@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29492-L30487
+Source lines: L29519-L30520
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a
 
 This addendum promotes the user-approved PMConcept6 eight-theme system into canonical PlanUnits and carries the exact per-variant token tables as spec data. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-### F3-425 - Eight Built-In Themes And Friendly Dark Default
+### F3-425 - Eight Built-In Themes And Basic Dark Factory Default
 
 ```yaml
 plan_unit_id: F3-425
@@ -22,15 +22,17 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The built-in theme set is exactly eight variants across four families: friendly-dark,
   friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light.
-  The default theme is friendly-dark. The selector additionally carries a presentation mode
-  dimension (Light, Dark, Auto); Auto resolves the selected family to its dark or light variant
-  by following the operating system appearance (prefers-color-scheme) and updates live when the
-  OS setting changes. This supersedes the prior three-family adjudication
-  (exactly three built-in theme choices with a Retro Dark default), which is preserved as
-  clearly labeled migration lineage prose so its exact tokens remain findable. Theme identity
-  persistence continues through the existing theme:v1 storage contract carrying the theme
-  family, presentation mode, and resolved variant; no new storage key is introduced for theme
-  identity.
+  Basic Dark is the factory theme only for an untouched first open or a genuinely fresh Project
+  with no committed theme snapshot. Existing explicit saved Project theme/layout customization
+  survives startup and Project switching. An admitted Project copy materializes the source
+  theme/layout into a detached destination-owned snapshot; subsequent source changes do not
+  propagate. The selector additionally carries a presentation mode dimension (Light, Dark,
+  Auto); Auto resolves the selected family to its dark or light variant by following the
+  operating system appearance (prefers-color-scheme) and updates live when the OS setting
+  changes. The former Friendly Dark default and prior three-family/Retro Dark adjudication are
+  preserved only as clearly labeled superseded lineage. Theme identity continues through the
+  existing Project-scoped theme:v1 contract carrying family, presentation mode, and resolved
+  variant; no new storage key is introduced for theme identity.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
 split_recommended: false
@@ -39,9 +41,10 @@ unblocks: []
 acceptance_criteria:
 - "The theme selector exposes exactly eight built-in variants: friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light."
 - "The selector additionally exposes a Light/Dark/Auto presentation mode, and in Auto the selected family resolves to its dark or light variant by following the OS appearance (prefers-color-scheme) live."
-- "The default theme is friendly-dark."
-- "The superseded three-family selector contract remains findable in the owner doc as clearly labeled migration lineage prose."
-- "theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
+- "Basic Dark is the untouched first-open/fresh-project factory default; an explicit saved Project selection is never overwritten by that seed."
+- "A copied Project receives a detached destination-owned theme/layout snapshot and never continuously inherits later source-project changes."
+- "The superseded Friendly Dark default and three-family selector contracts remain findable in the owner doc as clearly labeled lineage prose."
+- "Project-scoped theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -52,7 +55,7 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: eight_built_in_themes_and_friendly_dark_default
+  mode: eight_built_in_themes_and_basic_dark_factory_default
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md:166"
@@ -72,13 +75,16 @@ preserved_exact_tokens:
 - "Light, Dark, Auto"
 negative_constraints:
 - "Retro Dark is not the default."
+- "Friendly Dark is not the current factory default; it remains one supported theme and superseded default lineage."
+- "Do not overwrite an explicit saved Project theme/layout or keep a copied Project live-linked to its source Project."
 - "Do not register a new storage key for theme identity; theme:v1 carries the theme family, presentation mode, and resolved variant."
 compatibility_only_notes:
 - "Slint portability: all eight built-in variants resolve to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
 - "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
+- "The later Friendly-Dark-default promotion is itself superseded by the Basic Dark untouched first-open/fresh-project factory contract; it remains historical lineage only."
 owner_boundary_notes:
-- "The theme:v1 key row and its write frequency remain owned by the section 15.1 redb schema and F3-217; this unit widens only the persisted enum."
+- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by section 15.1 and F3-217; this unit defines factory selection and visible restoration/copy behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -799,7 +805,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Typography | `--line-height` | `1.5` |
 | Typography | `--letter-spacing` | `0.01em` |
 
-#### friendly-dark (default; 02-css-tokens.part.html:436-493)
+#### friendly-dark (historical source label `default` is superseded by the Basic Dark factory contract; 02-css-tokens.part.html:436-493)
 
 | Group | Token | Value |
 |---|---|---|

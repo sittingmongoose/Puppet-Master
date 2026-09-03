@@ -1,0 +1,293 @@
+{
+  "suite": "todo-runtime-verify",
+  "total": 57,
+  "pass": 57,
+  "fail": 0,
+  "results": [
+    {
+      "name": "todos.js registered PM56_TODOS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "query thread has its own non-empty list",
+      "pass": true,
+      "detail": "16"
+    },
+    {
+      "name": "subagents thread has its own non-empty list",
+      "pass": true,
+      "detail": "9"
+    },
+    {
+      "name": "the two thread lists are disjoint (no shared item ids)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a thread with no list returns null rather than a merged/empty-shared list",
+      "pass": true,
+      "detail": "null"
+    },
+    {
+      "name": "every item status is one of pending|in_progress|completed|blocked|skipped",
+      "pass": true,
+      "detail": "blocked,completed,in_progress,pending,skipped"
+    },
+    {
+      "name": "the fixture actually exercises all five statuses (not merely documents them)",
+      "pass": true,
+      "detail": "blocked,completed,in_progress,pending,skipped"
+    },
+    {
+      "name": "several leaves are in_progress at once",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "name": "completion happens out of display order (a later item completes while an earlier sibling still runs)",
+      "pass": true,
+      "detail": "[{\"id\":\"tq-03\",\"order\":1,\"status\":\"completed\"},{\"id\":\"tq-04\",\"order\":2,\"status\":\"in_progress\"},{\"id\":\"tq-05\",\"order\":3,\"status\":\"in_progress\"},{\"id\":\"tq-06\",\"order\":4,\"status\":\"completed\"}]"
+    },
+    {
+      "name": "every leaf has a non-empty expected_outcome",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "expected_outcome is bounded (a stated result, not an essay) — under 260 chars",
+      "pass": true,
+      "detail": "138 chars max"
+    },
+    {
+      "name": "a pending item whose dependency is not completed/skipped stays pending, not blocked (query thread)",
+      "pass": true,
+      "detail": "{\"status\":\"pending\",\"dependsOn\":[\"tq-07\"],\"depStatus\":\"blocked\"}"
+    },
+    {
+      "name": "a second independent example holds on the subagents thread",
+      "pass": true,
+      "detail": "{\"status\":\"pending\",\"dependsOn\":[\"tr-02\"],\"depStatus\":\"in_progress\"}"
+    },
+    {
+      "name": "exactly one leaf across both threads is a genuine blocker with a stated reason",
+      "pass": true,
+      "detail": "[\"tq-07\"]"
+    },
+    {
+      "name": "the blocker's parent rolls up to blocked without carrying its own blocked_reason_ref (derived, not a second genuine blocker)",
+      "pass": true,
+      "detail": "{\"genuineIds\":[\"tq-07\"],\"reason\":\"Production schema modification requires an explicit user override before this item can run.\",\"parentStatus\":\"blocked\",\"parentOwnReason\":null}"
+    },
+    {
+      "name": "no item record carries verification_state / source_group_label / done_category",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no item record even contains the substring \"verif\" anywhere in its fields",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "opening Activity Detail on the todo domain renders the real todo panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "every rendered query-thread node id matches the live query list (same set)",
+      "pass": true,
+      "detail": "16 rendered vs 16 live"
+    },
+    {
+      "name": "switching to subagents renders that thread's own list, matching the live data",
+      "pass": true,
+      "detail": "9 rendered vs 9 live"
+    },
+    {
+      "name": "no query-thread item bleeds into the subagents-thread render (never merged)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tr-04's dependency chip renders \"waiting\" styling and the node stays pending",
+      "pass": true,
+      "detail": "{\"waiting\":true,\"text\":\"Waiting on: Scan the route table for duplicate handler registrations\",\"status\":\"pending\"}"
+    },
+    {
+      "name": "two parallel leaves render in_progress simultaneously in the live DOM",
+      "pass": true,
+      "detail": "{\"s4\":\"in_progress\",\"s5\":\"in_progress\"}"
+    },
+    {
+      "name": "tq-08 (pending, unmet dependency on the blocked tq-07) renders pending with a \"Waiting on\" chip, never blocked styling",
+      "pass": true,
+      "detail": "{\"status\":\"pending\",\"waiting\":true,\"text\":\"Waiting on: Bound the event payload column size\"}"
+    },
+    {
+      "name": "the genuine blocker renders its blocked_reason_ref on the row",
+      "pass": true,
+      "detail": " Production schema modification requires an explicit user override before this item can run."
+    },
+    {
+      "name": "the derived-blocked parent renders no reason line of its own",
+      "pass": true,
+      "detail": "{\"leafReason\":\" Production schema modification requires an explicit user override before this item can run.\",\"parentHasOwnReasonLine\":false,\"parentStatus\":\"blocked\"}"
+    },
+    {
+      "name": "completed items remain inline in display order under their parent (no Done section, no reordering)",
+      "pass": true,
+      "detail": "[{\"id\":\"tq-03\",\"status\":\"completed\"},{\"id\":\"tq-04\",\"status\":\"in_progress\"},{\"id\":\"tq-05\",\"status\":\"in_progress\"},{\"id\":\"tq-06\",\"status\":\"completed\"}]"
+    },
+    {
+      "name": "exactly one tree container renders the whole list (no separate Done tree/section)",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "a completed row is struck through (computed text-decoration, not just a class name)",
+      "pass": true,
+      "detail": "{\"doneStruck\":true,\"doneDecoration\":\"line-through\",\"notDoneStruck\":false,\"notDoneDecoration\":\"none\"}"
+    },
+    {
+      "name": "a non-completed row carries no strike-through",
+      "pass": true,
+      "detail": "{\"doneStruck\":true,\"doneDecoration\":\"line-through\",\"notDoneStruck\":false,\"notDoneDecoration\":\"none\"}"
+    },
+    {
+      "name": "the todo hover preview card is reachable by hovering the Activity Bar domain",
+      "pass": true,
+      "detail": "195"
+    },
+    {
+      "name": "no \"verif…\" substring is user-visible in the todo hover card",
+      "pass": true,
+      "detail": "To-Dos4 of 12Inspect write amplification under the new indexLoad-test the index under concurrent write trafficConfirm the rollback rehearsal reproduces the pre-"
+    },
+    {
+      "name": "no \"verif…\" substring is user-visible in the todo Activity Detail panel",
+      "pass": true,
+      "detail": "3381 chars scanned"
+    },
+    {
+      "name": "tq-11 starts pending with no transitions (a clean item to drive)",
+      "pass": true,
+      "detail": "{\"project_id\":\"pm\",\"thread_id\":\"query\",\"parent_todo_id\":\"tq-p4\",\"depends_on\":[\"tq-06\"],\"parallel_group_id\":null,\"plan_id\":null,\"plan_version\":null,\"plan_step_ids\":[],\"planunit_ids\":[],\"goal_id\":null,\"expected_outcome\":\"Running the rollback script against a copy of the post-change database reproduces the pre-change schema exactly.\",\"active_work_ids\":[],\"blocked_reason_ref\":null,\"started_at\":null,\"completed_at\":null,\"revision\":1,\"transitions\":[],\"todo_id\":\"tq-11\",\"display_order\":2,\"title\":\"Confirm the rollback rehearsal reproduces the pre-change state\",\"status\":\"pending\"}"
+    },
+    {
+      "name": "tq-11's parent starts pending with no transitions of its own",
+      "pass": true,
+      "detail": "{\"project_id\":\"pm\",\"thread_id\":\"query\",\"parent_todo_id\":null,\"depends_on\":[],\"parallel_group_id\":null,\"plan_id\":null,\"plan_version\":null,\"plan_step_ids\":[],\"planunit_ids\":[],\"goal_id\":null,\"expected_outcome\":null,\"active_work_ids\":[],\"blocked_reason_ref\":null,\"started_at\":null,\"completed_at\":null,\"revision\":1,\"transitions\":[],\"todo_id\":\"tq-p4\",\"title\":\"Validate and report\",\"display_order\":4,\"status\":\"pending\"}"
+    },
+    {
+      "name": "the Start control for tq-11 exists and is clickable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Start moves tq-11 to in_progress with exactly one new receipted transition",
+      "pass": true,
+      "detail": "[{\"transition_id\":\"tr-tq-11-1\",\"todo_id\":\"tq-11\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"work_admitted\",\"cause_ref\":\"assignment:tq-11\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-03T20:51:27.434Z\",\"note\":\"A tool batch was durably admitted for this item.\"}]"
+    },
+    {
+      "name": "every item outside the tq-11 / parent rollup chain is untouched by that one transition",
+      "pass": true,
+      "detail": "unchanged"
+    },
+    {
+      "name": "the parent rolls up to in_progress through its OWN separate, individually receipted transition",
+      "pass": true,
+      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-03T20:51:27.434Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
+    },
+    {
+      "name": "the Complete control for tq-11 exists and is clickable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Complete moves tq-11 to completed with a second receipted transition naming the accepted outcome",
+      "pass": true,
+      "detail": "{\"transition_id\":\"tr-tq-11-2\",\"todo_id\":\"tq-11\",\"from_status\":\"in_progress\",\"to_status\":\"completed\",\"cause_kind\":\"outcome_satisfied\",\"cause_ref\":\"evidence:tq-11-2\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-03T20:51:27.813Z\",\"note\":\"Outcome evidence accepted: Running the rollback script against a copy of the post-change database reproduces the pre-change schema exactly.\"}"
+    },
+    {
+      "name": "every item outside the tq-11 / parent rollup chain is untouched by completing tq-11",
+      "pass": true,
+      "detail": "unchanged"
+    },
+    {
+      "name": "tq-11's parent does not falsely roll up to completed while its siblings are still pending, via its own second receipted rollup transition",
+      "pass": true,
+      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-03T20:51:27.434Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"},{\"transition_id\":\"tr-tq-p4-2\",\"todo_id\":\"tq-p4\",\"from_status\":\"in_progress\",\"to_status\":\"pending\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-03T20:51:27.813Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
+    },
+    {
+      "name": "the receipts disclosure renders one durable row per transition, most recent first",
+      "pass": true,
+      "detail": "Outcome accepted | Work admitted"
+    },
+    {
+      "name": "the \"attempt bulk complete\" control exists and is clickable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "bulk-complete-everything mutates nothing",
+      "pass": true,
+      "detail": "unchanged"
+    },
+    {
+      "name": "the \"simulate provider proposal\" control exists and is clickable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a provider whole-list proposal mutates nothing",
+      "pass": true,
+      "detail": "unchanged"
+    },
+    {
+      "name": "the stale-write demo control names a real target item",
+      "pass": true,
+      "detail": "tq-04"
+    },
+    {
+      "name": "the \"simulate stale write\" control exists and is clickable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a stale-revision write mutates nothing",
+      "pass": true,
+      "detail": "unchanged"
+    },
+    {
+      "name": "all three refusals are durable rows in the Refused attempts log, not toasts alone",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "name": "the bulk-complete refusal is recorded with its real reason",
+      "pass": true,
+      "detail": "[\"stale_todo_revision\",\"bulk_completion_refused\",\"bulk_completion_refused\"]"
+    },
+    {
+      "name": "the provider-proposal refusal is recorded as reconciliation, not a silent drop",
+      "pass": true,
+      "detail": "[\"This row changed since it was opened (no\",\"A provider-native whole-list proposal tr\",\"Bulk completion is refused: 6 items woul\"]"
+    },
+    {
+      "name": "the stale-write refusal names the exact stale-revision reason",
+      "pass": true,
+      "detail": "[\"stale_todo_revision\",\"bulk_completion_refused\",\"bulk_completion_refused\"]"
+    },
+    {
+      "name": "reset restores the To-Do fixture (tq-11 back to pending with no transitions)",
+      "pass": true,
+      "detail": "{\"status\":\"pending\",\"transitions\":0}"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

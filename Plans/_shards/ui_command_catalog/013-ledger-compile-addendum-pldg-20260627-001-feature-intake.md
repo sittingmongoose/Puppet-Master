@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7529-L7662
+Source lines: L7529-L7671
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -20,7 +20,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Notifications and Sounds commands include `cmd.settings.open_notifications`, destination create/update/delete/toggle/test,
+  Notifications and Sounds navigation uses the current `cmd.settings.open` typed Settings route. The historical
+  `cmd.settings.open_notifications` spelling is retained only as non-alias local-affordance lineage and receives no
+  primary handler or production-wiring row. Domain commands include destination create/update/delete/toggle/test,
   notification mapping update, runtime override set, and sound preview/upload/pack import/asset delete/asset restore/asset
   export/mapping set. Destination test commands require explicit user action, enabled destination authority, rate limiting,
   masking, and receipt recording. Destination create/update payloads carry provider-specific profile fields from CV-298
@@ -31,7 +33,8 @@ gui_classification_reason: Defines user-visible settings, destination, mapping, 
 depends_on: [CV-298, PS-124]
 unblocks: [WM-039, ATS-016]
 acceptance_criteria:
-  - Every Notifications & Sounds GUI control routes through a stable command ID.
+  - The Notifications & Sounds navigation affordance emits cmd.settings.open with a Settings-owned typed target; cmd.settings.open_notifications is not a command or alias.
+  - Every Notifications & Sounds domain control routes through its stable owner command ID.
   - Destination create/update commands accept provider-specific profile payloads without exposing raw URLs or tokens.
   - Test-send commands are separate from local preview and cannot mutate alert state.
   - Sound asset commands distinguish user-uploaded assets, imported packs, built-ins, hide/disable, restore, and export behavior.
@@ -56,6 +59,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
 source_atom_ids: [atom-0064, atom-0068, atom-0069]
 preserved_exact_tokens:
+  - "cmd.settings.open"
   - "cmd.settings.open_notifications"
   - "cmd.notifications.destination.create"
   - "cmd.notifications.destination.update"
@@ -72,9 +76,14 @@ preserved_exact_tokens:
   - "cmd.sound.asset.export"
   - "cmd.sound.mapping.set"
 negative_constraints:
+  - Do not register, alias, or wire cmd.settings.open_notifications; retain it only as local-affordance source lineage.
   - Do not route local sound preview through external notification delivery.
   - Do not make test-send implicit from saving settings.
   - Do not create visualizer bridge aliases as UI command IDs unless they dispatch outside the iframe host bridge.
+compatibility_only_notes:
+  - "cmd.settings.open_notifications is a retired local-affordance spelling with no alias; the current affordance emits cmd.settings.open with the typed Settings target."
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications: retained source lineage only; no primary handler, production-wiring row, or alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md

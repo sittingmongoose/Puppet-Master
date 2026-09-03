@@ -1,0 +1,443 @@
+/* browser-capture.css — feature module.  OWNER: Assistant-redesign wave (2026-09-03) —
+ * browser capture agent.  Styles browser-capture.js only: the internal-browser dialog
+ * (`.bc-dialog`), its toolbar/urlbar/session tabs, the demo page surface and its
+ * hover/region overlays, the component prompt bar, the details/DevTools/Captures rail,
+ * the composer list manager, and the transcript capture card + reference chips.
+ *
+ * Loaded last (per the module contract), so these rules win over styles.css without
+ * needing !important anywhere. Every colour is a theme token — nothing here is a
+ * literal hex, so all 8 themes (including the light and glass families) stay correct.
+ * Respects prefers-reduced-motion by dropping decoration/transition, never by dropping
+ * a state change (drag/hover feedback still updates instantly, just without easing).
+ */
+
+/* =========================================================================
+   0. COMPOSER ENTRY POINT
+   `.composer-box` has no flex layout of its own (composer.css only sets
+   container-type/position), so a lone slot child sits in normal block flow;
+   this gives the tray button sane spacing without touching that file.
+   ========================================================================= */
+.bc-tray-btn { display: inline-flex; margin: 6px 0 0 8px; }
+
+/* =========================================================================
+   1. DIALOG SHELL
+   ========================================================================= */
+.bc-dialog { max-height: min(760px, calc(100vh - 20px)); }
+.bc-body {
+  display: flex;
+  min-height: 0;
+  gap: 0;
+}
+.bc-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+.bc-rail {
+  flex: 0 0 268px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.bc-head.drawer-head { gap: 8px; }
+.bc-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.bc-tab {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 9px 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 160ms var(--ease), color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.bc-tab:hover { color: var(--text); border-color: var(--border-strong); }
+.bc-tab.active { background: color-mix(in srgb, var(--accent) 16%, var(--surface-2)); border-color: color-mix(in srgb, var(--accent) 42%, var(--border)); color: var(--text); }
+.bc-tab.is-protected.active { background: color-mix(in srgb, var(--warning) 18%, var(--surface-2)); border-color: color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.bc-tab svg { flex: 0 0 auto; }
+
+/* =========================================================================
+   2. URL BAR + BANNER + TOOLBAR
+   ========================================================================= */
+.bc-urlbar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 11px;
+  min-width: 0;
+}
+.bc-url-lock { display: flex; color: var(--subtle); flex: 0 0 auto; }
+.bc-url-text { font-family: var(--font-mono); color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bc-url-title { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; min-width: 40px; }
+.bc-url-gen {
+  flex: 0 0 auto; margin-left: auto;
+  padding: 2px 7px; border-radius: 999px;
+  background: var(--surface-3); color: var(--subtle);
+  font-family: var(--font-mono); font-size: 10px;
+}
+
+.bc-banner {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid color-mix(in srgb, var(--warning) 38%, var(--border));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning) 10%, var(--surface-2));
+  color: var(--warning);
+}
+.bc-banner strong { color: var(--text); display: block; font-size: 12px; }
+.bc-banner p { margin: 2px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+.bc-banner svg { flex: 0 0 auto; margin-top: 1px; }
+
+.bc-toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; position: relative; }
+.bc-tool-split { display: inline-flex; position: relative; }
+.bc-tool-split .bc-tool-btn { border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none; }
+.bc-tool-caret {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px;
+  border: 1px solid var(--border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+}
+.bc-tool-caret:hover { color: var(--text); background: var(--surface-3); }
+.bc-tool-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: background 160ms var(--ease), border-color 160ms var(--ease), color 160ms var(--ease);
+}
+.bc-tool-btn:hover { background: var(--surface-3); border-color: var(--border-strong); }
+.bc-tool-btn.is-armed {
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+  color: var(--text);
+}
+.bc-tool-btn svg { flex: 0 0 auto; }
+
+.bc-full-menu {
+  position: absolute; top: calc(100% + 4px); left: 0;
+  z-index: 2;
+  min-width: 200px;
+  padding: 4px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-float);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.bc-full-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 8px;
+  border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text);
+  font-size: 11.5px; text-align: left; cursor: pointer;
+}
+.bc-full-item:hover { background: var(--surface-3); }
+
+.bc-note { margin: 0; font-size: 10.5px; color: var(--muted); line-height: 1.5; }
+.bc-note .text-button { font-size: 10.5px; padding: 0; }
+
+/* =========================================================================
+   3. STAGE — the demo page surface, region drag, hover highlight
+   ========================================================================= */
+.bc-stage { position: relative; }
+.bc-viewport {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  overscroll-behavior: contain;
+}
+.bc-surface {
+  position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px;
+}
+.bc-surface.is-region-mode { cursor: crosshair; }
+.bc-surface.is-component-mode .bc-el { cursor: pointer; }
+
+.bc-el { border-radius: 8px; transition: box-shadow 140ms var(--ease); }
+.bc-el.is-bc-picked { box-shadow: 0 0 0 2px var(--accent); }
+.bc-surface.is-component-mode [data-bc-el]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.bc-el-text { display: block; }
+
+.bc-el-header { display: flex; flex-direction: column; gap: 2px; padding: 2px 2px 8px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 13px; color: var(--text); }
+.bc-el-breadcrumb { font-weight: 400; font-size: 10.5px; color: var(--muted); }
+.bc-el-filterbar { display: flex; gap: 6px; }
+.bc-el-chip {
+  padding: 5px 10px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--muted);
+  font-size: 10.5px; cursor: default;
+}
+.bc-el-chart {
+  padding: 10px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.bc-el-chart .bc-el-text { font-size: 12px; font-weight: 600; color: var(--text); }
+.bc-sparkline { display: flex; align-items: flex-end; gap: 2px; height: 26px; }
+.bc-sparkline i { display: block; width: 5px; border-radius: 2px 2px 0 0; background: var(--accent-2); opacity: .8; }
+
+.bc-el-table { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--border); border-radius: 10px; padding: 6px; background: var(--surface-2); }
+.bc-el-row {
+  display: flex; align-items: center;
+  padding: 6px 8px; border-radius: 7px;
+  background: var(--surface-3);
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--muted);
+  gap: 8px;
+}
+.bc-el-row.is-hot { background: color-mix(in srgb, var(--danger) 12%, var(--surface-3)); color: var(--text); }
+.bc-el-row .bc-el-text { flex: 1 1 auto; }
+.bc-el-retry {
+  flex: 0 0 auto;
+  padding: 3px 9px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--danger) 45%, var(--border));
+  background: color-mix(in srgb, var(--danger) 14%, var(--surface-2));
+  color: var(--text); font-family: var(--font-ui); font-size: 10px; cursor: pointer;
+}
+.bc-el-footnote { margin: 0; font-size: 10.5px; color: var(--subtle); }
+
+.bc-hl-box {
+  position: absolute; z-index: 3; pointer-events: none;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: 0 0 0 2000px transparent;
+}
+.bc-region-layer {
+  position: absolute; inset: 0; z-index: 4;
+  cursor: crosshair;
+}
+.bc-sel-box {
+  position: absolute; z-index: 5; pointer-events: none;
+  border: 1.5px dashed var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.bc-authpage { display: grid; place-items: center; min-height: 240px; padding: 20px; }
+.bc-authcard {
+  width: 220px; padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+  display: flex; flex-direction: column; gap: 9px;
+  opacity: .82;
+}
+.bc-authbrand { font-weight: 700; font-size: 12px; color: var(--text); text-align: center; }
+.bc-authfield { display: flex; flex-direction: column; gap: 3px; font-size: 10px; color: var(--muted); }
+.bc-authfield input {
+  height: 26px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--surface-3); color: var(--subtle); padding: 0 8px; font-size: 11px;
+}
+.bc-authbtn {
+  height: 28px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--surface-3); color: var(--subtle); font-size: 11px; cursor: not-allowed;
+}
+.bc-authnote { margin: 2px 0 0; font-size: 9.5px; color: var(--subtle); text-align: center; line-height: 1.4; }
+
+/* =========================================================================
+   4. COMPONENT PROMPT BAR
+   ========================================================================= */
+.bc-prompt-bar {
+  position: absolute; z-index: 6;
+  width: min(320px, calc(100% - 8px));
+  display: flex; flex-direction: column; gap: 7px;
+  padding: 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-float);
+  animation: bc-pop var(--spring-soft, 260ms) both;
+}
+@keyframes bc-pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+.bc-prompt-target { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.bc-prompt-target b { color: var(--text); font-family: var(--font-mono); font-weight: 600; }
+.bc-prompt-target span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; min-width: 0; }
+.bc-prompt-hint { margin: 0; font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.bc-prompt-input {
+  height: 30px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--text); padding: 0 9px; font-size: 11.5px;
+}
+.bc-prompt-actions { display: flex; align-items: center; gap: 4px; position: relative; }
+.bc-prompt-run { flex: 1 1 auto; font-size: 11px; padding: 6px 10px; }
+.bc-prompt-caret {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border: 1px solid var(--border); border-radius: 7px;
+  background: var(--surface-2); color: var(--muted); cursor: pointer;
+}
+.bc-prompt-caret:hover { color: var(--text); }
+.bc-prompt-bar .icon-button { flex: 0 0 auto; }
+.bc-prompt-menu {
+  position: absolute; bottom: calc(100% + 6px); right: 0;
+  z-index: 2; width: 220px;
+  padding: 4px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-float);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.bc-prompt-menu-item {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 6px 8px; border: 0; border-radius: 7px;
+  background: transparent; color: var(--text); text-align: left; cursor: pointer;
+}
+.bc-prompt-menu-item:hover { background: var(--surface-3); }
+.bc-prompt-menu-item.active { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.bc-prompt-menu-item strong { font-size: 11px; display: flex; align-items: center; gap: 5px; }
+.bc-prompt-menu-item span { font-size: 10px; color: var(--muted); }
+
+/* =========================================================================
+   5. RAIL — composer list manager, Details / DevTools / Captures tabs
+   ========================================================================= */
+.bc-list-manager {
+  border-bottom: 1px solid var(--border);
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.bc-list-manager-head { display: flex; flex-direction: column; gap: 1px; }
+.bc-list-manager-head b { font-size: 11px; color: var(--text); }
+.bc-list-manager-head span { font-size: 9.5px; color: var(--muted); }
+.bc-list-row { display: flex; align-items: center; gap: 5px; }
+.bc-list-num {
+  flex: 0 0 auto; min-width: 15px; text-align: center;
+  font-family: var(--font-mono); font-size: 10px; color: var(--subtle);
+}
+.bc-list-label { flex: 1 1 auto; min-width: 0; font-size: 10.5px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bc-list-row .icon-button { width: 20px; height: 20px; }
+
+.bc-rail-tabs { display: flex; border-bottom: 1px solid var(--border); }
+.bc-rail-tab {
+  flex: 1 1 0; padding: 8px 4px;
+  border: 0; border-bottom: 2px solid transparent;
+  background: transparent; color: var(--muted);
+  font-size: 10.5px; cursor: pointer;
+  transition: color 140ms var(--ease), border-color 140ms var(--ease);
+}
+.bc-rail-tab:hover { color: var(--text); }
+.bc-rail-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+.bc-rail-body { flex: 1 1 auto; min-height: 0; padding: 10px; display: flex; flex-direction: column; gap: 9px; }
+.bc-empty { margin: 0; font-size: 11px; color: var(--muted); line-height: 1.5; }
+.bc-sub { margin: 2px 0 0; font-size: 10px; color: var(--subtle); line-height: 1.45; }
+
+.bc-context-card { display: flex; flex-direction: column; gap: 7px; }
+.bc-context-row { display: flex; flex-direction: column; gap: 1px; }
+.bc-context-row label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--subtle); }
+.bc-context-row b { font-size: 11px; color: var(--text); font-weight: 600; word-break: break-word; }
+.bc-context-row > span { font-size: 10px; color: var(--muted); word-break: break-word; }
+.bc-locator-row { position: relative; }
+.bc-locator-row b.bc-mono { font-family: var(--font-mono); font-size: 10.5px; word-break: break-all; }
+.bc-tag-stable, .bc-tag-fragile, .bc-stale-tag, .bc-fresh-tag {
+  display: inline-flex; align-self: flex-start;
+  margin-top: 2px; padding: 1px 7px; border-radius: 999px;
+  font-size: 9px; font-weight: 600;
+}
+.bc-tag-stable { background: color-mix(in srgb, var(--positive) 18%, transparent); color: var(--positive); }
+.bc-tag-fragile { background: color-mix(in srgb, var(--warning) 18%, transparent); color: var(--warning); }
+.bc-fresh-tag { background: color-mix(in srgb, var(--positive) 18%, transparent); color: var(--positive); margin-left: 6px; }
+.bc-stale-tag { background: color-mix(in srgb, var(--warning) 20%, transparent); color: var(--warning); margin-left: 6px; }
+.bc-html-block { font-size: 9.5px; max-height: 84px; overflow: auto; margin-top: 2px; }
+.bc-rerender-note {
+  padding: 7px 9px; border-radius: 7px; font-size: 10.5px; line-height: 1.45;
+  border: 1px solid var(--border);
+}
+.bc-rerender-note.ok { border-color: color-mix(in srgb, var(--positive) 40%, var(--border)); background: color-mix(in srgb, var(--positive) 10%, var(--surface-2)); color: var(--text); }
+.bc-rerender-note.fail { border-color: color-mix(in srgb, var(--danger) 40%, var(--border)); background: color-mix(in srgb, var(--danger) 10%, var(--surface-2)); color: var(--text); }
+
+.bc-policy-grid { display: grid; grid-template-columns: 1fr; gap: 3px; }
+.bc-policy-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 6px 8px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--surface-2); cursor: pointer; text-align: left;
+}
+.bc-policy-row:hover { border-color: var(--border-strong); }
+.bc-policy-label { font-size: 10.5px; color: var(--text); }
+.bc-policy-state { flex: 0 0 auto; padding: 1px 8px; border-radius: 999px; font-size: 9.5px; font-weight: 700; }
+.bc-policy-off { background: var(--surface-3); color: var(--subtle); }
+.bc-policy-ask { background: color-mix(in srgb, var(--warning) 20%, transparent); color: var(--warning); }
+.bc-policy-on { background: color-mix(in srgb, var(--positive) 20%, transparent); color: var(--positive); }
+.bc-console { margin-top: 4px; display: flex; flex-direction: column; gap: 3px; }
+.bc-console label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--subtle); }
+.bc-console-line {
+  font-family: var(--font-mono); font-size: 10px; padding: 4px 7px;
+  border-radius: 6px; background: var(--code, var(--surface-2)); color: var(--muted);
+}
+.bc-console-warn { color: var(--warning); }
+
+.bc-captures-list { display: flex; flex-direction: column; gap: 6px; }
+.bc-capture-row { display: flex; align-items: center; gap: 8px; }
+.bc-capture-thumb { border-radius: 6px; border: 1px solid var(--border); object-fit: cover; flex: 0 0 auto; }
+.bc-capture-copy { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.bc-capture-copy b { font-size: 10.5px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bc-capture-copy span { font-size: 9.5px; color: var(--muted); }
+
+/* =========================================================================
+   6. TRANSCRIPT — capture card + reference chip strip
+   ========================================================================= */
+.bc-capture-card .message-surface { display: flex; flex-direction: column; gap: 6px; }
+.bc-capture-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.bc-capture-head b { font-size: 11.5px; color: var(--text); }
+.bc-capture-head span { font-size: 10px; color: var(--muted); }
+.bc-capture-img {
+  max-width: 100%; height: auto; display: block;
+  border-radius: 9px; border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.bc-capture-instruction { margin: 0; font-size: 12px; color: var(--text); }
+.bc-capture-sub { margin: 0; font-size: 10.5px; color: var(--muted); }
+.bc-fixture-note { margin: 0; font-size: 9.5px; color: var(--subtle); font-style: italic; }
+
+.bc-ref-strip {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  margin-bottom: 4px; font-size: 9.5px;
+}
+.bc-ref-strip-label { color: var(--subtle); }
+.bc-ref-chip {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-3); color: var(--muted);
+}
+.bc-ref-chip b { color: var(--accent-2); font-weight: 700; }
+
+/* =========================================================================
+   7. RESPONSIVE + REDUCED MOTION
+   ========================================================================= */
+@media (max-width: 760px) {
+  .bc-body { flex-direction: column; }
+  .bc-main { border-right: none; border-bottom: 1px solid var(--border); }
+  .bc-rail { flex: 1 1 auto; max-height: 46vh; }
+  .bc-prompt-bar { width: calc(100% - 8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bc-el, .bc-tab, .bc-tool-btn, .bc-rail-tab { transition: none; }
+  .bc-prompt-bar { animation: none; }
+}

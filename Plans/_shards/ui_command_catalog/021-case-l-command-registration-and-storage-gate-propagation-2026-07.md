@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8390-L9541
+Source lines: L8504-L9690
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -689,7 +689,7 @@ owner_hints:
   - Plans/Wiring_Matrix.md
 ```
 
-### UCC-120 - Settings Home Bloom And Suggestion Commands
+### UCC-120 - Settings Route And Transaction Composition
 
 ```yaml
 plan_unit_id: UCC-120
@@ -697,29 +697,34 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Settings home commands are `cmd.settings.bloom.open` (opens a category bloom modal with the F3-434 deep-link
-  contract open(category, focusSettingId); focus targets scroll into view and flash-highlight; reduced motion
-  skips the morph), `cmd.settings.category.reset` (two-step per-category reset: first activation arms
-  confirmation, second activation within the timeout resets to registry defaults, timeout expiry disarms), and
-  `cmd.settings.suggestion.dismiss` (per-card Suggested-shelf dismiss persisting at
-  settings_suggestions_dismissed:v1 with project-or-global scoping and 90-day expiry, fully local). These rows do
-  not change the F3-438/F3-439/F3-441 convention that individual setting mutations are registry-owned and
-  command-less.
+  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and
+  exact-return contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the
+  command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
+  cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
+  non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
+  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply.
+  The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
+  80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
+  seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
 gui_related: true
-gui_classification_reason: Registers user-visible settings bloom open, category reset, and suggestion dismiss commands.
-depends_on: [F3-434, F3-436, F3-437, F3-441]
+gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
+depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
 unblocks: []
 acceptance_criteria:
-  - bloom.open honors the deep-link contract and reduced-motion behavior.
-  - category.reset never resets without the two-step confirmation completing inside the timeout.
-  - suggestion.dismiss persists at settings_suggestions_dismissed:v1 with the F3-437 scoping and expiry and makes no network calls.
-  - Individual setting mutations remain registry-owned and command-less.
+  - cmd.settings.open accepts only the Settings-owned typed setting or manager/detail target and preserves its exact-return contract; presentation and motion remain Final GUI concerns.
+  - The local Notifications affordance emits cmd.settings.open with the typed Settings target; cmd.settings.open_notifications is neither registered nor aliased.
+  - Category reset never applies without a current preview, the required confirmation, and exact owner readback.
+  - Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry and makes no network calls.
+  - All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
+  - "The exact 41 canonical reuses, seven typed local actions, one retired bakeoff token, and 31 rejected tokens remain the complete Settings packet partition."
+  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; none of the 72 replaced, superseded, retired, or rejected source spellings becomes a command or alias."
+  - "`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an exact typed route, sole handler, and production-intent row."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: settings_command_catalog_gap
 reasoning_tier: standard
-context_scope: settings_home_commands
+context_scope: settings_route_and_home_commands
 implementation_surfaces:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
@@ -730,16 +735,39 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/FinalGUISpec.md:28854-28900 (F3-434)"
+  - "Plans/Settings_System.md#SSYS-018 (current typed route owner; supersedes bloom-specific routing)"
+  - "Plans/Settings_System.md#SSYS-023 (exact 80-token transitive disposition registry)"
+  - "Plans/settings_system_contract_fixtures.json#/packet_command_dispositions"
   - "Plans/FinalGUISpec.md:29031-29080 (F3-437)"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-  - "cmd.settings.bloom.open"
+  - "cmd.settings.open"
+  - "cmd.settings.transaction.preview"
+  - "cmd.settings.transaction.apply"
+  - "cmd.settings.open_notifications"
   - "cmd.settings.category.reset"
   - "cmd.settings.suggestion.dismiss"
   - "settings_suggestions_dismissed:v1"
+  - "settings.search.focus"
+  - "settings.search.result.activate"
+  - "settings.category.select"
+  - "settings.subcategory.select"
+  - "settings.setting.focus"
+  - "settings.scope.details.open"
+  - "settings.provider.installation.select"
 negative_constraints:
-  - Do not convert registry-owned setting mutations into commands via these rows.
+  - Do not mint a second Settings mutation command for reset, dismissal, or presentation behavior.
   - Do not perform a category reset without the completed two-step confirmation.
+  - Do not encode a bloom, breadcrumb, Back control, or other presentation geometry into cmd.settings.open.
+  - Do not register or alias any of the three retired local-affordance spellings.
+  - Do not copy packet replacement spellings into the catalog or promote typed local actions into domain commands.
+  - Do not treat a prose mention of cmd.artifacts.open_panel as catalog admission or handler evidence.
+compatibility_only_notes:
+  - The retired open-notifications, category-reset, and suggestion-dismiss spellings are searchable local-affordance lineage only and never normalize to current commands.
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications: local affordance emits cmd.settings.open with a typed target; no alias or handler."
+  - "cmd.settings.category.reset: local affordance composes transaction preview then apply; no alias or handler."
+  - "cmd.settings.suggestion.dismiss: local affordance composes transaction preview then apply; no alias or handler."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
@@ -799,7 +827,7 @@ owner_hints:
   - Plans/Permissions_System.md
 ```
 
-### UCC-122 - Source Control Pull Request Commands
+### UCC-122 - Forge Review Commands And Source Control Compatibility
 
 ```yaml
 plan_unit_id: UCC-122
@@ -807,29 +835,32 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Source Control pull request commands are `cmd.source_control.pr.create` and `cmd.source_control.pr.merge`.
-  Both are panel-scoped first-class route commands carrying exact SCM context payload (repo, worktree, compare
-  target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements, with deterministic
-  disabled-state behavior for missing scopes, expired auth, or no GitHub remote. They are distinct from the
-  thread-bound cmd.chat.worktree.pr and cmd.chat.worktree.merge rows, which remain assistant-thread-scoped.
-  PR merge of protected branches routes the domain.git_destructive_remote permission class.
+  Panel review actions use the canonical Forge-owned cmd.forge.review.create and cmd.forge.review.merge
+  commands with a typed provider discriminator and exact SCM/forge context. The historical
+  cmd.source_control.pr.create and cmd.source_control.pr.merge spellings are compatibility inputs that
+  normalize to the Forge commands with provider github before availability, permission, telemetry, receipt,
+  and dispatch; they receive no primary catalog or production-wiring rows. Thread-bound
+  cmd.chat.worktree.pr and cmd.chat.worktree.merge remain assistant-thread wrappers. Protected-branch merge
+  retains the applicable destructive-remote permission class.
 gui_related: true
-gui_classification_reason: Registers user-visible Source Control panel PR create and merge commands.
-depends_on: [UCC-044, UCC-058]
+gui_classification_reason: Registers user-visible Forge review create/merge commands and the Source Control compatibility normalization.
+depends_on: [UCC-044, UCC-058, FGI-004, SCS-004]
 unblocks: []
 acceptance_criteria:
-  - PR create and merge carry the exact SCM context payload and GitHub auth disabled-state behavior.
-  - Panel PR commands never impersonate or replace the thread-bound worktree PR commands.
+  - Forge review create and merge carry the exact provider, repository, revision, SCM context, permission, and disabled-state contract.
+  - Source Control PR compatibility inputs normalize before dispatch and never receive a second handler or primary wiring row.
+  - Panel review commands never impersonate or replace the thread-bound worktree PR commands.
   - Protected-branch merges are blocked without a domain.git_destructive_remote approval.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-risk_class: source_control_command_catalog_gap
+risk_class: forge_source_control_command_owner_drift
 reasoning_tier: high
-context_scope: source_control_pr_commands
+context_scope: forge_review_source_control_compatibility
 implementation_surfaces:
   - Plans/UI_Command_Catalog.md
-  - Plans/GitHub_Integration.md
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
   - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: source_control_pr_command_catalog
@@ -842,13 +873,17 @@ source_lineage:
 preserved_exact_tokens:
   - "cmd.source_control.pr.create"
   - "cmd.source_control.pr.merge"
+  - "cmd.forge.review.create"
+  - "cmd.forge.review.merge"
   - "domain.git_destructive_remote"
 negative_constraints:
   - Do not reuse thread-bound cmd.chat.worktree.pr or cmd.chat.worktree.merge for panel-scoped PR actions.
+  - Do not register Source Control compatibility inputs as primary commands or route them to Source Control-owned review handlers.
   - Do not merge protected branches without the domain-sensitive approval.
 owner_hints:
   - Plans/UI_Command_Catalog.md
-  - Plans/GitHub_Integration.md
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
   - Plans/Permissions_System.md
 ```
 

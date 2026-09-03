@@ -91,6 +91,11 @@
     model:'sonnet46', modelProvider:'all', modelSearch:'', effort:'', fast:true,
     favorites:D.models.filter(m=>m.favorite).map(m=>m.id),
     persona:'Product Manager', mode:'Agent', thoroughness:'Thorough', permissions:'Auto', worktree:'feature/query-index',
+    /* Assistant-redesign selectors. planStrategy/deepPlanStrategy are the six exact
+       choices; grillMe is the persistent Deep Plan check; reviewStrategy chooses the
+       Review submenu entry. `thoroughness` above is retained only so older fixtures and
+       harnesses that read it keep working -- nothing new writes it. */
+    planStrategy:'Standard', deepPlanStrategy:'Thorough', grillMe:false, reviewStrategy:'Multi-Pass Review',
     capabilities:{goal:true,crew:false,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
     activityCaps:{goal:{},crew:{}},
     messageExpanded:{}, messageDetails:{}, copyFlashId:null, workTerminal:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null}, works:{},
@@ -196,7 +201,15 @@
      ===================================================================== */
   const EXT_SLOTS = ['headerLeading','headerExtras','activityPanelBody','activityHoverCard','threadRowStatus',
     'historyChrome','messageMeta','messageAffordance','messageOverflow','messageOverflowPanel','threadMenu','goalSection','goalEditor',
-    'contextCompactMenu','contextLensMenu','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N'];
+    'contextCompactMenu','contextLensMenu','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N',
+    /* Assistant-redesign wave. transcriptMessage is a DECLINE-able replace slot: return ''
+       and the built-in renderMessage chain runs. composerTray/composerRibbon/composerBelow
+       are append slots inside the composer; wandRows and modeRows extend those two menus
+       without reopening this file again. */
+    'transcriptMessage','composerTray','composerRibbon','composerBelow','wandRows','submenu','modeRows',
+    /* Append points inside context.js's own replace-slot output, so BSD adds a row and a
+       section without re-registering (and therefore duplicating) the whole Context menu. */
+    'contextBsdRow','contextBsdSection'];
 
   function ensureExt(){
     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
@@ -488,7 +501,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
   }
   function renderArtifactEditor(art){
-    const meta=`<div class="editor-meta"><span class="meta-pill">${esc(art.kind)}</span><span class="meta-pill">Version ${art.version}</span><span class="meta-pill">${esc(lblOf('artifactStatus',art.status))}</span><span class="meta-pill">${esc(art.updated)}</span></div>`;
+    /* Assistant-redesign wave: ONE Plan truth, in the header chrome too. This row
+       read the legacy artifact record, so the pane's own header said
+       "Version 4 · Ready" directly above a card that said "Plan · V5" -- the same
+       two-surfaces-disagree defect the body already had. When plans.js owns this
+       artifact, the header reads the owner's version and Build state. */
+    let ver=`Version ${art.version}`, stat=esc(lblOf('artifactStatus',art.status));
+    if(art.kind==='plan' && window.PM56_PLANS && window.PM56_PLANS.editorPlanId){
+      const pid=window.PM56_PLANS.editorPlanId(art.id);
+      const rec=pid && window.PM56_PLANS.get(pid);
+      if(rec){ ver=`V${rec.version}`; stat=esc(window.PM56_PLANS.buildLabel(pid)||stat); }
+    }
+    const meta=`<div class="editor-meta"><span class="meta-pill">${esc(art.kind)}</span><span class="meta-pill">${esc(ver)}</span><span class="meta-pill">${stat}</span><span class="meta-pill">${esc(art.updated)}</span></div>`;
     let body='';
     if (art.kind==='plan') body=renderPlanDocument(art);
     else if (art.kind==='mermaid') body=renderMermaidEditor(art);
@@ -506,6 +530,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderPlanDocument(art){
+    /* Assistant-redesign wave: ONE Plan truth. plans.js owns the document, its
+       version and its single Build control, so this pane renders the SAME
+       record rather than a second hard-coded copy of the body. The literal
+       string below said "Version 4 / Revision 3" while the transcript card
+       said V5 -- two surfaces disagreeing about one plan. It is kept only as
+       the fallback for a build with plans.js dropped from MODULES. */
+    if(window.PM56_PLANS && window.PM56_PLANS.editorBody){
+      const owned = window.PM56_PLANS.editorBody(art.id);
+      if(owned) return owned + extRender('planEditorActions',{art});
+    }
     return `<p>${esc(art.summary)}</p><h2>Decision</h2><p>Use a tenant-first composite index as the reversible first step. Remove N+1 fan-out in the same change. Keep the materialized-view design as an explicitly gated follow-up.</p><h2>Build sequence</h2><div class="code-block">1. Capture baseline EXPLAIN ANALYZE evidence
 2. Add concurrent tenant_id + created_at index
 3. Batch event lookup and remove N+1 queries
@@ -679,6 +713,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return true;
   }
   function renderMessage(m,t){
+    /* Assistant-redesign wave: feature modules own whole transcript card families
+       (Plan cards, collaborative run cards, BSD advice, attachment-bearing turns).
+       They register `transcriptMessage` and return '' to decline, which falls
+       through to the built-in chain below -- so an unregistered type still renders
+       exactly as it did before any module loaded. This is the one engine hook the
+       wave needs: without it every new card type would have to be bolted into this
+       if-chain, which is precisely the app.js growth the module split exists to stop. */
+    const ext = extRender('transcriptMessage', {m, t});
+    if(ext) return ext;
     if(m.type==='text') return renderTextMessage(m);
     if(m.type==='working') return renderWorkingAnimation(m);
     if(m.type==='plan-card') return renderPlanCard(m);
@@ -1216,11 +1259,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   const DONE_STATES=['done','completed'];
   const ACTIVE_STATES=['doing','in_progress','running','next','pending','verifying','replanned'];
   const RUNNING_STATES=['doing','in_progress','running','working','verifying'];
-  const ACTIVITY_ORDER=['goal','todo','subagents','crew','changes','artifacts'];
+  /* Assistant-redesign wave: BrainStorm, Review and Chat Room join the bar. They sit next to
+     Crew because they are the other three collaborative kinds, and BEFORE changes/artifacts so
+     the compaction tiers drop file-level domains first under width pressure. Subagents stays a
+     separate domain -- a Crew member is not a subagent. */
+  const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
+  const COLLAB_DOMAINS={brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
+  /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
+     correct with the module absent (no runs -> no domains) and correct with it loaded. */
+  function collabRuns(tid){
+    const rt=window.PM56_RUNTIME&&window.PM56_RUNTIME.collab;
+    const runs=(rt&&Array.isArray(rt.runs))?rt.runs:[];
+    return runs.filter(r=>r&&r.threadId===tid);
+  }
   const plural=(n,one,many)=>`${n} ${n===1?one:many}`;
   /* Used only when a thread HAS an attached goal but D.goal fields are thin.
      It does not create Goal presence on threads that do not own one. */
-  const GOAL_FALLBACK={title:'Optimize analytics query performance',status:'active',phasesDone:1,phasesTotal:4,blocker:'Production schema modification requires explicit approval.'};
+  /* Goal V2 fallback: objective, lifecycle, revision. No phase counters -- a Goal has no numerator. */
+  const GOAL_FALLBACK={title:'Optimize analytics query performance',status:'active',revision:1,blocker:''};
   const CREW_FALLBACK=[
     {id:'crew-planner', name:'Planner', status:'waiting', current:'Holding the next slice'},
     {id:'crew-impl', name:'Implementer', status:'working', current:'Applying the agreed change'},
@@ -1228,16 +1284,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     {id:'crew-browser', name:'Browser auditor', status:'blocked', current:'Needs a live page'}
   ];
 
+  /* Goal V2: one objective plus a four-value lifecycle. There is no phase count
+     to project, so the bar shows the revision instead of a done/total pair --
+     a Goal has no numerator. Legacy phase fields are read only to migrate an
+     older fixture's text, never to render structure. */
   function goalSummary(){
     const g=D.goal;
     if(!g) return {...GOAL_FALLBACK, derived:false};
-    const phases=Array.isArray(g.phases)?g.phases:[];
     return {
-      title:g.title||g.objective||GOAL_FALLBACK.title,
+      title:g.objective||g.title||GOAL_FALLBACK.title,
       status:g.status||'active',
-      phasesDone:phases.filter(p=>p.status==='completed').length,
-      phasesTotal:phases.length,
-      blocker:(g.blocker&&(g.blocker.cause||g.blocker.label))||phases.find(p=>p.status==='blocked')?.blocker?.cause||'',
+      revision:g.revision||1,
+      blocker:g.blockedReason||'',
       derived:true
     };
   }
@@ -1279,7 +1337,22 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const hasGoalHistory=hasAttachedGoal||hasGoalReceipt||hasGoalArtifact;
     const capGoal=!!(state.activityCaps&&state.activityCaps.goal&&state.activityCaps.goal[tid]);
     const hasGoal=hasGoalHistory||(!!state.capabilities.goal&&capGoal);
-    const todos=(D.todos||[]).filter(t=>t.threadId===tid);
+    /* Assistant-redesign wave: To-Dos have ONE owner, todos.js (ToDo_Runtime.md).
+       The legacy flat `D.todos` fixture is thread-scoped only for `query`, so
+       reading it here hid the chip on every other thread that genuinely has a
+       list. Project the owner's leaves into the {status,label} shape the
+       activityDefs code below already expects, and fall back to the old fixture
+       only if the module did not load. */
+    const todos=(function(){
+      const api=window.PM56_TODOS;
+      if(api && api.get){
+        const items=api.get(tid);
+        if(items) return items
+          .filter(x=>!items.some(y=>y.parent_todo_id===x.todo_id))   /* leaves only */
+          .map(x=>({id:x.todo_id, threadId:tid, status:x.status, label:x.title}));
+      }
+      return (D.todos||[]).filter(t=>t.threadId===tid);
+    })();
     const subagents=(D.subagents||[]).filter(a=>a.parentThreadId===tid);
     const hasSubagents=subagents.length>0||msgs.some(m=>m.type==='live-agents');
     const hasCrewEvent=msgs.some(m=>m.type==='crew');
@@ -1289,14 +1362,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const invoked=new Set();
     msgs.forEach(m=>{ if((m.type==='artifact'||m.type==='plan-card')&&m.artifactId) invoked.add(m.artifactId); });
     const artifacts=(D.artifacts||[]).filter(a=>a.threadId===tid||invoked.has(a.id));
+    const runs=collabRuns(tid);
+    const collab={brainstorm:runs.filter(r=>r.kind==='brainstorm'),review:runs.filter(r=>r.kind==='review'),chat_room:runs.filter(r=>r.kind==='chat_room'),crew:runs.filter(r=>r.kind==='crew')};
     return {
       tid, hasAttachedGoal, hasGoalReceipt, hasGoalHistory, capGoal, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
+      collab,
       live:{
         goal:hasGoal,
         todo:todos.length>0,
         subagents:hasSubagents,
-        crew:hasCrew,
+        crew:hasCrew||collab.crew.length>0,
+        brainstorm:collab.brainstorm.length>0,
+        review:collab.review.length>0,
+        chat_room:collab.chat_room.length>0,
         changes:changes.length>0,
         artifacts:artifacts.length>0
       }
@@ -1343,12 +1422,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(scope.live.goal){
       if(scope.hasAttachedGoal){
         const g=goalSummary();
+        const GSTAT={active:'Running',paused:'Paused',blocked:'Blocked',completed:'Completed'};
         out.goal={icon:'goal',label:'Goal', attached:true,
-          count:g.phasesTotal?`${g.phasesDone}/${g.phasesTotal}`:'—',
+          count:`V${g.revision}`,
           state:g.status==='active'?'live':'changed',
-          tone:g.blocker?'blocked':g.status==='active'?'working':g.status==='complete'?'done':'idle',
+          tone:g.blocker?'blocked':g.status==='active'?'working':g.status==='completed'?'done':'idle',
           summary:g.title,
-          detail:[g.status.replace(/^./,c=>c.toUpperCase()),g.phasesTotal?`phase ${Math.min(g.phasesDone+1,g.phasesTotal)} of ${g.phasesTotal}`:null,g.blocker?'one blocker':null].filter(Boolean).join(' · ')};
+          detail:[GSTAT[g.status]||g.status,`revision ${g.revision}`,g.blocker?'blocked':null].filter(Boolean).join(' · ')};
       } else {
         const title=(threadById(scope.tid)||{}).title||'this thread';
         const rec=((threadById(scope.tid)||{}).messages||[]).find(m=>m.type==='goal-receipt');
@@ -1408,6 +1488,23 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         summary:`${plural(changes.length,'file','files')} changed`,
         detail:`+${cAdd} −${cDel} · exact ranges available in the editor`};
     }
+    /* One projection for all three collaborative kinds: same count/state/tone grammar, so a
+       reviewer can see they are one runtime rather than three. Status wording comes from each
+       run's own record; nothing here invents progress. */
+    Object.keys(COLLAB_DOMAINS).forEach(id=>{
+      if(!scope.live[id]) return;
+      const runs=scope.collab[id]||[];
+      const running=runs.filter(r=>r.status==='running');
+      const failed=runs.filter(r=>r.status==='failed'||r.degraded);
+      const done=runs.filter(r=>r.status==='completed');
+      const latest=runs[runs.length-1]||{};
+      out[id]={icon:id==='review'?'eye':id==='chat_room'?'users':'brain',label:COLLAB_DOMAINS[id],
+        count:String(runs.length),
+        state:running.length?'live':failed.length?'changed':'changed',
+        tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
+        summary:latest.title||COLLAB_DOMAINS[id],
+        detail:[running.length?`${running.length} running`:null,done.length?`${done.length} completed`:null,failed.length?`${failed.length} degraded`:null,latest.participants?`${latest.participants.length} participants`:null].filter(Boolean).join(' · ')||'No runs'};
+    });
     if(scope.live.artifacts){
       const arts=scope.artifacts;
       const artReady=arts.filter(a=>a.status==='ready').length;
@@ -1568,7 +1665,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const caps=[];
     if(state.capabilities.goal)caps.push(['goal','goal']); if(state.capabilities.crew)caps.push(['users','crew']); if(state.capabilities.bsd!=='Off')caps.push(['warning','bsd']); if(state.capabilities.context!=='Off')caps.push(['lens','context']); if(state.capabilities.eli5)caps.push(['sparkles','eli5']);
     const sendBtn=sendButtonHtml();
-    return `<div class="composer"><div class="composer-box" data-k="composer-box"><div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button>${showDrafts?`<button class="icon-button" data-action="restore-draft"${hoverAttrs('restore-draft','Restore the most recent of '+drafts.length+' draft'+(drafts.length===1?'':'s')+' sent from this thread')}>${icon('history',16)}</button>`:''}<span class="capability-indicators">${caps.slice(0,5).map(c=>`<span class="capability-dot ${c[1]}"${hoverAttrs('cap-'+c[1],(CAP_HOVER[c[1]]||c[1])+' active')}>${icon(c[0],16)}</span>`).join('')}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
+    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${caps.slice(0,5).map(c=>`<span class="capability-dot ${c[1]}"${hoverAttrs('cap-'+c[1],(CAP_HOVER[c[1]]||c[1])+' active')}>${icon(c[0],16)}</span>`).join('')}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
   }
 
   function queueOf(){
@@ -1771,7 +1868,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // except while the user is actually typing into them.
     if(!skipValue){
       if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){
-        const v=src.getAttribute('value');
+        /* A <textarea> has no `value` attribute -- its value is its child text,
+           and once that value is dirty (script set it, or the user typed) the
+           child text no longer drives what is displayed. Reading the ATTRIBUTE
+           therefore always gave null for a textarea and this branch never ran,
+           so a programmatic clear left the old text on screen. */
+        const v = el.tagName==='TEXTAREA' ? src.textContent : src.getAttribute('value');
         if(v!=null && el.value!==v) el.value=v;
       }
       if(el.tagName==='SELECT'){
@@ -2393,7 +2495,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderMenu(){
     const m=state.menu;
     let content='';
-    if(m.type==='persona') content=renderSimpleMenu('Persona',[['Product Manager','Product planning, product judgment, and coordination'],['Architect','Architecture, contracts, boundaries, and trade-offs'],['Implementer','Code, tests, and working product slices'],['Reviewer','Adversarial review, evidence, and risk'],['Teacher','Explanations, tours, and approachable guidance']],state.persona,'set-persona');
+    if(m.type==='persona') content=renderSimpleMenu('Persona',[['Product Manager','Product planning, product judgment, and coordination'],['Architect','Architecture, contracts, boundaries, and trade-offs'],['Implementer','Code, tests, and working product slices'],['Reviewer','Adversarial review, evidence, and risk'],['Teacher','Explanations, tours, and approachable guidance'],['Wonderer','Adjacent domains and overlooked possibilities; leads stay hypotheses until researched']],state.persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
@@ -2429,19 +2531,29 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderModeMenu(){
-    const items=[['Ask','Answer without making changes',''],['Plan','Create a durable implementation plan','plan'],['Deep Plan','Create an exhaustive, evidence-heavy plan','deep-plan'],['Agent','Execute the requested work',''],['Debug','Run an instrumented debugging workflow','']];
-    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(x[0]==='Ask'?'info':x[0].includes('Plan')?'document':x[0]==='Debug'?'warning':'sparkles',13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
+    /* Six roots exactly, in the packet's order. Plan/Deep Plan/Review carry sidecars;
+       Ask/Agent/Debug do not. Goal, BSD, ELI5, Crew and scheduling are ORTHOGONAL
+       controls and deliberately absent here. */
+    const items=[['Ask','Answer without making changes',''],['Agent','Execute the requested work',''],['Debug','Run an instrumented debugging workflow',''],['Plan','Create a read-only Plan document and To-Dos','plan'],['Deep Plan','Research through a scoped ledger, then plan','deep-plan'],['Review','Read-only review with fresh context','review']];
+    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(x[0]==='Ask'?'info':x[0].includes('Plan')?'document':x[0]==='Debug'?'warning':x[0]==='Review'?'eye':'sparkles',13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
   }
 
   function renderWandMenu(){
     const rows=[
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
       ['crew','Crew','Coordinate a role-based group of agents','crew-menu',state.capabilities.crew?'On':'Off','users'],
-      ['bsd','Back Seat Driver','Independent review and intervention','bsd-menu',state.capabilities.bsd,'warning'],
-      ['eli5','ELI5','Explain selected output more simply','eli5-menu',state.capabilities.eli5?'On':'Off','sparkles'],
+      /* Assistant-redesign wave: the BSD and ELI5 rows are gone from here.
+         Both were superseded and both now have ONE owner that renders through
+         `wandRows`, so leaving these produced two Back Seat Driver rows and two
+         ELI5 rows in the same menu with different, contradictory descriptions
+         ("Independent review and intervention" vs the packet's passive
+         read-only advisor; "Explain selected output more simply" vs the
+         independent conversation override). The submenus below are retained so
+         `bsd-menu`/`eli5-menu` still resolve if a module is dropped from the
+         build, and `set-eli5-cap` is still chained by assistant-features.js. */
       ['thought','Thought Stream','Control permitted reasoning visibility','thought-menu',state.capabilities.thought,'brain']
     ];
-    return `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${icon('wand',13)}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}`;
+    return `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${icon('wand',13)}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
   }
 
   function isFavorite(id){ return state.favorites.includes(id); }
@@ -2521,9 +2633,23 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
       return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${state.model===model.id&&state.effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${state.model===model.id&&state.effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${state.model===model.id&&state.fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${state.model===model.id&&state.fast?icon('check',11):''}</button>`:''}`;
     }
+    /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
+       Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy
+       Light/Balanced/Comprehensive labels -- the packet retires both. Deep Plan
+       carries a persistent Grill Me check in a footer row; it is an auxiliary
+       toggle, not a seventh strategy, and it does not read as model effort. */
     if(id==='plan'||id==='deep-plan'){
-      const opts=id==='plan'?[['Quick','Concise implementation route'],['Thorough','Detailed plan and acceptance gates'],['Exhaustive','Full evidence and edge-case pass']]:[['Thorough','Deep analysis with dependencies'],['Exhaustive','Maximum evidence and adversarial review']];
-      return `<div class="menu-head"><strong>${id==='plan'?'Plan':'Deep Plan'} thoroughness</strong></div>${opts.map(o=>`<button class="menu-item ${state.thoroughness===o[0]?'active':''}" data-action="set-thoroughness" data-mode="${id==='plan'?'Plan':'Deep Plan'}" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.thoroughness===o[0]?icon('check',11):''}</button>`).join('')}`;
+      const deep=id==='deep-plan';
+      const opts=deep
+        ?[['Thorough','Scoped ledger, then a Plan document · Default'],['Exhaustive','Maximum evidence and adversarial review'],['BrainStorm','Exhaustive plus independent proposals, debate and voting']]
+        :[['Quick','A concise route, written straight to the document'],['Standard','The usual balance of analysis and speed · Default'],['Thorough','Careful analysis with acceptance detail']];
+      const cur=deep?state.deepPlanStrategy:state.planStrategy;
+      const grill=`<div class="menu-divider"></div><button class="menu-item ${state.grillMe?'active':''}" data-action="toggle-grill-me"><span class="menu-copy"><strong>Grill Me</strong><span>Let the workflow ask more questions before planning</span></span>${state.grillMe?icon('check',11):''}</button>`;
+      return `<div class="menu-head"><strong>${deep?'Deep Plan':'Plan'}</strong></div>${opts.map(o=>`<button class="menu-item ${cur===o[0]?'active':''}" data-action="set-plan-strategy" data-mode="${deep?'Deep Plan':'Plan'}" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${cur===o[0]?icon('check',11):''}</button>`).join('')}${deep?grill:''}`;
+    }
+    if(id==='review'){
+      const opts=[['Single Agent','One fresh-context reviewer with the selected model and Persona'],['Multi-Pass Review','Several blind reviewers, then finding exchange · Default']];
+      return `<div class="menu-head"><strong>Review</strong><span class="spacer"></span><span class="chat-meta">Read-only</span></div>${opts.map(o=>`<button class="menu-item ${state.reviewStrategy===o[0]?'active':''}" data-action="set-review-strategy" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.reviewStrategy===o[0]?icon('check',11):''}</button>`).join('')}`;
     }
     if(id==='goal-menu')return renderCapabilitySub('Goal Mode',[['On','Enable natural-language, /goal, and button invocation'],['Off','Disable the visible Goal Mode capability']],state.capabilities.goal?'On':'Off','set-goal-cap');
     if(id==='crew-menu')return renderCapabilitySub('Crew',[['On','Allow role-based agent crews'],['Off','Keep crew coordination disabled']],state.capabilities.crew?'On':'Off','set-crew-cap');
@@ -2531,7 +2657,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');
     if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Expand only when permitted and useful'],['Expanded','Keep the permitted live thought stream open']],state.capabilities.thought,'set-thought-cap');
-    return '';
+    /* Assistant-redesign wave: a module that contributes a `wandRows` entry with
+       its own `data-submenu` had no way to render that sidecar -- bsd.js's
+       BSD row opened a real, empty sidecar with zero items. This is the missing
+       extension point. It is the LAST branch, so a module can only ever render
+       an id app.js does not already own. */
+    return extRender('submenu',{id});
   }
   function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[0])}</strong><span>${esc(o[1])}</span></span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
   function renderCompactSubmenu(id){ return `<div class="menu-head"><button class="icon-button" data-action="submenu-back">${icon('left',12)}</button><strong>Back</strong></div>${renderSubmenu(id)}`; }
@@ -2829,6 +2960,11 @@ recommended path                  migration 0043 + rollback</div></div></section
   function applyRecipe(i){i=Number(i);if(i<0){state.recipe=-1;renderApp();return;}const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
   function addReceipt(type,title,detail){appendMessage({id:uid(type),role:'system',type,title,detail,time:new Date().toISOString()});}
 
+  /* Used by every path that empties the composer while it may still hold focus. */
+  function clearComposerField(){
+    const el=document.querySelector('textarea[data-input="composer"]');
+    if(el && el.value!=='') el.value='';
+  }
   function handleSend(){
     const raw=state.composer.trim();if(!raw)return;
     if(runningRecs().length){
@@ -2836,6 +2972,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
       q.push({id:uid('q'), text:raw});
       state.composer='';
+      clearComposerField();   /* enqueue empties the field too; same focus reason */
       renderApp();
       return;
     }
@@ -2856,6 +2993,12 @@ recommended path                  migration 0043 + rollback</div></div></section
   }
   function deliverSend(raw){
     const t=activeThread();state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
+    /* pmSyncAttrs deliberately will not write .value while the element is
+       focused, so it cannot fight the caret mid-keystroke. Send is focused too,
+       but it is a deliberate clear rather than a render racing the typist, so it
+       clears the live field itself. Without this the message was sent and the
+       text stayed visible in the box. */
+    clearComposerField();
     t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
     const low=raw.toLowerCase();
     if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
@@ -2985,7 +3128,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       renderApp();
       return;
     }
-    if(a==='new-thread'){const id=uid('thread');state.threads.unshift({id,title:'Untitled thread',status:'idle',pinned:false,archived:false,updated:'now',unread:0,model:selectedModel().name,summary:'New assistant conversation',messages:[]});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id);switchThread(id);return;}
+    if(a==='new-thread'){const id=uid('thread');state.threads.unshift({id,title:'New chat',status:'idle',pinned:false,archived:false,updated:'now',unread:0,model:selectedModel().name,summary:'New assistant conversation',messages:[]});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id);switchThread(id);return;}
     if(a==='select-thread'){if(e.target.closest('.thread-more'))return;switchThread(btn.dataset.id);return;}
     if(a==='toggle-thread-pin'){mutateThread(btn.dataset.id,t=>t.pinned=!t.pinned);state.menu=null;return;}
     if(a==='archive-thread'){mutateThread(btn.dataset.id,t=>{t.archived=true;t.pinned=false});state.menu=null;return;}
@@ -3048,8 +3191,13 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='set-persona'){state.persona=btn.dataset.value;closeMenu();renderApp();return;}
     if(a==='set-permissions'){state.permissions=btn.dataset.value;closeMenu();renderApp();return;}
     if(a==='set-worktree'){state.worktree=btn.dataset.value;closeMenu();renderApp();return;}
-    if(a==='set-mode'){state.mode=btn.dataset.value;if(!['Plan','Deep Plan'].includes(state.mode)){closeMenu();renderApp();}else{setSubmenu(state.mode==='Plan'?'plan':'deep-plan');}return;}
+    if(a==='set-mode'){state.mode=btn.dataset.value;const sub={'Plan':'plan','Deep Plan':'deep-plan','Review':'review'}[state.mode];if(!sub){closeMenu();renderApp();}else{setSubmenu(sub);}return;}
     if(a==='set-thoroughness'){state.mode=btn.dataset.mode;state.thoroughness=btn.dataset.value;closeMenu();renderApp();return;}
+    if(a==='set-plan-strategy'){state.mode=btn.dataset.mode;if(state.mode==='Deep Plan')state.deepPlanStrategy=btn.dataset.value;else state.planStrategy=btn.dataset.value;state.thoroughness=btn.dataset.value;closeMenu();renderApp();return;}
+    /* Grill Me is a persistent check: it stays open so the user can see the tick land,
+       exactly like the Fast-mode auxiliary row it visually matches. */
+    if(a==='toggle-grill-me'){state.grillMe=!state.grillMe;renderOverlays();return;}
+    if(a==='set-review-strategy'){state.mode='Review';state.reviewStrategy=btn.dataset.value;closeMenu();renderApp();return;}
     if(a==='model-provider'){state.modelProvider=btn.dataset.value;renderOverlays();return;}
     if(a==='set-model'){state.model=btn.dataset.value;const model=selectedModel();if(state.effort && !model.efforts.includes(state.effort))state.effort='';setSubmenu(`model:${model.id}`);renderApp();return;}
     if(a==='toggle-favorite'){e.stopPropagation();const id=btn.dataset.value;state.favorites=isFavorite(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];renderOverlays();return;}

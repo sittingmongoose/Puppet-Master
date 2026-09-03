@@ -23,7 +23,14 @@ shell=(root/'shell.html').read_text(encoding=ENC)
 #           so they are live on the very first render.
 # Adding a module here is the only build.py edit a feature wave should ever need.
 MODULES=['activity-panel','activity-bar','goals','context','history','menus',
-         'transcript','lens','orbit','threadops','questions']
+         'transcript','lens','orbit','threadops','questions',
+         # Assistant-redesign wave (2026-09-03). One owner per file; each registers
+         # through window.PM56_EXT and owns a bounded feature family, so app.js does
+         # not grow a branch per feature. composer-state loads FIRST of the new set
+         # because attachments, plans, collaboration and browser-capture all read and
+         # write the composer destination it owns.
+         'composer-state','attachments','plans','todos','collaboration','bsd',
+         'scheduling','browser-capture','assistant-features']
 
 def read(name):
     f=root/name

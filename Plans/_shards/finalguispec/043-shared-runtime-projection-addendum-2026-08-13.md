@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5283-L26329
+Source lines: L5290-L26356
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -1008,8 +1008,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Canonical route payloads target source_control, github_actions, docker_manager, or document_pane
-  and normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
+  Canonical route payloads target source_control, repository_automation, docker_manager, or document_pane;
+  the legacy github_actions input normalizes to repository_automation with a GitHub automation binding and never
+  creates another occupant. Routes normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
   through one object-first route shape.
 gui_related: true
 gui_classification_reason: >-
@@ -1037,7 +1038,8 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0012"
 preserved_exact_tokens:
 - "source_control"
-- "github_actions"
+- "repository_automation"
+- "github_actions (migration-read alias only)"
 - "docker_manager"
 - "document_pane"
 - "/message"
@@ -1475,7 +1477,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The GUI surface set includes Usage, File Manager, editor surface, Chat, Agent Activity,
-  Artifacts, Source Control, GitHub Actions, Docker Manager, Run & Debug, Assistant Debug Mode,
+  Artifacts, Source Control, Actions & Pipelines, Docker Manager, Run & Debug, Assistant Debug Mode,
   project switching, language detection, audio feedback, catalog/sync, and SSH remote editing.
 gui_related: true
 gui_classification_reason: >-
@@ -2216,7 +2218,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The canonical side-panel inventory and labels are search, chat, files, source_control,
-  github_actions, docker_manager, artifacts, run_debug, testing, and agents with
+  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with
   matching labels, tooltips, shortcuts, and command IDs. The testing and agents
   panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
 gui_related: true
@@ -2249,7 +2251,7 @@ preserved_exact_tokens:
 - "chat"
 - "files"
 - "source_control"
-- "github_actions"
+- "repository_automation"
 - "docker_manager"
 - "artifacts"
 - "run_debug"
@@ -2264,7 +2266,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-043 - GitHub Actions Side Panel Owner Boundary
+### F3-043 - Actions And Pipelines Side Panel Owner Boundary
 
 ```yaml
 plan_unit_id: F3-043
@@ -2272,9 +2274,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  GitHub Actions is the github_actions side-panel owner for shell entry, label, command-palette
-  surface ID, detachable state, and route-open behavior while GitHub_Integration owns hosted
-  workflow and admin semantics.
+  Actions & Pipelines is the repository_automation side-panel owner for shell entry, label,
+  command-palette surface ID, detachable state, and route-open behavior. Forge_Integrations owns
+  the provider-neutral shell and AutomationBinding boundary; GitHub_Integration and other provider
+  owners retain their hosted workflow/pipeline, log, artifact, and administration semantics.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2295,12 +2298,14 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: github_actions_side_panel_owner_boundary
+  mode: repository_automation_side_panel_owner_boundary
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0037"
 preserved_exact_tokens:
-- "github_actions"
+- "repository_automation"
+- "Actions & Pipelines"
+- "AutomationBinding"
 - "Current Branch"
 - "Workflows"
 - "Settings"
@@ -2577,9 +2582,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Historical concept labels map to canonical side panels: GitHub Actions, Docker Manager, and
-  Source Control remain separate, DOCKER MANAGE migrates to Docker Manager, Unraid focuses Docker
-  Manager Publish / Unraid, and aliases use canonical side-panel IDs.
+  Historical concept labels map to canonical side panels: GITHUB ACTIONS migrates to Actions &
+  Pipelines with a GitHub automation binding, while Docker Manager and Source Control remain
+  separate; DOCKER MANAGE migrates to Docker Manager, Unraid focuses Docker Manager Publish /
+  Unraid, and aliases use canonical side-panel IDs.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2611,6 +2617,7 @@ preserved_exact_tokens:
 - "cmd.panel.switch"
 - "Publish / Unraid"
 - "source_control"
+- "repository_automation"
 - "github_actions"
 negative_constraints:
 - "The activity bar MUST NOT expose a Git icon that opens GITHUB ACTIONS."
@@ -3817,10 +3824,10 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The GUI exposes exactly eight built-in theme choices across four families, Friendly Dark,
   Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light,
-  with Friendly Dark as the default. Superseded lineage (2026-07-16 promotion, kept findable):
-  the prior contract exposed exactly three built-in theme choices, Retro Dark, Retro Light, and
-  Basic, while Basic could resolve internally to light or dark palette tokens without creating a
-  fourth built-in theme promise.
+  with Basic Dark as the untouched first-open/fresh-project factory default. An existing explicit
+  saved Project selection survives, and a copied Project receives a detached selection snapshot.
+  The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic
+  contract are superseded lineage kept findable; all eight variants remain supported.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -3830,6 +3837,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "Basic Dark is used only at the untouched first-open/fresh-project factory boundary; an existing saved Project selection and a copied Project's detached snapshot take precedence."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -3854,7 +3862,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Basic internal palette choice must not create a fourth user-facing built-in theme promise."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Friendly Dark as the factory default is superseded by the later Basic Dark first-open/fresh-project contract; Friendly Dark remains a supported variant."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -4090,7 +4099,8 @@ canonical_text: >-
   (friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light,
   basic-dark) and theme token properties for colors, accents, retro effects, paper texture,
   borders, padding, scrollbar width, line height, and base font size, with the property defaults
-  illustrative per active variant and friendly-dark as the default mode. The
+  illustrative per active variant and basic-dark as the untouched first-open/fresh-project
+  factory mode. The former friendly-dark default is superseded lineage. The
   ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same
   eight token sets; in auto the effective variant tracks the OS appearance
   (prefers-color-scheme) live and feeds the identical per-variant tokens.
@@ -4138,7 +4148,8 @@ preserved_exact_tokens:
 - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The former friendly-dark default-mode clause is superseded; it remains theme lineage, not the factory selection."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -11557,7 +11568,10 @@ canonical_text: >-
   `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`,
   `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and
   `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner
-  ContractRefs.
+  ContractRefs. Shell theme and layout are Project-scoped snapshots: a genuinely absent
+  first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
+  Project's explicit saved theme/layout survives every open and Project switch, and Project
+  copy materializes a detached destination snapshot with no continuing source inheritance.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
@@ -11568,6 +11582,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "A genuinely fresh Project seeds Basic Dark plus factory layout, existing explicit saved theme/layout survives startup and switching, and a copied Project owns an independent detached destination snapshot."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -11599,6 +11614,7 @@ preserved_exact_tokens:
 - "ContractName:Plans/LSPSupport.md"
 negative_constraints:
 - "`layout:v1` is not terminal topology or terminal session identity."
+- "Do not reapply factory theme/layout over an existing Project or keep a copied Project live-linked to its source snapshot."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -14561,8 +14577,10 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, four theme families (eight built-in themes,
-  default Friendly Dark; supersedes the prior three-family decision per
-  dec-2026-07-16-pm6-theme-settings-canon-promotion-seal), Settings restructure,
+  untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
+  prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
+  the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login retained by
+  auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and motion,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
 gui_related: true
@@ -14608,8 +14626,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "These decisions are final and must not be revisited during implementation."
 compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes: []
+stale_retired_dispositions:
+- "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
+owner_boundary_notes:
+- "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

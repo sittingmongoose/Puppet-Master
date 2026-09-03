@@ -61,6 +61,11 @@ REJECTED_COMMAND_CANDIDATES = {
     "cmd.settings.suggestion.dismiss",
 }
 RETIRED_PACKET_COMMANDS = {"cmd.settings.bloom.open"}
+REPOSITORY_LOCAL_PACKET_TOKENS = {
+    "cmd.repository_automation.binding.select",
+    "cmd.source_control.backup_history.open",
+}
+CONNECTION_DRAFT_LOCAL_PACKET_TOKENS = {"cmd.connection.draft.open_details"}
 ADJUDICATION_SHA256 = "d45da4082814b15fc92e6d7b074e6e10f429e1e3e090c4969a778564fac74fcd"
 
 
@@ -276,9 +281,34 @@ def expected_inventory() -> dict[str, tuple[str, str, str]]:
     forge = tokens(between(forge_text, "### 3.1 Canonical commands", "Setup reuses shared runtime commands:"))
     add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")})
     add(
+        "TCP-REPOSITORY-LOCAL",
+        "ui_action",
+        schema_enum_actions(
+            "Plans/final_gui_interaction_contracts.schema.json",
+            "/$defs/local_action_common_request/properties/action_id/enum",
+        ),
+    )
+    add(
         "TCP-INTEGRATION-CONNECTION",
         "command",
-        {f"cmd.integration.connection.{suffix}" for suffix in ("add", "update", "test", "remove", "open_details")},
+        {f"cmd.integration.connection.{suffix}" for suffix in ("add", "activate", "update", "test", "remove", "open_details")},
+    )
+    add(
+        "TCP-CONNECTION-DRAFT-ALIAS",
+        "command_alias",
+        {
+            "cmd.connection.draft.create",
+            "cmd.connection.activate",
+            "cmd.connection.update",
+            "cmd.connection.test",
+            "cmd.connection.remove",
+            "cmd.connection.open_details",
+        },
+    )
+    add(
+        "TCP-CONNECTION-DRAFT-LOCAL",
+        "ui_action",
+        {"ui.integration.connection.draft.open_details"},
     )
     add(
         "TCP-AUTH-PROFILE",
@@ -292,6 +322,11 @@ def expected_inventory() -> dict[str, tuple[str, str, str]]:
     )
     add("TCP-GITHUB-PR", "command", {"cmd.github.pr.create"})
     add("TCP-FORGE-PR-COMPAT", "command_alias", {"cmd.source_control.pr.create", "cmd.source_control.pr.merge"})
+    add(
+        "TCP-SIR-POST-AUTH-ALIAS",
+        "command_alias",
+        {"cmd.auth_session.resume", "cmd.auth_session.submit_code", "cmd.credential.add"},
+    )
 
     add(
         "TCP-ONBOARD",
@@ -925,8 +960,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             f"missing={sorted(alias_row_actions - set(alias_bindings))}, "
             f"unexpected={sorted(set(alias_bindings) - alias_row_actions)}"
         )
-    if len(alias_bindings) != 55:
-        failures.append(f"alias binding denominator drift: expected 55, found {len(alias_bindings)}")
+    if len(alias_bindings) != 64:
+        failures.append(f"alias binding denominator drift: expected 64, found {len(alias_bindings)}")
     for source, binding in alias_bindings.items():
         if not isinstance(binding, dict):
             failures.append(f"{source}: alias binding is not an object")
@@ -1164,6 +1199,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "cmd.origin.review.create",
         *RETIRED_PACKET_COMMANDS,
         *REJECTED_COMMAND_CANDIDATES,
+        *REPOSITORY_LOCAL_PACKET_TOKENS,
+        *CONNECTION_DRAFT_LOCAL_PACKET_TOKENS,
         *adjudicated_excluded_sources,
     }
     if set(excluded_tokens) != expected_excluded:
@@ -1223,11 +1260,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     handler_counts = Counter(profiles[row[1]]["handler_status"] for row in rows if row[1] in profiles)
     wiring_counts = Counter(profiles[row[1]]["wiring_status"] for row in rows if row[1] in profiles)
     exact_resolved_denominators = {
-        "row_count": 588,
-        "profile_count": 87,
-        "excluded_token_count": 55,
-        "alias_binding_count": 55,
-        "production_wiring_entry_count": 1065,
+        "row_count": 602,
+        "profile_count": 91,
+        "excluded_token_count": 58,
+        "alias_binding_count": 64,
+        "production_wiring_entry_count": 1066,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

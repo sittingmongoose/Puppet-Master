@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1204-L1542
+Source lines: L1204-L1547
 
-Source SHA256: `13a2d1319de9ca386a950e7b4deddae37debb57befbdaf81be0922dfbac58cae`
+Source SHA256: `db711baae6304f4c31237a191c2082b2fa1927f0335f365800b690e34697555d`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `13a2d1319de9ca386a950e7b4deddae37debb57befbdaf81be0922dfbac58cae
 
 This addendum integrates the recovered PMConcept7 Usage and Dashboard widget behavior into the current Widget
 System owner. Current source lineage is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the
-assertion-guarded T33-T41 pipeline in `Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the
+assertion-guarded T33-T43 pipeline in `Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the
 protected generated output and is never an authored owner. The current repo-local audit status is
 `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed runtime,
 visual, interaction, motion, or accessibility rows remain `verification_pending`, so this addendum grants no such audit
@@ -78,7 +78,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
 preserved_exact_tokens:
   - Strip
@@ -142,7 +142,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
 preserved_exact_tokens:
   - curated size
@@ -159,7 +159,7 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-### WS-019 - Transactional Frozen-Grid Resize And Reorder
+### WS-019 - Transactional Grid Resize And Reorder
 
 ```yaml
 plan_unit_id: WS-019
@@ -168,10 +168,12 @@ status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
   Usage and Dashboard widgets share one transactional direct-manipulation contract. Pickup snapshots the
-  stable widget identity, committed order, and measured painted physical column/row footprint. Resize installs
-  a real in-flow placeholder with that measured footprint, lifts a fixed-position preview from the measured
-  original rectangle, updates only the preview's supported geometry and adaptive body while held, and freezes
-  peer widget rectangles. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
+  stable widget identity, committed order, and measured painted physical column/row footprint. Usage pointer resize
+  installs a real in-flow placeholder initialized from that footprint, lifts a fixed-position preview, and then
+  advances both the placeholder and lifted card to each last-painted supported footprint while visibly and
+  deterministically repacking only obstructed peers. Unobstructed peers retain their rectangles, and every peer
+  remains mounted, painted, and free of entrance-animation replay. Dashboard resize retains its measured-footprint
+  placeholder and frozen peers. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
   measured-footprint in-flow placeholder, and derives stable two-dimensional slot candidates from the frozen
   grid plus the stable before/after widget identities in the committed-order snapshot. Candidate coverage includes
   empty same-footprint cavities and lower rows rather than only positions adjacent in DOM order. Pointer targeting
@@ -179,15 +181,17 @@ canonical_text: >-
   never lets overlapping multi-span candidate rectangles redirect the visible placeholder. Pointer and keyboard
   reorder use the same candidate model and visibly displace affected peers with interruptible motion while keeping
   those peer DOM nodes mounted; preview never replays their entrance animation or drops board/card opacity, and
-  only one accepted settlement reconciles DOM order. Resize peers remain frozen. A horizontal-only resize advances
+  only one accepted settlement reconciles DOM order. A horizontal-only resize advances
   strictly to a supported curated size in the requested horizontal direction while minimizing companion-axis drift;
   the same rule applies at the far right, far left, and middle, including when peers must repack. A deliberate
   edge-limited drag may quantize one step, and an in-viewport pointer-up commits the last painted supported size
   even after same-direction overshoot beyond that size. Preview state is local and transient: no command, receipt,
   persisted event, layout write, or board
   settlement occurs before release, and no measured preview footprint becomes durable layout state. A changed
-  release or keyboard drop commits the last insertion or resize intent that was actually painted, without a new
-  pointer-up hit test or release-time retarget, dispatches exactly one existing `cmd.widget.resize` or
+  pointer release commits the last painted pointer resize or reorder intent without a new pointer-up hit test or
+  release-time retarget; a changed keyboard reorder drop commits its selected insertion intent; and each supported
+  keyboard-resize activation settles its directional size intent atomically. Each changed terminal path dispatches
+  exactly one existing `cmd.widget.resize` or
   `cmd.widget.move`, persists the settled state once, settles the board once, and emits no persisted domain event,
   including no `workspace.layout_changed`. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
   target, a pre-dispatch validation failure, or an unchanged release/drop restores the committed state and
@@ -209,10 +213,10 @@ gui_classification_reason: This unit defines the complete pointer and keyboard l
 depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018]
 unblocks: [WS-020]
 acceptance_criteria:
-  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; resize leaves a placeholder with that measured footprint and a fixed preview at the measured viewport origin while peer widget rectangles and document scroll position remain unchanged for the complete held preview.
-  - Command, receipt, event, and persistence spies remain empty until a changed release.
-  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; resize peers remain frozen, while horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, obstructing peers repack only at settlement, an edge-constrained deliberate drag can express one step, and an in-viewport release after same-direction overshoot commits the last painted supported intent.
-  - A changed release or drop commits the last painted intent without pointer-up re-hit-testing or retargeting, emits exactly one existing `cmd.widget.resize` or `cmd.widget.move`, writes settled state once, triggers one board settlement, and emits no persisted domain event, including no `workspace.layout_changed`.
+  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Dashboard resize retains its measured placeholder and frozen peers.
+  - Command, receipt, event, and persistence spies remain empty until a changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation.
+  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology, while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen. Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent.
+  - A changed pointer release commits the last painted pointer intent without pointer-up re-hit-testing or retargeting, a changed keyboard reorder drop commits its selected insertion intent, and each supported keyboard-resize activation settles atomically; each changed terminal path emits exactly one existing `cmd.widget.resize` or `cmd.widget.move`, writes settled state once, triggers one board settlement, and emits no persisted domain event, including no `workspace.layout_changed`.
   - Escape, pointercancel, `lostpointercapture`, blur, invalid target, pre-dispatch validation failure, and unchanged release/drop restore the original state, emit no command, receipt, event, or persistence write, release capture, and remove every listener, class, ghost, placeholder, lifted state, preview style, and pending animation frame; an owner-rejected command or post-dispatch persistence-adapter failure instead retains exactly one attempted command and one rejected/failed receipt, restores authoritative geometry/order, emits no settled event or successful owner-store write, and performs the same complete transient cleanup.
   - Successful pointer and keyboard reorder restore the board's pre-transaction inline minimum-height value and leave scroll extent bounded to settled card geometry so repeated moves do not accumulate a blank tail; while one pointer or keyboard resize/reorder owns the board, every competing pointer, touch, pen, or keyboard acquisition is rejected before focus, capture, transient DOM, or class mutation, and cancelling the owner clears exactly that owner without leaving an operation flag.
   - Keyboard reorder supports pickup, directional move, drop, Escape, and blur; `aria-grabbed` is true only while pickup is active and returns to false after drop or cancellation, the picked card has a visible focus/outline state, and its two-dimensional candidate choice, live peer displacement, changed-only commit, rollback, and cleanup match pointer reorder without requiring a cloned pointer ghost or placeholder.
@@ -221,8 +225,8 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/interaction_transaction_matrix.json (static contract fixture only)
   - Plans/shared_runtime_command_contract_fixtures.json (static command/receipt/event-count fixture only)
-  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; exact Build8 concept/browser slice; readiness_claim=false)"
-  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/films/build8/t41-final/independent_visual_review.json (SHA-256 b669c7588b87ecd757addb6cdd0b59b473d9de89e0bd9e53a916ecc484ff559b; credited Build8 Usage/Home lossless-film review only; readiness_claim=false)"
+  - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; historical predecessor evidence only; superseded for Usage resize-preview timing; readiness_claim=false)"
+  - "verification_pending: fresh exact-T43 live occupied-neighbor preview, settlement-parity, cancellation, failure, and film receipts under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
 risk_class: widget_preview_leaks_or_multi_commit
 reasoning_tier: high
 context_scope: widget_transactional_resize_reorder
@@ -237,7 +241,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
+  - "Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
 preserved_exact_tokens:
   - cmd.widget.resize
@@ -254,7 +259,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not dispatch a command, receipt, persisted event, or storage write for pointer-preview frames.
   - Do not mint PM7-only resize or move commands.
-  - Do not settle or reflow peers during the held resize preview.
+  - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize.
   - Do not remount reorder peers, replay their entrance animation, or black out the board during preview.
   - Do not retain preview-only board minimum height after either commit or rollback, or allow simultaneous widget-operation controllers.
   - Do not derive reorder placement from stale nominal spans, persist a measured preview footprint, or re-hit-test and retarget at pointer-up.
@@ -329,7 +334,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
+  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
 preserved_exact_tokens:
   - widget_layout:v1:usage

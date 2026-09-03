@@ -636,6 +636,13 @@
 
     html += statusLine(esc, rec, tid);
 
+    /* Back Seat Driver summary row. bsd.js owns the content; context.js owns the
+       menu, so BSD appends here instead of re-registering the contextCompactMenu
+       replace slot -- two registrations on a replace slot concatenate, which would
+       render the whole Context menu twice. The row opens Context Details scrolled
+       to BSD; it never changes BSD mode itself. */
+    html += (ctx.extRender ? ctx.extRender('contextBsdRow', {}) : '');
+
     return html + '</div>';
   }
 
@@ -884,6 +891,11 @@
       '<div class="context-actions"><button class="soft-button" data-k="ctxdrawercompact" data-action="compact-now"' + tipAttrs(esc, 'ctx-act-compact', 'Preview a source-aware compaction for this thread') + '>' + icon('collapse', 12) + ' Preview Compact</button>' +
       '<button class="soft-button" data-action="export-context"' + tipAttrs(esc, 'ctx-act-export', 'Download a redacted JSON snapshot of this thread context') + '>' + icon('download', 12) + ' Redacted JSON</button>' +
       '<button class="soft-button" data-action="raw-context"' + tipAttrs(esc, 'ctx-act-raw', 'Switch to the redacted Raw projection tab') + '>' + icon('code', 12) + ' Raw projection</button></div>');
+
+    /* Back Seat Driver section. bsd.js owns the content; it appends here rather
+       than re-registering the contextDrawer replace slot. Curated view only -- the
+       Raw view returns above and keeps its existing redaction rules. */
+    html += (ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '');
 
     return html + '</div></aside>';
 

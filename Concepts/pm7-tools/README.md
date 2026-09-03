@@ -7,7 +7,7 @@ If something is wrong in the output, fix the transform (or the frozen inputs)
 and rebuild.
 
 The 2026-08-27 re-baseline froze the last non-reproducible PM7 bytes as the
-pinned base. The active pipeline now has eighteen assertion-guarded transform
+pinned base. The active pipeline now has nineteen assertion-guarded transform
 entries:
 T33 preserves the previously approved retro drag correction; T34 contains
 GUI-01..GUI-10 plus the approved GUI-X01..GUI-X04 Usage corrections; T35
@@ -24,11 +24,13 @@ settlement parity. T44 replaces the embedded Settings owner with the pinned
 Kimi K3 Tome Tabs geometry and a canonical Settings read model; the two T45
 entries add Product Onboarding and the deterministic live-shell Guided Tour;
 T46 adds owner-routed Doctor and operational system consumers, including the
-fail-closed Plugins System owner projection; T46P adds the
+fail-closed Plugins System owner projection; T46F adds the provider-neutral
+Source Control, Actions & Pipelines, forge, and backup/recovery projections;
+T46P adds the
 bounded full-thread browser fixture; T47 installs the shared hover/focus tag
 controller; and T48 refreshes the re-baselined Home workspace from its current
 authored source. T38 through T43 leave the protected embedded Settings and Chat
-sources unchanged. T44 through T48 are authored transforms, not hand-edits to
+sources unchanged. T44 through T48, including T46F, are authored transforms, not hand-edits to
 the generated artifact.
 Read the next section before changing anything here.
 
@@ -74,6 +76,7 @@ The authored tail runs in this exact order:
 | T45 Product Onboarding | `onboarding_cinematic_source.py` | simple cinematic first-run flow and typed local UI actions | verifier provided; no native Slint certification |
 | T45 live-shell Guided Tour | `guided_tour_source.py` | deterministic local teacher over the mounted shell | verifier provided; concept simulation only |
 | T46 operational systems | `systems_integration_source.py` | owner-routed Doctor plus Server, backup, Browser/capture, SCM/Origin, Named Plan, performance, and compact Plugins System owner consumers | verifiers provided; plugin controls remain `handler_unavailable`; no production handler claim |
+| T46F forge/backup post-integration | `forge_backup_post_integration_source.py` | one adaptive Source Control occupant, one provider-neutral Actions & Pipelines occupant, Git/Jujutsu semantics, Forgejo/Gitea and other forge projections, and the K3 backup/recovery manager | browser-concept projection only; production/native handlers remain unavailable and the September 1 packet audit must cite an exact artifact |
 | T46P full-thread performance | `full_thread_performance_source.py` | deterministic browser-applicable fixture for the retained performance topics and scenarios | verifier provided; native/static/hardware boundaries remain explicit |
 | T47 global hover tags | `global_hover_tags_source.py` | shared theme-aware pointer/focus overlay, accessibility descriptions, and fail-closed census | verifier provided; presentation/UI-action layer only |
 | T48 Home workspace authored-source refresh | `home_workspace_refresh_source.py` | replace only the pinned T20 style/controller bands from `home_workspace_source.py`, preserving the exact authored markup and frozen base | generated browser concept only; no acceptance or native-runtime claim |
@@ -84,9 +87,9 @@ as the artifact being reviewed. The current working tail can change while this
 integration wave is active, so this README intentionally does not pin a new
 T48 artifact byte count or hash before promotion evidence is frozen.
 
-T34-T48 are isolated in source modules and registered in the table order above
+T34-T48, including T46F, are isolated in source modules and registered in the table order above
 immediately after T33 in `build_pm7.py`; Product Onboarding precedes the
-live-shell Guided Tour within T45, T46P precedes T47, and
+live-shell Guided Tour within T45, T46F precedes T46P, T46P precedes T47, and
 `T48_home_workspace_source_refresh` is the current tail. Their pre/post
 assertions fail closed if the consumed input shape moves. T34 mints zero new
 primary command IDs, while its measured source set-diff adds the already-owned
@@ -413,6 +416,15 @@ recipe it used is preserved in the re-derivation section below.
   and cannot fall through to generic K3 mutation handlers. All operations
   remain browser-concept simulations unless a real owner bridge is attached;
   `AuthBrowserSession` remains excluded from recording and inspection.
+- `forge_backup_post_integration_source.py` -- authored T46F source. It keeps
+  the existing Source Control and activity-panel occupants, migrates legacy
+  GitHub Actions identities to one `repository_automation` identity, preserves
+  GitHub detail, adds provider-native GitLab/Azure/Bitbucket/Forgejo/Gitea and
+  connected-check projections, and renders Git and Jujutsu without borrowing
+  each other's concepts. It also deepens the existing K3 backup manager with
+  destination-account versus decryption readiness, Recovery Kit controls, and
+  explicit restore/Doctor routes. Every owner command remains
+  `owner_unavailable_concept_preview`; this source is not runtime evidence.
 - `full_thread_performance_source.py` -- authored T46P source. It extends the
   T46 performance consumer with deterministic browser fixtures, preserves the
   separate governor-decision, command-outcome, and ObservableWork axes, and
@@ -448,7 +460,8 @@ recipe it used is preserved in the re-derivation section below.
 
 The PM7 output, the build report, and `dead_selectors.py` are derived
 artifacts. Regenerate them; do not patch them. Hand-authored pipeline files
-include `build_pm7.py`, `home_workspace_source.py`, the T34-T48 source modules,
+include `build_pm7.py`, `home_workspace_source.py`, the T34-T48 source modules
+(including T46F),
 `pm7_transform_guards.py`, `css_audit.py`, the verification runners under
 `verify/`, and this README.
 
@@ -565,6 +578,20 @@ production persistence, accessibility conformance, or runtime behavior.
     node Concepts/pm7-tools/verify/backup_browser_scm_matrix.mjs \
       --html "$PM7_FILE" --evidence "$PM7_EVIDENCE/backup-browser-scm.json" \
       --modules "$PM7_MODULES" --chromium "$PM7_CHROME"
+
+    node Concepts/pm7-tools/verify/forge_backup_post_integration_checkpoint.mjs \
+      --file "$PM7_FILE" --out "$PM7_EVIDENCE/forge-backup-fast-checkpoint.json" \
+      --modules "$PM7_MODULES" --chromium "$PM7_CHROME" \
+      --url "http://127.0.0.1:8741/$PM7_FILE"
+
+The Forge/Backup post-integration checkpoint is the deliberately bounded
+pre-approval browser smoke for the exact T46F artifact. It checks the single
+Source/Actions occupants, Git/Jujutsu presentation semantics, all forge and
+automation profiles, new-control closure, the K3 Backup manager, Forgejo and
+Gitea onboarding presence, the shared explainer/accessibility target and
+self-hosted field-alignment regression guards, durable activity-ID migration,
+and the truthful concept/native boundary. It is not the post-approval exhaustive, native,
+provider, security, accessibility, performance, or motion campaign.
 
     node Concepts/pm7-tools/verify/full_thread_performance.mjs \
       --html "$PM7_FILE" --evidence "$PM7_EVIDENCE/full-thread-performance.json" \
@@ -735,9 +762,10 @@ Build only to a scratch outdir for static PM7 checking; do not promote
 
 ## Status
 
-CURRENT AUTHORED PIPELINE 2026-08-31: T33 through T48 are registered, with
+CURRENT AUTHORED PIPELINE 2026-09-02: T33 through T48 are registered, with
 separate T45 Product Onboarding and live-shell Guided Tour transforms and a
-T46P full-thread performance transform; `T48_home_workspace_source_refresh`
+T46F forge/backup post-integration transform plus a T46P full-thread
+performance transform; `T48_home_workspace_source_refresh`
 is the current tail. `Concepts/PMConcept7.html` remains a generated artifact
 and must be promoted only from `build_pm7.py` after the current working tail
 stabilizes.

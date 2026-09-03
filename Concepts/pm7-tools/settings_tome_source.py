@@ -138,7 +138,7 @@ def _project_inventory_json(need):
             row["default"] = None
             row["recommended"] = None
     inventory["scope_policy"] = "all persisted Settings values are project-owned; no-project is ephemeral"
-    need(len(rows) == 828, "T44: compatibility Settings inventory count changed")
+    need(len(rows) == 883, "T44: compatibility Settings inventory count changed")
     need(len({row.get("id") for row in rows}) == len(rows), "T44: compatibility Settings inventory ids are not unique")
     return json.dumps(inventory, separators=(",", ":"), ensure_ascii=False)
 
@@ -148,7 +148,7 @@ def _transfer_category_registry(need):
 
     The inventory does not own this ten-way UX taxonomy, so this adapter
     materializes explicit, pairwise-disjoint ID sets and validates every
-    member against the current 828-row inventory at build time.
+    member against the current 883-row inventory at build time.
     """
     rows = json.loads((REPO / "Plans" / "settings_inventory.json").read_text(encoding="utf-8"))["settings"]
     canonical = {row["id"] for row in rows}
@@ -366,6 +366,89 @@ def _scope_selector(selector):
     return selector
 
 
+SETTINGS_REPAIRS_CSS = r'''
+/* PM7 R2 settings repairs: no left-edge accent strips, composite search
+   pills paint themselves, focus glow rides the outer pill, tab strips never
+   wrap labels, rosters fit their content, retro themes get square chrome. */
+#panel-settings .setting-row.is-changed::before { content: none; }
+#panel-settings .badge.changed-chip {
+  color: var(--k3-accent); background: rgba(var(--accent-primary-rgb),.12);
+  border: 1px solid rgba(var(--accent-primary-rgb),.32);
+}
+#panel-settings .badge.purple {
+  color: var(--k3-accent); background: rgba(var(--accent-primary-rgb),.1);
+  border-color: rgba(var(--accent-primary-rgb),.3);
+}
+#panel-settings .local-nav-indicator { display: none; }
+#panel-settings .side-link.active::before,
+#panel-settings .domain-link.active::before { content: none; }
+#panel-settings .detail-example { border-left: 0; border-top: 2px solid var(--k3-accent); border-radius: 7px; }
+#panel-settings .resource-row.active { background: rgba(var(--accent-primary-rgb),.1); border-color: rgba(var(--accent-primary-rgb),.28); }
+#panel-settings .resource-row.active .resource-avatar { border-color: rgba(var(--accent-primary-rgb),.32); background: rgba(var(--accent-primary-rgb),.16); }
+#panel-settings .drawer { border-left: 1px solid var(--k3-line); }
+#panel-settings .sh-hit:hover,
+#panel-settings .sh-hit:focus-visible { border-left-color: transparent; }
+#panel-settings :is(.rail-search,.hero-search) input {
+  -webkit-appearance: none; appearance: none;
+  background-color: var(--k3-surface-1);
+  border: 0;
+  box-shadow: none;
+}
+#panel-settings :is(.rail-search,.hero-search) input:focus,
+#panel-settings :is(.rail-search,.hero-search) input:focus-visible { outline: none; box-shadow: none; border: 0; }
+html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
+  background-color: var(--k3-surface-1) !important;
+}
+#panel-settings .hero-search:focus-within {
+  border-color: rgba(var(--accent-primary-rgb),.55);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .2), 0 0 0 3px rgba(var(--accent-primary-rgb),.16);
+}
+#panel-settings .workspace-tab,
+#panel-settings .manager-tab { white-space: nowrap; flex: 0 0 auto; min-width: max-content; }
+#panel-settings .workspace-tabs { overflow-x: auto; overscroll-behavior-x: contain; }
+/* Manager headings never stack word-per-line, at any width. */
+#panel-settings .resource-name,
+#panel-settings .resource-sub,
+#panel-settings .panel-title,
+#panel-settings .library-item-name {
+  min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#panel-settings .resource-name-line { flex-wrap: nowrap; }
+#panel-settings .panel-title-row > div:first-child { min-width: 0; }
+#panel-settings .info-row { flex-wrap: wrap; }
+#panel-settings .info-value { flex: 1 1 auto; min-width: 0; word-break: normal; overflow-wrap: break-word; }
+/* Rosters always fully fit their manager; only the settings document scrolls.
+   This also retires the K3 wide-viewport sticky roster that re-introduced an
+   independent left-column scroll region on large monitors.  Narrow widths are
+   excluded so the off-canvas roster drawer keeps its absolute positioning. */
+@container settings-host (min-width: 721px) {
+  #panel-settings .workspace-block .resource-roster {
+    position: static; max-height: none; overflow: visible;
+  }
+}
+/* Retro themes: the settings chrome is square, matching the retro system. */
+:is(html[data-theme="retro-dark"],html[data-theme="retro-light"]) #panel-settings {
+  --radius-xl: 0; --radius-lg: 0; --radius-md: 0; --radius-sm: 0;
+}
+:is(html[data-theme="retro-dark"],html[data-theme="retro-light"]) #panel-settings :is(
+  .page-index,.page-index-card,.page-index-title,.local-nav,.local-nav-list,.index-link,
+  .manager-page,.manager-body,.manager-tabs,.manager-tab,.resource-roster,.resource-detail,
+  .resource-content,.resource-head,.resource-avatar,.resource-row,.resource-content .data-table,
+  .panel-card,.stat-card,.route-card,.route-primary,.domain-card,.home-panel,.setting-list,
+  .setting-row,.workflow-step,.data-table,.event-cell,.alert-strip,
+  .library-grid,.library-list,.library-detail,.library-item,.library-list-scroll,.search-field,
+  .filter-chip,.reorder-item,.prompt-box,
+  .topbar,.workspace-tabs,.workspace-tab,.project-pill,.page-header,.settings-doc-top,
+  .settings-section,.settings-document,.document-scroll,.document-toolbar,.document-layout,
+  .detail-inspector,.rail-search,.rail-search input,.hero-search,.hero-search input,.rail-project,.side-card,.domain-link,.side-link,.kbd,
+  .btn,.icon-btn,.select-control,.text-control,.number-control,.slider-control,.segmented,
+  .segmented button,.stepper,.chip-select button,.toggle,.toggle::after,.swatch,.reorder-item,
+  .search-results,.popover,.menu-item,.dialog,.drawer,.form-input,.form-select,.form-textarea,
+  .dialog-head,.dialog-footer,.toast,.pm7-server-gap-panel,.systems-contract-card,.badge,.changed-chip
+) { border-radius: 0; }
+'''
+
+
 def _scope_css(css, need):
     rules = css_audit.iter_rules(css)
     edits = []
@@ -440,6 +523,101 @@ def _scope_css(css, need):
     }
     for old, new in replacements.items():
         css = css.replace(old, new)
+
+    # K3 authored dark-navy surface literals bypass the semantic host bridge
+    # and paint every theme (including all four light themes) with the K3
+    # midnight palette.  Each literal maps to a bridged surface token so the
+    # active theme supplies its own paint.  Content scrims and box shadows
+    # stay literal on purpose: dimming content is theme-agnostic.
+    surface_repairs = {
+        # strips, chrome, workspace shells
+        "background: rgba(19,23,43,.98)": "background: var(--k3-surface-1)",
+        "background: rgba(13,16,31,.84)": "background: var(--k3-surface-1)",
+        "background: rgba(23,28,50,.72)": "background: var(--k3-surface-2)",
+        "background: rgba(12,15,29,.72)": "background: var(--k3-bg-1)",
+        "background: rgba(17, 21, 40, 0.92)": "background: var(--k3-surface-1)",
+        "background: linear-gradient(90deg, transparent, rgba(17,21,40,.94) 22px)": "background: linear-gradient(90deg, transparent, var(--k3-bg-1) 22px)",
+        "background: rgba(13,16,31,.52)": "background: var(--k3-bg-1)",
+        # buttons and controls
+        "background: rgba(29,34,61,.8)": "background: var(--k3-surface-3)",
+        "background: rgba(25,30,55,.72)": "background: var(--k3-surface-2)",
+        "background: rgba(27,32,57,.82)": "background: var(--k3-surface-2)",
+        "background: rgba(11,14,28,.66)": "background: var(--k3-bg-2)",
+        "background: rgba(25,30,54,.74)": "background: var(--k3-surface-2)",
+        "background: rgba(27,32,57,.65)": "background: var(--k3-surface-2)",
+        "background: rgba(25,30,54,.76)": "background: var(--k3-surface-2)",
+        "background: #30334a": "background: var(--k3-surface-3)",
+        "background: linear-gradient(135deg, #8052e3, #6840c0)": "background: var(--k3-accent)",
+        # settings home and ordinary document
+        "background: rgba(19,23,43,.74)": "background: var(--k3-surface-1)",
+        "background: rgba(18,22,41,.7)": "background: var(--k3-surface-1)",
+        "background: rgba(28,33,60,.86)": "background: var(--k3-surface-3)",
+        "background: rgba(13,16,31,.55)": "background: var(--k3-bg-2)",
+        "background: rgba(18,22,42,.56)": "background: var(--k3-bg-2)",
+        # manager rosters, detail panes, tables, route cards
+        "background: rgba(13,16,31,.56)": "background: var(--k3-bg-1)",
+        "background: rgba(23,27,49,.78)": "background: var(--k3-surface-2)",
+        "background: rgba(31,37,65,.78)": "background: var(--k3-surface-3)",
+        "background: rgba(14,17,33,.3)": "background: var(--k3-surface-0)",
+        "background: rgba(20,24,45,.72)": "background: var(--k3-surface-1)",
+        "background: rgba(23,27,49,.72)": "background: var(--k3-surface-2)",
+        "background: rgba(17,21,39,.56)": "background: var(--k3-surface-0)",
+        "background: rgba(29,34,60,.58)": "background: var(--k3-surface-1)",
+        "background: rgba(27,32,57,.84)": "background: var(--k3-surface-3)",
+        "background: rgba(10,13,26,.36)": "background: var(--k3-bg-2)",
+        "background: rgba(24,29,52,.66)": "background: var(--k3-surface-2)",
+        "background: rgba(25,29,53,.76)": "background: var(--k3-surface-2)",
+        "background: rgba(25,29,53,.65)": "background: var(--k3-surface-2)",
+        "background: rgba(18,22,41,.63)": "background: var(--k3-surface-0)",
+        "background: rgba(10,13,25,.48)": "background: var(--k3-bg-2)",
+        "background: rgba(10,13,25,.35)": "background: var(--k3-bg-2)",
+        "background: rgba(23,27,49,.98)": "background: var(--k3-surface-1)",
+        # dialogs, drawers, palette
+        "background: #13172b": "background: var(--k3-surface-1)",
+        "background: #12162a": "background: var(--k3-surface-1)",
+        # hairline dividers tuned for the midnight base only
+        "rgba(164,158,219,.105)": "var(--k3-line)",
+        "rgba(164,158,219,.1)": "var(--k3-line)",
+        "rgba(164,158,219,.09)": "var(--k3-line)",
+        "rgba(164,158,219,.08)": "var(--k3-line)",
+        "rgba(158,153,183,.23)": "var(--k3-line)",
+        # accent-tinted text: the theme accent replaces fixed violet tints
+        "color: #e9defc": "color: var(--k3-accent)",
+        "color: #d9ccff": "color: var(--k3-accent)",
+        "color: #d8ccff": "color: var(--k3-accent)",
+        "color: #d8cbff": "color: var(--k3-accent)",
+        "color: #d6c8ff": "color: var(--k3-accent)",
+        "color: #c8b6ff": "color: var(--k3-accent)",
+        "color: #bea9ff": "color: var(--k3-accent)",
+        "color: #bda9fb": "color: var(--k3-accent)",
+        "color: #bca7ff": "color: var(--k3-accent)",
+        "color: #bba8ef": "color: var(--k3-accent)",
+        "color: #baa6f6": "color: var(--k3-accent)",
+        "color: #b9a4fa": "color: var(--k3-accent)",
+        "color: #b8a3fb": "color: var(--k3-accent)",
+        "color: #b9dcff": "color: var(--k3-blue)",
+        "color: #a6edca": "color: var(--k3-green)",
+        "color: #85eab7": "color: var(--k3-green)",
+        "color: #ffd28c": "color: var(--k3-amber)",
+        "color: #f7d99f": "color: var(--k3-amber)",
+        "color: #ffabbc": "color: var(--k3-red)",
+        "color: #ffa2b5": "color: var(--k3-red)",
+        "color: #f49aad": "color: var(--k3-red)",
+        # active tab paints tuned for the violet-on-dark look only
+        "color: #eee7ff; background: linear-gradient(180deg, rgba(139,92,246,.14), rgba(139,92,246,.035))": "color: var(--k3-text-1); background: rgba(var(--accent-primary-rgb),.14)",
+        "color: #decfff;": "color: var(--k3-text-1);",
+    }
+    for old, new in surface_repairs.items():
+        need(old in css, "T44 CSS: surface literal anchor drifted: %s" % old)
+        css = css.replace(old, new)
+    # Remaining violet accent literals (tints, rings, glows, focus outlines)
+    # become accent-rgb alphas so each theme recolors them automatically.
+    css = re.sub(
+        r"rgba\((?:139,\s*92,\s*246|176,\s*151,\s*249|180,\s*151,\s*255|169,\s*132,\s*255|173,\s*137,\s*255|190,\s*160,\s*255|160,\s*124,\s*248|128,\s*82,\s*227|126,\s*79,\s*226|102,\s*63,\s*188|84,\s*48,\s*160|85,\s*59,\s*149),\s*([.\d]+)",
+        r"rgba(var(--accent-primary-rgb),\1",
+        css,
+    )
+    need("rgba(var(--accent-primary-rgb)" in css, "T44 CSS: accent literal normalization missing")
     need("color-mix(" not in css, "T44 CSS: unsupported color-mix survived")
     need("backdrop-filter" not in css, "T44 CSS: unsupported backdrop filter survived")
     need(":has(" not in css, "T44 CSS: unsupported :has survived")
@@ -495,7 +673,7 @@ def _scope_css(css, need):
   --pm-settings-color-scheme: dark;
   color-scheme: dark;
 }
-#panel-settings > #pm-settings-root { width:100%; height:100%; min-width:0; min-height:0; }
+#panel-settings > #pm-settings-root { width:100%; height:100%; min-width:0; min-height:0; contain:layout paint style; }
 #panel-settings > #pm-settings-portals { position:absolute; inset:0; z-index:300; pointer-events:none; overflow:hidden; }
 #panel-settings > #pm-settings-portals > * { pointer-events:auto; }
 #panel-settings > #pm-settings-portals > :is(.toast-stack,.tooltip) { pointer-events:none; }
@@ -559,6 +737,40 @@ def _scope_css(css, need):
 #panel-settings .all-settings-empty {
   display:grid; place-items:center; min-height:220px; color:var(--text-muted);
 }
+#panel-settings .workspace-block-body[data-workspace-mounted="false"] {
+  contain:layout paint style;
+}
+#panel-settings .workspace-lazy-placeholder {
+  width:100%; min-height:inherit; pointer-events:none; visibility:hidden;
+}
+/* The Providers roster is a compact, fixed catalog.  On desktop it belongs
+   to the outer Settings document rather than owning a second scrollport. */
+@container settings-host (min-width: 761px) {
+  #panel-settings .workspace-block .provider-roster-pane {
+    position:static; top:auto; align-self:start; max-height:none; overflow:visible;
+  }
+  #panel-settings .workspace-block .provider-roster-pane #provider-roster {
+    height:auto; max-height:none; overflow:visible; padding:3px 7px;
+  }
+  #panel-settings .workspace-block .provider-roster-pane .resource-row {
+    min-height:42px; padding:4px 8px; gap:8px;
+  }
+  #panel-settings .workspace-block .provider-roster-pane .resource-avatar {
+    width:26px; height:26px;
+  }
+  #panel-settings .workspace-block .provider-roster-pane .resource-row-meta {
+    margin-top:1px;
+  }
+}
+@keyframes pmSettingsTabSwapA { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@keyframes pmSettingsTabSwapB { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+#panel-settings .tab-swap-a { animation:pmSettingsTabSwapA 260ms var(--k3-ease-expo) both; }
+#panel-settings .tab-swap-b { animation:pmSettingsTabSwapB 260ms var(--k3-ease-expo) both; }
+#panel-settings .tab-swap-settled { animation:none!important; }
+html[data-motion="reduced"] #panel-settings :is(.tab-swap-a,.tab-swap-b) { animation:none!important; }
+@media (prefers-reduced-motion:reduce) {
+  #panel-settings :is(.tab-swap-a,.tab-swap-b) { animation:none!important; }
+}
 #projectSettingsModal { display:none !important; }
 html[data-theme^="glass"] #panel-settings {
   --k3-bg-1: rgba(var(--glass-tint-rgb), var(--glass-alpha));
@@ -615,11 +827,18 @@ html[data-theme^="retro"] #panel-settings :is(.page-enter,.manager-body,.section
   #panel-settings .path-control { width:100%; min-width:0; max-width:100%; }
 }
 '''
-    combined = "/* %s */\n" % TRANSFORM_MARKER + css + overrides
+    combined = "/* %s */\n" % TRANSFORM_MARKER + css + overrides + SETTINGS_REPAIRS_CSS
+    need(".setting-row.is-changed::before { content: none; }" in combined, "T44 CSS: changed-row stripe removal missing")
+    need(".local-nav-indicator { display: none; }" in combined, "T44 CSS: local nav rail removal missing")
+    need(".side-link.active::before" in combined and ".domain-link.active::before" in combined, "T44 CSS: rail active stripe removal missing")
+    need("position: static; max-height: none; overflow: visible;" in combined, "T44 CSS: roster fit-content repair missing")
+    need('--radius-xl: 0' in combined and '.pm7-server-gap-panel,.systems-contract-card,.badge,.changed-chip' in combined, "T44 CSS: retro square-chrome repair missing")
     need("color-scheme: var(--pm-settings-color-scheme, dark);" in combined, "T44 CSS: K3 UA color-scheme bridge missing")
     for theme in ("friendly-light", "friendly-dark", "glass-light", "glass-dark", "retro-light", "retro-dark", "basic-light", "basic-dark"):
         need('data-theme="%s"' % theme in combined, "T44 CSS: UA color-scheme variant missing %s" % theme)
     need("@container settings-host (max-width: 760px)" in combined and "@container settings-host (max-width: 420px)" in combined, "T44 CSS: All Settings responsive facets missing")
+    need(".provider-roster-pane #provider-roster" in combined and "overflow:visible" in combined,
+         "T44 CSS: desktop Providers roster must remain in the outer Settings scroll flow")
     return combined
 
 
@@ -974,6 +1193,171 @@ ALL_SETTINGS_RENDER = r'''  const allSettingsView={query:'',category:'all',expos
 '''
 
 
+LAZY_DOMAIN_RENDER = r'''  function continuousWorkspaceSections(workspace){
+    if(workspace.type==='settings')return workspace.virtualAllSettings?[{id:'all-settings',label:'All Settings'}]:(workspace.sections||[]).map(section=>({id:section.id,label:section.label}));
+    return [{id:`${workspace.id}:main`,label:workspace.label}];
+  }
+
+  function renderContinuousWorkspaceBody(workspace,domain){
+    if(workspace.type==='settings'){
+      if(workspace.virtualAllSettings)return renderAllSettingsSection(workspace);
+      return (workspace.sections||[]).map((section,index)=>renderSettingsSection(section,workspace,index)).join('');
+    }
+    const sectionId=`${workspace.id}:main`;
+    return `<div class="manager-section" data-section-id="${escAttr(sectionId)}" id="section-${escAttr(sectionId)}">${renderWorkspaceBody(workspace,domain)}</div>`;
+  }
+
+  function estimatedWorkspaceHeight(workspace){
+    if(workspace.type!=='settings')return 680;
+    if(workspace.virtualAllSettings)return 720;
+    const sections=workspace.sections||[],rows=sections.reduce((total,section)=>total+(section.settings||[]).length,0);
+    return Math.max(360,rows*(hostIsNarrow()?112:66)+sections.length*112);
+  }
+
+  function mountContinuousWorkspace(workspaceId){
+    const body=root.querySelector(`[data-continuous-workspace-body="${cssEscape(workspaceId)}"]`);
+    if(!body||body.dataset.workspaceMounted!=='false')return body;
+    const domain=getDomain(),workspace=domain.workspaces.find(row=>row.id===workspaceId);
+    if(!workspace)return null;
+    body.innerHTML=renderContinuousWorkspaceBody(workspace,domain);
+    body.dataset.workspaceMounted='true';body.style.minHeight='';
+    if(workspaceHydrationObserver)workspaceHydrationObserver.unobserve(body);
+    diagnostics.lazyWorkspaceMounts=(diagnostics.lazyWorkspaceMounts||0)+1;
+    requestAnimationFrame(()=>{setupAllSettingsVirtual();armSectionReveal();});
+    return body;
+  }
+
+  function queueWorkspaceHydration(workspaceId){
+    if(!workspaceId||workspaceHydrationQueue.includes(workspaceId))return;
+    workspaceHydrationQueue.push(workspaceId);
+    if(workspaceHydrationFrame)return;
+    const consume=()=>{
+      workspaceHydrationFrame=0;
+      while(workspaceHydrationQueue.length){
+        const id=workspaceHydrationQueue.shift(),body=root.querySelector(`[data-continuous-workspace-body="${cssEscape(id)}"]`);
+        if(!body||body.dataset.workspaceMounted!=='false')continue;
+        mountContinuousWorkspace(id);break;
+      }
+      if(workspaceHydrationQueue.length)workspaceHydrationFrame=requestAnimationFrame(consume);
+    };
+    workspaceHydrationFrame=requestAnimationFrame(consume);
+  }
+
+  function setupWorkspaceHydration(){
+    if(workspaceHydrationObserver)workspaceHydrationObserver.disconnect();
+    workspaceHydrationObserver=null;workspaceHydrationQueue.length=0;
+    if(workspaceHydrationFrame){cancelAnimationFrame(workspaceHydrationFrame);workspaceHydrationFrame=0;}
+    const scroller=root.querySelector('#settings-document'),bodies=[...root.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]')];
+    if(!scroller||!bodies.length||typeof IntersectionObserver!=='function')return;
+    workspaceHydrationObserver=new IntersectionObserver(entries=>{
+      for(const entry of entries)if(entry.isIntersecting){workspaceHydrationObserver.unobserve(entry.target);queueWorkspaceHydration(entry.target.dataset.continuousWorkspaceBody);}
+    },{root:scroller,rootMargin:'360px 0px',threshold:0});
+    bodies.forEach(body=>workspaceHydrationObserver.observe(body));
+  }
+
+  function renderDomainContinuous(domain) {
+    domainSectionMap = {};
+    const workspaces = domain.workspaces;
+    let activeWs=state.workspace;
+    if(!workspaces.some(workspace=>workspace.id===activeWs)&&workspaces[0])activeWs=workspaces[0].id;
+    const blocks = workspaces.map(workspace => {
+      const sections=continuousWorkspaceSections(workspace);
+      domainSectionMap[workspace.id]=sections;
+      const fullBleed=workspace.type!=='settings',mounted=workspace.id===activeWs,meta=workspaceMeta(workspace,domain);
+      const body=mounted?renderContinuousWorkspaceBody(workspace,domain):'<div class="workspace-lazy-placeholder" aria-hidden="true"></div>';
+      const reserve=mounted?'':` style="min-height:${estimatedWorkspaceHeight(workspace)}px"`;
+      return `<section class="workspace-block ${fullBleed?'is-full-bleed':''}" id="workspace-${escAttr(workspace.id)}" data-workspace-block="${escAttr(workspace.id)}">
+        <header class="workspace-separator"><h2>${escapeHtml(meta.title)}</h2><p>${escapeHtml(meta.description)}</p></header>
+        <div class="workspace-block-body" data-continuous-workspace-body="${escAttr(workspace.id)}" data-workspace-mounted="${mounted?'true':'false'}"${reserve}>${body}</div>
+      </section>`;
+    }).join('');
+
+    const sections=domainSectionMap[activeWs]||[];
+    let activeSection=state.activeSection[activeWs];
+    if(!activeSection||!sections.some(section=>section.id===activeSection))activeSection=sections[0]?.id;
+    if(activeSection)state.activeSection[activeWs]=activeSection;
+
+    const detail=findSettingInDomain(state.detailSetting,domain);
+    return `<div class="document-layout ${detail?'inspector-open':''}${softRemount?' is-soft-remount':' page-enter'}">
+      ${renderPageIndexCard(workspaces,activeWs,activeSection)}
+      <div class="document-main">
+        <div class="document-toolbar">${renderChromeActions()}</div>
+        <div class="document-scroll" id="settings-document" data-scroll-root>
+          <main class="domain-document">${blocks}<div class="settings-end-space" aria-hidden="true"></div></main>
+        </div>
+      </div>
+      <div class="detail-scrim" data-action="close-details" style="display:none"></div>
+      <aside class="detail-inspector" aria-label="Setting explanation" aria-hidden="true" style="display:none"></aside>
+    </div>`;
+  }
+
+'''
+
+
+OPTIMIZED_TAB_INK = r'''  function measureTabInks(force=false,scopeRoot=root) {
+    const navs=[...scopeRoot.querySelectorAll('.workspace-tabs, .manager-tabs')],pending=[];
+    navs.forEach(nav=>[...nav.querySelectorAll('.workspace-tab, .manager-tab')].forEach(btn=>{if(force||!tabInkGeometryCache.has(btn))pending.push(btn);}));
+    const freshGeometry=pending.map(btn=>({btn,left:btn.offsetLeft,width:btn.offsetWidth}));
+    freshGeometry.forEach(row=>tabInkGeometryCache.set(row.btn,{left:row.left,width:row.width}));
+    const rows=navs.map(nav=>({
+      nav,ink:nav.querySelector('.tab-ink'),btn:nav.querySelector('.workspace-tab.active, .manager-tab.active')
+    }));
+    return rows.map(row=>row.btn?{...row,...(tabInkGeometryCache.get(row.btn)||{left:0,width:0})}:row);
+  }
+  function moveTabInks(premeasured) {
+    const measured=premeasured||measureTabInks();
+    const fresh=[];
+    measured.forEach(row=>{
+      let ink=row.ink;
+      if(!row.btn){if(ink)ink.style.opacity='0';return;}
+      if(!ink){
+        ink=document.createElement('span');ink.className='tab-ink';ink.style.transition='none';row.nav.append(ink);fresh.push(ink);
+      }
+      ink.style.left=`${row.left}px`;ink.style.width=`${row.width}px`;ink.style.opacity='1';
+    });
+    if(fresh.length){void root.offsetWidth;fresh.forEach(ink=>{ink.style.transition='';});}
+  }
+
+'''
+
+
+PROVIDER_SELECTION_HELPER = r'''  let providerSelectionPhase='a';
+  let providerSelectionStartedAt=0;
+  function selectProviderView(providerId,tab='overview',reveal=false){
+    const provider=state.providers.find(row=>row.id===providerId)||state.providers[0];
+    if(!provider)return false;
+    state.selectedProvider=provider.id;state.providerTab=tab;state.resourceRosterOpen=false;saveState();
+    if(state.home||state.domain!=='ai'){
+      navigate('ai','providers');return true;
+    }
+    const body=root.querySelector('[data-continuous-workspace-body="providers"][data-workspace-mounted="true"]');
+    const currentPage=body?.querySelector('.manager-page');
+    if(!currentPage){
+      navigate('ai','providers');return true;
+    }
+    const template=document.createElement('template');template.innerHTML=renderProviders().trim();
+    const nextPage=template.content.firstElementChild,currentDetail=currentPage.querySelector('.resource-detail'),nextDetail=nextPage?.querySelector('.resource-detail');
+    if(!currentDetail||!nextDetail){renderApp({soft:true});return true;}
+    currentPage.querySelectorAll('#provider-roster [data-action="select-provider"]').forEach(row=>{
+      const active=row.dataset.provider===provider.id;row.classList.toggle('active',active);row.setAttribute('aria-current',active?'true':'false');
+    });
+    currentDetail.replaceWith(nextDetail);
+    const animated=nextDetail.querySelector('.resource-content')||nextDetail,now=performance.now(),interrupted=now-providerSelectionStartedAt<260;
+    providerSelectionStartedAt=now;providerSelectionPhase=providerSelectionPhase==='a'?'b':'a';
+    animated.classList.add(motionReduced()||interrupted?'tab-swap-settled':`tab-swap-${providerSelectionPhase}`);
+    /* Replacing one provider detail only introduces that detail's tab strip.
+       Measuring every hidden Settings workspace here made a roster click pay
+       for unrelated tabs and IntersectionObserver geometry.  The existing
+       cache remains valid; measure only the newly attached detail and retain
+       the normal 260 ms content transition. */
+    requestAnimationFrame(()=>moveTabInks(measureTabInks(false,nextDetail)));
+    if(reveal)jumpToWorkspace('providers');
+    return true;
+  }
+
+'''
+
+
 ADAPTER_PRELUDE = r'''/* PM7 T44 project-scoped Settings adapter. */
 (function () {
   'use strict';
@@ -984,6 +1368,9 @@ ADAPTER_PRELUDE = r'''/* PM7 T44 project-scoped Settings adapter. */
   var bridgeDepth=0;
   var lastProject='';
   var lastChatLayout='';
+  var lastPaintThemeKey='';
+  var lastGlassPaintKey='';
+  var lastMotionPaintKey='';
   var commandSeq=0;
   var continuations=new Map();
   var credentialSettingIds=new Set(['ai.accounts.anthropic-api-key','ai.accounts.openai-api-key','ai.accounts.gemini-api-key','ai.accounts.cursor-api-key','ai.accounts.minimax-api-key','ai.accounts.github-token','ai.accounts.opencode-server-auth','code.execution.dockerhub-token','web.providers.firecrawl-api-key','web.fetch.proxy-credentials','system.mcp.remote-headers']);
@@ -1030,24 +1417,37 @@ ADAPTER_PRELUDE = r'''/* PM7 T44 project-scoped Settings adapter. */
     var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';
     if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;
     var slug=family+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);
+    var themeKey=family+'|'+mode,currentSlug=document.documentElement.getAttribute('data-theme')||'';
     bridgeDepth++;
     try{
-      if(window.PM_THEME&&typeof window.PM_THEME.setFamily==='function'&&typeof window.PM_THEME.setMode==='function'){
-        window.PM_THEME.setFamily(family,{persist:false,dispatch:false});
-        window.PM_THEME.setMode(mode,{persist:false,dispatch:false});
-        slug=window.PM_THEME.get();
+      if(themeKey!==lastPaintThemeKey||currentSlug!==slug){
+        if(window.PM_THEME&&typeof window.PM_THEME.setFamily==='function'&&typeof window.PM_THEME.setMode==='function'){
+          window.PM_THEME.setFamily(family,{persist:false,dispatch:false});
+          window.PM_THEME.setMode(mode,{persist:false,dispatch:false});
+          slug=window.PM_THEME.get();
+        }
+        else if(currentSlug!==slug)document.documentElement.setAttribute('data-theme',slug);
+        lastPaintThemeKey=themeKey;
       }
-      else document.documentElement.setAttribute('data-theme',slug);
+      else slug=currentSlug||slug;
+      var schemePaint=/-light$/.test(slug)?'light':'dark';
+      if(document.documentElement.style.colorScheme!==schemePaint)document.documentElement.style.colorScheme=schemePaint;
       var bg=String(settings['general.visual.glass-background-mode']||'Mesh').toLowerCase();
       if(['mesh','depth','minimal'].indexOf(bg)<0)bg='mesh';
-      document.documentElement.setAttribute('data-glass-bg',bg);
+      if(document.documentElement.getAttribute('data-glass-bg')!==bg)document.documentElement.setAttribute('data-glass-bg',bg);
       var alpha=glassAlpha(settings,slug);settings['general.visual.glass-transparency']=alpha;
-      document.documentElement.style.setProperty('--glass-alpha',String(alpha));
-      if(settings['general.visual.reduce-animations'])document.documentElement.setAttribute('data-motion','reduced');
-      else document.documentElement.removeAttribute('data-motion');
+      var glassKey=slug+'|'+bg+'|'+String(alpha);
+      if(document.documentElement.style.getPropertyValue('--glass-alpha')!==String(alpha))document.documentElement.style.setProperty('--glass-alpha',String(alpha));
+      var motionKey=settings['general.visual.reduce-animations']?'reduced':'full';
+      if(motionKey!==lastMotionPaintKey||(document.documentElement.getAttribute('data-motion')==='reduced')!==(motionKey==='reduced')){
+        if(motionKey==='reduced')document.documentElement.setAttribute('data-motion','reduced');
+        else document.documentElement.removeAttribute('data-motion');
+        lastMotionPaintKey=motionKey;
+      }
       var chat=String(settings['general.visual.chat-layout-mode']||'Docked').toLowerCase();
       if(chat!==lastChatLayout&&window.PM_DEMO&&typeof window.PM_DEMO.emit==='function'){lastChatLayout=chat;window.PM_DEMO.emit('chat.layout',{mode:chat,origin:'settings'});}
-      if(window.PM_GLASS_LOCK_REFRESH)try{window.PM_GLASS_LOCK_REFRESH();}catch(_e){}
+      if(glassKey!==lastGlassPaintKey&&window.PM_GLASS_LOCK_REFRESH)try{window.PM_GLASS_LOCK_REFRESH();}catch(_e){}
+      lastGlassPaintKey=glassKey;
     }finally{bridgeDepth--;}
   }
   function load(defaults,merge){
@@ -1208,6 +1608,107 @@ def _adapt_js(source, need):
     )
     source = _replace_once(
         source,
+        """  function rerender(title = '', message = '', type = 'success') {
+    saveState();
+    renderApp({ soft: !state.home });
+    if (title) showToast(title, message, type);
+  }""",
+        """  function refreshSettingRow(id) {
+    saveState();
+    if (state.detailSetting === id || detailInspectorVisible) { renderApp({ soft: true }); return; }
+    const found = findSettingGlobal(id);
+    if (!found) { renderApp({ soft: true }); return; }
+    const el = root.querySelector(`#setting-${cssEscape(id)}`);
+    if (!el) return;
+    const holder = document.createElement('div');
+    holder.innerHTML = renderSettingRow(found.setting, found.section, found.workspace);
+    const next = holder.firstElementChild;
+    if (next) el.replaceWith(next);
+  }
+
+  function rerender(title = '', message = '', type = 'success') {
+    saveState();
+    renderApp({ soft: !state.home });
+    if (title) showToast(title, message, type);
+  }""",
+        need,
+        "in-place setting row refresh helper",
+    )
+    source = _replace_once(
+        source,
+        """  function showToast(title, message = '', type = 'success', duration = 3400) {
+    let stack = document.getElementById('toast-stack');
+    if (!stack) { stack = document.createElement('div'); stack.id = 'toast-stack'; stack.className = 'toast-stack'; document.body.append(stack); }
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const ic = type === 'success' ? 'check' : type === 'warning' ? 'alert' : type === 'error' ? 'close' : 'info';
+    toast.innerHTML = `${icon(ic)}<div class="toast-copy"><div class="toast-title">${escapeHtml(title)}</div>${message ? `<div class="toast-message">${escapeHtml(message)}</div>` : ''}</div>`;
+    stack.append(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(18px)'; setTimeout(() => toast.remove(), 220); }, duration);
+  }""",
+        """  function showToast(title, message = '', type = 'success', duration = 3400) {
+    const center = window.PM_TITLEBAR_NOTIFY || (typeof window.toast === 'function' ? window.toast : null);
+    if (center) {
+      const severity = type === 'success' ? 'success' : type === 'warning' ? 'warn' : type === 'error' ? 'error' : 'info';
+      const payload = { title: String(title || 'Notice'), body: message ? String(message) : '', severity, important: type === 'warning' || type === 'error', ttlMs: duration > 0 ? duration : null };
+      if (typeof center.push === 'function') center.push(payload); else center(payload);
+      return;
+    }
+    let stack = portalRoot().querySelector('#toast-stack');
+    if (!stack) { stack = document.createElement('div'); stack.id = 'toast-stack'; stack.className = 'toast-stack'; portalRoot().append(stack); }
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const ic = type === 'success' ? 'check' : type === 'warning' ? 'alert' : type === 'error' ? 'close' : 'info';
+    toast.innerHTML = `${icon(ic)}<div class="toast-copy"><div class="toast-title">${escapeHtml(title)}</div>${message ? `<div class="toast-message">${escapeHtml(message)}</div>` : ''}</div>`;
+    stack.append(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(18px)'; setTimeout(() => toast.remove(), 220); }, duration);
+  }""",
+        need,
+        "settings toasts ride the top-center notification center",
+    )
+    source = _replace_once(
+        source,
+        "${changed ? '<span class=\"badge purple\">Changed</span>' : ''}",
+        "${changed ? '<span class=\"badge changed-chip\">Modified</span>' : ''}",
+        need,
+        "changed-setting Modified chip",
+    )
+    source = _replace_once(
+        source,
+        """    </div>
+    <section class="panel-card" style="margin-top:10px"><div class="panel-title-row"><div><div class="panel-title">Important distinction</div><div class="panel-subtitle">Provider-level state does not imply every model has every capability.</div></div><button class="btn small" data-action="provider-tab-jump" data-tab="models">Inspect model capabilities</button></div>
+      <div class="alert-strip info">${icon('info')}<div>Vision, browser use, image generation, tool use, and long-context support are attached to individual model endpoints. Web & Research, Media & Output, Back Seat Driver, and Chat routing select those exact endpoints.</div></div>
+    </section>`;""",
+        """    </div>`;""",
+        need,
+        "remove provider Important distinction panel",
+    )
+    source = _replace_once(
+        source,
+        "{id:'installation',label:'Installation'}, {id:'diagnostics',label:'Diagnostics'}",
+        "{id:'installation',label:'Installation'}, {id:'diagnostics',label:'Diagnostics'}, {id:'advanced',label:'Advanced'}",
+        need,
+        "provider manager Advanced tab",
+    )
+    source = _replace_once(
+        source,
+        "{id:'limits',label:'Limits & Resets'}, {id:'diagnostics',label:'Diagnostics'}",
+        "{id:'limits',label:'Limits & Resets'}, {id:'diagnostics',label:'Diagnostics'}, {id:'advanced',label:'Advanced'}",
+        need,
+        "free-models manager Advanced tab",
+    )
+    source = _replace_once(
+        source,
+        """  function renderProviderTab(provider) {
+    const tab = state.providerTab;""",
+        """  function renderProviderTab(provider) {
+    const tab = state.providerTab;
+    if (tab === 'advanced') return '<div class="section-kicker" style="margin:18px 2px -6px">Integration owner-local evidence</div>';""",
+        need,
+        "provider Advanced tab content branch",
+    )
+    source = _replace_once(
+        source,
         'data-action="page-options" title="Page options" aria-label="Page options"',
         'data-action="page-options" data-pm-hover-label="Page options" data-pm-hover-detail="Open actions for this Settings page." aria-label="Page options"',
         need,
@@ -1219,6 +1720,13 @@ def _adapt_js(source, need):
         'data-action="play-sound" data-id="${escAttr(s.id)}" data-pm-hover-label="Play ${escAttr(s.name)}" data-pm-hover-detail="Preview this notification sound." aria-label="Play ${escAttr(s.name)}"',
         need,
         "sound preview shared hover metadata",
+    )
+    source = _replace_once(
+        source,
+        '          <aside class="resource-roster">\n            <div class="roster-head"><div class="roster-title">Providers (${state.providers.length})</div>',
+        '          <aside class="resource-roster provider-roster-pane">\n            <div class="roster-head"><div class="roster-title">Providers (${state.providers.length})</div>',
+        need,
+        "desktop provider roster identity",
     )
     source = _replace_once(
         source,
@@ -1329,10 +1837,12 @@ def _adapt_js(source, need):
     state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','The owner restored ordinary project Settings atomically and preserved secure credential references.','warning');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
-  function hostIsNarrow(){return root.clientWidth>0&&root.clientWidth<=720;}
+  let hostWidth=0;
+  function hostIsNarrow(){return hostWidth>0&&hostWidth<=720;}
   function installHostWidthObserver(){
-    if(typeof ResizeObserver!=='function')return;let priorWidth=root.clientWidth,narrow=hostIsNarrow();
-    const observer=new ResizeObserver(()=>{const width=root.clientWidth,next=hostIsNarrow(),activated=priorWidth===0&&width>0,breakpointChanged=next!==narrow,widthChanged=Math.abs(width-priorWidth)>=1;priorWidth=width;if(!activated&&!breakpointChanged&&!widthChanged)return;narrow=next;if(activated||breakpointChanged)renderApp({soft:true});else requestAnimationFrame(afterRender);});
+    const themeObserver=new MutationObserver(()=>{tabInkGeometryCache=new WeakMap();requestAnimationFrame(()=>moveTabInks(measureTabInks(true)));});themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    hostWidth=root.clientWidth;if(typeof ResizeObserver!=='function')return;let priorWidth=hostWidth,narrow=hostIsNarrow();
+    const observer=new ResizeObserver(entries=>{const width=entries[entries.length-1]?.contentRect?.width||0,next=width>0&&width<=720,activated=priorWidth===0&&width>0,breakpointChanged=next!==narrow,widthChanged=Math.abs(width-priorWidth)>=1;hostWidth=width;priorWidth=width;if(!activated&&!breakpointChanged&&!widthChanged)return;tabInkGeometryCache=new WeakMap();narrow=next;if(breakpointChanged)renderApp({soft:true});else requestAnimationFrame(afterRender);});
     observer.observe(root);
   }
   const INSTALLATION_DISABLED_REASONS={
@@ -1520,10 +2030,52 @@ def _adapt_js(source, need):
     )
     source = _replace_once(
         source,
+        "  let scrollCleanup = null;",
+        "  let scrollCleanup = null;\n  let workspaceHydrationObserver = null;\n  let workspaceHydrationFrame = 0;\n  const workspaceHydrationQueue = [];\n  let tabInkGeometryCache = new WeakMap();",
+        need,
+        "continuous workspace hydration state",
+    )
+    source = _replace_once(
+        source,
         "  function renderSettingsWorkspace(workspace, domain) {",
         ALL_SETTINGS_RENDER + "\n  function renderSettingsWorkspace(workspace, domain) {",
         need,
         "virtualized All Settings renderer",
+    )
+    source = _replace_once(
+        source,
+        "  function rerender(title = '', message = '', type = 'success') {\n    saveState();\n    renderApp({ soft: !state.home });\n    if (title) showToast(title, message, type);\n  }\n\n",
+        "  function rerender(title = '', message = '', type = 'success') {\n    saveState();\n    renderApp({ soft: !state.home });\n    if (title) showToast(title, message, type);\n  }\n\n" + PROVIDER_SELECTION_HELPER,
+        need,
+        "provider-local selection renderer",
+    )
+    source = _replace_once(
+        source,
+        "      case 'provider':\n        state.selectedProvider = p.id || 'claude-code';\n        state.providerTab = 'overview';\n        navigate('ai', 'providers');\n        return;",
+        "      case 'provider':\n        selectProviderView(p.id || 'claude-code','overview',true);\n        return;",
+        need,
+        "provider search-result selection refresh",
+    )
+    source = _replace_once(
+        source,
+        "      case 'free-route':\n        state.selectedProvider = 'free-models';\n        state.selectedFreeRoute = p.id;\n        state.providerTab = 'routes';\n        navigate('ai', 'providers');\n        return;",
+        "      case 'free-route':\n        state.selectedFreeRoute = p.id;\n        selectProviderView('free-models','routes',true);\n        return;",
+        need,
+        "free-route search-result selection refresh",
+    )
+    source = _replace_once(
+        source,
+        "      case 'provider-model':\n        state.selectedProvider = p.providerId || 'claude-code';\n        state.providerTab = 'models';\n        navigate('ai', 'providers');\n        return;",
+        "      case 'provider-model':\n        selectProviderView(p.providerId || 'claude-code','models',true);\n        return;",
+        need,
+        "provider-model search-result selection refresh",
+    )
+    source = _replace_once(
+        source,
+        "        if (id && state.providers.some(provider => provider.id === id)) {\n          state.selectedProvider = id;\n          state.providerTab = 'overview';\n          navigate(p.domain, p.workspace);\n          return;\n        }",
+        "        if (id && state.providers.some(provider => provider.id === id)) {\n          selectProviderView(id,'overview',true);\n          return;\n        }",
+        need,
+        "provider quick-action selection refresh",
     )
     source = _replace_once(
         source,
@@ -1592,6 +2144,43 @@ def _adapt_js(source, need):
         need,
         "virtualized continuous workspace branch",
     )
+    source = _replace_band(
+        source,
+        "  function renderDomainContinuous(domain) {",
+        "  function renderHome() {",
+        LAZY_DOMAIN_RENDER,
+        need,
+        "active-workspace continuous document hydration",
+    )
+    source = _replace_band(
+        source,
+        "  function moveTabInks() {",
+        "  function readForm(form) {",
+        OPTIMIZED_TAB_INK,
+        need,
+        "batched Settings tab-ink geometry",
+    )
+    source = _replace_once(
+        source,
+        "  function motionReduced() {\n    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  }",
+        "  function motionReduced() {\n    return document.documentElement.getAttribute('data-motion') === 'reduced' || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);\n  }",
+        need,
+        "effective reduced-motion setting",
+    )
+    source = _replace_once(
+        source,
+        "    tabsEl?.querySelectorAll('.manager-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));",
+        "    tabsEl?.querySelectorAll('.manager-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));\n    const inkMeasurements=measureTabInks();",
+        need,
+        "pre-mutation manager-tab ink geometry",
+    )
+    source = _replace_once(
+        source,
+        "    target.innerHTML = html;\n    target.classList.remove('tab-swap'); void target.offsetWidth; target.classList.add('tab-swap');\n    moveTabInks();",
+        "    const swapNow=performance.now(),interruptedSwap=swapNow-Number(target.dataset.pmSwapStartedAt||0)<260,swapPhase=target.dataset.pmSwapPhase==='a'?'b':'a';\n    target.classList.remove('tab-swap','tab-swap-a','tab-swap-b','tab-swap-settled');target.innerHTML=html;target.dataset.pmSwapStartedAt=String(swapNow);target.dataset.pmSwapPhase=swapPhase;\n    target.classList.add(motionReduced()||interruptedSwap?'tab-swap-settled':`tab-swap-${swapPhase}`);\n    moveTabInks(inkMeasurements);",
+        need,
+        "interruptible manager-tab content animation",
+    )
     source = _replace_once(
         source,
         "    const found = findSettingInDomain(state.detailSetting, getDomain());\n    const { inspector } = getDetailNodes();",
@@ -1602,9 +2191,23 @@ def _adapt_js(source, need):
     source = _replace_once(
         source,
         "    armSectionReveal();\n    moveTabInks();",
-        "    setupAllSettingsVirtual();\n    armSectionReveal();\n    moveTabInks();",
+        "    setupWorkspaceHydration();\n    setupAllSettingsVirtual();\n    armSectionReveal();\n    moveTabInks();",
         need,
-        "All Settings viewport setup",
+        "lazy workspace and All Settings viewport setup",
+    )
+    source = _replace_once(
+        source,
+        "  function jumpToWorkspace(wsId, behavior) {\n    state.workspace = wsId;",
+        "  function jumpToWorkspace(wsId, behavior) {\n    mountContinuousWorkspace(wsId);\n    state.workspace = wsId;",
+        need,
+        "workspace hydration before indexed navigation",
+    )
+    source = _replace_once(
+        source,
+        "  function scrollToSection(sectionId, smooth = true) {\n    const scroller = document.getElementById('settings-document');",
+        "  function scrollToSection(sectionId, smooth = true) {\n    const ownerWorkspace=Object.keys(domainSectionMap).find(workspaceId=>(domainSectionMap[workspaceId]||[]).some(section=>section.id===sectionId));\n    if(ownerWorkspace)mountContinuousWorkspace(ownerWorkspace);\n    const scroller = document.getElementById('settings-document');",
+        need,
+        "section hydration before indexed navigation",
     )
     source = _replace_once(
         source,
@@ -1759,6 +2362,20 @@ def _adapt_js(source, need):
         "      case 'install-provider': {const p=providerById(ds(el,'provider'));dispatchInstallationAction(p,'install',el);return;}",
         need,
         "typed provider install command",
+    )
+    source = _replace_once(
+        source,
+        "      case 'select-provider': state.selectedProvider=ds(el,'provider');state.providerTab='overview';navigate('ai','providers');return;",
+        "      case 'select-provider': selectProviderView(ds(el,'provider'),'overview',false);return;",
+        need,
+        "immediate provider roster selection",
+    )
+    source = _replace_once(
+        source,
+        "        const p=providerById(ds(el,'provider'));closeOverlay();state.selectedProvider=p.id;state.providerTab=p.installed?(p.signedIn?'overview':'accounts'):'installation';navigate('ai','providers');return;",
+        "        const p=providerById(ds(el,'provider'));closeOverlay();selectProviderView(p.id,p.installed?(p.signedIn?'overview':'accounts'):'installation',true);return;",
+        need,
+        "provider setup selection refresh",
     )
     source = _replace_once(
         source,
@@ -2226,17 +2843,17 @@ def _adapt_js(source, need):
         "confirmDialog('Restore default settings','Preview and restore application defaults while preserving provider credentials, project files, histories, and a rollback receipt?', 'Restore defaults',()=>{state.settings={};state.changed={};state.detailSetting=null;rerender('Defaults restored','Ordinary settings returned to defaults; owned resources and credentials were preserved.','warning');},true);return;":
             "confirmDialog('Restore project defaults','Ask the Settings owner to restore this project atomically while preserving credential references, project files, histories, and a rollback receipt?', 'Restore defaults',()=>restoreAllProjectDefaults(),true);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;state.settings[id]=!settingValue(found.setting);state.changed[id]=true;rerender('Setting updated',`${found.setting.label} is now ${state.settings[id]?'on':'off'}.`);return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const next=!settingValue(found.setting);if(!commitSettingValue(id,next))return;rerender('Setting updated',`${found.setting.label} is now ${next?'on':'off'}.`);return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const next=!settingValue(found.setting);if(!commitSettingValue(id,next))return;refreshSettingRow(id);showToast('Setting updated',`${found.setting.label} is now ${next?'on':'off'}.`);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;state.settings[id]=value;state.changed[id]=true;rerender('Setting updated',`${found.setting.label} is now ${value}.`);return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found||!commitSettingValue(id,value))return;rerender('Setting updated',`${found.setting.label} is now ${value}.`);return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found||!commitSettingValue(id,value))return;refreshSettingRow(id);showToast('Setting updated',`${found.setting.label} is now ${value}.`);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const current=Number(settingValue(found.setting))||0;const next=current+Number(ds(el,'step','1'));const min=found.setting.min??0,max=found.setting.max??100;state.settings[id]=Math.max(min,Math.min(max,next));state.changed[id]=true;rerender();return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const current=Number(settingValue(found.setting))||0;const next=current+Number(ds(el,'step','1'));const min=found.setting.min??0,max=found.setting.max??100;if(!commitSettingValue(id,Math.max(min,Math.min(max,next))))return;rerender();return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const current=Number(settingValue(found.setting))||0;const next=current+Number(ds(el,'step','1'));const min=found.setting.min??0,max=found.setting.max??100;if(!commitSettingValue(id,Math.max(min,Math.min(max,next))))return;refreshSettingRow(id);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])],i=arr.indexOf(value);if(i>=0)arr.splice(i,1);else arr.push(value);state.settings[id]=arr;state.changed[id]=true;rerender();return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])],i=arr.indexOf(value);if(i>=0)arr.splice(i,1);else arr.push(value);if(!commitSettingValue(id,arr))return;rerender();return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])],i=arr.indexOf(value);if(i>=0)arr.splice(i,1);else arr.push(value);if(!commitSettingValue(id,arr))return;refreshSettingRow(id);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])];if(moveItem(arr,Number(ds(el,'index')),Number(ds(el,'direction')))){state.settings[id]=arr;state.changed[id]=true;rerender();}return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])];if(moveItem(arr,Number(ds(el,'index')),Number(ds(el,'direction')))&&commitSettingValue(id,arr))rerender();return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const arr=[...(settingValue(found.setting)||[])];if(moveItem(arr,Number(ds(el,'index')),Number(ds(el,'direction')))&&commitSettingValue(id,arr))refreshSettingRow(id);return;",
         "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;delete state.settings[id];delete state.changed[id];rerender('Default restored',`${found.setting.label} now uses its default value.`);return;":
-            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found||!restoreSettingDefault(id))return;rerender('Default restored',`${found.setting.label} now uses its default value.`);return;",
+            "const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found||!restoreSettingDefault(id))return;refreshSettingRow(id);showToast('Default restored',`${found.setting.label} now uses its default value.`);return;",
     }
     for old, new in setting_mutation_replacements.items():
         source = _replace_once(source, old, new, need, "typed setting mutation command")
@@ -2261,6 +2878,13 @@ def _adapt_js(source, need):
         "    bindEvents();\n    installActionCallbackCleanup();\n    installHostWidthObserver();\n    renderApp();",
         need,
         "callback cleanup boot",
+    )
+    source = _replace_once(
+        source,
+        "      navigate,\n      renderApp,",
+        "      navigate,\n      renderApp,\n      mountWorkspace:mountContinuousWorkspace,",
+        need,
+        "deterministic lazy-workspace test hook",
     )
     source = _replace_once(source, "      version:'12.4-complete',", "      version:'12.5-pm7-t44',", need, "embedded version")
     source = _replace_once(
@@ -2289,6 +2913,14 @@ def _adapt_js(source, need):
     need("window.addEventListener('hashchange'" not in source, "T44 JS: hash listener survived")
     need("window.innerWidth" not in source and "window.innerHeight" not in source, "T44 JS: viewport-width positioning survived")
     need(' title="' not in source, "T44 JS: native title tooltip survived shared hover metadata migration")
+    need("data-continuous-workspace-body" in source and "setupWorkspaceHydration" in source and "mountContinuousWorkspace" in source, "T44 JS: active-workspace lazy hydration contract missing")
+    need("function measureTabInks(force=false,scopeRoot=root)" in source and "tabInkGeometryCache" in source and "return rows.map" in source and "void root.offsetWidth;fresh.forEach" in source, "T44 JS: batched tab-ink animation geometry missing")
+    need("const inkMeasurements=measureTabInks()" in source and "pmSwapStartedAt" in source and "tab-swap-settled" in source and "moveTabInks(inkMeasurements)" in source and "void target.offsetWidth" not in source, "T44 JS: interruptible manager-tab animation hot path missing")
+    need("function selectProviderView(" in source and "provider-roster-pane" in source and "case 'select-provider': selectProviderView(" in source and "currentDetail.replaceWith(nextDetail)" in source and "measureTabInks(false,nextDetail)" in source,
+         "T44 JS: provider-local selection and roster identity missing")
+    need("let hostWidth=0" in source and "contentRect?.width" in source, "T44 JS: ResizeObserver-backed host-width cache missing")
+    need("themeKey!==lastPaintThemeKey" in ADAPTER_PRELUDE and "glassKey!==lastGlassPaintKey" in ADAPTER_PRELUDE and "lastMotionPaintKey" in ADAPTER_PRELUDE,
+         "T44 JS: paint adapter still invalidates global theme/resize state on unrelated saves")
     for required in (
         "stable_id:setting.id",
         "description:setting.description||canonical.desc||''",
@@ -2362,7 +2994,7 @@ def apply(doc, notes, need):
     doc = _replace_once(
         doc,
         "PM7 SECTION 18/32: settings-data-json - inert JSON payload for PM_SETTINGS_DATA (T11 parse defer); parsed lazily on first settings access (script#pm7-settings-data)",
-        "PM7 SECTION 18/32: settings-data-json - current 828-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
+        "PM7 SECTION 18/32: settings-data-json - current 883-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
         need,
         "Settings section description",
     )

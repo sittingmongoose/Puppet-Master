@@ -2,35 +2,310 @@
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns native Goal Mode runtime behavior, not the bootstrap ledger conversation that produced it.
 > **PlanProfile:** New Plan Authoring Profile
-> **Authority:** Canonical owner for native Goal runtime/control-plane behavior, invisible and visible goal execution, durable goal state, scheduler updates, evidence, completion receipts, child goals, weak-model safety, verifier/adjudicator policy, goal authority boundaries, and runtime-facing Goal Mode task templates.
+> **Authority:** Sole canonical owner of the Goal object and the Goal runtime: one text-only `objective_text`, integer `revision`, the `active|paused|blocked|completed` lifecycle plus cancellation receipt semantics, durable host continuation, the direct-edit versus agent-proposal authority split, Goal creation authority, the Goal event family, Goal V1 -> V2 migration, and the read-only Goal projection consumed by the Activity domain. It does not own Goal phases, Goal tranches, child Goals or child-goal topology, Goal-owned workflow budgets, or a Goal-specific planner/evaluator/verifier/adjudicator role cast; those constructs are retired by the 2026-09-03 Assistant redesign and survive only as compatibility/source lineage. It does not own scheduling windows or quota resume, To-Do state, Assistant Plan documents, collaborative workflow runtime, permission/approval hosting, model or account identity, subagent lifecycle, or any workflow's own durable state.
 
 ## 0. Scope
 
-The Goal Runtime System is Puppet Master's native autonomous execution mode for long-running, cross-referential, or multi-step work. It is not a prompt-packet workflow, not a D2-style staged handoff, and not a planning-only assistant feature.
+The Goal Runtime System is Puppet Master's native durable-continuation mode for long-running, cross-referential, or multi-step work. It is not a prompt-packet workflow, not a D2-style staged handoff, and not a planning-only assistant feature.
 
-Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal product flows such as future Planning Wizard ledger-to-Plans transfer use the same engine invisibly; legacy Chain Wizard transfer references are compatibility/source-lineage aliases only.
+A Goal is deliberately small. It is one stable text objective plus a host-owned continuation promise: continue ordinary capable agent execution until this objective is achieved, the user pauses or cancels, or a genuine blocker prevents continuation. Everything else that a long run needs — questions, stages, topics, findings, ledgers, PlanUnits, assignments, checkpoints, tests, evidence, artifacts, retries, schedules, and quotas — stays in the durable state of the workflow that owns it and reaches the Goal-driven agent by reference. The Goal does not absorb that data and does not grow structure to describe it.
 
-Goal Mode may self-initiate `websearch`, `webfetch`, `webextract`, `webresearch`, `deep_research`, `webcrawl`, `webmap`, and Site Reader / BrowserAction evidence when current, external, URL, visual, dynamic-page, docs/issues/PR, comparison, research, or deep-research evidence matters. These calls go through the shared PM WebOperation/BrowserAction dispatcher, record `invocation_source` and `agent_reason`, obey the effective permission/no-network/egress policy, and render visible operation, progress, partial, denied, fallback, source, approval, session, or unavailable cards in the owning surface.
+Goal is general-purpose and remains extensively used on both sides of the product. User-facing Assistant Chat invokes it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal Puppet Master workflows invoke the same mechanism for external and internal research, ledger-to-Plans transfer, PlanUnit generation, audit and repair passes, WorkNode preparation, and WorkNode-related execution. Both sides get the same simple Goal record; they differ only in which workflow owns the state supplied by reference and which owner supplies completion evidence. Legacy Chain Wizard transfer references remain compatibility/source-lineage aliases only.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+Goal-driven work may self-initiate `websearch`, `webfetch`, `webextract`, `webresearch`, `deep_research`, `webcrawl`, `webmap`, and Site Reader / BrowserAction evidence when current, external, URL, visual, dynamic-page, docs/issues/PR, comparison, research, or deep-research evidence matters. These calls go through the shared PM WebOperation/BrowserAction dispatcher, record `invocation_source` and `agent_reason`, obey the effective permission/no-network/egress policy, and render visible operation, progress, partial, denied, fallback, source, approval, session, or unavailable cards in the owning surface.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
 ## 1. Ownership And Consumers
 
-Goal Runtime owns runtime state, scheduling, update/replan semantics, authority, evidence, certification, model-role policy, and child-goal coordination.
+Goal Runtime owns the Goal record, the Goal revision history, the Goal lifecycle transitions, the continuation decision, blocked-reason identity, cancellation receipt semantics, the Goal event family, and the Goal migration contract.
 
-Assistant Chat owns the visible chat controls and displays that project Goal Runtime state: activation, status chips, task trackers, pause/resume/stop/update controls, activity/evidence cards, completion summaries, and collapsible child-goal detail.
+Goal Runtime owns:
 
-FinalGUISpec owns GUI placement for settings surfaces, including the two Goal Mode model selections for worker and verifier/adjudicator roles.
+- `GoalRecordV2`: `goal_id`, `project_id`, `thread_id`, `objective_text`, `revision`, `state`, `blocked_reason_ref`, `active_run_ref`, `created_at`, `updated_at`, and `currentness_hash`;
+- `GoalRevisionRecord`: the append-only objective history with `change_source` `user_direct|agent_proposed_user_approved`;
+- `GoalContinuationRecord`: the per-evaluation continuation decision with `result` `continue|complete|pause|blocked|cancelled` and `user_stop_epoch`;
+- the rule that one model response ending is not Goal completion;
+- the rule that a manual Stop, Pause, or Cancel defeats every automatic continuation and resume path until the user explicitly resumes;
+- the authority split between direct user editing and agent-proposed replacement;
+- the six `cmd.chat.goal.*` command contracts in section 8 and the `goal.*` event family in section 10.
+
+Goal Runtime does not own:
+
+- Goal phases, phase boundaries, phase-bound snapshots, tranches, child Goals, parent/child completion authority, Goal-owned workflow budgets, or a Goal-specific planner/evaluator/verifier/adjudicator role cast — all retired, see section 11;
+- To-Do identity, hierarchy, or status (`Plans/ToDo_Runtime.md`);
+- Assistant Plan documents, Plan revisions, or Build admission (`Plans/Assistant_Plan_Runtime.md`);
+- execution windows, wind-down, recurring resume, timezone/DST behavior, or Usage-reset auto-resume (`Plans/Scheduling_and_Quota_Resume.md`);
+- Crew, BrainStorm, Review, or Chat Room participant/transcript/artifact runtime (`Plans/Collaborative_Workflows.md`);
+- the approval ladder and rule resolution (`Plans/Permissions_System.md`);
+- provider, model, and account identity (`Plans/Prompt_Pipeline.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`);
+- subagent spawn, lease, budget, and result settlement lifecycle (`Plans/orchestrator-subagent-integration.md`, GRS-035, GRS-036);
+- loop, no-progress, and spend taxonomy (`Plans/Run_Modes.md`, GRS-037);
+- ledger records, PlanUnits, generated indexes, WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks (`Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`).
+
+Assistant Chat renders the Goal Activity domain: the Activity-bar item, the interactive hover preview, and Goal Activity Detail. Goal is never a transcript card. `Plans/assistant-chat-design.md` owns that placement and chrome; this document owns the state and the actions those controls dispatch.
+
+FinalGUISpec owns Settings GUI placement. The two Goal Mode model selectors for worker and verifier/adjudicator roles are retired with the role cast; Goal-driven work uses the ordinary Assistant model/Persona selection owned by `Plans/Models_System.md` and `Plans/Personas.md`.
 
 Planning Ledger, Plan Document, and Plan-To-Node docs remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary. Goal Runtime may consume those contracts for ledger-to-Plans goals, but it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 
-When Goal Runtime is invoked by PRD Builder, Planning Wizard, Chain Wizard compatibility flows, or ledger-to-Plans transfer, web/browser evidence is source evidence only until an explicit compile/build phase. Read receipts, extract receipts, citations, browser artifacts, and research closure states may flow into ledger records, PRD source refs, PlanningRun evidence, PlanUnit source lineage, or Goal receipts, but they do not create implementation work or runtime dispatch by themselves.
+When a Goal is created by PRD Builder, Planning Wizard, Chain Wizard compatibility flows, or ledger-to-Plans transfer, web/browser evidence is source evidence only until an explicit compile/build phase. Read receipts, extract receipts, citations, browser artifacts, and research closure states may flow into ledger records, PRD source refs, PlanningRun evidence, PlanUnit source lineage, or the owning workflow's receipts, but they do not create implementation work or runtime dispatch by themselves.
 
-Permissions_System owns the global approval ladder and rule resolution. Goal Runtime owns the Goal-specific invocation rule: high-risk goal actions request explicit approval and invisible/internal goals block when outside predeclared authority.
+Permissions_System owns the global approval ladder and rule resolution. Goal Runtime owns exactly two Goal-specific approval facts: an agent-proposed objective replacement must pass through the existing approval host before it is written, and an internal Goal blocks rather than silently widening when the requested action is outside predeclared authority.
 
-Runtime_Artifacts_Panel owns user-visible runtime-artifact browsing and retention UI. Goal Runtime owns completion receipt semantics and evidence identity requirements.
+Runtime_Artifacts_Panel owns user-visible runtime-artifact browsing and retention UI. Completion evidence identity belongs to the workflow owner that produced it; Goal Runtime consumes `completion_evidence_refs` and does not restate the evidence.
 
-Prompt_Pipeline, Models_System, Multi-Account, Provider docs, and provider-specific integration docs own concrete provider/model/account identity. Goal Runtime owns role-policy usage: worker, planner, evaluator, verifier, and adjudicator roles and certification-tier requirements.
+## Goal V2 record and retired fields
+
+A Goal is one concise text objective plus a lifecycle. There is no title field, no separate summary, no structured decomposition, and no second text field of any kind. The objective prose itself carries the outcome, the finish condition, and the constraints, because a user who wants to change any of those edits one paragraph rather than reconciling five fields.
+
+`GoalRecordV2` is the only active writer schema:
+
+```yaml
+schema_id: pm.goal.record.v2
+fields:
+  goal_id: string
+  project_id: string
+  thread_id: string
+  objective_text: string
+  revision: integer
+  state: active|paused|blocked|completed
+  blocked_reason_ref: string|null
+  active_run_ref: string|null
+  created_at: timestamp
+  updated_at: timestamp
+  currentness_hash: string
+negative_fields:
+  - title
+  - phase
+  - tranche
+  - child_goal_ids
+  - goal_budget
+  - planner_role
+  - verifier_role
+  - adjudicator_role
+  - separate_done_when
+  - separate_scope
+  - separate_constraints
+  - attachment_manifest
+```
+
+`objective_text` is expected to remain concise. The product maximum stays consistent with the existing approximately 4,000-character Goal convention; a request that exceeds it is rejected with a typed error rather than silently truncated, and the user is shown the limit. `currentness_hash` is the compare-and-swap token for every mutation; a stale projection cannot write.
+
+The lifecycle enum is exactly `active | paused | blocked | completed`. `active` means the host may schedule the next turn when the thread is idle and eligible. `paused` means the user stopped continuation. `blocked` means an owner-supplied condition prevents safe progress and names it through `blocked_reason_ref`. `completed` means objective-completion evidence satisfied the continuation check.
+
+Cancellation is not a fifth state. Cancelling writes a `goal.cancelled` event and a minimal cancellation receipt, then removes the Goal from the active projection. A cancelled Goal is not rendered as an enduring status card, and no continuation may fire for it afterwards. History remains readable for audit; the Activity domain simply stops showing it.
+
+Every Goal has zero or one `active_run_ref`. Concurrency between the Goal and its run is resolved by the run owner, not by adding queue structure to the Goal.
+
+`GoalRevisionRecord` is the append-only objective history:
+
+```yaml
+schema_id: pm.goal.revision.v2
+fields:
+  goal_id: string
+  revision: integer
+  objective_text: string
+  change_source: user_direct|agent_proposed_user_approved
+  source_message_id: string|null
+  approval_id: string|null
+  prior_revision_hash: string|null
+  revision_hash: string
+  created_at: timestamp
+```
+
+Only two `change_source` values exist. There is no third path by which a Goal's text changes. Automatic memory, compaction, title generation, summarization, Persona switching, model switching, provider retry, and BSD advice can none of them write `objective_text`. A semantic diff or a predicted To-Do impact is not required for the approval UI, though internal audit may retain `prior_revision_hash` and `revision_hash`.
+
+Relevant attachments and context remain thread-owned. A Goal never carries an attachment manifest, and a Goal never freezes an input snapshot at creation. Where a workflow needs frozen inputs, that workflow owns the freeze under its own contract.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+## Durable host continuation
+
+Continuation is the entire reason the Goal object exists, and it is host-owned. One model response ending is not completion. When a model turn ends, the host — not the model, and not a prompt instruction telling the model to keep going — reloads canonical Goal state, checks currentness, checks the user stop epoch, evaluates objective-completion evidence supplied by the owning caller, and decides whether to admit another ordinary agent turn.
+
+The evaluation is recorded as a `GoalContinuationRecord`:
+
+```yaml
+schema_id: pm.goal.continuation.v2
+fields:
+  continuation_id: string
+  goal_id: string
+  goal_revision: integer
+  owning_run_id: string
+  evaluated_at: timestamp
+  result: continue|complete|pause|blocked|cancelled
+  completion_evidence_refs: [string]
+  blocked_reason_ref: string|null
+  next_attempt_ref: string|null
+  user_stop_epoch: integer
+```
+
+Rules that hold for every continuation evaluation:
+
+- The next turn is an ordinary agent turn with bounded current workflow context. The host does not paste the full thread history forward and does not accumulate a growing Goal prompt; a Goal that has run for two hours sends no more objective text than it did on turn one.
+- `result: continue` requires an unfinished objective, an eligible thread, an unchanged stop epoch, and a runnable next attempt. Any one of those failing produces a non-`continue` result with a recorded reason.
+- `result: complete` requires `completion_evidence_refs` from the owning caller. A model asserting that it is finished is a proposal; the recorded evidence is what closes the Goal.
+- `user_stop_epoch` is captured at evaluation time and compared at dispatch time. A continuation that was decided before a Stop and would dispatch after it is discarded.
+- Continuation is idempotent per `(goal_id, goal_revision, owning_run_id, next_attempt_ref)`. A crash-and-restart replays the decision without duplicating a completed effect.
+- Continuation survives compaction, restart, model switch, provider switch, and account switch, because the Goal record is durable and the continuation decision is recomputed from it rather than carried in conversation context.
+
+Manual Stop, Pause, and Cancel are authoritative and terminal for automation. They defeat Goal continuation, scheduled resume, Usage-reset resume, execution-window resume, Crew Auto, and provider-native retry until the user explicitly resumes or creates a new schedule. Nothing auto-resumes a manually stopped Goal — not a quota reset, not a window opening, not a successful dependency, not a later approval. This document defers to `Plans/Scheduling_and_Quota_Resume.md` for window and quota mechanics and takes precedence over it on this one point.
+
+Provider quota may put a run into the shared quota wait. That wait belongs to the scheduling/quota owner. It does not mutate `objective_text`, does not create a Goal phase, and does not change `state` on its own; the Goal stays `active` with its run waiting, exactly as the Build control stays `Building…` during a quota pause.
+
+Execution windows may pause and resume the run through `Plans/Scheduling_and_Quota_Resume.md`. Goal Runtime consumes that service and specifies none of its internals here.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+
+## Goal change authority
+
+Three authority paths write a Goal, and no other path may.
+
+**Creation.** `/goal`, the Goal control, or an explicit natural-language request such as "make that a goal" creates a Goal through `cmd.chat.goal.start`. The agent may create it on the user's explicit request without a second approval dialog, because the request itself is the approval. What the agent may not do is infer a Goal from a long task, from repeated failures, from a Plan Build, or from a schedule. Absent an explicit request there is no Goal.
+
+**Direct user edit.** The user edits `objective_text` in Goal Activity Detail and presses Save. Save *is* the approved change. There is no confirmation dialog, no agent review of the user's own text, and no material-difference analysis presented back to the user. The edit writes revision `n+1` with `change_source: user_direct` and a `source_message_id` of `null`. A direct edit is permitted in `active`, `paused`, and `blocked`; editing an `active` Goal takes effect at the next continuation boundary rather than mutating a turn already in flight.
+
+**Agent-proposed replacement.** The agent may propose a complete replacement objective only after an explicit user instruction to change the Goal. It dispatches `cmd.chat.goal.propose_update`, which returns an `ApprovalRequest` and writes nothing. The existing approval host shows exactly the current objective, the proposed complete replacement objective, `Approve Change`, and `Cancel`. On approval the accepted text is written through `cmd.chat.goal.update` with `change_source: agent_proposed_user_approved` and the originating `approval_id`. Nothing about the Goal changes before approval, and a denied or expired proposal leaves `revision` and `currentness_hash` untouched.
+
+The system must never silently rewrite, narrow, broaden, summarize, reformat, translate, or "clarify" `objective_text`. An agent that believes the objective is wrong proposes; it does not edit. A rejected silent-rewrite attempt is a typed error, not a quiet no-op, so the attempt is visible in audit.
+
+Pause, Resume, and Cancel are user controls. Resume from `paused` is eligible whenever currentness and permissions still resolve; Resume from `blocked` is eligible only when the owner condition named by `blocked_reason_ref` reports that it has cleared, and the control renders disabled with that reason when it has not.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/assistant-chat-design.md
+
+## Goal Activity domain surface
+
+Goal is a per-thread Activity domain. It is not a transcript card, it does not scroll away, and it is never duplicated as a message. To-Dos are the sibling Activity domain and are owned by `Plans/ToDo_Runtime.md`.
+
+The Activity-bar item appears only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive rather than a passive tooltip:
+
+```text
+Goal · Running
+<two-line objective preview>
+[Pause] [Cancel] [edit icon]
+```
+
+`Paused` and `Blocked` states substitute `Resume` for `Pause`, and render `Resume` disabled with the owner-supplied reason when the Goal is blocked and the condition has not cleared. The edit icon opens Goal Activity Detail already in edit mode with the objective textarea focused. Clicking the Activity item itself opens the ordinary detail view. No separate `Open` button is required.
+
+Goal Activity Detail contains a text-only objective editor and the lifecycle controls:
+
+```text
+Goal
+[objective textarea]
+[Save] [Cancel edit]
+
+[Pause/Resume] [Cancel Goal]
+History ▾
+```
+
+`History` is a compact revision list: revision number, timestamp, `change_source`, and the objective text at that revision. The blocker reason is shown when `blocked_reason_ref` is present.
+
+The detail view must not show a title field, phases, tranches, child Goals, budgets, a current action, a next action, a task drawer, a progress bar derived from invented percentages, or separate scope/done-when/constraints fields. Goal progress is visible through To-Dos and through the ordinary transcript, not through a Goal-owned task tracker.
+
+Every control on both surfaces dispatches a registered command from the Goal V2 command section below. Until the central command catalog, event catalog, and production wiring rows adopt those IDs, the controls render disabled with `command_not_registered`; no page-local handler, alias, or fixture may simulate success.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+## Internal workflow use of Goal V2
+
+Goal V2 is used extensively inside Puppet Master, not only in Assistant Chat. Internal research, Planning Ledger to Plans transfer, PlanUnit generation, audit and repair sweeps, WorkNode preparation, and execution all run under the same engine, with the same record, the same continuation loop, and the same stop semantics. There is no second internal Goal engine and no internal-only Goal field.
+
+What the internal callers get from Goal is exactly two things: a stable objective that survives compaction, restart, and model change, and a durable host continuation that keeps working the objective until it is complete, paused, blocked, or cancelled. What they do not get, and must not ask for, is a place to store their own workflow state.
+
+Each internal caller keeps its own state under its own owner:
+
+| Caller | Goal supplies | Caller owns |
+|---|---|---|
+| Internal research | objective, continuation | queries, sources, extracts, citations, dedup, coverage |
+| Ledger to Plans transfer | objective, continuation | ledger session, atoms, decisions, corrections, topic coverage, conversion receipts |
+| PlanUnit generation | objective, continuation | unit drafts, owner placement, dependency graph, acceptance criteria, validation surfaces |
+| Audit and repair | objective, continuation | findings, severity, disposition, repair attempts, re-verification evidence |
+| WorkNode preparation | objective, continuation | node seeds, readiness, inputs, compile receipts |
+| Execution | objective, continuation | assignments, checkpoints, tests, evidence, artifacts, retries, schedules, quotas |
+
+An internal caller that needs staged progress models the stages in its own records and reports readiness to Goal through completion evidence. It does not add a phase to the Goal, and Goal does not grow a field to hold it. This is the DRY boundary that the retired phase model violated: a Goal phase was a second, weaker copy of a workflow stage that the workflow already owned, and the two drifted.
+
+A Goal may drive several workflows by reference over its life. It holds no queue of them. The active work is whatever `active_run_ref` names, and the run owner resolves ordering, parallelism, and dependency among its own units.
+
+Invisible internal Goals are not rendered in the Assistant Activity bar. They are visible in the surfaces their owning workflow already provides, and they obey the same Stop epoch as user-facing Goals.
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+## Retired Goal structure and negative ownership
+
+The following are retired from Goal Runtime. They are not deprecated-but-tolerated; an active Goal V2 record, projection, event, command, or GUI surface that carries any of them is a defect.
+
+- **Goal phases.** No phase list, no `currentPhaseId`, no phase status, no phase exit criterion, no phase-bound evidence, no phase-bound attachment snapshot, no phase stepper, and no phase-derived progress bar.
+- **Goal tranches.** No tranche grouping, no tranche budget, no tranche admission.
+- **Child Goals.** No child-goal topology, no parent completion authority over children, no child write leases, no subgoal tree display, and no "3 child goals active" projection. Work that used to be a child Goal is either a To-Do under `Plans/ToDo_Runtime.md`, a participant under `Plans/Collaborative_Workflows.md`, or a separate Goal with no parent edge.
+- **Goal budgets.** No Goal-owned token, cost, turn, or wall-clock budget. Usage truth belongs to `Plans/usage-feature.md`; quota waiting belongs to `Plans/Scheduling_and_Quota_Resume.md`.
+- **Mandatory role cast.** No Goal-specific planner, evaluator, verifier, or adjudicator role is required to run a Goal. Where a workflow genuinely needs a reviewer, that reviewer is a Review run under `Plans/Collaborative_Workflows.md` or a certification step under the workflow's own owner, selected by that owner rather than imposed by Goal.
+
+Goal also does not own, and must not duplicate: To-Do state, Plan documents, ledgers, PlanUnits, WorkNodes, Orchestrator scheduling, schedules and execution windows, quota and reset truth, artifact version and retention, permission grants, Persona or model identity, thread or message lifecycle, or context materialization.
+
+Back Seat Driver is never a required step in a Goal. `Plans/Back_Seat_Driver.md` is read-only advice, and a Goal must complete, pause, block, or cancel identically whether BSD is Off, Auto, On, degraded, or quarantined.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/usage-feature.md, ContractName:Plans/DRY_Rules.md
+
+## Goal V2 exact commands and required result boundaries
+
+| Command ID | Meaning | Required result boundary |
+|---|---|---|
+| `cmd.chat.goal.start` | Create one text-only Goal for the thread | Returns `goal_id`, revision 1, `currentness_hash`, and a creation receipt. Creates no phase, child Goal, budget, schedule, Plan, or To-Do. |
+| `cmd.chat.goal.update` | Write an approved objective revision | Requires the expected revision and currentness hash, and either a user-authored edit or a resolved `approval_id`. Returns revision `n+1`. Never partially applies. |
+| `cmd.chat.goal.propose_update` | Agent requests an objective change | Returns an `ApprovalRequest` and writes nothing. A denied or expired proposal leaves revision and currentness untouched. |
+| `cmd.chat.goal.pause` | User pauses continuation | Sets `paused`, latches the stop epoch, and cancels no workflow-owned record. Nothing may auto-resume afterwards. |
+| `cmd.chat.goal.resume` | User resumes continuation | Refused while a manual stop is latched or while `blocked_reason_ref` has not cleared; the refusal names the reason. |
+| `cmd.chat.goal.cancel` | User ends the Goal | Writes a cancellation receipt, removes the Goal from the active projection, and forbids further continuation. Workflow-owned records remain under their owners. |
+| `cmd.chat.goal.open_editor` | Open Goal Activity Detail in edit mode | Navigation only. Opening the editor is not a mutation and cannot change revision or currentness. |
+
+`cmd.chat.goal.start` and `cmd.chat.goal.update` are pre-existing registered command IDs. This wave revises their request and result contracts in place to `GoalStartRequestV2`/`GoalStartResultV2` and `GoalUpdateRequestV2`/`GoalUpdateResultV2`. They keep one registration, one sole future handler, and one wiring identity; no peer row, compatibility spelling, or second handler is minted for them.
+
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A failure remains a failure: it never advances state, never emits a success-shaped receipt, and never writes a revision.
+
+Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, or toast may simulate success.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.production.json
+
+## Goal V2 events
+
+The required semantic event names are `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, and `goal.continuation_evaluated`. All eight require central EventRecord registration and payload schemas before any emission; until then the owning command records only its typed result, receipt, and projection.
+
+Envelopes carry Project, thread, and Goal identity, revision, `currentness_hash`, actor, correlation and causation, idempotency key, and redacted source refs. `goal.updated` carries `change_source` and, for the agent path, `approval_id`. `goal.continuation_evaluated` carries `result`, `user_stop_epoch`, and completion-evidence refs by reference rather than by value.
+
+No event may carry `objective_text` in full where a hash and a revision reference suffice for audit, and no event may carry secrets, tokens, provider credentials, or raw file bodies.
+
+There is deliberately no `goal.phase_*`, `goal.tranche_*`, `goal.child_*`, or `goal.budget_*` event. Registering one would reintroduce retired structure through the event catalog.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
+
+## Goal V1 to V2 migration
+
+Migration reads `pm.goal.record.v1` and writes `pm.goal.record.v2`. It is a one-way structural reduction with explicit custody of what is dropped.
+
+- `objective` maps to `objective_text` unchanged. A V1 record whose objective exceeds the product maximum is quarantined for owner review rather than truncated.
+- `title` is dropped. Where a V1 title carried meaning the objective does not, migration does not merge it silently; it records the dropped title in the migration receipt so an owner can decide.
+- `phases`, `currentPhaseId`, `tranches`, `subgoals`, `child_goal_ids`, `budget`, and role-cast fields are dropped and recorded in the receipt. Evidence that was attached to a completed phase is re-parented to the workflow owner that produced it, or retained as an immutable historical artifact reference; it is never deleted to make a migration pass.
+- V1 status maps as `active → active`, `paused → paused`, `blocked → blocked`, `completed → completed`, and `cancelled → cancelled receipt plus removal from the active projection` (cancellation is not a V2 state).
+- Revision history is synthesized as a single revision 1 with `change_source: user_direct` when no V1 revision history exists. Migration never fabricates intermediate revisions.
+- In-flight V1 Goals are paused across the migration boundary and require an explicit user resume. Migration never resumes work by itself, and a V1 Goal that was manually stopped stays stopped.
+
+Receipts record before and after hashes, dropped-field custody, quarantined records, and unresolved residual risk. A migration that cannot validate a Project or thread edge quarantines rather than guessing.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## Goal V2 verification
+
+Structural tests validate the V2 schema and fixtures, the absence of every retired field, revision monotonicity, compare-and-swap rejection of a stale `currentness_hash`, the two-value `change_source` enum, objective-length rejection, and the four-value lifecycle enum with cancellation modelled as a receipt rather than a state.
+
+Behavioral tests must prove that a Goal continues past a single model response across at least three host-admitted turns; that continuation survives a simulated restart and a compaction without growing the prompt; that a manual Stop, Pause, or Cancel defeats continuation, scheduled resume, Usage-reset resume, execution-window resume, and provider-native retry; that a direct user edit writes revision `n+1` with no approval dialog; that an agent proposal writes nothing before approval and nothing after denial; that an unrequested silent rewrite is refused with a typed error; and that a `complete` result requires recorded completion evidence rather than a model assertion.
+
+Negative tests must prove that no active surface exposes a phase, tranche, child Goal, budget, or mandatory verifier role; that a Goal cannot be inferred without an explicit user request; that a blocked Goal cannot resume until its named condition clears; and that BSD state — Off, Auto, On, degraded, or quarantined — changes no Goal outcome.
+
+Internal-caller tests must prove that a research Goal, a ledger-to-Plans Goal, and a PlanUnit-generation Goal each complete multi-turn work while keeping their own workflow state under their own owners, and that none of them writes a Goal field to hold it.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Progression_Gates.md
 
 ## 2. Canonical PlanUnits
 
@@ -87,6 +362,409 @@ negative_constraints:
   - Do not reintroduce old prompt-packet/D2 workflow as the product foundation.
   - Do not document a separate bootstrapped Goal Mode implementation as required for Puppet Master.
   - Do not narrow Assistant Chat Goal Mode to plan-doc tasks.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-048 - Goal V2 Record And Retired Field Prohibition
+
+```yaml
+plan_unit_id: GRS-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  A Goal is one concise text objective plus a lifecycle. GoalRecordV2 (pm.goal.record.v2) carries goal_id, project_id, thread_id, objective_text, revision, state, blocked_reason_ref, active_run_ref, created_at, updated_at, and currentness_hash and nothing else. There is no title, no second text field, no phase, no tranche, no child_goal_ids, no goal_budget, no planner/verifier/adjudicator role field, no separate done_when/scope/constraints, and no attachment manifest. The lifecycle enum is exactly active|paused|blocked|completed; cancellation is a receipt plus removal from the active projection, not a fifth state. currentness_hash is the compare-and-swap token for every mutation, and an objective that exceeds the approximately 4,000-character product maximum is rejected with a typed error rather than truncated.
+gui_related: true
+gui_classification_reason: The record shape decides what the Goal Activity bar and Goal Activity Detail may render, and forbids every retired projection.
+depends_on: []
+unblocks: [GRS-050, GRS-052]
+acceptance_criteria:
+  - An active Goal V2 record, projection, event, command, or GUI surface carries none of the negative fields.
+  - The lifecycle enum has exactly four values and cancellation is modelled as a receipt.
+  - A stale currentness_hash is rejected and cannot write.
+  - An oversized objective is rejected with a typed error and the limit is shown.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: retired_goal_structure_reintroduced
+reasoning_tier: high
+context_scope: goal_runtime_v2_record
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/storage-plan.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+node_compile_hint:
+  mode: goal_v2_record_contract
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-001
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-002
+  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.1
+preserved_exact_tokens:
+  - "pm.goal.record.v2"
+  - "objective_text"
+  - "currentness_hash"
+  - "active|paused|blocked|completed"
+negative_constraints:
+  - Do not add a title, phase, tranche, child Goal, budget, or role field to the Goal record.
+  - Do not model cancellation as a lifecycle state.
+  - Do not truncate an oversized objective silently.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-049 - Retired Goal Role Cast And Model-Role Policy
+
+```yaml
+plan_unit_id: GRS-049
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime no longer requires a planner, evaluator, reducer, verifier, adjudicator, or certifier role to run a Goal, and no longer persists a Goal-owned model-role policy or certification tier. Model and account selection belong to Models System and Multi-Account. Where a workflow genuinely needs review, that review is an explicitly configured Review run under Collaborative Workflows or a certification step owned by the workflow itself, chosen by that owner rather than imposed by Goal. Bounded worker authority, evidence discipline, and proposal-versus-canonical distinctions remain requirements of the executing run owner, not of the Goal record.
+gui_related: false
+gui_classification_reason: This unit removes runtime role requirements and names their new owners; it defines no user-visible surface.
+depends_on: [GRS-048]
+unblocks: []
+acceptance_criteria:
+  - No Goal command, record, event, or projection names a required planner, evaluator, verifier, adjudicator, or certifier role.
+  - A Goal completes, pauses, blocks, or cancels identically regardless of whether any reviewer exists.
+  - Review remains available as an explicitly configured Collaborative Workflows run.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mandatory_goal_role_cast_reintroduced
+reasoning_tier: standard
+context_scope: goal_runtime_role_retirement
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: goal_role_retirement
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-003
+  - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#4
+preserved_exact_tokens:
+  - "mandatory planner/verifier roles"
+negative_constraints:
+  - Do not reintroduce a Goal-specific role cast or certification tier.
+  - Do not make any Goal outcome depend on a reviewer Goal Runtime does not own.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-050 - Durable Host Continuation And Evidence-Gated Completion
+
+```yaml
+plan_unit_id: GRS-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Continuation is host-owned and durable. One model response ending is never completion. At each turn boundary the host reloads canonical Goal state, checks currentness, compares the user stop epoch, evaluates owner-supplied completion evidence, and records a GoalContinuationRecord (pm.goal.continuation.v2) with result continue|complete|pause|blocked|cancelled. The next turn is an ordinary agent turn with bounded current workflow context; the host never accumulates a growing Goal prompt. result complete requires completion_evidence_refs supplied by the owning caller -- a model asserting it is finished is a proposal, not a completion. Continuation is idempotent per goal_id, goal_revision, owning_run_id, and next_attempt_ref, and survives compaction, restart, model switch, provider switch, and account switch.
+gui_related: false
+gui_classification_reason: Continuation is runtime behavior; its only GUI consequence is the Goal state shown in Activity.
+depends_on: [GRS-048]
+unblocks: [GRS-051]
+acceptance_criteria:
+  - A Goal continues past a single model response across at least three host-admitted turns.
+  - Continuation survives a simulated restart and a compaction without growing the prompt.
+  - A complete result without recorded completion evidence is refused.
+  - Replay after a crash does not duplicate a completed effect.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Goal continuation harness
+risk_class: goal_completes_on_one_model_response
+reasoning_tier: high
+context_scope: goal_runtime_continuation
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: goal_continuation_contract
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-004
+  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.3
+preserved_exact_tokens:
+  - "pm.goal.continuation.v2"
+  - "completion_evidence_refs"
+  - "user_stop_epoch"
+negative_constraints:
+  - Do not treat the end of a model turn as objective completion.
+  - Do not carry the continuation decision in conversation context instead of durable state.
+  - Do not accumulate objective or history text across turns.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-051 - Manual Stop Precedence Over Every Automatic Resume
+
+```yaml
+plan_unit_id: GRS-051
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  A manual Stop, Pause, or Cancel is authoritative and terminal for automation. It defeats Goal continuation, scheduled resume, Usage-reset resume, execution-window resume, Crew Auto, and provider-native retry until the user explicitly resumes or creates a new schedule. A continuation decided before a Stop that would dispatch after it is discarded by stop-epoch comparison at dispatch time. Goal Runtime consumes Scheduling and Quota Resume for window and quota mechanics and takes precedence over it on this one point. Quota waiting does not mutate objective_text, does not create a phase, and does not change state by itself; the Goal stays active with its run waiting.
+gui_related: true
+gui_classification_reason: The Resume control must render disabled with the exact latched-stop reason rather than appearing available.
+depends_on: [GRS-050]
+unblocks: []
+acceptance_criteria:
+  - A manually stopped Goal is not resumed by a quota reset, a window opening, a cleared dependency, or a later approval.
+  - A continuation decided before a Stop is discarded at dispatch.
+  - Quota wait leaves state active and objective_text unchanged.
+  - The Resume control names the latched reason when disabled.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: automatic_resume_overrides_user_stop
+reasoning_tier: high
+context_scope: goal_runtime_stop_precedence
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: goal_stop_precedence
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-005
+  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#1.5
+preserved_exact_tokens:
+  - "manual_stop_latched"
+  - "user_stop_epoch"
+negative_constraints:
+  - Do not auto-resume a manually stopped Goal for any reason.
+  - Do not let a quota wait change Goal state or objective text.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-052 - Retired Child Goals And Their Replacement Owners
+
+```yaml
+plan_unit_id: GRS-052
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Child Goals, child-goal topology, parent completion authority over children, child write leases, and subgoal tree display are retired. A Goal has zero or one active_run_ref and no queue of children. Work that was previously a child Goal is either a To-Do under ToDo Runtime, a participant under Collaborative Workflows, or a separate Goal with no parent edge. Write isolation, worktree separation, and scope-conflict detection remain requirements of the executing run and worktree owners. No subagent may resume or advance a Goal; only the host continuation loop admits the next turn.
+gui_related: true
+gui_classification_reason: This retires the collapsible child-goal display and every child-count projection from the Assistant surface.
+depends_on: [GRS-048]
+unblocks: []
+acceptance_criteria:
+  - No Goal record, projection, event, or GUI surface exposes a child Goal, a child count, or a subgoal tree.
+  - Bounded parallel work resolves to To-Dos or collaborative participants.
+  - A subagent cannot resume or advance a Goal.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: child_goal_topology_reintroduced
+reasoning_tier: high
+context_scope: goal_runtime_child_retirement
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/ToDo_Runtime.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: goal_child_retirement
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-006
+  - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#4
+preserved_exact_tokens:
+  - "child goals"
+  - "active_run_ref"
+negative_constraints:
+  - Do not reintroduce child Goals, child leases, or parent completion authority.
+  - Do not let a subagent continue a Goal.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-053 - Internal Caller Boundary And Workflow-Owned State
+
+```yaml
+plan_unit_id: GRS-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal V2 is used extensively inside Puppet Master: internal research, ledger-to-Plans transfer, PlanUnit generation, audit and repair, WorkNode preparation, and execution all run on the same engine, record, continuation loop, and stop semantics. Goal supplies exactly two things to those callers -- a stable objective and durable host continuation. Every caller keeps its own questions, stages, topics, findings, ledgers, PlanUnits, assignments, checkpoints, tests, evidence, artifacts, retries, schedules, and quotas under its own owner. A caller needing staged progress models the stages in its own records and reports readiness through completion evidence; it never adds a phase to the Goal and Goal never grows a field to hold it. Invisible internal Goals are not rendered in the Assistant Activity bar and obey the same stop epoch.
+gui_related: false
+gui_classification_reason: Internal Goals are not rendered in the Assistant surface; this unit defines a runtime and ownership boundary.
+depends_on: [GRS-048, GRS-050]
+unblocks: []
+acceptance_criteria:
+  - A research Goal, a ledger-to-Plans Goal, and a PlanUnit-generation Goal each complete multi-turn work.
+  - None of them writes a Goal field to hold workflow state.
+  - Internal Goals do not appear in the Assistant Activity bar and honour the stop epoch.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: workflow_state_absorbed_into_goal
+reasoning_tier: high
+context_scope: goal_runtime_internal_callers
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: goal_internal_caller_boundary
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-007
+  - pm-assistant-implementation-2026-09-02-recovered:07_DRY_OWNERSHIP_MAP.md#3
+preserved_exact_tokens:
+  - "ledger-to-Plans"
+  - "WorkNode preparation"
+negative_constraints:
+  - Do not add a workflow-state field to the Goal record for an internal caller.
+  - Do not build a second internal Goal engine.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-054 - Goal Change Authority And Two-Path Revision
+
+```yaml
+plan_unit_id: GRS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Exactly two paths write objective_text. A direct user edit in Goal Activity Detail writes revision n+1 with change_source user_direct; Save is the approved change and requires no confirmation dialog, no agent review, and no material-difference analysis. An agent-proposed complete replacement, permitted only after an explicit user instruction to change the Goal, dispatches cmd.chat.goal.propose_update, returns an ApprovalRequest, and writes nothing until the user approves, at which point the accepted text is written with change_source agent_proposed_user_approved and the originating approval_id. The agent may create a Goal on an explicit user request without a second approval, and may never infer one from a long task, repeated failures, a Plan Build, or a schedule. The system must never silently rewrite, narrow, broaden, summarize, reformat, translate, or clarify objective_text; an attempt is a typed error, not a quiet no-op.
+gui_related: true
+gui_classification_reason: This defines the Goal editor Save behavior and the approval dialog contents for agent proposals.
+depends_on: [GRS-048]
+unblocks: []
+acceptance_criteria:
+  - A direct user edit writes revision n+1 with no approval dialog.
+  - An agent proposal writes nothing before approval and nothing after denial or expiry.
+  - An unrequested silent rewrite is refused with a typed error.
+  - No Goal is created without an explicit user request.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: silent_goal_rewrite_or_inferred_goal
+reasoning_tier: high
+context_scope: goal_runtime_change_authority
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: goal_change_authority
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-008
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-009
+  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#4.6
+preserved_exact_tokens:
+  - "user_direct"
+  - "agent_proposed_user_approved"
+  - "Approve Change"
+negative_constraints:
+  - Do not show the user an approval dialog for the user's own edit.
+  - Do not let any subsystem write objective_text outside the two paths.
+  - Do not infer a Goal from workload or failure.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-055 - Goal And To-Dos Are Activity Domains
+
+```yaml
+plan_unit_id: GRS-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal and To-Dos are Activity domains, not transcript cards. The Activity bar renders a compact Goal projection with state and a truncated objective, and a hover menu offering Pause, Resume, Cancel, and an edit icon that opens Goal Activity Detail in edit mode. Goal Activity Detail shows the full objective, an editable field with Save and Cancel edit, the lifecycle controls, and a compact revision History listing revision number, timestamp, change_source, and the objective text at that revision. The detail view must not show a title field, phases, tranches, child Goals, budgets, a current action, a next action, a task drawer, an invented percentage progress bar, or separate scope, done-when, and constraints fields. Goal progress is visible through To-Dos and the ordinary transcript.
+gui_related: true
+gui_classification_reason: This unit defines the Goal Activity bar projection, hover menu, and Activity Detail surface.
+depends_on: [GRS-048, GRS-054]
+unblocks: []
+acceptance_criteria:
+  - No Goal or To-Do card is rendered in the transcript.
+  - The Goal hover menu offers Pause, Resume, Cancel, and edit-to-panel.
+  - The detail view exposes none of the retired fields.
+  - Every control dispatches a registered command and renders disabled with command_not_registered until registration closes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/activity-detail-verify.mjs
+risk_class: retired_goal_projection_in_transcript
+reasoning_tier: standard
+context_scope: goal_runtime_activity_surface
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+node_compile_hint:
+  mode: goal_activity_projection
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-010
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
+preserved_exact_tokens:
+  - "Goal Activity Detail"
+  - "Pause/Resume"
+  - "Cancel Goal"
+negative_constraints:
+  - Do not render Goal or To-Dos as transcript cards.
+  - Do not show a phase stepper, child goal tree, or budget meter.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-056 - Goal V1 To V2 Migration With Dropped-Field Custody
+
+```yaml
+plan_unit_id: GRS-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Migration reads pm.goal.record.v1 and writes pm.goal.record.v2 as a one-way structural reduction with explicit custody. objective maps to objective_text unchanged and an oversized objective quarantines rather than truncating. title, phases, currentPhaseId, tranches, subgoals, child_goal_ids, budget, and role-cast fields are dropped and recorded in the migration receipt; evidence attached to a completed phase is re-parented to the workflow owner that produced it or retained as an immutable historical artifact reference, never deleted to make a migration pass. V1 cancelled maps to a cancellation receipt plus removal from the active projection because cancellation is not a V2 state. Revision history is synthesized as a single revision 1 with change_source user_direct when none exists; migration never fabricates intermediate revisions. In-flight V1 Goals are paused across the boundary and require an explicit user resume, and a manually stopped V1 Goal stays stopped.
+gui_related: false
+gui_classification_reason: Migration is a storage and custody operation with no user-visible surface of its own.
+depends_on: [GRS-048]
+unblocks: []
+acceptance_criteria:
+  - Every dropped V1 field appears in the migration receipt with its custody disposition.
+  - Phase evidence is re-parented or retained, never deleted.
+  - Migration pauses in-flight Goals and resumes none of them.
+  - A record whose Project or thread edge cannot validate quarantines rather than guessing.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: silent_goal_data_loss_on_migration
+reasoning_tier: high
+context_scope: goal_runtime_v1_to_v2_migration
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/storage-plan.md
+  - Plans/Bootstrap_Planning_Migration.md
+node_compile_hint:
+  mode: goal_v1_to_v2_migration
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GOAL-011
+  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.1
+preserved_exact_tokens:
+  - "pm.goal.record.v1"
+  - "pm.goal.record.v2"
+negative_constraints:
+  - Do not delete dropped-field data to make a migration pass.
+  - Do not fabricate revision history.
+  - Do not resume work during migration.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -752,9 +1430,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-008
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-048
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Goal objective attachment bundles and phase-bound input freezing are retired: a Goal V2 record carries no attachment manifest and freezes no snapshot, and every freeze is owned by the workflow that needs it. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-048.
   Goal Runtime preserves oversized objectives, large pasted blocks, image attachments, and remote-session attachments as runtime-readable objective attachment bundles. Objective attachment bundles include goal-objective.md, pasted-text-N.txt, and attachments/manifest.json; local images and remote image URLs must resolve to runtime-readable paths or artifact IDs for local and remote app-server sessions. Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.
 gui_related: false
 gui_classification_reason: Attachment preservation and snapshot identity are runtime/evidence behavior, not visual presentation.
@@ -823,9 +1503,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-009
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-049
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal-specific worker/planner/evaluator/reducer/verifier/adjudicator role separation is retired as a Goal Runtime requirement; bounded authority and evidence discipline now belong to the executing run owner and to Review runs. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-049.
   Goal Runtime separates worker, planner, evaluator, reducer, verifier, adjudicator, and runtime controller roles. Workers have bounded authority, and weak-worker outputs are proposal only until stronger or deterministic layers verify, merge, route, or complete them. A low quality agent over massive documents may miss a lot, hallucinate issues, or claim no issues, and must never make global completion judgment. Material worker claims carry source_spans, target_spans, and evidence_refs; no-material claims use no_material_items_found with source_span_checked and reason duplicate, nonmaterial, already_covered, or context_only. Unsupported content cannot become canonical plan content or completion evidence. Workers cannot certify global or parent completion by themselves. Risk-triggered verification escalates when worker capability, confidence, scope, evidence, or validation status is insufficient.
 gui_related: false
 gui_classification_reason: Runtime role separation and safety policy are backend/control-plane behavior.
@@ -897,9 +1579,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-010
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-049
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Goal-owned model-role policy with mandatory verifier and adjudicator tiers is retired; model selection belongs to Models System and any reviewer is an explicitly configured Review run. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-049.
   Goal Runtime persists separate model-role policy for worker execution and verifier/adjudicator authority. The role-policy record names worker_default, planner, evaluator, adjudicator, and verifier roles, and escalation inputs include risk_class, failure_count, task type, and provider constraints. Goal Mode must provide native goal support for users will be using other models; lower quality agent paths require stronger evidence gates/escalation and must not assume the newest/biggest/highest quality model. The verifier/adjudicator model may inherit the worker model only when the inherited model satisfies the required policy for the goal's certification tier. Low-risk goals can inherit by default; standard and strong-certification goals use policy-derived verifier/adjudicator requirements; strong-certification goals block, not merely warn, when the requirement cannot be met. Exact provider-specific default tier mappings remain deferred.
 gui_related: false
 gui_classification_reason: This unit defines runtime/provider model-role policy, not the Settings GUI control.
@@ -1100,9 +1784,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-013
 unit_type: validation_criterion
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-050
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Risk-tiered Goal completion certification with an independent verifier role is retired; Goal V2 completes only on completion evidence supplied by the owning caller, with no Goal-imposed certification tier. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-050.
   Completion certification is tiered by risk and phase. Lightweight read-only or answer-only goals require final answer, addressed objective, known uncertainty, no file mutation, and no hidden blocker. Standard code/doc work requires changed files, task checklist disposition, relevant tests/checks run or skipped with reason, no known unresolved blockers, and respected user constraints. Strong-certification goals require replayable evidence, source-to-target mapping where applicable, independent verifier or verifier role, deterministic validators where available, changed artifact hashes, explicit unresolved/open items, and written completion certificate.
 gui_related: false
 gui_classification_reason: Certification tiers are runtime/validation policy, not GUI implementation.
@@ -1156,9 +1842,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-014
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-050
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Verifier and adjudicator availability tiering is retired from Goal Runtime; a Goal never blocks on a Goal-specific reviewer because Goal Runtime no longer requires one. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-050.
   Verifier/adjudicator unavailable behavior is tiered: low-risk goals may finish with a degraded receipt; standard goals may degrade only when no mutation or required check is affected; strong-certification goals become blocked, not complete. Receipts retain hashes, summaries, changed files, command identities, validator outputs, child receipts, verifier/adjudicator decisions, and source-to-target mappings where relevant. Raw logs are capped, redacted, separately stored, and referenced by hash/path.
 gui_related: false
 gui_classification_reason: Degraded verification and evidence retention are runtime/evidence policy, not GUI implementation.
@@ -1221,9 +1909,11 @@ compatibility_only_notes:
 ```yaml
 plan_unit_id: GRS-015
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-051
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Goal-owned hard budgets and limit gates are retired; no-progress and repeated-blocker detection remains with the executing run owner and quota truth remains with the Usage and scheduling owners. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-051.
   Goal Runtime uses progress_fingerprint records, blocker_signature, artifact hashes, retry/blocker detection, repeat_count, no-progress continuations, hard budgets, limit statuses, and deterministic validators as first-class gates. Budget and limit gates carry exact fields max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents, budget_limited, and usage_limited. Repeated identical blockers without artifact change route to repair/adjudication rather than infinite retry, and a goal cannot hide repeated non-progress, validator failure, or budget exhaustion behind a normal completion claim.
 gui_related: false
 gui_classification_reason: Progress, budget, and validator gates are runtime control behavior, not GUI implementation.
@@ -1285,9 +1975,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-016
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-052
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Parallel child Goals and parent completion authority over children are retired; bounded parallel work is now To-Dos under the To-Do Runtime or participants under Collaborative Workflows. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-052.
   Parent goals may spawn parallel child goals/subagents with dedicated child_goal_id, parent_goal_id, agent_id, objectives, allowed scope, write policy, budgets, task lists, recovery state, stale/re-steer state, result artifacts, and local completion receipts. Subagents are preferred by default for bounded parallel work. "As many as needed" parallel child goals are capped by max_parallel_agents and budget, and remain bounded by write_scope_conflict_detection, worktree isolation, and parent synthesis requirements. Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.
 gui_related: false
 gui_classification_reason: Child-goal state and authority are runtime orchestration behavior; chat display is an Assistant Chat consumer surface.
@@ -1360,9 +2052,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-017
 unit_type: constraint
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-052
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Child-goal write authority and single-writer leases are retired together with child Goals; write isolation belongs to the executing run and worktree owners. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-052.
   Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease. If two child goals need the same file, the parent goal serializes or isolates the work, and write_scope_conflict_detection runs before writes proceed.
 gui_related: false
 gui_classification_reason: Write authority and conflict policy are runtime/file orchestration behavior, not GUI implementation.
@@ -3255,9 +3949,11 @@ owner_hints: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Ex
 ```yaml
 plan_unit_id: GRS-027
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-053
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal-owned verification and repair loop with a mandatory certifier role cast is retired from Goal Runtime; custody moves to the Orchestrator and Executor owners, which keep the VerificationCycle, receipt, and repair-strategy semantics under their own contracts. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by GRS-053.
   Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create typed VerificationFinding records, findings, and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Runtime policy consumes the contract-owned VerificationCycle example shape with verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action without re-owning the schema. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct when verifying or certifying repair loops. Validator failure, verifier unavailable, and repair budget exhaustion produce blocked or degraded outcomes rather than certified complete. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
 gui_related: false
 gui_classification_reason: Verification, repair, receipts, and certification policy are runtime/governance behavior, not GUI implementation.
@@ -4605,3 +5301,98 @@ negative_constraints:
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
+
+## Additive Correction v4 — Goal Replay Lineage, Completion Guards, And Bound Plan Runs (2026-09-03)
+
+This section applies `PM_Assistant_v2_Additive_Correction_v4` (`GREPLAY-001..012`, and the
+Goal side of `PGOAL-003..015`) to this owner. It adds **no visible Goal field**. The Goal the
+user sees stays simple text with no title, no phases, no Done-When list, no scope block, no
+constraints block, and no attachment list, presented in Activity and never as a thread card.
+
+### GREPLAY-001..003 — Hidden lineage, origin, and replay
+
+A Goal carries durable replay lineage that is never rendered as Goal content:
+
+```text
+pm.goal.origin_lineage.v1
+  goal_id, goal_revision
+  origin_kind                 user_request | agent_created_at_user_request |
+                              plan_build | internal_workflow
+  source_message_refs[]       the messages the objective came from
+  source_context_manifest_ref what context was admitted when it was accepted
+  bound_plan_ref              set only for plan_build
+  owning_workflow_ref         set only for internal_workflow
+```
+
+Origin is recorded, never inferred — a Goal has no title to infer from. Source context is
+referenced, never pasted into `objective_text`.
+
+Replay reconstructs the exact accepted objective revision and the admitted context after a
+crash, a context compaction, a model switch, or a host transfer. Reconstruction reads durable
+records, not chat-window retention, and the objective text is never silently summarised,
+re-worded, or "improved" on the way back.
+
+### GREPLAY-004..008 — The host owns `completed`
+
+The host owns the `completed` transition. A model's claim of completion is a **proposal**
+evaluated against owner predicates; a provider returning a final message completes nothing.
+
+A Goal cannot complete while:
+
+- a required current To-Do is `pending`, `in_progress`, or `blocked` — checked against the
+  current list identity and revision, never against removed historical items;
+- admitted work or a bound `PlanRun` is active, unresolved, or recovery-required, including
+  background subagents and tools;
+- an internal workflow Goal's own completion predicate is unmet. That predicate is consumed
+  **by reference** with owner identity and currentness — research closure, ledger coverage,
+  PlanUnit compilation, audit closure, WorkNode result — and the workflow's phases are never
+  copied into Goal state.
+
+A skipped To-Do counts as resolved only when an explicit accepted skip disposition exists. An
+item that merely disappeared is not skipped and cannot satisfy completion.
+
+### GREPLAY-009..010 — Epochs, and the authority of a manual stop
+
+Pause, Cancel, objective revision, bound Plan revision, and run replacement each increment and
+fence the relevant continuation epoch. Late schedule, quota, and provider callbacks arriving
+against an old epoch are ignored. Timestamp order alone never admits a callback.
+
+A manual Pause or Cancel stays authoritative across host restart, execution windows, Usage
+resets, and provider reconnects. No automatic path resumes it without new user authorization,
+and a service restart is never read as resume consent.
+
+### GREPLAY-011 — History stays compact
+
+Goal history retains creation, approved text revisions, pause, resume, blocked, completion, and
+cancellation, each routeable to its evidence. Phases and runtime topology are never exposed as
+Goal fields, and no transcript-style Goal card is created.
+
+### GREPLAY-012 — One continuation authority
+
+Provider-native Goal, plan, or task-loop state stays noncanonical and can never drive
+continuation alongside the Puppet Master Goal loop. Where an adapter cannot suppress its native
+loop, the adapter discloses the constrained state; two continuation authorities never run at
+once. This extends `PROVIDER-001..012` in `Plans/CLI_Bridged_Providers.md`.
+
+### PGOAL Goal-side — Goals bound to a Plan run
+
+A Goal created by `Build as Goal` is an ordinary simple Goal with a `GoalPlanBinding`
+(`pm.goal.plan_binding.v1`, owned jointly with `Plans/Assistant_Plan_Runtime.md`). The binding
+references the existing thread To-Do list and the existing Deep Plan scoped PlanUnit bundle by
+identity; neither is duplicated.
+
+- `cmd.chat.goal.pause` pauses the bound `PlanRun` at a shared safe boundary and fences
+  continuation, schedule, and quota callbacks. The Plan's Build control stays `Building…`.
+- `cmd.chat.goal.resume` revalidates under the current epoch before resuming. It refuses after a
+  manual cancel and refuses against a stale Goal revision.
+- `cmd.chat.goal.cancel` cancels the Goal and the bound run, invalidates the schedules and quota
+  consent associated with **that execution**, and sets the Plan control to `Canceled`. Unrelated
+  scheduled messages in the thread are untouched.
+- `cmd.chat.goal.update` keeps direct user editing and approved agent proposals, updates the
+  simple objective only, and fences the old epoch. It never edits the bound approved Plan.
+
+Goal-driven Plan execution creates no phases, no tranches, no child Goals, and no Goal-specific
+budget, and never enters the Orchestrator. Completing the bound Plan completes the Goal exactly
+once; replay of that effect is idempotent. A material Goal/Plan conflict stops new mutation
+admission and returns the Plan to `Revise` after a safe stop rather than conforming either
+object to the other.

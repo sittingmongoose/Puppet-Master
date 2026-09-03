@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3469-L17383
+Source lines: L3552-L17480
 
-Source SHA256: `8c7a1cfb06b9002436190af12a1dcdccdc2913bbb7c6ffe13118bc081fa33613`
+Source SHA256: `a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810`
 
 ---
 
@@ -2169,17 +2169,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  route_target requires project_id plus one primary selector; reject missing
-  selector, competing subject_id and object_kind/object_id, object halves,
-  inspector_target without object selector, conflicting tab_id, line/range, or
-  per-surface state inside route_target.
+  route_target requires resolver_scope, required-present project_id, and one primary
+  selector. project_id is non-null for project/run/thread resolution and null
+  only for server, application, bootstrap, or global resolution. Reject missing or contradictory scope,
+  competing subject_id and object_kind/object_id, object halves, inspector_target
+  without object selector, conflicting tab_id, line/range, or per-surface state.
 gui_related: false
 gui_classification_reason: This unit defines route_target validation and reject rules.
 split_recommended: true
 depends_on: [CV-031]
 unblocks: [CV-055, CV-057, CV-058, CV-059]
 acceptance_criteria:
-  - route_target requires project_id plus one primary selector.
+  - route_target requires resolver_scope, required-present project_id, and one primary selector.
+  - Legacy scope omission normalizes only to Project scope with a non-null project_id; non-Project scope never fabricates a Project identity.
   - Invalid selector combinations are rejected.
   - line/range and per-surface state stay outside base route_target.
 validation_surfaces:
@@ -2205,6 +2207,7 @@ preserved_exact_tokens:
   - "`tab_id`"
   - "`line`"
   - "`range`"
+  - "`resolver_scope`"
 negative_constraints:
   - "Base route_target must not contain line/range or per-surface state."
 owner_hints:
@@ -7714,7 +7717,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   route_target is the canonical navigation-and-focus contract requiring
-  target_kind and project_id, with target_kind as destination class only.
+  target_kind, resolver_scope, and required-present project_id, with project_id
+  nullable only for explicit non-Project scopes and target_kind remaining a
+  destination class only.
 gui_related: false
 gui_classification_reason: This unit defines route_target required fields and destination classes.
 split_recommended: true
@@ -7722,7 +7727,8 @@ depends_on: [CV-031, CV-054]
 unblocks: [CV-164, CV-166, CV-169, CV-173]
 acceptance_criteria:
   - "route_target remains the canonical navigation-and-focus contract."
-  - "target_kind and project_id are required."
+  - "target_kind, resolver_scope, and required-present project_id are required."
+  - "project_id is non-null for project/run/thread resolution and null only for the explicit server, application, bootstrap, or global resolver scopes governed by CV-327."
   - "target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab."
   - "target_kind is destination class only."
 validation_surfaces:
@@ -7750,6 +7756,7 @@ preserved_exact_tokens:
   - "`bottom_panel`"
   - "`embedded_surface`"
   - "`page_tab`"
+  - "`resolver_scope`"
   - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md"
 negative_constraints:
   - "target_kind must not replace selector identity."
@@ -7766,7 +7773,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   route_target permits exactly one canonical primary selector: subject_id or
-  object_kind plus object_id, with closed subject and object-kind families.
+  object_kind plus object_id, with closed subject and object-kind families;
+  owner-issued context-binding fields constrain that selected object and never
+  become competing selectors.
 gui_related: false
 gui_classification_reason: This unit defines route primary selector identity.
 split_recommended: true
@@ -7777,6 +7786,7 @@ acceptance_criteria:
   - "subject_id closes to doc:<document_id> and artifact:<artifact_id>."
   - "object_kind list from the source span is preserved."
   - "object_id pairs with object_kind for object selectors."
+  - "Context-binding fields such as repository_id, snapshot_id, automation_binding_id, server_id, filter_ref, and focus_ref cannot replace or compete with the primary selector."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8033,15 +8043,17 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Route resolver refinement uses resolver_scope, route_recipe_id?, tab_family?,
-  and open_disposition?, with legacy tab-family and open-disposition labels
-  normalized to canonical underscore field names.
+  and open_disposition?, with resolver_scope closed across project, server,
+  bootstrap, run, thread, and global resolution and legacy tab-family and
+  open-disposition labels normalized to canonical underscore field names.
 gui_related: false
 gui_classification_reason: This unit defines route resolver fields and alias normalization.
 split_recommended: true
 depends_on: [CV-163]
 unblocks: [CV-170, CV-172]
 acceptance_criteria:
-  - "resolver_scope closes to project, run, thread, and global."
+  - "resolver_scope closes to project, server, bootstrap, run, thread, and global."
+  - "project_id pairing agrees with resolver_scope; bootstrap cannot fabricate a Project or Server identity."
   - "open_disposition closes to reuse_existing, open_new, split_group, and focus_only."
   - "route_recipe_id? and tab_family? remain owner-defined refinement fields."
   - "Legacy tab-family and open-disposition labels normalize to tab_family and open_disposition."
@@ -8067,6 +8079,8 @@ preserved_exact_tokens:
   - "`open_disposition?`"
   - "`tab-family`"
   - "`open-disposition`"
+  - "`server`"
+  - "`bootstrap`"
 compatibility_only_notes:
   - "Legacy labels tab-family and open-disposition map to tab_family and open_disposition."
 negative_constraints:

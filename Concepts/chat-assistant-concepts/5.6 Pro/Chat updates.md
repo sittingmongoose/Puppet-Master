@@ -19,8 +19,10 @@ Build with `python3 build.py` then `--check`.
 
 ## Composer chrome
 
-- The composer box is one field. **Attach**, the optional restore-draft control,
-  and **active capability glyphs** sit in the **bottom-left of the textarea**.
+- The composer box is one field. **Attach** and **active capability glyphs**
+  sit in the **bottom-left of the textarea**. There is **no restore-draft
+  control and no Draft product at all** — unsent text and attachments persist
+  invisibly per thread (see *Composer persistence and destination*).
   **Send** sits in the **bottom-right of the textarea** (~24px). The tools row
   under the field holds only Persona, Model, Mode, Permissions, and the wand,
   and is **centered** in both labeled and icon modes.
@@ -327,7 +329,9 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
 
 ## Activity bar and Activity Detail
 
-Goal, Todo, Subagents, Crew, Changes, and Artifacts are **per-thread**. A
+Goal, Todo, Subagents, Crew, BrainStorm, Review, Chat Room, Changes, and
+Artifacts are **per-thread**. Goal and To-Dos live **here, in Activity — never
+as transcript cards**. A
 domain appears in the activity bar, the filter row, hover cards, and Activity
 Detail only when that thread owns or invoked it, or when Goal Mode / Crew Mode
 has published it on that thread, or when that thread still has Goal/Crew
@@ -649,6 +653,240 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - Rows under the rail come from the pinned-or-live subject and stream in live; a
   superseded rail defaults to icons-only.
 
+## Primary mode menu and sidecars
+
+Six roots exactly, in this order: **Ask**, **Agent**, **Debug**, **Plan**,
+**Deep Plan**, **Review**. Plan, Deep Plan and Review carry sidecars that use
+the existing fixed-width sprout behaviour.
+
+- **Plan** — Quick / **Standard · Default** / Thorough.
+- **Deep Plan** — **Thorough · Default** / Exhaustive / BrainStorm, then a
+  divider and a persistent **Grill Me** check. Grill Me matches the Fast-style
+  auxiliary row pattern and is not model effort.
+- **Review** — Single Agent / **Multi-Pass Review · Default**.
+
+Those are the **six Plan choices**, and there are exactly six: there is no
+fourth regular depth and no Light / Balanced / Comprehensive labelling. Choosing
+a Plan or Deep Plan strategy sets the next planning request; choosing BrainStorm
+or either Review entry opens that workflow's configuration modal.
+
+`Debug` is a primary mode, not a wand toggle. **Context Lens stays a standalone
+header control and is never a wand item.**
+
+## Plan card
+
+The Plan is a transcript card because it is a human-readable deliverable. It is
+`plan-card-v2`, owned by `plans.js`.
+
+- Header is the Plan title, a `Plan · Vn` badge, and a **Rich Text / Markdown**
+  toggle. **Rich Text is the default.**
+- Rich Text and Markdown are two **projections of one immutable block array**,
+  so they cannot drift; the Markdown view keeps every block's identity. Neither
+  is editable: there is no `textarea` and no `contenteditable` anywhere in the
+  card, and no path from it to a caret.
+- Exactly **one** primary control, which changes label and is never replaced by
+  a separate status badge:
+  `Build` → `Building…` → `Completed` | `Canceled`. `Building…` and both
+  terminal labels are the same control, disabled. Pause / quota / window
+  explanations appear as small support copy **beside** the control — they never
+  become a fifth button state, so a paused build still reads `Building…`.
+- Actions as eligible: **Revise**, **Build With Crew**, **Build At…**,
+  **Send To Planning Wizard**, **Export**, **Cancel**, **Details**, and
+  **Open To-Dos** while building.
+- **Revise**, never Edit. It targets the ordinary composer at the current
+  Plan/version and the composer chrome visibly changes; the user submits prose
+  and the agent writes a complete new version. `V4 → V5`. Earlier versions stay
+  immutable and readable in Details.
+- At most **one unfinished Plan per thread**. An explicit new-Plan request
+  cancels the old one; it does not stack. Historical Completed/Canceled cards
+  stay in chronological transcript order and default **compact**. There is no
+  Plan picker and **no `Superseded` label** — that status is retired.
+- **Build freezes** exact plan_id, version, content hash, step ids, runtime,
+  permissions and worktree. Regular Plan creates To-Dos directly and **no**
+  ledger, PlanUnits, WorkNodes or Plan Compile. Deep Plan is `ledger_bound`:
+  it carries a **run-scoped** ledger and materialises **scoped** PlanUnits at
+  Build, never writing the global PlanUnit index and never creating WorkNodes.
+  **Neither enters Orchestrator.**
+- **Send To Planning Wizard** bypasses PRD Builder — the Assistant Plan is the
+  intake specification — and leaves a durable receipt in the transcript.
+- Export produces Markdown and a structured bundle as real downloads; the PDF
+  route opens the browser print pipeline and the receipt records what actually
+  happened rather than claiming a file was written.
+
+## To-Dos
+
+One **thread-local hierarchical** list, owned by `todos.js`. Parent To-Dos with
+child sub-To-Dos; every leaf carries a bounded expected outcome.
+
+- Statuses are exactly `pending | in_progress | completed | blocked | skipped`.
+- **Several leaves may be in progress at once**, and out of display order, when
+  dependencies permit. A pending item with an unmet dependency is *not* blocked.
+- Transitions are **individually receipted** for that item. Bulk completion,
+  a provider whole-list replacement, and a stale-revision write are all
+  **refused**, with the refusal visible.
+- There is **no verification status** anywhere user-visible; validation, when
+  needed, is its own To-Do. There is **no separate Done section and no source
+  grouping** — completed items stay inline, in place, struck through.
+
+## Composer persistence and destination
+
+- Unsent text and attachments persist **invisibly per thread** across thread
+  switching and reload. No banner, no toast, no restore button, no Draft UI.
+- **Up / Down** cycles prior sent user messages only while the composer is
+  **empty** and no module has a conflicting pending state.
+- **Passive native spellcheck** only — red underline and right-click
+  replacement, re-asserted after each patch. No icon, no control.
+- A **destination ribbon** sits adjacent to the field when the composer is
+  targeted at a Plan revision or a collaborative run, with an illuminated
+  destination glyph at its leading edge. `composer-state.js` owns the ribbon and
+  the `clear-destination` action; no other module renders one.
+- The **quota wait strip** shows reset truth *and its source*, with an opt-in
+  auto-resume checkbox. When the source is unknown it prints `unknown`,
+  suppresses the countdown entirely, and offers a field for the user to supply
+  one — which then reads `user supplied`, never `provider reported`.
+- Preserved unchanged: Attach and capability glyphs bottom-left inside the
+  field, Send/Stop bottom-right at 24×24, the centred tools row, the static 1px
+  `--border-strong` divider that does **not** glow or thicken on focus, and the
+  container-based selector collapse.
+
+## Attachments
+
+- The attachment **tray sits above the text entry**; Attach stays bottom-left
+  inside the field.
+- Processing shows a **thin animated top-edge tracer** across the thumbnail —
+  not a conventional progress bar. Reduced motion keeps the state and drops the
+  animation.
+- Hover reveals an **X**; clicking the body opens the item where supported.
+- Type, size, source, process state and open/download/details live in the
+  **hover-gated message chrome**, not a permanent metadata row.
+- **More Info** carries producer/run, related message/workflow, version, hash,
+  trust/freshness, retention, export history, and context-materialization truth.
+- Download resolves the **exact stored version** and discloses drift when the
+  live file has changed since the message. A failed operation never clears data.
+
+## Multi-agent workflows
+
+**Crew**, **Chat Room**, **Review** and **BrainStorm** are four kinds over one
+foundation, owned by `collaboration.js`: one run record, one participant record,
+one transcript renderer, one card, one full panel, one Activity projection and
+one composer-target path.
+
+- Each invocation opens its **configuration modal**, populated from Settings
+  defaults. Each participant has a selectable model and Persona, and
+  **requested versus effective** identity is always disclosed — never a silent
+  substitution.
+- Clicking a participant opens that participant's transcript. Cards expand
+  inline and pop out to full panels. **Message** targets the ordinary composer
+  and the chrome names the destination.
+- **Review** — Single Agent, or Multi-Pass with **1–8 reviewers, default 3**,
+  repeated models allowed. Initial passes are **blind and concurrent** against
+  one **frozen** target pack. Findings are normalized, then exchanged for
+  corroboration and disagreement. Review is **read-only and never auto-repairs**.
+- **BrainStorm** is the third Deep Plan choice and a strict superset of
+  Exhaustive. Base maximum **20** user questions; **Grill Me** raises it by a
+  configurable **+25**, for an effective maximum of **45**. The maximum is
+  shared across participants, not per-agent. Independent proposals, then evidence-driven debate, targeted
+  research, voting, **preserved dissent**, and synthesis into exactly **one**
+  Deep Plan document.
+- **Crew Auto** is a checkable submenu item that opens configuration when
+  enabled. It cannot start without committed config and cannot widen authority.
+- **Chat Room** discussion creates no To-Dos, Plan or Goal without an explicit
+  **promotion**.
+- **Wonderer** is a built-in Persona plus a reusable methodology skill, and
+  **Grill Me** is additive; both are options in Crew, Chat Room and BrainStorm.
+  Wonderer's leads stay labelled as hypotheses until researched.
+- Crew stays **distinct from Subagents**.
+
+## Back Seat Driver
+
+A separate **passive advisor**, deliberately not one of the four workflow kinds
+and deliberately not in the Multi-Agent Workflows manager.
+
+- **Off / Auto / On**, Auto default. Read-only: it never authorizes, mutates,
+  certifies, or substitutes for a required review or test, and the primary flow
+  completes identically whether BSD is Off, Auto, On, degraded or quarantined.
+- Severity is exactly `nit | concern | critical`.
+- **Held and reconfirmed advice** is the behaviour worth the design. A concern
+  raised against generation N is **held**, re-evaluated against newer
+  generations, and then either **cleared** (the newer work addressed it) or
+  **emitted** — a stale warning is never delivered as if it were current. A held
+  finding never renders as advice. Emitted advice names the generation it was
+  raised against.
+- It runs in its own isolated context and tool session over bounded deltas, with
+  a cursor, cooldown, catch-up, quarantine and self-compaction that never
+  touches the user's conversation.
+- Stage bindings cover PRD Builder, Planning Wizard, ledger / PlanUnit work,
+  Plan Compile, WorkNode creation and audit, execution, verification,
+  remediation and certification. A bound stage is still never gated by BSD.
+- It is visible in the compact Context row, a **Context Details** section, advice
+  cards, and **Usage with its own attribution**, never folded into the primary
+  run.
+
+## Scheduling, execution windows, and quota resume
+
+- **Schedule Message** lives in the **wand** menu. Plan cards expose **Build At…**.
+- Execution windows support start, wind-down, pause, recurring resume, timezone,
+  days and DST-safe behaviour, with the transition night stated rather than
+  hidden.
+- A schedule binds an **exact** Plan version and hash, or an exact message and
+  attachment snapshot, and **revalidates before dispatch**. A later revision
+  **invalidates** the schedule with a stated reason and requires an explicit
+  rebind — it never silently runs the newer version. A duplicate nightly fire is
+  idempotent.
+- **Manual pause / cancel / Stop always overrides** scheduled or quota
+  auto-resume, and the refusal is visible.
+
+## Browser capture and DevTools
+
+- Full visible screenshot, optional full-page screenshot, region screenshot, and
+  component selection.
+- Full and region capture send **immediately** to the current composer
+  destination using an **isolated payload** — unrelated composer text is never
+  sent along with it.
+- The component prompt bar offers **Send Now**, **Add To Composer List** and
+  **Insert Component At Cursor**; the last mode persists. The composer list is
+  numbered with hidden refs.
+- `BrowserElementContext` keeps a **stable locator** plus DOM, component,
+  source, style, rect and page-generation data, and an optional crop; the
+  locator survives a re-render.
+- Ordinary internal browser and DevTools control is policy-gated. The
+  **protected authentication browser stays human-only** and refuses with a
+  stated reason.
+
+## Teach, Teacher, memory, ELI5, Debug, and Revert
+
+- **Teach** is user → Puppet Master durable teaching, through `/teach` and
+  natural language. It captures a memory record and **never switches Persona**.
+- **Teacher** is a distinct **Persona** that explains Puppet Master to the user.
+  Teach and Teacher are never conflated.
+- **Automatic memory creation** stays active under the Assistant memory owner
+  and is not replaced by Teach.
+- **ELI5** is an independent conversation override plus an application default —
+  not a Persona and not a mode. It changes presentation only and never mutates
+  artifacts.
+- **Debug** is a primary mode with a full Investigation Context and
+  verification / cleanup / recovery states.
+- **Revert Last Agent Edit** restores the exact latest eligible **whole-turn**
+  mutation manifest through FileSafe. It is distinct from conversation Rewind
+  and is never partial; an ineligible turn says why.
+- **Thread title policy** is Default resolver, None, or an explicit available
+  model. A manual rename **locks** the auto-title until an explicit Regenerate,
+  and an unavailable model is disclosed rather than silently substituted. An
+  untitled thread reads **New chat**.
+
+## What is fixture and what is not
+
+This is a concept lab, and the distinction is kept visible rather than blurred:
+
+- Every control above changes **fixture state** and renders a durable,
+  re-readable result. None of them dispatches a native command — the commands
+  they would call are registered in `Plans/UI_Command_Catalog.md` and have no
+  handler yet, and each card's Details names the ones it would have used.
+- Demo records carry a `demo: true` marker.
+- Progress timers here are client-side. No client-local timer is authoritative
+  in the runtime spec, and these are not either.
+- No required behaviour is represented by a toast alone.
+
 ## File pointers (this directory unless noted)
 
 - Engine: `app.js` (work records `state.works`, 500ms clock, sequencer, reveal gating,
@@ -659,6 +897,167 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - Composer overlay, queue, selector collapse: `app.js` + `composer.css`.
 - Menus: `menus.js` + `menus.css`. Context: `context.js` + `context.css`.
   History pin: `history.js` + `history.css`.
+- Assistant-redesign wave (2026-09-03), one owner per file, each registering
+  through `window.PM56_EXT` and loaded before `app.js`:
+  `composer-state.js` (buffers, destination, history, spellcheck, quota strip) ·
+  `attachments.js` (tray, tracer, message chrome, More Info, downloads) ·
+  `plans.js` (the `plan-card-v2` document card, projections, Build control) ·
+  `todos.js` (hierarchical per-thread list, receipts, refusals) ·
+  `collaboration.js` (Crew / Chat Room / Review / BrainStorm over one foundation) ·
+  `bsd.js` (Back Seat Driver policy, hold/reconfirm, Context and Usage) ·
+  `scheduling.js` (Schedule Message, Build At, windows, quota resume) ·
+  `browser-capture.js` (screenshots, region, component picker, DevTools) ·
+  `assistant-features.js` (Teach/Teacher, memory, ELI5, Revert, Debug, title).
+  Each has a matching `.css` concatenated last. `composer-state` loads first of
+  the set because the others write the composer destination it owns; `plans.js`
+  installs the identity-preserving `window.PM56_RUNTIME` merging accessor.
 - Verification: `node orbit-verify.mjs` (+ `--negative`), `node tests/audit.mjs`,
-  `node tests/context-verify.mjs` (current context contract: **207 checks**);
+  `node tests/context-verify.mjs` (current context contract: **207 checks**),
+  and the redesign suites `node tests/assistant-plan-verify.mjs`,
+  `tests/todo-verify.mjs`, `tests/collaboration-verify.mjs`,
+  `tests/bsd-verify.mjs`, `tests/attachments-composer-verify.mjs`,
+  `tests/scheduling-verify.mjs`, `tests/browser-capture-verify.mjs`,
+  `tests/restored-features-verify.mjs`;
   build with `python3 build.py` then `--check` (never hand-edit the two HTML outputs).
+
+## 31. Additive Correction v4 (2026-09-03)
+
+`PM_Assistant_v2_Additive_Correction_v4` was applied on top of the implemented
+v2 branch. It is **additive**: every rule above stays in force except where a
+clause here explicitly retires an earlier value, and no v2 system was
+reimplemented. The 5.6 Pro defaults, themes, Orbit and Step Rail, menus, thread
+history, questionnaires, Context Lens, the context ring and details, the
+activity bar, Send/Stop, the follow-up queue, the attachment tray and the
+composer selectors are all unchanged.
+
+**Question ceilings replace the old ones.** Plan Quick **3**, Standard **6**,
+Thorough **8**; Deep Plan Thorough **10**, Exhaustive **15**, BrainStorm **20**.
+Grill Me adds **25**, giving effective maxima of **28 / 31 / 33 / 35 / 40 / 45**.
+The totals are derived from base + extension, never stored a second time. The
+BrainStorm base of 15 and the Grill extension of +10 are **retired**; §21 above
+was corrected in place rather than annotated.
+
+One counter serves a whole planning run and is shared by every participant, so
+the ceiling is never multiplied by roster size. A `QuestionItem` is charged once,
+when its identity is first durably presented — re-render, restart, retry and
+reopen charge nothing. A question already answered in the thread is resolved
+from that answer, and a fact an agent can research is routed to research;
+neither consumes the allowance. At the ceiling the admission returns typed
+`question_budget_exhausted`: the run does not fail, no extra question is
+persisted, and Build is disabled only when an unresolved item is an explicit
+build blocker.
+
+**Plan progress is one host-owned projection.** `PlanProgressProjection` derives
+every step state from the thread's To-Dos, their work bindings and the Plan-step
+mapping — joined on stable ids, never on heading text or list position. Leaf
+states are `pending`, `in_progress`, `completed`, `blocked` and `skipped`; a
+parent may be `mixed`. Several steps can be in progress at once and steps can
+complete out of display order. A step whose *dependency* is unmet stays
+`pending`; only a genuine blocker makes it `blocked`. Rich Text shows a marker
+beside each step and Markdown shows a separate gutter rail — neither changes one
+byte of the approved document, and the Markdown serialisation is byte-identical
+whether a Plan is at rest or running. The `- [ ]` checkbox that used to appear in
+the Markdown projection is gone: a checkbox reads as a status and as an editable
+checklist, and status belongs in the rail.
+
+**The Build control still has exactly four labels.** An unfinished Plan reads
+`Building…` even when it is paused, waiting on a window or a Usage reset, holding
+a failed attempt, needing attention or needing recovery. Those conditions appear
+as secondary truth beside the control with the owner's exact reason and only the
+actions the owner admits. `Failed` is not a fourth label.
+
+**Plan Details tell the truth about the backend.** A Regular Plan states
+`Direct planning` and `No ledger, no PlanUnits`. A Deep Plan shows its ledger
+summary, its scoped PlanUnit count and validation, and the PlanUnit-to-To-Do
+mapping — hidden by default, inspectable there, and never rendered as To-Do items
+or as an Activity domain.
+
+**Plan embeds are versioned.** Mermaid, graph, chart, image, diagram, table,
+code, checklist, video and interactive blocks all go through the shared artifact
+renderer and freeze an exact `artifact_version` at approval. Video and
+interactive blocks carry a static fallback that PDF export uses, with the
+caption. A missing, stale, denied or unsupported artifact renders an explicit
+unavailable block naming which of the four it is — never dropped, and never
+substituted with another version.
+
+**Export separates the document from the run.** `Plan document` exports the
+approved bytes and never changes the Plan hash. `Execution report` is a separate
+versioned artifact carrying To-Dos, step states, deviations, evidence and a
+completion summary keyed to the exact version, hash and run, and it says plainly
+that it is not the approved Plan.
+
+**Build as Goal** sits in the Plan's secondary actions. It creates one simple
+Goal, one PlanRun and one binding, atomically, for the exact Plan version and
+hash, and it *references* the existing To-Do list and scoped PlanUnit bundle
+rather than duplicating either. The Goal is text-only and lives in Activity — no
+title, no phases, no child Goals, no Orchestrator, no thread card. Pausing the
+Goal keeps the Plan at `Building…` with a Paused reason; cancelling it makes the
+Plan `Canceled` and fences only that execution's schedules and quota consent,
+leaving unrelated scheduled messages alone. A repeated request with the same
+idempotency binding returns the original Goal and run.
+
+**Scheduled builds store one topology** — agent, goal_driven or crew — frozen at
+commit, with a frozen Crew definition where that applies, and create no run, Goal
+or provider attempt until first dispatch. Starting Build Now invalidates the
+pending schedule for that version first.
+
+**Scheduled messages have a card.** One durable schedule renders one card in its
+source thread after a commit, never on button press and never as a toast alone.
+Its states are `Scheduled`, `Held`, `Sent`, `Canceled`, `Failed` and `Expired`,
+each with its exact time, IANA timezone, destination, preview, attachment count
+and requested model. A `Sent` card links the message that was actually inserted,
+at the real dispatch time. Attachments freeze exact artifact versions and hashes;
+an unresolvable destination holds rather than rerouting, and an explicitly chosen
+model fails rather than silently falling back.
+
+**Workflow modals are transactions.** Opening or editing a Crew, Crew Auto,
+BrainStorm, Review, Chat Room, BSD or Build-With-Crew modal creates only a local
+draft. Before a confirmed Start there is no run, provider request, Usage record,
+event, card, settings write or install — the concept counts these on an
+instrumented ledger, and open → configure → cancel leaves every counter at zero.
+Cancelling a natural-language BrainStorm returns the request to the composer
+exactly as written. Crew Auto's checkmark appears only after a successful
+Settings commit.
+
+**Participants reach stated outcomes**: completed, failed, timed out,
+unavailable, canceled, or explicitly waived, with required and optional declared
+by the workflow definition. Nothing is silently substituted; a retry creates a
+new attempt identity and preserves the failed one; a replacement or a waiver
+needs an explicit reason. A one-reviewer Review says it is a single pass and
+claims no corroboration; a partial Review reports requested, completed and
+failed counts and stays attention-required. An active **Wonderer abstains** and
+leaves the vote denominator entirely — two-for, two-against with a Wonderer
+present reads 50% of four eligible voters, not 40% of five, and abstention is
+never counted as opposition. A failed coordinator blocks clean completion and is
+named; a failed Chat Room member produces no fabricated messages.
+
+**Browser components revalidate at dispatch.** Session, page, frame, generation,
+locator and captured identity are all checked. Exactly one compatible match may
+refresh the generation and proceed; zero matches, multiple matches, a destroyed
+frame, an identity mismatch or a changed source mapping return typed
+`stale_capture` with a recapture action, and nothing is sent. In a numbered
+composer list one stale item blocks only itself.
+
+**Folders attach through the shared command.** `cmd.chat.attachment.add` takes
+`semantic_kind: file | folder`, and a folder carries a bounded manifest — exact
+root identity, entries and hash policy, exclusions, permissions and
+materialization status — rather than a recursive dump.
+`cmd.chat.add_file_reference` survives only as a file-only alias and refuses a
+folder; the old statement that folder references are out of scope is retired.
+
+**To-Do graphs fail closed.** A self-parent, a parent cycle, a dependency cycle
+of any length, a cross-thread reference, and an unknown or duplicate id are each
+rejected as `invalid_graph` with nothing committed. Replacing a list is one
+atomic operation that first classifies every piece of active work as retained,
+rebound, safely canceled or refused. A late event is applied only when the list
+revision, item revision, work binding, Plan version and run epoch are all still
+current; a stale one is retained as rejected evidence. Validation stays an
+ordinary To-Do — there is still no verification status, no source groups and no
+separate Done section — and the test module was renamed from `todo-verify` to
+`todo-runtime-verify` so the name stops implying otherwise.
+
+**What this is not.** Everything above is concept behaviour backed by fixtures.
+It is not native proof: no Rust handler, storage engine, scheduler, provider
+adapter or recovery path runs here, and the readiness report keeps canonical,
+concept and native verdicts separate. Accessibility is out of scope for this
+correction, and no pre-existing accessibility behaviour was removed.

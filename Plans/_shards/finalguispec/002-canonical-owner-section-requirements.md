@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4-L136
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -83,7 +83,7 @@ Tab badges stay sparse and purposeful: the `Progress` badge represents meaningfu
 
 ### Canonical route payload
 
-Route payloads may target `source_control`, `github_actions`, `docker_manager`, or `document_pane`; panel-local subviews and `/selectors` refine the landing inside that destination, and remembered state supplies defaults only when the route does not override them.
+Route payloads may target `source_control`, `repository_automation`, `docker_manager`, or `document_pane`; panel-local subviews and `/selectors` refine the landing inside that destination, and remembered state supplies defaults only when the route does not override them. The retired `github_actions` panel ID is a migration-read alias that normalizes to `repository_automation` with a GitHub automation binding; it never creates a second occupant.
 
 Object-first deep-link recipes normalize `/message`, scheduler `/blocking/safe-point/remediation/attempt`, and `/package/lane/worktree/concern/promotion/graph` lineage through one route shape; `Plans/assistant-chat-design.md`, `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/WorktreeGitImprovement.md` consume the same object-first routing instead of inventing an SCM-local navigation identity.
 

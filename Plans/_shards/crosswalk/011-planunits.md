@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L486-L3136
+Source lines: L564-L3227
 
-Source SHA256: `949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80`
+Source SHA256: `9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c`
 
 ---
 
@@ -2187,20 +2187,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
-  Cross-surface actions Open in Source Control, Open in GitHub Actions, and
-  Open in Docker Manager use canonical context, shared panel-context envelopes,
-  and receipt-extension payloads that extend shared runtime receipts and blocked
-  packets with domain capability and identity refs without creating a second
-  receipt, navigation, or index owner.
+  Cross-surface actions Open in Source Control, Open in Actions & Pipelines, and
+  Open in Docker Manager use canonical route_target context and receipt-extension
+  payloads that extend shared runtime receipts and blocked packets with domain
+  capability and identity refs without creating a second receipt, navigation, or
+  index owner. Open in GitHub Actions is migration input for the canonical
+  automation occupant with an explicit GitHub AutomationBinding.
 gui_related: true
 gui_classification_reason: This unit governs cross-surface panel actions, blocked cards, destination panels, and deep links.
 split_recommended: true
 split_recommendation_reason: Crosswalk-S0031 is split across Source Control operation, identity, command, and cross-surface panel concerns.
-depends_on: [C-039, C-040, C-041]
+depends_on: [C-039, C-040, C-041, FGI-012, CV-327]
 unblocks: [C-043, C-044]
 acceptance_criteria:
-  - "Cross-surface actions use exactly Open in Source Control, Open in GitHub Actions, and Open in Docker Manager when canonical context exists."
-  - "panel-switch navigation uses a shared panel-context envelope instead of panel-local ad hoc arguments."
+  - "Cross-surface actions use exactly Open in Source Control, Open in Actions & Pipelines, and Open in Docker Manager when canonical context exists."
+  - "Open in GitHub Actions normalizes to repository_automation with an explicit GitHub AutomationBinding and has no peer occupant or handler."
+  - "panel-switch navigation consumes route_target instead of panel-local ad hoc arguments."
   - "receipt-extension payloads extend shared runtime receipt and blocked-payload packets without creating second owners."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2222,6 +2224,7 @@ source_lineage:
 preserved_exact_tokens:
   - "`Open in Source Control`"
   - "`Open in GitHub Actions`"
+  - "`Open in Actions & Pipelines`"
   - "`Open in Docker Manager`"
   - "`panel-switch`"
   - "`panel-context`"
@@ -2253,39 +2256,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
-  GitHubActionsSurface uses GitHub API identity and capability, not Git
-  transport state, for hosted workflow/admin behavior; Current Branch,
-  Workflows, and Settings are subviews of one Actions surface, GitHub API
-  remains hidden plumbing, and migration labels such as Git (GitHub) are aliases
-  rather than owner changes.
+  GitHub-specific workflow and administration behavior uses GitHub API identity
+  and capability, not Git transport state, inside an explicit GitHub
+  AutomationBinding selected by the canonical repository_automation / Actions &
+  Pipelines occupant. Current Branch, Workflows, and Settings remain GitHub-native
+  subviews; GitHub API remains hidden plumbing, and GitHubActionsSurface,
+  github_actions, and Git (GitHub) are migration inputs rather than owner or
+  occupant changes.
 gui_related: true
-gui_classification_reason: This unit governs GitHub Actions surface subviews and migration labels visible in the UI.
+gui_classification_reason: This unit governs GitHub-native automation subviews inside the provider-neutral Actions & Pipelines occupant and its visible migration labels.
 split_recommended: false
-depends_on: [C-042]
+depends_on: [C-042, FGI-012]
 unblocks: [C-046]
 acceptance_criteria:
-  - "GitHub Actions uses GitHub API identity and capability rather than Git transport state."
-  - "Current Branch, Workflows, and Settings are subviews of one Actions surface."
+  - "A GitHub AutomationBinding uses GitHub API identity and capability rather than Git transport state."
+  - "Current Branch, Workflows, and Settings are GitHub-native subviews inside the one Actions & Pipelines occupant."
   - "GitHub API remains hidden plumbing, not a user panel."
-  - "Final GUI migration labels are routing aliases, not owner changes."
+  - "GitHubActionsSurface, github_actions, and Git (GitHub) are migration inputs that do not create another occupant, handler, or owner."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: github_actions_identity_boundary_drift
+risk_class: github_automation_binding_or_occupant_identity_drift
 reasoning_tier: high
-context_scope: github_actions_surface_identity_boundary
+context_scope: github_automation_binding_surface_identity_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
+  - Plans/Forge_Integrations.md
+  - Plans/FinalGUISpec.md
   - Plans/GitHub_Integration.md
   - Plans/GitHub_API_Auth_and_Flows.md
   - Plans/newtools.md
 node_compile_hint:
-  mode: github_actions_surface_identity_boundary
+  mode: github_automation_binding_surface_identity_boundary
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0032
 preserved_exact_tokens:
   - "`GitHubActionsSurface`"
+  - "`repository_automation`"
+  - "`Actions & Pipelines`"
+  - "`AutomationBinding`"
+  - "`github_actions`"
   - "`GitHub API`"
   - "`Current Branch`"
   - "`Workflows`"
@@ -2297,6 +2308,8 @@ negative_constraints:
   - "Final GUI migration labels such as Git (GitHub) are routing aliases, not owner changes."
 owner_hints:
   - Plans/Crosswalk.md
+  - Plans/Forge_Integrations.md
+  - Plans/FinalGUISpec.md
   - Plans/GitHub_Integration.md
   - Plans/GitHub_API_Auth_and_Flows.md
   - Plans/newtools.md

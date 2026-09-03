@@ -1,0 +1,238 @@
+{
+  "suite": "assistant-plan-verify",
+  "total": 46,
+  "pass": 46,
+  "fail": 0,
+  "results": [
+    {
+      "name": "plans.js registered PM56_PLANS",
+      "pass": true,
+      "detail": "object"
+    },
+    {
+      "name": "no undeclared action collisions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "primary mode menu is exactly the six redesign roots",
+      "pass": true,
+      "detail": "Ask | Agent | Debug | Plan | Deep Plan | Review"
+    },
+    {
+      "name": "Plan offers exactly Quick / Standard / Thorough — no fourth depth",
+      "pass": true,
+      "detail": "Quick | Standard | Thorough"
+    },
+    {
+      "name": "Deep Plan offers exactly Thorough / Exhaustive / BrainStorm",
+      "pass": true,
+      "detail": "Thorough | Exhaustive | BrainStorm"
+    },
+    {
+      "name": "Deep Plan carries a persistent Grill Me check",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Review offers exactly Single Agent / Multi-Pass Review",
+      "pass": true,
+      "detail": "Single Agent | Multi-Pass Review"
+    },
+    {
+      "name": "the retired Light / Balanced / Comprehensive labels are gone",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "current Plan card renders with a version badge",
+      "pass": true,
+      "detail": "Plan · V5"
+    },
+    {
+      "name": "no editable caret in any Plan card",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Rich Text is the default projection",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Markdown toggle switches the projection",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Markdown keeps block identity (same ids, same order)",
+      "pass": true,
+      "detail": "40 rich ids vs 40 markdown ids"
+    },
+    {
+      "name": "Markdown projection is read-only",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "exactly one Build control per Plan card",
+      "pass": true,
+      "detail": "{\"ap-index\":{\"count\":1,\"label\":\"Build\",\"disabled\":false},\"ap-auth\":{\"count\":1,\"label\":\"Completed\",\"disabled\":true},\"ap-flags\":{\"count\":1,\"label\":\"Canceled\",\"disabled\":true}}"
+    },
+    {
+      "name": "Build control shows only the four allowed labels",
+      "pass": true,
+      "detail": "Build | Completed | Canceled"
+    },
+    {
+      "name": "terminal and Building… states are the same control, disabled",
+      "pass": true,
+      "detail": "{\"ap-index\":{\"count\":1,\"label\":\"Build\",\"disabled\":false},\"ap-auth\":{\"count\":1,\"label\":\"Completed\",\"disabled\":true},\"ap-flags\":{\"count\":1,\"label\":\"Canceled\",\"disabled\":true}}"
+    },
+    {
+      "name": "no `Superseded` label anywhere in the transcript",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "completed Plan renders compact with a Completed control",
+      "pass": true,
+      "detail": "{\"compact\":true,\"label\":\"Completed\"}"
+    },
+    {
+      "name": "canceled Plan renders compact with a Canceled control",
+      "pass": true,
+      "detail": "{\"compact\":true,\"label\":\"Canceled\"}"
+    },
+    {
+      "name": "Revise targets the composer at the current Plan/version",
+      "pass": true,
+      "detail": "{\"kind\":\"plan-revision\",\"label\":\"Revise Plan · V5\",\"detail\":\"Tenant-scoped analytics read path\",\"refId\":\"ap-index\",\"glyph\":\"document\",\"placeholder\":\"Describe what should change. The agent writes V6.\"}"
+    },
+    {
+      "name": "composer chrome visibly changes for the revision target",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Revise opens no Plan editor caret",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "Build moves the control to Building…",
+      "pass": true,
+      "detail": "building"
+    },
+    {
+      "name": "Build freezes exact plan_id, version, hash, step ids, runtime, permissions, worktree",
+      "pass": true,
+      "detail": "{\"plan_id\":\"ap-index\",\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"step_ids\":[\"ps-0\",\"ps-1\",\"ps-2\",\"ps-3\",\"ps-4\",\"ps-5\"],\"runtime\":\"Claude Sonnet 4.6\",\"permissions\":\"Auto\",\"worktree\":\"feature/query-index\",\"at\":\"9:02 PM\",\"orchestrator\":false}"
+    },
+    {
+      "name": "regular Plan creates To-Dos directly and NO PlanUnits",
+      "pass": true,
+      "detail": "{\"todos\":{\"at\":\"9:02 PM\",\"from\":\"plan_steps\",\"count\":6,\"reused\":false},\"units\":null}"
+    },
+    {
+      "name": "Build never enters Orchestrator",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Building… is the same control, disabled as a duplicate-build action",
+      "pass": true,
+      "detail": "{\"text\":\"Building…\",\"disabled\":true}"
+    },
+    {
+      "name": "Deep Plan is ledger-bound with a RUN-SCOPED ledger",
+      "pass": true,
+      "detail": "{\"backend\":\"ledger_bound\",\"ledger\":true,\"ledgerScope\":\"run\",\"units\":6,\"mat\":{\"at\":\"9:41 PM\",\"validated\":true,\"globalIndex\":false,\"worknodes\":0,\"scope\":\"ap-cache@V1\",\"count\":6},\"status\":\"building\",\"wait\":null}"
+    },
+    {
+      "name": "Deep Plan carries scoped PlanUnits, not global ones",
+      "pass": true,
+      "detail": "6"
+    },
+    {
+      "name": "Deep Plan creates no WorkNodes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a Building… Deep Plan carries its frozen approval and exact hash",
+      "pass": true,
+      "detail": "{\"version\":1,\"hash\":\"sha-demo:051c3a08\",\"at\":\"9:41 PM\",\"runtime\":\"Claude Opus 5\",\"permissions\":\"Auto\",\"worktree\":\"feature/session-cache\",\"orchestrator\":false,\"plan_id\":\"ap-cache\",\"step_ids\":[\"cs-0\",\"cs-1\",\"cs-2\",\"cs-2a\",\"cs-2b\",\"cs-3\",\"cs-4\",\"cs-5\",\"cs-6\"]}"
+    },
+    {
+      "name": "the scoped PlanUnit bundle is materialised, validated, and NOT in the global index",
+      "pass": true,
+      "detail": "{\"at\":\"9:41 PM\",\"validated\":true,\"globalIndex\":false,\"worknodes\":0,\"scope\":\"ap-cache@V1\",\"count\":6}"
+    },
+    {
+      "name": "Deep Plan maps To-Dos from the scoped PlanUnits, not from raw steps",
+      "pass": true,
+      "detail": "{\"at\":\"9:41 PM\",\"from\":\"planunits\",\"count\":6}"
+    },
+    {
+      "name": "Deep Plan card renders in its own thread",
+      "pass": true,
+      "detail": "{\"label\":\"Building…\",\"disabled\":true,\"wait\":\"Outside execution windowOutside the configured execution window (22:00–06:00). The run resumes at the next window; no client timer is authoritative.ResumeDetailsCancel build\",\"buildCount\":1}"
+    },
+    {
+      "name": "wait copy is support text beside the control, not a fifth button label",
+      "pass": true,
+      "detail": "{\"label\":\"Building…\",\"disabled\":true,\"wait\":\"Outside execution windowOutside the configured execution window (22:00–06:00). The run resumes at the next window; no client timer is authoritative.ResumeDetailsCancel build\",\"buildCount\":1}"
+    },
+    {
+      "name": "exactly one current Plan per thread",
+      "pass": true,
+      "detail": "ap-index"
+    },
+    {
+      "name": "a new-Plan request cancels the unfinished Plan rather than stacking",
+      "pass": true,
+      "detail": "{\"old\":\"ap-index\",\"oldStatus\":\"canceled\",\"now\":null}"
+    },
+    {
+      "name": "Export offers Markdown, PDF and the structured bundle",
+      "pass": true,
+      "detail": "markdown | pdf | bundle | markdown | bundle"
+    },
+    {
+      "name": "each export records a durable receipt naming what actually happened",
+      "pass": true,
+      "detail": "[\"markdown\",\"bundle\",\"pdf\"]"
+    },
+    {
+      "name": "Markdown and the bundle are handed to the browser as real files",
+      "pass": true,
+      "detail": "handed to the browser as ap-index-V5.md | handed to the browser as ap-index-V5.json"
+    },
+    {
+      "name": "the PDF receipt does not claim a file was written",
+      "pass": true,
+      "detail": "opened the browser print pipeline — whether a PDF was written is the browser’s decision, not this page’s"
+    },
+    {
+      "name": "Build With Crew opens with the exact current version and hash PRESELECTED",
+      "pass": true,
+      "detail": "Build With CrewTenant-scoped analytics read pathPreselected, and not editable hereplanV5hashsha-demo:869d26cbs"
+    },
+    {
+      "name": "Start freezes the exact version/hash and hands the Plan to the one Crew implementation",
+      "pass": true,
+      "detail": "{\"crew\":{\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"at\":\"9:02 PM\"},\"status\":\"building\",\"bound\":\"ap-index\"}"
+    },
+    {
+      "name": "reset restores the Plan fixtures",
+      "pass": true,
+      "detail": "{\"status\":\"ready\",\"version\":5}"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

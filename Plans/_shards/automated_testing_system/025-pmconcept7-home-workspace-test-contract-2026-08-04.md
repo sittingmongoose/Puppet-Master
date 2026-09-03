@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2840-L2936
+Source lines: L2982-L3079
 
-Source SHA256: `b25fb1aa2371456e671d9f1b4f5ae98200727a5497af258069de595ce5aa4ee9`
+Source SHA256: `d9088cb32285085b1df949842deb13a1346357974dd723292987bea02a7e9b0f`
 
 ---
 
@@ -75,6 +75,7 @@ depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245]
 unblocks: []
 acceptance_criteria:
 - All four editor and Browser targets and all four File Manager targets are exercised through visible production controls, and each asserts the rendered buffer rather than a dispatch count or a global marker.
+- The factory-state fixture proves Browser Preview and Automation remain owned by Panel 1 in the exact stable `Preview -> Automation -> overflow/actions anchor` group order, Browser Preview is active, inactive Automation is not painted or keyboard-focusable, overflow fitting cannot resurrect it, and a settled multi-frame observation records zero recurring child-list moves involving either owner tab.
 - Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable; host routes are exercised through the grab handle by pointer and by keyboard, and resizers assert changed rendered geometry.
 - Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
 - The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
@@ -88,7 +89,7 @@ validation_surfaces:
 risk_class: false_green_home_certification
 reasoning_tier: standard
 context_scope: home_live_certification
-implementation_surfaces: [Plans/Automated_Testing_System.md, Concepts/pm7-tools/verify/home_workspace_matrix.mjs]
+implementation_surfaces: [Plans/Automated_Testing_System.md, Concepts/pm7-tools/home_workspace_source.py, Concepts/pm7-tools/verify/home_workspace_matrix.mjs]
 node_compile_hint:
   mode: home_executable_matrix
   create_worknodes: false

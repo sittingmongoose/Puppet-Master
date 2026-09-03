@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4729-L4806
+Source lines: L4729-L4807
 
-Source SHA256: `94877149d1b497059f7b921e13eb98409c6de5f1862ae5e6bc7bbcf566b4988a`
+Source SHA256: `f083fc0c7e53c324e4b735dc7df7db49667b8f504ac8c22329fa3aa4f6274487`
 
 ---
 
@@ -37,8 +37,8 @@ canonical_text: >-
   dispatches the existing usage-subject navigation command. Event-primary callers use usage_event/usage_event_ref;
   a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
-  dispatch no command; and a Settings change dispatches cmd.settings.bloom.open against the canonical
-  Settings destination identity.
+  dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
+  `pm.settings_route_request.v1` target and exact-return identity.
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -71,7 +71,8 @@ source_lineage:
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md
 preserved_exact_tokens:
   - cmd.usage.forecast.request
-  - cmd.settings.bloom.open
+  - cmd.settings.open
+  - pm.settings_route_request.v1
   - none_pending_event_authority
   - missing_event_registration
   - UNKNOWN_OPEN

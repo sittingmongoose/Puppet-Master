@@ -2,7 +2,7 @@
   "schema_id": "pm.shared_integration_runtime.command_contract_fixtures.v1",
   "schema_version": "1.0.0",
   "contract_schema": "Plans/shared_integration_runtime.schema.json",
-  "claim_boundary": "Static schema fixtures only; no central registration, native handler, production wiring, EventRecord, provider call, installation activation, or runtime proof.",
+  "claim_boundary": "Static schema fixtures plus central production-intent metadata only; no native handler, EventRecord, provider call, authentication completion, capability verification, connection activation, or runtime proof.",
   "request_cases": [
     {
       "name": "add_cursor_origin_connection_without_raw_credentials",
@@ -14,6 +14,7 @@
         "action": "add",
         "command_instance_id": "cmdinst-connection-add-1",
         "idempotency_key": "idem-connection-add-1",
+        "command_context_ref": "command-context-connection-add-1",
         "origin": "forge_gui",
         "connection_kind": "forge",
         "provider_id": "cursor_origin",
@@ -34,6 +35,54 @@
           "profile_ref": null,
           "account_id": null,
           "credential_ref": null,
+          "nonsecret_configuration_ref": "connection-config-ref-origin-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": "capability-requirement-origin-1",
+          "verification_evidence_ref": null,
+          "patch_ref": null,
+          "probe_policy_ref": null,
+          "confirmation_ref": null,
+          "credential_disposition": "not_applicable",
+          "remote_data_disposition": "not_applicable",
+          "details_projection_ref": null
+        }
+      }
+    },
+    {
+      "name": "activate_verified_backup_connection_draft",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_request",
+        "command_id": "cmd.integration.connection.activate",
+        "action": "activate",
+        "command_instance_id": "cmdinst-connection-activate-1",
+        "idempotency_key": "idem-connection-activate-1",
+        "command_context_ref": "command-context-connection-activate-1",
+        "origin": "settings_gui",
+        "connection_kind": "backup",
+        "provider_id": "object_storage",
+        "provider_variant": "s3_compatible",
+        "connection_id": "connection-draft-backup-1",
+        "project_id": "project-1",
+        "route_id": "backup-destination-setup",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "expected_connection_generation": 3,
+        "topology_generation": 4,
+        "permission_snapshot_ref": "permission-snapshot-activate-1",
+        "observable_work_ref": "work-connection-activate-1",
+        "return_context_ref": "return-backup-destination",
+        "mutation": {
+          "setup_route": "backup-destination-setup",
+          "profile_ref": "profile-ref-backup-1",
+          "account_id": "account-backup-1",
+          "credential_ref": "broker-ref-backup-1",
+          "nonsecret_configuration_ref": "connection-config-ref-backup-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": "capability-requirement-backup-nondestructive-1",
+          "verification_evidence_ref": "verification-evidence-backup-canary-1",
           "patch_ref": null,
           "probe_policy_ref": null,
           "confirmation_ref": null,
@@ -53,6 +102,7 @@
         "action": "update",
         "command_instance_id": "cmdinst-connection-update-1",
         "idempotency_key": "idem-connection-update-1",
+        "command_context_ref": "command-context-connection-update-1",
         "origin": "settings_gui",
         "connection_kind": "forge",
         "provider_id": "gitlab",
@@ -73,6 +123,10 @@
           "profile_ref": "profile-ref-1",
           "account_id": "account-1",
           "credential_ref": "credential-broker-ref-1",
+          "nonsecret_configuration_ref": "connection-config-ref-gitlab-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": null,
+          "verification_evidence_ref": null,
           "patch_ref": "connection-patch-1",
           "probe_policy_ref": null,
           "confirmation_ref": null,
@@ -92,6 +146,7 @@
         "action": "test",
         "command_instance_id": "cmdinst-connection-test-1",
         "idempotency_key": "idem-connection-test-1",
+        "command_context_ref": "command-context-connection-test-1",
         "origin": "forge_gui",
         "connection_kind": "forge",
         "provider_id": "azure_devops",
@@ -112,6 +167,10 @@
           "profile_ref": "profile-ref-2",
           "account_id": "account-2",
           "credential_ref": "credential-broker-ref-2",
+          "nonsecret_configuration_ref": "connection-config-ref-azure-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": "capability-requirement-azure-readiness-1",
+          "verification_evidence_ref": null,
           "patch_ref": null,
           "probe_policy_ref": "probe-policy-auth-capability-currentness",
           "confirmation_ref": null,
@@ -131,6 +190,7 @@
         "action": "remove",
         "command_instance_id": "cmdinst-connection-remove-1",
         "idempotency_key": "idem-connection-remove-1",
+        "command_context_ref": "command-context-connection-remove-1",
         "origin": "settings_gui",
         "connection_kind": "forge",
         "provider_id": "bitbucket",
@@ -151,6 +211,10 @@
           "profile_ref": "profile-ref-3",
           "account_id": "account-3",
           "credential_ref": "credential-broker-ref-3",
+          "nonsecret_configuration_ref": "connection-config-ref-bitbucket-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": null,
+          "verification_evidence_ref": null,
           "patch_ref": null,
           "probe_policy_ref": null,
           "confirmation_ref": "confirmation-remove-connection-3",
@@ -170,6 +234,7 @@
         "action": "open_details",
         "command_instance_id": "cmdinst-connection-details-1",
         "idempotency_key": "idem-connection-details-1",
+        "command_context_ref": "command-context-connection-details-1",
         "origin": "forge_gui",
         "connection_kind": "forge",
         "provider_id": "gitlab",
@@ -190,6 +255,10 @@
           "profile_ref": "profile-ref-4",
           "account_id": "account-4",
           "credential_ref": null,
+          "nonsecret_configuration_ref": "connection-config-ref-gitlab-self-managed-1",
+          "auth_continuation_ref": null,
+          "capability_requirement_ref": null,
+          "verification_evidence_ref": null,
           "patch_ref": null,
           "probe_policy_ref": null,
           "confirmation_ref": null,
@@ -232,6 +301,159 @@
     }
   ],
   "other_positive_cases": [
+    {
+      "name": "connection_activate_permission_is_exact_and_non_widening",
+      "target_def": "SharedIntegrationPermissionDecision",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "shared_integration_permission_decision",
+        "decision_id": "permission-connection-activate-1",
+        "command_id": "cmd.integration.connection.activate",
+        "permission_snapshot_ref": "permission-snapshot-activate-1",
+        "required_scopes": ["connection_activate"],
+        "decision": "admitted",
+        "confirmation_ref": null,
+        "credential_material_exposed": false,
+        "authority_widening": false,
+        "decided_at_utc": "2026-09-01T00:14:00Z"
+      }
+    },
+    {
+      "name": "connection_activate_starts_handler_unavailable",
+      "target_def": "IntegrationConnectionAvailability",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_availability",
+        "command_id": "cmd.integration.connection.activate",
+        "provider_id": "object_storage",
+        "connection_id": "connection-draft-backup-1",
+        "project_id": "project-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "connection_generation": 3,
+        "topology_generation": 4,
+        "state": "unavailable",
+        "disabled_reason": "handler_unavailable",
+        "currentness": "current",
+        "evaluated_at_utc": "2026-09-01T00:14:00Z"
+      }
+    },
+    {
+      "name": "first_time_backup_connection_draft_persists_auth_continuation",
+      "target_def": "ConnectionDraftRecord",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "connection_draft_record",
+        "connection_id": "connection-draft-backup-1",
+        "connection_kind": "backup",
+        "provider_id": "object_storage",
+        "provider_variant": "s3_compatible",
+        "project_id": "project-1",
+        "home_server_id": "server-1",
+        "execution_host_id": "host-1",
+        "execution_environment_id": "env-1",
+        "draft_state": "authentication_pending",
+        "connection_generation": 1,
+        "nonsecret_configuration_ref": "connection-config-ref-backup-1",
+        "profile_ref": null,
+        "credential_ref": null,
+        "auth_continuation_ref": "auth-continuation-backup-first-profile-1",
+        "capability_requirement_ref": "capability-requirement-backup-nondestructive-1",
+        "capability_snapshot_ref": null,
+        "verification_evidence_ref": null,
+        "active_connection_ref": null,
+        "persistence_owner": "IntegrationConnectionRegistry",
+        "created_at_utc": "2026-09-01T00:10:00Z",
+        "updated_at_utc": "2026-09-01T00:10:00Z",
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "act_148_draft_create_normalizes_to_add",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-148","source_candidate_id":"cmd.connection.draft.create","resolved_command_id":"cmd.integration.connection.add","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::add","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "act_149_activate_normalizes_to_activate",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-149","source_candidate_id":"cmd.connection.activate","resolved_command_id":"cmd.integration.connection.activate","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::activate","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "act_150_update_normalizes_to_update",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-150","source_candidate_id":"cmd.connection.update","resolved_command_id":"cmd.integration.connection.update","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::update","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "act_151_test_normalizes_to_test",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-151","source_candidate_id":"cmd.connection.test","resolved_command_id":"cmd.integration.connection.test","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::test","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "act_152_remove_normalizes_to_remove",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-152","source_candidate_id":"cmd.connection.remove","resolved_command_id":"cmd.integration.connection.remove","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::remove","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "act_153_open_details_normalizes_to_persisted_connection_details",
+      "target_def": "ConnectionCandidateResolution",
+      "instance": {"schema_id":"pm.shared_integration_runtime.command_contracts.v1","record_kind":"connection_candidate_resolution","action_id":"ACT-153","source_candidate_id":"cmd.connection.open_details","resolved_command_id":"cmd.integration.connection.open_details","owner_role":"IntegrationConnectionRegistry","resolution_kind":"pre_policy_alias_to_canonical_command","source_registered":false,"peer_handler_created":false,"normalization_before_gates":true,"sole_future_handler":"handlers::integration_connection::open_details","handler_unavailable":true,"persistence_owner":"IntegrationConnectionRegistry","expected_event_types":[],"runtime_evidence_claimed":false}
+    },
+    {
+      "name": "draft_open_details_is_owner_local_request",
+      "target_def": "ConnectionDraftOpenDetailsRequest",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "connection_draft_open_details_request",
+        "action_id": "ui.integration.connection.draft.open_details",
+        "packet_token": "cmd.connection.draft.open_details",
+        "connection_id": "connection-draft-backup-1",
+        "expected_connection_generation": 1,
+        "current_projection_ref": "connection-draft-projection-backup-1",
+        "permission_snapshot_ref": "permission-snapshot-draft-details-1",
+        "route_target_ref": "route-settings-backup-draft-details",
+        "focus_return_ref": "focus-settings-backup-destination-row",
+        "accessibility_description": "Open current non-secret connection draft details and return to the initiating destination row.",
+        "presentation_only": true,
+        "persistent_state_mutation": false,
+        "domain_handler": null,
+        "domain_event_emission": false,
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "draft_open_details_returns_navigation_receipt",
+      "target_def": "ConnectionDraftOpenDetailsResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "connection_draft_open_details_result",
+        "action_id": "ui.integration.connection.draft.open_details",
+        "connection_id": "connection-draft-backup-1",
+        "observed_connection_generation": 1,
+        "outcome": "completed",
+        "route_projection_ref": "connection-draft-projection-backup-1",
+        "navigation_receipt_ref": "navigation-receipt-draft-details-1",
+        "focus_return_ref": "focus-settings-backup-destination-row",
+        "return_behavior": "restore_exact_initiating_focus_and_route",
+        "persistent_state_mutation": false,
+        "domain_event_emission": false,
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "connection_activation_error_has_safe_reason_and_recovery",
+      "target_def": "IntegrationConnectionCommandError",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_error",
+        "error_code": "authentication_required",
+        "retryable": true,
+        "safe_message": "Complete the protected sign-in and re-run non-destructive verification before activation.",
+        "retry_after_utc": null,
+        "technical_details_ref": null,
+        "recovery_action_ref": "recovery-action-resume-protected-auth-1",
+        "effect_state": "none"
+      }
+    },
     {
       "name": "forgejo_handler_unavailable_preserves_git_transport",
       "target_def": "SharedIntegrationConsumerProjection",
@@ -509,7 +731,7 @@
         "prior_connection_generation": 0,
         "result_connection_generation": 1,
         "outcome": "succeeded",
-        "connection_state": "ready",
+        "connection_state": "authentication_pending",
         "availability": {
           "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
           "record_kind": "integration_connection_availability",
@@ -528,6 +750,7 @@
         },
         "permission_decision_ref": "permission-result-add",
         "non_secret_connection_ref": "connection-projection-add",
+        "auth_continuation_ref": "auth-continuation-origin-first-profile-1",
         "capability_snapshot_ref": "capability-snapshot-add",
         "probe_evidence_ref": null,
         "details_projection_ref": null,
@@ -541,6 +764,56 @@
         "receipt_ref": "receipt-connection-add",
         "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
         "completed_at_utc": "2026-09-01T00:15:00Z"
+      }
+    },
+    {
+      "name": "result_connection_activate_requires_verified_capabilities",
+      "target_def": "IntegrationConnectionCommandResult",
+      "instance": {
+        "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+        "record_kind": "integration_connection_command_result",
+        "result_id": "result-connection-activate-1",
+        "command_id": "cmd.integration.connection.activate",
+        "command_instance_id": "cmdinst-connection-activate-1",
+        "provider_id": "object_storage",
+        "connection_id": "connection-draft-backup-1",
+        "project_id": "project-1",
+        "prior_connection_generation": 3,
+        "result_connection_generation": 4,
+        "outcome": "succeeded",
+        "connection_state": "ready",
+        "availability": {
+          "schema_id": "pm.shared_integration_runtime.command_contracts.v1",
+          "record_kind": "integration_connection_availability",
+          "command_id": "cmd.integration.connection.activate",
+          "provider_id": "object_storage",
+          "connection_id": "connection-draft-backup-1",
+          "project_id": "project-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "connection_generation": 4,
+          "topology_generation": 4,
+          "state": "available",
+          "disabled_reason": null,
+          "currentness": "current",
+          "evaluated_at_utc": "2026-09-01T00:16:00Z"
+        },
+        "permission_decision_ref": "permission-result-activate",
+        "non_secret_connection_ref": "connection-projection-backup-active-1",
+        "auth_continuation_ref": null,
+        "capability_snapshot_ref": "capability-snapshot-backup-nondestructive-1",
+        "probe_evidence_ref": "verification-evidence-backup-canary-1",
+        "details_projection_ref": null,
+        "observable_work_ref": "work-connection-activate-1",
+        "return_settlement": {
+          "return_context_ref": "return-backup-destination",
+          "settlement": "restored",
+          "initiating_surface_restored": true
+        },
+        "error": null,
+        "receipt_ref": "receipt-connection-activate",
+        "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+        "completed_at_utc": "2026-09-01T00:16:00Z"
       }
     },
     {
@@ -577,6 +850,7 @@
         },
         "permission_decision_ref": "permission-result-update",
         "non_secret_connection_ref": "connection-projection-update",
+        "auth_continuation_ref": null,
         "capability_snapshot_ref": "capability-snapshot-update",
         "probe_evidence_ref": null,
         "details_projection_ref": null,
@@ -626,6 +900,7 @@
         },
         "permission_decision_ref": "permission-result-test",
         "non_secret_connection_ref": "connection-projection-test",
+        "auth_continuation_ref": null,
         "capability_snapshot_ref": "capability-snapshot-test",
         "probe_evidence_ref": "probe-evidence-current-1",
         "details_projection_ref": null,
@@ -675,6 +950,7 @@
         },
         "permission_decision_ref": "permission-result-remove",
         "non_secret_connection_ref": "connection-projection-remove",
+        "auth_continuation_ref": null,
         "capability_snapshot_ref": "capability-snapshot-remove",
         "probe_evidence_ref": null,
         "details_projection_ref": null,
@@ -724,6 +1000,7 @@
         },
         "permission_decision_ref": "permission-result-open_details",
         "non_secret_connection_ref": "connection-projection-open_details",
+        "auth_continuation_ref": null,
         "capability_snapshot_ref": "capability-snapshot-open_details",
         "probe_evidence_ref": null,
         "details_projection_ref": "connection-details-redacted-1",
@@ -1218,24 +1495,107 @@
       "base_positive_case": "embedded_tsnet_connector_identity_remains_server_owned",
       "patch": {"project_id": "project-1"},
       "expected_failure": "one connector identity per Server"
+    },
+    {
+      "name": "draft_create_requires_nonsecret_configuration",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "add_cursor_origin_connection_without_raw_credentials",
+      "patch": {"mutation.nonsecret_configuration_ref": null},
+      "expected_failure": "typed non-secret configuration reference"
+    },
+    {
+      "name": "activate_requires_profile_after_authentication",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "activate_verified_backup_connection_draft",
+      "patch": {"mutation.profile_ref": null},
+      "expected_failure": "authenticated profile reference"
+    },
+    {
+      "name": "activate_requires_capability_requirement",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "activate_verified_backup_connection_draft",
+      "patch": {"mutation.capability_requirement_ref": null},
+      "expected_failure": "minimum capability requirement"
+    },
+    {
+      "name": "activate_requires_verification_evidence",
+      "target_def": "IntegrationConnectionCommandRequest",
+      "base_positive_case": "activate_verified_backup_connection_draft",
+      "patch": {"mutation.verification_evidence_ref": null},
+      "expected_failure": "non-destructive verification evidence"
+    },
+    {
+      "name": "successful_activation_requires_capability_snapshot",
+      "target_def": "IntegrationConnectionCommandResult",
+      "base_positive_case": "result_connection_activate_requires_verified_capabilities",
+      "patch": {"capability_snapshot_ref": null},
+      "expected_failure": "successful activation capability snapshot"
+    },
+    {
+      "name": "first_time_auth_pending_draft_requires_continuation",
+      "target_def": "ConnectionDraftRecord",
+      "base_positive_case": "first_time_backup_connection_draft_persists_auth_continuation",
+      "patch": {"auth_continuation_ref": null},
+      "expected_failure": "first-time protected authentication continuation"
+    },
+    {
+      "name": "candidate_resolution_cannot_create_peer_handler",
+      "target_def": "ConnectionCandidateResolution",
+      "base_positive_case": "act_149_activate_normalizes_to_activate",
+      "patch": {"peer_handler_created": true},
+      "expected_failure": "source alias has no peer handler"
+    },
+    {
+      "name": "candidate_resolution_must_match_action_id",
+      "target_def": "ConnectionCandidateResolution",
+      "base_positive_case": "act_149_activate_normalizes_to_activate",
+      "patch": {"resolved_command_id": "cmd.integration.connection.update"},
+      "expected_failure": "action candidate exact normalization"
+    },
+    {
+      "name": "draft_details_cannot_persist_state",
+      "target_def": "ConnectionDraftOpenDetailsRequest",
+      "base_positive_case": "draft_open_details_is_owner_local_request",
+      "patch": {"persistent_state_mutation": true},
+      "expected_failure": "owner-local navigation is non-persistent"
+    },
+    {
+      "name": "draft_details_cannot_claim_domain_handler",
+      "target_def": "ConnectionDraftOpenDetailsRequest",
+      "base_positive_case": "draft_open_details_is_owner_local_request",
+      "patch": {"domain_handler": "handlers::integration_connection::draft_open_details"},
+      "expected_failure": "owner-local navigation has no domain handler"
+    },
+    {
+      "name": "connection_error_requires_safe_recovery_route",
+      "target_def": "IntegrationConnectionCommandError",
+      "base_positive_case": "connection_activation_error_has_safe_reason_and_recovery",
+      "patch": {"recovery_action_ref": null},
+      "expected_failure": "typed safe recovery action"
     }
   ],
   "coverage": {
     "exact_command_ids": [
       "cmd.integration.connection.add",
+      "cmd.integration.connection.activate",
       "cmd.integration.connection.update",
       "cmd.integration.connection.test",
       "cmd.integration.connection.remove",
       "cmd.integration.connection.open_details",
       "cmd.installation.select"
     ],
-    "request_case_count": 6,
-    "negative_case_count": 29,
+    "request_case_count": 7,
+    "command_request_case_count": 7,
+    "candidate_resolution_case_count": 6,
+    "connection_draft_persistence_case_count": 1,
+    "connection_draft_local_action_request_and_result_count": 2,
+    "connection_safe_reason_and_recovery_error_case_count": 1,
+    "negative_case_count": 40,
     "connection_provider_payload_discriminator_covered": true,
     "installation_select_separated_from_acquisition_and_authentication": true,
     "native_runtime_claimed": false,
     "event_registration_claimed": false,
-    "positive_result_case_count": 6,
+    "positive_result_case_count": 7,
     "all_commands_have_positive_request_and_result": true,
     "connection_probe_evidence_machine_closed": true,
     "installation_activation_proof_machine_closed": true,

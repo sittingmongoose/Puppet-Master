@@ -1132,3 +1132,269 @@ source_lineage: [Plans/Wiring_Matrix.md#WM-051]
 negative_constraints: [Do not mint false domain commands for ephemeral presentation., Do not invent synthetic controls solely to satisfy a census.]
 compile_disposition: extend_existing_owner
 ```
+
+## Puppet Master Assistant Redesign Wiring Rules - 2026-09-03
+
+The Assistant redesign adds fifty-five production-intent wiring rows under the `assistant_redesign.*` element namespace. The following rules govern them and any later row in the same families.
+
+**One producer, one command, one handler.** Every mutating Assistant control names exactly one registered command ID and exactly one sole future target handler. A control that cannot name a registered command renders disabled with `command_not_registered`. A page-local action ID, an alias, a fixture, a client timer, or a toast may never stand in for an unregistered command, and a successful-looking receipt may never be produced by the surface itself.
+
+**View-local intents are declared, not disguised.** Three rows carry a view-local or owner-internal effect rather than a user-facing command: composer text entry updating the `ComposerBuffer`, parent To-Do expansion, and Plan view switching between Rich Text and Markdown. Each is declared explicitly as `(view-local intent)` in its wiring row. A view-local intent must not emit a domain event, must not write a `TodoTransition`, and must not be presented in the catalog as a command.
+
+**Availability and disabled reason come from the owner.** Every row reads `state.assistant_redesign.<selector>.availability` and `state.assistant_redesign.<selector>.disabled_reason` from its semantic owner before dispatch. A surface that cannot read the owner projection renders the control disabled rather than optimistic, and it announces the exact owner reason rather than a generic one.
+
+**Negative paths are part of the wiring row.** Each row declares the specific thing it must not do — no Draft UI, no direct Plan edit, no bulk To-Do completion, no unrelated composer text on a component send, no auto-resume after a manual stop, no provider-native state read back as canonical. A wiring row whose negative path is not asserted by a test is not closed.
+
+**Manual stop outranks every automatic producer.** Any row whose producer is a schedule, an execution window, a quota resume, Crew Auto, Goal continuation, or a provider retry must re-check the latched `user_stop_epoch` immediately before dispatch and abort with the exact failed clause when it has moved.
+
+**Read-only advisors are never in the mutation path.** Back Seat Driver rows produce advice records and projections only. No BSD row may be a precondition of a primary-flow row, and no primary-flow row may read BSD health to decide whether it may proceed.
+
+**Exact-version targets revalidate.** Any row that dispatches against a Plan, a message snapshot, or a frozen review target carries the exact version and hash, revalidates immediately before dispatch, and aborts rather than rebinding to a newer target.
+
+### UIW-018 - Assistant Redesign Row Discipline And Declared View-Local Intents
+
+```yaml
+plan_unit_id: UIW-018
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  Every Assistant redesign wiring row names one producer, one registered command ID, and one sole future target handler, reads its owner availability and exact disabled reason from the declared state selectors before dispatch, and renders disabled with command_not_registered when no registered command exists. A row carrying a view-local or owner-internal effect rather than a user-facing command is declared explicitly as a view-local intent, emits no domain event, writes no transition record, and receives no catalog command row. Each row declares its specific negative path and is not closed until a test asserts it. A row whose producer is a schedule, window, quota resume, Crew Auto, Goal continuation, or provider retry re-checks the latched user_stop_epoch immediately before dispatch and aborts with the exact failed clause when it has moved. Back Seat Driver rows produce advice records and projections only and may never be a precondition of a primary-flow row. Rows dispatching against a Plan, message snapshot, or frozen review target carry the exact version and hash, revalidate immediately before dispatch, and abort rather than rebinding.
+gui_related: true
+gui_classification_reason: These rules govern how every Assistant control resolves availability, dispatch, and disabled state.
+depends_on: [UIW-017]
+unblocks: []
+acceptance_criteria:
+  - Every row names one command or is declared a view-local intent.
+  - No page-local action, alias, fixture, timer, or toast simulates a registered command.
+  - Every declared negative path has an asserting test.
+  - Automatic producers re-check the stop epoch immediately before dispatch.
+  - No primary-flow row depends on BSD health.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: simulated_command_success_or_undeclared_local_action
+reasoning_tier: high
+context_scope: assistant_redesign_wiring_rules
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: static_wiring_rule_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json
+  - pm-assistant-implementation-2026-09-02-recovered:05_GUI_WIRING_MATRIX.md
+  - pm-assistant-implementation-2026-09-02-recovered:DRY-004
+preserved_exact_tokens:
+  - "command_not_registered"
+  - "handler_unavailable"
+  - "user_stop_epoch"
+negative_constraints:
+  - Do not let a view-local intent emit a domain event or a transition record.
+  - Do not make a primary-flow row depend on Back Seat Driver.
+  - Do not rebind an exact-version dispatch to a newer target.
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+```
+
+## Assistant redesign: what belongs in the production wiring matrix (2026-09-03)
+
+`Plans/Wiring_Matrix.production.json` is the register of **registered
+GUI → command → handler** wiring. Its schema requires every row to name a
+`ui_command_id` matching `^cmd\.…`, and that requirement is load-bearing: a row
+in this file asserts that a real command identity exists for the element.
+
+A **view-local or owner-internal effect is therefore not a row here.** The
+Assistant redesign initially carried sixteen such rows, each named
+`(view-local intent) …` and each marked `proposed_census_required` in the source
+packet — that is, explicitly *not* registered. They have been removed from the
+production matrix. Their behaviour remains specified in their owner documents;
+what they never had was a command identity, and inventing one to satisfy the
+schema would have made this file claim a registration that does not exist.
+
+The removed rows, with their owners:
+
+| Packet row | Effect | Owner |
+|---|---|---|
+| W-001 | local ComposerBuffer update | `Plans/storage-plan.md` |
+| W-012 | internal continuation evaluation | `Plans/Goal_Runtime_System.md` |
+| W-021 | To-Do work binding | `Plans/ToDo_Runtime.md` |
+| W-022 | To-Do transition | `Plans/ToDo_Runtime.md` |
+| W-026 | existing questionnaire submit | `Plans/PRD_Builder.md` |
+| W-027 | research capability request | `Plans/Collaborative_Workflows.md` |
+| W-028 | BrainStorm vote action | `Plans/Collaborative_Workflows.md` |
+| W-031 | Review internal result | `Plans/Collaborative_Workflows.md` |
+| W-032 | Review vote action | `Plans/Collaborative_Workflows.md` |
+| W-033 | Review finalize action | `Plans/Collaborative_Workflows.md` |
+| W-037 | BSD internal trigger evaluator | `Plans/Back_Seat_Driver.md` |
+| W-038 | BSD internal hold | `Plans/Back_Seat_Driver.md` |
+| W-039 | BSD internal reconfirm | `Plans/Back_Seat_Driver.md` |
+| W-048 | scheduling internal eligibility | `Plans/Scheduling_and_Quota_Resume.md` |
+| W-050 | internal memory policy | `Plans/Assistant_Memory.md` |
+| W-053 | internal title admission | `Plans/Assistant_Plan_Runtime.md` |
+
+Two further corrections were made at the same time, and the rules behind them
+apply to every future row:
+
+- **A wiring row names one command, never a family.** `cmd.chat_room.promote_to_*`
+  was expanded into the three commands the catalog actually carries:
+  `promote_to_goal`, `promote_to_plan`, `promote_to_todo`.
+- **`ui_element_id`'s first segment carries no underscore** (`^[a-z][a-z0-9]*`),
+  so the redesign namespace is `assistant.redesign.…`, not `assistant_redesign.…`.
+  The entry keys are unchanged; only the element identity is.
+
+### Denominator note for `scripts/pm-touch-closure-verify.py`
+
+That verifier pins `production_wiring_entry_count` to an exact expected value so
+an unnoticed change to this file is caught. The redesign deliberately adds 41
+rows, taking the file from 1066 to **1107** entries. The pin has **not** been
+moved here: quietly editing a drift detector's expected value is the opposite of
+what it is for. Updating it from 1066 to 1107 is a one-line owner decision that
+should be made deliberately, and `validate_touch_closure` will keep reporting the
+drift until it is.
+
+### Handler-identity census (2026-09-03)
+
+Every one of the redesign's 84 commands was censused against the handler identity
+declared in `Plans/UI_Command_Catalog.md` and `Plans/Commands_System.md`. The two
+catalogs agreed with each other on all 84; the wiring matrix did not, and now does.
+**Result: 0 commands bound to more than one handler identity.**
+
+What the census corrected:
+
+- **43 wiring rows named a handler that the catalog does not declare.** They had
+  been derived from the command's own namespace (`cmd.chat.todos.open` →
+  `handlers::chat::todos_open`) rather than read from the catalog, which binds that
+  command to its owner (`handlers::todo_runtime::todos_open`). Deriving a handler
+  name from a command name is not a census; the catalog is the register and the
+  rows now read it.
+- **Two pre-Goal-V2 rows** (`catalog.chat_goal_start`, `catalog.chat_goal_update`)
+  still pointed at `handlers::chat::goal_*` while the catalog had moved the binding
+  to `handlers::goal_runtime::goal_*` under the simplified Goal runtime. Aligned.
+- **`cmd.bsd.set`** was bound to both `handlers::back_seat_driver::set_mode` and the
+  alias `handlers::bsd::set`, with a parallel `BSDModeSetRequest` contract family.
+  `Plans/Back_Seat_Driver.md` §17 already said in prose that the alias must not be
+  admitted and the existing binding wins; the catalog rows now match its own rule.
+- **`cmd.settings.open`** carried the prose placeholder `existing Settings handler`,
+  which is not an identity. Bound to `handlers::settings::open_route`.
+
+One binding is **new and wants an owner's confirmation**: `cmd.chat.revert` had no
+handler identity declared anywhere in either catalog, only prose saying it "routes
+through the canonical FileSafe file-restore pipeline". Its wiring row carried the
+placeholder `existing FileSafe handler`, which fails the handler pattern. It is now
+`handlers::filesafe::restore_turn_manifest` — a name chosen to match the convention
+and the command's documented behaviour, not one read from a register. If FileSafe's
+owner spells it differently, this is the one place to change.
+
+## Additive Correction v4: wiring coverage and the internal-producer register (2026-09-03)
+
+`PM_Assistant_v2_Additive_Correction_v4` supplies 51 wiring rows (`CW-001..CW-051`). They split
+along the rule already established in the section above: **a production wiring row names one
+registered command.** The schema enforces `ui_command_id` against `^cmd\.…`, and inventing a
+command identity to satisfy that pattern would make this register assert a registration that
+does not exist.
+
+### Command-bearing rows — revised in place
+
+Twenty-seven existing production entries carry the correction. None is new: the branch-current
+census found every command the correction touches already registered, so the correction adds
+acceptance checks and correction-specific test rows rather than rows.
+
+| Packet rows | Production entry |
+|---|---|
+| CW-004, CW-009 | `assistant.redesign.w_016.chat_plan_build` |
+| CW-022 | `assistant.redesign.w_017.chat_plan_build_with_crew` |
+| CW-008, CW-010 | `assistant.redesign.w_018.chat_plan_schedule_build` |
+| CW-011 | `assistant.redesign.w_020.chat_plan_export` |
+| CW-012 | `assistant.redesign.cmd.chat_plan_open_details` |
+| CW-013, CW-048 | `assistant.redesign.cmd.chat_plan_view_set` |
+| CW-005 / CW-006 / CW-007 / CW-047 | `…w_007.chat_goal_pause` / `…w_008.chat_goal_resume` / `…w_009.chat_goal_cancel` / `…w_010.chat_goal_update` |
+| CW-014, CW-015 | `assistant.redesign.cmd.collaboration_configure` |
+| CW-016, CW-019 | the four `…collaboration_start` entries (w_023, w_025, w_030, w_034) |
+| CW-024 | `assistant.redesign.cmd.collaboration_reconfigure` |
+| CW-018 | `assistant.redesign.w_024.chat_crew_auto_set` |
+| CW-029 / CW-030 / CW-031 | the three `chat_schedule_message*` entries |
+| CW-033 | `assistant.redesign.w_002.chat_attachment_add` |
+| CW-034 | `catalog.chat_add_file_reference` |
+| CW-035 / CW-036+CW-049 / CW-050 / CW-037 | the four `browser_component_*` entries |
+| CW-051 | `assistant.redesign.cmd.chat_todos_toggle_parent` |
+
+Each revised entry gained the correction's acceptance checks and correction test rows under the
+`wiring.correction_v4.*` prefix, covering the negative, race, restart, stale-target, and
+provider-degradation paths the correction requires. Their `evidence_required` text now names the
+`CW-` rows that produced them and repeats that a production-intent row proves no runtime fact.
+
+### Internal-producer rows — owner-documented, not matrix rows
+
+The remaining twenty-four `CW-` rows have **no command identity**. They are owner-internal
+producers, projectors, and reducers. They stay out of this register for the same reason the
+sixteen view-local rows did, and their behaviour is specified — with the same
+producer → handler → durable effect → consumer → failure shape — in their owner documents:
+
+| Packet rows | Internal producer | Owner |
+|---|---|---|
+| CW-001 | question admission and budget projection | `Plans/Assistant_Plan_Runtime.md` (QMAX-005..016) |
+| CW-002, CW-045 | Settings transaction and question-limit migration | `Plans/Settings_System.md`, `Plans/storage-plan.md` (MIG-001..003) |
+| CW-003 | `AssistantPlanProgressProjector` recompute | `Plans/Assistant_Plan_Runtime.md` (PPROG-002, CDRY-002) |
+| CW-010 | scheduler plan dispatch | `Plans/Scheduling_and_Quota_Resume.md` (PSCHED-004, PSCHED-013) |
+| CW-017 | modal close / draft discard | `Plans/Collaborative_Workflows.md` (MODAL-004) |
+| CW-020, CW-021 | ComposerBuffer BrainStorm config and held request | `Plans/Collaborative_Workflows.md` (MODAL-011..012) |
+| CW-023 | participant failure and timeout dispositions | `Plans/Collaborative_Workflows.md` (PART-001..006) |
+| CW-025, CW-026, CW-027, CW-028 | Review, BrainStorm, Crew and Chat Room reducers | `Plans/Collaborative_Workflows.md` (PART-007..019) |
+| CW-032 | `internal.scheduler.dispatch_scheduled_message` | `Plans/Scheduling_and_Quota_Resume.md` (SMSG-006, SMSG-010..011) |
+| CW-038, CW-039, CW-040 | To-Do graph mutation, list replacement, late-event gate | `Plans/ToDo_Runtime.md` (TDG-001..012) |
+| CW-041, CW-042 | embed render and artifact retention | `Plans/Runtime_Artifacts_Panel.md` (PDET-008..012, PDET-006) |
+| CW-043, CW-044 | Goal completion predicate and replay | `Plans/Goal_Runtime_System.md` (GREPLAY-003..010) |
+| CW-046 | concept two-build byte check | `Concepts/chat-assistant-concepts/5.6 Pro/build.py` (CONCEPT-017) |
+
+### Reverse coverage for the correction
+
+Reverse coverage is what detects an orphan control or an invisible effect, so the correction's
+new projections each name their consumers explicitly in the owner document and in the revised
+`acceptance_checks`:
+
+- `PlanProgressProjection` → Rich status markers, the Markdown gutter, the Plan card summary, and
+  Plan Details. Every consumer reads the same projection; none keeps a private copy, and a stale
+  projection is disclosed rather than rendered as current.
+- `PlanExecutionAttentionProjection` → the Build control's secondary line and its allowed
+  actions.
+- `PlanningQuestionBudgetProjection` → the questionnaire host, Plan and Deep Plan Details, and
+  the BrainStorm modal.
+- `ScheduledMessageProjection` → the thread schedule card and its Details.
+- `ParticipantDisposition` and `CollaborationCompletionProjection` → the workflow card,
+  participant rows, the full panel, Activity, and Usage.
+- `ToDoListReplacementDisposition` → the To-Dos Activity list and, through the projector, Plan
+  progress.
+
+### Accessibility
+
+`CONCEPT-020` puts accessibility outside this correction. The `accessibility_contract` block
+remains a schema requirement on every entry and is untouched; no correction failure is raised for
+accessibility, and no pre-existing accessibility behaviour is removed.
+
+### Additive Correction v4: five tokens that must stay unregistered (2026-09-03)
+
+`validate_wiring_matrix` scrapes `cmd.*` tokens out of `Plans/UI_Command_Catalog.md`
+and requires a production row for each. The correction's catalog section ends with an
+explicit list of command ids it **forbids creating** — and the scraper read that list
+as five new registrations.
+
+Giving them rows would have made this register assert exactly the identities the
+correction exists to prevent. They are recorded in
+`Plans/Wiring_Matrix.production.exclusions.json` instead, each with its reason:
+
+| Token | Why it must not exist |
+|---|---|
+| `cmd.chat.plan.build_as_goal` | Build as Goal is `cmd.chat.plan.build` with `execution_topology: goal_driven` (PGOAL-002, CDRY-004). |
+| `cmd.chat.plan.export_report` | The execution report is `cmd.chat.plan.export` with `content_kind: execution_report` (CDRY-005). |
+| `cmd.chat.plan.progress.set` | Progress is a derived projection; `internal.plan_progress.recompute` is an owner action, not a command (PPROG-018, CDRY-002). |
+| `cmd.chat.add_folder_reference` | A folder is added through `cmd.chat.attachment.add` with `semantic_kind: folder` (FOLDER-003). |
+| `cmd.browser.component.recapture` | Recapture reuses `cmd.browser.component.pick` so one flow owns identity creation (BSTALE-004). |
+
+This is a fifth exclusion class beside the four the file already recorded: **a token
+that appears in the catalog only inside an explicit "deliberately NOT registered"
+list.** A future correction that names forbidden ids in prose should add them here at
+the same time.

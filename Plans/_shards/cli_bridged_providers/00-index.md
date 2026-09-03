@@ -1,24 +1,26 @@
 # Shard Index: Plans/CLI_Bridged_Providers.md
 
-Generated: 2026-08-30T00:17:00Z
+Generated: 2026-09-03T21:40:03Z
 
-Source SHA256: `2e2169e29bbc60c977d161be0f7d05b1458c6c690dbf079f10e3d47fcee61870`
+Source SHA256: `53d1d3779e9c3f41567c015b7e879c5d021cc372a690db9bfeb6813495145459`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `07b029240bcc9b5342231116c7a58561da1628fcb010e8f5b81a7f5bb2e31081`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `edb3b74449d994f08527f13d1384310b1745f9ac24f7006471fdf8a31deb7b3a`
-- [003 - Purpose](003-purpose.md) L15-L59 `54c95330df00c93e54c00497b3dfdb9827ce5dc41665f04819de119b132d7419`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L61-L92 `d207d82deba2f67c98d4f097f2c1d896ea9d811e1f477626aa5fd798fd246943`
-- [005 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L94-L231 `41dfbca0b48096e06d01b4cfff63645a6e43250ccd971a211ac50a7532aef8dc`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L233-L237 `f588af03c9607b82ec01b5fbb74a81ae069652f23097be57c1af5bb8e6d6c90d`
-- [007 - PlanUnits](007-planunits.md) L239-L290 `8c8119b8bd3b4a4c5f1dac1094e71a118461c78646ef2a1007329f0635ae4d68`
-- [008 - Remaining Runtime Canon Closure Addendum (2026-08-14)](008-remaining-runtime-canon-closure-addendum-2026-08-14.md) L292-L1187 `863f8d2885cf581b67f08e4fe78ef8992254a273fd7b8129c60d3629045b7a7e`
-- [009 - Migration Coverage](009-migration-coverage.md) L1189-L1199 `1a0ba31267979c30cb9f56ec4da5c699cdb945d8d63d46800d93e8774c6f88ca`
-- [010 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1201-L1373 `7ecfabb6a9b2b326f69e29aeda505816d5c3142330c0cd0a8019e2a11a15a2a4`
-- [011 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](011-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1375-L1457 `2fb09c3cf96a7e0411c76aedc7903b46acaffdc82841443ca180b1fee6abf880`
-- [012 - Remaining Runtime Integration Addendum - Provider CLI Lifecycle Consumer (2026-08-13)](012-remaining-runtime-integration-addendum-provider-cli-lifecycle-co.md) L1459-L1576 `540ee02765b4ce0b063899f94cd2a1c5de4e6c5c8aaa42c12b89b007afd50525`
-- [013 - Usage And Quota Evidence Addendum - 2026-07-09](013-usage-and-quota-evidence-addendum-2026-07-09.md) L1578-L1663 `6ee3389bf71673f44bf4450dfbe3e725ba64e447f6f3c05cbde7f7f3d78994cb`
-- [014 - FABLE Residual CLI Bridge Contract Cleanup Addendum - 2026-07-07](014-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md) L1665-L1779 `29be3095ea90636b6109d908bc999acca8f2bb54623cc25625234af7d475dfe1`
+- [001 - Preamble](001-preamble.md) L1-L1 `700c47fc69771b7ec3e8ea8deaa67e8f7c588a8833d8beced604f4325945719c`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `9435c727f0448a0d2ac8dadf030a07f85c395007a846a285f3f023977703f8c7`
+- [003 - Purpose](003-purpose.md) L15-L59 `d4c511a8a5ddd3bf6937da6b2b9a0d5ac990982cefce2f693defa3ca40ff05e2`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L61-L92 `0f45583bf47b6c6810c5654c91ec908298f92355815786339e5acce890a2651c`
+- [005 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L94-L231 `b30cac4de4e54b511d1a37bc9deef024e3c83350c61afb505cb744954599398a`
+- [006 - Provider Control, Capability, and Reconciliation (Assistant redesign, 2026-09-03)](006-provider-control-capability-and-reconciliation-assistant-redesig.md) L233-L413 `5de77c88296b060926452f24b47d04735bdefcfd02e3949a1c26604fee962d47`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L415-L419 `d955b6468318ffcca6cc03e5635040876815a7d03087f288a777ac3088737c6a`
+- [008 - PlanUnits](008-planunits.md) L421-L472 `c736e41aaeb0986bfc2f5e5f6fa278f17a9d8be0baace66cf81adc6e7bad7a7b`
+- [009 - Remaining Runtime Canon Closure Addendum (2026-08-14)](009-remaining-runtime-canon-closure-addendum-2026-08-14.md) L474-L1369 `9d40328b11de8c5be7d8a569fda127bf697f4eaf7f08c142a2245254a9d81ed9`
+- [010 - Migration Coverage](010-migration-coverage.md) L1371-L1381 `fc50987ba451962c58b2c77d8336a5daf0dc271fb2ad72dddfa6e9de4343cdc2`
+- [011 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](011-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1383-L1555 `d636c9f6445c6d5af235745713cefea98f4b34a5e250c3ac061f05c66157fde6`
+- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1557-L1639 `c45930c335ec267c1ded931ed9dd973864acdebbaf6c43d9e4db4429376487f5`
+- [013 - Remaining Runtime Integration Addendum - Provider CLI Lifecycle Consumer (2026-08-13)](013-remaining-runtime-integration-addendum-provider-cli-lifecycle-co.md) L1641-L1758 `71b810a04a6a1fa3c1339434c6662e7faa1c34d74397820864af1999bbbb7647`
+- [014 - Usage And Quota Evidence Addendum - 2026-07-09](014-usage-and-quota-evidence-addendum-2026-07-09.md) L1760-L1845 `1ec623a6298aab96704f0e36d4d1dafe240e20d068061ab287b4cd6cc157ad34`
+- [015 - FABLE Residual CLI Bridge Contract Cleanup Addendum - 2026-07-07](015-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md) L1847-L1961 `e40f6710f5c1487d9848f7d251d95475e2f75598970861cc34ea91b49ad46c23`
+- [016 - Additive Correction v4 — Participant Independence And Continuation Authority (2026-09-03)](016-additive-correction-v4-participant-independence-and-continuation.md) L1963-L1981 `f49960d09da40cf4863826f0c7e4b617e46d0012559c4f78289ed15576a5314c`

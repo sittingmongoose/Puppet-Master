@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28899-L28974
+Source lines: L28926-L29001
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -35,7 +35,7 @@ Repairs row `sfk-94c4451c654561bebe80cef7`.
 The four Activity Bar groups are:
 
 1. `project`: File Manager, Search, Source Control.
-2. `automation`: GitHub Actions, Docker Manager, Testing.
+2. `automation`: Actions & Pipelines, Docker Manager, Testing.
 3. `communication`: Chat, Agents.
 4. `system`: Runtime Artifacts.
 
@@ -63,7 +63,7 @@ Required Slint host files:
 | Orchestrator seven-tab page | `ui/orchestrator/orchestrator_page.slint` |
 | Docker/Hosts | `ui/docker/docker_hosts_view.slint` |
 | Source Control | `ui/source_control/source_control_panel.slint` |
-| GitHub Actions | `ui/github_actions/github_actions_panel.slint` |
+| Actions & Pipelines | `ui/repository_automation/repository_automation_panel.slint` |
 | Docker Manager | `ui/docker/docker_manager_panel.slint` |
 | Artifacts | `ui/artifacts/artifacts_panel.slint` |
 | Search | `ui/search/search_panel.slint` |

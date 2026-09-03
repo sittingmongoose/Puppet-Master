@@ -5426,7 +5426,7 @@ negative_constraints:
 
 ## Central Touch Production Closure Addendum - 2026-09-01
 
-The following exact 227 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
+The following exact 231 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
 
 | Command | Canonical owner binding | Sole future handler | Request -> result | Initial availability / effect |
 |---|---|---|---|---|
@@ -5489,7 +5489,9 @@ The following exact 227 primary commands complete the remaining actionable Touch
 | `cmd.forge.review.checkout` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.close` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.create` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.mark_ready` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.merge` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
@@ -5540,6 +5542,8 @@ The following exact 227 primary commands complete the remaining actionable Touch
 | `cmd.named_plan.rename` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::rename` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.named_plan.restore` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::restore` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.named_plan.set_priority` | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::set_priority` | `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_request` -> `Plans/named_plan_system_contracts.schema.json#/$defs/named_plan_action_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.panel.redock` | `Plans/FinalGUISpec.md#F3-HOME-003` | `handlers::panel::redock` | typed `panel_id`, `window_id?`, `target_host`, `expected_layout_revision`, `idempotency_key` request -> typed panel/layout result | `handler_unavailable`; `panel.redocked` remains the admitted owner event; native Final GUI evidence is absent |
+| `cmd.panel.undock` | `Plans/FinalGUISpec.md#F3-HOME-003` | `handlers::panel::undock` | typed `project_id?`, `panel_id`, `current_host`, `target_window?`, `expected_layout_revision`, `idempotency_key` request -> typed panel/layout/window result | `handler_unavailable`; `panel.undocked` remains the admitted owner event; native Final GUI evidence is absent |
 | `cmd.remote_access.funnel.disable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_disable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.remote_access.funnel.enable` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_enable` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.remote_access.funnel.preflight` | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_preflight` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
@@ -5676,13 +5680,13 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 227 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: Exactly 231 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 227 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
+- The exact table contains 231 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
 - Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
 validation_surfaces:
@@ -5702,3 +5706,464 @@ negative_constraints:
 - Do not mint peer alias handlers or events.
 compile_disposition: extend_existing_owner
 ```
+
+## ConnectionDraft Central Registration Addendum - 2026-09-02
+
+`cmd.integration.connection.activate` is the one new primary command needed to close the packet ConnectionDraft lifecycle. It joins the existing `cmd.integration.connection.add|update|test|remove|open_details` family and maps only to `handlers::integration_connection::activate`. Its exact request, result, error, availability, and permission contracts are `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`, `#/$defs/IntegrationConnectionCommandResult`, `#/$defs/IntegrationConnectionCommandError`, `#/$defs/IntegrationConnectionAvailability`, and `#/$defs/SharedIntegrationPermissionDecision`. The owner is `Plans/Shared_Integration_Runtime.md#SIR-035`; the persistence owner is `IntegrationConnectionRegistry`.
+
+The six packet candidates normalize before schema, capability/currentness, permission, policy, dispatch, receipt, event, or persistence handling:
+
+| Source candidate | Canonical command | Sole future target | Source disposition |
+|---|---|---|---|
+| `cmd.connection.draft.create` | `cmd.integration.connection.add` | `handlers::integration_connection::add` | ACT-148 compatibility input; source unregistered; canonical add persists inactive draft |
+| `cmd.connection.activate` | `cmd.integration.connection.activate` | `handlers::integration_connection::activate` | ACT-149 compatibility input; source unregistered |
+| `cmd.connection.update` | `cmd.integration.connection.update` | `handlers::integration_connection::update` | ACT-150 compatibility input; source unregistered |
+| `cmd.connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | ACT-151 compatibility input; source unregistered |
+| `cmd.connection.remove` | `cmd.integration.connection.remove` | `handlers::integration_connection::remove` | ACT-152 compatibility input; source unregistered |
+| `cmd.connection.open_details` | `cmd.integration.connection.open_details` | `handlers::integration_connection::open_details` | ACT-153 compatibility input for persisted connection; source unregistered |
+
+`cmd.connection.draft.open_details` is not a command or alias. Its current identity is the owner-local `ui.integration.connection.draft.open_details` action from SIR-035, with no domain handler, command registration, persistence mutation, EventRecord, or production-wiring command row.
+
+All six canonical command targets remain `handler_unavailable`. Static owner contracts, registration prose, catalog metadata, and production-intent wiring are not dispatcher or native handler proof. Effects remain owner result/receipt/projection only with `expected_event_types=[]`; no protected-auth material, capability success, persistence success, provider call, or runtime readiness is inferred.
+
+### CS-075 - ConnectionDraft Activation Registration And Candidate Normalization
+
+```yaml
+plan_unit_id: CS-075
+unit_type: command_registry
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The central registry adds only cmd.integration.connection.activate to the existing six-command IntegrationConnectionRegistry family; ACT-148..153 source spellings normalize before all gates to the six canonical commands, receive no peer handler or persistence identity, and draft-only details remain a typed owner-local action.
+gui_related: true
+gui_classification_reason: Settings integration/destination rows, Product Onboarding, Doctor, connection managers, and palette/API expose activation and the existing lifecycle commands through typed availability.
+depends_on: [CS-073, SIR-035]
+unblocks: [UCC-153]
+acceptance_criteria:
+  - cmd.integration.connection.activate appears once as a primary command and maps only to handlers::integration_connection::activate with the SIR-035 request/result/error/availability/permission family.
+  - ACT-148..153 source spellings normalize one-to-one before capability/currentness, permission, policy, validation, dispatch, receipt, event, or persistence handling and never receive peer handlers.
+  - cmd.integration.connection.add is the canonical inactive-draft creation route; activation remains a separate expected-generation mutation with verified capability evidence.
+  - cmd.connection.draft.open_details and ui.integration.connection.draft.open_details receive no command registration or domain handler.
+  - All six canonical routes remain handler_unavailable and event-silent with "expected_event_types=[]" until executable proof and Event Authority exist.
+validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, python3 scripts/pm-new-contracts-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: duplicate_connection_command_namespace_or_false_registration
+reasoning_tier: high
+context_scope: connection_draft_central_registration
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: static_command_registry_and_alias_normalization_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Shared_Integration_Runtime.md#SIR-035
+  - "source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md:192-197"
+preserved_exact_tokens: [ACT-148, ACT-149, ACT-150, ACT-151, ACT-152, ACT-153, cmd.integration.connection.activate, handlers::integration_connection::activate, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - Do not register any cmd.connection.* source spelling or create a peer availability, handler, persistence identity, EventRecord, or provider namespace.
+  - Do not promote ui.integration.connection.draft.open_details into a command.
+  - Do not claim native dispatcher, handler, persistence, provider, authentication, capability, or runtime evidence.
+```
+
+## Post-Integration Auth Candidate Central Normalization - 2026-09-02
+
+SIR-033 already owns the typed normalization records for these three packet candidates. The central command registry therefore registers no new primary command and creates no alias-specific handler, availability record, production wiring row, persistence identity, or EventRecord.
+
+| Packet/source spelling | Exact target | Sole future target handler | Central disposition |
+|---|---|---|---|
+| `cmd.auth_session.resume` | `cmd.authentication.resume` | `handlers::authentication::resume` | Normalize before every gate; preserve source identity only as compatibility provenance. |
+| `cmd.auth_session.submit_code` | `cmd.auth_profile.submit_code` | `handlers::multi_account::submit_code` | Normalize before every gate; submitted code remains in the protected owner channel and never enters alias metadata. |
+| `cmd.credential.add` | `cmd.credential_source.add` | `handlers::credential_broker::source_add` | Normalize before every gate; credential material and attachments remain with the credential owner. |
+
+The canonical targets retain their existing typed requests, results, errors, availability, permissions, and sole future handlers. They remain `handler_unavailable`, and `expected_event_types=[]` remains exact until native dispatcher/handler evidence and Event Authority admission exist.
+
+### CS-076 - Post-Integration Auth Candidate Normalization
+
+```yaml
+plan_unit_id: CS-076
+unit_type: command_registry
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  SIR-033's three post-integration source spellings normalize before every gate to existing authentication, auth-profile, and credential-source commands; the central registry adds no primary, peer handler, independent wiring, persistence identity, or EventRecord.
+gui_related: false
+gui_classification_reason: This is central pre-dispatch identity normalization; GUI consumers remain attached to the canonical target commands through UCC-154.
+depends_on: [CS-073, SIR-033]
+unblocks: [UCC-154]
+acceptance_criteria:
+  - cmd.auth_session.resume maps only to cmd.authentication.resume and handlers::authentication::resume.
+  - cmd.auth_session.submit_code maps only to cmd.auth_profile.submit_code and handlers::multi_account::submit_code.
+  - cmd.credential.add maps only to cmd.credential_source.add and handlers::credential_broker::source_add.
+  - Normalization precedes schema selection, availability, currentness, permission, policy, validation, dispatch, receipt, event, and persistence handling.
+  - The three source spellings remain unregistered and receive no peer availability, handler, production wiring row, persistence identity, EventRecord, secret payload, or protected-browser authority.
+  - Canonical targets remain handler_unavailable and event-silent with "expected_event_types=[]" until executable proof and Event Authority exist.
+validation_surfaces: [Plans/shared_integration_runtime_expansion_contracts.schema.json, Plans/shared_integration_runtime_expansion_fixtures.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py --json]
+risk_class: duplicate_auth_handler_or_secret_bearing_compatibility_route
+reasoning_tier: high
+context_scope: post_integration_auth_candidate_central_normalization
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.exclusions.json]
+node_compile_hint: {mode: static_alias_normalization_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Shared_Integration_Runtime.md#SIR-033
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md:124-131
+preserved_exact_tokens: [cmd.auth_session.resume, cmd.auth_session.submit_code, cmd.credential.add, cmd.authentication.resume, cmd.auth_profile.submit_code, cmd.credential_source.add, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - Do not register the packet source spellings or create peer handlers, wiring, persistence, events, secrets, or protected-session access.
+  - Do not infer native normalization, dispatch, handler, authentication, credential mutation, or runtime readiness from static contracts.
+```
+
+## Neutral Source-Control Primary Registration Completion - 2026-09-02
+
+Three existing Source Control owner commands already have typed owner contracts, Touch Closure rows, and production-intent wiring, but require explicit concrete central catalog records. This section completes those records without minting new semantics or changing the packet compatibility aliases that target them.
+
+| Command ID | Canonical owner | Sole future handler | Exact request -> result | Current evidence boundary |
+|---|---|---|---|---|
+| `cmd.source_control.repository.bind` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::repository_bind` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.status.refresh` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::status_refresh` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.workspace.remove` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::workspace_remove` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+
+The compatibility spellings `cmd.project.checkout.connect_existing`, `cmd.project.checkout.verify`, and `cmd.project.checkout.remove` continue to normalize before every gate to these primaries. They do not receive peer registrations or handlers.
+
+### CS-077 - Neutral Source-Control Primary Registration Completion
+
+```yaml
+plan_unit_id: CS-077
+unit_type: command_registry
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Repository bind, status refresh, and workspace remove receive concrete central catalog records over their existing Source Control owner contracts, sole future handlers, Touch Closure rows, and production-intent wiring; compatibility inputs remain unregistered and native evidence remains absent.
+gui_related: true
+gui_classification_reason: Source Control, Settings, Project setup, Doctor, and palette/API consumers require exact availability, disabled reason, and return behavior for these commands.
+depends_on: [CS-073, SCS-003]
+unblocks: [UCC-155]
+acceptance_criteria:
+  - Each exact command appears once in this concrete table with Source Control owner, typed request/result, and one sole future handler.
+  - Existing production-intent and Touch Closure rows remain the only wiring identities; no compatibility source receives a peer row or handler.
+  - Every route remains handler_unavailable and event-silent with "expected_event_types=[]" until executable proof and Event Authority admission exist.
+  - Repository binding, status observation, and workspace removal remain distinct actions with owner-defined currentness, permission, data-disposition, and exact-return semantics.
+validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: missing_central_source_control_primary_or_conflated_mutation
+reasoning_tier: high
+context_scope: neutral_source_control_primary_registration
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Source_Control_System.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: static_existing_primary_registration_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Source_Control_System.md#SCS-003
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json
+preserved_exact_tokens: [cmd.source_control.repository.bind, cmd.source_control.status.refresh, cmd.source_control.workspace.remove, handlers::source_control::repository_bind, handlers::source_control::status_refresh, handlers::source_control::workspace_remove, handler_unavailable, "expected_event_types=[]"]
+negative_constraints:
+  - Do not invent peer compatibility handlers, generic source-control dispatch, automatic removal, or fabricated currentness.
+  - Do not claim native dispatcher, handler, persistence, filesystem, repository, or runtime evidence from static registration.
+```
+
+## Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03
+
+This addendum records the central command-contract registration for the approved Puppet Master Assistant redesign. `Plans/UI_Command_Catalog.md` carries the catalog rows, labels, preconditions and reverse-consumer surfaces; this document carries the typed contract identity, the sole future handler, and the exact evidence boundary for each command. Every route below is `handler_unavailable`. A typed contract, a catalog row, and a production-intent wiring row together prove design closure and prove nothing about a native dispatcher, handler execution, rendered control, receipt, storage write, or runtime readiness.
+
+`cmd.chat.goal.start`, `cmd.chat.goal.update` and `cmd.bsd.set` were already centrally registered. This wave revises their request and result contract identities in place. They keep one registration, one handler target, and one wiring identity; no compatibility spelling and no peer row is minted for them.
+
+### Central command contract records
+
+| Command ID | Canonical owner | Sole future handler | Exact request -> result | Current evidence boundary |
+|---|---|---|---|---|
+| `cmd.chat.goal.start` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_start` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartRequestV2` -> `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.update` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_update` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2` -> `Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.propose_update` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_propose_update` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateProposalRequest` -> `Plans/goal_runtime_contracts.schema.json#/$defs/ApprovalRequest` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.pause` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_pause` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlRequestV2` -> `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.resume` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_resume` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlRequestV2` -> `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.cancel` | `Plans/Goal_Runtime_System.md` | `handlers::goal_runtime::goal_cancel` | `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlRequestV2` -> `Plans/goal_runtime_contracts.schema.json#/$defs/GoalControlResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.goal.open_editor` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::goal_open_editor` | `Plans/assistant_chat_contracts.schema.json#/$defs/GoalEditorRoute` -> `Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.plan.strategy.set` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_strategy_set` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.create` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_create` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCreateRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCreateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.request_revision` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_request_revision` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.view.set` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_view_set` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanViewRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanViewResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.plan.build` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_build` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.build_with_crew` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_build_with_crew` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCrewBuildRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.schedule_build` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::plan_schedule_build` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AssistantPlanScheduleRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionScheduleResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.cancel` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_cancel` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.export` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_export` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanExportRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.send_to_planning_wizard` | `Plans/Planning_Wizard.md` | `handlers::planning_wizard::assistant_plan_intake` | `Plans/planning_wizard_contracts.schema.json#/$defs/AssistantPlanHandoffRequest` -> `Plans/planning_wizard_contracts.schema.json#/$defs/PlanningWizardIntakeResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.plan.open_details` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_details` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.todos.open` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.todos.toggle_parent` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_toggle_parent` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewRequest` -> `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.todos.open_work` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open_work` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoWorkRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.collaboration.configure` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::configure` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.collaboration.start` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::start` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.pause` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::pause` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.resume` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::resume` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.cancel` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::cancel` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.message` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::message` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.open` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::open` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationOpenRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationOpenResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.collaboration.participant.open` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::participant_open` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationParticipantOpenRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationParticipantOpenResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.collaboration.export` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::export` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationExportRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationExportResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.collaboration.reconfigure` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::reconfigure` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationReconfigureRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationReconfigureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.brainstorm.next_round` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::brainstorm_next_round` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormRoundRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormRoundResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.brainstorm.synthesize_plan` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::brainstorm_synthesize_plan` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormSynthesisRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/AssistantPlanCreateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.review.create_todos` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_create_todos` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.review.send_findings_to_agent` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_send_findings_to_agent` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewSendFindingsRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.review.run_again` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_run_again` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewRunAgainRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.next_round` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_next_round` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.summarize` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_summarize` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomSummarizeRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ArtifactResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.promote_to_plan` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_promote_to_plan` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.promote_to_todo` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_promote_to_todo` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.promote_to_goal` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_promote_to_goal` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteGoalRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteGoalResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.crew_auto.set` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::crew_auto_set` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.crew_auto.open_config` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::crew_auto_open_config` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoConfigRoute` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.bsd.set` | `Plans/Back_Seat_Driver.md` | `handlers::back_seat_driver::set_mode` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BackSeatDriverModeSetRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BackSeatDriverModeSetResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.configure` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::configure` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDPolicyUpdateRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDPolicyUpdateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.workflow.configure` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::workflow_configure` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDWorkflowBindingRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDWorkflowBindingResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.assignment.pause` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::assignment_pause` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.assignment.resume` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::assignment_resume` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.assignment.retry` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::assignment_retry` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentRetryRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentRetryResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.assignment.stop` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::assignment_stop` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlRequest` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDAssignmentControlResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.bsd.finding.open` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::finding_open` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDFindingRoute` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.bsd.open_usage` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::open_usage` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDUsageRoute` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.bsd.open_transcript` | `Plans/Back_Seat_Driver.md` | `handlers::bsd::open_transcript` | `Plans/back_seat_driver_contracts.schema.json#/$defs/BSDTranscriptRoute` -> `Plans/back_seat_driver_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.attachment.add` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_add` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.attachment.remove` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_remove` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.attachment.retry` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_retry` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.attachment.open` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_open` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.attachment.download` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_download` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.attachment.details` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_details` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.attachment.freeze_reference` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_freeze_reference` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreeze_ReferenceRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreeze_ReferenceResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.attachment.save_to_project` | `Plans/FileManager.md` | `handlers::chat_attachments::attachment_save_to_project` | `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentSave_To_ProjectRequest` -> `Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentSave_To_ProjectResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.composer.destination.set` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::composer_destination_set` | `Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationSetRequest` -> `Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationSetResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.composer.destination.clear` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::composer_destination_clear` | `Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationClearRequest` -> `Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationClearResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.schedule_message` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::schedule_message` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.schedule_message.update` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::schedule_message_update` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.schedule_message.cancel` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::schedule_message_cancel` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.execution_window.create` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::execution_window_create` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCreateRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCreateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.execution_window.update` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::execution_window_update` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.execution_window.cancel` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::execution_window_cancel` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.runtime.quota_resume.set` | `Plans/Scheduling_and_Quota_Resume.md` | `handlers::scheduling::quota_resume_set` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/QuotaResumeConsentRequest` -> `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/QuotaResumeConsentResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.thread.regenerate_title` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::thread_regenerate_title` | `Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleRegenerateRequest` -> `Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleGenerationResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.teach.capture` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_capture` | `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCaptureRequest` -> `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCaptureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.teach.confirm` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_confirm` | `Plans/assistant_memory_contracts.schema.json#/$defs/TeachConfirmRequest` -> `Plans/assistant_memory_contracts.schema.json#/$defs/TeachConfirmResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.teach.cancel` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_cancel` | `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCancelRequest` -> `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat.teach.open_memory` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_open_memory` | `Plans/assistant_memory_contracts.schema.json#/$defs/MemoryRoute` -> `Plans/assistant_memory_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.eli5.set` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::eli5_set` | `Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideRequest` -> `Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.capture.full_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_full_to_chat` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureFullRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.capture.region_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_region_to_chat` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureRegionRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.component.pick` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_pick` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentPickRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentPickResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.component.send_now` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_send_now` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentSendRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/MessageAdmissionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.component.add_to_composer` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_add_to_composer` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.component.insert_at_cursor` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_insert_at_cursor` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+
+The eleven contract schema documents named above are owner-authored artifacts that must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them and does not admit a storage key or an EventRecord.
+
+### Typed error vocabulary
+
+Every command in this wave returns one of the shared owner error kinds: `invalid_request`, `owner_unavailable`, `command_not_registered`, `permission_denied`, `stale_revision`, `stale_currentness`, `target_not_found`, `precondition_failed`, `idempotency_conflict`, `quota_exhausted`, `manual_stop_latched`, or `cancelled`. A failure stays a failure: it never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule, and never returns a success-shaped receipt. `manual_stop_latched` is terminal against every scheduled or quota-driven auto-resume path and can only be cleared by an explicit user action.
+
+### Semantic event candidates requiring Event Authority adjudication
+
+The redesign proposes sixty-seven semantic event names. None of them is registered. No owner may emit any of them until the central EventRecord catalog admits the name and its payload schema, and until then the owning command records only its typed result, receipt, and projection.
+
+| Proposed owner | Event names | Authority status |
+|---|---|---|
+| `Plans/Goal_Runtime_System.md` | `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, `goal.continuation_evaluated` | `requires_central_adjudication` |
+| `Plans/Assistant_Plan_Runtime.md` | `assistant_plan.created`, `assistant_plan.version_created`, `assistant_plan.build_started`, `assistant_plan.completed`, `assistant_plan.cancelled`, `assistant_plan.exported`, `assistant_plan.wizard_handoff_created`, `assistant_plan.schedule_invalidated` | `requires_central_adjudication` |
+| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |
+| `Plans/Collaborative_Workflows.md` | `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized` | `requires_central_adjudication` |
+| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |
+| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |
+
+### Runtime record families requiring central storage adjudication
+
+The redesign proposes the following runtime record families. Each names a payload-semantics owner. Storage owns physical binding, replay, retention, indexes, and projector checkpoints, and no writer is admitted until `Plans/storage-plan.md` and the Contracts owner register the family.
+
+| Record schema_id | Payload-semantics owner | Registration status |
+|---|---|---|
+| `pm.chat.composer_buffer.v1` | `Plans/storage-plan.md` | `required` |
+| `pm.chat.composer_destination.v1` | `Plans/assistant-chat-design.md` | `required` |
+| `pm.chat.scheduled_message_snapshot.v1` | `Plans/Scheduling_and_Quota_Resume.md` | `required` |
+| `pm.chat.attachment_ref.v2` | `Plans/FileManager.md` | `required` |
+| `pm.chat.attachment_materialization.v1` | `Plans/Prompt_Pipeline.md` | `required` |
+| `pm.goal.record.v2` | `Plans/Goal_Runtime_System.md` | `required` |
+| `pm.goal.revision.v2` | `Plans/Goal_Runtime_System.md` | `required` |
+| `pm.goal.continuation.v2` | `Plans/Goal_Runtime_System.md` | `required` |
+| `pm.assistant_plan.record.v1` | `Plans/Assistant_Plan_Runtime.md` | `required` |
+| `pm.assistant_plan.document_revision.v1` | `Plans/Assistant_Plan_Runtime.md` | `required` |
+| `pm.assistant_plan.deep_ledger_session.v1` | `Plans/Planning_Ledger_System.md` | `required` |
+| `pm.assistant_plan.planunit_bundle.v1` | `Plans/Plan_Document_System.md` | `required` |
+| `pm.assistant_plan.run.v1` | `Plans/Assistant_Plan_Runtime.md` | `required` |
+| `pm.assistant_plan.adherence.v1` | `Plans/Assistant_Plan_Runtime.md` | `required` |
+| `pm.chat.todo_item.v2` | `Plans/ToDo_Runtime.md` | `required` |
+| `pm.chat.todo_work_binding.v1` | `Plans/ToDo_Runtime.md` | `required` |
+| `pm.chat.todo_transition.v1` | `Plans/ToDo_Runtime.md` | `required` |
+| `pm.collaboration.definition.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.collaboration.participant_spec.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.collaboration.run.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.collaboration.message.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.brainstorm.question_bank.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.brainstorm.proposal.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.brainstorm.vote.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.review.target_pack.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.review.finding.v1` | `Plans/Collaborative_Workflows.md` | `required` |
+| `pm.research.capability_provisioning.v1` | `Plans/Shared_Integration_Runtime.md` | `required` |
+| `pm.bsd.policy.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.bsd.workflow_binding.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.bsd.assignment.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.bsd.review_cycle.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.bsd.finding.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.bsd.quarantine.v1` | `Plans/Back_Seat_Driver.md` | `required` |
+| `pm.execution.schedule.v1` | `Plans/Scheduling_and_Quota_Resume.md` | `required` |
+| `pm.runtime.quota_resume_consent.v1` | `Plans/Scheduling_and_Quota_Resume.md` | `required` |
+| `pm.browser.element_context.v1` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `required` |
+| `pm.browser.component_instruction_item.v1` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `required` |
+| `pm.chat.thread_title_policy.v1` | `Plans/Settings_System.md` | `required` |
+| `pm.chat.thread_title_generation.v1` | `Plans/Models_System.md` | `required` |
+
+### CS-078 - Assistant Redesign Central Contract, Event, And Record Registration
+
+```yaml
+plan_unit_id: CS-078
+unit_type: command_registry
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The Puppet Master Assistant redesign registers eighty-four exact command contracts across eleven owner documents, each with one typed request, one typed result, and one sole future handler, plus a shared typed error vocabulary of invalid_request, owner_unavailable, command_not_registered, permission_denied, stale_revision, stale_currentness, target_not_found, precondition_failed, idempotency_conflict, quota_exhausted, manual_stop_latched, and cancelled. cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set are pre-existing registrations whose contracts are revised in place with no peer row and no second handler. Sixty-seven semantic event names and thirty-nine runtime record families are proposed and remain requires_central_adjudication; no owner may emit an event or admit a storage writer until Event Authority and storage registration close for that name. Every route stays handler_unavailable, and a typed contract plus a catalog row plus a production-intent wiring row prove design closure and prove nothing about a native dispatcher, handler execution, rendered control, receipt, storage write, or runtime readiness.
+gui_related: true
+gui_classification_reason: Every registered command has named GUI consumers whose availability and disabled reason depend on these contracts.
+depends_on: [CS-077, UCC-156]
+unblocks: []
+acceptance_criteria:
+  - All eighty-four commands carry one owner, one typed request, one typed result, and one sole future handler.
+  - The three pre-existing IDs are revised in place with no duplicate registration or handler.
+  - A failure never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule and never returns a success-shaped receipt.
+  - manual_stop_latched is terminal against every scheduled or quota-driven auto-resume path.
+  - All sixty-seven events and thirty-nine record families remain unregistered until central adjudication closes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: unregistered_emission_or_simulated_command_success
+reasoning_tier: high
+context_scope: assistant_redesign_central_registration
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: static_central_command_registration_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:machine/commands.json
+  - pm-assistant-implementation-2026-09-02-recovered:machine/events.json
+  - pm-assistant-implementation-2026-09-02-recovered:machine/runtime_records.json
+  - pm-assistant-implementation-2026-09-02-recovered:DRY-003
+preserved_exact_tokens:
+  - "handler_unavailable"
+  - "command_not_registered"
+  - "requires_central_adjudication"
+  - "manual_stop_latched"
+negative_constraints:
+  - Do not emit a proposed event before Event Authority admits its name and payload schema.
+  - Do not admit a storage writer before the record family is registered.
+  - Do not return a success-shaped receipt for a failed command.
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+## Additive Correction v4 — Branch-Current Command Census And Dispositions (2026-09-03)
+
+This section applies `PM_Assistant_v2_Additive_Correction_v4` (`CDRY-001..013`) to this owner.
+The correction is additive to the implemented v2 branch and mints **no new user command**.
+
+### CDRY-001 — The census that preceded these dispositions
+
+The correction packet's proposed IDs were treated as proposals, not as implementation truth. A
+census of the branch-current registers (`Plans/UI_Command_Catalog.md`, this document, and
+`Plans/Wiring_Matrix.production.json`) was run first, on 2026-09-03, and every command the
+correction touches already existed:
+
+| Command | Census result | Disposition |
+|---|---|---|
+| `cmd.chat.plan.build` | present, one handler `handlers::assistant_plan::plan_build` | revise: add `execution_topology: agent \| goal_driven` |
+| `cmd.chat.plan.build_with_crew` | present, one handler `handlers::assistant_plan::plan_build_with_crew` | retain atomic contract; add currentness and participant semantics |
+| `cmd.chat.plan.schedule_build` | present, one handler `handlers::scheduling::plan_schedule_build` | revise: `execution_topology`, frozen Crew definition, first-dispatch admission |
+| `cmd.chat.plan.export` | present, one handler `handlers::assistant_plan::plan_export` | revise: add `content_kind: plan_document \| execution_report` |
+| `cmd.chat.plan.view.set` | present, classified `shell_view` | keep as view state; emits no Plan event |
+| `cmd.chat.plan.open_details` | present, classified `navigation_wrapper` | keep; owns no details data |
+| `cmd.chat.goal.pause/resume/cancel/update` | present, `handlers::goal_runtime::*` | revise for a bound `PlanRun` |
+| `cmd.collaboration.configure` | present | preview only; no run, provider, Usage, event, card, install, or settings effect |
+| `cmd.collaboration.start` | present | idempotent admission; freeze targets at Start |
+| `cmd.collaboration.reconfigure` | present | extend for retry, replacement, waiver, coordinator/moderator replacement |
+| `cmd.chat.crew_auto.set` | present | commit the checkmark only after a Settings transaction |
+| `cmd.chat.schedule_message[.update\|.cancel]` | all three present | revise for projection, currentness, and preserved history |
+| `cmd.chat.attachment.add` | present, one handler `handlers::chat_attachments::attachment_add` | revise: `semantic_kind: file \| folder` |
+| `cmd.chat.add_file_reference` | present, signature-locked | file-only compatibility alias; rejects a folder |
+| `cmd.browser.component.send_now / .add_to_composer / .insert_at_cursor / .pick` | all four present | revise for revalidation; `pick` is the recapture flow |
+| `cmd.chat.todos.toggle_parent` | present, classified `shell_view` | local or shared view state only |
+
+Absent, and deliberately **not** created: `cmd.chat.plan.build_as_goal`,
+`cmd.chat.plan.export_report`, `cmd.chat.plan.progress.set`, `cmd.chat.add_folder_reference`,
+`cmd.browser.component.recapture`, and any per-number question-limit command. A census of the
+branch found no independent folder effect and no second progress authority; nothing in this
+correction justifies minting one.
+
+### CDRY-002..005 — The four reuse rules
+
+Plan progress is a derived projection. No user command and no model tool sets it; the internal
+projector action is `internal.plan_progress.recompute`.
+
+The seven question values (six bases plus the Grill Me extension) are ordinary project Settings
+written through the generic Settings transaction. No per-number command handler is created.
+
+`Build as Goal` is `cmd.chat.plan.build` with `execution_topology: goal_driven`. `Build With
+Crew` keeps its specialised atomic command so that `PlanRun` and `CrewRun` commit together;
+decomposing it into `cmd.collaboration.start` followed by `cmd.chat.plan.build` would create a
+race and is prohibited.
+
+Plan export reuses `cmd.chat.plan.export` with `content_kind` alongside the existing format
+discriminator, so one export owner produces two distinct artifacts.
+
+### CDRY-006 — What stays view state
+
+Modal open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover, local tabs,
+and To-Do parent expansion use local or shared view-state primitives and emit no domain event. A
+persisted preference uses the shared UI state owner. No domain command is registered for a visual
+action, and `local.workflow_modal.close`, `local.plan_card.expand`, and `local.plan_view.toggle`
+are local view actions rather than catalog rows.
+
+### CDRY-007..009 — Family reuse
+
+Collaboration start, reconfigure, pause, resume, cancel, message, and export reuse the shared
+`cmd.collaboration.*` family. A kind-specific command exists only where the semantics genuinely
+differ; thin aliases normalise to one handler and one effect, and four duplicate runtimes are
+never built.
+
+Scheduled-message projection reuses the existing create, update, and cancel commands. Card
+actions map onto those commands. Dispatch is `internal.scheduler.dispatch_scheduled_message`, an
+internal scheduler action with its own idempotency domain — not a second user command, and not a
+state-set command.
+
+Folder add reuses `cmd.chat.attachment.add`. Browser stale currentness returns a typed result or
+error through the existing component send and pick commands rather than forking attachment or
+browser ownership.
+
+### CDRY-010..011 — Contract obligations for every changed command
+
+Each new or changed mutating command carries a typed request, result, and error enumeration, an
+availability predicate, expected revision and currentness, a permission snapshot, an idempotency
+key, exactly one handler, and a declared effect disposition. Unknown state and unknown errors
+fail closed; success is never inferred from a dismissed modal or an accepted dispatch.
+
+Every durable effect has either a centrally admitted `EventRecord` payload authority or an
+explicit receipt-only / no-event disposition recorded before implementation-ready status. A
+proposed event list is not a registration, and no owner document emits an unregistered event
+name.
+
+### CDRY-012..013 — Wiring and the Settings boundary
+
+Production wiring covers the full path for every correction surface: GUI or internal producer →
+command or intent → sole handler → owner record, event, or receipt → projector → every GUI
+consumer, including the failure and recovery paths. Reverse coverage is required so an orphan
+control or an invisible effect is detectable; validating command-to-handler rows alone is
+insufficient.
+
+Settings remains the owner of the shell, the inventory, project-scoped values, transactions,
+defaults, and manager routing. Domain runtimes own their own records and operations. A manager
+action routes to its owner, and participant, run, and schedule truth is never stored as a
+settings value.

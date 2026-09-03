@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8213-L8388
+Source lines: L8314-L8502
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -150,17 +150,28 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
-### Settings home bloom and suggestion commands
+### Settings route and transaction commands
 
-These rows do not alter the registry-owned non-command convention for setting mutations (F3-438/F3-439/F3-441): `bloom.open` is an open/deep-link surface command in the mold of `cmd.settings.open_notifications`, `category.reset` is a command-shaped bulk action behind the F3-434 two-step confirmation, and `suggestion.dismiss` is the F3-437 per-card dismiss control.
+`Plans/Settings_System.md` SSYS-018 owns exactly five Settings semantic commands. Presentation actions and
+bulk/reset/dismiss affordances must compose these typed route and transaction commands; they never mint a
+second Settings mutation family.
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.settings.bloom.open` | Open Category Bloom | Opens a category bloom modal, optionally deep-linked via `open(category, focusSettingId)`; a focus target scrolls into view and flash-highlights; reduced motion opens without the morph. | `settings_registry_loaded` | `shell_view` |
-| `cmd.settings.category.reset` | Reset Settings Category | Resets every setting in a category to registry defaults; two-step: first activation arms confirmation, second activation within the timeout resets, timeout expiry disarms without resetting. | `category_bloom_open` | `domain_action` |
-| `cmd.settings.suggestion.dismiss` | Dismiss Suggested Setting | Dismisses a Suggested-shelf entry; persists at `settings_suggestions_dismissed:v1`, project-scoped when the driving signal was project-scoped, 90-day expiry, fully local. | `suggestion_visible` | `domain_action` |
+| `cmd.settings.open` | Open Settings Target | Opens the exact Settings setting or manager/detail target carried by `pm.settings_route_request.v1`, preserving the typed return contract and current context. The K3 host chooses the presentation; the command does not encode a bloom or other obsolete layout. | `settings_registry_loaded && route_target_current` | `navigation_wrapper` |
+| `cmd.settings.transaction.preview` | Preview Settings Transaction | Validates and expands stable target IDs, requested values, owner routes, permissions, currentness, migration impact, and rollback eligibility without committing. | `settings_snapshot_current && target_set_nonempty` | `domain_action` |
+| `cmd.settings.transaction.apply` | Apply Settings Transaction | Applies exactly one current preview under revision/CAS and idempotency guards, performs owner readback, and returns a typed committed/refused/failed/rollback-required result. | `preview_current && permission_allowed && owner_routes_available` | `domain_action` |
+| `cmd.settings.transaction.rollback` | Roll Back Settings Transaction | Restores an eligible committed transaction from its exact rollback snapshot and verifies owner readback; it never invents rollback where none was created. | `rollback_snapshot_current && rollback_allowed` | `domain_action` |
+| `cmd.settings.export` | Export Settings | Exports the selected non-secret Settings snapshot and explicit exclusions through `pm.settings_export_request.v1`; credentials and protected session material never enter the manifest. | `settings_snapshot_current && export_destination_allowed` | `domain_action` |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md
+Historical `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and
+`cmd.settings.suggestion.dismiss` spellings are retired, non-alias local-affordance lineage. Opening the
+Notifications destination emits `cmd.settings.open` with the Settings-owned typed target. Category reset
+and suggestion dismissal each compose `cmd.settings.transaction.preview` followed by
+`cmd.settings.transaction.apply`; neither bypasses the preview/currentness/confirmation/readback contract.
+The three historical spellings receive no primary handler, production-wiring row, or alias.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, SchemaID:pm.settings_system.contracts.v1, ContractName:Plans/FinalGUISpec.md
 
 ### Docker container start and Unraid template commands
 
@@ -174,13 +185,15 @@ ContractRef: ContractName:Plans/FinalGUISpec.md
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md
 
-### Source Control pull request commands
+### Forge review commands and Source Control compatibility inputs
 
-Panel-scoped PR actions are first-class Source Control route commands with exact SCM context payload (repo, worktree, compare target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements. They are distinct from the thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` rows (UCC-058), which stay assistant-thread-scoped.
+Panel review actions consume the common Forge owner with exact SCM/forge context (provider, repository, workspace/revision, compare target, baseline, run/attempt lineage). The historical Source Control PR spellings normalize before availability, permission, telemetry, receipt, and dispatch; they never own a second review handler. Thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` remain separate assistant-thread wrappers.
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.source_control.pr.create` | Create Pull Request | Creates a pull request from the Source Control panel with repo, source worktree/branch, target branch, and compare payload; deterministic disabled state for missing scopes, expired auth, or no GitHub remote. | `github_auth_valid && github_remote_present` | `domain_action` |
-| `cmd.source_control.pr.merge` | Merge Pull Request | Merges the selected pull request; protected-branch mutation routes the `domain.git_destructive_remote` permission class. | `pr_open && merge_allowed && github_auth_valid` | `domain_action` |
+| `cmd.forge.review.create` | Create Review | Creates a provider-discriminated review through the Forge owner with repository, source workspace/revision, target revision, compare payload, and exact return route. | `forge_capability_current && auth_valid && repository_current` | `domain_action` |
+| `cmd.forge.review.merge` | Merge Review | Merges the selected provider review through the Forge owner; protected-branch mutation routes the applicable destructive-remote permission class. | `review_open && merge_allowed && auth_valid` | `domain_action` |
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+Compatibility inputs: `cmd.source_control.pr.create` normalizes to `cmd.forge.review.create {provider: github}` and `cmd.source_control.pr.merge` normalizes to `cmd.forge.review.merge {provider: github}`. Neither compatibility spelling receives a primary catalog or production-wiring row.
+
+ContractRef: ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md

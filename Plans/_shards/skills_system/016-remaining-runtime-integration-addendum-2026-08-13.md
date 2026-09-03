@@ -4,7 +4,7 @@ Source: `Plans/Skills_System.md`
 
 Source lines: L2584-L2647
 
-Source SHA256: `e9b5a64f585b47d2142222d2e1e031981bc97c2da3629e41f2a36c62bc49d094`
+Source SHA256: `c556120cfe2b34b0692622237915e06e188c430a48073ebcd559d74ec2cd83b3`
 
 ---
 

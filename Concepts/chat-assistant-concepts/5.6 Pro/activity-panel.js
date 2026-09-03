@@ -34,6 +34,12 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
+  /* Assistant-redesign wave: 'todo' stays here. Dropping it removed the To-Do
+     tile from all eight Activity Detail concepts (6 domain tiles became 5).
+     The duplication it was meant to prevent is handled upstream instead:
+     app.js's activityScope() now derives `todos` from window.PM56_TODOS, so the
+     tiles and counts below read the OWNER's data, and todos.js's own panel body
+     renders only in focused 'todo' scope. */
   var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
   var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
   var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'users', changes: 'changes', artifacts: 'artifact' };

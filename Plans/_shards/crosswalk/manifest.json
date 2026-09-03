@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-30T00:17:00Z",
+  "generated_at_utc": "2026-09-03T21:40:03Z",
   "index_path": "Plans/_shards/crosswalk/00-index.md",
-  "index_sha256": "d004d68ddbf479897500ff2d762110df658515cef7c038bf193b808eadee9c17",
+  "index_sha256": "31acc5d7a1481186a1e2c03b2fab7b6fbc7156ccf1cfddd1880cacc6b7d9b41e",
   "manifest_path": "Plans/_shards/crosswalk/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/crosswalk/001-preamble.md",
-      "sha256": "33776c541641653358e388c303c2eabde320ba6bc09b05cef569fa89e5cf0a1d",
+      "sha256": "80144a937e91ed4aaa799e83aa56158db203d98502a92c0079bd7ea743e84ee1",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/crosswalk/002-canonical-owner-section-requirements.md",
-      "sha256": "f02bd731e28257ef6019d0690f9992b8d381ced6aa419d62ab8661173c1d772a",
+      "sha256": "67324897de5e3d17ffbe1299cb22d860c5c64b4a6c1b3cded2037327134ed9fa",
       "shard_id": "002",
       "source_line_end": 23,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/crosswalk/003-0.-scope.md",
-      "sha256": "f2f3a1868c5c61931d80e588a61d02dce78c49445d16269b9766b5045d0f5b5e",
+      "sha256": "d3c48cdf71f4ce9ccb326f0c77a797be1eb60834796516f01a53c602fa961244",
       "shard_id": "003",
       "source_line_end": 31,
       "source_line_start": 25,
@@ -35,115 +35,142 @@
     {
       "heading": "1. Precedence (anti-drift)",
       "path": "Plans/_shards/crosswalk/004-1.-precedence-anti-drift.md",
-      "sha256": "4bdfb2ce415b369ff7e1972130dcba0353b7724720904db780b7d18a3577b1da",
+      "sha256": "d23242fd630b19ee53ad75df494311f90270a5f2111e7de9b61ca1dfb34f82d3",
       "shard_id": "004",
-      "source_line_end": 43,
+      "source_line_end": 50,
       "source_line_start": 33,
       "split_rule": "heading-##"
     },
     {
       "heading": "2. Primitive index (definitions are DRY)",
       "path": "Plans/_shards/crosswalk/005-2.-primitive-index-definitions-are-dry.md",
-      "sha256": "1c7986a4874202ec6743c15b2be6671db5337319e3c0f129414b1caf81e3aa99",
+      "sha256": "845f368f12887d1a4d328a47accf0a7a8468558468deb97589da2fe90f8d05d4",
       "shard_id": "005",
-      "source_line_end": 309,
-      "source_line_start": 45,
+      "source_line_end": 380,
+      "source_line_start": 52,
       "split_rule": "heading-##"
     },
     {
       "heading": "References",
       "path": "Plans/_shards/crosswalk/006-references.md",
-      "sha256": "a9119bd334148b82c65ac3f599eeca067ed6f1966aff118ff294c96190653822",
+      "sha256": "46b39871651e5632aa50cfa93379db5add55141079285da44c5c48a18b859033",
       "shard_id": "006",
-      "source_line_end": 384,
-      "source_line_start": 311,
+      "source_line_end": 455,
+      "source_line_start": 382,
       "split_rule": "heading-##"
     },
     {
       "heading": "Recovery Terminology Canonical Alignment (2026-03-08)",
       "path": "Plans/_shards/crosswalk/007-recovery-terminology-canonical-alignment-2026-03-08.md",
-      "sha256": "68a816e0e22b6c56ec1dc708229b16678533374ae2a93871081b5d9215de84e4",
+      "sha256": "370c5930c74152db4131bae27128329cc7b2c757e45ce1c02306a9ca8ab18415",
       "shard_id": "007",
-      "source_line_end": 397,
-      "source_line_start": 386,
+      "source_line_end": 468,
+      "source_line_start": 457,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Scheduler / Recovery Ownership and Precedence",
       "path": "Plans/_shards/crosswalk/008-runtime-scheduler-recovery-ownership-and-precedence.md",
-      "sha256": "b6013fa241c17d0677cac351c08b2d828644c875e7ad0307165cbc4faff06066",
+      "sha256": "e870bdc5ab3ffb82a2939eb7b50c1d3160cbe4b022a9deb92e7ca7e73e3c7a3a",
       "shard_id": "008",
-      "source_line_end": 415,
-      "source_line_start": 398,
+      "source_line_end": 486,
+      "source_line_start": 469,
       "split_rule": "heading-##"
     },
     {
-      "heading": "Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)",
-      "path": "Plans/_shards/crosswalk/009-source-control-github-actions-and-docker-manager-ownership-adden.md",
-      "sha256": "f5538509a729b9e881fe3ce678662e606caa4431930f9b475e0e92035edb383a",
+      "heading": "Source Control, Actions & Pipelines, and Docker Manager Ownership Addendum (2026-03-12; scoped supersession 2026-09-01)",
+      "path": "Plans/_shards/crosswalk/009-source-control-actions-pipelines-and-docker-manager-ownership-ad.md",
+      "sha256": "b5557b2f0d6d7679f4bd2762922abc0ad4ace8f63567ee128241e66aa0378a55",
       "shard_id": "009",
-      "source_line_end": 478,
-      "source_line_start": 417,
+      "source_line_end": 556,
+      "source_line_start": 488,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/crosswalk/010-owner-consumer-map.md",
-      "sha256": "2e412baaee141ae37ce41f9e21eb5fbf94f279a62229e1ebde2011b65e0f2d16",
+      "sha256": "7ebe30474a1ced62ab91eb9dea4e63e79b489d29857f9274ec6b5215b7fb115f",
       "shard_id": "010",
-      "source_line_end": 484,
-      "source_line_start": 480,
+      "source_line_end": 562,
+      "source_line_start": 558,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/crosswalk/011-planunits.md",
-      "sha256": "645d0149724a1b9e521b922104a6981d72c323139fe289daa871d8c2b57b26b1",
+      "sha256": "a5330ac320f5cb4647be67eb8c746d5ef08379d259162ec535de811052539e1d",
       "shard_id": "011",
-      "source_line_end": 3136,
-      "source_line_start": 486,
+      "source_line_end": 3227,
+      "source_line_start": 564,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/crosswalk/012-migration-coverage.md",
-      "sha256": "cde8c9fc0882e62c7def2317a56b3583319d66068961bdb7a1f390cf1920f042",
+      "sha256": "86d98039da0d3610b0da0a079d6a62b47beca083dd424519d701efebe85615fc",
       "shard_id": "012",
-      "source_line_end": 3148,
-      "source_line_start": 3138,
+      "source_line_end": 3239,
+      "source_line_start": 3229,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/crosswalk/013-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "b88e040fd5985e82c5a91eac8a72f4832167e14d604b83794aef82f0c9eeb6ef",
+      "sha256": "fb0fa0869f27c316b2cb6a6093b13f68169ccc7695918605b8a827ab53fe689d",
       "shard_id": "013",
-      "source_line_end": 3187,
-      "source_line_start": 3150,
+      "source_line_end": 3278,
+      "source_line_start": 3241,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/crosswalk/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "534cefff01ca3c9d75d03e5ce64f95c86c7373e0064917395afc7f86950569c2",
+      "sha256": "70cb2403c21521248588c5dec447dab9903c35c77fa961b38d2a680aac54ab25",
       "shard_id": "014",
-      "source_line_end": 3265,
-      "source_line_start": 3190,
+      "source_line_end": 3356,
+      "source_line_start": 3281,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/crosswalk/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "28b633587d1ecd96cc0ee7c510cdf11e80c4d4d8388b4fdfc8f2cd5b19f869d8",
+      "sha256": "5e08d8a8df52bf2230a5a06884fde1827d8605aeef7c663568e209d8fa770bfe",
       "shard_id": "015",
-      "source_line_end": 3271,
-      "source_line_start": 3267,
+      "source_line_end": 3362,
+      "source_line_start": 3358,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Touch Closure Authority Addendum - 2026-09-01",
+      "path": "Plans/_shards/crosswalk/016-touch-closure-authority-addendum-2026-09-01.md",
+      "sha256": "334026f6f6a98a5bed954a0401dc0816df9d1ea4e23820b24371b315cae1614a",
+      "shard_id": "016",
+      "source_line_end": 3424,
+      "source_line_start": 3364,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Forge/Backup/tsnet Owner And Route Reconciliation Addendum - 2026-09-01",
+      "path": "Plans/_shards/crosswalk/017-forge-backup-tsnet-owner-and-route-reconciliation-addendum-2026-.md",
+      "sha256": "3b69774e17b0502607e8ec298fcde264e4d6c4e0355b2937b6e2e5f9f7cc641a",
+      "shard_id": "017",
+      "source_line_end": 3509,
+      "source_line_start": 3426,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Puppet Master Assistant Redesign Ownership Routing - 2026-09-03",
+      "path": "Plans/_shards/crosswalk/018-puppet-master-assistant-redesign-ownership-routing-2026-09-03.md",
+      "sha256": "8c258b565fb2c2d1c4d3f1396393a1014daa507e38c7c6519340e9eecb959f57",
+      "shard_id": "018",
+      "source_line_end": 3532,
+      "source_line_start": 3511,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3271,
+    "line_count": 3532,
     "path": "Plans/Crosswalk.md",
-    "sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+    "sha256": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c"
   }
 }

@@ -1,33 +1,34 @@
 # Shard Index: Plans/Project_Output_Artifacts.md
 
-Generated: 2026-08-30T00:17:00Z
+Generated: 2026-09-03T21:40:03Z
 
-Source SHA256: `5aea224c7bb380fd6d0a7469de4e21e7ec55a458f2790f3c3fe188a2ed9c3e11`
+Source SHA256: `f26aaf82474af8d25a284a9515fae5789162c320bc40129358312da00915367d`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L15 `e6c5c6be1361ec76d93ea8bf7cb12f00fe46437dc403d1df5b5f5c6851601152`
-- [002 - 0. Scope (normative)](002-0.-scope-normative.md) L17-L70 `b311ceae9d939d29ee15dca1d72e2a6a61532ffb848beb2662b7653f3e0af48e`
-- [003 - 1. Canonical persistence vs filesystem staging](003-1.-canonical-persistence-vs-filesystem-staging.md) L71-L79 `d67fd7a85fff2926824efdbb86cbaccb0b9cce70e6bd7c91f0422020742c4741`
-- [004 - 2. Required artifact set (SSOT) — Project Plan Package](004-2.-required-artifact-set-ssot-project-plan-package.md) L81-L140 `b34785d437ebb172308847334dec9e76356bd854c436b5167d43c625a3a76b5a`
-- [005 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](005-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L142-L250 `fd343f6cb37934ad6dc9004fd2e6433e7a40e21c6e0fec2e135f7c62bad3bf8f`
-- [006 - 3. Schema alignment (critical; do not rename fields)](006-3.-schema-alignment-critical-do-not-rename-fields.md) L252-L270 `8674723e50c32f4aa6986149966ff7691196a8cd39596dc58d4729ebb0820744`
-- [007 - 4. Contract layers (two-layer model)](007-4.-contract-layers-two-layer-model.md) L272-L302 `9936a1a473e5e6b0bace55f56b7207133c1f482883441d0db3a2060fc83c6e3e`
-- [008 - 5. DRY enforcement (contract-referenced graph)](008-5.-dry-enforcement-contract-referenced-graph.md) L304-L333 `1069b258c620cd96445f592b6fd531092b11ca911ff5bd4d656f423867efb125`
-- [009 - 6. Autonomy + decision logging (no human-required decisions)](009-6.-autonomy-decision-logging-no-human-required-decisions.md) L335-L349 `d7b210c11cb00f79b7d34beec87655472b77511ccc90fba8119c061e0ab2d3c1`
-- [010 - 7. Plan graph requirements (**sharded-only canonical** + optional derived export)](010-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md) L351-L471 `016b0d7ba2655e3c572bd65293ea700a0ec85c213fccd3b6f060463e15207c26`
-- [011 - 8. Seglog canonical persistence contract (artifact events)](011-8.-seglog-canonical-persistence-contract-artifact-events.md) L473-L521 `25ed41a4e0e806fe01b990bcabae9140ff7a5f7972aae979ae0d3b9ccd2a1348`
-- [012 - 9. Acceptance criteria (validator requirements)](012-9.-acceptance-criteria-validator-requirements.md) L523-L637 `24f67672275ddfc87cc1792337d294789425a1230e5e681c0de45ac42c4b5200`
-- [013 - 11. Traceability outputs](013-11.-traceability-outputs.md) L638-L774 `f2eefc4ced844fc7e08832d2d244f9c3bbfc3db0097288b68393ff36449a6799`
-- [014 - 12. Optional derived `quickstart.md` contract (human convenience only)](014-12.-optional-derived-quickstart.md-contract-human-convenience-on.md) L776-L808 `0cc453600d35c5774960db0d03514853953344a70f9c657774e92917cb8e80ec`
-- [015 - Change Summary](015-change-summary.md) L810-L823 `e454e2e9de6e74b1f13f2a5fb8cde211e0aad709db20314a8f92c762bb938d71`
-- [016 - Runtime Evidence and Degradation Artifact Addendum (2026-03-08)](016-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) L825-L839 `180801b6247c51284793d9c89b720f419c07ef0d62ede2547f3d037bd6e9af15`
-- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L841-L845 `bac95d206bb14de634c1c585fdad46df5ffd20c72b70103a850e52fa252cb0fe`
-- [018 - PlanUnits](018-planunits.md) L847-L3158 `52f6eebd516e5022d139f90e2d7225b01453276db45b207cf495ed54a7f34bd1`
-- [019 - Migration Coverage](019-migration-coverage.md) L3160-L3170 `8e081aef569a97d447734357cd05444a8353e07e722834ac6e9621bc33701b08`
-- [020 - Ledger Compile Addendum - pldg-20260614-002](020-ledger-compile-addendum-pldg-20260614-002.md) L3172-L3220 `a582df526be96b5a9114181bee159415ec1754e39f13b94b299ea1640ae2d9e5`
-- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L3222-L3336 `6d03dd27aa40c70e92c6c12d24abe983ccb2d69855076d760f9656bc798deaa2`
-- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3339-L3431 `51af750c012ea910ab2bf3042e1808ba82b1520e54c52da9ab1cf89f0dcedea0`
-- [023 - Ledger Compile Addendum - pldg-20260626-001-feature-name](023-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3434-L3537 `a397a7be239544af307a9d702afc6fc5335466bb05c2725d062b72f1fb1cdb98`
+- [001 - Preamble](001-preamble.md) L1-L15 `ea579d91ff0a0eab6bed72c61ba62fea0adfaddb75eff3ba50066c5b7cbbc8c3`
+- [002 - 0. Scope (normative)](002-0.-scope-normative.md) L17-L70 `b64010183b28c0e49590cb6d533e95ebf767760689729e7e4f4bd0a8843e693f`
+- [003 - 1. Canonical persistence vs filesystem staging](003-1.-canonical-persistence-vs-filesystem-staging.md) L71-L79 `b6bdf281220a4711c89b71a85c93c73af66d08624b16e3658a3ff9f26d8a159c`
+- [004 - 2. Required artifact set (SSOT) — Project Plan Package](004-2.-required-artifact-set-ssot-project-plan-package.md) L81-L140 `744031460c963c775b1a0f680e1c2c4d487d807127c7de6a3f0a03b3cea6eaac`
+- [005 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](005-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L142-L250 `cc05caf9501fb17975f40b211b40bbf0db8d2e4a107b1dd47ed22399492f4bc1`
+- [006 - 3. Schema alignment (critical; do not rename fields)](006-3.-schema-alignment-critical-do-not-rename-fields.md) L252-L270 `f2ec892b906151218d1c00ecf7376b4c2cf61b0dd04e151ed245ff56be6880eb`
+- [007 - 4. Contract layers (two-layer model)](007-4.-contract-layers-two-layer-model.md) L272-L302 `ffb4c7e55da440224aff1fe4cb43582fcba4095161ad25a5dd9a92446f1322ff`
+- [008 - 5. DRY enforcement (contract-referenced graph)](008-5.-dry-enforcement-contract-referenced-graph.md) L304-L333 `de3500781e23a97605f9c3385654e9067d799a3e48134ca085938644c88e138b`
+- [009 - 6. Autonomy + decision logging (no human-required decisions)](009-6.-autonomy-decision-logging-no-human-required-decisions.md) L335-L349 `0b004e99ca2fcb964a7daec73e9e10bb7b66f6b62fb6256f4c2c5ff01e4db23b`
+- [010 - 7. Plan graph requirements (**sharded-only canonical** + optional derived export)](010-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md) L351-L471 `9d43e012d27a8ba2f2e6960c5ba96beb0a52ced03f9205a76b9a4953bea21595`
+- [011 - 8. Seglog canonical persistence contract (artifact events)](011-8.-seglog-canonical-persistence-contract-artifact-events.md) L473-L521 `ba940fa39ae55b5c71b5e76e14cf9cd7a5daa32ceb37fa22b5de9c8587e3ca4d`
+- [012 - 9. Acceptance criteria (validator requirements)](012-9.-acceptance-criteria-validator-requirements.md) L523-L637 `479829920ef9c8cbde39eb0c46281d4a3eb55ca05d65b42651e39ecfe3c96a8f`
+- [013 - 11. Traceability outputs](013-11.-traceability-outputs.md) L638-L774 `ecc3f5ad02621c4e6938dfd53608433db7c9ef0077dd60b9158d4cd5b9c3a112`
+- [014 - 12. Optional derived `quickstart.md` contract (human convenience only)](014-12.-optional-derived-quickstart.md-contract-human-convenience-on.md) L776-L808 `c1ae01ee14dfbae79931b32256ca5f627aafe5e2df449f29729e6892546a9df0`
+- [015 - Change Summary](015-change-summary.md) L810-L823 `3dd667e11dc8a7e3315f57af49b1cfc948e064d8cad5913f0d9e54bd8f284646`
+- [016 - Runtime Evidence and Degradation Artifact Addendum (2026-03-08)](016-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) L825-L839 `e2a3ba72d162732a9984b947187ef5a8997d45dd12e416382c96def48cc8a2d3`
+- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L841-L845 `d22c4c26b229a0efeef734b408eee82894c99d99038d812b83b20f5179daa9ee`
+- [018 - PlanUnits](018-planunits.md) L847-L3158 `40f555e9b0ca7a69acfd9ab12e2e5a32b91fd0dde0ab96bd1d3eb0c8b064b0bb`
+- [019 - Migration Coverage](019-migration-coverage.md) L3160-L3170 `6359412b9cc1e76fd763fa4ee86cc5eda003f5e7798a718e6e031d8511248b7b`
+- [020 - Ledger Compile Addendum - pldg-20260614-002](020-ledger-compile-addendum-pldg-20260614-002.md) L3172-L3220 `20f19ae70f7fe72be5389a6dfd96d0fb286aee7b7fb6a07869bd055a8a501f38`
+- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L3222-L3336 `e0fa994c348839c12e972d1d209ea86bd57a11fa4d3e34bec9b4c5e7da752923`
+- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3339-L3431 `b42b03ac711ac8d52677f704d1a95312d62fd31da598cdd0c9ac2ca88fced20e`
+- [023 - Ledger Compile Addendum - pldg-20260626-001-feature-name](023-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3434-L3537 `4f66bef106ffabb5c141b874485b107f931051f4a9b0b83c7a6d72c796907610`
+- [024 - Additive Correction v4 — Plan And Review Exports (2026-09-03)](024-additive-correction-v4-plan-and-review-exports-2026-09-03.md) L3539-L3554 `74b723ed696695d73027c3d4cbf84494c0d65ccf3f68de163a79a78df642cc2c`

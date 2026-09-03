@@ -35040,7 +35040,7 @@ acceptance_criteria:
   - "Ready presents one dominant enter action, a working Back action, and an optional Guided Tour without trapping the user; Back returns to Review with the complete live draft intact. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
   - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout`; it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
-  - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
+  - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
   - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup."
   - "Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings never ghost through one another."
@@ -35688,11 +35688,19 @@ canonical_text: >-
   shows the actual destination/refspec, Origin mirror write-through, protection, and CI/cost effects. Publish and
   review creation are separate unless one explicit combined preview lists both effects; expected-head fencing,
   remote limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states
-  remain visible, with no blanket Origin read-only badge. Actions & Pipelines selects AutomationBinding only when
-  more than one service applies and shows current revision checks, pinned and available definitions, active/recent
+  remain visible, with no blanket Origin read-only badge. `ui.source_control.profile.preview` is a typed owner-local
+  view action that lets the concept or future comparison surface switch between Git and Jujutsu presentation without
+  changing the Project's configured backend, repository binding, workspace, history, or persistent state. Actions &
+  Pipelines selects AutomationBinding only when more than one service applies and shows current revision checks, pinned and available definitions, active/recent
   runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy or the provider's available
   trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables links,
-  and external/unsupported explanation. Provider-native headings and names remain GitHub Actions, GitLab
+  and external/unsupported explanation. `ui.repository_automation.binding.select` is a typed owner-local action
+  that changes only which already-authorized AutomationBinding presentation is selected; it registers no domain
+  command or semantic handler, emits no domain EventRecord, grants no provider authority, and mutates neither the
+  repository binding nor the AutomationBinding. `ui.source_control.backup_history.open` is a typed owner-local,
+  read-only navigation action that carries exact project, repository, immutable revision, Backup-owner route, deep
+  link, currentness, accessibility, and return-context identity into the Backup owner; it never requests restore,
+  starts restore, or mutates Source Control or Backup state. Provider-native headings and names remain GitHub Actions, GitLab
   Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no
   invented definitions and Origin checks never imply Origin Actions. Files uses engine-correct decoration/ignore,
   useful repository/source badges, read-only Backup preview, and Restore this file. Artifacts distinguishes
@@ -35711,6 +35719,9 @@ acceptance_criteria:
   - Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid actions.
   - Protected branch, rejected push, Origin mirror mapping, stale review head, one-to-many partial push, and review-API-unavailable/push-ready fixtures show exact target and outcome truth.
   - Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented steps, and existing pinned GitHub workflows/rerun controls survive.
+  - "`ui.source_control.profile.preview` request/result fixtures require an exact current repository projection, selected `git|jj` presentation profile, accessibility and return context, deterministic focus settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false backend/repository/workspace/history mutation facts; it never dispatches `cmd.source_control.backend.select`."
+  - "`ui.repository_automation.binding.select` request/result fixtures require at least two explicit candidate AutomationBinding refs, exact selected binding and capability/currentness refs, deterministic return settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false repository/automation mutation facts; the profile has `domain_command_registered=false`, `semantic_domain_handler=null`, and `domain_event_emitted=false`."
+  - "`ui.source_control.backup_history.open` request/result fixtures require the Backup owner, `backup_history_repository_revision` route kind, exact repository revision, Backup route and deep-link refs, deterministic target-open settlement, and false restore/source/Backup mutation facts; navigation never implies `cmd.backup.restore.preview`, `cmd.backup.restore.execute`, or any other Backup mutation."
   - Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
   - Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts never auto-execute and remote CI is never local test proof.
   - Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals, secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner registration remain impossible.
@@ -35732,12 +35743,544 @@ source_lineage:
   - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
   - source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
   - source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
-preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation History, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced]
+preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation History, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced, ui.source_control.profile.preview, ui.repository_automation.binding.select, ui.source_control.backup_history.open, owner_local_typed_ui_controller, backup_history_repository_revision]
 negative_constraints:
   - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git mutation.
   - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
   - Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin blanket read-only.
   - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner registration.
+  - Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler, emit a domain EventRecord, persist a preview or provider/binding selection, dispatch backend selection from the profile preview, change backend/repository/workspace/history/RepositoryForgeBinding/AutomationBinding state, start restore, or mutate Source Control/Backup state.
   - Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content, or count Backup statistics as model usage.
   - Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness proof from static Plans/schema/fixtures.
+owner_boundary_notes:
+  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, routes, and the two typed owner-local request/result profiles only; Forge owns AutomationBinding truth, Backup owns history/restore truth, and all semantic effects remain with their named domain owners.
 ```
+
+### F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation
+
+```yaml
+plan_unit_id: F3-530
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI provides two reusable pure-presentation consumers without becoming a secret, permission, approval,
+  authentication, command, or persistence owner. SecretReferenceControl consumes only an owner reference,
+  redacted/masked status, typed availability and disabled reason, and a protected owner route. Its choose,
+  replace, remove, and open-owner interactions are typed local UI actions: no raw secret enters component state,
+  events, logs, receipts, screenshots, Chat, Usage, adapters, or agents, and owner revalidation owns every effect.
+  HumanStepUpDialog consumes an owner-authored HumanStepProjection plus exact target, permission, step-up policy,
+  protected channel, confirmation, expected generation, currentness, consequence, and return references. It emits
+  only a reference-only local response or cancellation settlement; visibility and clicks grant no authority, stale
+  targets block owner dispatch, and the semantic owner revalidates immediately before any effect. The dialog is
+  used only where an effect-specific security contract requires step-up, never as universal optional-HITL friction.
+  The same contract family records the September packet's corrected 27-component DRY reconciliation: 16 exact
+  names were already present; eight of eleven absent names map to existing canonical equivalents; SourceGraph,
+  SecretReferenceControl, and HumanStepUpDialog receive bounded typed closure. NativeAutomationTree is a
+  migration-read/source-lineage alias superseded by NativeJobTree and never becomes a second component.
+gui_related: true
+gui_classification_reason: These are reusable visible controls/dialogs and a machine-checkable map from packet presentation vocabulary to existing owner projections.
+depends_on: [F3-522, F3-528, F3-529, SCS-017, SIR-019, SIR-023, SIR-035, PS-138, PS-139, SMPFS-154, GAAAF-016, N2-153]
+unblocks: []
+acceptance_criteria:
+  - SecretReferenceControl validates only reference/redacted state and the exact choose/replace/remove/open-owner local-action vocabulary; it has no raw-secret readback, store, auth policy, domain command, EventRecord, persistence, capture, adapter, or agent authority.
+  - HumanStepUpDialog binds an exact owner projection/target/generation/permission/policy/protected-channel/confirmation/consequence/return set, supports keyboard-complete response and safe cancellation, preserves focus return, and blocks stale-target dispatch.
+  - Dialog visibility or button activation never establishes permission or effect authority; only the semantic owner may revalidate and dispatch, and optional HITL is not made universal.
+  - The 11-row reconciliation preserves the corrected 27 = 16 + 11 denominator, records eight semantic equivalents and three bounded closures exactly once, and creates no duplicate owner, command, component, or state machine.
+  - "`NativeAutomationTree` is accepted only as a migration-read/source-lineage alias to canonical `NativeJobTree`; no second automation hierarchy is registered or rendered."
+  - Static schema/fixture evidence retains `runtime_evidence_claimed=false` and `packet_scenarios_claimed_run=false`; it proves no native Slint rendering, protected-channel behavior, handler, security property, scenario, or readiness state.
+validation_surfaces:
+  - Plans/final_gui_interaction_contracts.schema.json#/$defs/secret_reference_control
+  - Plans/final_gui_interaction_contracts.schema.json#/$defs/human_step_up_dialog
+  - Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future native protected-entry, permission/currentness race, cancellation/focus, accessibility, capture-exclusion, and owner-dispatch tests
+risk_class: secret_exposure_dialog_local_authority_or_duplicate_dry_owner
+reasoning_tier: high
+context_scope: reference_only_security_presentation_and_dry_reconciliation
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, future Slint SecretReferenceControl and HumanStepUpDialog]
+node_compile_hint: {mode: static_presentation_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/dry_components.json:6-61
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/semantic_gap_plan_rerun/semantic_gap_plan.json
+  - Plans/Source_Control_System.md#SCS-017
+  - Plans/Shared_Integration_Runtime.md#SIR-019
+  - Plans/Shared_Integration_Runtime.md#SIR-023
+  - Plans/Shared_Integration_Runtime.md#SIR-035
+  - Plans/Permissions_System.md#PS-138
+  - Plans/Permissions_System.md#PS-139
+  - Plans/newtools.md#N2-153
+preserved_exact_tokens: [CapabilityReason, EngineSpecificChanges, SourceGraph, WorkspaceSelector, RemotePublicationPreview, NativeAutomationTree, NativeJobTree, PipelineRunSummary, SecretReferenceControl, AuthSessionProgress, HumanStepUpDialog, DoctorHealthProjection]
+negative_constraints:
+  - Do not model raw credentials, tokens, passwords, keys, cookies, authorization codes, verifiers, private material, or credential-bearing paths in Final GUI state or evidence.
+  - Do not let presentation visibility, a button click, readable metadata, cached permission, or stale projection grant authority or prove an effect.
+  - Do not turn local UI actions into domain commands, register a new event family, duplicate semantic owners, or let dialogs dispatch directly.
+  - Do not add NativeAutomationTree beside NativeJobTree or create duplicate capability, workspace, publication, pipeline, auth, or Doctor projections.
+  - Do not claim native/runtime/security/accessibility/performance evidence or any executed packet scenario from static contracts and fixtures.
+```
+
+## Puppet Master Assistant Redesign GUI Specification - 2026-09-03
+
+This section is the canonical GUI contract for the approved Puppet Master Assistant redesign. It preserves the winning 5.6 Pro concept and states only what changes. Everything the concept already does that is not contradicted here remains binding: Layered Studio, Preview Rows, Orbit, Status Board and Ask Card selected defaults; thread history, pinning and menu motion; app-rendered hover cards; message chrome; the Context Lens strip; the context ring, menu, details and compaction behavior; questionnaire choreography; selector collapse; responsive activity-panel behavior; the follow-up queue semantics; the Send-to-Stop morph; and the current themes and visual tokens.
+
+### 1. Header
+
+Header order remains `Context Lens | Thread Search | Worktree | Context Ring`. No Goal chip and no model or mode metadata returns to the header. **Context Lens remains a top-level header control and horizontal strip and is not moved into the wand.** The context-ring compact menu gains a BSD summary row while retaining Compact Now and More Details; that row opens or scrolls Context Details to BSD and does not itself change BSD mode.
+
+### 2. Primary mode menu
+
+Root choices become exactly `Ask`, `Agent`, `Debug`, `Plan ▶`, `Deep Plan ▶`, `Review ▶`. Sidecars keep the existing fixed-width sprout behavior.
+
+The Plan sidecar offers `Quick`, `Standard · Default`, `Thorough`. The Deep Plan sidecar offers `Thorough · Default`, `Exhaustive`, `BrainStorm`, then a divider and a persistent `✓ Grill Me` check row. The Review sidecar offers `Single Agent` and `Multi-Pass Review`.
+
+Selecting BrainStorm or either Review choice opens that workflow's configuration modal. Selecting a Plan or Deep Plan strategy sets the strategy for the next planning request. Grill Me is a persistent check for the next Deep Plan invocation and visually matches the existing auxiliary-row pattern without being confused with model effort.
+
+### 3. Wand menu
+
+The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, and `Manage Defaults…`. The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox.
+
+Review stays in the primary mode selector and BrainStorm stays under Deep Plan; neither is duplicated as a first-class wand entry, though context actions may route to them. Schedule Message belongs in the wand, not in an Assistant overflow menu outside it.
+
+### 4. Composer
+
+Baseline chrome is unchanged: Attach and active capability glyphs stay bottom-left inside the text field, Send and Stop stay bottom-right, and Persona, Model, Mode, Permissions and the wand stay centered below the static divider. **The optional restore-draft control and all user-visible Draft terminology are removed**; unsent text and attachments persist invisibly per thread instead.
+
+When attachments exist the composer expands upward into an attachment tray above the text entry. Each thumbnail is a compact rounded surface consistent with the orbit-node and composer tokens, showing an image preview or a file-type SVG, an optional ellipsized name, a thin animated top-edge tracer while processing, a hover X in the upper right, and a click target on the body that opens or previews. Name, type, size, source, state and actions come from the hover card or the hidden message chrome rather than permanent text. A failed attachment stays removable and retryable. The tray coexists with selector collapse and the destination ribbon without clipping.
+
+A targeted composer adds a narrow ribbon inside the composer's top edge and tints the outer border and background. It stays theme-aware and subtle — not a broad colored stripe and not a left accent bar. The ribbon reads, for example, `To: BrainStorm · Provider Architecture · 4 participants ×`, and the matching small destination glyph near Attach illuminates; clicking that glyph opens the eligible destinations. Pressing Revise shows `Revising Plan · V5 ×` and submits feedback to the revision agent rather than opening a document editor.
+
+When a provider quota wait is active, a compact in-flow strip sits below the activity and follow-up queue and above the composer, reading the paused reason, the reset time and its source, and an opt-in `Resume automatically` checkbox. It is in flow, not a full-width overlay, and must not collide with the activity bar or the decision host.
+
+### 5. Transcript attachments
+
+Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
+
+### 6. Plan card
+
+The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer. The Markdown view is read-only and preserves block identity.
+
+The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`.
+
+Historical Completed and Canceled cards stay in place and default to compact. A later Plan appears lower in the transcript. There is no Plan picker and no `Superseded` label.
+
+### 7. Goal Activity UI
+
+Goal appears in the Activity bar only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive: `Goal · Running`, a two-line objective preview, and `[Pause] [Cancel] [edit icon]`, with Resume replacing Pause when eligible. The edit icon opens Activity Detail in edit mode; clicking the Goal item itself opens the normal detail view.
+
+Activity Detail shows a text-only objective area with `[Save] [Cancel edit]`, then `[Pause/Resume] [Cancel Goal]` and a `History ▾` revision list. It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
+
+### 8. To-Dos Activity UI
+
+The hover preview shows compact current work — a completed-over-total count and the current items, with several current rows allowed and a blocked count only when nonzero. Activity Detail shows one hierarchical tree using distinct pending, current, completed, blocked and skipped marks in the existing visual language. Completed entries stay inline with a filled dot and strike-through. There is no Done heading, no source chip, no verification badge, no Goal grouping and no cross-thread row. Parent rows expand and collapse and show derived counts, and clicking an active item may open its associated work, agent or artifact. **There is no To-Do transcript card.**
+
+### 9. Activity bar domains
+
+Dynamic domains become `Goal · To-Dos · Subagents · Crew · BrainStorm · Review · Chat Room · Changes · Artifacts`, preserving per-thread presence, omission of empty domains, responsive compaction tiers, hover-card dwell, and Activity Detail routing. The four collaborative domains may show active and completed run counts and the latest status, and their rows open the corresponding card, panel or participant transcript. Subagents remains distinct from Crew and from collaborative participant groups.
+
+### 10. Multi-agent modals, cards and panels
+
+One shared modal shell and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
+
+Each run renders one transcript card that expands inline for recent transcript and details and pops out to a full panel showing the same run. Participants are clickable and open their own transcripts. The BrainStorm modal shows the effective question maximum including the Grill extension; the Review modal shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room modal shows turn policy and rounds; the Crew modal shows coordinator, roles, assignment strategy and parallelism.
+
+### 11. BSD GUI
+
+The wand shows Off, Auto and On check state plus Configure, driven by the owner projection. Silent, duplicate and cleared evaluations create no transcript noise. Emitted advice appears as an attributable BSD card or inline advisory near the relevant working activity or safe boundary. Held findings appear only in Context Details and the BSD detail, possibly as a small held count, and are never shown as confirmed warnings. Unreconfirmed terminal critical advice is explicitly labelled stale or unreconfirmed.
+
+The compact Context menu carries a BSD row showing mode, Persona and liveness, for example `BSD  Auto · Critical Advisor` over `Caught up · checked 18s ago`, across the states Off, Idle, Reviewing, Catching up, Finding held, Advice delivered, Quota paused, Failed and Unavailable. Context Details gains a BSD section with policy, identity, stage, cursor, triggers, findings, context, Usage, failure and watch guidance, reusing the existing detail-card grammar and Raw redaction rules. The Usage page gains a BSD purpose filter and rows for calls, no-calls, held, cleared, emitted and suppressed findings, timeout, quota and failure counts, cost by model, account and stage, and catch-up latency, added through the existing widget system without altering the accepted Usage layout.
+
+### 12. Browser capture GUI
+
+The browser toolbar and context menu expose `Full Screenshot ▶ Visible Browser | Full Scrollable Page`, `Region Screenshot`, and `Select Component`. Region mode draws a selection overlay and sends on completion. Component mode highlights the hovered and clicked component and places a compact instruction bar beside the selected target without clipping the viewport, carrying a text input, Send, and a menu offering `Send Now`, `Add To Composer List` and `Insert Component At Cursor`, with the last choice marked and remembered. Escape cancels selection. A selected component chip renders as a highlighted `<div>`, `<Button>` or framework name. Numbered queue items in the composer are plain readable text plus an embedded hidden reference, and are distinct from the live follow-up queue.
+
+### 13. Scheduling GUI
+
+`Schedule Message` opens a modal carrying date and time, timezone, destination, message preview, attachments, missed-time behavior, the selected model and account summary, and a Schedule action. The composer stays populated until the schedule commits, and on success only the scheduled snapshot clears from the buffer.
+
+`Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version disclosure, timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
+
+The quota wait strip described in section 4 links to Usage detail from its reset and source text, and its checkbox controls only that run's consent unless Settings defines a default.
+
+### 14. Teach, Teacher, memory, ELI5, Debug and Revert
+
+`/teach` or natural language opens an explicit capture card showing the proposed knowledge and its scope. **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior.
+
+ELI5 is a wand check with a conversation override while Settings owns the application default; it is not a one-shot "simplify this output" action. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes and the message overflow when eligible, previews the exact files before dispatching the canonical whole-turn revert, and stays distinct from Rewind in the thread and message overflow.
+
+### 15. Thread history and status
+
+Thread status continues to derive from owner projections. Review, multi-agent, scheduled and quota-wait statuses are added only through the shared status vocabulary; Plan Build-button labels are never overloaded into thread status. A title-generation failure leaves `New chat` and is reported in Details and Usage rather than in an intrusive modal.
+
+### 16. Responsive and theme behavior
+
+All eight themes and every width in the concept's existing verification apply, plus the narrow 390–590px states. Under width pressure the priority order is: preserve Send and Stop; preserve destination identity and its close control; preserve Attach and the active capability glyphs; collapse the participant cluster and the attachment overflow; use the existing selector icon mode; keep the Plan primary status control visible and overflow its secondary actions; and preserve Activity icon access even when labels and counts collapse.
+
+Do not add left accent bars, excessive padding, permanent bright status surfaces, or white-until-hover defects.
+
+### F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement
+
+```yaml
+plan_unit_id: F3-531
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Assistant primary mode menu offers exactly Ask, Agent, Debug, Plan, Deep Plan, and Review, with sidecars Quick/Standard/Thorough for Plan, Thorough/Exhaustive/BrainStorm plus a persistent Grill Me check for Deep Plan, and Single Agent/Multi-Pass Review for Review, all using the existing fixed-width sprout behavior. The wand keeps its existing capability entries and adds Goal, a BSD sidecar of Off/Auto/On/Configure driven by the owner projection, ELI5, Schedule Message, Teach where discoverability helps, Revert Last Agent Edit when eligible, and a Multi-Agent sidecar of Crew, Chat Room, a checkable Crew Auto, and Manage Defaults. Review stays in the mode selector and BrainStorm stays under Deep Plan; neither is duplicated as a first-class wand entry. Context Lens remains a top-level header control and horizontal strip and is never moved into the wand, and header order remains Context Lens, Thread Search, Worktree, Context Ring with no Goal chip and no model or mode metadata.
+gui_related: true
+gui_classification_reason: This unit specifies the exact contents and placement of the mode menu, the wand, and the header.
+depends_on: [F3-530]
+unblocks: [F3-532, F3-533]
+acceptance_criteria:
+  - The mode menu shows exactly six roots with the three specified sidecars.
+  - Grill Me is a persistent check in the Deep Plan sidecar and is not confused with model effort.
+  - The BSD wand check state comes from the owner projection, not a local checkbox.
+  - Context Lens remains a header control and is absent from the wand.
+  - Schedule Message appears in the wand and not in an outer overflow menu.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/audit.mjs
+  - node tests/restored-features-verify.mjs
+risk_class: mode_menu_or_lens_placement_drift
+reasoning_tier: high
+context_scope: assistant_redesign_menus
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/menus.js
+node_compile_hint:
+  mode: assistant_menu_specification
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GUI-001
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#2
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#3
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#4
+preserved_exact_tokens:
+  - "Deep Plan"
+  - "Multi-Pass Review"
+  - "Grill Me"
+  - "Context Lens"
+negative_constraints:
+  - Do not move Context Lens into the wand.
+  - Do not duplicate Review or BrainStorm as first-class wand entries.
+  - Do not return a Goal chip or model/mode metadata to the header.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip
+
+```yaml
+plan_unit_id: F3-532
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Baseline composer chrome is preserved: Attach and active capability glyphs bottom-left inside the text field, Send and Stop bottom-right, and Persona, Model, Mode, Permissions and the wand centered below the static divider. The optional restore-draft control and all user-visible Draft terminology are removed because unsent text and attachments persist invisibly per thread. When attachments exist the composer expands upward into a tray of compact rounded thumbnails carrying an image preview or file-type SVG, an optional ellipsized name, a thin animated top-edge tracer while processing, a hover X in the upper right, and a body click that opens or previews, with name, type, size, source, state and actions supplied by the hover card or hidden message chrome rather than permanent text. A targeted composer adds a narrow theme-aware ribbon inside the top edge naming its destination with a close control and illuminates the matching destination glyph near Attach, and Revise shows Revising Plan Vn rather than opening a document editor. An active provider quota wait shows a compact in-flow strip above the composer with the paused reason, the reset time and its source, and an opt-in resume checkbox, never a full-width overlay.
+gui_related: true
+gui_classification_reason: This is the complete composer rendering contract for the redesign.
+depends_on: [F3-531]
+unblocks: []
+acceptance_criteria:
+  - No restore-draft control or Draft terminology is rendered anywhere.
+  - The attachment tray coexists with selector collapse and the destination ribbon without clipping.
+  - The destination ribbon names the destination, is subtle and theme-aware, and offers a close control.
+  - The quota strip is in flow and does not collide with the activity bar or decision host.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/attachments-composer-verify.mjs
+risk_class: draft_ui_reintroduced_or_hidden_send_destination
+reasoning_tier: high
+context_scope: assistant_redesign_composer
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
+  - Concepts/chat-assistant-concepts/5.6 Pro/attachments.js
+node_compile_hint:
+  mode: assistant_composer_specification
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GUI-002
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#5
+preserved_exact_tokens:
+  - "attachment tray"
+  - "top-edge tracer"
+  - "Revising Plan"
+negative_constraints:
+  - Do not render a Draft control or Draft terminology.
+  - Do not use a broad colored stripe or left accent for the destination ribbon.
+  - Do not hide the send destination at any width.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains
+
+```yaml
+plan_unit_id: F3-533
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History. The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row. Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
+gui_related: true
+gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
+depends_on: [F3-531]
+unblocks: []
+acceptance_criteria:
+  - The Plan card has exactly one primary status control with four possible labels and no editable caret.
+  - No Goal or To-Do transcript card exists.
+  - Completed To-Dos stay inline with a filled dot and strike-through and no Done heading.
+  - Activity exposes all nine domains with existing compaction and routing behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/assistant-plan-verify.mjs
+  - node tests/todo-verify.mjs
+  - node tests/activity-detail-verify.mjs
+risk_class: goal_or_todo_transcript_card_or_done_section
+reasoning_tier: high
+context_scope: assistant_redesign_cards_and_activity
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/ToDo_Runtime.md
+  - Plans/Goal_Runtime_System.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
+node_compile_hint:
+  mode: assistant_card_and_activity_specification
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GUI-003
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#9
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#10
+preserved_exact_tokens:
+  - "Building…"
+  - "Completed"
+  - "Canceled"
+  - "Plan · V5"
+negative_constraints:
+  - Do not render Goal or To-Dos as transcript cards.
+  - Do not add a Plan picker or a Superseded label.
+  - Do not replace the Build control with a separate status badge.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions
+
+```yaml
+plan_unit_id: F3-534
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  All eight themes and every width in the concept's existing verification apply to the redesign, plus the narrow 390 to 590 pixel states. Under width pressure the priority order is to preserve Send and Stop, then destination identity and its close control, then Attach and the active capability glyphs, then to collapse the participant cluster and attachment overflow, then to use the existing selector icon mode, then to keep the Plan primary status control visible while overflowing its secondary actions, and finally to preserve Activity icon access even when labels and counts collapse. Left accent bars, excessive padding, permanent bright status surfaces, and white-until-hover defects are prohibited. Accessibility semantics already present must be preserved when a component is touched, and no separate accessibility expansion workstream is in scope for this wave.
+gui_related: true
+gui_classification_reason: This unit governs responsive collapse order and visual prohibitions across every redesign surface.
+depends_on: [F3-532, F3-533]
+unblocks: []
+acceptance_criteria:
+  - Send and Stop survive every supported width.
+  - The send destination is never hidden at any width.
+  - The Plan primary status control stays visible while secondary actions overflow.
+  - No left accent bar, permanent bright status surface, or white-until-hover state is introduced.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/audit.mjs
+risk_class: responsive_collapse_hides_critical_control
+reasoning_tier: standard
+context_scope: assistant_redesign_responsive
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
+  - Concepts/chat-assistant-concepts/5.6 Pro/styles.css
+node_compile_hint:
+  mode: assistant_responsive_specification
+  create_worknodes: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:GUI-004
+  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#18
+  - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#6
+preserved_exact_tokens:
+  - "390"
+  - "590"
+negative_constraints:
+  - Do not hide Send, Stop, or the send destination at any width.
+  - Do not add left accent bars or permanent bright status surfaces.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+## Additive Correction v4 — Assistant Correction Surfaces (2026-09-03)
+
+This section applies the GUI-related clauses of `PM_Assistant_v2_Additive_Correction_v4`. It is
+additive: every v2 Assistant surface above — the primary mode menu and its sidecars, the wand,
+Context Lens at the top of the chat, the context ring and details, thread history, the
+questionnaire host, Orbit and Step Rail, the activity bar, Send/Stop, the follow-up queue, the
+attachment tray, the composer selectors and indicators, and the eight themes — stays exactly as
+specified. Nothing here authorises a broad restyle.
+
+### QMAX-017 — Where the question numbers appear
+
+The BrainStorm configuration modal shows `Maximum questions: 20` and, with Grill Me enabled,
+`Maximum questions: 45 (20 + Grill Me 25)`. The other five planning choices show their effective
+limits in Details or in modal help: Quick 3/28, Standard 6/31, Thorough 8/33, Deep Thorough
+10/35, Deep Exhaustive 15/40. When Settings configure different values the displayed arithmetic
+uses the configured numbers.
+
+No `15`, `+10`, or `25`-as-BrainStorm-total example survives in any menu, tooltip, modal, or
+help string. The question count does not become a permanent crowded composer control.
+
+### PPROG-009..012 — Progress on the Plan document and card
+
+Rich Text shows a subtle status marker beside each Plan step. It never strikes through, rewrites,
+re-wraps, or reorders approved Plan prose, and a status change animates without changing document
+bytes.
+
+Markdown stays read-only and shows status in a separate gutter or adjacent rail keyed to stable
+block IDs. No checkbox and no status word is injected into the Markdown text.
+
+The Plan card may show a compact To-Do completion summary. The Build control is the only display
+of Build/Building…/Completed/Canceled, the two never disagree once the current projection has
+arrived, and no second Plan lifecycle chip is added.
+
+A delayed or stale projection reads `Updating progress…` or shows an explicit stale marker rather
+than presenting old data as current, and a stale projection cannot enable a mutation control.
+
+### PFAIL-001..002, PFAIL-005, PFAIL-009 — Four labels, and secondary truth
+
+The primary Build control has exactly four labels: `Build`, `Building…`, `Completed`, `Canceled`.
+While the Plan is unfinished it reads `Building…` even when the run is paused, waiting on a
+window or a Usage reset, holding a failed attempt, needing attention, or needing recovery.
+`Failed` is not a fourth label.
+
+Nonterminal trouble appears as secondary truth beside the control — `Paused`, `Waiting for
+Usage`, `Outside execution window`, `Needs attention`, `Build failed`, `Recovery required` — with
+the exact owner reason and only the owner-admitted actions. A generic `Working` label that hides
+a failure is prohibited.
+
+After restart the surface restores `Building…` plus the exact secondary reason and allowed
+actions from owner state, with no transient false `Build` or `Completed` frame.
+
+### PDET-001..003, PDET-009, PDET-012 — Plan Details
+
+Details show Plan identity, version and hash, backend, creation and revision sources, source
+messages, attachments, research, exports, run history, and currentness.
+
+A Regular Plan states `Direct planning` and `No ledger, no PlanUnits`. A Deep Plan additionally
+shows ledger summary and currentness, scoped PlanUnit count and validation, and the
+PlanUnit-to-To-Do mapping. Scoped PlanUnits are hidden by default, inspectable in Details, and
+never rendered as To-Do items or as an Activity domain. Technical detail is not shown by default.
+
+Mermaid, graph, chart, image, diagram, table, code, checklist, video, and interactive blocks all
+render through the shared artifact renderer. A missing, stale, denied, or unsupported embed shows
+an explicit unavailable block with its reason and a repair or re-export route.
+
+### PGOAL-001, PGOAL-007..008, PGOAL-013..014 — Build as Goal in the GUI
+
+`Build as Goal` lives in the Plan secondary/overflow action menu and responds to an explicit
+natural-language request. The primary control stays `Build`; no second large button is added.
+
+While a bound Goal is paused, the Plan control still reads `Building…` and the pause state and
+reason appear separately. Goal Cancel sets the control to `Canceled`.
+
+Goal Activity links to the bound Plan and Plan Details links back to the Goal. No Goal thread card
+is created, and the objective text is not duplicated as a Plan card section. Goal and To-Dos
+remain in Activity, not on thread cards, and the Goal keeps its hover Pause/Resume/Cancel/edit
+controls.
+
+### PSCHED-011, PSCHED-013 — Schedule state is secondary
+
+Before a scheduled start the Plan card keeps `Build` as its primary label and shows schedule and
+window state as secondary information. `Scheduled` is never a primary Plan status label, and
+`Building…` is not shown before run admission. A failed schedule admission shows the schedule and
+its reason with repair or cancel actions and no partial runtime card.
+
+### MODAL-001, MODAL-004..008, MODAL-010..012, MODAL-014, MODAL-018 — Modals as transactions
+
+Opening or editing a Crew, Crew Auto, BrainStorm, Review, Chat Room, BSD-workflow, or
+Build-With-Crew modal creates only local draft state. No placeholder card, no Activity entry, and
+no `Running` state appears during configuration, and cancel leaves no transcript trace.
+
+A failed Start keeps the modal values and shows the typed failure; it never clears the user's
+configuration and never renders a fake card.
+
+`Crew Auto`'s checkmark reflects effective stored state and appears only after configuration
+confirmation and a successful Settings commit; cancel restores the prior state.
+
+If a Review target changed while the modal was open, the modal offers refresh-to-current or the
+explicitly identified old immutable target. There is no silent swap.
+
+A held natural-language BrainStorm request is restored intact to the composer on cancel, with its
+text and attachments. Build With Crew refuses a Plan that changed while its modal was open and
+tells the user to reopen against the new version.
+
+Modal selection, expand/collapse, hover, tabs, and close use shared view-state primitives, not
+domain commands.
+
+### PART-001, PART-003, PART-007..008, PART-010..012, PART-017..018, PART-023..024 — Participants
+
+A participant row shows role, model, Persona, the requested-versus-effective disclosure when they
+differ, and one explicit terminal outcome: completed, failed, timed out, unavailable, canceled, or
+explicitly waived. A row never simply disappears.
+
+A one-reviewer Multi-Pass Review labels itself a single-pass result and shows no agreement or
+consensus section. A partial Review shows requested, completed, and failed counts and stays
+attention-required until retry, reconfiguration, or explicit acceptance.
+
+An active Wonderer row shows `Abstained` and is excluded from the support and oppose denominators
+without depressing the support percentage. Unresolved disagreement stays visible; a lack of quorum
+is never rendered as consensus.
+
+A failed Crew coordinator shows `Needs attention` with its allowed actions; no other participant
+silently becomes coordinator. A Chat Room with failed members keeps a truthful roster and shows no
+fabricated messages.
+
+Cards, Activity, and full panels expose partial, failed, and waived counts and currentness with
+details reachable from participant rows, without flooding the main transcript. A constrained
+provider discloses its control tier before Start and in the final artifact.
+
+### SMSG-001..003, SMSG-012..013, SMSG-018 — The scheduled-message card
+
+A scheduled message renders one card in its source thread after a durable commit — never before,
+and never as a toast alone. Its visible states are `Scheduled`, `Held`, `Sent`, `Canceled`,
+`Failed`, and `Expired`, each with truthful actions and reasons.
+
+The card shows the exact time, IANA timezone, destination, a short text preview, the attachment
+count, the requested model or route, and whether Edit and Cancel are available. Hashes stay in
+Details and secret attachment paths are never shown.
+
+A `Sent` card links to the dispatched message. Cancelled, expired, and failed cards keep their
+records. `Schedule Message` stays in the wand; the card is the lifecycle projection, not a second
+creation entry point.
+
+### BSTALE-003, BSTALE-005 — Stale capture in the composer
+
+A stale component returns an explicit `stale_capture` state with a recapture action and blocks the
+send until it is resolved. Nothing is guessed and nothing is silently dropped.
+
+In a numbered composer list, one stale item stays visible and blocks only itself; the other items
+are untouched, and the composer's other content is unchanged.
+
+### FOLDER-001, FOLDER-006..007 — Folders in the shared tray
+
+A folder attaches through the same tray, picker, and drag-and-drop path as a file, shown with its
+bounded manifest rather than an expanded file list. A folder that changed after send is disclosed
+as changed or stale with captured-versus-current identity in Details. Open, reveal, export, and
+download reuse File Manager and artifact capabilities, and an unsupported action is disabled with
+its reason.
+
+### TDG-006, TDG-013..014 — To-Do list surfaces
+
+Reordering changes display order only. Large hierarchies use the existing virtualization and
+preserve every item: the compact hover may summarise, full Activity may not truncate. Validation
+appears as an ordinary To-Do with no verification field, status, badge, group, or separate Done
+section.

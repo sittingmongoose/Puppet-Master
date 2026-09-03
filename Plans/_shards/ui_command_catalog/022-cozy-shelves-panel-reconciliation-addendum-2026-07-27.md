@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9543-L10460
+Source lines: L9692-L10610
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -171,7 +171,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Worktr
 
 ### Worktree and GitHub PR rows
 
-`cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. `cmd.github.pr.create` is the GitHub-domain, API-only PR creation command (per GitHub_API_Auth_and_Flows) that the prototype token `git.create_pr` retires into; it is distinct from, and does not alias or replace, the panel-scoped `cmd.source_control.pr.create` route command (UCC-122) or the thread-bound `cmd.chat.worktree.pr`. All three PR-creation scopes stay live with wiring recording which surface dispatches which.
+`cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. `cmd.github.pr.create` remains the narrow GitHub-domain API action owned by the existing GitHub integration. A provider-neutral panel review instead uses `cmd.forge.review.create`; the historical `cmd.source_control.pr.create` spelling is only a compatibility input to that Forge command. The GitHub-domain action, Forge panel action, and thread-bound `cmd.chat.worktree.pr` remain distinct scopes with explicit wiring.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -540,11 +540,12 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked; per the UCC-122
   negative constraint it never reuses the thread-bound cmd.chat.worktree.merge. cmd.git.worktree.lock and
-  cmd.git.worktree.unlock register worktree lock flags. cmd.github.pr.create is the GitHub-domain API-only
-  PR creation command that the prototype token git.create_pr retires into, gated on github_auth_valid and
-  github_remote_present; it is distinct from, and neither aliases nor replaces, the panel-scoped
-  cmd.source_control.pr.create route command and the thread-bound cmd.chat.worktree.pr. All three PR-creation
-  scopes stay live and wiring records which surface dispatches which.
+  cmd.git.worktree.unlock register worktree lock flags. cmd.github.pr.create is the narrow GitHub-domain API
+  command that the prototype token git.create_pr retires into, gated on github_auth_valid and
+  github_remote_present. Provider-neutral panel review creation uses cmd.forge.review.create;
+  cmd.source_control.pr.create is only its provider-github compatibility input. The GitHub-domain action,
+  Forge panel action, and thread-bound cmd.chat.worktree.pr stay distinct and wiring records which surface
+  dispatches which.
 gui_related: true
 gui_classification_reason: Registers user-visible worktree merge, lock, unlock, and GitHub PR creation controls.
 depends_on: [UCC-054, UCC-055, UCC-058, UCC-122]
@@ -552,7 +553,7 @@ unblocks: []
 acceptance_criteria:
   - Worktree merge is project-scoped, two-step confirmed, and blocked with a reason on dirty, conflicted, or merge-locked worktrees.
   - Lock and unlock mutate only worktree lock state.
-  - cmd.github.pr.create, cmd.source_control.pr.create, and cmd.chat.worktree.pr remain three distinct live commands with recorded scope boundaries.
+  - cmd.github.pr.create, cmd.forge.review.create, and cmd.chat.worktree.pr remain three distinct live commands with recorded scope boundaries; cmd.source_control.pr.create is compatibility-only.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -579,7 +580,7 @@ preserved_exact_tokens:
   - "cmd.github.pr.create"
 negative_constraints:
   - Do not reuse thread-bound cmd.chat.worktree.merge or cmd.chat.worktree.pr for panel-scoped actions.
-  - Do not alias cmd.github.pr.create to cmd.source_control.pr.create or collapse the two rows.
+  - Do not alias cmd.github.pr.create to cmd.forge.review.create, register cmd.source_control.pr.create as a primary row, or collapse the domain, Forge-panel, and thread-bound scopes.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/WorktreeGitImprovement.md

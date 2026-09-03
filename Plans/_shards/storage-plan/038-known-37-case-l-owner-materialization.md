@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L17722-L17807
 
-Source SHA256: `3184c41cc0823c7cc39c93fd44bebed5bed5d784b4ac43e35979ad7b1e47ab94`
+Source SHA256: `c0d0f887c5dec45535091dc8cb54ac655874a783a962dc42a9e16326923a9738`
 
 ---
 
@@ -14,7 +14,7 @@ Status: `STATICALLY_MATERIALIZED`. This section is the Storage owner contract fo
 
 ### Known-37 retention assignment (`RET-K37-ASSIGNMENT-001@1.0.0`)
 
-The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-04.1` with 39 rows. The two later rows are not retroactively part of the Known-37 assignment, and this section does not assert a complete current registry or current denominator.
+The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-27.1` with 39 rows; that revision upgrades the existing `workspace.layout_changed` family and its closed payload contract to `1.1.0` without adding a fortieth family. The two post-Known-37 rows are not retroactively part of the Known-37 assignment, and neither the revision upgrade nor this currentness correction asserts a complete current registry or current denominator: the denominator remains `UNKNOWN_OPEN`.
 
 Currentness boundary (2026-08-10): the July Event Authority union records 37 registered rows, at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 and leaves the complete denominator `UNKNOWN_OPEN`. This claim is bound to `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under external `PuppetMaster-AssuranceLab` custody. This lower-bound evidence requires fresh reconciliation against current sources; it forbids bulk registration and does not close material contract depth, Case L, PNC-019, buildability, or `CL-CRIT-EVENT-AUTHORITY-001`. Unknown or unregistered families remain quarantined without checkpoint advance.
 

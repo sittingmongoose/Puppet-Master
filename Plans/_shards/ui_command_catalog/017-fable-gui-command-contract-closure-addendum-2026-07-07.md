@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7974-L8102
+Source lines: L8047-L8202
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -54,9 +54,36 @@ Every command in this addendum returns the `UICommandResponse` envelope from `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
-| `cmd.onboarding.free_models.refresh` | `project_id?`, `provider_filter?`, `account_id?`, `idempotency_key` | `free_model_catalog_revision`, `model_ids[]` | `handler_unavailable`, `permission_denied` | `onboarding.free_models_refreshed` |
-| `cmd.onboarding.free_models.retry` | `project_id?`, `failed_refresh_id`, `retry_reason`, `idempotency_key` | `free_model_catalog_revision?`, `retry_receipt_ref` | `blocked_state_required`, `handler_unavailable` | `onboarding.free_models_refresh_retried` |
-| `cmd.onboarding.free_models.setup` | `project_id?`, `provider_id`, `return_route`, `setup_intent`, `idempotency_key` | `setup_route_ref`, `return_route` | `invalid_route`, `permission_denied` | `onboarding.provider_setup_opened` |
+
+### Retained Product Onboarding command-era row lineage
+
+The following former rows are preserved verbatim enough for search, audit, and one-time migration lineage.
+They are not members of the active GUI command table above, are not aliases, and receive no primary handler
+or production-wiring row. Current Product Onboarding uses the thirteen typed local `ui.onboarding.*` actions
+enumerated by UCC-106 and routes owner work to the target owner's existing canonical command.
+
+| Historical token | Retained command-era payload/result/error/effect lineage | Current disposition |
+|---|---|---|
+| `cmd.onboarding.free_models.refresh` | Payload `project_id?`, `provider_filter?`, `account_id?`, `idempotency_key`; result `free_model_catalog_revision`, `model_ids[]`; errors `handler_unavailable`, `permission_denied`; former effect `onboarding.free_models_refreshed`. | Source lineage only; no command or alias. |
+| `cmd.onboarding.free_models.retry` | Payload `project_id?`, `failed_refresh_id`, `retry_reason`, `idempotency_key`; result `free_model_catalog_revision?`, `retry_receipt_ref`; errors `blocked_state_required`, `handler_unavailable`; former effect `onboarding.free_models_refresh_retried`. | Source lineage only; no command or alias. |
+| `cmd.onboarding.free_models.setup` | Payload `project_id?`, `provider_id`, `return_route`, `setup_intent`, `idempotency_key`; result `setup_route_ref`, `return_route`; errors `invalid_route`, `permission_denied`; former effect `onboarding.provider_setup_opened`. | Source lineage only; no command or alias. |
+
+The packet candidate tokens `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`,
+`cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and
+`cmd.onboarding.skip` are also source-lineage only, but they are not part of the eleven retained command-era rows above.
+Each candidate is rejected as a command, alias, primary handler, and production-wiring row because its behavior is
+already represented by the closed typed-local action request/result contract. Every request carries the required closed
+`local_context` with normalized `intent`, `scope`, branch/selection/target, owner-operation/branch, disclosure/tour, and
+recovery fields; arbitrary/raw payloads, additional fields, and secret-bearing values are excluded. Setup/project
+disclosure versus branch-local `more_ways`, and whole-session versus optional-scope `skip`, are distinguished by their
+exact intent/scope/choice/branch combinations and by `session_skipped` versus `optional_scope_skipped` results.
+`ui.onboarding.defer` durably writes the
+exact resumable continuation before dismissal; `ui.onboarding.close` dismisses without completion;
+`ui.onboarding.skip` records an explicit skipped session; and `ui.onboarding.open_details` toggles only ephemeral,
+same-stage, non-persistent Details with no owner route or command. Disabled or rejected local results dispatch and write
+nothing, carry no owner/production receipt, and expose their exact error and disabled reason. These catalog/static
+statements and browser-concept verification do not prove a native dispatcher, Slint controller, persistence adapter,
+or runtime handler.
 
 ### Existing launch, recovery, and FileManager command contracts
 

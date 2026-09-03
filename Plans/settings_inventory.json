@@ -19161,6 +19161,1423 @@
     "Q-CRITICAL",
     "recovery blocked"
    ]
-  }
+  },
+ {
+  "id": "general.interaction.working-activity-style",
+  "label": "Working Animation",
+  "desc": "Which animation the assistant shows while it is working: Orbit is the default richer view, Step Rail is the simplified list. Applies instantly and changes nothing about the work itself.",
+  "type": "select",
+  "options": [
+   "Orbit",
+   "Step Rail"
+  ],
+  "default": "Orbit",
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "recommended": "Orbit",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "activity",
+   "animation",
+   "assistant.chat.working_activity_style",
+   "chat",
+   "style",
+   "working"
+  ]
+ },
+ {
+  "id": "ai.models.thread-title-model",
+  "label": "Chat Title Model",
+  "desc": "Which model names your chats. Default lets the resolver pick a cheap fast one, None leaves every chat called New chat, or pick a specific available model. Renaming a chat yourself locks the name until you ask for a new one.",
+  "type": "select",
+  "options": [
+   "Default",
+   "None",
+   "<available model id>"
+  ],
+  "default": "Default",
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "recommended": "Default",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.thread_title_model",
+   "chat",
+   "model",
+   "thread",
+   "title"
+  ]
+ },
+ {
+  "id": "general.interaction.eli5-default",
+  "label": "Explain Terms Everywhere",
+  "desc": "Turns term explanations on for every new chat. The per-chat toggle still wins for a chat you have changed. Never changes generated documents.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.eli5_default",
+   "chat",
+   "default",
+   "eli5",
+   "everywhere",
+   "explain",
+   "terms"
+  ]
+ },
+ {
+  "id": "planning.interview.plan-default-depth",
+  "label": "Plan Depth",
+  "desc": "How much work a Plan does before writing the document: Quick for a fast sketch, Standard for the usual balance, Thorough for careful analysis. All three produce the same read-only Plan document plus To-Dos.",
+  "type": "select",
+  "options": [
+   "Quick",
+   "Standard",
+   "Thorough"
+  ],
+  "default": "Standard",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "Standard",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.plan.default_strategy",
+   "chat",
+   "default",
+   "depth",
+   "plan",
+   "strategy"
+  ]
+ },
+ {
+  "id": "planning.interview.deep-plan-default-depth",
+  "label": "Deep Plan Depth",
+  "desc": "How much work a Deep Plan does: Thorough, Exhaustive, or BrainStorm. BrainStorm is a superset of Exhaustive that adds independent proposals, debate, and voting.",
+  "type": "select",
+  "options": [
+   "Thorough",
+   "Exhaustive",
+   "BrainStorm"
+  ],
+  "default": "Thorough",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "Thorough",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.deep_plan.default_strategy",
+   "chat",
+   "deep",
+   "default",
+   "depth",
+   "plan",
+   "strategy"
+  ]
+ },
+ {
+  "id": "planning.interview.deep-plan-grill-me",
+  "label": "Grill Me By Default",
+  "desc": "Starts every Deep Plan with Grill Me checked, which lets the workflow ask you more questions before planning. You can still toggle it per Plan.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.deep_plan.grill_me_default",
+   "by",
+   "chat",
+   "deep",
+   "default",
+   "grill",
+   "me",
+   "plan"
+  ]
+ },
+ {
+  "id": "planning.interview.plan-default-export",
+  "label": "Plan Export Format",
+  "desc": "Which format the Plan export button produces first. Both PDF and Markdown stay available on every Plan.",
+  "type": "select",
+  "options": [
+   "Markdown",
+   "PDF"
+  ],
+  "default": "Markdown",
+  "scope": [
+   "global"
+  ],
+  "tier": "advanced",
+  "recommended": "Markdown",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.plan.default_export",
+   "chat",
+   "default",
+   "export",
+   "format",
+   "plan"
+  ]
+ },
+ {
+  "id": "general.interaction.composer-persist-unsent",
+  "label": "Keep Unsent Messages",
+  "desc": "Keeps whatever you typed and attached in each chat when you switch away, close, or crash. There is no draft banner and nothing to restore by hand -- the text is simply there when you come back.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "assistant-chat"
+  ],
+  "search": [
+   "assistant.chat.composer.persist_unsent",
+   "chat",
+   "composer",
+   "keep",
+   "messages",
+   "persist",
+   "unsent"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-participant-count",
+  "label": "Crew Size",
+  "desc": "How many teammates a new Crew starts with. You can add or remove members in the Crew setup before it runs.",
+  "type": "number",
+  "default": 3,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "3",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.participant_count",
+   "count",
+   "crew",
+   "multi",
+   "participant",
+   "size"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-coordinator",
+  "label": "Crew Coordinator",
+  "desc": "Who directs the Crew: the assistant you are already talking to, a dedicated coordinator teammate, or nobody (each member works its own assignment).",
+  "type": "select",
+  "default": "Parent assistant",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Parent assistant",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.coordinator",
+   "coordinator",
+   "crew",
+   "multi"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-assignment-strategy",
+  "label": "Crew Assignment",
+  "desc": "How work is handed out: the manager directs it, members claim it, or everyone gets the same task for comparison.",
+  "type": "select",
+  "default": "Manager directed",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Manager directed",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assignment",
+   "assistant.multi_agent.crew.assignment_strategy",
+   "crew",
+   "multi",
+   "strategy"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-parallelism",
+  "label": "Crew Parallelism",
+  "desc": "How many Crew members may work at the same time. The host may still admit fewer.",
+  "type": "number",
+  "default": 3,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "3",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.parallelism",
+   "crew",
+   "multi",
+   "parallelism"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-auto-enabled",
+  "label": "Crew Auto",
+  "desc": "Lets the assistant offer a Crew by itself when a request looks complex enough. It still cannot start one until you commit a configuration, and it can never grant itself more permission than you already gave.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.auto_enabled",
+   "auto",
+   "crew",
+   "enabled",
+   "multi"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-auto-complexity",
+  "label": "Crew Auto Threshold",
+  "desc": "How complex a request has to look before Crew Auto offers a Crew.",
+  "type": "select",
+  "default": "High",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "High",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.auto_complexity",
+   "auto",
+   "complexity",
+   "crew",
+   "multi",
+   "threshold"
+  ]
+ },
+ {
+  "id": "branching.crew.crew-auto-max-members",
+  "label": "Crew Auto Size Limit",
+  "desc": "The largest Crew that Crew Auto may propose without you raising it yourself.",
+  "type": "number",
+  "default": 4,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "4",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.crew"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.crew.auto_max_members",
+   "auto",
+   "crew",
+   "limit",
+   "max",
+   "members",
+   "multi",
+   "size"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-core-participants",
+  "label": "BrainStorm Participants",
+  "desc": "How many core thinkers a BrainStorm starts with, before optional Wonderer and Grill Me roles are added.",
+  "type": "number",
+  "default": 4,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "4",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.core_participants",
+   "brainstorm",
+   "core",
+   "multi",
+   "participants"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-question-limit",
+  "label": "BrainStorm Question Limit",
+  "desc": "The most questions a BrainStorm may ask you before it plans (20). Grill Me raises this by its own extension, so the Grill Me total is 45.",
+  "type": "number",
+  "default": 20,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "20",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.question_limit",
+   "brainstorm",
+   "limit",
+   "multi",
+   "question"
+  ]
+ },
+ {
+  "id": "branching.crew.grill-me-question-extension",
+  "label": "Grill Me Extra Questions",
+  "desc": "How many additional questions Grill Me adds to a workflow's allowance (25). Questions are shared across participants, so this does not multiply per teammate.",
+  "type": "number",
+  "default": 25,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "25",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.grill_me.question_extension",
+   "extension",
+   "extra",
+   "grill",
+   "me",
+   "multi",
+   "question",
+   "questions"
+  ]
+ },
+ {
+  "id": "branching.plan.quick-question-limit",
+  "label": "Quick Plan Question Limit",
+  "desc": "The most questions a Quick Plan may ask you before it writes the document. Grill Me raises this to 28.",
+  "type": "number",
+  "default": 3,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "3",
+  "related_features": [
+   "assistant-redesign"
+  ],
+  "search": [
+   "assistant.chat.plan.quick.question_limit",
+   "limit",
+   "plan",
+   "question",
+   "quick"
+  ]
+ },
+ {
+  "id": "branching.plan.standard-question-limit",
+  "label": "Standard Plan Question Limit",
+  "desc": "The most questions a Standard Plan may ask you before it writes the document. Grill Me raises this to 31.",
+  "type": "number",
+  "default": 6,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "6",
+  "related_features": [
+   "assistant-redesign"
+  ],
+  "search": [
+   "assistant.chat.plan.standard.question_limit",
+   "limit",
+   "plan",
+   "question",
+   "standard"
+  ]
+ },
+ {
+  "id": "branching.plan.thorough-question-limit",
+  "label": "Thorough Plan Question Limit",
+  "desc": "The most questions a Thorough Plan may ask you before it writes the document. Grill Me raises this to 33.",
+  "type": "number",
+  "default": 8,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "8",
+  "related_features": [
+   "assistant-redesign"
+  ],
+  "search": [
+   "assistant.chat.plan.thorough.question_limit",
+   "limit",
+   "plan",
+   "question",
+   "thorough"
+  ]
+ },
+ {
+  "id": "branching.deep-plan.thorough-question-limit",
+  "label": "Deep Plan Thorough Question Limit",
+  "desc": "The most questions a Deep Plan Thorough run may ask you. Grill Me raises this to 35.",
+  "type": "number",
+  "default": 10,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "10",
+  "related_features": [
+   "assistant-redesign"
+  ],
+  "search": [
+   "assistant.chat.deep_plan.thorough.question_limit",
+   "deep",
+   "limit",
+   "plan",
+   "question",
+   "thorough"
+  ]
+ },
+ {
+  "id": "branching.deep-plan.exhaustive-question-limit",
+  "label": "Deep Plan Exhaustive Question Limit",
+  "desc": "The most questions a Deep Plan Exhaustive run may ask you. Grill Me raises this to 40.",
+  "type": "number",
+  "default": 15,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "15",
+  "related_features": [
+   "assistant-redesign"
+  ],
+  "search": [
+   "assistant.chat.deep_plan.exhaustive.question_limit",
+   "deep",
+   "exhaustive",
+   "limit",
+   "plan",
+   "question"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-external-research",
+  "label": "BrainStorm Research Depth",
+  "desc": "How hard a BrainStorm researches outside your project. It stays read-only against your code either way.",
+  "type": "select",
+  "default": "Maximum",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Maximum",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.external_research",
+   "brainstorm",
+   "depth",
+   "external",
+   "multi",
+   "research"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-independent-proposals",
+  "label": "Independent Proposals First",
+  "desc": "Each participant writes its own proposal before anyone sees the others, so debate starts from genuinely different positions instead of the first idea.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.independent_proposals",
+   "brainstorm",
+   "first",
+   "independent",
+   "multi",
+   "proposals"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-debate-rounds",
+  "label": "BrainStorm Debate Rounds",
+  "desc": "How many rounds of evidence-driven debate run before voting.",
+  "type": "number",
+  "default": 2,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "2",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.debate_rounds",
+   "brainstorm",
+   "debate",
+   "multi",
+   "rounds"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-voting",
+  "label": "BrainStorm Voting",
+  "desc": "How the group decides: weighted by evidence, a plain majority, or the coordinator adjudicates.",
+  "type": "select",
+  "default": "Evidence weighted",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Evidence weighted",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.voting",
+   "brainstorm",
+   "multi",
+   "voting"
+  ]
+ },
+ {
+  "id": "branching.crew.brainstorm-preserve-dissent",
+  "label": "Keep Dissent",
+  "desc": "Records the positions that lost the vote in the final Plan, so a rejected option is visible rather than erased.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.brainstorm"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.brainstorm.preserve_dissent",
+   "brainstorm",
+   "dissent",
+   "keep",
+   "multi",
+   "preserve"
+  ]
+ },
+ {
+  "id": "planning.verification.review-strategy",
+  "label": "Review Strategy",
+  "desc": "Whether Review runs one fresh reviewer or several independent passes that compare findings afterwards.",
+  "type": "select",
+  "default": "Multi-pass",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "Multi-pass",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.strategy",
+   "multi",
+   "review",
+   "strategy"
+  ]
+ },
+ {
+  "id": "planning.verification.review-reviewer-count",
+  "label": "Reviewers",
+  "desc": "How many independent reviewers a Multi-Pass Review uses, from one to eight. Repeating the same model is allowed and still gives independent passes.",
+  "type": "number",
+  "default": 3,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "3",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.reviewer_count",
+   "count",
+   "multi",
+   "review",
+   "reviewer",
+   "reviewers"
+  ]
+ },
+ {
+  "id": "planning.verification.review-blind-initial-pass",
+  "label": "Blind First Pass",
+  "desc": "Reviewers cannot see each other's findings on the first pass, so agreement means something. They exchange findings only afterwards.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.blind_initial_pass",
+   "blind",
+   "first",
+   "initial",
+   "multi",
+   "pass",
+   "review"
+  ]
+ },
+ {
+  "id": "planning.verification.review-peer-corroboration",
+  "label": "Compare Findings",
+  "desc": "After the blind passes, reviewers see each other's findings and mark agreement or disagreement.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.peer_corroboration",
+   "compare",
+   "corroboration",
+   "findings",
+   "multi",
+   "peer",
+   "review"
+  ]
+ },
+ {
+  "id": "planning.verification.review-preserve-dissent",
+  "label": "Keep Review Dissent",
+  "desc": "Keeps a finding that only one reviewer stood behind, marked as disputed rather than dropped.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.preserve_dissent",
+   "dissent",
+   "keep",
+   "multi",
+   "preserve",
+   "review"
+  ]
+ },
+ {
+  "id": "planning.verification.review-auto-repair",
+  "label": "Review Fixes Things",
+  "desc": "Off, and locked off for this feature: Review reads and reports. Acting on a finding is always a separate explicit step.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.review"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.review.auto_repair",
+   "auto",
+   "fixes",
+   "multi",
+   "repair",
+   "review",
+   "things"
+  ]
+ },
+ {
+  "id": "branching.crew.chat-room-participant-count",
+  "label": "Chat Room Size",
+  "desc": "How many participants a new Chat Room starts with.",
+  "type": "number",
+  "default": 4,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "4",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.chat-room"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.chat_room.participant_count",
+   "chat",
+   "count",
+   "multi",
+   "participant",
+   "room",
+   "size"
+  ]
+ },
+ {
+  "id": "branching.crew.chat-room-turn-policy",
+  "label": "Chat Room Turns",
+  "desc": "How the room takes turns: moderated by one participant, strict round-robin, or free-for-all.",
+  "type": "select",
+  "default": "Moderated",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Moderated",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.chat-room"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.chat_room.turn_policy",
+   "chat",
+   "multi",
+   "policy",
+   "room",
+   "turn",
+   "turns"
+  ]
+ },
+ {
+  "id": "branching.crew.chat-room-max-rounds",
+  "label": "Chat Room Rounds",
+  "desc": "How many rounds a room runs before it stops and offers a summary.",
+  "type": "number",
+  "default": 5,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "5",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.chat-room"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.chat_room.max_rounds",
+   "chat",
+   "max",
+   "multi",
+   "room",
+   "rounds"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-mode",
+  "label": "Back Seat Driver",
+  "desc": "A separate read-only adviser that watches your work and raises concerns. Auto runs it on the moments that usually matter, On watches continuously, Off disables it. It never approves, changes, or certifies anything, and your work continues normally if it fails.",
+  "type": "select",
+  "options": [
+   "Off",
+   "Auto",
+   "On"
+  ],
+  "default": "Auto",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "Auto",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "assistant.bsd.mode",
+   "back",
+   "bsd",
+   "driver",
+   "mode",
+   "seat"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-model",
+  "label": "Adviser Model",
+  "desc": "Which model the Back Seat Driver uses. Default lets the resolver pick. Its usage is billed and shown separately from your main work.",
+  "type": "select",
+  "default": "Default",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Default",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.model",
+   "bsd",
+   "model"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-persona",
+  "label": "Adviser Persona",
+  "desc": "Which persona the Back Seat Driver speaks as. Critical Advisor is blunt about risk.",
+  "type": "select",
+  "default": "Critical Advisor",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Critical Advisor",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.persona",
+   "bsd",
+   "persona"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-trigger-sensitivity",
+  "label": "Adviser Sensitivity",
+  "desc": "How readily the adviser speaks up. Balanced raises concerns and criticals but stays quiet about nits.",
+  "type": "select",
+  "default": "Balanced",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Balanced",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.trigger_sensitivity",
+   "bsd",
+   "sensitivity",
+   "trigger"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-catch-up-seconds",
+  "label": "Adviser Catch-Up",
+  "desc": "How long the adviser may spend catching up on work that happened while it was busy, before it skips ahead to current work.",
+  "type": "select",
+  "options": [
+   "Off",
+   "15",
+   "30 seconds",
+   "60 seconds"
+  ],
+  "default": "30 seconds",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "30",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.catch_up_seconds",
+   "bsd",
+   "catch",
+   "seconds",
+   "up"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-cooldown-turns",
+  "label": "Adviser Cooldown",
+  "desc": "How many turns the adviser stays quiet after speaking, so it does not repeat itself.",
+  "type": "number",
+  "default": 3,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "3",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.cooldown_turns",
+   "bsd",
+   "cooldown",
+   "turns"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-retain-transcript",
+  "label": "Keep Adviser Transcript",
+  "desc": "Keeps the adviser's own conversation so you can open it and see why it said something.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.retain_transcript",
+   "bsd",
+   "keep",
+   "retain",
+   "transcript"
+  ]
+ },
+ {
+  "id": "safety.approvals.bsd-self-compact-threshold",
+  "label": "Adviser Compaction Point",
+  "desc": "How full the adviser's own context gets before it compacts itself. Its compaction never touches your conversation.",
+  "type": "number",
+  "default": 0.8,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "0.8",
+  "related_features": [
+   "assistant-redesign",
+   "back-seat-driver"
+  ],
+  "search": [
+   "adviser",
+   "assistant.bsd.self_compact_threshold",
+   "bsd",
+   "compact",
+   "compaction",
+   "point",
+   "self",
+   "threshold"
+  ]
+ },
+ {
+  "id": "safety.approvals.schedule-wind-down-minutes",
+  "label": "Wind-Down Time",
+  "desc": "How long before a window closes the assistant stops taking on big new work, so the current step can finish safely instead of being cut off mid-write.",
+  "type": "number",
+  "default": 10,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "simple",
+  "recommended": "10",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "assistant.scheduling.wind_down_minutes",
+   "down",
+   "minutes",
+   "scheduling",
+   "time",
+   "wind"
+  ]
+ },
+ {
+  "id": "safety.approvals.schedule-missed-policy",
+  "label": "If A Schedule Is Missed",
+  "desc": "What happens when a scheduled time passes while the app is closed: hold it for you, send at the next opportunity, or cancel after the grace period.",
+  "type": "select",
+  "default": "Hold",
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "Hold",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "a",
+   "assistant.scheduling.missed_dispatch_policy",
+   "dispatch",
+   "if",
+   "is",
+   "missed",
+   "policy",
+   "schedule",
+   "scheduling"
+  ]
+ },
+ {
+  "id": "safety.approvals.schedule-grace-minutes",
+  "label": "Schedule Grace Period",
+  "desc": "How late a missed schedule may still run before Cancel after grace gives up on it.",
+  "type": "number",
+  "default": 30,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "30",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "assistant.scheduling.default_grace_minutes",
+   "default",
+   "grace",
+   "minutes",
+   "period",
+   "schedule",
+   "scheduling"
+  ]
+ },
+ {
+  "id": "safety.approvals.schedule-resume-next-window",
+  "label": "Resume Next Window",
+  "desc": "Picks paused work back up when the next execution window opens. A manual Stop or Pause always wins over this.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "assistant.scheduling.resume_next_window",
+   "next",
+   "resume",
+   "scheduling",
+   "window"
+  ]
+ },
+ {
+  "id": "ai.usage.auto-resume-default",
+  "label": "Resume When Usage Resets",
+  "desc": "Off by default. When you tick the box on a paused run, it resumes once the provider's usage window reopens -- unless you stopped it yourself, which always wins.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "assistant.usage.auto_resume_default",
+   "auto",
+   "default",
+   "resets",
+   "resume",
+   "usage",
+   "when"
+  ]
+ },
+ {
+  "id": "safety.approvals.schedule-dst-policy",
+  "label": "Daylight Saving Behavior",
+  "desc": "Keeps a 10 PM window at 10 PM local on both sides of a clock change, rather than drifting by an hour. The skipped and repeated hours each run exactly once.",
+  "type": "select",
+  "default": "Preserve local wall clock",
+  "scope": [
+   "global"
+  ],
+  "tier": "advanced",
+  "recommended": "Preserve local wall clock",
+  "related_features": [
+   "assistant-redesign",
+   "scheduling-and-usage-resume"
+  ],
+  "search": [
+   "assistant.scheduling.dst_policy",
+   "behavior",
+   "daylight",
+   "dst",
+   "policy",
+   "saving",
+   "scheduling"
+  ]
+ },
+ {
+  "id": "planning.testing.browser-capture-full-default",
+  "label": "Screenshot Scope",
+  "desc": "Whether the screenshot button captures just what you can see or the whole scrolling page.",
+  "type": "select",
+  "default": "Visible viewport",
+  "scope": [
+   "global"
+  ],
+  "tier": "simple",
+  "recommended": "Visible viewport",
+  "related_features": [
+   "assistant-redesign",
+   "browser"
+  ],
+  "search": [
+   "browser",
+   "browser.chat_capture.full_default",
+   "capture",
+   "chat",
+   "default",
+   "full",
+   "scope",
+   "screenshot"
+  ]
+ },
+ {
+  "id": "planning.testing.browser-component-action",
+  "label": "After Picking A Component",
+  "desc": "What happens when you pick a component: send it straight away, add it to a numbered list in the composer, or insert it at your cursor. Remembers whichever you used last.",
+  "type": "select",
+  "default": "Last used, starting with Send now",
+  "scope": [
+   "global"
+  ],
+  "tier": "advanced",
+  "recommended": "Last used, starting with Send now",
+  "related_features": [
+   "assistant-redesign",
+   "browser"
+  ],
+  "search": [
+   "a",
+   "action",
+   "after",
+   "browser",
+   "browser.chat_capture.component_action",
+   "capture",
+   "chat",
+   "component",
+   "picking"
+  ]
+ },
+ {
+  "id": "planning.testing.browser-component-crop",
+  "label": "Include Component Image",
+  "desc": "Attaches a cropped picture of the component alongside its structure and styles.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "global"
+  ],
+  "tier": "advanced",
+  "recommended": "on",
+  "related_features": [
+   "assistant-redesign",
+   "browser"
+  ],
+  "search": [
+   "browser",
+   "browser.chat_capture.include_component_crop",
+   "capture",
+   "chat",
+   "component",
+   "crop",
+   "image",
+   "include"
+  ]
+ },
+ {
+  "id": "planning.testing.browser-devtools-policy",
+  "label": "Agent DevTools Access",
+  "desc": "Whether the assistant may open DevTools in the ordinary internal browser. The protected sign-in browser is never included and stays yours alone.",
+  "type": "select",
+  "default": "On with permission",
+  "scope": [
+   "global"
+  ],
+  "tier": "advanced",
+  "recommended": "On with permission",
+  "related_features": [
+   "assistant-redesign",
+   "browser"
+  ],
+  "search": [
+   "access",
+   "agent",
+   "browser",
+   "browser.agent.devtools_policy",
+   "devtools",
+   "policy"
+  ]
+ }
  ]
 }

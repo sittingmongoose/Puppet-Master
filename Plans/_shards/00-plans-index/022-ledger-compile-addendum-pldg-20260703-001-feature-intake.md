@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5081-L5771
+Source lines: L5137-L5925
 
-Source SHA256: `7fcd6ef30a113ac13345c458296b99bfabdabd08bcb1a291d38000ba648327fc`
+Source SHA256: `82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be`
 
 ---
 
@@ -284,6 +284,104 @@ context_scope: remaining_runtime_integration_owner_map
 implementation_surfaces: [Plans/00-plans-index.md, Plans/Shared_Integration_Runtime.md, Plans/runtime_integration_disposition.json]
 node_compile_hint: {mode: shared_integration_runtime_owner_map, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [Plans/runtime_integration_disposition.json, PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13]
+```
+
+### 203-command Touch Closure owner map — 2026-09-01
+
+The retained Settings, Onboarding/Doctor, Full Thread Performance,
+Server-First/WAN/Backup, and Egolite/Browser/SCM packet wave now routes its final
+203 previously unbound primary commands through eleven existing domain owners and
+four central consumer/dispatch owners. Together with the earlier reconciled set,
+the machine Touch Closure inventory contains 401 primary command rows: 400 are
+actionable with static production-intent wiring and exactly one sole future-handler
+identity; `cmd.artifacts.open_panel` remains the one explicitly blocked false
+inventory token and has no production row. The same registry contains 51
+normalization-only aliases, 101 typed local UI actions, and 7 presentation rows,
+for 560 rows across 87 profiles and 1041 production-intent wiring entries.
+
+Domain-owner routes are `Plans/Backup_Restore_System.md`,
+`Plans/Forge_Integrations.md`, `Plans/Jujutsu_Integration.md`,
+`Plans/Multi-Account_Connection_Spec.md`, `Plans/Named_Plan_System.md`,
+`Plans/Remote_Access_System.md`,
+`Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/Server_System.md`,
+`Plans/Shared_Integration_Runtime.md`, `Plans/Source_Control_System.md`, and
+`Plans/Test_Capture_and_Motion_Evidence.md`. Central identity, reverse-consumer,
+production-intent, and dispatch invariants remain in `Plans/Commands_System.md`,
+`Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`, and
+`Plans/UI_Wiring_Rules.md`. These are static canonical targets, not claims of
+native handlers, runtime success, readiness, or Slint certification.
+
+### 0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map
+
+```yaml
+plan_unit_id: 0PI-068
+unit_type: owner_map
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The final 203-command packet closure routes through eleven named domain owners
+  and four central consumer/dispatch owners while touch_closure.json remains a
+  machine crosswalk rather than a new owner. The resolved inventory freezes 401
+  primary commands, of which 400 are actionable with production-intent wiring and
+  exactly one sole future handler and one is explicitly blocked without wiring;
+  51 aliases, 101 typed local UI actions, and 7 presentation rows complete the
+  560-row, 87-profile registry over 1041 production-intent entries. Dedicated
+  server-gap and Touch Closure validators fail closed on drift. Every row remains
+  static planning/contract evidence until independently implemented and verified.
+gui_related: true
+gui_classification_reason: The map routes every intended Settings, Onboarding, Doctor, PMConcept7, owner-workspace, palette, API, and headless consumer without taking presentation ownership.
+split_recommended: false
+depends_on: [0PI-067, C-051, DR-041, CV-326, ATS-042, CS-074, UCC-152, WM-051, UIW-017, SIR-031, RAS-013]
+unblocks: []
+acceptance_criteria:
+  - "All eleven domain-owner documents and all four central owner documents are explicitly indexed and dependency-closed."
+  - "Plans/Multi-Account_Connection_Spec.md is an explicit indexed owner path rather than an implicit command-row reference."
+  - "The exact 401/400/1 primary-command denominator, 51 aliases, 101 local actions, 7 presentation rows, 560 rows, 87 profiles, and 1041 production entries is preserved."
+  - "Every actionable primary command has exactly one production-intent route and one sole future-handler identity; the blocked token has neither."
+  - "Both dedicated validators are standalone and named in run-gates and audit-governance."
+  - "No static target, schema, fixture, registry, concept simulation, or browser result is represented as native runtime or Slint certification."
+validation_surfaces:
+  - python3 scripts/pm-server-command-gap-verify.py --json
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-server-command-gap
+  - python3 scripts/pm-plans-verify.py validate-touch-closure
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_owner_map_or_denominator_drift
+reasoning_tier: high
+context_scope: final_packet_command_touch_closure_owner_map
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Backup_Restore_System.md
+  - Plans/Forge_Integrations.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Multi-Account_Connection_Spec.md
+  - Plans/Named_Plan_System.md
+  - Plans/Remote_Access_System.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/Server_System.md
+  - Plans/Shared_Integration_Runtime.md
+  - Plans/Source_Control_System.md
+  - Plans/Test_Capture_and_Motion_Evidence.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/touch_closure.json
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint: {mode: static_owner_and_machine_registry_map, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
+  - Plans/Contracts_V0.md#cv-326---touch-closure-registry-and-static-production-intent-boundary
+  - Plans/Automated_Testing_System.md#ats-042---touch-and-server-command-gap-aggregate-gates
+  - Plans/server_command_gap_adjudication.json
+  - Plans/touch_closure.json
+preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel, 401, 400, 1, 51, 101, 7, 560, 87, 1041]
+negative_constraints:
+  - "Do not create a new aggregate runtime owner from this cross-document map."
+  - "Do not wire the blocked false-inventory token or normalization-only aliases as peers."
+  - "Do not infer native implementation, runtime success, readiness, or Slint certification from static closure."
+owner_hints: [Plans/00-plans-index.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md]
 ```
 
 ### PMConcept7 tweak wave 8 — 2026-08-15 (kebab ink canon, chat dock back, drag snap, scroll kill)

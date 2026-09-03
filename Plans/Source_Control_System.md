@@ -944,3 +944,53 @@ negative_constraints:
   - Do not expose whole forge registries/logs to agents or silently turn runners into Execution Hosts.
   - Do not claim runtime, remote, security, performance, or readiness proof from static materialization.
 ```
+
+### SCS-017 - Bounded Backend-Native Source Graph Projection
+
+```yaml
+plan_unit_id: SCS-017
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  SourceGraph is one paginated, virtualized Source Control projection under the existing Source Control owner.
+  It binds every page to an exact RepositoryContext, repository, workspace, backend, selected revision, projection
+  generation, freshness, and stable node/edge references. Git renders a commit graph with parent/merge edges;
+  Jujutsu renders stable change identity, current commit identity, rewrites, abandonment, and conflicts without a
+  fake staging model. SourceGraph is source history only: Jujutsu operation history and Backup history remain
+  separate owner projections and routes. Repository identity comes from RepositoryContext, never display paths or
+  shared commits. Pages are capped at 200 nodes, hydration remains bounded, selection anchors survive pagination,
+  and stale or partial pages remain visibly stale or partial. The projection introduces no mutation command,
+  handler, persistence owner, domain event, repository-identity inference, or runtime/native evidence claim.
+gui_related: true
+gui_classification_reason: The typed projection is the reusable model for the virtualized Source Control history-and-graph view.
+depends_on: [SCS-002, SCS-015, SCS-016, F3-529]
+unblocks: [F3-530]
+acceptance_criteria:
+  - SourceGraph validates only as `pm.source_control.source_graph_projection.v1` with exact repository/workspace/backend/revision identity, currentness, pagination, bounded nodes/edges, stable references, and virtualization fences.
+  - Git pages use `git_commit_graph`, null stable-change references, and parent/merge edges; Jujutsu pages use `jujutsu_change_graph` and require a stable change reference for every node.
+  - Jujutsu operation history, source history, and Backup history are explicitly separate, and graph navigation never dispatches a restore, undo, source mutation, or publication.
+  - RepositoryContext remains identity authority; display paths and shared commits are explicitly non-authoritative.
+  - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
+  - Plans/source_control_contract_fixtures.json
+  - Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests
+risk_class: unbounded_graph_hydration_or_source_history_identity_conflation
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future SourceGraph projector and Slint consumer]
+node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/dry_components.json:17-26
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/semantic_gap_plan_rerun/semantic_gap_plan.json
+preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history]
+negative_constraints:
+  - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.
+  - Do not merge Jujutsu operation history or Backup history into SourceGraph or invent a cross-owner undo/restore action.
+  - Do not eagerly hydrate an unbounded history, lose selection identity between pages, or paint stale/partial data as current.
+  - Do not add a SourceGraph command, handler, state owner, EventRecord family, persistence authority, or runtime/native proof from this static closure.
+```

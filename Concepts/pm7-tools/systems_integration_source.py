@@ -759,38 +759,37 @@ GLOBAL_SCRIPT = r'''
 (function(){
   'use strict';
   if(window.PM7_SYSTEMS_INTEGRATION)return;
-  var shell=document.querySelector('.app-shell'),panel=document.getElementById('panel-settings'),reservedChatWidth=0;
+  var shell=document.querySelector('.app-shell'),panel=document.getElementById('panel-settings'),chat=document.getElementById('chatPanel'),resizer=document.getElementById('chatResizer');
+  var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0;
   function settingsActive(){return !!(panel&&panel.classList.contains('active'));}
   function chatReservation(){
-    var chat=document.getElementById('chatPanel'),resizer=document.getElementById('chatResizer');
     if(!chat||chat.classList.contains('hidden'))return 0;
-    var rect=chat.getBoundingClientRect(),style=getComputedStyle(chat);
-    if(style.display!=='none'&&rect.width>0)reservedChatWidth=rect.width;
+    if(chatWidth>0)reservedChatWidth=chatWidth;
     if(!(reservedChatWidth>0)){
-      var shellWidth=shell?(shell.clientWidth||shell.getBoundingClientRect().width):0;
       reservedChatWidth=shellWidth<=980?Math.max(320,Math.min(430,shellWidth*.46)):Math.max(380,Math.min(550,Math.min(680,shellWidth*.46)));
     }
-    var resizerWidth=0;
-    if(resizer&&!resizer.classList.contains('hidden')){
-      var resizerRect=resizer.getBoundingClientRect(),resizerStyle=getComputedStyle(resizer);
-      resizerWidth=resizerStyle.display==='none'?5:(resizerRect.width||5);
-    }
-    return reservedChatWidth+resizerWidth;
+    return reservedChatWidth+(resizer&&!resizer.classList.contains('hidden')?(resizerWidth||5):0);
   }
   function hostProjection(){
-    var width=panel?(panel.clientWidth||panel.getBoundingClientRect().width):0,focused=document.body.classList.contains('pm7-settings-focus-host');
-    var shellWidth=shell?(shell.clientWidth||shell.getBoundingClientRect().width):0,reservation=chatReservation();
+    var focused=document.body.classList.contains('pm7-settings-focus-host'),reservation=chatReservation();
+    var width=panelWidth>0?panelWidth:Math.max(0,shellWidth-reservation);
     return {settings_active:settingsActive(),shell_width:shellWidth,panel_width:width,focused:focused,chat_reservation:reservation,projected_with_chat:focused?Math.max(0,width-reservation):width,threshold:980};
   }
   function syncHost(){
     var projection=hostProjection();
     var shouldFocus=projection.settings_active&&projection.shell_width>0&&projection.projected_with_chat<projection.threshold;
+    var focusChanged=projection.focused!==shouldFocus;
     document.body.classList.toggle('pm7-settings-focus-host',shouldFocus);
     /* Focus-host chrome can move the active page tab after the shared density
        pass. Re-snap its presentation-only ink on the next paint so the hidden
        indicator never widens the document's scrollable overflow area. */
-    if(window.PM7_PAGE_TAB_INK&&typeof window.PM7_PAGE_TAB_INK.resync==='function')requestAnimationFrame(function(){window.PM7_PAGE_TAB_INK.resync();});
+    if(focusChanged&&window.PM7_PAGE_TAB_INK&&typeof window.PM7_PAGE_TAB_INK.resync==='function')requestAnimationFrame(function(){window.PM7_PAGE_TAB_INK.resync();});
     return Object.assign({},projection,{focused:shouldFocus});
+  }
+  function scheduleSyncHost(){if(syncFrame)return;syncFrame=requestAnimationFrame(function(){syncFrame=0;syncHost();});}
+  function observeWidth(element,assign){
+    if(!element||typeof ResizeObserver!=='function')return;
+    new ResizeObserver(function(entries){var width=entries[entries.length-1]&&entries[entries.length-1].contentRect?entries[entries.length-1].contentRect.width:0;assign(width);scheduleSyncHost();}).observe(element);
   }
   function dispatchSettings(commandId,payload,continuation){
     var tome=window.PM7_SETTINGS_TOME;
@@ -819,9 +818,12 @@ GLOBAL_SCRIPT = r'''
   });
   Object.defineProperty(window,'PM7_BROWSER_PROGRAM',{value:browserProgramDescriptor,writable:false,configurable:false,enumerable:true});
   window.PM7_SYSTEMS_INTEGRATION={schema_id:'pm.pmconcept7.systems_projection.v1',simulation_only:true,production_runtime_state:'unavailable',native_runtime_state:'unavailable',sync_host:syncHost,host_projection:hostProjection,settings_commands:window.PM7_SETTINGS_COMMANDS,server_gap_consumers:window.PM7_SERVER_GAP_CONSUMERS,doctor_fixture_model:function(){return JSON.parse(JSON.stringify(window.PM7_DOCTOR_CLOSURE_MODEL));},doctor_status_catalog:function(){return window.PM7_DOCTOR_STATUS_CATALOG.slice();},doctor_domain_catalog:function(){return window.PM7_DOCTOR_DOMAIN_IDS.slice();},doctor_work_projection:function(){return JSON.parse(JSON.stringify(window.PM7_DOCTOR_WORK_PROJECTION()));},return_to_doctor:function(result){if(!window.PM12_KIMI)return {mode:'blocked_owner_bridge'};var payload=result||{};window.PM12_KIMI.dispatchAction('doctor-return',{checkId:payload.checkId,findingId:payload.findingId,findingRevision:payload.findingRevision,targetId:payload.targetId,ownerActionId:payload.ownerActionId,typedOwnerRouteId:payload.typedOwnerRouteId,idempotencyKey:payload.idempotencyKey,ownerResultRef:payload.ownerResultRef,normalizedStatus:payload.normalizedStatus,outcome:payload.outcome,baseOwnerGeneration:payload.baseOwnerGeneration,baseCacheGeneration:payload.baseCacheGeneration,ownerGeneration:payload.ownerGeneration,cacheGeneration:payload.cacheGeneration,freshnessState:payload.freshnessState});return {mode:'browser_concept_return_requested',browser_projection_only:true,production_runtime_state:'unavailable'};}};
-  if(shell&&typeof ResizeObserver==='function')new ResizeObserver(syncHost).observe(shell);
+  shellWidth=shell?shell.clientWidth:0;panelWidth=panel?panel.clientWidth:0;chatWidth=chat?chat.clientWidth:0;resizerWidth=resizer?(resizer.clientWidth||5):5;
+  observeWidth(shell,function(width){shellWidth=width;});
+  observeWidth(panel,function(width){panelWidth=width;});
+  observeWidth(chat,function(width){if(width>0)chatWidth=width;});
+  observeWidth(resizer,function(width){if(width>0)resizerWidth=width;});
   if(panel&&typeof MutationObserver==='function')new MutationObserver(syncHost).observe(panel,{attributes:true,attributeFilter:['class']});
-  var chat=document.getElementById('chatPanel');
   if(chat&&typeof MutationObserver==='function')new MutationObserver(syncHost).observe(chat,{attributes:true,attributeFilter:['class','style']});
   syncHost();
 })();
@@ -1055,14 +1057,14 @@ def apply(doc, notes, need):
     doc = _replace_once(
         doc,
         '<div class="resource-content">${provider.id === \'free-models\' ? renderFreeModels(provider) : renderProviderTab(provider)}</div>',
-        '<div class="resource-content">${provider.id === \'free-models\' ? renderFreeModels(provider) : renderProviderTab(provider)+pm7IntegrationConsumerPanel(provider)}</div>',
+        '<div class="resource-content">${provider.id === \'free-models\' ? renderFreeModels(provider) : renderProviderTab(provider)+(state.providerTab===\'advanced\'?pm7IntegrationConsumerPanel(provider):\'\')}</div>',
         need,
         "provider owner-local consumer panel",
     )
     doc = _replace_once(
         doc,
         "case 'provider-tab': case 'provider-tab-jump': { const p = providerById(); html = p.id === 'free-models' ? renderFreeModels(p) : renderProviderTab(p); break; }",
-        "case 'provider-tab': case 'provider-tab-jump': { const p = providerById(); html = p.id === 'free-models' ? renderFreeModels(p) : renderProviderTab(p)+pm7IntegrationConsumerPanel(p); break; }",
+        "case 'provider-tab': case 'provider-tab-jump': { const p = providerById(); html = p.id === 'free-models' ? renderFreeModels(p) : renderProviderTab(p)+(state.providerTab==='advanced'?pm7IntegrationConsumerPanel(p):''); break; }",
         need,
         "provider tab owner-local consumer panel",
     )
@@ -1685,6 +1687,8 @@ def apply(doc, notes, need):
         "T46: Browser Program reverse-visible owner route missing",
     )
     need("PM7_SETTINGS_COMMANDS" in doc, "T46: Settings command bridge missing")
+    need("function observeWidth(element,assign)" in GLOBAL_SCRIPT and "contentRect.width" in GLOBAL_SCRIPT and "focusChanged&&window.PM7_PAGE_TAB_INK" in GLOBAL_SCRIPT,
+         "T46: cached responsive-host geometry or bounded ink resync missing")
     need(doc.count('id="pm7-t48-egolite-retained-contracts"') == 1, "T46: retained Egolite contract projection missing or duplicated")
     for requirement_id in ("HBU-005", "HBU-013", "BRW-010", "BRW-011", "SCM-005", "SCM-019", "ORI-002", "ORI-020", "IRT-008", "IRT-009", "IRT-010", "IRT-011", "SEC-003", "SEC-007", "SEC-008"):
         need(EGOLITE_RETAINED_CONTRACT_DATA.count('"id":"%s"' % requirement_id) == 1, "T46: retained Egolite requirement missing or duplicated: %s" % requirement_id)
@@ -1707,7 +1711,7 @@ def apply(doc, notes, need):
             "backup_contract": "Full Server scope with reconstructable indexes/caches/processes/live browser state excluded and portable secrets requiring a separate encrypted recovery envelope",
             "consumer_contract": ["PM-native Browser", "Test Capture", "SCM and forges", "Cursor Origin Preview", "Named Plans", "full-thread performance"],
             "plugin_contract": "compact K3 owner-fact projection with exact 12 centrally registered commands; every control is handler_unavailable, receipt-only without EventRecord, hover-described, bounded/redacted, and incapable of simulated production mutation",
-            "responsive_host_contract": "when the projected Settings host with global Chat mounted is below 980 physical pixels, Settings temporarily suppresses global Chat paint without changing saved Chat layout state",
+            "responsive_host_contract": "when the projected Settings host with global Chat mounted is below 980 physical pixels, Settings temporarily suppresses global Chat paint without changing saved Chat layout state; ResizeObserver-owned width caches keep page switches free of synchronous geometry reads",
             "settings_command_bridge": ["cmd.settings.open", "cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "cmd.settings.transaction.rollback", "cmd.settings.export"],
             "egolite_retained_contract_projection": "15 exact owner-routed rows; browser concept only, runtime/native/benchmark unavailable or not run, AuthBrowserSession remains structurally excluded",
             "simulation_boundary": "browser concept only; no production owner receipt or native Slint runtime claim",

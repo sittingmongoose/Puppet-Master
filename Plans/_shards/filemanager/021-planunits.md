@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L584-L4215
+Source lines: L605-L4237
 
-Source SHA256: `75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd`
+Source SHA256: `97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6`
 
 ---
 
@@ -2503,7 +2503,8 @@ owner_doc: Plans/FileManager.md
 canonical_text: >-
   FileManager owns the file-tree action surface, and cmd.chat.add_file_reference is a lock: Add to
   Assistant Chat inserts a visible file reference chip into the active composer or thread context,
-  file references are file-only in MVP, and folder insertion is out of scope.
+  this alias is file-only and rejects a folder, and folder attachment is added through
+  cmd.chat.attachment.add with semantic_kind folder.
 gui_related: true
 gui_classification_reason: >-
   This unit governs the visible Add to Assistant Chat action and composer reference chip.
@@ -2535,10 +2536,10 @@ preserved_exact_tokens:
 - "visible file reference chip"
 - "active composer/thread context"
 - "file-only in MVP"
-- "folder insertion is out of scope"
+- "folder insertion goes through cmd.chat.attachment.add"
 negative_constraints:
 - "Add to Assistant Chat must not inline full file contents as a hidden side effect."
-- "Folder insertion is out of scope for MVP."
+- "Folder insertion must not use this file-only alias; it uses cmd.chat.attachment.add with semantic_kind folder."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

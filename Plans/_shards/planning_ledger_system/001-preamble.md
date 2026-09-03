@@ -4,7 +4,7 @@ Source: `Plans/Planning_Ledger_System.md`
 
 Source lines: L1-L3
 
-Source SHA256: `8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07`
+Source SHA256: `871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b`
 
 ---
 

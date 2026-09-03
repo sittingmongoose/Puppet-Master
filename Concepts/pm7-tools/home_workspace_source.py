@@ -4509,9 +4509,20 @@ HOME_SCRIPT = r'''
       }
     }, true);
     if (window.MutationObserver) {
-      var observer = new MutationObserver(function () {
-        document.querySelectorAll('[data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"], .s4-row[data-sid="general.startup.reset-home-layout"] .s4-action').forEach(function (button) {
-          if (!button.classList.contains("s4-working") && !button.textContent.trim()) button.textContent = "Reset";
+      var resetSelector = '[data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"], .s4-row[data-sid="general.startup.reset-home-layout"] .s4-action';
+      function normalizeResetButton(button) {
+        if (button && !button.classList.contains("s4-working") && !button.textContent.trim()) button.textContent = "Reset";
+      }
+      var observer = new MutationObserver(function (records) {
+        /* Settings swaps can add dozens of nodes. Inspect only each newly
+           attached subtree instead of rescanning this multi-megabyte concept
+           document after every unrelated mutation. */
+        records.forEach(function (record) {
+          Array.prototype.forEach.call(record.addedNodes || [], function (node) {
+            if (!node || node.nodeType !== 1) return;
+            if (node.matches && node.matches(resetSelector)) normalizeResetButton(node);
+            if (node.querySelectorAll) node.querySelectorAll(resetSelector).forEach(normalizeResetButton);
+          });
         });
       });
       observer.observe(document.body, { childList: true, subtree: true });
@@ -4739,6 +4750,9 @@ HOME_SCRIPT = r'''
      ownership stay in the base fitter; this is presentation containment only. */
   function enforceHomeOverflowClearance(strip) {
     if (!strip || !strip.isConnected) return;
+    if (document.documentElement.getAttribute('data-pm-page-transition') === 'running') return;
+    var ownerPage = strip.closest && strip.closest('.primary-content > .page');
+    if (ownerPage && !ownerPage.classList.contains('active')) return;
     var surface = strip.closest('[data-pm-home-surface][data-pm-home-kind="editor_panel"]');
     var chip = strip.querySelector(".pm-ed-overflow");
     var kebab = surface && surface.querySelector(':scope > [data-pm-home-surface-options]');
@@ -4782,6 +4796,9 @@ HOME_SCRIPT = r'''
 
   function scheduleHomeOverflowClearance(strip) {
     if (!strip || !strip.isConnected) return;
+    if (document.documentElement.getAttribute('data-pm-page-transition') === 'running') return;
+    var ownerPage = strip.closest && strip.closest('.primary-content > .page');
+    if (ownerPage && !ownerPage.classList.contains('active')) return;
     var state = overflowSafety.states && overflowSafety.states.get(strip);
     if (!state) {
       state = { queued: false };
@@ -5013,6 +5030,10 @@ if (
             'existing.nextElementSibling === chrome.automation',
             'chrome.automation.nextElementSibling === before',
             'tabs.insertBefore(existing, before);\n        tabs.insertBefore(chrome.automation, before);',
+            "var ownerPage = strip.closest && strip.closest('.primary-content > .page');",
+            "document.documentElement.getAttribute('data-pm-page-transition') === 'running'",
+            "if (ownerPage && !ownerPage.classList.contains('active')) return;",
+            "function scheduleHomeOverflowClearance(strip)",
         )
     )
 ):

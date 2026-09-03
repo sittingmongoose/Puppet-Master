@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4006-L4026
+Source lines: L4013-L4033
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -16,8 +16,8 @@ These decisions are final and must not be revisited during implementation:
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/Tauri/DOM-rendered product UI or HTML/CSS/JS product shell** -- native desktop is Rust + Slint `.slint` markup; Slint/WASM web may use only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
-5. **Four theme families / eight built-in themes** -- Friendly Dark (default), Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML); supersedes the prior three-family lock (Retro Dark, Retro Light, Basic Modern) per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal
-6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor
+5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
+6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search
 9. **Model/platform selection via dropdowns**, not text entry

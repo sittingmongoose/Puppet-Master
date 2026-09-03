@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32460-L33138
+Source lines: L32493-L33171
 
-Source SHA256: `bcab6be83ac85fcd2b30ecdc8fd86dbecdc9b68f906fdad9f5722998dd98f34a`
+Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
 
 ---
 
@@ -328,7 +328,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The panels/ Slint host-file inventory adds panels/search_panel.slint,
-  panels/source_control_panel.slint, panels/github_actions_panel.slint,
+  panels/source_control_panel.slint, panels/repository_automation_panel.slint,
   panels/testing_panel.slint, panels/agents_panel.slint, and
   panels/artifacts_panel.slint, so every canonical side-panel occupant has a named host
   file; file_manager_panel.slint and docker_manager_panel.slint are already listed. Where
@@ -342,7 +342,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The panels/ inventory lists host files for search, source control, GitHub Actions, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
+- "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
 - "Duplicate ui/<domain>/ spellings in the FABLE Slint Host File Inventory resolve to the same planned surface, not a second file."
 - "No implementation files are created and no source tree is authorized by these registrations."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -362,7 +362,7 @@ source_lineage:
 preserved_exact_tokens:
 - "panels/search_panel.slint"
 - "panels/source_control_panel.slint"
-- "panels/github_actions_panel.slint"
+- "panels/repository_automation_panel.slint"
 - "panels/testing_panel.slint"
 - "panels/agents_panel.slint"
 - "panels/artifacts_panel.slint"
@@ -644,7 +644,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Ratified decision (2026-07-27): the side-panel occupant stack (activity bar plus the
-  single panel slot hosting search, chat, files, source_control, github_actions,
+  single panel slot hosting search, chat, files, source_control, repository_automation,
   docker_manager, testing, agents, artifacts, run_debug) mounts on the LEFT edge of the
   shell. This supersedes the right-hand slot language in the section 3/4 shell prose and
   closes the carried deviation recorded by F3-478: the concept family (PMConcept7 and the

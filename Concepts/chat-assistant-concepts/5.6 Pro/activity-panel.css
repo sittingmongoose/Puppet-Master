@@ -656,20 +656,14 @@ body:has(.activity-panel.transient) .history-flyout {
   padding: 10px 4px 2px;
 }
 .pmap-statusboard .goal-compact-head { display: none; }
-.pmap-statusboard .goal-compact-line {
-  font-size: 12px;
-  line-height: 17px;
-}
-.pmap-statusboard .goal-compact-list { gap: 0; }
-.pmap-statusboard .goal-compact-list li {
-  min-height: 34px;
-  grid-template-columns: 16px minmax(0,1fr) auto;
-  gap: 7px;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-}
-.pmap-statusboard .goal-compact-state { font-size: 10.5px; }
-.pmap-statusboard .goal-compact-blocker {
+/* Assistant-redesign wave (2026-09-03): the retired compact-Goal sub-elements
+   (.goal-compact-line, .goal-compact-list, .goal-compact-state,
+   .goal-compact-blocker) are gone. goals.js's renderCompact now emits
+   .goal-compact, .goal-compact-head, .goal-rev, .ab-objective
+   .goal-objective-2, .goal-blocker-line and .goal-compact-actions.
+   The blocker rule is retargeted at the live class rather than deleted, so
+   a blocked Goal keeps its warning treatment on this surface. */
+.pmap-statusboard .goal-blocker-line {
   margin-top: 6px;
   padding: 8px;
   border-radius: 7px;

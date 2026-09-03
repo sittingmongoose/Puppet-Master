@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-30T00:17:00Z",
+  "generated_at_utc": "2026-09-03T21:40:03Z",
   "index_path": "Plans/_shards/skills_system/00-index.md",
-  "index_sha256": "1b2b50aa5a5a648c5ac12899a2a783ff2e8601b3fe9f98e51c751458d415bac8",
+  "index_sha256": "842b1cd8f2292df3bddd016afbc29e713a650fb829205e3295b36e947bac90ad",
   "manifest_path": "Plans/_shards/skills_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/skills_system/001-preamble.md",
-      "sha256": "ad8988b1ac30dbe83fd763a94b573cfba1b279b40671d1160c7898e4c68c7775",
+      "sha256": "7466815d61760b55493b344e23d068b271ac011b08b3ee80327c4b82f3942e66",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/skills_system/002-0.-scope-and-ssot-status.md",
-      "sha256": "13ac67e9513c12f76de82076a00a186bc8dbb91bce72a76e23d46bb8d72a01d9",
+      "sha256": "5f8412537af316b347945dfa3d6b9c8ae8daa6d391e9bd3cf0fa5722cc263597",
       "shard_id": "002",
       "source_line_end": 27,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Definitions",
       "path": "Plans/_shards/skills_system/003-1.-definitions.md",
-      "sha256": "01e510ab08f2c90b1a4406e59f2f03e88ca4d17ed1ff6f6fd8cf96fbb4fc62f3",
+      "sha256": "fbb35db57a7926a0663f28b073677756a532b7a8bba909de858cdb0fab4a856b",
       "shard_id": "003",
       "source_line_end": 48,
       "source_line_start": 29,
@@ -35,7 +35,7 @@
     {
       "heading": "2. On-disk format (SKILL.md)",
       "path": "Plans/_shards/skills_system/004-2.-on-disk-format-skill.md.md",
-      "sha256": "c45204add5cbdd6c670de8c57c7beeeb0d072a9c5f817fc7a7afaf98cff8bcb0",
+      "sha256": "e05aad3bc667866a2a02c0a58ee0b5addf7280853c5939390fc46153b4369f44",
       "shard_id": "004",
       "source_line_end": 88,
       "source_line_start": 50,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Storage layout and discovery",
       "path": "Plans/_shards/skills_system/005-3.-storage-layout-and-discovery.md",
-      "sha256": "35eb4c479673296594245cff427850e7de65a2f4afb1cc44cf590cb20d960e8d",
+      "sha256": "3fb5b3bf123c4e6e6ec149f4c63bad7a889a740e2399e884ccfb7af77d022898",
       "shard_id": "005",
       "source_line_end": 144,
       "source_line_start": 90,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Runtime surface",
       "path": "Plans/_shards/skills_system/006-4.-runtime-surface.md",
-      "sha256": "ee5d9c6ceea32ae254ea1ab8cfb6601f8ad50bda380cf4c957ee26d4423fb1ba",
+      "sha256": "881b044ef886c71ed8d4e7bfabadb317aa4c18b8a096c9f8128341a590304b3b",
       "shard_id": "006",
       "source_line_end": 264,
       "source_line_start": 146,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Permissions integration",
       "path": "Plans/_shards/skills_system/007-5.-permissions-integration.md",
-      "sha256": "65001c21850e851c4a3b1804a5fd1585cfbcc99981a9daa22f27af6ad87faefd",
+      "sha256": "c8a0f5c45b2abc0489b52bbb9383c4f5932798d598aee919e5881f888b10166a",
       "shard_id": "007",
       "source_line_end": 300,
       "source_line_start": 265,
@@ -71,7 +71,7 @@
     {
       "heading": "6. GUI requirements",
       "path": "Plans/_shards/skills_system/008-6.-gui-requirements.md",
-      "sha256": "12889f79abe1ace6ba8786876fa0f73aab08b0f1684d695d0cd05c698ab326ec",
+      "sha256": "b3e075ee90cc5b39ff89dbc0b47949b39322da2606bc71854d18698a453c0d92",
       "shard_id": "008",
       "source_line_end": 399,
       "source_line_start": 302,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Baseline alignment (OpenCode)",
       "path": "Plans/_shards/skills_system/009-7.-baseline-alignment-opencode.md",
-      "sha256": "d024dc17dd56c9f8185e63e12964ee6d74011287b2c75cf6507256a47dba4996",
+      "sha256": "2b9cbbccb6712cd4982ef1c36a66663eaaa0df7c7988c466c6a0b6c0223d4e18",
       "shard_id": "009",
       "source_line_end": 414,
       "source_line_start": 400,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Acceptance criteria",
       "path": "Plans/_shards/skills_system/010-8.-acceptance-criteria.md",
-      "sha256": "44687171cb9cdccfe47e1b8f9ded3eff703b407744c5469d41bc8144d642bafb",
+      "sha256": "bb27293e5e201a30f08ee3bce261eb0357c4cbedc0e37465d51f165009f2fed9",
       "shard_id": "010",
       "source_line_end": 433,
       "source_line_start": 416,
@@ -98,7 +98,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/skills_system/011-owner-consumer-map.md",
-      "sha256": "9ffb2b925c113155402bb36c03ac45bb6d85c453e1e4ce7ba5ee1665f5418912",
+      "sha256": "d9652fd3b5a9017b4ff23cfe62a4097e092448aa47be3b734baba0b5dad2d90c",
       "shard_id": "011",
       "source_line_end": 439,
       "source_line_start": 435,
@@ -107,7 +107,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/skills_system/012-planunits.md",
-      "sha256": "1adb2b60d4724927d41371358b46b2aee5891f0d2b54aca1a2fe89e4c719e594",
+      "sha256": "223f0c8b712948d7ea598aea9d433ba1cfac99844dd97797f219230fb50dadfa",
       "shard_id": "012",
       "source_line_end": 2496,
       "source_line_start": 441,
@@ -116,7 +116,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/skills_system/013-migration-coverage.md",
-      "sha256": "bc7945835e16b331a8567202833d8f08f86aa027b8f3e0d64a1b44e1e13b4a0b",
+      "sha256": "0418a27408dcbf253e76bd21d1f78602b47afc4bf9487aa95bfd03653ef14cd0",
       "shard_id": "013",
       "source_line_end": 2508,
       "source_line_start": 2498,
@@ -125,7 +125,7 @@
     {
       "heading": "FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/skills_system/014-fable-residual-skills-invocation-cleanup-addendum-2026-07-07.md",
-      "sha256": "a2eb273e881ebc995e5ca1877158e02e223207319d0db07078b4ca46db9b7b99",
+      "sha256": "f63eec65ad691505c6ad2da7dfba71dd3022856a8ec1ddbc164225938b79f044",
       "shard_id": "014",
       "source_line_end": 2576,
       "source_line_start": 2510,
@@ -134,7 +134,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/skills_system/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "510902ebe500cc54821a0db3d61d1f017423861616d52ecd34837f80568b9063",
+      "sha256": "1e5b688780042fe6a60040a636e953e992813c98ba99345f84c5c147e89aaa70",
       "shard_id": "015",
       "source_line_end": 2582,
       "source_line_start": 2578,
@@ -143,16 +143,25 @@
     {
       "heading": "Remaining Runtime Integration Addendum - 2026-08-13",
       "path": "Plans/_shards/skills_system/016-remaining-runtime-integration-addendum-2026-08-13.md",
-      "sha256": "77720240272269f5b490bb6501469cf0116379cad05be1f43d1c98193ecd34f6",
+      "sha256": "921e41f148a85f915be2168c8e989ec0664831df187ac4689d9e440070637c35",
       "shard_id": "016",
       "source_line_end": 2647,
       "source_line_start": 2584,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Additive Correction v4 \u2014 Wonderer Methodology And The Grill Me Question Frontier (2026-09-03)",
+      "path": "Plans/_shards/skills_system/017-additive-correction-v4-wonderer-methodology-and-the-grill-me-que.md",
+      "sha256": "7cc5d05198cd61af95eba2c55bcb956beac27dfcc0a6103b39612009ff36ea04",
+      "shard_id": "017",
+      "source_line_end": 2686,
+      "source_line_start": 2649,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2647,
+    "line_count": 2686,
     "path": "Plans/Skills_System.md",
-    "sha256": "e9b5a64f585b47d2142222d2e1e031981bc97c2da3629e41f2a36c62bc49d094"
+    "sha256": "c556120cfe2b34b0692622237915e06e188c430a48073ebcd559d74ec2cd83b3"
   }
 }

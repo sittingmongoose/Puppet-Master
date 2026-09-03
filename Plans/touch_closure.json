@@ -1434,10 +1434,11 @@
       "requirement_refs": [
         "Plans/Shared_Integration_Runtime.md#SIR-019",
         "Plans/Forge_Integrations.md#FGI-008",
-        "Plans/Shared_Integration_Runtime.md#SIR-029"
+        "Plans/Shared_Integration_Runtime.md#SIR-029",
+        "Plans/Shared_Integration_Runtime.md#SIR-035"
       ],
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit": "SIR-019",
+      "plan_unit": "SIR-035",
       "dry_contract_ref": "Plans/shared_integration_runtime.schema.json",
       "payload_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest",
       "result_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult",
@@ -1445,12 +1446,16 @@
       "availability_rule": "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability; exact provider/connection/topology/generations, setup, probe, and return context apply.",
       "permission_gate": "Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision; broker references only, no credential exposure or authority widening.",
       "disabled_reason_rule": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDisabledReasonCode.",
-      "handler_owner": "Shared Integration Runtime connection semantic owner plus provider owner; native handler path absent. Sole future targets are handlers::integration_connection::add, update, test, remove, and open_details; target strings are not native/provider proof.",
+      "handler_owner": "Shared Integration Runtime and IntegrationConnectionRegistry own the connection lifecycle. Sole future targets are handlers::integration_connection::add, activate, update, test, remove, and open_details; named targets are static intent, not native/provider proof.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner schema/fixtures only; catalog, wiring, native provider calls/probes, and runtime proof absent. Central production-intent wiring is specified; no native runtime proof.",
+      "production_or_simulation": "Static owner schema, fixtures, catalog, and central production-intent wiring are specified; native dispatch, provider calls/probes, persistence, and runtime proof remain absent.",
       "gui_triggers": [
-        "Forge/Origin/GitLab/Azure DevOps/Bitbucket connection setup and details"
+        "Settings integration and destination rows",
+        "Product Onboarding owner setup",
+        "Doctor deep links and remediation",
+        "Forge/Origin/GitLab/Azure DevOps/Bitbucket/Forgejo/Gitea connection managers",
+        "palette/API"
       ],
       "return_route": "Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement; runtime focus settlement unproved.",
       "reverse_consumers": [
@@ -1468,10 +1473,10 @@
         "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult"
       ],
       "observable_work": [
-        "Connection setup/test where asynchronous."
+        "Connection setup, protected authentication continuation, activation, and test where asynchronous."
       ],
       "persistence_refs": [
-        "non-secret connection refs only"
+        "IntegrationConnectionRegistry persists inactive ConnectionDraft records and non-secret connection refs only"
       ],
       "migration_refs": [
         "provider-specific connection namespaces remain forbidden"
@@ -1482,7 +1487,122 @@
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only",
-        "catalog_wiring_handler_probe_runtime_proof_absent"
+        "catalog_and_production_intent_wiring_specified",
+        "native_handler_provider_probe_persistence_runtime_proof_absent"
+      ]
+    },
+    {
+      "profile_id": "TCP-CONNECTION-DRAFT-ALIAS",
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-035",
+        "Plans/Commands_System.md#CS-075",
+        "Plans/UI_Command_Catalog.md#UCC-153"
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit": "SIR-035",
+      "dry_contract_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionCandidateResolution",
+      "payload_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionCandidateResolution",
+      "result_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionCandidateResolution",
+      "error_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError",
+      "availability_rule": "Each ACT-148..153 source spelling normalizes to its exact canonical cmd.integration.connection.* target before availability, permission, currentness, and dispatch; the source has no independent availability state.",
+      "permission_gate": "Consume only the exact target command's current permission decision; normalization cannot widen identity, topology, credentials, destructive scope, or provider authority.",
+      "disabled_reason_rule": "Expose the canonical target's exact disabled reason, including handler_unavailable, and never create a source-specific success or fallback route.",
+      "handler_owner": "Normalize before permission and dispatch to alias_bindings.exact_target; no source registration, second handler, independent wiring, persistence identity, or EventRecord.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static candidate-resolution contract and fixtures only; canonical targets have production-intent wiring, while native normalization and runtime dispatch evidence remain absent.",
+      "gui_triggers": [
+        "Settings integration and destination rows",
+        "Product Onboarding owner setup",
+        "Doctor connection remediation",
+        "connection managers",
+        "palette/API"
+      ],
+      "return_route": "The exact canonical target settles the initiating route, focus, continuation, and currentness context; the compatibility source creates no return lifecycle.",
+      "reverse_consumers": [
+        "Settings integrations",
+        "Product Onboarding",
+        "Doctor",
+        "Forge and repository automation managers",
+        "Backup destination manager"
+      ],
+      "event_refs": [
+        "none_from_alias; canonical target remains receipt-only pending Event Authority"
+      ],
+      "receipt_refs": [
+        "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionCandidateResolution",
+        "canonical target command result only"
+      ],
+      "observable_work": [
+        "Owned only by the canonical target after normalization; alias acceptance is never work completion."
+      ],
+      "persistence_refs": [
+        "No alias persistence identity; IntegrationConnectionRegistry remains sole owner."
+      ],
+      "migration_refs": [
+        "ACT-148..153 source spellings are unregistered compatibility inputs normalized before every gate."
+      ],
+      "test_refs": [
+        "Plans/shared_integration_runtime_fixtures.json#/other_positive_cases/3",
+        "Plans/shared_integration_runtime_fixtures.json#/other_positive_cases/4",
+        "Plans/shared_integration_runtime_fixtures.json#/negative_cases"
+      ],
+      "evidence_refs": [
+        "static_candidate_resolution_schema_and_fixtures_only",
+        "native_normalization_runtime_proof_absent"
+      ]
+    },
+    {
+      "profile_id": "TCP-CONNECTION-DRAFT-LOCAL",
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-035",
+        "Plans/Commands_System.md#CS-075",
+        "Plans/UI_Command_Catalog.md#UCC-153"
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit": "SIR-035",
+      "dry_contract_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDraftOpenDetailsRequest",
+      "payload_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDraftOpenDetailsRequest",
+      "result_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDraftOpenDetailsResult",
+      "error_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDraftOpenDetailsResult",
+      "availability_rule": "Available only for an exact current non-secret ConnectionDraft projection, expected generation, permission snapshot, route target, focus-return context, and mounted owner-local controller.",
+      "permission_gate": "Presentation/currentness/accessibility gate only; the action grants no connection, authentication, provider, persistence, capability, or mutation authority.",
+      "disabled_reason_rule": "Return stale, permission_denied, or projection_unavailable with deterministic focus/route settlement; never dispatch a domain command or simulate details.",
+      "handler_owner": "Shared Integration Runtime owner-local typed UI controller only; domain_handler is null and no semantic-domain handler exists.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Typed request/result contract and static fixtures only; no production UICommand row, EventRecord, persistent mutation, native Slint controller, or runtime claim.",
+      "gui_triggers": [
+        "Current ConnectionDraft details affordance in Settings, Onboarding, Doctor, and connection managers"
+      ],
+      "return_route": "Open the exact non-secret draft projection and restore the initiating focus and route from focus_return_ref.",
+      "reverse_consumers": [
+        "Settings integrations",
+        "Product Onboarding owner handoff",
+        "Doctor connection findings",
+        "Forge, automation, and Backup connection managers"
+      ],
+      "event_refs": [
+        "none_local_presentation_action"
+      ],
+      "receipt_refs": [
+        "Plans/shared_integration_runtime.schema.json#/$defs/ConnectionDraftOpenDetailsResult"
+      ],
+      "observable_work": [],
+      "persistence_refs": [
+        "none; persistent_state_mutation=false"
+      ],
+      "migration_refs": [
+        "cmd.connection.draft.open_details is superseded by ui.integration.connection.draft.open_details and is never registered."
+      ],
+      "test_refs": [
+        "Plans/shared_integration_runtime_fixtures.json#/other_positive_cases/9",
+        "Plans/shared_integration_runtime_fixtures.json#/other_positive_cases/10",
+        "Plans/shared_integration_runtime_fixtures.json#/negative_cases"
+      ],
+      "evidence_refs": [
+        "static_owner_schema_and_fixtures_only",
+        "native_local_controller_runtime_proof_absent"
       ]
     },
     {
@@ -4518,6 +4638,109 @@
         "Plans/shared_runtime_command_contract_fixtures.json"
       ],
       "wiring_status": "specified"
+    },
+    {
+      "profile_id": "TCP-REPOSITORY-LOCAL",
+      "requirement_refs": [
+        "Plans/FinalGUISpec.md#F3-529"
+      ],
+      "owner_plan": "Plans/FinalGUISpec.md",
+      "plan_unit": "F3-529",
+      "dry_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_request",
+      "payload_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_request",
+      "result_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_result",
+      "error_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_result",
+      "availability_rule": "The exact current repository projection, project and repository identities, accessibility description, caller return context, and mounted owner-local presentation controller are required; binding selection additionally requires at least two already-authorized AutomationBinding refs, and Backup navigation requires an immutable revision plus exact Backup-owner route and deep link.",
+      "permission_gate": "Presentation/currentness/accessibility gate only. Neither action grants provider, installation, authentication, filesystem, browser, restore, Source Control, Backup, repository-binding, or AutomationBinding mutation authority.",
+      "disabled_reason_rule": "Return stale_projection or caller_unavailable with deterministic return settlement; never register or simulate a semantic-domain command, provider mutation, restore, or owner work.",
+      "handler_owner": "Owner-local typed UI controller only; semantic_domain_handler is null and no domain handler exists.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Typed owner-local request/result contract and static fixtures only; no production UICommand row, EventRecord, persistent-state mutation, native Slint controller, or runtime claim.",
+      "gui_triggers": [
+        "Source Control > Actions & Pipelines AutomationBinding selector",
+        "Source Control > Recovery > Open Backup history"
+      ],
+      "return_route": "Deterministically restore the initiating binding-picker context or open the exact Backup history target while preserving the supplied caller context.",
+      "reverse_consumers": [
+        "Source Control workbench",
+        "Actions & Pipelines panel",
+        "Backup history"
+      ],
+      "event_refs": [
+        "none_local_presentation_action"
+      ],
+      "receipt_refs": [
+        "Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_result",
+        "Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_result"
+      ],
+      "observable_work": [],
+      "persistence_refs": [
+        "none; persistent_state_mutation=false"
+      ],
+      "migration_refs": [
+        "Packet command-like tokens normalize to these typed local UI actions and are never registered as domain commands."
+      ],
+      "test_refs": [
+        "Plans/final_gui_interaction_contract_fixtures.json#/positive_instance/contracts/7/local_action_pairs"
+      ],
+      "evidence_refs": [
+        "static_owner_schema_and_fixture_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-SIR-POST-AUTH-ALIAS",
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-033",
+        "Plans/Commands_System.md#CS-076",
+        "Plans/UI_Command_Catalog.md#UCC-154"
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit": "SIR-033",
+      "dry_contract_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRAliasNormalization",
+      "payload_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRAliasNormalization",
+      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRAliasNormalization",
+      "error_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRAliasNormalization",
+      "availability_rule": "Normalize the source spelling to alias_bindings.exact_target before reading the canonical target availability; the source has no independent availability or disabled state.",
+      "permission_gate": "The canonical target owner performs every currentness, permission, policy, protected-channel, and FileSafe gate after normalization; the source spelling grants no authority.",
+      "disabled_reason_rule": "Expose only the canonical target's exact disabled reason, including handler_unavailable, and never synthesize alias-specific success, fallback, or recovery state.",
+      "handler_owner": "Compatibility normalizer only; the exact target retains its sole future handler, while the source spelling has no registration, peer handler, wiring row, persistence identity, or EventRecord.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static SIR-033 normalization schema, fixtures, central catalog metadata, and exclusion only; native normalization, dispatch, handler, authentication, credential mutation, GUI, and runtime evidence are absent.",
+      "gui_triggers": [
+        "No independent GUI trigger; historical inputs settle through the canonical target control and state."
+      ],
+      "return_route": "The canonical target settles the exact initiating route, focus, invocation, continuation, and currentness context; the compatibility source creates no return lifecycle.",
+      "reverse_consumers": [
+        "Authentication handoff and Product Onboarding through canonical auth targets",
+        "Settings Integrations and Doctor through canonical auth-profile and credential-source targets",
+        "Palette/API compatibility ingress after normalization"
+      ],
+      "event_refs": [
+        "none_from_alias; canonical target remains receipt-only pending Event Authority"
+      ],
+      "receipt_refs": [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRAliasNormalization",
+        "canonical target command result only"
+      ],
+      "observable_work": [
+        "Owned only by the canonical target after normalization; alias acceptance is never work completion."
+      ],
+      "persistence_refs": [
+        "No alias persistence identity; canonical authentication, auth-profile, and credential owners remain exclusive."
+      ],
+      "migration_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-033"
+      ],
+      "test_refs": [
+        "Plans/shared_integration_runtime_expansion_fixtures.json",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_alias_contract_and_fixture_only",
+        "native_normalization_runtime_proof_absent"
+      ]
     }
   ],
   "row_columns": [
@@ -6999,7 +7222,15 @@
       "command",
       "cmd.integration.connection.add",
       "partial",
-      "Exact schema pointers and positive request/result fixtures exist; catalog, production wiring, native connection handler/provider probe, EventRecord, and runtime proof remain absent."
+      "Exact schema, fixtures, catalog, and production-intent wiring exist; native connection handler, inactive-draft persistence, protected-auth continuation, provider probe, EventRecord admission, and runtime proof remain absent."
+    ],
+    [
+      "TOUCH-ICONN-006",
+      "TCP-INTEGRATION-CONNECTION",
+      "command",
+      "cmd.integration.connection.activate",
+      "partial",
+      "SIR-035, strict fixtures, central registration, catalog, and sole-target production-intent wiring exist; native activation handler, authenticated-profile/capability/verification/permission/generation enforcement, atomic persistence, restart/race behavior, and runtime proof remain absent."
     ],
     [
       "TOUCH-ICONN-002",
@@ -7007,7 +7238,7 @@
       "command",
       "cmd.integration.connection.update",
       "partial",
-      "Exact schema pointers and positive request/result fixtures exist; catalog, production wiring, native connection handler/provider probe, EventRecord, and runtime proof remain absent."
+      "Exact schema, fixtures, catalog, and production-intent wiring exist; native connection handler/provider mutation, persistence, EventRecord admission, and runtime proof remain absent."
     ],
     [
       "TOUCH-ICONN-003",
@@ -7015,7 +7246,7 @@
       "command",
       "cmd.integration.connection.test",
       "partial",
-      "Exact schema pointers and positive request/result fixtures exist; catalog, production wiring, native connection handler/provider probe, EventRecord, and runtime proof remain absent."
+      "Exact schema, fixtures, catalog, and production-intent wiring exist; native connection handler/provider probe, bounded work, EventRecord admission, and runtime proof remain absent."
     ],
     [
       "TOUCH-ICONN-004",
@@ -7023,7 +7254,7 @@
       "command",
       "cmd.integration.connection.remove",
       "partial",
-      "Exact schema pointers and positive request/result fixtures exist; catalog, production wiring, native connection handler/provider probe, EventRecord, and runtime proof remain absent."
+      "Exact schema, fixtures, catalog, and production-intent wiring exist; native connection handler/provider cleanup, safe persistence settlement, EventRecord admission, and runtime proof remain absent."
     ],
     [
       "TOUCH-ICONN-005",
@@ -7031,7 +7262,63 @@
       "command",
       "cmd.integration.connection.open_details",
       "partial",
-      "Exact schema pointers and positive request/result fixtures exist; catalog, production wiring, native connection handler/provider probe, EventRecord, and runtime proof remain absent."
+      "Exact schema, fixtures, catalog, and production-intent wiring exist; native read-only handler, redacted projection, exact-return behavior, and runtime proof remain absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-001",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.draft.create",
+      "partial",
+      "ACT-148 statically normalizes to cmd.integration.connection.add before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-002",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.activate",
+      "partial",
+      "ACT-149 statically normalizes to cmd.integration.connection.activate before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-003",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.update",
+      "partial",
+      "ACT-150 statically normalizes to cmd.integration.connection.update before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-004",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.test",
+      "partial",
+      "ACT-151 statically normalizes to cmd.integration.connection.test before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-005",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.remove",
+      "partial",
+      "ACT-152 statically normalizes to cmd.integration.connection.remove before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-006",
+      "TCP-CONNECTION-DRAFT-ALIAS",
+      "command_alias",
+      "cmd.connection.open_details",
+      "partial",
+      "ACT-153 statically normalizes to cmd.integration.connection.open_details before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-CONNDRAFT-007",
+      "TCP-CONNECTION-DRAFT-LOCAL",
+      "ui_action",
+      "ui.integration.connection.draft.open_details",
+      "partial",
+      "Typed current-projection navigation request/result and strict fixtures exist without a command, semantic handler, persistence mutation, or EventRecord; native Slint local-controller, accessibility, focus return, and runtime evidence remain absent."
     ],
     [
       "TOUCH-AUTHPR-001",
@@ -9232,6 +9519,54 @@
       "cmd.remote_access.tailscale.serve.enable",
       "partial",
       "Compatibility input normalizes before policy and dispatch to cmd.remote_access.tailscale.setup.start; independent handler/wiring is forbidden and runtime normalization evidence remains absent."
+    ],
+    [
+      "TOUCH-REPLOCAL-001",
+      "TCP-REPOSITORY-LOCAL",
+      "ui_action",
+      "ui.source_control.profile.preview",
+      "partial",
+      "Typed owner-local request/result and strict positive/negative fixtures switch only the Git/Jujutsu presentation profile with false backend, repository-binding, workspace, and history mutation facts; native Slint local-controller, current projection, focus, accessibility, and runtime evidence remain absent."
+    ],
+    [
+      "TOUCH-REPLOCAL-002",
+      "TCP-REPOSITORY-LOCAL",
+      "ui_action",
+      "ui.repository_automation.binding.select",
+      "partial",
+      "Typed owner-local request/result and strict positive/negative fixtures exist; it selects presentation among already-authorized bindings without repository or AutomationBinding mutation, but native Slint local-controller, current projection, accessibility, and runtime evidence remain absent."
+    ],
+    [
+      "TOUCH-REPLOCAL-003",
+      "TCP-REPOSITORY-LOCAL",
+      "ui_action",
+      "ui.source_control.backup_history.open",
+      "partial",
+      "Typed read-only owner-local navigation carries exact project, repository, immutable revision, Backup route, deep link, currentness, accessibility, and return context without starting restore; native Slint local-controller, exact-return, accessibility, and runtime evidence remain absent."
+    ],
+    [
+      "TOUCH-SIRPOSTAUTH-001",
+      "TCP-SIR-POST-AUTH-ALIAS",
+      "command_alias",
+      "cmd.auth_session.resume",
+      "partial",
+      "SIR-033 statically normalizes to cmd.authentication.resume before every gate; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-SIRPOSTAUTH-002",
+      "TCP-SIR-POST-AUTH-ALIAS",
+      "command_alias",
+      "cmd.auth_session.submit_code",
+      "partial",
+      "SIR-033 statically normalizes to cmd.auth_profile.submit_code before every gate and keeps raw code in the protected owner channel; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-SIRPOSTAUTH-003",
+      "TCP-SIR-POST-AUTH-ALIAS",
+      "command_alias",
+      "cmd.credential.add",
+      "partial",
+      "SIR-033 statically normalizes to cmd.credential_source.add before every gate and grants no credential visibility or attachment authority; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
     ]
   ],
   "excluded_tokens": [
@@ -9702,6 +10037,35 @@
         "Plans/Project_Sync_and_Backbone.md#PSB-005"
       ],
       "token": "cmd.update.content.open_details"
+    },
+    {
+      "classification": "superseded_by_typed_local_ui_action",
+      "reason": "The retained behavior is presentation-only and is owned by a typed owner-local action; it must not become a semantic-domain command, alias, handler, production wiring row, EventRecord, or persistent binding mutation.",
+      "replacement": "ui.repository_automation.binding.select",
+      "source_refs": [
+        "Plans/FinalGUISpec.md#F3-529"
+      ],
+      "token": "cmd.repository_automation.binding.select"
+    },
+    {
+      "classification": "superseded_by_typed_local_ui_action",
+      "reason": "The retained behavior is read-only owner-local navigation into Backup history; it must not become a semantic-domain command, alias, handler, production wiring row, EventRecord, restore request, or Source Control/Backup mutation.",
+      "replacement": "ui.source_control.backup_history.open",
+      "source_refs": [
+        "Plans/FinalGUISpec.md#F3-529"
+      ],
+      "token": "cmd.source_control.backup_history.open"
+    },
+    {
+      "classification": "superseded_by_typed_local_ui_action",
+      "reason": "Draft-only details are current non-secret owner-local navigation. The command-shaped spelling must not become a command, alias, semantic handler, production wiring row, persistence mutation, capability grant, ObservableWork record, or EventRecord.",
+      "replacement": "ui.integration.connection.draft.open_details",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-035",
+        "Plans/Commands_System.md#CS-075",
+        "Plans/UI_Command_Catalog.md#UCC-153"
+      ],
+      "token": "cmd.connection.draft.open_details"
     },
     {
       "classification": "forbidden",
@@ -10386,6 +10750,114 @@
       "domain_event_emitted_by_alias": false,
       "exact_target": "cmd.remote_access.tailscale.disable",
       "handler_dispatch_token": "cmd.remote_access.tailscale.disable",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.draft.create": {
+      "availability_source": "cmd.integration.connection.add",
+      "canonical_handler_id": "handlers::integration_connection::add",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.add",
+      "handler_dispatch_token": "cmd.integration.connection.add",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.activate": {
+      "availability_source": "cmd.integration.connection.activate",
+      "canonical_handler_id": "handlers::integration_connection::activate",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.activate",
+      "handler_dispatch_token": "cmd.integration.connection.activate",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.update": {
+      "availability_source": "cmd.integration.connection.update",
+      "canonical_handler_id": "handlers::integration_connection::update",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.update",
+      "handler_dispatch_token": "cmd.integration.connection.update",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.test": {
+      "availability_source": "cmd.integration.connection.test",
+      "canonical_handler_id": "handlers::integration_connection::test",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.test",
+      "handler_dispatch_token": "cmd.integration.connection.test",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.remove": {
+      "availability_source": "cmd.integration.connection.remove",
+      "canonical_handler_id": "handlers::integration_connection::remove",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.remove",
+      "handler_dispatch_token": "cmd.integration.connection.remove",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.connection.open_details": {
+      "availability_source": "cmd.integration.connection.open_details",
+      "canonical_handler_id": "handlers::integration_connection::open_details",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.integration.connection.open_details",
+      "handler_dispatch_token": "cmd.integration.connection.open_details",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.auth_session.resume": {
+      "availability_source": "cmd.authentication.resume",
+      "canonical_handler_id": "handlers::authentication::resume",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.authentication.resume",
+      "handler_dispatch_token": "cmd.authentication.resume",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.auth_session.submit_code": {
+      "availability_source": "cmd.auth_profile.submit_code",
+      "canonical_handler_id": "handlers::multi_account::submit_code",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.auth_profile.submit_code",
+      "handler_dispatch_token": "cmd.auth_profile.submit_code",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
+    "cmd.credential.add": {
+      "availability_source": "cmd.credential_source.add",
+      "canonical_handler_id": "handlers::credential_broker::source_add",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.credential_source.add",
+      "handler_dispatch_token": "cmd.credential_source.add",
       "independent_handler_allowed": false,
       "independent_wiring_allowed": false,
       "normalization_phase": "before_permission_and_dispatch",

@@ -4,7 +4,7 @@
 
 ## 0. Scope
 
-This document is the canonical owner for the Bootstrap Planning Ledger, the Native Ledger Service runtime contract, compact operating surfaces, per-turn ledger protocol, ledger source-lineage preservation, and ledger-to-Plan compilation boundary.
+This document is the canonical owner for the Bootstrap Planning Ledger, the Native Ledger Service runtime contract, the Assistant Deep Plan run-scoped ledger profile defined in Section 4, compact operating surfaces, per-turn ledger protocol, ledger source-lineage preservation, and ledger-to-Plan compilation boundary.
 
 The ledger exists to preserve planning/source memory during long feature-spec conversations. Canonical product/build truth remains in live non-pipeline `Plans/**` docs after compilation.
 
@@ -12,12 +12,13 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 
 ## 1. Architecture Summary
 
-The planning system has two incarnations:
+The planning system has three incarnations:
 
 1. Bootstrap Ledger: file-backed JSONL/JSON under `Plans/ledgers/v2/`.
 2. Native Ledger Service: the finished-product Puppet Master runtime contract for service/API or storage-backed ledger persistence, with implementation required to conform to PLS-015.
+3. Assistant Deep Plan profile: the run-scoped native ledger described in Section 4, bound to one Assistant Plan identity and version, used only by Deep Plan strategies and never by a regular Assistant Plan.
 
-Both incarnations use `design_atom` records during conversation and compile accepted atoms into PlanUnits only when the user asks to compile.
+All three incarnations use `design_atom` records during conversation. The bootstrap and native incarnations compile accepted atoms into PlanUnits only when the user asks to compile; the Assistant Deep Plan profile compiles into one Plan document revision and defers scoped PlanUnit materialization to Build approval under `Plans/Plan_Document_System.md`.
 
 The active bootstrap ledger format is machine-first: append-only JSONL event and record streams plus compact JSON projections. Markdown may exist as a debug export only and does not replace active JSONL/JSON state.
 
@@ -1225,3 +1226,147 @@ pm_gap_or_delta: External issue/PR closure governance not clearly extended
 proposal_or_recommendation: Add ExternalIssueClosureRegistry
 compile_disposition: create_new_planunit
 ```
+
+## 4. Assistant Deep Plan Ledger Profile
+
+This document gains one additional ledger profile: the Assistant Deep Plan profile. It is a third incarnation alongside the Bootstrap Planning Ledger and the Native Ledger Service, and it exists only to back the Deep Plan strategies (`Thorough`, `Exhaustive`, `BrainStorm`) owned by `Plans/Assistant_Plan_Runtime.md`. The Deep Plan profile uses the standard ledger record shapes defined by this owner; it does not fork them, and it does not become a second ledger owner living inside the Assistant.
+
+The profile is run-scoped. One `DeepPlanLedgerSession` binds exactly one `assistant_plan_id` plus one `plan_version`, carries `status` in `collecting|ready|sealed|cancelled`, and holds refs for design atoms, decisions, questions, corrections, research, current state, and a `source_hash`. Records inside the session use the standard `design_atom`, decision, question, correction, and research record semantics defined in Section 1 and Section 2 of this document, so a Deep Plan ledger can be read, audited, and later promoted with the same tooling. A Plan revision creates a new session identity bound to the new version; older sessions remain immutable history. Session state lives in the runtime storage bound to the Assistant thread, not in `Plans/ledgers/v2/`, unless the ledger owner explicitly admits a compatible projection.
+
+The Assistant Deep Plan profile explicitly does not run the bootstrap migration pipeline. It does not perform bootstrap ledger transfer, does not shard, does not write or refresh `Plans/_shards/**`, does not write global product canon into `Plans/**`, does not touch `Plans/.plan_index/**`, `Plans/.evidence/**`, or `Plans/Spec_Lock.json`, and does not emit governance seals or readiness receipts. `Plans/Bootstrap_Planning_Migration.md` remains the sole owner of that pipeline and is not invoked by any Assistant Plan strategy. A Deep Plan session is planning memory for one thread task; it is never repository specification memory.
+
+The profile is also not available to a regular Assistant Plan. `Plan Quick`, `Plan Standard`, and `Plan Thorough` use the direct backend and create no ledger session at all. A request to open a ledger session for a regular Plan is rejected as an owner-boundary violation rather than silently upgraded, and a regular Plan that grows in scope becomes a Deep Plan only through an explicit user strategy choice.
+
+Conversion is the profile's terminal step inside the Assistant. When the session reaches `ready`, the ledger compiles into one standardized human-readable Assistant Plan document revision under `Plans/Assistant_Plan_Runtime.md`. That conversion produces a Plan document only; it does not by itself create PlanUnits. Scoped PlanUnit materialization happens later, on Build approval, under the scoped profile owned by `Plans/Plan_Document_System.md`, and remains outside this document's authority.
+
+Promotion is the profile's only route out of the Assistant. `Send To Planning Wizard` may carry the sealed session ref, its question/decision/correction/research records, source and answer identity, and the `source_hash` into `Plans/Planning_Wizard.md`, which then owns its own PlanningRun ledger work under its own rules. Promotion preserves lineage; it does not transfer ledger ownership, and Planning Wizard never writes back into a sealed Deep Plan session.
+
+Question records in a Deep Plan session are the shared question registry for the whole run. When `BrainStorm` or `Grill Me` is active, every participant reads and writes the same registry so that the strategy's base maximum of user-decision questions (Plan 3/6/8, Deep Plan 10/15/20), the configured Grill extension (default `+25`), duplicate merging, imported prior thread answers, and researched-instead-of-asked dispositions are counted once across all participants rather than per agent. `Plans/Collaborative_Workflows.md` owns participant protocol and `Plans/Skills_System.md` owns the Wonderer and Grill Me methodology; this document owns only the durable question record shape and its single-registry guarantee.
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### PLS-020 - Assistant Deep Plan Run-Scoped Ledger Profile
+
+```yaml
+plan_unit_id: PLS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  Planning Ledger System owns an Assistant Deep Plan profile that provides a run-scoped native ledger for Deep Plan Thorough, Exhaustive, and BrainStorm only. One DeepPlanLedgerSession binds exactly one assistant_plan_id and plan_version, carries status collecting, ready, sealed, or cancelled, and holds design-atom, decision, question, correction, research, current-state, and source_hash refs using the standard ledger record shapes. The profile does not run the bootstrap migration or transfer pipeline, does not shard, does not modify Plans product canon, generated indexes, evidence, or Spec Lock, and is not available to regular Plan Quick, Standard, or Thorough, which create no ledger at all.
+gui_related: false
+gui_classification_reason: Ledger session shape, scope, and pipeline exclusion are backend planning-memory semantics; the Assistant surfaces only a read-only plan-process projection owned elsewhere.
+depends_on:
+  - PLS-001
+  - PLS-002
+  - PLS-015
+unblocks: []
+acceptance_criteria:
+  - A Deep Plan session validates against the standard ledger record shapes and binds exactly one plan identity and version.
+  - Opening a ledger session for a regular Plan strategy is rejected as an owner-boundary violation and is never silently upgraded.
+  - No Deep Plan session run writes Plans/_shards, Plans/.plan_index, Plans/.evidence, Plans/Spec_Lock.json, or product canon.
+  - A Plan revision creates a new session identity and leaves prior sessions immutable.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py
+risk_class: assistant_ledger_pipeline_bleed
+reasoning_tier: high
+context_scope: assistant_deep_plan_ledger_profile
+implementation_surfaces:
+  - Plans/Planning_Ledger_System.md
+  - Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: ledger_profile_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-002
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-003
+  - pm-assistant-implementation-2026-09-02-recovered:PLAN-008
+  - "packet:02_RUNTIME_AND_STORAGE_CONTRACTS.md#5.4"
+  - "packet:01_IMPLEMENTATION_SPEC.md#5.4"
+preserved_exact_tokens:
+  - "DeepPlanLedgerSession"
+  - "pm.assistant_plan.deep_ledger_session.v1"
+  - "collecting|ready|sealed|cancelled"
+negative_constraints:
+  - Do not run the bootstrap ledger transfer or migration pipeline for an Assistant Plan.
+  - Do not shard, seal, or index a Deep Plan session as product canon.
+  - Do not create a ledger session for a regular Plan strategy.
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+### PLS-021 - Deep Plan Conversion, Promotion, And Shared Question Registry
+
+```yaml
+plan_unit_id: PLS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  A ready Deep Plan ledger session compiles into exactly one standardized Assistant Plan document revision and creates no PlanUnits by that act; scoped PlanUnit materialization happens later on Build approval under the Plan Document System scoped profile. Send To Planning Wizard is the only promotion route out of the Assistant and carries the sealed session ref, question, decision, correction, and research records, source and answer identity, and source_hash into Planning Wizard, which then owns its own run ledger and never writes back into a sealed session. Question records in a session form one shared registry across every participant so the strategy's question base (Plan 3/6/8, Deep Plan 10/15/20), the configurable Grill extension defaulting to plus twenty-five, duplicate merging, imported thread answers, and researched dispositions are counted once for the whole run rather than per agent.
+gui_related: false
+gui_classification_reason: Conversion, promotion payload, and registry counting are backend record semantics; the visible questionnaire and Plan card are owned by other documents.
+depends_on:
+  - PLS-020
+  - PLS-008
+unblocks: []
+acceptance_criteria:
+  - Ledger conversion yields one Plan document revision and zero PlanUnits.
+  - A promotion payload preserves session ref, records, source and answer identity, and source_hash, and Planning Wizard cannot mutate the sealed session.
+  - Enabling Grill Me mid-run raises the effective maximum without resetting the count already consumed.
+  - Two participants asking the same semantic question consume one registry entry.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py
+risk_class: deep_plan_conversion_or_question_registry_drift
+reasoning_tier: high
+context_scope: deep_plan_conversion_and_questions
+implementation_surfaces:
+  - Plans/Planning_Ledger_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: ledger_conversion_and_registry_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-003
+  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-008
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-003
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-004
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-005
+  - "packet:15_EDGE_CASE_CLOSURES.md#4"
+preserved_exact_tokens:
+  - "Send To Planning Wizard"
+  - "Grill Me"
+  - "source_hash"
+negative_constraints:
+  - Do not create PlanUnits at ledger conversion time.
+  - Do not reset the question count when Grill Me is enabled mid-run.
+  - Do not let Planning Wizard write back into a sealed Deep Plan session.
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Planning_Wizard.md
+```
+
+## Additive Correction v4 — One Question Registry Per Run (2026-09-03)
+
+`QMAX-005..008`, `QMAX-016`. This owner keeps the durable question record shape and its
+single-registry guarantee; the arithmetic and the admission decision are owned by
+`Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`).
+
+- The registry is keyed by the **planning run**, not by participant, agent, pass, or card. Every
+  BrainStorm participant, the Wonderer role, and the Grill Me specialist read and write the same
+  registry, so the ceiling is never multiplied by participant count.
+- A `QuestionItem` is charged once, when its stable identity is first durably presented to the
+  user. Re-render, reconnect, restart, retry, and panel reopen resolve the existing record rather
+  than writing a new one.
+- Plan revisions continue the same registry; only a genuinely new Plan identity starts a new one.
+  Plan version is never the registry key.
+- The registry records duplicate merges, imported prior-thread answers, and
+  researched-instead-of-asked dispositions, which is what makes `reused_answer_count` and
+  `research_resolved_count` reconstructible after a restart.

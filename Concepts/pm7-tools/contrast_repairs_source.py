@@ -179,6 +179,17 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
   border-color: #17613f !important;
   color: #ffffff !important;
 }
+
+/* Friendly title-bar search fields: the frosted --pm6-cozy-field fill reads
+   as a separate "typing box" floating inside the pill.  Drop the fill — the
+   outlined pill plus focus ring carry the affordance, matching the repaired
+   Settings search fields — and disable native field paint. */
+[data-theme^="friendly"] .title-bar .search-bar,
+[data-theme^="friendly"] .title-bar .pm6-tb-search-pop-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+}
 </style>
 """.replace("__SURFACES__", SURFACES)
 

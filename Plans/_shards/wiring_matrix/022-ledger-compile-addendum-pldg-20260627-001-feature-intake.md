@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3249-L3322
+Source lines: L3249-L3327
 
-Source SHA256: `29b9500b2b14b8ea6eb56ae60091650bb635d556c5fe223a7e2051e590e29256`
+Source SHA256: `d108a46be70fbc2c9a91dc216f291f8238ed1201412f6582a4ad93a1ccad03f6`
 
 ---
 
@@ -20,18 +20,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Notifications and Sounds wiring maps `cmd.settings.open_notifications` to Settings > General > Notifications & Sounds;
-  destination create/update/delete/toggle/test commands to notification destination storage, credential custody, live-send
-  authority, delivery service, and receipt projection; mapping/override commands to global/project override records; and
-  sound preview/upload/pack import/asset delete/asset restore/asset export/mapping set commands to sound asset validation,
-  manifest storage, PM-managed blobs, and local-only preview. Destination create/update wiring validates provider-specific
-  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram profile payloads against CV-298 before writing non-secret
-  settings and credential refs. This PlanUnit records wiring obligations only and does not generate wiring JSON.
+  Notifications and Sounds wiring opens the exact Settings target through `cmd.settings.open`; the predecessor
+  `cmd.settings.open_notifications` spelling remains searchable source lineage only and is neither a production wiring
+  row nor a compatibility alias. Destination create/update/delete/toggle/test commands map to notification destination
+  storage, credential custody, live-send authority, delivery service, and receipt projection; mapping/override commands
+  map to global/project override records; and sound preview/upload/pack import/asset delete/asset restore/asset export/
+  mapping set commands map to sound asset validation, manifest storage, PM-managed blobs, and local-only preview.
+  Destination create/update wiring validates provider-specific Slack, Discord, generic webhook, ntfy, Pushover, and
+  Telegram profile payloads against CV-298 before writing non-secret settings and credential refs. This PlanUnit records
+  wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines user-visible settings command wiring and command-to-surface behavior.
 depends_on: [UCC-103, F3-405, CV-298, SP-222, PS-124]
 unblocks: [ATS-016]
 acceptance_criteria:
+  - Settings entry uses `cmd.settings.open`; no production row or compatibility alias exists for `cmd.settings.open_notifications`.
   - Destination test-send wiring requires explicit user action, enabled destination, masking, rate limit, and receipt recording.
   - Provider-specific destination payloads are validated before storage or live-send test wiring can proceed.
   - Sound preview wiring stays local-only and cannot send remote notifications.
@@ -57,7 +60,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
 source_atom_ids: [atom-0064, atom-0065, atom-0068]
 preserved_exact_tokens:
-  - "cmd.settings.open_notifications"
+  - "cmd.settings.open"
   - "cmd.notifications.destination.create"
   - "cmd.notifications.destination.update"
   - "cmd.notifications.destination.delete"
@@ -72,6 +75,8 @@ preserved_exact_tokens:
   - "cmd.sound.asset.restore"
   - "cmd.sound.asset.export"
   - "cmd.sound.mapping.set"
+stale_retired_dispositions:
+  - "cmd.settings.open_notifications is source-lineage-only; it is neither a production row nor a compatibility alias."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
   - Do not wire local preview through remote delivery.

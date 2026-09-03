@@ -183,7 +183,7 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
   });
   var SEMANTIC_ACTION_SELECTOR='a[href],button,input:not([type="hidden"]),select,textarea,summary,[contenteditable="true"],[role="button"],[role="link"],[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"],[role="tab"],[role="checkbox"],[role="radio"],[role="switch"],[role="slider"],[data-action],[data-command-id],[data-ui-action-id],[data-callback],[onclick]';
   var ACTION_SELECTOR=SEMANTIC_ACTION_SELECTOR+',[tabindex]';
-  var SEMANTIC_SELECTOR='[title],[data-hover-tip],[data-tooltip],[data-pm-hover-label],[data-pm-hover-detail],[data-technical-id],[data-setting-id],[data-widget-id],[data-chart-mark],[data-status],[class*="status"],[class*="badge"],[class*="pill"],code,kbd,samp,svg [data-value],svg [aria-label]';
+  var SEMANTIC_SELECTOR='[title],[data-hover-tip],[data-tooltip],[data-pm-hover-label],[data-pm-hover-detail],[data-technical-id],[data-setting-id],[data-widget-id],[data-chart-mark],[data-status],[data-truncated],[class*="truncate"],[class*="ellipsis"],[class*="status"],[class*="badge"],[class*="pill"],code,kbd,samp,svg [data-value],svg [aria-label]';
   var BLOCKED_EVENTS=['click','dblclick','beforeinput','input','change','submit'];
 
   function clean(value){return String(value==null?'':value).replace(/\s+/g,' ').trim();}
@@ -194,6 +194,17 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
   function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID));}
   function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
   function overlayAllows(el){var overlay=activeOverlay();return !overlay||!!(el&&overlay.contains(el));}
+  function activeSurface(payload){
+    var overlay=activeOverlay();if(overlay)return overlay;
+    var page=payload&&payload.detail?payload.detail.page:payload&&payload.page;
+    if(page){var safe=String(page).replace(/[^a-z0-9_-]/gi,''),exact=document.querySelector('.primary-content > .page.page-'+safe);if(exact)return exact;}
+    return document.querySelector('.primary-content > .page.active')||document.body;
+  }
+  function mutationSurfaceAllows(el){
+    if(!el||el.nodeType!==1)return false;
+    var overlay=activeOverlay();if(overlay)return overlay===el||overlay.contains(el)||el.contains(overlay);
+    var page=el.closest&&el.closest('.primary-content > .page');return !page||page.classList.contains('active');
+  }
   function visibleText(el){
     if(!el)return '';
     /* textContent concatenates adjacent semantic children (for example a
@@ -221,15 +232,14 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     return el.tabIndex>=0;
   }
   function isTruncated(el){
-    if(!el||!el.getBoundingClientRect)return false;
-    var forced=attr(el,'data-truncated')==='true';
-    var overflowed=(el.scrollWidth>el.clientWidth+1)||(el.scrollHeight>el.clientHeight+1);
-    /* Most actionable elements are not truncated. Avoid a computed-style read
-       (and the layout flush it can trigger) until cheap geometry or an exact
-       owner annotation says truncation is actually possible. */
-    if(!forced&&!overflowed)return false;if(forced)return true;
-    var style;try{style=getComputedStyle(el);}catch(_error){return false;}
-    return style.textOverflow==='ellipsis'||style.overflowX==='hidden'||style.overflowY==='hidden';
+    if(!el)return false;
+    if(attr(el,'data-truncated')==='true')return true;
+    /* Bulk hover census runs during navigation. Geometry reads here would
+       synchronously lay out the newly mounted page once per candidate and
+       steal the first animation frames. Owners annotate dynamic clipping;
+       stable CSS truncation uses semantic class/inline-style hints. */
+    var signal=attr(el,'class')+' '+attr(el,'style');
+    return /(?:^|[-_\s])(truncate|truncated|ellipsis)(?:[-_\s]|$)|text-overflow\s*:\s*ellipsis/i.test(signal);
   }
   function technicalAttribute(el){
     if(!el||!el.attributes)return '';
@@ -466,6 +476,7 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     this.root=null;this.tag=null;this.descriptions=null;this.active=null;this.activeModel=null;
     this.pendingOpenTimer=0;this.pendingOpenTarget=null;this.pendingOpenSource=null;this.pendingPointerIntent=null;this.departureTimer=0;this.closeTimer=0;this.scanFrame=0;this.pendingScanScope=null;this.visualEnabled=true;this.observer=null;this.overlayScope=null;
     this.keyOwners=new Map();this.preparedByElement=new WeakMap();this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;this.scanning=false;this.scanComplete=true;this.bootstrapPass=0;this.observeAfterBootstrap=false;this.lastScan={candidates:0,bound:0,duration_ms:0,batches:0};
+    this.deferredLiveScopes=new Set();this.deferredLiveTimer=0;
     this.liveShallow=new Set();this.liveDeep=new Set();this.liveQueue=[];this.liveCursor=0;this.liveFrame=0;this.liveRunning=false;this.lastLive={candidates:0,bound:0,released:0,duration_ms:0,batches:0};
     this.started=false;this.motionQuery=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;this.reduced=!!(this.motionQuery&&this.motionQuery.matches);
     this.slint_projection=Object.freeze({
@@ -591,6 +602,13 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;});if(!covered)this.liveShallow.add(el);
     }
     if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}
+  };
+  HoverTagController.prototype.deferLiveScope=function(el){
+    if(!el||el.nodeType!==1)return;var self=this,covered=false,remove=[];
+    this.deferredLiveScopes.forEach(function(root){if(!root.isConnected)remove.push(root);else if(root===el||root.contains(el))covered=true;else if(el.contains(root))remove.push(root);});
+    remove.forEach(function(root){self.deferredLiveScopes.delete(root);});if(!covered)this.deferredLiveScopes.add(el);
+    clearTimeout(this.deferredLiveTimer);var reduced=document.documentElement.getAttribute('data-motion')==='reduced'||this.reduced;
+    this.deferredLiveTimer=setTimeout(function(){self.deferredLiveTimer=0;var scopes=[...self.deferredLiveScopes];self.deferredLiveScopes.clear();scopes.forEach(function(scope){if(scope.isConnected)self.enqueueLive(scope,true);});},reduced?0:280);
   };
   HoverTagController.prototype.cleanupRemoved=function(root){
     if(!root||root.nodeType!==1)return;var self=this,nodes=[];
@@ -757,9 +775,19 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){this.tag.setAttribute('data-open','false');this.tag.hidden=true;}}
     return this.visualEnabled;
   };
+  HoverTagController.prototype.pauseBackgroundCensus=function(){
+    cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;
+    clearTimeout(this.deferredLiveTimer);this.deferredLiveTimer=0;this.deferredLiveScopes.clear();
+    this.pendingScanScope=null;this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;
+    this.liveQueue=[];this.liveCursor=0;this.liveShallow.clear();this.liveDeep.clear();this.scanning=false;this.liveRunning=false;this.scanComplete=true;
+  };
   HoverTagController.prototype.observe=function(){
     var self=this;if(this.observer)this.observer.disconnect();
     this.observer=new MutationObserver(function(records){
+      /* Page switches change hundreds of layout/state attributes together.
+         Pointer and focus still bind a requested target synchronously; the
+         complete active-page census resumes after the visual transition. */
+      if(self.pageSettling){self.syncOverlayState();return;}
       for(var i=0;i<records.length;i++){
         var record=records[i];
         if(record.target&&record.target.nodeType===1&&inOwner(record.target))continue;
@@ -771,19 +799,23 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
         /* Dynamic components sometimes restore a native title after their
            initial render. Migrate it in this observer microtask so the
            browser-native tooltip never becomes the user-facing path. */
-        if(record.type==='attributes'&&record.attributeName==='title'&&record.target&&record.target.nodeType===1){self.bind(record.target);continue;}
+        if(record.type==='attributes'&&record.attributeName==='title'&&record.target&&record.target.nodeType===1){if(mutationSurfaceAllows(record.target))self.bind(record.target);continue;}
         if(record.type==='attributes'&&record.target&&record.target.nodeType===1){
           if(record.target===document.documentElement&&record.attributeName==='data-theme'){self.position();continue;}
-          self.enqueueLive(record.target,false);continue;
+          if(mutationSurfaceAllows(record.target))self.enqueueLive(record.target,false);continue;
         }
         if(record.type==='characterData'){
           var parent=record.target&&record.target.parentElement,bound=parent&&parent.closest&&parent.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);
-          if(bound)self.enqueueLive(bound,false);continue;
+          if(bound&&mutationSurfaceAllows(bound))self.enqueueLive(bound,false);continue;
         }
         if(record.type==='childList'){
           var target=record.target&&record.target.nodeType===1?record.target:null,targetBound=target&&target.closest&&target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);
-          if(targetBound&&!inOwner(targetBound))self.enqueueLive(targetBound,false);
-          for(var j=0;j<record.addedNodes.length;j++)if(record.addedNodes[j].nodeType===1&&!inOwner(record.addedNodes[j]))self.enqueueLive(record.addedNodes[j],true);
+          if(targetBound&&!inOwner(targetBound)&&mutationSurfaceAllows(targetBound))self.enqueueLive(targetBound,false);
+          var settingsSwap=target&&target.closest&&target.closest('#panel-settings .manager-tab-body.tab-swap-a,#panel-settings .manager-tab-body.tab-swap-b');
+          for(var j=0;j<record.addedNodes.length;j++)if(record.addedNodes[j].nodeType===1&&!inOwner(record.addedNodes[j])&&mutationSurfaceAllows(record.addedNodes[j])){
+            var added=record.addedNodes[j],providerSwap=!settingsSwap&&added.matches&&added.matches('#panel-settings .resource-detail,.resource-detail')&&added.querySelector&&added.querySelector('.tab-swap-a,.tab-swap-b');
+            if(settingsSwap||providerSwap)self.deferLiveScope(added);else self.enqueueLive(added,true);
+          }
           for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);
         }
       }
@@ -795,7 +827,7 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
       'data-technical-id','data-chart-mark','data-value','data-pinned','data-pm-hover-label','data-pm-hover-detail','data-pm-hover-exempt','data-theme','data-open'
     ]});return true;
   };
-  HoverTagController.prototype.disconnect=function(){if(this.observer)this.observer.disconnect();this.cancelPendingOpen();cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;this.pendingScanScope=null;this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.liveQueue=[];this.liveShallow.clear();this.liveDeep.clear();this.scanning=false;this.liveRunning=false;this.scanComplete=true;};
+  HoverTagController.prototype.disconnect=function(){if(this.observer)this.observer.disconnect();this.cancelPendingOpen();clearTimeout(this.pageScanTimer);this.pageScanTimer=0;this.pageSettling=false;this.pauseBackgroundCensus();};
   HoverTagController.prototype.settle=function(scope){
     var self=this;this.scheduleScan(scope);return this.whenIdle().then(function(){return new Promise(function(resolve){requestAnimationFrame(function(){self.scan(scope);resolve(self.audit(scope));});});});
   };
@@ -840,12 +872,19 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     window.addEventListener('resize',viewportChanged);if(window.visualViewport){window.visualViewport.addEventListener('resize',viewportChanged);window.visualViewport.addEventListener('scroll',viewportChanged);}
     window.addEventListener('scroll',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);else self.position();},true);
     document.addEventListener('input',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);document.addEventListener('change',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);
+    var pageChanged=function(payload){
+      clearTimeout(self.pageScanTimer);self.pageSettling=true;self.pauseBackgroundCensus();self.syncOverlayState();
+      var reduced=document.documentElement.getAttribute('data-motion')==='reduced'||self.reduced;
+      self.pageScanTimer=setTimeout(function(){self.pageScanTimer=0;self.pageSettling=false;self.scheduleScan(activeSurface(payload));},reduced?0:380);
+    };
+    try{if(window.PM_DEMO&&typeof window.PM_DEMO.on==='function')window.PM_DEMO.on('page.changed',pageChanged);}catch(_error){}
+    document.addEventListener('page.changed',pageChanged);
     /* Arm observation before collecting the one startup snapshot. Dynamic
        controls can be inserted in the several frame-bounded census batches;
        deferring the observer until the end created a real blind window. The
        generated attributes are either outside the filter or idempotent, and
        owner-root writes are ignored, so this does not create a second scan. */
-    this.observe();this.scheduleScan(document);return this;
+    this.observe();this.scheduleScan(activeSurface());return this;
   };
 
   var controller=new HoverTagController();
@@ -908,7 +947,9 @@ def apply(doc, notes, need):
     need("general.interaction.show-tooltips" in HOVER_SCRIPT, "T47: Settings projection bridge missing")
     need("function activeOverlay()" in HOVER_SCRIPT and "prototype.overlayAllows" in HOVER_SCRIPT and "document.getElementById('pm7-guided-tour')" in HOVER_SCRIPT and "document.getElementById('pm7-onboarding')" in HOVER_SCRIPT and "self.syncOverlayState()" in HOVER_SCRIPT and "setAttrIfChanged(desc,'role','presentation')" in HOVER_SCRIPT, "T47: onboarding/guided-tour hover containment contract missing")
     need("duplicate_key" in HOVER_SCRIPT and "stale_text" in HOVER_SCRIPT and "native_title_only" in HOVER_SCRIPT, "T47: deterministic census guards incomplete")
-    need("this.observe();this.scheduleScan(document);return this" in HOVER_SCRIPT, "T47: startup observer must be armed before the one bounded census snapshot")
+    need("this.observe();this.scheduleScan(activeSurface());return this" in HOVER_SCRIPT and "mutationSurfaceAllows" in HOVER_SCRIPT and "window.PM_DEMO.on('page.changed',pageChanged)" in HOVER_SCRIPT and "pauseBackgroundCensus" in HOVER_SCRIPT and "if(self.pageSettling)" in HOVER_SCRIPT, "T47: active-surface startup/live census contract missing")
+    truncation_probe = HOVER_SCRIPT.split("function isTruncated(el)", 1)[1].split("function technicalAttribute(el)", 1)[0]
+    need("scrollWidth" not in truncation_probe and "clientWidth" not in truncation_probe and "data-truncated" in truncation_probe, "T47: bulk truncation census regained synchronous layout reads")
     need("this.bootstrapPass<1" not in HOVER_SCRIPT and "attributeOldValue:true" in HOVER_SCRIPT and "record.oldValue===record.target.getAttribute(record.attributeName)" in HOVER_SCRIPT, "T47: startup or live observer still repeats whole-document/no-op semantic work")
     need("processScanBatch" in HOVER_SCRIPT and "processLiveBatch" in HOVER_SCRIPT and "whenIdle" in HOVER_SCRIPT and HOVER_SCRIPT.count("performance.now()-started<4") == 2 and "performance.now()-started<3" in HOVER_SCRIPT and "attributeFilter" in HOVER_SCRIPT, "T47: bounded census and incremental relevant-mutation contracts missing")
     need("takeRecords()" not in HOVER_SCRIPT and "ownMutation" not in HOVER_SCRIPT and "setAttrIfChanged" in HOVER_SCRIPT, "T47: observer-safe idempotent writes missing")
@@ -924,7 +965,7 @@ def apply(doc, notes, need):
             "overlay_contract": "one shared root; center above, flip below, clamp to every visible-viewport edge with a feasible margin up to 8px; 8px anchor gap; max width 280px; viewport-bounded height with internal overflow",
             "timings_ms": {"pointer_open": 1600, "pointer_stationary": 1100, "pointer_radius_px": 5, "focus_open": 1000, "departure_grace": 160, "standard_motion": 240, "retro_stepped_motion": 140, "reduced_motion": 0},
             "accessibility_contract": "persistent description nodes and additive stable aria-describedby tokens remain when show-tooltips hides visual tags; while onboarding or the guided tour is open, descriptions outside that modal temporarily lose tooltip semantics and are hidden from accessibility, then restore; missing names are repaired from exact UI copy before native titles migrate",
-            "coverage_contract": "actionable/focusable, truncated, technical identifier, status, badge, chart mark, disabled, and dynamic pin/unpin candidates are live-bound; persistent accessible descriptions bind immediately, while visual tags require 1600ms pointer residence plus 1100ms stationary intent within a 5px radius or 1000ms keyboard focus; pointer press and scroll cancel pending pointer help, target motion resets stationary intent, and every new anchor earns a full dwell; observation is armed before the one startup snapshot, which uses frame-bounded read-then-write batches, so controls inserted during bootstrap are retained without a second whole-document pass; exact old/current attribute reassertions are semantic no-ops rather than invalidations; open onboarding and guided-tour overlays suppress anchors outside their own surface",
+            "coverage_contract": "actionable/focusable, owner-annotated or semantic-class truncated values, technical identifier, status, badge, chart mark, disabled, and dynamic pin/unpin candidates are live-bound without geometry reads in the navigation census; persistent accessible descriptions bind for the active page and on same-frame pointer/focus acknowledgement, while explicit settle(document) retains fail-closed full-artifact audit coverage; visual tags require 1600ms pointer residence plus 1100ms stationary intent within a 5px radius or 1000ms keyboard focus; pointer press and scroll cancel pending pointer help, target motion resets stationary intent, and every new anchor earns a full dwell; observation is armed before the active-surface startup snapshot, page changes schedule the newly active surface, and inactive-page mutations do not consume the frame budget; exact old/current attribute reassertions are semantic no-ops rather than invalidations; open onboarding and guided-tour overlays suppress anchors outside their own surface",
             "theme_contract": "Basic/Friendly/Glass/Retro light and dark; Glass consumes live tint/transparency with a readable opaque floor and no blur",
             "slint_portability": "typed PMHoverTag, anchor/overlay geometry, pointer coordinates/radius, timers, press/scroll/focus inputs, and theme tokens; no Canvas, WebGL, browser-only physics, SVG filter, or heavy CSS filter",
             "deterministic_api": "window.PM_HOVER_TAG_CONTROLLER",

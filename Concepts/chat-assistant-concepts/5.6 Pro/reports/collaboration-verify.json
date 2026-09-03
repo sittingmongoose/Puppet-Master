@@ -1,0 +1,443 @@
+{
+  "suite": "collaboration-verify",
+  "total": 87,
+  "pass": 87,
+  "fail": 0,
+  "results": [
+    {
+      "name": "collaboration.js registered PM56_COLLAB",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "exactly four collaborative workflow kinds, closed",
+      "pass": true,
+      "detail": "[\"crew\",\"brainstorm\",\"review\",\"chat_room\"]"
+    },
+    {
+      "name": "all four kinds are present in the seeded runs",
+      "pass": true,
+      "detail": "[\"brainstorm\",\"chat_room\",\"crew\",\"review\"]"
+    },
+    {
+      "name": "every run — regardless of kind — passes the SAME shape predicate (one CollaborativeRun record shape)",
+      "pass": true,
+      "detail": "1 distinct shapes across 9 runs"
+    },
+    {
+      "name": "every participant — regardless of kind — passes the SAME shape predicate (one Participant record shape)",
+      "pass": true,
+      "detail": "1 distinct shapes"
+    },
+    {
+      "name": "crew: the shared transcript card renders on its own thread with the common card structure",
+      "pass": true,
+      "detail": "{\"hasHead\":true,\"hasBadge\":true,\"hasTitle\":true,\"hasStatus\":true,\"hasMeta\":true,\"hasFoot\":true}"
+    },
+    {
+      "name": "crew: Expand reveals the inline card body (participants, kind detail, usage)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "crew: Open Panel pops the SAME run out to the full shared panel shell",
+      "pass": true,
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+    },
+    {
+      "name": "crew: Message sets the composer destination to this run (destinationKind === kind)",
+      "pass": true,
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"crew\",\"refId\":\"crew-query-perf\",\"participantId\":null,\"label\":\"Crew · Crew · Query Performance Rollout\",\"detail\":\"3 participants\",\"glyph\":\"users\"}"
+    },
+    {
+      "name": "crew: the composer chrome visibly changes and names the destination",
+      "pass": true,
+      "detail": "{\"visible\":true,\"text\":\"To: Crew · Crew · Query Performance Rollout · 3 participants · 3\"}"
+    },
+    {
+      "name": "brainstorm: the shared transcript card renders on its own thread with the common card structure",
+      "pass": true,
+      "detail": "{\"hasHead\":true,\"hasBadge\":true,\"hasTitle\":true,\"hasStatus\":true,\"hasMeta\":true,\"hasFoot\":true}"
+    },
+    {
+      "name": "brainstorm: Expand reveals the inline card body (participants, kind detail, usage)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "brainstorm: Open Panel pops the SAME run out to the full shared panel shell",
+      "pass": true,
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+    },
+    {
+      "name": "brainstorm: Message sets the composer destination to this run (destinationKind === kind)",
+      "pass": true,
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"brainstorm\",\"refId\":\"brainstorm-provider-failover\",\"participantId\":null,\"label\":\"BrainStorm · BrainStorm · Provider Failover Strategy\",\"detail\":\"5 participants\",\"glyph\":\"brain\"}"
+    },
+    {
+      "name": "brainstorm: the composer chrome visibly changes and names the destination",
+      "pass": true,
+      "detail": "{\"visible\":true,\"text\":\"To: BrainStorm · BrainStorm · Provider Failover Strategy · 5 participants · 5\"}"
+    },
+    {
+      "name": "review: the shared transcript card renders on its own thread with the common card structure",
+      "pass": true,
+      "detail": "{\"hasHead\":true,\"hasBadge\":true,\"hasTitle\":true,\"hasStatus\":true,\"hasMeta\":true,\"hasFoot\":true}"
+    },
+    {
+      "name": "review: Expand reveals the inline card body (participants, kind detail, usage)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "review: Open Panel pops the SAME run out to the full shared panel shell",
+      "pass": true,
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+    },
+    {
+      "name": "review: Message sets the composer destination to this run (destinationKind === kind)",
+      "pass": true,
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"review\",\"refId\":\"review-orchestrator-boundary\",\"participantId\":null,\"label\":\"Review · Multi-Pass Review · Orchestrator Boundary Changes\",\"detail\":\"3 participants\",\"glyph\":\"eye\"}"
+    },
+    {
+      "name": "review: the composer chrome visibly changes and names the destination",
+      "pass": true,
+      "detail": "{\"visible\":true,\"text\":\"To: Review · Multi-Pass Review · Orchestrator Boundary Changes · 3 participants · 3\"}"
+    },
+    {
+      "name": "chat_room: the shared transcript card renders on its own thread with the common card structure",
+      "pass": true,
+      "detail": "{\"hasHead\":true,\"hasBadge\":true,\"hasTitle\":true,\"hasStatus\":true,\"hasMeta\":true,\"hasFoot\":true}"
+    },
+    {
+      "name": "chat_room: Expand reveals the inline card body (participants, kind detail, usage)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "chat_room: Open Panel pops the SAME run out to the full shared panel shell",
+      "pass": true,
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+    },
+    {
+      "name": "chat_room: Message sets the composer destination to this run (destinationKind === kind)",
+      "pass": true,
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"chat_room\",\"refId\":\"chatroom-onboarding\",\"participantId\":null,\"label\":\"Chat Room · Chat Room · Onboarding Redesign Options\",\"detail\":\"3 participants\",\"glyph\":\"users\"}"
+    },
+    {
+      "name": "chat_room: the composer chrome visibly changes and names the destination",
+      "pass": true,
+      "detail": "{\"visible\":true,\"text\":\"To: Chat Room · Chat Room · Onboarding Redesign Options · 3 participants · 3\"}"
+    },
+    {
+      "name": "clicking a participant with real output opens their own transcript (not empty, not a fabricated summary)",
+      "pass": true,
+      "detail": "{\"heading\":\"Migration Engineer\",\"msgCount\":1,\"empty\":false}"
+    },
+    {
+      "name": "a participant with no output yet opens a truthful EMPTY transcript, never a fabricated one",
+      "pass": true,
+      "detail": "{\"msgCount\":0,\"hasEmptyNote\":true}"
+    },
+    {
+      "name": "crew: opens its own configuration modal every invocation",
+      "pass": true,
+      "detail": "{\"rowFound\":true,\"dialogOpen\":true,\"menuGone\":true}"
+    },
+    {
+      "name": "crew: opening it from the Wand menu closes the Wand menu (no stray menu left open/overlapping behind the dialog)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "crew: the modal is populated from Settings defaults (RTC.definitions.crew)",
+      "pass": true,
+      "detail": "{\"rows\":3,\"config\":{\"coordinator\":\"parent_assistant\",\"assignmentStrategy\":\"manager_directed\",\"memberCount\":3,\"parallelism\":3,\"autoEnabled\":false,\"autoComplexity\":\"high\",\"autoMaxMembers\":4,\"contextSharing\":\"shared\",\"synthesisPolicy\":\"coordinator_adjudicated\",\"timeLimitMinutes\":45,\"tokenLimit\":400000,\"costLimitUsd\":6},\"grillMe\":false}"
+    },
+    {
+      "name": "crew: cancelling the modal starts nothing (no draft retained, no dialog left open)",
+      "pass": true,
+      "detail": "{\"draft\":null,\"dialogGone\":true}"
+    },
+    {
+      "name": "brainstorm: opens its own configuration modal every invocation",
+      "pass": true,
+      "detail": "{\"rowFound\":true,\"dialogOpen\":true,\"menuGone\":true}"
+    },
+    {
+      "name": "brainstorm: opening it from the Wand menu closes the Wand menu (no stray menu left open/overlapping behind the dialog)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "brainstorm: the modal is populated from Settings defaults (RTC.definitions.brainstorm)",
+      "pass": true,
+      "detail": "{\"rows\":4,\"config\":{\"coreParticipants\":4,\"questionLimit\":20,\"grillExtension\":25,\"externalResearch\":\"maximum\",\"independentProposals\":true,\"debateRounds\":2,\"voting\":\"evidence_weighted\",\"preserveDissent\":true,\"timeLimitMinutes\":90,\"tokenLimit\":900000,\"costLimitUsd\":14,\"concurrency\":4},\"grillMe\":false}"
+    },
+    {
+      "name": "brainstorm: cancelling the modal starts nothing (no draft retained, no dialog left open)",
+      "pass": true,
+      "detail": "{\"draft\":null,\"dialogGone\":true}"
+    },
+    {
+      "name": "review: opens its own configuration modal every invocation",
+      "pass": true,
+      "detail": "{\"rowFound\":true,\"dialogOpen\":true,\"menuGone\":true}"
+    },
+    {
+      "name": "review: opening it from the Wand menu closes the Wand menu (no stray menu left open/overlapping behind the dialog)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "review: the modal is populated from Settings defaults (RTC.definitions.review)",
+      "pass": true,
+      "detail": "{\"rows\":3,\"config\":{\"strategy\":\"multi_pass\",\"reviewerCount\":3,\"blindInitialPass\":true,\"peerCorroboration\":true,\"preserveDissent\":true,\"autoRepair\":false,\"timeLimitMinutes\":30,\"tokenLimit\":350000,\"costLimitUsd\":5},\"grillMe\":false}"
+    },
+    {
+      "name": "review: cancelling the modal starts nothing (no draft retained, no dialog left open)",
+      "pass": true,
+      "detail": "{\"draft\":null,\"dialogGone\":true}"
+    },
+    {
+      "name": "chat_room: opens its own configuration modal every invocation",
+      "pass": true,
+      "detail": "{\"rowFound\":true,\"dialogOpen\":true,\"menuGone\":true}"
+    },
+    {
+      "name": "chat_room: opening it from the Wand menu closes the Wand menu (no stray menu left open/overlapping behind the dialog)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "chat_room: the modal is populated from Settings defaults (RTC.definitions.chat_room)",
+      "pass": true,
+      "detail": "{\"rows\":4,\"config\":{\"participantCount\":4,\"turnPolicy\":\"moderated\",\"maxRounds\":5,\"timeLimitMinutes\":60,\"costLimitUsd\":4},\"grillMe\":false}"
+    },
+    {
+      "name": "chat_room: cancelling the modal starts nothing (no draft retained, no dialog left open)",
+      "pass": true,
+      "detail": "{\"draft\":null,\"dialogGone\":true}"
+    },
+    {
+      "name": "the crew configure modal opened for the substitution drive-through",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "selecting a demo-unavailable model updates the draft state immediately",
+      "pass": true,
+      "detail": "kimi-k3-turbo"
+    },
+    {
+      "name": "committing the modal creates exactly one new run (Crew Auto aside)",
+      "pass": true,
+      "detail": "10"
+    },
+    {
+      "name": "the committed participant records BOTH requested and effective identity, with a substitution reason (never a silent substitution)",
+      "pass": true,
+      "detail": "{\"requested\":\"kimi-k3-turbo\",\"effective\":\"kimi-k3\",\"reason\":\"Provider window exhausted on this account. Substituted within the same provider.\"}"
+    },
+    {
+      "name": "the committed run's panel renders the requested/effective disclosure for the substituted participant",
+      "pass": true,
+      "detail": "effective Kimi K3 · Moonshot"
+    },
+    {
+      "name": "a normal (non-substituted) participant renders no effective-route chrome — disclosure is not noise",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "the Configure modal repaints the requested/effective note immediately on selecting an unavailable model (no separate action needed to force a re-render)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "Multi-Pass Review reuses the same model on two reviewer slots without collapsing their identity",
+      "pass": true,
+      "detail": "[{\"id\":\"p-17\",\"model\":\"opus5\"},{\"id\":\"p-18\",\"model\":\"glm52\"},{\"id\":\"p-19\",\"model\":\"opus5\"}]"
+    },
+    {
+      "name": "the review configure modal opened for the reviewer-count bounds drive-through",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Multi-Pass Review defaults to exactly 3 reviewers",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "name": "Review accepts up to 8 reviewers with Commit still enabled",
+      "pass": true,
+      "detail": "{\"n\":8,\"disabled\":false,\"warn\":false}"
+    },
+    {
+      "name": "a 9th reviewer goes out of range: Commit disables and the modal discloses it",
+      "pass": true,
+      "detail": "{\"n\":9,\"disabled\":true,\"warn\":true}"
+    },
+    {
+      "name": "the panel names the single frozen target pack hash all initial passes shared",
+      "pass": true,
+      "detail": "Frozen target changes · hash a1c9f02e · frozen 8:59 PM"
+    },
+    {
+      "name": "a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged",
+      "pass": true,
+      "detail": "Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped."
+    },
+    {
+      "name": "at least one finding is corroborated by more than one reviewer under that same frozen pack",
+      "pass": true,
+      "detail": "f1"
+    },
+    {
+      "name": "Review states it is read-only and never auto-repairs, and no control anywhere on the run exposes a repair action",
+      "pass": true,
+      "detail": "{\"targetTxt\":\"Frozen target changes · hash a1c9f02e · frozen 8:59 PM\",\"excludedTxt\":\"Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.\",\"readonlyNote\":\"Review is read-only and never auto-repairs. assistant.multi_agent.review.auto_repair is locked off.\",\"hasRepairAction\":false}"
+    },
+    {
+      "name": "the review configure modal reopened for the auto-repair lock check",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "assistant.multi_agent.review.auto_repair is locked off and not a reachable escape hatch in the configure modal",
+      "pass": true,
+      "detail": "{\"found\":true,\"disabled\":true,\"text\":\"Auto-repair — permanently off. assistant.multi_agent.review.auto_repair is locked and is not a user-reachable escape hatch.\"}"
+    },
+    {
+      "name": "the brainstorm configure modal opened for the question-arithmetic drive-through",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BrainStorm modal states the base arithmetic before Grill Me",
+      "pass": true,
+      "detail": "Maximum questions: 20"
+    },
+    {
+      "name": "checking Grill Me updates the draft state immediately",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "the Configure modal repaints \"Maximum questions\" immediately when Grill Me is checked: 20 + Grill Me 25 = 45 (no separate action needed to force a re-render)",
+      "pass": true,
+      "detail": "Maximum questions: 45 (20 + Grill Me 25)"
+    },
+    {
+      "name": "the arithmetic stays correct after further interaction with the modal",
+      "pass": true,
+      "detail": "Maximum questions: 45 (20 + Grill Me 25)"
+    },
+    {
+      "name": "the question bank is ONE object on the run, not duplicated per participant (shared budget, not per-agent)",
+      "pass": true,
+      "detail": "[\"id\",\"runId\",\"role\",\"name\",\"requestedProviderId\",\"requestedAccountId\",\"requestedModelId\",\"requestedModelName\",\"effectiveModelId\",\"effectiveModelName\",\"requestedPersona\",\"effectivePersona\",\"additiveRoleKind\",\"status\",\"substitutionReason\",\"evidenceNote\",\"blockedReason\",\"current\",\"required\",\"outcome\",\"vote\",\"votingRole\",\"waiver\",\"attempts\",\"assignmentRevision\",\"demo\"]"
+    },
+    {
+      "name": "the live run panel shows the base maximum before Grill Me",
+      "pass": true,
+      "detail": "Maximum questions: 20"
+    },
+    {
+      "name": "the registered toggle action (unlike the raw modal checkbox) DOES repaint immediately: 20 + Grill Me 25 = 45, without resetting the already-asked count",
+      "pass": true,
+      "detail": "Maximum questions: 45 (20 + Grill Me 25)"
+    },
+    {
+      "name": "the already-asked questions are preserved when the ceiling is raised (shared, monotonic budget)",
+      "pass": true,
+      "detail": "9 vs 9"
+    },
+    {
+      "name": "the disqualified alternative stays visible regardless of vote count (hard constraint section)",
+      "pass": true,
+      "detail": "Disqualified regardless of vote countFully automatic cross-account failover (an early variant of prop-a) — violates: Never spend from a personal account without explicit confirmation.Disqualified regardless of the ring design’s other merits; it is visible in the rejected-alternatives section and was never revived by discussion."
+    },
+    {
+      "name": "material dissent is preserved and rendered, not smoothed over",
+      "pass": true,
+      "detail": "Preserved dissent · ProductThe resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention."
+    },
+    {
+      "name": "Synthesize produces exactly one synthesis, preserving the dissent count from the protocol",
+      "pass": true,
+      "detail": "{\"phase\":\"synthesis\",\"dissentPreserved\":1}"
+    },
+    {
+      "name": "the synthesis honestly discloses that no Plan document exists yet (command not registered) rather than overclaiming one landed",
+      "pass": true,
+      "detail": "`cmd.brainstorm.synthesize_plan` is not yet registered in the central command catalog, so no Plan document was created from this synthesis. The content above is exactly what that handoff would send, including the 1 preserved dissent record(s) and the disqualified alternative — nothing here claims a Plan exists."
+    },
+    {
+      "name": "synthesizing again is idempotent — exactly ONE synthesis/Plan handoff record ever, never duplicated",
+      "pass": true,
+      "detail": "1 -> 1 coordinator response messages"
+    },
+    {
+      "name": "Crew Auto starts unchecked and unconfigured",
+      "pass": true,
+      "detail": "{\"checked\":false,\"autoConfigured\":false}"
+    },
+    {
+      "name": "checking Crew Auto before it is configured OPENS the configuration modal rather than enabling anything directly",
+      "pass": true,
+      "detail": "{\"modalOpen\":true,\"isAutoMode\":true,\"autoEnabled\":false}"
+    },
+    {
+      "name": "unlike the four Wand-menu configure rows above, the Crew Auto route DOES close the Wand menu behind it (collab-crew-auto-toggle calls ctx.closeMenu()) — confirms the fix exists, just not applied to the other four rows",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "cancelling the Crew Auto modal leaves it unconfigured and starts nothing",
+      "pass": true,
+      "detail": "{\"autoConfigured\":false,\"runs\":10}"
+    },
+    {
+      "name": "the \"widen authority\" demo control is durably refused (recorded, not a toast alone) and starts nothing",
+      "pass": true,
+      "detail": "{\"text\":true,\"runs\":10}"
+    },
+    {
+      "name": "committing Crew Auto configuration records it as configured and enabled, but STILL starts no run by itself",
+      "pass": true,
+      "detail": "{\"autoConfigured\":true,\"autoEnabled\":true,\"runs\":10}"
+    },
+    {
+      "name": "Crew Auto now shows checked in the Multi-Agent menu, reflecting the committed configuration",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "the room starts with nothing promoted, and its thread has no To-Do list of its own",
+      "pass": true,
+      "detail": "{\"promosBefore\":0,\"todosBeforeRoom\":null}"
+    },
+    {
+      "name": "an ordinary round of discussion creates no promotion, no To-Do list, no Plan, no Goal by itself",
+      "pass": true,
+      "detail": "{\"promotions\":0,\"rounds\":3,\"todos\":null}"
+    },
+    {
+      "name": "an EXPLICIT promotion is the only thing that adds a promotion record, with lineage to the source message",
+      "pass": true,
+      "detail": "[{\"id\":\"promo-107\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-106\",\"at\":\"2026-09-03T21:00:34.215Z\"}]"
+    },
+    {
+      "name": "the explicit promotion is recorded as a durable, visible receipt in the transcript",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

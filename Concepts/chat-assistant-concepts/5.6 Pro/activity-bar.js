@@ -36,7 +36,7 @@
   var EXT = window.PM56_EXT;
   if (!EXT || !EXT.slot) return;
 
-  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
+  var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'brainstorm', 'review', 'chat_room', 'changes', 'artifacts'];
   var ROWS = 5;                 /* every list in every card caps here, then "+N more" */
 
   /* ---------------------------------------------------------------- utils */
@@ -510,6 +510,15 @@
   EXT.slot('activityHoverCard', function (ctx) {
     var id = ctx.domain, def = ctx.def || (ctx.activityDefs() || {})[id];
     var build = CARDS[id];
+    /* Assistant-redesign wave: To-Dos moved to todos.js (ToDo_Runtime.md owns
+       the hierarchy, dependencies and receipts), but this file still owns the
+       hover-card SHELL -- its keyed identity, tone and dialog semantics. So the
+       owner supplies the BODY and the shell below is unchanged. Declining the
+       whole card here instead produced a preview that was no longer a dialog.
+       `todoCard` stays as the fallback for a build without todos.js. */
+    if (id === 'todo' && window.PM56_TODOS && window.PM56_TODOS.hoverBody) {
+      build = function (c) { return window.PM56_TODOS.hoverBody(c); };
+    }
     if (!def || !build) return '';
     if (coll(ctx).live && coll(ctx).live[id] === false) return '';
     /* data-k on the card itself: #pmOverlayRoot is reconciled positionally for

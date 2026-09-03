@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/final_gui_interaction_contracts.schema.json",
   "title": "Final GUI reconciled interaction presentation contracts",
-  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, PMHoverTag, and evidence separation. Validation is not runtime or native Slint proof.",
+  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, PMHoverTag, reusable reference-only security controls, post-integration DRY reconciliation, and evidence separation. Validation is not runtime or native Slint proof.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_id", "schema_version", "contracts"],
@@ -11,8 +11,8 @@
     "schema_version": {"const": "1.0.0"},
     "contracts": {
       "type": "array",
-      "minItems": 8,
-      "maxItems": 8,
+      "minItems": 11,
+      "maxItems": 11,
       "items": {
         "oneOf": [
           {"$ref": "#/$defs/k3_geometry"},
@@ -22,7 +22,10 @@
           {"$ref": "#/$defs/hover_tag"},
           {"$ref": "#/$defs/evidence_boundary"},
           {"$ref": "#/$defs/provider_recovery_connector_presentation"},
-          {"$ref": "#/$defs/source_control_forge_depth_presentation"}
+          {"$ref": "#/$defs/source_control_forge_depth_presentation"},
+          {"$ref": "#/$defs/secret_reference_control"},
+          {"$ref": "#/$defs/human_step_up_dialog"},
+          {"$ref": "#/$defs/post_integration_dry_component_reconciliation"}
         ]
       },
       "allOf": [
@@ -33,11 +36,20 @@
         {"contains": {"properties": {"contract_kind": {"const": "hover_tag"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
         {"contains": {"properties": {"contract_kind": {"const": "evidence_boundary"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
         {"contains": {"properties": {"contract_kind": {"const": "provider_recovery_connector_presentation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
-        {"contains": {"properties": {"contract_kind": {"const": "source_control_forge_depth_presentation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1}
+        {"contains": {"properties": {"contract_kind": {"const": "source_control_forge_depth_presentation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "secret_reference_control"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "human_step_up_dialog"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"contract_kind": {"const": "post_integration_dry_component_reconciliation"}}, "required": ["contract_kind"]}, "minContains": 1, "maxContains": 1}
       ]
     }
   },
   "$defs": {
+    "opaque_non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
     "theme_order": {
       "type": "array",
       "prefixItems": [
@@ -89,7 +101,7 @@
     "onboarding_motion": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["contract_kind", "plan_unit_ref", "setup_model", "stage_count", "stages", "journey_mode", "connect_existing_stage_count", "connect_existing_stages", "connect_existing_skips", "reverse_back_contract", "navigation_before_apply", "selection_effect", "first_choice_stage", "first_choice_options", "independent_roles", "roles_visible", "role_choice_stage", "theme_choice_stage", "theme_choice_timing", "theme_picker", "safe_history", "remote_access", "review_apply", "owner_action_identity", "owner_projection_only", "private_owner_mutations", "synthetic_onboarding_commands", "max_prominent_choices", "dominant_primary_actions", "hero_ms", "step_transition_ms", "stagger_ms", "microinteraction_ms", "success_ms", "interruptible", "input_blocking", "reduced_motion"],
+      "required": ["contract_kind", "plan_unit_ref", "setup_model", "stage_count", "stages", "journey_mode", "connect_existing_stage_count", "connect_existing_stages", "connect_existing_skips", "reverse_back_contract", "navigation_before_apply", "selection_effect", "first_choice_stage", "first_choice_options", "independent_roles", "roles_visible", "role_choice_stage", "theme_choice_stage", "theme_choice_timing", "theme_picker", "safe_history", "remote_access", "choice_help", "review_apply", "owner_action_identity", "owner_projection_only", "private_owner_mutations", "synthetic_onboarding_commands", "max_prominent_choices", "dominant_primary_actions", "hero_ms", "step_transition_ms", "stagger_ms", "microinteraction_ms", "success_ms", "interruptible", "input_blocking", "reduced_motion"],
       "properties": {
         "contract_kind": {"const": "onboarding_motion"},
         "plan_unit_ref": {"const": "F3-520"},
@@ -202,17 +214,32 @@
         "remote_access": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["recommended_options", "remote_link_label", "remote_link_placement"],
+          "required": ["local_group", "remote_options", "remote_link_label", "remote_link_placement"],
           "properties": {
-            "recommended_options": {
+            "local_group": {"const": "Local_or_VPN"},
+            "remote_options": {
               "type": "array",
-              "prefixItems": [{"const": "Tailscale_or_Headscale"}, {"const": "existing_VPN"}, {"const": "reverse_proxy"}],
+              "prefixItems": [{"const": "Tailscale_or_Headscale"}, {"const": "reverse_proxy"}, {"const": "Remote_Link"}],
               "items": false,
               "minItems": 3,
               "maxItems": 3
             },
             "remote_link_label": {"const": "Remote Link"},
-            "remote_link_placement": {"const": "more_options"}
+            "remote_link_placement": {"const": "always_visible_remote_choice"}
+          }
+        },
+        "choice_help": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["component", "target_id", "max_visible", "control_relation", "active_description_relation", "replaces_previous", "expands_peer_sections"],
+          "properties": {
+            "component": {"const": "shared_anchored_explainer"},
+            "target_id": {"const": "pm7ob-explainer"},
+            "max_visible": {"const": 1},
+            "control_relation": {"const": "aria-controls"},
+            "active_description_relation": {"const": "aria-describedby"},
+            "replaces_previous": {"const": true},
+            "expands_peer_sections": {"const": false}
           }
         },
         "review_apply": {
@@ -586,7 +613,7 @@
     },
     "source_control_forge_depth_presentation": {
       "type": "object", "additionalProperties": false,
-      "required": ["contract_kind", "plan_unit_ref", "source_control_header", "source_control_sections", "git_visual_semantics", "jujutsu_visual_semantics", "review_and_publication", "automation_sections", "capability_states", "related_surfaces", "hosted_administration", "provider_native_vocabulary", "selector_only_when_ambiguous", "owner_projection_only", "private_mutations", "runtime_evidence_claimed"],
+      "required": ["contract_kind", "plan_unit_ref", "source_control_header", "source_control_sections", "git_visual_semantics", "jujutsu_visual_semantics", "review_and_publication", "automation_sections", "capability_states", "related_surfaces", "hosted_administration", "local_action_pairs", "provider_native_vocabulary", "selector_only_when_ambiguous", "owner_projection_only", "private_mutations", "runtime_evidence_claimed"],
       "properties": {
         "contract_kind": {"const": "source_control_forge_depth_presentation"}, "plan_unit_ref": {"const": "F3-529"},
         "source_control_header": {
@@ -613,9 +640,252 @@
           "bottom_bar": {"type": "array", "prefixItems": [{"const": "truthful_publication_backup_connector_work"}, {"const": "no_routine_synced"}, {"const": "no_secret_content"}, {"const": "no_backup_as_token_usage"}], "items": false}
         }},
         "hosted_administration": {"type": "object", "additionalProperties": false, "required": ["areas", "read_write_independent", "versioned_provider_field_schema", "external_only_labeled", "secret_readback", "runner_requires_host_and_consent", "enable_ci_registers_runner"], "properties": {"areas": {"type": "array", "prefixItems": [{"const": "repository_and_branch_policy"}, {"const": "ci_environments_and_deployment_approvals"}, {"const": "secrets_and_variables"}, {"const": "runner_list_registration_removal"}, {"const": "release_assets"}], "items": false}, "read_write_independent": {"const": true}, "versioned_provider_field_schema": {"const": true}, "external_only_labeled": {"const": true}, "secret_readback": {"const": false}, "runner_requires_host_and_consent": {"const": true}, "enable_ci_registers_runner": {"const": false}}},
+        "local_action_pairs": {
+          "type": "object", "additionalProperties": false,
+          "required": ["profile_preview_request", "profile_preview_result", "binding_select_request", "binding_select_result", "backup_history_open_request", "backup_history_open_result"],
+          "properties": {
+            "profile_preview_request": {"$ref": "#/$defs/source_control_profile_preview_local_action_request"},
+            "profile_preview_result": {"$ref": "#/$defs/source_control_profile_preview_local_action_result"},
+            "binding_select_request": {"$ref": "#/$defs/repository_local_action_request"},
+            "binding_select_result": {"$ref": "#/$defs/repository_local_action_result"},
+            "backup_history_open_request": {"$ref": "#/$defs/source_control_backup_local_action_request"},
+            "backup_history_open_result": {"$ref": "#/$defs/source_control_backup_local_action_result"}
+          }
+        },
         "provider_native_vocabulary": {"const": true}, "selector_only_when_ambiguous": {"const": true}, "owner_projection_only": {"const": true}, "private_mutations": {"const": false}, "runtime_evidence_claimed": {"const": false}
       }
     },
+    "local_action_common_request": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "action_id", "packet_token", "request_id", "projection_ref", "expected_projection_generation", "return_context_ref", "accessibility_description_ref", "controller_target", "domain_command_registered", "semantic_domain_handler", "domain_event_emitted", "presentation_only", "persistent_state_mutation", "return_behavior", "installation_authority_granted", "authentication_authority_granted", "filesystem_authority_granted", "browser_authority_granted", "provider_authority_granted", "project_ref", "repository_ref", "action_context", "requested_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.final_gui.repository_local_action.v1"}, "record_kind": {"const": "repository_local_action_request"}, "action_id": {"enum": ["ui.source_control.profile.preview", "ui.repository_automation.binding.select", "ui.source_control.backup_history.open"]}, "packet_token": {"enum": ["not_applicable_typed_local_ui_action", "cmd.repository_automation.binding.select", "cmd.source_control.backup_history.open"]}, "request_id": {"type": "string", "minLength": 1}, "projection_ref": {"type": "string", "minLength": 1}, "expected_projection_generation": {"type": "integer", "minimum": 0}, "return_context_ref": {"type": "string", "minLength": 1}, "accessibility_description_ref": {"type": "string", "minLength": 1}, "controller_target": {"const": "owner_local_typed_ui_controller"}, "domain_command_registered": {"const": false}, "semantic_domain_handler": {"type": "null"}, "domain_event_emitted": {"const": false}, "presentation_only": {"const": true}, "persistent_state_mutation": {"const": false}, "return_behavior": {"const": "deterministic_presentation_settlement"}, "installation_authority_granted": {"const": false}, "authentication_authority_granted": {"const": false}, "filesystem_authority_granted": {"const": false}, "browser_authority_granted": {"const": false}, "provider_authority_granted": {"const": false}, "project_ref": {"type": "string", "minLength": 1}, "repository_ref": {"type": "string", "minLength": 1}, "action_context": {"type": "object"}, "requested_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"action_id": {"const": "ui.source_control.profile.preview"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "not_applicable_typed_local_ui_action"}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.repository_automation.binding.select"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "cmd.repository_automation.binding.select"}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.source_control.backup_history.open"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "cmd.source_control.backup_history.open"}}}}
+      ]
+    },
+    "source_control_profile_preview_local_action_request": {
+      "allOf": [
+        {"$ref": "#/$defs/local_action_common_request"},
+        {"properties": {"action_id": {"const": "ui.source_control.profile.preview"}, "packet_token": {"const": "not_applicable_typed_local_ui_action"}, "action_context": {"type": "object", "additionalProperties": false, "required": ["selected_profile", "presentation_selection_only", "backend_mutated", "repository_binding_mutated", "workspace_mutated", "history_mutated", "capability_ref"], "properties": {"selected_profile": {"enum": ["git", "jj"]}, "presentation_selection_only": {"const": true}, "backend_mutated": {"const": false}, "repository_binding_mutated": {"const": false}, "workspace_mutated": {"const": false}, "history_mutated": {"const": false}, "capability_ref": {"type": "string", "minLength": 1}}}}}
+      ]
+    },
+    "repository_local_action_request": {
+      "allOf": [
+        {"$ref": "#/$defs/local_action_common_request"},
+        {"properties": {"action_id": {"const": "ui.repository_automation.binding.select"}, "packet_token": {"const": "cmd.repository_automation.binding.select"}, "action_context": {"type": "object", "additionalProperties": false, "required": ["automation_binding_refs", "selected_automation_binding_ref", "presentation_selection_only", "repository_binding_mutated", "automation_binding_mutated", "capability_ref"], "properties": {"automation_binding_refs": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "selected_automation_binding_ref": {"type": "string", "minLength": 1}, "presentation_selection_only": {"const": true}, "repository_binding_mutated": {"const": false}, "automation_binding_mutated": {"const": false}, "capability_ref": {"type": "string", "minLength": 1}}}}}
+      ]
+    },
+    "source_control_backup_local_action_request": {
+      "allOf": [
+        {"$ref": "#/$defs/local_action_common_request"},
+        {"properties": {"action_id": {"const": "ui.source_control.backup_history.open"}, "packet_token": {"const": "cmd.source_control.backup_history.open"}, "action_context": {"type": "object", "additionalProperties": false, "required": ["target_owner", "route_kind", "repository_revision_ref", "backup_owner_route_ref", "backup_history_deep_link_ref", "read_only_navigation", "restore_requested", "source_or_backup_mutation"], "properties": {"target_owner": {"const": "Backup"}, "route_kind": {"const": "backup_history_repository_revision"}, "repository_revision_ref": {"type": "string", "minLength": 1}, "backup_owner_route_ref": {"type": "string", "minLength": 1}, "backup_history_deep_link_ref": {"type": "string", "minLength": 1}, "read_only_navigation": {"const": true}, "restore_requested": {"const": false}, "source_or_backup_mutation": {"const": false}}}}}
+      ]
+    },
+    "local_action_common_result": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "action_id", "packet_token", "request_id", "projection_generation", "outcome", "controller_target", "domain_command_registered", "semantic_domain_handler", "domain_event_emitted", "presentation_only", "persistent_state_mutation", "return_behavior", "installation_authority_granted", "authentication_authority_granted", "filesystem_authority_granted", "browser_authority_granted", "provider_authority_granted", "settled_projection_ref", "result_detail", "return_settlement", "completed_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.final_gui.repository_local_action.v1"}, "record_kind": {"const": "repository_local_action_result"}, "action_id": {"enum": ["ui.source_control.profile.preview", "ui.repository_automation.binding.select", "ui.source_control.backup_history.open"]}, "packet_token": {"enum": ["not_applicable_typed_local_ui_action", "cmd.repository_automation.binding.select", "cmd.source_control.backup_history.open"]}, "request_id": {"type": "string", "minLength": 1}, "projection_generation": {"type": "integer", "minimum": 0}, "outcome": {"enum": ["completed", "dismissed", "stale_projection", "caller_unavailable"]}, "controller_target": {"const": "owner_local_typed_ui_controller"}, "domain_command_registered": {"const": false}, "semantic_domain_handler": {"type": "null"}, "domain_event_emitted": {"const": false}, "presentation_only": {"const": true}, "persistent_state_mutation": {"const": false}, "return_behavior": {"const": "deterministic_presentation_settlement"}, "installation_authority_granted": {"const": false}, "authentication_authority_granted": {"const": false}, "filesystem_authority_granted": {"const": false}, "browser_authority_granted": {"const": false}, "provider_authority_granted": {"const": false}, "settled_projection_ref": {"type": "string", "minLength": 1}, "result_detail": {"type": "object"}, "return_settlement": {"type": "object", "additionalProperties": false, "required": ["return_context_ref", "settlement", "initiating_surface_restored"], "properties": {"return_context_ref": {"type": "string", "minLength": 1}, "settlement": {"enum": ["restored", "target_opened", "caller_unavailable"]}, "initiating_surface_restored": {"type": "boolean"}}}, "completed_at_utc": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [
+        {"if": {"properties": {"action_id": {"const": "ui.source_control.profile.preview"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "not_applicable_typed_local_ui_action"}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.repository_automation.binding.select"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "cmd.repository_automation.binding.select"}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.source_control.backup_history.open"}}, "required": ["action_id"]}, "then": {"properties": {"packet_token": {"const": "cmd.source_control.backup_history.open"}}}}
+      ]
+    },
+    "source_control_profile_preview_local_action_result": {"allOf": [{"$ref": "#/$defs/local_action_common_result"}, {"properties": {"action_id": {"const": "ui.source_control.profile.preview"}, "packet_token": {"const": "not_applicable_typed_local_ui_action"}, "result_detail": {"type": "object", "additionalProperties": false, "required": ["selected_profile", "presentation_selection_applied", "backend_mutated", "repository_binding_mutated", "workspace_mutated", "history_mutated"], "properties": {"selected_profile": {"enum": ["git", "jj"]}, "presentation_selection_applied": {"type": "boolean"}, "backend_mutated": {"const": false}, "repository_binding_mutated": {"const": false}, "workspace_mutated": {"const": false}, "history_mutated": {"const": false}}}}}]},
+    "repository_local_action_result": {"allOf": [{"$ref": "#/$defs/local_action_common_result"}, {"properties": {"action_id": {"const": "ui.repository_automation.binding.select"}, "packet_token": {"const": "cmd.repository_automation.binding.select"}, "result_detail": {"type": "object", "additionalProperties": false, "required": ["selected_automation_binding_ref", "presentation_selection_applied", "repository_binding_mutated", "automation_binding_mutated"], "properties": {"selected_automation_binding_ref": {"type": "string", "minLength": 1}, "presentation_selection_applied": {"type": "boolean"}, "repository_binding_mutated": {"const": false}, "automation_binding_mutated": {"const": false}}}}}]},
+    "source_control_backup_local_action_result": {"allOf": [{"$ref": "#/$defs/local_action_common_result"}, {"properties": {"action_id": {"const": "ui.source_control.backup_history.open"}, "packet_token": {"const": "cmd.source_control.backup_history.open"}, "result_detail": {"type": "object", "additionalProperties": false, "required": ["target_owner", "route_kind", "backup_owner_route_ref", "backup_history_deep_link_ref", "target_opened", "restore_started", "source_or_backup_mutation"], "properties": {"target_owner": {"const": "Backup"}, "route_kind": {"const": "backup_history_repository_revision"}, "backup_owner_route_ref": {"type": "string", "minLength": 1}, "backup_history_deep_link_ref": {"type": "string", "minLength": 1}, "target_opened": {"type": "boolean"}, "restore_started": {"const": false}, "source_or_backup_mutation": {"const": false}}}}}]},
+    "secret_reference_control": {
+      "title": "SecretReferenceControl",
+      "description": "A pure Final GUI presentation consumer for owner-held credential/reference state. It never models, reads, stores, logs, captures, or returns secret material.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "component_name", "owner_projection_ref", "credential_reference_ref", "masked_status", "availability_ref", "disabled_reason_ref", "accepted_payload", "actions", "protected_submission_route_ref", "accessibility", "authority_boundary", "capture_policy", "runtime_evidence_claimed"],
+      "properties": {
+        "contract_kind": {"const": "secret_reference_control"},
+        "plan_unit_ref": {"const": "F3-530"},
+        "component_name": {"const": "SecretReferenceControl"},
+        "owner_projection_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "credential_reference_ref": {"oneOf": [{"$ref": "#/$defs/opaque_non_secret_ref"}, {"type": "null"}]},
+        "masked_status": {"enum": ["not_configured", "configured", "expired", "reauthentication_required", "permission_limited", "unavailable"]},
+        "availability_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "disabled_reason_ref": {"oneOf": [{"$ref": "#/$defs/opaque_non_secret_ref"}, {"type": "null"}]},
+        "accepted_payload": {"const": "owner_reference_and_redacted_status_only"},
+        "actions": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "ui.secret_reference.choose"},
+            {"const": "ui.secret_reference.replace"},
+            {"const": "ui.secret_reference.remove"},
+            {"const": "ui.secret_reference.open_owner"}
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "protected_submission_route_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label_ref", "description_ref", "disabled_reason_described", "keyboard_reachable", "focus_return_ref"],
+          "properties": {
+            "label_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "description_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "disabled_reason_described": {"const": true},
+            "keyboard_reachable": {"const": true},
+            "focus_return_ref": {"$ref": "#/$defs/opaque_non_secret_ref"}
+          }
+        },
+        "authority_boundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presentation_only", "write_only_secret_entry", "raw_secret_readback", "secret_store_owned", "auth_policy_owned", "domain_command_registered", "domain_event_emitted", "persistent_state_mutation", "owner_revalidates_and_dispatches", "agents_or_adapters_can_access_protected_entry"],
+          "properties": {
+            "presentation_only": {"const": true},
+            "write_only_secret_entry": {"const": true},
+            "raw_secret_readback": {"const": false},
+            "secret_store_owned": {"const": false},
+            "auth_policy_owned": {"const": false},
+            "domain_command_registered": {"const": false},
+            "domain_event_emitted": {"const": false},
+            "persistent_state_mutation": {"const": false},
+            "owner_revalidates_and_dispatches": {"const": true},
+            "agents_or_adapters_can_access_protected_entry": {"const": false}
+          }
+        },
+        "capture_policy": {"const": "protected_entry_and_secret_material_prohibited"},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "human_step_up_dialog": {
+      "title": "HumanStepUpDialog",
+      "description": "A pure presentation consumer for an owner-authored human step-up projection. Visibility or a click never grants authority; the semantic owner revalidates and dispatches.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "component_name", "human_step_projection_ref", "exact_target_ref", "permission_ref", "step_up_policy_ref", "protected_channel_ref", "confirmation_ref", "expected_generation", "currentness", "consequence_description_ref", "actions", "response_contract", "accessibility", "authority_boundary", "secret_free_presentation", "runtime_evidence_claimed"],
+      "properties": {
+        "contract_kind": {"const": "human_step_up_dialog"},
+        "plan_unit_ref": {"const": "F3-530"},
+        "component_name": {"const": "HumanStepUpDialog"},
+        "human_step_projection_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "exact_target_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "permission_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "step_up_policy_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "protected_channel_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "confirmation_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "expected_generation": {"type": "integer", "minimum": 0},
+        "currentness": {"enum": ["current", "stale", "cancelled", "caller_unavailable"]},
+        "consequence_description_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+        "actions": {
+          "type": "array",
+          "prefixItems": [{"const": "ui.human_step_up.respond"}, {"const": "ui.human_step_up.cancel"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "response_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["response_payload", "outcomes", "return_context_ref", "stale_target_blocks_owner_dispatch", "cancel_is_safe", "owner_revalidates_before_dispatch"],
+          "properties": {
+            "response_payload": {"const": "typed_local_response_reference_only"},
+            "outcomes": {"type": "array", "prefixItems": [{"const": "responded"}, {"const": "cancelled"}, {"const": "stale_target"}, {"const": "caller_unavailable"}], "items": false},
+            "return_context_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "stale_target_blocks_owner_dispatch": {"const": true},
+            "cancel_is_safe": {"const": true},
+            "owner_revalidates_before_dispatch": {"const": true}
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dialog_label_ref", "dialog_description_ref", "initial_focus_ref", "escape_cancels", "focus_trapped_while_open", "focus_return_ref", "keyboard_complete"],
+          "properties": {
+            "dialog_label_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "dialog_description_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "initial_focus_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "escape_cancels": {"const": true},
+            "focus_trapped_while_open": {"const": true},
+            "focus_return_ref": {"$ref": "#/$defs/opaque_non_secret_ref"},
+            "keyboard_complete": {"const": true}
+          }
+        },
+        "authority_boundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presentation_only", "visibility_grants_authority", "button_click_grants_authority", "domain_command_registered", "domain_event_emitted", "persistent_state_mutation", "dialog_is_permission_owner", "dialog_is_protected_channel_owner", "owner_dispatch_after_revalidation", "optional_hitl_made_universal"],
+          "properties": {
+            "presentation_only": {"const": true},
+            "visibility_grants_authority": {"const": false},
+            "button_click_grants_authority": {"const": false},
+            "domain_command_registered": {"const": false},
+            "domain_event_emitted": {"const": false},
+            "persistent_state_mutation": {"const": false},
+            "dialog_is_permission_owner": {"const": false},
+            "dialog_is_protected_channel_owner": {"const": false},
+            "owner_dispatch_after_revalidation": {"const": true},
+            "optional_hitl_made_universal": {"const": false}
+          }
+        },
+        "secret_free_presentation": {"const": true},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "post_integration_dry_component_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_kind", "plan_unit_ref", "packet_component_denominator", "exact_names_present", "exact_names_absent", "semantic_equivalents", "bounded_typed_closures", "post_closure_exact_components", "post_closure_equivalent_mappings", "post_closure_unresolved", "mappings", "duplicate_owner_or_component_created", "runtime_evidence_claimed", "packet_scenarios_claimed_run"],
+      "properties": {
+        "contract_kind": {"const": "post_integration_dry_component_reconciliation"},
+        "plan_unit_ref": {"const": "F3-530"},
+        "packet_component_denominator": {"const": 27},
+        "exact_names_present": {"const": 16},
+        "exact_names_absent": {"const": 11},
+        "semantic_equivalents": {"const": 8},
+        "bounded_typed_closures": {"const": 3},
+        "post_closure_exact_components": {"const": 19},
+        "post_closure_equivalent_mappings": {"const": 8},
+        "post_closure_unresolved": {"const": 0},
+        "mappings": {
+          "type": "array",
+          "prefixItems": [
+            {"$ref": "#/$defs/dry_mapping_capability_reason"},
+            {"$ref": "#/$defs/dry_mapping_engine_specific_changes"},
+            {"$ref": "#/$defs/dry_mapping_source_graph"},
+            {"$ref": "#/$defs/dry_mapping_workspace_selector"},
+            {"$ref": "#/$defs/dry_mapping_remote_publication_preview"},
+            {"$ref": "#/$defs/dry_mapping_native_automation_tree"},
+            {"$ref": "#/$defs/dry_mapping_pipeline_run_summary"},
+            {"$ref": "#/$defs/dry_mapping_secret_reference_control"},
+            {"$ref": "#/$defs/dry_mapping_auth_session_progress"},
+            {"$ref": "#/$defs/dry_mapping_human_step_up_dialog"},
+            {"$ref": "#/$defs/dry_mapping_doctor_health_projection"}
+          ],
+          "items": false,
+          "minItems": 11,
+          "maxItems": 11
+        },
+        "duplicate_owner_or_component_created": {"const": false},
+        "runtime_evidence_claimed": {"const": false},
+        "packet_scenarios_claimed_run": {"const": false}
+      }
+    },
+    "dry_mapping_capability_reason": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "CapabilityReason"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "EffectiveOperationCapability plus typed disabled reason"}, "canonical_contract_ref": {"const": "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability"}, "canonical_owner": {"const": "Source Control"}, "source_line_ref": {"const": "machine/dry_components.json:6-15"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_engine_specific_changes": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "EngineSpecificChanges"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "BackendOperationSemantics"}, "canonical_contract_ref": {"const": "Plans/source_control_contracts.schema.json#/$defs/backend_operation_semantics"}, "canonical_owner": {"const": "Source Control"}, "source_line_ref": {"const": "machine/dry_components.json:17-26"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_source_graph": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "SourceGraph"}, "disposition": {"const": "bounded_typed_closure"}, "canonical_name": {"const": "source_graph_projection"}, "canonical_contract_ref": {"const": "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection"}, "canonical_owner": {"const": "Source Control"}, "source_line_ref": {"const": "machine/dry_components.json:17-26"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_workspace_selector": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "WorkspaceSelector"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "RepositoryContext plus cmd.source_control.workspace.switch"}, "canonical_contract_ref": {"const": "Plans/source_control_contracts.schema.json#/$defs/repository_context"}, "canonical_owner": {"const": "Source Control"}, "source_line_ref": {"const": "machine/dry_components.json:17-26"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_remote_publication_preview": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "RemotePublicationPreview"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "RemoteOperationTarget plus ExternalEffectReconciliation"}, "canonical_contract_ref": {"const": "Plans/source_control_contracts.schema.json#/$defs/remote_operation_target"}, "canonical_owner": {"const": "Source Control"}, "source_line_ref": {"const": "machine/dry_components.json:17-26"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_native_automation_tree": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created", "migration_read_alias_only"], "properties": {"packet_component": {"const": "NativeAutomationTree"}, "disposition": {"const": "superseded_source_lineage_alias"}, "canonical_name": {"const": "NativeJobTree"}, "canonical_contract_ref": {"const": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord/properties/source_integration_components"}, "canonical_owner": {"const": "Shared Integration Runtime"}, "source_line_ref": {"const": "machine/dry_components.json:29-37"}, "duplicate_component_created": {"const": false}, "migration_read_alias_only": {"const": true}}},
+    "dry_mapping_pipeline_run_summary": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "PipelineRunSummary"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "PipelineProjection plus AutomationRun"}, "canonical_contract_ref": {"const": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection"}, "canonical_owner": {"const": "Forge Integrations"}, "source_line_ref": {"const": "machine/dry_components.json:29-37"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_secret_reference_control": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "SecretReferenceControl"}, "disposition": {"const": "bounded_typed_closure"}, "canonical_name": {"const": "SecretReferenceControl"}, "canonical_contract_ref": {"const": "Plans/final_gui_interaction_contracts.schema.json#/$defs/secret_reference_control"}, "canonical_owner": {"const": "Final GUI presentation consumer"}, "source_line_ref": {"const": "machine/dry_components.json:51-61"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_auth_session_progress": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "AuthSessionProgress"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "ProtectedAuthBrowserLifecycleProjection"}, "canonical_contract_ref": {"const": "Plans/protected_auth_browser_contracts.schema.json#/$defs/protected_auth_browser_lifecycle_projection"}, "canonical_owner": {"const": "Protected Auth Browser"}, "source_line_ref": {"const": "machine/dry_components.json:51-61"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_human_step_up_dialog": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "HumanStepUpDialog"}, "disposition": {"const": "bounded_typed_closure"}, "canonical_name": {"const": "HumanStepUpDialog"}, "canonical_contract_ref": {"const": "Plans/final_gui_interaction_contracts.schema.json#/$defs/human_step_up_dialog"}, "canonical_owner": {"const": "Final GUI presentation consumer"}, "source_line_ref": {"const": "machine/dry_components.json:51-61"}, "duplicate_component_created": {"const": false}}},
+    "dry_mapping_doctor_health_projection": {"type": "object", "additionalProperties": false, "required": ["packet_component", "disposition", "canonical_name", "canonical_contract_ref", "canonical_owner", "source_line_ref", "duplicate_component_created"], "properties": {"packet_component": {"const": "DoctorHealthProjection"}, "disposition": {"const": "semantic_equivalent"}, "canonical_name": {"const": "DoctorFindingProjection plus DoctorWorkspace"}, "canonical_contract_ref": {"const": "Plans/doctor_contracts.schema.json#/$defs/doctor_finding_projection"}, "canonical_owner": {"const": "Doctor registry"}, "source_line_ref": {"const": "machine/dry_components.json:51-61"}, "duplicate_component_created": {"const": false}}},
     "evidence_boundary": {
       "type": "object",
       "additionalProperties": false,

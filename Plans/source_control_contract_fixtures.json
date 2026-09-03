@@ -2006,9 +2006,98 @@
       "name": "truenas_home_wsl_checkout_and_remote_forge_route_by_owner",
       "definition": "source_operation_routing_and_agent_boundary",
       "value": {"schema_id": "pm.source_control.routing_and_agent_boundary.v1", "repository_context_ref": "repository-context:truenas-wsl-forgejo", "local_filesystem_route": {"source_location_execution_environment_ref": "environment:wsl:ubuntu", "selected_installation_ref": "installation:git:wsl:ubuntu", "worktree_or_workspace_manager_ref": "manager:worktree:wsl", "file_safe_decision_ref": "filesafe:decision:alpha"}, "hosting_api_route": {"egress_host_ref": "host:truenas:home", "forge_adapter_ref": "adapter:forgejo:instance-a", "credential_ref": "credential-lease:forgejo:alpha", "assumes_checkout_present": false, "git_credential_interchangeable": false}, "cli_hosting_route": {"installation_profile_ref": "installation:origin-cli:wsl", "explicit_repository_target": "repository:origin:alpha", "current_working_branch_default_used": false}, "durable_receipt_home_server_ref": "server:truenas:home", "worker_becomes_project_authority": false, "agent_summary": {"compact_typed_actions": true, "structured_blockers": true, "whole_registry_or_log_dump": false, "same_registered_commands": true, "ui_scraping_substitute": false, "alternate_account_fallback": false}, "automated_mutation": {"exact_task_policy_ref": "policy:task:publish", "approval_ref": "approval:publish:alpha", "protected_branch_bypass": false, "ci_cost_trigger_disclosed": true, "runner_is_execution_host_without_configuration": false}}
+    },
+    {
+      "name": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "definition": "source_graph_projection",
+      "value": {
+        "schema_id": "pm.source_control.source_graph_projection.v1",
+        "projection_id": "source-graph:git:alpha:43",
+        "repository_context_ref": "repository-context:git:alpha",
+        "repo_id": "repo:alpha",
+        "workspace_id": "git-worktree:alpha-main",
+        "scm_backend": "git",
+        "selected_revision_ref": "revision:git:alpha:43",
+        "graph_kind": "git_commit_graph",
+        "currentness": {"state": "current", "projection_generation": 43, "observed_at_utc": "2026-09-02T16:00:00Z", "expires_at_utc": "2026-09-02T16:05:00Z"},
+        "page": {"cursor_ref": null, "next_cursor_ref": "cursor:source-graph:git:alpha:page-2", "page_size": 100, "returned_count": 2, "total_count": 8412, "has_more": true},
+        "nodes": [
+          {"node_ref": "graph-node:git:alpha:43", "revision_ref": "revision:git:alpha:43", "stable_change_ref": null, "parent_refs": ["graph-node:git:alpha:42"], "label_ref": "label:source-graph:git:alpha:43", "node_state": "normal", "selected": true},
+          {"node_ref": "graph-node:git:alpha:42", "revision_ref": "revision:git:alpha:42", "stable_change_ref": null, "parent_refs": [], "label_ref": "label:source-graph:git:alpha:42", "node_state": "normal", "selected": false}
+        ],
+        "edges": [{"edge_ref": "graph-edge:git:alpha:43:42", "from_node_ref": "graph-node:git:alpha:43", "to_node_ref": "graph-node:git:alpha:42", "kind": "parent"}],
+        "virtualization": {"page_bounded": true, "virtualized": true, "stable_node_identity": true, "selection_anchor_preserved": true, "unbounded_hydration": false},
+        "history_separation": {"projection_kind": "source_history", "jujutsu_operation_history_separate": true, "backup_history_separate": true},
+        "identity_authority": {"repository_context_authoritative": true, "display_path_authoritative": false, "shared_commit_authoritative": false},
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "jujutsu_source_graph_preserves_change_identity_and_history_boundaries",
+      "definition": "source_graph_projection",
+      "value": {
+        "schema_id": "pm.source_control.source_graph_projection.v1",
+        "projection_id": "source-graph:jj:alpha:27",
+        "repository_context_ref": "repository-context:jj:alpha",
+        "repo_id": "repo:jj-alpha",
+        "workspace_id": "jj-workspace:alpha",
+        "scm_backend": "jujutsu",
+        "selected_revision_ref": "revision:jj:alpha:27",
+        "graph_kind": "jujutsu_change_graph",
+        "currentness": {"state": "stale", "projection_generation": 27, "observed_at_utc": "2026-09-02T15:50:00Z", "expires_at_utc": null},
+        "page": {"cursor_ref": "cursor:source-graph:jj:alpha:page-3", "next_cursor_ref": null, "page_size": 80, "returned_count": 1, "total_count": null, "has_more": false},
+        "nodes": [{"node_ref": "graph-node:jj:alpha:change-qwerty", "revision_ref": "revision:jj:alpha:27", "stable_change_ref": "change:jj:alpha:qwerty", "parent_refs": [], "label_ref": "label:source-graph:jj:alpha:qwerty", "node_state": "rewritten", "selected": true}],
+        "edges": [],
+        "virtualization": {"page_bounded": true, "virtualized": true, "stable_node_identity": true, "selection_anchor_preserved": true, "unbounded_hydration": false},
+        "history_separation": {"projection_kind": "source_history", "jujutsu_operation_history_separate": true, "backup_history_separate": true},
+        "identity_authority": {"repository_context_authoritative": true, "display_path_authoritative": false, "shared_commit_authoritative": false},
+        "runtime_evidence_claimed": false
+      }
     }
   ],
   "invalid": [
+    {
+      "name": "source_graph_never_claims_shared_commit_identity_authority",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"identity_authority.shared_commit_authoritative": true},
+      "expected_error": "repository identity remains owner-bound"
+    },
+    {
+      "name": "source_graph_cannot_hydrate_without_a_bound",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"virtualization.unbounded_hydration": true},
+      "expected_error": "source graph pages remain bounded"
+    },
+    {
+      "name": "git_source_graph_cannot_use_jujutsu_change_graph",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"graph_kind": "jujutsu_change_graph"},
+      "expected_error": "backend-native graph kind"
+    },
+    {
+      "name": "jujutsu_source_graph_requires_stable_change_reference",
+      "definition": "source_graph_projection",
+      "base_valid": "jujutsu_source_graph_preserves_change_identity_and_history_boundaries",
+      "patch": {"nodes.0.stable_change_ref": null},
+      "expected_error": "Jujutsu change identity is preserved"
+    },
+    {
+      "name": "source_graph_does_not_merge_backup_history",
+      "definition": "source_graph_projection",
+      "base_valid": "jujutsu_source_graph_preserves_change_identity_and_history_boundaries",
+      "patch": {"history_separation.backup_history_separate": false},
+      "expected_error": "Backup history remains owner-separated"
+    },
+    {
+      "name": "source_graph_static_fixture_is_not_runtime_evidence",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"runtime_evidence_claimed": true},
+      "expected_error": "static graph fixture does not prove runtime"
+    },
     {
       "name": "unknown_capability_cannot_be_flattened_to_unsupported",
       "definition": "effective_operation_capability",

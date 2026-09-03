@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L1248-L6882
 
-Source SHA256: `96f52e2b968fe4260d733e2f59b3f7e2df24948b428bace7b628a6249a4afc75`
+Source SHA256: `e90c2d9e9cd4dd77d91979cf6ed178eb6f9bf117ad4dbda3dbf62a060fe35af9`
 
 ---
 
@@ -4111,7 +4111,7 @@ preserved_exact_tokens:
 - visible file reference chip
 - Canonical signature lock
 negative_constraints:
-- File references are file-only in MVP; folder references are out of scope.
+- This alias is file-only: it rejects a folder. A folder reference is added through cmd.chat.attachment.add with semantic_kind folder, not through this command.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md'
 compatibility_only_notes: []

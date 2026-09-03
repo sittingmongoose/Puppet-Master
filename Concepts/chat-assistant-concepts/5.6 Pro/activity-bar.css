@@ -305,17 +305,14 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 }
 .hover-card.ab-card .goal-compact { gap: 7px; padding: 4px; }
 .hover-card.ab-card .goal-compact-head strong { font-size: 13px; line-height: 17px; }
-.hover-card.ab-card .goal-compact-line { font-size: 11.5px; line-height: 16px; }
-.hover-card.ab-card .goal-compact-list { gap: 0; }
-.hover-card.ab-card .goal-compact-list li {
-  min-height: 30px;
-  grid-template-columns: 15px minmax(0,1fr) auto;
-  gap: 7px;
-  border-top: 1px solid var(--border);
-  font-size: 11.5px;
-}
-.hover-card.ab-card .goal-compact-state { font-size: 10.5px; }
-.hover-card.ab-card .goal-compact-blocker {
+/* Assistant-redesign wave (2026-09-03): the retired compact-Goal sub-elements
+   (.goal-compact-line, .goal-compact-list, .goal-compact-state,
+   .goal-compact-blocker) are gone. goals.js's renderCompact now emits
+   .goal-compact, .goal-compact-head, .goal-rev, .ab-objective
+   .goal-objective-2, .goal-blocker-line and .goal-compact-actions.
+   The blocker rule is retargeted at the live class rather than deleted, so
+   a blocked Goal keeps its warning treatment on this surface. */
+.hover-card.ab-card .goal-blocker-line {
   padding: 7px;
   border-radius: 7px;
   background: color-mix(in srgb,var(--warning) 8%,var(--surface-3));

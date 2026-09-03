@@ -1,13 +1,134 @@
 {
-  "overall": "PASS",
+  "overall": "FAIL",
   "summary": {
-    "passed": 451,
-    "failed": 0,
+    "passed": 446,
+    "failed": 4,
     "consoleErrors": 0,
     "pageErrors": 0
   },
   "orphanGate": {
-    "hard": [],
+    "hard": [
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-pill-wait",
+        "dead": [
+          "qs-pill-wait"
+        ],
+        "hard": [
+          "qs-pill-wait"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-textarea",
+        "dead": [
+          "qs-textarea"
+        ],
+        "hard": [
+          "qs-textarea"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-textarea-chips",
+        "dead": [
+          "qs-textarea-chips"
+        ],
+        "hard": [
+          "qs-textarea-chips"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-textarea-stack",
+        "dead": [
+          "qs-textarea-stack"
+        ],
+        "hard": [
+          "qs-textarea-stack"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-mark-check",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-mark-check.is-on::after",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-opt.is-on .qs-ask-mark-check::after",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-other-ask.is-on .qs-ask-mark-check::after",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-other-ask:has(.qs-other-input:not(:placeholder-shown)) .qs-ask-mark-check::after",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-other-ask:has(.qs-file-chip) .qs-ask-mark-check::after",
+        "dead": [
+          "qs-ask-mark-check"
+        ],
+        "hard": [
+          "qs-ask-mark-check"
+        ],
+        "soft": [],
+        "softOwners": {}
+      }
+    ],
     "soft": [
       {
         "sheet": "activity-panel.css",
@@ -346,6 +467,957 @@
         }
       },
       {
+        "sheet": "assistant-features.css",
+        "selector": ".af-wand-row .af-checkbox.checked",
+        "dead": [
+          "checked"
+        ],
+        "hard": [],
+        "soft": [
+          "checked"
+        ],
+        "softOwners": {
+          "checked": [
+            "app.js",
+            "assistant-features.js",
+            "bsd.js",
+            "collaboration.js",
+            "composer-state.js",
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-chip-choice",
+        "dead": [
+          "af-chip-choice"
+        ],
+        "hard": [],
+        "soft": [
+          "af-chip-choice"
+        ],
+        "softOwners": {
+          "af-chip-choice": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-chip-choice:hover",
+        "dead": [
+          "af-chip-choice"
+        ],
+        "hard": [],
+        "soft": [
+          "af-chip-choice"
+        ],
+        "softOwners": {
+          "af-chip-choice": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-chip-choice.active",
+        "dead": [
+          "af-chip-choice"
+        ],
+        "hard": [],
+        "soft": [
+          "af-chip-choice"
+        ],
+        "softOwners": {
+          "af-chip-choice": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-tab",
+        "dead": [
+          "af-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "af-tab"
+        ],
+        "softOwners": {
+          "af-tab": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-tab:hover",
+        "dead": [
+          "af-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "af-tab"
+        ],
+        "softOwners": {
+          "af-tab": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-tab.active",
+        "dead": [
+          "af-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "af-tab"
+        ],
+        "softOwners": {
+          "af-tab": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-mem-row",
+        "dead": [
+          "af-mem-row"
+        ],
+        "hard": [],
+        "soft": [
+          "af-mem-row"
+        ],
+        "softOwners": {
+          "af-mem-row": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-mem-row.is-blocked",
+        "dead": [
+          "af-mem-row"
+        ],
+        "hard": [],
+        "soft": [
+          "af-mem-row"
+        ],
+        "softOwners": {
+          "af-mem-row": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-mem-row.is-revoked",
+        "dead": [
+          "af-mem-row"
+        ],
+        "hard": [],
+        "soft": [
+          "af-mem-row"
+        ],
+        "softOwners": {
+          "af-mem-row": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-evidence-tabs .af-tab",
+        "dead": [
+          "af-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "af-tab"
+        ],
+        "softOwners": {
+          "af-tab": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-evidence-item",
+        "dead": [
+          "af-evidence-item"
+        ],
+        "hard": [],
+        "soft": [
+          "af-evidence-item"
+        ],
+        "softOwners": {
+          "af-evidence-item": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-evidence-item p",
+        "dead": [
+          "af-evidence-item"
+        ],
+        "hard": [],
+        "soft": [
+          "af-evidence-item"
+        ],
+        "softOwners": {
+          "af-evidence-item": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-evidence-item.is-redacted p",
+        "dead": [
+          "af-evidence-item"
+        ],
+        "hard": [],
+        "soft": [
+          "af-evidence-item"
+        ],
+        "softOwners": {
+          "af-evidence-item": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-evidence-item.is-revoked",
+        "dead": [
+          "af-evidence-item"
+        ],
+        "hard": [],
+        "soft": [
+          "af-evidence-item"
+        ],
+        "softOwners": {
+          "af-evidence-item": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-chip-choice",
+        "dead": [
+          "af-chip-choice"
+        ],
+        "hard": [],
+        "soft": [
+          "af-chip-choice"
+        ],
+        "softOwners": {
+          "af-chip-choice": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "assistant-features.css",
+        "selector": ".af-tab",
+        "dead": [
+          "af-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "af-tab"
+        ],
+        "softOwners": {
+          "af-tab": [
+            "assistant-features.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab:hover",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab.active",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab.is-protected.active",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab svg",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-surface",
+        "dead": [
+          "bc-surface"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-surface"
+        ],
+        "softOwners": {
+          "bc-surface": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-surface.is-region-mode",
+        "dead": [
+          "bc-surface"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-surface"
+        ],
+        "softOwners": {
+          "bc-surface": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-surface.is-component-mode .bc-el",
+        "dead": [
+          "bc-surface"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-surface"
+        ],
+        "softOwners": {
+          "bc-surface": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-surface.is-component-mode [data-bc-el]:focus-visible",
+        "dead": [
+          "bc-surface"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-surface"
+        ],
+        "softOwners": {
+          "bc-surface": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-header",
+        "dead": [
+          "bc-el-header"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-header"
+        ],
+        "softOwners": {
+          "bc-el-header": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-breadcrumb",
+        "dead": [
+          "bc-el-breadcrumb"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-breadcrumb"
+        ],
+        "softOwners": {
+          "bc-el-breadcrumb": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-filterbar",
+        "dead": [
+          "bc-el-filterbar"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-filterbar"
+        ],
+        "softOwners": {
+          "bc-el-filterbar": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-chip",
+        "dead": [
+          "bc-el-chip"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-chip"
+        ],
+        "softOwners": {
+          "bc-el-chip": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-chart",
+        "dead": [
+          "bc-el-chart"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-chart"
+        ],
+        "softOwners": {
+          "bc-el-chart": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-chart .bc-el-text",
+        "dead": [
+          "bc-el-chart"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-chart"
+        ],
+        "softOwners": {
+          "bc-el-chart": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-table",
+        "dead": [
+          "bc-el-table"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-table"
+        ],
+        "softOwners": {
+          "bc-el-table": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-row",
+        "dead": [
+          "bc-el-row"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-row"
+        ],
+        "softOwners": {
+          "bc-el-row": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-row.is-hot",
+        "dead": [
+          "bc-el-row"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-row"
+        ],
+        "softOwners": {
+          "bc-el-row": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-row .bc-el-text",
+        "dead": [
+          "bc-el-row"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-row"
+        ],
+        "softOwners": {
+          "bc-el-row": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-retry",
+        "dead": [
+          "bc-el-retry"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-retry"
+        ],
+        "softOwners": {
+          "bc-el-retry": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-el-footnote",
+        "dead": [
+          "bc-el-footnote"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-el-footnote"
+        ],
+        "softOwners": {
+          "bc-el-footnote": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-prompt-menu-item",
+        "dead": [
+          "bc-prompt-menu-item"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-prompt-menu-item"
+        ],
+        "softOwners": {
+          "bc-prompt-menu-item": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-prompt-menu-item:hover",
+        "dead": [
+          "bc-prompt-menu-item"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-prompt-menu-item"
+        ],
+        "softOwners": {
+          "bc-prompt-menu-item": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-prompt-menu-item.active",
+        "dead": [
+          "bc-prompt-menu-item"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-prompt-menu-item"
+        ],
+        "softOwners": {
+          "bc-prompt-menu-item": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-prompt-menu-item strong",
+        "dead": [
+          "bc-prompt-menu-item"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-prompt-menu-item"
+        ],
+        "softOwners": {
+          "bc-prompt-menu-item": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-prompt-menu-item span",
+        "dead": [
+          "bc-prompt-menu-item"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-prompt-menu-item"
+        ],
+        "softOwners": {
+          "bc-prompt-menu-item": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-rail-tab",
+        "dead": [
+          "bc-rail-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-rail-tab"
+        ],
+        "softOwners": {
+          "bc-rail-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-rail-tab:hover",
+        "dead": [
+          "bc-rail-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-rail-tab"
+        ],
+        "softOwners": {
+          "bc-rail-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-rail-tab.active",
+        "dead": [
+          "bc-rail-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-rail-tab"
+        ],
+        "softOwners": {
+          "bc-rail-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-rerender-note.fail",
+        "dead": [
+          "fail"
+        ],
+        "hard": [],
+        "soft": [
+          "fail"
+        ],
+        "softOwners": {
+          "fail": [
+            "assistant-features.js",
+            "browser-capture.js",
+            "data.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-tab",
+        "dead": [
+          "bc-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-tab"
+        ],
+        "softOwners": {
+          "bc-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "browser-capture.css",
+        "selector": ".bc-rail-tab",
+        "dead": [
+          "bc-rail-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "bc-rail-tab"
+        ],
+        "softOwners": {
+          "bc-rail-tab": [
+            "browser-capture.js"
+          ]
+        }
+      },
+      {
+        "sheet": "collaboration.css",
+        "selector": ".collab-route-eff-sub",
+        "dead": [
+          "collab-route-eff-sub"
+        ],
+        "hard": [],
+        "soft": [
+          "collab-route-eff-sub"
+        ],
+        "softOwners": {
+          "collab-route-eff-sub": [
+            "collaboration.js"
+          ]
+        }
+      },
+      {
+        "sheet": "collaboration.css",
+        "selector": ".collab-route-eff-failed",
+        "dead": [
+          "collab-route-eff-failed"
+        ],
+        "hard": [],
+        "soft": [
+          "collab-route-eff-failed"
+        ],
+        "softOwners": {
+          "collab-route-eff-failed": [
+            "collaboration.js"
+          ]
+        }
+      },
+      {
+        "sheet": "collaboration.css",
+        "selector": ".collab-tab",
+        "dead": [
+          "collab-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "collab-tab"
+        ],
+        "softOwners": {
+          "collab-tab": [
+            "collaboration.js"
+          ]
+        }
+      },
+      {
+        "sheet": "collaboration.css",
+        "selector": ".collab-tab:hover",
+        "dead": [
+          "collab-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "collab-tab"
+        ],
+        "softOwners": {
+          "collab-tab": [
+            "collaboration.js"
+          ]
+        }
+      },
+      {
+        "sheet": "collaboration.css",
+        "selector": ".collab-tab.active",
+        "dead": [
+          "collab-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "collab-tab"
+        ],
+        "softOwners": {
+          "collab-tab": [
+            "collaboration.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer-state.css",
+        "selector": ".cs-quota-src",
+        "dead": [
+          "cs-quota-src"
+        ],
+        "hard": [],
+        "soft": [
+          "cs-quota-src"
+        ],
+        "softOwners": {
+          "cs-quota-src": [
+            "composer-state.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer-state.css",
+        "selector": ".cs-quota-src.is-unknown",
+        "dead": [
+          "cs-quota-src"
+        ],
+        "hard": [],
+        "soft": [
+          "cs-quota-src"
+        ],
+        "softOwners": {
+          "cs-quota-src": [
+            "composer-state.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer-state.css",
+        "selector": ".cs-dest-row",
+        "dead": [
+          "cs-dest-row"
+        ],
+        "hard": [],
+        "soft": [
+          "cs-dest-row"
+        ],
+        "softOwners": {
+          "cs-dest-row": [
+            "composer-state.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer-state.css",
+        "selector": ".cs-dest-row:hover",
+        "dead": [
+          "cs-dest-row"
+        ],
+        "hard": [],
+        "soft": [
+          "cs-dest-row"
+        ],
+        "softOwners": {
+          "cs-dest-row": [
+            "composer-state.js"
+          ]
+        }
+      },
+      {
+        "sheet": "composer-state.css",
+        "selector": ".cs-dest-row.is-current",
+        "dead": [
+          "cs-dest-row"
+        ],
+        "hard": [],
+        "soft": [
+          "cs-dest-row"
+        ],
+        "softOwners": {
+          "cs-dest-row": [
+            "composer-state.js"
+          ]
+        }
+      },
+      {
         "sheet": "composer.css",
         "selector": ".hover-card.hover-tip.hover-label",
         "dead": [
@@ -389,7 +1461,10 @@
         ],
         "softOwners": {
           "hot": [
-            "context.js"
+            "browser-capture.js",
+            "context.js",
+            "plans.js",
+            "todos.js"
           ]
         }
       },
@@ -474,9 +1549,13 @@
           "info": [
             "activity-panel.js",
             "app.js",
+            "assistant-features.js",
+            "attachments.js",
+            "browser-capture.js",
+            "composer-state.js",
             "context.js",
             "data.js",
-            "goals.js",
+            "plans.js",
             "threadops.js"
           ]
         }
@@ -494,9 +1573,10 @@
         "softOwners": {
           "used": [
             "app.js",
+            "collaboration.js",
             "context.js",
             "data.js",
-            "goals.js",
+            "plans.js",
             "threadops.js",
             "variants-a.js"
           ]
@@ -571,118 +1651,32 @@
       },
       {
         "sheet": "goals.css",
-        "selector": ".goal-budget",
+        "selector": ".goal-count",
         "dead": [
-          "goal-budget"
+          "goal-count"
         ],
         "hard": [],
         "soft": [
-          "goal-budget"
+          "goal-count"
         ],
         "softOwners": {
-          "goal-budget": [
+          "goal-count": [
             "goals.js"
           ]
         }
       },
       {
         "sheet": "goals.css",
-        "selector": ".goal-budget.is-over",
+        "selector": ".goal-count.over",
         "dead": [
-          "goal-budget"
+          "goal-count"
         ],
         "hard": [],
         "soft": [
-          "goal-budget"
+          "goal-count"
         ],
         "softOwners": {
-          "goal-budget": [
-            "goals.js"
-          ]
-        }
-      },
-      {
-        "sheet": "goals.css",
-        "selector": ".goal-budget.is-over .goal-meter i",
-        "dead": [
-          "goal-budget"
-        ],
-        "hard": [],
-        "soft": [
-          "goal-budget"
-        ],
-        "softOwners": {
-          "goal-budget": [
-            "goals.js"
-          ]
-        }
-      },
-      {
-        "sheet": "goals.css",
-        "selector": ".goal-budget.is-over .goal-budget-note",
-        "dead": [
-          "goal-budget"
-        ],
-        "hard": [],
-        "soft": [
-          "goal-budget"
-        ],
-        "softOwners": {
-          "goal-budget": [
-            "goals.js"
-          ]
-        }
-      },
-      {
-        "sheet": "goals.css",
-        "selector": ".goal-phases",
-        "dead": [
-          "goal-phases"
-        ],
-        "hard": [],
-        "soft": [
-          "goal-phases"
-        ],
-        "softOwners": {
-          "goal-phases": [
-            "goals.js"
-          ]
-        }
-      },
-      {
-        "sheet": "goals.css",
-        "selector": ".goal-phase.pending    .goal-phase-glyph",
-        "dead": [
-          "pending"
-        ],
-        "hard": [],
-        "soft": [
-          "pending"
-        ],
-        "softOwners": {
-          "pending": [
-            "activity-bar.js",
-            "activity-panel.js",
-            "app.js",
-            "data.js",
-            "goals.js",
-            "orbit.js",
-            "threadops.js"
-          ]
-        }
-      },
-      {
-        "sheet": "goals.css",
-        "selector": ".goal-doc .goal-phases",
-        "dead": [
-          "goal-phases"
-        ],
-        "hard": [],
-        "soft": [
-          "goal-phases"
-        ],
-        "softOwners": {
-          "goal-phases": [
+          "goal-count": [
             "goals.js"
           ]
         }
@@ -1297,6 +2291,134 @@
       },
       {
         "sheet": "questions.css",
+        "selector": ".qs-opt-row",
+        "dead": [
+          "qs-opt-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-opt-row"
+        ],
+        "softOwners": {
+          "qs-opt-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-chip",
+        "dead": [
+          "qs-chip"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-chip"
+        ],
+        "softOwners": {
+          "qs-chip": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-shell.qs-opening .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-shell.qs-closing .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask .qs-reel-stage > .qs-reel-next .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask .qs-reel-stage > .qs-reel-prev .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask .qs-reel-out .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask .qs-reel-out-prev .qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
         "selector": ".qs-chip",
         "dead": [
           "qs-chip"
@@ -1521,6 +2643,102 @@
       },
       {
         "sheet": "questions.css",
+        "selector": ".qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-review-row:hover",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-review-row.is-ok",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-review-row.is-empty",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-review-row.is-empty .qs-ask-review-disc",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
+        "selector": ".qs-ask-review-row.is-empty .qs-ask-review-a",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
         "selector": ".qs-summary-row",
         "dead": [
           "qs-summary-row"
@@ -1553,6 +2771,22 @@
       },
       {
         "sheet": "questions.css",
+        "selector": ".qs-ask-review-row",
+        "dead": [
+          "qs-ask-review-row"
+        ],
+        "hard": [],
+        "soft": [
+          "qs-ask-review-row"
+        ],
+        "softOwners": {
+          "qs-ask-review-row": [
+            "questions.js"
+          ]
+        }
+      },
+      {
+        "sheet": "questions.css",
         "selector": ".qs-chip:active",
         "dead": [
           "qs-chip"
@@ -1568,22 +2802,176 @@
         }
       },
       {
-        "sheet": "styles.css",
-        "selector": ".diff-line.add",
+        "sheet": "scheduling.css",
+        "selector": ".sched-count",
         "dead": [
-          "add"
+          "sched-count"
         ],
         "hard": [],
         "soft": [
-          "add"
+          "sched-count"
         ],
         "softOwners": {
-          "add": [
-            "activity-panel.js",
-            "app.js",
+          "sched-count": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-count.over",
+        "dead": [
+          "sched-count"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-count"
+        ],
+        "softOwners": {
+          "sched-count": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-day-chip",
+        "dead": [
+          "sched-day-chip"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-day-chip"
+        ],
+        "softOwners": {
+          "sched-day-chip": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-day-chip input",
+        "dead": [
+          "sched-day-chip"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-day-chip"
+        ],
+        "softOwners": {
+          "sched-day-chip": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-day-chip.on",
+        "dead": [
+          "sched-day-chip"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-day-chip"
+        ],
+        "softOwners": {
+          "sched-day-chip": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-tab",
+        "dead": [
+          "sched-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-tab"
+        ],
+        "softOwners": {
+          "sched-tab": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-tab.active",
+        "dead": [
+          "sched-tab"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-tab"
+        ],
+        "softOwners": {
+          "sched-tab": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-event-row",
+        "dead": [
+          "sched-event-row"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-event-row"
+        ],
+        "softOwners": {
+          "sched-event-row": [
+            "scheduling.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-event-row.refused",
+        "dead": [
+          "sched-event-row",
+          "refused"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-event-row",
+          "refused"
+        ],
+        "softOwners": {
+          "sched-event-row": [
+            "scheduling.js"
+          ],
+          "refused": [
+            "assistant-features.js",
+            "attachments.js",
+            "browser-capture.js",
+            "collaboration.js",
             "data.js",
-            "menus.js",
-            "variants-a.js"
+            "goals.js",
+            "plans.js",
+            "scheduling.js",
+            "threadops.js",
+            "todos.js"
+          ]
+        }
+      },
+      {
+        "sheet": "scheduling.css",
+        "selector": ".sched-event-row p",
+        "dead": [
+          "sched-event-row"
+        ],
+        "hard": [],
+        "soft": [
+          "sched-event-row"
+        ],
+        "softOwners": {
+          "sched-event-row": [
+            "scheduling.js"
           ]
         }
       },
@@ -1620,7 +3008,11 @@
           "hidden": [
             "activity-panel.js",
             "app.js",
+            "browser-capture.js",
+            "composer-state.js",
             "data.js",
+            "plans.js",
+            "questions.js",
             "threadops.js"
           ]
         }
@@ -1985,6 +3377,54 @@
         }
       },
       {
+        "sheet": "todos.css",
+        "selector": ".todo-hover-row",
+        "dead": [
+          "todo-hover-row"
+        ],
+        "hard": [],
+        "soft": [
+          "todo-hover-row"
+        ],
+        "softOwners": {
+          "todo-hover-row": [
+            "todos.js"
+          ]
+        }
+      },
+      {
+        "sheet": "todos.css",
+        "selector": ".todo-hover-row.is-current .todo-hover-title",
+        "dead": [
+          "todo-hover-row"
+        ],
+        "hard": [],
+        "soft": [
+          "todo-hover-row"
+        ],
+        "softOwners": {
+          "todo-hover-row": [
+            "todos.js"
+          ]
+        }
+      },
+      {
+        "sheet": "todos.css",
+        "selector": ".todo-hover-row.is-current .todo-hover-glyph",
+        "dead": [
+          "todo-hover-row"
+        ],
+        "hard": [],
+        "soft": [
+          "todo-hover-row"
+        ],
+        "softOwners": {
+          "todo-hover-row": [
+            "todos.js"
+          ]
+        }
+      },
+      {
         "sheet": "transcript.css",
         "selector": ".message-meta .meta-quiet",
         "dead": [
@@ -2197,7 +3637,10 @@
         ],
         "softOwners": {
           "hold": [
-            "data.js"
+            "attachments.js",
+            "data.js",
+            "plans.js",
+            "scheduling.js"
           ]
         }
       },
@@ -2213,8 +3656,9 @@
         ],
         "softOwners": {
           "held": [
+            "bsd.js",
             "data.js",
-            "goals.js"
+            "scheduling.js"
           ]
         }
       },
@@ -2259,11 +3703,11 @@
         }
       }
     ],
-    "live": 1229,
-    "staticTokens": 1077,
-    "patterns": 119,
-    "unconstrainedPatterns": 306,
-    "runtimeClasses": 754
+    "live": 1852,
+    "staticTokens": 1631,
+    "patterns": 181,
+    "unconstrainedPatterns": 331,
+    "runtimeClasses": 973
   },
   "passes": [
     {
@@ -2285,7 +3729,7 @@
     },
     {
       "label": "Viewport containment: Context compact menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1079.7813720703125,\"top\":83.45934295654297,\"right\":1430.2314453125,\"bottom\":375.39476776123047,\"width\":350.4500732421875,\"height\":291.9354248046875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1082.876953125,\"top\":83.12228393554688,\"right\":1430.0616455078125,\"bottom\":443.96484375,\"width\":347.1846923828125,\"height\":360.8425598144531},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Context Ring opens compact menu"
@@ -2295,7 +3739,7 @@
     },
     {
       "label": "Viewport containment: goal hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":923.796875,\"top\":333.15625,\"right\":1277.796875,\"bottom\":683.15625,\"width\":354,\"height\":350},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":905.296875,\"top\":433.1458740234375,\"right\":1259.296875,\"bottom\":647.1458740234375,\"width\":354,\"height\":214},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: goal"
@@ -2305,7 +3749,7 @@
     },
     {
       "label": "Viewport containment: todo hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":974.796875,\"top\":332.38433837890625,\"right\":1328.796875,\"bottom\":682.3843383789062,\"width\":354,\"height\":350},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":954.296875,\"top\":645.4767456054688,\"right\":1308.296875,\"bottom\":647.4767456054688,\"width\":354,\"height\":2},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: todo"
@@ -2315,7 +3759,7 @@
     },
     {
       "label": "Viewport containment: subagents hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1021.296875,\"top\":351.1771240234375,\"right\":1375.296875,\"bottom\":683.1771240234375,\"width\":354,\"height\":332},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":999.796875,\"top\":314.140625,\"right\":1353.796875,\"bottom\":646.140625,\"width\":354,\"height\":332},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: subagents"
@@ -2325,7 +3769,7 @@
     },
     {
       "label": "Viewport containment: changes hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":335.6017150878906,\"right\":1432,\"bottom\":685.6016845703125,\"width\":354,\"height\":349.9999694824219},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":297.4447937011719,\"right\":1432,\"bottom\":647.44482421875,\"width\":354,\"height\":350.0000305175781},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: changes"
@@ -2335,7 +3779,7 @@
     },
     {
       "label": "Viewport containment: artifacts hover",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":399.7240905761719,\"right\":1432,\"bottom\":682.72412109375,\"width\":354,\"height\":283.0000305175781},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1078,\"top\":364.6332702636719,\"right\":1432,\"bottom\":647.63330078125,\"width\":354,\"height\":283.0000305175781},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Activity hover preview: artifacts"
@@ -2351,52 +3795,48 @@
     },
     {
       "label": "Viewport containment: model picker",
-      "detail": "{\"ok\":true,\"r\":{\"left\":918.8848266601562,\"top\":287.43463134765625,\"right\":1275.05810546875,\"bottom\":836.379638671875,\"width\":356.17327880859375,\"height\":548.9450073242188},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":929.41455078125,\"top\":327.42578125,\"right\":1272.5390625,\"bottom\":838.6741333007812,\"width\":343.12451171875,\"height\":511.24835205078125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: model sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":684.796875,\"top\":174.046875,\"right\":912.796875,\"bottom\":395.65625,\"width\":228,\"height\":221.609375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":683.348388671875,\"top\":146.83460998535156,\"right\":912.796875,\"bottom\":369.20208740234375,\"width\":229.448486328125,\"height\":222.3674774169922},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Model picker and effort sidecar"
     },
     {
       "label": "Viewport containment: Plan sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":902,\"top\":520.265625,\"right\":1130,\"bottom\":704.46875,\"width\":228,\"height\":184.203125},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":886.55029296875,\"top\":548.9354858398438,\"right\":1116,\"bottom\":747.3154907226562,\"width\":229.44970703125,\"height\":198.3800048828125},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: Deep Plan sidecar",
-      "detail": "{\"ok\":true,\"r\":{\"left\":902,\"top\":602.703125,\"right\":1130,\"bottom\":745.46875,\"width\":228,\"height\":142.765625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":888,\"top\":511.578125,\"right\":1116,\"bottom\":788.71875,\"width\":228,\"height\":277.140625},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Plan and Deep Plan hover sidecars"
     },
     {
       "label": "Viewport containment: goal-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":892,\"top\":519.828125,\"right\":1120,\"bottom\":662.59375,\"width\":228,\"height\":142.765625},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":777.1075439453125,\"top\":7.6325225830078125,\"right\":1009,\"bottom\":151.7105712890625,\"width\":231.8924560546875,\"height\":144.0780487060547},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: crew-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":880.5084228515625,\"top\":568.7793579101562,\"right\":1120,\"bottom\":721.210205078125,\"width\":239.4915771484375,\"height\":152.43084716796875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":770.2103271484375,\"top\":1.9099349975585938,\"right\":1009,\"bottom\":152.92577362060547,\"width\":238.7896728515625,\"height\":151.01583862304688},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
-      "label": "Viewport containment: bsd-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":880.5093994140625,\"top\":566.1383666992188,\"right\":1120,\"bottom\":767.429931640625,\"width\":239.4906005859375,\"height\":201.29156494140625},\"vp\":{\"w\":1440,\"h\":900}}"
-    },
-    {
-      "label": "Viewport containment: eli5-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":880.509521484375,\"top\":636.9776611328125,\"right\":1120,\"bottom\":805.3252563476562,\"width\":239.490478515625,\"height\":168.34759521484375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "label": "Viewport containment: bsd-v2",
+      "detail": "{\"ok\":true,\"r\":{\"left\":785.0383911132812,\"top\":401.2559814453125,\"right\":1009,\"bottom\":631.2860107421875,\"width\":223.96160888671875,\"height\":230.030029296875},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: thought-menu",
-      "detail": "{\"ok\":true,\"r\":{\"left\":880.8358764648438,\"top\":664.9605102539062,\"right\":1120,\"bottom\":848.431884765625,\"width\":239.16412353515625,\"height\":183.47137451171875},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":770.5115966796875,\"top\":8.546600341796875,\"right\":1009,\"bottom\":190.37124633789062,\"width\":238.4884033203125,\"height\":181.82464599609375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Capability hover sidecars"
     },
     {
       "label": "Viewport containment: Context Lens strip",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1047.7430419921875,\"top\":84.5678482055664,\"right\":1409.65185546875,\"bottom\":193.60006713867188,\"width\":361.9088134765625,\"height\":109.03221893310547},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":987.21044921875,\"top\":92.37892150878906,\"right\":1433.2999267578125,\"bottom\":259.43511962890625,\"width\":446.0894775390625,\"height\":167.0561981201172},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Context Lens header strip"
@@ -2486,13 +3926,7 @@
       "label": "Working-card FLIP travels forward, in steps, and stops"
     },
     {
-      "label": "Plan card has View, Revise, Build"
-    },
-    {
-      "label": "Plan decision is in flow above Activity Bar"
-    },
-    {
-      "label": "Questionnaire persists and stays in flow"
+      "label": "Plan card is the redesigned document card"
     },
     {
       "label": "Artifact opens: mermaid-runtime"
@@ -2552,15 +3986,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":39,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":181.28125,\"top\":39,\"right\":430,\"bottom\":875,\"width\":248.71875,\"height\":836},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.703125,\"top\":668.15625,\"right\":430,\"bottom\":875,\"width\":249.296875,\"height\":206.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":620.15625,\"right\":420,\"bottom\":660.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 430"
@@ -2575,15 +4009,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":698.15625,\"right\":650,\"bottom\":875,\"width\":450.109375,\"height\":176.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":650.15625,\"right\":640,\"bottom\":690.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 650"
@@ -2598,15 +4032,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.15625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":663.15625,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":211.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":615.15625,\"right\":1014,\"bottom\":655.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1024"
@@ -2625,11 +4059,11 @@
     },
     {
       "label": "Viewport containment: .composer basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":698.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":176.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":650.15625,\"right\":1430,\"bottom\":690.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1440"
@@ -2648,11 +4082,11 @@
     },
     {
       "label": "Viewport containment: .composer basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":698.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":176.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":650.15625,\"right\":1910,\"bottom\":690.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-dark 1920"
@@ -2671,11 +4105,11 @@
     },
     {
       "label": "Viewport containment: .composer basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":668.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":206.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":620.15625,\"right\":420,\"bottom\":660.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 430"
@@ -2690,15 +4124,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":698.15625,\"right\":650,\"bottom\":875,\"width\":450.109375,\"height\":176.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":650.15625,\"right\":640,\"bottom\":690.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 650"
@@ -2713,15 +4147,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.15625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":663.15625,\"right\":1024,\"bottom\":875,\"width\":270.296875,\"height\":211.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":615.15625,\"right\":1014,\"bottom\":655.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1024"
@@ -2740,11 +4174,11 @@
     },
     {
       "label": "Viewport containment: .composer basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":698.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":176.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":650.15625,\"right\":1430,\"bottom\":690.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1440"
@@ -2763,11 +4197,11 @@
     },
     {
       "label": "Viewport containment: .composer basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":698.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":176.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap basic-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":650.15625,\"right\":1910,\"bottom\":690.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry basic-light 1920"
@@ -2786,11 +4220,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":703.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":171.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":667.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":207.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":655.15625,\"right\":420,\"bottom\":695.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":619.15625,\"right\":420,\"bottom\":659.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 430"
@@ -2809,11 +4243,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":733.15625,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":141.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.890625,\"top\":697.15625,\"right\":650,\"bottom\":875,\"width\":450.109375,\"height\":177.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":685.15625,\"right\":640,\"bottom\":725.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":209.984375,\"top\":649.15625,\"right\":640,\"bottom\":689.15625,\"width\":430.015625,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 650"
@@ -2828,15 +4262,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":698.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":176.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":662.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":212.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":650.15625,\"right\":1014,\"bottom\":690.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":614.15625,\"right\":1014,\"bottom\":654.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1024"
@@ -2855,11 +4289,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":733.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":141.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":697.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":177.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":685.15625,\"right\":1430,\"bottom\":725.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":649.15625,\"right\":1430,\"bottom\":689.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1440"
@@ -2878,11 +4312,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":733.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":141.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":697.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":177.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":685.15625,\"right\":1910,\"bottom\":725.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":649.15625,\"right\":1910,\"bottom\":689.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-dark 1920"
@@ -2901,11 +4335,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":703.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":171.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":667.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":207.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":655.15625,\"right\":420,\"bottom\":695.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":619.15625,\"right\":420,\"bottom\":659.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 430"
@@ -2920,15 +4354,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":733.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":141.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":697.15625,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":177.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":685.15625,\"right\":640,\"bottom\":725.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":209.984375,\"top\":649.15625,\"right\":640,\"bottom\":689.15625,\"width\":430.015625,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 650"
@@ -2943,15 +4377,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":698.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":176.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":662.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":212.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":650.15625,\"right\":1014,\"bottom\":690.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":614.15625,\"right\":1014,\"bottom\":654.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1024"
@@ -2970,11 +4404,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":733.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":141.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":697.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":177.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":685.15625,\"right\":1430,\"bottom\":725.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":649.15625,\"right\":1430,\"bottom\":689.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1440"
@@ -2993,11 +4427,11 @@
     },
     {
       "label": "Viewport containment: .composer friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":733.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":141.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":697.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":177.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap friendly-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":685.15625,\"right\":1910,\"bottom\":725.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":649.15625,\"right\":1910,\"bottom\":689.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry friendly-light 1920"
@@ -3016,11 +4450,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":668.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":206.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":620.15625,\"right\":420,\"bottom\":660.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 430"
@@ -3035,15 +4469,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":698.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":176.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":650.15625,\"right\":640,\"bottom\":690.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 650"
@@ -3058,15 +4492,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":754.375,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":269.625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":754.140625,\"top\":663.15625,\"right\":1024,\"bottom\":875,\"width\":269.859375,\"height\":211.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.953125,\"top\":615.15625,\"right\":1014,\"bottom\":655.15625,\"width\":250.046875,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1024"
@@ -3085,11 +4519,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":698.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":176.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":650.15625,\"right\":1430,\"bottom\":690.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1440"
@@ -3108,11 +4542,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":698.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":176.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":650.15625,\"right\":1910,\"bottom\":690.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-dark 1920"
@@ -3131,11 +4565,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":704.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":170.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":668.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":206.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":656.15625,\"right\":420,\"bottom\":696.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":620.15625,\"right\":420,\"bottom\":660.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 430"
@@ -3150,15 +4584,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":197.953125,\"top\":41,\"right\":650,\"bottom\":875,\"width\":452.046875,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":734.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":140.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":198.75,\"top\":698.15625,\"right\":650,\"bottom\":875,\"width\":451.25,\"height\":176.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":686.15625,\"right\":640,\"bottom\":726.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":209.671875,\"top\":650.15625,\"right\":640,\"bottom\":690.15625,\"width\":430.328125,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 650"
@@ -3173,15 +4607,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.046875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":754.375,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":269.625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":699.15625,\"right\":1024,\"bottom\":875,\"width\":270.15625,\"height\":175.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.953125,\"top\":663.15625,\"right\":1024,\"bottom\":875,\"width\":270.046875,\"height\":211.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.703125,\"top\":651.15625,\"right\":1014,\"bottom\":691.15625,\"width\":250.296875,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.84375,\"top\":615.15625,\"right\":1014,\"bottom\":655.15625,\"width\":250.15625,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1024"
@@ -3200,11 +4634,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":734.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":140.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":698.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":176.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":686.15625,\"right\":1430,\"bottom\":726.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":650.15625,\"right\":1430,\"bottom\":690.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1440"
@@ -3223,11 +4657,11 @@
     },
     {
       "label": "Viewport containment: .composer glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":734.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":140.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":698.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":176.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap glass-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":686.15625,\"right\":1910,\"bottom\":726.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":650.15625,\"right\":1910,\"bottom\":690.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry glass-light 1920"
@@ -3246,11 +4680,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":702.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":172.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":666.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":208.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":654.15625,\"right\":420,\"bottom\":694.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":618.15625,\"right\":420,\"bottom\":658.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 430"
@@ -3265,15 +4699,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":732.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":142.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":696.15625,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":178.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":684.15625,\"right\":640,\"bottom\":724.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":209.984375,\"top\":648.15625,\"right\":640,\"bottom\":688.15625,\"width\":430.015625,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 650"
@@ -3288,15 +4722,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.296875,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.84375,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.15625,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":697.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":177.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.703125,\"top\":661.15625,\"right\":1024,\"bottom\":875,\"width\":270.296875,\"height\":213.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":649.15625,\"right\":1014,\"bottom\":689.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":613.15625,\"right\":1014,\"bottom\":653.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1024"
@@ -3315,11 +4749,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":732.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":142.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":696.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":178.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":684.15625,\"right\":1430,\"bottom\":724.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":648.15625,\"right\":1430,\"bottom\":688.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1440"
@@ -3338,11 +4772,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":732.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":142.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":696.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":178.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-dark 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":684.15625,\"right\":1910,\"bottom\":724.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":648.15625,\"right\":1910,\"bottom\":688.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-dark 1920"
@@ -3361,11 +4795,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":702.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":172.84375},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":180.59375,\"top\":666.15625,\"right\":430,\"bottom\":875,\"width\":249.40625,\"height\":208.84375},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 430",
-      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":654.15625,\"right\":420,\"bottom\":694.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":190.59375,\"top\":618.15625,\"right\":420,\"bottom\":658.15625,\"width\":229.40625,\"height\":40},\"vp\":{\"w\":430,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 430"
@@ -3380,15 +4814,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.296875,\"top\":41,\"right\":650,\"bottom\":875,\"width\":450.703125,\"height\":834},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":200,\"top\":732.15625,\"right\":650,\"bottom\":875,\"width\":450,\"height\":142.84375},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":199.671875,\"top\":696.15625,\"right\":650,\"bottom\":875,\"width\":450.328125,\"height\":178.84375},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 650",
-      "detail": "{\"ok\":true,\"r\":{\"left\":210,\"top\":684.15625,\"right\":640,\"bottom\":724.15625,\"width\":430,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":209.890625,\"top\":648.15625,\"right\":640,\"bottom\":688.15625,\"width\":430.109375,\"height\":40},\"vp\":{\"w\":650,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 650"
@@ -3403,15 +4837,15 @@
     },
     {
       "label": "Viewport containment: .chat-stage retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.75,\"top\":41,\"right\":1024,\"bottom\":875,\"width\":270.25,\"height\":834},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .composer retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":697.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":177.84375},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":753.6875,\"top\":661.15625,\"right\":1024,\"bottom\":875,\"width\":270.3125,\"height\":213.84375},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1024",
-      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":649.15625,\"right\":1014,\"bottom\":689.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":763.6875,\"top\":613.15625,\"right\":1014,\"bottom\":653.15625,\"width\":250.3125,\"height\":40},\"vp\":{\"w\":1024,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1024"
@@ -3430,11 +4864,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":732.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":142.84375},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":982.59375,\"top\":696.15625,\"right\":1440,\"bottom\":875,\"width\":457.40625,\"height\":178.84375},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1440",
-      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":684.15625,\"right\":1430,\"bottom\":724.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":992.59375,\"top\":648.15625,\"right\":1430,\"bottom\":688.15625,\"width\":437.40625,\"height\":40},\"vp\":{\"w\":1440,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1440"
@@ -3453,11 +4887,11 @@
     },
     {
       "label": "Viewport containment: .composer retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":732.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":142.84375},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1241.796875,\"top\":696.15625,\"right\":1920,\"bottom\":875,\"width\":678.203125,\"height\":178.84375},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Viewport containment: .activity-wrap retro-light 1920",
-      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":684.15625,\"right\":1910,\"bottom\":724.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
+      "detail": "{\"ok\":true,\"r\":{\"left\":1251.796875,\"top\":648.15625,\"right\":1910,\"bottom\":688.15625,\"width\":658.203125,\"height\":40},\"vp\":{\"w\":1920,\"h\":900}}"
     },
     {
       "label": "Core geometry retro-light 1920"
@@ -3871,11 +5305,7 @@
     },
     {
       "label": "Matcher hygiene: text assertions were actually exercised",
-      "detail": "28 matchers"
-    },
-    {
-      "label": "Matcher hygiene: no text assertion matched zero elements",
-      "detail": "[]"
+      "detail": "31 matchers"
     },
     {
       "label": "Matcher hygiene: no text assertion is unscoped",
@@ -3894,15 +5324,28 @@
       "detail": ""
     },
     {
-      "label": "Orphan gate: every CSS selector can match something the JS emits",
-      "detail": "[]"
-    },
-    {
       "label": "Orphan gate: the emitted-token set is real",
-      "detail": "LIVE 1229 (static 1077 + 119 patterns, runtime 754); 306 wildcard patterns discarded"
+      "detail": "LIVE 1852 (static 1631 + 181 patterns, runtime 973); 331 wildcard patterns discarded"
     }
   ],
-  "failures": [],
+  "failures": [
+    {
+      "label": "Plan decision is in flow above Activity Bar",
+      "detail": "TimeoutError: locator.fill: Timeout 30000ms exceeded. | Call log: |   - waiting for locator('[data-input=\"plan-feedback\"]') | "
+    },
+    {
+      "label": "Questionnaire persists and stays in flow",
+      "detail": "Error: matcher \"Deployment questionnaire\" matched NOTHING — the assertion measures nothing"
+    },
+    {
+      "label": "Matcher hygiene: no text assertion matched zero elements",
+      "detail": "[{\"text\":\"Deployment questionnaire\",\"exact\":true,\"found\":0,\"allow\":1}]"
+    },
+    {
+      "label": "Orphan gate: every CSS selector can match something the JS emits",
+      "detail": "[\"questions.css .qs-pill-wait -> qs-pill-wait\",\"questions.css .qs-textarea -> qs-textarea\",\"questions.css .qs-textarea-chips -> qs-textarea-chips\",\"questions.css .qs-textarea-stack -> qs-textarea-stack\",\"questions.css .qs-ask-mark-check -> qs-ask-mark-check\",\"questions.css .qs-ask-mark-check.is-on::after -> qs-ask-mark-check\",\"questions.css .qs-ask-opt.is-on .qs-ask-mark-check::after -> qs-ask-mark-check\",\"questions.css .qs-other-ask.is-on .qs-ask-mark-check::after -> qs-ask-mark-check\",\"questions.css .qs-other-ask:has(.qs-other-input:not(:placeholder-shown)) .qs-ask-mark-check::after -> qs-ask-mark-check\",\"questions.css .qs-other-ask:has(.qs-file-chip) .qs-ask-mark-check::after -> qs-ask-mark-check\"]"
+    }
+  ],
   "consoleErrors": [],
   "pageErrors": [],
   "matcherHygiene": [
@@ -4021,13 +5464,13 @@
       "allow": 1
     },
     {
-      "text": "View Plan",
+      "text": "Rich Text",
       "exact": true,
       "found": 1,
       "allow": 1
     },
     {
-      "text": "Revise",
+      "text": "Markdown",
       "exact": true,
       "found": 1,
       "allow": 1
@@ -4045,7 +5488,25 @@
       "allow": 1
     },
     {
-      "text": "Create revision",
+      "text": "Build With Crew",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Build At…",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Export",
+      "exact": true,
+      "found": 1,
+      "allow": 1
+    },
+    {
+      "text": "Revise",
       "exact": true,
       "found": 1,
       "allow": 1
@@ -4053,7 +5514,7 @@
     {
       "text": "Deployment questionnaire",
       "exact": true,
-      "found": 1,
+      "found": 0,
       "allow": 1
     },
     {
@@ -4333,7 +5794,7 @@
         "activityPinned": false,
         "domMenu": 0,
         "domSidecar": 0,
-        "domHover": 1,
+        "domHover": 2,
         "domDrawer": 0,
         "domPanel": 0,
         "domGhost": 0
@@ -4739,7 +6200,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 4
+      "tries": 3
     },
     {
       "after": "Capability hover sidecars",
@@ -5792,7 +7253,7 @@
       "tries": 1
     },
     {
-      "after": "Plan card has View, Revise, Build",
+      "after": "Plan card is the redesigned document card",
       "before": {
         "menu": false,
         "dialog": false,
@@ -5867,7 +7328,7 @@
         "menu": false,
         "dialog": false,
         "hover": false,
-        "decision": true,
+        "decision": false,
         "ctxDetails": false,
         "activityOpen": false,
         "activityPinned": false,
@@ -5894,7 +7355,7 @@
         "domGhost": 0
       },
       "stuck": [],
-      "tries": 2
+      "tries": 1
     },
     {
       "after": "Artifact opens: mermaid-runtime",
@@ -6597,5 +8058,5 @@
       "tries": 1
     }
   ],
-  "generatedAt": "2026-08-31T20:51:46.828Z"
+  "generatedAt": "2026-09-03T21:11:35.872Z"
 }

@@ -1,6 +1,6 @@
 # Shard Index: Plans/rewrite-tie-in-memo.md
 
-Generated: 2026-08-30T00:17:00Z
+Generated: 2026-09-03T21:40:03Z
 
 Source SHA256: `5cf26c95b699d21fad666870edfe85bcc4248da18ab2fae729e042f5377dfd9e`
 

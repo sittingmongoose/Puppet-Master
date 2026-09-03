@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pm.shared_integration_runtime.command_contracts.schema.v1",
   "title": "Puppet Master shared integration connection, selection, and consumer-boundary contracts",
-  "description": "Owner-side static contracts for five shared integration connection commands, cmd.installation.select, and reference-only consumers in forge, repository automation, backup, and embedded connector domains. No central registration, native handler, wiring, EventRecord producer, acquisition, authentication, provider capability, or runtime proof is implied.",
+  "description": "Owner-side static contracts for six shared integration connection commands, their persisted inactive ConnectionDraft lifecycle, one draft-local details action, cmd.installation.select, and reference-only consumers in forge, repository automation, backup, and embedded connector domains. No native handler, EventRecord producer, provider call, authentication completion, capability verification, or runtime proof is implied.",
   "x-schema-id": "pm.shared_integration_runtime.command_contracts.v1",
   "oneOf": [
     {"$ref": "#/$defs/IntegrationConnectionCommandRequest"},
@@ -14,7 +14,11 @@
     {"$ref": "#/$defs/InstallationSelectCommandResult"},
     {"$ref": "#/$defs/InstallationSelectAvailability"},
     {"$ref": "#/$defs/InstallationSelectCommandError"},
-    {"$ref": "#/$defs/SharedIntegrationConsumerProjection"}
+    {"$ref": "#/$defs/SharedIntegrationConsumerProjection"},
+    {"$ref": "#/$defs/ConnectionDraftRecord"},
+    {"$ref": "#/$defs/ConnectionCandidateResolution"},
+    {"$ref": "#/$defs/ConnectionDraftOpenDetailsRequest"},
+    {"$ref": "#/$defs/ConnectionDraftOpenDetailsResult"}
   ],
   "$defs": {
     "Id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
@@ -34,9 +38,9 @@
         {"if": {"properties": {"settlement": {"enum": ["retained", "caller_unavailable"]}}, "required": ["settlement"]}, "then": {"properties": {"initiating_surface_restored": {"const": false}}}}
       ]
     },
-    "IntegrationConnectionCommandId": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details"]},
-    "IntegrationConnectionAction": {"enum": ["add", "update", "test", "remove", "open_details"]},
-    "ConnectionState": {"enum": ["unconfigured", "configured", "testing", "ready", "ready_with_limits", "needs_attention", "unavailable", "removing", "removed", "recovery_required"]},
+    "IntegrationConnectionCommandId": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.activate", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details"]},
+    "IntegrationConnectionAction": {"enum": ["add", "activate", "update", "test", "remove", "open_details"]},
+    "ConnectionState": {"enum": ["unconfigured", "inactive_draft", "authentication_pending", "verification_pending", "activation_ready", "configured", "testing", "ready", "ready_with_limits", "needs_attention", "unavailable", "removing", "removed", "recovery_required"]},
     "ConnectionDisabledReasonCode": {
       "enum": [
         "command_not_registered",
@@ -93,7 +97,7 @@
         "recovery_required"
       ]
     },
-    "SharedIntegrationPermissionScope": {"enum": ["connection_add", "connection_update", "connection_test", "connection_remove", "connection_details_read", "installation_select"]},
+    "SharedIntegrationPermissionScope": {"enum": ["connection_add", "connection_activate", "connection_update", "connection_test", "connection_remove", "connection_details_read", "installation_select"]},
     "SharedIntegrationPermissionDecision": {
       "type": "object",
       "additionalProperties": false,
@@ -102,7 +106,7 @@
         "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
         "record_kind": {"const": "shared_integration_permission_decision"},
         "decision_id": {"$ref": "#/$defs/Id"},
-        "command_id": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details", "cmd.installation.select"]},
+        "command_id": {"enum": ["cmd.integration.connection.add", "cmd.integration.connection.activate", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details", "cmd.installation.select"]},
         "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
         "required_scopes": {"type": "array", "minItems": 1, "maxItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/SharedIntegrationPermissionScope"}},
         "decision": {"enum": ["admitted", "confirmation_required", "denied", "stale", "policy_blocked"]},
@@ -140,7 +144,7 @@
     "IntegrationConnectionCommandError": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "error_code", "retryable", "safe_message", "retry_after_utc", "technical_details_ref", "effect_state"],
+      "required": ["schema_id", "record_kind", "error_code", "retryable", "safe_message", "retry_after_utc", "technical_details_ref", "recovery_action_ref", "effect_state"],
       "properties": {
         "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
         "record_kind": {"const": "integration_connection_command_error"},
@@ -149,18 +153,23 @@
         "safe_message": {"type": "string", "minLength": 1, "maxLength": 512},
         "retry_after_utc": {"type": ["string", "null"], "format": "date-time"},
         "technical_details_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "recovery_action_ref": {"$ref": "#/$defs/NonSecretRef"},
         "effect_state": {"enum": ["none", "committed", "rolled_back", "partial", "unknown"]}
       }
     },
     "ConnectionMutation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["setup_route", "profile_ref", "account_id", "credential_ref", "patch_ref", "probe_policy_ref", "confirmation_ref", "credential_disposition", "remote_data_disposition", "details_projection_ref"],
+      "required": ["setup_route", "profile_ref", "account_id", "credential_ref", "nonsecret_configuration_ref", "auth_continuation_ref", "capability_requirement_ref", "verification_evidence_ref", "patch_ref", "probe_policy_ref", "confirmation_ref", "credential_disposition", "remote_data_disposition", "details_projection_ref"],
       "properties": {
         "setup_route": {"$ref": "#/$defs/NonSecretRef"},
         "profile_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "account_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "credential_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "nonsecret_configuration_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "auth_continuation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "capability_requirement_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "verification_evidence_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "patch_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "probe_policy_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "confirmation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
@@ -172,7 +181,7 @@
     "IntegrationConnectionCommandRequest": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "command_id", "action", "command_instance_id", "idempotency_key", "origin", "connection_kind", "provider_id", "provider_variant", "connection_id", "project_id", "route_id", "home_server_id", "execution_host_id", "execution_environment_id", "expected_connection_generation", "topology_generation", "permission_snapshot_ref", "observable_work_ref", "return_context_ref", "mutation"],
+      "required": ["schema_id", "record_kind", "command_id", "action", "command_instance_id", "idempotency_key", "command_context_ref", "origin", "connection_kind", "provider_id", "provider_variant", "connection_id", "project_id", "route_id", "home_server_id", "execution_host_id", "execution_environment_id", "expected_connection_generation", "topology_generation", "permission_snapshot_ref", "observable_work_ref", "return_context_ref", "mutation"],
       "properties": {
         "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
         "record_kind": {"const": "integration_connection_command_request"},
@@ -180,8 +189,9 @@
         "action": {"$ref": "#/$defs/IntegrationConnectionAction"},
         "command_instance_id": {"$ref": "#/$defs/Id"},
         "idempotency_key": {"$ref": "#/$defs/Id"},
+        "command_context_ref": {"$ref": "#/$defs/NonSecretRef"},
         "origin": {"enum": ["forge_gui", "settings_gui", "command_palette", "natural_language_user", "doctor_user_action", "owner_reconciler"]},
-        "connection_kind": {"enum": ["forge", "source_control_host", "provider_service", "mcp_service", "other_registered"]},
+        "connection_kind": {"enum": ["forge", "automation", "backup", "source_control_host", "provider_service", "mcp_service", "other_registered"]},
         "provider_id": {"$ref": "#/$defs/Id"},
         "provider_variant": {"$ref": "#/$defs/Id"},
         "connection_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
@@ -198,9 +208,10 @@
         "mutation": {"$ref": "#/$defs/ConnectionMutation"}
       },
       "allOf": [
-        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.add"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "add"}, "connection_id": {"type": "null"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"credential_disposition": {"const": "not_applicable"}, "remote_data_disposition": {"const": "not_applicable"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.add"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "add"}, "connection_id": {"type": "null"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"nonsecret_configuration_ref": {"$ref": "#/$defs/NonSecretRef"}, "credential_disposition": {"const": "not_applicable"}, "remote_data_disposition": {"const": "not_applicable"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.activate"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "activate"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"profile_ref": {"$ref": "#/$defs/NonSecretRef"}, "capability_requirement_ref": {"$ref": "#/$defs/NonSecretRef"}, "verification_evidence_ref": {"$ref": "#/$defs/NonSecretRef"}, "credential_disposition": {"const": "not_applicable"}, "remote_data_disposition": {"const": "not_applicable"}}}]}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.update"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "update"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"patch_ref": {"$ref": "#/$defs/NonSecretRef"}}}]}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.test"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "test"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"probe_policy_ref": {"$ref": "#/$defs/NonSecretRef"}}}]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.test"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "test"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"probe_policy_ref": {"$ref": "#/$defs/NonSecretRef"}, "capability_requirement_ref": {"$ref": "#/$defs/NonSecretRef"}}}]}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.remove"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "remove"}, "connection_id": {"$ref": "#/$defs/Id"}, "mutation": {"allOf": [{"$ref": "#/$defs/ConnectionMutation"}, {"properties": {"confirmation_ref": {"$ref": "#/$defs/NonSecretRef"}, "credential_disposition": {"enum": ["retain_broker_ref", "revoke_broker_ref", "revocation_pending", "recovery_required"]}, "remote_data_disposition": {"enum": ["retain_provider_data", "provider_action_required", "recovery_required"]}}}]}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.open_details"}}, "required": ["command_id"]}, "then": {"properties": {"action": {"const": "open_details"}, "connection_id": {"$ref": "#/$defs/Id"}, "observable_work_ref": {"type": "null"}}}}
       ]
@@ -208,7 +219,7 @@
     "IntegrationConnectionCommandResult": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "result_id", "command_id", "command_instance_id", "provider_id", "connection_id", "project_id", "prior_connection_generation", "result_connection_generation", "outcome", "connection_state", "availability", "permission_decision_ref", "non_secret_connection_ref", "capability_snapshot_ref", "probe_evidence_ref", "details_projection_ref", "observable_work_ref", "return_settlement", "error", "receipt_ref", "event_effect_policy", "completed_at_utc"],
+      "required": ["schema_id", "record_kind", "result_id", "command_id", "command_instance_id", "provider_id", "connection_id", "project_id", "prior_connection_generation", "result_connection_generation", "outcome", "connection_state", "availability", "permission_decision_ref", "non_secret_connection_ref", "auth_continuation_ref", "capability_snapshot_ref", "probe_evidence_ref", "details_projection_ref", "observable_work_ref", "return_settlement", "error", "receipt_ref", "event_effect_policy", "completed_at_utc"],
       "properties": {
         "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
         "record_kind": {"const": "integration_connection_command_result"},
@@ -225,6 +236,7 @@
         "availability": {"$ref": "#/$defs/IntegrationConnectionAvailability"},
         "permission_decision_ref": {"$ref": "#/$defs/NonSecretRef"},
         "non_secret_connection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "auth_continuation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "capability_snapshot_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "probe_evidence_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
         "details_projection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
@@ -238,8 +250,122 @@
       "allOf": [
         {"if": {"properties": {"outcome": {"enum": ["failed", "rejected", "recovery_required"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"$ref": "#/$defs/IntegrationConnectionCommandError"}}}},
         {"if": {"properties": {"outcome": {"enum": ["succeeded", "cancelled", "no_effect"]}}, "required": ["outcome"]}, "then": {"properties": {"error": {"type": "null"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.add"}, "outcome": {"const": "succeeded"}, "connection_state": {"const": "authentication_pending"}}, "required": ["command_id", "outcome", "connection_state"]}, "then": {"properties": {"auth_continuation_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.activate"}, "outcome": {"const": "succeeded"}}, "required": ["command_id", "outcome"]}, "then": {"properties": {"connection_state": {"enum": ["ready", "ready_with_limits"]}, "non_secret_connection_ref": {"$ref": "#/$defs/NonSecretRef"}, "capability_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"}, "auth_continuation_ref": {"type": "null"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.test"}, "outcome": {"const": "succeeded"}}, "required": ["command_id", "outcome"]}, "then": {"properties": {"probe_evidence_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.integration.connection.open_details"}}, "required": ["command_id"]}, "then": {"properties": {"outcome": {"const": "no_effect"}, "details_projection_ref": {"$ref": "#/$defs/NonSecretRef"}, "observable_work_ref": {"type": "null"}}}}
+      ]
+    },
+    "ConnectionDraftRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "connection_id", "connection_kind", "provider_id", "provider_variant", "project_id", "home_server_id", "execution_host_id", "execution_environment_id", "draft_state", "connection_generation", "nonsecret_configuration_ref", "profile_ref", "credential_ref", "auth_continuation_ref", "capability_requirement_ref", "capability_snapshot_ref", "verification_evidence_ref", "active_connection_ref", "persistence_owner", "created_at_utc", "updated_at_utc", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "connection_draft_record"},
+        "connection_id": {"$ref": "#/$defs/Id"},
+        "connection_kind": {"enum": ["forge", "automation", "backup"]},
+        "provider_id": {"$ref": "#/$defs/Id"},
+        "provider_variant": {"$ref": "#/$defs/Id"},
+        "project_id": {"$ref": "#/$defs/Id"},
+        "home_server_id": {"$ref": "#/$defs/Id"},
+        "execution_host_id": {"$ref": "#/$defs/Id"},
+        "execution_environment_id": {"$ref": "#/$defs/Id"},
+        "draft_state": {"enum": ["inactive", "authentication_pending", "verification_pending", "activation_ready", "activated", "cancelled"]},
+        "connection_generation": {"type": "integer", "minimum": 1},
+        "nonsecret_configuration_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "profile_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "credential_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "auth_continuation_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "capability_requirement_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "capability_snapshot_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "verification_evidence_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "active_connection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "persistence_owner": {"const": "IntegrationConnectionRegistry"},
+        "created_at_utc": {"type": "string", "format": "date-time"},
+        "updated_at_utc": {"type": "string", "format": "date-time"},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {"if": {"properties": {"draft_state": {"const": "authentication_pending"}}, "required": ["draft_state"]}, "then": {"properties": {"auth_continuation_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"draft_state": {"enum": ["activation_ready", "activated"]}}, "required": ["draft_state"]}, "then": {"properties": {"profile_ref": {"$ref": "#/$defs/NonSecretRef"}, "capability_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"}, "verification_evidence_ref": {"$ref": "#/$defs/NonSecretRef"}}}},
+        {"if": {"properties": {"draft_state": {"const": "activated"}}, "required": ["draft_state"]}, "then": {"properties": {"active_connection_ref": {"$ref": "#/$defs/NonSecretRef"}, "auth_continuation_ref": {"type": "null"}}}}
+      ]
+    },
+    "ConnectionCandidateResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "action_id", "source_candidate_id", "resolved_command_id", "owner_role", "resolution_kind", "source_registered", "peer_handler_created", "normalization_before_gates", "sole_future_handler", "handler_unavailable", "persistence_owner", "expected_event_types", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "connection_candidate_resolution"},
+        "action_id": {"enum": ["ACT-148", "ACT-149", "ACT-150", "ACT-151", "ACT-152", "ACT-153"]},
+        "source_candidate_id": {"enum": ["cmd.connection.draft.create", "cmd.connection.activate", "cmd.connection.update", "cmd.connection.test", "cmd.connection.remove", "cmd.connection.open_details"]},
+        "resolved_command_id": {"$ref": "#/$defs/IntegrationConnectionCommandId"},
+        "owner_role": {"const": "IntegrationConnectionRegistry"},
+        "resolution_kind": {"const": "pre_policy_alias_to_canonical_command"},
+        "source_registered": {"const": false},
+        "peer_handler_created": {"const": false},
+        "normalization_before_gates": {"const": true},
+        "sole_future_handler": {"enum": ["handlers::integration_connection::add", "handlers::integration_connection::activate", "handlers::integration_connection::update", "handlers::integration_connection::test", "handlers::integration_connection::remove", "handlers::integration_connection::open_details"]},
+        "handler_unavailable": {"const": true},
+        "persistence_owner": {"const": "IntegrationConnectionRegistry"},
+        "expected_event_types": {"type": "array", "maxItems": 0},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {"if": {"properties": {"action_id": {"const": "ACT-148"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.draft.create"}, "resolved_command_id": {"const": "cmd.integration.connection.add"}, "sole_future_handler": {"const": "handlers::integration_connection::add"}}}},
+        {"if": {"properties": {"action_id": {"const": "ACT-149"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.activate"}, "resolved_command_id": {"const": "cmd.integration.connection.activate"}, "sole_future_handler": {"const": "handlers::integration_connection::activate"}}}},
+        {"if": {"properties": {"action_id": {"const": "ACT-150"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.update"}, "resolved_command_id": {"const": "cmd.integration.connection.update"}, "sole_future_handler": {"const": "handlers::integration_connection::update"}}}},
+        {"if": {"properties": {"action_id": {"const": "ACT-151"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.test"}, "resolved_command_id": {"const": "cmd.integration.connection.test"}, "sole_future_handler": {"const": "handlers::integration_connection::test"}}}},
+        {"if": {"properties": {"action_id": {"const": "ACT-152"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.remove"}, "resolved_command_id": {"const": "cmd.integration.connection.remove"}, "sole_future_handler": {"const": "handlers::integration_connection::remove"}}}},
+        {"if": {"properties": {"action_id": {"const": "ACT-153"}}, "required": ["action_id"]}, "then": {"properties": {"source_candidate_id": {"const": "cmd.connection.open_details"}, "resolved_command_id": {"const": "cmd.integration.connection.open_details"}, "sole_future_handler": {"const": "handlers::integration_connection::open_details"}}}}
+      ]
+    },
+    "ConnectionDraftOpenDetailsRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "action_id", "packet_token", "connection_id", "expected_connection_generation", "current_projection_ref", "permission_snapshot_ref", "route_target_ref", "focus_return_ref", "accessibility_description", "presentation_only", "persistent_state_mutation", "domain_handler", "domain_event_emission", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "connection_draft_open_details_request"},
+        "action_id": {"const": "ui.integration.connection.draft.open_details"},
+        "packet_token": {"const": "cmd.connection.draft.open_details"},
+        "connection_id": {"$ref": "#/$defs/Id"},
+        "expected_connection_generation": {"type": "integer", "minimum": 1},
+        "current_projection_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "route_target_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "focus_return_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "accessibility_description": {"type": "string", "minLength": 1, "maxLength": 512},
+        "presentation_only": {"const": true},
+        "persistent_state_mutation": {"const": false},
+        "domain_handler": {"type": "null"},
+        "domain_event_emission": {"const": false},
+        "runtime_evidence_claimed": {"const": false}
+      }
+    },
+    "ConnectionDraftOpenDetailsResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "action_id", "connection_id", "observed_connection_generation", "outcome", "route_projection_ref", "navigation_receipt_ref", "focus_return_ref", "return_behavior", "persistent_state_mutation", "domain_event_emission", "runtime_evidence_claimed"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_integration_runtime.command_contracts.v1"},
+        "record_kind": {"const": "connection_draft_open_details_result"},
+        "action_id": {"const": "ui.integration.connection.draft.open_details"},
+        "connection_id": {"$ref": "#/$defs/Id"},
+        "observed_connection_generation": {"type": "integer", "minimum": 1},
+        "outcome": {"enum": ["completed", "stale", "permission_denied", "projection_unavailable"]},
+        "route_projection_ref": {"$ref": "#/$defs/NullableNonSecretRef"},
+        "navigation_receipt_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "focus_return_ref": {"$ref": "#/$defs/NonSecretRef"},
+        "return_behavior": {"const": "restore_exact_initiating_focus_and_route"},
+        "persistent_state_mutation": {"const": false},
+        "domain_event_emission": {"const": false},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"const": "completed"}}, "required": ["outcome"]}, "then": {"properties": {"route_projection_ref": {"$ref": "#/$defs/NonSecretRef"}}}}
       ]
     },
     "InstallationSelectDisabledReasonCode": {

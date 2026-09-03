@@ -1,0 +1,119 @@
+{
+  "suite": "provider-permission-verify",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "scope_note": "Adapter conformance against a live direct/SDK/CLI/server provider is NOT covered here and cannot be — no adapter exists. See Plans/CLI_Bridged_Providers.md.",
+  "results": [
+    {
+      "name": "every participant record carries BOTH a requested and an effective identity",
+      "pass": true,
+      "detail": "requestedProviderId, requestedAccountId, requestedModelId, requestedModelName, effectiveModelId, effectiveModelName, requestedPersona, effectivePersona, substitutionReason"
+    },
+    {
+      "name": "the Crew configuration modal opened so a substitution can actually be driven",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "an unavailable model really is substituted (the case exists to be judged, not an empty set)",
+      "pass": true,
+      "detail": "[{\"req\":\"kimi-k3-turbo\",\"eff\":\"kimi-k3\",\"reason\":\"Provider window exhausted on this account. Substituted within the same provider.\"}]"
+    },
+    {
+      "name": "no substitution is silent — every differing effective model states a reason",
+      "pass": true,
+      "detail": "[{\"req\":\"kimi-k3-turbo\",\"eff\":\"kimi-k3\",\"reason\":\"Provider window exhausted on this account. Substituted within the same provider.\"}]"
+    },
+    {
+      "name": "the advisor also discloses requested vs effective, not just workflows",
+      "pass": true,
+      "detail": "{\"requested\":\"Default resolver\",\"effective\":\"Claude Sonnet 4.6\"}"
+    },
+    {
+      "name": "the To-Do refusal controls are actually present to be driven",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a provider-native whole-list To-Do proposal cannot mutate PM canon",
+      "pass": true,
+      "detail": "list unchanged"
+    },
+    {
+      "name": "the refusal is recorded as reconciliation, not silently dropped",
+      "pass": true,
+      "detail": "[\"bulk_completion_refused\"]"
+    },
+    {
+      "name": "the reset-source cycle control is reachable in the wand menu",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reset source is only ever one of the four declared values",
+      "pass": true,
+      "detail": "provider reported | locally inferred | user supplied | unknown"
+    },
+    {
+      "name": "the cycle actually reaches `unknown` (the honest case is reachable, not theoretical)",
+      "pass": true,
+      "detail": "provider reported -> locally inferred -> user supplied -> unknown -> provider reported -> locally inferred"
+    },
+    {
+      "name": "an unknown reset source prints `unknown` and invents no countdown",
+      "pass": true,
+      "detail": "(strip not open)"
+    },
+    {
+      "name": "advisor Usage is attributed separately and never folded into the primary run",
+      "pass": true,
+      "detail": "calls 24, $0.021, account work"
+    },
+    {
+      "name": "an unavailable title route records the outcome and reason rather than substituting",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "the unavailable-title case is either exercised here or explicitly out of this suite",
+      "pass": true,
+      "detail": "not exercised here — driven end to end by tests/restored-features-verify.mjs §8c"
+    },
+    {
+      "name": "Review freezes ONE target pack, and findings from a different version are excluded rather than merged",
+      "pass": true,
+      "detail": "{\"frozen\":{\"targetKind\":\"changes\",\"targetRefs\":[\"orchestrator-subagent-integration.md#executionLimits\",\"crew.concurrency clamp\"],\"targetHashes\":{\"primary\":\"a1c9f02e\"},\"frozenAt\":\"2026-09-03T"
+    },
+    {
+      "name": "the read-only advisor exposes no approve / certify / mutate action anywhere",
+      "pass": true,
+      "detail": "none"
+    },
+    {
+      "name": "Crew Auto cannot widen authority — the attempt starts nothing and enables nothing",
+      "pass": true,
+      "detail": "{\"autoBefore\":{\"cfg\":false,\"enabled\":false,\"runs\":10},\"autoAfter\":{\"enabled\":false,\"runs\":10}}"
+    },
+    {
+      "name": "the protected authentication browser is modelled as human-only",
+      "pass": true,
+      "detail": "{\"id\":\"sess-auth\",\"humanOnly\":true}"
+    },
+    {
+      "name": "Build freezes the permission mode and worktree it was admitted under",
+      "pass": true,
+      "detail": "{\"permissions\":\"Auto\",\"worktree\":\"feature/session-cache\"}"
+    },
+    {
+      "name": "the named negative-path classes each have a real control or owner behind them",
+      "pass": true,
+      "detail": "{\"stale\":true,\"bulk\":true,\"provider\":true,\"quarantine\":true,\"stop\":true}"
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

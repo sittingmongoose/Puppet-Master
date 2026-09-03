@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L644-L4024
+Source lines: L648-L4055
 
-Source SHA256: `0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7`
+Source SHA256: `0b754bd9e29239becb917810f8b63479913ea56b425d53e00386acc65174f6da`
 
 ---
 
@@ -399,14 +399,14 @@ owner_hints:
 - "Plans/Decision_Policy.md"
 ```
 
-### PLUG-009 - Plugin Manifest Schema
+### PLUG-009 - Plugin Manifest Identity And Native Fields
 
 ```yaml
 plan_unit_id: PLUG-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Each plugin directory must contain plugin.json with id, name, version, description, hooks, tools, and entry fields, preserving the plugin id regex, directory-name match, field requirements, and manifest value types."
+canonical_text: "PM-internal interchange plugin.json is limited to the skills/ plus mcp.json interchange floor and is not directly loadable OpenAI/Codex or Claude Code packaging, while each PM-native plugin uses pm-plugin.json for id, name, version, description, hooks, tools, and entry; dual PM manifests validate independently with exact id/version agreement and no field merge, target adapters emit ecosystem-specific metadata plus .mcp.json without authority widening, and legacy PM-shaped plugin.json is migration input only."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -417,6 +417,9 @@ acceptance_criteria:
 - "PLUG-009 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- "PM-native hooks, tools, and entry fields validate only from pm-plugin.json; PM-internal interchange plugin.json and target-adapter output cannot request PM-native execution or authority."
+- "A dual-manifest package requires exact id/version agreement without field merge, and a legacy PM-shaped plugin.json remains explicit migration input rather than interchange canon."
+- "Direct OpenAI/Codex and Claude Code package claims require named adapters, target schemas, target conformance, separate source/output hashes and inventories, and no authority widening."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -432,6 +435,9 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0010
 preserved_exact_tokens:
 - "plugin.json"
+- "pm-plugin.json"
+- "skills/"
+- "mcp.json"
 - "id"
 - "name"
 - "version"
@@ -445,10 +451,12 @@ preserved_exact_tokens:
 - "script"
 - "subprocess binary"
 negative_constraints:
-- "A plugin directory without a valid plugin.json manifest must not be loaded as a valid plugin."
+- "A PM-native plugin directory without a valid pm-plugin.json must not be freshly loaded as a PM-native executable plugin."
+- "PM-internal interchange plugin.json must not carry canonical PM-native hooks, tools, commands, UI, native entry, permissions, capabilities, sandbox, or signature fields or claim direct external loadability."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved legacy plugin.json hooks/tools/entry shape is source lineage and legacy_imported migration input only; it is not the internal-interchange schema."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -657,7 +665,7 @@ plan_unit_id: PLUG-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "The plugin lifecycle discovers manifests, validates plugin.json, initializes the entry module with PluginContext, keeps hooks active during the session, and tears down on session.end before unloading."
+canonical_text: "The plugin lifecycle discovers PM-internal interchange plugin.json and PM-native pm-plugin.json independently, rejects dual-manifest id/version mismatch, classifies legacy PM-shaped plugin.json as migration input, keeps external target adaptation separate, initializes only an approved PM-native entry with PluginContext, keeps hooks active during the session, and tears down on session.end before unloading."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -669,6 +677,7 @@ acceptance_criteria:
 - "PLUG-014 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- "Interchange-only skill/MCP packages remain with their internal import owners and never enter PM-native entry initialization; target-adapter output also grants no PM-native activation."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -691,8 +700,11 @@ preserved_exact_tokens:
 - "Teardown"
 - "session.end"
 - "PluginContext"
+- "plugin.json"
+- "pm-plugin.json"
 negative_constraints:
 - "Invalid manifests are rejected with a warning and skipped rather than initialized."
+- "An interchange-only, target-adapted, or fresh legacy-shaped plugin.json must not be initialized as PM-native executable code."
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -1115,7 +1127,7 @@ plan_unit_id: PLUG-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "permission.ask fires when the permission engine resolves a tool invocation to ask before presenting UI, can Continue to present ask UI, Allow, or Deny(reason), and plugin permission overrides are logged as plugin.permission.override events."
+canonical_text: "permission.ask fires when the permission engine resolves a tool invocation to ask before presenting UI, can Continue to present ask UI, Allow, or Deny(reason), and plugin permission overrides persist typed override receipts with redacted projections; plugin.permission.override remains a non-emitting Event Authority candidate."
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -1150,10 +1162,11 @@ preserved_exact_tokens:
 - "Deny(reason)"
 - "plugin.permission.override"
 negative_constraints:
-- "Plugin overrides of permission decisions MUST be logged to the event ledger as plugin.permission.override events."
+- "Plugin overrides must not emit plugin.permission.override EventRecords unless Event Authority separately admits that identity."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved source-lineage claim that overrides are logged as plugin.permission.override events is non-current; typed receipts and redacted projections are current until Event Authority admission."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2046,14 +2059,14 @@ owner_hints:
 - "Plans/Personas.md"
 ```
 
-### PLUG-041 - Plugin Event Log Record Shape
+### PLUG-041 - Plugin Activity Record Shape And Event Authority Boundary
 
 ```yaml
 plan_unit_id: PLUG-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "All plugin activity logs to the Puppet Master event ledger using the canonical EventRecord envelope owned by Contracts_V0; Plugins_System owns plugin.* event semantics and plugin-owned payload content such as plugin_id, hook names, durations, resolution details, and structured plugin payload, while legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only."
+canonical_text: "Plugin activity persists through plugin-owned typed request/result/error/receipt records and redacted projections; no plugin.* EventRecord identity is currently admitted, and any future Event Authority admission must use the canonical EventRecord envelope owned by Contracts_V0 with closed payload, producer, scope, redaction, retention, and consumer contracts."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2090,26 +2103,27 @@ preserved_exact_tokens:
 - "PluginContext.log(level, message)"
 - "source: \"plugin:<plugin_id>\""
 negative_constraints:
-- "Plugin activity must not bypass structured EventRecord logging."
+- "Plugin producers must not emit EventRecords under historical plugin.* candidate identities until Event Authority separately admits them."
 - "Plugins_System.md must not locally redefine the EventRecord envelope fields."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord"
 compatibility_only_notes:
 - "Legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only and not normative EventRecord field canon."
+- "The preserved Puppet Master event ledger and event_type literals describe historical source lineage, not current emission authority."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
 - "Plans/Contracts_V0.md"
 ```
 
-### PLUG-042 - Plugin Log Event Taxonomy
+### PLUG-042 - Historical Plugin Log Event Candidates
 
 ```yaml
 plan_unit_id: PLUG-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugin log event taxonomy includes loaded, load_failed, hook invoked, hook error, hook blocked, permission override, tool registered, and tool collision event types with their required emission conditions."
+canonical_text: "The historical plugin log taxonomy preserves loaded, load_failed, hook invoked, hook error, hook blocked, permission override, tool registered, and tool collision identities as individual non-emitting Event Authority candidates; current occurrences persist through typed receipts/results/errors and redacted projections."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2146,9 +2160,10 @@ preserved_exact_tokens:
 - "duration_ms"
 - "resolution"
 negative_constraints:
-- "Plugin events must not be emitted under plugin-private event names when canonical event types exist."
+- "Historical plugin.* candidate identities must not emit EventRecords until Event Authority separately admits each identity."
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved event-type names and required emission-condition wording are source lineage only; the current disposition is non-emitting typed receipts/projections pending Event Authority."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2213,7 +2228,7 @@ plan_unit_id: PLUG-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "The Plugins tab lists discovered plugins with Name, ID, Version, Source, Status, Hook count, and Tool count columns, shows internal plugins with locked badges, provides enable/disable toggles except for internal plugins, and expands rows for description, hooks, custom tools, entry path, and plugin data directory path."
+canonical_text: "The Plugins tab lists discovered plugins with Name, ID, Version, Source, Status, Hook count, and Tool count columns, shows internal plugins with locked badges, provides enable/disable toggles except for internal plugins, and expands rows for description, hooks, custom tools, safe source class, package identity, and redacted relative component labels without private absolute entry or data paths."
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -2259,8 +2274,10 @@ preserved_exact_tokens:
 - "plugin data directory path"
 negative_constraints:
 - "Internal plugins cannot be disabled from the Plugins tab."
+- "Plugin details must not expose private absolute entry paths or plugin data directory paths."
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved entry path and plugin data directory path literals are non-current source-lineage wording; current GUI copy uses redacted relative component labels."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2274,7 +2291,7 @@ plan_unit_id: PLUG-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "The Plugins tab supports Add plugin flows for package specifiers and local directories containing plugin.json, updates config.plugins.packages, triggers reload, and distinguishes config-sourced removal from project/global delete-from-disk with confirmation."
+canonical_text: "The Plugins tab supports package-specifier and local-package flows for PM-internal interchange plugin.json, PM-native pm-plugin.json, or matching dual manifests; named target adapters handle OpenAI/Codex and Claude Code metadata without reinterpreting it as PM-native, legacy PM-shaped plugin.json opens a migration preview rather than fresh executable install, and config.plugins.packages, reload, and confirmed config/project/global removal semantics remain preserved."
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -2288,6 +2305,7 @@ acceptance_criteria:
 - "PLUG-045 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- "Local package selection exposes internal-interchange, PM-native, dual-manifest, mismatch, target-adapter, and legacy migration classifications without merging manifest fields."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2308,6 +2326,7 @@ preserved_exact_tokens:
 - "Add local"
 - "file picker"
 - "directory containing plugin.json"
+- "pm-plugin.json"
 - "config.plugins.packages"
 - "triggers reload"
 - "Remove plugin"
@@ -2316,8 +2335,10 @@ preserved_exact_tokens:
 - "confirmation"
 negative_constraints:
 - "Remove plugin controls must distinguish config-sourced removal from project/global delete-from-disk."
+- "Add local must not treat a fresh legacy PM-shaped plugin.json as internal-interchange or PM-native executable install, and must not treat external target metadata as PM-native authority."
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved source phrase directory containing plugin.json now denotes a PM-internal interchange package or a legacy migration candidate, not a PM-native entry declaration or direct external package claim."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2608,7 +2629,7 @@ plan_unit_id: PLUG-051
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Puppet Master uses a platform-agnostic plugin API through WASM modules, subprocess-based entries, or dynamic libraries defined by plugin.json entry, with no JavaScript runtime dependency."
+canonical_text: "Puppet Master uses a platform-agnostic plugin API through WASM modules, subprocess-based entries, or dynamic libraries defined only by the PM-native pm-plugin.json entry, with no JavaScript runtime dependency; PM-internal interchange plugin.json and target-adapter output cannot declare native execution."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2621,6 +2642,7 @@ acceptance_criteria:
 - "PLUG-051 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- "The platform-agnostic runtime formats remain substantive PM-native requirements under pm-plugin.json entry."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2642,13 +2664,16 @@ preserved_exact_tokens:
 - "subprocess-based"
 - "dynamic libraries"
 - "plugin.json"
+- "pm-plugin.json"
 - "entry"
 - "No JavaScript runtime dependency"
 negative_constraints:
 - "Puppet Master plugin runtime must not require a JavaScript runtime dependency."
+- "PM-internal interchange plugin.json and target-adapter output must not declare or activate a PM-native runtime entry."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved plugin.json entry token is legacy PM-shaped source lineage and migration input only."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2662,7 +2687,7 @@ plan_unit_id: PLUG-052
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Puppet Master deltas preserve namespaced aliasing for tool collisions by default, strict priority and lexicographic deterministic load order, typed structured logging, and per-Persona plugin controls as the canonical divergences from the OpenCode baseline."
+canonical_text: "Puppet Master deltas preserve namespaced aliasing for tool collisions by default, strict priority and lexicographic deterministic load order, typed receipt/result/error logging with redacted projections pending Event Authority, and per-Persona plugin controls as the canonical divergences from the OpenCode baseline."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2708,6 +2733,7 @@ preserved_contractrefs:
 - "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
 compatibility_only_notes:
 - "OpenCode deltas are preserved without re-owning existing fine-grained units."
+- "The preserved typed ledger events literal is non-current source lineage; plugin.* identities remain non-emitting candidates pending Event Authority."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
@@ -2837,7 +2863,7 @@ plan_unit_id: PLUG-055
 unit_type: acceptance_overlay
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Backend acceptance overlay preserves AC-PL01 through AC-PL08 for discovery priority, deterministic load order, hook execution order, tool-execute blocking, central registry routing, built-in collision defaults, typed event logging, and timeout or panic continuation behavior."
+canonical_text: "Backend acceptance overlay preserves AC-PL01 through AC-PL08 for discovery priority, deterministic load order, hook execution order, tool-execute blocking, central registry routing, built-in collision defaults, typed receipt/result/error logging with redacted projections and no plugin.* EventRecord emission pending Event Authority, and timeout or panic continuation behavior."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2897,7 +2923,8 @@ negative_constraints:
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Progression_Gates.md"
 - "ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Plugins_System.md#HOOK-EVENTS"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The preserved typed events literal is non-current source lineage; AC-PL07 now requires typed receipts/projections and forbids candidate EventRecord emission pending Event Authority."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"

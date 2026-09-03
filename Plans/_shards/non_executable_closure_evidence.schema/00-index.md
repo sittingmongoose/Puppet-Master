@@ -1,6 +1,6 @@
 # Shard Index: Plans/.implementation_readiness/non_executable_closure_evidence.schema.json
 
-Generated: 2026-08-30T00:17:00Z
+Generated: 2026-09-03T21:40:03Z
 
 Source SHA256: `20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428`
 

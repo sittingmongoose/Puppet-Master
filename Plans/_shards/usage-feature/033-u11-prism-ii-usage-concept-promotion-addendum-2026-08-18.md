@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6329-L6417
+Source lines: L6329-L6418
 
-Source SHA256: `4dea9175dadfaebb338bcd2957d53fed33cd25c26d350a63f5169c643f8e78c0`
+Source SHA256: `2798b306a8bebfc44d2add1d29c25cba2f762b388d6248a564227e8a42de2e45`
 
 ---
 
@@ -16,12 +16,13 @@ canonical PlanUnit. `Concepts/usage-concepts/QwenUsageConcept/u11-prism.html` an
 This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts,
 generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-The concept's Settings destinations were re-bound during the audit to the canonical Settings deep-link
-identity: `open(category, focusSettingId)` owned by `Plans/FinalGUISpec.md` F3-434, dispatched as
-`cmd.settings.bloom.open` and certified by the `catalog.settings_bloom_open` production wiring row. The
-category is one of the twelve in `Plans/settings_inventory.json` and the focus setting id is a real row id
-from the same inventory. The earlier four-field destination envelope, and its `manager`/`section`/
-focus-reason vocabulary, are retired concept inventions with no canonical standing.
+The concept's Settings destinations now consume the canonical typed route owned by
+`Plans/Settings_System.md` SSYS-018: `cmd.settings.open` carries
+`pm.settings_route_request.v1`, a setting or manager/detail target, and an exact-return contract. The
+provider-setup route uses `target_type=setting` with the real inventory id
+`ai.accounts.provider-connections`. The former `open(category, focusSettingId)` and four-field
+manager/section/focus-reason envelopes are superseded inputs that require pre-dispatch migration and have
+no primary catalog standing.
 
 ### UF-092 - Usage Page Counting Honesty, Settlement Axis, And Policy Boundary
 
@@ -40,8 +41,8 @@ canonical_text: >-
   describes how far one attempt has progressed toward final accounting, while entitlement_class and
   provider_route_kind describe who pays for it, and the page never collapses the two into one badge. Usage
   reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
-  deep-links to its owner through cmd.settings.bloom.open with a real Settings category and a real setting
-  id, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
+  deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
+  target, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
   keep their own units, windows, and reset semantics and are never flattened onto a single cross-provider
   percentage scale.
 gui_related: true
@@ -52,7 +53,7 @@ acceptance_criteria:
   - A route with no published separate billing treatment for its cache-read or reasoning bucket renders that bucket as not exposed and leaves displayed totals unchanged; no fixture infers an inclusive or exclusive rule from an unpublished route.
   - Unknown and provider-reported zero render as distinct states with distinct reasons on every Usage surface, and no projection path converts one into the other.
   - Settlement state and billing route render as independent axes; a combined badge that hides one behind the other fails the fixture.
-  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.bloom.open with a category from Plans/settings_inventory.json and a real setting id from the same inventory, and writes no local policy value.
+  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value.
   - Provider-native quota units keep their own unit, window, and reset semantics; a single cross-provider percentage rollup fails the fixture.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -82,7 +83,7 @@ preserved_exact_tokens:
   - settlement_status
   - entitlement_class
   - provider_route_kind
-  - cmd.settings.bloom.open
+  - cmd.settings.open
   - "ai.usage.usage-windows"
   - "scope:all"
 negative_constraints:

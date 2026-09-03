@@ -1,0 +1,619 @@
+/* collaboration.css — feature module.  OWNER: Collaborative Workflows
+ * (Assistant redesign wave, 2026-09-03). Pairs with collaboration.js.
+ * Concatenated LAST (see build.py), so these rules win over styles.css.
+ * Every rule is scoped under a `.collab-*` class this module owns, uses the
+ * shared design tokens so all 8 themes work, and drops decoration (not state
+ * changes) under prefers-reduced-motion. `--text-dim` is referenced with a
+ * `var(--muted)` fallback because the base theme files do not define it yet
+ * (composer-state.css and bsd.css carry the same defensive pattern).
+ */
+
+/* =============================================================== card == */
+.collab-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.collab-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.collab-kind-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+.collab-kind-crew .collab-kind-badge { color: var(--accent); }
+.collab-kind-brainstorm .collab-kind-badge { color: var(--accent-2); }
+.collab-kind-review .collab-kind-badge { color: var(--warning); }
+.collab-kind-chat_room .collab-kind-badge { color: var(--positive); }
+.collab-card-title {
+  font-size: 13px;
+  color: var(--text);
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+.collab-card-meta {
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+.collab-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border);
+}
+.collab-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+.collab-more-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 0 0;
+  border-top: 1px dashed var(--border);
+}
+
+/* ========================================================= status chip == */
+.collab-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.collab-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex: none; }
+.collab-status-working .collab-status-dot { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.collab-status-done .collab-status-dot { background: var(--positive); }
+.collab-status-blocked .collab-status-dot { background: var(--danger); }
+.collab-status-idle .collab-status-dot { background: var(--muted); }
+
+/* ==================================================== participant row == */
+.collab-participants {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.collab-participant {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 7px 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--ease, .15s), border-color var(--ease, .15s), transform var(--spring-soft-ease, .18s);
+}
+.collab-participant:hover, .collab-participant:focus-visible {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+.collab-participant:active { transform: scale(.99); }
+.collab-p-avatar {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--surface-4);
+  color: var(--text);
+}
+.collab-p-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.collab-p-copy strong { font-size: 12px; color: var(--text); }
+.collab-additive-tag {
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--accent-2);
+  border: 1px solid var(--accent-2);
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-left: 4px;
+}
+.collab-p-route, .collab-p-current, .collab-p-blocked, .collab-p-state {
+  font-size: 10.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.collab-p-blocked { color: var(--danger); }
+.collab-p-status {
+  flex: none;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--muted);
+}
+.collab-p-status-working { color: var(--accent); }
+.collab-p-status-done { color: var(--positive); }
+.collab-p-status-blocked { color: var(--danger); }
+
+/* ============================================== requested/effective == */
+.collab-route { color: var(--text-dim, var(--muted)); }
+.collab-route-eff {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+.collab-route-eff-sub { color: var(--warning); }
+.collab-route-eff-failed { color: var(--danger); }
+.collab-p-identity { font-size: 12px; color: var(--text); }
+.collab-sub-reason { font-size: 11px; color: var(--warning); display: flex; gap: 5px; align-items: flex-start; }
+
+/* ==================================================== messages/recent == */
+.collab-recent, .collab-room-recent, .collab-full-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.collab-recent strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+.collab-msg {
+  border-left: 2px solid var(--border);
+  padding: 4px 0 4px 9px;
+}
+.collab-msg-user { border-left-color: var(--accent); }
+.collab-msg-coordinator { border-left-color: var(--accent-2); }
+.collab-msg-system { border-left-color: var(--muted); }
+.collab-msg-head {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: 10.5px;
+}
+.collab-msg-head strong { color: var(--text); font-size: 11.5px; }
+.collab-msg-type {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--warning);
+  border: 1px solid var(--warning);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.collab-msg-type-conflict, .collab-msg-type-warning { color: var(--danger); border-color: var(--danger); }
+.collab-msg-type-vote, .collab-msg-type-finding { color: var(--accent-2); border-color: var(--accent-2); }
+.collab-msg-clock { color: var(--muted); margin-left: auto; }
+.collab-msg-body { margin: 2px 0 0; font-size: 12px; color: var(--text); white-space: pre-wrap; }
+
+/* ============================================================= usage == */
+.collab-usage {
+  display: flex;
+  gap: 12px;
+  font-size: 10.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.collab-usage-table { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
+.collab-usage-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; }
+.collab-usage-row b { color: var(--text); }
+
+/* ============================================================ crew == */
+.collab-bound-plan {
+  font-size: 11.5px;
+  color: var(--text);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 9px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.collab-assignments { display: flex; flex-direction: column; gap: 7px; }
+.collab-assignment {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  background: var(--surface-2);
+}
+.collab-assignment-done { border-color: color-mix(in srgb, var(--positive) 45%, var(--border)); }
+.collab-assignment-blocked { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); }
+.collab-assignment-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.collab-assignment-head strong { font-size: 12px; color: var(--text); }
+.collab-assignment-status {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.collab-assignment-meta { margin: 3px 0 0; font-size: 11px; color: var(--muted); }
+.collab-evidence { margin: 5px 0 0; font-size: 11px; color: var(--positive); }
+.collab-blocked-note { margin: 5px 0 0; font-size: 11px; color: var(--danger); display: flex; gap: 5px; align-items: flex-start; }
+.collab-assignment-actions { margin-top: 6px; }
+
+/* ======================================================= brainstorm == */
+.collab-qmax { font-size: 12px; font-weight: 600; color: var(--text); margin: 0 0 6px; }
+.collab-votes, .collab-hardconflicts, .collab-dissents, .collab-leads {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.collab-leads strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+.collab-vote {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 9px;
+  font-size: 11.5px;
+}
+.collab-vote b { color: var(--text); }
+.collab-vote span { text-transform: capitalize; font-weight: 600; margin-left: 4px; }
+.collab-vote-support span { color: var(--positive); }
+.collab-vote-oppose span { color: var(--danger); }
+.collab-vote-abstain span { color: var(--muted); }
+.collab-vote p, .collab-hardconflict p, .collab-dissent p, .collab-lead p { margin: 3px 0 0; font-size: 11px; color: var(--muted); }
+.collab-hardconflict {
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 7px 9px;
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface-2));
+}
+.collab-hardconflict strong { font-size: 11.5px; color: var(--danger); }
+.collab-dissent, .collab-dissent-inline {
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  padding: 7px 9px;
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface-2));
+  font-size: 11.5px;
+}
+.collab-dissent strong { display: flex; gap: 5px; align-items: center; color: var(--warning); font-size: 11.5px; }
+.collab-dissent-inline { display: flex; gap: 5px; align-items: flex-start; color: var(--warning); margin-top: 5px; }
+.collab-lead {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 9px;
+}
+.collab-lead-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  border: 1px solid var(--accent-2);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.collab-synthesis {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 9px 10px;
+  background: var(--surface-3);
+}
+.collab-synthesis strong { font-size: 12px; color: var(--text); }
+.collab-synthesis p { font-size: 11.5px; color: var(--text); margin: 5px 0 0; }
+.collab-grill-toggle { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text); margin-bottom: 8px; }
+
+/* ============================================================ review == */
+.collab-targetpack { font-size: 11.5px; color: var(--muted); margin: 0 0 8px; }
+.collab-targetpack code { font-family: var(--font-mono); color: var(--text); background: var(--surface-3); padding: 1px 5px; border-radius: 4px; }
+.collab-findings { display: flex; flex-direction: column; gap: 7px; }
+.collab-finding {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  background: var(--surface-2);
+}
+.collab-finding-head { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.collab-finding-head strong { font-size: 12px; color: var(--text); flex: 1 1 auto; min-width: 140px; }
+.collab-sev {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.collab-sev-critical { color: var(--danger); border-color: var(--danger); }
+.collab-sev-major { color: var(--warning); border-color: var(--warning); }
+.collab-sev-minor, .collab-sev-suggestion { color: var(--muted); }
+.collab-disp {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.collab-finding.collab-disp-confirmed .collab-disp { color: var(--positive); }
+.collab-finding.collab-disp-uncertain .collab-disp { color: var(--warning); }
+.collab-finding.collab-disp-rejected .collab-disp { color: var(--danger); }
+.collab-excluded {
+  border-style: dashed;
+  opacity: .82;
+}
+.collab-readonly-note {
+  font-size: 10.5px;
+  color: var(--muted);
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+.collab-finding-pick {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--text);
+  padding: 3px 0;
+}
+
+/* ========================================================= chat room == */
+.collab-promotions, .collab-promote-row { margin-top: 8px; }
+.collab-promotion {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: 11.5px;
+  color: var(--positive);
+  border: 1px solid var(--positive);
+  border-radius: var(--radius-sm);
+  padding: 6px 9px;
+  background: color-mix(in srgb, var(--positive) 8%, var(--surface-2));
+  margin-bottom: 5px;
+}
+.collab-promote-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--muted);
+}
+.collab-promote-row .text-button { font-size: 11px; }
+
+/* ============================================================= empty == */
+.collab-empty, .collab-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ==================================================== follow-on rows == */
+.collab-followon {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+.collab-followon-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+/* ============================================================= panel == */
+.collab-panel { display: flex; flex-direction: column; max-height: min(82vh, 780px); }
+.collab-panel-body { overflow: auto; flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; }
+.collab-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 6px 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.collab-tab {
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.collab-tab:hover { color: var(--text); }
+.collab-tab.active {
+  color: var(--text);
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.collab-panel-foot {
+  border-top: 1px solid var(--border);
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.collab-participants-full { gap: 6px; }
+
+/* ================================================= participant view == */
+.collab-participant-view { display: flex; flex-direction: column; gap: 6px; }
+.collab-participant-view h3 { margin: 2px 0 0; font-size: 15px; color: var(--text); }
+.collab-participant-transcript {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ======================================================= configure == */
+.collab-configure-body { display: flex; flex-direction: column; gap: 10px; }
+.collab-configure-body h4 {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--muted);
+}
+.collab-field-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.collab-field-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  flex: 1 1 160px;
+}
+.collab-field-row input[type="text"],
+.collab-field-row input[type="number"],
+.collab-field-row select {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+}
+.collab-limit-warn { color: var(--danger); font-weight: 700; text-transform: none; }
+.collab-participant-editor { display: flex; flex-direction: column; gap: 6px; }
+.collab-participant-editor-row {
+  display: grid;
+  grid-template-columns: minmax(110px,1fr) minmax(150px,1.4fr) minmax(110px,1fr) auto auto auto;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.collab-participant-editor-row input,
+.collab-participant-editor-row select {
+  font: inherit;
+  font-size: 11.5px;
+  color: var(--text);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 6px;
+  min-width: 0;
+}
+.collab-add-specialists {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 9px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.collab-add-specialists strong { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+.collab-checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text); }
+.collab-configure-foot { display: flex; justify-content: flex-end; gap: 8px; }
+.collab-refusal-demo {
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface-2));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.collab-refusal-demo strong { font-size: 11.5px; color: var(--warning); }
+
+/* ===================================================== evidence dialog == */
+.collab-evidence-input {
+  width: 100%;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  resize: vertical;
+  margin: 8px 0;
+}
+
+/* ================================================== wand menu / auto == */
+.collab-auto-row { cursor: pointer; }
+.collab-auto-row input[type="checkbox"] { flex: none; }
+
+/* =================================================== activity domain == */
+.collab-hover { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; max-width: 320px; }
+.collab-hover strong { font-size: 12.5px; color: var(--text); }
+.collab-hover p { margin: 0; font-size: 11px; color: var(--muted); }
+.collab-activity-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.collab-activity-head { display: flex; align-items: center; gap: 8px; }
+.collab-activity-head strong { font-size: 12.5px; color: var(--text); }
+
+/* ================================================ reduced motion == */
+@media (prefers-reduced-motion: reduce) {
+  .collab-participant { transition: none; }
+  .collab-participant:active { transform: none; }
+}
+
+/* ===========================================================================
+   Additive Correction v4 (2026-09-03) — participant outcomes, waivers and the
+   completion-truth line. Tokens only (no --text-dim in this project).
+   =========================================================================== */
+.collab-participant .collab-p-outcome{
+  font:600 9.5px/1.5 var(--font-ui); text-transform:uppercase; letter-spacing:.05em;
+  border:1px solid var(--border); border-radius:999px; padding:0 6px;
+  color:var(--muted); background:var(--surface-3); align-self:flex-start;
+}
+.collab-participant .collab-p-outcome-completed{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
+.collab-participant .collab-p-outcome-failed,
+.collab-participant .collab-p-outcome-timed_out,
+.collab-participant .collab-p-outcome-unavailable{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.collab-participant .collab-p-outcome-canceled{ color:var(--subtle); border-style:dashed; }
+.collab-participant .collab-p-outcome-explicitly_waived{ color:var(--accent); border-style:dashed; }
+.collab-participant .collab-p-waiver,
+.collab-participant .collab-p-attempts,
+.collab-participant .collab-p-req{
+  font:400 10px/1.5 var(--font-ui); color:var(--subtle);
+}
+.collab-participant .collab-p-req{ letter-spacing:.03em; text-transform:uppercase; font-weight:600; }
+
+.collab-card .collab-truth{
+  display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+  margin:2px 0 6px; padding:6px 9px; border-radius:8px;
+  border:1px solid var(--border); background:var(--surface-3);
+  font:400 11px/1.5 var(--font-ui); color:var(--muted);
+}
+.collab-card .collab-truth strong{ color:var(--text); font:600 11px/1.5 var(--font-ui); }
+.collab-card .collab-truth-attention{
+  border-color:color-mix(in srgb, var(--warning) 45%, var(--border));
+  background:color-mix(in srgb, var(--warning) 7%, var(--surface-3));
+}
+.collab-card .collab-truth-review,
+.collab-card .collab-truth-vote,
+.collab-card .collab-truth-note{ color:var(--muted); }
+.collab-card .collab-truth-warn{ color:var(--warning); font-weight:500; }

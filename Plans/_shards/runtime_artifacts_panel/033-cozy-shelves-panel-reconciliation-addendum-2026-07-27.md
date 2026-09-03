@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2218-L2508
+Source lines: L2218-L2450
 
-Source SHA256: `7c0bb4c9b7a914ee98c6e8185dd2c7612033369b55b4a3024c95f070e6b49286`
+Source SHA256: `7b67c3b77b9b01ff15f7d0ef2e1561c9a3c00add9b610c9d4128d52a4c920b7b`
 
 ---
 
@@ -240,62 +240,4 @@ negative_constraints:
 owner_hints:
   - Plans/Runtime_Artifacts_Panel.md
   - Plans/FinalGUISpec.md
-```
-
-### RAP-052 - Retention, Pin, And Tombstone Surface
-
-```yaml
-plan_unit_id: RAP-052
-unit_type: requirement
-status: accepted
-owner_doc: Plans/Runtime_Artifacts_Panel.md
-canonical_text: >-
-  Every artifact row surfaces its retention truth. Rows whose RAP-010 retention class bounds their
-  lifetime show an expires-in line derived from the owner retention policy; a pin-to-keep action routes
-  through the owning retention/hold surface and is disabled with storage_read_only in viewer mode, where
-  permission approval cannot widen the gate. Expiry produces a tombstone row that preserves provenance
-  metadata - canonical artifact id, family, run/thread/attempt refs, receipt refs, retention class, and
-  redaction summary - after the content itself is gone. Tombstones and cleanup expire only regenerable
-  projections; they never delete canonical records or clear descendant/application/legal-hold refs, and
-  a tombstone renders visually distinct from failed, blocked, and empty states.
-gui_related: true
-gui_classification_reason: Expiry lines, pin actions, and tombstone rows are user-visible retention affordances.
-depends_on: [RAP-010, RAP-046, RAP-047]
-unblocks: []
-acceptance_criteria:
-  - Bounded-retention rows show an expires-in line sourced from owner retention policy, never a panel-local estimate.
-  - Pin-to-keep routes to the owning retention/hold surface and classifies as storage_read_only in viewer mode.
-  - Expired rows become tombstones preserving canonical id, family, lineage refs, receipt refs, retention class, and redaction summary.
-  - Tombstone fixtures prove canonical records and legal-hold refs survive projection expiry.
-  - Tombstone rendering is distinguishable from failed, blocked, and empty states.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
-validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future Runtime Artifacts retention and tombstone fixtures
-risk_class: retention_visibility_loss
-reasoning_tier: standard
-context_scope: artifact_retention_pin_tombstone
-implementation_surfaces:
-  - Plans/Runtime_Artifacts_Panel.md
-node_compile_hint:
-  mode: artifact_retention_pin_tombstone_surface
-  create_worknodes: false
-  create_nodeseeds: false
-source_lineage:
-  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
-  - "user decision 2026-07-27"
-  - "Plans/Runtime_Artifacts_Panel.md:166-190"
-  - "Plans/Runtime_Artifacts_Panel.md:2048"
-preserved_exact_tokens:
-  - durable
-  - session_bounded
-  - ephemeral_view
-  - storage_read_only
-negative_constraints:
-  - Do not let panel cleanup or expiry delete canonical records or clear legal-hold refs.
-  - Do not render a tombstone as failed, blocked, or empty.
-  - Do not enable pin-to-keep in viewer or blocked storage modes.
-owner_hints:
-  - Plans/Runtime_Artifacts_Panel.md
-  - Plans/storage-plan.md
 ```

@@ -656,6 +656,7 @@ Core rules:
 - `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the tool creates items silently; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.
 - `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
 - TODO is the SSOT for plan execution state across single-agent, crew, and subagent runs. `/revise` creates an explicit new draft/revision instead of mutating approved history invisibly; sticky-panel-vs-inline-progress is a UI division, not a second TODO state model. The sticky-card / execution-tracker surface owns the full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions, while inline-progress chat messages stay compact and link back to the sticky panel.
+- **Superseded by `## 15`:** the SSOT sentence above is retained as source lineage only. The canonical To-Do list, item identity, statuses, hierarchy, dependencies, work bindings, transitions, rollups, and recovery are owned by `Plans/ToDo_Runtime.md`. In this document `todowrite` and every provider-native `TodoWrite` equivalent are proposal endpoints reconciled by the `ToDoController` against the canonical list, and `todoread` is a projection read. Whole-list replacement is import compatibility and diagnostics only; individually receipted item transitions carrying item-level cause evidence are the live authority. See `### 15.1` and `### 15.2`.
 
 Fields:
 - Q&A loop
@@ -2311,6 +2312,121 @@ Rules:
 - Question/questionnaire session state persistence and TODO schema persistence are storage-owned carry-through requirements that web cache and activity payloads must not overwrite.
 
 Compatibility/source-lineage disposition: this extract preserves cache state values, provider labels, and storage carry-through rules as source tokens. Cache persistence and activity payload typing remain storage-owned while Tools owns cache-routing behavior.
+## 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries
+
+Tools remains the single tool authority for Puppet Master. Every tool invocation — from the primary Assistant run, a Crew member, a BrainStorm participant, a Review reviewer, a Chat Room speaker, a Back Seat Driver advisor, a scheduled dispatch, or a provider-emitted tool intent — resolves through this document's registry, policy engine, dispatch order, FileSafe integration, deadline propagation, receipt taxonomy, and Usage rollup. No consumer surface may define a second tool registry, a second dispatcher, a second permission resolution path, or a second success taxonomy. This section closes the consumer boundaries that the Assistant redesign introduces and supersedes any earlier phrasing in this document that treated the TODO tool family as its own execution-state owner.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/MCP_Integration.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### 15.1 To-Do tool semantics are proposal semantics
+
+`Plans/ToDo_Runtime.md` is the sole semantic owner of the one current thread To-Do list, item identity, hierarchy, dependencies, parallel groups, statuses, work bindings, rollups, recovery, and Activity projection. Tools owns only the tool-shaped surface through which an agent or provider asks that owner to change something.
+
+The `todowrite` tool and every provider-native `TodoWrite`-style equivalent are **proposal endpoints**. A whole-list payload is a *proposed* list state, never an applied one. Tools normalizes the payload, binds it to exact thread, project, list revision, actor, permission snapshot, and idempotency key, and hands it to the `ToDoController` for reconciliation against the canonical list. The controller decides which proposed items are created, matched to existing `todo_id` values, reordered, or rejected, and which proposed status changes are admissible. A payload that arrives with no expected list revision, or with a stale one, is reconciled or rejected — it is never applied by overwrite. `todoread` returns the canonical projection of the current list and remains a read operation with no `source_surface` mutation authority.
+
+The following are explicitly retired as tool-layer behavior: whole-list replacement as live authority; the tool marking items complete because the model's internal checklist changed; a tool result being treated as the durable list; and the earlier statement in `### 3.5C` that the TODO tool family is "the SSOT for plan execution state". The normalized TODO schema in `### 3.5C` remains the wire shape for proposals and reads; the canonical record shapes are `pm.chat.todo_item.v2`, `pm.chat.todo_work_binding.v1`, and `pm.chat.todo_transition.v1` under the To-Do Runtime owner.
+
+Typed proposal outcomes, returned per proposed item rather than per payload:
+
+```text
+accepted_created | accepted_matched | accepted_status_changed | accepted_reordered
+| rejected_stale_revision | rejected_not_owned | rejected_status_not_admissible
+| rejected_outcome_unsatisfied | rejected_permission_denied | rejected_duplicate_idempotency
+| deferred_requires_approval
+```
+
+A payload is partially applicable: accepted items commit and rejected items return their exact reason. Tools must not collapse a mixed result into a single success or a single failure, and must not silently drop a rejected item from the returned envelope.
+
+### 15.2 Individually receipted item transitions replace whole-list snapshots
+
+Every canonical status change is one `pm.chat.todo_transition.v1` record carrying `from_status`, `to_status`, `cause_kind`, `cause_ref`, `expected_revision`, and `committed_revision`. Tools supplies the cause evidence; it does not supply the transition. Cause kinds admitted from the tool layer are `work_admitted`, `outcome_satisfied`, `dependency_changed`, `external_block`, `explicit_skip`, `retry`, and `reopen`; `child_rollup` is derived by the owner and is never tool-emitted.
+
+Tool success is evidence input, not completion. A `completed` transition requires that the item's `expected_outcome` be satisfied and that a work binding in `pm.chat.todo_work_binding.v1` reached a terminal successful result; a green tool receipt alone does not satisfy it. A failed attempt does not automatically fail or skip an item; retry policy decides. Work bindings carry `work_kind` values `primary_segment`, `subagent_assignment`, `crew_assignment`, `tool_batch`, `research`, `validation`, and `artifact_generation`, so a Crew assignment or a batched tool run is attributable to the exact item it advanced. Several leaf items may be in progress simultaneously and out of display order; Tools must not serialize dispatch on the assumption that only one item is active.
+
+Whole-list snapshots survive in exactly one place: import compatibility and diagnostics. A snapshot observed from a provider is a noncanonical observation and is never promoted to canon automatically.
+
+### 15.3 Read-only tool profile
+
+Tools defines and owns one canonical read-only tool profile. `Plans/Back_Seat_Driver.md` consumes it by profile ID as `read_only_tool_profile_id`; Review and BrainStorm consume the same profile family for their read-only target boundary. The profile is a Tools-owned object so that exactly one place decides what "read-only" means.
+
+Admitted read-only capability:
+
+- file and project search/read operations;
+- `grep` and LSP diagnostics;
+- diff and source-control inspection;
+- test and build output inspection;
+- artifact, receipt, and Usage lookup;
+- ordinary browser DOM, screenshot, console, and network inspection;
+- external documentation and research operations under the active network policy.
+
+Forbidden under the profile, with no per-run widening:
+
+- project write or edit of any kind;
+- mutating shell;
+- installation or MCP mutation;
+- approval or permission mutation;
+- credential mutation;
+- publish, deploy, merge, or commit;
+- the protected authentication browser;
+- direct control of the primary run.
+
+An advisor or reviewer holding this profile cannot request an out-of-profile tool and cannot be granted one by a parent run, a Persona, a Skill, or a provider adapter. A route that cannot honor the boundary — an opaque provider that executes its own mutating tools internally — is not eligible for a read-only assignment unless it is used reasoning-only with no execution access at all; Tools returns an availability failure naming the unsatisfied profile rather than downgrading the profile. Review and BrainStorm additionally hold no direct mutating tool against their frozen target: Review never repairs what it reviews, and BrainStorm is read-only against the target project for the whole planning run.
+
+### 15.4 Collaborative workflow tool dispatch boundary
+
+`Plans/Collaborative_Workflows.md` owns participant identity, per-participant tool *selection*, the configuration modal that captures it, and the requested/effective disclosure. Tools owns dispatch. A participant's selection is a bounded subset of tools already registered here, expressed as a tool profile plus explicit tool IDs in `requested_tool_profile_id` and the participant's requested tool set. There is no workflow-local tool registry, no workflow-local schema, no workflow-local permission resolution, and no workflow-local receipt format.
+
+Dispatch rules for participant tool calls:
+
+- the participant's effective tool set is the intersection of its requested set, the workflow's tool policy, and the parent permission ceiling — intersection only, never union;
+- a participant cannot widen its own set mid-run, and a coordinator cannot widen a member's set beyond the ceiling frozen at run start;
+- every invocation carries workflow run identity, participant slot identity, attempt identity, and the To-Do or Plan identity it advances when one is active;
+- Usage, receipts, and artifacts attribute to the exact participant slot, never to the parent run in aggregate;
+- a tool unavailable to a participant returns a typed unavailability naming the narrowing source, and the participant is told; it is not silently omitted from the participant's advertised capability list.
+
+Crew members execute delegated work under the parent's mutation authority and no more. Chat Room participants discuss; a room turn does not acquire mutation authority merely because a tool exists. Review and BrainStorm participants run under §15.3.
+
+### 15.5 Temporary research capability requests
+
+A BrainStorm or other research participant may need a capability that is not installed — an MCP server, a media utility, a package. Tools does not install it and does not hold an escape hatch for it. The participant emits a capability request that Tools routes to the `ResearchCapabilityProvisioningOperation` path (`pm.research.capability_provisioning.v1`) under `Plans/MCP_Integration.md` for MCP-shaped capability, `Plans/Shared_Integration_Runtime.md` for the installation/execution work, and `Plans/Permissions_System.md` for the approval gate. Existing capability is resolved first. The preferred effective scope is a temporary isolated run sandbox; persistent project, host, or global installation requires ordinary explicit approval through the normal installation owner. Tools exposes the newly provisioned capability to the requesting run only after the operation reaches `ready`, withdraws it at teardown, and never leaves a provisioned tool visible in the registry after the operation reaches `cleaned`. No planning participant mutates the target project or host outside that approved service.
+
+### 15.6 Provider-native tool suppression and observation
+
+For every provider route, provider-native tool, To-Do, Plan, subagent, MCP, and Skill facilities are handled in this exact order: disable when the provider supports disabling; redirect compatibility invocations into the corresponding Puppet Master service; project Puppet Master configuration into the format the provider requires; ingest unavoidable native state as noncanonical observation; never silently promote an observation to canon. Host Tool Execution is the preferred shape — the provider emits a tool intent, Tools validates schema and identity, Permissions and FileSafe evaluate, Tools dispatches the canonical tool, and the result and receipt return to the provider. Delegated provider-internal execution is the fallback and is isolated, restricted, snapshotted, reconciled, and disclosed. Reasoning-only is the final fallback when safe execution cannot be controlled. The capability fields, the four capability values, the three control tiers, and the four adapter classes that govern which of these is available are owned by `Plans/CLI_Bridged_Providers.md`; Tools consumes that matrix and must not restate a different one.
+
+### 15.7 Browser capture tool dispatch
+
+Browser capture actions — visible full screenshot, explicit full-page screenshot, region screenshot, and component selection — are dispatched as ordinary Tools operations against the Puppet Master-owned browser session, with `Plans/Section15_MVP_Promoted_Features_Spec.md` owning the capture product semantics and `pm.browser.element_context.v1` owning the retained component context. Agent access to the ordinary internal browser and DevTools is policy-controlled through Permissions. The protected authentication browser is excluded from capture, DevTools, advisor inspection, and persistence regardless of provider capability or profile, and there is no tool, profile, or provider projection that reaches it.
+
+### 15.8 Consumed command IDs
+
+Tools registers no new command IDs for this section. It dispatches for the owners below and its required result boundary is stated so a consumer cannot mistake a tool receipt for a domain mutation.
+
+| Command ID | Owner | Required result boundary |
+|---|---|---|
+| `cmd.chat.todos.open` | `Plans/ToDo_Runtime.md` | Projection only; opening the list never mutates items or bindings. |
+| `cmd.chat.todos.open_work` | `Plans/ToDo_Runtime.md` | Opens the bound work record; a tool receipt shown there is evidence, not a status change. |
+| `cmd.collaboration.start` | `Plans/Collaborative_Workflows.md` | Freezes the per-participant effective tool set; later tool calls cannot widen it. |
+| `cmd.collaboration.participant.open` | `Plans/Collaborative_Workflows.md` | Shows the participant's exact requested and effective tool set and its narrowing source. |
+| `cmd.bsd.configure` | `Plans/Back_Seat_Driver.md` | Selects a read-only profile ID owned here; it cannot define new tool capability. |
+| `cmd.browser.capture.full_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | Dispatches capture through Tools; protected-auth sessions return an explicit exclusion, not an empty capture. |
+| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | Policy-controlled; denial returns a typed permission result rather than a disabled-looking no-op. |
+
+These exact IDs are owner requests and are not registered until the central command catalog, event catalog, and production wiring rows adopt them. Until then the GUI controls that reach them remain disabled with `command_not_registered`; no page-local handler, tool shim, or alias may simulate success.
+
+### 15.9 Events
+
+The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on — `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` — belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.
+
+### 15.10 Migration
+
+Existing `todowrite` call sites that relied on whole-list replacement become proposal calls with per-item outcomes; callers that assumed a single boolean success must be updated before the endpoint is admitted. Legacy `verifying` To-Do inputs map to `in_progress`, and a validation To-Do is created only where source evidence proves validation remained work. Legacy `replanned` inputs map to an event plus the resulting item state, never to a status. Whole-list provider snapshots already stored become noncanonical observations unless they pass validated reconciliation. Ask and Plan preset rules that removed blanket auto-deny for `todowrite`, `todoread`, `question`, and the web operation family are preserved; the proposal reframing changes what the tool may do, not whether it is reachable. No blanket-deny is reintroduced by this section.
+
+### 15.11 Verification
+
+Structural tests must prove: a whole-list payload with a stale revision is reconciled or rejected and never overwrites; a mixed payload returns per-item outcomes; a green tool receipt without a satisfied `expected_outcome` cannot produce a `completed` transition; every completion transition carries an item-level `cause_ref`; the read-only profile rejects each forbidden capability class including protected-auth browser access; a participant cannot widen its effective tool set at call time; a coordinator cannot widen a member beyond the frozen ceiling; a research capability is unavailable before `ready` and unreachable after `cleaned`; and a provider-native tool intent without host execution is disclosed at its true control tier rather than reported as full interception. Behavior tests must prove that mixed-result proposals surface every rejection to the user-visible surface and that no consumer surface holds a second tool registry. Static validation of this section is not runtime registration, persistence, GUI, event, wiring, or buildability proof.
+
+
 ## Canonical owner and consumer reconciliation
 
 Tools are defined SSOT in this document. Consumers in other surfaces (UI, CLI, Help, Permissions) reference this document rather than restating tool definitions.
@@ -12418,4 +12534,235 @@ negative_constraints:
 owner_hints:
   - Plans/Tools.md
   - Plans/Shared_Integration_Runtime.md
+```
+
+## Assistant Redesign Consumer Addendum - 2026-09-03
+
+### T-179 - To-Do Tool Proposal Semantics And Receipted Item Transitions
+
+```yaml
+plan_unit_id: T-179
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  The todowrite tool and every provider-native TodoWrite-style whole-list payload are proposal endpoints that Tools
+  normalizes, binds to exact thread, project, list revision, actor, permission snapshot, and idempotency key, and hands
+  to the ToDoController owned by Plans/ToDo_Runtime.md for reconciliation against the canonical list; whole-list
+  replacement is never live authority, per-item proposal outcomes are returned individually, and every canonical status
+  change is one receipted transition carrying item-level cause evidence with a satisfied expected outcome rather than a
+  bare tool success.
+gui_related: true
+gui_classification_reason: Determines what the Activity To-Do list and approval prompts may show as an applied change versus a proposal outcome.
+depends_on: [T-027, T-028, T-007, T-076]
+unblocks: []
+acceptance_criteria:
+  - A whole-list payload with a stale or absent expected list revision is reconciled or rejected and never overwrites the canonical list.
+  - A mixed payload returns per-item accepted and rejected outcomes with exact reasons and drops no item from the envelope.
+  - A green tool receipt without a satisfied expected outcome and a terminal successful work binding cannot produce a completed transition.
+  - todoread remains a projection read and never appears as a source_surface mutation source.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: todo_whole_list_authority_drift
+reasoning_tier: high
+context_scope: todo_tool_proposal_boundary
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/ToDo_Runtime.md
+node_compile_hint:
+  mode: todo_tool_proposal_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:TODO-009
+  - pm-assistant-implementation-2026-09-02-recovered:TODO-010
+  - pm-assistant-implementation-2026-09-02-recovered:TODO-011
+  - pm-assistant-implementation-2026-09-02-recovered:TODO-012
+  - pm-assistant-implementation-2026-09-02-recovered:PROVIDER-007
+source_atom_ids: []
+preserved_exact_tokens:
+  - todowrite
+  - todoread
+  - TodoWrite
+  - ToDoController
+  - pm.chat.todo_item.v2
+  - pm.chat.todo_transition.v1
+  - pm.chat.todo_work_binding.v1
+negative_constraints:
+  - Do not let a whole-list payload directly mark canonical items complete.
+  - Do not collapse a mixed proposal result into one success or one failure.
+  - Do not move To-Do semantics, hierarchy, statuses, or rollups into Tools.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/ToDo_Runtime.md
+```
+
+### T-180 - Canonical Read-Only Tool Profile For Advisors And Reviewers
+
+```yaml
+plan_unit_id: T-180
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Tools defines exactly one canonical read-only tool profile admitting search/read, grep and LSP diagnostics,
+  diff and source-control inspection, test and build output inspection, artifact/receipt/Usage lookup, ordinary browser
+  inspection, and network-policy-bounded research, while forbidding project write, mutating shell, installation or MCP
+  mutation, approval, permission or credential mutation, publish/deploy/merge/commit, the protected authentication
+  browser, and direct primary-run control; Back Seat Driver, Review, and BrainStorm consume this profile by ID and no
+  parent run, Persona, Skill, or provider adapter may widen it.
+gui_related: true
+gui_classification_reason: The profile and its narrowing source are shown in advisor and participant detail surfaces and gate visible tool controls.
+depends_on: [T-007, T-074, T-092]
+unblocks: []
+acceptance_criteria:
+  - Each forbidden capability class is rejected under the profile including protected authentication browser access.
+  - A route that cannot honor the read-only boundary returns an availability failure naming the unsatisfied profile instead of a downgraded profile.
+  - Review holds no direct mutating tool against its frozen target and BrainStorm holds none against the target project.
+  - Persona or Skill selection never adds a tool outside the profile.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: read_only_profile_widening
+reasoning_tier: high
+context_scope: read_only_tool_profile
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: read_only_tool_profile_owner
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:BSD-011
+  - pm-assistant-implementation-2026-09-02-recovered:REVIEW-011
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-007
+source_atom_ids: []
+preserved_exact_tokens:
+  - read_only_tool_profile_id
+  - protected authentication browser
+negative_constraints:
+  - Do not define a second read-only profile in an advisor, reviewer, or workflow document.
+  - Do not permit per-run widening of the profile.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Back_Seat_Driver.md
+```
+
+### T-181 - Collaborative Participant Tool Dispatch Without A Workflow Registry
+
+```yaml
+plan_unit_id: T-181
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Plans/Collaborative_Workflows.md selects per-participant tools and discloses requested versus effective assignment
+  while Tools remains the sole tool authority that registers, resolves, dispatches, receipts, and attributes every
+  participant invocation; a participant effective tool set is the intersection of its requested set, the workflow tool
+  policy, and the parent permission ceiling frozen at run start, cannot be widened by the participant or its
+  coordinator, and there is no workflow-local tool registry, schema, permission path, or receipt format.
+gui_related: true
+gui_classification_reason: Participant rows and panels display exact requested and effective tool sets and their narrowing source.
+depends_on: [T-002, T-005, T-058, T-074]
+unblocks: []
+acceptance_criteria:
+  - Effective participant tool sets are computed by intersection and never by union.
+  - A coordinator cannot grant a member a tool outside the frozen parent ceiling.
+  - Every participant invocation carries workflow run, participant slot, attempt, and active Plan or To-Do identity.
+  - A tool narrowed away returns typed unavailability naming the narrowing source rather than being silently omitted.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: workflow_local_tool_registry_drift
+reasoning_tier: high
+context_scope: collaborative_tool_dispatch
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: collaborative_tool_dispatch_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-003
+  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-009
+  - pm-assistant-implementation-2026-09-02-recovered:CREW-005
+  - pm-assistant-implementation-2026-09-02-recovered:DRY-001
+source_atom_ids: []
+preserved_exact_tokens:
+  - requested_tool_profile_id
+  - participant_slot_id
+negative_constraints:
+  - Do not create a workflow-local tool registry or dispatcher.
+  - Do not let Crew Auto or a coordinator widen authority.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Collaborative_Workflows.md
+```
+
+### T-182 - Research Capability Requests, Provider-Native Tool Order, And Browser Capture Dispatch
+
+```yaml
+plan_unit_id: T-182
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  A research participant capability request is routed to the ResearchCapabilityProvisioningOperation path rather than
+  installed by Tools, is exposed to the requesting run only between ready and cleaned states, and never permits direct
+  target-project or host mutation; provider-native tool, To-Do, Plan, subagent, MCP, and Skill facilities are disabled,
+  redirected, projected, or observed as noncanonical in that exact order with Host Tool Execution preferred, delegated
+  isolated execution as fallback and reasoning-only as final fallback; browser capture dispatches through Tools with the
+  protected authentication browser excluded regardless of provider capability or profile.
+gui_related: true
+gui_classification_reason: Governs visible provisioning operation cards, capture actions, DevTools availability, and control-tier disclosure.
+depends_on: [T-068, T-164, T-176]
+unblocks: []
+acceptance_criteria:
+  - A requested research capability is unavailable before the operation reaches ready and unreachable after it reaches cleaned.
+  - Persistent project, host, or global installation requires ordinary explicit approval through the installation owner.
+  - A provider-native tool intent that cannot be host-executed is disclosed at its true control tier and never reported as full interception.
+  - Protected authentication browser sessions return an explicit exclusion for capture, DevTools, and advisor inspection.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provisioning_or_provider_tool_authority_drift
+reasoning_tier: high
+context_scope: research_provisioning_and_provider_tools
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/MCP_Integration.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: provider_and_provisioning_tool_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-008
+  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-009
+  - pm-assistant-implementation-2026-09-02-recovered:PROVIDER-002
+  - pm-assistant-implementation-2026-09-02-recovered:PROVIDER-006
+  - pm-assistant-implementation-2026-09-02-recovered:BROWSER-008
+  - pm-assistant-implementation-2026-09-02-recovered:BROWSER-009
+source_atom_ids: []
+preserved_exact_tokens:
+  - ResearchCapabilityProvisioningOperation
+  - pm.research.capability_provisioning.v1
+  - Host Tool Execution
+negative_constraints:
+  - Do not install research capability from inside the tool layer.
+  - Do not promote provider-native observation to canonical state.
+  - Do not expose the protected authentication browser through any tool, profile, or provider projection.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/MCP_Integration.md
 ```

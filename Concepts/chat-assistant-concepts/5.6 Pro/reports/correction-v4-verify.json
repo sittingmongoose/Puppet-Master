@@ -1,0 +1,969 @@
+{
+  "suite": "correction-v4-verify",
+  "scope_note": "Concept-side only. Proves the 5.6 Pro surface behaves as the correction specifies. It is NOT native proof: no Rust handler, storage engine, scheduler, provider adapter or recovery path is exercised. Adapter conformance, real dispatch, and wiring proof require a live native runtime and are explicitly out of scope for this suite.",
+  "total": 112,
+  "pass": 112,
+  "fail": 0,
+  "results": [
+    {
+      "name": "QMAX-001/002 the six bases are 3/6/8 and 10/15/20",
+      "pass": true,
+      "detail": {
+        "got": {
+          "quick": 3,
+          "standard": 6,
+          "thorough": 8,
+          "deep_thorough": 10,
+          "deep_exhaustive": 15,
+          "brainstorm": 20
+        },
+        "want": {
+          "quick": 3,
+          "standard": 6,
+          "thorough": 8,
+          "deep_thorough": 10,
+          "deep_exhaustive": 15,
+          "brainstorm": 20
+        }
+      }
+    },
+    {
+      "name": "QMAX-003 the Grill Me extension is 25, not 10",
+      "pass": true,
+      "detail": 25
+    },
+    {
+      "name": "QMAX-004 the six effective maxima are 28/31/33/35/40/45",
+      "pass": true,
+      "detail": {
+        "got": [
+          28,
+          31,
+          33,
+          35,
+          40,
+          45
+        ],
+        "want": [
+          28,
+          31,
+          33,
+          35,
+          40,
+          45
+        ]
+      }
+    },
+    {
+      "name": "QMAX-004 the total is DERIVED, never a second stored literal",
+      "pass": true,
+      "detail": {
+        "base": 20,
+        "ext": 25,
+        "eff": 45
+      }
+    },
+    {
+      "name": "QMAX-006 three different participants share ONE counter",
+      "pass": true,
+      "detail": {
+        "asked": 3,
+        "remaining": 17,
+        "limit": 20
+      }
+    },
+    {
+      "name": "QMAX-007 NEGATIVE: re-presenting the same QuestionItem charges nothing",
+      "pass": true,
+      "detail": {
+        "a": 1,
+        "b": 1,
+        "charged": false,
+        "reason": "already_charged"
+      }
+    },
+    {
+      "name": "QMAX-011/012 a reused answer and a researched fact consume no allowance",
+      "pass": true,
+      "detail": {
+        "asked": 0,
+        "reused": 1,
+        "research": 1
+      }
+    },
+    {
+      "name": "QMAX-014 NEGATIVE: at the ceiling, typed question_budget_exhausted and the run survives",
+      "pass": true,
+      "detail": {
+        "error": "question_budget_exhausted",
+        "ok": false,
+        "runFailed": false,
+        "asked": 3
+      }
+    },
+    {
+      "name": "QMAX-009 enabling Grill Me raises the ceiling by exactly 25 and never resets asked",
+      "pass": true,
+      "detail": {
+        "before": 8,
+        "after": 33,
+        "asked": 5
+      }
+    },
+    {
+      "name": "QMAX-010 disabling it again lowers no count and deletes no history",
+      "pass": true,
+      "detail": {
+        "asked": 5,
+        "limit": 8
+      }
+    },
+    {
+      "name": "PPROG-004 leaf states use exactly the correction vocabulary",
+      "pass": true,
+      "detail": {
+        "got": [
+          "completed",
+          "in_progress",
+          "completed",
+          "pending",
+          "blocked",
+          "skipped"
+        ],
+        "want": [
+          "completed",
+          "in_progress",
+          "completed",
+          "pending",
+          "blocked",
+          "skipped"
+        ]
+      }
+    },
+    {
+      "name": "PPROG-004 a parent with heterogeneous children is `mixed`",
+      "pass": true,
+      "detail": {
+        "state": "mixed",
+        "todo_ids": [],
+        "reason": null,
+        "work": [],
+        "evidence": [],
+        "children": [
+          "cs-2a",
+          "cs-2b"
+        ]
+      }
+    },
+    {
+      "name": "PPROG-005 two steps are in_progress at once (real concurrency)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-005 a later step completed before an earlier one (out of order)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-007 NEGATIVE: an unmet DEPENDENCY leaves the step pending, not blocked",
+      "pass": true,
+      "detail": {
+        "state": "pending",
+        "todo_ids": [
+          "tc-04"
+        ],
+        "reason": null,
+        "work": [],
+        "evidence": []
+      }
+    },
+    {
+      "name": "PPROG-007 blocked names its owning condition",
+      "pass": true,
+      "detail": "blocker:tc-05-no-eviction-hook"
+    },
+    {
+      "name": "PPROG-003 every step state is joined by To-Do id, not by title",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-002 the projection is derived from the To-Do owner",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-006 the step state FOLLOWS the To-Do, proving derivation",
+      "pass": true,
+      "detail": {
+        "got": {
+          "before": "blocked",
+          "after": "completed",
+          "restored": "blocked"
+        },
+        "want": {
+          "before": "blocked",
+          "after": "completed",
+          "restored": "blocked"
+        }
+      }
+    },
+    {
+      "name": "PPROG-010 Markdown serialisation is byte-stable under a progress change",
+      "pass": true,
+      "detail": {
+        "sameMd": true,
+        "sameHash": true,
+        "hasCheckbox": false
+      }
+    },
+    {
+      "name": "PPROG-010 NEGATIVE: no checkbox is injected into the Markdown",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-012 the stale-projection control exists on the Plan Details surface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PPROG-013 RESTART: the currentness hash is a pure function of durable records",
+      "pass": true,
+      "detail": {
+        "stableAcrossReads": true,
+        "movesWithInputs": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "PFAIL-001 the primary control only ever shows the four labels",
+      "pass": true,
+      "detail": {
+        "got": [
+          "Build",
+          "Building…",
+          "Completed",
+          "Canceled"
+        ],
+        "want": [
+          "Build",
+          "Building…",
+          "Completed",
+          "Canceled"
+        ]
+      }
+    },
+    {
+      "name": "PFAIL-002 an unfinished Plan carries its condition as SECONDARY truth",
+      "pass": true,
+      "detail": {
+        "kind": "window",
+        "line": "Outside execution window"
+      }
+    },
+    {
+      "name": "PFAIL-002 the button label is still Building… while that condition holds",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PFAIL-002 the attention projection admits only owner-listed actions",
+      "pass": true,
+      "detail": [
+        "resume",
+        "details",
+        "cancel"
+      ]
+    },
+    {
+      "name": "PFAIL-001 NEGATIVE: no rendered Build control says anything else",
+      "pass": true,
+      "detail": [
+        "Build",
+        "Completed",
+        "Canceled",
+        "Build"
+      ]
+    },
+    {
+      "name": "PDET-009 every registered renderer kind is represented",
+      "pass": true,
+      "detail": [
+        "mermaid",
+        "chart",
+        "graph",
+        "image",
+        "diagram",
+        "checklist",
+        "video",
+        "interactive",
+        "cad"
+      ]
+    },
+    {
+      "name": "PDET-008 every embed freezes an exact artifact_version",
+      "pass": true,
+      "detail": [
+        "art-flow-read-path@v3",
+        "art-p99-by-tenant@v7",
+        "art-call-graph@v2",
+        "art-explain-plan@v1",
+        "art-schema-delta@v4",
+        "art-rollout-checks@v2",
+        "art-repro-capture@v1",
+        "art-latency-explorer@v5",
+        "art-deleted-trace@v1",
+        "art-row-counts@v2",
+        "art-prod-dashboard@v9",
+        "art-cad-model@v1"
+      ]
+    },
+    {
+      "name": "PDET-012 all four unavailable reasons are represented",
+      "pass": true,
+      "detail": [
+        "ok",
+        "missing",
+        "stale",
+        "denied",
+        "unsupported"
+      ]
+    },
+    {
+      "name": "PDET-011 video and interactive both carry a static fallback for PDF",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PDET-010 interactive content is marked sandboxed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PDET-012 NEGATIVE: an unavailable embed still carries its text summary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PGOAL-003 no Goal exists before Build as Goal is used",
+      "pass": true,
+      "detail": {
+        "label": "Build",
+        "bound": false,
+        "todos": 16
+      }
+    },
+    {
+      "name": "PGOAL-003 one Goal, one PlanRun and one binding committed together",
+      "pass": true,
+      "detail": {
+        "goal": true,
+        "run": "run-ap-index-V5",
+        "count": 1
+      }
+    },
+    {
+      "name": "PGOAL-002 the Plan control moved to Building… through the SAME build command",
+      "pass": true,
+      "detail": "Building…"
+    },
+    {
+      "name": "PGOAL-004 the binding REFERENCES the existing To-Do list rather than duplicating it",
+      "pass": true,
+      "detail": "todos:query"
+    },
+    {
+      "name": "PGOAL-005/GREPLAY-001 the Goal is text-only with no title field",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PGOAL-006 origin lineage records WHY the Goal exists, without a title",
+      "pass": true,
+      "detail": "plan_build"
+    },
+    {
+      "name": "PGOAL-012 RACE: the same idempotency key returns the ORIGINAL Goal and run",
+      "pass": true,
+      "detail": {
+        "replayed": true,
+        "sameGoal": true,
+        "count": 1
+      }
+    },
+    {
+      "name": "PGOAL-011 NEGATIVE: a duplicate/stale bind request fails closed",
+      "pass": true,
+      "detail": "active_run_exists"
+    },
+    {
+      "name": "PGOAL-007 pausing the Goal keeps the Plan at Building… with a Paused reason",
+      "pass": true,
+      "detail": "Building…"
+    },
+    {
+      "name": "PGOAL-008 cancelling the Goal makes the Plan Canceled",
+      "pass": true,
+      "detail": "Canceled"
+    },
+    {
+      "name": "PGOAL-008/SMSG-016 NEGATIVE: unrelated scheduled MESSAGES are untouched by that cancel",
+      "pass": true,
+      "detail": {
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "name": "GREPLAY-010 NEGATIVE: resume after a manual cancel is refused",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "canceled_is_terminal"
+      }
+    },
+    {
+      "name": "MODAL-002 the effect ledger starts at zero (nothing ran on load)",
+      "pass": true,
+      "detail": {
+        "got": {
+          "runs": 0,
+          "providerCalls": 0,
+          "usageRecords": 0,
+          "events": 0,
+          "cards": 0,
+          "settingsWrites": 0,
+          "installs": 0,
+          "participants": 0
+        },
+        "want": {
+          "runs": 0,
+          "providerCalls": 0,
+          "usageRecords": 0,
+          "events": 0,
+          "cards": 0,
+          "settingsWrites": 0,
+          "installs": 0,
+          "participants": 0
+        }
+      }
+    },
+    {
+      "name": "MODAL-001 opening a workflow modal creates only a local launch draft",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "MODAL-002 NEGATIVE: open → configure → cancel leaves EVERY effect counter at zero",
+      "pass": true,
+      "detail": {
+        "got": {
+          "runs": 0,
+          "providerCalls": 0,
+          "usageRecords": 0,
+          "events": 0,
+          "cards": 0,
+          "settingsWrites": 0,
+          "installs": 0,
+          "participants": 0
+        },
+        "want": {
+          "runs": 0,
+          "providerCalls": 0,
+          "usageRecords": 0,
+          "events": 0,
+          "cards": 0,
+          "settingsWrites": 0,
+          "installs": 0,
+          "participants": 0
+        }
+      }
+    },
+    {
+      "name": "MODAL-004 cancel discards the draft and creates no run and no card",
+      "pass": true,
+      "detail": {
+        "draft": false,
+        "runs": 9,
+        "before": 9
+      }
+    },
+    {
+      "name": "PART-001 the six terminal outcomes are exactly the correction set",
+      "pass": true,
+      "detail": {
+        "got": [
+          "completed",
+          "failed",
+          "timed_out",
+          "unavailable",
+          "canceled",
+          "explicitly_waived"
+        ],
+        "want": [
+          "completed",
+          "failed",
+          "timed_out",
+          "unavailable",
+          "canceled",
+          "explicitly_waived"
+        ]
+      }
+    },
+    {
+      "name": "PART-007 a one-reviewer Review labels itself a single pass",
+      "pass": true,
+      "detail": "Single independent pass — no peer corroboration, agreement, quorum or consensus is claimed."
+    },
+    {
+      "name": "PART-007 NEGATIVE: a single pass reports no quorum",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PART-008 a partial Review discloses requested/completed/failed and stays attention-required",
+      "pass": true,
+      "detail": {
+        "requested_passes": 3,
+        "completed_passes": 2,
+        "failed_passes": 1,
+        "single_pass": false,
+        "partial": true,
+        "claims_corroboration": false,
+        "label": "Partial: 2 of 3 requested passes completed, 1 failed. Not a full Multi-Pass result."
+      }
+    },
+    {
+      "name": "PART-008 NEGATIVE: it does not finalise as a full Multi-Pass",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "WONV-003/PART-012 an active Wonderer abstains and leaves the DENOMINATOR",
+      "pass": true,
+      "detail": {
+        "denominator": 4,
+        "abstain": 2,
+        "pct": 50
+      }
+    },
+    {
+      "name": "WONV-003 NEGATIVE: abstention is not counted as opposition",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "PART-014 a tie is surfaced as a tie, not rendered as consensus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "WONV-007/PART-011 Wonderer is additive (optional) and cast no vote",
+      "pass": true,
+      "detail": {
+        "required": false,
+        "vote": null,
+        "outcome": "completed"
+      }
+    },
+    {
+      "name": "PART-017 a failed coordinator blocks clean completion and is named",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PART-016 a missing required OUTPUT is named, not glossed over",
+      "pass": true,
+      "detail": [
+        "synthesis-summary"
+      ]
+    },
+    {
+      "name": "PART-002 an explicit waiver carries actor, reason and currentness",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PART-018 NEGATIVE: a failed Chat Room member produces no fabricated messages",
+      "pass": true,
+      "detail": {
+        "gone": true,
+        "fabricated": 0
+      }
+    },
+    {
+      "name": "PART-004 retry creates a NEW attempt identity and preserves the failed one",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "before": 1,
+        "after": 2,
+        "preserved": "timed_out"
+      }
+    },
+    {
+      "name": "PART-003 NEGATIVE: replacement without an explicit reason is refused",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PART-002 NEGATIVE: a waiver without a reason is refused",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "PART-020 RACE: a stale-epoch callback is rejected and retained as evidence",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "stale_epoch",
+        "retained": true,
+        "rejected": 1
+      }
+    },
+    {
+      "name": "SMSG-002 the six visible states are exactly the correction set",
+      "pass": true,
+      "detail": {
+        "got": [
+          "scheduled",
+          "held",
+          "sent",
+          "canceled",
+          "failed",
+          "expired"
+        ],
+        "want": [
+          "scheduled",
+          "held",
+          "sent",
+          "canceled",
+          "failed",
+          "expired"
+        ]
+      }
+    },
+    {
+      "name": "SMSG-001 every state renders a real card in the SOURCE thread",
+      "pass": true,
+      "detail": [
+        "scheduled",
+        "held",
+        "sent",
+        "failed",
+        "canceled",
+        "expired"
+      ]
+    },
+    {
+      "name": "SMSG-003 each card shows exact time, IANA timezone, destination and requested model",
+      "pass": true,
+      "detail": [
+        "America/Chicago",
+        "America/Chicago",
+        "America/Chicago",
+        "America/Chicago",
+        "America/Chicago",
+        "America/Chicago"
+      ]
+    },
+    {
+      "name": "SMSG-006 the Sent card links the dispatched message and its REAL dispatch time",
+      "pass": true,
+      "detail": "msg-query-rollout-kickoff"
+    },
+    {
+      "name": "SMSG-005 NEGATIVE: a Sent schedule cannot be edited or cancelled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "SMSG-011 NEGATIVE: an explicit model choice failed rather than silently falling back",
+      "pass": true,
+      "detail": "Kimi K3 Turbo was unavailable at dispatch and this schedule names it explicitly, so no substitute was chosen. The failed attempt is preserved; editing and retrying creates a new attempt identity."
+    },
+    {
+      "name": "SMSG-010 NEGATIVE: an unresolvable destination holds rather than rerouting",
+      "pass": true,
+      "detail": "Recorded destination \"Crew · Query Performance\" is no longer resolvable (the crew run ended). Holding the dispatch rather than substituting a different destination."
+    },
+    {
+      "name": "SMSG-007 a scheduled attachment freezes an exact artifact version and hash",
+      "pass": true,
+      "detail": {
+        "schema": "pm.schedule.attachment_snapshot.v1",
+        "scheduled_message_id": "sm-sent-rollout",
+        "attachment_id": "art-rollout",
+        "artifact_version": "v2",
+        "content_hash": "sha-demo:5f0c21ab",
+        "folder_manifest_hash": null,
+        "snapshot_ref": null,
+        "availability": "available"
+      }
+    },
+    {
+      "name": "PSCHED-001 a build schedule stores exactly one execution topology",
+      "pass": true,
+      "detail": "agent"
+    },
+    {
+      "name": "PSCHED-008 window and quota are a CONJUNCTION, not an override",
+      "pass": true,
+      "detail": "window_and_quota_conjunction"
+    },
+    {
+      "name": "PSCHED-003 NEGATIVE: no runtime exists while only a future schedule does",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "BSTALE-004 recapture reuses cmd.browser.component.pick, not a new command",
+      "pass": true,
+      "detail": "cmd.browser.component.pick"
+    },
+    {
+      "name": "BSTALE-002 exactly one compatible match is `current`",
+      "pass": true,
+      "detail": {
+        "schema": "pm.browser.component_revalidation_result.v1",
+        "attachment_id": "bctx-1-mtm1u4w7",
+        "captured_generation": 1,
+        "current_generation": 1,
+        "locator_result_count": 1,
+        "identity_match": true,
+        "result": "current",
+        "reason": null,
+        "recapture_action": "cmd.browser.component.pick"
+      }
+    },
+    {
+      "name": "BSTALE-003 NEGATIVE: zero matches returns stale_capture with a recapture action",
+      "pass": true,
+      "detail": "zero_matches"
+    },
+    {
+      "name": "BSTALE-003 NEGATIVE: multiple matches returns stale_capture (never nearest-match)",
+      "pass": true,
+      "detail": {
+        "reason": "multiple_matches",
+        "count": 12
+      }
+    },
+    {
+      "name": "BSTALE-003 NEGATIVE: an identity mismatch on a single match is stale",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "BSTALE-011 a source-map change is disclosed even when the locator resolves",
+      "pass": true,
+      "detail": {
+        "file": "src/features/dashboard/QueryRow.tsx",
+        "line": 52
+      }
+    },
+    {
+      "name": "BSTALE-010 currentness is GENERATION based: an older generation refreshes explicitly",
+      "pass": true,
+      "detail": "generation_refreshed"
+    },
+    {
+      "name": "BSTALE-001 NEGATIVE: a lost session is stale, not assumed current",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "BSTALE-005 one stale item blocks only ITSELF; the others stay valid",
+      "pass": true,
+      "detail": [
+        "ctx-bad"
+      ]
+    },
+    {
+      "name": "BSTALE-005 NEGATIVE: no partial list is sent automatically",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "BSTALE-012 RACE: a late resolution against a stale selection epoch is fenced",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "stale_selection_epoch",
+        "dispatched": false,
+        "retained_as_evidence": true
+      }
+    },
+    {
+      "name": "FOLDER-001 files and folders both normalise through cmd.chat.attachment.add",
+      "pass": true,
+      "detail": {
+        "file": "cmd.chat.attachment.add",
+        "folder": "cmd.chat.attachment.add"
+      }
+    },
+    {
+      "name": "FOLDER-001 the picker, drag-and-drop and File Manager paths converge on one owner",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "FOLDER-002 NEGATIVE: the file-only alias REFUSES a folder",
+      "pass": true,
+      "detail": "unsupported_semantic_kind"
+    },
+    {
+      "name": "FOLDER-002 the alias normalises a FILE to the shared command and adds no second handler",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "FOLDER-003 NEGATIVE: no folder-specific command surface exists",
+      "pass": true,
+      "detail": "undefined"
+    },
+    {
+      "name": "FOLDER-004 a folder carries a bounded manifest with root identity, policies and exclusions",
+      "pass": true,
+      "detail": {
+        "root": "project:pm/src/analytics/",
+        "status": "manifest_only"
+      }
+    },
+    {
+      "name": "FOLDER-004 NEGATIVE: the manifest is bounded, not a recursive dump",
+      "pass": true,
+      "detail": {
+        "shown": 4,
+        "total": 6
+      }
+    },
+    {
+      "name": "TDG-001 NEGATIVE: a self-parent is rejected as invalid_graph",
+      "pass": true,
+      "detail": [
+        "tc-00"
+      ]
+    },
+    {
+      "name": "TDG-002 NEGATIVE: a parent cycle of length 2 is rejected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "TDG-003 NEGATIVE: a dependency cycle spanning three items is rejected",
+      "pass": true,
+      "detail": [
+        "tc-00",
+        "tc-02a",
+        "tc-03",
+        "tc-00"
+      ]
+    },
+    {
+      "name": "TDG-004 NEGATIVE: a cross-thread item is rejected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "TDG-005 NEGATIVE: an unknown reference fails closed rather than auto-creating",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "TDG-005 NEGATIVE: a duplicate id is rejected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "TDG-001..005 NEGATIVE: a rejected candidate commits NOTHING",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "invalid_graph",
+        "before": 8,
+        "after": 8
+      }
+    },
+    {
+      "name": "TDG-008 NEGATIVE: dropping an item with active work is REFUSED, not silently orphaned",
+      "pass": true,
+      "detail": [
+        {
+          "todo_id": "tc-01",
+          "reason": "active work has no rebind target and cancelActive was not requested"
+        }
+      ]
+    },
+    {
+      "name": "TDG-009 rebinding preserves the exact work binding on the new item",
+      "pass": true,
+      "detail": [
+        {
+          "from": "tc-01",
+          "to": "tc-04",
+          "work": [
+            "work-bench-cold"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TDG-008 cancelling active work on replacement is receipted, not silent",
+      "pass": true,
+      "detail": [
+        {
+          "todo_id": "tc-01",
+          "work": [
+            "work-bench-cold"
+          ],
+          "receipt": "cancel:tc-01"
+        }
+      ]
+    },
+    {
+      "name": "TDG-010 RACE: a stale-revision event is rejected, retained as evidence, and changes nothing",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "stale_item_revision",
+        "retained": true,
+        "status": "pending",
+        "rejected": 1
+      }
+    },
+    {
+      "name": "TDG-010 RACE: an event carrying a foreign work binding is rejected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "TDG-014 NEGATIVE: no verification field and no `verifying` status exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "CONCEPT-003 NEGATIVE: no rendered surface still shows the retired 15 / +10 arithmetic",
+      "pass": true,
+      "detail": {
+        "brainstorm15": false,
+        "grill25total": false
+      }
+    },
+    {
+      "name": "CONCEPT-003 the BrainStorm definition carries 20 and the extension 25",
+      "pass": true,
+      "detail": {
+        "q": 20,
+        "g": 25
+      }
+    },
+    {
+      "name": "no console errors during the whole run",
+      "pass": true,
+      "detail": []
+    }
+  ]
+}
