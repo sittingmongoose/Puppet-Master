@@ -1,0 +1,57 @@
+name: Publish verified Astra concept
+on:
+  push:
+    branches: ['concept/astra-onboarding-2026-09-04']
+    paths: ['.github/workflows/astra-concept-publish.yml']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: concept/astra-onboarding-2026-09-04
+          sparse-checkout: |
+            Concepts/TestPMConcept.html
+            Concepts/TestAstraPmConcept.html
+            Concepts/ConceptHub/
+            Concepts/onboarding/astra-gpt-6-pro/
+            .astra-transfer/
+          sparse-checkout-cone-mode: false
+      - name: Restore SHA-verified authored sources
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import hashlib, json, lzma
+          data=b''.join(Path(f'.astra-transfer/{i:02d}.bin').read_bytes() for i in range(6))
+          assert hashlib.sha256(data).hexdigest()=='6a5b7dc22daef2be7c6aa5686d98c61a90216ee5d1604fdd17f2e8fdb8add8be', 'Source transfer hash mismatch'
+          files=json.loads(lzma.decompress(data))
+          assert isinstance(files,dict) and len(files)==15, 'Unexpected source inventory'
+          for name,text in files.items():
+              p=PurePosixPath(name)
+              assert name.startswith('Concepts/onboarding/astra-gpt-6-pro/') and '..' not in p.parts and not p.is_absolute()
+              assert isinstance(text,str)
+              target=Path(name); target.parent.mkdir(parents=True,exist_ok=True); target.write_text(text,encoding='utf-8')
+          PY
+      - name: Build only the isolated copy and validate Hub registration
+        run: |
+          python3 Concepts/onboarding/astra-gpt-6-pro/build.py
+          python3 Concepts/ConceptHub/validate.py Concepts/onboarding/astra-gpt-6-pro
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          for name,expected in [('Concepts/TestPMConcept.html','ea9c502a1c4a456f3e092c45d3524105153f9bba52d36f26fbfad922e885a4ef'),('Concepts/TestAstraPmConcept.html','761e4f931ab02333adec57190e9376c3acee3b18a99d60117a0f38f025808867')]:
+              digest=hashlib.sha256(Path(name).read_bytes()).hexdigest()
+              print(name,digest)
+              assert digest==expected, 'Build or baseline hash mismatch'
+          PY
+      - name: Commit verified concept files only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Concepts/TestAstraPmConcept.html Concepts/onboarding/astra-gpt-6-pro/
+          git diff --cached --check
+          git commit -m 'Rebuild Astra onboarding and guided tour from visually tested source'
+          git push origin HEAD:concept/astra-onboarding-2026-09-04
