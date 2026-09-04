@@ -1,0 +1,37 @@
+name: Astra concept source snapshot
+on:
+  push:
+    branches: ['concept/astra-onboarding-2026-09-04']
+    paths: ['.github/workflows/astra-concept-source.yml']
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            Concepts/TestPMConcept.html
+            Concepts/TestAstraPmConcept.html
+            Concepts/CONCEPT_RULES.md
+            Concepts/ConceptHub
+            Concepts/pm7-tools
+            Plans
+          sparse-checkout-cone-mode: false
+          lfs: false
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-source-snapshot
+          path: |
+            Concepts/TestPMConcept.html
+            Concepts/TestAstraPmConcept.html
+            Concepts/CONCEPT_RULES.md
+            Concepts/ConceptHub/
+            Concepts/pm7-tools/
+            Plans/00-plans-index.md
+            Plans/Planning_Wizard.md
+            Plans/assistant-chat-design.md
+            Plans/Settings.md
+            Plans/FinalGUISpec.md
+          retention-days: 3
