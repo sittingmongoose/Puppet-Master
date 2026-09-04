@@ -926,7 +926,7 @@ validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_c
 risk_class: semantic_flattening_duplicate_external_effect_or_authority_escape
 reasoning_tier: high
 context_scope: normalized_remote_effect_observation_routing_and_agents
-implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future record projector, effect reconciler, observer, and route coordinator]
+implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future record projector, future effect reconciler, future observer, future route coordinator]
 node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:39-45

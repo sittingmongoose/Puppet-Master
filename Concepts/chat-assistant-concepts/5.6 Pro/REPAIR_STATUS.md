@@ -172,6 +172,41 @@ Established during this pass, and worth knowing before trusting any of them:
 | TDG — graph validation, atomic replacement, currentness gates | closed |
 | CONCEPT — retired values removed, test renamed, both outputs byte-checked | closed |
 
+### Where each CONCEPT requirement is demonstrated
+
+The `CONCEPT-*` family is owned by this folder rather than by a `Plans/` document, so
+its evidence is a fixture and an assertion rather than a paragraph. Each row names the
+source that carries the behaviour and the suite that drives it.
+
+| Requirement | Where it lives | Driven by |
+|---|---|---|
+| `CONCEPT-001` Modify the existing source, do not replace the concept | the nine existing feature modules, extended in place; no new concept folder | `build.py --check` |
+| `CONCEPT-002` Latest correction supersedes conflicting v2 and Chat updates | `Chat updates.md` §21 corrected **in place** and §31 added | `correction-v4-verify.mjs` §12 |
+| `CONCEPT-003` Six bases and Grill totals; no 15/+10/25 left | `plans.js` `QBASE`/`QGRILL`, `collaboration.js` definitions | `correction-v4-verify.mjs` §1, §12 |
+| `CONCEPT-004` Nested, concurrent, out-of-order, blocked, skipped, mixed, stale, restart | `plans.js` `progress()`, `todos.js` `CACHE_ITEMS` | `correction-v4-verify.mjs` §2 |
+| `CONCEPT-005` Failure and recovery while the button stays Building… | `plans.js` `attention()` + `waitCopy()`, `ap-cache` fixture | `correction-v4-verify.mjs` §3 |
+| `CONCEPT-006` Regular versus Deep Details | `plans.js` `dlgInfo` backend section | `correction-v4-verify.mjs` §4 |
+| `CONCEPT-007` Ten renderer kinds, unavailable and PDF fallback | `plans.js` `EMBED_V1` + `richEmbed()` | `correction-v4-verify.mjs` §4 |
+| `CONCEPT-008` Build as Goal, binding, hover controls, cancel, completion | `plans.js` `pd-build-goal`, `goals.js` bound Goals | `correction-v4-verify.mjs` §5 |
+| `CONCEPT-009` Agent/Goal/Crew topology and immediate-build invalidation | `scheduling.js` `topology_snapshot`, `plans.js` `boundCancel` | `correction-v4-verify.mjs` §5, §8 |
+| `CONCEPT-010` Modal open/cancel/start/failure/currentness | `collaboration.js` effect ledger + `collab-modal-cancel` | `correction-v4-verify.mjs` §6 |
+| `CONCEPT-011` Participant failure, waiver, partial, tie, abstention, coordinator | the five correction seed runs in `collaboration.js` | `correction-v4-verify.mjs` §7 |
+| `CONCEPT-012` Six scheduled-message states and exact snapshots | `scheduling.js` seeded messages + `renderMessageCard` | `correction-v4-verify.mjs` §8 |
+| `CONCEPT-013` Stale component currentness and per-item recapture | `browser-capture.js` `revalidateContext`/`revalidateList` | `correction-v4-verify.mjs` §9 |
+| `CONCEPT-014` Folder through the shared tray and a bounded manifest | `attachments.js` `attachmentAdd` + folder manifest fields | `correction-v4-verify.mjs` §10 |
+| `CONCEPT-015` Rename the ambiguous test label | `tests/todo-runtime-verify.mjs` | the file name and its header |
+| `CONCEPT-016` Update the companion files | this file, `Chat updates.md`, `README.md`, `RELEASE_NOTES.md`, `DELIVERY_MANIFEST.json`, `assets/component-contract.json` | `DELIVERY_MANIFEST.json` hashes |
+| `CONCEPT-017` Regenerate both outputs and byte-check | `build.py` | `build.py --check`, run twice |
+| `CONCEPT-018` Preserve every non-conflicting v2 decision | no broad CSS replacement; every prior suite still green | the other ten suites, 429 assertions |
+| `CONCEPT-019` Fixture-backed behaviour is identified as such | the scope header in `correction-v4-verify.mjs` and its `scope_note` | `reports/REDESIGN_READINESS.md` §8 |
+| `CONCEPT-020` No accessibility work required | no accessibility assertion was added or removed | — |
+
+`CDRY-017` (one replacement audit Goal under 4,000 characters) and `CDRY-020` (additive
+to the implemented branch, never a re-application of the recovered baseline) are
+properties of the correction packet and this application of it, not of any file:
+`REPLACEMENT_AUDIT_GOAL.txt` ships in the packet at 3,867 characters, and the changed
+file set is the evidence for `CDRY-020`.
+
 ### Not closed here, and why
 
 | Item | Blocker |

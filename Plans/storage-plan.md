@@ -18696,6 +18696,16 @@ owner_hints:
 This section applies `PM_Assistant_v2_Additive_Correction_v4` (`CDRY-014..015`, and the storage
 side of `QMAX-016/019`, `PPROG-013`, `PFAIL-009`, `GREPLAY-003`, `SMSG-012/017`) to this owner.
 
+### PDET-006 — Retention is reachability, not card visibility
+
+Deleting or hiding a thread card never purges a Plan artifact revision that is still
+referenced by a Planning Wizard handoff, a Goal, a Crew or Review run, a Usage record,
+an export, or another artifact. Retention follows the shared reachability and hold
+rules this document already owns; card visibility is not deletion authority, and a
+`PlanArtifactEmbed` naming an exact `artifact_version` is itself a hold on that
+revision. `Plans/Runtime_Artifacts_Panel.md` owns the artifact identity; this owner
+owns the durability rule.
+
 ### Registered record families
 
 The seventeen record shapes admitted by this correction are tabulated in the Additive Correction

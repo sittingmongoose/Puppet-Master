@@ -2746,6 +2746,15 @@ summary. It states its own currentness and its source Plan hash, and it is never
 approved Plan. Both exports are produced by `cmd.chat.plan.export` under
 `content_kind: plan_document | execution_report`; no peer export command exists.
 
+### BSTALE-009 — Stale browser captures are inspectable, and carry no secrets
+
+A stale browser capture keeps an artifact-side Details record exposing the original
+page, session and generation, the capture time, the identity hints that failed to
+match, and the typed reason. Protected authentication surfaces stay excluded, and no
+credential, cookie or storage value is persisted into that record.
+`Plans/Section15_MVP_Promoted_Features_Spec.md` owns the revalidation taxonomy; this
+owner owns the durability and disclosure of what it writes down.
+
 ### WONV-008 — Research artifacts use Puppet Master identity
 
 Wonderer research and synthesis output is a Puppet Master artifact with progressive disclosure:

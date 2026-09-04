@@ -1,6 +1,6 @@
 {
  "name": "Puppet Master Assistant Chat 5.6 Pro",
- "generatedAt": "2026-09-03T21:40:39.962212+00:00",
+ "generatedAt": "2026-09-04T00:58:13.737156+00:00",
  "repoRelativePath": "Concepts/chat-assistant-concepts/5.6 Pro",
  "certification": "CONCEPT_PASS — canonical, concept and native readiness are reported separately in reports/REDESIGN_READINESS.md",
  "releaseGates": [
@@ -35,8 +35,8 @@
   },
   {
    "path": "REPAIR_STATUS.md",
-   "bytes": 12002,
-   "sha256": "c5346a284fa71d8e1e047a486fd22679ce302ff74666f7256083181076e69485"
+   "bytes": 15854,
+   "sha256": "b673057c535e9c5585053625c7d878acd4d2cee761f7622974306fb52ee735bd"
   },
   {
    "path": "activity-bar.css",
@@ -245,8 +245,13 @@
   },
   {
    "path": "reports/REDESIGN_READINESS.md",
-   "bytes": 14753,
-   "sha256": "69f8774e9736e87f76ecb1730a7300cfa7312a540b1bbee4a200e801a428f9cc"
+   "bytes": 15544,
+   "sha256": "f383140503447286e5a70ab61758ea6613ab683dbc347698faeef70598f3842a"
+  },
+  {
+   "path": "reports/gates-run.log",
+   "bytes": 3846,
+   "sha256": "c9565cfa8ae3c0d4fd38ed47823e0e0fec2f0a6f6d99c9c6bd9983713b4d56b7"
   },
   {
    "path": "scheduling.css",

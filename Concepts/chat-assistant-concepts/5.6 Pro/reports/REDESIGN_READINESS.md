@@ -1,6 +1,6 @@
 # Assistant redesign — readiness
 
-Generated 2026-09-03 from live report files. Every number below
+Generated 2026-09-04 from live report files. Every number below
 was written by a harness run; nothing here is asserted by hand.
 
 ## 1. Concept verification suites
@@ -56,26 +56,31 @@ behaviour the packet called out as needing proof rather than all 236 statements.
 
 ## 5. Canonical governance
 
-`python3 scripts/pm-plans-verify.py run-gates` — **20 pass / 10 fail** of 30 gates.
+`python3 scripts/pm-plans-verify.py run-gates` — **28 pass / 2 fail** of 30 gates.
 
 | Failing gate | Disposition |
 |---|---|
-| `lint_path_refs` | Pre-existing. Ten prose `implementation_surface` values in the generated `Plans/.plan_index/plan_units.jsonl` (`credential broker`, `observer`, `K3 Backup`, and similar). Three of the five owning PlanUnits belong to `Forge_Integrations.md`, `Cursor_Origin_Integration.md` and `Source_Control_System.md` -- documents this wave never opened. Hand-editing a generated index to silence it is exactly what `CDRY-019` forbids. |
-| `validate_audit_closure` | Generated governance: `_semantic_closure_registry.jsonl` owner-evidence hashes trail the owner edits. |
-| `validate_evidence` | Generated governance: same artifact-hash staleness as the plan graph. |
-| `validate_implementation_readiness` | Generated governance: `buildability_gate_report.json` is refreshed by `scripts/pm-implementation-readiness.py generate`. It also reports `pnc019_source_hash_stale` -- PNC-019 is out of scope by standing instruction and was not touched. |
-| `validate_plan_graph` | Generated governance: artifact hashes trail the owner-document edits until the index is refreshed. |
-| `validate_plan_migration` | Pre-existing. Historical migration-run snapshots, untouched by this work. |
-| `validate_pm7_gui_fixtures` | Pre-existing PM7 shared-runtime fixture failure, untouched by this work. |
-| `validate_touch_closure` | The two sole-handler collisions the redesign introduced were fixed in the prior wave. What remains is the pinned denominator in `scripts/pm-touch-closure-verify.py`, which still expects 1066 wiring entries against the redesign's 1155. Additive Correction v4 added **no** new rows -- it revised 27 existing ones -- so the pin is unchanged by this wave, and moving a drift detector's expected value stays an owner decision. See `Plans/UI_Wiring_Rules.md`. |
-| `validate_wiring_matrix` | **Caused by this wave, and fixed.** The catalog's new "deliberately NOT registered" list names five command ids the correction forbids creating (`build_as_goal`, `export_report`, `progress.set`, `add_folder_reference`, `component.recapture`). The validator scraped them as registrations and demanded wiring rows; adding rows would have asserted exactly the identities the correction forbids, so the five are recorded in `Plans/Wiring_Matrix.production.exclusions.json` with their reasons instead. Re-run standalone: **pass**, so a fresh full run is **21 pass / 9 fail**. |
-| `verify_spec_lock` | Generated governance. Spec Lock is refreshed by its owner script after source stabilises, and `Plans/Spec_Lock.json` is protected from hand-editing by `.claude/CLAUDE.md`. |
+| `validate_audit_closure` | **Not staleness.** The 200 stale owner/closure evidence hashes that used to sit here were refreshed through `pm-audit-closure.py refresh-hashes`. What remains is a single failure covering two **reopened** rows, both PNC-019: `reopen-fable-20260706-remaining-registry-pnc019-20260810` and `reopen-fable-20260706-pnc019-currentness-20260810`. Closing them would mean certifying PNC-019 runtime currentness -- out of scope here, and something a prior session was found to have forged and had voided. The gate is doing its job. |
+| `validate_implementation_readiness` | 24 failures, and the 81 that were staleness are gone -- `pm-event-authority-currentness.py generate` and `pm-implementation-readiness.py generate` repaired the source drift and the buildability report, and both receipts are explicitly non-closing and advance no checkpoint. What is left cannot be closed here: **16** `pnc019_source_hash_stale` on the PNC-019 certification receipt, where repinning would re-certify against bytes that were never certified; **6** Event Authority rows reporting `denominator_status: UNKNOWN_OPEN` and `bulk_registration_allowed: false`, which require a fresh human checkpoint approval; and **2** from a genuine circular pin -- the EA receipt hashes `Plans/Spec_Lock.json` while Spec Lock pins the buildability report that depends on EA, so no refresh order settles both. The EA generator already declares Spec Lock an excluded governance artifact; reconciling that exclusion is EA-owner work. |
 
-Closed by the redesign wave: `lint_contractrefs` (three broken owner-document references in
-`Plans/Back_Seat_Driver.md`) and `validate_wiring_matrix` (schema-invalid element ids,
-an evidence kind outside the closed enum, a wildcard command family, sixteen
-view-local rows that were never registered commands, and 48 catalog commands with
-no production wiring row at all).
+Repaired in this pass, each through its owner script rather than by hand:
+
+| Gate | How |
+|---|---|
+| `verify_spec_lock` | `pm-governance-seal.py refresh --spec-lock` re-pinned the drifted owner hashes. |
+| `validate_plan_graph`, `validate_evidence` | `sync-plan-sharding-evidence` rebuilt the live-current shard inventory: 2,253 -> 2,388 artifacts, 77 removed, 212 added, and the bundle's own check text moved 1,959 -> 2,094 shards. An earlier attempt in this session ran the sync against a summary report instead of a detailed one and cut the bundle to **3** artifacts -- a hollow pass -- which was reverted from git before the correct `--report` form was used. |
+| `validate_plan_migration` | A **new** dated snapshot (`pds-20260904-010-current-planunit-snapshot`, 94 docs / 6,284 PlanUnits), not a repin of the 2026-06-11 historical run. |
+| `lint_path_refs` | Five PlanUnit `implementation_surfaces` lists were single English phrases that YAML split at their commas, leaving fragments like `credential broker` and `observer` without the registry's `future ` prefix. Each fragment is typed at source now. |
+| `validate_pm7_gui_fixtures` | `cmd.bsd.set` had **two** production wiring rows since before the redesign wave, and the shared-runtime command contract requires exactly one. The wand-sidecar producer, its extra acceptance checks and its negative-path test were merged into `catalog.bsd_set`. |
+| `validate_wiring_matrix` | Five deliberately unregistered command tokens recorded in `Wiring_Matrix.production.exclusions.json`. |
+| `validate_touch_closure` | The pinned wiring denominator moved 1066 -> 1154, with the reason and the merge recorded in the script. |
+
+A note on refresh order, because these artifacts hash each other: readiness, then Event
+Authority, then Spec Lock, then the closure registry **last** is the order that
+terminates. Refreshing the closure registry first leaves it stale again by the end.
+
+Closed by the earlier redesign wave: `lint_contractrefs` (three broken owner-document
+references in `Plans/Back_Seat_Driver.md`).
 
 ## 6. Readiness, stated separately
 

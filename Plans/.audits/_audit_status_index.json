@@ -21,7 +21,7 @@
       "line": 737
     }
   ],
-  "generated_at_utc": "2026-08-11T01:31:55Z",
+  "generated_at_utc": "2026-08-30T00:41:42Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1227,6 +1227,91 @@
       "reported_status_family": "other",
       "scope_key": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
       "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260827-001-pmconcept7-usage-recovery",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md",
+      "reported_status": "FAIL_WITH_NAMED_RESIDUALS",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260827-001-pmconcept7-usage-recovery",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260828-001-pmconcept7-usage-successor",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md",
+      "reported_status": "CLASSIFIED_WITH_FAILURES_AND_NAMED_RESIDUALS",
+      "reported_status_family": "other",
+      "scope_key": "audit-20260828-001-pmconcept7-usage-successor",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260828-002-settings-tome-tabs-preport",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260828-002-settings-tome-tabs-preport/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260828-002-settings-tome-tabs-preport",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260828-003-chat-56-fast-lane",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260828-003-chat-56-fast-lane/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260828-003-chat-56-fast-lane",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260829-001-pmconcept7-widget-followup",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md",
+      "reported_status": "CLASSIFIED_WITH_FAILURE_BLOCKERS_AND_NAMED_RESIDUALS",
+      "reported_status_family": "other",
+      "scope_key": "audit-20260829-001-pmconcept7-widget-followup",
+      "superseded_by": null
     }
   ],
   "schema_id": "pm.audit_status_index.v1",
@@ -1239,13 +1324,13 @@
     "current_blocker_count": 2,
     "current_reopened_finding_count": 2,
     "current_report_blocker_count": 0,
-    "historical_blocked_or_fail_report_count": 24,
-    "report_count": 66,
+    "historical_blocked_or_fail_report_count": 25,
+    "report_count": 71,
     "reported_status_family_counts": {
-      "blocked_or_fail": 24,
-      "other": 2,
+      "blocked_or_fail": 25,
+      "other": 4,
       "pass": 26,
-      "unknown": 14
+      "unknown": 16
     }
   }
 }

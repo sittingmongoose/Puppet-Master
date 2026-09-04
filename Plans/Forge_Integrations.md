@@ -245,7 +245,7 @@ validation_surfaces: [app/token/webhook schema fixtures, secret scans, signature
 risk_class: forge_secret_or_webhook_replay
 reasoning_tier: high
 context_scope: forge_apps_webhooks_security
-implementation_surfaces: [Plans/forge_integration_contracts.schema.json, credential broker, future webhook ingress]
+implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future credential broker, future webhook ingress]
 node_compile_hint: {mode: forge_app_webhook_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:ORI-02..03, source_ref:egolite-register:SEC-02..03]
 preserved_exact_tokens: [ForgeAppInstallation, ForgeInstallationTokenLease, raw-body, signature before parse, replay, dedupe, redelivery]
