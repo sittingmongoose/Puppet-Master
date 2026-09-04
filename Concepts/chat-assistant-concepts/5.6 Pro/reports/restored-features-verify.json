@@ -42,7 +42,7 @@
     {
       "name": "the taught record survives a thread switch and is visible in the Memory panel (session-durable)",
       "pass": true,
-      "detail": "This thread onlySep 4 1:59 AMAlways confirm the migration rollback path before applying a forward migration, for this project.Source: thread-ven5qnv-mtmb2xt2 · secret screen: clear Lock Narrow Revoke "
+      "detail": "This thread onlySep 4 2:53 AMAlways confirm the migration rollback path before applying a forward migration, for this project.Source: thread-o6wj5mi-mtmd0oam · secret screen: clear Lock Narrow Revoke "
     },
     {
       "name": "selecting the Teacher Persona actually sets it",
@@ -67,7 +67,7 @@
     {
       "name": "the first checkpoint on a fresh page collides with the locked taught seed record and is deferred (FEATURE-004)",
       "pass": true,
-      "detail": "{\"id\":\"af-auto-k63rn6t-mtmb356a\",\"trigger\":\"run_boundary\",\"threadId\":\"thread-mqjvrtq-mtmb33fd\",\"summary\":\"Run boundary reached: query-perf benchmark suite mentioned again in this thread.\",\"verification\":\"deferred\",\"blocked\":true,\"blockedByRecordId\":\"af-teach-seed-1\",\"at\":\"2026-09-04T01:59:36.178Z\"}"
+      "detail": "{\"id\":\"af-auto-v4n5yag-mtmd0voo\",\"trigger\":\"run_boundary\",\"threadId\":\"thread-6qn06dh-mtmd0twu\",\"summary\":\"Run boundary reached: query-perf benchmark suite mentioned again in this thread.\",\"verification\":\"deferred\",\"blocked\":true,\"blockedByRecordId\":\"af-teach-seed-1\",\"at\":\"2026-09-04T02:53:49.800Z\"}"
     },
     {
       "name": "ELI5 toggles a real per-conversation capability",
@@ -97,7 +97,7 @@
     {
       "name": "an eligible agent turn shows a real, enabled \"Revert Last Agent Edit\" control",
       "pass": true,
-      "detail": "{\"turnId\":\"af-agentturn-lalauq6-mtmb39ek\",\"disabled\":false}"
+      "detail": "{\"turnId\":\"af-agentturn-xoeszfl-mtmd0zz1\",\"disabled\":false}"
     },
     {
       "name": "the preview shows the REAL, exact whole-turn file manifest (3 files, per the fixture)",
@@ -117,7 +117,7 @@
     {
       "name": "a conflicted-but-eligible turn still shows an enabled preview control",
       "pass": true,
-      "detail": "{\"turnId\":\"af-agentturn-t7us8ob-mtmb3dn8\",\"disabled\":false}"
+      "detail": "{\"turnId\":\"af-agentturn-adhyv6s-mtmd149x\",\"disabled\":false}"
     },
     {
       "name": "a currentness conflict REFUSES the revert with a reason — zero files touched (no partial success)",
@@ -152,7 +152,7 @@
     {
       "name": "a real investigation id backs the card",
       "pass": true,
-      "detail": "af-inv-4kth2n0-mtmb3go6"
+      "detail": "af-inv-zy1l70w-mtmd17cp"
     },
     {
       "name": "advancing walks target/baseline/instrumentation/reproduction/analysis/repair, collecting real evidence per phase",
@@ -187,12 +187,12 @@
     {
       "name": "Export bundle produces a real downloadable JSON file",
       "pass": true,
-      "detail": "{ | \"demo\": true, | \"exportedAt\": \"2026-09-04T01:59:57.811Z\", | \"investigationId\": \"af-inv-4kth2n0-mtmb3go6\", | \"target\": { | \"kind\": \"component\", | \"label\": \"New chat\" | }, | \"status\": \"complete\""
+      "detail": "{ | \"demo\": true, | \"exportedAt\": \"2026-09-04T02:54:11.951Z\", | \"investigationId\": \"af-inv-zy1l70w-mtmd17cp\", | \"target\": { | \"kind\": \"component\", | \"label\": \"New chat\" | }, | \"status\": \"complete\""
     },
     {
       "name": "the exported bundle redacts the redacted item's content (label only, not the real content)",
       "pass": true,
-      "detail": "{\"id\":\"af-ev-13z8srl-mtmb3hn8\",\"at\":\"2026-09-04T01:59:52.340Z\",\"redacted\":true,\"label\":\"[redacted]\"}"
+      "detail": "{\"id\":\"af-ev-kc0um0g-mtmd18e1\",\"at\":\"2026-09-04T02:54:06.265Z\",\"redacted\":true,\"label\":\"[redacted]\"}"
     },
     {
       "name": "the Context Lens trigger is a real, visible top-level header control, left of thread search",
@@ -207,7 +207,7 @@
     {
       "name": "Default resolver generates a real title from a bounded excerpt of the first message",
       "pass": true,
-      "detail": "{\"title\":\"Investigate the write amplification on the\",\"lastAttempt\":{\"at\":\"2026-09-04T02:00:02.283Z\",\"policy\":\"default\",\"outcome\":\"generated\",\"titleText\":\"Investigate the write amplification on the\",\"route\":\"GPT-5 Mini · Work · openai-work\"}}"
+      "detail": "{\"title\":\"Investigate the write amplification on the\",\"lastAttempt\":{\"at\":\"2026-09-04T02:54:16.519Z\",\"policy\":\"default\",\"outcome\":\"generated\",\"titleText\":\"Investigate the write amplification on the\",\"route\":\"GPT-5 Mini · Work · openai-work\"}}"
     },
     {
       "name": "the newly titled thread has a real row in history",
@@ -217,17 +217,17 @@
     {
       "name": "Title policy \"None\" leaves the thread as \"New chat\" until manually renamed",
       "pass": true,
-      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-04T02:00:05.913Z\",\"policy\":\"none\",\"outcome\":\"skipped_none\"}}"
+      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-04T02:54:20.186Z\",\"policy\":\"none\",\"outcome\":\"skipped_none\"}}"
     },
     {
       "name": "an explicitly selected but unavailable model is DISCLOSED, never silently substituted (title stays unchanged, reason recorded)",
       "pass": true,
-      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-04T02:00:10.012Z\",\"policy\":\"model:opus5-personal\",\"outcome\":\"unavailable\",\"reason\":\"Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\"}}"
+      "detail": "{\"title\":\"New chat\",\"lastAttempt\":{\"at\":\"2026-09-04T02:54:24.386Z\",\"policy\":\"model:opus5-personal\",\"outcome\":\"unavailable\",\"reason\":\"Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\"}}"
     },
     {
       "name": "the header visibly shows the unavailable-title state (not silent)",
       "pass": true,
-      "detail": "{\"chipText\":\"Title route unavailable: Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\",\"selectedThread\":\"thread-08iyfmx-mtmb3ury\",\"expectedThread\":\"thread-08iyfmx-mtmb3ury\",\"locked\":false,\"pending\":false,\"headerExtrasHtml\":\"\\n      <button class=\\\"icon-button\\\" data-action=\\\"toggle-history\\\" data-hover-key=\\\"open-history\\\" data-hover-tip=\\\"Open thread history\\\" aria-label=\\\"Open thread history\\\"><svg class=\\\"\\\" width=\\\"14\\\" height=\\\"14\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"1.8\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\" aria-hidden=\\\"true\\\"><path d=\\\"M3 12a9 9 0 1 0 3-6.7L3 8\\\"></path><path d=\\\"M3 3v5h5\"}"
+      "detail": "{\"chipText\":\"Title route unavailable: Claude Opus 5 · Personal · anthropic-me — The five-hour window for this account is spent. It resets at 18:00 UTC; the Work account is unaffected.\",\"selectedThread\":\"thread-u4vov8k-mtmd1lus\",\"expectedThread\":\"thread-u4vov8k-mtmd1lus\",\"locked\":false,\"pending\":false,\"headerExtrasHtml\":\"\\n      <button class=\\\"icon-button\\\" data-action=\\\"toggle-history\\\" data-hover-key=\\\"open-history\\\" data-hover-tip=\\\"Open thread history\\\" aria-label=\\\"Open thread history\\\"><svg class=\\\"\\\" width=\\\"14\\\" height=\\\"14\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"1.8\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\" aria-hidden=\\\"true\\\"><path d=\\\"M3 12a9 9 0 1 0 3-6.7L3 8\\\"></path><path d=\\\"M3 3v5h5\"}"
     },
     {
       "name": "a manual rename that happens WHILE a generation is in flight wins — the late generation is discarded",

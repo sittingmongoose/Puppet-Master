@@ -82,7 +82,7 @@
     {
       "name": "the numbered list is backed by hidden structured refs (not visible as raw text)",
       "pass": true,
-      "detail": "[{\"id\":\"bcref-6-mtmb2izk\",\"kind\":\"list\",\"number\":1,\"componentLabel\":\"<TenantFilter>\",\"instruction\":\"check the tenant filter\",\"contextId\":\"bctx-5-mtmb2icd\",\"addedAt\":\"2026-09-04T01:59:07.424Z\"},{\"id\":\"bcref-8-mtmb2k9j\",\"kind\":\"list\",\"number\":2,\"componentLabel\":\"<WindowFilter>\",\"instruction\":\"and the window filter too\",\"contextId\":\"bctx-7-mtmb2jp4\",\"addedAt\":\"2026-09-04T01:59:09.079Z\"}]"
+      "detail": "[{\"id\":\"bcref-6-mtmd09ud\",\"kind\":\"list\",\"number\":1,\"componentLabel\":\"<TenantFilter>\",\"instruction\":\"check the tenant filter\",\"contextId\":\"bctx-5-mtmd0989\",\"addedAt\":\"2026-09-04T02:53:21.493Z\"},{\"id\":\"bcref-8-mtmd0b59\",\"kind\":\"list\",\"number\":2,\"componentLabel\":\"<WindowFilter>\",\"instruction\":\"and the window filter too\",\"contextId\":\"bctx-7-mtmd0ajy\",\"addedAt\":\"2026-09-04T02:53:23.181Z\"}]"
     },
     {
       "name": "a real list-manager panel shows the pending refs for reorder/removal",
@@ -92,7 +92,7 @@
     {
       "name": "moving an item in the list manager renumbers it in place",
       "pass": true,
-      "detail": "[\"bcref-8-mtmb2k9j\",\"bcref-6-mtmb2izk\"]"
+      "detail": "[\"bcref-8-mtmd0b59\",\"bcref-6-mtmd09ud\"]"
     },
     {
       "name": "removing an item in the list manager drops it from the refs",
@@ -117,7 +117,7 @@
     {
       "name": "simulating a re-render (shuffled row order + bumped generation) still re-resolves the stable locator",
       "pass": true,
-      "detail": "Stable locator re-resolved to the same element after the re-render (row order changed, page is now generation 2). New rect 639×35 at (266,540). The fragile nth-of-type path recorded at capture time no longer matches this element’s position."
+      "detail": "Stable locator re-resolved to the same element after the re-render (row order changed, page is now generation 2). New rect 639×35 at (266,465). The fragile nth-of-type path recorded at capture time no longer matches this element’s position."
     },
     {
       "name": "the page generation actually advanced",

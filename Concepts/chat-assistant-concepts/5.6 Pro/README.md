@@ -197,3 +197,19 @@ backed by fixtures. It is not native proof: no Rust handler, storage engine,
 scheduler, provider adapter or recovery path is exercised. `reports/REDESIGN_READINESS.md`
 reports canonical, concept and native readiness separately, and a concept pass
 never closes native work.
+
+## Audit
+
+`reports/AUDIT_MATRIX.md` is the per-requirement audit of this concept against
+the implemented v2 packet and `PM_Assistant_v2_Additive_Correction_v4` — 481
+requirements, each decided by a probe that drives this page in a real browser.
+Regenerate it with:
+
+```
+node tests/independent-audit-v5.mjs
+python3 reports/build-audit-matrix.py
+python3 reports/build-delivery-manifest.py
+```
+
+A pass there closes the concept column only. Canonical (`Plans/**`) and native
+readiness are separate columns and neither is closed by anything in this folder.

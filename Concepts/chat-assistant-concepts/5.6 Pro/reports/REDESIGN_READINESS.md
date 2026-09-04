@@ -203,3 +203,96 @@ they are **not** counted as closed by anything in this file.
 | Storage migrations (CDRY-014, CDRY-015) | No migration executes in a `file://` page. |
 | Production wiring (CDRY-012) | Needs a source-hashed native dispatcher. |
 
+## 9. Independent replacement audit (2026-09-04)
+
+Sections 1–8 above were written by the wave that APPLIED the correction. This
+section is written by an independent audit of that claim, and it reads none of
+them: `tests/independent-audit-v5.mjs` decides one verdict for each of the
+481 requirements — 236 from the implemented v2 packet and
+245 from the correction — by driving the built page in a real browser and reading
+state or rendered DOM. `REPAIR_STATUS.md`, `DELIVERY_MANIFEST.json`, the packet
+test matrix and every screenshot were deliberately excluded as inputs.
+
+Per-requirement results: `reports/AUDIT_MATRIX.md` (human) and
+`reports/independent-audit-v5.json` (machine).
+
+| verdict | count |
+|---|---:|
+| pass | 444 |
+| blocked | 35 |
+| superseded | 2 |
+| **total** | **481** |
+
+494 probes, 0 console errors.
+
+### The three verdicts, after an independent pass
+
+| Level | Verdict | What it rests on |
+|---|---|---|
+| **Canonical** | not addressed by this audit | This audit inspects the concept implementation, not the `Plans/**` owner documents. `python3 scripts/pm-plans-verify.py run-gates` owns that verdict and section 5 above records its two failing gates. |
+| **Concept** | closed | 444 of 481 requirements driven and observed on the real surface; 2 superseded by the correction with the replacement value proven; 0 failed; 0 not implemented. |
+| **Native** | closed for nothing | 35 requirements are recorded `blocked`, each naming the exact missing infrastructure — a native handler, a storage engine, a scheduler, a provider adapter, or a census of the implementation branch. None is recorded as a pass. Every other row is fixture-backed. |
+
+### Coverage, replacing the count in section 8
+
+Section 8 reported 88 of 245 correction requirements as asserted in the concept,
+with the remainder left undecided. That gap is closed: every requirement now has
+a verdict, and a requirement with no concept surface is recorded `blocked` with
+its blocker rather than left blank.
+
+| Family | pass | blocked | superseded | total |
+|---|---:|---:|---:|---:|
+| `ATT` | 13 | 1 | 0 | 14 |
+| `AUTH` | 5 | 0 | 0 | 5 |
+| `BRAIN` | 14 | 0 | 2 | 16 |
+| `BROWSER` | 9 | 0 | 0 | 9 |
+| `BSD` | 19 | 1 | 0 | 20 |
+| `COLLAB` | 10 | 0 | 0 | 10 |
+| `COMPOSER` | 11 | 0 | 0 | 11 |
+| `CREW` | 7 | 0 | 0 | 7 |
+| `DPLAN` | 10 | 0 | 0 | 10 |
+| `DRY` | 4 | 4 | 0 | 8 |
+| `FEATURE` | 10 | 0 | 0 | 10 |
+| `GOAL` | 12 | 2 | 0 | 14 |
+| `GUI` | 11 | 0 | 0 | 11 |
+| `PLAN` | 18 | 0 | 0 | 18 |
+| `PROVIDER` | 7 | 5 | 0 | 12 |
+| `REVIEW` | 12 | 0 | 0 | 12 |
+| `ROOM` | 5 | 1 | 0 | 6 |
+| `SCHED` | 11 | 1 | 0 | 12 |
+| `TITLE` | 7 | 1 | 0 | 8 |
+| `TODO` | 14 | 0 | 0 | 14 |
+| `WONDER` | 7 | 2 | 0 | 9 |
+| `BSTALE` | 12 | 0 | 0 | 12 |
+| `CDRY` | 12 | 8 | 0 | 20 |
+| `CONCEPT` | 20 | 0 | 0 | 20 |
+| `FOLDER` | 8 | 0 | 0 | 8 |
+| `GREPLAY` | 11 | 1 | 0 | 12 |
+| `MODAL` | 18 | 0 | 0 | 18 |
+| `PART` | 23 | 1 | 0 | 24 |
+| `PDET` | 11 | 1 | 0 | 12 |
+| `PFAIL` | 10 | 0 | 0 | 10 |
+| `PGOAL` | 15 | 0 | 0 | 15 |
+| `PPROG` | 18 | 0 | 0 | 18 |
+| `PSCHED` | 12 | 2 | 0 | 14 |
+| `QMAX` | 18 | 2 | 0 | 20 |
+| `SMSG` | 16 | 2 | 0 | 18 |
+| `TDG` | 16 | 0 | 0 | 16 |
+| `WONV` | 8 | 0 | 0 | 8 |
+| **total** | **444** | **35** | **2** | **481** |
+
+### Defects the audit found and repaired
+
+Thirty-two defects were found by driving the surface — not by reading a document —
+and each is repaired in source with a probe that fails without the repair. They are
+listed with their symptoms in `REPAIR_STATUS.md`. Among them: a public
+`questionBudget()` that resolved `Deep · Thorough` to base 6 instead of 10; a Build
+control that could never be disabled by a build blocker while the card said it
+could; a Plan that completed without ever completing its bound Goal; a To-Do
+controller that accepted the retired `verifying` status through whole-list
+replacement; and a screenshot that silently discarded a pending attachment.
+
+All 541 assertions in the eleven pre-existing suites still pass after every repair.
+
+**This document is still not a certification.** No requirement is certified
+native, and the canonical column is not this audit's to close.
