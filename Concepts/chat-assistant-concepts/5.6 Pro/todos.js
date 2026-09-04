@@ -970,7 +970,8 @@
      list byte-identical -- there is no partial commit and no silent repair.
      ===================================================================== */
   function validateGraph(threadId, candidate){
-    var res={ thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
+    var res={ schema:'pm.todo.graph_validation_result.v1',
+              thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
               valid:true, self_parent_ids:[], parent_cycles:[], dependency_cycles:[],
               unknown_refs:[], cross_thread_refs:[], duplicate_ids:[], invalid_statuses:[] };
     var items=(candidate&&candidate.items)||[], byId={}, i, j;
@@ -1057,7 +1058,8 @@
     var oldItems=(store&&store.items)||[], newItems=candidate.items||[];
     var newById={}, i;
     for(i=0;i<newItems.length;i++) newById[newItems[i].todo_id]=newItems[i];
-    var disp={ thread_id:threadId, old_revision:(store&&store.revision)||1,
+    var disp={ schema:'pm.todo.list_replacement_disposition.v1',
+               thread_id:threadId, old_revision:(store&&store.revision)||1,
                new_revision:((store&&store.revision)||1)+1,
                retained:[], rebound:[], canceled:[], refused:[], active_work_refs:[] };
     for(i=0;i<oldItems.length;i++){

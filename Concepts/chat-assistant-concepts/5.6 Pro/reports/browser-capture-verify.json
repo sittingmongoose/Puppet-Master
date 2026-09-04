@@ -82,7 +82,7 @@
     {
       "name": "the numbered list is backed by hidden structured refs (not visible as raw text)",
       "pass": true,
-      "detail": "[{\"id\":\"bcref-6-mtmd09ud\",\"kind\":\"list\",\"number\":1,\"componentLabel\":\"<TenantFilter>\",\"instruction\":\"check the tenant filter\",\"contextId\":\"bctx-5-mtmd0989\",\"addedAt\":\"2026-09-04T02:53:21.493Z\"},{\"id\":\"bcref-8-mtmd0b59\",\"kind\":\"list\",\"number\":2,\"componentLabel\":\"<WindowFilter>\",\"instruction\":\"and the window filter too\",\"contextId\":\"bctx-7-mtmd0ajy\",\"addedAt\":\"2026-09-04T02:53:23.181Z\"}]"
+      "detail": "[{\"id\":\"bcref-6-mtmdfuzx\",\"kind\":\"list\",\"number\":1,\"componentLabel\":\"<TenantFilter>\",\"instruction\":\"check the tenant filter\",\"contextId\":\"bctx-5-mtmdfuei\",\"addedAt\":\"2026-09-04T03:05:28.749Z\"},{\"id\":\"bcref-8-mtmdfw8w\",\"kind\":\"list\",\"number\":2,\"componentLabel\":\"<WindowFilter>\",\"instruction\":\"and the window filter too\",\"contextId\":\"bctx-7-mtmdfvo1\",\"addedAt\":\"2026-09-04T03:05:30.368Z\"}]"
     },
     {
       "name": "a real list-manager panel shows the pending refs for reorder/removal",
@@ -92,7 +92,7 @@
     {
       "name": "moving an item in the list manager renumbers it in place",
       "pass": true,
-      "detail": "[\"bcref-8-mtmd0b59\",\"bcref-6-mtmd09ud\"]"
+      "detail": "[\"bcref-8-mtmdfw8w\",\"bcref-6-mtmdfuzx\"]"
     },
     {
       "name": "removing an item in the list manager drops it from the refs",

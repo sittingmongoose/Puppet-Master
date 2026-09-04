@@ -117,7 +117,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmd5ubo-7-4iu0d",
+     "id": "att-mtmdqx2w-7-w3mjv",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -147,13 +147,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmd5ubn-1-qvq59",
+     "id": "att-mtmdqx2w-1-l3okp",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmd5ubo-5-iy4ip",
+     "id": "att-mtmdqx2w-5-o9xud",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -173,7 +173,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmd5ubn-1-qvq59",
+     "id": "att-mtmdqx2w-1-l3okp",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -330,7 +330,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "out": "Build check passed. Both deliverables match sha256 f2416f0962e51295."
+    "out": "Build check passed. Both deliverables match sha256 31b56ae57fdcd856."
    },
    "id": "AUTH-003",
    "readiness": {
@@ -345,7 +345,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "len": 19905
+    "len": 19906
    },
    "id": "AUTH-004",
    "readiness": {
@@ -1332,7 +1332,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmd6w43",
+     "attachment_id": "bctx-1-mtmdryb3",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -1357,21 +1357,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmd712m",
+     "id": "bctx-13-mtmds38j",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmd71pb",
+     "id": "bctx-15-mtmds3uu",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmd72bf",
+     "id": "bctx-17-mtmds4gg",
      "count": 1,
      "result": "current",
      "match": true,
@@ -1458,11 +1458,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmd76fu",
+       "ref_id": "bctx-25-mtmds8g0",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmd76fu",
+        "attachment_id": "bctx-25-mtmds8g0",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -1473,11 +1473,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmd773n",
+       "ref_id": "bctx-27-mtmds91u",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmd773n",
+        "attachment_id": "bctx-27-mtmds91u",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1488,11 +1488,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmd77qr",
+       "ref_id": "bctx-29-mtmds9nu",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmd77qr",
+        "attachment_id": "bctx-29-mtmds9nu",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1504,7 +1504,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmd76fu"
+      "bctx-25-mtmds8g0"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -2848,7 +2848,7 @@
    "evidence": {
     "missing": [],
     "stale": [],
-    "current": "f2416f0962e51295"
+    "current": "31b56ae57fdcd856"
    },
    "id": "CONCEPT-016",
    "readiness": {
@@ -2863,10 +2863,10 @@
   {
    "verdict": "pass",
    "evidence": {
-    "h1": "f2416f0962e51295",
-    "h2": "f2416f0962e51295",
+    "h1": "31b56ae57fdcd856",
+    "h2": "31b56ae57fdcd856",
     "identical": true,
-    "bytes": 2726526
+    "bytes": 2727081
    },
    "id": "CONCEPT-017",
    "readiness": {
@@ -3386,7 +3386,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "readiness": 19905,
+    "readiness": 19906,
     "scoped": true
    },
    "id": "DRY-008",
@@ -3713,7 +3713,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmd5ubn-3-0utos",
+    "attachment_id": "att-mtmdqx2w-3-u4zei",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -3787,7 +3787,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hash4bbb6f7c94dbTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hasha006dfe48d7dTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -4719,7 +4719,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "bytes": 2726526,
+    "bytes": 2727081,
     "identical": true
    },
    "id": "GUI-010",
@@ -5157,17 +5157,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -5714,7 +5714,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T02:58:23.658Z",
+     "at": "2026-09-04T03:14:46.797Z",
      "currentness": 1
     }
    },
@@ -6367,9 +6367,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-63ob",
-     "sess-p-28-eont",
-     "sess-p-30-7mr6"
+     "sess-p-26-znn",
+     "sess-p-28-7gte",
+     "sess-p-30-37mj"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -7547,6 +7547,7 @@
    "evidence": {
     "label": "Building…",
     "attn": {
+     "schema": "pm.assistant_plan.execution_attention_projection.v1",
      "plan_run_id": "run-ap-cache-V1",
      "condition_kind": "window",
      "line": "Outside execution window",
@@ -8438,6 +8439,7 @@
    "verdict": "pass",
    "evidence": {
     "keys": [
+     "schema",
      "project_id",
      "thread_id",
      "assistant_plan_id",
@@ -8882,9 +8884,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-3eid",
-     "sess-p-4-eyx7",
-     "sess-p-6-eacn"
+     "sess-p-2-7m48",
+     "sess-p-4-32p7",
+     "sess-p-6-h3zh"
     ],
     "distinct": true
    },
@@ -10000,7 +10002,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-cjoe",
+    "session": "sess-p-46-4if1",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -11217,6 +11219,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11256,6 +11259,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11299,6 +11303,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11360,6 +11365,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11394,6 +11400,7 @@
    "verdict": "pass",
    "evidence": {
     "unknown": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11409,6 +11416,7 @@
      "error": "invalid_graph"
     },
     "dupe": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -11490,6 +11498,7 @@
      "ok": false,
      "error": "invalid_graph",
      "validation": {
+      "schema": "pm.todo.graph_validation_result.v1",
       "thread_id": "plan-deep",
       "candidate_revision": null,
       "valid": false,
@@ -11525,6 +11534,7 @@
      "ok": false,
      "error": "active_work_unresolved",
      "disposition": {
+      "schema": "pm.todo.list_replacement_disposition.v1",
       "thread_id": "plan-deep",
       "old_revision": 1,
       "new_revision": 2,
@@ -13046,6 +13056,7 @@
    "verdict": "pass",
    "evidence": {
     "keys": [
+     "schema",
      "project_id",
      "thread_id",
      "assistant_plan_id",
@@ -15573,17 +15584,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T02:57:41.322Z",
+     "frozenAt": "2026-09-04T03:14:04.672Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -16118,7 +16129,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T02:58:23.658Z",
+     "at": "2026-09-04T03:14:46.797Z",
      "currentness": 1
     }
    },
@@ -16711,9 +16722,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-63ob",
-     "sess-p-28-eont",
-     "sess-p-30-7mr6"
+     "sess-p-26-znn",
+     "sess-p-28-7gte",
+     "sess-p-30-37mj"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -17322,7 +17333,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmd6w43",
+     "attachment_id": "bctx-1-mtmdryb3",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -17344,21 +17355,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmd712m",
+     "id": "bctx-13-mtmds38j",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmd71pb",
+     "id": "bctx-15-mtmds3uu",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmd72bf",
+     "id": "bctx-17-mtmds4gg",
      "count": 1,
      "result": "current",
      "match": true,
@@ -17436,11 +17447,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmd76fu",
+       "ref_id": "bctx-25-mtmds8g0",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmd76fu",
+        "attachment_id": "bctx-25-mtmds8g0",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -17451,11 +17462,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmd773n",
+       "ref_id": "bctx-27-mtmds91u",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmd773n",
+        "attachment_id": "bctx-27-mtmds91u",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17466,11 +17477,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmd77qr",
+       "ref_id": "bctx-29-mtmds9nu",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmd77qr",
+        "attachment_id": "bctx-29-mtmds9nu",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17482,7 +17493,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmd76fu"
+      "bctx-25-mtmds8g0"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -17711,7 +17722,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmd5ubn-3-0utos",
+    "attachment_id": "att-mtmdqx2w-3-u4zei",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -17779,7 +17790,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hash4bbb6f7c94dbTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hasha006dfe48d7dTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -17810,6 +17821,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -17846,6 +17858,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -17886,6 +17899,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -17944,6 +17958,7 @@
    "verdict": "pass",
    "evidence": {
     "res": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -17975,6 +17990,7 @@
    "verdict": "pass",
    "evidence": {
     "unknown": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -17990,6 +18006,7 @@
      "error": "invalid_graph"
     },
     "dupe": {
+     "schema": "pm.todo.graph_validation_result.v1",
      "thread_id": "plan-deep",
      "candidate_revision": 99,
      "valid": false,
@@ -18065,6 +18082,7 @@
      "ok": false,
      "error": "invalid_graph",
      "validation": {
+      "schema": "pm.todo.graph_validation_result.v1",
       "thread_id": "plan-deep",
       "candidate_revision": null,
       "valid": false,
@@ -18097,6 +18115,7 @@
      "ok": false,
      "error": "active_work_unresolved",
      "disposition": {
+      "schema": "pm.todo.list_replacement_disposition.v1",
       "thread_id": "plan-deep",
       "old_revision": 1,
       "new_revision": 2,
@@ -18310,7 +18329,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "out": "Build check passed. Both deliverables match sha256 f2416f0962e51295."
+    "out": "Build check passed. Both deliverables match sha256 31b56ae57fdcd856."
    },
    "id": "AUTH-003",
    "readiness": {
@@ -18322,7 +18341,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "len": 19905
+    "len": 19906
    },
    "id": "AUTH-004",
    "readiness": {
@@ -18593,7 +18612,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmd5ubo-7-4iu0d",
+     "id": "att-mtmdqx2w-7-w3mjv",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -18620,13 +18639,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmd5ubn-1-qvq59",
+     "id": "att-mtmdqx2w-1-l3okp",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmd5ubo-5-iy4ip",
+     "id": "att-mtmdqx2w-5-o9xud",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -18643,7 +18662,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmd5ubn-1-qvq59",
+     "id": "att-mtmdqx2w-1-l3okp",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -19284,6 +19303,7 @@
    "evidence": {
     "label": "Building…",
     "attn": {
+     "schema": "pm.assistant_plan.execution_attention_projection.v1",
      "plan_run_id": "run-ap-cache-V1",
      "condition_kind": "window",
      "line": "Outside execution window",
@@ -21168,7 +21188,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-cjoe",
+    "session": "sess-p-46-4if1",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -22749,9 +22769,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-3eid",
-     "sess-p-4-eyx7",
-     "sess-p-6-eacn"
+     "sess-p-2-7m48",
+     "sess-p-4-32p7",
+     "sess-p-6-h3zh"
     ],
     "distinct": true
    },
@@ -23073,7 +23093,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "bytes": 2726526,
+    "bytes": 2727081,
     "identical": true
    },
    "id": "GUI-010",
@@ -23190,7 +23210,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "readiness": 19905,
+    "readiness": 19906,
     "scoped": true
    },
    "id": "DRY-008",
@@ -23552,7 +23572,7 @@
    "evidence": {
     "missing": [],
     "stale": [],
-    "current": "f2416f0962e51295"
+    "current": "31b56ae57fdcd856"
    },
    "id": "CONCEPT-016",
    "readiness": {
@@ -23564,10 +23584,10 @@
   {
    "verdict": "pass",
    "evidence": {
-    "h1": "f2416f0962e51295",
-    "h2": "f2416f0962e51295",
+    "h1": "31b56ae57fdcd856",
+    "h2": "31b56ae57fdcd856",
     "identical": true,
-    "bytes": 2726526
+    "bytes": 2727081
    },
    "id": "CONCEPT-017",
    "readiness": {

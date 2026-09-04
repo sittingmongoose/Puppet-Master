@@ -127,12 +127,12 @@
     {
       "name": "Build freezes exact plan_id, version, hash, step ids, runtime, permissions, worktree",
       "pass": true,
-      "detail": "{\"plan_id\":\"ap-index\",\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"step_ids\":[\"ps-0\",\"ps-1\",\"ps-2\",\"ps-3\",\"ps-4\",\"ps-5\"],\"runtime\":\"Claude Sonnet 4.6\",\"permissions\":\"Auto\",\"worktree\":\"feature/query-index\",\"at\":\"2:50 AM\",\"orchestrator\":false}"
+      "detail": "{\"plan_id\":\"ap-index\",\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"step_ids\":[\"ps-0\",\"ps-1\",\"ps-2\",\"ps-3\",\"ps-4\",\"ps-5\"],\"runtime\":\"Claude Sonnet 4.6\",\"permissions\":\"Auto\",\"worktree\":\"feature/query-index\",\"at\":\"3:03 AM\",\"orchestrator\":false}"
     },
     {
       "name": "regular Plan creates To-Dos directly and NO PlanUnits",
       "pass": true,
-      "detail": "{\"todos\":{\"at\":\"2:50 AM\",\"from\":\"plan_steps\",\"count\":6,\"reused\":false},\"units\":null}"
+      "detail": "{\"todos\":{\"at\":\"3:03 AM\",\"from\":\"plan_steps\",\"count\":6,\"reused\":false},\"units\":null}"
     },
     {
       "name": "Build never enters Orchestrator",
@@ -222,7 +222,7 @@
     {
       "name": "Start freezes the exact version/hash and hands the Plan to the one Crew implementation",
       "pass": true,
-      "detail": "{\"crew\":{\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"at\":\"2:50 AM\"},\"status\":\"building\",\"bound\":\"ap-index\"}"
+      "detail": "{\"crew\":{\"version\":5,\"hash\":\"sha-demo:869d26cb\",\"at\":\"3:03 AM\"},\"status\":\"building\",\"bound\":\"ap-index\"}"
     },
     {
       "name": "reset restores the Plan fixtures",

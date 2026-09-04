@@ -283,7 +283,7 @@ its blocker rather than left blank.
 
 ### Defects the audit found and repaired
 
-Thirty-two defects were found by driving the surface — not by reading a document —
+Thirty-four defects were found by driving the surface — not by reading a document —
 and each is repaired in source with a probe that fails without the repair. They are
 listed with their symptoms in `REPAIR_STATUS.md`. Among them: a public
 `questionBudget()` that resolved `Deep · Thorough` to base 6 instead of 10; a Build

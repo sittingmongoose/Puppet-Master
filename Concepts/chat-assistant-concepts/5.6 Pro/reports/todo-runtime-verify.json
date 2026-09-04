@@ -187,7 +187,7 @@
     {
       "name": "Start moves tq-11 to in_progress with exactly one new receipted transition",
       "pass": true,
-      "detail": "[{\"transition_id\":\"tr-tq-11-1\",\"todo_id\":\"tq-11\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"work_admitted\",\"cause_ref\":\"assignment:tq-11\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T02:50:58.812Z\",\"note\":\"A tool batch was durably admitted for this item.\"}]"
+      "detail": "[{\"transition_id\":\"tr-tq-11-1\",\"todo_id\":\"tq-11\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"work_admitted\",\"cause_ref\":\"assignment:tq-11\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T03:03:29.309Z\",\"note\":\"A tool batch was durably admitted for this item.\"}]"
     },
     {
       "name": "every item outside the tq-11 / parent rollup chain is untouched by that one transition",
@@ -197,7 +197,7 @@
     {
       "name": "the parent rolls up to in_progress through its OWN separate, individually receipted transition",
       "pass": true,
-      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T02:50:58.812Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
+      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T03:03:29.309Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
     },
     {
       "name": "the Complete control for tq-11 exists and is clickable",
@@ -207,7 +207,7 @@
     {
       "name": "Complete moves tq-11 to completed with a second receipted transition naming the accepted outcome",
       "pass": true,
-      "detail": "{\"transition_id\":\"tr-tq-11-2\",\"todo_id\":\"tq-11\",\"from_status\":\"in_progress\",\"to_status\":\"completed\",\"cause_kind\":\"outcome_satisfied\",\"cause_ref\":\"evidence:tq-11-2\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-04T02:50:59.183Z\",\"note\":\"Outcome evidence accepted: Running the rollback script against a copy of the post-change database reproduces the pre-change schema exactly.\"}"
+      "detail": "{\"transition_id\":\"tr-tq-11-2\",\"todo_id\":\"tq-11\",\"from_status\":\"in_progress\",\"to_status\":\"completed\",\"cause_kind\":\"outcome_satisfied\",\"cause_ref\":\"evidence:tq-11-2\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-04T03:03:29.675Z\",\"note\":\"Outcome evidence accepted: Running the rollback script against a copy of the post-change database reproduces the pre-change schema exactly.\"}"
     },
     {
       "name": "every item outside the tq-11 / parent rollup chain is untouched by completing tq-11",
@@ -217,7 +217,7 @@
     {
       "name": "tq-11's parent does not falsely roll up to completed while its siblings are still pending, via its own second receipted rollup transition",
       "pass": true,
-      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T02:50:58.812Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"},{\"transition_id\":\"tr-tq-p4-2\",\"todo_id\":\"tq-p4\",\"from_status\":\"in_progress\",\"to_status\":\"pending\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-04T02:50:59.183Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
+      "detail": "[{\"transition_id\":\"tr-tq-p4-1\",\"todo_id\":\"tq-p4\",\"from_status\":\"pending\",\"to_status\":\"in_progress\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":1,\"committed_revision\":2,\"created_at\":\"2026-09-04T03:03:29.309Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"},{\"transition_id\":\"tr-tq-p4-2\",\"todo_id\":\"tq-p4\",\"from_status\":\"in_progress\",\"to_status\":\"pending\",\"cause_kind\":\"child_rollup\",\"cause_ref\":\"rollup:tq-p4\",\"expected_revision\":2,\"committed_revision\":3,\"created_at\":\"2026-09-04T03:03:29.675Z\",\"note\":\"Derived from child status; a parent is never completed by direct assertion.\"}]"
     },
     {
       "name": "the receipts disclosure renders one durable row per transition, most recent first",

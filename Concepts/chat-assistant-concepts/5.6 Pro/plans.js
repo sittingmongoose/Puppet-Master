@@ -968,6 +968,10 @@
       state[id]={ state:agg, todo_ids:[], reason:null, work:[], evidence:[], children:ch };
     }
     var proj={
+      /* The typed contract names this projection. It used to declare its
+         schema only in the Details copy, so a consumer holding the object had
+         no way to identify it -- which is the whole point of a schema id. */
+      schema:'pm.assistant_plan.progress_projection.v1',
       project_id:'pm', thread_id:r.thread_id, assistant_plan_id:r.plan_id,
       plan_version:r.version, plan_hash:hashOf(blocks),
       plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
@@ -1013,7 +1017,8 @@
     var k=r.attention&&r.attention.kind;
     if(!k) return null;
     var base=ATTENTION[k]; if(!base) return null;
-    return { plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
+    return { schema:'pm.assistant_plan.execution_attention_projection.v1',
+             plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
              condition_kind:k, line:base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),

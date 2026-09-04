@@ -25,6 +25,11 @@ def tracked():
         rel = p.relative_to(ROOT)
         if set(rel.parts) & SKIP_DIRS or str(rel).replace('\\', '/').startswith('tests/tmp'):
             continue
+        # A manifest cannot hash itself: the hash would be of the PREVIOUS
+        # manifest, which is a stale claim in the one file whose job is
+        # accurate hashes.
+        if rel.name == 'DELIVERY_MANIFEST.json':
+            continue
         if p.suffix.lower() in SKIP_SUFFIX:
             continue
         yield rel, p
