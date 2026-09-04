@@ -99,9 +99,9 @@ blocked: 1  pass: 13
 | `ATT-003` | pass | FileManager.md | top-edge tracer, not a progress bar | n/a | {"tracer": true, "conventionalBar": false} |
 | `ATT-004` | pass | FileManager.md | hover X, body opens | n/a | {"remove": 1, "open": 7, "hoverGated": true} |
 | `ATT-005` | pass | FileManager.md | metadata hover-gated | n/a | {"cards": 7, "chrome": 4, "permanentMeta": 0, "hoverKeys": 22} |
-| `ATT-006` | pass | FileManager.md | failure keeps siblings, offers retry | n/a | {"failed": {"thread": "attachments", "msg": "attachments-01", "id": "att-mtmd5ubo-7-4iu0d", "origin": "uploaded_snapshot", "kind": "archive", "state": "failed", "name": "legacy-project.pkg"}, "buttons": ["", "C… |
-| `ATT-007` | pass | FileManager.md | live refs keep the materialized revision | n/a | [{"id": "att-mtmd5ubn-1-qvq59", "rev": null, "hash": "360ab09c340d", "mat": 1}, {"id": "att-mtmd5ubo-5-iy4ip", "rev": null, "hash": "3748bc9034f8", "mat": 1}] |
-| `ATT-008` | pass | FileManager.md | changed disclosure does not rewrite history | n/a | [{"id": "att-mtmd5ubn-1-qvq59", "name": "src/analytics/queries.rs", "captured": "360ab09c340d", "fields": []}] |
+| `ATT-006` | pass | FileManager.md | failure keeps siblings, offers retry | n/a | {"failed": {"thread": "attachments", "msg": "attachments-01", "id": "att-mtmdqx2w-7-w3mjv", "origin": "uploaded_snapshot", "kind": "archive", "state": "failed", "name": "legacy-project.pkg"}, "buttons": ["", "C… |
+| `ATT-007` | pass | FileManager.md | live refs keep the materialized revision | n/a | [{"id": "att-mtmdqx2w-1-l3okp", "rev": null, "hash": "360ab09c340d", "mat": 1}, {"id": "att-mtmdqx2w-5-o9xud", "rev": null, "hash": "3748bc9034f8", "mat": 1}] |
+| `ATT-008` | pass | FileManager.md | changed disclosure does not rewrite history | n/a | [{"id": "att-mtmdqx2w-1-l3okp", "name": "src/analytics/queries.rs", "captured": "360ab09c340d", "fields": []}] |
 | `ATT-009` | pass | FileManager.md | download returns the exact stored version | n/a | {"label": "Download exact version"} |
 | `ATT-010` | pass | FileManager.md | bounded folder manifest | n/a | {"shown": 4, "total": 6, "truncated": true} |
 | `ATT-011` | pass | FileManager.md | More Info fields | n/a | {"missing": [], "len": 1177} |
@@ -117,8 +117,8 @@ pass: 5
 |---|---|---|---|---|---|
 | `AUTH-001` | pass | assistant-chat-design.md | precedence stated in the companion | n/a | {"hasSection": true} |
 | `AUTH-002` | pass | assistant-chat-design.md | modified in place | n/a | {"modules": 20} |
-| `AUTH-003` | pass | assistant-chat-design.md | generated files never hand-edited | n/a | {"out": "Build check passed. Both deliverables match sha256 f2416f0962e51295."} |
-| `AUTH-004` | pass | assistant-chat-design.md | three readiness columns | n/a | {"len": 19905} |
+| `AUTH-003` | pass | assistant-chat-design.md | generated files never hand-edited | n/a | {"out": "Build check passed. Both deliverables match sha256 31b56ae57fdcd856."} |
+| `AUTH-004` | pass | assistant-chat-design.md | three readiness columns | n/a | {"len": 19906} |
 | `AUTH-005` | pass | assistant-chat-design.md | accessibility out of scope, nothing removed | n/a | {"app.js": 28, "plans.js": 8, "collaboration.js": 12, "todos.js": 13, "scheduling.js": 9} |
 
 ### BRAIN — v2 · BrainStorm
@@ -266,7 +266,7 @@ blocked: 4  pass: 4
 | `DRY-005` | blocked | DRY_Rules.md | forward and reverse wiring coverage | needs the wiring matrix | Forward and reverse GUI wiring coverage is produced from Wiring_Matrix.production.json against a source-hashed dispatcher, neither of which exists in this folder. |
 | `DRY-006` | pass | DRY_Rules.md | settings route, runtimes own records | n/a | {"leaks": [], "kinds": ["crew", "brainstorm", "review", "chat_room"]} |
 | `DRY-007` | blocked | DRY_Rules.md | generated governance refreshed last | needs repository gates | Ordering of generated index/shard/evidence/governance refreshes is a Plans/** repository-gate property, outside this concept folder. |
-| `DRY-008` | pass | DRY_Rules.md | packet/canonical/concept/native not conflated | n/a | {"readiness": 19905, "scoped": true} |
+| `DRY-008` | pass | DRY_Rules.md | packet/canonical/concept/native not conflated | n/a | {"readiness": 19906, "scoped": true} |
 
 ### FEATURE — v2 · Teach/Teacher/memory/Debug/ELI5/Revert/Lens
 
@@ -321,7 +321,7 @@ pass: 11
 | `GUI-007` | pass | FinalGUISpec.md | tray, ribbon and quota strip coexist | n/a | {"above": [{"cls": "cs-ribbon", "top": 702, "h": 33}, {"cls": "att-tray", "top": 735, "h": 73}, {"cls": "att-tray-row", "top": 744, "h": 64}], "clipped": [], "composerTop": 844} |
 | `GUI-008` | pass | FinalGUISpec.md | tokens, inline SVG, no left accent bars | n/a | {"out": [{"f": "plans.css", "hardColors": 0, "accents": []}, {"f": "collaboration.css", "hardColors": 0, "accents": []}, {"f": "todos.css", "hardColors": 0, "accents": []}, {"f": "scheduling.css", "hardColors":… |
 | `GUI-009` | pass | FinalGUISpec.md | Chat updates replaces obsolete truth | n/a | {"saysReplace": true, "changelog": false} |
-| `GUI-010` | pass | FinalGUISpec.md | both outputs rebuilt and byte-checked | n/a | {"bytes": 2726526, "identical": true} |
+| `GUI-010` | pass | FinalGUISpec.md | both outputs rebuilt and byte-checked | n/a | {"bytes": 2727081, "identical": true} |
 | `GUI-011` | pass | FinalGUISpec.md | no toast-only simulation | n/a | {"before": {"plan": "ready", "todos": 16}, "after": {"plan": "building", "todos": 22, "approved": true}} |
 
 ### PLAN — v2 · Regular Assistant Plan
@@ -336,7 +336,7 @@ pass: 18
 | `PLAN-004` | pass | Assistant_Plan_Runtime.md | one current Plan per thread | n/a | {"byThread": {"query": ["ap-index"], "plan-deep": ["ap-cache"]}, "all": [{"id": "ap-index", "t": "query", "cur": true, "st": "ready"}, {"id": "ap-cache", "t": "plan-deep", "cur": true, "st": "building"}, {"id":… |
 | `PLAN-005` | pass | Assistant_Plan_Runtime.md | one identity, Vn, immutable history | n/a | {"id": "ap-index", "versions": [1, 2, 3, 4, 5], "current": 5, "oldUnchanged": true} |
 | `PLAN-006` | pass | Assistant_Plan_Runtime.md | one control, four labels | n/a | {"ready": "Build", "building": "Building…", "completed": "Completed", "canceled": "Canceled"} |
-| `PLAN-007` | pass | Assistant_Plan_Runtime.md | Building… with secondary reason | n/a | {"label": "Building…", "attn": {"plan_run_id": "run-ap-cache-V1", "condition_kind": "window", "line": "Outside execution window", "tone": "info", "reason": "Outside the configured execution window (22:00–06:00)… |
+| `PLAN-007` | pass | Assistant_Plan_Runtime.md | Building… with secondary reason | n/a | {"label": "Building…", "attn": {"schema": "pm.assistant_plan.execution_attention_projection.v1", "plan_run_id": "run-ap-cache-V1", "condition_kind": "window", "line": "Outside execution window", "tone": "info",… |
 | `PLAN-008` | pass | Assistant_Plan_Runtime.md | Regular creates document + To-Dos only | n/a | {"backend": "direct", "ledger": null, "planunits": null, "worknodes": [], "orchestrator": {"entered": false, "retired": true}} |
 | `PLAN-009` | pass | Assistant_Plan_Runtime.md | Build freezes the exact context | n/a | {"version": 5, "hash": "sha-demo:869d26cb", "runtime": "Claude Sonnet 4.6", "permissions": "Auto", "worktree": "feature/query-index"} |
 | `PLAN-010` | pass | Assistant_Plan_Runtime.md | Build is idempotent | n/a | {"after1": {"run": "run-ap-index-V5", "todos": 22}, "after2": {"run": "run-ap-index-V5", "todos": 22}, "secondControl": false} |
@@ -357,7 +357,7 @@ blocked: 5  pass: 7
 |---|---|---|---|---|---|
 | `PROVIDER-001` | pass | CLI_Bridged_Providers.md | PM owns the canonical objects | n/a | {"goal": true, "plan": true, "todo": true, "collab": true, "attachments": true} |
 | `PROVIDER-002` | blocked | CLI_Bridged_Providers.md | disable/redirect/project/retain order | needs an adapter | The four-step disposition for a provider-native system needs a live adapter exposing one. No adapter runs in this concept. |
-| `PROVIDER-003` | pass | CLI_Bridged_Providers.md | provider session ids are correlation only | n/a | {"runIds": ["crew-query-perf", "brainstorm-provider-failover", "review-orchestrator-boundary"], "sessionIds": ["sess-p-2-3eid", "sess-p-4-eyx7", "sess-p-6-eacn"], "distinct": true} |
+| `PROVIDER-003` | pass | CLI_Bridged_Providers.md | provider session ids are correlation only | n/a | {"runIds": ["crew-query-perf", "brainstorm-provider-failover", "review-orchestrator-boundary"], "sessionIds": ["sess-p-2-7m48", "sess-p-4-32p7", "sess-p-6-h3zh"], "distinct": true} |
 | `PROVIDER-004` | blocked | CLI_Bridged_Providers.md | closed capability matrix | needs an adapter | A published adapter capability matrix with source and currentness is adapter-side. This concept exposes model rosters and permission ceilings, not adapter capabilities. |
 | `PROVIDER-005` | blocked | CLI_Bridged_Providers.md | execution control tier disclosed | needs an adapter | Full / Constrained / Provider-managed tiers are declared by an adapter for a real run. Nothing here executes through one. |
 | `PROVIDER-006` | blocked | CLI_Bridged_Providers.md | host tool execution preferred | needs an adapter | Preferring host tool execution, isolating delegated execution and falling back to reasoning-only is adapter behaviour at dispatch. No dispatch occurs here. |
@@ -375,7 +375,7 @@ pass: 12
 | requirement | verdict | canonical | concept | native | evidence |
 |---|---|---|---|---|---|
 | `REVIEW-001` | pass | Collaborative_Workflows.md | primary mode, two submenu choices | n/a | {"opts": ["Single Agent", "Multi-Pass Review"], "single": true, "multi": true} |
-| `REVIEW-002` | pass | Collaborative_Workflows.md | fresh-context reviewer subagent | n/a | {"session": "sess-p-46-cjoe", "isolation": "fresh", "persona": "Reviewer", "model": "opus5"} |
+| `REVIEW-002` | pass | Collaborative_Workflows.md | fresh-context reviewer subagent | n/a | {"session": "sess-p-46-4if1", "isolation": "fresh", "persona": "Reviewer", "model": "opus5"} |
 | `REVIEW-003` | pass | Collaborative_Workflows.md | 1–8 reviewers, default 3, repeats allowed | n/a | {"count": 3, "repeated": true, "keys": ["strategy", "reviewerCount", "blindInitialPass", "peerCorroboration", "preserveDissent", "autoRepair", "timeLimitMinutes", "tokenLimit", "costLimitUsd"]} |
 | `REVIEW-004` | pass | Collaborative_Workflows.md | unique attempt + frozen pack | n/a | [{"id": "review-orchestrator-boundary", "frozen": true, "hash": "a1c9f02e", "sessions": 3, "n": 3}, {"id": "run-47", "frozen": true, "hash": "a91c33f0", "sessions": 1, "n": 1}, {"id": "run-55", "frozen": true, … |
 | `REVIEW-005` | pass | Collaborative_Workflows.md | concurrent and blind | n/a | [{"id": "review-orchestrator-boundary", "isolation": ["fresh"]}, {"id": "run-47", "isolation": ["fresh"]}, {"id": "run-55", "isolation": ["fresh"]}] |
@@ -478,10 +478,10 @@ pass: 12
 | requirement | verdict | canonical | concept | native | evidence |
 |---|---|---|---|---|---|
 | `BSTALE-001` | pass | Section15_MVP_Promoted_Features_Spec.md | every send path revalidates | n/a | {"cap": {"contexts": 3, "captures": 3, "mode": "component", "picked": null}, "fields": ["schema", "attachment_id", "captured_generation", "current_generation", "locator_result_count", "identity_match", "result"… |
-| `BSTALE-002` | pass | Section15_MVP_Promoted_Features_Spec.md | exactly one compatible match | n/a | [{"id": "bctx-13-mtmd712m", "count": 1, "result": "current", "match": true, "reason": null}, {"id": "bctx-15-mtmd71pb", "count": 1, "result": "current", "match": true, "reason": null}, {"id": "bctx-17-mtmd72bf"… |
+| `BSTALE-002` | pass | Section15_MVP_Promoted_Features_Spec.md | exactly one compatible match | n/a | [{"id": "bctx-13-mtmds38j", "count": 1, "result": "current", "match": true, "reason": null}, {"id": "bctx-15-mtmds3uu", "count": 1, "result": "current", "match": true, "reason": null}, {"id": "bctx-17-mtmds4gg"… |
 | `BSTALE-003` | pass | Section15_MVP_Promoted_Features_Spec.md | four stale reasons, nothing sent | n/a | {"out": [{"case": "zero", "result": "stale_capture", "reason": "zero_matches", "recapture": "cmd.browser.component.pick"}, {"case": "multiple", "result": "stale_capture", "reason": "multiple_matches", "recaptur… |
 | `BSTALE-004` | pass | Commands_System.md | recapture reuses the pick command | n/a | {"cmd": "cmd.browser.component.pick", "peer": []} |
-| `BSTALE-005` | pass | ComposerBuffer | one stale item blocks only itself | n/a | {"n": 3, "res": {"items": [{"ref_id": "bctx-25-mtmd76fu", "ok": false, "result": {"schema": "pm.browser.component_revalidation_result.v1", "attachment_id": "bctx-25-mtmd76fu", "captured_generation": 1, "current… |
+| `BSTALE-005` | pass | ComposerBuffer | one stale item blocks only itself | n/a | {"n": 3, "res": {"items": [{"ref_id": "bctx-25-mtmds8g0", "ok": false, "result": {"schema": "pm.browser.component_revalidation_result.v1", "attachment_id": "bctx-25-mtmds8g0", "captured_generation": 1, "current… |
 | `BSTALE-006` | pass | Section15_MVP_Promoted_Features_Spec.md | chips keep structured identity | n/a | {"fields": ["id", "demo", "capturedAt", "session", "page", "locator", "fragileLocator", "tag", "role", "name", "text", "component", "source", "rect", "parentPath", "style", "boundedHtml", "crop", "stableId", "f… |
 | `BSTALE-007` | pass | Scheduling_and_Quota_Resume.md | no live selector in a schedule | n/a | {"browserish": []} |
 | `BSTALE-008` | pass | Section15_MVP_Promoted_Features_Spec.md | isolated immediate-send payload | n/a | {"unchanged": true, "result": "current"} |
@@ -538,8 +538,8 @@ pass: 20
 | `CONCEPT-013` | pass | concept source/tests | stale component currentness | n/a | {"hasRevalidate": true, "hasList": true, "recapture": "cmd.browser.component.pick", "epoch": "number"} |
 | `CONCEPT-014` | pass | concept source/tests | folder through the shared tray | n/a | {"folderCmd": "cmd.chat.attachment.add", "aliasRefuses": "unsupported_semantic_kind", "aliasNormalises": "cmd.chat.attachment.add", "sources": ["picker", "drag_drop", "file_manager", "alias"]} |
 | `CONCEPT-015` | pass | concept source/tests | test label renamed | n/a | {"oldName": [], "newName": ["todo-runtime-verify.mjs"], "activeReferences": []} |
-| `CONCEPT-016` | pass | companion files | companions describe what is implemented | n/a | {"missing": [], "stale": [], "current": "f2416f0962e51295"} |
-| `CONCEPT-017` | pass | build.py | deterministic, byte-checked twice | n/a | {"h1": "f2416f0962e51295", "h2": "f2416f0962e51295", "identical": true, "bytes": 2726526} |
+| `CONCEPT-016` | pass | companion files | companions describe what is implemented | n/a | {"missing": [], "stale": [], "current": "31b56ae57fdcd856"} |
+| `CONCEPT-017` | pass | build.py | deterministic, byte-checked twice | n/a | {"h1": "31b56ae57fdcd856", "h2": "31b56ae57fdcd856", "identical": true, "bytes": 2727081} |
 | `CONCEPT-018` | pass | concept source | non-conflicting v2 decisions preserved | n/a | {"themes": 8, "recipes": 8, "lens": true, "orbit": true, "menus": true, "transcript": true, "history": false, "contextRing": true, "composer": true, "stop": true} |
 | `CONCEPT-019` | pass | concept docs/tests | fixture-backed behaviour is labelled | n/a | {"scoped": true, "threeColumns": true} |
 | `CONCEPT-020` | pass | all correction owners | no accessibility requirement raised | n/a | {"ariaAttributesPerFile": [28, 8, 12, 13]} |
@@ -554,7 +554,7 @@ pass: 8
 | `FOLDER-002` | pass | UI_Command_Catalog.md | alias is file-only | n/a | {"okFile": {"ok": true, "command": "cmd.chat.attachment.add", "handler": "handlers::chat_attachments::attachment_add", "semantic_kind": "file", "source": "alias", "effect": "AttachmentRef", "folder_manifest_req… |
 | `FOLDER-003` | pass | Commands_System.md | no folder-specific surface | needs command census | {"api": ["freezeFolderForSchedule"], "peerActions": [], "addFolderRef": "undefined"} |
 | `FOLDER-004` | pass | FileManager.md | bounded manifest | n/a | {"missing": [], "shown": 4, "total": 6, "truncated": true} |
-| `FOLDER-005` | pass | Scheduling_and_Quota_Resume.md | scheduled folder freezes its manifest | n/a | {"ok": true, "schema": "pm.schedule.attachment_snapshot.v1", "attachment_id": "att-mtmd5ubn-3-0utos", "folder_manifest_hash": "sha-demo:f0a31c7b", "root_identity": "project:pm/src/analytics/", "availability": "… |
+| `FOLDER-005` | pass | Scheduling_and_Quota_Resume.md | scheduled folder freezes its manifest | n/a | {"ok": true, "schema": "pm.schedule.attachment_snapshot.v1", "attachment_id": "att-mtmdqx2w-3-u4zei", "folder_manifest_hash": "sha-demo:f0a31c7b", "root_identity": "project:pm/src/analytics/", "availability": "… |
 | `FOLDER-006` | pass | FileManager.md | changed folder is disclosed, history preserved | n/a | {"unchanged": true, "status": "manifest_only", "materialization": [{"turn": "this turn", "status": "partially_materialized", "note": "Bounded manifest only (4 of 6 files listed by name/size) — no recursive file… |
 | `FOLDER-007` | pass | FileManager.md | reuse File Manager capabilities | needs FileManager | {"buttons": [{"label": "", "disabled": false, "reason": null}, {"label": "Close", "disabled": false, "reason": null}, {"label": "Download exact version", "disabled": false, "reason": null}, {"label": "Open / pr… |
 | `FOLDER-008` | pass | Prompt_Pipeline.md | manifest and extraction are separate identities | n/a | {"manifest_status": "manifest_only", "hash": "sha-demo:f0a31c7b", "receipt": {"turn": "this turn", "status": "partially_materialized", "note": "Bounded manifest only (4 of 6 files listed by name/size) — no recu… |
@@ -592,7 +592,7 @@ pass: 18
 | `MODAL-006` | pass | Settings_System.md | defaults only via Save as Default | needs Settings owner | {"defsUnchanged": true, "writesBefore": 0, "writesAfter": 0} |
 | `MODAL-007` | pass | Collaborative_Workflows.md | card only after admission | n/a | {"t0": 1, "t1": 1, "t2": 1, "modalOpened": true} |
 | `MODAL-008` | pass | Settings_System.md | Crew Auto checks only after commit | needs Settings owner | {"before": false, "during": false, "after": false} |
-| `MODAL-009` | pass | Collaborative_Workflows.md | target freezes at Start | n/a | [{"id": "review-orchestrator-boundary", "frozenAt": "2026-09-04T02:57:41.322Z", "targetHash": "a1c9f02e"}, {"id": "run-47", "frozenAt": "2026-09-04T02:57:41.322Z", "targetHash": "a91c33f0"}, {"id": "run-55", "f… |
+| `MODAL-009` | pass | Collaborative_Workflows.md | target freezes at Start | n/a | [{"id": "review-orchestrator-boundary", "frozenAt": "2026-09-04T03:14:04.672Z", "targetHash": "a1c9f02e"}, {"id": "run-47", "frozenAt": "2026-09-04T03:14:04.672Z", "targetHash": "a91c33f0"}, {"id": "run-55", "f… |
 | `MODAL-010` | pass | Collaborative_Workflows.md | stale target needs a decision | n/a | {"runs": 3, "stale": [{"id": "review-orchestrator-boundary", "choices": [{"id": "refresh_to_current", "label": "Refresh to the current target", "target_hash": "f77e10bb"}, {"id": "use_frozen_target", "label": "… |
 | `MODAL-011` | pass | ComposerBuffer | pre-send BrainStorm config in the buffer | n/a | {"stored": {"kind": "brainstorm", "questionLimit": 20, "grillMe": true, "wonderer": true}, "roundTrip": {"kind": "brainstorm", "questionLimit": 20, "grillMe": true, "wonderer": true}, "text": "Deep Plan BrainSt… |
 | `MODAL-012` | pass | Prompt_Pipeline | NL request held before dispatch | needs provider | {"msgsBefore": 26, "msgsAfterHold": 26, "providerBefore": 0, "providerAfter": 0, "held": "Please brainstorm the storage engine options.", "draftOpened": true, "runs": 9, "restoredText": "Please brainstorm the s… |
@@ -610,7 +610,7 @@ blocked: 1  pass: 23
 | requirement | verdict | canonical | concept | native | evidence |
 |---|---|---|---|---|---|
 | `PART-001` | pass | Collaborative_Workflows.md | six terminal outcomes | n/a | {"vocab": ["completed", "failed", "timed_out", "unavailable", "canceled", "explicitly_waived"], "results": {"completed": true, "failed": true, "timed_out": true, "unavailable": true, "canceled": true, "explicit… |
-| `PART-002` | pass | Collaborative_Workflows.md | required vs optional, waiver identity | n/a | {"required": 3, "optional": 0, "noReasonErr": "waiver_requires_reason", "waiver": {"actor": "user", "reason": "covered by an existing audit", "at": "2026-09-04T02:58:23.658Z", "currentness": 1}} |
+| `PART-002` | pass | Collaborative_Workflows.md | required vs optional, waiver identity | n/a | {"required": 3, "optional": 0, "noReasonErr": "waiver_requires_reason", "waiver": {"actor": "user", "reason": "covered by an existing audit", "at": "2026-09-04T03:14:46.797Z", "currentness": 1}} |
 | `PART-003` | pass | Provider control | no silent substitution | n/a | {"noReasonErr": "replacement_requires_reason", "ok": true, "rev": 2, "originalLabel": "Claude Sonnet 4.6 · Anthropic", "originalModelId": "sonnet46", "nowModelId": "sonnet46-personal", "nowLabel": "Claude Sonne… |
 | `PART-004` | pass | Collaborative_Workflows.md | retry = new attempt, old kept | n/a | {"retried": true, "attempts": 2, "kept": true, "lateErr": "stale_epoch", "rejected": 1} |
 | `PART-005` | pass | Commands_System.md | one reconfigure owner | needs command census | {"api": ["retryParticipant", "replaceParticipant", "setOutcome"], "perWorkflowEngines": []} |
@@ -630,7 +630,7 @@ blocked: 1  pass: 23
 | `PART-019` | pass | Collaborative_Workflows.md | kind-specific completion predicate | n/a | {"kinds": ["crew", "brainstorm", "review", "chat_room"], "shapes": {"crew": ["schema", "run_id", "kind", "required_slots", "completed_slots", "failed_slots", "waived_slots", "unresolved_required", "output_statu… |
 | `PART-020` | pass | Collaborative_Workflows.md | cancel fences every callback | n/a | {"err": "run_canceled", "retained": true, "unchanged": true, "rejected": 1} |
 | `PART-021` | pass | Provider control | pre-Start unavailability is not a runtime participant | n/a | {"before": {"runs": 0, "providerCalls": 0, "usageRecords": 0, "events": 0, "cards": 0, "settingsWrites": 0, "installs": 0, "participants": 0}, "after": {"runs": 0, "providerCalls": 0, "usageRecords": 0, "events… |
-| `PART-022` | pass | Collaborative_Workflows.md | same model, independent attempts | n/a | {"slots": ["p-25", "p-27", "p-29"], "uniqueSlots": 3, "sessions": ["sess-p-26-63ob", "sess-p-28-eont", "sess-p-30-7mr6"], "uniqueSessions": 3, "models": ["opus5", "glm52", "opus5"]} |
+| `PART-022` | pass | Collaborative_Workflows.md | same model, independent attempts | n/a | {"slots": ["p-25", "p-27", "p-29"], "uniqueSlots": 3, "sessions": ["sess-p-26-znn", "sess-p-28-7gte", "sess-p-30-37mj"], "uniqueSessions": 3, "models": ["opus5", "glm52", "opus5"]} |
 | `PART-023` | pass | FinalGUISpec.md | counts reachable without flooding the transcript | n/a | {"hasCard": true, "participantRows": 0, "showsCounts": true, "genericOnly": false} |
 | `PART-024` | blocked | CLI_Bridged_Providers.md | constrained-execution disclosure | needs an adapter | Requires a live direct/SDK/CLI/server adapter that cannot guarantee fresh sessions, parallelism or isolation, so its constrained tier can be disclosed before Start and in the artifact. No adapter runs in this c… |
 
@@ -698,7 +698,7 @@ pass: 18
 
 | requirement | verdict | canonical | concept | native | evidence |
 |---|---|---|---|---|---|
-| `PPROG-001` | pass | Assistant_Plan_Runtime.md | typed projection key | needs projector service | {"keys": ["project_id", "thread_id", "assistant_plan_id", "plan_version", "plan_hash", "plan_run_id", "projection_revision", "currentness_hash", "generated_at", "step_states", "stale", "source"], "plan_hash": "… |
+| `PPROG-001` | pass | Assistant_Plan_Runtime.md | typed projection key | needs projector service | {"keys": ["schema", "project_id", "thread_id", "assistant_plan_id", "plan_version", "plan_hash", "plan_run_id", "projection_revision", "currentness_hash", "generated_at", "step_states", "stale", "source"], "pla… |
 | `PPROG-002` | pass | Assistant_Plan_Runtime.md | sole authority, derived from To-Dos | needs ToDoController | {"step": "cs-4", "beforeState": "pending", "afterState": "in_progress", "hasSetter": "undefined", "cmdExists": "undefined"} |
 | `PPROG-003` | pass | Assistant_Plan_Runtime.md | stable step ids, not titles | n/a | {"count": 9, "renamed": 9, "sameIds": true, "sameStates": true} |
 | `PPROG-004` | pass | Assistant_Plan_Runtime.md | five leaf states + mixed | n/a | {"words": ["in_progress", "completed", "blocked", "skipped", "pending", "mixed"], "seen": {"cs-0": "in_progress", "cs-1": "completed", "cs-2a": "blocked", "cs-2b": "skipped"}, "states": {"cs-0": "in_progress", … |
@@ -796,14 +796,14 @@ pass: 16
 
 | requirement | verdict | canonical | concept | native | evidence |
 |---|---|---|---|---|---|
-| `TDG-001` | pass | ToDo_Runtime.md | self-parent rejected | n/a | {"res": {"thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": ["tc-00"], "parent_cycles": [["tc-00", "tc-00"]], "dependency_cycles": [], "unknown_refs": [], "cross_thread_refs"… |
-| `TDG-002` | pass | ToDo_Runtime.md | parent cycle rejected | n/a | {"res": {"thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [["tc-00", "tc-01", "tc-00"], ["tc-01", "tc-00", "tc-01"]], "dependency_cycles": [], "unknown… |
-| `TDG-003` | pass | ToDo_Runtime.md | dependency cycle rejected | n/a | {"res": {"thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [["tc-00", "tc-02a", "tc-01", "tc-00"], ["tc-01"], ["tc-02a"], ["tc-… |
-| `TDG-004` | pass | ToDo_Runtime.md | cross-thread rejected | n/a | {"res": {"thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [], "unknown_refs": [], "cross_thread_refs": ["tc-00"], "duplicate_i… |
-| `TDG-005` | pass | ToDo_Runtime.md | unknown and duplicate ids fail closed | n/a | {"unknown": {"thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [], "unknown_refs": ["does-not-exist"], "cross_thread_refs": [],… |
+| `TDG-001` | pass | ToDo_Runtime.md | self-parent rejected | n/a | {"res": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": ["tc-00"], "parent_cycles": [["tc-00", "tc-00"]], "dependency_cycl… |
+| `TDG-002` | pass | ToDo_Runtime.md | parent cycle rejected | n/a | {"res": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [["tc-00", "tc-01", "tc-00"], ["tc-01", "tc-0… |
+| `TDG-003` | pass | ToDo_Runtime.md | dependency cycle rejected | n/a | {"res": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [["tc-00", "tc-02a",… |
+| `TDG-004` | pass | ToDo_Runtime.md | cross-thread rejected | n/a | {"res": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [], "unknown_refs": … |
+| `TDG-005` | pass | ToDo_Runtime.md | unknown and duplicate ids fail closed | n/a | {"unknown": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": 99, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [], "unknown_ref… |
 | `TDG-006` | pass | ToDo_Runtime.md | reorder changes only display_order | n/a | {"ok": true, "depsSame": true} |
-| `TDG-007` | pass | ToDo_Runtime.md | replacement is an owner operation | n/a | {"bad": {"ok": false, "error": "invalid_graph", "validation": {"thread_id": "plan-deep", "candidate_revision": null, "valid": false, "self_parent_ids": [], "parent_cycles": [], "dependency_cycles": [], "unknown… |
-| `TDG-008` | pass | ToDo_Runtime.md | active work classified, never orphaned | n/a | {"dropped": "tc-01", "res": {"ok": false, "error": "active_work_unresolved", "disposition": {"thread_id": "plan-deep", "old_revision": 1, "new_revision": 2, "retained": ["tc-00", "tc-02a", "tc-02b", "tc-03", "t… |
+| `TDG-007` | pass | ToDo_Runtime.md | replacement is an owner operation | n/a | {"bad": {"ok": false, "error": "invalid_graph", "validation": {"schema": "pm.todo.graph_validation_result.v1", "thread_id": "plan-deep", "candidate_revision": null, "valid": false, "self_parent_ids": [], "paren… |
+| `TDG-008` | pass | ToDo_Runtime.md | active work classified, never orphaned | n/a | {"dropped": "tc-01", "res": {"ok": false, "error": "active_work_unresolved", "disposition": {"schema": "pm.todo.list_replacement_disposition.v1", "thread_id": "plan-deep", "old_revision": 1, "new_revision": 2, … |
 | `TDG-009` | pass | ToDo_Runtime.md | rebind preserves the exact work binding | n/a | {"res": {"ok": true, "rebound": [{"from": "tc-01", "to": "tc-00", "work": ["work-bench-cold"]}]}, "work": ["work-bench-cold"], "targetWork": ["work-bench-cold"], "targetRevision": 4} |
 | `TDG-010` | pass | ToDo_Runtime.md | late events need every currentness key | n/a | {"errors": {"item": "stale_item_revision", "list": "stale_list_revision", "work": "stale_work_binding", "plan": "stale_plan_version"}, "retained": 4, "status": "completed"} |
 | `TDG-011` | pass | ToDo_Runtime.md | removed children cannot move a parent | n/a | {"res": true, "late": "unknown_todo", "parentStatus": "completed"} |

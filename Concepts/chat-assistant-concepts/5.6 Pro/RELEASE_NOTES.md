@@ -60,13 +60,13 @@ Result: 481 requirements decided. 444 pass, 2 superseded by the correction with
 the replacement value proven, 35 blocked on native infrastructure with the exact
 blocker named, and **0 failed or not implemented**. 494 probes, 0 console errors.
 
-The audit found and repaired 32 defects the applying wave had not, including a
+The audit found and repaired 34 defects the applying wave had not, including a
 public `questionBudget()` that resolved `Deep · Thorough` to base 6 instead of
 10, a Build control that could never be disabled by a build blocker while the
 card's own copy said it could, a Plan that completed without completing its
 bound Goal, a To-Do controller that accepted the retired `verifying` status
 through whole-list replacement, and a screenshot that silently discarded a
-pending attachment. `REPAIR_STATUS.md` lists all thirty-two with their symptoms.
+pending attachment. `REPAIR_STATUS.md` lists all thirty-four with their symptoms.
 
 All 541 assertions in the eleven pre-existing suites still pass.
 

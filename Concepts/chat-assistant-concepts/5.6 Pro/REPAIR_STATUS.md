@@ -278,9 +278,13 @@ Each is repaired in source, and each has a probe that fails without the repair.
 | 31 | `Chat updates.md` recorded the retired values but never stated the precedence chain the correction requires. | CONCEPT-002, AUTH-001 |
 | 32 | This file hard-coded a build digest that the gate no longer produced. A companion that repeats a digest goes stale the next time anything is rebuilt, so the digest lives in the gate output and in the regenerated manifest instead. | CONCEPT-016 |
 
+| 33 | Four typed projections declared their schema id only in rendered copy, not in the object: `progress()`, `attention()`, `validateGraph()` and the list-replacement disposition. A consumer holding one had no way to identify it, which is the whole point of a schema id. | PPROG-001, TDG-001 |
+| 34 | No inventory existed of the identifiers this surface exposes, so a later census against the real branch had nothing exact to diff against. `tests/census-ids.mjs` now writes `reports/ID_CENSUS.json`: 294 registered actions, 65 rendered, the 7 `cmd.*` the UI names as unregistered, 12 schema ids, 9 Activity domains and every published vocabulary — stated as a concept inventory, not as the branch census CDRY-001 asks for. | CDRY-001 |
+
 ### Result
 
-481 requirements decided, 0 failed, 0 not implemented. 35 are recorded
+34 defects found and repaired. 481 requirements decided, 0 failed,
+0 not implemented. 35 are recorded
 **blocked** with the exact blocker — a native handler, a storage engine, a
 scheduler, a provider adapter, or a census of the implementation branch — and
 none of them is recorded as a pass. 2 v2 requirements (BRAIN-002, BRAIN-003) are

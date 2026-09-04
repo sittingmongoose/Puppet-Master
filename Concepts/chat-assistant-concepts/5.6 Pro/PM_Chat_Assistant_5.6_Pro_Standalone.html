@@ -29726,6 +29726,10 @@ window.PM56_EXT = window.PM56_EXT || {
       state[id]={ state:agg, todo_ids:[], reason:null, work:[], evidence:[], children:ch };
     }
     var proj={
+      /* The typed contract names this projection. It used to declare its
+         schema only in the Details copy, so a consumer holding the object had
+         no way to identify it -- which is the whole point of a schema id. */
+      schema:'pm.assistant_plan.progress_projection.v1',
       project_id:'pm', thread_id:r.thread_id, assistant_plan_id:r.plan_id,
       plan_version:r.version, plan_hash:hashOf(blocks),
       plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
@@ -29771,7 +29775,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var k=r.attention&&r.attention.kind;
     if(!k) return null;
     var base=ATTENTION[k]; if(!base) return null;
-    return { plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
+    return { schema:'pm.assistant_plan.execution_attention_projection.v1',
+             plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
              condition_kind:k, line:base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),
@@ -32050,7 +32055,8 @@ window.PM56_EXT = window.PM56_EXT || {
      list byte-identical -- there is no partial commit and no silent repair.
      ===================================================================== */
   function validateGraph(threadId, candidate){
-    var res={ thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
+    var res={ schema:'pm.todo.graph_validation_result.v1',
+              thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
               valid:true, self_parent_ids:[], parent_cycles:[], dependency_cycles:[],
               unknown_refs:[], cross_thread_refs:[], duplicate_ids:[], invalid_statuses:[] };
     var items=(candidate&&candidate.items)||[], byId={}, i, j;
@@ -32137,7 +32143,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var oldItems=(store&&store.items)||[], newItems=candidate.items||[];
     var newById={}, i;
     for(i=0;i<newItems.length;i++) newById[newItems[i].todo_id]=newItems[i];
-    var disp={ thread_id:threadId, old_revision:(store&&store.revision)||1,
+    var disp={ schema:'pm.todo.list_replacement_disposition.v1',
+               thread_id:threadId, old_revision:(store&&store.revision)||1,
                new_revision:((store&&store.revision)||1)+1,
                retained:[], rebound:[], canceled:[], refused:[], active_work_refs:[] };
     for(i=0;i<oldItems.length;i++){
@@ -34336,7 +34343,8 @@ window.PM56_EXT = window.PM56_EXT || {
     if(OUTCOMES.indexOf(outcome) < 0) return { ok:false, error:'invalid_outcome' };
     if(outcome === 'explicitly_waived' && !opts.reason)
       return { ok:false, error:'waiver_requires_reason' };
-    p.attempts.push({ attempt_id:'att-'+p.id+'-'+(p.attempts.length+1),
+    p.attempts.push({ schema:'pm.collaboration.participant_disposition.v1',
+      attempt_id:'att-'+p.id+'-'+(p.attempts.length+1),
       outcome:outcome, at:nowIso(),
       requested_identity:p.requestedModelId, effective_identity:p.effectiveModelId,
       reason:opts.reason || null, epoch:run.stopEpoch });

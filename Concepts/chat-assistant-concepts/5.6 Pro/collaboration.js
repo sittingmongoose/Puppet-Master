@@ -2050,7 +2050,8 @@
     if(OUTCOMES.indexOf(outcome) < 0) return { ok:false, error:'invalid_outcome' };
     if(outcome === 'explicitly_waived' && !opts.reason)
       return { ok:false, error:'waiver_requires_reason' };
-    p.attempts.push({ attempt_id:'att-'+p.id+'-'+(p.attempts.length+1),
+    p.attempts.push({ schema:'pm.collaboration.participant_disposition.v1',
+      attempt_id:'att-'+p.id+'-'+(p.attempts.length+1),
       outcome:outcome, at:nowIso(),
       requested_identity:p.requestedModelId, effective_identity:p.effectiveModelId,
       reason:opts.reason || null, epoch:run.stopEpoch });
