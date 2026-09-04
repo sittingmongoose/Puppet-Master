@@ -27,14 +27,15 @@ TRANSFORM_MARKER = "PM7 Guided Tour: deterministic real-shell teacher"
 
 
 GUIDED_TOUR_MARKUP = r'''<!-- PM7 Guided Tour: deterministic real-shell teacher -->
-<div id="pm7-guided-tour" class="pm7gt" data-open="false" data-motion="idle" data-step="chat_teacher" data-phase="0" hidden>
+<div id="pm7-guided-tour" class="pm7gt" data-open="false" data-motion="idle" data-step-id="tour.intro.comfort" data-choreography="idle" hidden>
   <div class="pm7gt-scrim" aria-hidden="true"></div>
   <div class="pm7gt-halo" aria-hidden="true"></div>
+  <div class="pm7gt-pointer" aria-hidden="true"></div>
   <section class="pm7gt-callout" role="dialog" aria-modal="false">
     <header class="pm7gt-head">
-      <div><span class="pm7gt-local">BEGINNER TOUR</span><span class="pm7gt-boundary">Watch once, then try the real control</span></div>
+      <div><span class="pm7gt-local">BEGINNER TOUR</span><span class="pm7gt-boundary">Try the real control, or choose Show Me</span></div>
       <div class="pm7gt-head-actions">
-        <button type="button" id="pm7gt-eli5" class="pm7gt-quiet pm7gt-eli5" data-ui-action-id="ui.guided_tour.toggle_eli5" aria-pressed="false">ELI5: Off</button>
+        <button type="button" id="pm7gt-eli5" class="pm7gt-quiet pm7gt-eli5" data-ui-action-id="ui.guided_tour.toggle_eli5" aria-pressed="false" data-pm-hover-label="Use simpler words" data-pm-hover-detail="The meaning stays accurate; only the explanation gets shorter and clearer.">ELI5: Off</button>
         <button type="button" class="pm7gt-quiet" data-ui-action-id="ui.guided_tour.pause">Pause</button>
         <button type="button" class="pm7gt-quiet" data-ui-action-id="ui.guided_tour.skip">Skip Tour</button>
       </div>
@@ -42,7 +43,7 @@ GUIDED_TOUR_MARKUP = r'''<!-- PM7 Guided Tour: deterministic real-shell teacher 
     <div class="pm7gt-clip"><div class="pm7gt-stage" data-guided-tour-layer="current"></div></div>
     <footer class="pm7gt-foot">
       <button type="button" class="pm7gt-back" data-ui-action-id="ui.guided_tour.back">Back</button>
-      <span class="pm7gt-progress" aria-live="polite">Scene 1 of 3</span>
+      <span class="pm7gt-progress" aria-live="polite">Introduction</span>
       <span class="pm7gt-forward-slot" role="status" aria-live="polite"><span class="pm7gt-status">Ready</span></span>
     </footer>
   </section>
@@ -67,6 +68,9 @@ GUIDED_TOUR_STYLE = r'''
   transform: translate(-50%,-50%) scale(1); transition: opacity var(--pm7gt-focus-dur) var(--ease-out), transform var(--pm7gt-focus-dur) var(--ease-out); }
 .pm7gt[data-target="missing"] .pm7gt-halo { opacity: 0; transform: translate(-50%,-50%) scale(.98); }
 .pm7gt[data-target="internal"] .pm7gt-halo { opacity: 0; }
+.pm7gt-pointer { position:fixed; z-index:2; left:50%; top:50%; width:16px; height:16px; border:2px solid var(--surface); border-radius:50%; background:var(--accent-primary); box-shadow:0 2px 9px rgba(0,0,0,.28); opacity:0; pointer-events:none; transform:translate(-50%,-50%); transition:left var(--pm7gt-focus-dur) var(--ease-out),top var(--pm7gt-focus-dur) var(--ease-out),opacity var(--pm7gt-micro-dur) var(--ease-default); }
+.pm7gt[data-choreography="pre_cue"] .pm7gt-pointer,.pm7gt[data-choreography="travel"] .pm7gt-pointer,.pm7gt[data-choreography="arrival"] .pm7gt-pointer { opacity:1; }
+.pm7gt[data-choreography="arrival"] .pm7gt-pointer { transform:translate(-50%,-50%) scale(.82); }
 .pm7gt-callout { position: fixed; left: 50%; top: 50%; width: min(var(--pm7gt-theme-w,420px),var(--pm7gt-fit-w,100vw),calc(100vw - 24px)); max-height: min(520px,var(--pm7gt-fit-h,100vh),calc(100vh - 24px));
   box-sizing: border-box; display: grid; grid-template-rows: auto minmax(0,1fr) auto; overflow: visible;
   border: 1px solid var(--border); border-radius: var(--radius-lg); color: var(--text-primary); background: var(--surface-elevated);
@@ -102,6 +106,8 @@ GUIDED_TOUR_STYLE = r'''
 .pm7gt-actions { margin-top: 16px; }
 .pm7gt-actions:empty { display:none; margin:0; }
 .pm7gt-actions > button { flex: 1 1 150px; }
+.pm7gt-mode-label { flex:1 1 100%; color:var(--text-muted); font-size:11px; line-height:1.35; }
+.pm7gt[data-action-mode="try"] .pm7gt-halo { box-shadow:0 0 0 5px var(--surface),0 0 24px var(--accent-primary); }
 .pm7gt-watched { box-shadow: 0 0 0 3px var(--accent-primary); }
 .pm7gt-eli5[aria-pressed="true"] { border-color: var(--accent-primary) !important; color: var(--accent-primary) !important; background: var(--surface) !important; }
 .pm7gt-live { margin: 14px 0 0; min-height: 42px; display: grid; align-items: center; padding: 9px 11px; overflow: hidden; border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface); color: var(--text-secondary); font-size: 12px; }
@@ -230,22 +236,7 @@ html[data-theme^="basic"] .pm7gt[data-motion="forward"] .pm7gt-stage { animation
   /* During a watched click the real control, not the director card, owns the
      remaining screen.  The compact card can sit wholly above or below even in
      the 320 x 560 floor viewport; its middle remains scrollable. */
-  .pm7gt[data-step="usage"][data-phase="2"] .pm7gt-callout,
-  .pm7gt[data-step="usage"][data-phase="1"] .pm7gt-callout,
-  .pm7gt[data-step="usage"][data-phase="3"] .pm7gt-callout,
-  .pm7gt[data-step="usage"][data-phase="4"] .pm7gt-callout,
-  .pm7gt[data-step="usage"][data-phase="5"] .pm7gt-callout,
-  .pm7gt[data-step="usage"][data-phase="6"] .pm7gt-callout,
-  .pm7gt[data-step="planning_wizard"][data-phase="0"] .pm7gt-callout,
-  .pm7gt[data-step="planning_wizard"][data-phase="1"] .pm7gt-callout,
-  .pm7gt[data-step="planning_wizard"][data-phase="2"] .pm7gt-callout,
-  .pm7gt[data-step="planning_wizard"][data-phase="3"] .pm7gt-callout,
-  .pm7gt[data-step="planning_wizard"][data-phase="4"] .pm7gt-callout,
-  .pm7gt[data-step="chat_teacher"][data-phase="0"] .pm7gt-callout,
-  .pm7gt[data-step="chat_teacher"][data-phase="1"] .pm7gt-callout,
-  .pm7gt[data-step="chat_teacher"][data-phase="2"] .pm7gt-callout,
-  .pm7gt[data-step="chat_teacher"][data-phase="3"] .pm7gt-callout { max-height: min(230px,calc(100vh - 12px)); }
-  .pm7gt[data-step="chat_teacher"][data-phase="4"] .pm7gt-callout { max-height: min(200px,calc(100vh - 12px)); }
+  .pm7gt[data-step-id] .pm7gt-callout { max-height: min(250px,calc(100vh - 12px)); }
   .pm7gt-head { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; }
   .pm7gt-head-actions { justify-content: end; gap: 2px; }
   .pm7gt-head-actions button { min-height: 30px !important; padding: 4px 6px !important; }
@@ -266,13 +257,13 @@ html[data-theme^="basic"] .pm7gt[data-motion="forward"] .pm7gt-stage { animation
   .pm7gt-foot { grid-template-columns:auto 1fr minmax(100px,1.25fr); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pm7gt *,.pm7gt *::before,.pm7gt *::after,.pm7gt-return { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; }
+  .pm7gt *,.pm7gt *::before,.pm7gt *::after,.pm7gt-return { animation-duration: 80ms !important; animation-delay: 0ms !important; transition-duration: 80ms !important; }
 }
-html[data-motion="reduced"] .pm7gt *,html[data-motion="reduced"] .pm7gt *::before,html[data-motion="reduced"] .pm7gt *::after,html[data-motion="reduced"] .pm7gt-return { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; }
+html[data-motion="reduced"] .pm7gt *,html[data-motion="reduced"] .pm7gt *::before,html[data-motion="reduced"] .pm7gt *::after,html[data-motion="reduced"] .pm7gt-return { animation-duration: 80ms !important; animation-delay: 0ms !important; transition-duration: 80ms !important; }
 </style>'''
 
 
-GUIDED_TOUR_SCRIPT = r'''
+_GUIDED_TOUR_LEGACY_SCRIPT = r'''
 <script id="pm7-guided-tour-js">
 /* PM7 Guided Tour: deterministic real-shell teacher */
 (function () {
@@ -624,6 +615,115 @@ GUIDED_TOUR_SCRIPT = r'''
   }else mountGuidedTour();
 })();
 </script>'''
+
+
+# Keep the broad, reviewed local Teacher corpus while replacing the old
+# numeric-phase controller.  Only this bounded fragment is carried into the
+# generated module; none of the retired controller is emitted.
+_TEACHER_LIBRARY_START = _GUIDED_TOUR_LEGACY_SCRIPT.index("  function teacherTopic")
+_TEACHER_LIBRARY_END = _GUIDED_TOUR_LEGACY_SCRIPT.index("  function completeTeacherTurn")
+_TEACHER_LIBRARY_FRAGMENT = _GUIDED_TOUR_LEGACY_SCRIPT[_TEACHER_LIBRARY_START:_TEACHER_LIBRARY_END]
+
+
+_GUIDED_TOUR_V3_PREFIX = r'''
+<script id="pm7-guided-tour-js">
+/* PM7 Guided Tour: deterministic real-shell teacher */
+(function () {
+  'use strict';
+  function installGuidedTour() {
+  var root=document.getElementById('pm7-guided-tour'),resumeButton=document.getElementById('pm7-guided-tour-resume'),replayButton=document.getElementById('pm7-guided-tour-replay'),eli5Button=document.getElementById('pm7gt-eli5');
+  if(!root||!resumeButton||!replayButton||!eli5Button||window.PM7_GUIDED_TOUR)return;
+  var stage=root.querySelector('[data-guided-tour-layer="current"]'),halo=root.querySelector('.pm7gt-halo'),pointer=root.querySelector('.pm7gt-pointer'),callout=root.querySelector('.pm7gt-callout');
+  var backButton=root.querySelector('[data-ui-action-id="ui.guided_tour.back"]'),progress=root.querySelector('.pm7gt-progress'),forwardSlot=root.querySelector('.pm7gt-forward-slot');
+  var AUTHORITATIVE_PROMPT='What happens before Puppet Master changes my files?';
+  var AUTHORITATIVE_ANSWER={id:'before_files_change',normal:'Before work begins, Puppet Master turns your request into a plan. You can review the important choices, correct anything that looks wrong, and decide when to begin. Your Project permissions still control what the work may change.',eli5:'First, Puppet Master writes down what it thinks you want. You can fix the plan before anything starts. It waits for your decision to begin.'};
+  var BOOK_CLUB_GOAL='Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join.';
+  var BOOK_CLUB_OUTCOMES=['Visitors can see the next meeting.','Visitors can see the current book.','New members can learn how to join.'];
+  var WHY_COPY='This decides whether the site needs shared sign-in and editing. Answering now keeps Puppet Master from planning the wrong kind of site.';
+  var UI_ACTIONS=['ui.guided_tour.start','ui.guided_tour.next','ui.guided_tour.show_me','ui.guided_tour.back','ui.guided_tour.pause','ui.guided_tour.resume','ui.guided_tour.skip','ui.guided_tour.focus_route','ui.guided_tour.toggle_eli5','ui.guided_tour.finish','ui.guided_tour.replay'];
+  var STEP_DEFS=[
+    {id:'tour.intro.comfort',chapter:'intro',meaningful:false,dwell_ms:0,action_id:'ui.guided_tour.next'},
+    {id:'tour.chat.open',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'cmd.panel.switch'},
+    {id:'tour.chat.teacher.select',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'ui.assistant_chat.select_persona'},
+    {id:'tour.chat.teacher.ask',chapter:'chat_teacher',meaningful:true,dwell_ms:700,action_id:'ui.assistant_chat.send'},
+    {id:'tour.chat.teacher.reply',chapter:'chat_teacher',meaningful:false,dwell_ms:500,action_id:'ui.guided_tour.next'},
+    {id:'tour.chat.teacher.eli5',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'ui.assistant_chat.toggle_eli5'},
+    {id:'tour.workspace.navigation',chapter:'workspace',meaningful:true,dwell_ms:650,action_id:'ui.guided_tour.focus_route'},
+    {id:'tour.workspace.chat.dock',chapter:'workspace',meaningful:true,dwell_ms:700,action_id:'cmd.workspace_layout.move_surface'},
+    {id:'tour.workspace.panels.rearrange',chapter:'workspace',meaningful:true,dwell_ms:750,action_id:'cmd.workspace_layout.move_surface'},
+    {id:'tour.workspace.usage.open',chapter:'workspace',meaningful:true,dwell_ms:650,action_id:'ui.guided_tour.focus_route'},
+    {id:'tour.workspace.widget.manage',chapter:'workspace',meaningful:true,dwell_ms:900,action_id:'cmd.widget.configure'},
+    {id:'tour.planning.open',chapter:'planning_wizard',meaningful:true,dwell_ms:900,action_id:'ui.planning_wizard.open'},
+    {id:'tour.planning.project_source',chapter:'planning_wizard',meaningful:true,dwell_ms:900,action_id:'wizard.attach'},
+    {id:'tour.planning.goal',chapter:'planning_wizard',meaningful:true,dwell_ms:1000,action_id:'wizard.practice_goal'},
+    {id:'tour.planning.guided_help',chapter:'planning_wizard',meaningful:true,dwell_ms:900,action_id:'wizard.intent'},
+    {id:'tour.planning.requirements',chapter:'planning_wizard',meaningful:true,dwell_ms:950,action_id:'wizard.to_requirements'},
+    {id:'tour.planning.question',chapter:'planning_wizard',meaningful:true,dwell_ms:1050,action_id:'wizard.practice_answer'},
+    {id:'tour.planning.why',chapter:'planning_wizard',meaningful:true,dwell_ms:950,action_id:'wizard.practice_why'},
+    {id:'tour.planning.review',chapter:'planning_wizard',meaningful:true,dwell_ms:1100,action_id:'wizard.practice_review'},
+    {id:'tour.planning.edit',chapter:'planning_wizard',meaningful:true,dwell_ms:1100,action_id:'wizard.practice_edit'},
+    {id:'tour.planning.consequence',chapter:'planning_wizard',meaningful:false,dwell_ms:900,action_id:'ui.guided_tour.next'},
+    {id:'tour.planning.approval_boundary',chapter:'planning_wizard',meaningful:false,dwell_ms:900,action_id:'ui.guided_tour.finish'}
+  ];
+  var STEP_BY_ID={};STEP_DEFS.forEach(function(row,index){row.index=index;STEP_BY_ID[row.id]=row;});
+  var STORYBOARD={schema_id:'pm.guided_tour.storyboard.v3',revision:'newbie-first-chat-workspace-planning-2026-09-04',order:STEP_DEFS.map(function(row){return row.id;}),chapter_order:['chat_teacher','workspace','planning_wizard'],promise:'Ask Teacher, make the workspace yours, then plan before building.',continuity:'Assistant Chat and Teacher come first; workspace navigation and reversible layout practice come second; Planning Wizard owns the final and longest chapter.',final_destination:'planning_wizard',work_started:false};
+  var meaningful=STEP_DEFS.filter(function(row){return row.meaningful;}),planningMeaningful=meaningful.filter(function(row){return row.chapter==='planning_wizard';}),meaningfulDwell=meaningful.reduce(function(sum,row){return sum+row.dwell_ms;},0),planningDwell=planningMeaningful.reduce(function(sum,row){return sum+row.dwell_ms;},0);
+  var timings={step_ms:500,focus_ms:460,show_me_normal_ms:260,show_me_reduced_ms:80,minimum_non_retro_ms:420,maximum_non_retro_ms:560,retro_ms:140,reduced_ms:80,same_frame_ack_ms:0};
+  var state={open:false,status:'first_launch',step_id:'tour.intro.comfort',step:'intro',step_index:0,phase:0,phase_key:'comfort',last_action:null,last_result:null,last_error:null,action_mode:null,action_status:'idle',choreography_state:'idle',layout_disposition:'pending',layout_snapshot_restored:false,completed:false,skipped:false,transition_serial:0,motion:'idle',source:'unknown',eli5_enabled:false,teacher_mode:'local_deterministic_zero_provider',teacher_thread_id:null,teacher_persona_selected:false,teacher_message_sent:false,teacher_answer_id:null,teacher_response_message_id:null,teacher_response_index:null,teacher_copy_mode:'normal',active_widget_id:null,panel_demo_pair_ids:null,panel_demo_complete:false,usage_card_demo_complete:false,planning_goal:'',planning_answer:null,planning_why_open:false,planning_reviewed:false,planning_edited:false,planning_consequence_visible:false,planning_project_selected:false,planning_requirements_opened:false,work_started:false,provider_request_baseline:0,usage_baseline:0,provider_request_delta:0,usage_delta:0,zero_provider_verified:true,zero_usage_verified:true,low_resource_profile:false,shell_squeezed:false};
+  var original=null,history=[],uiActionLog=[],effectReceipts=[],listeners=[],receiptSerial=0,sessionSerial=0,transitionTimer=0,choreographyTimers=[],targetFrame=0,targetResizeObserver=null,activeTarget=null,lastOutsideFocus=null,lastOutsideFocusAt=0,teacherOriginalSend=null,teacherPending=null,teacherMessageSerial=0,restoring=false,widgetCheckpoint=null,planningFixture=null,reduced=motionReduced();
+  function clone(value){if(value===undefined)return undefined;return JSON.parse(JSON.stringify(value));}
+  function same(a,b){return JSON.stringify(a)===JSON.stringify(b);}
+  function motionReduced(){try{return document.documentElement.getAttribute('data-motion')==='reduced'||!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(error){return false;}}
+  function currentTheme(){return document.documentElement.getAttribute('data-theme')||'unknown';}
+  function stepDef(id){return STEP_BY_ID[id||state.step_id]||STEP_DEFS[0];}
+  function chapterPhase(def){var rows=STEP_DEFS.filter(function(row){return row.chapter===def.chapter;});return Math.max(0,rows.indexOf(def));}
+  function syncCompatibility(){var def=stepDef();state.step=def.chapter;state.step_index=def.index;state.phase=chapterPhase(def);state.phase_key=def.id.split('.').slice(2).join('_')||'comfort';}
+  function counterNumber(value){if(Array.isArray(value))return value.length;value=Number(value);return Number.isFinite(value)?value:0;}
+  function measureCounters(){var d=window.PM_DEMO,s=d&&d.state||{},usage=s.usage||{},provider=s.providers||{};return {provider_requests:counterNumber(s.provider_request_count||provider.request_count||provider.requests||d&&d.provider_request_log),usage:counterNumber(s.usage_count||usage.request_count||usage.events||usage.receipts)};}
+  function updateCounterDeltas(){var now=measureCounters();state.provider_request_delta=now.provider_requests-state.provider_request_baseline;state.usage_delta=now.usage-state.usage_baseline;state.zero_provider_verified=state.provider_request_delta===0;state.zero_usage_verified=state.usage_delta===0;return now;}
+  function recordUi(id,payload){var row={action_id:id,step_id:state.step_id,serial:uiActionLog.length+1,payload:clone(payload||{})};uiActionLog.push(row);return row;}
+  function receipt(actionId,targetId,status,reason,before,after,owner,mode,metadata){var row={schema_id:'pm.guided_tour.concept_effect_receipt.v2',receipt_id:'guided-tour-effect-'+(++receiptSerial),action_id:actionId,step_id:state.step_id,target_id:targetId||null,status:status,reason:reason||null,before:clone(before),after:clone(after),owner_receipt:clone(owner||null),mode:mode||state.action_mode||'try',concept_simulation_only:true,production_receipt:false};if(metadata)row.local_action_result=clone(metadata);effectReceipts.push(row);state.last_result=clone(row);state.last_error=status==='failed'||status==='disabled'?reason||status:null;notify();return row;}
+  function snapshot(){syncCompatibility();updateCounterDeltas();var def=stepDef();return {schema_id:'pm.guided_tour.concept_snapshot.v2',schema_version:'2.0.0',concept_simulation_only:true,durable_session_record:false,real_shell_owner_observation:true,production_runtime_certification:false,open:state.open,status:state.status,step_id:state.step_id,step:state.step,step_index:state.step_index,phase:state.phase,phase_key:state.phase_key,chapter:def.chapter,last_action:state.last_action,last_result:clone(state.last_result),last_error:state.last_error,action_mode:state.action_mode,action_status:state.action_status,choreography_state:state.choreography_state,layout_disposition:state.layout_disposition,layout_snapshot_restored:state.layout_snapshot_restored,completed:state.completed,skipped:state.skipped,transition_serial:state.transition_serial,motion:state.motion,source:state.source,eli5_enabled:state.eli5_enabled,teacher_mode:state.teacher_mode,teacher_thread_id:state.teacher_thread_id,teacher_persona_selected:state.teacher_persona_selected,teacher_message_sent:state.teacher_message_sent,teacher_answer_id:state.teacher_answer_id,teacher_response_message_id:state.teacher_response_message_id,teacher_copy_mode:state.teacher_copy_mode,active_widget_id:state.active_widget_id,panel_demo_pair_ids:clone(state.panel_demo_pair_ids),panel_demo_complete:state.panel_demo_complete,usage_card_demo_complete:state.usage_card_demo_complete,planning_goal:state.planning_goal,planning_answer:state.planning_answer,planning_why_open:state.planning_why_open,planning_reviewed:state.planning_reviewed,planning_edited:state.planning_edited,planning_consequence_visible:state.planning_consequence_visible,planning_project_selected:state.planning_project_selected,planning_requirements_opened:state.planning_requirements_opened,work_started:false,provider_request_baseline:state.provider_request_baseline,provider_request_delta:state.provider_request_delta,provider_use_count:state.provider_request_delta,usage_baseline:state.usage_baseline,usage_delta:state.usage_delta,zero_provider_verified:state.zero_provider_verified,zero_usage_verified:state.zero_usage_verified,reduced_motion:reduced,low_resource_profile:state.low_resource_profile,shell_squeezed:state.shell_squeezed,theme:currentTheme(),timings:clone(timings),storyboard_revision:STORYBOARD.revision,story_order:STORYBOARD.order.slice(),chapter_order:STORYBOARD.chapter_order.slice(),meaningful_action_count:meaningful.length,planning_meaningful_action_count:planningMeaningful.length,meaningful_dwell_ms:meaningfulDwell,planning_dwell_ms:planningDwell,planning_action_share:planningMeaningful.length/meaningful.length,planning_dwell_share:planningDwell/meaningfulDwell,history:history.slice(),layout_snapshot_captured:!!original,journal_depth:0,effect_receipts:clone(effectReceipts),ui_action_log:clone(uiActionLog),target:targetAdapter.status(state.step_id)};}
+  function notify(){var value=snapshot();listeners.slice().forEach(function(fn){try{fn(value);}catch(error){}});}
+  function ack(control,id){state.last_action=id;if(control){control.setAttribute('data-ack','true');control.dataset.ackFrame='same';}root.dataset.ack=id;root.dataset.ackFrame='same';notify();}
+'''
+
+
+_GUIDED_TOUR_V3_SUFFIX = r'''
+  var broadTeacherAnswer=teacherAnswer;
+  function guidedTeacherAnswer(text){if(/what happens before puppet master changes my files/i.test(String(text||'')))return {id:AUTHORITATIVE_ANSWER.id,copy_mode:state.eli5_enabled?'eli5':'normal',html:state.eli5_enabled?AUTHORITATIVE_ANSWER.eli5:AUTHORITATIVE_ANSWER.normal};return broadTeacherAnswer(text);}
+  function homeSurface(id,layout){return (layout&&layout.surfaces||[]).filter(function(row){return row.surface_instance_id===id;})[0]||null;}
+  function semanticHome(layout){return (layout&&layout.surfaces||[]).map(function(surface){return {id:surface.surface_instance_id,host:surface.host,slot_index:surface.slot_index,visible:surface.visible,collapsed:surface.collapsed,size:clone(surface.size||{}),floating_bounds:clone(surface.floating_bounds||null)};}).sort(function(a,b){return a.id.localeCompare(b.id);});}
+  function usageLayout(){var api=window.PM7_USAGE;if(!api||!api.state)return null;var ids=[];try{ids=api.visibleWidgets().map(function(item){return item.id;});}catch(error){}var layouts={};ids.forEach(function(id){var item=api.widgetById&&api.widgetById(id);if(item&&api.layoutFor)layouts[id]=clone(api.layoutFor(item));});return {room:api.state.room,visible_widget_ids:ids,hidden:clone(api.state.hidden||{}),layouts:layouts};}
+  function layoutNow(){var home=window.PM_HOME_WORKSPACE;return {home:home?semanticHome(home.layout):null,usage:usageLayout()};}
+  function rememberOutsideFocus(event){var node=event&&event.target&&event.target.closest?event.target.closest('button,a,input,textarea,select,[tabindex]:not([tabindex="-1"])'):null;if(!node||root.contains(node))return;lastOutsideFocus=node;lastOutsideFocusAt=Date.now();}
+  document.addEventListener('pointerdown',rememberOutsideFocus,true);
+  function captureOriginal(preferredFocus){var api=window.PM_HOME_WORKSPACE,tab=document.querySelector('.page-tab.active[data-page]'),toggle=document.querySelector('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5'),persona=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label'),input=document.querySelector('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input'),active=document.activeElement,focus=preferredFocus||(active&&active!==document.body&&active!==document.documentElement&&active!==root?active:(lastOutsideFocus&&Date.now()-lastOutsideFocusAt<1200?lastOutsideFocus:null)),attach=document.querySelector('#panel-wizard .pm6-wiz-attach-card.selected'),intent=document.querySelector('#panel-wizard .pm6-wiz-intent-chip.sel'),wizStage=document.querySelector('#panel-wizard .pm6-wiz-stage.active[data-wiz-stage]'),counters=measureCounters();original={semantic:layoutNow(),home_layout:api?clone(api.layout):null,usage:usageLayout(),page:window.PM_PAGES&&window.PM_PAGES.current||tab&&tab.getAttribute('data-page')||'dashboard',chat_thread:window.PM_DEMO&&window.PM_DEMO.state&&window.PM_DEMO.state.chat&&window.PM_DEMO.state.chat.activeThread||null,persona:persona&&persona.textContent.trim()||'Product Manager',chat_placeholder:input&&input.getAttribute('placeholder')||'',chat_draft:input&&input.value||'',eli5_active:!!(toggle&&toggle.classList.contains('active')),attach:attach&&attach.getAttribute('data-demo-arg')||null,intent:intent&&intent.getAttribute('data-demo-arg')||null,wizard_stage:wizStage&&wizStage.getAttribute('data-wiz-stage')||'intake',focus_node:focus&&focus!==document.body?focus:null,scroll_left:Number(window.scrollX)||0,scroll_top:Number(window.scrollY||(document.scrollingElement&&document.scrollingElement.scrollTop))||0,counters:counters};state.provider_request_baseline=counters.provider_requests;state.usage_baseline=counters.usage;return clone(original.semantic);}
+  function restoreDocumentScroll(){var left=original?original.scroll_left:0,top=original?original.scroll_top:0;try{window.scrollTo(left,top);}catch(error){}if(document.scrollingElement){document.scrollingElement.scrollLeft=left;document.scrollingElement.scrollTop=top;}}
+  function setUsageVisible(id,visible){var api=window.PM7_USAGE,item=api&&api.widgetById&&api.widgetById(id),key=api&&api.state&&(api.state.room+':'+id);if(!api||!item)return false;var current=!api.state.hidden[key];if(current===visible)return true;if(!visible){var card=document.querySelector('#pm7uBoard .pm7u-card[data-widget="'+id+'"]'),menu=card&&card.querySelector('.pm7u-cardmenu');if(menu)menu.click();var hide=document.querySelector('#pm7uCardPop [data-hide-card="'+id+'"]');if(hide)hide.click();}else{var chooser=document.getElementById('pm7uCustomize');if(chooser)chooser.click();var show=document.querySelector('#pm7uCustomizePop [data-toggle-widget="'+id+'"]');if(show)show.click();if(document.querySelector('#pm7uCustomizePop.open')&&chooser)chooser.click();}return !api.state.hidden[key]===visible;}
+  function restoreWorkspaceSnapshot(){var failures=[],api=window.PM_HOME_WORKSPACE;if(original&&api&&original.home_layout){(original.home_layout.surfaces||[]).slice().sort(function(a,b){return a.slot_index-b.slot_index;}).forEach(function(want){try{var now=homeSurface(want.surface_instance_id,api.layout);if(!now)return failures.push('missing:'+want.surface_instance_id);if(!now.visible&&want.visible)api.setSurfaceVisible(want.surface_instance_id,true,'cmd.panel.switch');var insertion={index:want.slot_index};if(want.floating_bounds)insertion.bounds=clone(want.floating_bounds);api.moveSurface(want.surface_instance_id,want.host,insertion);now=homeSurface(want.surface_instance_id,api.layout);if(now&&now.collapsed!==want.collapsed)api.setCollapsed(want.surface_instance_id,want.collapsed);now=homeSurface(want.surface_instance_id,api.layout);if(now&&now.visible!==want.visible)api.setSurfaceVisible(want.surface_instance_id,want.visible,'cmd.panel.switch');}catch(error){failures.push(want.surface_instance_id);}});}var u=window.PM7_USAGE;if(original&&original.usage&&u){Object.keys(original.usage.layouts||{}).forEach(function(id){var item=u.widgetById&&u.widgetById(id),want=original.usage.layouts[id];if(item&&want&&u.setLayout)u.setLayout(item,want.cols,want.rows,'cmd.widget.resize','guided_tour_snapshot_restore');});Object.keys(u.state.hidden||{}).forEach(function(key){var id=key.split(':').slice(1).join(':'),want=!!original.usage.hidden[key];if(id)setUsageVisible(id,!want);});if(u.rerender)u.rerender();}var after=layoutNow(),ok=!!original&&same(original.semantic,after);return {ok:ok&&failures.length===0,failures:failures,before:original&&clone(original.semantic),after:after};}
+  function selectPersona(name){var label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');if(label&&label.textContent.trim()===name)return true;var button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(!button)return false;if(!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))button.click();var item=[].slice.call(document.querySelectorAll('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem')).find(function(row){return row.getAttribute('data-persona')===name;});if(item)item.click();label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');return !!(label&&label.textContent.trim()===name);}
+  function restoreChatState(){if(!original)return false;selectPersona(original.persona);var d=window.PM_DEMO;if(original.chat_thread){var item=document.querySelector('.chat-thread-item[data-thread="'+original.chat_thread+'"]');if(item)item.click();if(d&&d.state&&d.state.chat)d.state.chat.activeThread=original.chat_thread;}document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input').forEach(function(input){input.setAttribute('placeholder',original.chat_placeholder);input.value=original.chat_draft;input.dispatchEvent(new Event('input',{bubbles:true}));});document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',original.eli5_active);});var id=state.teacher_thread_id;if(id&&id!==original.chat_thread&&d&&d.state&&d.state.chat){delete d.state.chat.threads[id];if(Array.isArray(d.state.chat.order))d.state.chat.order=d.state.chat.order.filter(function(row){return row!==id;});if(window.PM6_CHAT_THREADS)delete window.PM6_CHAT_THREADS[id];document.querySelectorAll('.chat-thread-item[data-thread="'+id+'"]').forEach(function(row){row.remove();});}return true;}
+  function restorePlanningChoice(){if(!original)return;restoring=true;var attach=original.attach&&document.querySelector('#panel-wizard .pm6-wiz-attach-card[data-demo-arg="'+original.attach+'"]'),intent=original.intent&&document.querySelector('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="'+original.intent+'"]');if(attach&&!attach.classList.contains('selected'))attach.click();if(intent&&!intent.classList.contains('sel'))intent.click();restoring=false;}
+  function originalFocus(){var node=original&&original.focus_node;if(node&&node.isConnected&&node.getClientRects().length){requestAnimationFrame(function(){try{node.focus({preventScroll:true});}catch(error){}restoreDocumentScroll();});}}
+  function visibleTarget(selector){if(!selector)return null;var selectors=selector.split(',');for(var i=0;i<selectors.length;i+=1){var nodes=document.querySelectorAll(selectors[i].trim());for(var j=0;j<nodes.length;j+=1){var rect=nodes[j].getBoundingClientRect();if(rect.width>0&&rect.height>0&&rect.bottom>0&&rect.right>0&&rect.top<innerHeight&&rect.left<innerWidth)return nodes[j];}}return null;}
+  function activeChat(){return visibleTarget('#chatPanel:not(.hidden),#floatingChat');}
+  function chatOpenControl(){return visibleTarget('.activity-bar .icon[title="Chat"],[data-demo-action="cmd.panel.switch"][data-demo-arg*="chat"]');}
+  function teacherPersonaButton(){return visibleTarget('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem[data-persona="Teacher"]');}
+  function mountTeacherPersonaControl(){var existing=teacherPersonaButton(),list=document.querySelector('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personalist');if(existing||!list)return existing;var teacher=document.createElement('button');teacher.type='button';teacher.className='pm6-chat-personaitem';teacher.setAttribute('data-persona','Teacher');teacher.setAttribute('data-od-id','persona-item-teacher');teacher.setAttribute('data-pm-hover-label','Choose Teacher');teacher.setAttribute('data-pm-hover-detail','Ask for a clear explanation or a safe next step in Puppet Master.');teacher.innerHTML='<span class="pm6-chat-personaname">Teacher</span><span class="pm6-chat-personacheck" aria-hidden="true"></span>';list.insertBefore(teacher,list.firstChild);return teacher;}
+  function openChatSurface(){var api=window.PM_HOME_WORKSPACE,chat=api&&homeSurface('chat',api.layout);if(api&&chat&&!chat.visible)api.setSurfaceVisible('chat',true,'cmd.panel.switch');var panel=document.getElementById('chatPanel');if(panel)panel.classList.remove('hidden');return !!activeChat();}
+  function setTeacherPlaceholder(){document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input').forEach(function(input){input.setAttribute('placeholder','Ask Teacher anything about Puppet Master…');});}
+  function completeTeacherTurn(d,threadId,msgId,answer,how){var thread=d.state.chat.threads[threadId];if(thread){thread.messages.push({role:'assistant',html:answer.html,stopped:how==='stopped',guided_example:true});state.teacher_response_index=thread.messages.length-1;}d.state.chat.busy=false;d.state.chat.activeStream=null;d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:how==='stopped'?'stopped':'done'});d.emit('chat.state',{busy:false,context:d.state.chat.context,queue:d.state.chat.queue});state.teacher_message_sent=how!=='stopped';state.teacher_answer_id=answer.id;state.teacher_response_message_id=msgId;state.teacher_copy_mode=answer.copy_mode;teacherPending=null;setTimeout(function(){var message=document.querySelector('[data-pm6-mid="'+msgId+'"]'),sink=message&&message.querySelector('.pm6-chat-sink');if(message){message.classList.add('pm7gt-teacher-message');message.setAttribute('data-guided-example','true');message.querySelectorAll('.runtime-snapshot,.msg-runtime-compact').forEach(function(node){node.remove();});}if(sink)sink.setAttribute('data-pm7gt-teacher-response','true');if(state.open&&state.step_id==='tour.chat.teacher.ask')completeStep('applied',{thread_id:threadId,message_id:msgId,local_deterministic:true,provider_request_delta:0,usage_delta:0});},0);}
+  function installTeacherSendAdapter(){var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.send!=='function')return false;if(teacherOriginalSend)return true;teacherOriginalSend=d.chat.send;d.chat.send=function(threadId,text){var during=state.open&&state.step_id==='tour.chat.teacher.ask',threadOk=state.teacher_thread_id&&threadId===state.teacher_thread_id;if(!during||!threadOk)return teacherOriginalSend.apply(d.chat,arguments);text=String(text==null?'':text).trim();if(!text)return {toast:'Type a message first.'};if(d.state.chat.busy)return {toast:'Teacher is finishing the last reply.'};var thread=d.state.chat.threads[threadId],answer=guidedTeacherAnswer(text),msgId='pm7gt-teacher-'+(++teacherMessageSerial);if(!thread)return {toast:'Teacher’s guided example is not available.'};thread.messages.push({role:'user',text:text,guided_example:true});d.emit('chat.stream',{threadId:threadId,type:'user',text:text});d.state.chat.busy=true;d.emit('chat.state',{busy:true,context:d.state.chat.context,queue:d.state.chat.queue});d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'start',intent:'guided_teacher'});teacherPending={session:sessionSerial,thread:threadId,message:msgId};if(d.stream&&typeof d.stream.start==='function'){d.state.chat.activeStream=d.stream.start(function(chunk){d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:chunk});},answer.html,{onDone:function(how){completeTeacherTurn(d,threadId,msgId,answer,how);}});}else{d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:answer.html});completeTeacherTurn(d,threadId,msgId,answer,'done');}return {ok:true,local_deterministic:true,provider_request_delta:0,usage_delta:0,answer_id:answer.id,copy_mode:answer.copy_mode};};return true;}
+  function uninstallTeacherSendAdapter(){var d=window.PM_DEMO;if(teacherOriginalSend&&d&&d.chat)d.chat.send=teacherOriginalSend;teacherOriginalSend=null;teacherPending=null;}
+  function prepareTeacherPractice(){openChatSurface();installTeacherSendAdapter();setTeacherPlaceholder();var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.newThread!=='function')return false;if(!state.teacher_thread_id){var created=d.chat.newThread('teacher');state.teacher_thread_id=created&&created.threadId||null;if(state.teacher_thread_id&&d.state.chat.threads[state.teacher_thread_id])d.state.chat.threads[state.teacher_thread_id].title='Guided example · Teacher';if(window.PM6_CHAT_THREADS&&state.teacher_thread_id)window.PM6_CHAT_THREADS[state.teacher_thread_id].title='Guided example · Teacher';document.querySelectorAll('.chat-thread-item[data-thread="'+state.teacher_thread_id+'"] .thread-title').forEach(function(node){node.textContent='Guided example · Teacher';});}return true;}
+  function fillTeacherQuestion(){var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!input)return false;input.value=AUTHORITATIVE_PROMPT;input.dispatchEvent(new Event('input',{bubbles:true}));try{input.focus({preventScroll:true});}catch(error){}return true;}
+  function applyTeacherMode(){var d=window.PM_DEMO,thread=d&&d.state&&d.state.chat&&d.state.chat.threads[state.teacher_thread_id],html=state.eli5_enabled?AUTHORITATIVE_ANSWER.eli5:AUTHORITATIVE_ANSWER.normal;if(thread&&Number.isFinite(state.teacher_response_index)&&thread.messages[state.teacher_response_index])thread.messages[state.teacher_response_index].html=html;var sink=document.querySelector('[data-pm6-mid="'+state.teacher_response_message_id+'"] .pm6-chat-sink,[data-pm7gt-teacher-response="true"]');if(sink)sink.textContent=html;state.teacher_copy_mode=state.eli5_enabled?'eli5':'normal';return !!sink;}
+  function syncEli5(){eli5Button.setAttribute('aria-pressed',String(state.eli5_enabled));eli5Button.textContent=state.eli5_enabled?'ELI5: On':'ELI5: Off';document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',state.eli5_enabled);});}
+'''
+
+
+GUIDED_TOUR_SCRIPT = _GUIDED_TOUR_V3_PREFIX + _TEACHER_LIBRARY_FRAGMENT + _GUIDED_TOUR_V3_SUFFIX
 
 
 def apply(doc, notes, need):
