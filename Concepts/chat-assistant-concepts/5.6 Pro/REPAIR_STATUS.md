@@ -224,3 +224,72 @@ file set is the evidence for `CDRY-020`.
 
 Nothing above is recorded as a concept pass. `reports/REDESIGN_READINESS.md`
 keeps canonical, concept and native readiness in three separate columns.
+
+## Independent replacement audit — 2026-09-04
+
+The previous section recorded the correction as applied. This section records
+what an **independent** audit of that claim found, and what it repaired.
+
+`tests/independent-audit-v5.mjs` decides one verdict for each of the 481
+requirements — 236 from the implemented v2 packet and 245 from
+`PM_Assistant_v2_Additive_Correction_v4` — by driving the built page in a real
+browser and reading state or rendered DOM. It reads no prior report: not this
+file, not `DELIVERY_MANIFEST.json`, not the packet's own test matrix, and no
+screenshot. `reports/AUDIT_MATRIX.md` is the per-requirement result and
+`reports/independent-audit-v5.json` the machine record.
+
+### What the audit found that the previous pass had not
+
+Each of these was found by driving the surface, not by reading a document.
+Each is repaired in source, and each has a probe that fails without the repair.
+
+| # | Defect | How it showed up |
+|---|---|---|
+| 1 | `questionBudget()` never normalised its `strategy` argument, so the exported entry point resolved `Deep · Thorough` — the exact string the Plan record stores — to `standard` **6** instead of **10**, and echoed retired labels like `light` back as active strategy values. The module's own callers normalised; the public one did not. | QMAX-001/002 |
+| 2 | Nothing could ever disable Build for a build blocker. `eligible()` had no blocker predicate at all, while the card's own toast asserted "Build stays enabled unless an unresolved item is an explicit build blocker" — copy describing a behaviour no code path could produce. | QMAX-015 |
+| 3 | A To-Do blocked through the ordinary transition path recorded no `blocked_reason_ref`, so the projection's blocked cell had `reason:null`. Only the hand-seeded fixture item carried one. | PPROG-007 |
+| 4 | Plan Details showed identity, hash and backend but **no** source messages, attachments, research, run history or currentness. | PDET-001 |
+| 5 | `artifact_version` was the display string `'v3'` while the typed contract says integer. A native port reusing the shape would have inherited a string where a comparable version was promised. | PDET-008 |
+| 6 | Plan completion never completed the bound Goal. Pause, Resume and Cancel drove the Plan from the Goal, but a Plan that reached Completed left its Goal `active` forever — a Goal whose whole objective was that Plan. | PGOAL-009 |
+| 7 | `resumeRun()` was a second copy of the run tick that simply stopped when no work was left, so a Plan resumed after a Pause could never reach Completed. One body now, one completion predicate. | PGOAL-009, PFAIL-004 |
+| 8 | `goals.js restoreFixture()` did not clear plan-bound Goals, and `plans.js restore()` left live run timers ticking and the question counters populated. A restore that leaves durable records behind is a restore that lies — and it made later measurements unreliable. | PGOAL-003 |
+| 9 | An immediate Build did not invalidate the pending schedule for that Plan version, so a timer could still deliver a second dispatch for work already running. Cancel did this; Build did not. | PSCHED-005, PFAIL-010 |
+| 10 | An ordinary Revise invalidated only the card's own binding. Every durable build schedule stayed `active` and still bound to the replaced version. | PSCHED-006, SCHED-004 |
+| 11 | One build schedule carried **no** `topology_snapshot` at all, so a dispatcher reading it would have had to infer the topology — the inference the correction forbids. No crew-topology or held-admission schedule existed to demonstrate the frozen CollaborationDefinition or a refused admission, and no schedule carried the two distinct idempotency keys or an evaluated eligibility conjunction. | PSCHED-001/002/008/013/014 |
+| 12 | `voteTally()` excluded `additiveRoleKind === 'grill'`, but every producer writes `'grill_me'`. The branch was dead: a Grill Me slot carrying a vote would have been counted without ever being configured as a voting role. | PART-013 |
+| 13 | `run.coordinator` is a descriptor `{kind,label}`, not a participant id, so `participant(run, run.coordinator)` was always `undefined` and `coordinator_failed` could never become true. A failed coordinator read as a healthy run. | PART-017 |
+| 14 | `mkParticipant` defaulted every slot to `required:true` unless a caller said otherwise, so a seeded Wonderer became a **required** slot — an additive specialist blocking clean completion. | WONV-006, BRAIN-016 |
+| 15 | The tie-vote run had `synthesis:null`. A message said the tie would be resolved on constraints and evidence; no structured record said it was. | PART-014 |
+| 16 | Participants carried no session identity, so an independent-pass claim had nothing behind it. | PART-022, REVIEW-004/005 |
+| 17 | Review runs produced no output artifact — only a transcript. | REVIEW-010 |
+| 18 | Every seeded run shared one idempotency key, because the key was built from `o.id`, which is undefined for any run taking a generated id. | MODAL-017 |
+| 19 | A Start could not fail. There was no preflight, so "failed Start retains values and creates no partial run" had no path to exercise. | MODAL-005 |
+| 20 | The natural-language BrainStorm hold was **dead code**: `collab-modal-cancel` knew how to restore a held request, but nothing ever produced one, so a prose BrainStorm request would simply have been sent. | MODAL-012 |
+| 21 | ComposerBuffer had nowhere to keep a pre-send workflow configuration, so "restores config with text" could not be true. | MODAL-011 |
+| 22 | The Review target-change model had a stale hash but no explicit choice between refreshing and reviewing the frozen target. | MODAL-010 |
+| 23 | The scheduled-message projection declared `pm.schedule.message_projection.v1` while publishing `can_edit`/`can_cancel`; a reader following that contract would have found neither field. | SMSG-003 |
+| 24 | A held schedule's attachment carried no frozen hash or version, and no snapshot modelled an unavailable retained version, so "hold rather than substitute current bytes" was not demonstrable. Failed and held dispatches kept no attempt history. | SMSG-007/008/013 |
+| 25 | `applyTransition` accepted **any** `to_status`, including `verifying` — the one status the correction retires by name. `replaceThreadList` accepted it too, which is exactly how a provider whole-list snapshot arrives. | TDG-014, TODO-007, PROVIDER-007 |
+| 26 | A Full or Region screenshot tripped the composer commit reconciler, which infers "a send happened" from the message count growing while the composer field is empty — and a buffer holding **attachments with no typed text** looks empty to that test. Attaching a file and then taking a screenshot silently discarded the attachment. | BROWSER-002, BSTALE-008 |
+| 27 | The Chat Room definition declared only counts and limits: no moderator, turn protocol, mentions/replies, tools or output. | ROOM-002 |
+| 28 | Wonderer leads had two shapes in two fixtures — `connection`/`status` in one, `seed`/`tether`/`state` in the other — so a reader could not tell a tethered hypothesis from a researched lead without knowing which fixture it came from. | WONDER-002/003, WONV-005 |
+| 29 | The run status word was `cancelled` while every other terminal vocabulary in the concept — participant outcomes, scheduled-message states, Plan status, Goal status — says `canceled`. Two spellings of one state inside one module. | COLLAB-008 |
+| 30 | `.pd-sec-honest` carried a 3px left accent bar, the pattern the GUI spec asks new UI to avoid. | GUI-008 |
+| 31 | `Chat updates.md` recorded the retired values but never stated the precedence chain the correction requires. | CONCEPT-002, AUTH-001 |
+| 32 | This file hard-coded a build digest that the gate no longer produced. A companion that repeats a digest goes stale the next time anything is rebuilt, so the digest lives in the gate output and in the regenerated manifest instead. | CONCEPT-016 |
+
+### Result
+
+481 requirements decided, 0 failed, 0 not implemented. 35 are recorded
+**blocked** with the exact blocker — a native handler, a storage engine, a
+scheduler, a provider adapter, or a census of the implementation branch — and
+none of them is recorded as a pass. 2 v2 requirements (BRAIN-002, BRAIN-003) are
+recorded **superseded** by QMAX-002/QMAX-003, each with proof that the
+replacement value is the one the surface holds.
+
+All 541 assertions in the eleven pre-existing suites still pass after every
+repair above.
+
+**This is not a certification.** The concept column is closed; the canonical
+`Plans/**` column is owned by `pm-plans-verify.py run-gates` and is not
+addressed here, and the native column is closed for nothing at all.

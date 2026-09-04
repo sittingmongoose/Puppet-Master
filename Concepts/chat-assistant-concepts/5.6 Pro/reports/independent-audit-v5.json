@@ -4,17 +4,15 @@
  "method": "Every row was decided by driving the built page in a real browser and reading state or rendered DOM. No prior report, manifest, screenshot or fixture toast was an input.",
  "probes_total": 494,
  "probe_counts": {
-  "pass": 456,
+  "pass": 457,
   "blocked": 35,
-  "superseded": 2,
-  "failed": 1
+  "superseded": 2
  },
  "requirements_decided": 481,
  "requirement_counts": {
-  "pass": 443,
+  "pass": 444,
   "blocked": 35,
-  "superseded": 2,
-  "failed": 1
+  "superseded": 2
  },
  "console_errors": [],
  "requirements": [
@@ -119,7 +117,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmcfw00-7-pixdr",
+     "id": "att-mtmd5ubo-7-4iu0d",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -149,13 +147,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmcfvzz-1-p0usv",
+     "id": "att-mtmd5ubn-1-qvq59",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmcfw00-5-rez8q",
+     "id": "att-mtmd5ubo-5-iy4ip",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -175,7 +173,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmcfvzz-1-p0usv",
+     "id": "att-mtmd5ubn-1-qvq59",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -347,7 +345,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "len": 15504
+    "len": 19905
    },
    "id": "AUTH-004",
    "readiness": {
@@ -1334,7 +1332,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmcgwns",
+     "attachment_id": "bctx-1-mtmd6w43",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -1359,21 +1357,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmch1kb",
+     "id": "bctx-13-mtmd712m",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmch268",
+     "id": "bctx-15-mtmd71pb",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmch2rz",
+     "id": "bctx-17-mtmd72bf",
      "count": 1,
      "result": "current",
      "match": true,
@@ -1460,11 +1458,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmch6tg",
+       "ref_id": "bctx-25-mtmd76fu",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmch6tg",
+        "attachment_id": "bctx-25-mtmd76fu",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -1475,11 +1473,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmch7f4",
+       "ref_id": "bctx-27-mtmd773n",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmch7f4",
+        "attachment_id": "bctx-27-mtmd773n",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1490,11 +1488,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmch817",
+       "ref_id": "bctx-29-mtmd77qr",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmch817",
+        "attachment_id": "bctx-29-mtmd77qr",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1506,7 +1504,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmch6tg"
+      "bctx-25-mtmd76fu"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -2846,18 +2844,10 @@
    ]
   },
   {
-   "verdict": "failed",
+   "verdict": "pass",
    "evidence": {
     "missing": [],
-    "stale": [
-     {
-      "f": "REPAIR_STATUS.md",
-      "found": [
-       "5a48b5f7db37c57e"
-      ],
-      "current": "f2416f0962e51295"
-     }
-    ],
+    "stale": [],
     "current": "f2416f0962e51295"
    },
    "id": "CONCEPT-016",
@@ -3396,7 +3386,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "readiness": 15504,
+    "readiness": 19905,
     "scoped": true
    },
    "id": "DRY-008",
@@ -3723,7 +3713,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmcfw00-3-mpm3x",
+    "attachment_id": "att-mtmd5ubn-3-0utos",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -3797,7 +3787,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hashb5f25998ad90Typenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hash4bbb6f7c94dbTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -5167,17 +5157,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -5724,7 +5714,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T02:38:11.471Z",
+     "at": "2026-09-04T02:58:23.658Z",
      "currentness": 1
     }
    },
@@ -6377,9 +6367,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-31hq",
-     "sess-p-28-cwsl",
-     "sess-p-30-7yfi"
+     "sess-p-26-63ob",
+     "sess-p-28-eont",
+     "sess-p-30-7mr6"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -8892,9 +8882,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-dxkd",
-     "sess-p-4-h4b1",
-     "sess-p-6-5e7s"
+     "sess-p-2-3eid",
+     "sess-p-4-eyx7",
+     "sess-p-6-eacn"
     ],
     "distinct": true
    },
@@ -10010,7 +10000,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-ep7x",
+    "session": "sess-p-46-cjoe",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -15583,17 +15573,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T02:37:30.437Z",
+     "frozenAt": "2026-09-04T02:57:41.322Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -16128,7 +16118,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T02:38:11.471Z",
+     "at": "2026-09-04T02:58:23.658Z",
      "currentness": 1
     }
    },
@@ -16721,9 +16711,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-31hq",
-     "sess-p-28-cwsl",
-     "sess-p-30-7yfi"
+     "sess-p-26-63ob",
+     "sess-p-28-eont",
+     "sess-p-30-7mr6"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -17332,7 +17322,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmcgwns",
+     "attachment_id": "bctx-1-mtmd6w43",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -17354,21 +17344,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmch1kb",
+     "id": "bctx-13-mtmd712m",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmch268",
+     "id": "bctx-15-mtmd71pb",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmch2rz",
+     "id": "bctx-17-mtmd72bf",
      "count": 1,
      "result": "current",
      "match": true,
@@ -17446,11 +17436,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmch6tg",
+       "ref_id": "bctx-25-mtmd76fu",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmch6tg",
+        "attachment_id": "bctx-25-mtmd76fu",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -17461,11 +17451,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmch7f4",
+       "ref_id": "bctx-27-mtmd773n",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmch7f4",
+        "attachment_id": "bctx-27-mtmd773n",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17476,11 +17466,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmch817",
+       "ref_id": "bctx-29-mtmd77qr",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmch817",
+        "attachment_id": "bctx-29-mtmd77qr",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17492,7 +17482,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmch6tg"
+      "bctx-25-mtmd76fu"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -17721,7 +17711,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmcfw00-3-mpm3x",
+    "attachment_id": "att-mtmd5ubn-3-0utos",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -17789,7 +17779,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hashb5f25998ad90Typenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hash4bbb6f7c94dbTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -18332,7 +18322,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "len": 15504
+    "len": 19905
    },
    "id": "AUTH-004",
    "readiness": {
@@ -18603,7 +18593,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmcfw00-7-pixdr",
+     "id": "att-mtmd5ubo-7-4iu0d",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -18630,13 +18620,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmcfvzz-1-p0usv",
+     "id": "att-mtmd5ubn-1-qvq59",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmcfw00-5-rez8q",
+     "id": "att-mtmd5ubo-5-iy4ip",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -18653,7 +18643,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmcfvzz-1-p0usv",
+     "id": "att-mtmd5ubn-1-qvq59",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -21178,7 +21168,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-ep7x",
+    "session": "sess-p-46-cjoe",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -22759,9 +22749,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-dxkd",
-     "sess-p-4-h4b1",
-     "sess-p-6-5e7s"
+     "sess-p-2-3eid",
+     "sess-p-4-eyx7",
+     "sess-p-6-eacn"
     ],
     "distinct": true
    },
@@ -23200,7 +23190,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "readiness": 15504,
+    "readiness": 19905,
     "scoped": true
    },
    "id": "DRY-008",
@@ -23558,18 +23548,10 @@
    }
   },
   {
-   "verdict": "failed",
+   "verdict": "pass",
    "evidence": {
     "missing": [],
-    "stale": [
-     {
-      "f": "REPAIR_STATUS.md",
-      "found": [
-       "5a48b5f7db37c57e"
-      ],
-      "current": "f2416f0962e51295"
-     }
-    ],
+    "stale": [],
     "current": "f2416f0962e51295"
    },
    "id": "CONCEPT-016",
@@ -23946,5 +23928,8 @@
     "native": "n/a"
    }
   }
- ]
+ ],
+ "scope": {
+  "partial": false
+ }
 }

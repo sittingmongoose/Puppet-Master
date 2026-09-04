@@ -47,3 +47,29 @@ were preserved, and obsolete clauses were replaced in place rather than annotate
 - `tests/todo-verify.mjs` renamed to `tests/todo-runtime-verify.mjs`.
 - New suite `tests/correction-v4-verify.mjs` (112 assertions).
 - Both HTML outputs regenerated from `build.py` twice and byte-checked.
+
+## Independent replacement audit — 2026-09-04
+
+The correction above was audited independently rather than accepted. A new
+harness, `tests/independent-audit-v5.mjs`, decides one verdict for each of the
+481 requirements — 236 from the implemented v2 packet and 245 from the
+correction — by driving the built page in a real browser and reading state or
+rendered DOM. It reads no prior report, manifest, screenshot or fixture toast.
+
+Result: 481 requirements decided. 444 pass, 2 superseded by the correction with
+the replacement value proven, 35 blocked on native infrastructure with the exact
+blocker named, and **0 failed or not implemented**. 494 probes, 0 console errors.
+
+The audit found and repaired 32 defects the applying wave had not, including a
+public `questionBudget()` that resolved `Deep · Thorough` to base 6 instead of
+10, a Build control that could never be disabled by a build blocker while the
+card's own copy said it could, a Plan that completed without completing its
+bound Goal, a To-Do controller that accepted the retired `verifying` status
+through whole-list replacement, and a screenshot that silently discarded a
+pending attachment. `REPAIR_STATUS.md` lists all thirty-two with their symptoms.
+
+All 541 assertions in the eleven pre-existing suites still pass.
+
+This is not a certification. `reports/AUDIT_MATRIX.md` keeps canonical, concept
+and native readiness in three separate columns, and the native column is closed
+for nothing.

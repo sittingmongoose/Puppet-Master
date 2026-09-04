@@ -2,10 +2,10 @@
 """Regenerate DELIVERY_MANIFEST.json from what is actually on disk.
 
 The manifest is a companion file, so it must describe the build that exists
-right now. Hand-maintaining its hashes is how it went stale: it named build
-`5a48b5f7db37c57e` while `build.py --check` reported a different digest, which
-is exactly the drift CONCEPT-016 forbids. Everything below is read from the
-filesystem or from a report a harness wrote; nothing is asserted by hand.
+right now. Hand-maintaining its hashes is how it went stale: it named a build
+digest that `build.py --check` no longer produced, which is exactly the drift
+CONCEPT-016 forbids. Everything below is read from the filesystem or from a
+report a harness wrote; nothing is asserted by hand.
 
     python3 reports/build-delivery-manifest.py
 """
@@ -14,7 +14,7 @@ import hashlib, json, pathlib, subprocess, datetime, re, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'DELIVERY_MANIFEST.json'
 
-SKIP_DIRS = {'node_modules', '.git', 'evidence', 'handoff', 'tests/tmp'}
+SKIP_DIRS = {'node_modules', '.git', 'evidence', 'handoff'}
 SKIP_SUFFIX = {'.zip', '.mov', '.png', '.webm', '.mp4'}
 
 
@@ -23,8 +23,7 @@ def tracked():
         if not p.is_file():
             continue
         rel = p.relative_to(ROOT)
-        parts = set(rel.parts)
-        if parts & SKIP_DIRS or str(rel).startswith('tests/tmp'):
+        if set(rel.parts) & SKIP_DIRS or str(rel).replace('\\', '/').startswith('tests/tmp'):
             continue
         if p.suffix.lower() in SKIP_SUFFIX:
             continue
@@ -37,8 +36,8 @@ def sha(p):
 
 check = subprocess.run([sys.executable, 'build.py', '--check'], cwd=ROOT,
                        capture_output=True, text=True)
-digest = re.search(r'sha256 ([0-9a-f]+)', check.stdout)
-build_digest = digest.group(1) if digest else None
+m = re.search(r'sha256 ([0-9a-f]+)', check.stdout)
+build_digest = m.group(1) if m else None
 build_ok = check.returncode == 0
 
 audit_path = ROOT / 'reports' / 'independent-audit-v5.json'
@@ -83,6 +82,8 @@ manifest = {
 
 if audit:
     c = audit['requirement_counts']
+    unclosed = sorted(r['id'] for r in audit['requirements']
+                      if r['verdict'] in ('failed', 'not_implemented'))
     manifest['audit'] = {
         'report': 'reports/AUDIT_MATRIX.md',
         'machine': 'reports/independent-audit-v5.json',
@@ -92,13 +93,12 @@ if audit:
         'probes': audit['probes_total'],
         'consoleErrors': len(audit['console_errors']),
         'counts': c,
-        'unclosed': sorted(r['id'] for r in audit['requirements']
-                           if r['verdict'] in ('failed', 'not_implemented')),
+        'unclosed': unclosed,
         'blocked': sorted(r['id'] for r in audit['requirements'] if r['verdict'] == 'blocked'),
         'superseded': sorted(f"{r['id']} -> {r.get('superseded_by')}" for r in audit['requirements']
                              if r['verdict'] == 'superseded'),
     }
-    if not manifest['audit']['unclosed']:
+    if not unclosed:
         manifest['certification'] = (
             'CONCEPT AUDIT CLOSED — every one of '
             f"{audit['requirements_decided']} v2 and correction requirements is decided, with "

@@ -687,7 +687,7 @@
     {
       "name": "SMSG-010 NEGATIVE: an unresolvable destination holds rather than rerouting",
       "pass": true,
-      "detail": "Recorded destination \"Crew · Query Performance\" is no longer resolvable (the crew run ended). Holding the dispatch rather than substituting a different destination."
+      "detail": "Recorded destination \"Crew · Query Performance\" is no longer resolvable (the crew run ended), and the retained revision of load-profile.json is missing. Holding the dispatch rather than substituting a different destination or newer bytes."
     },
     {
       "name": "SMSG-007 a scheduled attachment freezes an exact artifact version and hash",
@@ -700,7 +700,8 @@
         "content_hash": "sha-demo:5f0c21ab",
         "folder_manifest_hash": null,
         "snapshot_ref": null,
-        "availability": "available"
+        "availability": "available",
+        "unavailable_note": null
       }
     },
     {
@@ -728,7 +729,7 @@
       "pass": true,
       "detail": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-1-mtmazwen",
+        "attachment_id": "bctx-1-mtmd289q",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
