@@ -117,7 +117,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmdqx2w-7-w3mjv",
+     "id": "att-mtmeqx20-7-cnp9t",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -147,13 +147,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmdqx2w-1-l3okp",
+     "id": "att-mtmeqx20-1-94qnk",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmdqx2w-5-o9xud",
+     "id": "att-mtmeqx20-5-w320y",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -173,7 +173,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmdqx2w-1-l3okp",
+     "id": "att-mtmeqx20-1-94qnk",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -1332,7 +1332,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmdryb3",
+     "attachment_id": "bctx-1-mtmes0ql",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -1357,21 +1357,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmds38j",
+     "id": "bctx-13-mtmes5x6",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmds3uu",
+     "id": "bctx-15-mtmes6kl",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmds4gg",
+     "id": "bctx-17-mtmes77w",
      "count": 1,
      "result": "current",
      "match": true,
@@ -1458,11 +1458,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmds8g0",
+       "ref_id": "bctx-25-mtmesbkd",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmds8g0",
+        "attachment_id": "bctx-25-mtmesbkd",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -1473,11 +1473,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmds91u",
+       "ref_id": "bctx-27-mtmesc7c",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmds91u",
+        "attachment_id": "bctx-27-mtmesc7c",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1488,11 +1488,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmds9nu",
+       "ref_id": "bctx-29-mtmescud",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmds9nu",
+        "attachment_id": "bctx-29-mtmescud",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -1504,7 +1504,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmds8g0"
+      "bctx-25-mtmesbkd"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -3713,7 +3713,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmdqx2w-3-u4zei",
+    "attachment_id": "att-mtmeqx20-3-yt0c1",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -3787,7 +3787,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hasha006dfe48d7dTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hashc21449f45d5aTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -5157,17 +5157,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -5714,7 +5714,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T03:14:46.797Z",
+     "at": "2026-09-04T03:42:48.630Z",
      "currentness": 1
     }
    },
@@ -6367,9 +6367,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-znn",
-     "sess-p-28-7gte",
-     "sess-p-30-37mj"
+     "sess-p-26-ge2d",
+     "sess-p-28-86y3",
+     "sess-p-30-2to5"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -8884,9 +8884,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-7m48",
-     "sess-p-4-32p7",
-     "sess-p-6-h3zh"
+     "sess-p-2-2tk0",
+     "sess-p-4-crfb",
+     "sess-p-6-ccka"
     ],
     "distinct": true
    },
@@ -10002,7 +10002,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-4if1",
+    "session": "sess-p-46-dreh",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -15584,17 +15584,17 @@
    "evidence": [
     {
      "id": "review-orchestrator-boundary",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "a1c9f02e"
     },
     {
      "id": "run-47",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "a91c33f0"
     },
     {
      "id": "run-55",
-     "frozenAt": "2026-09-04T03:14:04.672Z",
+     "frozenAt": "2026-09-04T03:42:04.256Z",
      "targetHash": "b7710a24"
     }
    ],
@@ -16129,7 +16129,7 @@
     "waiver": {
      "actor": "user",
      "reason": "covered by an existing audit",
-     "at": "2026-09-04T03:14:46.797Z",
+     "at": "2026-09-04T03:42:48.630Z",
      "currentness": 1
     }
    },
@@ -16722,9 +16722,9 @@
     ],
     "uniqueSlots": 3,
     "sessions": [
-     "sess-p-26-znn",
-     "sess-p-28-7gte",
-     "sess-p-30-37mj"
+     "sess-p-26-ge2d",
+     "sess-p-28-86y3",
+     "sess-p-30-2to5"
     ],
     "uniqueSessions": 3,
     "models": [
@@ -17333,7 +17333,7 @@
     ],
     "result": {
      "schema": "pm.browser.component_revalidation_result.v1",
-     "attachment_id": "bctx-1-mtmdryb3",
+     "attachment_id": "bctx-1-mtmes0ql",
      "captured_generation": 1,
      "current_generation": 1,
      "locator_result_count": 1,
@@ -17355,21 +17355,21 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "bctx-13-mtmds38j",
+     "id": "bctx-13-mtmes5x6",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-15-mtmds3uu",
+     "id": "bctx-15-mtmes6kl",
      "count": 1,
      "result": "current",
      "match": true,
      "reason": null
     },
     {
-     "id": "bctx-17-mtmds4gg",
+     "id": "bctx-17-mtmes77w",
      "count": 1,
      "result": "current",
      "match": true,
@@ -17447,11 +17447,11 @@
     "res": {
      "items": [
       {
-       "ref_id": "bctx-25-mtmds8g0",
+       "ref_id": "bctx-25-mtmesbkd",
        "ok": false,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-25-mtmds8g0",
+        "attachment_id": "bctx-25-mtmesbkd",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 0,
@@ -17462,11 +17462,11 @@
        }
       },
       {
-       "ref_id": "bctx-27-mtmds91u",
+       "ref_id": "bctx-27-mtmesc7c",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-27-mtmds91u",
+        "attachment_id": "bctx-27-mtmesc7c",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17477,11 +17477,11 @@
        }
       },
       {
-       "ref_id": "bctx-29-mtmds9nu",
+       "ref_id": "bctx-29-mtmescud",
        "ok": true,
        "result": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-29-mtmds9nu",
+        "attachment_id": "bctx-29-mtmescud",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,
@@ -17493,7 +17493,7 @@
       }
      ],
      "blocked_ids": [
-      "bctx-25-mtmds8g0"
+      "bctx-25-mtmesbkd"
      ],
      "sendable": false,
      "partial_send_allowed": false,
@@ -17722,7 +17722,7 @@
    "evidence": {
     "ok": true,
     "schema": "pm.schedule.attachment_snapshot.v1",
-    "attachment_id": "att-mtmdqx2w-3-u4zei",
+    "attachment_id": "att-mtmeqx20-3-yt0c1",
     "folder_manifest_hash": "sha-demo:f0a31c7b",
     "root_identity": "project:pm/src/analytics/",
     "availability": "available",
@@ -17790,7 +17790,7 @@
       "reason": "File Manager is not wired into this concept lab."
      }
     ],
-    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hasha006dfe48d7dTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
+    "text": "src/analytics/Folder manifestFixture dataProducer & runProduced byYou · Referenced from the project treeRelated messageAttached to the user turn shown in this thread.Related plan / workflowNone recorded.Version & identityVersionSingle version — no lineage recorded.Hashc21449f45d5aTypenot reportedTrust & freshnessLive-reference driftNot applicable to this origin.Folder manifest (bounded)Files shown"
    },
    "id": "FOLDER-007",
    "readiness": {
@@ -18612,7 +18612,7 @@
     "failed": {
      "thread": "attachments",
      "msg": "attachments-01",
-     "id": "att-mtmdqx2w-7-w3mjv",
+     "id": "att-mtmeqx20-7-cnp9t",
      "origin": "uploaded_snapshot",
      "kind": "archive",
      "state": "failed",
@@ -18639,13 +18639,13 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmdqx2w-1-l3okp",
+     "id": "att-mtmeqx20-1-94qnk",
      "rev": null,
      "hash": "360ab09c340d",
      "mat": 1
     },
     {
-     "id": "att-mtmdqx2w-5-o9xud",
+     "id": "att-mtmeqx20-5-w320y",
      "rev": null,
      "hash": "3748bc9034f8",
      "mat": 1
@@ -18662,7 +18662,7 @@
    "verdict": "pass",
    "evidence": [
     {
-     "id": "att-mtmdqx2w-1-l3okp",
+     "id": "att-mtmeqx20-1-94qnk",
      "name": "src/analytics/queries.rs",
      "captured": "360ab09c340d",
      "fields": []
@@ -21188,7 +21188,7 @@
   {
    "verdict": "pass",
    "evidence": {
-    "session": "sess-p-46-4if1",
+    "session": "sess-p-46-dreh",
     "isolation": "fresh",
     "persona": "Reviewer",
     "model": "opus5"
@@ -22769,9 +22769,9 @@
      "review-orchestrator-boundary"
     ],
     "sessionIds": [
-     "sess-p-2-7m48",
-     "sess-p-4-32p7",
-     "sess-p-6-h3zh"
+     "sess-p-2-2tk0",
+     "sess-p-4-crfb",
+     "sess-p-6-ccka"
     ],
     "distinct": true
    },
