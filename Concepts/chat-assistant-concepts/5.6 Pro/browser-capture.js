@@ -621,6 +621,10 @@
       rect: payload.rect || null,
       contextId: payload.elCtx ? payload.elCtx.id : null,
       destinationLabel: destinationLabel(),
+      /* BROWSER-002 / BSTALE-008: this payload is its own submission. The
+         composer reconciler must not read it as a composer send, or an
+         attachment sitting in the tray with no typed text is discarded. */
+      isolatedSubmission: true,
       demo: true
     };
     ctx.appendMessage(msg, thread);

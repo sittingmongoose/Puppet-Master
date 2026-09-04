@@ -257,7 +257,7 @@
     {
       "name": "Multi-Pass Review reuses the same model on two reviewer slots without collapsing their identity",
       "pass": true,
-      "detail": "[{\"id\":\"p-17\",\"model\":\"opus5\"},{\"id\":\"p-18\",\"model\":\"glm52\"},{\"id\":\"p-19\",\"model\":\"opus5\"}]"
+      "detail": "[{\"id\":\"p-25\",\"model\":\"opus5\"},{\"id\":\"p-27\",\"model\":\"glm52\"},{\"id\":\"p-29\",\"model\":\"opus5\"}]"
     },
     {
       "name": "the review configure modal opened for the reviewer-count bounds drive-through",
@@ -282,7 +282,7 @@
     {
       "name": "the panel names the single frozen target pack hash all initial passes shared",
       "pass": true,
-      "detail": "Frozen target changes · hash a1c9f02e · frozen 8:59 PM"
+      "detail": "Frozen target changes · hash a1c9f02e · frozen 1:56 AM"
     },
     {
       "name": "a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged",
@@ -297,7 +297,7 @@
     {
       "name": "Review states it is read-only and never auto-repairs, and no control anywhere on the run exposes a repair action",
       "pass": true,
-      "detail": "{\"targetTxt\":\"Frozen target changes · hash a1c9f02e · frozen 8:59 PM\",\"excludedTxt\":\"Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.\",\"readonlyNote\":\"Review is read-only and never auto-repairs. assistant.multi_agent.review.auto_repair is locked off.\",\"hasRepairAction\":false}"
+      "detail": "{\"targetTxt\":\"Frozen target changes · hash a1c9f02e · frozen 1:56 AM\",\"excludedTxt\":\"Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.\",\"readonlyNote\":\"Review is read-only and never auto-repairs. assistant.multi_agent.review.auto_repair is locked off.\",\"hasRepairAction\":false}"
     },
     {
       "name": "the review configure modal reopened for the auto-repair lock check",
@@ -337,7 +337,7 @@
     {
       "name": "the question bank is ONE object on the run, not duplicated per participant (shared budget, not per-agent)",
       "pass": true,
-      "detail": "[\"id\",\"runId\",\"role\",\"name\",\"requestedProviderId\",\"requestedAccountId\",\"requestedModelId\",\"requestedModelName\",\"effectiveModelId\",\"effectiveModelName\",\"requestedPersona\",\"effectivePersona\",\"additiveRoleKind\",\"status\",\"substitutionReason\",\"evidenceNote\",\"blockedReason\",\"current\",\"required\",\"outcome\",\"vote\",\"votingRole\",\"waiver\",\"attempts\",\"assignmentRevision\",\"demo\"]"
+      "detail": "[\"id\",\"runId\",\"role\",\"name\",\"requestedProviderId\",\"requestedAccountId\",\"requestedModelId\",\"requestedModelName\",\"effectiveModelId\",\"effectiveModelName\",\"requestedPersona\",\"effectivePersona\",\"additiveRoleKind\",\"status\",\"substitutionReason\",\"evidenceNote\",\"blockedReason\",\"current\",\"required\",\"sessionId\",\"sessionIsolation\",\"outcome\",\"vote\",\"votingRole\",\"waiver\",\"attempts\",\"assignmentRevision\",\"demo\"]"
     },
     {
       "name": "the live run panel shows the base maximum before Grill Me",
@@ -427,7 +427,7 @@
     {
       "name": "an EXPLICIT promotion is the only thing that adds a promotion record, with lineage to the source message",
       "pass": true,
-      "detail": "[{\"id\":\"promo-107\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-106\",\"at\":\"2026-09-03T21:00:34.215Z\"}]"
+      "detail": "[{\"id\":\"promo-141\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-140\",\"at\":\"2026-09-04T01:56:58.071Z\"}]"
     },
     {
       "name": "the explicit promotion is recorded as a durable, visible receipt in the transcript",

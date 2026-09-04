@@ -617,3 +617,13 @@
 .collab-card .collab-truth-vote,
 .collab-card .collab-truth-note{ color:var(--muted); }
 .collab-card .collab-truth-warn{ color:var(--warning); font-weight:500; }
+
+/* MODAL-005: a refused Start, shown inside the modal that still holds every
+   value the user configured. It is a disclosure, not a card: no run exists. */
+.collab-start-failure{
+  margin:12px 0 0; padding:10px 12px; border-radius:8px;
+  border:1px solid var(--border-strong); background:var(--surface-2);
+}
+.collab-start-failure strong{ display:block; font-size:12px; margin-bottom:4px; color:var(--text); }
+.collab-start-failure p{ margin:0; font-size:11.5px; color:var(--muted); }
+.collab-start-failure p + p{ margin-top:5px; }

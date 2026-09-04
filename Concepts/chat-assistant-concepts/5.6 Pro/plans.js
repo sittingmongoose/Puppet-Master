@@ -125,13 +125,26 @@
      unavailable reasons -- and is deliberately part of the fixture so the
      unavailable path is demonstrable rather than described. */
   function embed(o){
+    /* `artifact_version` is an INTEGER in the typed contract
+       (pm.assistant_plan.artifact_embed.v1). It used to be stored as the
+       display string `'v3'`, which is a label, not a version: an integer
+       compares and orders, a label does not, and a native port reusing this
+       shape would have inherited a string where the schema says integer.
+       The label is kept separately so every rendered surface and the Markdown
+       projection still read `art-x@v3` and the document bytes do not move. */
+    var raw=o.artifact_version, n=parseInt(String(raw).replace(/^v/i,''),10);
     return { t:'plan_embed', block_id:o.block_id, artifact_id:o.artifact_id,
-             artifact_version:o.artifact_version, renderer_kind:o.kind,
+             artifact_version:isNaN(n)?0:n,
+             artifact_version_label:(typeof raw==='string'&&/^v/i.test(raw))?raw:('v'+(isNaN(n)?0:n)),
+             renderer_kind:o.kind,
              display:o.display||'inline', caption:o.caption,
              text_summary:o.summary, static_fallback_ref:o.fallback||null,
              source_ref:o.source||null, sandboxed:!!o.sandboxed,
              state:o.state||'ok', preview:o.preview||null };
   }
+  /* Every display site resolves the label through here, so a future embed that
+     forgets one still renders a version rather than `undefined`. */
+  function embedVer(b){ return b.artifact_version_label || ('v'+b.artifact_version); }
 
   /* ------------------------------------------------------- ap-index V1..V5
      ONE identity, five immutable revisions.  The early drafts are genuinely
@@ -311,6 +324,17 @@
       exports:[],                            /* export receipts */
       cancelReason:o.cancelReason||null,
       revisionLog:o.revisionLog||[],
+      /* PDET-001. Details must show creation/revision SOURCES, the source
+         messages, the attachments the Plan was built from, the research it
+         admitted and its run history -- not only identity, hash and backend.
+         These are REFERENCES into the shared owners (message ids, attachment
+         ids, research receipts, run ids); the Plan stores no second copy of
+         any artifact's metadata, which is what PDET-001's "use shared route/
+         artifact identities" forbids. */
+      sources:o.sources||[],                 /* [{kind, ref, at, note}] */
+      attachmentRefs:o.attachmentRefs||[],   /* [attachment_id] into attachments.js */
+      research:o.research||[],               /* [{ref, kind, at, summary}] */
+      runHistory:o.runHistory||[],           /* [{run_id, attempt, outcome, at, reason}] */
       _approvedSeed:o.approvedSeed||null,
       _unitsSeed:o.unitsSeed||null,
       _todosSeed:o.todosSeed||null
@@ -400,7 +424,19 @@
         {v:3,at:'12:05',why:'Add the N+1 fan-out and write-amplification work.'},
         {v:4,at:'12:31',why:'CREATE INDEX CONCURRENTLY cannot run inside a transaction.'},
         {v:5,at:'12:58',why:'Fold in measured results and name what is still unmeasured.'}
-      ]
+      ],
+      /* PDET-001: where this Plan CAME FROM, by reference. */
+      sources:[
+        {kind:'creation', ref:'msg:query-014', at:'11:20', note:'User request that opened planning.'},
+        {kind:'revision', ref:'msg:query-031', at:'12:05', note:'Revision V3 requested in prose.'},
+        {kind:'revision', ref:'msg:query-047', at:'12:58', note:'Revision V5 requested after the benchmark.'}
+      ],
+      attachmentRefs:['att-explain-plan','att-bench-csv'],
+      research:[
+        {ref:'research:pg-partial-index', kind:'external', at:'11:34', summary:'Partial index behaviour under CONCURRENTLY.'},
+        {ref:'research:repo-query-builder', kind:'repository', at:'11:41', summary:'Four call sites reach one query builder.'}
+      ],
+      runHistory:[]
     }),
     'ap-cache': planRec({
       id:'ap-cache', thread:'plan-deep', title:'Session cache stampede',
@@ -425,6 +461,19 @@
         orchestrator:false },
       unitsSeed:{ at:'9:41 PM', validated:true, globalIndex:false, worknodes:0 },
       todosSeed:{ at:'9:41 PM', from:'planunits' },
+      sources:[
+        {kind:'creation', ref:'msg:plan-deep-006', at:'9:30 PM', note:'Deep Plan requested for the incident.'}
+      ],
+      attachmentRefs:['att-incident-timeline'],
+      research:[
+        {ref:'research:session-store-read', kind:'repository', at:'9:33 PM', summary:'session_store.rs:210-288 read path.'}
+      ],
+      /* PFAIL-003: a failed ATTEMPT is history under ONE run, not a second run. */
+      runHistory:[
+        {run_id:'run-ap-cache-V1', attempt:1, outcome:'failed', at:'9:52 PM',
+         reason:'Provider connection dropped mid-step; no side effect was replayed.'},
+        {run_id:'run-ap-cache-V1', attempt:2, outcome:'running', at:'10:04 PM', reason:''}
+      ],
       ledger:{ id:'apl-20260903-001', scope:'run', entries:[
         {k:'source',   v:'incident 2026-08-19 timeline'},
         {k:'source',   v:'session_store.rs:210-288'},
@@ -565,10 +614,10 @@
     unsupported:'No registered renderer claims this artifact kind.'
   };
   function richEmbed(b,k){
-    var ver = esc(b.artifact_id)+' · '+esc(b.artifact_version);
+    var ver = esc(b.artifact_id)+' · '+esc(embedVer(b));
     if(b.state!=='ok'){
       return '<div class="pd-embed pd-embed-unavailable pd-embed-'+esc(b.state)+'"'+k+
-        ' data-embed-state="'+esc(b.state)+'" data-artifact-version="'+esc(b.artifact_version)+'">'+
+        ' data-embed-state="'+esc(b.state)+'" data-artifact-version="'+esc(embedVer(b))+'">'+
         ICON.warning+
         '<div class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
           '<span class="pd-embed-why">'+esc(b.state)+' — '+esc(EMBED_UNAVAILABLE[b.state]||'unavailable')+'</span>'+
@@ -582,7 +631,7 @@
       ? '<span class="pd-embed-fallback">PDF: '+esc(b.static_fallback_ref)+'</span>' : '';
     return '<button type="button" class="pd-embed pd-embed-ok pd-embed-kind-'+esc(b.renderer_kind)+'"'+k+
       ' data-embed-state="ok" data-embed-kind="'+esc(b.renderer_kind)+'"'+
-      ' data-artifact-version="'+esc(b.artifact_version)+'"'+
+      ' data-artifact-version="'+esc(embedVer(b))+'"'+
       ' data-action="open-artifact" data-id="'+esc(b.artifact_id)+'">'+
       ICON.artifact+
       '<span class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
@@ -656,7 +705,7 @@
       case 'artifact':       return '['+b.label+']('+b.kind+':'+b.id+')';
       /* PDET-008: the serialisation carries the FROZEN version, so a Markdown
          export names exactly which revision was approved. */
-      case 'plan_embed':     return '!['+b.caption+']('+b.artifact_id+'@'+b.artifact_version+
+      case 'plan_embed':     return '!['+b.caption+']('+b.artifact_id+'@'+embedVer(b)+
                                     ' "'+b.renderer_kind+'")'+'\n\n> '+b.text_summary;
       case 'callout':        return '> **'+(b.tone==='warning'?'Warning':'Note')+'** '+b.text;
       /* PPROG-010 / TDG-014: NOT `- [ ]`. A checkbox in the serialisation reads
@@ -749,16 +798,30 @@
     return 'standard';
   }
 
+  /* Normalise ANY incoming strategy to one of the six current keys.
+     `strategyKey()` above reads a Plan RECORD; this reads a bare value, which
+     is what the exported `questionBudget()` entry point receives. Both paths
+     must agree, or the module's own callers see 10 for `Deep · Thorough`
+     while an outside caller handing over the same record field silently gets
+     `standard` 6 -- and the projection then echoes a retired label such as
+     `light` back as though it were an active strategy. Unknown input resolves
+     to a CURRENT key and is never stored verbatim. */
+  function normStrategy(v){
+    if(v==null) return null;
+    if(QBASE[v]!=null) return v;
+    return strategyKey({ strategy:v });
+  }
+
   /* One counter per RUN, shared by every participant. Plan revisions continue
      the same counter; only a new Plan identity starts a new one. */
   function budgetRun(workflowId, strategy, grill){
-    var m=RT.questionBudget.runs;
+    var m=RT.questionBudget.runs, key=normStrategy(strategy);
     if(!m[workflowId]){
-      m[workflowId]={ workflow_id:workflowId, strategy:strategy, grill_me_enabled:!!grill,
+      m[workflowId]={ workflow_id:workflowId, strategy:key||'standard', grill_me_enabled:!!grill,
                       asked:{}, order:[], reused:0, research:0 };
     }
     var run=m[workflowId];
-    run.strategy=strategy||run.strategy;
+    if(key) run.strategy=key;
     if(grill!=null) run.grill_me_enabled=!!grill;
     return run;
   }
@@ -771,6 +834,12 @@
     return {
       schema:'pm.assistant_plan.question_budget_projection.v1',
       workflow_id:run.workflow_id, strategy:run.strategy, strategy_label:QLABEL[run.strategy],
+      /* The two typed fields the correction's contract names and the earlier
+         shape omitted. `planning_kind` is DERIVED from the strategy, never
+         stored twice; `policy_version` is what makes a stored projection from
+         the retired 15/+10 policy detectable rather than silently rendered. */
+      planning_kind:(run.strategy.indexOf('deep')===0||run.strategy==='brainstorm')?'deep_plan':'plan',
+      policy_version:2,
       base_limit:base, grill_me_enabled:run.grill_me_enabled, grill_me_extension:QGRILL,
       effective_limit:eff, questions_asked:asked,
       questions_remaining:Math.max(0, eff-asked),
@@ -1045,12 +1114,36 @@
   /* §7.3 footer.  Which actions are ELIGIBLE depends on status; the eligibility
      is computed here once so the card, the More Info panel and the harness all
      read the same answer. */
+  /* QMAX-015. Exhausting the question allowance must NOT disable Build; only
+     an unresolved item EXPLICITLY classified as build-blocking may. The card's
+     own toast has always said so, so without this predicate the copy asserted
+     a behaviour no code path could produce. A blocker is a record on the Plan
+     ({id, build_blocking:true, why}) or an unresolved To-Do carrying
+     `build_blocking`; anything unresolved but not so classified stays visible
+     and does not gate the control. */
+  function buildBlockers(r){
+    var out=list(r.blockers).filter(function(b){ return b && b.build_blocking && !b.resolved; })
+      .map(function(b){ return { id:b.id||'blocker', why:b.why||'', source:'plan' }; });
+    var api=todoApi();
+    if(api && api.get){
+      var items=api.get(r.thread_id)||[];
+      for(var i=0;i<items.length;i++){
+        var t=items[i];
+        if(t.plan_id===r.plan_id && t.build_blocking && t.status!=='completed' && t.status!=='skipped')
+          out.push({ id:t.todo_id, why:t.blocked_reason_ref||t.title||'', source:'todo' });
+      }
+    }
+    return out;
+  }
+
   function eligible(r){
     var e = { revise:false, build:false, crew:false, at:false, wizard:true, exportx:true,
               cancel:false, todos:false, goal:false, report:false };
     if(r.status==='ready'){ e.revise=true; e.build=true; e.crew=true; e.at=true; e.cancel=true; e.goal=true; }
     else if(r.status==='building'){ e.cancel=true; e.todos=true; e.revise=false; e.report=true; }
     else if(r.status==='completed'){ e.report=true; }
+    var blk=buildBlockers(r);
+    if(blk.length){ e.build=false; e.crew=false; e.at=false; e.goal=false; e.blocked_by=blk; }
     return e;
   }
 
@@ -1068,7 +1161,19 @@
     /* PGOAL-001: Build as Goal is a SECONDARY action. The primary control stays
        Build; no second large button is added. */
     if(e.goal)   out.push(actionBtn('pd-build-goal','Build as Goal',r.plan_id));
-    return '<div class="pd-foot">'+out.join('')+progressSummary(r)+waitCopy(r)+'</div>';
+    /* QMAX-015: when Build is off because of an explicit build blocker, say
+       which one. A disabled control with no reason is the failure mode the
+       correction calls out ("do not disable Build merely because
+       questions_remaining is zero"), inverted. */
+    var blk=e.blocked_by||[];
+    var blkLine = blk.length
+      ? '<span class="pd-wait pd-attn pd-attn-warning" data-condition="build_blocked">'+ICON.warning+
+        '<span class="pd-attn-copy"><strong>Build blocked</strong><span>'+
+        esc(blk.length===1?'One unresolved item is classified build-blocking: ':'Unresolved build-blocking items: ')+
+        esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
+        '</span></span></span>'
+      : '';
+    return '<div class="pd-foot">'+out.join('')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -1169,6 +1274,12 @@
   function admitBuild(ctx,r,opts){
     opts=opts||{};
     if(r.status!=='ready') return false;
+    /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
+       pending schedule for this Plan BEFORE the run is admitted, so a timer
+       cannot deliver a second dispatch for work that has already started.
+       Cancel did this and Build did not, which left exactly the duplicate
+       admission the correction names -- two owners of one PlanRun. */
+    r.scheduleInvalidation = invalidateSchedulesFor(r, 'immediate_build');
     r.approved = freeze(r,ctx);
     r.status = 'building';
     r.buildStep = 0;
@@ -1206,42 +1317,89 @@
     /* Advance the step gutter on a real interval so Building… is observable.
        Nothing here is authoritative -- §7.2's gutter is a projection. */
     stopRun(r);
-    if(!opts.paused){
-      runTimers[r.plan_id] = setInterval(function(){
-        if(r.status!=='building'){ stopRun(r); return; }
-        var a=todoApi(), moved=null;
-        if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
-        r._projRev=(r._projRev||1)+1;
-        /* PFAIL-007: Completed requires the completion predicate to hold --
-           every required leaf resolved. `moved===null` means the projector
-           found nothing left to admit or complete. */
-        if(!moved){
-          var pr=progress(r), ids=Object.keys(pr.step_states), open=0;
-          for(var q=0;q<ids.length;q++){
-            var s=pr.step_states[ids[q]];
-            if(s.children) continue;
-            if(s.state!=='completed' && s.state!=='skipped') open++;
-          }
-          if(open===0){ r.status='completed'; r.current=false; stopRun(r); }
-          else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
-        }
-        ctx.renderApp();
-      }, 1400);
-    }
+    if(!opts.paused) startRunTimer(ctx,r);
     return true;
+  }
+
+  /* ONE tick, used by the first admission and by every resume. It used to be
+     duplicated, and the copy in resumeRun() simply stopped when no work was
+     left -- so a Plan resumed after a Pause could never reach Completed and
+     could never complete its bound Goal. One body, one completion predicate. */
+  function runTick(ctx,r){
+    if(r.status!=='building'){ stopRun(r); return; }
+    var a=todoApi(), moved=null;
+    if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    r._projRev=(r._projRev||1)+1;
+    /* PFAIL-007: Completed requires the completion predicate to hold --
+       every required leaf resolved. `moved===null` means the projector
+       found nothing left to admit or complete. */
+    if(!moved){
+      var pr=progress(r), ids=Object.keys(pr.step_states), open=0;
+      for(var q=0;q<ids.length;q++){
+        var s=pr.step_states[ids[q]];
+        if(s.children) continue;
+        if(s.state!=='completed' && s.state!=='skipped') open++;
+      }
+      if(open===0){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
+      else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
+    }
+    ctx.renderApp();
+  }
+  function startRunTimer(ctx,r){
+    stopRun(r);
+    runTimers[r.plan_id]=setInterval(function(){ runTick(ctx,r); }, 1400);
+  }
+
+  /* One place that invalidates every schedule bound to a Plan, whichever owner
+     holds it: this module's own card binding (`r.schedule`) and the scheduler's
+     durable build schedules. Returns a receipt so the caller can show what was
+     fenced rather than asserting it. */
+  function invalidateSchedulesFor(r, reason){
+    var why = reason==='immediate_build'
+      ? 'Build Now started this exact Plan version; the pending schedule is invalidated so no later dispatch can admit a second run.'
+      : 'The bound execution ended; this schedule can no longer dispatch.';
+    var out={ card:0, scheduler:0, reason:reason };
+    if(r.schedule && !r.schedule.invalid){
+      r.schedule.invalid=true; r.schedule.invalidReason=why; out.card=1;
+    }
+    var S=window.PM56_SCHED;
+    if(S && S.invalidateForExecution){
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why });
+      out.scheduler=(res&&res.schedules)||0;
+    }
+    return out;
+  }
+
+  /* PGOAL-009. Plan completion completes the bound Goal EXACTLY ONCE, and
+     records the completion lineage. Without this the binding was one-way:
+     Pause, Resume and Cancel drove the Plan from the Goal, but a Plan that
+     reached Completed left its Goal `active` forever -- a Goal whose whole
+     objective was that Plan. Idempotent by construction: a Goal already
+     `completed` returns the first receipt rather than emitting a second
+     completion effect, which is what makes replay safe. */
+  function completeBoundGoal(r){
+    if(!r.goalBinding) return null;
+    var G=window.PM56_GOAL; if(!G || !G.bound) return null;
+    var g=G.bound(r.plan_id); if(!g) return null;
+    if(g.status==='completed') return { ok:true, replayed:true, goal_id:g.id, completion:g.completion||null };
+    if(g.status==='canceled')  return { ok:false, error:'canceled_is_terminal', goal_id:g.id };
+    var lineage={ schema:'pm.goal.completion_lineage.v1', goal_id:g.id,
+                  assistant_plan_id:r.plan_id, plan_version:r.version,
+                  plan_hash:hashOf(body(r)),
+                  plan_run_id:r.goalBinding.plan_run_id,
+                  todo_list_ref:r.goalBinding.todo_list_ref,
+                  currentness_hash:currentnessOf(r),
+                  at:new Date().toISOString() };
+    G.boundTransition(r.plan_id,'completed',
+      'The bound Plan reached Completed: every required leaf resolved. Completed once, by the host, against the completion predicate — not because a model returned a final message.');
+    g=G.bound(r.plan_id); if(g) g.completion=lineage;
+    return { ok:true, replayed:false, goal_id:lineage.goal_id, completion:lineage };
   }
 
   /* Resume the demo run from wherever the durable To-Dos left it. */
   function resumeRun(ctx,r){
     if(r.status!=='building') return;
-    stopRun(r);
-    runTimers[r.plan_id]=setInterval(function(){
-      if(r.status!=='building'){ stopRun(r); return; }
-      var a=todoApi(), moved=a&&a.advanceForPlan?a.advanceForPlan(r.plan_id,r.thread_id):null;
-      r._projRev=(r._projRev||1)+1;
-      if(!moved){ stopRun(r); }
-      ctx.renderApp();
-    },1400);
+    startRunTimer(ctx,r);
   }
 
   /* --- 6.3 Revise (§5.6) -----------------------------------------------
@@ -1264,7 +1422,13 @@
     r.version = r.version+1;
     r.revisions[r.version] = next;
     r.revisionLog.push({v:r.version, at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}), why:feedback});
-    /* A revision invalidates anything bound to the exact old version. */
+    /* A revision invalidates anything bound to the exact old version -- the
+       card's own binding AND every durable build schedule the scheduler holds.
+       Only the first of those was done here, so an ordinary Revise left a live
+       schedule pointing at replaced bytes. */
+    var Sr=window.PM56_SCHED;
+    if(Sr && Sr.invalidateForPlanRevision)
+      r.scheduleRevisionInvalidation = Sr.invalidateForPlanRevision(r.plan_id, r.version-1, r.version, hashOf(next));
     if(r.schedule && r.schedule.version !== r.version){
       r.schedule.invalid = true;
       r.schedule.invalidReason = 'Bound to V'+r.schedule.version+'; the Plan is now V'+r.version+'. Rebind or reschedule explicitly.';
@@ -1308,6 +1472,46 @@
       kv('version','V'+r.version)+kv('strategy', r.strategy)+
       kv('backend', r.backend)+kv('content hash', hashOf(b))+
       kv('steps', String(ss.length))+kv('status', r.status)+'</section>');
+
+    /* --- PDET-001: creation/revision sources, source messages, attachments,
+       research and run history. Every entry is a REFERENCE into the owner that
+       holds the object (message, attachment, research receipt, run); this
+       section copies no artifact metadata into Plan storage. Currentness is
+       reported for every Plan, approved or not, so a reader can always tell
+       whether what they are looking at is current. */
+    var att=window.PM56_ATTACHMENTS;
+    rows.push('<section class="pd-sec pd-sec-sources"><h4>Sources and provenance</h4>'+
+      kv('currentness_hash', currentnessOf(r))+
+      kv('currentness', r._projStale?'stale — the projection inputs moved after this was generated':'current')+
+      '<div class="pd-prov">'+
+      '<h5>Source messages</h5>'+
+      (list(r.sources).length
+        ? '<ul class="pd-prov-list">'+list(r.sources).map(function(x){
+            return '<li data-source-kind="'+esc(x.kind)+'"><code>'+esc(x.ref)+'</code>'+
+              '<strong>'+esc(x.kind)+'</strong><span>'+esc(x.at||'')+'</span><em>'+esc(x.note||'')+'</em></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">No source message is recorded for this Plan.</p>')+
+      '<h5>Attachments</h5>'+
+      (list(r.attachmentRefs).length
+        ? '<ul class="pd-prov-list">'+list(r.attachmentRefs).map(function(id){
+            var a=att&&att.findAttachment?att.findAttachment(id):null;
+            return '<li><code>'+esc(id)+'</code><span>'+esc(a?(a.name||a.title||''):'resolved by the attachment owner')+'</span></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">This Plan admitted no attachments.</p>')+
+      '<h5>Research</h5>'+
+      (list(r.research).length
+        ? '<ul class="pd-prov-list">'+list(r.research).map(function(x){
+            return '<li data-research-kind="'+esc(x.kind)+'"><code>'+esc(x.ref)+'</code>'+
+              '<strong>'+esc(x.kind)+'</strong><span>'+esc(x.at||'')+'</span><em>'+esc(x.summary||'')+'</em></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">This Plan resolved nothing through research.</p>')+
+      '<h5>Run history</h5>'+
+      (list(r.runHistory).length
+        ? '<ul class="pd-prov-list pd-runs">'+list(r.runHistory).map(function(x){
+            return '<li data-run-outcome="'+esc(x.outcome)+'"><code>'+esc(x.run_id)+'</code>'+
+              '<strong>attempt '+esc(String(x.attempt))+' · '+esc(x.outcome)+'</strong>'+
+              '<span>'+esc(x.at||'')+'</span><em>'+esc(x.reason||'')+'</em></li>'; }).join('')+'</ul>'+
+          '<p class="pd-note">Attempts are history under ONE PlanRun. A failed attempt is not a second run and is not Plan completion.</p>'
+        : '<p class="pd-note">No run has been admitted for this Plan yet.</p>')+
+      '</div>'+
+      '<p class="pd-note">Each row is a reference into the owner that holds the object. Plan storage keeps no second copy of an attachment’s or an artifact’s metadata.</p></section>');
 
     rows.push('<section class="pd-sec"><h4>Projection parity</h4><p class="pd-note">'+
       'Rich Text and Markdown are rendered from one block array. Block ids in each projection: '+
@@ -1431,7 +1635,7 @@
     if(ems.length){
       rows.push('<section class="pd-sec pd-sec-embeds"><h4>Embedded artifacts</h4>'+
         '<ul class="pd-embeds">'+ems.map(function(x){
-          return '<li data-embed-state="'+esc(x.state)+'"><code>'+esc(x.artifact_id)+'@'+esc(x.artifact_version)+'</code>'+
+          return '<li data-embed-state="'+esc(x.state)+'"><code>'+esc(x.artifact_id)+'@'+esc(embedVer(x))+'</code>'+
             '<strong>'+esc(x.renderer_kind)+'</strong><span>'+esc(x.caption)+'</span>'+
             '<em>'+(x.state==='ok'
               ? ((x.renderer_kind==='video'||x.renderer_kind==='interactive')
@@ -1605,7 +1809,7 @@
      is checkable rather than a claim. */
   function embedExportNotes(r){
     return body(r).filter(function(b){ return b.t==='plan_embed'; }).map(function(b){
-      return { block_id:b.block_id, artifact:b.artifact_id+'@'+b.artifact_version,
+      return { block_id:b.block_id, artifact:b.artifact_id+'@'+embedVer(b),
                kind:b.renderer_kind, state:b.state,
                exported_as: b.state!=='ok' ? ('explicit unavailable block ('+b.state+')')
                           : (b.renderer_kind==='video'||b.renderer_kind==='interactive')
@@ -1865,7 +2069,7 @@
       }
       if(!found) return;
       ctx.toast('Embed '+found.b.state,
-        found.b.artifact_id+'@'+found.b.artifact_version+' — '+(EMBED_UNAVAILABLE[found.b.state]||'available')+
+        found.b.artifact_id+'@'+embedVer(found.b)+' — '+(EMBED_UNAVAILABLE[found.b.state]||'available')+
         ' The approved Plan still names this exact version; no other version was substituted.');
     },
 
@@ -2056,7 +2260,17 @@
     eligible:function(id){ var r=rec(id); return r?eligible(r):null; },
     buildLabel:function(id){ var r=rec(id); return r?BUILD_LABEL[r.status]:null; },
     cancelForNewPlan:cancelForNewPlan,
-    restore:function(){ P().records = hydrate(JSON.parse(JSON.stringify(PLANS0))); },
+    restore:function(){
+      /* Stop every live run timer BEFORE swapping the records, or the old
+         closure keeps ticking against a record nothing can see any more —
+         which is how a "restored" surface silently advances the To-Do list of
+         a Plan the caller believes it just reset. */
+      for(var k in runTimers){ if(runTimers[k]){ clearInterval(runTimers[k]); runTimers[k]=null; } }
+      P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      /* The question counters are durable run records, not view state: leaving
+         them behind made a restored Plan report questions it had never asked. */
+      if(RT.questionBudget){ RT.questionBudget.runs={}; RT.questionBudget.seq=0; }
+    },
     fixture:function(){ return JSON.parse(JSON.stringify(PLANS0)); },
     dialogType:function(kind){ return DLG[kind]; },
     /* Additive Correction v4. */

@@ -125,11 +125,11 @@
   var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
   var RUN_STATE_LABEL = {
     configuring: 'Configuring', running: 'Running', paused: 'Paused', waiting: 'Waiting',
-    blocked: 'Blocked', completed: 'Completed', cancelled: 'Cancelled', failed: 'Failed'
+    blocked: 'Blocked', completed: 'Completed', canceled: 'Cancelled', failed: 'Failed'
   };
   var RUN_STATE_TONE = {
     configuring: 'idle', running: 'working', paused: 'idle', waiting: 'idle',
-    blocked: 'blocked', completed: 'done', cancelled: 'idle', failed: 'blocked'
+    blocked: 'blocked', completed: 'done', canceled: 'idle', failed: 'blocked'
   };
 
   /* =====================================================================
@@ -157,7 +157,18 @@
       timeLimitMinutes: 30, tokenLimit: 350000, costLimitUsd: 5
     },
     chat_room: {
-      participantCount: 4, turnPolicy: 'moderated', maxRounds: 5,
+      /* ROOM-002: the configuration a Chat Room actually has — participants,
+         MODERATOR, turn policy, mentions/replies, tools, rounds/stop and the
+         output. Only the counts and limits were declared before, so the modal
+         had no default for the protocol it is defined by. */
+      participantCount: 4,
+      moderator: 'dedicated_moderator',
+      moderatorPersona: 'Product Manager',
+      turnPolicy: 'moderated',
+      mentionsEnabled: true, repliesEnabled: true,
+      tools: 'read_only',
+      maxRounds: 5, stopCondition: 'rounds_or_moderator_close',
+      output: 'transcript_plus_optional_summary',
       timeLimitMinutes: 60, costLimitUsd: 4
     }
   };
@@ -228,7 +239,21 @@
          available. `outcome` is the single explicit terminal disposition:
          completed | failed | timed_out | unavailable | canceled |
          explicitly_waived. A slot with no callback is NOT completed. */
-      required: o.required !== false,
+      /* An ADDITIVE role (Wonderer, Grill Me) is optional by definition: it
+         supplements the core roster and can never gate clean completion. The
+         old default made every slot required unless a caller remembered to say
+         otherwise, so a seeded Wonderer became a required slot -- the exact
+         "additive specialist silently replaces a core role" the correction
+         forbids, inverted into "additive specialist blocks completion". */
+      required: o.required !== undefined ? o.required !== false
+              : ((o.additiveRoleKind || 'none') === 'none'),
+      /* PART-022: repeated slots on the SAME model are independent passes, so
+         each one carries its own session identity. Without it there was no way
+         to tell a genuinely fresh pass from a reused context claiming to be
+         blind, which is what the correction says must be evidenced or
+         disclosed as constrained. */
+      sessionId: o.sessionId || ('sess-' + (o.id || rid('p')) + '-' + Math.floor(Math.random()*1e6).toString(36)),
+      sessionIsolation: o.sessionIsolation || 'fresh',
       outcome: o.outcome || null,
       vote: o.vote || null,
       votingRole: o.votingRole === undefined ? (o.additiveRoleKind ? o.additiveRoleKind === 'none' : true) : !!o.votingRole,
@@ -238,9 +263,22 @@
       demo: true
     };
   }
+  /* A stable digest of the configuration a Start was admitted with, so a
+     replay carrying the same idempotency key but a DIFFERENT configuration is
+     detectable rather than silently accepted. */
+  function cfgFingerprint(config, participants){
+    var basis = JSON.stringify([config, (participants||[]).map(function(p){
+      return [p.role, p.requestedModelId, p.requestedPersona, p.additiveRoleKind, p.required];
+    })]);
+    var x=0x811c9dc5;
+    for(var i=0;i<basis.length;i++){ x^=basis.charCodeAt(i); x=(x*0x01000193)>>>0; }
+    return 'cfg:'+('00000000'+x.toString(16)).slice(-8);
+  }
+
   function mkRun(o) {
+    var runId = o.id || rid('run');
     return {
-      id: o.id || rid('run'),
+      id: runId,
       kind: o.kind,
       threadId: o.threadId,
       title: o.title,
@@ -264,6 +302,13 @@
          shape and the uniform-shape predicate caught it. */
       expectedOutputs: o.expectedOutputs || [],
       pendingUserDecision: !!o.pendingUserDecision,
+      /* MODAL-017: run admission is idempotent on THIS key, not on the modal
+         instance. A repeated Start with the same key returns the original run;
+         the same key with a changed configuration is rejected rather than
+         quietly starting a second run under the old identity. */
+      idempotency_key: o.idempotency_key ||
+        ((o.kind||'run') + ':' + (o.threadId||'-') + ':' + runId + ':rev' + (o.definitionRevision || 1)),
+      config_fingerprint: o.config_fingerprint || cfgFingerprint(o.config || {}, o.participants || []),
       crew: o.crew || null,
       brainstorm: o.brainstorm || null,
       review: o.review || null,
@@ -380,9 +425,22 @@
         dissent: [
           { participantRole: 'Product', position: 'oppose (of the synthesis leaning toward prop-c-as-mechanism)', confidence: 'medium', reason: 'The resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention.' }
         ],
+        /* WONV-002/005, WONDER-002/003: ONE lead vocabulary. This fixture used
+           `connection`/`status` while the other used `seed`/`tether`/`state`,
+           so the same object had two shapes and a reader could not tell a
+           tethered hypothesis from a researched lead without knowing which
+           fixture it came from. `seed` names what the lead hangs off,
+           `tether` says how, `state` is the disposition, and `enteredPlan`
+           records whether it has been allowed into a Plan. */
         wondererLeads: [
-          { id: 'w1', lead: 'CDN edge-failover practice favors a gradual canary percentage over a binary cutover.', connection: 'Suggests the health-checked ring in prop-a could shed traffic gradually instead of all-or-nothing, reducing the flapping risk Architecture flagged.', status: 'hypothesis' },
-          { id: 'w2', lead: 'Airline overbooking policy publishes the compensation rule in advance rather than deciding case-by-case.', connection: 'Argues for a fixed, disclosed account-spend policy (prop-b) over an ad hoc mid-incident judgment call.', status: 'hypothesis' }
+          { id: 'w1', lead: 'CDN edge-failover practice favors a gradual canary percentage over a binary cutover.',
+            seed: 'health-checked ring in prop-a',
+            tether: 'Suggests the health-checked ring in prop-a could shed traffic gradually instead of all-or-nothing, reducing the flapping risk Architecture flagged.',
+            state: 'hypothesis', enteredPlan: false },
+          { id: 'w2', lead: 'Airline overbooking policy publishes the compensation rule in advance rather than deciding case-by-case.',
+            seed: 'account-spend policy in prop-b',
+            tether: 'Argues for a fixed, disclosed account-spend policy (prop-b) over an ad hoc mid-incident judgment call.',
+            state: 'hypothesis', enteredPlan: false }
         ],
         provisioning: [
           { id: 'rc-1', capability: 'provider-status-checker CLI', state: 'ready', scope: 'run-scoped, temporary', permissionRequestRef: 'perm-req-771', cleanupRequired: true, note: 'Resolved an existing capability first; nothing was installed persistently.' }
@@ -421,6 +479,20 @@
           acceptanceRefs: ['Configured concurrency above the ceiling is clamped and disclosed, never silently honored.']
         },
         staleTargetHash: 'f77e10bb',
+        /* MODAL-009/010: the target froze at Start, and it CHANGED while the
+           modal was open. The user must choose; nothing may swap silently and
+           the two hashes may never be combined into one mixed review. */
+        staleTarget: {
+          detected_at: nowIso(),
+          frozen_hash: 'a1c9f02e',
+          current_hash: 'f77e10bb',
+          choices: [
+            { id:'refresh_to_current', label:'Refresh to the current target', target_hash:'f77e10bb' },
+            { id:'use_frozen_target',  label:'Review the identified frozen target', target_hash:'a1c9f02e', immutable:true }
+          ],
+          chosen: null,
+          mixed: false
+        },
         findings: [
           { id: 'f1', findingKey: 'child-spawn-bypasses-ceiling', category: 'correctness', severity: 'critical', claim: 'A nested Crew inside a Crew can request child concurrency that is never clamped against the orchestrator’s total active-agent ceiling.', affectedRefs: ['executionLimits.totalActiveAgents'], evidenceRefs: ['trace: nested-crew-concurrency-repro'], originatingReviewerIds: [0, 1], reviewerVotes: [{ reviewerIndex: 0, disposition: 'confirmed', confidence: 'high', evidence: 'Reproduced: nested request admits 6 when the ceiling is 4.' }, { reviewerIndex: 1, disposition: 'confirmed', confidence: 'high', evidence: 'Same repro from a different entry point.' }], disposition: 'confirmed', dissent: null, proposedRemediation: 'Clamp nested concurrency against the ceiling remaining at spawn time, not just at the top level.' },
           { id: 'f2', findingKey: 'retry-identity-not-logged', category: 'observability', severity: 'minor', claim: 'A retried child attempt does not log its own retry identity, only the original attempt id.', affectedRefs: ['retry pathway'], evidenceRefs: ['log sample'], originatingReviewerIds: [0], reviewerVotes: [{ reviewerIndex: 1, disposition: 'uncertain', confidence: 'low', evidence: 'Could not reproduce from the pack alone; the log sample may be from an older build.' }], disposition: 'uncertain', dissent: 'Reviewer 1 still holds this as a real minor finding; Reviewer 2 could not confirm it from the frozen pack. Recorded as uncertain rather than manufacturing agreement either way.', proposedRemediation: 'Add the retry attempt id to the child log line if reproduced against a current pack.' },
@@ -430,6 +502,13 @@
           { id: 'f4-excluded', reviewerIndex: 2, targetHash: 'f77e10bb', claim: 'A finding from Reviewer 3, produced against a target pack that changed mid-run.', reason: 'Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.' }
         ]
       },
+      /* REVIEW-010: the review OUTPUT is a versioned artifact with both
+         projections plus a short thread summary. The transcript alone is not
+         the deliverable. */
+      artifacts: [{ id: 'rev-artifact-orchestrator-boundary', kind: 'review_report', version: 2,
+        formats: ['rich', 'markdown'], title: 'Multi-Pass Review · Orchestrator Boundary Changes',
+        coverage: 'multi_pass_3', target_hash: 'a1c9f02e',
+        summary: 'Three passes over the frozen pack: one confirmed critical, one confirmed major, one uncertain with dissent retained, one excluded for a different target hash.' }],
       usage: { inputTokens: 96000, outputTokens: 12100, costUsd: 0.71 }
     });
     rv.messages.push(mkMsg(rv, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Target pack frozen at a1c9f02e. All three initial passes admitted concurrently; each reviewer’s prompt carried no other reviewer’s findings, output or identity.' }));
@@ -489,6 +568,9 @@
       targetPack:{ targetKind:'assistant_response', targetRefs:['migration guard diff'],
         targetHashes:{ primary:'a91c33f0' }, frozenAt:nowIso(), userConstraintRefs:[], acceptanceRefs:[] },
       findings:[], excludedFindings:[] };
+    single.artifacts=[{ id:'rev-artifact-'+single.id, kind:'review_report', version:1,
+      formats:['rich','markdown'], title:'Single Agent Review · migration guard',
+      coverage:'single_pass', summary:'One independent pass. No corroboration is claimed.' }];
     single.messages.push(mkMsg(single,{ senderKind:'system', senderName:'System',
       body:'One reviewer was requested, so this is a single independent pass. It does not claim peer corroboration, agreement, quorum or consensus, and no multi-agent agreement section exists.' }));
     runs.push(single);
@@ -512,6 +594,12 @@
       findings:[], excludedFindings:[] };
     partial.participants[2].attempts=[{ attempt_id:'att-r3-1', outcome:'timed_out', at:nowIso(),
       requested_identity:'opus5', effective_identity:'opus5', reason:'pass timeout', epoch:0 }];
+    /* REVIEW-010: the output is a versioned Rich/Markdown artifact, not only a
+       transcript. A partial review still produces one; it is labelled partial
+       rather than withheld. */
+    partial.artifacts=[{ id:'rev-artifact-'+partial.id, kind:'review_report', version:1,
+      formats:['rich','markdown'], title:'Multi-Pass Review · cache invalidation',
+      coverage:'partial', summary:'2 of 3 requested passes completed; 1 timed out. Findings are reported with their coverage stated.' }];
     partial.messages.push(mkMsg(partial,{ senderKind:'system', senderName:'System',
       body:'2 of 3 requested passes completed and 1 timed out. This stays attention-required until retry, reconfiguration, or an explicit acceptance of partial review. It is not finalised as a full Multi-Pass.' }));
     runs.push(partial);
@@ -544,9 +632,37 @@
                      askedIds:[], resolvedIds:[], duplicateIds:[], researchRoutedIds:[] },
       proposals:[], debateRounds:2, votes:[], hardConstraintViolations:[],
       dissent:[{ by:'Reviewer', text:'Append-only segments make compaction an operational problem nobody has owned yet.' }],
-      wondererLeads:[{ lead:'Content-addressed segment names would make replication a copy rather than a protocol.',
-                       tether:'Follows from the append-only segment proposal; unresearched, retained as a hypothesis.' }],
-      provisioning:[], synthesis:null };
+      /* WONV-002/005/008: a lead is TETHERED to its seed and carries an
+         explicit disposition. `hypothesis` is not a conclusion, and only a
+         `researched` or `user_decided` lead may enter a Plan. */
+      wondererLeads:[
+        { id:'lead-1',
+          lead:'Content-addressed segment names would make replication a copy rather than a protocol.',
+          seed:'append-only segment proposal',
+          tether:'Follows directly from the append-only segment proposal raised in round 1.',
+          state:'hypothesis', enteredPlan:false },
+        { id:'lead-2',
+          lead:'Compaction could be scheduled off the write path entirely.',
+          seed:'compaction ownership objection',
+          tether:'Follows from the Reviewer’s dissent about unowned compaction.',
+          state:'researched', enteredPlan:true,
+          research_ref:'research:compaction-off-path' }
+      ],
+      /* PART-014: the tie is broken on recorded grounds, never on response
+         order or model prestige. The record names which grounds decided it. */
+      synthesis:{
+        outcome:'hybrid',
+        decided_by:'synthesis_reasoning',
+        grounds:[
+          { kind:'hard_constraint', text:'The event log must survive a single-node loss; only the segmented proposal states a replication story.' },
+          { kind:'evidence', text:'The 90-day retention measurement exists for segments and not for the single-table approach.' },
+          { kind:'feasibility', text:'Segment compaction can be scheduled off the write path; the single-table vacuum cannot.' },
+          { kind:'risk', text:'Unowned compaction is the Reviewer’s recorded objection and stays open as a To-Do rather than being resolved by the vote.' }
+        ],
+        rejected:'single-table with partition pruning',
+        unresolved_disagreement:'Compaction ownership remains disputed and is retained, not treated as agreement.',
+        not_decided_by:['response_order','model_prestige','random'] },
+      provisioning:[] };
     tievote.messages.push(mkMsg(tievote,{ senderKind:'system', senderName:'System',
       body:'Support 2, oppose 2 across the four eligible voters. The Wonderer abstained by default and is excluded from the denominator — it is not counted as opposition, and the support percentage is 50% of 4, not 40% of 5. The tie is resolved by hard constraints, evidence quality, feasibility and risk in synthesis, never by response order.' }));
     runs.push(tievote);
@@ -606,6 +722,14 @@
     RTC.runs = JSON.parse(SEED_RUNS_JSON);
     RTC.draft = null;
     msgSeq = {};
+    /* The effect ledger is the INSTRUMENT the zero-side-effect proof reads.
+       A restore that left it holding a previous run's counters made every
+       later "no durable effect on cancel" reading unreliable, because the
+       baseline was already dirty. Rejected callbacks are evidence of a past
+       run and belong to that run, so they reset with it. */
+    RTC.effects = { runs:0, providerCalls:0, usageRecords:0, events:0,
+                    cards:0, settingsWrites:0, installs:0, participants:0 };
+    RTC.rejectedCallbacks = [];
   }
 
   /* Attach one `collab-run` reference message per seed run to its thread, ONCE,
@@ -792,7 +916,15 @@
       return '<div class="collab-dissent" data-k="collab-dissent"><strong>' + ctx.icon('warning', 11) + 'Preserved dissent · ' + esc(d.participantRole) + '</strong><p>' + esc(d.reason) + '</p></div>';
     }).join('');
     var wonder = (b.wondererLeads || []).map(function (w) {
-      return '<div class="collab-lead" data-k="collab-lead-' + esc(w.id) + '"><span class="collab-lead-tag">' + esc(w.status) + '</span><p>' + esc(w.lead) + '</p><p class="collab-sub">Connection: ' + esc(w.connection) + '</p></div>';
+      /* One vocabulary: state + tether. The old `status`/`connection` names are
+         still read so an older stored run renders rather than showing
+         `undefined`, but nothing writes them any more. */
+      var state = w.state || w.status || 'hypothesis';
+      var tether = w.tether || w.connection || '';
+      return '<div class="collab-lead" data-k="collab-lead-' + esc(w.id) + '" data-lead-state="' + esc(state) + '">' +
+        '<span class="collab-lead-tag">' + esc(state) + '</span><p>' + esc(w.lead) + '</p>' +
+        (w.seed ? '<p class="collab-sub">Seed: ' + esc(w.seed) + '</p>' : '') +
+        '<p class="collab-sub">Tether: ' + esc(tether) + '</p></div>';
     }).join('');
     return '<p class="collab-qmax" data-k="collab-qmax">' + esc(qLine) + '</p>' +
       (votes ? '<div class="collab-votes">' + votes + '</div>' : '') +
@@ -959,7 +1091,7 @@
   });
   EXT.action('collab-cancel', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canCancel(run)) return true;
-    run.status = 'cancelled'; run.completedAt = nowIso(); run.stopEpoch += 1;
+    run.status = 'canceled'; run.completedAt = nowIso(); run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. New admissions stopped; the card, transcript, participants and artifacts remain with truthful cancelled state.' }));
     if (RT.composer.destination && RT.composer.destination.refId === run.id) {
       var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
@@ -1007,7 +1139,7 @@
     RT.composer.destinationProviders.push(function (ctx) {
       var out = [];
       RTC.runs.forEach(function (run) {
-        if (['completed', 'cancelled', 'failed'].indexOf(run.status) >= 0) return;
+        if (['completed', 'canceled', 'failed'].indexOf(run.status) >= 0) return;
         out.push({ id: 'collab:' + run.id, kind: 'workflow', destinationKind: run.kind, refId: run.id, label: KIND_LABEL[run.kind] + ' · ' + run.title, detail: plural(run.participants.length, 'participant', 'participants'), glyph: destinationGlyph(run.kind) });
         run.participants.forEach(function (p) {
           out.push({ id: 'collab:' + run.id + ':' + p.id, kind: 'participant', destinationKind: run.kind, refId: run.id, participantId: p.id, label: run.title + ' → ' + p.role, detail: 'direct to participant', glyph: destinationGlyph(run.kind) });
@@ -1026,6 +1158,38 @@
      `composerBelow` template string this module's own handler (below) also
      contributes to, so a nested render here would be reentrant. The send
      that triggered this hook already renders on its own next frame. */
+  /* MODAL-012. A BrainStorm asked for in PROSE must be HELD before any
+     provider dispatch, opened for configuration, and returned intact if the
+     user cancels. The cancel handler below has always known how to restore a
+     held request, but nothing ever produced one -- the restore path was
+     unreachable, so a prose request would simply have been sent. This is the
+     producer: it claims the submission, parks it in the durable ComposerBuffer
+     (so a thread switch or a reload does not lose it) and opens the modal.
+     It deliberately runs BEFORE the destination hook below. */
+  var NL_BRAINSTORM = /\b(brain\s?storm|brainstorm)\b/i;
+  function heldRequestFrom(thread, message, buffer){
+    return { threadId: thread && (thread.id || thread) || (buffer && buffer.thread_id) || null,
+             text: (message && (message.body || message.text)) || (buffer && buffer.text) || '',
+             attachments: (buffer && buffer.attachments ? buffer.attachments.slice() : []),
+             kind: 'brainstorm' };
+  }
+  RT.composer.preSendHooks = RT.composer.preSendHooks || [];
+  RT.composer.preSendHooks.push(function (ctx, thread, raw) {
+    if (RTC.draft) return false;                   /* already configuring */
+    if (!NL_BRAINSTORM.test(String(raw || ''))) return false;
+    var CS = window.PM56_COMPOSER_STATE;
+    var buffer = CS && CS.bufferFor ? CS.bufferFor(thread && thread.id) : null;
+    if (buffer && buffer.destination) return false; /* an explicit destination wins */
+    var held = heldRequestFrom(thread, { body: raw }, buffer);
+    if (CS && CS.holdRequest) CS.holdRequest(held.threadId, held);
+    openConfigureDraft('brainstorm', null, false);
+    if (RTC.draft) RTC.draft.heldRequest = held;
+    ctx.openDialog && ctx.openDialog({ type: 'collab-configure' });
+    ctx.toast && ctx.toast('BrainStorm held',
+      'Your request is held before any provider call. Configure it and press Start, or cancel and get the text back exactly as written.');
+    return true;                                   /* claimed: nothing was sent */
+  });
+
   if (RT.composer.commitHooks) {
     RT.composer.commitHooks.push(function (ctx, thread, message, buffer) {
       var dest = buffer && buffer.destination;
@@ -1056,7 +1220,7 @@
     var d = RT.composer.destination;
     if (d && (d.kind === 'workflow' || d.kind === 'participant') && KIND_LABEL[d.destinationKind]) {
       var run = findRun(d.refId);
-      var ended = !run || ['completed', 'cancelled', 'failed'].indexOf(run.status) >= 0;
+      var ended = !run || ['completed', 'canceled', 'failed'].indexOf(run.status) >= 0;
       if (ended) {
         var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
         var empty = !buf || (!buf.text && !(buf.attachments && buf.attachments.length));
@@ -1468,6 +1632,7 @@
       '<p class="collab-sub">No provider brand marks are drawn here — this concept’s shared context object does not expose a provider-mark renderer, so routes are shown as text rather than a letter-only substitute glyph.</p>' +
       (d.autoMode ? '<div class="collab-refusal-demo"><strong>Admission-gate refusal</strong><p class="collab-sub">Crew Auto criteria can only narrow admission. This always-refuses control proves it rather than describing it:</p><button class="soft-button" data-action="collab-crew-auto-refuse-demo">' + ctx.icon('lock', 12) + ' Try to widen authority (always refused)</button></div>' : '') +
       '</div>' +
+      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p><p class="collab-sub">Everything you configured above is still here. Fix the cause and press Start again; nothing partial was created.</p></div>' : '') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -1515,7 +1680,11 @@
     ctx.closeDialog();
     if (held) {
       var CS = window.PM56_COMPOSER_STATE;
-      if (CS && CS.setBuffer) CS.setBuffer(held.threadId, held.text, held.attachments || []);
+      /* Prefer the durable hold: it returns the exact text AND attachments and
+         clears the hold in one operation, so a restored request cannot later
+         be released a second time. */
+      if (CS && CS.restoreHeldRequest && CS.heldRequest && CS.heldRequest(held.threadId)) CS.restoreHeldRequest(held.threadId);
+      else if (CS && CS.setBuffer) CS.setBuffer(held.threadId, held.text, held.attachments || []);
       else if (ctx.state) ctx.state.composer = held.text;
       ctx.renderApp();
       ctx.toast('BrainStorm cancelled', 'Your request was returned to the composer exactly as written. Nothing ran, and nothing ran with defaults.');
@@ -1601,6 +1770,25 @@
     }
   });
 
+  /* Typed Start preflight. `forceFailure` exists so the refusal path is
+     drivable in a concept that has no provider to fail; every other clause is
+     a real check over the draft the user configured. */
+  function startPreflight(d) {
+    if (d.forceFailure)
+      return { ok:false, error:String(d.forceFailure), slot:null,
+               message:'Start was refused ('+d.forceFailure+'). Your configuration is unchanged; no run, card or participant record was created.' };
+    for (var i = 0; i < d.rows.length; i++) {
+      var r = d.rows[i], m = modelById(r.requestedModelId);
+      if (!m)
+        return { ok:false, error:'model_unresolved', slot:r.role,
+                 message:'“'+r.role+'” names a model this project cannot resolve. Nothing was started; pick a model or remove the slot.' };
+      if (UNAVAILABLE_DEMO[r.requestedModelId] && !fallbackModelFor(r.requestedModelId))
+        return { ok:false, error:'provider_unavailable', slot:r.role,
+                 message:'“'+r.role+'” is unavailable and no same-provider substitute is configured. Nothing was started, and no failed participant was recorded — no provider attempt was made.' };
+    }
+    return { ok:true };
+  }
+
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
@@ -1620,6 +1808,20 @@
       ctx.closeDialog();
       ctx.renderOverlays();
       ctx.toast('Crew Auto configured and enabled', 'Committed with a ' + crewDefA.autoRosterTemplate.length + '-member roster template and a cap of ' + crewDefA.autoMaxMembers + '. It still cannot widen authority or override an explicit single-agent selection.');
+      return true;
+    }
+    /* MODAL-005 / PART-021. PREFLIGHT, before anything durable exists. A
+       required slot whose model cannot be resolved is a refused START: the
+       draft keeps every value the user entered, the failure is typed, and no
+       run, card, participant record or provider attempt is created. A model
+       being unavailable at CONFIGURATION time is not a failed runtime
+       participant -- claiming one would assert a provider attempt that never
+       happened. */
+    var preflight = startPreflight(d);
+    if (!preflight.ok) {
+      d.lastFailure = preflight;                 /* shown in the modal, values kept */
+      ctx.renderOverlays();
+      ctx.toast('Start refused', preflight.message);
       return true;
     }
     var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
@@ -1924,7 +2126,10 @@
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];
       if(p.additiveRoleKind==='wonderer' && p.status!=='disabled'){ abstain++; continue; }
-      if(p.additiveRoleKind==='grill' && !p.votingRole){ abstain++; continue; }
+      /* Every producer writes `grill_me`; this branch used to test `grill`,
+         so it never fired and a Grill Me slot carrying a vote would have been
+         counted without ever being configured as an ordinary voting role. */
+      if((p.additiveRoleKind==='grill_me'||p.additiveRoleKind==='grill') && !p.votingRole){ abstain++; continue; }
       if(p.outcome && p.outcome!=='completed'){ ineligible++; continue; }
       if(!p.outcome && p.status!=='done'){ ineligible++; continue; }
       if(p.vote==='oppose') oppose++; else if(p.vote==='support') support++; else abstain++;
@@ -1940,6 +2145,15 @@
   /* PART-007..008, PART-016..019. The completion predicate for each kind. A
      provider turn ending is never enough, and a partial result never
      finalises as a full one. */
+  /* The participant slot that IS the coordinator, when one exists. */
+  function coordinatorSlot(run){
+    var c=run.coordinator; if(!c) return null;
+    if(typeof c==='string') return participant(run,c);
+    if(c.participant_id) return participant(run,c.participant_id);
+    for(var i=0;i<run.participants.length;i++) if(run.participants[i].isCoordinator) return run.participants[i];
+    return null;
+  }
+
   function completionProjection(run){
     var req=[], done=[], failed=[], waived=[], i, p;
     for(i=0;i<run.participants.length;i++){
@@ -1955,8 +2169,15 @@
     var outputs = run.expectedOutputs || [];
     var missingOutputs = outputs.filter(function(o){ return !o.delivered && !o.waived; })
                                 .map(function(o){ return o.id; });
+    /* `run.coordinator` is a DESCRIPTOR ({kind,label}), not a participant id,
+       so `participant(run, run.coordinator)` was always undefined and this
+       predicate could never become true -- a failed coordinator read as a
+       healthy run. Resolve the coordinator's slot the way the roster does:
+       by its explicit `participant_id` when it names one, otherwise by the
+       slot flagged `isCoordinator`. A `parent_assistant` coordinator has no
+       participant slot and legitimately cannot fail this way. */
     var coordinatorFailed = !!(run.coordinator && (function(){
-      var c=participant(run, run.coordinator);
+      var c=coordinatorSlot(run);
       return c && c.outcome && c.outcome!=='completed';
     })());
     var tally = run.kind==='brainstorm' ? voteTally(run) : null;
@@ -1980,9 +2201,21 @@
          corroboration, agreement, quorum or consensus. */
       review_truth: run.kind==='review' ? reviewTruth(run) : null,
       clean_completion: !reason,
-      attention_reason: reason
+      attention_reason: reason,
+      /* PART-008/017: an attention-required run states what the user may do.
+         A disclosed count with no admitted action is a dead end, and a silent
+         coordinator hand-over is the failure this list exists to prevent. */
+      attention_required: !!reason,
+      allowed_actions: reason ? ATTENTION_ACTIONS[reason].slice() : []
     };
   }
+  var ATTENTION_ACTIONS = {
+    coordinator_failed:              ['replace_coordinator','retry_coordinator','cancel','details'],
+    required_participants_unresolved:['retry','replace','waive','accept_partial','cancel','details'],
+    required_outputs_missing:        ['retry','waive_output','cancel','details'],
+    vote_tie_unresolved:             ['synthesize','another_round','cancel','details'],
+    pending_user_decision:           ['decide','cancel','details']
+  };
 
   function reviewTruth(run){
     var requested = (run.review && run.review.requestedPasses) || run.participants.length;
@@ -2036,6 +2269,14 @@
     rejectedCallbacks: function(){ return RTC.rejectedCallbacks.slice(); },
     voteTally: function(runId){ var r=findRun(runId); return r?voteTally(r):null; },
     completion: function(runId){ var r=findRun(runId); return r?completionProjection(r):null; },
-    outcomeVocabulary: function(){ return OUTCOMES.slice(); }
+    outcomeVocabulary: function(){ return OUTCOMES.slice(); },
+    /* One spelling of one state word. The run status said `cancelled` while
+       every other terminal vocabulary in this concept — participant outcomes,
+       scheduled-message states, Plan status, Goal status — says `canceled`.
+       Two spellings of the same state inside one module is a trap for anyone
+       porting it, so the state word is normalised and published here. */
+    runStatusVocabulary: function(){
+      return ['configuring','running','paused','blocked','completed','canceled','failed'];
+    }
   };
 })();

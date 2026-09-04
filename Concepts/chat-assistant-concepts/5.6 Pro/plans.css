@@ -254,7 +254,9 @@
 .pd-note code{ font-family:var(--font-mono); font-size:11px; }
 .pd-bad{ color:var(--danger); }
 .pd-sec-honest{
-  padding:10px 12px; border:1px solid var(--border); border-left:3px solid var(--warning);
+  /* GUI-008: no left accent bar. The section is distinguished by its surface
+     and a full border, the way the other cards are. */
+  padding:10px 12px; border:1px solid var(--border);
   border-radius:var(--radius-sm); background:var(--surface-3);
 }
 .pd-ledger,.pd-units,.pd-revs,.pd-exports,.pd-cmds{ margin:0; padding:0; list-style:none; }
@@ -452,3 +454,27 @@
 .goal-bound-active .goal-bound-chip{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border)); }
 .goal-bound-paused .goal-bound-chip{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
 .goal-bound-link{ font-family:var(--font-mono); font-size:10.5px; color:var(--subtle); }
+
+/* --- PDET-001: sources and provenance ------------------------------------
+   Four reference lists (source messages, attachments, research, run history)
+   inside Plan Details. They are compact reference rows, not cards: the object
+   itself lives in its own owner and is reachable from the code chip. */
+.pd-prov h5{
+  margin:14px 0 6px; font-size:11px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted);
+}
+.pd-prov h5:first-child{ margin-top:4px; }
+.pd-prov-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px; }
+.pd-prov-list li{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:8px;
+  padding:6px 8px; border-radius:6px; background:var(--surface-2);
+  border:1px solid var(--border); font-size:12px;
+}
+.pd-prov-list code{
+  font-family:var(--font-mono); font-size:11px; padding:1px 5px; border-radius:4px;
+  background:var(--surface-3); color:var(--text);
+}
+.pd-prov-list strong{ font-weight:600; font-size:11px; color:var(--text); }
+.pd-prov-list span{ color:var(--muted); font-size:11px; }
+.pd-prov-list em{ flex:1 1 100%; font-style:normal; color:var(--muted); font-size:11px; }
+.pd-runs li[data-run-outcome="failed"]{ border-color:var(--border-strong); }

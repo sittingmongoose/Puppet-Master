@@ -92,7 +92,16 @@
   /* Local view state only. Nothing here is domain truth. */
   var ui = { editing:false, draft:null, showHistory:false, showContinuations:false, confirmCancel:false, proposal:null };
 
-  function restoreFixture(){ D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false; ui.confirmCancel=false; ui.proposal=null; }
+  function restoreFixture(){
+    D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false;
+    ui.confirmCancel=false; ui.proposal=null;
+    /* Plan-bound Goals live in the shared runtime, not in D.goal, so restoring
+       only the fixture left every Goal a previous Build as Goal had created
+       still bound -- the next admission then failed `active_run_exists` against
+       a Goal the caller had just asked to be rid of. A restore that leaves
+       durable records behind is a restore that lies. */
+    if(RT_G.boundGoals){ RT_G.boundGoals.byPlan={}; RT_G.boundGoals.seq=0; }
+  }
 
   var STATUS_LABEL = { active:'Running', paused:'Paused', blocked:'Blocked', completed:'Completed' };
   var STATUS_TONE  = { active:'working', paused:'idle',   blocked:'blocked', completed:'done' };
@@ -237,6 +246,34 @@
   var RT_G = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
   RT_G.boundGoals = RT_G.boundGoals || { byPlan:{}, seq:0 };
 
+  /* GREPLAY-002. The FOUR origin kinds, as a closed vocabulary the owner
+     publishes rather than a string one code path happens to write. Only
+     `plan_build` was ever produced here, so nothing could tell whether the
+     other three existed as a contract or had simply been forgotten; and
+     because a Goal has no title, origin can never be inferred from one.
+     `originOf()` is the single reader, so a future writer that invents a
+     fifth kind fails closed instead of leaking an unknown value into replay. */
+  var ORIGIN_KINDS = ['user_request','agent_requested_by_user','plan_build','internal_workflow'];
+  var ORIGIN_LABEL = {
+    user_request:'the user asked for it directly',
+    agent_requested_by_user:'an agent created it because the user asked the agent to',
+    plan_build:'an approved Plan was built as a Goal',
+    internal_workflow:'a workflow uses it internally'
+  };
+  function originOf(kind){
+    return ORIGIN_KINDS.indexOf(kind)>=0 ? kind : 'user_request';
+  }
+  /* The plain thread Goal has an origin too; it is simply not `plan_build`. */
+  function lineageFor(goalId, revision, kind, o){
+    o=o||{};
+    return { schema:'pm.goal.origin_lineage.v1', goal_id:goalId, goal_revision:revision||1,
+             origin_kind:originOf(kind), origin_label:ORIGIN_LABEL[originOf(kind)],
+             source_message_refs:o.source_message_refs||[],
+             source_context_manifest_ref:o.source_context_manifest_ref||null,
+             bound_plan_ref:o.bound_plan_ref||null,
+             owning_workflow_ref:o.owning_workflow_ref||null };
+  }
+
   function boundFor(planId){ return RT_G.boundGoals.byPlan[planId] || null; }
   function boundList(threadId){
     var out=[], k, m=RT_G.boundGoals.byPlan;
@@ -263,10 +300,11 @@
       currentnessHash:o.plan_hash, stopEpoch:0, mode:null,
       idempotency_key:o.idempotency_key,
       /* GREPLAY-001..002: hidden lineage. Not rendered as Goal content. */
-      lineage:{ schema:'pm.goal.origin_lineage.v1', goal_id:id, goal_revision:1,
-                origin_kind:'plan_build', source_message_refs:o.source_refs||[],
+      lineage:lineageFor(id, 1, o.origin_kind||'plan_build', {
+                source_message_refs:o.source_refs||[],
                 source_context_manifest_ref:'ctx-manifest:'+o.plan_id+'@V'+o.version,
-                bound_plan_ref:o.plan_id+'@V'+o.version, owning_workflow_ref:null },
+                bound_plan_ref:o.plan_id+'@V'+o.version,
+                owning_workflow_ref:o.owning_workflow_ref||null }),
       /* PGOAL-003/004: the binding. todo_list_ref and planunit_bundle_ref are
          REFERENCES to what already exists -- identity equality is the proof
          that nothing was duplicated. */
@@ -590,6 +628,10 @@
     createBound:createBound,
     boundTransition:boundTransition,
     chip:headerChip,
-    sidebar:sidebarSummary
+    sidebar:sidebarSummary,
+    /* GREPLAY-002: the closed origin vocabulary, published by its owner. */
+    originKinds:function(){ return ORIGIN_KINDS.slice(); },
+    originLabel:function(k){ return ORIGIN_LABEL[originOf(k)]; },
+    lineageFor:lineageFor
   };
 })();

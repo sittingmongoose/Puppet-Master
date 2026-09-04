@@ -341,13 +341,28 @@
           project_id: 'pm', thread_id: 'query',
           destination_ref: { kind: 'workflow', label: 'Crew · Query Performance', detail: '3 agents · coordinator', unresolvable: true },
           text: 'Crew, fold the concurrent-write-load check into tonight’s pass and report back before the window closes.',
-          attachment_refs: [{ name: 'benchmark.csv', kind: 'file', demo: true }],
+          /* SMSG-007/008: frozen at COMMIT — exact content hash and version.
+             The second entry is the case the correction exists for: the
+             retained version is gone at dispatch, so the schedule HOLDS. It
+             does not send whatever those bytes are now. */
+          attachment_refs: [
+            { name: 'benchmark.csv', kind: 'file', content_hash: 'sha-demo:9c14e0d2',
+              artifact_version: 1, availability: 'available', demo: true },
+            { name: 'load-profile.json', kind: 'file', content_hash: 'sha-demo:2b77af10',
+              artifact_version: 3, availability: 'missing', demo: true,
+              unavailable_note: 'The exact retained revision was deleted from the project after this schedule was committed.' }
+          ],
           requested_runtime: { modelId: 'opus5', modelName: 'Claude Opus 5', provider: 'Anthropic', account: 'Work · anthropic-work' },
           scheduled_at_utc: '2026-09-03T04:30:00Z', timezone: 'America/Chicago', local_wall_time: '23:30',
           missed_policy: 'next_available', grace_seconds: 1800,
           state: 'held', expected_thread_currentness: 21, revision: 1,
           idempotencyKey: 'sm-route-held',
-          heldReason: 'Recorded destination "Crew · Query Performance" is no longer resolvable (the crew run ended). Holding the dispatch rather than substituting a different destination.',
+          heldReason: 'Recorded destination "Crew · Query Performance" is no longer resolvable (the crew run ended), and the retained revision of load-profile.json is missing. Holding the dispatch rather than substituting a different destination or newer bytes.',
+          dispatch_attempts: [
+            { attempt_id: 'sda-sm-route-held-1', at: '2026-09-03T04:30:05Z', outcome: 'held',
+              requested_route: 'opus5 · Work · anthropic-work', effective_route: null,
+              reason: 'destination_unresolvable + retained_attachment_missing' }
+          ],
           dispatchedMessageId: null, dispatchedAt: null,
           createdAt: t0, updatedAt: '2026-09-03T04:30:05Z'
         },
@@ -383,6 +398,13 @@
           idempotencyKey: 'sm-failed-model',
           /* SMSG-011: an EXPLICIT model selection never silently falls back. */
           failureReason: 'Kimi K3 Turbo was unavailable at dispatch and this schedule names it explicitly, so no substitute was chosen. The failed attempt is preserved; editing and retrying creates a new attempt identity.',
+          /* SMSG-013: the historical attempt is immutable evidence. A retry
+             appends; it never rewrites this row. */
+          dispatch_attempts: [
+            { attempt_id: 'sda-sm-failed-model-1', at: '2026-09-03T03:15:02Z', outcome: 'failed',
+              requested_route: 'kimi-k3-turbo · Personal · moonshot', effective_route: null,
+              reason: 'Provider window exhausted on this account; no substitute was permitted.' }
+          ],
           heldReason: null, dispatchedMessageId: null, dispatchedAt: null,
           createdAt: t0, updatedAt: '2026-09-03T03:15:02Z'
         },
@@ -430,6 +452,20 @@
             execution_topology:'agent', collaboration_definition_ref:null,
             eligibility_policy:'window_and_quota_conjunction' },
           runtime_created: false,
+          /* PSCHED-014: TWO idempotency domains, deliberately different keys.
+             Repeated creation returns one schedule; repeated timer delivery
+             admits one run. A wall-clock stamp is not a dedup key for either. */
+          idempotency_key: 'sched:ap-index@V5:recurring_window:22:00:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-nightly-index:occurrence',
+          /* PSCHED-008: eligibility is the CONJUNCTION, evaluated, not a
+             policy label. `eligible` is the AND and can never be either half. */
+          eligibility: { window:{ satisfied:false, reason:'Outside 22:00–02:00 America/Chicago.' },
+                         quota:{ satisfied:true,  reason:'Usage available.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:false },
+          /* PSCHED-009: recurrence RESUMES one unfinished run; it never starts
+             a second one, and a terminal run ends the recurrence's claim. */
+          resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 5, exact_target_hash: demoHash('ap-index:5'),
           schedule_kind: 'recurring_window',
           timezone: 'America/Chicago', local_start: '22:00', local_pause: '02:00',
@@ -444,6 +480,21 @@
         {
           schedule_id: 'bld-auth-nightly',
           project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-auth',
+          /* PSCHED-001: EVERY Build At stores one exact topology. This record
+             carried none, so a dispatcher reading it would have had to infer
+             one -- which is the exact inference the correction forbids. */
+          execution_topology: 'agent',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'agent', collaboration_definition_ref:null,
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          idempotency_key: 'sched:ap-auth@V2:one_time:01:00:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-auth-nightly:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 01:00 slot.' },
+                         quota:{ satisfied:true, reason:'Usage available.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:true },
+          resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 2, exact_target_hash: demoHash('ap-auth:2'),
           schedule_kind: 'one_time',
           timezone: 'America/Chicago', local_start: '01:00', local_pause: null,
@@ -459,6 +510,82 @@
             { at: '2026-09-03T05:10:00Z', text: 'Invalidated: Plan ap-auth was revised from V2 to V3. Automatic dispatch disabled until an explicit rebind.' }
           ],
           createdAt: t0, updatedAt: '2026-09-03T05:10:00Z'
+        },
+        /* PSCHED-002: a CREW scheduled build. The validated
+           CollaborationDefinition, its revision, the requested AND effective
+           assignments, the permission ceiling and the limits all freeze at
+           schedule commit, so dispatch needs no unattended modal and cannot
+           adopt whatever the Crew defaults happen to be that night. */
+        {
+          schedule_id: 'bld-crew-embeds',
+          project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-embeds',
+          execution_topology: 'crew',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'crew',
+            collaboration_definition_ref:'collabdef:crew@rev4',
+            collaboration_definition_revision:4,
+            assignments:[
+              { slot_id:'coordinator', required:true, requested_identity:'model:claude-opus-5', effective_identity:'model:claude-opus-5' },
+              { slot_id:'member-1',    required:true, requested_identity:'model:claude-sonnet-5', effective_identity:'model:claude-sonnet-5' },
+              { slot_id:'member-2',    required:false, requested_identity:'model:claude-haiku-4-5', effective_identity:'model:claude-haiku-4-5' }
+            ],
+            permission_ceiling:'Auto',
+            limits:{ time_limit_minutes:45, token_limit:400000, cost_limit_usd:6 },
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          idempotency_key: 'sched:ap-embeds@V1:one_time:23:30:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-crew-embeds:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 23:30 slot.' },
+                         quota:{ satisfied:false, reason:'Usage exhausted until the 04:00 reset.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:false },
+          resumes_run_id: null, stops_on_terminal: true,
+          exact_target_version: 1, exact_target_hash: demoHash('ap-embeds:1'),
+          schedule_kind: 'one_time',
+          timezone: 'America/Chicago', local_start: '23:30', local_pause: null,
+          days_of_week: [],
+          wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
+          state: 'active', revision: 1, invalidated_reason: null,
+          pendingVersion: null, pendingHash: null,
+          runPhase: 'idle', demoClockIso: t0, lastOccurrenceStart: null, occurrencesFired: [],
+          log: [{ at: t0, text: 'Schedule created: one-time Crew build at 11:30 PM. CollaborationDefinition rev 4 frozen with three assignments; no CrewRun exists yet.' }],
+          createdAt: t0, updatedAt: t0
+        },
+        /* PSCHED-013: an admission that FAILED. The schedule record and the
+           exact reason survive for repair or cancellation, and no PlanRun,
+           Goal or CrewRun was left behind -- the failure mode this row exists
+           to make checkable is a half-created run with a Building… card. */
+        {
+          schedule_id: 'bld-flags-held',
+          project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-flags',
+          execution_topology: 'goal_driven',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'goal_driven', collaboration_definition_ref:null,
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          plan_run_id: null, goal_id: null, crew_run_id: null,
+          idempotency_key: 'sched:ap-flags@V1:one_time:02:15:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-flags-held:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 02:15 slot.' },
+                         quota:{ satisfied:true, reason:'Usage available.' },
+                         permission:{ satisfied:false, reason:'The worktree this Plan names no longer exists.' },
+                         eligible:false },
+          resumes_run_id: null, stops_on_terminal: true,
+          exact_target_version: 1, exact_target_hash: demoHash('ap-flags:1'),
+          schedule_kind: 'one_time',
+          timezone: 'America/Chicago', local_start: '02:15', local_pause: null,
+          days_of_week: [],
+          wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
+          state: 'held',
+          held_reason: 'Admission refused: the worktree feature/flags named by this Plan no longer exists. No PlanRun, Goal or CrewRun was created; the schedule is intact for repair or cancellation.',
+          invalidated_reason: null,
+          revision: 1, pendingVersion: null, pendingHash: null,
+          runPhase: 'idle', demoClockIso: t0, lastOccurrenceStart: null, occurrencesFired: [],
+          log: [
+            { at: t0, text: 'Schedule created: one-time goal-driven build at 2:15 AM.' },
+            { at: '2026-09-03T07:15:00Z', text: 'Held at first dispatch: worktree predicate false. Nothing partial was admitted.' }
+          ],
+          createdAt: t0, updatedAt: '2026-09-03T07:15:00Z'
         }
       ],
       quotaConsents: [
@@ -759,6 +886,34 @@
     persistNow();
     return rec;
   }
+  /* PSCHED-006. The PLAN owner calls this when it writes a new version. Until
+     it existed the only revision path was `simulateRevision`, driven from this
+     module's own management dialog -- so an ordinary Revise in the composer
+     left every durable build schedule `active` and still bound to the old
+     version, free to dispatch a build of bytes the user had already replaced.
+     Invalidation is per-schedule and explicit: nothing is retargeted
+     automatically, and the row keeps naming the stale version so the user can
+     rebind or recreate it deliberately. */
+  function invalidateForPlanRevision(planId, oldVersion, newVersion, newHash) {
+    var out = { invalidated: [], untouched: [] };
+    P().buildSchedules.forEach(function (rec) {
+      if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
+      if (rec.state === 'invalidated' || rec.state === 'cancelled' || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+      if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
+      rec.pendingVersion = newVersion;
+      rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
+      rec.state = 'invalidated';
+      rec.invalidated_reason = 'Plan ' + planId + ' was revised from V' + rec.exact_target_version +
+        ' to V' + newVersion + ' after this schedule was created. Automatic dispatch is disabled until you rebind.';
+      rec.revision += 1; rec.updatedAt = nowIso();
+      logBuildLine(rec, rec.invalidated_reason);
+      logEvent('execution_window.invalidated', rec.schedule_id, 'target_version_changed', rec.invalidated_reason);
+      out.invalidated.push(rec.schedule_id);
+    });
+    if (out.invalidated.length) persistNow();
+    return out;
+  }
+
   function rebindBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state !== 'invalidated') return null;
     if (rec.pendingVersion != null) rec.exact_target_version = rec.pendingVersion;
@@ -1208,6 +1363,15 @@
       expired_reason:rec.expiredReason || null,
       revision:rec.revision,
       /* SMSG-005: Edit and Cancel are only available where the owner allows. */
+      /* The typed contract (pm.schedule.message_projection.v1) names these
+         `edit_available` / `cancel_available`. This projection declared that
+         schema id while publishing `can_edit` / `can_cancel`, so a native
+         reader following the contract would have found neither. Both names are
+         emitted: the contract name is authoritative and the short name stays
+         for the readers already written against it. */
+      dispatch_attempts: list(rec.dispatch_attempts),
+      edit_available:['scheduled','held','failed'].indexOf(rec.state)>=0,
+      cancel_available:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_edit:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_cancel:['scheduled','held','failed'].indexOf(rec.state)>=0,
       currentness_hash:demoHash(rec.scheduled_dispatch_id+':'+rec.revision+':'+rec.state)
@@ -1224,7 +1388,8 @@
         content_hash:a.content_hash || null,
         folder_manifest_hash:a.folder_manifest_hash || null,
         snapshot_ref:a.snapshot_ref || null,
-        availability:a.availability || 'available' };
+        availability:a.availability || 'available',
+        unavailable_note:a.unavailable_note || null };
     });
   }
 
@@ -1254,7 +1419,8 @@
       (snaps.length
         ? '<ul class="sched-card-snaps">'+snaps.map(function(s){
             return '<li data-availability="'+esc(s.availability)+'"><code>'+esc(s.attachment_id)+(s.artifact_version?'@'+esc(s.artifact_version):'')+'</code>'+
-                   '<span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em></li>'; }).join('')+'</ul>'
+                   '<span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em>'+
+                   (s.unavailable_note?'<em class="sched-snap-why">'+esc(s.unavailable_note)+'</em>':'')+'</li>'; }).join('')+'</ul>'
         : '')+
       '<div class="sched-card-foot">'+
         '<button type="button" class="soft-button" data-action="sched-card-details" data-id="'+esc(rec.scheduled_dispatch_id)+'">Details</button>'+
@@ -1342,7 +1508,11 @@
       var b=builds[i];
       if(b.target_id===assoc.plan_id && b.state!=='invalidated'){
         b.state='invalidated';
-        b.invalidReason='The bound execution was cancelled at continuation epoch '+assoc.epoch+'.';
+        b.invalidated_reason = assoc.why ||
+          ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
+        b.invalidReason = b.invalidated_reason;
+        b.updatedAt = nowIso();
+        logBuildLine(b, 'Invalidated: '+b.invalidated_reason);
         out.schedules++;
       }
     }
@@ -1585,6 +1755,7 @@
     attachmentSnapshots: function (id) { var r = smById(id); return r ? attachmentSnapshots(r) : null; },
     stateVocabulary: function () { return SM_ORDER.slice(); },
     invalidateForExecution: invalidateForExecution,
+    invalidateForPlanRevision: invalidateForPlanRevision,
     topologyOf: function (scheduleId) {
       var arr = P().buildSchedules, i;
       for (i = 0; i < arr.length; i++) if (arr[i].schedule_id === scheduleId) return arr[i].topology_snapshot || null;
