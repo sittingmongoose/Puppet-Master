@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "topic": "Astra onboarding and guided tour",
+  "model": "GPT-6 Pro",
+  "presentation": "entries",
+  "order": 15,
+  "widthControl": {"enabled": true, "label": "Full application width", "role": "page", "min": 640, "max": 1920, "step": 10, "default": 1440, "presets": [640, 960, 1280, 1440, 1920], "previewWidth": "test"},
+  "entries": [{"id": "astra", "title": "Astra — a world of possibility", "path": "index.html", "openPath": "index.html", "openActions": "both", "controlMode": "standard", "tags": ["onboarding", "guided-tour", "full-shell", "eight-themes"], "order": 10}]
+}
