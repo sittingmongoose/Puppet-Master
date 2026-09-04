@@ -6080,22 +6080,26 @@ correction touches already existed:
 
 | Command | Census result | Disposition |
 |---|---|---|
-| `cmd.chat.plan.build` | present, one handler `handlers::assistant_plan::plan_build` | revise: add `execution_topology: agent \| goal_driven` |
+| `cmd.chat.plan.build` | present, one handler `handlers::assistant_plan::plan_build` | revise: add `execution_topology: agent \| goal_driven` (`PGOAL-002`) |
 | `cmd.chat.plan.build_with_crew` | present, one handler `handlers::assistant_plan::plan_build_with_crew` | retain atomic contract; add currentness and participant semantics |
 | `cmd.chat.plan.schedule_build` | present, one handler `handlers::scheduling::plan_schedule_build` | revise: `execution_topology`, frozen Crew definition, first-dispatch admission |
 | `cmd.chat.plan.export` | present, one handler `handlers::assistant_plan::plan_export` | revise: add `content_kind: plan_document \| execution_report` |
 | `cmd.chat.plan.view.set` | present, classified `shell_view` | keep as view state; emits no Plan event |
 | `cmd.chat.plan.open_details` | present, classified `navigation_wrapper` | keep; owns no details data |
 | `cmd.chat.goal.pause/resume/cancel/update` | present, `handlers::goal_runtime::*` | revise for a bound `PlanRun` |
-| `cmd.collaboration.configure` | present | preview only; no run, provider, Usage, event, card, install, or settings effect |
+| `cmd.collaboration.configure` | present | preview only; no run, provider, Usage, event, card, install, or settings effect (`MODAL-003`) |
 | `cmd.collaboration.start` | present | idempotent admission; freeze targets at Start |
-| `cmd.collaboration.reconfigure` | present | extend for retry, replacement, waiver, coordinator/moderator replacement |
+| `cmd.collaboration.reconfigure` | present | extend for retry, replacement, waiver, coordinator/moderator replacement (`PART-005`) |
 | `cmd.chat.crew_auto.set` | present | commit the checkmark only after a Settings transaction |
 | `cmd.chat.schedule_message[.update\|.cancel]` | all three present | revise for projection, currentness, and preserved history |
 | `cmd.chat.attachment.add` | present, one handler `handlers::chat_attachments::attachment_add` | revise: `semantic_kind: file \| folder` |
 | `cmd.chat.add_file_reference` | present, signature-locked | file-only compatibility alias; rejects a folder |
-| `cmd.browser.component.send_now / .add_to_composer / .insert_at_cursor / .pick` | all four present | revise for revalidation; `pick` is the recapture flow |
+| `cmd.browser.component.send_now / .add_to_composer / .insert_at_cursor / .pick` | all four present | revise for revalidation; `pick` is the recapture flow (`BSTALE-004`) |
 | `cmd.chat.todos.toggle_parent` | present, classified `shell_view` | local or shared view state only |
+
+`FOLDER-003` is the negative half of that census: no `cmd.chat.add_folder_reference`
+and no folder-specific handler, event, or storage family exists, and a census of the
+branch found no independent folder effect.
 
 Absent, and deliberately **not** created: `cmd.chat.plan.build_as_goal`,
 `cmd.chat.plan.export_report`, `cmd.chat.plan.progress.set`, `cmd.chat.add_folder_reference`,

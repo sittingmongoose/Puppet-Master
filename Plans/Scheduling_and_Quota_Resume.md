@@ -631,7 +631,7 @@ an explicit stored fallback the build is `Held` or `Failed` rather than substitu
 and effective identity stay visible. No hidden modal opens and no alternative route is chosen for
 the user.
 
-### PSCHED-005..006, PSCHED-009..012 — Invalidation, revision, recurrence, and edits
+### PSCHED-005..006, PSCHED-009..012, PFAIL-010 — Invalidation, revision, recurrence, and edits
 
 An immediate `Build` of the same Plan version atomically invalidates its pending schedule before
 admitting the run, so no later duplicate dispatch is possible and timer ownership is never
@@ -652,6 +652,14 @@ never cleared.
 Editing a schedule uses expected revision and currentness and cannot mutate a schedule after
 dispatch has started. A stale update is refused rather than raced against timer dispatch.
 
+### PGOAL-015 — A goal-driven schedule creates its Goal at dispatch, not at commit
+
+A scheduled build whose stored topology is `goal_driven` freezes that topology at
+schedule commit and creates the Goal only when the scheduled dispatch is admitted.
+While only a future schedule exists there is no active Goal, no `PlanRun` and no
+`GoalPlanBinding` — the schedule is durable, the execution has not started, and
+Goal continuation does not begin before the scheduled time.
+
 ### PSCHED-008 — Two timers are a conjunction
 
 When an execution window and a Usage reset both apply, work resumes only when **every**
@@ -671,6 +679,15 @@ exists, and `Building…` is not reported before run admission.
 Schedule idempotency and first-dispatch idempotency are distinct domains with independent tests:
 repeated schedule creation returns one schedule, and repeated timer delivery admits one run.
 Wall-clock time is never the sole deduplication key.
+
+### CDRY-008 — Scheduled messages mint no new commands
+
+The projection reuses the existing `cmd.chat.schedule_message`,
+`cmd.chat.schedule_message.update` and `cmd.chat.schedule_message.cancel`; every card
+action maps onto one of those three. Dispatch is
+`internal.scheduler.dispatch_scheduled_message`, an internal scheduler action with its
+own idempotency domain — not a second user command, and not a state-set command. No
+`schedule_message.state.set` exists.
 
 ### SMSG-001..003 — The scheduled-message card
 

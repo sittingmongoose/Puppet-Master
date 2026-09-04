@@ -5049,69 +5049,6 @@
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ]
     },
-    "assistant.redesign.w_036.bsd_set": {
-      "ui_element_id": "assistant.redesign.w_036.bsd_set",
-      "ui_location": "Puppet Master Assistant > bsd.wand_mode",
-      "ui_command_id": "cmd.bsd.set",
-      "handler_location": "handlers::back_seat_driver::set_mode",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.bsd.set names exactly one owner-adjudicated future target handlers::back_seat_driver::set_mode in Plans/Back_Seat_Driver.md; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Read state.assistant_redesign.bsd_set.availability and state.assistant_redesign.bsd_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "The durable effect is exactly: BSD policy projection. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
-        "Every named reverse consumer renders from the same owner projection: wand/context.",
-        "Negative path is enforced: no local checkbox truth.",
-        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
-      ],
-      "evidence_required": "Future production evidence for cmd.bsd.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Back_Seat_Driver.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-036. The owner binding and this production-intent row prove none of those runtime facts.",
-      "state_selector": "state.assistant_redesign.bsd_set.availability",
-      "disabled_reason_projection": "state.assistant_redesign.bsd_set.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "BSD policy projection under Plans/Back_Seat_Driver.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
-        "receipt_or_event_refs": [
-          "Plans/Back_Seat_Driver.md",
-          "BSD policy projection"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.bsd.set in bsd.wand_mode.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.bsd.set only when available.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
-        "disabled_announcement": "Announce state.assistant_redesign.bsd_set.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.assistant_redesign.bsd_set.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Prove cmd.bsd.set reaches only handlers::back_seat_driver::set_mode; the target string itself is not proof."
-        },
-        {
-          "test_id": "wiring.assistant_redesign.bsd_set.state",
-          "evidence_kind": "state_projection",
-          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence, and fail closed on stale currentness."
-        },
-        {
-          "test_id": "wiring.assistant_redesign.bsd_set.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly 'BSD policy projection' with typed receipt correlation and zero unregistered EventRecord effects."
-        },
-        {
-          "test_id": "wiring.assistant_redesign.bsd_set.negative",
-          "evidence_kind": "state_projection",
-          "requirement": "Negative path. Prove the negative path holds: no local checkbox truth."
-        },
-        {
-          "test_id": "wiring.assistant_redesign.bsd_set.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role and name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.bsd.set records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
-      ]
-    },
     "assistant.redesign.w_040.bsd_workflow_configure": {
       "ui_element_id": "assistant.redesign.w_040.bsd_workflow_configure",
       "ui_location": "Puppet Master Assistant > bsd.workflow_config",
@@ -13504,7 +13441,7 @@
     },
     "catalog.bsd_set": {
       "ui_element_id": "catalog.bsd_set",
-      "ui_location": "Assistant Chat > Back Seat Driver",
+      "ui_location": "Assistant Chat > Back Seat Driver; Puppet Master Assistant > wand > BSD sidecar (Off/Auto/On/Configure)",
       "ui_command_id": "cmd.bsd.set",
       "handler_location": "handlers::back_seat_driver::set_mode",
       "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_request",
@@ -13515,9 +13452,11 @@
         "cmd.bsd.set is available only when the owner selector is scope writable and projection current; disabled reasons are exactly stale_projection, already_in_state, policy_denied, permission_required.",
         "cmd.bsd.set reads state.commands.bsd_set.availability and state.commands.bsd_set.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
         "cmd.bsd.set is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns BackSeatDriverModeSetResult with BackSeatDriverModeSetResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
-        "Sets Off, Auto, or On for the selected canonical scope; effective default and recommended value are Auto while explicit stored Off remains Off. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+        "Sets Off, Auto, or On for the selected canonical scope; effective default and recommended value are Auto while explicit stored Off remains Off. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output.",
+        "The wand BSD sidecar (Off/Auto/On/Configure) and the Assistant Chat Back Seat Driver control are the two producers of this one command; both read the same owner projection and neither keeps a local checkbox truth. Merged from the former assistant.redesign.w_036.bsd_set row, which duplicated this command in the production matrix and broke the shared-runtime contract's exactly-one-row rule.",
+        "Negative path is enforced: no local checkbox truth. An unavailable or denied dispatch changes nothing and states its exact reason, and the sidecar check reflects the stored owner projection rather than an optimistic local toggle."
       ],
-      "evidence_required": "Production wiring evidence for cmd.bsd.set: render/control proof, exact-handler dispatcher fixture, BackSeatDriverModeSetRequest -> BackSeatDriverModeSetResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "evidence_required": "Production wiring evidence for cmd.bsd.set: render/control proof, exact-handler dispatcher fixture, BackSeatDriverModeSetRequest -> BackSeatDriverModeSetResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects. The wand BSD sidecar producer was merged into this row on 2026-09-04: the shared-runtime command contract requires exactly one production wiring row per governed command, and two rows for cmd.bsd.set had been failing validate_pm7_gui_fixtures since before the Assistant redesign wave.",
       "state_selector": "state.commands.bsd_set.availability",
       "disabled_reason_projection": "state.commands.bsd_set.disabled_reason",
       "effect_contract": {
@@ -13555,6 +13494,11 @@
           "test_id": "wiring.catalog.bsd_set.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.bsd.set."
+        },
+        {
+          "test_id": "wiring.catalog.bsd_set.negative",
+          "evidence_kind": "state_projection",
+          "requirement": "Negative path. Prove the negative path holds: no local checkbox truth."
         }
       ],
       "event_test_requirements": [

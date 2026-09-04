@@ -139,7 +139,7 @@ validation_surfaces: [Origin installation/token fixtures, five-minute receipt te
 risk_class: origin_app_forgery_or_token_escape
 reasoning_tier: high
 context_scope: cursor_origin_app_and_token_auth
-implementation_surfaces: [Plans/cursor_origin_integration_fixtures.json, credential broker, future Origin auth adapter]
+implementation_surfaces: [Plans/cursor_origin_integration_fixtures.json, future credential broker, future Origin auth adapter]
 node_compile_hint: {mode: origin_app_jit_auth_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:ORI-010..014]
 preserved_exact_tokens: [Ed25519, JWKS, five-minute receipt, least-privilege JIT repo token, 15 minutes, x-access-token, Reauthorize]

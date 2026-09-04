@@ -1268,14 +1268,18 @@ schedule for that same version before admitting the run, and the immediate build
 schedule-invalidation receipt. A later timer delivery for the invalidated schedule admits
 nothing.
 
-### PGOAL-001..002, CDRY-004 — Build as Goal is exposed, and mints no command
+### PGOAL-001..002, MODAL-013..014, CDRY-004 — Build as Goal is exposed, and mints no command
 
 `Build as Goal` appears in the Plan secondary/overflow action menu and is reachable by explicit
 natural-language request. The primary control stays `Build`; no second large button is added.
 
 It reuses `cmd.chat.plan.build` with `execution_topology: goal_driven`. `cmd.chat.plan.build_as_goal`
 is not registered. `cmd.chat.plan.build_with_crew` keeps its specialised atomic contract and is
-not decomposed into a collaboration start plus a separate build.
+not decomposed into a collaboration start plus a separate build (`MODAL-013`):
+`PlanRun` and `CrewRun` commit together or neither commits, so the two never race.
+It freezes Plan version and hash at Start and refuses a Plan that changed while its
+modal was open, sending the user back to reopen against the new version
+(`MODAL-014`). `Plans/Collaborative_Workflows.md` owns the modal side of both.
 
 ### PGOAL-003..006 — Atomic binding, reuse, and what it must not create
 
@@ -1348,7 +1352,7 @@ A Wonderer lead reaches the Plan only after it has been researched, decided by t
 explicitly retained as an unresolved hypothesis. An accepted factual or architectural claim
 cites its convergent evidence path; fertility alone is never promoted to truth.
 
-### CDRY-002 — Progress has no mutation command
+### PPROG-018, CDRY-002 — Progress has no mutation command
 
 Progress projection changes are owner events and internal projector updates. No user command and
 no model tool sets Plan progress; `cmd.chat.plan.progress.set` is not registered, and the

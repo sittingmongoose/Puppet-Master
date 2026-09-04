@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36122-L36286
+Source lines: L36122-L36294
 
-Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
+Source SHA256: `d5dd0b8f0f130cf3a4834576d4ac87136d579819ec48bf6b3f165ac4874adc2b`
 
 ---
 
@@ -166,6 +166,14 @@ bounded manifest rather than an expanded file list. A folder that changed after 
 as changed or stale with captured-versus-current identity in Details. Open, reveal, export, and
 download reuse File Manager and artifact capabilities, and an unsupported action is disabled with
 its reason.
+
+### CDRY-006 — Visual toggles are view state, not commands
+
+Modal open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover,
+local tabs, and To-Do parent expansion all use local or shared view-state primitives
+and emit no domain event. Where a preference persists it uses the shared UI state
+owner. No domain command is registered for a visual action, and the command census in
+`Plans/Commands_System.md` records each of these as local or shared view-state reuse.
 
 ### TDG-006, TDG-013..014 — To-Do list surfaces
 

@@ -1259,12 +1259,24 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     disposition_counts = Counter(row[4] for row in rows if isinstance(row, list) and len(row) == 6)
     handler_counts = Counter(profiles[row[1]]["handler_status"] for row in rows if row[1] in profiles)
     wiring_counts = Counter(profiles[row[1]]["wiring_status"] for row in rows if row[1] in profiles)
+    # production_wiring_entry_count moved 1066 -> 1155 for the Assistant redesign
+    # wave (2026-09-03), a reviewed and deliberate +89: 41 redesign command rows
+    # plus the 48 catalog commands that previously had no production wiring row at
+    # all. The rationale and the row-by-row disposition are in
+    # Plans/UI_Wiring_Rules.md. Additive Correction v4 (2026-09-04) added NO further
+    # rows -- it revised 27 existing entries and recorded five deliberately
+    # unregistered command tokens in Plans/Wiring_Matrix.production.exclusions.json,
+    # neither of which changes this count. 1155 -> 1154 on 2026-09-04: the duplicate
+# cmd.bsd.set row (assistant.redesign.w_036.bsd_set) was merged into
+# catalog.bsd_set because the shared-runtime command contract requires exactly
+# one production row per governed command. A pin is only useful while it is moved
+    # for a stated reason; do not raise it to make an unexplained diff pass.
     exact_resolved_denominators = {
         "row_count": 602,
         "profile_count": 91,
         "excluded_token_count": 58,
         "alias_binding_count": 64,
-        "production_wiring_entry_count": 1066,
+        "production_wiring_entry_count": 1154,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

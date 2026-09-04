@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L35580-L35663
 
-Source SHA256: `75353a8d3278f32136ccd84b1d3526d638c05770acdf4b1c617783ed59ac85de`
+Source SHA256: `d5dd0b8f0f130cf3a4834576d4ac87136d579819ec48bf6b3f165ac4874adc2b`
 
 ---
 
@@ -66,7 +66,7 @@ validation_surfaces:
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers
-implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation, K3 Backup, Onboarding, Doctor, and Remote Access Slint components]
+implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation Slint components, future K3 Backup Slint components, future Onboarding Slint components, future Doctor Slint components, future Remote Access Slint components]
 node_compile_hint: {mode: final_gui_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory

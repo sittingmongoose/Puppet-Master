@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1292-L1400
+Source lines: L1292-L1409
 
-Source SHA256: `bb2048d39770ab3c8ab6bf24519c89ba8660de407a4bab5525e780f23cfec60a`
+Source SHA256: `20320fc014b687080978e068cac4323fdc4f4aeba87f27f83bfff46e050ff0c0`
 
 ---
 
@@ -68,6 +68,15 @@ producer → handler → durable effect → consumer → failure shape — in th
 | CW-041, CW-042 | embed render and artifact retention | `Plans/Runtime_Artifacts_Panel.md` (PDET-008..012, PDET-006) |
 | CW-043, CW-044 | Goal completion predicate and replay | `Plans/Goal_Runtime_System.md` (GREPLAY-003..010) |
 | CW-046 | concept two-build byte check | `Concepts/chat-assistant-concepts/5.6 Pro/build.py` (CONCEPT-017) |
+
+### CDRY-012 — What a complete row covers
+
+Production wiring covers the whole path for every correction surface: GUI or internal
+producer → command or intent → sole handler → owner record, event or receipt →
+projector → every GUI consumer, including the failure and recovery paths. Reverse
+coverage is mandatory, because it is the only thing that detects an orphan control or
+an invisible effect; validating command-to-handler rows alone is not sufficient
+coverage and never closes this requirement.
 
 ### Reverse coverage for the correction
 

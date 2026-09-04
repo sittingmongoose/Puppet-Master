@@ -10,8 +10,8 @@ registry, and shared-runtime registration. Every excluded source class is listed
 explicitly in `CURRENT_EVENT_SOURCE_INVENTORY.json`.
 
 Current result: `UNKNOWN_OPEN`. The live registry has 39 rows.
-Mechanical discovery found 63 unregistered likely-persisted tokens,
-4 contested tokens, and 143 unregistered ambiguous
+Mechanical discovery found 75 unregistered likely-persisted tokens,
+9 contested tokens, and 153 unregistered ambiguous
 event-like tokens. Those are review queues, not automated dispositions.
 
 The `adjudication/` subtree preserves seven exact source groups containing 252

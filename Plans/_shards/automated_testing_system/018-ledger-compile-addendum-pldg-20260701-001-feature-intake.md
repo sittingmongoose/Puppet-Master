@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1633-L1873
+Source lines: L1633-L1875
 
-Source SHA256: `d9088cb32285085b1df949842deb13a1346357974dd723292987bea02a7e9b0f`
+Source SHA256: `18f4feddbfd15e2f5063fe7d821aac7d37c050b7c597cc8532b94f4eb86ae557`
 
 ---
 
@@ -90,7 +90,8 @@ validation_surfaces:
   - Concepts/pm7-tools/guided_tour_source.py static transform assertions
   - Concepts/pm7-tools/verify/guided_tour.mjs browser-concept verifier
   - Concepts/pm7-tools/build_pm7.py final generated-artifact static gate
-  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py predecessor packet audit only, not current Onboarding/Tour acceptance
+  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py
+  - future Onboarding/Tour acceptance runner (the scratchpad runner above is predecessor-packet audit only and is not current acceptance)
   - future native nine-/six-stage Product Onboarding GUI, request/result, review-confirmation fence, owner-return, durable-migration, and no-command-family acceptance suite
   - future native three-scene Guided Tour exact-control, callout, focus, Skip-restore, and Finish-layout acceptance suite
   - future Doctor/Health no-false-green fixture suite
@@ -99,7 +100,8 @@ reasoning_tier: high
 context_scope: nine_and_six_stage_onboarding_three_scene_tour_doctor_acceptance
 implementation_surfaces:
   - Plans/Automated_Testing_System.md
-  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py predecessor packet audit only
+  - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py
+  - future Onboarding/Tour acceptance runner (predecessor-packet audit only)
   - future Product Onboarding/Guided Tour/Health/Planning Wizard acceptance tests
 node_compile_hint:
   mode: nine_and_six_stage_onboarding_three_scene_tour_acceptance_tests

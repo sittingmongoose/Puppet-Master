@@ -35635,7 +35635,7 @@ validation_surfaces:
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers
-implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation, K3 Backup, Onboarding, Doctor, and Remote Access Slint components]
+implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation Slint components, future K3 Backup Slint components, future Onboarding Slint components, future Doctor Slint components, future Remote Access Slint components]
 node_compile_hint: {mode: final_gui_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
@@ -36277,6 +36277,14 @@ bounded manifest rather than an expanded file list. A folder that changed after 
 as changed or stale with captured-versus-current identity in Details. Open, reveal, export, and
 download reuse File Manager and artifact capabilities, and an unsupported action is disabled with
 its reason.
+
+### CDRY-006 — Visual toggles are view state, not commands
+
+Modal open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover,
+local tabs, and To-Do parent expansion all use local or shared view-state primitives
+and emit no domain event. Where a preference persists it uses the shared UI state
+owner. No domain command is registered for a visual action, and the command census in
+`Plans/Commands_System.md` records each of these as local or shared view-state reuse.
 
 ### TDG-006, TDG-013..014 — To-Do list surfaces
 

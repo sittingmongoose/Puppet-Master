@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2678-L2754
+Source lines: L2678-L2763
 
-Source SHA256: `7b67c3b77b9b01ff15f7d0ef2e1561c9a3c00add9b610c9d4128d52a4c920b7b`
+Source SHA256: `5dcc95a6d7612a7134741da4fa5e6a32f6c621f3fbb994351902e7460ee7bd51`
 
 ---
 
@@ -78,6 +78,15 @@ The report may include To-Dos, step states, deviations, evidence, attempts, and 
 summary. It states its own currentness and its source Plan hash, and it is never presented as the
 approved Plan. Both exports are produced by `cmd.chat.plan.export` under
 `content_kind: plan_document | execution_report`; no peer export command exists.
+
+### BSTALE-009 — Stale browser captures are inspectable, and carry no secrets
+
+A stale browser capture keeps an artifact-side Details record exposing the original
+page, session and generation, the capture time, the identity hints that failed to
+match, and the typed reason. Protected authentication surfaces stay excluded, and no
+credential, cookie or storage value is persisted into that record.
+`Plans/Section15_MVP_Promoted_Features_Spec.md` owns the revalidation taxonomy; this
+owner owns the durability and disclosure of what it writes down.
 
 ### WONV-008 — Research artifacts use Puppet Master identity
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18694-L18762
+Source lines: L18694-L18772
 
-Source SHA256: `c0d0f887c5dec45535091dc8cb54ac655874a783a962dc42a9e16326923a9738`
+Source SHA256: `6a4eb20b9d80825dd1ca6acc4735de58c878a316d4183d8632bc80fb2d0b63da`
 
 ---
 
@@ -12,6 +12,16 @@ Source SHA256: `c0d0f887c5dec45535091dc8cb54ac655874a783a962dc42a9e16326923a9738
 
 This section applies `PM_Assistant_v2_Additive_Correction_v4` (`CDRY-014..015`, and the storage
 side of `QMAX-016/019`, `PPROG-013`, `PFAIL-009`, `GREPLAY-003`, `SMSG-012/017`) to this owner.
+
+### PDET-006 — Retention is reachability, not card visibility
+
+Deleting or hiding a thread card never purges a Plan artifact revision that is still
+referenced by a Planning Wizard handoff, a Goal, a Crew or Review run, a Usage record,
+an export, or another artifact. Retention follows the shared reachability and hold
+rules this document already owns; card visibility is not deletion authority, and a
+`PlanArtifactEmbed` naming an exact `artifact_version` is itself a hold on that
+revision. `Plans/Runtime_Artifacts_Panel.md` owns the artifact identity; this owner
+owns the durability rule.
 
 ### Registered record families
 

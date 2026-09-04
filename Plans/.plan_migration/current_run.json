@@ -1,17 +1,17 @@
 {
   "batch_size": 10,
   "conversion_performed": false,
-  "doc_count": 74,
-  "final_validation_summary_sha256": "0daee4a6299b80ad55803512e8e2507208e1a298f272075c9a66ffbc51d50fd7",
-  "generated_at_utc": "2026-08-30T00:14:32Z",
-  "inventory_sha256": "393bb6e7f08652d2eb8db87c47f75e4b0ec519d8b86e0b668b289211de6717f2",
-  "plans_manifest_sha256": "7d7f5c54edd3b1c4c5642a816e4c8e971752c0e10045ccc6225c56f22c34a12c",
-  "run_id": "pds-20260830-008-current-planunit-snapshot",
-  "run_path": "Plans/.plan_migration/pds-20260830-008-current-planunit-snapshot",
+  "doc_count": 94,
+  "final_validation_summary_sha256": "45ba0eabaa4a4adca713599b7aad3cc8040cd4b55d81d26648809f29fa84f19c",
+  "generated_at_utc": "2026-09-04T00:26:20Z",
+  "inventory_sha256": "3a67f78ce32e2c0cb7d9838dcbeff61600d8bf69dc785fbe957b0994c5828478",
+  "plans_manifest_sha256": "386dd27c3a439b2a724cecb758c329644a4a7fe22339b699cd42ee04df457a81",
+  "run_id": "pds-20260904-010-current-planunit-snapshot",
+  "run_path": "Plans/.plan_migration/pds-20260904-010-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.current_run_pointer.v1",
   "snapshot_mode": "current_planunit_state_snapshot",
   "status": "COMPLETE",
   "supersedes_run_ids": [
-    "pds-20260829-007-current-planunit-snapshot"
+    "pds-20260904-009-current-planunit-snapshot"
   ]
 }
