@@ -77,7 +77,7 @@
     {
       "name": "the newly uploaded attachment has a real id",
       "pass": true,
-      "detail": "att-mtmdgbf7-b-st01i"
+      "detail": "att-mtmdyfop-b-xfbfd"
     },
     {
       "name": "the remove X is hidden at rest (opacity 0)",
@@ -87,12 +87,12 @@
     {
       "name": "hovering the attachment reveals the X (opacity 1)",
       "pass": true,
-      "detail": "0.999654"
+      "detail": "1"
     },
     {
       "name": "clicking the body of a ready, previewable (image) attachment opens a real preview",
       "pass": true,
-      "detail": "{\"present\":true,\"src\":\"blob:null/1c32b66b-c640-\"}"
+      "detail": "{\"present\":true,\"src\":\"blob:null/73f8cda2-2b95-\"}"
     },
     {
       "name": "clicking the body of a non-previewable attachment opens its More Info (detail) surface",
@@ -172,12 +172,12 @@
     {
       "name": "found the seeded failed attachment with a real Retry control",
       "pass": true,
-      "detail": "{\"att\":\"att-mtmdg7m2-7-8x9h6\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2}"
+      "detail": "{\"att\":\"att-mtmdybw9-7-u8i3b\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2}"
     },
     {
       "name": "retry preserves the same attachment identity and name (never replaced)",
       "pass": true,
-      "detail": "{\"before\":{\"att\":\"att-mtmdg7m2-7-8x9h6\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2},\"after\":{\"exists\":true,\"name\":\"legacy-project.pkg\",\"state\":\"resolving\",\"siblingCount\":2}}"
+      "detail": "{\"before\":{\"att\":\"att-mtmdybw9-7-u8i3b\",\"thread\":\"attachments\",\"message\":\"attachments-01\",\"name\":\"legacy-project.pkg\",\"siblingCount\":2},\"after\":{\"exists\":true,\"name\":\"legacy-project.pkg\",\"state\":\"resolving\",\"siblingCount\":2}}"
     },
     {
       "name": "retry does not remove or alter sibling attachments on the same message",
@@ -197,7 +197,7 @@
     {
       "name": "found the seeded drifted project-reference attachment (queries.rs)",
       "pass": true,
-      "detail": "att-msg-thumb:att-mtmdg7m1-1-4k4px"
+      "detail": "att-msg-thumb:att-mtmdybw8-1-mey9c"
     },
     {
       "name": "the download names the exact stored hash",
@@ -207,12 +207,12 @@
     {
       "name": "the download discloses that the live file has changed since the message (drift)",
       "pass": true,
-      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/queries.rs | Origin: Project reference (live) | Exact stored hash: 360ab09c340d | Materialized: 9/4/2026, 3:05:45 AM | This download resolves the EXACT version referenced by the message (hash 360ab09c340d), not the current working-tree content. | The live file has since change"
+      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/queries.rs | Origin: Project reference (live) | Exact stored hash: 360ab09c340d | Materialized: 9/4/2026, 3:19:50 AM | This download resolves the EXACT version referenced by the message (hash 360ab09c340d), not the current working-tree content. | The live file has since change"
     },
     {
       "name": "a non-drifted reference download does NOT claim drift (honest contrast)",
       "pass": true,
-      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/schema.rs | Origin: Project reference (live) | Exact stored hash: 31ce0d307c02 | Materialized: 9/4/2026, 3:05:47 AM"
+      "detail": "Puppet Master concept lab — stand-in download (no real File Manager/FileSafe store is wired into this concept). | File: src/analytics/schema.rs | Origin: Project reference (live) | Exact stored hash: 31ce0d307c02 | Materialized: 9/4/2026, 3:19:53 AM"
     },
     {
       "name": "no console errors during the substantive run (sections 0-9 above)",
