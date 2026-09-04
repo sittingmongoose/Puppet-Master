@@ -972,7 +972,7 @@
   function validateGraph(threadId, candidate){
     var res={ thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
               valid:true, self_parent_ids:[], parent_cycles:[], dependency_cycles:[],
-              unknown_refs:[], cross_thread_refs:[], duplicate_ids:[] };
+              unknown_refs:[], cross_thread_refs:[], duplicate_ids:[], invalid_statuses:[] };
     var items=(candidate&&candidate.items)||[], byId={}, i, j;
     for(i=0;i<items.length;i++){
       var it=items[i];
@@ -992,6 +992,13 @@
     for(i=0;i<items.length;i++){
       var t=items[i];
       if(t.thread_id && t.thread_id!==threadId) res.cross_thread_refs.push(t.todo_id);
+      /* TDG-014 / TODO-010 / PROVIDER-007. The status vocabulary is closed
+         HERE too, not only on the transition path. Whole-list replacement is
+         exactly how a provider snapshot arrives, so leaving it unvalidated let
+         a model write any word it liked -- `verifying` included -- straight
+         into canonical items while `applyTransition` refused the same word. */
+      if(t.status!=null && TODO_STATUSES.indexOf(t.status)<0)
+        res.invalid_statuses.push({ todo_id:t.todo_id, status:t.status });
       if(t.parent_todo_id===t.todo_id) res.self_parent_ids.push(t.todo_id);
       if(t.parent_todo_id && !byId[t.parent_todo_id]) res.unknown_refs.push(t.parent_todo_id);
       for(j=0;j<(t.depends_on||[]).length;j++){
@@ -1029,8 +1036,12 @@
     res.duplicate_ids=uniq(res.duplicate_ids);
     res.valid = !(res.self_parent_ids.length || res.parent_cycles.length ||
                   res.dependency_cycles.length || res.unknown_refs.length ||
-                  res.cross_thread_refs.length || res.duplicate_ids.length);
-    if(!res.valid) res.error='invalid_graph';
+                  res.cross_thread_refs.length || res.duplicate_ids.length ||
+                  res.invalid_statuses.length);
+    if(!res.valid) res.error = res.invalid_statuses.length &&
+      !(res.self_parent_ids.length || res.parent_cycles.length || res.dependency_cycles.length ||
+        res.unknown_refs.length || res.cross_thread_refs.length || res.duplicate_ids.length)
+      ? 'invalid_status' : 'invalid_graph';
     return res;
   }
 
@@ -1080,11 +1091,21 @@
   /* TDG-010. A late event needs list revision, item revision, work binding,
      Plan version and run epoch to still be current. A stale one is RETAINED as
      rejected evidence and never applied; timestamp order is not a gate. */
+  /* TDG-014. The CLOSED status vocabulary. It is enforced here rather than
+     documented, because an unvalidated `to_status` let a caller write any word
+     it liked -- including `verifying`, the one status the correction retires by
+     name. A To-Do has five states; validation is an ordinary To-Do, never a
+     status. */
+  var TODO_STATUSES = ['pending','in_progress','completed','blocked','skipped'];
+
   function applyTransition(threadId, ev){
     var store=threadStore(threadId);
     if(!store) return { ok:false, error:'unknown_thread' };
     var item=findItem(store.items, ev.todo_id);
     if(!item) return { ok:false, error:'unknown_todo' };
+    if(TODO_STATUSES.indexOf(ev.to_status)<0)
+      return { ok:false, error:'invalid_status', allowed:TODO_STATUSES.slice(),
+               detail:'`'+String(ev.to_status)+'` is not a To-Do status. There is no verification status; validation is an ordinary To-Do.' };
     var why=null;
     if(ev.expected_list_revision!=null && ev.expected_list_revision!==(store.revision||1)) why='stale_list_revision';
     else if(ev.expected_revision!=null && ev.expected_revision!==item.revision)            why='stale_item_revision';
@@ -1101,6 +1122,16 @@
     item.status=ev.to_status; item.revision=item.revision+1;
     if(ev.to_status==='in_progress' && !item.started_at) item.started_at=ev.at||new Date().toISOString();
     if(ev.to_status==='completed') item.completed_at=ev.at||new Date().toISOString();
+    /* PPROG-007: `blocked` must reference its OWNING CONDITION. Only the
+       seeded fixture carried `blocked_reason_ref` before this, so any item
+       blocked through the ordinary transition path produced a projection cell
+       with `reason:null` -- a blocked step that could not say what blocked it.
+       Leaving `blocked` also clears the reference, so a resolved blocker
+       cannot linger as stale evidence on a running item. */
+    if(ev.to_status==='blocked')
+      item.blocked_reason_ref = ev.blocked_reason_ref || ev.cause_ref || ('blocker:'+item.todo_id);
+    else if(item.blocked_reason_ref)
+      item.blocked_reason_ref = null;
     return { ok:true, item:item };
   }
 
@@ -1168,6 +1199,7 @@
     materializeForPlan: materializeForPlan,
     advanceForPlan: advanceForPlan,
     revisionOf: function(threadId){ var s=threadStore(threadId); return s?(s.revision||1):null; },
-    rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; }
+    rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; },
+    statusVocabulary: function(){ return TODO_STATUSES.slice(); }
   };
 })();

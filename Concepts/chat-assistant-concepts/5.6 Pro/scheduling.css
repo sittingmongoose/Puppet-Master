@@ -180,3 +180,9 @@
 .sched-card-snaps code{ font-family:var(--font-mono); font-size:10px; color:var(--text); }
 .sched-card-snaps em{ font-style:normal; margin-left:auto; }
 .sched-card-foot{ display:flex; gap:6px; flex-wrap:wrap; }
+
+/* SMSG-008: which retained reference became unavailable, said on the card
+   rather than only in Details — the hold is not explicable without it. */
+.sched-card-snaps .sched-snap-why{
+  flex:1 1 100%; font-style:normal; font-size:11px; color:var(--muted); margin-top:2px;
+}

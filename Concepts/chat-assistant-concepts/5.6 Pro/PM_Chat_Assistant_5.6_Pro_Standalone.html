@@ -9494,7 +9494,9 @@ button.qs-spine-slot.is-current::after{
 .pd-note code{ font-family:var(--font-mono); font-size:11px; }
 .pd-bad{ color:var(--danger); }
 .pd-sec-honest{
-  padding:10px 12px; border:1px solid var(--border); border-left:3px solid var(--warning);
+  /* GUI-008: no left accent bar. The section is distinguished by its surface
+     and a full border, the way the other cards are. */
+  padding:10px 12px; border:1px solid var(--border);
   border-radius:var(--radius-sm); background:var(--surface-3);
 }
 .pd-ledger,.pd-units,.pd-revs,.pd-exports,.pd-cmds{ margin:0; padding:0; list-style:none; }
@@ -9692,6 +9694,30 @@ button.qs-spine-slot.is-current::after{
 .goal-bound-active .goal-bound-chip{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border)); }
 .goal-bound-paused .goal-bound-chip{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
 .goal-bound-link{ font-family:var(--font-mono); font-size:10.5px; color:var(--subtle); }
+
+/* --- PDET-001: sources and provenance ------------------------------------
+   Four reference lists (source messages, attachments, research, run history)
+   inside Plan Details. They are compact reference rows, not cards: the object
+   itself lives in its own owner and is reachable from the code chip. */
+.pd-prov h5{
+  margin:14px 0 6px; font-size:11px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted);
+}
+.pd-prov h5:first-child{ margin-top:4px; }
+.pd-prov-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px; }
+.pd-prov-list li{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:8px;
+  padding:6px 8px; border-radius:6px; background:var(--surface-2);
+  border:1px solid var(--border); font-size:12px;
+}
+.pd-prov-list code{
+  font-family:var(--font-mono); font-size:11px; padding:1px 5px; border-radius:4px;
+  background:var(--surface-3); color:var(--text);
+}
+.pd-prov-list strong{ font-weight:600; font-size:11px; color:var(--text); }
+.pd-prov-list span{ color:var(--muted); font-size:11px; }
+.pd-prov-list em{ flex:1 1 100%; font-style:normal; color:var(--muted); font-size:11px; }
+.pd-runs li[data-run-outcome="failed"]{ border-color:var(--border-strong); }
 
 /* todos.css — feature module styles.  OWNER: Assistant redesign wave (2026-09-03), To-Do Runtime.
  *
@@ -10471,6 +10497,16 @@ button.qs-spine-slot.is-current::after{
 .collab-card .collab-truth-note{ color:var(--muted); }
 .collab-card .collab-truth-warn{ color:var(--warning); font-weight:500; }
 
+/* MODAL-005: a refused Start, shown inside the modal that still holds every
+   value the user configured. It is a disclosure, not a card: no run exists. */
+.collab-start-failure{
+  margin:12px 0 0; padding:10px 12px; border-radius:8px;
+  border:1px solid var(--border-strong); background:var(--surface-2);
+}
+.collab-start-failure strong{ display:block; font-size:12px; margin-bottom:4px; color:var(--text); }
+.collab-start-failure p{ margin:0; font-size:11.5px; color:var(--muted); }
+.collab-start-failure p + p{ margin-top:5px; }
+
 /* bsd.css — styles for bsd.js (Back Seat Driver: passive read-only advisor).
  * OWNER: ui-designer pass, Assistant-redesign wave (2026-09-03).
  *
@@ -11187,6 +11223,12 @@ button.qs-spine-slot.is-current::after{
 .sched-card-snaps code{ font-family:var(--font-mono); font-size:10px; color:var(--text); }
 .sched-card-snaps em{ font-style:normal; margin-left:auto; }
 .sched-card-foot{ display:flex; gap:6px; flex-wrap:wrap; }
+
+/* SMSG-008: which retained reference became unavailable, said on the card
+   rather than only in Details — the hold is not explicable without it. */
+.sched-card-snaps .sched-snap-why{
+  flex:1 1 100%; font-style:normal; font-size:11px; color:var(--muted); margin-top:2px;
+}
 
 /* browser-capture.css — feature module.  OWNER: Assistant-redesign wave (2026-09-03) —
  * browser capture agent.  Styles browser-capture.js only: the internal-browser dialog
@@ -18461,7 +18503,16 @@ window.PM56_EXT = window.PM56_EXT || {
   /* Local view state only. Nothing here is domain truth. */
   var ui = { editing:false, draft:null, showHistory:false, showContinuations:false, confirmCancel:false, proposal:null };
 
-  function restoreFixture(){ D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false; ui.confirmCancel=false; ui.proposal=null; }
+  function restoreFixture(){
+    D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false;
+    ui.confirmCancel=false; ui.proposal=null;
+    /* Plan-bound Goals live in the shared runtime, not in D.goal, so restoring
+       only the fixture left every Goal a previous Build as Goal had created
+       still bound -- the next admission then failed `active_run_exists` against
+       a Goal the caller had just asked to be rid of. A restore that leaves
+       durable records behind is a restore that lies. */
+    if(RT_G.boundGoals){ RT_G.boundGoals.byPlan={}; RT_G.boundGoals.seq=0; }
+  }
 
   var STATUS_LABEL = { active:'Running', paused:'Paused', blocked:'Blocked', completed:'Completed' };
   var STATUS_TONE  = { active:'working', paused:'idle',   blocked:'blocked', completed:'done' };
@@ -18606,6 +18657,34 @@ window.PM56_EXT = window.PM56_EXT || {
   var RT_G = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
   RT_G.boundGoals = RT_G.boundGoals || { byPlan:{}, seq:0 };
 
+  /* GREPLAY-002. The FOUR origin kinds, as a closed vocabulary the owner
+     publishes rather than a string one code path happens to write. Only
+     `plan_build` was ever produced here, so nothing could tell whether the
+     other three existed as a contract or had simply been forgotten; and
+     because a Goal has no title, origin can never be inferred from one.
+     `originOf()` is the single reader, so a future writer that invents a
+     fifth kind fails closed instead of leaking an unknown value into replay. */
+  var ORIGIN_KINDS = ['user_request','agent_requested_by_user','plan_build','internal_workflow'];
+  var ORIGIN_LABEL = {
+    user_request:'the user asked for it directly',
+    agent_requested_by_user:'an agent created it because the user asked the agent to',
+    plan_build:'an approved Plan was built as a Goal',
+    internal_workflow:'a workflow uses it internally'
+  };
+  function originOf(kind){
+    return ORIGIN_KINDS.indexOf(kind)>=0 ? kind : 'user_request';
+  }
+  /* The plain thread Goal has an origin too; it is simply not `plan_build`. */
+  function lineageFor(goalId, revision, kind, o){
+    o=o||{};
+    return { schema:'pm.goal.origin_lineage.v1', goal_id:goalId, goal_revision:revision||1,
+             origin_kind:originOf(kind), origin_label:ORIGIN_LABEL[originOf(kind)],
+             source_message_refs:o.source_message_refs||[],
+             source_context_manifest_ref:o.source_context_manifest_ref||null,
+             bound_plan_ref:o.bound_plan_ref||null,
+             owning_workflow_ref:o.owning_workflow_ref||null };
+  }
+
   function boundFor(planId){ return RT_G.boundGoals.byPlan[planId] || null; }
   function boundList(threadId){
     var out=[], k, m=RT_G.boundGoals.byPlan;
@@ -18632,10 +18711,11 @@ window.PM56_EXT = window.PM56_EXT || {
       currentnessHash:o.plan_hash, stopEpoch:0, mode:null,
       idempotency_key:o.idempotency_key,
       /* GREPLAY-001..002: hidden lineage. Not rendered as Goal content. */
-      lineage:{ schema:'pm.goal.origin_lineage.v1', goal_id:id, goal_revision:1,
-                origin_kind:'plan_build', source_message_refs:o.source_refs||[],
+      lineage:lineageFor(id, 1, o.origin_kind||'plan_build', {
+                source_message_refs:o.source_refs||[],
                 source_context_manifest_ref:'ctx-manifest:'+o.plan_id+'@V'+o.version,
-                bound_plan_ref:o.plan_id+'@V'+o.version, owning_workflow_ref:null },
+                bound_plan_ref:o.plan_id+'@V'+o.version,
+                owning_workflow_ref:o.owning_workflow_ref||null }),
       /* PGOAL-003/004: the binding. todo_list_ref and planunit_bundle_ref are
          REFERENCES to what already exists -- identity equality is the proof
          that nothing was duplicated. */
@@ -18959,7 +19039,11 @@ window.PM56_EXT = window.PM56_EXT || {
     createBound:createBound,
     boundTransition:boundTransition,
     chip:headerChip,
-    sidebar:sidebarSummary
+    sidebar:sidebarSummary,
+    /* GREPLAY-002: the closed origin vocabulary, published by its owner. */
+    originKinds:function(){ return ORIGIN_KINDS.slice(); },
+    originLabel:function(k){ return ORIGIN_LABEL[originOf(k)]; },
+    lineageFor:lineageFor
   };
 })();
 
@@ -26323,6 +26407,10 @@ window.PM56_EXT = window.PM56_EXT || {
   C.destinationProviders = C.destinationProviders || [];
   C.historyBlockers = C.historyBlockers || [];
   C.commitHooks = C.commitHooks || [];
+  /* Pre-send claim hooks. app.js's deliverSend consults these BEFORE the user
+     message is admitted, so a module can hold a submission rather than let it
+     reach the provider. See MODAL-012. */
+  C.preSendHooks = C.preSendHooks || [];
   C.version = 1;
 
   /* =====================================================================
@@ -26354,6 +26442,18 @@ window.PM56_EXT = window.PM56_EXT || {
       browser_context_refs: [],
       destination: null,
       cursor_position: null,
+      /* MODAL-011/012. A Deep Plan BrainStorm chosen BEFORE submission, and a
+         natural-language BrainStorm request held before provider dispatch,
+         both live here with the text they belong to -- not in the modal, and
+         not as a started run. The buffer already survived thread switches and
+         reload, so putting the configuration beside the text is what makes
+         "restores config with text" true rather than asserted, and what makes
+         Cancel able to return the request intact.
+           workflow_config : the validated pre-send configuration
+           held_request    : the natural-language request being held
+         Both are null for an ordinary message. */
+      workflow_config: null,
+      held_request: null,
       revision: 0,
       updated_at: null
     };
@@ -26691,7 +26791,23 @@ window.PM56_EXT = window.PM56_EXT || {
          again and commits again: unbounded mutual recursion that wedged the
          renderer with no error and no console output. Committing is not
          re-entrant, so say so. */
-      if (grew && emptied && th && !committing) {
+      /* ISOLATED SUBMISSIONS. A Full/Region screenshot and a component Send
+         Now append their OWN user message and must never consume the composer
+         (BROWSER-002, BSTALE-008). This reconciler infers "a send happened"
+         from the count growing while the composer field is empty -- true for
+         the Send button, Cmd/Ctrl+Enter and the queue -- but an isolated
+         capture also grows the count, and a buffer holding ATTACHMENTS with no
+         text looks "empty" to that test. The result was that attaching a file
+         and then taking a screenshot silently discarded the attachment. A
+         message that declares itself isolated is not a composer send. */
+      var newest = null;
+      if (th && th.messages) {
+        for (var mi = th.messages.length - 1; mi >= 0; mi--) {
+          if (th.messages[mi].role === 'user') { newest = th.messages[mi]; break; }
+        }
+      }
+      var isolated = !!(newest && newest.isolatedSubmission);
+      if (grew && emptied && th && !committing && !isolated) {
         committing = true;
         try { commitBuffer(ctx, th); }
         finally {
@@ -27091,6 +27207,44 @@ window.PM56_EXT = window.PM56_EXT || {
        the fence a late browser resolution is checked against, and setBuffer is
        how a cancelled BrainStorm returns its held request intact. */
     revision: function (threadId) { var b = bufferFor(threadId); return b ? (b.revision || 0) : null; },
+    /* MODAL-011: store a validated pre-send workflow configuration WITH the
+       text. Nothing starts; the workflow runs only when the request is sent. */
+    setWorkflowConfig: function (threadId, config) {
+      var b = bufferFor(threadId); if (!b) return null;
+      b.workflow_config = config ? JSON.parse(JSON.stringify(config)) : null;
+      b.revision = (b.revision || 0) + 1; b.updated_at = new Date().toISOString();
+      persist();
+      return JSON.parse(JSON.stringify(b.workflow_config || null));
+    },
+    workflowConfig: function (threadId) {
+      var b = bufferFor(threadId); return b && b.workflow_config ? JSON.parse(JSON.stringify(b.workflow_config)) : null;
+    },
+    /* MODAL-012: hold a natural-language workflow request BEFORE any provider
+       dispatch, then either release it on Start or restore it intact on
+       Cancel. `restoreHeldRequest` puts the exact text and attachments back
+       and clears the hold, so a cancelled request never runs with defaults. */
+    holdRequest: function (threadId, request) {
+      var b = bufferFor(threadId); if (!b) return null;
+      b.held_request = { text: String((request && request.text) || b.text || ''),
+                         attachments: (request && request.attachments) ? request.attachments.slice() : (b.attachments || []).slice(),
+                         kind: (request && request.kind) || 'brainstorm',
+                         held_at: new Date().toISOString(), dispatched: false };
+      b.revision = (b.revision || 0) + 1; b.updated_at = b.held_request.held_at;
+      persist();
+      return JSON.parse(JSON.stringify(b.held_request));
+    },
+    heldRequest: function (threadId) {
+      var b = bufferFor(threadId); return b && b.held_request ? JSON.parse(JSON.stringify(b.held_request)) : null;
+    },
+    restoreHeldRequest: function (threadId) {
+      var b = bufferFor(threadId); if (!b || !b.held_request) return null;
+      var h = b.held_request;
+      b.text = h.text; b.attachments = (h.attachments || []).slice();
+      b.held_request = null; b.workflow_config = null;
+      b.revision = (b.revision || 0) + 1; b.updated_at = new Date().toISOString();
+      persist();
+      return { restored: true, text: b.text, attachments: b.attachments.length };
+    },
     setBuffer: function (threadId, text, attachments) {
       var b = bufferFor(threadId); if (!b) return null;
       b.text = String(text == null ? '' : text);
@@ -28729,13 +28883,26 @@ window.PM56_EXT = window.PM56_EXT || {
      unavailable reasons -- and is deliberately part of the fixture so the
      unavailable path is demonstrable rather than described. */
   function embed(o){
+    /* `artifact_version` is an INTEGER in the typed contract
+       (pm.assistant_plan.artifact_embed.v1). It used to be stored as the
+       display string `'v3'`, which is a label, not a version: an integer
+       compares and orders, a label does not, and a native port reusing this
+       shape would have inherited a string where the schema says integer.
+       The label is kept separately so every rendered surface and the Markdown
+       projection still read `art-x@v3` and the document bytes do not move. */
+    var raw=o.artifact_version, n=parseInt(String(raw).replace(/^v/i,''),10);
     return { t:'plan_embed', block_id:o.block_id, artifact_id:o.artifact_id,
-             artifact_version:o.artifact_version, renderer_kind:o.kind,
+             artifact_version:isNaN(n)?0:n,
+             artifact_version_label:(typeof raw==='string'&&/^v/i.test(raw))?raw:('v'+(isNaN(n)?0:n)),
+             renderer_kind:o.kind,
              display:o.display||'inline', caption:o.caption,
              text_summary:o.summary, static_fallback_ref:o.fallback||null,
              source_ref:o.source||null, sandboxed:!!o.sandboxed,
              state:o.state||'ok', preview:o.preview||null };
   }
+  /* Every display site resolves the label through here, so a future embed that
+     forgets one still renders a version rather than `undefined`. */
+  function embedVer(b){ return b.artifact_version_label || ('v'+b.artifact_version); }
 
   /* ------------------------------------------------------- ap-index V1..V5
      ONE identity, five immutable revisions.  The early drafts are genuinely
@@ -28915,6 +29082,17 @@ window.PM56_EXT = window.PM56_EXT || {
       exports:[],                            /* export receipts */
       cancelReason:o.cancelReason||null,
       revisionLog:o.revisionLog||[],
+      /* PDET-001. Details must show creation/revision SOURCES, the source
+         messages, the attachments the Plan was built from, the research it
+         admitted and its run history -- not only identity, hash and backend.
+         These are REFERENCES into the shared owners (message ids, attachment
+         ids, research receipts, run ids); the Plan stores no second copy of
+         any artifact's metadata, which is what PDET-001's "use shared route/
+         artifact identities" forbids. */
+      sources:o.sources||[],                 /* [{kind, ref, at, note}] */
+      attachmentRefs:o.attachmentRefs||[],   /* [attachment_id] into attachments.js */
+      research:o.research||[],               /* [{ref, kind, at, summary}] */
+      runHistory:o.runHistory||[],           /* [{run_id, attempt, outcome, at, reason}] */
       _approvedSeed:o.approvedSeed||null,
       _unitsSeed:o.unitsSeed||null,
       _todosSeed:o.todosSeed||null
@@ -29004,7 +29182,19 @@ window.PM56_EXT = window.PM56_EXT || {
         {v:3,at:'12:05',why:'Add the N+1 fan-out and write-amplification work.'},
         {v:4,at:'12:31',why:'CREATE INDEX CONCURRENTLY cannot run inside a transaction.'},
         {v:5,at:'12:58',why:'Fold in measured results and name what is still unmeasured.'}
-      ]
+      ],
+      /* PDET-001: where this Plan CAME FROM, by reference. */
+      sources:[
+        {kind:'creation', ref:'msg:query-014', at:'11:20', note:'User request that opened planning.'},
+        {kind:'revision', ref:'msg:query-031', at:'12:05', note:'Revision V3 requested in prose.'},
+        {kind:'revision', ref:'msg:query-047', at:'12:58', note:'Revision V5 requested after the benchmark.'}
+      ],
+      attachmentRefs:['att-explain-plan','att-bench-csv'],
+      research:[
+        {ref:'research:pg-partial-index', kind:'external', at:'11:34', summary:'Partial index behaviour under CONCURRENTLY.'},
+        {ref:'research:repo-query-builder', kind:'repository', at:'11:41', summary:'Four call sites reach one query builder.'}
+      ],
+      runHistory:[]
     }),
     'ap-cache': planRec({
       id:'ap-cache', thread:'plan-deep', title:'Session cache stampede',
@@ -29029,6 +29219,19 @@ window.PM56_EXT = window.PM56_EXT || {
         orchestrator:false },
       unitsSeed:{ at:'9:41 PM', validated:true, globalIndex:false, worknodes:0 },
       todosSeed:{ at:'9:41 PM', from:'planunits' },
+      sources:[
+        {kind:'creation', ref:'msg:plan-deep-006', at:'9:30 PM', note:'Deep Plan requested for the incident.'}
+      ],
+      attachmentRefs:['att-incident-timeline'],
+      research:[
+        {ref:'research:session-store-read', kind:'repository', at:'9:33 PM', summary:'session_store.rs:210-288 read path.'}
+      ],
+      /* PFAIL-003: a failed ATTEMPT is history under ONE run, not a second run. */
+      runHistory:[
+        {run_id:'run-ap-cache-V1', attempt:1, outcome:'failed', at:'9:52 PM',
+         reason:'Provider connection dropped mid-step; no side effect was replayed.'},
+        {run_id:'run-ap-cache-V1', attempt:2, outcome:'running', at:'10:04 PM', reason:''}
+      ],
       ledger:{ id:'apl-20260903-001', scope:'run', entries:[
         {k:'source',   v:'incident 2026-08-19 timeline'},
         {k:'source',   v:'session_store.rs:210-288'},
@@ -29169,10 +29372,10 @@ window.PM56_EXT = window.PM56_EXT || {
     unsupported:'No registered renderer claims this artifact kind.'
   };
   function richEmbed(b,k){
-    var ver = esc(b.artifact_id)+' · '+esc(b.artifact_version);
+    var ver = esc(b.artifact_id)+' · '+esc(embedVer(b));
     if(b.state!=='ok'){
       return '<div class="pd-embed pd-embed-unavailable pd-embed-'+esc(b.state)+'"'+k+
-        ' data-embed-state="'+esc(b.state)+'" data-artifact-version="'+esc(b.artifact_version)+'">'+
+        ' data-embed-state="'+esc(b.state)+'" data-artifact-version="'+esc(embedVer(b))+'">'+
         ICON.warning+
         '<div class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
           '<span class="pd-embed-why">'+esc(b.state)+' — '+esc(EMBED_UNAVAILABLE[b.state]||'unavailable')+'</span>'+
@@ -29186,7 +29389,7 @@ window.PM56_EXT = window.PM56_EXT || {
       ? '<span class="pd-embed-fallback">PDF: '+esc(b.static_fallback_ref)+'</span>' : '';
     return '<button type="button" class="pd-embed pd-embed-ok pd-embed-kind-'+esc(b.renderer_kind)+'"'+k+
       ' data-embed-state="ok" data-embed-kind="'+esc(b.renderer_kind)+'"'+
-      ' data-artifact-version="'+esc(b.artifact_version)+'"'+
+      ' data-artifact-version="'+esc(embedVer(b))+'"'+
       ' data-action="open-artifact" data-id="'+esc(b.artifact_id)+'">'+
       ICON.artifact+
       '<span class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
@@ -29260,7 +29463,7 @@ window.PM56_EXT = window.PM56_EXT || {
       case 'artifact':       return '['+b.label+']('+b.kind+':'+b.id+')';
       /* PDET-008: the serialisation carries the FROZEN version, so a Markdown
          export names exactly which revision was approved. */
-      case 'plan_embed':     return '!['+b.caption+']('+b.artifact_id+'@'+b.artifact_version+
+      case 'plan_embed':     return '!['+b.caption+']('+b.artifact_id+'@'+embedVer(b)+
                                     ' "'+b.renderer_kind+'")'+'\n\n> '+b.text_summary;
       case 'callout':        return '> **'+(b.tone==='warning'?'Warning':'Note')+'** '+b.text;
       /* PPROG-010 / TDG-014: NOT `- [ ]`. A checkbox in the serialisation reads
@@ -29353,16 +29556,30 @@ window.PM56_EXT = window.PM56_EXT || {
     return 'standard';
   }
 
+  /* Normalise ANY incoming strategy to one of the six current keys.
+     `strategyKey()` above reads a Plan RECORD; this reads a bare value, which
+     is what the exported `questionBudget()` entry point receives. Both paths
+     must agree, or the module's own callers see 10 for `Deep · Thorough`
+     while an outside caller handing over the same record field silently gets
+     `standard` 6 -- and the projection then echoes a retired label such as
+     `light` back as though it were an active strategy. Unknown input resolves
+     to a CURRENT key and is never stored verbatim. */
+  function normStrategy(v){
+    if(v==null) return null;
+    if(QBASE[v]!=null) return v;
+    return strategyKey({ strategy:v });
+  }
+
   /* One counter per RUN, shared by every participant. Plan revisions continue
      the same counter; only a new Plan identity starts a new one. */
   function budgetRun(workflowId, strategy, grill){
-    var m=RT.questionBudget.runs;
+    var m=RT.questionBudget.runs, key=normStrategy(strategy);
     if(!m[workflowId]){
-      m[workflowId]={ workflow_id:workflowId, strategy:strategy, grill_me_enabled:!!grill,
+      m[workflowId]={ workflow_id:workflowId, strategy:key||'standard', grill_me_enabled:!!grill,
                       asked:{}, order:[], reused:0, research:0 };
     }
     var run=m[workflowId];
-    run.strategy=strategy||run.strategy;
+    if(key) run.strategy=key;
     if(grill!=null) run.grill_me_enabled=!!grill;
     return run;
   }
@@ -29375,6 +29592,12 @@ window.PM56_EXT = window.PM56_EXT || {
     return {
       schema:'pm.assistant_plan.question_budget_projection.v1',
       workflow_id:run.workflow_id, strategy:run.strategy, strategy_label:QLABEL[run.strategy],
+      /* The two typed fields the correction's contract names and the earlier
+         shape omitted. `planning_kind` is DERIVED from the strategy, never
+         stored twice; `policy_version` is what makes a stored projection from
+         the retired 15/+10 policy detectable rather than silently rendered. */
+      planning_kind:(run.strategy.indexOf('deep')===0||run.strategy==='brainstorm')?'deep_plan':'plan',
+      policy_version:2,
       base_limit:base, grill_me_enabled:run.grill_me_enabled, grill_me_extension:QGRILL,
       effective_limit:eff, questions_asked:asked,
       questions_remaining:Math.max(0, eff-asked),
@@ -29649,12 +29872,36 @@ window.PM56_EXT = window.PM56_EXT || {
   /* §7.3 footer.  Which actions are ELIGIBLE depends on status; the eligibility
      is computed here once so the card, the More Info panel and the harness all
      read the same answer. */
+  /* QMAX-015. Exhausting the question allowance must NOT disable Build; only
+     an unresolved item EXPLICITLY classified as build-blocking may. The card's
+     own toast has always said so, so without this predicate the copy asserted
+     a behaviour no code path could produce. A blocker is a record on the Plan
+     ({id, build_blocking:true, why}) or an unresolved To-Do carrying
+     `build_blocking`; anything unresolved but not so classified stays visible
+     and does not gate the control. */
+  function buildBlockers(r){
+    var out=list(r.blockers).filter(function(b){ return b && b.build_blocking && !b.resolved; })
+      .map(function(b){ return { id:b.id||'blocker', why:b.why||'', source:'plan' }; });
+    var api=todoApi();
+    if(api && api.get){
+      var items=api.get(r.thread_id)||[];
+      for(var i=0;i<items.length;i++){
+        var t=items[i];
+        if(t.plan_id===r.plan_id && t.build_blocking && t.status!=='completed' && t.status!=='skipped')
+          out.push({ id:t.todo_id, why:t.blocked_reason_ref||t.title||'', source:'todo' });
+      }
+    }
+    return out;
+  }
+
   function eligible(r){
     var e = { revise:false, build:false, crew:false, at:false, wizard:true, exportx:true,
               cancel:false, todos:false, goal:false, report:false };
     if(r.status==='ready'){ e.revise=true; e.build=true; e.crew=true; e.at=true; e.cancel=true; e.goal=true; }
     else if(r.status==='building'){ e.cancel=true; e.todos=true; e.revise=false; e.report=true; }
     else if(r.status==='completed'){ e.report=true; }
+    var blk=buildBlockers(r);
+    if(blk.length){ e.build=false; e.crew=false; e.at=false; e.goal=false; e.blocked_by=blk; }
     return e;
   }
 
@@ -29672,7 +29919,19 @@ window.PM56_EXT = window.PM56_EXT || {
     /* PGOAL-001: Build as Goal is a SECONDARY action. The primary control stays
        Build; no second large button is added. */
     if(e.goal)   out.push(actionBtn('pd-build-goal','Build as Goal',r.plan_id));
-    return '<div class="pd-foot">'+out.join('')+progressSummary(r)+waitCopy(r)+'</div>';
+    /* QMAX-015: when Build is off because of an explicit build blocker, say
+       which one. A disabled control with no reason is the failure mode the
+       correction calls out ("do not disable Build merely because
+       questions_remaining is zero"), inverted. */
+    var blk=e.blocked_by||[];
+    var blkLine = blk.length
+      ? '<span class="pd-wait pd-attn pd-attn-warning" data-condition="build_blocked">'+ICON.warning+
+        '<span class="pd-attn-copy"><strong>Build blocked</strong><span>'+
+        esc(blk.length===1?'One unresolved item is classified build-blocking: ':'Unresolved build-blocking items: ')+
+        esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
+        '</span></span></span>'
+      : '';
+    return '<div class="pd-foot">'+out.join('')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -29773,6 +30032,12 @@ window.PM56_EXT = window.PM56_EXT || {
   function admitBuild(ctx,r,opts){
     opts=opts||{};
     if(r.status!=='ready') return false;
+    /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
+       pending schedule for this Plan BEFORE the run is admitted, so a timer
+       cannot deliver a second dispatch for work that has already started.
+       Cancel did this and Build did not, which left exactly the duplicate
+       admission the correction names -- two owners of one PlanRun. */
+    r.scheduleInvalidation = invalidateSchedulesFor(r, 'immediate_build');
     r.approved = freeze(r,ctx);
     r.status = 'building';
     r.buildStep = 0;
@@ -29810,42 +30075,89 @@ window.PM56_EXT = window.PM56_EXT || {
     /* Advance the step gutter on a real interval so Building… is observable.
        Nothing here is authoritative -- §7.2's gutter is a projection. */
     stopRun(r);
-    if(!opts.paused){
-      runTimers[r.plan_id] = setInterval(function(){
-        if(r.status!=='building'){ stopRun(r); return; }
-        var a=todoApi(), moved=null;
-        if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
-        r._projRev=(r._projRev||1)+1;
-        /* PFAIL-007: Completed requires the completion predicate to hold --
-           every required leaf resolved. `moved===null` means the projector
-           found nothing left to admit or complete. */
-        if(!moved){
-          var pr=progress(r), ids=Object.keys(pr.step_states), open=0;
-          for(var q=0;q<ids.length;q++){
-            var s=pr.step_states[ids[q]];
-            if(s.children) continue;
-            if(s.state!=='completed' && s.state!=='skipped') open++;
-          }
-          if(open===0){ r.status='completed'; r.current=false; stopRun(r); }
-          else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
-        }
-        ctx.renderApp();
-      }, 1400);
-    }
+    if(!opts.paused) startRunTimer(ctx,r);
     return true;
+  }
+
+  /* ONE tick, used by the first admission and by every resume. It used to be
+     duplicated, and the copy in resumeRun() simply stopped when no work was
+     left -- so a Plan resumed after a Pause could never reach Completed and
+     could never complete its bound Goal. One body, one completion predicate. */
+  function runTick(ctx,r){
+    if(r.status!=='building'){ stopRun(r); return; }
+    var a=todoApi(), moved=null;
+    if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    r._projRev=(r._projRev||1)+1;
+    /* PFAIL-007: Completed requires the completion predicate to hold --
+       every required leaf resolved. `moved===null` means the projector
+       found nothing left to admit or complete. */
+    if(!moved){
+      var pr=progress(r), ids=Object.keys(pr.step_states), open=0;
+      for(var q=0;q<ids.length;q++){
+        var s=pr.step_states[ids[q]];
+        if(s.children) continue;
+        if(s.state!=='completed' && s.state!=='skipped') open++;
+      }
+      if(open===0){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
+      else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
+    }
+    ctx.renderApp();
+  }
+  function startRunTimer(ctx,r){
+    stopRun(r);
+    runTimers[r.plan_id]=setInterval(function(){ runTick(ctx,r); }, 1400);
+  }
+
+  /* One place that invalidates every schedule bound to a Plan, whichever owner
+     holds it: this module's own card binding (`r.schedule`) and the scheduler's
+     durable build schedules. Returns a receipt so the caller can show what was
+     fenced rather than asserting it. */
+  function invalidateSchedulesFor(r, reason){
+    var why = reason==='immediate_build'
+      ? 'Build Now started this exact Plan version; the pending schedule is invalidated so no later dispatch can admit a second run.'
+      : 'The bound execution ended; this schedule can no longer dispatch.';
+    var out={ card:0, scheduler:0, reason:reason };
+    if(r.schedule && !r.schedule.invalid){
+      r.schedule.invalid=true; r.schedule.invalidReason=why; out.card=1;
+    }
+    var S=window.PM56_SCHED;
+    if(S && S.invalidateForExecution){
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why });
+      out.scheduler=(res&&res.schedules)||0;
+    }
+    return out;
+  }
+
+  /* PGOAL-009. Plan completion completes the bound Goal EXACTLY ONCE, and
+     records the completion lineage. Without this the binding was one-way:
+     Pause, Resume and Cancel drove the Plan from the Goal, but a Plan that
+     reached Completed left its Goal `active` forever -- a Goal whose whole
+     objective was that Plan. Idempotent by construction: a Goal already
+     `completed` returns the first receipt rather than emitting a second
+     completion effect, which is what makes replay safe. */
+  function completeBoundGoal(r){
+    if(!r.goalBinding) return null;
+    var G=window.PM56_GOAL; if(!G || !G.bound) return null;
+    var g=G.bound(r.plan_id); if(!g) return null;
+    if(g.status==='completed') return { ok:true, replayed:true, goal_id:g.id, completion:g.completion||null };
+    if(g.status==='canceled')  return { ok:false, error:'canceled_is_terminal', goal_id:g.id };
+    var lineage={ schema:'pm.goal.completion_lineage.v1', goal_id:g.id,
+                  assistant_plan_id:r.plan_id, plan_version:r.version,
+                  plan_hash:hashOf(body(r)),
+                  plan_run_id:r.goalBinding.plan_run_id,
+                  todo_list_ref:r.goalBinding.todo_list_ref,
+                  currentness_hash:currentnessOf(r),
+                  at:new Date().toISOString() };
+    G.boundTransition(r.plan_id,'completed',
+      'The bound Plan reached Completed: every required leaf resolved. Completed once, by the host, against the completion predicate — not because a model returned a final message.');
+    g=G.bound(r.plan_id); if(g) g.completion=lineage;
+    return { ok:true, replayed:false, goal_id:lineage.goal_id, completion:lineage };
   }
 
   /* Resume the demo run from wherever the durable To-Dos left it. */
   function resumeRun(ctx,r){
     if(r.status!=='building') return;
-    stopRun(r);
-    runTimers[r.plan_id]=setInterval(function(){
-      if(r.status!=='building'){ stopRun(r); return; }
-      var a=todoApi(), moved=a&&a.advanceForPlan?a.advanceForPlan(r.plan_id,r.thread_id):null;
-      r._projRev=(r._projRev||1)+1;
-      if(!moved){ stopRun(r); }
-      ctx.renderApp();
-    },1400);
+    startRunTimer(ctx,r);
   }
 
   /* --- 6.3 Revise (§5.6) -----------------------------------------------
@@ -29868,7 +30180,13 @@ window.PM56_EXT = window.PM56_EXT || {
     r.version = r.version+1;
     r.revisions[r.version] = next;
     r.revisionLog.push({v:r.version, at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}), why:feedback});
-    /* A revision invalidates anything bound to the exact old version. */
+    /* A revision invalidates anything bound to the exact old version -- the
+       card's own binding AND every durable build schedule the scheduler holds.
+       Only the first of those was done here, so an ordinary Revise left a live
+       schedule pointing at replaced bytes. */
+    var Sr=window.PM56_SCHED;
+    if(Sr && Sr.invalidateForPlanRevision)
+      r.scheduleRevisionInvalidation = Sr.invalidateForPlanRevision(r.plan_id, r.version-1, r.version, hashOf(next));
     if(r.schedule && r.schedule.version !== r.version){
       r.schedule.invalid = true;
       r.schedule.invalidReason = 'Bound to V'+r.schedule.version+'; the Plan is now V'+r.version+'. Rebind or reschedule explicitly.';
@@ -29912,6 +30230,46 @@ window.PM56_EXT = window.PM56_EXT || {
       kv('version','V'+r.version)+kv('strategy', r.strategy)+
       kv('backend', r.backend)+kv('content hash', hashOf(b))+
       kv('steps', String(ss.length))+kv('status', r.status)+'</section>');
+
+    /* --- PDET-001: creation/revision sources, source messages, attachments,
+       research and run history. Every entry is a REFERENCE into the owner that
+       holds the object (message, attachment, research receipt, run); this
+       section copies no artifact metadata into Plan storage. Currentness is
+       reported for every Plan, approved or not, so a reader can always tell
+       whether what they are looking at is current. */
+    var att=window.PM56_ATTACHMENTS;
+    rows.push('<section class="pd-sec pd-sec-sources"><h4>Sources and provenance</h4>'+
+      kv('currentness_hash', currentnessOf(r))+
+      kv('currentness', r._projStale?'stale — the projection inputs moved after this was generated':'current')+
+      '<div class="pd-prov">'+
+      '<h5>Source messages</h5>'+
+      (list(r.sources).length
+        ? '<ul class="pd-prov-list">'+list(r.sources).map(function(x){
+            return '<li data-source-kind="'+esc(x.kind)+'"><code>'+esc(x.ref)+'</code>'+
+              '<strong>'+esc(x.kind)+'</strong><span>'+esc(x.at||'')+'</span><em>'+esc(x.note||'')+'</em></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">No source message is recorded for this Plan.</p>')+
+      '<h5>Attachments</h5>'+
+      (list(r.attachmentRefs).length
+        ? '<ul class="pd-prov-list">'+list(r.attachmentRefs).map(function(id){
+            var a=att&&att.findAttachment?att.findAttachment(id):null;
+            return '<li><code>'+esc(id)+'</code><span>'+esc(a?(a.name||a.title||''):'resolved by the attachment owner')+'</span></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">This Plan admitted no attachments.</p>')+
+      '<h5>Research</h5>'+
+      (list(r.research).length
+        ? '<ul class="pd-prov-list">'+list(r.research).map(function(x){
+            return '<li data-research-kind="'+esc(x.kind)+'"><code>'+esc(x.ref)+'</code>'+
+              '<strong>'+esc(x.kind)+'</strong><span>'+esc(x.at||'')+'</span><em>'+esc(x.summary||'')+'</em></li>'; }).join('')+'</ul>'
+        : '<p class="pd-note">This Plan resolved nothing through research.</p>')+
+      '<h5>Run history</h5>'+
+      (list(r.runHistory).length
+        ? '<ul class="pd-prov-list pd-runs">'+list(r.runHistory).map(function(x){
+            return '<li data-run-outcome="'+esc(x.outcome)+'"><code>'+esc(x.run_id)+'</code>'+
+              '<strong>attempt '+esc(String(x.attempt))+' · '+esc(x.outcome)+'</strong>'+
+              '<span>'+esc(x.at||'')+'</span><em>'+esc(x.reason||'')+'</em></li>'; }).join('')+'</ul>'+
+          '<p class="pd-note">Attempts are history under ONE PlanRun. A failed attempt is not a second run and is not Plan completion.</p>'
+        : '<p class="pd-note">No run has been admitted for this Plan yet.</p>')+
+      '</div>'+
+      '<p class="pd-note">Each row is a reference into the owner that holds the object. Plan storage keeps no second copy of an attachment’s or an artifact’s metadata.</p></section>');
 
     rows.push('<section class="pd-sec"><h4>Projection parity</h4><p class="pd-note">'+
       'Rich Text and Markdown are rendered from one block array. Block ids in each projection: '+
@@ -30035,7 +30393,7 @@ window.PM56_EXT = window.PM56_EXT || {
     if(ems.length){
       rows.push('<section class="pd-sec pd-sec-embeds"><h4>Embedded artifacts</h4>'+
         '<ul class="pd-embeds">'+ems.map(function(x){
-          return '<li data-embed-state="'+esc(x.state)+'"><code>'+esc(x.artifact_id)+'@'+esc(x.artifact_version)+'</code>'+
+          return '<li data-embed-state="'+esc(x.state)+'"><code>'+esc(x.artifact_id)+'@'+esc(embedVer(x))+'</code>'+
             '<strong>'+esc(x.renderer_kind)+'</strong><span>'+esc(x.caption)+'</span>'+
             '<em>'+(x.state==='ok'
               ? ((x.renderer_kind==='video'||x.renderer_kind==='interactive')
@@ -30209,7 +30567,7 @@ window.PM56_EXT = window.PM56_EXT || {
      is checkable rather than a claim. */
   function embedExportNotes(r){
     return body(r).filter(function(b){ return b.t==='plan_embed'; }).map(function(b){
-      return { block_id:b.block_id, artifact:b.artifact_id+'@'+b.artifact_version,
+      return { block_id:b.block_id, artifact:b.artifact_id+'@'+embedVer(b),
                kind:b.renderer_kind, state:b.state,
                exported_as: b.state!=='ok' ? ('explicit unavailable block ('+b.state+')')
                           : (b.renderer_kind==='video'||b.renderer_kind==='interactive')
@@ -30469,7 +30827,7 @@ window.PM56_EXT = window.PM56_EXT || {
       }
       if(!found) return;
       ctx.toast('Embed '+found.b.state,
-        found.b.artifact_id+'@'+found.b.artifact_version+' — '+(EMBED_UNAVAILABLE[found.b.state]||'available')+
+        found.b.artifact_id+'@'+embedVer(found.b)+' — '+(EMBED_UNAVAILABLE[found.b.state]||'available')+
         ' The approved Plan still names this exact version; no other version was substituted.');
     },
 
@@ -30660,7 +31018,17 @@ window.PM56_EXT = window.PM56_EXT || {
     eligible:function(id){ var r=rec(id); return r?eligible(r):null; },
     buildLabel:function(id){ var r=rec(id); return r?BUILD_LABEL[r.status]:null; },
     cancelForNewPlan:cancelForNewPlan,
-    restore:function(){ P().records = hydrate(JSON.parse(JSON.stringify(PLANS0))); },
+    restore:function(){
+      /* Stop every live run timer BEFORE swapping the records, or the old
+         closure keeps ticking against a record nothing can see any more —
+         which is how a "restored" surface silently advances the To-Do list of
+         a Plan the caller believes it just reset. */
+      for(var k in runTimers){ if(runTimers[k]){ clearInterval(runTimers[k]); runTimers[k]=null; } }
+      P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      /* The question counters are durable run records, not view state: leaving
+         them behind made a restored Plan report questions it had never asked. */
+      if(RT.questionBudget){ RT.questionBudget.runs={}; RT.questionBudget.seq=0; }
+    },
     fixture:function(){ return JSON.parse(JSON.stringify(PLANS0)); },
     dialogType:function(kind){ return DLG[kind]; },
     /* Additive Correction v4. */
@@ -31684,7 +32052,7 @@ window.PM56_EXT = window.PM56_EXT || {
   function validateGraph(threadId, candidate){
     var res={ thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
               valid:true, self_parent_ids:[], parent_cycles:[], dependency_cycles:[],
-              unknown_refs:[], cross_thread_refs:[], duplicate_ids:[] };
+              unknown_refs:[], cross_thread_refs:[], duplicate_ids:[], invalid_statuses:[] };
     var items=(candidate&&candidate.items)||[], byId={}, i, j;
     for(i=0;i<items.length;i++){
       var it=items[i];
@@ -31704,6 +32072,13 @@ window.PM56_EXT = window.PM56_EXT || {
     for(i=0;i<items.length;i++){
       var t=items[i];
       if(t.thread_id && t.thread_id!==threadId) res.cross_thread_refs.push(t.todo_id);
+      /* TDG-014 / TODO-010 / PROVIDER-007. The status vocabulary is closed
+         HERE too, not only on the transition path. Whole-list replacement is
+         exactly how a provider snapshot arrives, so leaving it unvalidated let
+         a model write any word it liked -- `verifying` included -- straight
+         into canonical items while `applyTransition` refused the same word. */
+      if(t.status!=null && TODO_STATUSES.indexOf(t.status)<0)
+        res.invalid_statuses.push({ todo_id:t.todo_id, status:t.status });
       if(t.parent_todo_id===t.todo_id) res.self_parent_ids.push(t.todo_id);
       if(t.parent_todo_id && !byId[t.parent_todo_id]) res.unknown_refs.push(t.parent_todo_id);
       for(j=0;j<(t.depends_on||[]).length;j++){
@@ -31741,8 +32116,12 @@ window.PM56_EXT = window.PM56_EXT || {
     res.duplicate_ids=uniq(res.duplicate_ids);
     res.valid = !(res.self_parent_ids.length || res.parent_cycles.length ||
                   res.dependency_cycles.length || res.unknown_refs.length ||
-                  res.cross_thread_refs.length || res.duplicate_ids.length);
-    if(!res.valid) res.error='invalid_graph';
+                  res.cross_thread_refs.length || res.duplicate_ids.length ||
+                  res.invalid_statuses.length);
+    if(!res.valid) res.error = res.invalid_statuses.length &&
+      !(res.self_parent_ids.length || res.parent_cycles.length || res.dependency_cycles.length ||
+        res.unknown_refs.length || res.cross_thread_refs.length || res.duplicate_ids.length)
+      ? 'invalid_status' : 'invalid_graph';
     return res;
   }
 
@@ -31792,11 +32171,21 @@ window.PM56_EXT = window.PM56_EXT || {
   /* TDG-010. A late event needs list revision, item revision, work binding,
      Plan version and run epoch to still be current. A stale one is RETAINED as
      rejected evidence and never applied; timestamp order is not a gate. */
+  /* TDG-014. The CLOSED status vocabulary. It is enforced here rather than
+     documented, because an unvalidated `to_status` let a caller write any word
+     it liked -- including `verifying`, the one status the correction retires by
+     name. A To-Do has five states; validation is an ordinary To-Do, never a
+     status. */
+  var TODO_STATUSES = ['pending','in_progress','completed','blocked','skipped'];
+
   function applyTransition(threadId, ev){
     var store=threadStore(threadId);
     if(!store) return { ok:false, error:'unknown_thread' };
     var item=findItem(store.items, ev.todo_id);
     if(!item) return { ok:false, error:'unknown_todo' };
+    if(TODO_STATUSES.indexOf(ev.to_status)<0)
+      return { ok:false, error:'invalid_status', allowed:TODO_STATUSES.slice(),
+               detail:'`'+String(ev.to_status)+'` is not a To-Do status. There is no verification status; validation is an ordinary To-Do.' };
     var why=null;
     if(ev.expected_list_revision!=null && ev.expected_list_revision!==(store.revision||1)) why='stale_list_revision';
     else if(ev.expected_revision!=null && ev.expected_revision!==item.revision)            why='stale_item_revision';
@@ -31813,6 +32202,16 @@ window.PM56_EXT = window.PM56_EXT || {
     item.status=ev.to_status; item.revision=item.revision+1;
     if(ev.to_status==='in_progress' && !item.started_at) item.started_at=ev.at||new Date().toISOString();
     if(ev.to_status==='completed') item.completed_at=ev.at||new Date().toISOString();
+    /* PPROG-007: `blocked` must reference its OWNING CONDITION. Only the
+       seeded fixture carried `blocked_reason_ref` before this, so any item
+       blocked through the ordinary transition path produced a projection cell
+       with `reason:null` -- a blocked step that could not say what blocked it.
+       Leaving `blocked` also clears the reference, so a resolved blocker
+       cannot linger as stale evidence on a running item. */
+    if(ev.to_status==='blocked')
+      item.blocked_reason_ref = ev.blocked_reason_ref || ev.cause_ref || ('blocker:'+item.todo_id);
+    else if(item.blocked_reason_ref)
+      item.blocked_reason_ref = null;
     return { ok:true, item:item };
   }
 
@@ -31880,7 +32279,8 @@ window.PM56_EXT = window.PM56_EXT || {
     materializeForPlan: materializeForPlan,
     advanceForPlan: advanceForPlan,
     revisionOf: function(threadId){ var s=threadStore(threadId); return s?(s.revision||1):null; },
-    rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; }
+    rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; },
+    statusVocabulary: function(){ return TODO_STATUSES.slice(); }
   };
 })();
 
@@ -32011,11 +32411,11 @@ window.PM56_EXT = window.PM56_EXT || {
   var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
   var RUN_STATE_LABEL = {
     configuring: 'Configuring', running: 'Running', paused: 'Paused', waiting: 'Waiting',
-    blocked: 'Blocked', completed: 'Completed', cancelled: 'Cancelled', failed: 'Failed'
+    blocked: 'Blocked', completed: 'Completed', canceled: 'Cancelled', failed: 'Failed'
   };
   var RUN_STATE_TONE = {
     configuring: 'idle', running: 'working', paused: 'idle', waiting: 'idle',
-    blocked: 'blocked', completed: 'done', cancelled: 'idle', failed: 'blocked'
+    blocked: 'blocked', completed: 'done', canceled: 'idle', failed: 'blocked'
   };
 
   /* =====================================================================
@@ -32043,7 +32443,18 @@ window.PM56_EXT = window.PM56_EXT || {
       timeLimitMinutes: 30, tokenLimit: 350000, costLimitUsd: 5
     },
     chat_room: {
-      participantCount: 4, turnPolicy: 'moderated', maxRounds: 5,
+      /* ROOM-002: the configuration a Chat Room actually has — participants,
+         MODERATOR, turn policy, mentions/replies, tools, rounds/stop and the
+         output. Only the counts and limits were declared before, so the modal
+         had no default for the protocol it is defined by. */
+      participantCount: 4,
+      moderator: 'dedicated_moderator',
+      moderatorPersona: 'Product Manager',
+      turnPolicy: 'moderated',
+      mentionsEnabled: true, repliesEnabled: true,
+      tools: 'read_only',
+      maxRounds: 5, stopCondition: 'rounds_or_moderator_close',
+      output: 'transcript_plus_optional_summary',
       timeLimitMinutes: 60, costLimitUsd: 4
     }
   };
@@ -32114,7 +32525,21 @@ window.PM56_EXT = window.PM56_EXT || {
          available. `outcome` is the single explicit terminal disposition:
          completed | failed | timed_out | unavailable | canceled |
          explicitly_waived. A slot with no callback is NOT completed. */
-      required: o.required !== false,
+      /* An ADDITIVE role (Wonderer, Grill Me) is optional by definition: it
+         supplements the core roster and can never gate clean completion. The
+         old default made every slot required unless a caller remembered to say
+         otherwise, so a seeded Wonderer became a required slot -- the exact
+         "additive specialist silently replaces a core role" the correction
+         forbids, inverted into "additive specialist blocks completion". */
+      required: o.required !== undefined ? o.required !== false
+              : ((o.additiveRoleKind || 'none') === 'none'),
+      /* PART-022: repeated slots on the SAME model are independent passes, so
+         each one carries its own session identity. Without it there was no way
+         to tell a genuinely fresh pass from a reused context claiming to be
+         blind, which is what the correction says must be evidenced or
+         disclosed as constrained. */
+      sessionId: o.sessionId || ('sess-' + (o.id || rid('p')) + '-' + Math.floor(Math.random()*1e6).toString(36)),
+      sessionIsolation: o.sessionIsolation || 'fresh',
       outcome: o.outcome || null,
       vote: o.vote || null,
       votingRole: o.votingRole === undefined ? (o.additiveRoleKind ? o.additiveRoleKind === 'none' : true) : !!o.votingRole,
@@ -32124,9 +32549,22 @@ window.PM56_EXT = window.PM56_EXT || {
       demo: true
     };
   }
+  /* A stable digest of the configuration a Start was admitted with, so a
+     replay carrying the same idempotency key but a DIFFERENT configuration is
+     detectable rather than silently accepted. */
+  function cfgFingerprint(config, participants){
+    var basis = JSON.stringify([config, (participants||[]).map(function(p){
+      return [p.role, p.requestedModelId, p.requestedPersona, p.additiveRoleKind, p.required];
+    })]);
+    var x=0x811c9dc5;
+    for(var i=0;i<basis.length;i++){ x^=basis.charCodeAt(i); x=(x*0x01000193)>>>0; }
+    return 'cfg:'+('00000000'+x.toString(16)).slice(-8);
+  }
+
   function mkRun(o) {
+    var runId = o.id || rid('run');
     return {
-      id: o.id || rid('run'),
+      id: runId,
       kind: o.kind,
       threadId: o.threadId,
       title: o.title,
@@ -32150,6 +32588,13 @@ window.PM56_EXT = window.PM56_EXT || {
          shape and the uniform-shape predicate caught it. */
       expectedOutputs: o.expectedOutputs || [],
       pendingUserDecision: !!o.pendingUserDecision,
+      /* MODAL-017: run admission is idempotent on THIS key, not on the modal
+         instance. A repeated Start with the same key returns the original run;
+         the same key with a changed configuration is rejected rather than
+         quietly starting a second run under the old identity. */
+      idempotency_key: o.idempotency_key ||
+        ((o.kind||'run') + ':' + (o.threadId||'-') + ':' + runId + ':rev' + (o.definitionRevision || 1)),
+      config_fingerprint: o.config_fingerprint || cfgFingerprint(o.config || {}, o.participants || []),
       crew: o.crew || null,
       brainstorm: o.brainstorm || null,
       review: o.review || null,
@@ -32266,9 +32711,22 @@ window.PM56_EXT = window.PM56_EXT || {
         dissent: [
           { participantRole: 'Product', position: 'oppose (of the synthesis leaning toward prop-c-as-mechanism)', confidence: 'medium', reason: 'The resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention.' }
         ],
+        /* WONV-002/005, WONDER-002/003: ONE lead vocabulary. This fixture used
+           `connection`/`status` while the other used `seed`/`tether`/`state`,
+           so the same object had two shapes and a reader could not tell a
+           tethered hypothesis from a researched lead without knowing which
+           fixture it came from. `seed` names what the lead hangs off,
+           `tether` says how, `state` is the disposition, and `enteredPlan`
+           records whether it has been allowed into a Plan. */
         wondererLeads: [
-          { id: 'w1', lead: 'CDN edge-failover practice favors a gradual canary percentage over a binary cutover.', connection: 'Suggests the health-checked ring in prop-a could shed traffic gradually instead of all-or-nothing, reducing the flapping risk Architecture flagged.', status: 'hypothesis' },
-          { id: 'w2', lead: 'Airline overbooking policy publishes the compensation rule in advance rather than deciding case-by-case.', connection: 'Argues for a fixed, disclosed account-spend policy (prop-b) over an ad hoc mid-incident judgment call.', status: 'hypothesis' }
+          { id: 'w1', lead: 'CDN edge-failover practice favors a gradual canary percentage over a binary cutover.',
+            seed: 'health-checked ring in prop-a',
+            tether: 'Suggests the health-checked ring in prop-a could shed traffic gradually instead of all-or-nothing, reducing the flapping risk Architecture flagged.',
+            state: 'hypothesis', enteredPlan: false },
+          { id: 'w2', lead: 'Airline overbooking policy publishes the compensation rule in advance rather than deciding case-by-case.',
+            seed: 'account-spend policy in prop-b',
+            tether: 'Argues for a fixed, disclosed account-spend policy (prop-b) over an ad hoc mid-incident judgment call.',
+            state: 'hypothesis', enteredPlan: false }
         ],
         provisioning: [
           { id: 'rc-1', capability: 'provider-status-checker CLI', state: 'ready', scope: 'run-scoped, temporary', permissionRequestRef: 'perm-req-771', cleanupRequired: true, note: 'Resolved an existing capability first; nothing was installed persistently.' }
@@ -32307,6 +32765,20 @@ window.PM56_EXT = window.PM56_EXT || {
           acceptanceRefs: ['Configured concurrency above the ceiling is clamped and disclosed, never silently honored.']
         },
         staleTargetHash: 'f77e10bb',
+        /* MODAL-009/010: the target froze at Start, and it CHANGED while the
+           modal was open. The user must choose; nothing may swap silently and
+           the two hashes may never be combined into one mixed review. */
+        staleTarget: {
+          detected_at: nowIso(),
+          frozen_hash: 'a1c9f02e',
+          current_hash: 'f77e10bb',
+          choices: [
+            { id:'refresh_to_current', label:'Refresh to the current target', target_hash:'f77e10bb' },
+            { id:'use_frozen_target',  label:'Review the identified frozen target', target_hash:'a1c9f02e', immutable:true }
+          ],
+          chosen: null,
+          mixed: false
+        },
         findings: [
           { id: 'f1', findingKey: 'child-spawn-bypasses-ceiling', category: 'correctness', severity: 'critical', claim: 'A nested Crew inside a Crew can request child concurrency that is never clamped against the orchestrator’s total active-agent ceiling.', affectedRefs: ['executionLimits.totalActiveAgents'], evidenceRefs: ['trace: nested-crew-concurrency-repro'], originatingReviewerIds: [0, 1], reviewerVotes: [{ reviewerIndex: 0, disposition: 'confirmed', confidence: 'high', evidence: 'Reproduced: nested request admits 6 when the ceiling is 4.' }, { reviewerIndex: 1, disposition: 'confirmed', confidence: 'high', evidence: 'Same repro from a different entry point.' }], disposition: 'confirmed', dissent: null, proposedRemediation: 'Clamp nested concurrency against the ceiling remaining at spawn time, not just at the top level.' },
           { id: 'f2', findingKey: 'retry-identity-not-logged', category: 'observability', severity: 'minor', claim: 'A retried child attempt does not log its own retry identity, only the original attempt id.', affectedRefs: ['retry pathway'], evidenceRefs: ['log sample'], originatingReviewerIds: [0], reviewerVotes: [{ reviewerIndex: 1, disposition: 'uncertain', confidence: 'low', evidence: 'Could not reproduce from the pack alone; the log sample may be from an older build.' }], disposition: 'uncertain', dissent: 'Reviewer 1 still holds this as a real minor finding; Reviewer 2 could not confirm it from the frozen pack. Recorded as uncertain rather than manufacturing agreement either way.', proposedRemediation: 'Add the retry attempt id to the child log line if reproduced against a current pack.' },
@@ -32316,6 +32788,13 @@ window.PM56_EXT = window.PM56_EXT || {
           { id: 'f4-excluded', reviewerIndex: 2, targetHash: 'f77e10bb', claim: 'A finding from Reviewer 3, produced against a target pack that changed mid-run.', reason: 'Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.' }
         ]
       },
+      /* REVIEW-010: the review OUTPUT is a versioned artifact with both
+         projections plus a short thread summary. The transcript alone is not
+         the deliverable. */
+      artifacts: [{ id: 'rev-artifact-orchestrator-boundary', kind: 'review_report', version: 2,
+        formats: ['rich', 'markdown'], title: 'Multi-Pass Review · Orchestrator Boundary Changes',
+        coverage: 'multi_pass_3', target_hash: 'a1c9f02e',
+        summary: 'Three passes over the frozen pack: one confirmed critical, one confirmed major, one uncertain with dissent retained, one excluded for a different target hash.' }],
       usage: { inputTokens: 96000, outputTokens: 12100, costUsd: 0.71 }
     });
     rv.messages.push(mkMsg(rv, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Target pack frozen at a1c9f02e. All three initial passes admitted concurrently; each reviewer’s prompt carried no other reviewer’s findings, output or identity.' }));
@@ -32375,6 +32854,9 @@ window.PM56_EXT = window.PM56_EXT || {
       targetPack:{ targetKind:'assistant_response', targetRefs:['migration guard diff'],
         targetHashes:{ primary:'a91c33f0' }, frozenAt:nowIso(), userConstraintRefs:[], acceptanceRefs:[] },
       findings:[], excludedFindings:[] };
+    single.artifacts=[{ id:'rev-artifact-'+single.id, kind:'review_report', version:1,
+      formats:['rich','markdown'], title:'Single Agent Review · migration guard',
+      coverage:'single_pass', summary:'One independent pass. No corroboration is claimed.' }];
     single.messages.push(mkMsg(single,{ senderKind:'system', senderName:'System',
       body:'One reviewer was requested, so this is a single independent pass. It does not claim peer corroboration, agreement, quorum or consensus, and no multi-agent agreement section exists.' }));
     runs.push(single);
@@ -32398,6 +32880,12 @@ window.PM56_EXT = window.PM56_EXT || {
       findings:[], excludedFindings:[] };
     partial.participants[2].attempts=[{ attempt_id:'att-r3-1', outcome:'timed_out', at:nowIso(),
       requested_identity:'opus5', effective_identity:'opus5', reason:'pass timeout', epoch:0 }];
+    /* REVIEW-010: the output is a versioned Rich/Markdown artifact, not only a
+       transcript. A partial review still produces one; it is labelled partial
+       rather than withheld. */
+    partial.artifacts=[{ id:'rev-artifact-'+partial.id, kind:'review_report', version:1,
+      formats:['rich','markdown'], title:'Multi-Pass Review · cache invalidation',
+      coverage:'partial', summary:'2 of 3 requested passes completed; 1 timed out. Findings are reported with their coverage stated.' }];
     partial.messages.push(mkMsg(partial,{ senderKind:'system', senderName:'System',
       body:'2 of 3 requested passes completed and 1 timed out. This stays attention-required until retry, reconfiguration, or an explicit acceptance of partial review. It is not finalised as a full Multi-Pass.' }));
     runs.push(partial);
@@ -32430,9 +32918,37 @@ window.PM56_EXT = window.PM56_EXT || {
                      askedIds:[], resolvedIds:[], duplicateIds:[], researchRoutedIds:[] },
       proposals:[], debateRounds:2, votes:[], hardConstraintViolations:[],
       dissent:[{ by:'Reviewer', text:'Append-only segments make compaction an operational problem nobody has owned yet.' }],
-      wondererLeads:[{ lead:'Content-addressed segment names would make replication a copy rather than a protocol.',
-                       tether:'Follows from the append-only segment proposal; unresearched, retained as a hypothesis.' }],
-      provisioning:[], synthesis:null };
+      /* WONV-002/005/008: a lead is TETHERED to its seed and carries an
+         explicit disposition. `hypothesis` is not a conclusion, and only a
+         `researched` or `user_decided` lead may enter a Plan. */
+      wondererLeads:[
+        { id:'lead-1',
+          lead:'Content-addressed segment names would make replication a copy rather than a protocol.',
+          seed:'append-only segment proposal',
+          tether:'Follows directly from the append-only segment proposal raised in round 1.',
+          state:'hypothesis', enteredPlan:false },
+        { id:'lead-2',
+          lead:'Compaction could be scheduled off the write path entirely.',
+          seed:'compaction ownership objection',
+          tether:'Follows from the Reviewer’s dissent about unowned compaction.',
+          state:'researched', enteredPlan:true,
+          research_ref:'research:compaction-off-path' }
+      ],
+      /* PART-014: the tie is broken on recorded grounds, never on response
+         order or model prestige. The record names which grounds decided it. */
+      synthesis:{
+        outcome:'hybrid',
+        decided_by:'synthesis_reasoning',
+        grounds:[
+          { kind:'hard_constraint', text:'The event log must survive a single-node loss; only the segmented proposal states a replication story.' },
+          { kind:'evidence', text:'The 90-day retention measurement exists for segments and not for the single-table approach.' },
+          { kind:'feasibility', text:'Segment compaction can be scheduled off the write path; the single-table vacuum cannot.' },
+          { kind:'risk', text:'Unowned compaction is the Reviewer’s recorded objection and stays open as a To-Do rather than being resolved by the vote.' }
+        ],
+        rejected:'single-table with partition pruning',
+        unresolved_disagreement:'Compaction ownership remains disputed and is retained, not treated as agreement.',
+        not_decided_by:['response_order','model_prestige','random'] },
+      provisioning:[] };
     tievote.messages.push(mkMsg(tievote,{ senderKind:'system', senderName:'System',
       body:'Support 2, oppose 2 across the four eligible voters. The Wonderer abstained by default and is excluded from the denominator — it is not counted as opposition, and the support percentage is 50% of 4, not 40% of 5. The tie is resolved by hard constraints, evidence quality, feasibility and risk in synthesis, never by response order.' }));
     runs.push(tievote);
@@ -32492,6 +33008,14 @@ window.PM56_EXT = window.PM56_EXT || {
     RTC.runs = JSON.parse(SEED_RUNS_JSON);
     RTC.draft = null;
     msgSeq = {};
+    /* The effect ledger is the INSTRUMENT the zero-side-effect proof reads.
+       A restore that left it holding a previous run's counters made every
+       later "no durable effect on cancel" reading unreliable, because the
+       baseline was already dirty. Rejected callbacks are evidence of a past
+       run and belong to that run, so they reset with it. */
+    RTC.effects = { runs:0, providerCalls:0, usageRecords:0, events:0,
+                    cards:0, settingsWrites:0, installs:0, participants:0 };
+    RTC.rejectedCallbacks = [];
   }
 
   /* Attach one `collab-run` reference message per seed run to its thread, ONCE,
@@ -32678,7 +33202,15 @@ window.PM56_EXT = window.PM56_EXT || {
       return '<div class="collab-dissent" data-k="collab-dissent"><strong>' + ctx.icon('warning', 11) + 'Preserved dissent · ' + esc(d.participantRole) + '</strong><p>' + esc(d.reason) + '</p></div>';
     }).join('');
     var wonder = (b.wondererLeads || []).map(function (w) {
-      return '<div class="collab-lead" data-k="collab-lead-' + esc(w.id) + '"><span class="collab-lead-tag">' + esc(w.status) + '</span><p>' + esc(w.lead) + '</p><p class="collab-sub">Connection: ' + esc(w.connection) + '</p></div>';
+      /* One vocabulary: state + tether. The old `status`/`connection` names are
+         still read so an older stored run renders rather than showing
+         `undefined`, but nothing writes them any more. */
+      var state = w.state || w.status || 'hypothesis';
+      var tether = w.tether || w.connection || '';
+      return '<div class="collab-lead" data-k="collab-lead-' + esc(w.id) + '" data-lead-state="' + esc(state) + '">' +
+        '<span class="collab-lead-tag">' + esc(state) + '</span><p>' + esc(w.lead) + '</p>' +
+        (w.seed ? '<p class="collab-sub">Seed: ' + esc(w.seed) + '</p>' : '') +
+        '<p class="collab-sub">Tether: ' + esc(tether) + '</p></div>';
     }).join('');
     return '<p class="collab-qmax" data-k="collab-qmax">' + esc(qLine) + '</p>' +
       (votes ? '<div class="collab-votes">' + votes + '</div>' : '') +
@@ -32845,7 +33377,7 @@ window.PM56_EXT = window.PM56_EXT || {
   });
   EXT.action('collab-cancel', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canCancel(run)) return true;
-    run.status = 'cancelled'; run.completedAt = nowIso(); run.stopEpoch += 1;
+    run.status = 'canceled'; run.completedAt = nowIso(); run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. New admissions stopped; the card, transcript, participants and artifacts remain with truthful cancelled state.' }));
     if (RT.composer.destination && RT.composer.destination.refId === run.id) {
       var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
@@ -32893,7 +33425,7 @@ window.PM56_EXT = window.PM56_EXT || {
     RT.composer.destinationProviders.push(function (ctx) {
       var out = [];
       RTC.runs.forEach(function (run) {
-        if (['completed', 'cancelled', 'failed'].indexOf(run.status) >= 0) return;
+        if (['completed', 'canceled', 'failed'].indexOf(run.status) >= 0) return;
         out.push({ id: 'collab:' + run.id, kind: 'workflow', destinationKind: run.kind, refId: run.id, label: KIND_LABEL[run.kind] + ' · ' + run.title, detail: plural(run.participants.length, 'participant', 'participants'), glyph: destinationGlyph(run.kind) });
         run.participants.forEach(function (p) {
           out.push({ id: 'collab:' + run.id + ':' + p.id, kind: 'participant', destinationKind: run.kind, refId: run.id, participantId: p.id, label: run.title + ' → ' + p.role, detail: 'direct to participant', glyph: destinationGlyph(run.kind) });
@@ -32912,6 +33444,38 @@ window.PM56_EXT = window.PM56_EXT || {
      `composerBelow` template string this module's own handler (below) also
      contributes to, so a nested render here would be reentrant. The send
      that triggered this hook already renders on its own next frame. */
+  /* MODAL-012. A BrainStorm asked for in PROSE must be HELD before any
+     provider dispatch, opened for configuration, and returned intact if the
+     user cancels. The cancel handler below has always known how to restore a
+     held request, but nothing ever produced one -- the restore path was
+     unreachable, so a prose request would simply have been sent. This is the
+     producer: it claims the submission, parks it in the durable ComposerBuffer
+     (so a thread switch or a reload does not lose it) and opens the modal.
+     It deliberately runs BEFORE the destination hook below. */
+  var NL_BRAINSTORM = /\b(brain\s?storm|brainstorm)\b/i;
+  function heldRequestFrom(thread, message, buffer){
+    return { threadId: thread && (thread.id || thread) || (buffer && buffer.thread_id) || null,
+             text: (message && (message.body || message.text)) || (buffer && buffer.text) || '',
+             attachments: (buffer && buffer.attachments ? buffer.attachments.slice() : []),
+             kind: 'brainstorm' };
+  }
+  RT.composer.preSendHooks = RT.composer.preSendHooks || [];
+  RT.composer.preSendHooks.push(function (ctx, thread, raw) {
+    if (RTC.draft) return false;                   /* already configuring */
+    if (!NL_BRAINSTORM.test(String(raw || ''))) return false;
+    var CS = window.PM56_COMPOSER_STATE;
+    var buffer = CS && CS.bufferFor ? CS.bufferFor(thread && thread.id) : null;
+    if (buffer && buffer.destination) return false; /* an explicit destination wins */
+    var held = heldRequestFrom(thread, { body: raw }, buffer);
+    if (CS && CS.holdRequest) CS.holdRequest(held.threadId, held);
+    openConfigureDraft('brainstorm', null, false);
+    if (RTC.draft) RTC.draft.heldRequest = held;
+    ctx.openDialog && ctx.openDialog({ type: 'collab-configure' });
+    ctx.toast && ctx.toast('BrainStorm held',
+      'Your request is held before any provider call. Configure it and press Start, or cancel and get the text back exactly as written.');
+    return true;                                   /* claimed: nothing was sent */
+  });
+
   if (RT.composer.commitHooks) {
     RT.composer.commitHooks.push(function (ctx, thread, message, buffer) {
       var dest = buffer && buffer.destination;
@@ -32942,7 +33506,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var d = RT.composer.destination;
     if (d && (d.kind === 'workflow' || d.kind === 'participant') && KIND_LABEL[d.destinationKind]) {
       var run = findRun(d.refId);
-      var ended = !run || ['completed', 'cancelled', 'failed'].indexOf(run.status) >= 0;
+      var ended = !run || ['completed', 'canceled', 'failed'].indexOf(run.status) >= 0;
       if (ended) {
         var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
         var empty = !buf || (!buf.text && !(buf.attachments && buf.attachments.length));
@@ -33354,6 +33918,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '<p class="collab-sub">No provider brand marks are drawn here — this concept’s shared context object does not expose a provider-mark renderer, so routes are shown as text rather than a letter-only substitute glyph.</p>' +
       (d.autoMode ? '<div class="collab-refusal-demo"><strong>Admission-gate refusal</strong><p class="collab-sub">Crew Auto criteria can only narrow admission. This always-refuses control proves it rather than describing it:</p><button class="soft-button" data-action="collab-crew-auto-refuse-demo">' + ctx.icon('lock', 12) + ' Try to widen authority (always refused)</button></div>' : '') +
       '</div>' +
+      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p><p class="collab-sub">Everything you configured above is still here. Fix the cause and press Start again; nothing partial was created.</p></div>' : '') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -33401,7 +33966,11 @@ window.PM56_EXT = window.PM56_EXT || {
     ctx.closeDialog();
     if (held) {
       var CS = window.PM56_COMPOSER_STATE;
-      if (CS && CS.setBuffer) CS.setBuffer(held.threadId, held.text, held.attachments || []);
+      /* Prefer the durable hold: it returns the exact text AND attachments and
+         clears the hold in one operation, so a restored request cannot later
+         be released a second time. */
+      if (CS && CS.restoreHeldRequest && CS.heldRequest && CS.heldRequest(held.threadId)) CS.restoreHeldRequest(held.threadId);
+      else if (CS && CS.setBuffer) CS.setBuffer(held.threadId, held.text, held.attachments || []);
       else if (ctx.state) ctx.state.composer = held.text;
       ctx.renderApp();
       ctx.toast('BrainStorm cancelled', 'Your request was returned to the composer exactly as written. Nothing ran, and nothing ran with defaults.');
@@ -33487,6 +34056,25 @@ window.PM56_EXT = window.PM56_EXT || {
     }
   });
 
+  /* Typed Start preflight. `forceFailure` exists so the refusal path is
+     drivable in a concept that has no provider to fail; every other clause is
+     a real check over the draft the user configured. */
+  function startPreflight(d) {
+    if (d.forceFailure)
+      return { ok:false, error:String(d.forceFailure), slot:null,
+               message:'Start was refused ('+d.forceFailure+'). Your configuration is unchanged; no run, card or participant record was created.' };
+    for (var i = 0; i < d.rows.length; i++) {
+      var r = d.rows[i], m = modelById(r.requestedModelId);
+      if (!m)
+        return { ok:false, error:'model_unresolved', slot:r.role,
+                 message:'“'+r.role+'” names a model this project cannot resolve. Nothing was started; pick a model or remove the slot.' };
+      if (UNAVAILABLE_DEMO[r.requestedModelId] && !fallbackModelFor(r.requestedModelId))
+        return { ok:false, error:'provider_unavailable', slot:r.role,
+                 message:'“'+r.role+'” is unavailable and no same-provider substitute is configured. Nothing was started, and no failed participant was recorded — no provider attempt was made.' };
+    }
+    return { ok:true };
+  }
+
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
@@ -33506,6 +34094,20 @@ window.PM56_EXT = window.PM56_EXT || {
       ctx.closeDialog();
       ctx.renderOverlays();
       ctx.toast('Crew Auto configured and enabled', 'Committed with a ' + crewDefA.autoRosterTemplate.length + '-member roster template and a cap of ' + crewDefA.autoMaxMembers + '. It still cannot widen authority or override an explicit single-agent selection.');
+      return true;
+    }
+    /* MODAL-005 / PART-021. PREFLIGHT, before anything durable exists. A
+       required slot whose model cannot be resolved is a refused START: the
+       draft keeps every value the user entered, the failure is typed, and no
+       run, card, participant record or provider attempt is created. A model
+       being unavailable at CONFIGURATION time is not a failed runtime
+       participant -- claiming one would assert a provider attempt that never
+       happened. */
+    var preflight = startPreflight(d);
+    if (!preflight.ok) {
+      d.lastFailure = preflight;                 /* shown in the modal, values kept */
+      ctx.renderOverlays();
+      ctx.toast('Start refused', preflight.message);
       return true;
     }
     var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
@@ -33810,7 +34412,10 @@ window.PM56_EXT = window.PM56_EXT || {
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];
       if(p.additiveRoleKind==='wonderer' && p.status!=='disabled'){ abstain++; continue; }
-      if(p.additiveRoleKind==='grill' && !p.votingRole){ abstain++; continue; }
+      /* Every producer writes `grill_me`; this branch used to test `grill`,
+         so it never fired and a Grill Me slot carrying a vote would have been
+         counted without ever being configured as an ordinary voting role. */
+      if((p.additiveRoleKind==='grill_me'||p.additiveRoleKind==='grill') && !p.votingRole){ abstain++; continue; }
       if(p.outcome && p.outcome!=='completed'){ ineligible++; continue; }
       if(!p.outcome && p.status!=='done'){ ineligible++; continue; }
       if(p.vote==='oppose') oppose++; else if(p.vote==='support') support++; else abstain++;
@@ -33826,6 +34431,15 @@ window.PM56_EXT = window.PM56_EXT || {
   /* PART-007..008, PART-016..019. The completion predicate for each kind. A
      provider turn ending is never enough, and a partial result never
      finalises as a full one. */
+  /* The participant slot that IS the coordinator, when one exists. */
+  function coordinatorSlot(run){
+    var c=run.coordinator; if(!c) return null;
+    if(typeof c==='string') return participant(run,c);
+    if(c.participant_id) return participant(run,c.participant_id);
+    for(var i=0;i<run.participants.length;i++) if(run.participants[i].isCoordinator) return run.participants[i];
+    return null;
+  }
+
   function completionProjection(run){
     var req=[], done=[], failed=[], waived=[], i, p;
     for(i=0;i<run.participants.length;i++){
@@ -33841,8 +34455,15 @@ window.PM56_EXT = window.PM56_EXT || {
     var outputs = run.expectedOutputs || [];
     var missingOutputs = outputs.filter(function(o){ return !o.delivered && !o.waived; })
                                 .map(function(o){ return o.id; });
+    /* `run.coordinator` is a DESCRIPTOR ({kind,label}), not a participant id,
+       so `participant(run, run.coordinator)` was always undefined and this
+       predicate could never become true -- a failed coordinator read as a
+       healthy run. Resolve the coordinator's slot the way the roster does:
+       by its explicit `participant_id` when it names one, otherwise by the
+       slot flagged `isCoordinator`. A `parent_assistant` coordinator has no
+       participant slot and legitimately cannot fail this way. */
     var coordinatorFailed = !!(run.coordinator && (function(){
-      var c=participant(run, run.coordinator);
+      var c=coordinatorSlot(run);
       return c && c.outcome && c.outcome!=='completed';
     })());
     var tally = run.kind==='brainstorm' ? voteTally(run) : null;
@@ -33866,9 +34487,21 @@ window.PM56_EXT = window.PM56_EXT || {
          corroboration, agreement, quorum or consensus. */
       review_truth: run.kind==='review' ? reviewTruth(run) : null,
       clean_completion: !reason,
-      attention_reason: reason
+      attention_reason: reason,
+      /* PART-008/017: an attention-required run states what the user may do.
+         A disclosed count with no admitted action is a dead end, and a silent
+         coordinator hand-over is the failure this list exists to prevent. */
+      attention_required: !!reason,
+      allowed_actions: reason ? ATTENTION_ACTIONS[reason].slice() : []
     };
   }
+  var ATTENTION_ACTIONS = {
+    coordinator_failed:              ['replace_coordinator','retry_coordinator','cancel','details'],
+    required_participants_unresolved:['retry','replace','waive','accept_partial','cancel','details'],
+    required_outputs_missing:        ['retry','waive_output','cancel','details'],
+    vote_tie_unresolved:             ['synthesize','another_round','cancel','details'],
+    pending_user_decision:           ['decide','cancel','details']
+  };
 
   function reviewTruth(run){
     var requested = (run.review && run.review.requestedPasses) || run.participants.length;
@@ -33922,7 +34555,15 @@ window.PM56_EXT = window.PM56_EXT || {
     rejectedCallbacks: function(){ return RTC.rejectedCallbacks.slice(); },
     voteTally: function(runId){ var r=findRun(runId); return r?voteTally(r):null; },
     completion: function(runId){ var r=findRun(runId); return r?completionProjection(r):null; },
-    outcomeVocabulary: function(){ return OUTCOMES.slice(); }
+    outcomeVocabulary: function(){ return OUTCOMES.slice(); },
+    /* One spelling of one state word. The run status said `cancelled` while
+       every other terminal vocabulary in this concept — participant outcomes,
+       scheduled-message states, Plan status, Goal status — says `canceled`.
+       Two spellings of the same state inside one module is a trap for anyone
+       porting it, so the state word is normalised and published here. */
+    runStatusVocabulary: function(){
+      return ['configuring','running','paused','blocked','completed','canceled','failed'];
+    }
   };
 })();
 
@@ -34697,13 +35338,28 @@ window.PM56_EXT = window.PM56_EXT || {
           project_id: 'pm', thread_id: 'query',
           destination_ref: { kind: 'workflow', label: 'Crew · Query Performance', detail: '3 agents · coordinator', unresolvable: true },
           text: 'Crew, fold the concurrent-write-load check into tonight’s pass and report back before the window closes.',
-          attachment_refs: [{ name: 'benchmark.csv', kind: 'file', demo: true }],
+          /* SMSG-007/008: frozen at COMMIT — exact content hash and version.
+             The second entry is the case the correction exists for: the
+             retained version is gone at dispatch, so the schedule HOLDS. It
+             does not send whatever those bytes are now. */
+          attachment_refs: [
+            { name: 'benchmark.csv', kind: 'file', content_hash: 'sha-demo:9c14e0d2',
+              artifact_version: 1, availability: 'available', demo: true },
+            { name: 'load-profile.json', kind: 'file', content_hash: 'sha-demo:2b77af10',
+              artifact_version: 3, availability: 'missing', demo: true,
+              unavailable_note: 'The exact retained revision was deleted from the project after this schedule was committed.' }
+          ],
           requested_runtime: { modelId: 'opus5', modelName: 'Claude Opus 5', provider: 'Anthropic', account: 'Work · anthropic-work' },
           scheduled_at_utc: '2026-09-03T04:30:00Z', timezone: 'America/Chicago', local_wall_time: '23:30',
           missed_policy: 'next_available', grace_seconds: 1800,
           state: 'held', expected_thread_currentness: 21, revision: 1,
           idempotencyKey: 'sm-route-held',
-          heldReason: 'Recorded destination "Crew · Query Performance" is no longer resolvable (the crew run ended). Holding the dispatch rather than substituting a different destination.',
+          heldReason: 'Recorded destination "Crew · Query Performance" is no longer resolvable (the crew run ended), and the retained revision of load-profile.json is missing. Holding the dispatch rather than substituting a different destination or newer bytes.',
+          dispatch_attempts: [
+            { attempt_id: 'sda-sm-route-held-1', at: '2026-09-03T04:30:05Z', outcome: 'held',
+              requested_route: 'opus5 · Work · anthropic-work', effective_route: null,
+              reason: 'destination_unresolvable + retained_attachment_missing' }
+          ],
           dispatchedMessageId: null, dispatchedAt: null,
           createdAt: t0, updatedAt: '2026-09-03T04:30:05Z'
         },
@@ -34739,6 +35395,13 @@ window.PM56_EXT = window.PM56_EXT || {
           idempotencyKey: 'sm-failed-model',
           /* SMSG-011: an EXPLICIT model selection never silently falls back. */
           failureReason: 'Kimi K3 Turbo was unavailable at dispatch and this schedule names it explicitly, so no substitute was chosen. The failed attempt is preserved; editing and retrying creates a new attempt identity.',
+          /* SMSG-013: the historical attempt is immutable evidence. A retry
+             appends; it never rewrites this row. */
+          dispatch_attempts: [
+            { attempt_id: 'sda-sm-failed-model-1', at: '2026-09-03T03:15:02Z', outcome: 'failed',
+              requested_route: 'kimi-k3-turbo · Personal · moonshot', effective_route: null,
+              reason: 'Provider window exhausted on this account; no substitute was permitted.' }
+          ],
           heldReason: null, dispatchedMessageId: null, dispatchedAt: null,
           createdAt: t0, updatedAt: '2026-09-03T03:15:02Z'
         },
@@ -34786,6 +35449,20 @@ window.PM56_EXT = window.PM56_EXT || {
             execution_topology:'agent', collaboration_definition_ref:null,
             eligibility_policy:'window_and_quota_conjunction' },
           runtime_created: false,
+          /* PSCHED-014: TWO idempotency domains, deliberately different keys.
+             Repeated creation returns one schedule; repeated timer delivery
+             admits one run. A wall-clock stamp is not a dedup key for either. */
+          idempotency_key: 'sched:ap-index@V5:recurring_window:22:00:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-nightly-index:occurrence',
+          /* PSCHED-008: eligibility is the CONJUNCTION, evaluated, not a
+             policy label. `eligible` is the AND and can never be either half. */
+          eligibility: { window:{ satisfied:false, reason:'Outside 22:00–02:00 America/Chicago.' },
+                         quota:{ satisfied:true,  reason:'Usage available.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:false },
+          /* PSCHED-009: recurrence RESUMES one unfinished run; it never starts
+             a second one, and a terminal run ends the recurrence's claim. */
+          resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 5, exact_target_hash: demoHash('ap-index:5'),
           schedule_kind: 'recurring_window',
           timezone: 'America/Chicago', local_start: '22:00', local_pause: '02:00',
@@ -34800,6 +35477,21 @@ window.PM56_EXT = window.PM56_EXT || {
         {
           schedule_id: 'bld-auth-nightly',
           project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-auth',
+          /* PSCHED-001: EVERY Build At stores one exact topology. This record
+             carried none, so a dispatcher reading it would have had to infer
+             one -- which is the exact inference the correction forbids. */
+          execution_topology: 'agent',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'agent', collaboration_definition_ref:null,
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          idempotency_key: 'sched:ap-auth@V2:one_time:01:00:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-auth-nightly:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 01:00 slot.' },
+                         quota:{ satisfied:true, reason:'Usage available.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:true },
+          resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 2, exact_target_hash: demoHash('ap-auth:2'),
           schedule_kind: 'one_time',
           timezone: 'America/Chicago', local_start: '01:00', local_pause: null,
@@ -34815,6 +35507,82 @@ window.PM56_EXT = window.PM56_EXT || {
             { at: '2026-09-03T05:10:00Z', text: 'Invalidated: Plan ap-auth was revised from V2 to V3. Automatic dispatch disabled until an explicit rebind.' }
           ],
           createdAt: t0, updatedAt: '2026-09-03T05:10:00Z'
+        },
+        /* PSCHED-002: a CREW scheduled build. The validated
+           CollaborationDefinition, its revision, the requested AND effective
+           assignments, the permission ceiling and the limits all freeze at
+           schedule commit, so dispatch needs no unattended modal and cannot
+           adopt whatever the Crew defaults happen to be that night. */
+        {
+          schedule_id: 'bld-crew-embeds',
+          project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-embeds',
+          execution_topology: 'crew',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'crew',
+            collaboration_definition_ref:'collabdef:crew@rev4',
+            collaboration_definition_revision:4,
+            assignments:[
+              { slot_id:'coordinator', required:true, requested_identity:'model:claude-opus-5', effective_identity:'model:claude-opus-5' },
+              { slot_id:'member-1',    required:true, requested_identity:'model:claude-sonnet-5', effective_identity:'model:claude-sonnet-5' },
+              { slot_id:'member-2',    required:false, requested_identity:'model:claude-haiku-4-5', effective_identity:'model:claude-haiku-4-5' }
+            ],
+            permission_ceiling:'Auto',
+            limits:{ time_limit_minutes:45, token_limit:400000, cost_limit_usd:6 },
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          idempotency_key: 'sched:ap-embeds@V1:one_time:23:30:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-crew-embeds:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 23:30 slot.' },
+                         quota:{ satisfied:false, reason:'Usage exhausted until the 04:00 reset.' },
+                         permission:{ satisfied:true, reason:'Auto within ceiling.' },
+                         eligible:false },
+          resumes_run_id: null, stops_on_terminal: true,
+          exact_target_version: 1, exact_target_hash: demoHash('ap-embeds:1'),
+          schedule_kind: 'one_time',
+          timezone: 'America/Chicago', local_start: '23:30', local_pause: null,
+          days_of_week: [],
+          wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
+          state: 'active', revision: 1, invalidated_reason: null,
+          pendingVersion: null, pendingHash: null,
+          runPhase: 'idle', demoClockIso: t0, lastOccurrenceStart: null, occurrencesFired: [],
+          log: [{ at: t0, text: 'Schedule created: one-time Crew build at 11:30 PM. CollaborationDefinition rev 4 frozen with three assignments; no CrewRun exists yet.' }],
+          createdAt: t0, updatedAt: t0
+        },
+        /* PSCHED-013: an admission that FAILED. The schedule record and the
+           exact reason survive for repair or cancellation, and no PlanRun,
+           Goal or CrewRun was left behind -- the failure mode this row exists
+           to make checkable is a half-created run with a Building… card. */
+        {
+          schedule_id: 'bld-flags-held',
+          project_id: 'pm', target_kind: 'assistant_plan_run', target_id: 'ap-flags',
+          execution_topology: 'goal_driven',
+          topology_snapshot: { schema:'pm.schedule.plan_topology_snapshot.v1',
+            execution_topology:'goal_driven', collaboration_definition_ref:null,
+            eligibility_policy:'window_and_quota_conjunction' },
+          runtime_created: false,
+          plan_run_id: null, goal_id: null, crew_run_id: null,
+          idempotency_key: 'sched:ap-flags@V1:one_time:02:15:America/Chicago',
+          dispatch_idempotency_key: 'dispatch:bld-flags-held:one_time',
+          eligibility: { window:{ satisfied:true, reason:'One-time 02:15 slot.' },
+                         quota:{ satisfied:true, reason:'Usage available.' },
+                         permission:{ satisfied:false, reason:'The worktree this Plan names no longer exists.' },
+                         eligible:false },
+          resumes_run_id: null, stops_on_terminal: true,
+          exact_target_version: 1, exact_target_hash: demoHash('ap-flags:1'),
+          schedule_kind: 'one_time',
+          timezone: 'America/Chicago', local_start: '02:15', local_pause: null,
+          days_of_week: [],
+          wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
+          state: 'held',
+          held_reason: 'Admission refused: the worktree feature/flags named by this Plan no longer exists. No PlanRun, Goal or CrewRun was created; the schedule is intact for repair or cancellation.',
+          invalidated_reason: null,
+          revision: 1, pendingVersion: null, pendingHash: null,
+          runPhase: 'idle', demoClockIso: t0, lastOccurrenceStart: null, occurrencesFired: [],
+          log: [
+            { at: t0, text: 'Schedule created: one-time goal-driven build at 2:15 AM.' },
+            { at: '2026-09-03T07:15:00Z', text: 'Held at first dispatch: worktree predicate false. Nothing partial was admitted.' }
+          ],
+          createdAt: t0, updatedAt: '2026-09-03T07:15:00Z'
         }
       ],
       quotaConsents: [
@@ -35115,6 +35883,34 @@ window.PM56_EXT = window.PM56_EXT || {
     persistNow();
     return rec;
   }
+  /* PSCHED-006. The PLAN owner calls this when it writes a new version. Until
+     it existed the only revision path was `simulateRevision`, driven from this
+     module's own management dialog -- so an ordinary Revise in the composer
+     left every durable build schedule `active` and still bound to the old
+     version, free to dispatch a build of bytes the user had already replaced.
+     Invalidation is per-schedule and explicit: nothing is retargeted
+     automatically, and the row keeps naming the stale version so the user can
+     rebind or recreate it deliberately. */
+  function invalidateForPlanRevision(planId, oldVersion, newVersion, newHash) {
+    var out = { invalidated: [], untouched: [] };
+    P().buildSchedules.forEach(function (rec) {
+      if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
+      if (rec.state === 'invalidated' || rec.state === 'cancelled' || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+      if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
+      rec.pendingVersion = newVersion;
+      rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
+      rec.state = 'invalidated';
+      rec.invalidated_reason = 'Plan ' + planId + ' was revised from V' + rec.exact_target_version +
+        ' to V' + newVersion + ' after this schedule was created. Automatic dispatch is disabled until you rebind.';
+      rec.revision += 1; rec.updatedAt = nowIso();
+      logBuildLine(rec, rec.invalidated_reason);
+      logEvent('execution_window.invalidated', rec.schedule_id, 'target_version_changed', rec.invalidated_reason);
+      out.invalidated.push(rec.schedule_id);
+    });
+    if (out.invalidated.length) persistNow();
+    return out;
+  }
+
   function rebindBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state !== 'invalidated') return null;
     if (rec.pendingVersion != null) rec.exact_target_version = rec.pendingVersion;
@@ -35564,6 +36360,15 @@ window.PM56_EXT = window.PM56_EXT || {
       expired_reason:rec.expiredReason || null,
       revision:rec.revision,
       /* SMSG-005: Edit and Cancel are only available where the owner allows. */
+      /* The typed contract (pm.schedule.message_projection.v1) names these
+         `edit_available` / `cancel_available`. This projection declared that
+         schema id while publishing `can_edit` / `can_cancel`, so a native
+         reader following the contract would have found neither. Both names are
+         emitted: the contract name is authoritative and the short name stays
+         for the readers already written against it. */
+      dispatch_attempts: list(rec.dispatch_attempts),
+      edit_available:['scheduled','held','failed'].indexOf(rec.state)>=0,
+      cancel_available:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_edit:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_cancel:['scheduled','held','failed'].indexOf(rec.state)>=0,
       currentness_hash:demoHash(rec.scheduled_dispatch_id+':'+rec.revision+':'+rec.state)
@@ -35580,7 +36385,8 @@ window.PM56_EXT = window.PM56_EXT || {
         content_hash:a.content_hash || null,
         folder_manifest_hash:a.folder_manifest_hash || null,
         snapshot_ref:a.snapshot_ref || null,
-        availability:a.availability || 'available' };
+        availability:a.availability || 'available',
+        unavailable_note:a.unavailable_note || null };
     });
   }
 
@@ -35610,7 +36416,8 @@ window.PM56_EXT = window.PM56_EXT || {
       (snaps.length
         ? '<ul class="sched-card-snaps">'+snaps.map(function(s){
             return '<li data-availability="'+esc(s.availability)+'"><code>'+esc(s.attachment_id)+(s.artifact_version?'@'+esc(s.artifact_version):'')+'</code>'+
-                   '<span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em></li>'; }).join('')+'</ul>'
+                   '<span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em>'+
+                   (s.unavailable_note?'<em class="sched-snap-why">'+esc(s.unavailable_note)+'</em>':'')+'</li>'; }).join('')+'</ul>'
         : '')+
       '<div class="sched-card-foot">'+
         '<button type="button" class="soft-button" data-action="sched-card-details" data-id="'+esc(rec.scheduled_dispatch_id)+'">Details</button>'+
@@ -35698,7 +36505,11 @@ window.PM56_EXT = window.PM56_EXT || {
       var b=builds[i];
       if(b.target_id===assoc.plan_id && b.state!=='invalidated'){
         b.state='invalidated';
-        b.invalidReason='The bound execution was cancelled at continuation epoch '+assoc.epoch+'.';
+        b.invalidated_reason = assoc.why ||
+          ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
+        b.invalidReason = b.invalidated_reason;
+        b.updatedAt = nowIso();
+        logBuildLine(b, 'Invalidated: '+b.invalidated_reason);
         out.schedules++;
       }
     }
@@ -35941,6 +36752,7 @@ window.PM56_EXT = window.PM56_EXT || {
     attachmentSnapshots: function (id) { var r = smById(id); return r ? attachmentSnapshots(r) : null; },
     stateVocabulary: function () { return SM_ORDER.slice(); },
     invalidateForExecution: invalidateForExecution,
+    invalidateForPlanRevision: invalidateForPlanRevision,
     topologyOf: function (scheduleId) {
       var arr = P().buildSchedules, i;
       for (i = 0; i < arr.length; i++) if (arr[i].schedule_id === scheduleId) return arr[i].topology_snapshot || null;
@@ -36590,6 +37402,10 @@ window.PM56_EXT = window.PM56_EXT || {
       rect: payload.rect || null,
       contextId: payload.elCtx ? payload.elCtx.id : null,
       destinationLabel: destinationLabel(),
+      /* BROWSER-002 / BSTALE-008: this payload is its own submission. The
+         composer reconciler must not read it as a composer send, or an
+         attachment sitting in the tray with no typed text is discarded. */
+      isolatedSubmission: true,
       demo: true
     };
     ctx.appendMessage(msg, thread);
@@ -41833,7 +42649,24 @@ recommended path                  migration 0043 + rollback</div></div></section
     renderApp();
   }
   function deliverSend(raw){
-    const t=activeThread();state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
+    const t=activeThread();
+    /* PRE-SEND CLAIM (MODAL-012). A feature module may HOLD a submission
+       before it is admitted to the thread -- a BrainStorm asked for in prose
+       must reach its configuration modal, not the provider. A hook returning
+       true owns the text and is responsible for restoring it if the user
+       cancels; every hook that returns anything else leaves the ordinary send
+       path exactly as it was. Registered through the shared composer runtime
+       so no module has to reopen this function. */
+    const RTc = (window.PM56_RUNTIME||{}).composer;
+    if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
+      for(let i=0;i<RTc.preSendHooks.length;i++){
+        let claimed=false;
+        try{ claimed = RTc.preSendHooks[i](extCtx(), t, raw)===true; }
+        catch(err){ console.error('PM56 preSendHook threw', err); }
+        if(claimed){ state.composer=''; clearComposerField(); renderApp(); return; }
+      }
+    }
+    state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
     /* pmSyncAttrs deliberately will not write .value while the element is
        focused, so it cannot fight the caret mid-keystroke. Send is focused too,
        but it is a deliberate clear rather than a render racing the typist, so it

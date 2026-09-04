@@ -306,18 +306,18 @@
       "name": "PDET-008 every embed freezes an exact artifact_version",
       "pass": true,
       "detail": [
-        "art-flow-read-path@v3",
-        "art-p99-by-tenant@v7",
-        "art-call-graph@v2",
-        "art-explain-plan@v1",
-        "art-schema-delta@v4",
-        "art-rollout-checks@v2",
-        "art-repro-capture@v1",
-        "art-latency-explorer@v5",
-        "art-deleted-trace@v1",
-        "art-row-counts@v2",
-        "art-prod-dashboard@v9",
-        "art-cad-model@v1"
+        "art-flow-read-path@3",
+        "art-p99-by-tenant@7",
+        "art-call-graph@2",
+        "art-explain-plan@1",
+        "art-schema-delta@4",
+        "art-rollout-checks@2",
+        "art-repro-capture@1",
+        "art-latency-explorer@5",
+        "art-deleted-trace@1",
+        "art-row-counts@2",
+        "art-prod-dashboard@9",
+        "art-cad-model@1"
       ]
     },
     {
@@ -728,7 +728,7 @@
       "pass": true,
       "detail": {
         "schema": "pm.browser.component_revalidation_result.v1",
-        "attachment_id": "bctx-1-mtm8vtgm",
+        "attachment_id": "bctx-1-mtmazwen",
         "captured_generation": 1,
         "current_generation": 1,
         "locator_result_count": 1,

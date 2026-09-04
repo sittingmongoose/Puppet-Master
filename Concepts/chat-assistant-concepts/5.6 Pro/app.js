@@ -2992,7 +2992,24 @@ recommended path                  migration 0043 + rollback</div></div></section
     renderApp();
   }
   function deliverSend(raw){
-    const t=activeThread();state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
+    const t=activeThread();
+    /* PRE-SEND CLAIM (MODAL-012). A feature module may HOLD a submission
+       before it is admitted to the thread -- a BrainStorm asked for in prose
+       must reach its configuration modal, not the provider. A hook returning
+       true owns the text and is responsible for restoring it if the user
+       cancels; every hook that returns anything else leaves the ordinary send
+       path exactly as it was. Registered through the shared composer runtime
+       so no module has to reopen this function. */
+    const RTc = (window.PM56_RUNTIME||{}).composer;
+    if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
+      for(let i=0;i<RTc.preSendHooks.length;i++){
+        let claimed=false;
+        try{ claimed = RTc.preSendHooks[i](extCtx(), t, raw)===true; }
+        catch(err){ console.error('PM56 preSendHook threw', err); }
+        if(claimed){ state.composer=''; clearComposerField(); renderApp(); return; }
+      }
+    }
+    state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
     /* pmSyncAttrs deliberately will not write .value while the element is
        focused, so it cannot fight the caret mid-keystroke. Send is focused too,
        but it is a deliberate clear rather than a render racing the typist, so it

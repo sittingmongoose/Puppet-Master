@@ -42,7 +42,7 @@
     {
       "name": "the \"Schedule\" confirm button is reachable at its own rendered screen position (not occluded by other content)",
       "pass": true,
-      "detail": "{\"dialogComputedPosition\":\"fixed\",\"dialogRect\":{\"x\":379.8955078125,\"y\":269.67767333984375,\"width\":680.208984375,\"height\":360.4232177734375,\"top\":269.67767333984375,\"right\":1060.1044921875,\"bottom\":630.1008911132812,\"left\":379.8955078125},\"buttonRect\":{\"x\":958.0731201171875,\"y\":589.0883178710938,\"width\":87.0267333984375,\"height\":30.00921630859375,\"top\":589.0883178710938,\"right\":1045.099853515625,\"bottom\":619.0975341796875,\"left\":958.0731201171875},\"elementActuallyAtButtonCenter\":\"BUTTON.primary-button\",\"hitIsTheButton\":true}"
+      "detail": "{\"dialogComputedPosition\":\"fixed\",\"dialogRect\":{\"x\":379.8956298828125,\"y\":269.6778564453125,\"width\":680.208740234375,\"height\":360.423095703125,\"top\":269.6778564453125,\"right\":1060.1043701171875,\"bottom\":630.1009521484375,\"left\":379.8956298828125},\"buttonRect\":{\"x\":958.0730590820312,\"y\":589.08837890625,\"width\":87.02667236328125,\"height\":30.00921630859375,\"top\":589.08837890625,\"right\":1045.0997314453125,\"bottom\":619.0975952148438,\"left\":958.0730590820312},\"elementActuallyAtButtonCenter\":\"BUTTON.primary-button\",\"hitIsTheButton\":true}"
     },
     {
       "name": "a real mouse click on \"Schedule\" reaches scheduling.js's dialog",
@@ -162,12 +162,12 @@
     {
       "name": "Schedule freezes the exact composer text into a real ScheduledMessageSnapshot",
       "pass": true,
-      "detail": "{\"scheduled_dispatch_id\":\"sm-i7pnz2u-mtm0b4a8\",\"project_id\":\"pm\",\"thread_id\":\"route\",\"destination_ref\":null,\"text\":\"Idempotency probe — dispatched live for this run.\",\"attachment_refs\":[],\"requested_runtime\":{\"modelId\":\"sonnet46\",\"modelName\":\"Claude Sonnet 4.6\",\"provider\":\"Anthropic\",\"account\":\"Work · anthropic-work\"},\"scheduled_at_utc\":\"2026-09-04T03:57:00.000Z\",\"timezone\":\"America/Chicago\",\"local_wall_time\":\"22:57\",\"missed_policy\":\"hold\",\"grace_seconds\":1800,\"state\":\"scheduled\",\"expected_thread_currentness\":16,\"revision\":1,\"idempotencyKey\":\"sm-i7pnz2u-mtm0b4a8\",\"heldReason\":null,\"dispatchedMessageId\":null,\"dispatchedAt\":null,\"createdAt\":\"2026-09-03T20:57:52.496Z\",\"updatedAt\":\"2026-09-03T20:57:52.496Z\"}"
+      "detail": "{\"scheduled_dispatch_id\":\"sm-isr2hpr-mtmb07wm\",\"project_id\":\"pm\",\"thread_id\":\"route\",\"destination_ref\":null,\"text\":\"Idempotency probe — dispatched live for this run.\",\"attachment_refs\":[],\"requested_runtime\":{\"modelId\":\"sonnet46\",\"modelName\":\"Claude Sonnet 4.6\",\"provider\":\"Anthropic\",\"account\":\"Work · anthropic-work\"},\"scheduled_at_utc\":\"2026-09-04T08:57:00.000Z\",\"timezone\":\"America/Chicago\",\"local_wall_time\":\"03:57\",\"missed_policy\":\"hold\",\"grace_seconds\":1800,\"state\":\"scheduled\",\"expected_thread_currentness\":16,\"revision\":1,\"idempotencyKey\":\"sm-isr2hpr-mtmb07wm\",\"heldReason\":null,\"dispatchedMessageId\":null,\"dispatchedAt\":null,\"createdAt\":\"2026-09-04T01:57:19.750Z\",\"updatedAt\":\"2026-09-04T01:57:19.750Z\"}"
     },
     {
       "name": "Dispatch now marks the scheduled record as dispatched",
       "pass": true,
-      "detail": "{\"scheduled_dispatch_id\":\"sm-i7pnz2u-mtm0b4a8\",\"project_id\":\"pm\",\"thread_id\":\"route\",\"destination_ref\":null,\"text\":\"Idempotency probe — dispatched live for this run.\",\"attachment_refs\":[],\"requested_runtime\":{\"modelId\":\"sonnet46\",\"modelName\":\"Claude Sonnet 4.6\",\"provider\":\"Anthropic\",\"account\":\"Work · anthropic-work\"},\"scheduled_at_utc\":\"2026-09-04T03:57:00.000Z\",\"timezone\":\"America/Chicago\",\"local_wall_time\":\"22:57\",\"missed_policy\":\"hold\",\"grace_seconds\":1800,\"state\":\"dispatched\",\"expected_thread_currentness\":16,\"revision\":1,\"idempotencyKey\":\"sm-i7pnz2u-mtm0b4a8\",\"heldReason\":null,\"dispatchedMessageId\":\"sched-sent-dd9lcvi-mtm0b4s7\",\"dispatchedAt\":\"2026-09-03T20:57:53.228Z\",\"createdAt\":\"2026-09-03T20:57:52.496Z\",\"updatedAt\":\"2026-09-03T20:57:53.228Z\"}"
+      "detail": "{\"scheduled_dispatch_id\":\"sm-isr2hpr-mtmb07wm\",\"project_id\":\"pm\",\"thread_id\":\"route\",\"destination_ref\":null,\"text\":\"Idempotency probe — dispatched live for this run.\",\"attachment_refs\":[],\"requested_runtime\":{\"modelId\":\"sonnet46\",\"modelName\":\"Claude Sonnet 4.6\",\"provider\":\"Anthropic\",\"account\":\"Work · anthropic-work\"},\"scheduled_at_utc\":\"2026-09-04T08:57:00.000Z\",\"timezone\":\"America/Chicago\",\"local_wall_time\":\"03:57\",\"missed_policy\":\"hold\",\"grace_seconds\":1800,\"state\":\"dispatched\",\"expected_thread_currentness\":16,\"revision\":1,\"idempotencyKey\":\"sm-isr2hpr-mtmb07wm\",\"heldReason\":null,\"dispatchedMessageId\":\"sched-sent-xz4i5t2-mtmb08f8\",\"dispatchedAt\":\"2026-09-04T01:57:20.501Z\",\"createdAt\":\"2026-09-04T01:57:19.750Z\",\"updatedAt\":\"2026-09-04T01:57:20.501Z\"}"
     },
     {
       "name": "\"Dispatch now\" delivers the message into the THREAD THE USER IS LOOKING AT",
@@ -187,7 +187,7 @@
     {
       "name": "the duplicate dispatch is recorded as suppressed, not silently ignored",
       "pass": true,
-      "detail": "[{\"id\":\"ev-10-mtm0b5f9\",\"at\":\"2026-09-03T20:57:53.973Z\",\"type\":\"scheduled_dispatch.dispatched\",\"ref\":\"sm-i7pnz2u-mtm0b4a8\",\"clause\":null,\"detail\":\"Duplicate fire suppressed by idempotency key \\\"sm-i7pnz2u-mtm0b4a8\\\"; original result returned unchanged.\"},{\"id\":\"ev-9-mtm0b4uk\",\"at\":\"2026-09-03T20:57:53.228Z\",\"type\":\"scheduled_dispatch.dispatched\",\"ref\":\"sm-i7pnz2u-mtm0b4a8\",\"clause\":null,\"detail\":\"Delivered the exact frozen text, attachments and destination into Provider Route Change.\"},{\"id\":\"ev-8-mtm0b4a8\",\"at\":\"2026-09-03T20:57:52.496Z\",\"type\":\"scheduled_dispatch.created\",\"ref\":\"sm-i7pnz2u-mtm0b4a8\",\"clause\":null,\"detail\":\"Scheduled for 10:57 PM Chicago · America/Chicago on 2026-09-03.\"}]"
+      "detail": "[{\"id\":\"ev-10-mtmb091b\",\"at\":\"2026-09-04T01:57:21.215Z\",\"type\":\"scheduled_dispatch.dispatched\",\"ref\":\"sm-isr2hpr-mtmb07wm\",\"clause\":null,\"detail\":\"Duplicate fire suppressed by idempotency key \\\"sm-isr2hpr-mtmb07wm\\\"; original result returned unchanged.\"},{\"id\":\"ev-9-mtmb08hh\",\"at\":\"2026-09-04T01:57:20.501Z\",\"type\":\"scheduled_dispatch.dispatched\",\"ref\":\"sm-isr2hpr-mtmb07wm\",\"clause\":null,\"detail\":\"Delivered the exact frozen text, attachments and destination into Provider Route Change.\"},{\"id\":\"ev-8-mtmb07wm\",\"at\":\"2026-09-04T01:57:19.750Z\",\"type\":\"scheduled_dispatch.created\",\"ref\":\"sm-isr2hpr-mtmb07wm\",\"clause\":null,\"detail\":\"Scheduled for 3:57 AM Chicago · America/Chicago on 2026-09-04.\"}]"
     },
     {
       "name": "a manual Stop latches, visibly, in the Precedence panel",
@@ -197,12 +197,12 @@
     {
       "name": "an auto-resume attempt while manually stopped is REFUSED with a visible, stated reason",
       "pass": true,
-      "detail": "{\"id\":\"ev-12-mtm0b8mu\",\"at\":\"2026-09-03T20:57:58.134Z\",\"type\":\"runtime.quota_resume_attempted\",\"ref\":\"qrc-query-perf\",\"clause\":\"manual_stop_latched\",\"detail\":\"Manual Stop is latched at epoch 1 — Manual Stop, simulated from Scheduled & Automations..\"}"
+      "detail": "{\"id\":\"ev-12-mtmb0c7p\",\"at\":\"2026-09-04T01:57:25.333Z\",\"type\":\"runtime.quota_resume_attempted\",\"ref\":\"qrc-query-perf\",\"clause\":\"manual_stop_latched\",\"detail\":\"Manual Stop is latched at epoch 1 — Manual Stop, simulated from Scheduled & Automations..\"}"
     },
     {
       "name": "a dispatch decided before a stop and delivered after it is discarded, not delivered",
       "pass": true,
-      "detail": "{\"id\":\"ev-13-mtm0b9if\",\"at\":\"2026-09-03T20:57:59.271Z\",\"type\":\"runtime.quota_resume_attempted\",\"ref\":\"precedence\",\"clause\":\"manual_stop_latched\",\"detail\":\"Manual Stop latched at epoch 2. Every scheduled dispatch, window resume and quota auto-resume now refuses until an explicit resume.\"}"
+      "detail": "{\"id\":\"ev-13-mtmb0d2n\",\"at\":\"2026-09-04T01:57:26.448Z\",\"type\":\"runtime.quota_resume_attempted\",\"ref\":\"precedence\",\"clause\":\"manual_stop_latched\",\"detail\":\"Manual Stop latched at epoch 2. Every scheduled dispatch, window resume and quota auto-resume now refuses until an explicit resume.\"}"
     },
     {
       "name": "an explicit user resume clears the latch",

@@ -925,7 +925,14 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
 `PM_Assistant_v2_Additive_Correction_v4` was applied on top of the implemented
 v2 branch. It is **additive**: every rule above stays in force except where a
 clause here explicitly retires an earlier value, and no v2 system was
-reimplemented. The 5.6 Pro defaults, themes, Orbit and Step Rail, menus, thread
+reimplemented.
+
+**Authority, in order.** The latest correction and the conversation that
+produced it **supersede** the implemented v2 packet; v2 supersedes any
+non-conflicting statement in this file; this file supersedes older `Plans/**`.
+Nothing is kept side by side: where a clause below retires a value, the old
+value is deleted from this file rather than annotated, and there is exactly one
+active rule for any behaviour. The 5.6 Pro defaults, themes, Orbit and Step Rail, menus, thread
 history, questionnaires, Context Lens, the context ring and details, the
 activity bar, Send/Stop, the follow-up queue, the attachment tray and the
 composer selectors are all unchanged.

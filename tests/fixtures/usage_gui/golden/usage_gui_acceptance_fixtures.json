@@ -5,106 +5,526 @@
     {
       "fixture_id": "GUI-USG-001",
       "title": "missing usage renders unknown, not zero",
-      "surfaces": ["Usage", "Ledger", "Dashboard Usage widget", "Context Detail Pane"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["source_class:unknown", "source_confidence:unknown", "source_authority:unknown", "usage_reporting_state:unknown_or_unavailable", "raw_payload_ref:absent_or_redacted"],
-      "must_not": ["zero_tokens", "zero_cost", "no_usage_success"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "Dashboard Usage widget",
+        "Context Detail Pane"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-001.json"
+      ],
+      "must": [
+        "source_class:unknown",
+        "source_confidence:unknown",
+        "source_authority:unknown",
+        "usage_reporting_state:unknown_or_unavailable",
+        "raw_payload_ref:absent_or_redacted"
+      ],
+      "must_not": [
+        "zero_tokens",
+        "zero_cost",
+        "no_usage_success"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-001",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-002",
       "title": "provider-reported zero remains reported zero",
-      "surfaces": ["Usage", "Ledger", "provider/settings row"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["source_class:provider_reported", "source_confidence", "source_authority", "settlement_status:settled_or_adjusted", "zero_buckets", "raw_payload_ref", "provider_payload_hash"],
-      "must_not": ["missing_usage", "null_usage", "unknown_usage"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "provider/settings row",
+        "Dashboard"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-002.json"
+      ],
+      "must": [
+        "source_class:provider_reported",
+        "source_confidence",
+        "source_authority",
+        "settlement_status:settled_or_adjusted",
+        "zero_buckets",
+        "raw_payload_ref",
+        "provider_payload_hash"
+      ],
+      "must_not": [
+        "missing_usage",
+        "null_usage",
+        "unknown_usage",
+        "missing_usage_copy"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-002",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-003",
       "title": "unknown cost fails closed",
-      "surfaces": ["Usage", "Ledger", "Dashboard Usage widget"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["cost_status:unknown", "source_confidence", "source_authority", "cost_microdollars:null", "cost_minor_units:null", "unknown_cost_copy"],
-      "must_not": ["$0.00", "provider_authoritative_cost", "priced_success"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "Dashboard Usage widget",
+        "Runtime Artifacts"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-003.json"
+      ],
+      "must": [
+        "cost_status:unknown",
+        "source_confidence",
+        "source_authority",
+        "cost_microdollars:null",
+        "cost_minor_units:null",
+        "unknown_cost_copy"
+      ],
+      "must_not": [
+        "$0.00",
+        "provider_authoritative_cost",
+        "priced_success"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-003",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-004",
       "title": "BYOK and subscription costs are hidden, not estimated",
-      "surfaces": ["Usage", "Ledger", "provider/settings row", "model row"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["usage_event_ref", "usage_record_id", "source_confidence", "source_authority", "hidden_byok", "hidden_subscription", "display_cost_policy:suppress"],
-      "must_not": ["fake_per_token_price", "pricing_snapshot_id_without_source", "cost_microdollars_fabricated"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "provider/settings row",
+        "model row",
+        "Runtime Artifacts"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-004.json"
+      ],
+      "must": [
+        "usage_event_ref",
+        "usage_record_id",
+        "source_confidence",
+        "source_authority",
+        "hidden_byok",
+        "hidden_subscription",
+        "display_cost_policy:suppress"
+      ],
+      "must_not": [
+        "fake_per_token_price",
+        "pricing_snapshot_id_without_source",
+        "cost_microdollars_fabricated"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-004",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-005",
       "title": "disabled quota bucket is disabled, not empty",
-      "surfaces": ["Usage", "provider/settings row", "Antigravity CLI quota row"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/CLI_Bridged_Providers.md#CBP-027"],
-      "must": ["quota_status:disabled", "window_kind:unknown_or_disabled", "disabled_reason"],
-      "must_not": ["zero_remaining", "exhausted", "success", "reset_countdown", "fabricated_progress"]
+      "surfaces": [
+        "Usage",
+        "provider/settings row",
+        "Antigravity CLI quota row",
+        "Plans & limits"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/CLI_Bridged_Providers.md#CBP-027",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-005.json"
+      ],
+      "must": [
+        "quota_status:disabled",
+        "window_kind:unknown_or_disabled",
+        "disabled_reason"
+      ],
+      "must_not": [
+        "zero_remaining",
+        "exhausted",
+        "success",
+        "reset_countdown",
+        "fabricated_progress"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-005",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-006",
       "title": "reported cache zero differs from unsupported cache",
-      "surfaces": ["Usage", "Ledger", "model row"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Contracts_V0.md#CV-200"],
-      "must": ["cache_read:0", "cache_reporting_state:reported", "cache_reporting_state:not_exposed", "cache_reporting_state:unknown"],
-      "must_not": ["zero_cache_as_unsupported", "unsupported_cache_as_zero"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "model row",
+        "Prompt cache"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/Contracts_V0.md#CV-200",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-006.json"
+      ],
+      "must": [
+        "cache_read:0",
+        "cache_reporting_state:reported",
+        "cache_reporting_state:not_exposed",
+        "cache_reporting_state:unknown"
+      ],
+      "must_not": [
+        "zero_cache_as_unsupported",
+        "unsupported_cache_as_zero"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-006",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-007",
       "title": "inclusive and exclusive token totals do not double count",
-      "surfaces": ["Usage", "Ledger", "Runtime Artifacts", "model row"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Contracts_V0.md#CV-196"],
-      "must": ["counting_semantics", "input_total_includes_cache", "output_total_includes_reasoning", "provider_total_semantics"],
-      "must_not": ["cache_added_when_provider_inclusive", "reasoning_added_when_provider_inclusive", "double_counted_total"]
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "Runtime Artifacts",
+        "model row",
+        "Analytics"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/Contracts_V0.md#CV-196",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-007.json"
+      ],
+      "must": [
+        "counting_semantics",
+        "input_total_includes_cache",
+        "output_total_includes_reasoning",
+        "provider_total_semantics"
+      ],
+      "must_not": [
+        "cache_added_when_provider_inclusive",
+        "reasoning_added_when_provider_inclusive",
+        "double_counted_total"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-007",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-USG-008",
       "title": "partial and aborted streams preserve partial usage once",
-      "surfaces": ["Usage", "Runtime Artifacts", "Run Graph", "Orchestrator"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/runtime_artifact_tool_llm_trace.schema.json:1"],
-      "must": ["settlement_status:streaming_partial_or_failed", "stream_state:partial_or_aborted", "dedupe_key", "accepted_partial_rollup_once"],
-      "must_not": ["final_copy", "settled_copy", "duplicate_partial_rollup"]
+      "surfaces": [
+        "Usage",
+        "Runtime Artifacts",
+        "Run Graph",
+        "Orchestrator",
+        "Ledger"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/runtime_artifact_tool_llm_trace.schema.json:1",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-USG-008.json"
+      ],
+      "must": [
+        "settlement_status:streaming_partial_or_failed",
+        "stream_state:partial_or_aborted",
+        "dedupe_key",
+        "accepted_partial_rollup_once"
+      ],
+      "must_not": [
+        "final_copy",
+        "settled_copy",
+        "duplicate_partial_rollup"
+      ],
+      "input": {
+        "fixture_identity": "GUI-USG-008",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-CBP-001",
       "title": "Antigravity missing commands render not exposed or unknown",
-      "surfaces": ["Antigravity CLI provider row", "Usage", "provider/settings row"],
-      "source_lineage": ["Plans/CLI_Bridged_Providers.md#CBP-027", "Plans/usage-feature.md#UF-088"],
-      "must": ["/stats", "/usage", "/quota", "/credits", "stats_unavailable", "usage:unknown", "quota:not_exposed", "credits:not_exposed"],
-      "must_not": ["fabricated_stats", "fabricated_usage", "fabricated_quota", "fabricated_credits"]
+      "surfaces": [
+        "Antigravity CLI provider row",
+        "Usage",
+        "provider/settings row",
+        "Provider settings"
+      ],
+      "source_lineage": [
+        "Plans/CLI_Bridged_Providers.md#CBP-027",
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-CBP-001.json"
+      ],
+      "must": [
+        "/stats",
+        "/usage",
+        "/quota",
+        "/credits",
+        "stats_unavailable",
+        "usage:unknown",
+        "quota:not_exposed",
+        "credits:not_exposed"
+      ],
+      "must_not": [
+        "fabricated_stats",
+        "fabricated_usage",
+        "fabricated_quota",
+        "fabricated_credits",
+        "quota:not_exposed_as_zero"
+      ],
+      "input": {
+        "fixture_identity": "GUI-CBP-001",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-CBP-002",
       "title": "Antigravity G1 credits are credits-only",
-      "surfaces": ["Antigravity CLI provider row", "Usage", "Dashboard Usage widget"],
-      "source_lineage": ["Plans/CLI_Bridged_Providers.md#CBP-027", "Plans/usage-feature.md#UF-088"],
-      "must": ["provider_id:antigravity_cli", "route:agy", "G1 credits", "UseG1Credits", "credits_status", "credits_remaining"],
-      "must_not": ["token_bucket_populated_from_credits", "cost_populated_from_credits", "quota_populated_from_credits", "provider_total_from_credits"]
+      "surfaces": [
+        "Antigravity CLI provider row",
+        "Usage",
+        "Dashboard Usage widget",
+        "Provider settings"
+      ],
+      "source_lineage": [
+        "Plans/CLI_Bridged_Providers.md#CBP-027",
+        "Plans/usage-feature.md#UF-088",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-CBP-002.json"
+      ],
+      "must": [
+        "provider_id:antigravity_cli",
+        "route:agy",
+        "G1 credits",
+        "UseG1Credits",
+        "credits_status",
+        "credits_remaining"
+      ],
+      "must_not": [
+        "token_bucket_populated_from_credits",
+        "cost_populated_from_credits",
+        "quota_populated_from_credits",
+        "provider_total_from_credits"
+      ],
+      "input": {
+        "fixture_identity": "GUI-CBP-002",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-ROUTE-001",
-      "title": "Usage route opens object-first by usage event",
-      "surfaces": ["Usage", "Ledger", "Runtime Artifacts"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Wiring_Matrix.production.json:1"],
-      "must": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "provider_attempt_ref", "attempt_id", "trace_ref", "source_class", "source_confidence", "source_authority", "settlement_status", "projection_freshness", "projection_health"],
-      "must_not": ["timestamp_primary_route", "run_only_primary_route", "thread_only_primary_route", "tier_only_primary_route"]
+      "title": "Ledger routes by distinct usage attempt identity; non-Ledger details stay local",
+      "surfaces": [
+        "Usage",
+        "Ledger",
+        "Runtime Artifacts",
+        "Provider details",
+        "Account details",
+        "Presentation panel details"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/Wiring_Matrix.production.json:1",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-ROUTE-001.json"
+      ],
+      "must": [
+        "route_target.object_kind:usage_attempt",
+        "object_id:attempt_id",
+        "route_target.object_id_equals_attempt_id",
+        "ledger_attempt_id_primary_route",
+        "usage_attempt_primary_route",
+        "ledger_usage_event_ref_correlation_passthrough",
+        "usage_event_ref",
+        "usage_record_id",
+        "provider_attempt_ref",
+        "attempt_id",
+        "trace_ref",
+        "source_class",
+        "source_confidence",
+        "source_authority",
+        "settlement_status",
+        "projection_freshness",
+        "projection_health",
+        "non_ledger_panel_details_are_local",
+        "local_provider_detail_uses_stable_provider_id",
+        "local_account_detail_uses_stable_account_id",
+        "local_detail.route_dispatch:false"
+      ],
+      "must_not": [
+        "timestamp_primary_route",
+        "run_only_primary_route",
+        "thread_only_primary_route",
+        "tier_only_primary_route",
+        "attempt_id_copied_to_usage_event_ref",
+        "usage_event_ref_copied_to_attempt_id",
+        "opaque_card_id_as_usage_provider",
+        "non_ledger_panel_dispatches_open_usage_subject"
+      ],
+      "input": {
+        "fixture_identity": "GUI-ROUTE-001",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true,
+        "ledger": {
+          "route_target": {
+            "object_kind": "usage_attempt",
+            "object_id_source": "attempt_id"
+          },
+          "identity_contract": {
+            "attempt_id_distinct_from_usage_event_ref": true,
+            "correlation_passthrough": [
+              "usage_event_ref",
+              "usage_record_id",
+              "provider_attempt_ref"
+            ]
+          }
+        },
+        "non_ledger_details": [
+          {
+            "detail_kind": "provider",
+            "identity_field": "provider_id",
+            "route_dispatch": false
+          },
+          {
+            "detail_kind": "account",
+            "identity_field": "account_id",
+            "route_dispatch": false
+          },
+          {
+            "detail_kind": "presentation_panel",
+            "identity_field": "stable_panel_id",
+            "route_dispatch": false
+          }
+        ]
+      }
     },
     {
       "fixture_id": "GUI-RAW-001",
       "title": "Raw and Curated usage views redact provider payloads",
-      "surfaces": ["Runtime Artifacts", "Usage", "Ledger"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Runtime_Artifacts_Panel.md#RAP-044"],
-      "must": ["Curated normalized fields", "source_class", "source_confidence", "source_authority", "Raw redacted refs", "provider_payload_hash", "omitted_counts", "permission_state"],
-      "must_not": ["credentials", "account_identifiers", "local_paths", "raw_provider_secrets"]
+      "surfaces": [
+        "Runtime Artifacts",
+        "Usage",
+        "Ledger",
+        "Usage Raw",
+        "Context Detail Pane Raw"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-044",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-RAW-001.json"
+      ],
+      "must": [
+        "Curated normalized fields",
+        "source_class",
+        "source_confidence",
+        "source_authority",
+        "Raw redacted refs",
+        "provider_payload_hash",
+        "omitted_counts",
+        "permission_state"
+      ],
+      "must_not": [
+        "credentials",
+        "account_identifiers",
+        "local_paths",
+        "raw_provider_secrets"
+      ],
+      "input": {
+        "fixture_identity": "GUI-RAW-001",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     },
     {
       "fixture_id": "GUI-RAP-001",
       "title": "Runtime artifact usage drill-through requires envelope and per-type schemas",
-      "surfaces": ["Runtime Artifacts", "Usage", "Ledger"],
-      "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Runtime_Artifacts_Panel.md#RAP-043"],
-      "must": ["cost_usage", "tool_llm_trace", "envelope_plus_per_type", "usage_event_ref", "usage_record_id"],
-      "must_not": ["envelope_only_valid", "arbitrary_non_empty_type_payload_valid"]
+      "surfaces": [
+        "Runtime Artifacts",
+        "Usage",
+        "Ledger"
+      ],
+      "source_lineage": [
+        "Plans/usage-feature.md#UF-088",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-043",
+        "PlanUnit:UF-088",
+        "tests/fixtures/usage_gui/cases/GUI-RAP-001.json"
+      ],
+      "must": [
+        "cost_usage",
+        "tool_llm_trace",
+        "envelope_plus_per_type",
+        "usage_event_ref",
+        "usage_record_id"
+      ],
+      "must_not": [
+        "envelope_only_valid",
+        "arbitrary_non_empty_type_payload_valid"
+      ],
+      "input": {
+        "fixture_identity": "GUI-RAP-001",
+        "authority": "canonical_test_fixture"
+      },
+      "expected_projection": {
+        "truthful_unknown_zero_hidden_partial_semantics": true
+      }
     }
+  ],
+  "owner_docs": [
+    "Plans/usage-feature.md",
+    "Plans/Automated_Testing_System.md"
   ]
 }

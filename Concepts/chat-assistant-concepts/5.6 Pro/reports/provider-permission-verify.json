@@ -83,7 +83,7 @@
     {
       "name": "Review freezes ONE target pack, and findings from a different version are excluded rather than merged",
       "pass": true,
-      "detail": "{\"frozen\":{\"targetKind\":\"changes\",\"targetRefs\":[\"orchestrator-subagent-integration.md#executionLimits\",\"crew.concurrency clamp\"],\"targetHashes\":{\"primary\":\"a1c9f02e\"},\"frozenAt\":\"2026-09-03T"
+      "detail": "{\"frozen\":{\"targetKind\":\"changes\",\"targetRefs\":[\"orchestrator-subagent-integration.md#executionLimits\",\"crew.concurrency clamp\"],\"targetHashes\":{\"primary\":\"a1c9f02e\"},\"frozenAt\":\"2026-09-04T"
     },
     {
       "name": "the read-only advisor exposes no approve / certify / mutate action anywhere",

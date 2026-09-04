@@ -84,6 +84,10 @@
   C.destinationProviders = C.destinationProviders || [];
   C.historyBlockers = C.historyBlockers || [];
   C.commitHooks = C.commitHooks || [];
+  /* Pre-send claim hooks. app.js's deliverSend consults these BEFORE the user
+     message is admitted, so a module can hold a submission rather than let it
+     reach the provider. See MODAL-012. */
+  C.preSendHooks = C.preSendHooks || [];
   C.version = 1;
 
   /* =====================================================================
@@ -115,6 +119,18 @@
       browser_context_refs: [],
       destination: null,
       cursor_position: null,
+      /* MODAL-011/012. A Deep Plan BrainStorm chosen BEFORE submission, and a
+         natural-language BrainStorm request held before provider dispatch,
+         both live here with the text they belong to -- not in the modal, and
+         not as a started run. The buffer already survived thread switches and
+         reload, so putting the configuration beside the text is what makes
+         "restores config with text" true rather than asserted, and what makes
+         Cancel able to return the request intact.
+           workflow_config : the validated pre-send configuration
+           held_request    : the natural-language request being held
+         Both are null for an ordinary message. */
+      workflow_config: null,
+      held_request: null,
       revision: 0,
       updated_at: null
     };
@@ -452,7 +468,23 @@
          again and commits again: unbounded mutual recursion that wedged the
          renderer with no error and no console output. Committing is not
          re-entrant, so say so. */
-      if (grew && emptied && th && !committing) {
+      /* ISOLATED SUBMISSIONS. A Full/Region screenshot and a component Send
+         Now append their OWN user message and must never consume the composer
+         (BROWSER-002, BSTALE-008). This reconciler infers "a send happened"
+         from the count growing while the composer field is empty -- true for
+         the Send button, Cmd/Ctrl+Enter and the queue -- but an isolated
+         capture also grows the count, and a buffer holding ATTACHMENTS with no
+         text looks "empty" to that test. The result was that attaching a file
+         and then taking a screenshot silently discarded the attachment. A
+         message that declares itself isolated is not a composer send. */
+      var newest = null;
+      if (th && th.messages) {
+        for (var mi = th.messages.length - 1; mi >= 0; mi--) {
+          if (th.messages[mi].role === 'user') { newest = th.messages[mi]; break; }
+        }
+      }
+      var isolated = !!(newest && newest.isolatedSubmission);
+      if (grew && emptied && th && !committing && !isolated) {
         committing = true;
         try { commitBuffer(ctx, th); }
         finally {
@@ -852,6 +884,44 @@
        the fence a late browser resolution is checked against, and setBuffer is
        how a cancelled BrainStorm returns its held request intact. */
     revision: function (threadId) { var b = bufferFor(threadId); return b ? (b.revision || 0) : null; },
+    /* MODAL-011: store a validated pre-send workflow configuration WITH the
+       text. Nothing starts; the workflow runs only when the request is sent. */
+    setWorkflowConfig: function (threadId, config) {
+      var b = bufferFor(threadId); if (!b) return null;
+      b.workflow_config = config ? JSON.parse(JSON.stringify(config)) : null;
+      b.revision = (b.revision || 0) + 1; b.updated_at = new Date().toISOString();
+      persist();
+      return JSON.parse(JSON.stringify(b.workflow_config || null));
+    },
+    workflowConfig: function (threadId) {
+      var b = bufferFor(threadId); return b && b.workflow_config ? JSON.parse(JSON.stringify(b.workflow_config)) : null;
+    },
+    /* MODAL-012: hold a natural-language workflow request BEFORE any provider
+       dispatch, then either release it on Start or restore it intact on
+       Cancel. `restoreHeldRequest` puts the exact text and attachments back
+       and clears the hold, so a cancelled request never runs with defaults. */
+    holdRequest: function (threadId, request) {
+      var b = bufferFor(threadId); if (!b) return null;
+      b.held_request = { text: String((request && request.text) || b.text || ''),
+                         attachments: (request && request.attachments) ? request.attachments.slice() : (b.attachments || []).slice(),
+                         kind: (request && request.kind) || 'brainstorm',
+                         held_at: new Date().toISOString(), dispatched: false };
+      b.revision = (b.revision || 0) + 1; b.updated_at = b.held_request.held_at;
+      persist();
+      return JSON.parse(JSON.stringify(b.held_request));
+    },
+    heldRequest: function (threadId) {
+      var b = bufferFor(threadId); return b && b.held_request ? JSON.parse(JSON.stringify(b.held_request)) : null;
+    },
+    restoreHeldRequest: function (threadId) {
+      var b = bufferFor(threadId); if (!b || !b.held_request) return null;
+      var h = b.held_request;
+      b.text = h.text; b.attachments = (h.attachments || []).slice();
+      b.held_request = null; b.workflow_config = null;
+      b.revision = (b.revision || 0) + 1; b.updated_at = new Date().toISOString();
+      persist();
+      return { restored: true, text: b.text, attachments: b.attachments.length };
+    },
     setBuffer: function (threadId, text, attachments) {
       var b = bufferFor(threadId); if (!b) return null;
       b.text = String(text == null ? '' : text);
