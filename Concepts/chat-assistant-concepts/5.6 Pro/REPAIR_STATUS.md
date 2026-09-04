@@ -38,7 +38,11 @@ Verified in a headless browser against the shipped standalone, not inferred:
 
 ## Current state
 
-Build `5a48b5f7db37c57e`. `python3 build.py --check` is the gate.
+`python3 build.py --check` is the gate. It prints the current digest; this file
+deliberately does not repeat it, because a hand-copied hash is exactly what went
+stale here — an earlier revision named a build that no longer existed while the
+gate reported a different one. `DELIVERY_MANIFEST.json` carries the live digest
+and is regenerated from disk by `reports/build-delivery-manifest.py`.
 
 Final acceptance, 15/15:
 
