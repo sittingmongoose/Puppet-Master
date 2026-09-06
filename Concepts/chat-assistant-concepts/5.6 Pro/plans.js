@@ -1105,8 +1105,8 @@
     var v = 'Plan · V'+r.version;
     return '<div class="pd-head">'+
       '<div class="pd-head-main">'+
-        '<h3 class="pd-title">'+esc(r.title)+'</h3>'+
-        '<span class="pd-strategy">'+esc(r.strategy)+' · '+esc(r.backend==='ledger_bound'?'ledger-bound':'direct')+'</span>'+
+        '<h3 class="pd-title"><button type="button" data-action="pd-info" data-id="'+esc(r.plan_id)+'">'+esc(r.title)+'</button></h3>'+
+        '<span class="pd-strategy">'+esc(r.strategy)+'</span>'+
       '</div>'+
       '<span class="pd-badge" data-hover-key="pd-badge-'+esc(r.plan_id)+'">'+esc(v)+'</span>'+
     '</div>'+
@@ -1153,16 +1153,16 @@
   }
 
   function cardFooter(r){
-    var e=eligible(r), out=[];
-    out.push(buildControl(r));
+    var e=eligible(r), out=[], primary=[];
+    primary.push(buildControl(r));
     if(e.crew)   out.push(actionBtn('pd-build-crew','Build With Crew',r.plan_id));
     if(e.at)     out.push(actionBtn('pd-build-at','Build At…',r.plan_id));
-    if(e.revise) out.push(actionBtn('pd-revise','Revise',r.plan_id));
+    if(e.revise) primary.push(actionBtn('pd-revise','Revise',r.plan_id));
     if(e.todos)  out.push(actionBtn('pd-open-todos','Open To-Dos',r.plan_id));
     if(e.wizard) out.push(actionBtn('pd-wizard','Send To Planning Wizard',r.plan_id));
     if(e.exportx)out.push(actionBtn('pd-export','Export',r.plan_id));
     if(e.cancel) out.push(actionBtn('pd-cancel','Cancel',r.plan_id));
-    out.push(actionBtn('pd-info','Details',r.plan_id));
+    out.push(actionBtn('pd-inspect','Record & history',r.plan_id));
     /* PGOAL-001: Build as Goal is a SECONDARY action. The primary control stays
        Build; no second large button is added. */
     if(e.goal)   out.push(actionBtn('pd-build-goal','Build as Goal',r.plan_id));
@@ -1178,7 +1178,7 @@
         esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
         '</span></span></span>'
       : '';
-    return '<div class="pd-foot">'+out.join('')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
+    return '<div class="pd-foot">'+primary.join('')+'<button type="button" class="soft-button" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -1215,9 +1215,16 @@
   var ui = { expanded:{}, info:null };
 
   function renderCard(r){
-    var terminal = (r.status==='completed'||r.status==='canceled');
-    if(terminal && !ui.expanded[r.plan_id]) return renderCompact(r);
-    return renderFull(r);
+    var terminal=r.status==='completed'||r.status==='canceled';
+    if(terminal)return renderCompact(r);
+    var first=body(r).find(b=>b.t==='paragraph'),summary=first?first.text:'';
+    var e=eligible(r),pr=progress(r);
+    return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
+      '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
+      '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
+      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+' steps</span><span>'+esc(r.status)+'</span></div>'+
+      '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+        (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
   /* =====================================================================
@@ -1847,7 +1854,13 @@
      slot when state.dialog is set, so a module-local `open` variable rendered
      nothing at all: the Details and Export buttons clicked and no dialog ever
      appeared. bsd.js already used the correct channel; this now matches it. */
+  EXT.action('pd-more-actions',function(ctx,btn){ui.more=ui.more||{};ui.more[btn.dataset.id]=!ui.more[btn.dataset.id];ctx.renderApp();return true;});
+
   var DLG = { info:'pd-info', crew:'pd-crew', at:'pd-at', export:'pd-export' };
+  function openPlanEditor(ctx,id){
+    var r=rec(id);if(!r)return;
+    ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor('plan:'+id);
+  }
   function openDlg(ctx, kind, id){ ctx.openDialog({ type:DLG[kind], id:id }); }
 
   var ACTIONS = {
@@ -1859,10 +1872,7 @@
       ctx.renderApp();
     },
 
-    'pd-expand': function(ctx,btn){
-      ui.expanded[btn.dataset.id] = !ui.expanded[btn.dataset.id];
-      ctx.renderApp();
-    },
+    'pd-expand': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
 
     'pd-build': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
@@ -1889,11 +1899,12 @@
 
     'pd-open-todos': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
-      ctx.state.activity.open=true; ctx.state.activity.domain='todo';
+      ctx.state.activity.open=true;ctx.state.activity.pinned=true; ctx.state.activity.domain='todo';
       ctx.renderApp();
     },
 
-    'pd-info':       function(ctx,btn){ openDlg(ctx,'info',  btn.dataset.id); },
+    'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
+    'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
     'pd-build-at':   function(ctx,btn){ openDlg(ctx,'at',    btn.dataset.id); },
     'pd-export':     function(ctx,btn){ openDlg(ctx,'export',btn.dataset.id); },
@@ -2240,7 +2251,7 @@
      from the build. Same renderers, same record, same single Build control. */
   var ARTIFACT_TO_PLAN = { 'plan-query':'ap-index' };
   function editorBody(artifactId){
-    var id = ARTIFACT_TO_PLAN[artifactId];
+    var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
     var r = id && rec(id);
     if(!r) return '';
     return '<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
@@ -2255,7 +2266,7 @@
     editorBody:editorBody,
     /* Which Plan an artifact id maps to, so app.js's artifact header can read
        the owner's version and Build label instead of the legacy record. */
-    editorPlanId:function(artifactId){ return ARTIFACT_TO_PLAN[artifactId] || null; },
+    editorPlanId:function(artifactId){ return String(artifactId).startsWith('plan:')?String(artifactId).slice(5):ARTIFACT_TO_PLAN[artifactId]||null; },
     current:currentPlan,
     /* Accepts a record (original shape) or a plan id, so a harness that
        reasons in ids does not have to reach into P().records first. */
@@ -2288,7 +2299,7 @@
     questionBases:function(){ return JSON.parse(JSON.stringify(QBASE)); },
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
-    openDetails:function(ctx,id){ openDlg(ctx,'info',id); ctx.renderApp(); },
+    openDetails:openPlanEditor,
     /* PGOAL-007/008: goals.js drives these; the Plan owner applies them. */
     boundPause:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;

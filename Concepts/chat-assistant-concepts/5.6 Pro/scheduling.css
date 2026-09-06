@@ -166,7 +166,7 @@
 }
 .sched-card-why{
   margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--warning);
-  border-left:2px solid color-mix(in srgb, var(--warning) 55%, var(--border)); padding-left:8px;
+   padding-left:8px;
 }
 .sched-card-link{ margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--muted); }
 .sched-card-link code{ font-family:var(--font-mono); font-size:10.5px; }
@@ -186,3 +186,85 @@
 .sched-card-snaps .sched-snap-why{
   flex:1 1 100%; font-style:normal; font-size:11px; color:var(--muted); margin-top:2px;
 }
+
+/* Scheduling v2: readable messages and windows, not a runtime diagnostics wall. */
+.sched-dialog{width:min(680px,calc(100vw - 24px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden;}
+.sched-dialog--manage{width:min(820px,calc(100vw - 24px));height:min(780px,calc(100vh - 36px));}
+.sched-dialog>.dialog-body{padding:20px 24px;overflow-y:auto;min-height:0;display:block;}
+.sched-dialog .drawer-head{gap:10px;padding:17px 22px;flex:none;}
+.schedule-overview{padding:18px 24px;display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--border);}
+.schedule-overview>div:not(.schedule-overview-state){display:grid;gap:3px;}
+.schedule-overview strong{font-size:23px;font-weight:600;line-height:1.1;}
+.schedule-overview span{font-size:11px;color:var(--muted);}
+.schedule-overview-state{margin-left:auto;}
+.sched-tabs{padding:0 20px;gap:18px;border-bottom:1px solid var(--border);flex:none;}
+.sched-tab{padding:13px 2px!important;border-radius:0;display:flex;gap:6px;align-items:center;font-size:11px;}
+.sched-tab.active{background:transparent;border-bottom:2px solid var(--accent);color:var(--text);}
+.sched-tab>span{background:var(--surface-3);padding:1px 5px;border-radius:5px;font-size:9px;}
+.schedule-list-toolbar{padding:12px 24px 0;display:flex;align-items:center;gap:12px;flex:none;}
+.schedule-list-toolbar>span:not(.spacer){color:var(--muted);font-size:10px;}
+.schedule-list-section>h3{font-size:11px;letter-spacing:.02em;font-weight:600;margin:0 0 9px;display:flex;gap:8px;align-items:center;}
+.schedule-list-section>h3>span{font-size:10px;font-weight:400;color:var(--muted);}
+.schedule-list-section+.schedule-list-section{margin-top:22px;}
+.schedule-item{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface-2);margin:8px 0;min-width:0;}
+.schedule-item-head{display:flex;align-items:start;gap:12px;}
+.schedule-item-icon{width:30px;height:30px;border-radius:8px;background:var(--surface-3);display:grid;place-items:center;flex:none;color:var(--muted);}
+.schedule-item-copy{display:grid;gap:7px;flex:1;min-width:0;}
+.schedule-item-copy>strong{font-size:12px;line-height:1.5;font-weight:550;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
+.schedule-item-copy>span{font-size:11px;color:var(--muted);line-height:1.4;}
+.schedule-item-destination{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin:10px 0 6px 42px;}
+.schedule-item-controls{display:flex;align-items:center;gap:8px;margin:11px 0 0 42px;flex-wrap:wrap;}
+.schedule-details{margin-top:12px;padding-top:9px;border-top:1px solid var(--border);}
+.schedule-details>summary{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:10px;color:var(--muted);width:fit-content;padding:2px 0;list-style:none;}
+.schedule-details[open]>summary{color:var(--text);margin-bottom:11px;}
+.schedule-details[open]>summary>svg{transform:rotate(180deg);}
+.sched-details-body{font-size:11px;line-height:1.55;}
+.sched-full-message{white-space:pre-wrap;overflow-wrap:anywhere;padding:10px 12px;border-radius:7px;background:var(--surface-3);margin:3px 0 16px;}
+.sched-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;margin:14px 0;font-size:11px;}
+.sched-facts>div{min-width:0;}
+.sched-facts dt{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.sched-facts dd{margin:0;overflow-wrap:anywhere;}
+.sched-audit{font-size:10px;color:var(--muted);margin-top:14px;}
+.sched-audit>summary{cursor:pointer;padding:4px 0;}
+.sched-audit pre{white-space:pre-wrap;overflow-wrap:anywhere;}
+.sched-audit p{line-height:1.5;}
+.schedule-attention{display:flex;gap:7px;align-items:start;font-size:11px;color:var(--warning);margin:11px 0 0;line-height:1.45;}
+.schedule-attention svg{flex:none;margin-top:2px;}
+.schedule-history{margin-top:22px;}
+.schedule-history>summary{font-size:11px;color:var(--muted);cursor:pointer;padding:9px 0;}
+.schedule-history>summary>span{margin-left:5px;font-size:10px;}
+.schedule-footer{padding:12px 24px;display:flex;justify-content:space-between;color:var(--muted);font-size:9px;border-top:1px solid var(--border);flex:none;}
+.schedule-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;padding:40px 20px;font-size:12px;color:var(--muted);}
+.schedule-empty strong{color:var(--text);font-size:14px;}
+.schedule-safety{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
+.schedule-safety>div{display:grid;gap:7px;}.schedule-safety strong{font-size:12px;}.schedule-safety div>span{color:var(--muted);font-size:11px;}
+.schedule-destination-tag,.sched-destination-tag{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin:0 0 17px;}
+.sched-dialog .sched-field{display:flex;flex-direction:column;gap:7px;min-width:0;margin-bottom:15px;font-size:11px;color:var(--muted);}
+.sched-dialog .sched-field>span{font-size:11px;color:var(--muted);}
+.sched-dialog .sched-field input,.sched-dialog .sched-field select{height:36px;min-width:0;width:100%;}
+.sched-dialog .sched-field textarea{font-size:12px;line-height:1.65;min-height:110px;color:var(--text);padding:12px;}
+.schedule-when{padding-top:3px;}.schedule-when h3{font-size:12px;font-weight:600;margin:5px 0 11px;}
+.sched-dialog .sched-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+.schedule-zone{grid-column:1/-1;}
+.sched-attached{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px;font-size:10px;}
+.sched-attached>span{display:flex;align-items:center;gap:5px;padding:4px 7px;background:var(--surface-3);border-radius:5px;}
+.schedule-form-foot{display:flex;align-items:center;gap:9px;padding:14px 22px;border-top:1px solid var(--border);flex:none;flex-wrap:wrap;}
+.schedule-caption{font-size:10px;color:var(--muted);}
+.sched-form-error{color:var(--danger);font-size:11px;min-height:14px;}
+.schedule-plan-target{display:grid;gap:5px;margin-bottom:22px;}.schedule-plan-target>strong{font-size:14px;}.schedule-plan-target>span{font-size:11px;color:var(--muted);}
+.schedule-kind{display:flex;gap:6px;margin-bottom:20px;}.schedule-kind .active{background:var(--surface-3);border-color:var(--border-strong);}
+.sched-days{margin:0 0 20px;gap:6px;}.sched-day-chip{justify-content:center;min-width:34px;height:33px;color:var(--muted);font-size:10px;}.sched-day-chip.on{color:var(--text);background:var(--surface-4);border-color:var(--border-strong);}
+.sched-card{display:block;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 16px;min-width:0;}
+.sched-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.sched-kind{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:10px;}
+.sched-card-preview{font-size:12px;line-height:1.6;color:var(--text);margin:12px 0 8px;}
+.sched-card-time{font-size:10px;color:var(--muted);line-height:1.5;}
+.sched-card-foot{display:flex;gap:10px;margin-top:11px;align-items:center;flex-wrap:wrap;}
+.sched-card-foot .text-button{padding:2px 0;font-size:10px;}
+.sched-card .sched-details-body{margin-top:14px;}
+.sched-chip{font-size:9px;white-space:nowrap;}
+@media(max-width:540px){.schedule-overview{gap:18px;padding:16px;}.schedule-overview-state{display:none;}.sched-tabs{gap:12px;padding:0 14px;}.sched-tab{font-size:10px;}.sched-dialog>.dialog-body{padding:16px;}.schedule-item{padding:12px;}.schedule-item-destination,.schedule-item-controls{margin-left:0;}.sched-facts{grid-template-columns:1fr;}.schedule-form-foot .schedule-caption{display:none;}}
+
+/* Terminal events read as receipts, not another stack of active forms. */
+.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired){border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;padding:11px 2px;}
+.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired) .sched-card-preview{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:8px 0 6px;color:var(--muted);}

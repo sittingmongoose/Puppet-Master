@@ -991,6 +991,8 @@
     conceptMasterDetail, conceptAgentBoard, conceptLedger, conceptLiveFeed, conceptDashboard];
 
   EXT.slot('activityPanelBody', function (ctx) {
+    if(ctx.domain === 'todo' && window.PM56_TODOS) return '';
+    if(['brainstorm','review','chat_room'].includes(ctx.domain)&&ctx.state.activity.scope==='focus')return '';
     var v = Number(ctx.state.variants && ctx.state.variants[4]) || 0;
     if (v < 0 || v >= CONCEPTS.length) v = 0;
     try { return CONCEPTS[v](ctx); }

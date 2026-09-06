@@ -41,6 +41,8 @@
      =================================================================== */
   var SEED = {
     demo:true,
+    sessionEpoch:1,
+    reprimeRequired:false,
     mode:'auto',                       /* off | auto | on -- Auto is the default */
     model:{ requested:'Default resolver', effective:'Claude Sonnet 4.6' },
     persona:{ requested:'Critical Advisor', effective:'Critical Advisor' },
@@ -111,6 +113,7 @@
       { gen:14, role:'advisor', text:'Re-evaluated at generation 14. The measurement is still absent, so the concern stands and stays held for the next safe boundary.' }
     ]
   };
+  SEED.findings.forEach(f=>{f.sessionEpoch=SEED.sessionEpoch;f.advisorModel=SEED.model.effective;f.advisorPersona=SEED.persona.effective;});
   RT.bsd = RT.bsd || JSON.parse(JSON.stringify(SEED));
   var BSD0 = JSON.stringify(SEED);
   function P(){ return RT.bsd; }
@@ -133,8 +136,8 @@
     if(p.quarantined) return 'failed';
     return p.state;
   }
-  function heldFindings(){ return P().findings.filter(function(f){ return f.status==='held'; }); }
-  function emitted(){ return P().findings.filter(function(f){ return f.status==='emitted'; }); }
+  function heldFindings(){ return P().findings.filter(function(f){ return f.status==='held' && f.sessionEpoch===P().sessionEpoch; }); }
+  function emitted(){ return P().findings.filter(function(f){ return f.status==='emitted' && f.sessionEpoch===P().sessionEpoch; }); }
 
   /* ===================================================================
      2. COMPACT CONTEXT ROW
@@ -168,15 +171,15 @@
   function findingRow(ctx,f){
     var badge = '<span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span>';
     var status = '<span class="bsd-status bsd-status-'+esc(f.status)+'">'+esc(f.status)+'</span>';
-    var stale = (f.status==='emitted' && f.deliveredAtGeneration < P().generation - 1)
-      ? '<p class="bsd-stale">Delivered against generation '+f.deliveredAtGeneration+' and not reconfirmed since. Treat as stale, not current.</p>' : '';
+    var stale = f.sessionEpoch!==P().sessionEpoch ? '<span class="bsd-stale">Previous session · '+esc(f.advisorModel)+'</span>' : (f.status==='emitted' && f.deliveredAtGeneration < P().generation - 1)
+      ? '<span class="bsd-stale">Not reconfirmed · gen '+f.deliveredAtGeneration+'</span>' : '';
     return '<div class="bsd-finding" data-k="bsd-f-'+esc(f.id)+'">'+
       '<div class="bsd-finding-head">'+badge+status+
-        '<span class="bsd-gen">raised at generation '+f.raisedAtGeneration+'</span>'+
+        '<span class="bsd-gen">gen '+f.raisedAtGeneration+'</span>'+
         '<span class="spacer"></span>'+
         '<button class="text-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">History</button></div>'+
       '<strong class="bsd-finding-title">'+esc(f.title)+'</strong>'+
-      '<p class="bsd-finding-detail">'+esc(f.detail)+'</p>'+ stale +
+      (RT.bsdOpenFinding===f.id?'<p class="bsd-finding-detail">'+esc(f.detail)+'</p>':'')+ stale +
       (RT.bsdOpenFinding===f.id
         ? '<div class="bsd-history">'+f.history.map(function(h){
             return '<div class="bsd-hrow"><span class="bsd-hgen">gen '+h.gen+'</span><span>'+esc(h.what)+'</span></div>';
@@ -186,59 +189,75 @@
   }
 
   function detailsSection(ctx){
-    var p=P(), st=liveState();
-    var bound=p.stages.filter(function(s){return s.bound;});
-    return '<section class="context-section bsd-section" data-k="bsd-section" id="ctx-bsd">'+
-      '<h3>Back Seat Driver</h3>'+
-      '<div class="context-section-body">'+
-        '<div class="bsd-policy" data-k="bsd-policy">'+
-          '<div class="metric-card"><label>Mode</label><strong>'+esc(p.mode==='auto'?'Auto':p.mode==='on'?'On':'Off')+'</strong></div>'+
-          '<div class="metric-card"><label>State</label><strong>'+esc(STATE_LABEL[st])+'</strong></div>'+
-          '<div class="metric-card"><label>Cursor</label><strong>'+p.cursor+' / '+p.generation+'</strong></div>'+
-          '<div class="metric-card"><label>Cooldown</label><strong>'+p.cooldownRemaining+' / '+p.cooldownTurns+'</strong></div>'+
-        '</div>'+
-        '<p class="bsd-identity">Requested <b>'+esc(p.model.requested)+'</b> · effective <b>'+esc(p.model.effective)+'</b> · Persona <b>'+esc(p.persona.effective)+'</b>'+
-          (p.model.requested!==p.model.effective?' <span class="bsd-sub">(the resolver chose the effective model; the request is recorded)</span>':'')+'</p>'+
-        '<p class="bsd-isolation">Runs in its own isolated context and tool session with bounded deltas. It reads a redacted projection of the primary work and can write nothing. Self-compacts at '+Math.round(p.selfCompactThreshold*100)+'% of its own window; that compaction never touches your conversation.</p>'+
-        '<div class="bsd-stages" data-k="bsd-stages">'+
-          '<div class="bsd-stages-head"><strong>Stage bindings</strong><span class="spacer"></span>'+
-            '<button class="text-button" data-action="bsd-configure-stages">Configure</button></div>'+
-          '<div class="bsd-stage-chips">'+p.stages.map(function(s){
-            return '<span class="bsd-stage'+(s.bound?' on':'')+'">'+esc(s.label)+'</span>';
-          }).join('')+'</div>'+
-          '<p class="bsd-sub">'+bound.length+' of '+p.stages.length+' stages bound. Advice at a bound stage is still read-only and never gates the stage.</p>'+
-        '</div>'+
-        '<div class="bsd-findings" data-k="bsd-findings">'+p.findings.map(function(f){return findingRow(ctx,f);}).join('')+'</div>'+
-        '<div class="bsd-usage" data-k="bsd-usage">'+
-          '<strong>Usage · attributed to Back Seat Driver only</strong>'+
-          '<div class="bsd-usage-grid">'+
-            [['Calls',p.usage.calls],['No-call evaluations',p.usage.noCalls],['Held',p.usage.held],['Cleared',p.usage.cleared],
-             ['Emitted',p.usage.emitted],['Suppressed',p.usage.suppressed],['Timeouts',p.usage.timeouts],
-             ['Quota pauses',p.usage.quotaPauses],['Failures',p.usage.failures],['Catch-up latency',p.usage.catchUpLatencyMs+' ms']]
-              .map(function(r){return '<div><label>'+esc(r[0])+'</label><b>'+esc(r[1])+'</b></div>';}).join('')+
-          '</div>'+
-          '<p class="bsd-sub">'+esc(p.usage.model)+' · account '+esc(p.usage.account)+' · '+p.usage.inputTokens.toLocaleString()+' in / '+p.usage.outputTokens.toLocaleString()+' out · $'+p.usage.costUsd.toFixed(3)+'. These totals are separate from the primary run and are never folded into it.</p>'+
-          '<button class="soft-button" data-action="bsd-open-usage">'+ctx.icon('chart',12)+' Open Usage</button>'+
-          '<button class="soft-button" data-action="bsd-open-transcript">'+ctx.icon('document',12)+' Advisor transcript</button>'+
-        '</div>'+
-        (p.quarantined?'<div class="bsd-quarantine">'+ctx.icon('warning',13)+'<div><strong>Advisor output quarantined</strong><p>The advisor returned malformed output and was isolated. Your work continued without interruption, and nothing it produced was admitted.</p></div></div>':'')+
-        /* The two behaviours worth PROVING rather than describing. Both actions
-           existed from the first draft of this module but nothing rendered a
-           control for them, so the hold/reconfirm cycle and the failure
-           isolation were unreachable and therefore unverifiable. bsd-verify.mjs
-           drives these two buttons. */
-        '<div class="bsd-demo" data-k="bsd-demo">'+
-          '<strong>Demonstrate</strong>'+
-          '<p class="bsd-sub">A concern raised against generation '+p.generation+' is held and re-evaluated against newer work before it is delivered. Advance the primary flow to watch a held finding be cleared or re-confirmed rather than delivered as if it were current.</p>'+
-          '<div class="bsd-demo-row">'+
-            '<button class="soft-button" data-action="bsd-advance-generation">'+ctx.icon('step',12)+' Advance a generation</button>'+
-            '<button class="soft-button" data-action="bsd-simulate-failure">'+ctx.icon('warning',12)+' '+(p.quarantined?'Recover the advisor':'Fail the advisor')+'</button>'+
-          '</div>'+
-        '</div>'+
-        '<p class="bsd-sub bsd-watch">Watch guidance: BSD reads the project through the same permission ceiling as the primary flow and never widens it. It cannot approve, merge, certify, or stand in for a required review or test.</p>'+
-      '</div>'+
-    '</section>';
+    var p=P(), st=liveState(), bound=p.stages.filter(s=>s.bound);
+    return '<section class="bsd-section" data-k="bsd-section" id="ctx-bsd">'+
+      '<div class="bsd-summary-head"><span class="bsd-live">'+esc(STATE_LABEL[st])+' · '+esc(p.mode)+'</span><button class="soft-button" data-action="bsd-configure-stages">'+ctx.icon('sliders',12)+' Configure</button></div>'+
+      '<div class="bsd-summary-identity"><strong>'+esc(p.model.effective)+'</strong><span>'+esc(p.persona.effective)+'</span></div>'+
+      '<div class="bsd-summary-metrics"><span>Checked '+p.cursor+'/'+p.generation+'</span><span>'+bound.length+' stages</span><span>'+heldFindings().length+' held</span></div>'+
+      '<details class="bsd-disclosure"><summary>Findings <span>'+p.findings.length+'</span></summary><div class="bsd-findings">'+p.findings.map(f=>findingRow(ctx,f)).join('')+'</div></details>'+
+      '<details class="bsd-disclosure"><summary>Session & usage</summary><dl class="bsd-session-grid">'+
+        [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Effective model',p.model.effective],['Persona',p.persona.requested],['Sensitivity',p.sensitivity],['Catch-up cap',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Self-compact',Math.round(p.selfCompactThreshold*100)+'%'],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>'+
+        '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Transcript</button></div></details>'+
+      (p.quarantined?'<p class="bsd-quarantine">Advisor unavailable · primary work unaffected</p>':'')+'</section>';
   }
+
+  var configDraft=null;
+  function beginConfig(ctx){
+    configDraft=JSON.parse(JSON.stringify(P()));
+    configDraft.modelId=configDraft.model.id||(D.models.find(m=>m.name===configDraft.model.effective)||D.models[0]).id;
+    ctx.closeMenu();ctx.openDialog({type:'bsd-stages'});
+  }
+  function configDialog(ctx){
+    var d=configDraft;if(!d){configDraft=JSON.parse(JSON.stringify(P()));d=configDraft;d.modelId=(D.models.find(m=>m.name===d.model.effective)||D.models[0]).id;}
+    const pick=window.PM56_PICKERS;
+    return '<section class="demo-dialog bsd-dialog bsd-configure" role="dialog" aria-label="Configure Back Seat Driver" data-k="bsd-configure">'+
+      '<div class="demo-dialog-head"><strong>Back Seat Driver</strong><span class="meta-pill">Read-only advisor</span><span class="spacer"></span><button class="icon-button" data-action="bsd-close-dialog" title="Cancel">'+ctx.icon('close',13)+'</button></div>'+
+      '<div class="demo-dialog-body"><div class="bsd-config-mode">'+['off','auto','on'].map(v=>'<button class="soft-button '+(d.mode===v?'active':'')+'" data-action="bsd-config-mode" data-value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</button>').join('')+'</div>'+
+      '<div class="bsd-config-pickers"><label>Advisor model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona.requested)+'</label></div>'+
+      '<div class="bsd-config-grid"><label>Trigger sensitivity<select data-bsd-field="sensitivity">'+['conservative','balanced','frequent'].map(v=>'<option value="'+v+'" '+(d.sensitivity===v?'selected':'')+'>'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
+      '<label>Catch-up cap<select data-bsd-field="catchUpSeconds">'+[0,15,30,60].map(v=>'<option value="'+v+'" '+(d.catchUpSeconds===v?'selected':'')+'>'+(v?v+' seconds':'Never wait')+'</option>').join('')+'</select></label>'+
+      '<label>Cooldown · turns<input data-bsd-field="cooldownTurns" type="number" min="0" max="100" value="'+d.cooldownTurns+'"></label>'+
+      '<label>Self-compact · %<input data-bsd-field="selfCompactThreshold" type="number" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label></div>'+
+      '<label class="bsd-retain"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label>'+
+      '<details class="bsd-disclosure"><summary>Workflow stages <span>'+d.stages.filter(s=>s.bound).length+' of '+d.stages.length+'</span></summary><div class="bsd-stage-grid">'+d.stages.map(s=>'<label class="bsd-stage-row"><input type="checkbox" data-bsd-stage="'+esc(s.id)+'" '+(s.bound?'checked':'')+'><span>'+esc(s.label)+'</span></label>').join('')+'</div></details>'+
+      '<div class="bsd-config-error" role="alert">'+esc(d.error||'')+'</div></div>'+
+      '<div class="demo-dialog-foot"><button class="soft-button" data-action="bsd-close-dialog">Cancel</button><button class="primary-button" data-action="bsd-save-config">Save configuration</button></div></section>';
+  }
+  document.addEventListener('change',function(e){
+    if(!configDraft)return;
+    const el=e.target, key=el.dataset.bsdField, stage=el.dataset.bsdStage;
+    if(stage){const s=configDraft.stages.find(x=>x.id===stage);if(s)s.bound=el.checked;return;}
+    if(!key)return;
+    configDraft[key]=key==='retainTranscript'?el.checked:key==='selfCompactThreshold'?Number(el.value)/100:['cooldownTurns','catchUpSeconds'].includes(key)?Number(el.value):el.value;
+  });
+  ['model','persona'].forEach(kind=>EXT.action('bsd-pick-'+kind,function(ctx,btn){
+    const draft=configDraft;if(!draft)return true;
+    window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:draft.modelId,persona:draft.persona.requested,effort:draft.model.effort,fast:draft.model.fast},v=>{
+      if(configDraft!==draft||ctx.state.dialog?.type!=='bsd-stages')return;
+      if(kind==='persona')draft.persona={requested:v.persona,effective:v.persona};
+      else{
+        const model=D.models.find(m=>m.id===v.model);if(!model)return;
+        draft.modelId=v.model;draft.model={id:v.model,requested:model.name,effective:model.name,effort:v.effort,fast:v.fast};
+      }
+      ctx.renderOverlays();
+    });return true;
+  }));
+  EXT.action('bsd-config-mode',function(ctx,btn){if(configDraft)configDraft.mode=btn.dataset.value;ctx.renderOverlays();return true;});
+  EXT.action('bsd-save-config',function(ctx){
+    const d=configDraft;if(!d)return true;
+    if(!Number.isInteger(d.cooldownTurns)||d.cooldownTurns<0||d.cooldownTurns>100||!Number.isFinite(d.selfCompactThreshold)||d.selfCompactThreshold<.1||d.selfCompactThreshold>.95){d.error='Check cooldown and compaction limits.';ctx.renderOverlays();return true;}
+    const p=P();
+    const identityChanged=JSON.stringify([p.model.id||p.model.effective,p.model.effort,p.model.fast,p.persona.effective])!==JSON.stringify([d.model.id||d.model.effective,d.model.effort,d.model.fast,d.persona.effective]);
+    ['mode','model','persona','sensitivity','catchUpSeconds','cooldownTurns','retainTranscript','selfCompactThreshold','stages'].forEach(k=>p[k]=JSON.parse(JSON.stringify(d[k])));
+    if(identityChanged){
+      // Historical findings retain their own advisor identity. A replacement
+      // advisor has not read the old cursor and must not reconfirm old advice.
+      p.sessionEpoch+=1;p.reprimeRequired=true;p.cursor=0;p.checkedSecondsAgo=null;p.cooldownRemaining=0;
+      p.transcript.push({gen:p.generation,role:'system',sessionEpoch:p.sessionEpoch,text:'Advisor changed. New session awaits context priming.'});
+    }
+    p.revision=(p.revision||0)+1;p.state=p.mode==='off'?'off':p.cursor<p.generation?'catching_up':'idle';
+    configDraft=null;ctx.closeMenu();ctx.closeDialog();ctx.renderApp();return true;
+  });
 
   /* ===================================================================
      4. TRANSCRIPT ADVICE CARD
@@ -254,7 +273,7 @@
       '<div class="event-copy">'+
         '<strong><span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span> '+esc(f.title)+'</strong>'+
         '<p>'+esc(f.detail)+'</p>'+
-        '<p class="bsd-attr">Back Seat Driver · '+esc(P().persona.effective)+' · '+esc(P().model.effective)+' · read-only advice against generation '+f.raisedAtGeneration+'</p>'+
+        '<p class="bsd-attr">Back Seat Driver · '+esc(f.advisorModel||P().model.effective)+' · gen '+f.raisedAtGeneration+'</p>'+
       '</div>'+
       '<div class="plan-actions">'+
         '<button class="soft-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">Evidence</button>'+
@@ -306,27 +325,13 @@
   EXT.slot('dialog', function(ctx){
     var d=ctx.state.dialog; if(!d) return '';
     var p=P();
-    if(d.type==='bsd-stages'){
-      return '<div class="demo-dialog bsd-dialog" data-k="bsd-stage-dialog">'+
-        '<div class="demo-dialog-head"><strong>Back Seat Driver stages</strong><span class="spacer"></span>'+
-          '<button class="icon-button" data-action="bsd-close-dialog">'+ctx.icon('close',13)+'</button></div>'+
-        '<div class="demo-dialog-body">'+
-          '<p class="bsd-sub">Bind the advisor to the stages where a second opinion is worth its cost. Every binding is read-only: a bound stage is never gated, blocked, or certified by BSD.</p>'+
-          p.stages.map(function(s){
-            return '<label class="bsd-stage-row" data-k="bsd-sr-'+esc(s.id)+'">'+
-              '<input type="checkbox" data-action="bsd-toggle-stage" data-id="'+esc(s.id)+'"'+(s.bound?' checked':'')+'>'+
-              '<span>'+esc(s.label)+'</span></label>';
-          }).join('')+
-        '</div>'+
-        '<div class="demo-dialog-foot"><button class="primary-button" data-action="bsd-close-dialog">Done</button></div>'+
-      '</div>';
-    }
+    if(d.type==='bsd-stages')return configDialog(ctx);
     if(d.type==='bsd-transcript'){
       return '<div class="demo-dialog bsd-dialog" data-k="bsd-transcript-dialog">'+
         '<div class="demo-dialog-head"><strong>Advisor transcript</strong><span class="spacer"></span>'+
           '<button class="icon-button" data-action="bsd-close-dialog">'+ctx.icon('close',13)+'</button></div>'+
         '<div class="demo-dialog-body">'+
-          '<p class="bsd-sub">This is the advisor\'s own isolated session. It is retained because <code>assistant.bsd.retain_transcript</code> is on.</p>'+
+          '<p class="bsd-sub">Advisor session history</p>'+
           p.transcript.map(function(t){
             return '<div class="bsd-tline bsd-tline-'+esc(t.role)+'"><span class="bsd-hgen">gen '+t.gen+'</span><p>'+esc(t.text)+'</p></div>';
           }).join('')+
@@ -354,11 +359,12 @@
       ctx.state.context = ctx.state.context || {};
       ctx.state.context.details = true;
       ctx.state.context.drawerView='curated';
+      ctx.state.context.polishSections=Object.assign({},ctx.state.context.polishSections,{'Back Seat Driver':true});
       reRender(ctx);
       setTimeout(function(){ var el=document.getElementById('ctx-bsd'); if(el) el.scrollIntoView({block:'start'}); }, 30);
     },
-    'bsd-configure-stages': function(ctx){ ctx.openDialog({type:'bsd-stages'}); },
-    'bsd-close-dialog': function(ctx){ ctx.closeDialog(); },
+    'bsd-configure-stages': beginConfig,
+    'bsd-close-dialog': function(ctx){ configDraft=null;ctx.closeMenu();ctx.closeDialog(); },
     'bsd-toggle-stage': function(ctx,btn){
       var id=btn.dataset.id, p=P();
       p.stages.forEach(function(s){ if(s.id===id) s.bound=!s.bound; });
@@ -397,7 +403,7 @@
           f.history.push({gen:p.generation, what:'Still held at generation '+p.generation+'. Re-evaluated against the newer delta rather than delivered.'});
         }
       });
-      p.cursor=p.generation;
+      p.cursor=p.generation;p.reprimeRequired=false;
       p.state = heldFindings().length ? 'held' : 'idle';
       p.checkedSecondsAgo=2;
       reRender(ctx);
@@ -417,7 +423,7 @@
   var prevReset = EXT._actions && EXT._actions['reset-all'];
   EXT.chainAction('reset-all', function(ctx,btn,ev){
     RT.bsd = JSON.parse(BSD0); RT.bsdOpenFinding=null;
-    return prevReset ? prevReset(ctx,btn,ev) : false;
+    configDraft=null;return false;
   });
 
   window.PM56_BSD = {

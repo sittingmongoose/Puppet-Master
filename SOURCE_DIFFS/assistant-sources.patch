@@ -1,0 +1,2212 @@
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.css
+@@ -343,16 +343,18 @@
+    content and clip nowrap labels.
+    ===================================================================== */
+ .chat-stage {
+-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
++  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+ }
+ .chat-float {
+-  position: relative;
++  position: absolute;
++  left:12px; right:12px;
++  bottom:calc(var(--chat-dock-h,100px) + var(--decision-h,0px) + 12px);
+   z-index: 8;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   gap: 4px;
+-  padding: 0 10px 8px;
++  padding: 0;
+   pointer-events: none;
+ }
+ .chat-float .activity-wrap {
+@@ -373,7 +375,7 @@
+ .jump-bottom {
+   position: absolute;
+   right: 10px;
+-  bottom: calc(100% + var(--decision-h, 0px) + 8px);
++  bottom: calc(100% + 8px);
+   z-index: 9;
+   width: 30px;
+   height: 30px;
+@@ -532,3 +534,20 @@
+   .hover-card.ab-card { animation: none !important; }
+   .jump-bottom.is-working > svg { animation: none !important; }
+ }
++
++/* The transcript occupies the space under and around the floating pill. */
++.chat-stage > .transcript { grid-row:3; padding-top:18px; padding-bottom:calc(var(--thread-float-h,44px) + 36px); }
++.chat-stage > .decision-host { grid-row:4; }
++.chat-stage > .composer { grid-row:5; }
++.chat-stage > .chat-header { grid-row:1; }
++.lens-dock { grid-row:2; min-height:0; min-width:0; z-index:7; }
++.lens-dock:empty { display:none; }
++.lens-inline { padding:10px 14px 12px; background:var(--surface-2); border-bottom:1px solid var(--border); }
++.lens-inline .lens-strip-head { margin-top:0; }
++.lens-inline .lens-note, .lens-inline .lens-foot { display:none; }
++.shared-picker-button { display:flex; align-items:center; gap:8px; min-height:40px; min-width:0; width:100%; padding:7px 10px; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); color:var(--text); text-align:left; cursor:pointer; }
++.shared-picker-button:hover { background:var(--surface-3); border-color:var(--border-strong); }
++.shared-picker-copy { display:grid; min-width:0; flex:1; gap:2px; }
++.shared-picker-copy strong { font-size:11px; font-weight:550; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
++.shared-picker-copy small { font-size:9px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
++.shared-picker-button > svg { flex:none; }
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js
+@@ -992,6 +992,7 @@
+
+   EXT.slot('activityPanelBody', function (ctx) {
+     if(ctx.domain === 'todo' && window.PM56_TODOS) return '';
++    if(['brainstorm','review','chat_room'].includes(ctx.domain)&&ctx.state.activity.scope==='focus')return '';
+     var v = Number(ctx.state.variants && ctx.state.variants[4]) || 0;
+     if (v < 0 || v >= CONCEPTS.length) v = 0;
+     try { return CONCEPTS[v](ctx); }
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/app.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/app.js
+@@ -21,6 +21,9 @@
+   const uid = (p='id') => `${p}-${Math.random().toString(36).slice(2,9)}-${Date.now().toString(36)}`;
+
+   const PATHS = {
++    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/>',
++    chat:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"/>',
++    sliders:'<path d="M4 6h5M13 6h7M4 12h10M18 12h2M4 18h2M10 18h10M9 3v6M14 9v6M6 15v6"/>',
+     search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+     history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
+     reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+@@ -209,7 +212,7 @@
+     'transcriptMessage','composerTray','composerRibbon','composerBelow','wandRows','submenu','modeRows',
+     /* Append points inside context.js's own replace-slot output, so BSD adds a row and a
+        section without re-registering (and therefore duplicating) the whole Context menu. */
+-    'contextBsdRow','contextBsdSection'];
++    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord'];
+
+   function ensureExt(){
+     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
+@@ -252,7 +255,7 @@
+   function extCtx(extra){
+     return Object.assign({
+       /* data */
+-      state, D, M, clone, clamp, esc, uid, icon,
++      state, D, M, clone, clamp, esc, uid, icon, providerMark,
+       thread: activeThread(), model: selectedModel(),
+       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
+       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
+@@ -425,6 +428,9 @@
+     return {kind, a, b};
+   }
+   function editorTabLabel(id){
++    const owned=extReplace('editorTabLabel',{editorId:id},'');if(owned)return owned;
++    const planId=window.PM56_PLANS?.editorPlanId(id);
++    if(planId)return window.PM56_PLANS.get(planId)?.title||'Plan';
+     const a=D.artifacts.find(x=>x.id===id);
+     if(a) return a.title;
+     const ag=D.subagents.find(x=>`thread-${x.id}`===id);
+@@ -448,7 +454,7 @@
+   }
+   function renderEditor() {
+     return `<section class="editor-pane">
+-      <div class="editor-tabs">${state.editorTabs.map(id => {
++      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat" title="Return to chat">${icon('chat',15)}</button>${state.editorTabs.map(id => {
+         const label=editorTabLabel(id);
+         return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}" title="${esc(label)}"><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
+       }).join('')}</div>
+@@ -458,6 +464,8 @@
+
+   function renderEditorBody() {
+     const id=state.activeEditor;
++    const owned=extReplace('editorDocument',{editorId:id},'');if(owned)return owned;
++    if(id?.startsWith('plan:'))return window.PM56_PLANS?.editorBody(id)||'<div class="editor-empty">Plan unavailable</div>';
+     if (!id) return `<div class="editor-empty">${icon('document',28)}<div><strong>No artifact open</strong><br><span>Plans, files, visual artifacts, links, and child-agent threads open here.</span></div></div>`;
+     const agent=D.subagents.find(a=>`thread-${a.id}`===id);
+     if (agent) return renderAgentEditor(agent);
+@@ -502,6 +510,7 @@
+     return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
+   }
+   function renderArtifactEditor(art){
++    if(art.kind==='plan'){const owned=window.PM56_PLANS?.editorBody(art.id);if(owned)return owned;}
+     /* Assistant-redesign wave: ONE Plan truth, in the header chrome too. This row
+        read the legacy artifact record, so the pane's own header said
+        "Version 4 · Ready" directly above a card that said "Plan · V5" -- the same
+@@ -629,7 +638,7 @@
+      override local to the file editor. */
+   function renderFileEditor(path){
+     const c=D.changes.find(x=>x.path===path);
+-    const line=c?.line||null;
++    const line=state.fileFocus?.[path]||c?.line||null;
+     const deleted=c?.status==='deleted';
+     const statusLabel=(D.labels&&D.labels.changeStatus&&D.labels.changeStatus[c?.status])
+       || (c?.status ? String(c.status).replace(/^./,ch=>ch.toUpperCase()) : 'Working tree');
+@@ -678,6 +687,7 @@
+     const t=activeThread();
+     return `<section class="chat-stage" data-shell="${state.variants[0]}">
+       ${renderChatHeader(t)}
++      <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
+       <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.filter(messageVisible).map(m=>renderMessage(m,t)).join('')}</div></div>
+       ${renderDecisionHost()}
+       ${renderChatFloat()}
+@@ -845,6 +855,7 @@
+   }
+
+   function renderEventMessage(m){
++    const record=extReplace('workRecord',{m},'');if(record)return record;
+     const map={
+       'question-receipt':['todo','Questionnaire waiting','warning'],'bsd-evaluating':['search','BSD evaluating',''],'bsd-advice':['warning','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eyeoff','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['lock','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['users','Crew',''],'new-message':['down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['artifact','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
+     };
+@@ -858,7 +869,7 @@
+     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
+        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
+     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
+-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><strong>${esc(m.title||d[1])}</strong><p>${esc(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
++    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><span class="event-kind">${esc(d[1])}</span><strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+   }
+   function renderWorkingAnimation(m){
+     const rec=workRecFor(m)||state.work;
+@@ -1753,17 +1764,15 @@
+     const composer=stage.querySelector('.composer');
+     const dock=composer?composer.getBoundingClientRect().height:0;
+     setStageVar(stage, '--chat-dock-h', dock);
+-    /* Bar is in-flow; do not pad the transcript as if the float overlayed it. */
+-    setStageVar(stage, '--thread-float-h', 0);
++    const float=stage.querySelector('.chat-float');
++    setStageVar(stage, '--thread-float-h', float ? float.offsetHeight : 0);
+     const host=stage.querySelector('.decision-host');
+     const decisionH=(host && !host.classList.contains('empty') && host.offsetHeight)?host.getBoundingClientRect().height:0;
+     setStageVar(stage, '--decision-h', decisionH);
+-    const lensOn=!!(state.menu&&state.menu.type==='lens');
+-    const strip=lensOn?document.querySelector('.overlay-menu.lens-strip'):null;
+-    /* offsetHeight is transform-safe; getBoundingClientRect shrinks mid-sprout. */
+-    const lensH=strip?strip.offsetHeight+8:0;
+-    setStageVar(stage, '--lens-strip-h', lensH);
+-    if(lensOn&&strip) observeLensStrip(strip);
++    const strip=stage.querySelector('.lens-inline');
++    // The grid already reserves the lens height. No scroll-away padding proxy.
++    setStageVar(stage, '--lens-strip-h', 0);
++    if(strip) observeLensStrip(strip);
+     else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
+   }
+   function activityRowWidth(bar){
+@@ -1965,7 +1974,7 @@
+     document.documentElement.style.setProperty('--editor-w',`${effectiveEditor}%`);
+     document.documentElement.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
+     document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
+-    pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
++    pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
+     document.getElementById('pmRoot').setAttribute('aria-busy','false');
+     flipHeights(flipTargets, flipBefore);
+     flipMoves(moveTargets, moveBefore);
+@@ -2399,6 +2408,16 @@
+     };
+     requestAnimationFrame(tick);
+   }
++  // The lens is an in-flow sibling, never a positioned transcript overlay.
++  function renderInlineLens(){
++    return state.menu?.type==='lens' ? `<div class="lens-inline" data-k="lens-inline">${extReplace('contextLensMenu',{},'')}</div>` : '';
++  }
++  function syncInlineLens(){
++    const dock=document.querySelector('.lens-dock');
++    if(!dock)return;
++    pmPatch(dock,renderInlineLens());
++    dock.classList.toggle('is-open',state.menu?.type==='lens');
++  }
+   let lastOverlayPayload='';
+   function renderOverlays(){
+     const root=document.getElementById('pmOverlayRoot');
+@@ -2406,7 +2425,8 @@
+     if(state.historyMode==='floating') parts.push(`<aside class="history-flyout" data-history-variant="${state.variants[1]}">${renderHistoryContent(true)}</aside>`);
+     if(state.context.details) parts.push(renderContextDrawer());
+     if(state.dialog) parts.push(renderDialog());
+-    if(state.menu) parts.push(renderMenu());
++    if(state.menu && state.menu.type!=='lens') parts.push(renderMenu());
++    syncInlineLens();
+     /* Hover tips are synced after the patch so tip-only updates can avoid
+        re-patching menus/drawers (which live in this same overlay root). */
+     if(state.toast.length) parts.push(`<div class="toast-stack">${state.toast.slice(-3).map(t=>`<div class="toast"><strong>${esc(t.title)}</strong><span>${esc(t.detail||'')}</span></div>`).join('')}</div>`);
+@@ -2496,10 +2516,60 @@
+     }
+   }
+
++  const PERSONA_CATALOG=[
++    ['Product Manager','Product planning and coordination'], ['Architect','Architecture and trade-offs'],
++    ['Implementer','Code and tests'], ['Reviewer','Independent review'],
++    ['Teacher','Explanations and guidance'], ['Wonderer','Adjacent ideas and research'],
++    ['Critical Advisor','Read-only second opinion']
++  ];
++  let scopedPicker=null;
++  function pickerSelection(){ return state.menu?.scopedPicker && scopedPicker ? scopedPicker.value : state; }
++  function pickerAnchor(button){
++    if(!button.dataset.menuAnchor) button.dataset.menuAnchor=uid('picker');
++    return button.dataset.menuAnchor;
++  }
++  function beginScopedPicker(type,button,value,onChange){
++    scopedPicker={type,value:{model:value.model||state.model,effort:value.effort||'',fast:!!value.fast,persona:value.persona||state.persona},onChange};
++    state.modelSearch=''; state.modelProvider='all';
++    openMenu(type,pickerAnchor(button),{scopedPicker:true});
++  }
++  function handleScopedPickerAction(a,btn,e){
++    if(!state.menu?.scopedPicker||!scopedPicker)return false;
++    if(!['set-model','set-effort','toggle-fast','set-persona'].includes(a))return false;
++    e.stopPropagation();
++    const session=scopedPicker, value=session.value;
++    if(a==='set-persona'){
++      value.persona=btn.dataset.value;
++      session.onChange({...value}); closeMenu(); return true;
++    }
++    const id=a==='set-model'?btn.dataset.value:btn.dataset.model;
++    const model=D.models.find(x=>x.id===id); if(!model)return true;
++    value.model=id;
++    if(!model.efforts.includes(value.effort))value.effort='';
++    if(!model.fast)value.fast=false;
++    if(a==='set-effort')value.effort=btn.dataset.value;
++    if(a==='toggle-fast')value.fast=!value.fast;
++    session.onChange({...value});
++    if(a==='set-model')setSubmenu('model:'+id);else renderOverlays();
++    return true;
++  }
++  window.PM56_PICKERS={
++    openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
++    openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
++    personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
++    modelButton(action,anchor,modelId,extra=''){
++      const m=D.models.find(x=>x.id===modelId);
++      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
++    },
++    personaButton(action,anchor,persona,extra=''){
++      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
++    }
++  };
++
+   function renderMenu(){
+     const m=state.menu;
+     let content='';
+-    if(m.type==='persona') content=renderSimpleMenu('Persona',[['Product Manager','Product planning, product judgment, and coordination'],['Architect','Architecture, contracts, boundaries, and trade-offs'],['Implementer','Code, tests, and working product slices'],['Reviewer','Adversarial review, evidence, and risk'],['Teacher','Explanations, tours, and approachable guidance'],['Wonderer','Adjacent domains and overlooked possibilities; leads stay hypotheses until researched']],state.persona,'set-persona');
++    if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
+     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
+     /* Rows come from D.operational.worktrees, not from four string literals:
+        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
+@@ -2596,13 +2666,13 @@
+   }
+   function effortWords(m){
+     return `<span class="effort-words">${m.efforts.map((e,i)=>{
+-      const lit=!!state.effort && state.model===m.id && state.effort===e;
++      const lit=!!pickerSelection().effort && pickerSelection().model===m.id && pickerSelection().effort===e;
+       return `${i?'<span class="effort-sep"> / </span>':''}<span class="effort-word${lit?' is-lit':''}">${esc(e)}</span>`;
+     }).join('')}</span>`;
+   }
+   function groupModels(models){
+     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
+-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${state.model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${state.model===m.id&&state.fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
++    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+   }
+   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
+      (min-height:44 with border-box, so its 5/6px padding is inside), a
+@@ -2636,7 +2706,7 @@
+   function renderSubmenu(id){
+     if(id.startsWith('model:')){
+       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
+-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${state.model===model.id&&state.effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${state.model===model.id&&state.effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${state.model===model.id&&state.fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${state.model===model.id&&state.fast?icon('check',11):''}</button>`:''}`;
++      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
+     }
+     /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
+        Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy
+@@ -2735,7 +2805,7 @@
+     const triggerGroups=demoTriggerGroups();
+     const g=clampDemoGeom(state.dialog.geom||lastDemoGeom||defaultDemoGeom());
+     state.dialog.geom=g;
+-    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail · Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Orbit is the default working activity; Step Rail is the simplified option. Every lab take stays available below.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
++    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
+   }
+
+   function positionOverlays(){
+@@ -2793,6 +2863,7 @@
+     syncChatDock();
+   }
+   function openMenu(type,anchor,extra={}){
++    if(!extra.scopedPicker) scopedPicker=null;
+     const anchorEl=document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`);
+     const rect=anchorEl?.getBoundingClientRect();
+     const side=rect&&rect.left<window.innerWidth*.53?'right':'left';
+@@ -2805,7 +2876,11 @@
+     if(state.menu&&state.menu.type===type&&state.menu.anchor===anchor){ closeMenu(); return; }
+     openMenu(type,anchor,extra);
+   }
+-  function closeMenu(){state.menu=null;renderOverlays();}
++  function closeMenu(){
++    const anchor=state.menu?.scopedPicker?state.menu.anchor:null;
++    state.menu=null;scopedPicker=null;renderOverlays();
++    if(anchor)requestAnimationFrame(()=>document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`)?.focus({preventScroll:true}));
++  }
+   function setSubmenu(id){
+     if(!state.menu)return;
+     clearTimeout(submenuTimer);
+@@ -2816,8 +2891,13 @@
+   function toast(title,detail=''){
+     const t={id:uid('toast'),title,detail};state.toast.push(t);renderOverlays();setTimeout(()=>{state.toast=state.toast.filter(x=>x.id!==t.id);renderOverlays();},2800);
+   }
+-  function openEditor(id){ if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp(); }
+-  function closeEditor(id){ const i=state.editorTabs.indexOf(id);state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
++  function openEditor(id){
++    // Artifact aliases and plan tabs address one plan, never two copies.
++    const planId=window.PM56_PLANS?.editorPlanId(id);
++    if(planId){const existing=state.editorTabs.find(t=>window.PM56_PLANS?.editorPlanId(t)===planId);id=existing||'plan:'+planId;}
++    state.editorRevealed=true;if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp();
++  }
++  function closeEditor(id){ const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
+   function switchThread(id){
+     const t=state.threads.find(x=>x.id===id);if(!t)return;
+     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
+@@ -3127,8 +3207,26 @@
+     const btn=e.target.closest('[data-action]');
+     const sub=e.target.closest('[data-submenu]');
+     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
+-    if(!btn){if(state.menu&&!e.target.closest('.overlay-menu'))closeMenu();return;}
++    if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
+     const a=btn.dataset.action;
++    if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
++    if(handleScopedPickerAction(a,btn,e)) return;
++    const preview=btn.closest('.ab-card');
++    if(preview && ['open-activity','todo-show-item','open-agent','open-crew','open-change','open-artifact','collab-open-panel','collab-open-participant'].includes(a)){
++      state.activity.pinned=true;
++      if(!['open-activity','todo-show-item'].includes(a)){
++        const run=btn.dataset.run&&window.PM56_COLLAB?.run(btn.dataset.run);
++        const domain=run?run.kind:a==='open-change'?'changes':a==='open-artifact'?'artifacts':a==='open-crew'?'crew':'subagents';
++        let id=btn.dataset.id||btn.dataset.path||btn.dataset.run||btn.dataset.participant;
++        if(a==='open-change'){const file=D.changes.find(c=>c.path===btn.dataset.path);id=file?.id||file?.path||id;}
++        state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';
++        state.activity.selected={domain,id};
++        if(!state.activity.expanded.includes(domain))state.activity.expanded.push(domain);
++        state.hover=null;renderApp();
++        requestAnimationFrame(()=>document.querySelector('.activity-panel .pmap-detail,.activity-panel .collab-activity-body')?.scrollIntoView({block:'nearest'}));
++        return;
++      }
++    }
+     /* Feature modules first, so a module can add an action or override one. */
+     if(extRun(a,btn,e))return;
+     if(a==='open-menu'){e.stopPropagation();const type=btn.dataset.menu,anchor=btn.dataset.menuAnchor;toggleMenu(type,anchor);return;}
+@@ -3196,7 +3294,7 @@
+       if(a==='inspect-work-step'){rec.running=false;scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
+       if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
+     }
+-    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
++    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
+     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
+     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
+     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/bsd.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/bsd.css
+@@ -237,9 +237,8 @@
+ .bsd-stages .bsd-sub { margin-top: 7px; }
+
+ /* ---- Findings ------------------------------------------------------
+-   Severity escalates through border-left THICKNESS and a background tint
+-   on top of the badge's own fill state (section 2) — a third, independent
+-   read of the same hierarchy that never depends on hue perception alone. */
++   Severity is carried by the labeled badge and subtle whole-surface tint;
++   there are no decorative side strips. */
+ .bsd-findings {
+   display: flex;
+   flex-direction: column;
+@@ -248,14 +247,14 @@
+ .bsd-finding {
+   padding: 9px 10px;
+   border: 1px solid var(--border);
+-  border-left: 3px solid var(--border);
++  
+   border-radius: var(--radius-sm);
+   background: var(--surface-2);
+ }
+-.bsd-finding:has(.bsd-sev-concern) { border-left-color: var(--warning); }
++.bsd-finding:has(.bsd-sev-concern) {  }
+ .bsd-finding:has(.bsd-sev-critical) {
+-  border-left-width: 4px;
+-  border-left-color: var(--danger);
++  
++  
+   background: color-mix(in srgb, var(--danger) 5%, var(--surface-2));
+ }
+ .bsd-finding-head {
+@@ -395,15 +394,15 @@
+    cleared/suppressed), so the card itself just needs the same severity read
+    as section 2, echoed onto the icon chip and a left accent bar.
+    ===================================================================== */
+-.bsd-card { border-left: 3px solid var(--border-strong); }
+-.bsd-card:has(.bsd-sev-concern) { border-left-color: var(--warning); }
++.bsd-card {  }
++.bsd-card:has(.bsd-sev-concern) {  }
+ .bsd-card:has(.bsd-sev-concern) .event-icon {
+   background: color-mix(in srgb, var(--warning) 16%, var(--surface-3));
+   color: var(--warning);
+ }
+ .bsd-card:has(.bsd-sev-critical) {
+-  border-left-width: 4px;
+-  border-left-color: var(--danger);
++  
++  
+ }
+ .bsd-card:has(.bsd-sev-critical) .event-icon {
+   background: color-mix(in srgb, var(--danger) 18%, var(--surface-3));
+@@ -531,3 +530,28 @@
+ @media (prefers-reduced-motion: reduce) {
+   .bsd-live.bsd-tone-working::before { animation-iteration-count: 1; }
+ }
++
++/* Severity is a small labeled badge; no directional accent borders. */
++.bsd-summary-head,.bsd-summary-metrics,.bsd-summary-actions { display:flex; align-items:center; justify-content:space-between; gap:8px; }
++.bsd-summary-identity { display:grid; gap:4px; margin:12px 0; font-size:12px; }
++.bsd-summary-identity span,.bsd-summary-metrics { color:var(--muted); font-size:10px; }
++.bsd-disclosure { margin-top:12px; border-top:1px solid var(--border); padding-top:10px; }
++.bsd-disclosure summary { cursor:pointer; font-size:11px; font-weight:600; display:flex; justify-content:space-between; padding:3px 0 7px; }
++.bsd-disclosure summary span { color:var(--muted); font-weight:400; }
++.bsd-findings { gap:0; }
++.bsd-finding { padding:11px 0; border:0; border-bottom:1px solid var(--border); border-radius:0; background:transparent; }
++.bsd-session-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:10px; }
++.bsd-session-grid dt { color:var(--muted); margin-bottom:3px; }
++.bsd-session-grid dd { margin:0; overflow-wrap:anywhere; }
++.bsd-configure { width:min(620px,calc(100vw - 24px)); }
++.bsd-configure .demo-dialog-body { padding:20px; display:block; }
++.bsd-config-mode { display:flex; gap:5px; margin-bottom:20px; }
++.bsd-config-mode .active { background:var(--surface-3); border-color:var(--accent); color:var(--accent); }
++.bsd-config-pickers { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
++.bsd-config-pickers label,.bsd-config-grid label { display:grid; gap:7px; min-width:0; font-size:11px; color:var(--muted); }
++.bsd-config-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:17px; }
++.bsd-config-grid input,.bsd-config-grid select { width:100%; min-width:0; height:35px; padding:6px 9px; border:1px solid var(--border); border-radius:7px; color:var(--text); background:var(--surface-2); }
++.bsd-retain { display:flex; align-items:center; gap:8px; font-size:11px; }
++.bsd-stage-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px 10px; }
++.bsd-config-error { min-height:15px; color:var(--danger); font-size:11px; margin-top:10px; }
++@media(max-width:480px){ .bsd-config-pickers,.bsd-config-grid {grid-template-columns:1fr;} }
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/bsd.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/bsd.js
+@@ -41,6 +41,8 @@
+      =================================================================== */
+   var SEED = {
+     demo:true,
++    sessionEpoch:1,
++    reprimeRequired:false,
+     mode:'auto',                       /* off | auto | on -- Auto is the default */
+     model:{ requested:'Default resolver', effective:'Claude Sonnet 4.6' },
+     persona:{ requested:'Critical Advisor', effective:'Critical Advisor' },
+@@ -111,6 +113,7 @@
+       { gen:14, role:'advisor', text:'Re-evaluated at generation 14. The measurement is still absent, so the concern stands and stays held for the next safe boundary.' }
+     ]
+   };
++  SEED.findings.forEach(f=>{f.sessionEpoch=SEED.sessionEpoch;f.advisorModel=SEED.model.effective;f.advisorPersona=SEED.persona.effective;});
+   RT.bsd = RT.bsd || JSON.parse(JSON.stringify(SEED));
+   var BSD0 = JSON.stringify(SEED);
+   function P(){ return RT.bsd; }
+@@ -133,8 +136,8 @@
+     if(p.quarantined) return 'failed';
+     return p.state;
+   }
+-  function heldFindings(){ return P().findings.filter(function(f){ return f.status==='held'; }); }
+-  function emitted(){ return P().findings.filter(function(f){ return f.status==='emitted'; }); }
++  function heldFindings(){ return P().findings.filter(function(f){ return f.status==='held' && f.sessionEpoch===P().sessionEpoch; }); }
++  function emitted(){ return P().findings.filter(function(f){ return f.status==='emitted' && f.sessionEpoch===P().sessionEpoch; }); }
+
+   /* ===================================================================
+      2. COMPACT CONTEXT ROW
+@@ -168,15 +171,15 @@
+   function findingRow(ctx,f){
+     var badge = '<span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span>';
+     var status = '<span class="bsd-status bsd-status-'+esc(f.status)+'">'+esc(f.status)+'</span>';
+-    var stale = (f.status==='emitted' && f.deliveredAtGeneration < P().generation - 1)
+-      ? '<p class="bsd-stale">Delivered against generation '+f.deliveredAtGeneration+' and not reconfirmed since. Treat as stale, not current.</p>' : '';
++    var stale = f.sessionEpoch!==P().sessionEpoch ? '<span class="bsd-stale">Previous session · '+esc(f.advisorModel)+'</span>' : (f.status==='emitted' && f.deliveredAtGeneration < P().generation - 1)
++      ? '<span class="bsd-stale">Not reconfirmed · gen '+f.deliveredAtGeneration+'</span>' : '';
+     return '<div class="bsd-finding" data-k="bsd-f-'+esc(f.id)+'">'+
+       '<div class="bsd-finding-head">'+badge+status+
+-        '<span class="bsd-gen">raised at generation '+f.raisedAtGeneration+'</span>'+
++        '<span class="bsd-gen">gen '+f.raisedAtGeneration+'</span>'+
+         '<span class="spacer"></span>'+
+         '<button class="text-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">History</button></div>'+
+       '<strong class="bsd-finding-title">'+esc(f.title)+'</strong>'+
+-      '<p class="bsd-finding-detail">'+esc(f.detail)+'</p>'+ stale +
++      (RT.bsdOpenFinding===f.id?'<p class="bsd-finding-detail">'+esc(f.detail)+'</p>':'')+ stale +
+       (RT.bsdOpenFinding===f.id
+         ? '<div class="bsd-history">'+f.history.map(function(h){
+             return '<div class="bsd-hrow"><span class="bsd-hgen">gen '+h.gen+'</span><span>'+esc(h.what)+'</span></div>';
+@@ -186,59 +189,75 @@
+   }
+
+   function detailsSection(ctx){
+-    var p=P(), st=liveState();
+-    var bound=p.stages.filter(function(s){return s.bound;});
+-    return '<section class="context-section bsd-section" data-k="bsd-section" id="ctx-bsd">'+
+-      '<h3>Back Seat Driver</h3>'+
+-      '<div class="context-section-body">'+
+-        '<div class="bsd-policy" data-k="bsd-policy">'+
+-          '<div class="metric-card"><label>Mode</label><strong>'+esc(p.mode==='auto'?'Auto':p.mode==='on'?'On':'Off')+'</strong></div>'+
+-          '<div class="metric-card"><label>State</label><strong>'+esc(STATE_LABEL[st])+'</strong></div>'+
+-          '<div class="metric-card"><label>Cursor</label><strong>'+p.cursor+' / '+p.generation+'</strong></div>'+
+-          '<div class="metric-card"><label>Cooldown</label><strong>'+p.cooldownRemaining+' / '+p.cooldownTurns+'</strong></div>'+
+-        '</div>'+
+-        '<p class="bsd-identity">Requested <b>'+esc(p.model.requested)+'</b> · effective <b>'+esc(p.model.effective)+'</b> · Persona <b>'+esc(p.persona.effective)+'</b>'+
+-          (p.model.requested!==p.model.effective?' <span class="bsd-sub">(the resolver chose the effective model; the request is recorded)</span>':'')+'</p>'+
+-        '<p class="bsd-isolation">Runs in its own isolated context and tool session with bounded deltas. It reads a redacted projection of the primary work and can write nothing. Self-compacts at '+Math.round(p.selfCompactThreshold*100)+'% of its own window; that compaction never touches your conversation.</p>'+
+-        '<div class="bsd-stages" data-k="bsd-stages">'+
+-          '<div class="bsd-stages-head"><strong>Stage bindings</strong><span class="spacer"></span>'+
+-            '<button class="text-button" data-action="bsd-configure-stages">Configure</button></div>'+
+-          '<div class="bsd-stage-chips">'+p.stages.map(function(s){
+-            return '<span class="bsd-stage'+(s.bound?' on':'')+'">'+esc(s.label)+'</span>';
+-          }).join('')+'</div>'+
+-          '<p class="bsd-sub">'+bound.length+' of '+p.stages.length+' stages bound. Advice at a bound stage is still read-only and never gates the stage.</p>'+
+-        '</div>'+
+-        '<div class="bsd-findings" data-k="bsd-findings">'+p.findings.map(function(f){return findingRow(ctx,f);}).join('')+'</div>'+
+-        '<div class="bsd-usage" data-k="bsd-usage">'+
+-          '<strong>Usage · attributed to Back Seat Driver only</strong>'+
+-          '<div class="bsd-usage-grid">'+
+-            [['Calls',p.usage.calls],['No-call evaluations',p.usage.noCalls],['Held',p.usage.held],['Cleared',p.usage.cleared],
+-             ['Emitted',p.usage.emitted],['Suppressed',p.usage.suppressed],['Timeouts',p.usage.timeouts],
+-             ['Quota pauses',p.usage.quotaPauses],['Failures',p.usage.failures],['Catch-up latency',p.usage.catchUpLatencyMs+' ms']]
+-              .map(function(r){return '<div><label>'+esc(r[0])+'</label><b>'+esc(r[1])+'</b></div>';}).join('')+
+-          '</div>'+
+-          '<p class="bsd-sub">'+esc(p.usage.model)+' · account '+esc(p.usage.account)+' · '+p.usage.inputTokens.toLocaleString()+' in / '+p.usage.outputTokens.toLocaleString()+' out · $'+p.usage.costUsd.toFixed(3)+'. These totals are separate from the primary run and are never folded into it.</p>'+
+-          '<button class="soft-button" data-action="bsd-open-usage">'+ctx.icon('chart',12)+' Open Usage</button>'+
+-          '<button class="soft-button" data-action="bsd-open-transcript">'+ctx.icon('document',12)+' Advisor transcript</button>'+
+-        '</div>'+
+-        (p.quarantined?'<div class="bsd-quarantine">'+ctx.icon('warning',13)+'<div><strong>Advisor output quarantined</strong><p>The advisor returned malformed output and was isolated. Your work continued without interruption, and nothing it produced was admitted.</p></div></div>':'')+
+-        /* The two behaviours worth PROVING rather than describing. Both actions
+-           existed from the first draft of this module but nothing rendered a
+-           control for them, so the hold/reconfirm cycle and the failure
+-           isolation were unreachable and therefore unverifiable. bsd-verify.mjs
+-           drives these two buttons. */
+-        '<div class="bsd-demo" data-k="bsd-demo">'+
+-          '<strong>Demonstrate</strong>'+
+-          '<p class="bsd-sub">A concern raised against generation '+p.generation+' is held and re-evaluated against newer work before it is delivered. Advance the primary flow to watch a held finding be cleared or re-confirmed rather than delivered as if it were current.</p>'+
+-          '<div class="bsd-demo-row">'+
+-            '<button class="soft-button" data-action="bsd-advance-generation">'+ctx.icon('step',12)+' Advance a generation</button>'+
+-            '<button class="soft-button" data-action="bsd-simulate-failure">'+ctx.icon('warning',12)+' '+(p.quarantined?'Recover the advisor':'Fail the advisor')+'</button>'+
+-          '</div>'+
+-        '</div>'+
+-        '<p class="bsd-sub bsd-watch">Watch guidance: BSD reads the project through the same permission ceiling as the primary flow and never widens it. It cannot approve, merge, certify, or stand in for a required review or test.</p>'+
+-      '</div>'+
+-    '</section>';
+-  }
++    var p=P(), st=liveState(), bound=p.stages.filter(s=>s.bound);
++    return '<section class="bsd-section" data-k="bsd-section" id="ctx-bsd">'+
++      '<div class="bsd-summary-head"><span class="bsd-live">'+esc(STATE_LABEL[st])+' · '+esc(p.mode)+'</span><button class="soft-button" data-action="bsd-configure-stages">'+ctx.icon('sliders',12)+' Configure</button></div>'+
++      '<div class="bsd-summary-identity"><strong>'+esc(p.model.effective)+'</strong><span>'+esc(p.persona.effective)+'</span></div>'+
++      '<div class="bsd-summary-metrics"><span>Checked '+p.cursor+'/'+p.generation+'</span><span>'+bound.length+' stages</span><span>'+heldFindings().length+' held</span></div>'+
++      '<details class="bsd-disclosure"><summary>Findings <span>'+p.findings.length+'</span></summary><div class="bsd-findings">'+p.findings.map(f=>findingRow(ctx,f)).join('')+'</div></details>'+
++      '<details class="bsd-disclosure"><summary>Session & usage</summary><dl class="bsd-session-grid">'+
++        [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Effective model',p.model.effective],['Persona',p.persona.requested],['Sensitivity',p.sensitivity],['Catch-up cap',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Self-compact',Math.round(p.selfCompactThreshold*100)+'%'],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>'+
++        '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Transcript</button></div></details>'+
++      (p.quarantined?'<p class="bsd-quarantine">Advisor unavailable · primary work unaffected</p>':'')+'</section>';
++  }
++
++  var configDraft=null;
++  function beginConfig(ctx){
++    configDraft=JSON.parse(JSON.stringify(P()));
++    configDraft.modelId=configDraft.model.id||(D.models.find(m=>m.name===configDraft.model.effective)||D.models[0]).id;
++    ctx.closeMenu();ctx.openDialog({type:'bsd-stages'});
++  }
++  function configDialog(ctx){
++    var d=configDraft;if(!d){configDraft=JSON.parse(JSON.stringify(P()));d=configDraft;d.modelId=(D.models.find(m=>m.name===d.model.effective)||D.models[0]).id;}
++    const pick=window.PM56_PICKERS;
++    return '<section class="demo-dialog bsd-dialog bsd-configure" role="dialog" aria-label="Configure Back Seat Driver" data-k="bsd-configure">'+
++      '<div class="demo-dialog-head"><strong>Back Seat Driver</strong><span class="meta-pill">Read-only advisor</span><span class="spacer"></span><button class="icon-button" data-action="bsd-close-dialog" title="Cancel">'+ctx.icon('close',13)+'</button></div>'+
++      '<div class="demo-dialog-body"><div class="bsd-config-mode">'+['off','auto','on'].map(v=>'<button class="soft-button '+(d.mode===v?'active':'')+'" data-action="bsd-config-mode" data-value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</button>').join('')+'</div>'+
++      '<div class="bsd-config-pickers"><label>Advisor model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona.requested)+'</label></div>'+
++      '<div class="bsd-config-grid"><label>Trigger sensitivity<select data-bsd-field="sensitivity">'+['conservative','balanced','frequent'].map(v=>'<option value="'+v+'" '+(d.sensitivity===v?'selected':'')+'>'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
++      '<label>Catch-up cap<select data-bsd-field="catchUpSeconds">'+[0,15,30,60].map(v=>'<option value="'+v+'" '+(d.catchUpSeconds===v?'selected':'')+'>'+(v?v+' seconds':'Never wait')+'</option>').join('')+'</select></label>'+
++      '<label>Cooldown · turns<input data-bsd-field="cooldownTurns" type="number" min="0" max="100" value="'+d.cooldownTurns+'"></label>'+
++      '<label>Self-compact · %<input data-bsd-field="selfCompactThreshold" type="number" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label></div>'+
++      '<label class="bsd-retain"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label>'+
++      '<details class="bsd-disclosure"><summary>Workflow stages <span>'+d.stages.filter(s=>s.bound).length+' of '+d.stages.length+'</span></summary><div class="bsd-stage-grid">'+d.stages.map(s=>'<label class="bsd-stage-row"><input type="checkbox" data-bsd-stage="'+esc(s.id)+'" '+(s.bound?'checked':'')+'><span>'+esc(s.label)+'</span></label>').join('')+'</div></details>'+
++      '<div class="bsd-config-error" role="alert">'+esc(d.error||'')+'</div></div>'+
++      '<div class="demo-dialog-foot"><button class="soft-button" data-action="bsd-close-dialog">Cancel</button><button class="primary-button" data-action="bsd-save-config">Save configuration</button></div></section>';
++  }
++  document.addEventListener('change',function(e){
++    if(!configDraft)return;
++    const el=e.target, key=el.dataset.bsdField, stage=el.dataset.bsdStage;
++    if(stage){const s=configDraft.stages.find(x=>x.id===stage);if(s)s.bound=el.checked;return;}
++    if(!key)return;
++    configDraft[key]=key==='retainTranscript'?el.checked:key==='selfCompactThreshold'?Number(el.value)/100:['cooldownTurns','catchUpSeconds'].includes(key)?Number(el.value):el.value;
++  });
++  ['model','persona'].forEach(kind=>EXT.action('bsd-pick-'+kind,function(ctx,btn){
++    const draft=configDraft;if(!draft)return true;
++    window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:draft.modelId,persona:draft.persona.requested,effort:draft.model.effort,fast:draft.model.fast},v=>{
++      if(configDraft!==draft||ctx.state.dialog?.type!=='bsd-stages')return;
++      if(kind==='persona')draft.persona={requested:v.persona,effective:v.persona};
++      else{
++        const model=D.models.find(m=>m.id===v.model);if(!model)return;
++        draft.modelId=v.model;draft.model={id:v.model,requested:model.name,effective:model.name,effort:v.effort,fast:v.fast};
++      }
++      ctx.renderOverlays();
++    });return true;
++  }));
++  EXT.action('bsd-config-mode',function(ctx,btn){if(configDraft)configDraft.mode=btn.dataset.value;ctx.renderOverlays();return true;});
++  EXT.action('bsd-save-config',function(ctx){
++    const d=configDraft;if(!d)return true;
++    if(!Number.isInteger(d.cooldownTurns)||d.cooldownTurns<0||d.cooldownTurns>100||!Number.isFinite(d.selfCompactThreshold)||d.selfCompactThreshold<.1||d.selfCompactThreshold>.95){d.error='Check cooldown and compaction limits.';ctx.renderOverlays();return true;}
++    const p=P();
++    const identityChanged=JSON.stringify([p.model.id||p.model.effective,p.model.effort,p.model.fast,p.persona.effective])!==JSON.stringify([d.model.id||d.model.effective,d.model.effort,d.model.fast,d.persona.effective]);
++    ['mode','model','persona','sensitivity','catchUpSeconds','cooldownTurns','retainTranscript','selfCompactThreshold','stages'].forEach(k=>p[k]=JSON.parse(JSON.stringify(d[k])));
++    if(identityChanged){
++      // Historical findings retain their own advisor identity. A replacement
++      // advisor has not read the old cursor and must not reconfirm old advice.
++      p.sessionEpoch+=1;p.reprimeRequired=true;p.cursor=0;p.checkedSecondsAgo=null;p.cooldownRemaining=0;
++      p.transcript.push({gen:p.generation,role:'system',sessionEpoch:p.sessionEpoch,text:'Advisor changed. New session awaits context priming.'});
++    }
++    p.revision=(p.revision||0)+1;p.state=p.mode==='off'?'off':p.cursor<p.generation?'catching_up':'idle';
++    configDraft=null;ctx.closeMenu();ctx.closeDialog();ctx.renderApp();return true;
++  });
+
+   /* ===================================================================
+      4. TRANSCRIPT ADVICE CARD
+@@ -254,7 +273,7 @@
+       '<div class="event-copy">'+
+         '<strong><span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span> '+esc(f.title)+'</strong>'+
+         '<p>'+esc(f.detail)+'</p>'+
+-        '<p class="bsd-attr">Back Seat Driver · '+esc(P().persona.effective)+' · '+esc(P().model.effective)+' · read-only advice against generation '+f.raisedAtGeneration+'</p>'+
++        '<p class="bsd-attr">Back Seat Driver · '+esc(f.advisorModel||P().model.effective)+' · gen '+f.raisedAtGeneration+'</p>'+
+       '</div>'+
+       '<div class="plan-actions">'+
+         '<button class="soft-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">Evidence</button>'+
+@@ -306,27 +325,13 @@
+   EXT.slot('dialog', function(ctx){
+     var d=ctx.state.dialog; if(!d) return '';
+     var p=P();
+-    if(d.type==='bsd-stages'){
+-      return '<div class="demo-dialog bsd-dialog" data-k="bsd-stage-dialog">'+
+-        '<div class="demo-dialog-head"><strong>Back Seat Driver stages</strong><span class="spacer"></span>'+
+-          '<button class="icon-button" data-action="bsd-close-dialog">'+ctx.icon('close',13)+'</button></div>'+
+-        '<div class="demo-dialog-body">'+
+-          '<p class="bsd-sub">Bind the advisor to the stages where a second opinion is worth its cost. Every binding is read-only: a bound stage is never gated, blocked, or certified by BSD.</p>'+
+-          p.stages.map(function(s){
+-            return '<label class="bsd-stage-row" data-k="bsd-sr-'+esc(s.id)+'">'+
+-              '<input type="checkbox" data-action="bsd-toggle-stage" data-id="'+esc(s.id)+'"'+(s.bound?' checked':'')+'>'+
+-              '<span>'+esc(s.label)+'</span></label>';
+-          }).join('')+
+-        '</div>'+
+-        '<div class="demo-dialog-foot"><button class="primary-button" data-action="bsd-close-dialog">Done</button></div>'+
+-      '</div>';
+-    }
++    if(d.type==='bsd-stages')return configDialog(ctx);
+     if(d.type==='bsd-transcript'){
+       return '<div class="demo-dialog bsd-dialog" data-k="bsd-transcript-dialog">'+
+         '<div class="demo-dialog-head"><strong>Advisor transcript</strong><span class="spacer"></span>'+
+           '<button class="icon-button" data-action="bsd-close-dialog">'+ctx.icon('close',13)+'</button></div>'+
+         '<div class="demo-dialog-body">'+
+-          '<p class="bsd-sub">This is the advisor\'s own isolated session. It is retained because <code>assistant.bsd.retain_transcript</code> is on.</p>'+
++          '<p class="bsd-sub">Advisor session history</p>'+
+           p.transcript.map(function(t){
+             return '<div class="bsd-tline bsd-tline-'+esc(t.role)+'"><span class="bsd-hgen">gen '+t.gen+'</span><p>'+esc(t.text)+'</p></div>';
+           }).join('')+
+@@ -354,11 +359,12 @@
+       ctx.state.context = ctx.state.context || {};
+       ctx.state.context.details = true;
+       ctx.state.context.drawerView='curated';
++      ctx.state.context.polishSections=Object.assign({},ctx.state.context.polishSections,{'Back Seat Driver':true});
+       reRender(ctx);
+       setTimeout(function(){ var el=document.getElementById('ctx-bsd'); if(el) el.scrollIntoView({block:'start'}); }, 30);
+     },
+-    'bsd-configure-stages': function(ctx){ ctx.openDialog({type:'bsd-stages'}); },
+-    'bsd-close-dialog': function(ctx){ ctx.closeDialog(); },
++    'bsd-configure-stages': beginConfig,
++    'bsd-close-dialog': function(ctx){ configDraft=null;ctx.closeMenu();ctx.closeDialog(); },
+     'bsd-toggle-stage': function(ctx,btn){
+       var id=btn.dataset.id, p=P();
+       p.stages.forEach(function(s){ if(s.id===id) s.bound=!s.bound; });
+@@ -397,7 +403,7 @@
+           f.history.push({gen:p.generation, what:'Still held at generation '+p.generation+'. Re-evaluated against the newer delta rather than delivered.'});
+         }
+       });
+-      p.cursor=p.generation;
++      p.cursor=p.generation;p.reprimeRequired=false;
+       p.state = heldFindings().length ? 'held' : 'idle';
+       p.checkedSecondsAgo=2;
+       reRender(ctx);
+@@ -417,7 +423,7 @@
+   var prevReset = EXT._actions && EXT._actions['reset-all'];
+   EXT.chainAction('reset-all', function(ctx,btn,ev){
+     RT.bsd = JSON.parse(BSD0); RT.bsdOpenFinding=null;
+-    return prevReset ? prevReset(ctx,btn,ev) : false;
++    configDraft=null;return false;
+   });
+
+   window.PM56_BSD = {
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/build.py
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/build.py
+@@ -30,7 +30,7 @@
+          # because attachments, plans, collaboration and browser-capture all read and
+          # write the composer destination it owns.
+          'composer-state','attachments','plans','todos','collaboration','bsd',
+-         'scheduling','browser-capture','assistant-features','delivery-polish']
++         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos']
+
+ def read(name):
+     f=root/name
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/collaboration.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/collaboration.css
+@@ -189,12 +189,12 @@
+ }
+ .collab-recent strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+ .collab-msg {
+-  border-left: 2px solid var(--border);
++  
+   padding: 4px 0 4px 9px;
+ }
+-.collab-msg-user { border-left-color: var(--accent); }
+-.collab-msg-coordinator { border-left-color: var(--accent-2); }
+-.collab-msg-system { border-left-color: var(--muted); }
++.collab-msg-user {  }
++.collab-msg-coordinator {  }
++.collab-msg-system {  }
+ .collab-msg-head {
+   display: flex;
+   align-items: baseline;
+@@ -627,3 +627,17 @@
+ .collab-start-failure strong{ display:block; font-size:12px; margin-bottom:4px; color:var(--text); }
+ .collab-start-failure p{ margin:0; font-size:11.5px; color:var(--muted); }
+ .collab-start-failure p + p{ margin-top:5px; }
++
++/* Shared selector rows: identity and role, not a table of native selects. */
++.collab-participant-editor { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
++.collab-participant-editor-row { display:flex; flex-direction:column; gap:8px; padding:11px; border:1px solid var(--border); border-radius:11px; background:var(--surface-2); }
++.collab-member-name { display:flex; align-items:center; gap:6px; min-width:0; }
++.collab-member-name .collab-field-role { flex:1; min-width:0; border:0; background:transparent; padding:5px 2px; font-weight:600; }
++.collab-member-number { font-size:10px; color:var(--muted); width:16px; flex:none; }
++.collab-member-pickers { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
++.collab-member-pickers label { display:grid; gap:4px; font-size:9px; color:var(--muted); }
++.collab-config-effort { color:var(--muted); font-size:10px; }
++.collab-authority { color:var(--muted); font-size:10px; }
++.collab-checkbox-row small { margin-left:7px; color:var(--muted); }
++.collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
++@media(max-width:560px){ .collab-participant-editor { grid-template-columns:1fr; } }
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js
+@@ -224,6 +224,7 @@
+       requestedAccountId: (modelById(reqId) || {}).accountId || '',
+       requestedModelId: reqId,
+       requestedModelName: modelLabel(reqId),
++      requestedEffort: o.requestedEffort || '', requestedFast: !!o.requestedFast,
+       effectiveModelId: unavailable ? (eff ? eff.id : null) : reqId,
+       effectiveModelName: unavailable ? (eff ? modelLabel(eff.id) : 'None available') : modelLabel(reqId),
+       requestedPersona: o.persona,
+@@ -1533,7 +1534,7 @@
+   var KIND_PARTICIPANT_LIMIT = { crew: [1, 8], brainstorm: [2, 8], review: [1, 8], chat_room: [2, 8] };
+
+   function draftRow(role, modelId, persona, additive) {
+-    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', additiveRoleKind: additive || 'none' };
++    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', requestedEffort:'', requestedFast:false, additiveRoleKind: additive || 'none' };
+   }
+
+   function openConfigureDraft(kind, reconfigureRunId, autoMode) {
+@@ -1559,38 +1560,37 @@
+     };
+   }
+
+-  function modelOptions(selectedId) {
+-    return list(D.models).map(function (m) {
+-      var flag = UNAVAILABLE_DEMO[m.id] ? ' — unavailable (demo)' : '';
+-      return '<option value="' + esc(m.id) + '"' + (m.id === selectedId ? ' selected' : '') + '>' + esc(m.name) + ' · ' + esc(m.provider) + flag + '</option>';
+-    }).join('');
+-  }
+-  var PERSONA_OPTIONS = ['Product Manager', 'Architect', 'Implementer', 'Reviewer', 'Teacher', 'Wonderer'];
+-  function personaOptions(sel) {
+-    return PERSONA_OPTIONS.map(function (p) { return '<option value="' + esc(p) + '"' + (p === sel ? ' selected' : '') + '>' + esc(p) + '</option>'; }).join('');
+-  }
+-
+   function draftRowHtml(ctx, row, idx) {
+-    var eff = UNAVAILABLE_DEMO[row.requestedModelId] ? fallbackModelFor(row.requestedModelId) : null;
+-    var effLine = UNAVAILABLE_DEMO[row.requestedModelId]
+-      ? '<span class="collab-route-eff ' + (eff ? 'collab-route-eff-sub' : 'collab-route-eff-failed') + '">' + ctx.icon('warning', 11) + (eff ? 'effective ' + esc(modelLabel(eff.id)) : 'no substitute — slot disabled') + '</span>' : '';
+-    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-' + esc(row.rowId) + '">' +
+-      '<input class="collab-field-role" type="text" data-collab-input="role" data-row="' + esc(row.rowId) + '" value="' + esc(row.role) + '" placeholder="Role">' +
+-      '<select data-collab-input="model" data-row="' + esc(row.rowId) + '">' + modelOptions(row.requestedModelId) + '</select>' +
+-      '<select data-collab-input="persona" data-row="' + esc(row.rowId) + '">' + personaOptions(row.persona) + '</select>' +
+-      effLine +
+-      (row.additiveRoleKind !== 'none' ? '<span class="collab-additive-tag">' + esc(row.additiveRoleKind === 'wonderer' ? 'Wonderer' : 'Grill Me') + '</span>' : '') +
+-      '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="' + esc(row.rowId) + '" title="Duplicate">' + ctx.icon('copy', 12) + '</button>' +
+-      '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="' + esc(row.rowId) + '" title="Remove">' + ctx.icon('close', 12) + '</button>' +
+-      '</div>';
+-  }
++    const pick=window.PM56_PICKERS;
++    const attrs='data-row="'+esc(row.rowId)+'"';
++    const fallback=UNAVAILABLE_DEMO[row.requestedModelId]?fallbackModelFor(row.requestedModelId):null;
++    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
++      '<div class="collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
++      '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="'+esc(row.rowId)+'" title="Duplicate participant">'+ctx.icon('copy',12)+'</button>'+
++      '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="'+esc(row.rowId)+'" title="Remove participant">'+ctx.icon('close',12)+'</button></div>'+
++      '<div class="collab-member-pickers"><label>Model'+pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs)+'</label>'+
++      '<label>Persona'+pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs)+'</label></div>'+
++      (row.requestedEffort?'<span class="collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</span>':'')+
++      (UNAVAILABLE_DEMO[row.requestedModelId]?'<span class="collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</span>':'')+'</div>';
++  }
++  ['model','persona'].forEach(function(kind){
++    EXT.action('collab-pick-'+kind,function(ctx,btn){
++      var draft=RTC.draft, row=draft&&draft.rows.find(function(r){return r.rowId===btn.dataset.row;});
++      if(!row)return true;
++      window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:row.requestedModelId,persona:row.persona,effort:row.requestedEffort,fast:row.requestedFast},function(v){
++        if(RTC.draft!==draft||!draft.rows.includes(row)||!['collab-configure','collaboration-configure'].includes(ctx.state.dialog?.type))return;
++        row.requestedModelId=v.model;row.persona=v.persona;row.requestedEffort=v.effort;row.requestedFast=v.fast;
++        ctx.renderOverlays();
++      });return true;
++    });
++  });
+
+   function kindConfigFields(ctx, d) {
+     if (d.kind === 'crew') {
+       return '<div class="collab-field-row"><label>Coordinator<select data-collab-input="cfg-coordinator"><option value="parent_assistant"' + (d.config.coordinator === 'parent_assistant' ? ' selected' : '') + '>Parent assistant</option><option value="dedicated_synthesis_model"' + (d.config.coordinator !== 'parent_assistant' ? ' selected' : '') + '>Dedicated synthesis model</option></select></label>' +
+         '<label>Assignment strategy<select data-collab-input="cfg-assignmentStrategy"><option value="manager_directed"' + (d.config.assignmentStrategy === 'manager_directed' ? ' selected' : '') + '>Manager-directed</option><option value="explicit_static"' + (d.config.assignmentStrategy === 'explicit_static' ? ' selected' : '') + '>Explicit static</option><option value="adaptive"' + (d.config.assignmentStrategy === 'adaptive' ? ' selected' : '') + '>Adaptive</option></select></label>' +
+         '<label>Parallelism<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
+-        '<p class="collab-sub">Mutation authority is inherited from this thread’s mode and Plan permissions — it is not a field here and cannot be raised from this modal.</p>';
++        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
+     }
+     if (d.kind === 'brainstorm') {
+       var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
+@@ -1601,8 +1601,8 @@
+     if (d.kind === 'review') {
+       return '<div class="collab-field-row"><label>Strategy<select data-collab-input="cfg-strategy"><option value="multi_pass"' + (d.config.strategy === 'multi_pass' ? ' selected' : '') + '>Multi-Pass Review</option><option value="single_agent"' + (d.config.strategy === 'single_agent' ? ' selected' : '') + '>Single Agent</option></select></label>' +
+         '<label>Reviewers (1–8, default 3)<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
+-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Blind, concurrent initial passes against one frozen target pack (always on)</span></label>' +
+-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Auto-repair — permanently off. <code>assistant.multi_agent.review.auto_repair</code> is locked and is not a user-reachable escape hatch.</span></label>';
++        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
++        '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
+     }
+     return '<div class="collab-field-row"><label>Turn policy<select data-collab-input="cfg-turnPolicy"><option value="moderated"' + (d.config.turnPolicy === 'moderated' ? ' selected' : '') + '>Moderated</option><option value="round_robin"' + (d.config.turnPolicy === 'round_robin' ? ' selected' : '') + '>Round robin</option><option value="free_discussion"' + (d.config.turnPolicy === 'free_discussion' ? ' selected' : '') + '>Free discussion</option><option value="ask_everyone_once"' + (d.config.turnPolicy === 'ask_everyone_once' ? ' selected' : '') + '>Ask everyone once</option></select></label>' +
+       '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
+@@ -1626,13 +1626,12 @@
+       '<h4>' + esc(KIND_LABEL[d.kind]) + ' configuration</h4>' +
+       kindConfigFields(ctx, d) +
+       (supportsAdditive ? '<div class="collab-add-specialists"><strong>Add specialists</strong>' +
+-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span>Wonderer — explores adjacent leads, labelled hypothesis until researched</span></label>' +
++        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
+         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
+         '</div>' : '') +
+-      '<p class="collab-sub">No provider brand marks are drawn here — this concept’s shared context object does not expose a provider-mark renderer, so routes are shown as text rather than a letter-only substitute glyph.</p>' +
+-      (d.autoMode ? '<div class="collab-refusal-demo"><strong>Admission-gate refusal</strong><p class="collab-sub">Crew Auto criteria can only narrow admission. This always-refuses control proves it rather than describing it:</p><button class="soft-button" data-action="collab-crew-auto-refuse-demo">' + ctx.icon('lock', 12) + ' Try to widen authority (always refused)</button></div>' : '') +
++      '' +
+       '</div>' +
+-      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p><p class="collab-sub">Everything you configured above is still here. Fix the cause and press Start again; nothing partial was created.</p></div>' : '') +
++      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
+       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
+       '</section>';
+   }
+@@ -1801,7 +1800,7 @@
+       var crewDefA = RTC.definitions.crew;
+       crewDefA.autoConfigured = true;
+       crewDefA.autoEnabled = true;
+-      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona }; });
++      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast }; });
+       crewDefA.autoMaxMembers = clamp(d.rows.length, 1, 8);
+       effect('settingsWrites');            /* MODAL-006/008: only HERE. */
+       RTC.draft = null;
+@@ -1824,7 +1823,7 @@
+       ctx.toast('Start refused', preflight.message);
+       return true;
+     }
+-    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
++    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
+     /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition;
+        Wonderer and Grill Me are additive and therefore optional. An additive
+        specialist never replaces a core role. */
+@@ -1964,6 +1963,8 @@
+     if (ctx.state.activity && ctx.state.activity.scope !== 'focus') return '';
+     var runs = runsForThread(ctx.state.selectedThread).filter(function (r) { return r.kind === dom; });
+     if (!runs.length) return '';
++    const selected=ctx.state.activity.selected;
++    if(selected?.domain===dom&&runs.some(r=>r.id===selected.id))runs=runs.filter(r=>r.id===selected.id);
+     return runs.map(function (r) { return renderActivityBody(ctx, r); }).join('');
+   });
+
+@@ -2241,7 +2242,7 @@
+   EXT.chainAction('reset-all', function (ctx, btn, ev) {
+     restoreFixture();
+     UI.expanded = {}; UI.more = {}; UI.selectedFindings = {};
+-    return prevReset ? prevReset(ctx, btn, ev) : false;
++    return false;
+   });
+
+   window.PM56_COLLAB = {
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.css
+@@ -9,14 +9,6 @@
+ .transcript table { width:100%; table-layout:fixed; }
+ .transcript td, .transcript th { overflow-wrap:anywhere; min-width:0; }
+ .transcript img, .transcript video, .transcript canvas { max-width:100%; }
+-.chat-float { padding-top:6px; padding-bottom:8px; }
+-.chat-float .activity-bar[data-variant="0"] {
+-  background:transparent; border:0; box-shadow:none; backdrop-filter:none;
+-  border-radius:0; flex-wrap:wrap; max-width:100%; overflow:visible;
+-}
+-.chat-float .activity-bar[data-variant="0"]::before,
+-.chat-float .activity-bar[data-variant="0"]::after { display:none; }
+-.chat-float .activity-bar[data-variant="0"] .activity-item { min-width:0; }
+ .assistant-grid.activity-pinned { grid-template-columns:minmax(150px,var(--history-w)) minmax(230px,var(--activity-w)) minmax(300px,1fr); }
+ .assistant-grid.history-closed.activity-pinned { grid-template-columns:minmax(230px,var(--activity-w)) minmax(300px,1fr); }
+ @media(min-width:821px) and (max-width:1100px){
+@@ -50,14 +42,6 @@
+ .todo-detail .todo-chips { display:grid; }
+ .todo-detail .todo-chip { white-space:normal; }
+ /* Consistent quiet card headers and footers; work components are excluded. */
+-.sched-card { display:block; padding:12px 14px; border:0; border-bottom:1px solid var(--border); border-radius:0; background:transparent; box-shadow:none; }
+-.sched-card-head { display:flex; align-items:center; gap:8px; }
+-.sched-card-head>.text-button { margin-left:auto; }
+-.sched-card-preview { margin:7px 0; font-size:12px; line-height:1.55; }
+-.sched-card-time { font-size:10px; color:var(--muted); }
+-.sched-card-detail { margin-top:10px; padding-top:8px; border-top:1px solid var(--border); }
+-.sched-card-snaps { overflow-wrap:anywhere; }
+-.sched-card-why { border-left:0; padding-left:0; }
+ .polish-plan-more { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; padding-top:5px; }
+ .plan-doc .pd-foot { gap:7px; }
+ .polish-wand-group { border-bottom:1px solid var(--border); }
+@@ -74,10 +58,6 @@
+ .polish-context-section>h3 { border:0; padding:0; }
+ .polish-context-section>h3>button { display:flex; align-items:center; justify-content:space-between; width:100%; padding:12px 3px; border:0; background:transparent; color:var(--text); cursor:pointer; text-align:left; font:inherit; }
+ .polish-context-section>h3>button:hover { color:var(--accent); }
+-.ctx-drawer .bsd-card, .ctx-drawer .bsd-check, .ctx-drawer .bsd-section,
+-.ctx-drawer .bsd-hold, .ctx-drawer .bsd-warning, .ctx-drawer .bsd-suggestion,
+-.ctx-drawer .bsd-report, .ctx-drawer .ctx-fallback, .ctx-drawer .ctx-note,
+-.ctx-drawer [class*="bsd-"] { border-left-color:var(--border); box-shadow:none; }
+ .ctx-drawer .bsd-section { border:0; }
+ .ctx-drawer .context-section .context-section { margin:0; }
+ @media(max-width:590px){
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js
+@@ -44,7 +44,7 @@
+     ['To-Dos · provider proposal','todo-attempt-provider-proposal']
+   ];
+   function gallery(ctx){
+-    return '<section class="demo-section polish-demo-section"><h3>Feature demonstrations</h3><div class="demo-section-body">'+
++    return (window.PM56_REPAIR_DEMOS?window.PM56_REPAIR_DEMOS.gallery(ctx):'')+'<section class="demo-section polish-demo-section"><h3>Feature demonstrations</h3><div class="demo-section-body">'+
+       galleryRows.map(function(r){return '<button type="button" class="demo-trigger" data-action="polish-demo-action" data-target="'+r[1]+'">'+ctx.esc(r[0])+'</button>';}).join('')+'</div></section>';
+   }
+   function hover(html,domain,ctx){
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/goals.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+@@ -597,7 +597,7 @@
+   var prevReset = EXT._actions && EXT._actions['reset-all'];
+   EXT.chainAction('reset-all', function(ctx,btn,ev){
+     restoreFixture();
+-    return prevReset ? prevReset(ctx,btn,ev) : false;
++    return false;
+   });
+
+   /* Own delegated input listener. Deliberately does NOT re-render: the
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/plans.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/plans.css
+@@ -91,14 +91,14 @@
+
+ .plan-doc .pd-callout{
+   display:flex; gap:9px; margin:0 0 12px; padding:9px 11px;
+-  border:1px solid var(--border); border-left-width:3px; border-radius:var(--radius-sm);
++  border:1px solid var(--border); border-radius:var(--radius-sm);
+   background:var(--surface-3);
+ }
+ .plan-doc .pd-callout p{ margin:0; font:400 12px/1.5 var(--font-ui); color:var(--text); }
+ .plan-doc .pd-callout svg{ flex:0 0 auto; margin-top:1px; }
+-.plan-doc .pd-callout-info{ border-left-color:var(--accent); }
++.plan-doc .pd-callout-info{ border-color:var(--border); }
+ .plan-doc .pd-callout-info svg{ color:var(--accent); }
+-.plan-doc .pd-callout-warning{ border-left-color:var(--warning); }
++.plan-doc .pd-callout-warning{ border-color:var(--border); }
+ .plan-doc .pd-callout-warning svg{ color:var(--warning); }
+
+ /* ------------------------------------------------------------- plan steps */
+@@ -335,7 +335,7 @@
+ .plan-doc .pd-step-skipped .pd-step-copy strong{ color:var(--muted); }
+ .plan-doc .pd-step-mixed .pd-step-gutter{ border-color:var(--accent); color:var(--accent); opacity:.75; }
+ .plan-doc .pd-step-none .pd-step-gutter{ border-style:dashed; color:transparent; }
+-.plan-doc .pd-step-nested{ margin-left:18px; border-left:2px solid var(--border); }
++.plan-doc .pd-step-nested{ margin-left:18px; padding-left: 14px; }
+ .plan-doc .pd-step-child,
+ .plan-doc .pd-step-state,
+ .plan-doc .pd-step-why,
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/plans.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+@@ -1105,8 +1105,8 @@
+     var v = 'Plan · V'+r.version;
+     return '<div class="pd-head">'+
+       '<div class="pd-head-main">'+
+-        '<h3 class="pd-title">'+esc(r.title)+'</h3>'+
+-        '<span class="pd-strategy">'+esc(r.strategy)+' · '+esc(r.backend==='ledger_bound'?'ledger-bound':'direct')+'</span>'+
++        '<h3 class="pd-title"><button type="button" data-action="pd-info" data-id="'+esc(r.plan_id)+'">'+esc(r.title)+'</button></h3>'+
++        '<span class="pd-strategy">'+esc(r.strategy)+'</span>'+
+       '</div>'+
+       '<span class="pd-badge" data-hover-key="pd-badge-'+esc(r.plan_id)+'">'+esc(v)+'</span>'+
+     '</div>'+
+@@ -1162,7 +1162,7 @@
+     if(e.wizard) out.push(actionBtn('pd-wizard','Send To Planning Wizard',r.plan_id));
+     if(e.exportx)out.push(actionBtn('pd-export','Export',r.plan_id));
+     if(e.cancel) out.push(actionBtn('pd-cancel','Cancel',r.plan_id));
+-    out.push(actionBtn('pd-info','Details',r.plan_id));
++    out.push(actionBtn('pd-inspect','Record & history',r.plan_id));
+     /* PGOAL-001: Build as Goal is a SECONDARY action. The primary control stays
+        Build; no second large button is added. */
+     if(e.goal)   out.push(actionBtn('pd-build-goal','Build as Goal',r.plan_id));
+@@ -1215,9 +1215,16 @@
+   var ui = { expanded:{}, info:null };
+
+   function renderCard(r){
+-    var terminal = (r.status==='completed'||r.status==='canceled');
+-    if(terminal && !ui.expanded[r.plan_id]) return renderCompact(r);
+-    return renderFull(r);
++    var terminal=r.status==='completed'||r.status==='canceled';
++    if(terminal)return renderCompact(r);
++    var first=body(r).find(b=>b.t==='paragraph'),summary=first?first.text:'';
++    var e=eligible(r),pr=progress(r);
++    return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
++      '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
++      '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
++      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+' steps</span><span>'+esc(r.status)+'</span></div>'+
++      '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
++        (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
+   }
+
+   /* =====================================================================
+@@ -1850,6 +1857,10 @@
+   EXT.action('pd-more-actions',function(ctx,btn){ui.more=ui.more||{};ui.more[btn.dataset.id]=!ui.more[btn.dataset.id];ctx.renderApp();return true;});
+
+   var DLG = { info:'pd-info', crew:'pd-crew', at:'pd-at', export:'pd-export' };
++  function openPlanEditor(ctx,id){
++    var r=rec(id);if(!r)return;
++    ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor('plan:'+id);
++  }
+   function openDlg(ctx, kind, id){ ctx.openDialog({ type:DLG[kind], id:id }); }
+
+   var ACTIONS = {
+@@ -1861,10 +1872,7 @@
+       ctx.renderApp();
+     },
+
+-    'pd-expand': function(ctx,btn){
+-      ui.expanded[btn.dataset.id] = !ui.expanded[btn.dataset.id];
+-      ctx.renderApp();
+-    },
++    'pd-expand': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
+
+     'pd-build': function(ctx,btn){
+       var r=rec(btn.dataset.id); if(!r) return;
+@@ -1891,11 +1899,12 @@
+
+     'pd-open-todos': function(ctx,btn){
+       var r=rec(btn.dataset.id); if(!r) return;
+-      ctx.state.activity.open=true; ctx.state.activity.domain='todo';
++      ctx.state.activity.open=true;ctx.state.activity.pinned=true; ctx.state.activity.domain='todo';
+       ctx.renderApp();
+     },
+
+-    'pd-info':       function(ctx,btn){ openDlg(ctx,'info',  btn.dataset.id); },
++    'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
++    'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
+     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
+     'pd-build-at':   function(ctx,btn){ openDlg(ctx,'at',    btn.dataset.id); },
+     'pd-export':     function(ctx,btn){ openDlg(ctx,'export',btn.dataset.id); },
+@@ -2242,7 +2251,7 @@
+      from the build. Same renderers, same record, same single Build control. */
+   var ARTIFACT_TO_PLAN = { 'plan-query':'ap-index' };
+   function editorBody(artifactId){
+-    var id = ARTIFACT_TO_PLAN[artifactId];
++    var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
+     var r = id && rec(id);
+     if(!r) return '';
+     return '<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
+@@ -2257,7 +2266,7 @@
+     editorBody:editorBody,
+     /* Which Plan an artifact id maps to, so app.js's artifact header can read
+        the owner's version and Build label instead of the legacy record. */
+-    editorPlanId:function(artifactId){ return ARTIFACT_TO_PLAN[artifactId] || null; },
++    editorPlanId:function(artifactId){ return String(artifactId).startsWith('plan:')?String(artifactId).slice(5):ARTIFACT_TO_PLAN[artifactId]||null; },
+     current:currentPlan,
+     /* Accepts a record (original shape) or a plan id, so a harness that
+        reasons in ids does not have to reach into P().records first. */
+@@ -2290,7 +2299,7 @@
+     questionBases:function(){ return JSON.parse(JSON.stringify(QBASE)); },
+     grillExtension:function(){ return QGRILL; },
+     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
+-    openDetails:function(ctx,id){ openDlg(ctx,'info',id); ctx.renderApp(); },
++    openDetails:openPlanEditor,
+     /* PGOAL-007/008: goals.js drives these; the Plan owner applies them. */
+     boundPause:function(planId){
+       var r=rec(planId); if(!r||r.status!=='building') return null;
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/questions.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/questions.css
+@@ -38,7 +38,7 @@
+    source order, which it does: this file is concatenated last.
+    ========================================================================== */
+ .decision-host[data-variant] .decision-surface{
+-  border-left:1px solid color-mix(in srgb,var(--accent) 30%,var(--border));
++  border-left:1px solid var(--border);
+   border-radius:14px;
+   font-family:inherit;
+   max-width:none;
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.css
+@@ -0,0 +1,3 @@
++.polish-demo-section .demo-trigger:has(small){display:grid;gap:5px;text-align:left;}
++.polish-demo-section .demo-trigger small{font-size:9px;color:var(--muted);font-weight:400;}
++.polish-demo-section .demo-trigger strong{font-size:11px;font-weight:500;}
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.js
+@@ -0,0 +1,69 @@
++/* Scoped demonstration entry points. None are product commands or timers. */
++(function(){
++ 'use strict';const E=window.PM56_EXT;
++ const scenarios=[
++  ['schedules-overview','Scheduling','Message overview','Needs attention, upcoming and history'],
++  ['schedules-windows','Scheduling','Build windows','One-time and recurring windows'],
++  ['schedule-new','Scheduled messages','New message','Detached message, time, route and missed policy'],
++  ['schedule-edit','Scheduled messages','Edit existing message','Same record and revision on save'],
++  ['schedule-once','Build scheduling','One-time build','Exact plan version and local start'],
++  ['schedule-recurring','Build scheduling','Recurring build','Weekdays, overnight pause and resume'],
++  ['schedule-stop','Automation safety','Manual-stop refusal','Automatic resume remains blocked'],
++  ['schedule-race','Automation safety','Stop / dispatch race','Stale callback refused in the event log'],
++  ['schedule-duplicate','Automation safety','Duplicate window event','One recorded occurrence, not two runs'],
++  ['bsd-config','Back Seat Driver','Configure advisor','Model, persona, cadence, context and stages'],
++  ['bsd-held','Back Seat Driver','Held advisor findings','Original findings and source generation'],
++  ['crew-config','Collaboration','Crew lineup','Shared model and persona pickers'],
++  ['crew-auto-config','Collaboration','Crew Auto lineup','Shared pickers within automatic criteria'],
++  ['chat-room-config','Collaboration','Chat Room lineup','Participant-specific model and persona'],
++  ['brainstorm-config','Collaboration','BrainStorm lineup','Planning roles and shared pickers'],
++  ['review-config','Collaboration','Review lineup','Independent reviewer routing'],
++  ['lens-focus','Context Lens','Focus messages','In-flow lens and immediate selection'],
++  ['lens-subcompact','Context Lens','Subcompact preview','Explicit Apply with the transcript below'],
++  ['plan-index','Plans','Analytics plan tab','One document with all plan controls'],
++  ['plan-auth','Plans','Access-control plan tab','Another plan, independent tab and state'],
++  ['record-provider','Transcript records','Provider selector change','File identity and recorded hunk at line 65'],
++  ['record-provider-second','Transcript records','Provider selector follow-up','Same file, recorded hunk at line 227'],
++  ['record-note','Transcript records','Work note','Unlinked note, not a fabricated artifact'],
++  ['activity-todo','Activity','To-Do preview','Clickable bounded preview opens pinned details'],
++  ['activity-changes','Activity','Changed-file preview','Clickable file opens its pinned record'],
++  ['work-orbit','Working activity','Orbit sequence','Existing default component in view'],
++  ['work-simple','Working activity','Step Rail Simple sequence','Existing simple component in view']
++ ];
++ function invoke(ctx,action,ds={}){const b=document.createElement('button');Object.assign(b.dataset,ds);E.run(action,b,new Event('click'));}
++ function launch(ctx,id){
++  if(!scenarios.some(r=>r[0]===id))return;
++  ctx.closeMenu();ctx.closeDialog();ctx.state.hover=null;ctx.state.context.details=false;ctx.state.activity.open=false;
++  if(id.startsWith('schedule')){
++   window.PM56_SCHED.restore();ctx.switchThread('query');ctx=E.ctx();
++   const rec=window.PM56_SCHED.list().messages.find(m=>m.state==='scheduled');const build=window.PM56_SCHED.list().builds.find(b=>b.state==='active'&&b.schedule_kind==='recurring_window');
++   if(id==='schedule-new'){invoke(ctx,'sched-open-message');return;}
++   if(id==='schedule-edit'){invoke(ctx,'sched-edit-message',{id:rec.scheduled_dispatch_id});return;}
++   if(id==='schedule-once'){invoke(ctx,'sched-open-build-at',{planId:'ap-index',planVersion:String(window.PM56_PLANS.get('ap-index').version)});return;}
++   if(id==='schedule-recurring'){invoke(ctx,'sched-edit-build',{id:build.schedule_id});return;}
++   invoke(ctx,'sched-open-manage');
++   if(id==='schedules-windows')invoke(ctx,'sched-manage-tab',{tab:'builds'});
++   if(id==='schedule-stop'){invoke(ctx,'sched-simulate-stop');invoke(ctx,'sched-attempt-resume');invoke(ctx,'sched-manage-tab',{tab:'quota'});}
++   if(id==='schedule-race'){invoke(ctx,'sched-race-demo');invoke(ctx,'sched-manage-tab',{tab:'events'});}
++   if(id==='schedule-duplicate'){invoke(ctx,'sched-fire-duplicate',{id:build.schedule_id});invoke(ctx,'sched-manage-tab',{tab:'events'});}
++   return;
++  }
++  if(id==='bsd-config'){invoke(ctx,'bsd-configure-stages');return;}
++  if(id==='bsd-held'){ctx.switchThread('bsd');ctx.state.context.details=true;ctx.renderApp();return;}
++  const kinds={'crew-config':'crew','crew-auto-config':'crew','chat-room-config':'chat_room','brainstorm-config':'brainstorm','review-config':'review'};
++  if(kinds[id]){invoke(ctx,'collab-open-configure',{kind:kinds[id],auto:id==='crew-auto-config'?'1':'0'});return;}
++  if(id.startsWith('lens-')){ctx.switchThread('query');invoke(ctx,'lens-open');invoke(ctx,'lens-mode',{value:id==='lens-focus'?'focus':'subcompact'});return;}
++  if(id.startsWith('plan-')){invoke(ctx,'pd-info',{id:id==='plan-index'?'ap-index':'ap-auth',planId:id==='plan-index'?'ap-index':'ap-auth'});return;}
++  if(id.startsWith('record-')){
++   if(id==='record-note'){
++    const t=ctx.state.threads.find(t=>t.messages.some(m=>m.type==='agent-work'&&window.PM56_RECORDS.reference(m).kind==='note'));
++    if(t){ctx.switchThread(t.id);const m=t.messages.find(m=>m.type==='agent-work'&&window.PM56_RECORDS.reference(m).kind==='note');invoke(E.ctx(),'open-work-record',{id:m.id});}
++   }else{ctx.switchThread('route');invoke(E.ctx(),'open-work-record',{id:id==='record-provider'?'route-04':'route-12'});}
++   return;
++  }
++  if(id.startsWith('activity-')){ctx.switchThread('query');ctx.state.activity.pinned=true;ctx.state.hover={type:'activity',domain:id==='activity-todo'?'todo':'changes'};ctx.renderApp();return;}
++  if(id.startsWith('work-')){window.PM56_DEMO.setVariant(2,id==='work-simple'?8:1);window.PM56_DEMO.trigger('Start complete work');requestAnimationFrame(()=>document.querySelector('.working-card')?.scrollIntoView({block:'center'}));}
++ }
++ E.action('repair-demo',(ctx,btn)=>{launch(ctx,btn.dataset.scenario);return true;});
++ window.PM56_REPAIR_DEMOS={list:()=>scenarios.map(([id,feature,label,expected])=>({id,feature,label,expected})),launch:id=>launch(E.ctx(),id),gallery:ctx=>'<section class="demo-section polish-demo-section"><h3>Assistant refinements</h3><div class="demo-section-body">'+scenarios.map(([id,feature,label,expected])=>'<button class="demo-trigger" data-action="repair-demo" data-scenario="'+id+'" title="'+ctx.esc(expected)+'"><small>'+ctx.esc(feature)+'</small><strong>'+ctx.esc(label)+'</strong></button>').join('')+'</div></section>'};
++})();
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/scheduling.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/scheduling.css
+@@ -166,7 +166,7 @@
+ }
+ .sched-card-why{
+   margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--warning);
+-  border-left:2px solid color-mix(in srgb, var(--warning) 55%, var(--border)); padding-left:8px;
++   padding-left:8px;
+ }
+ .sched-card-link{ margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--muted); }
+ .sched-card-link code{ font-family:var(--font-mono); font-size:10.5px; }
+@@ -186,3 +186,85 @@
+ .sched-card-snaps .sched-snap-why{
+   flex:1 1 100%; font-style:normal; font-size:11px; color:var(--muted); margin-top:2px;
+ }
++
++/* Scheduling v2: readable messages and windows, not a runtime diagnostics wall. */
++.sched-dialog{width:min(680px,calc(100vw - 24px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden;}
++.sched-dialog--manage{width:min(820px,calc(100vw - 24px));height:min(780px,calc(100vh - 36px));}
++.sched-dialog>.dialog-body{padding:20px 24px;overflow-y:auto;min-height:0;display:block;}
++.sched-dialog .drawer-head{gap:10px;padding:17px 22px;flex:none;}
++.schedule-overview{padding:18px 24px;display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--border);}
++.schedule-overview>div:not(.schedule-overview-state){display:grid;gap:3px;}
++.schedule-overview strong{font-size:23px;font-weight:600;line-height:1.1;}
++.schedule-overview span{font-size:11px;color:var(--muted);}
++.schedule-overview-state{margin-left:auto;}
++.sched-tabs{padding:0 20px;gap:18px;border-bottom:1px solid var(--border);flex:none;}
++.sched-tab{padding:13px 2px!important;border-radius:0;display:flex;gap:6px;align-items:center;font-size:11px;}
++.sched-tab.active{background:transparent;border-bottom:2px solid var(--accent);color:var(--text);}
++.sched-tab>span{background:var(--surface-3);padding:1px 5px;border-radius:5px;font-size:9px;}
++.schedule-list-toolbar{padding:12px 24px 0;display:flex;align-items:center;gap:12px;flex:none;}
++.schedule-list-toolbar>span:not(.spacer){color:var(--muted);font-size:10px;}
++.schedule-list-section>h3{font-size:11px;letter-spacing:.02em;font-weight:600;margin:0 0 9px;display:flex;gap:8px;align-items:center;}
++.schedule-list-section>h3>span{font-size:10px;font-weight:400;color:var(--muted);}
++.schedule-list-section+.schedule-list-section{margin-top:22px;}
++.schedule-item{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface-2);margin:8px 0;min-width:0;}
++.schedule-item-head{display:flex;align-items:start;gap:12px;}
++.schedule-item-icon{width:30px;height:30px;border-radius:8px;background:var(--surface-3);display:grid;place-items:center;flex:none;color:var(--muted);}
++.schedule-item-copy{display:grid;gap:7px;flex:1;min-width:0;}
++.schedule-item-copy>strong{font-size:12px;line-height:1.5;font-weight:550;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
++.schedule-item-copy>span{font-size:11px;color:var(--muted);line-height:1.4;}
++.schedule-item-destination{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin:10px 0 6px 42px;}
++.schedule-item-controls{display:flex;align-items:center;gap:8px;margin:11px 0 0 42px;flex-wrap:wrap;}
++.schedule-details{margin-top:12px;padding-top:9px;border-top:1px solid var(--border);}
++.schedule-details>summary{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:10px;color:var(--muted);width:fit-content;padding:2px 0;list-style:none;}
++.schedule-details[open]>summary{color:var(--text);margin-bottom:11px;}
++.schedule-details[open]>summary>svg{transform:rotate(180deg);}
++.sched-details-body{font-size:11px;line-height:1.55;}
++.sched-full-message{white-space:pre-wrap;overflow-wrap:anywhere;padding:10px 12px;border-radius:7px;background:var(--surface-3);margin:3px 0 16px;}
++.sched-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;margin:14px 0;font-size:11px;}
++.sched-facts>div{min-width:0;}
++.sched-facts dt{font-size:10px;color:var(--muted);margin-bottom:3px;}
++.sched-facts dd{margin:0;overflow-wrap:anywhere;}
++.sched-audit{font-size:10px;color:var(--muted);margin-top:14px;}
++.sched-audit>summary{cursor:pointer;padding:4px 0;}
++.sched-audit pre{white-space:pre-wrap;overflow-wrap:anywhere;}
++.sched-audit p{line-height:1.5;}
++.schedule-attention{display:flex;gap:7px;align-items:start;font-size:11px;color:var(--warning);margin:11px 0 0;line-height:1.45;}
++.schedule-attention svg{flex:none;margin-top:2px;}
++.schedule-history{margin-top:22px;}
++.schedule-history>summary{font-size:11px;color:var(--muted);cursor:pointer;padding:9px 0;}
++.schedule-history>summary>span{margin-left:5px;font-size:10px;}
++.schedule-footer{padding:12px 24px;display:flex;justify-content:space-between;color:var(--muted);font-size:9px;border-top:1px solid var(--border);flex:none;}
++.schedule-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;padding:40px 20px;font-size:12px;color:var(--muted);}
++.schedule-empty strong{color:var(--text);font-size:14px;}
++.schedule-safety{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
++.schedule-safety>div{display:grid;gap:7px;}.schedule-safety strong{font-size:12px;}.schedule-safety div>span{color:var(--muted);font-size:11px;}
++.schedule-destination-tag,.sched-destination-tag{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin:0 0 17px;}
++.sched-dialog .sched-field{display:flex;flex-direction:column;gap:7px;min-width:0;margin-bottom:15px;font-size:11px;color:var(--muted);}
++.sched-dialog .sched-field>span{font-size:11px;color:var(--muted);}
++.sched-dialog .sched-field input,.sched-dialog .sched-field select{height:36px;min-width:0;width:100%;}
++.sched-dialog .sched-field textarea{font-size:12px;line-height:1.65;min-height:110px;color:var(--text);padding:12px;}
++.schedule-when{padding-top:3px;}.schedule-when h3{font-size:12px;font-weight:600;margin:5px 0 11px;}
++.sched-dialog .sched-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
++.schedule-zone{grid-column:1/-1;}
++.sched-attached{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px;font-size:10px;}
++.sched-attached>span{display:flex;align-items:center;gap:5px;padding:4px 7px;background:var(--surface-3);border-radius:5px;}
++.schedule-form-foot{display:flex;align-items:center;gap:9px;padding:14px 22px;border-top:1px solid var(--border);flex:none;flex-wrap:wrap;}
++.schedule-caption{font-size:10px;color:var(--muted);}
++.sched-form-error{color:var(--danger);font-size:11px;min-height:14px;}
++.schedule-plan-target{display:grid;gap:5px;margin-bottom:22px;}.schedule-plan-target>strong{font-size:14px;}.schedule-plan-target>span{font-size:11px;color:var(--muted);}
++.schedule-kind{display:flex;gap:6px;margin-bottom:20px;}.schedule-kind .active{background:var(--surface-3);border-color:var(--border-strong);}
++.sched-days{margin:0 0 20px;gap:6px;}.sched-day-chip{justify-content:center;min-width:34px;height:33px;color:var(--muted);font-size:10px;}.sched-day-chip.on{color:var(--text);background:var(--surface-4);border-color:var(--border-strong);}
++.sched-card{display:block;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 16px;min-width:0;}
++.sched-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
++.sched-kind{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:10px;}
++.sched-card-preview{font-size:12px;line-height:1.6;color:var(--text);margin:12px 0 8px;}
++.sched-card-time{font-size:10px;color:var(--muted);line-height:1.5;}
++.sched-card-foot{display:flex;gap:10px;margin-top:11px;align-items:center;flex-wrap:wrap;}
++.sched-card-foot .text-button{padding:2px 0;font-size:10px;}
++.sched-card .sched-details-body{margin-top:14px;}
++.sched-chip{font-size:9px;white-space:nowrap;}
++@media(max-width:540px){.schedule-overview{gap:18px;padding:16px;}.schedule-overview-state{display:none;}.sched-tabs{gap:12px;padding:0 14px;}.sched-tab{font-size:10px;}.sched-dialog>.dialog-body{padding:16px;}.schedule-item{padding:12px;}.schedule-item-destination,.schedule-item-controls{margin-left:0;}.sched-facts{grid-template-columns:1fr;}.schedule-form-foot .schedule-caption{display:none;}}
++
++/* Terminal events read as receipts, not another stack of active forms. */
++.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired){border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;padding:11px 2px;}
++.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired) .sched-card-preview{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:8px 0 6px;color:var(--muted);}
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
+@@ -305,7 +305,7 @@
+   var STORE_KEY = 'pm56-scheduling.v1';
+   var store = {
+     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { } },
++    set: function (k, v) { try { localStorage.setItem(k, v);return true; } catch (e) { return false; } },
+     del: function (k) { try { localStorage.removeItem(k); } catch (e) { } }
+   };
+
+@@ -637,14 +637,14 @@
+     try {
+       var out = JSON.parse(JSON.stringify(P()));
+       out.lastSavedAt = nowIso();
+-      P().lastSavedAt = out.lastSavedAt;
+-      store.set(STORE_KEY, JSON.stringify(out));
++      ui.persistenceAvailable=store.set(STORE_KEY, JSON.stringify(out));
++      if(ui.persistenceAvailable)P().lastSavedAt=out.lastSavedAt;
+     } catch (err) { console.info('PM56 scheduling: not persisted this tick', err); }
+   }
+   function restoreFixture() {
+     RT.scheduling = JSON.parse(SEED_JSON);
+     store.del(STORE_KEY);
+-    ui.msgDraft = null; ui.buildDraft = null; ui.editingMsgId = null; ui.manageTab = 'messages';
++    ui.msgDraft=null;ui.buildDraft=null;ui.editingMsgId=null;ui.editingBuildId=null;ui.focusSchedule=null;ui.cardOpen={};ui.manageTab='messages';
+   }
+
+   function findMessage(id) {
+@@ -709,8 +709,8 @@
+       return { ok: false, clause: 'manual_stop_latched', detail: 'Manual Stop is latched at epoch ' + S.stopEpoch + (S.stopReason ? (' — ' + S.stopReason) : '') + '.' };
+     }
+     if (kind === 'message') {
+-      if (rec.state === 'cancelled') return { ok: false, clause: 'schedule_not_found', detail: 'This scheduled message was cancelled and is retained only for audit.' };
+-      if (rec.state === 'dispatched') return { ok: false, clause: 'dispatch_already_started', detail: 'Already dispatched under idempotency key "' + rec.idempotencyKey + '"; the original result is returned rather than sending again.' };
++      if (['cancelled','canceled'].includes(rec.state)) return { ok: false, clause: 'schedule_not_found', detail: 'This scheduled message was cancelled and is retained only for audit.' };
++      if (['dispatched','sent'].includes(rec.state)) return { ok: false, clause: 'dispatch_already_started', detail: 'Already dispatched under idempotency key "' + rec.idempotencyKey + '"; the original result is returned rather than sending again.' };
+       if (rec.state === 'expired') return { ok: false, clause: 'stale_schedule_revision', detail: 'This dispatch expired under its cancel-after-grace policy.' };
+       var th = threadByIdRaw(rec.thread_id);
+       if (!th) return { ok: false, clause: 'target_not_found', detail: 'The owning thread no longer resolves.' };
+@@ -721,7 +721,7 @@
+     }
+     if (kind === 'build') {
+       if (rec.state === 'invalidated') return { ok: false, clause: 'target_version_changed', detail: rec.invalidated_reason || 'The bound Plan version changed.' };
+-      if (rec.state === 'cancelled') return { ok: false, clause: 'schedule_not_found', detail: 'This build schedule was cancelled.' };
++      if (['cancelled','canceled'].includes(rec.state)) return { ok: false, clause: 'schedule_not_found', detail: 'This build schedule was cancelled.' };
+       if (rec.state === 'completed') return { ok: false, clause: 'dispatch_already_started', detail: 'This one-time schedule already completed.' };
+       return { ok: true, clause: null, detail: 'Exact Plan version and hash are current; no invalidation is pending.' };
+     }
+@@ -749,14 +749,15 @@
+       modelId: ctx.state.model,
+       date: soon.getFullYear() + '-' + pad2(soon.getMonth() + 1) + '-' + pad2(soon.getDate()),
+       time: pad2(soon.getHours()) + ':' + pad2(soon.getMinutes()),
+-      timezone: 'America/Chicago', missed: 'hold', grace: 30
++      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', missed: 'hold', grace: 30
+     };
+   }
+   function loadMessageForEdit(rec) {
++    var local=tzParts(rec.timezone||'America/New_York', Date.parse(rec.scheduled_at_utc));
+     return {
+-      threadId: rec.thread_id, text: rec.text, attachments: [], destination: rec.destination_ref,
++      threadId: rec.thread_id, text: rec.text, attachments: (rec.attachment_refs||[]).map(a=>({...a})), destination: rec.destination_ref,
+       modelId: (rec.requested_runtime && rec.requested_runtime.modelId) || 'sonnet46',
+-      date: rec.scheduled_at_utc ? rec.scheduled_at_utc.slice(0, 10) : '', time: rec.local_wall_time || '22:00',
++      date: local ? local.y+'-'+pad2(local.mo)+'-'+pad2(local.d) : '', time: rec.local_wall_time || '22:00',
+       timezone: rec.timezone || 'America/Chicago', missed: rec.missed_policy || 'hold',
+       grace: rec.grace_seconds ? Math.round(rec.grace_seconds / 60) : 30
+     };
+@@ -789,19 +790,20 @@
+     return rec;
+   }
+   function cancelMessage(id) {
+-    var rec = findMessage(id); if (!rec || rec.state === 'dispatched') return false;
+-    rec.state = 'cancelled'; rec.updatedAt = nowIso();
++    var rec = findMessage(id); if (!rec || !messageProjection(rec).can_edit) return false;
++    rec.state = 'canceled'; rec.updatedAt = nowIso();
+     logEvent('scheduled_dispatch.cancelled', id, null, 'Cancelled by the user. The snapshot is retained for audit and will never dispatch.');
+     persistNow();
+     return true;
+   }
+   function dispatchMessage(ctx, id) {
+     var rec = findMessage(id); if (!rec) return null;
+-    if (rec.state === 'dispatched') {
++    if (['dispatched','sent'].includes(rec.state)) {
+       logEvent('scheduled_dispatch.dispatched', id, null, 'Duplicate fire suppressed by idempotency key "' + rec.idempotencyKey + '"; original result returned unchanged.');
+       persistNow();
+       return { duplicate: true, rec: rec };
+     }
++    if(!['scheduled','held','failed'].includes(rec.state))return {refused:true,rec:rec,reason:'This schedule is '+(SM_STATE[rec.state]?.label||rec.state)+'.'};
+     var epoch = P().stopEpoch;
+     var elig = evaluateEligibility('message', rec, epoch);
+     if (!elig.ok) {
+@@ -813,7 +815,7 @@
+     var th = threadByIdRaw(rec.thread_id) || ctx.thread;
+     var msg = { id: ctx.uid('sched-sent'), role: 'user', type: 'text', body: rec.text, time: nowIso(), viaSchedule: true, scheduledDispatchId: id };
+     ctx.appendMessage(msg, th);
+-    rec.state = 'dispatched'; rec.dispatchedMessageId = msg.id; rec.dispatchedAt = nowIso(); rec.updatedAt = rec.dispatchedAt;
++    rec.state = 'sent'; rec.dispatchedMessageId = msg.id; rec.dispatchedAt = nowIso(); rec.updatedAt = rec.dispatchedAt;
+     logEvent('scheduled_dispatch.dispatched', id, null, 'Delivered the exact frozen text, attachments and destination into ' + (th ? th.title : rec.thread_id) + '.');
+     persistNow();
+     return { dispatched: true, rec: rec, thread: th };
+@@ -827,15 +829,16 @@
+   function defaultBuildDraft(planId, version) {
+     return {
+       planId: planId, version: version, kind: 'recurring_window',
+-      date: '', time: '22:00', startTime: '22:00', pauseTime: '02:00',
+-      timezone: 'America/Chicago', days: [1, 2, 3, 4, 5],
++      date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
++      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
+       windDown: 10, autoResumeNext: true, missed: 'hold'
+     };
+   }
+   function commitBuild(ctx) {
+     var d = ui.buildDraft; if (!d) return null;
+     var hash = demoHash(d.planId + ':' + d.version);
+-    var id = ctx.uid('bld');
++    var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
++    var id = existing ? existing.schedule_id : ctx.uid('bld');
+     var oneTime = d.kind === 'one_time';
+     var scheduledUtc = null;
+     if (oneTime) {
+@@ -860,21 +863,32 @@
+       log: [{ at: nowIso(), text: 'Schedule created: ' + (oneTime ? ('one-time build at ' + to12h(d.time) + ' ' + tzLabel(d.timezone)) : ('recurring window ' + to12h(d.startTime) + '–' + to12h(d.pauseTime) + ' ' + tzLabel(d.timezone) + ', ' + daysSummary(d.days))) + '.' }],
+       createdAt: nowIso(), updatedAt: nowIso()
+     };
+-    P().buildSchedules.unshift(rec);
+-    logEvent('execution_window.created', id, null, 'Bound to ' + d.planId + ' V' + d.version + ' (hash ' + hash + ').');
++    if (existing) {
++      // Edit the existing owner record atomically: no temporary schedule or
++      // orphan creation event and no loss of already admitted occurrence IDs.
++      var retained={createdAt:existing.createdAt,revision:existing.revision+1,
++        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),
++        runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
++      Object.assign(existing,rec,retained);rec=existing;
++      logBuildLine(rec,'Window updated.');
++      logEvent('execution_window.updated',id,null,'Schedule updated.');
++    } else {
++      P().buildSchedules.unshift(rec);
++      logEvent('execution_window.created', id, null, 'Bound to ' + d.planId + ' V' + d.version + ' (hash ' + hash + ').');
++    }
+     persistNow();
+     return rec;
+   }
+   function cancelBuild(id) {
+     var rec = findBuild(id); if (!rec || rec.state === 'completed') return false;
+-    rec.state = 'cancelled'; rec.updatedAt = nowIso();
++    rec.state = 'canceled'; rec.updatedAt = nowIso();
+     logBuildLine(rec, 'Cancelled by the user. Any already-admitted work continues under its own owner — cancelling a window is not a Stop.');
+     logEvent('execution_window.updated', id, null, 'Cancelled by the user.');
+     persistNow();
+     return true;
+   }
+   function simulateRevision(id) {
+-    var rec = findBuild(id); if (!rec || rec.state === 'invalidated' || rec.state === 'cancelled') return null;
++    var rec = findBuild(id); if (!rec || rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state)) return null;
+     var oldV = rec.exact_target_version, oldH = rec.exact_target_hash;
+     var newV = oldV + 1, newH = demoHash(rec.target_id + ':' + newV);
+     rec.pendingVersion = newV; rec.pendingHash = newH;
+@@ -898,7 +912,7 @@
+     var out = { invalidated: [], untouched: [] };
+     P().buildSchedules.forEach(function (rec) {
+       if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
+-      if (rec.state === 'invalidated' || rec.state === 'cancelled' || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
++      if (rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state) || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+       if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
+       rec.pendingVersion = newVersion;
+       rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
+@@ -1039,110 +1053,98 @@
+   /* =====================================================================
+      8. RENDERERS
+      ===================================================================== */
+-  var MSG_STATE_LABEL = { scheduled: 'Scheduled', held: 'Held', dispatched: 'Dispatched', cancelled: 'Cancelled', failed: 'Failed', expired: 'Expired' };
+-  var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', cancelled: 'idle', failed: 'blocked', expired: 'idle' };
+-  var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Cancelled', completed: 'Completed', invalidated: 'Needs update' };
+-  var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', completed: 'done', invalidated: 'blocked' };
++  var MSG_STATE_LABEL = { scheduled: 'Scheduled', held: 'Held', dispatched: 'Sent', sent:'Sent', cancelled: 'Canceled', canceled:'Canceled', failed: 'Failed', expired: 'Expired' };
++  var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', sent:'done', cancelled: 'idle', canceled:'idle', failed: 'blocked', expired: 'idle' };
++  var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Canceled', canceled:'Canceled', completed: 'Completed', invalidated: 'Needs update' };
++  var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', canceled:'idle', completed: 'done', invalidated: 'blocked' };
+   var PHASE_LABEL = { idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
+   function chip(label, tone) { return '<span class="sched-chip sched-tone-' + esc(tone) + '">' + esc(label) + '</span>'; }
+
+-  function renderMessageRow(ctx, m) {
+-    var label = MSG_STATE_LABEL[m.state] || m.state, tone = MSG_STATE_TONE[m.state] || 'idle';
+-    var actionable = m.state === 'scheduled' || m.state === 'held';
+-    var buttons = '';
+-    if (actionable) {
+-      buttons += '<button class="soft-button" data-action="sched-dispatch-message" data-id="' + esc(m.scheduled_dispatch_id) + '">' + ctx.icon('play', 12) + ' Dispatch now</button>';
+-      buttons += '<button class="text-button" data-action="sched-edit-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Edit</button>';
+-      buttons += '<button class="text-button danger" data-action="sched-cancel-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Cancel</button>';
+-    } else if (m.state === 'dispatched') {
+-      buttons += '<button class="text-button" data-action="sched-dispatch-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Fire duplicate (idempotency test)</button>';
+-    }
+-    return '<div class="sched-row" data-k="sched-msg-' + esc(m.scheduled_dispatch_id) + '">' +
+-      '<div class="sched-row-head">' + chip(label, tone) +
+-      '<span class="sched-row-title">' + esc(to12h(m.local_wall_time)) + ' ' + esc(tzLabel(m.timezone)) + ' · ' + esc(fmtDay(m.scheduled_at_utc)) + '</span>' +
+-      '<span class="spacer"></span><span class="sched-idem" title="Idempotency key">' + esc(m.idempotencyKey) + '</span>' +
+-      '</div>' +
+-      '<p class="sched-row-text">' + esc(m.text) + '</p>' +
+-      (m.heldReason && m.state === 'held' ? '<p class="sched-reason">' + esc(m.heldReason) + '</p>' : '') +
+-      (m.dispatchedMessageId ? '<p class="sched-reason positive">Delivered as message ' + esc(m.dispatchedMessageId) + ' at ' + esc(fmtClock(m.dispatchedAt)) + '.</p>' : '') +
+-      (buttons ? '<div class="sched-row-actions">' + buttons + '</div>' : '') +
+-      '</div>';
+-  }
+-
+-  function renderBuildRow(ctx, b) {
+-    var label = BLD_STATE_LABEL[b.state] || b.state, tone = BLD_STATE_TONE[b.state] || 'idle';
+-    var when = b.schedule_kind === 'one_time' ? ('One-time · ' + to12h(b.local_start) + ' ' + tzLabel(b.timezone))
+-      : (to12h(b.local_start) + '–' + to12h(b.local_pause) + ' ' + tzLabel(b.timezone) + ' · ' + daysSummary(b.days_of_week));
+-    var buttons = '';
+-    if (b.state === 'invalidated') {
+-      buttons += '<button class="primary-button" data-action="sched-rebind-build" data-id="' + esc(b.schedule_id) + '">Rebind to V' + esc(b.pendingVersion) + '</button>';
+-      buttons += '<button class="text-button danger" data-action="sched-cancel-build" data-id="' + esc(b.schedule_id) + '">Cancel</button>';
+-    } else if (b.state === 'active') {
+-      buttons += '<button class="soft-button" data-action="sched-advance-window" data-id="' + esc(b.schedule_id) + '">' + ctx.icon('step', 12) + ' Advance window</button>';
+-      if (b.lastOccurrenceStart) buttons += '<button class="text-button" data-action="sched-fire-duplicate" data-id="' + esc(b.schedule_id) + '">Fire duplicate</button>';
+-      buttons += '<button class="text-button" data-action="sched-simulate-revision" data-id="' + esc(b.schedule_id) + '">Simulate Plan revision</button>';
+-      if (b.schedule_kind === 'recurring_window') {
+-        buttons += '<button class="text-button" data-action="sched-jump-transition" data-id="' + esc(b.schedule_id) + '" data-which="spring_forward">Jump to spring-forward</button>';
+-        buttons += '<button class="text-button" data-action="sched-jump-transition" data-id="' + esc(b.schedule_id) + '" data-which="fall_back">Jump to fall-back</button>';
+-      }
+-      buttons += '<button class="text-button danger" data-action="sched-cancel-build" data-id="' + esc(b.schedule_id) + '">Cancel</button>';
+-    }
+-    var logLines = (b.log || []).slice(0, 4).map(function (l) {
+-      return '<div class="sched-log-row"><span class="sched-log-when">' + esc(fmtClock(l.at)) + '</span><span>' + esc(l.text) + '</span></div>';
+-    }).join('');
+-    return '<div class="sched-row" data-k="sched-bld-' + esc(b.schedule_id) + '">' +
+-      '<div class="sched-row-head">' + chip(label, tone) +
+-      '<span class="sched-row-title">' + esc(b.target_id) + ' · V' + esc(b.exact_target_version) + ' · ' + esc(when) + '</span>' +
+-      '<span class="spacer"></span><span class="sched-idem" title="Idempotency key">' + esc(idempotencyKey(b)) + '</span>' +
+-      '</div>' +
+-      (b.state === 'active' ? '<p class="sched-phase">Phase: ' + esc(PHASE_LABEL[b.runPhase] || b.runPhase) + (b.lastOccurrenceStart ? (' · last occurrence ' + esc(fmtClock(b.lastOccurrenceStart)) + ' ' + esc(fmtDay(b.lastOccurrenceStart))) : '') + '</p>' : '') +
+-      (b.invalidated_reason ? '<p class="sched-reason">' + esc(b.invalidated_reason) + '</p>' : '') +
+-      (buttons ? '<div class="sched-row-actions">' + buttons + '</div>' : '') +
+-      (logLines ? '<div class="sched-log">' + logLines + '</div>' : '') +
+-      '</div>';
+-  }
+-
+-  function renderMessageDialog(ctx) {
+-    var d = ui.msgDraft || (ui.msgDraft = defaultMsgDraft(ctx));
+-    var th = threadByIdRaw(d.threadId);
+-    var destLabel = d.destination ? (d.destination.label + (d.destination.detail ? (' · ' + d.destination.detail) : '')) : ('Assistant · ' + (th ? th.title : d.threadId));
+-    var attachRows = (d.attachments || []).length ? d.attachments.map(function (a) { return '<li>' + esc(attachmentLabel(a)) + '</li>'; }).join('') : '<li class="sched-empty">No attachments in the composer right now.</li>';
+-    var modelOpts = (D.models || []).map(function (m) { return '<option value="' + esc(m.id) + '"' + (m.id === d.modelId ? ' selected' : '') + '>' + esc(m.name) + ' · ' + esc(m.account) + '</option>'; }).join('');
+-    var tzOpts = TZ_OPTIONS.map(function (t) { return '<option value="' + esc(t.id) + '"' + (t.id === d.timezone ? ' selected' : '') + '>' + esc(t.label) + '</option>'; }).join('');
+-    var text = String(d.text || '');
+-    var over = text.length > 8000;
+-    var editing = ui.editingMsgId ? findMessage(ui.editingMsgId) : null;
+-    var mine = P().scheduledMessages.filter(function (m) { return m.thread_id === d.threadId; });
+-    var list = mine.length ? mine.map(function (m) { return renderMessageRow(ctx, m); }).join('') : '<p class="sched-empty">No scheduled messages for this thread yet.</p>';
+-
+-    return '<section class="dialog sched-dialog sched-dialog--message" style="width:min(640px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Schedule Message">' +
+-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('history', 13) + '</span>' +
+-      '<strong>' + (editing ? 'Update scheduled message' : 'Schedule Message') + '</strong><span class="spacer"></span>' +
+-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
+-      '<div class="dialog-body">' +
+-      '<p class="sched-honesty">Freezes the exact destination, text, attachments, model/account and time. Revalidated right before dispatch — never silently sent to a different destination, model or account.</p>' +
+-      '<div class="sched-field"><label>Destination</label><div class="sched-static">' + esc(destLabel) + '</div></div>' +
+-      '<div class="sched-field"><label>Message text (frozen at Schedule)</label>' +
+-      '<textarea class="sched-text" data-sched-input="msg-text" rows="4" placeholder="What should be sent">' + esc(text) + '</textarea>' +
+-      '<span class="sched-count' + (over ? ' over' : '') + '">' + text.length + ' / 8000</span></div>' +
+-      '<div class="sched-field"><label>Attachments (frozen at Schedule)</label><ul class="sched-attach-list">' + attachRows + '</ul></div>' +
+-      '<div class="sched-field-grid">' +
+-      '<div class="sched-field"><label>Date</label><input type="date" data-sched-input="msg-date" value="' + esc(d.date) + '"></div>' +
+-      '<div class="sched-field"><label>Time</label><input type="time" data-sched-input="msg-time" value="' + esc(d.time) + '"></div>' +
+-      '<div class="sched-field"><label>Timezone</label><select data-sched-input="msg-tz">' + tzOpts + '</select></div>' +
+-      '<div class="sched-field"><label>Model / account</label><select data-sched-input="msg-model">' + modelOpts + '</select></div>' +
+-      '<div class="sched-field"><label>If missed</label><select data-sched-input="msg-missed">' +
+-      '<option value="hold"' + (d.missed === 'hold' ? ' selected' : '') + '>Hold until I act</option>' +
+-      '<option value="next_available"' + (d.missed === 'next_available' ? ' selected' : '') + '>Send at next opportunity</option>' +
+-      '<option value="cancel_after_grace"' + (d.missed === 'cancel_after_grace' ? ' selected' : '') + '>Cancel after grace</option></select></div>' +
+-      '<div class="sched-field"><label>Grace (minutes)</label><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="' + esc(d.grace) + '"' + (d.missed === 'cancel_after_grace' ? '' : ' disabled') + '></div>' +
+-      '</div>' +
+-      '<div class="plan-actions">' +
+-      (editing ? '<button class="text-button" data-action="sched-cancel-edit-message">Cancel edit</button>' : '') +
+-      '<button class="primary-button" data-action="sched-create-message"' + (!text.trim() || over ? ' disabled' : '') + '>' + (editing ? 'Save schedule' : 'Schedule') + '</button>' +
+-      '</div>' +
+-      '<h3 class="sched-subhead">Scheduled for this thread</h3><div class="sched-list">' + list + '</div>' +
+-      '</div></section>';
++  function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
++  function whenLabel(iso,zone){
++    if(!iso||!Number.isFinite(Date.parse(iso)))return 'Time not set';
++    try{return new Intl.DateTimeFormat('en-US',{timeZone:zone||'UTC',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(iso));}catch(e){return iso;}
++  }
++  function destinationLabel(m){var t=threadByIdRaw(m.thread_id);return m.destination_ref?.label||t?.title||m.thread_id||'This thread';}
++  function facts(rows){return '<dl class="sched-facts">'+rows.filter(r=>r[1]!=null&&r[1]!=='').map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>';}
++  function messageActions(ctx,m){
++    var p=messageProjection(m),id=esc(m.scheduled_dispatch_id);
++    return (p.can_edit?'<button class="soft-button" data-action="sched-edit-message" data-id="'+id+'">Edit</button>':'')+
++      (['scheduled','held','failed'].includes(m.state)?'<button class="text-button" data-action="sched-dispatch-message" data-id="'+id+'">Send now</button>':'')+
++      (p.can_cancel?'<button class="text-button danger" data-action="sched-cancel-message" data-id="'+id+'">Cancel</button>':'')+
++      (m.dispatchedMessageId?'<button class="soft-button" data-action="sched-open-sent" data-id="'+id+'">Open sent message</button>':'');
++  }
++  function attentionLabel(record){
++    var reason=record.heldReason||record.failureReason||record.expiredReason||'';
++    if(/attach|file.*missing|missing.*file/i.test(reason))return 'Attachment unavailable';
++    if(/thread|destination|project|deleted|archived/i.test(reason))return 'Destination unavailable';
++    if(/model|account|route|provider/i.test(reason))return 'Model or account unavailable';
++    if(/expired|grace|missed/i.test(reason))return 'Scheduled time passed';
++    return record.state==='failed'?'Delivery failed':record.state==='expired'?'Schedule expired':'Needs your attention';
++  }
++  function messageDetails(ctx,m){
++    var attachments=attachmentSnapshots(m);
++    return '<div class="sched-details-body"><div class="sched-full-message">'+esc(m.text)+'</div>'+facts([
++      ['Issue',m.heldReason||m.failureReason||m.expiredReason],['Destination',destinationLabel(m)],['Model',m.requested_runtime?.modelName||'Default'],['Account',m.requested_runtime?.account],
++      ['Timezone',m.timezone],['If missed',({hold:'Hold for you',next_available:'Send when available',cancel_after_grace:'Cancel after grace'})[m.missed_policy]],
++      ['Grace',m.missed_policy==='cancel_after_grace'?Math.round(m.grace_seconds/60)+' min':null],['Revision',m.revision]
++    ])+(attachments.length?'<div class="sched-attached">'+attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(a.filename||a.attachment_id)+' · '+esc(a.availability)+'</span>').join(''):'')+
++      '<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',m.scheduled_dispatch_id],['UTC time',m.scheduled_at_utc],['Idempotency key',m.idempotencyKey],['Created',m.createdAt],['Updated',m.updatedAt]])+
++      (attachments.length?'<pre>'+esc(JSON.stringify(attachments,null,2))+'</pre>':'')+'</details></div>';
++  }
++  function validateWall(date,time,zone){
++    var match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date||'');
++    if(!match||!/^([01]\d|2[0-3]):[0-5]\d$/.test(time||''))return 'Choose a valid date and time.';
++    var h=parseHHMM(time),ms=tzToUTC(zone,+match[1],+match[2],+match[3],h.h,h.m),t=tzParts(zone,ms);
++    if(!t||t.y!==+match[1]||t.mo!==+match[2]||t.d!==+match[3]||t.h!==h.h||t.mi!==h.m)return 'This local time does not exist in the selected timezone.';
++    if(ms<=Date.now())return 'Choose a time in the future.';
++    return '';
++  }
++
++
++  function renderMessageRow(ctx,m){
++    var label=SM_STATE[m.state]?.label||MSG_STATE_LABEL[m.state]||m.state,tone=MSG_STATE_TONE[m.state]||'idle';
++    var why=m.heldReason||m.failureReason||m.expiredReason;
++    return '<article class="schedule-item" data-k="schedule-'+esc(m.scheduled_dispatch_id)+'" data-schedule-id="'+esc(m.scheduled_dispatch_id)+'">'+
++      '<div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('history',17)+'</span><div class="schedule-item-copy"><strong>'+esc(String(m.text||'Untitled message'))+'</strong><span>'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+'</span></div>'+chip(label,tone)+'</div>'+
++      '<div class="schedule-item-destination">'+ctx.icon('chat',12)+esc(destinationLabel(m))+'</div>'+
++      (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
++      '<div class="schedule-item-controls">'+messageActions(ctx,m)+'</div>'+
++      '<details class="schedule-details" '+(ui.focusSchedule===m.scheduled_dispatch_id?'open':'')+'><summary>Details '+ctx.icon('down',11)+'</summary>'+messageDetails(ctx,m)+'</details></article>';
++  }
++
++
++  function renderBuildRow(ctx,b){
++    var plan=window.PM56_PLANS?.get(b.target_id),id=esc(b.schedule_id),label=BLD_STATE_LABEL[b.state]||b.state;
++    var one=b.schedule_kind==='one_time';
++    var when=one?whenLabel(b.scheduled_at_utc,b.timezone):daysSummary(b.days_of_week)+' · '+to12h(b.local_start)+'–'+to12h(b.local_pause)+' · '+zoneName(b.timezone);
++    var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,Date.now())):null;
++    var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
++    return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
++      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting')+(nextIso?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
++      '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
++      (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
++      (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
++      (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
++      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+facts([
++        ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
++      ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
++      (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
++  }
++
++
++  function renderMessageDialog(ctx){
++    var d=ui.msgDraft||(ui.msgDraft=defaultMsgDraft(ctx)),editing=ui.editingMsgId,th=threadByIdRaw(d.threadId),text=String(d.text||'');
++    var tzOpts=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(t.id===d.timezone?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
++    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))tzOpts='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+tzOpts;
++    return '<section class="dialog sched-dialog sched-dialog--message" role="dialog" aria-modal="true" aria-label="Schedule Message"><div class="drawer-head">'+ctx.icon('history',16)+'<strong>'+(editing?'Edit scheduled message':'Schedule a message')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
++      '<div class="dialog-body"><div class="sched-destination-tag">'+ctx.icon('chat',14)+esc(d.destination?.label||th?.title||'This thread')+'</div>'+
++      '<label class="sched-field"><span>Message</span><textarea class="sched-text" data-sched-input="msg-text" rows="4" maxlength="8000" placeholder="What should be sent?">'+esc(text)+'</textarea></label>'+
++      (d.attachments?.length?'<div class="sched-attached">'+d.attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(attachmentLabel(a))+'</span>').join('')+'</div>':'')+
++      '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
++      '<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
++      '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
++      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000?'disabled':'')+'>'+(editing?'Save changes':'Schedule message')+'</button></div></section>';
+   }
+
+   function renderQuotaHint() {
+@@ -1151,97 +1153,36 @@
+     return '<p class="sched-hint attention">Provider Usage is exhausted right now (reset ' + esc(q.resetAt || 'unknown') + ' · ' + esc(q.resetSource) + '). A window opening while usage is unavailable holds rather than dispatching.</p>';
+   }
+
+-  function renderBuildDialog(ctx) {
+-    var d = ctx.state.dialog;
+-    var planId = d.planId, version = d.version;
+-    var draft = ui.buildDraft;
+-    if (!draft || draft.planId !== planId || draft.version !== version) draft = ui.buildDraft = defaultBuildDraft(planId, version);
+-    var hash = demoHash(planId + ':' + version);
+-    var oneTime = draft.kind === 'one_time';
+-    var tzOpts = TZ_OPTIONS.map(function (t) { return '<option value="' + esc(t.id) + '"' + (t.id === draft.timezone ? ' selected' : '') + '>' + esc(t.label) + '</option>'; }).join('');
+-    var dayChips = DAY_LABELS.map(function (lbl, i) {
+-      var on = draft.days.indexOf(i) >= 0;
+-      return '<label class="sched-day-chip' + (on ? ' on' : '') + '"><input type="checkbox" data-action="sched-toggle-day" data-day="' + i + '"' + (on ? ' checked' : '') + '><span>' + lbl + '</span></label>';
+-    }).join('');
+-    var dstCheckpoints = [];
+-    if (draft.startTime) { var sh = parseHHMM(draft.startTime); dstCheckpoints.push({ label: 'start', hh: sh.h, mi: sh.m }); }
+-    if (draft.pauseTime) { var ph = parseHHMM(draft.pauseTime); dstCheckpoints.push({ label: 'pause', hh: ph.h, mi: ph.m }); }
+-    var dstLines = describeDst(draft.timezone, dstCheckpoints, draft.days).map(function (l) { return '<p class="sched-dst-line">' + esc(l) + '</p>'; }).join('');
+-    var existing = buildsForTarget(planId);
+-    var existingList = existing.length ? existing.map(function (b) { return renderBuildRow(ctx, b); }).join('') : '<p class="sched-empty">No existing schedule for this Plan yet.</p>';
+-
+-    return '<section class="dialog sched-dialog sched-dialog--build" style="width:min(700px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Build At">' +
+-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('document', 13) + '</span>' +
+-      '<strong>Build At…</strong><span class="meta-pill">' + esc(planId) + ' · V' + esc(version) + ' · hash ' + esc(hash) + '</span><span class="spacer"></span>' +
+-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
+-      '<div class="dialog-body">' +
+-      '<p class="sched-honesty">Binds this exact version and hash, never “the current Plan”. If ' + esc(planId) + ' is revised after this, the schedule is invalidated with a reason and offers rebinding — it will not silently build the newer version.</p>' +
+-      '<div class="sched-field"><label>Schedule kind</label><div class="sched-radio-row">' +
+-      '<label><input type="radio" name="sched-build-kind" data-action="sched-set-build-kind" data-value="one_time"' + (oneTime ? ' checked' : '') + '> One-time start</label>' +
+-      '<label><input type="radio" name="sched-build-kind" data-action="sched-set-build-kind" data-value="recurring_window"' + (!oneTime ? ' checked' : '') + '> Recurring window</label>' +
+-      '</div></div>' +
+-      (oneTime ?
+-        '<div class="sched-field-grid">' +
+-        '<div class="sched-field"><label>Date</label><input type="date" data-sched-input="build-date" value="' + esc(draft.date) + '"></div>' +
+-        '<div class="sched-field"><label>Start time</label><input type="time" data-sched-input="build-time" value="' + esc(draft.time) + '"></div>' +
+-        '<div class="sched-field"><label>Timezone</label><select data-sched-input="build-tz">' + tzOpts + '</select></div>' +
+-        '</div>'
+-        :
+-        '<div class="sched-field-grid">' +
+-        '<div class="sched-field"><label>Start time (local)</label><input type="time" data-sched-input="build-start" value="' + esc(draft.startTime) + '"></div>' +
+-        '<div class="sched-field"><label>Pause time (local)</label><input type="time" data-sched-input="build-pause" value="' + esc(draft.pauseTime) + '"></div>' +
+-        '<div class="sched-field"><label>Timezone</label><select data-sched-input="build-tz">' + tzOpts + '</select></div>' +
+-        '<div class="sched-field"><label>Wind-down (minutes)</label><input type="number" min="0" max="180" data-sched-input="build-wind" value="' + esc(draft.windDown) + '"></div>' +
+-        '</div>' +
+-        '<div class="sched-field"><label>Days</label><div class="sched-days">' + dayChips + '</div><span class="sched-hint">' + esc(daysSummary(draft.days)) + '</span></div>' +
+-        '<label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume"' + (draft.autoResumeNext ? ' checked' : '') + '> Auto-resume next window</label>' +
+-        '<div class="sched-dst" data-k="sched-dst">' + dstLines + '</div>'
+-      ) +
+-      '<div class="sched-field"><label>If a window is missed</label><select data-sched-input="build-missed">' +
+-      '<option value="hold"' + (draft.missed === 'hold' ? ' selected' : '') + '>Hold</option>' +
+-      '<option value="next_available"' + (draft.missed === 'next_available' ? ' selected' : '') + '>Next available</option>' +
+-      '<option value="cancel_after_grace"' + (draft.missed === 'cancel_after_grace' ? ' selected' : '') + '>Cancel after grace</option></select></div>' +
+-      renderQuotaHint() +
+-      '<div class="plan-actions"><button class="primary-button" data-action="sched-create-build" data-plan-id="' + esc(planId) + '" data-plan-version="' + esc(version) + '">Create schedule</button></div>' +
+-      '<h3 class="sched-subhead">Existing schedules for ' + esc(planId) + '</h3><div class="sched-list">' + existingList + '</div>' +
+-      '</div></section>';
+-  }
+-
+-  function renderPrecedenceSection() {
+-    var S = P();
+-    return '<p class="sched-honesty">Manual Stop, Pause or Cancel always outranks a schedule, a quota reset, or a Goal/Plan/Crew continuation. Latching increments a stop epoch; a decision computed against an older epoch is discarded rather than delivered, and nothing automatic can clear the latch.</p>' +
+-      '<div class="sched-precedence" data-k="sched-precedence">' +
+-      '<div class="metric-card"><label>Stop epoch</label><strong>' + S.stopEpoch + '</strong></div>' +
+-      '<div class="metric-card"><label>Latched</label><strong>' + (S.stopped ? 'Yes' : 'No') + '</strong></div>' +
+-      '</div>' +
+-      (S.stopped ? '<p class="sched-reason">' + esc(S.stopReason || 'Manual Stop') + ' — latched at ' + esc(fmtClock(S.stopAt)) + '.</p>' : '') +
+-      '<div class="plan-actions">' +
+-      (S.stopped
+-        ? '<button class="primary-button" data-action="sched-clear-stop">Explicit resume (clears the latch)</button>'
+-        : '<button class="soft-button danger" data-action="sched-simulate-stop">Simulate manual Stop</button>') +
+-      '<button class="text-button" data-action="sched-race-demo">Race demo: decide, then Stop, then try to deliver</button>' +
+-      '</div>' +
+-      '<p class="sched-hint">The race demo captures a decision at the current epoch, latches a stop, then attempts delivery under that older decision — proving it is discarded, not delivered.</p>';
+-  }
+-
+-  function renderQuotaSection() {
+-    var q = RT.quota;
+-    var consent = P().quotaConsents[0];
+-    var mirror = q ?
+-      ('<div class="sched-precedence">' +
+-        '<div class="metric-card"><label>Waiting</label><strong>' + (q.waiting ? 'Yes' : 'No') + '</strong></div>' +
+-        '<div class="metric-card"><label>Reset</label><strong>' + esc(q.resetAt || 'unknown') + '</strong></div>' +
+-        '<div class="metric-card"><label>Truth</label><strong>' + esc(q.resetSource) + '</strong></div>' +
+-        '<div class="metric-card"><label>Auto-resume checked</label><strong>' + (q.resumeAutomatically ? 'Yes' : 'No') + '</strong></div>' +
+-        '</div>')
+-      : '<p class="sched-empty">composer-state.js has not initialised RT.quota yet.</p>';
+-    var consentBlock = consent ? '<p class="sched-hint">QuotaResumeConsent is scoped to one run, provider and account — never a global default. This run: <b>' + esc(consent.run_id) + '</b> · ' + esc(consent.provider_id) + ' · ' + esc(consent.account_id) + '.</p>' : '';
+-    return '<p class="sched-honesty">This mirrors the quota wait strip owned by composer-state.js below the composer — the checkbox lives there, not here. This section revalidates the same shared eligibility predicate and attempts the resume that checkbox opts into.</p>' +
+-      mirror + consentBlock +
+-      '<div class="plan-actions">' +
+-      '<button class="soft-button" data-action="sched-attempt-resume">Attempt auto-resume now</button>' +
+-      '<button class="text-button" data-action="sched-simulate-quota-reset">Simulate: provider window reopens</button>' +
+-      '</div>';
++
++  function renderBuildDialog(ctx){
++    var x=ctx.state.dialog,d=ui.buildDraft;if(!d||d.planId!==x.planId)d=ui.buildDraft=defaultBuildDraft(x.planId,x.version);
++    var plan=window.PM56_PLANS?.get(d.planId),one=d.kind==='one_time';
++    var zones=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(d.timezone===t.id?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
++    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
++    return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
++      '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
++      '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
++      '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
++      '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
++      (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div><label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume" '+(d.autoResumeNext?'checked':'')+'>Resume next window</label>':'')+
++      '<details class="schedule-details"><summary>More options '+ctx.icon('down',11)+'</summary><div class="sched-field-grid">'+(!one?'<label class="sched-field"><span>Wind-down · minutes</span><input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'"></label>':'')+
++      '<label class="sched-field"><span>If missed</span><select data-sched-input="build-missed">'+[['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><details class="sched-audit"><summary>Timezone rules</summary>'+describeDst(d.timezone,[],d.days).map(l=>'<p>'+esc(l)+'</p>').join('')+'</details></details>'+
++      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div></section>';
++  }
++
++
++  function renderPrecedenceSection(){
++    var S=P();return '<section class="schedule-safety"><div><strong>Manual stop</strong><span>'+(S.stopped?'Automations paused':'Not active')+'</span></div>'+
++      (S.stopped?'<button class="soft-button" data-action="sched-clear-stop">Resume automations</button>':'')+'</section>'+
++      (S.stopped?'<p class="schedule-attention">'+esc(S.stopReason||'Stopped by you')+'</p>':'')+
++      '<details class="sched-audit"><summary>Stop record</summary>'+facts([['Epoch',S.stopEpoch],['Stopped',S.stopAt],['Rule','Manual stop, pause or cancel wins over automatic continuation.']])+'</details>';
++  }
++
++
++  function renderQuotaSection(){
++    var q=RT.quota,c=P().quotaConsents[0];return '<section class="schedule-safety"><div><strong>Quota resume</strong><span>'+(q?.waiting?'Waiting for provider quota':'No quota wait')+'</span></div>'+chip(q?.resumeAutomatically?'Opted in':'Off','idle')+'</section>'+facts([
++      ['Expected reset',q?.resetAt||'Unknown'],['Reset source',q?.resetSource||'Unknown'],['Provider',c?.provider_id],['Account',c?.account_id]
++    ])+'<details class="sched-audit"><summary>Consent record</summary>'+facts([['Run',c?.run_id],['Scope','This run and account only'],['Control','Use the quota wait strip in chat.']])+'</details>';
+   }
+
+   function renderEventLog() {
+@@ -1255,34 +1196,25 @@
+     }).join('') + '</div>';
+   }
+
+-  function renderPersistenceFooter(ctx) {
+-    var S = P();
+-    return '<div class="sched-persist-foot">' +
+-      '<p class="sched-honesty">No client-side timer is authoritative here — every occurrence above is recomputed from the stored IANA timezone and local wall time, exactly as a restart would. These records persist to this browser’s local storage only so the concept survives a reload; the product’s real timers are server-owned.</p>' +
+-      '<div class="sched-persist-row"><span>' + (S.lastSavedAt ? ('Last saved locally ' + esc(fmtClock(S.lastSavedAt)) + ' ' + esc(fmtDay(S.lastSavedAt))) : 'Not yet saved') + '</span>' +
+-      '<button class="soft-button" data-action="sched-reload-now">' + ctx.icon('reset', 12) + ' Reload page now</button></div></div>';
+-  }
+-
+-  function renderManageDialog(ctx) {
+-    var S = P();
+-    var tab = ui.manageTab || 'messages';
+-    var tabs = [['messages', 'Messages'], ['builds', 'Build windows'], ['quota', 'Quota resume'], ['precedence', 'Precedence'], ['events', 'Event log']];
+-    var tabRow = tabs.map(function (t) { return '<button class="text-button sched-tab' + (tab === t[0] ? ' active' : '') + '" data-action="sched-manage-tab" data-tab="' + t[0] + '">' + t[1] + '</button>'; }).join('');
+-    var body = '';
+-    if (tab === 'messages') body = S.scheduledMessages.length ? S.scheduledMessages.map(function (m) { return renderMessageRow(ctx, m); }).join('') : '<p class="sched-empty">No scheduled messages.</p>';
+-    else if (tab === 'builds') body = S.buildSchedules.length ? S.buildSchedules.map(function (b) { return renderBuildRow(ctx, b); }).join('') : '<p class="sched-empty">No build schedules.</p>';
+-    else if (tab === 'quota') body = renderQuotaSection();
+-    else if (tab === 'precedence') body = renderPrecedenceSection();
+-    else if (tab === 'events') body = renderEventLog();
+-
+-    return '<section class="dialog sched-dialog sched-dialog--manage" style="width:min(760px,calc(100vw - 20px));height:min(640px,calc(100vh - 20px))" role="dialog" aria-modal="true" aria-label="Scheduled and Automations">' +
+-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('refresh', 13) + '</span><strong>Scheduled &amp; Automations</strong>' +
+-      (S.stopped ? '<span class="meta-pill sched-pill-stop">Manual Stop latched</span>' : '') + '<span class="spacer"></span>' +
+-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
+-      '<div class="sched-tabs">' + tabRow + '</div>' +
+-      '<div class="dialog-body">' + body + '</div>' +
+-      renderPersistenceFooter(ctx) +
+-      '</section>';
++
++  function renderPersistenceFooter(ctx){return '<div class="schedule-footer"><span title="This HTML demonstrates schedules; no background dispatch service runs here.">Concept · local records</span><span title="'+(ui.persistenceAvailable===false?'Browser storage unavailable. Changes last for this session.':'')+'">'+(ui.persistenceAvailable===false?'Session only':P().lastSavedAt?'Saved '+esc(fmtClock(P().lastSavedAt)):'')+'</span></div>';}
++
++
++  function renderManageDialog(ctx){
++    var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
++    var active=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state)),attention=active.filter(m=>m.state!=='scheduled'),upcoming=active.filter(m=>m.state==='scheduled').sort((a,b)=>Date.parse(a.scheduled_at_utc)-Date.parse(b.scheduled_at_utc)),past=S.scheduledMessages.filter(m=>!active.includes(m));
++    var tabs=[['messages','Messages',active.length],['builds','Build windows',S.buildSchedules.filter(b=>['active','paused','invalidated'].includes(b.state)).length],['quota','Resume & safety',null],['events','Activity',null]];
++    function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
++    var content='';
++    if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!S.scheduledMessages.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No scheduled messages</strong><button class="soft-button" data-action="sched-open-message">Schedule a message</button></div>':'');
++    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
++    else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
++    else content=renderEventLog();
++    return '<section class="dialog sched-dialog sched-dialog--manage" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>Scheduled &amp; automations</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
++      '<div class="schedule-overview"><div><strong>'+active.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':attention.length?attention.length+' need attention':'No blockers',S.stopped||attention.length?'attention':'done')+'</div></div>'+
++      '<div class="sched-tabs">'+tabs.map(([v,l,n])=>'<button class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+(n!==null?'<span>'+n+'</span>':'')+'</button>').join('')+'</div>'+
++      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':'')+'<span class="spacer"></span><span>All threads</span></div>'+
++      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+'</section>';
+   }
+
+   EXT.slot('wandRows', function (ctx) {
+@@ -1330,6 +1262,7 @@
+   function list(v){ return Array.isArray(v) ? v : []; }
+   var SM_STATE = {
+     scheduled:{ label:'Scheduled', tone:'idle' },
++    dispatched:{label:'Sent',tone:'done'}, cancelled:{label:'Canceled',tone:'idle'},
+     held:     { label:'Held',      tone:'warn' },
+     sent:     { label:'Sent',      tone:'done' },
+     canceled: { label:'Canceled',  tone:'idle' },
+@@ -1393,22 +1326,16 @@
+     });
+   }
+
+-  function renderMessageCard(ctx,rec){
+-    var pr=messageProjection(rec),st=SM_STATE[rec.state]||{label:rec.state,tone:'idle'};
+-    var why=pr.held_reason||pr.failure_reason||pr.cancel_reason||pr.expired_reason;
+-    var open=!!(ui.cardOpen&&ui.cardOpen[rec.scheduled_dispatch_id]);
+-    var snaps=attachmentSnapshots(rec);
+-    var detail=open?'<div class="sched-card-detail"><div class="sched-card-facts"><span>'+esc(rec.scheduled_at_utc)+'</span><span>'+esc(rec.destination_ref?rec.destination_ref.label:'This thread')+'</span><span>'+esc((rec.requested_runtime&&rec.requested_runtime.modelName)||'Default')+'</span></div>'+
+-      (why?'<p class="sched-card-why">'+esc(why)+'</p>':'')+
+-      (snaps.length?'<ul class="sched-card-snaps">'+snaps.map(function(s){return '<li data-availability="'+esc(s.availability)+'"><code>'+esc(s.attachment_id)+(s.artifact_version?'@'+esc(s.artifact_version):'')+'</code><span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em>'+(s.unavailable_note?'<em>'+esc(s.unavailable_note)+'</em>':'')+'</li>';}).join('')+'</ul>':'')+
+-      '<div class="sched-card-foot"><button class="text-button" data-action="sched-open-manage">Manage schedules</button>'+
+-      (pr.can_edit?'<button class="soft-button" data-action="sched-card-edit" data-id="'+esc(rec.scheduled_dispatch_id)+'">Edit</button>':'')+
+-      (pr.can_cancel?'<button class="soft-button danger" data-action="sched-card-cancel" data-id="'+esc(rec.scheduled_dispatch_id)+'">Cancel</button>':'')+
+-      (pr.dispatched_message_id?'<button class="soft-button" data-action="sched-open-sent" data-id="'+esc(rec.scheduled_dispatch_id)+'">Sent message</button>':'')+'</div></div>':'';
+-    return '<article class="event-card sched-card sched-card-'+esc(rec.state)+'" data-k="sched-card-'+esc(rec.scheduled_dispatch_id)+'" data-schedule-id="'+esc(rec.scheduled_dispatch_id)+'" data-schedule-state="'+esc(rec.state)+'">'+
+-      '<div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',13)+'Scheduled message</span><span class="sched-state sched-state-'+esc(st.tone)+'" data-state="'+esc(rec.state)+'">'+esc(st.label)+'</span><button class="text-button" data-action="sched-card-details" data-id="'+esc(rec.scheduled_dispatch_id)+'" aria-expanded="'+open+'">'+(open?'Less':'Details')+'</button></div>'+
+-      '<p class="sched-card-preview">'+esc(pr.text_preview)+(String(rec.text||'').length>120?'…':'')+'</p>'+
+-      '<div class="sched-card-time">'+esc(rec.local_wall_time)+' '+esc(rec.timezone)+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+detail+'</article>';
++  function renderMessageCard(ctx,m){
++    var pr=messageProjection(m),st=SM_STATE[m.state]||{label:m.state,tone:'idle'},id=esc(m.scheduled_dispatch_id),open=!!ui.cardOpen?.[m.scheduled_dispatch_id];
++    var why=pr.held_reason||pr.failure_reason||pr.expired_reason;
++    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'"><div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
++      '<p class="sched-card-preview">'+esc(pr.text_preview)+(m.text.length>120?'…':'')+'</p>'+
++      '<div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
++      (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',12)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
++      '<div class="sched-card-foot"><button class="text-button" data-action="sched-card-details" data-id="'+id+'" aria-expanded="'+open+'">'+(open?'Less':'Details')+'</button>'+
++      (pr.can_edit?'<button class="text-button" data-action="sched-card-edit" data-id="'+id+'">Edit</button>':'')+(pr.dispatched_message_id?'<button class="text-button" data-action="sched-open-sent" data-id="'+id+'">Open message</button>':'')+'</div>'+
++      (open?messageDetails(ctx,m)+'<div class="sched-card-foot">'+(pr.can_cancel?'<button class="text-button danger" data-action="sched-card-cancel" data-id="'+id+'">Cancel schedule</button>':'')+'<button class="text-button" data-action="sched-focus-record" data-id="'+id+'">All schedules</button></div>':'')+'</article>';
+   }
+
+   EXT.slot('transcriptMessage', function (ctx) {
+@@ -1447,11 +1374,15 @@
+      in DOM order, and any harness selecting by action alone then clicked the
+      card instead of the menu item. */
+   EXT.action('sched-card-details', function(ctx,btn){ ui.cardOpen=ui.cardOpen||{}; ui.cardOpen[btn.dataset.id]=!ui.cardOpen[btn.dataset.id]; ctx.renderApp(); return true; });
+-  EXT.action('sched-open-sent', function(ctx,btn){
+-    var rec=smById(btn.dataset.id); if(!rec) return true;
+-    ctx.toast('Dispatched message', 'The schedule links to '+rec.dispatchedMessageId+', inserted at the real dispatch time '+rec.dispatchedAt+
+-      '. Transcript order is never backdated to when the schedule was created, and replay returns this same message id.');
+-    return true;
++  EXT.action('sched-open-sent',function(ctx,btn){
++    var m=smById(btn.dataset.id);if(!m?.dispatchedMessageId)return true;
++    ctx.closeDialog();ctx.switchThread(m.thread_id);
++    requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(m.dispatchedMessageId)+'"]')?.scrollIntoView({block:'center',behavior:'smooth'}));return true;
++  });
++  EXT.action('sched-focus-record',function(ctx,btn){ui.focusSchedule=btn.dataset.id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});return true;});
++  EXT.action('sched-pick-model',function(ctx,btn){
++    var d=ui.msgDraft;if(!d)return true;
++    window.PM56_PICKERS.openModel(btn,{model:d.modelId,effort:d.effort,fast:d.fast},v=>{if(ui.msgDraft!==d||ctx.state.dialog?.type!=='sched-message')return;d.modelId=v.model;d.effort=v.effort;d.fast=v.fast;ctx.renderOverlays();});return true;
+   });
+   EXT.action('sched-card-edit', function(ctx,btn){
+     var rec=smById(btn.dataset.id); if(!rec) return true;
+@@ -1544,13 +1475,17 @@
+     openBuildAt(ctx, btn.dataset.planId, btn.dataset.planVersion);
+   };
+   ACT['sched-close-dialog'] = function (ctx) {
+-    ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;
++    ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;ui.editingBuildId=null;
+     ctx.closeDialog();
+   };
+   ACT['sched-create-message'] = function (ctx) {
++    var draft=ui.msgDraft;if(!draft)return;
++    var err=validateWall(draft.date,draft.time,draft.timezone);
++    if(!String(draft.text||'').trim()||draft.text.length>8000)err='Enter a message of 1–8,000 characters.';
++    if(err){draft.error=err;ctx.renderOverlays();return;}draft.error='';
+     if (ui.editingMsgId) {
+       var rec = findMessage(ui.editingMsgId);
+-      if (!rec || rec.state === 'dispatched') { ctx.toast('Cannot update', 'This schedule already dispatched; updates are refused once dispatch has started.'); return; }
++      if (!rec || !messageProjection(rec).can_edit) { ctx.toast('Cannot update', 'This schedule already dispatched; updates are refused once dispatch has started.'); return; }
+       var d = ui.msgDraft, text = String(d.text || '').trim();
+       if (!text) return;
+       var dt = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d.date || ''), hhmm = parseHHMM(d.time);
+@@ -1561,15 +1496,15 @@
+       rec.revision += 1; rec.state = 'scheduled'; rec.heldReason = null; rec.updatedAt = nowIso();
+       logEvent('scheduled_dispatch.updated', rec.scheduled_dispatch_id, null, 'Rebound under revision ' + rec.revision + '.');
+       persistNow();
+-      ui.editingMsgId = null;
+-      reRender(ctx);
++      ui.editingMsgId = null;ui.msgDraft=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
++      ctx.openDialog({type:'sched-manage'});ctx.renderApp();
+       ctx.toast('Schedule updated', 'Revision ' + rec.revision + ' recorded.');
+       return;
+     }
+     var rec2 = commitMessage(ctx);
+     if (!rec2) { ctx.toast('Nothing scheduled', 'Message text is required.'); return; }
+-    ui.msgDraft = defaultMsgDraft(ctx);
+-    reRender(ctx);
++    if(!ctx.state.threads.find(t=>t.id===rec2.thread_id)?.messages.some(m=>m.scheduleId===rec2.scheduled_dispatch_id)){ctx.appendMessage({id:'sched-card-'+rec2.scheduled_dispatch_id,role:'system',type:'sched-message',scheduleId:rec2.scheduled_dispatch_id,time:rec2.createdAt},threadByIdRaw(rec2.thread_id));}
++    ui.msgDraft=null;ui.focusSchedule=rec2.scheduled_dispatch_id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});ctx.renderApp();
+     ctx.toast('Message scheduled', 'Frozen for ' + to12h(rec2.local_wall_time) + ' ' + tzLabel(rec2.timezone) + '. It revalidates its destination and route immediately before dispatch.');
+   };
+   ACT['sched-cancel-message'] = function (ctx, btn) {
+@@ -1582,25 +1517,38 @@
+     if (!res) return;
+     reRender(ctx);
+     if (res.duplicate) ctx.toast('Duplicate suppressed', 'Idempotency key already resolved; nothing sent twice.');
++    else if (res.refused) ctx.toast('Not sent',res.reason);
+     else if (res.held) ctx.toast('Dispatch held', res.reason);
+     else if (res.dispatched) ctx.toast('Scheduled message sent', 'Delivered the exact text frozen at schedule time into ' + (res.thread ? res.thread.title : 'the thread') + '.');
+   };
+   ACT['sched-edit-message'] = function (ctx, btn) {
+     var rec = findMessage(btn.dataset.id); if (!rec) return;
+     ui.editingMsgId = rec.scheduled_dispatch_id;
++    if(!messageProjection(rec).can_edit)return;
+     ui.msgDraft = loadMessageForEdit(rec);
+-    reRender(ctx);
++    ctx.openDialog({type:'sched-message'});
+   };
+   ACT['sched-cancel-edit-message'] = function (ctx) {
+     ui.editingMsgId = null; ui.msgDraft = defaultMsgDraft(ctx);
+     reRender(ctx);
+   };
++  ACT['sched-edit-build']=function(ctx,btn){
++    var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
++    ui.editingBuildId=b.schedule_id;
++    var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
++    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
++    ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
++  };
+   ACT['sched-create-build'] = function (ctx, btn) {
+     if (!ui.buildDraft) ui.buildDraft = defaultBuildDraft(btn.dataset.planId, Number(btn.dataset.planVersion));
+-    var rec = commitBuild(ctx);
+-    if (!rec) return;
+-    reRender(ctx);
+-    ctx.toast('Build schedule created', rec.schedule_kind === 'one_time'
++    var d=ui.buildDraft,err=d.kind==='one_time'?validateWall(d.date,d.time,d.timezone):(!d.days.length?'Select at least one day.':d.startTime===d.pauseTime?'Start and pause must be different.':'');
++    if(err){d.error=err;ctx.renderOverlays();return;}
++    var old=ui.editingBuildId?findBuild(ui.editingBuildId):null;
++    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
++    var rec=commitBuild(ctx);if(!rec)return;
++    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});
++    reRender(ctx);
++    ctx.toast(old?'Build window updated':'Build window scheduled', rec.schedule_kind === 'one_time'
+       ? ('One-time at ' + to12h(rec.local_start) + ' ' + tzLabel(rec.timezone) + '.')
+       : ('Recurring ' + to12h(rec.local_start) + '–' + to12h(rec.local_pause) + ' ' + tzLabel(rec.timezone) + ', ' + daysSummary(rec.days_of_week) + '.'));
+   };
+@@ -1692,6 +1640,11 @@
+   };
+   Object.keys(ACT).forEach(function (name) { EXT.action(name, function (ctx, btn, ev) { ACT[name](ctx, btn, ev); return true; }); });
+
++  document.addEventListener('input',function(e){
++    if(e.target.dataset.schedInput!=='msg-text'||!ui.msgDraft)return;
++    ui.msgDraft.text=e.target.value;ui.msgDraft.error='';
++    var save=document.querySelector('[data-action="sched-create-message"]');if(save)save.disabled=!e.target.value.trim()||e.target.value.length>8000;
++  });
+   document.addEventListener('change', function (e) {
+     var t = e.target; if (!t || !t.getAttribute) return;
+     var k = t.getAttribute('data-sched-input'); if (!k) return;
+@@ -1721,7 +1674,7 @@
+   var prevReset = EXT._actions && EXT._actions['reset-all'];
+   EXT.chainAction('reset-all', function (ctx, btn, ev) {
+     restoreFixture();
+-    return prevReset ? prevReset(ctx, btn, ev) : false;
++    return false;
+   });
+
+   window.PM56_SCHED = {
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/todos.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/todos.js
+@@ -825,7 +825,7 @@
+       var id=btn.dataset.id,list=itemsOf(currentThreadId(ctx)),it=list&&findItem(list,id); if(!it)return;
+       ui.detailOpen=ui.detailOpen||{}; ui.detailOpen[id]=true;
+       var parent=it.parent_todo_id; while(parent){delete ui.collapsed[parent];var p=findItem(list,parent);parent=p&&p.parent_todo_id;}
+-      Object.assign(ctx.state.activity,{open:true,domain:'todo',scope:'focus'});ctx.state.hover=null;ctx.renderApp();
++      Object.assign(ctx.state.activity,{open:true,pinned:true,domain:'todo',scope:'focus'});ctx.state.hover=null;ctx.renderApp();
+       requestAnimationFrame(function(){var el=document.querySelector('[data-todo-id="'+CSS.escape(id)+'"]');if(el)el.scrollIntoView({block:'nearest'});});
+     },
+     'todo-toggle-parent': function(ctx,btn){
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.css
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.css
+@@ -0,0 +1,70 @@
++
++/* Record grammar is limited to non-working content. */
++.work-output{display:block;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);min-width:0;overflow:hidden;}
++.work-output-open{display:flex;align-items:center;gap:11px;width:100%;padding:13px 15px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer;}
++.work-output-open:hover{background:var(--surface-3);}
++.work-output-icon{width:29px;height:29px;display:grid;place-items:center;flex:none;color:var(--muted);border-radius:7px;background:var(--surface-3);}
++.work-output-copy{display:grid;gap:5px;flex:1;min-width:0;}
++.work-output-kind{font-size:9px;color:var(--muted);}
++.work-output-copy strong{font-size:12px;font-weight:550;line-height:1.4;overflow-wrap:anywhere;}
++.work-output-path{font-family:var(--font-mono);font-size:10px;color:var(--muted);overflow-wrap:anywhere;}
++.work-output-target{display:flex;align-items:center;gap:9px;flex:none;color:var(--muted);}
++.work-output-diff{font-family:var(--font-mono);font-size:10px;color:var(--muted);}
++.work-output-summary{padding:0 15px 13px 55px;font-size:11px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere;}
++.work-output-summary p{margin:0;}
++.work-output-summary code{font-size:10px;white-space:normal;}
++.work-record-body{font-size:13px;line-height:1.75;overflow-wrap:anywhere;}
++.work-record-source{display:grid;gap:8px;margin-top:30px;padding-top:15px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);}
++.work-record-source .text-button{justify-self:start;}
++.event-kind{display:block;font-size:9px;font-weight:400;color:var(--muted);margin-bottom:5px;}
++.plan-preview{padding:15px 17px;}
++.plan-preview-kicker{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted);}
++.plan-preview-kicker svg{width:14px;height:14px;}
++.plan-preview-kicker>span:last-child{margin-left:auto;font-size:9px;}
++.plan-preview-open{display:grid;gap:9px;width:100%;border:0;color:var(--text);padding:13px 0 9px;background:transparent;cursor:pointer;text-align:left;}
++.plan-preview-open strong{font-size:14px;font-weight:600;line-height:1.45;}
++.plan-preview-open:hover strong{text-decoration:underline;text-underline-offset:3px;}
++.plan-preview-open>span{font-size:11px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
++.plan-preview-meta{display:flex;gap:12px;font-size:10px;color:var(--muted);text-transform:capitalize;margin:4px 0 9px;}
++.plan-preview .pd-foot{padding:11px 0 0;margin:0;}
++.plan-doc-editor{max-width:960px;margin:0 auto;padding:25px 30px;min-width:0;}
++.plan-doc-editor .pd-head-main{min-width:0;}
++.pd-title>button{border:0;padding:0;font:inherit;color:inherit;background:transparent;text-align:left;cursor:pointer;}
++.plan-doc-editor .pd-title{font-size:23px;line-height:1.3;}
++.plan-doc-editor .pd-body{margin:22px 0;}
++.plan-doc-editor .pd-views{margin-top:17px;}
++.plan-doc-editor .pd-foot{position:sticky;bottom:0;padding:12px 0;background:var(--surface);border-top:1px solid var(--border);}
++.plan-doc-editor .polish-plan-more{padding:8px 0;border:0;background:transparent;}
++.editor-return{display:none;flex:none;}
++.workspace.editor-revealed .editor-pane{min-width:0;}
++@media(max-width:900px){
++  .workspace.editor-revealed>.editor-pane{position:absolute;inset:0;display:grid!important;grid-template-rows:auto minmax(0,1fr);z-index:40;background:var(--surface);}
++  .workspace.editor-revealed .editor-return{display:inline-flex;}
++  .workspace.editor-revealed>.main-resizer{display:none;}
++  .plan-doc-editor{padding:20px;}
++}
++@media(max-width:480px){.work-output-diff{display:none;}.work-output-summary{padding-left:15px;}}
++
++/* A uniform perimeter is not an accent stripe. No side-only highlight is
++   used on non-working transcript cards, details, or warning projections. */
++.pd-callout { border:1px solid var(--border); }
++.context-section.bsd-section,.ctx-section.bsd-section,.bsd-section {border-left:0!important;box-shadow:none!important;}
++.bsd-section::before,.bsd-section::after{border:0!important;background:none!important;box-shadow:none!important;}
++.schedule-item-copy>strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
++.schedule-attention{border:0;background:transparent;padding:4px 0;}
++
++/* When pinning tools leaves too little width, an explicit Open action still
++   reveals the editor. The previous hide rule made plan tabs unreachable. */
++@media(min-width:901px) and (max-width:1100px){
++ .workspace.editor-revealed>.editor-pane{display:grid!important;grid-template-rows:auto minmax(0,1fr);position:absolute;inset:0 auto 0 0;width:calc(100% - 320px);z-index:40;background:var(--surface);box-shadow:var(--shadow-float);}
++ .workspace.editor-revealed .editor-return{display:inline-flex;}
++}
++
++@media(max-width:1100px){
++ .workspace.editor-revealed{position:relative;}
++ body:has(.workspace.editor-revealed) .history-flyout{visibility:hidden;pointer-events:none;}
++ .workspace.editor-revealed .editor-tabs{min-width:0;flex-wrap:nowrap;overflow-x:auto;}
++ .workspace.editor-revealed .editor-content{min-width:0;}
++}
++/* Provider selection uses the existing whole-button treatment, not a stripe. */
++.provider-button.active::before{content:none;}
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js
+@@ -0,0 +1,54 @@
++/* Transcript records: presentation and exact navigation only.
++ * A work notice is NOT automatically an artifact. Fixture references are
++ * explicit and resolve to existing recorded files, plans, or activity owners.
++ * No diff or source content is fabricated by this module.
++ */
++(function(){
++  'use strict';
++  const E=window.PM56_EXT,D=window.PM56_DATA;
++  const REFERENCES={
++    'route-04':{kind:'change',path:'threads/provider-selector.js',line:65},
++    'route-12':{kind:'change',path:'threads/provider-selector.js',line:227},
++    'bsd-09':{kind:'change',path:'migrations/0043_tenant_created_index.sql',line:1},
++    'attachments-10':{kind:'inspection',path:'src/analytics/schema.rs',line:1},
++    'query-13':{kind:'activity',domain:'subagents',label:'Agent delegation'},
++    'crew-06':{kind:'activity',domain:'crew',label:'Crew update'}
++  };
++  function formatRecord(ctx,text){
++    // This is a small inline-text projection, not arbitrary HTML execution.
++    return String(text||'').split(/\n{2,}/).map(p=>'<p>'+p.split(/(`[^`\n]+`|\*\*[^*\n]+\*\*)/g).map(t=>t.startsWith('`')&&t.endsWith('`')?'<code>'+ctx.esc(t.slice(1,-1))+'</code>':t.startsWith('**')&&t.endsWith('**')?'<strong>'+ctx.esc(t.slice(2,-2))+'</strong>':ctx.esc(t).replace(/\n/g,'<br>')).join('')+'</p>').join('');
++  }
++  function lookup(ctx,id){for(const t of ctx.state.threads){const m=t.messages.find(m=>m.id===id);if(m)return {m,t};}return null;}
++  function reference(m){return m.outputRef||REFERENCES[m.id]||{kind:'note'};}
++  function kindLabel(ref){return ({change:'File change',inspection:'File inspection',activity:ref.label||'Activity',artifact:'Artifact',plan:'Plan'})[ref.kind]||'Work note';}
++  E.slot('workRecord',ctx=>{
++    const m=ctx.m;if(m?.type!=='agent-work')return '';
++    const ref=reference(m),c=ref.path&&D.changes.find(c=>c.path===ref.path);
++    const label=kindLabel(ref),icon=ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?'users':'document';
++    return '<article class="work-output" data-output-kind="'+ctx.esc(ref.kind)+'" data-message-id="'+ctx.esc(m.id)+'"><button class="work-output-open" type="button" data-action="open-work-record" data-id="'+ctx.esc(m.id)+'"><span class="work-output-icon">'+ctx.icon(icon,16)+'</span><span class="work-output-copy"><span class="work-output-kind">'+ctx.esc(label)+'</span><strong>'+ctx.esc(m.title||label)+'</strong>'+ (ref.path?'<span class="work-output-path">'+ctx.esc(ref.path)+'</span>':'')+'</span><span class="work-output-target">'+(c&&ref.kind==='change'?'<span class="work-output-diff">+'+c.add+' −'+c.del+'</span>':'')+ctx.icon('chevron',13)+'</span></button><div class="work-output-summary">'+formatRecord(ctx,m.detail)+'</div></article>';
++  });
++  E.action('open-work-record',(ctx,btn)=>{
++    const hit=lookup(ctx,btn.dataset.id);if(!hit)return true;
++    const ref=reference(hit.m);ctx.closeMenu();ctx.closeDialog();
++    if(ref.path&&D.changes.some(c=>c.path===ref.path)){
++      ctx.state.fileFocus=ctx.state.fileFocus||{};ctx.state.fileFocus[ref.path]=ref.line;ctx.openEditor('file:'+ref.path);requestAnimationFrame(()=>document.querySelector('.editor-pane .diff-line.focus')?.scrollIntoView({block:'center'}));
++    }else if(ref.kind==='activity'){
++      Object.assign(ctx.state.activity,{open:true,pinned:true,domain:ref.domain,scope:'focus'});ctx.renderApp();
++    }else if(ref.kind==='plan'&&window.PM56_PLANS?.get(ref.id))window.PM56_PLANS.openDetails(ctx,ref.id);
++    else if(ref.kind==='artifact'&&D.artifacts.some(a=>a.id===ref.id))ctx.openEditor(ref.id);
++    else ctx.openEditor('work-record:'+hit.m.id);
++    return true;
++  });
++  E.slot('editorTabLabel',ctx=>{
++    if(!ctx.editorId?.startsWith('work-record:'))return '';
++    return lookup(ctx,ctx.editorId.slice(12))?.m.title||'Work note';
++  });
++  E.slot('editorDocument',ctx=>{
++    if(!ctx.editorId?.startsWith('work-record:'))return '';
++    const hit=lookup(ctx,ctx.editorId.slice(12));if(!hit)return '<div class="editor-empty">Work note unavailable</div>';
++    const m=hit.m;
++    return '<article class="editor-doc work-record-document"><div class="editor-meta"><span class="meta-pill">Work note</span><span class="meta-pill">No linked file or artifact</span></div><h1>'+ctx.esc(m.title||'Work note')+'</h1><div class="work-record-body">'+formatRecord(ctx,m.detail)+'</div><div class="work-record-source"><span>Source thread</span><button class="text-button" data-action="work-record-source" data-thread="'+ctx.esc(hit.t.id)+'" data-id="'+ctx.esc(m.id)+'">'+ctx.esc(hit.t.title)+'</button></div></article>';
++  });
++  E.action('work-record-source',(ctx,btn)=>{ctx.state.editorRevealed=false;ctx.switchThread(btn.dataset.thread);requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(btn.dataset.id)+'"]')?.scrollIntoView({block:'center',behavior:'smooth'}));return true;});
++  window.PM56_RECORDS={reference,kindLabel,formatRecord};
++})();
+
+--- a/Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js
++++ b/Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js
+@@ -71,7 +71,7 @@
+   /* This file loads BEFORE the EXT shim (see build.py), so the actions are
+      wired on the first take-8 render instead of at module scope. The
+      lifecycle hooks CHAIN the previously-registered handler — orbit.js owns
+-     one too, and the registry is last-wins, so replacing it would strand
++     one too, and the registry chains declared owners, so replacing it would strand
+      orbit's per-card UI. */
+   let rail8Wired = false;
+   const rail8Wire = () => {
+@@ -101,11 +101,10 @@
+       return true;
+     });
+     /* Only RESET clears the view state — play/complete respect the pin and
+-       the collapse. Chains orbit.js's reset hook (last-wins registry). */
++       the collapse. Chains orbit.js's reset hook exactly once. */
+     {
+-      const prev = EXT._actions && EXT._actions['reset-working'];
+-      EXT.action('reset-working', (ctx, btn) => {
+-        if (prev) { try { prev(ctx, btn); } catch (e) { /* keep the chain alive */ } }
++      // The registry invokes the previous owner once when this hook declines.
++      EXT.chainAction('reset-working', (ctx, btn) => {
+         const card = btn && btn.closest ? btn.closest('.working-card') : null;
+         if (card) { const ui = RAIL8_UI[card.dataset.cardUi]; if (ui) { ui.pin = null; ui.expanded = null; } }
+         return false;

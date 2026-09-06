@@ -189,12 +189,12 @@
 }
 .collab-recent strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
 .collab-msg {
-  border-left: 2px solid var(--border);
+  
   padding: 4px 0 4px 9px;
 }
-.collab-msg-user { border-left-color: var(--accent); }
-.collab-msg-coordinator { border-left-color: var(--accent-2); }
-.collab-msg-system { border-left-color: var(--muted); }
+.collab-msg-user {  }
+.collab-msg-coordinator {  }
+.collab-msg-system {  }
 .collab-msg-head {
   display: flex;
   align-items: baseline;
@@ -627,3 +627,17 @@
 .collab-start-failure strong{ display:block; font-size:12px; margin-bottom:4px; color:var(--text); }
 .collab-start-failure p{ margin:0; font-size:11.5px; color:var(--muted); }
 .collab-start-failure p + p{ margin-top:5px; }
+
+/* Shared selector rows: identity and role, not a table of native selects. */
+.collab-participant-editor { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.collab-participant-editor-row { display:flex; flex-direction:column; gap:8px; padding:11px; border:1px solid var(--border); border-radius:11px; background:var(--surface-2); }
+.collab-member-name { display:flex; align-items:center; gap:6px; min-width:0; }
+.collab-member-name .collab-field-role { flex:1; min-width:0; border:0; background:transparent; padding:5px 2px; font-weight:600; }
+.collab-member-number { font-size:10px; color:var(--muted); width:16px; flex:none; }
+.collab-member-pickers { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
+.collab-member-pickers label { display:grid; gap:4px; font-size:9px; color:var(--muted); }
+.collab-config-effort { color:var(--muted); font-size:10px; }
+.collab-authority { color:var(--muted); font-size:10px; }
+.collab-checkbox-row small { margin-left:7px; color:var(--muted); }
+.collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
+@media(max-width:560px){ .collab-participant-editor { grid-template-columns:1fr; } }

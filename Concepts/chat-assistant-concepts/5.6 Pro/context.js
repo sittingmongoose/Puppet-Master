@@ -839,13 +839,12 @@
     if (view === 'raw') return html + rawBody() + '</div></aside>';
 
     html += '<div class="context-hero" data-context-revision="' + (rec.compaction.revision || 0) + '"><div class="context-big"><strong>' + pct(p) + '</strong>' +
-      '<span>current window used · ' + num(w.used) + ' / ' + num(w.limit) + ' tokens · revision ' + (rec.compaction.revision || 0) + '</span></div>' +
+      '<span>current window used · ' + num(w.used) + ' / ' + num(w.limit) + ' tokens' + '</span></div>' +
       '<div class="context-bar"><i style="width:' + (p == null ? 0 : Math.max(0, Math.min(100, p))) + '%"></i></div></div>';
 
     html += '<div class="metric-grid">' + card('Tokens loaded', ktok(w.used)) +
-      card('Cache hit', noRoute ? 'not reported' : pct2(w.cacheHitPct)) + card('Cached tokens', ktok(w.cached)) +
-      card('Available', ktok(w.available != null ? w.available : (w.limit - w.used))) +
-      card('Input this turn', ktok(w.inputThisTurn)) + card('Output this turn', ktok(w.outputThisTurn)) + '</div>';
+      card('Available', ktok(w.available != null ? w.available : (w.limit - w.used))) + card('Cache hit', noRoute ? 'not reported' : pct2(w.cacheHitPct)) + '</div>';
+    html += section('Token details', '<div class="metric-grid">'+card('Cached tokens', ktok(w.cached))+card('Input this turn', ktok(w.inputThisTurn))+card('Output this turn', ktok(w.outputThisTurn))+'</div>');
 
     html += section('Source composition', segBar(esc, sources, w.used, w.limit, false, 'composition-bar') +
       compositionKey(esc, sources, w.used, w.limit) +
@@ -895,7 +894,7 @@
     /* Back Seat Driver section. bsd.js owns the content; it appends here rather
        than re-registering the contextDrawer replace slot. Curated view only -- the
        Raw view returns above and keeps its existing redaction rules. */
-    html += (ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '');
+    html += section('Back Seat Driver',ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '');
 
     return html + '</div></aside>';
 
@@ -908,7 +907,10 @@
     function card(label, value) {
       return '<div class="metric-card"' + tipAttrs(esc, 'ctx-metric-' + label, label + ' · ' + String(value).replace(/<[^>]+>/g, '')) + '><label>' + label + '</label><strong>' + value + '</strong></div>';
     }
-    function section(title, body) { return '<section class="context-section"><h3>' + title + '</h3><div class="context-section-body">' + body + '</div></section>'; }
+    function section(title, body) {
+      var open=!!(state.context.polishSections&&state.context.polishSections[title]);
+      return '<section class="context-section polish-context-section" data-k="ctx-section:'+esc(title)+'"><h3><button type="button" data-action="polish-context-toggle" data-section="'+esc(title)+'" aria-expanded="'+open+'"><span>'+title+'</span>'+icon(open?'down':'chevron',12)+'</button></h3>'+(open?'<div class="context-section-body">'+body+'</div>':'')+'</section>';
+    }
     function routeLine(label, r) {
       return '<div class="activity-line ctx-route-line"><div class="copy"><strong>' + label + ' · ' + esc(r.provider || 'not reported') + '</strong>' +
         '<span>' + esc(r.product || 'not reported') + ' · ' + esc(r.model || 'not reported') + ' · ' + esc(r.connection || 'no connection') +

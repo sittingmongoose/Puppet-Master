@@ -929,15 +929,7 @@
   /* =====================================================================
      13. SLOTS — entry points + dialog + transcript rendering
      ===================================================================== */
-  EXT.slot('wandRows', function (ctx) {
-    return '<button class="menu-item" data-action="bc-open" data-k="bc-wand-row">'
-      + '<span class="menu-icon">' + ctx.icon('globe', 13) + '</span>'
-      + '<span class="menu-copy"><strong>Browser</strong><span>Screenshots, region capture, component picking, DevTools</span></span></button>';
-  });
-
-  EXT.slot('composerTray', function (ctx) {
-    return '<button class="icon-button bc-tray-btn" data-action="bc-open"' + tip('bc-tray', 'Open the internal browser — screenshots, region capture, component picking') + '>' + ctx.icon('globe', 15) + '</button>';
-  });
+  /* Browser entry is owned outside Assistant Chat. Capture fixture is available in Demo Studio only. */
 
   EXT.slot('dialog', function (ctx) {
     var d = ctx.state.dialog;

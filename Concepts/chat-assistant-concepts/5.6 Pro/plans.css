@@ -91,14 +91,14 @@
 
 .plan-doc .pd-callout{
   display:flex; gap:9px; margin:0 0 12px; padding:9px 11px;
-  border:1px solid var(--border); border-left-width:3px; border-radius:var(--radius-sm);
+  border:1px solid var(--border); border-radius:var(--radius-sm);
   background:var(--surface-3);
 }
 .plan-doc .pd-callout p{ margin:0; font:400 12px/1.5 var(--font-ui); color:var(--text); }
 .plan-doc .pd-callout svg{ flex:0 0 auto; margin-top:1px; }
-.plan-doc .pd-callout-info{ border-left-color:var(--accent); }
+.plan-doc .pd-callout-info{ border-color:var(--border); }
 .plan-doc .pd-callout-info svg{ color:var(--accent); }
-.plan-doc .pd-callout-warning{ border-left-color:var(--warning); }
+.plan-doc .pd-callout-warning{ border-color:var(--border); }
 .plan-doc .pd-callout-warning svg{ color:var(--warning); }
 
 /* ------------------------------------------------------------- plan steps */
@@ -335,7 +335,7 @@
 .plan-doc .pd-step-skipped .pd-step-copy strong{ color:var(--muted); }
 .plan-doc .pd-step-mixed .pd-step-gutter{ border-color:var(--accent); color:var(--accent); opacity:.75; }
 .plan-doc .pd-step-none .pd-step-gutter{ border-style:dashed; color:transparent; }
-.plan-doc .pd-step-nested{ margin-left:18px; border-left:2px solid var(--border); }
+.plan-doc .pd-step-nested{ margin-left:18px; padding-left: 14px; }
 .plan-doc .pd-step-child,
 .plan-doc .pd-step-state,
 .plan-doc .pd-step-why,
