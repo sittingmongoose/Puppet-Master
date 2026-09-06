@@ -1,0 +1,70 @@
+
+/* Record grammar is limited to non-working content. */
+.work-output{display:block;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);min-width:0;overflow:hidden;}
+.work-output-open{display:flex;align-items:center;gap:11px;width:100%;padding:13px 15px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer;}
+.work-output-open:hover{background:var(--surface-3);}
+.work-output-icon{width:29px;height:29px;display:grid;place-items:center;flex:none;color:var(--muted);border-radius:7px;background:var(--surface-3);}
+.work-output-copy{display:grid;gap:5px;flex:1;min-width:0;}
+.work-output-kind{font-size:9px;color:var(--muted);}
+.work-output-copy strong{font-size:12px;font-weight:550;line-height:1.4;overflow-wrap:anywhere;}
+.work-output-path{font-family:var(--font-mono);font-size:10px;color:var(--muted);overflow-wrap:anywhere;}
+.work-output-target{display:flex;align-items:center;gap:9px;flex:none;color:var(--muted);}
+.work-output-diff{font-family:var(--font-mono);font-size:10px;color:var(--muted);}
+.work-output-summary{padding:0 15px 13px 55px;font-size:11px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere;}
+.work-output-summary p{margin:0;}
+.work-output-summary code{font-size:10px;white-space:normal;}
+.work-record-body{font-size:13px;line-height:1.75;overflow-wrap:anywhere;}
+.work-record-source{display:grid;gap:8px;margin-top:30px;padding-top:15px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);}
+.work-record-source .text-button{justify-self:start;}
+.event-kind{display:block;font-size:9px;font-weight:400;color:var(--muted);margin-bottom:5px;}
+.plan-preview{padding:15px 17px;}
+.plan-preview-kicker{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted);}
+.plan-preview-kicker svg{width:14px;height:14px;}
+.plan-preview-kicker>span:last-child{margin-left:auto;font-size:9px;}
+.plan-preview-open{display:grid;gap:9px;width:100%;border:0;color:var(--text);padding:13px 0 9px;background:transparent;cursor:pointer;text-align:left;}
+.plan-preview-open strong{font-size:14px;font-weight:600;line-height:1.45;}
+.plan-preview-open:hover strong{text-decoration:underline;text-underline-offset:3px;}
+.plan-preview-open>span{font-size:11px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.plan-preview-meta{display:flex;gap:12px;font-size:10px;color:var(--muted);text-transform:capitalize;margin:4px 0 9px;}
+.plan-preview .pd-foot{padding:11px 0 0;margin:0;}
+.plan-doc-editor{max-width:960px;margin:0 auto;padding:25px 30px;min-width:0;}
+.plan-doc-editor .pd-head-main{min-width:0;}
+.pd-title>button{border:0;padding:0;font:inherit;color:inherit;background:transparent;text-align:left;cursor:pointer;}
+.plan-doc-editor .pd-title{font-size:23px;line-height:1.3;}
+.plan-doc-editor .pd-body{margin:22px 0;}
+.plan-doc-editor .pd-views{margin-top:17px;}
+.plan-doc-editor .pd-foot{position:sticky;bottom:0;padding:12px 0;background:var(--surface);border-top:1px solid var(--border);}
+.plan-doc-editor .polish-plan-more{padding:8px 0;border:0;background:transparent;}
+.editor-return{display:none;flex:none;}
+.workspace.editor-revealed .editor-pane{min-width:0;}
+@media(max-width:900px){
+  .workspace.editor-revealed>.editor-pane{position:absolute;inset:0;display:grid!important;grid-template-rows:auto minmax(0,1fr);z-index:40;background:var(--surface);}
+  .workspace.editor-revealed .editor-return{display:inline-flex;}
+  .workspace.editor-revealed>.main-resizer{display:none;}
+  .plan-doc-editor{padding:20px;}
+}
+@media(max-width:480px){.work-output-diff{display:none;}.work-output-summary{padding-left:15px;}}
+
+/* A uniform perimeter is not an accent stripe. No side-only highlight is
+   used on non-working transcript cards, details, or warning projections. */
+.pd-callout { border:1px solid var(--border); }
+.context-section.bsd-section,.ctx-section.bsd-section,.bsd-section {border-left:0!important;box-shadow:none!important;}
+.bsd-section::before,.bsd-section::after{border:0!important;background:none!important;box-shadow:none!important;}
+.schedule-item-copy>strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
+.schedule-attention{border:0;background:transparent;padding:4px 0;}
+
+/* When pinning tools leaves too little width, an explicit Open action still
+   reveals the editor. The previous hide rule made plan tabs unreachable. */
+@media(min-width:901px) and (max-width:1100px){
+ .workspace.editor-revealed>.editor-pane{display:grid!important;grid-template-rows:auto minmax(0,1fr);position:absolute;inset:0 auto 0 0;width:calc(100% - 320px);z-index:40;background:var(--surface);box-shadow:var(--shadow-float);}
+ .workspace.editor-revealed .editor-return{display:inline-flex;}
+}
+
+@media(max-width:1100px){
+ .workspace.editor-revealed{position:relative;}
+ body:has(.workspace.editor-revealed) .history-flyout{visibility:hidden;pointer-events:none;}
+ .workspace.editor-revealed .editor-tabs{min-width:0;flex-wrap:nowrap;overflow-x:auto;}
+ .workspace.editor-revealed .editor-content{min-width:0;}
+}
+/* Provider selection uses the existing whole-button treatment, not a stripe. */
+.provider-button.active::before{content:none;}

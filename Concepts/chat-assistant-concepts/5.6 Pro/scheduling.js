@@ -305,7 +305,7 @@
   var STORE_KEY = 'pm56-scheduling.v1';
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { } },
+    set: function (k, v) { try { localStorage.setItem(k, v);return true; } catch (e) { return false; } },
     del: function (k) { try { localStorage.removeItem(k); } catch (e) { } }
   };
 
@@ -637,14 +637,14 @@
     try {
       var out = JSON.parse(JSON.stringify(P()));
       out.lastSavedAt = nowIso();
-      P().lastSavedAt = out.lastSavedAt;
-      store.set(STORE_KEY, JSON.stringify(out));
+      ui.persistenceAvailable=store.set(STORE_KEY, JSON.stringify(out));
+      if(ui.persistenceAvailable)P().lastSavedAt=out.lastSavedAt;
     } catch (err) { console.info('PM56 scheduling: not persisted this tick', err); }
   }
   function restoreFixture() {
     RT.scheduling = JSON.parse(SEED_JSON);
     store.del(STORE_KEY);
-    ui.msgDraft = null; ui.buildDraft = null; ui.editingMsgId = null; ui.manageTab = 'messages';
+    ui.msgDraft=null;ui.buildDraft=null;ui.editingMsgId=null;ui.editingBuildId=null;ui.focusSchedule=null;ui.cardOpen={};ui.manageTab='messages';
   }
 
   function findMessage(id) {
@@ -709,8 +709,8 @@
       return { ok: false, clause: 'manual_stop_latched', detail: 'Manual Stop is latched at epoch ' + S.stopEpoch + (S.stopReason ? (' — ' + S.stopReason) : '') + '.' };
     }
     if (kind === 'message') {
-      if (rec.state === 'cancelled') return { ok: false, clause: 'schedule_not_found', detail: 'This scheduled message was cancelled and is retained only for audit.' };
-      if (rec.state === 'dispatched') return { ok: false, clause: 'dispatch_already_started', detail: 'Already dispatched under idempotency key "' + rec.idempotencyKey + '"; the original result is returned rather than sending again.' };
+      if (['cancelled','canceled'].includes(rec.state)) return { ok: false, clause: 'schedule_not_found', detail: 'This scheduled message was cancelled and is retained only for audit.' };
+      if (['dispatched','sent'].includes(rec.state)) return { ok: false, clause: 'dispatch_already_started', detail: 'Already dispatched under idempotency key "' + rec.idempotencyKey + '"; the original result is returned rather than sending again.' };
       if (rec.state === 'expired') return { ok: false, clause: 'stale_schedule_revision', detail: 'This dispatch expired under its cancel-after-grace policy.' };
       var th = threadByIdRaw(rec.thread_id);
       if (!th) return { ok: false, clause: 'target_not_found', detail: 'The owning thread no longer resolves.' };
@@ -721,7 +721,7 @@
     }
     if (kind === 'build') {
       if (rec.state === 'invalidated') return { ok: false, clause: 'target_version_changed', detail: rec.invalidated_reason || 'The bound Plan version changed.' };
-      if (rec.state === 'cancelled') return { ok: false, clause: 'schedule_not_found', detail: 'This build schedule was cancelled.' };
+      if (['cancelled','canceled'].includes(rec.state)) return { ok: false, clause: 'schedule_not_found', detail: 'This build schedule was cancelled.' };
       if (rec.state === 'completed') return { ok: false, clause: 'dispatch_already_started', detail: 'This one-time schedule already completed.' };
       return { ok: true, clause: null, detail: 'Exact Plan version and hash are current; no invalidation is pending.' };
     }
@@ -749,14 +749,15 @@
       modelId: ctx.state.model,
       date: soon.getFullYear() + '-' + pad2(soon.getMonth() + 1) + '-' + pad2(soon.getDate()),
       time: pad2(soon.getHours()) + ':' + pad2(soon.getMinutes()),
-      timezone: 'America/Chicago', missed: 'hold', grace: 30
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', missed: 'hold', grace: 30
     };
   }
   function loadMessageForEdit(rec) {
+    var local=tzParts(rec.timezone||'America/New_York', Date.parse(rec.scheduled_at_utc));
     return {
-      threadId: rec.thread_id, text: rec.text, attachments: [], destination: rec.destination_ref,
+      threadId: rec.thread_id, text: rec.text, attachments: (rec.attachment_refs||[]).map(a=>({...a})), destination: rec.destination_ref,
       modelId: (rec.requested_runtime && rec.requested_runtime.modelId) || 'sonnet46',
-      date: rec.scheduled_at_utc ? rec.scheduled_at_utc.slice(0, 10) : '', time: rec.local_wall_time || '22:00',
+      date: local ? local.y+'-'+pad2(local.mo)+'-'+pad2(local.d) : '', time: rec.local_wall_time || '22:00',
       timezone: rec.timezone || 'America/Chicago', missed: rec.missed_policy || 'hold',
       grace: rec.grace_seconds ? Math.round(rec.grace_seconds / 60) : 30
     };
@@ -789,19 +790,20 @@
     return rec;
   }
   function cancelMessage(id) {
-    var rec = findMessage(id); if (!rec || rec.state === 'dispatched') return false;
-    rec.state = 'cancelled'; rec.updatedAt = nowIso();
+    var rec = findMessage(id); if (!rec || !messageProjection(rec).can_edit) return false;
+    rec.state = 'canceled'; rec.updatedAt = nowIso();
     logEvent('scheduled_dispatch.cancelled', id, null, 'Cancelled by the user. The snapshot is retained for audit and will never dispatch.');
     persistNow();
     return true;
   }
   function dispatchMessage(ctx, id) {
     var rec = findMessage(id); if (!rec) return null;
-    if (rec.state === 'dispatched') {
+    if (['dispatched','sent'].includes(rec.state)) {
       logEvent('scheduled_dispatch.dispatched', id, null, 'Duplicate fire suppressed by idempotency key "' + rec.idempotencyKey + '"; original result returned unchanged.');
       persistNow();
       return { duplicate: true, rec: rec };
     }
+    if(!['scheduled','held','failed'].includes(rec.state))return {refused:true,rec:rec,reason:'This schedule is '+(SM_STATE[rec.state]?.label||rec.state)+'.'};
     var epoch = P().stopEpoch;
     var elig = evaluateEligibility('message', rec, epoch);
     if (!elig.ok) {
@@ -813,7 +815,7 @@
     var th = threadByIdRaw(rec.thread_id) || ctx.thread;
     var msg = { id: ctx.uid('sched-sent'), role: 'user', type: 'text', body: rec.text, time: nowIso(), viaSchedule: true, scheduledDispatchId: id };
     ctx.appendMessage(msg, th);
-    rec.state = 'dispatched'; rec.dispatchedMessageId = msg.id; rec.dispatchedAt = nowIso(); rec.updatedAt = rec.dispatchedAt;
+    rec.state = 'sent'; rec.dispatchedMessageId = msg.id; rec.dispatchedAt = nowIso(); rec.updatedAt = rec.dispatchedAt;
     logEvent('scheduled_dispatch.dispatched', id, null, 'Delivered the exact frozen text, attachments and destination into ' + (th ? th.title : rec.thread_id) + '.');
     persistNow();
     return { dispatched: true, rec: rec, thread: th };
@@ -827,15 +829,16 @@
   function defaultBuildDraft(planId, version) {
     return {
       planId: planId, version: version, kind: 'recurring_window',
-      date: '', time: '22:00', startTime: '22:00', pauseTime: '02:00',
-      timezone: 'America/Chicago', days: [1, 2, 3, 4, 5],
+      date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
       windDown: 10, autoResumeNext: true, missed: 'hold'
     };
   }
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
     var hash = demoHash(d.planId + ':' + d.version);
-    var id = ctx.uid('bld');
+    var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
+    var id = existing ? existing.schedule_id : ctx.uid('bld');
     var oneTime = d.kind === 'one_time';
     var scheduledUtc = null;
     if (oneTime) {
@@ -860,21 +863,32 @@
       log: [{ at: nowIso(), text: 'Schedule created: ' + (oneTime ? ('one-time build at ' + to12h(d.time) + ' ' + tzLabel(d.timezone)) : ('recurring window ' + to12h(d.startTime) + '–' + to12h(d.pauseTime) + ' ' + tzLabel(d.timezone) + ', ' + daysSummary(d.days))) + '.' }],
       createdAt: nowIso(), updatedAt: nowIso()
     };
-    P().buildSchedules.unshift(rec);
-    logEvent('execution_window.created', id, null, 'Bound to ' + d.planId + ' V' + d.version + ' (hash ' + hash + ').');
+    if (existing) {
+      // Edit the existing owner record atomically: no temporary schedule or
+      // orphan creation event and no loss of already admitted occurrence IDs.
+      var retained={createdAt:existing.createdAt,revision:existing.revision+1,
+        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),
+        runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
+      Object.assign(existing,rec,retained);rec=existing;
+      logBuildLine(rec,'Window updated.');
+      logEvent('execution_window.updated',id,null,'Schedule updated.');
+    } else {
+      P().buildSchedules.unshift(rec);
+      logEvent('execution_window.created', id, null, 'Bound to ' + d.planId + ' V' + d.version + ' (hash ' + hash + ').');
+    }
     persistNow();
     return rec;
   }
   function cancelBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state === 'completed') return false;
-    rec.state = 'cancelled'; rec.updatedAt = nowIso();
+    rec.state = 'canceled'; rec.updatedAt = nowIso();
     logBuildLine(rec, 'Cancelled by the user. Any already-admitted work continues under its own owner — cancelling a window is not a Stop.');
     logEvent('execution_window.updated', id, null, 'Cancelled by the user.');
     persistNow();
     return true;
   }
   function simulateRevision(id) {
-    var rec = findBuild(id); if (!rec || rec.state === 'invalidated' || rec.state === 'cancelled') return null;
+    var rec = findBuild(id); if (!rec || rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state)) return null;
     var oldV = rec.exact_target_version, oldH = rec.exact_target_hash;
     var newV = oldV + 1, newH = demoHash(rec.target_id + ':' + newV);
     rec.pendingVersion = newV; rec.pendingHash = newH;
@@ -898,7 +912,7 @@
     var out = { invalidated: [], untouched: [] };
     P().buildSchedules.forEach(function (rec) {
       if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
-      if (rec.state === 'invalidated' || rec.state === 'cancelled' || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+      if (rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state) || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
       if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
       rec.pendingVersion = newVersion;
       rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
@@ -1039,110 +1053,98 @@
   /* =====================================================================
      8. RENDERERS
      ===================================================================== */
-  var MSG_STATE_LABEL = { scheduled: 'Scheduled', held: 'Held', dispatched: 'Dispatched', cancelled: 'Cancelled', failed: 'Failed', expired: 'Expired' };
-  var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', cancelled: 'idle', failed: 'blocked', expired: 'idle' };
-  var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Cancelled', completed: 'Completed', invalidated: 'Needs update' };
-  var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', completed: 'done', invalidated: 'blocked' };
+  var MSG_STATE_LABEL = { scheduled: 'Scheduled', held: 'Held', dispatched: 'Sent', sent:'Sent', cancelled: 'Canceled', canceled:'Canceled', failed: 'Failed', expired: 'Expired' };
+  var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', sent:'done', cancelled: 'idle', canceled:'idle', failed: 'blocked', expired: 'idle' };
+  var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Canceled', canceled:'Canceled', completed: 'Completed', invalidated: 'Needs update' };
+  var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', canceled:'idle', completed: 'done', invalidated: 'blocked' };
   var PHASE_LABEL = { idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
   function chip(label, tone) { return '<span class="sched-chip sched-tone-' + esc(tone) + '">' + esc(label) + '</span>'; }
 
-  function renderMessageRow(ctx, m) {
-    var label = MSG_STATE_LABEL[m.state] || m.state, tone = MSG_STATE_TONE[m.state] || 'idle';
-    var actionable = m.state === 'scheduled' || m.state === 'held';
-    var buttons = '';
-    if (actionable) {
-      buttons += '<button class="soft-button" data-action="sched-dispatch-message" data-id="' + esc(m.scheduled_dispatch_id) + '">' + ctx.icon('play', 12) + ' Dispatch now</button>';
-      buttons += '<button class="text-button" data-action="sched-edit-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Edit</button>';
-      buttons += '<button class="text-button danger" data-action="sched-cancel-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Cancel</button>';
-    } else if (m.state === 'dispatched') {
-      buttons += '<button class="text-button" data-action="sched-dispatch-message" data-id="' + esc(m.scheduled_dispatch_id) + '">Fire duplicate (idempotency test)</button>';
-    }
-    return '<div class="sched-row" data-k="sched-msg-' + esc(m.scheduled_dispatch_id) + '">' +
-      '<div class="sched-row-head">' + chip(label, tone) +
-      '<span class="sched-row-title">' + esc(to12h(m.local_wall_time)) + ' ' + esc(tzLabel(m.timezone)) + ' · ' + esc(fmtDay(m.scheduled_at_utc)) + '</span>' +
-      '<span class="spacer"></span><span class="sched-idem" title="Idempotency key">' + esc(m.idempotencyKey) + '</span>' +
-      '</div>' +
-      '<p class="sched-row-text">' + esc(m.text) + '</p>' +
-      (m.heldReason && m.state === 'held' ? '<p class="sched-reason">' + esc(m.heldReason) + '</p>' : '') +
-      (m.dispatchedMessageId ? '<p class="sched-reason positive">Delivered as message ' + esc(m.dispatchedMessageId) + ' at ' + esc(fmtClock(m.dispatchedAt)) + '.</p>' : '') +
-      (buttons ? '<div class="sched-row-actions">' + buttons + '</div>' : '') +
-      '</div>';
+  function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
+  function whenLabel(iso,zone){
+    if(!iso||!Number.isFinite(Date.parse(iso)))return 'Time not set';
+    try{return new Intl.DateTimeFormat('en-US',{timeZone:zone||'UTC',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(iso));}catch(e){return iso;}
+  }
+  function destinationLabel(m){var t=threadByIdRaw(m.thread_id);return m.destination_ref?.label||t?.title||m.thread_id||'This thread';}
+  function facts(rows){return '<dl class="sched-facts">'+rows.filter(r=>r[1]!=null&&r[1]!=='').map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>';}
+  function messageActions(ctx,m){
+    var p=messageProjection(m),id=esc(m.scheduled_dispatch_id);
+    return (p.can_edit?'<button class="soft-button" data-action="sched-edit-message" data-id="'+id+'">Edit</button>':'')+
+      (['scheduled','held','failed'].includes(m.state)?'<button class="text-button" data-action="sched-dispatch-message" data-id="'+id+'">Send now</button>':'')+
+      (p.can_cancel?'<button class="text-button danger" data-action="sched-cancel-message" data-id="'+id+'">Cancel</button>':'')+
+      (m.dispatchedMessageId?'<button class="soft-button" data-action="sched-open-sent" data-id="'+id+'">Open sent message</button>':'');
+  }
+  function attentionLabel(record){
+    var reason=record.heldReason||record.failureReason||record.expiredReason||'';
+    if(/attach|file.*missing|missing.*file/i.test(reason))return 'Attachment unavailable';
+    if(/thread|destination|project|deleted|archived/i.test(reason))return 'Destination unavailable';
+    if(/model|account|route|provider/i.test(reason))return 'Model or account unavailable';
+    if(/expired|grace|missed/i.test(reason))return 'Scheduled time passed';
+    return record.state==='failed'?'Delivery failed':record.state==='expired'?'Schedule expired':'Needs your attention';
+  }
+  function messageDetails(ctx,m){
+    var attachments=attachmentSnapshots(m);
+    return '<div class="sched-details-body"><div class="sched-full-message">'+esc(m.text)+'</div>'+facts([
+      ['Issue',m.heldReason||m.failureReason||m.expiredReason],['Destination',destinationLabel(m)],['Model',m.requested_runtime?.modelName||'Default'],['Account',m.requested_runtime?.account],
+      ['Timezone',m.timezone],['If missed',({hold:'Hold for you',next_available:'Send when available',cancel_after_grace:'Cancel after grace'})[m.missed_policy]],
+      ['Grace',m.missed_policy==='cancel_after_grace'?Math.round(m.grace_seconds/60)+' min':null],['Revision',m.revision]
+    ])+(attachments.length?'<div class="sched-attached">'+attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(a.filename||a.attachment_id)+' · '+esc(a.availability)+'</span>').join(''):'')+
+      '<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',m.scheduled_dispatch_id],['UTC time',m.scheduled_at_utc],['Idempotency key',m.idempotencyKey],['Created',m.createdAt],['Updated',m.updatedAt]])+
+      (attachments.length?'<pre>'+esc(JSON.stringify(attachments,null,2))+'</pre>':'')+'</details></div>';
+  }
+  function validateWall(date,time,zone){
+    var match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date||'');
+    if(!match||!/^([01]\d|2[0-3]):[0-5]\d$/.test(time||''))return 'Choose a valid date and time.';
+    var h=parseHHMM(time),ms=tzToUTC(zone,+match[1],+match[2],+match[3],h.h,h.m),t=tzParts(zone,ms);
+    if(!t||t.y!==+match[1]||t.mo!==+match[2]||t.d!==+match[3]||t.h!==h.h||t.mi!==h.m)return 'This local time does not exist in the selected timezone.';
+    if(ms<=Date.now())return 'Choose a time in the future.';
+    return '';
   }
 
-  function renderBuildRow(ctx, b) {
-    var label = BLD_STATE_LABEL[b.state] || b.state, tone = BLD_STATE_TONE[b.state] || 'idle';
-    var when = b.schedule_kind === 'one_time' ? ('One-time · ' + to12h(b.local_start) + ' ' + tzLabel(b.timezone))
-      : (to12h(b.local_start) + '–' + to12h(b.local_pause) + ' ' + tzLabel(b.timezone) + ' · ' + daysSummary(b.days_of_week));
-    var buttons = '';
-    if (b.state === 'invalidated') {
-      buttons += '<button class="primary-button" data-action="sched-rebind-build" data-id="' + esc(b.schedule_id) + '">Rebind to V' + esc(b.pendingVersion) + '</button>';
-      buttons += '<button class="text-button danger" data-action="sched-cancel-build" data-id="' + esc(b.schedule_id) + '">Cancel</button>';
-    } else if (b.state === 'active') {
-      buttons += '<button class="soft-button" data-action="sched-advance-window" data-id="' + esc(b.schedule_id) + '">' + ctx.icon('step', 12) + ' Advance window</button>';
-      if (b.lastOccurrenceStart) buttons += '<button class="text-button" data-action="sched-fire-duplicate" data-id="' + esc(b.schedule_id) + '">Fire duplicate</button>';
-      buttons += '<button class="text-button" data-action="sched-simulate-revision" data-id="' + esc(b.schedule_id) + '">Simulate Plan revision</button>';
-      if (b.schedule_kind === 'recurring_window') {
-        buttons += '<button class="text-button" data-action="sched-jump-transition" data-id="' + esc(b.schedule_id) + '" data-which="spring_forward">Jump to spring-forward</button>';
-        buttons += '<button class="text-button" data-action="sched-jump-transition" data-id="' + esc(b.schedule_id) + '" data-which="fall_back">Jump to fall-back</button>';
-      }
-      buttons += '<button class="text-button danger" data-action="sched-cancel-build" data-id="' + esc(b.schedule_id) + '">Cancel</button>';
-    }
-    var logLines = (b.log || []).slice(0, 4).map(function (l) {
-      return '<div class="sched-log-row"><span class="sched-log-when">' + esc(fmtClock(l.at)) + '</span><span>' + esc(l.text) + '</span></div>';
-    }).join('');
-    return '<div class="sched-row" data-k="sched-bld-' + esc(b.schedule_id) + '">' +
-      '<div class="sched-row-head">' + chip(label, tone) +
-      '<span class="sched-row-title">' + esc(b.target_id) + ' · V' + esc(b.exact_target_version) + ' · ' + esc(when) + '</span>' +
-      '<span class="spacer"></span><span class="sched-idem" title="Idempotency key">' + esc(idempotencyKey(b)) + '</span>' +
-      '</div>' +
-      (b.state === 'active' ? '<p class="sched-phase">Phase: ' + esc(PHASE_LABEL[b.runPhase] || b.runPhase) + (b.lastOccurrenceStart ? (' · last occurrence ' + esc(fmtClock(b.lastOccurrenceStart)) + ' ' + esc(fmtDay(b.lastOccurrenceStart))) : '') + '</p>' : '') +
-      (b.invalidated_reason ? '<p class="sched-reason">' + esc(b.invalidated_reason) + '</p>' : '') +
-      (buttons ? '<div class="sched-row-actions">' + buttons + '</div>' : '') +
-      (logLines ? '<div class="sched-log">' + logLines + '</div>' : '') +
-      '</div>';
+
+  function renderMessageRow(ctx,m){
+    var label=SM_STATE[m.state]?.label||MSG_STATE_LABEL[m.state]||m.state,tone=MSG_STATE_TONE[m.state]||'idle';
+    var why=m.heldReason||m.failureReason||m.expiredReason;
+    return '<article class="schedule-item" data-k="schedule-'+esc(m.scheduled_dispatch_id)+'" data-schedule-id="'+esc(m.scheduled_dispatch_id)+'">'+
+      '<div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('history',17)+'</span><div class="schedule-item-copy"><strong>'+esc(String(m.text||'Untitled message'))+'</strong><span>'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+'</span></div>'+chip(label,tone)+'</div>'+
+      '<div class="schedule-item-destination">'+ctx.icon('chat',12)+esc(destinationLabel(m))+'</div>'+
+      (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
+      '<div class="schedule-item-controls">'+messageActions(ctx,m)+'</div>'+
+      '<details class="schedule-details" '+(ui.focusSchedule===m.scheduled_dispatch_id?'open':'')+'><summary>Details '+ctx.icon('down',11)+'</summary>'+messageDetails(ctx,m)+'</details></article>';
   }
 
-  function renderMessageDialog(ctx) {
-    var d = ui.msgDraft || (ui.msgDraft = defaultMsgDraft(ctx));
-    var th = threadByIdRaw(d.threadId);
-    var destLabel = d.destination ? (d.destination.label + (d.destination.detail ? (' · ' + d.destination.detail) : '')) : ('Assistant · ' + (th ? th.title : d.threadId));
-    var attachRows = (d.attachments || []).length ? d.attachments.map(function (a) { return '<li>' + esc(attachmentLabel(a)) + '</li>'; }).join('') : '<li class="sched-empty">No attachments in the composer right now.</li>';
-    var modelOpts = (D.models || []).map(function (m) { return '<option value="' + esc(m.id) + '"' + (m.id === d.modelId ? ' selected' : '') + '>' + esc(m.name) + ' · ' + esc(m.account) + '</option>'; }).join('');
-    var tzOpts = TZ_OPTIONS.map(function (t) { return '<option value="' + esc(t.id) + '"' + (t.id === d.timezone ? ' selected' : '') + '>' + esc(t.label) + '</option>'; }).join('');
-    var text = String(d.text || '');
-    var over = text.length > 8000;
-    var editing = ui.editingMsgId ? findMessage(ui.editingMsgId) : null;
-    var mine = P().scheduledMessages.filter(function (m) { return m.thread_id === d.threadId; });
-    var list = mine.length ? mine.map(function (m) { return renderMessageRow(ctx, m); }).join('') : '<p class="sched-empty">No scheduled messages for this thread yet.</p>';
 
-    return '<section class="dialog sched-dialog sched-dialog--message" style="width:min(640px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Schedule Message">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('history', 13) + '</span>' +
-      '<strong>' + (editing ? 'Update scheduled message' : 'Schedule Message') + '</strong><span class="spacer"></span>' +
-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="dialog-body">' +
-      '<p class="sched-honesty">Freezes the exact destination, text, attachments, model/account and time. Revalidated right before dispatch — never silently sent to a different destination, model or account.</p>' +
-      '<div class="sched-field"><label>Destination</label><div class="sched-static">' + esc(destLabel) + '</div></div>' +
-      '<div class="sched-field"><label>Message text (frozen at Schedule)</label>' +
-      '<textarea class="sched-text" data-sched-input="msg-text" rows="4" placeholder="What should be sent">' + esc(text) + '</textarea>' +
-      '<span class="sched-count' + (over ? ' over' : '') + '">' + text.length + ' / 8000</span></div>' +
-      '<div class="sched-field"><label>Attachments (frozen at Schedule)</label><ul class="sched-attach-list">' + attachRows + '</ul></div>' +
-      '<div class="sched-field-grid">' +
-      '<div class="sched-field"><label>Date</label><input type="date" data-sched-input="msg-date" value="' + esc(d.date) + '"></div>' +
-      '<div class="sched-field"><label>Time</label><input type="time" data-sched-input="msg-time" value="' + esc(d.time) + '"></div>' +
-      '<div class="sched-field"><label>Timezone</label><select data-sched-input="msg-tz">' + tzOpts + '</select></div>' +
-      '<div class="sched-field"><label>Model / account</label><select data-sched-input="msg-model">' + modelOpts + '</select></div>' +
-      '<div class="sched-field"><label>If missed</label><select data-sched-input="msg-missed">' +
-      '<option value="hold"' + (d.missed === 'hold' ? ' selected' : '') + '>Hold until I act</option>' +
-      '<option value="next_available"' + (d.missed === 'next_available' ? ' selected' : '') + '>Send at next opportunity</option>' +
-      '<option value="cancel_after_grace"' + (d.missed === 'cancel_after_grace' ? ' selected' : '') + '>Cancel after grace</option></select></div>' +
-      '<div class="sched-field"><label>Grace (minutes)</label><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="' + esc(d.grace) + '"' + (d.missed === 'cancel_after_grace' ? '' : ' disabled') + '></div>' +
-      '</div>' +
-      '<div class="plan-actions">' +
-      (editing ? '<button class="text-button" data-action="sched-cancel-edit-message">Cancel edit</button>' : '') +
-      '<button class="primary-button" data-action="sched-create-message"' + (!text.trim() || over ? ' disabled' : '') + '>' + (editing ? 'Save schedule' : 'Schedule') + '</button>' +
-      '</div>' +
-      '<h3 class="sched-subhead">Scheduled for this thread</h3><div class="sched-list">' + list + '</div>' +
-      '</div></section>';
+  function renderBuildRow(ctx,b){
+    var plan=window.PM56_PLANS?.get(b.target_id),id=esc(b.schedule_id),label=BLD_STATE_LABEL[b.state]||b.state;
+    var one=b.schedule_kind==='one_time';
+    var when=one?whenLabel(b.scheduled_at_utc,b.timezone):daysSummary(b.days_of_week)+' · '+to12h(b.local_start)+'–'+to12h(b.local_pause)+' · '+zoneName(b.timezone);
+    var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,Date.now())):null;
+    var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
+    return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
+      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting')+(nextIso?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
+      '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
+      (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
+      (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
+      (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
+      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+facts([
+        ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
+      ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
+      (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
+  }
+
+
+  function renderMessageDialog(ctx){
+    var d=ui.msgDraft||(ui.msgDraft=defaultMsgDraft(ctx)),editing=ui.editingMsgId,th=threadByIdRaw(d.threadId),text=String(d.text||'');
+    var tzOpts=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(t.id===d.timezone?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
+    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))tzOpts='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+tzOpts;
+    return '<section class="dialog sched-dialog sched-dialog--message" role="dialog" aria-modal="true" aria-label="Schedule Message"><div class="drawer-head">'+ctx.icon('history',16)+'<strong>'+(editing?'Edit scheduled message':'Schedule a message')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
+      '<div class="dialog-body"><div class="sched-destination-tag">'+ctx.icon('chat',14)+esc(d.destination?.label||th?.title||'This thread')+'</div>'+
+      '<label class="sched-field"><span>Message</span><textarea class="sched-text" data-sched-input="msg-text" rows="4" maxlength="8000" placeholder="What should be sent?">'+esc(text)+'</textarea></label>'+
+      (d.attachments?.length?'<div class="sched-attached">'+d.attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(attachmentLabel(a))+'</span>').join('')+'</div>':'')+
+      '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
+      '<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
+      '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000?'disabled':'')+'>'+(editing?'Save changes':'Schedule message')+'</button></div></section>';
   }
 
   function renderQuotaHint() {
@@ -1151,97 +1153,36 @@
     return '<p class="sched-hint attention">Provider Usage is exhausted right now (reset ' + esc(q.resetAt || 'unknown') + ' · ' + esc(q.resetSource) + '). A window opening while usage is unavailable holds rather than dispatching.</p>';
   }
 
-  function renderBuildDialog(ctx) {
-    var d = ctx.state.dialog;
-    var planId = d.planId, version = d.version;
-    var draft = ui.buildDraft;
-    if (!draft || draft.planId !== planId || draft.version !== version) draft = ui.buildDraft = defaultBuildDraft(planId, version);
-    var hash = demoHash(planId + ':' + version);
-    var oneTime = draft.kind === 'one_time';
-    var tzOpts = TZ_OPTIONS.map(function (t) { return '<option value="' + esc(t.id) + '"' + (t.id === draft.timezone ? ' selected' : '') + '>' + esc(t.label) + '</option>'; }).join('');
-    var dayChips = DAY_LABELS.map(function (lbl, i) {
-      var on = draft.days.indexOf(i) >= 0;
-      return '<label class="sched-day-chip' + (on ? ' on' : '') + '"><input type="checkbox" data-action="sched-toggle-day" data-day="' + i + '"' + (on ? ' checked' : '') + '><span>' + lbl + '</span></label>';
-    }).join('');
-    var dstCheckpoints = [];
-    if (draft.startTime) { var sh = parseHHMM(draft.startTime); dstCheckpoints.push({ label: 'start', hh: sh.h, mi: sh.m }); }
-    if (draft.pauseTime) { var ph = parseHHMM(draft.pauseTime); dstCheckpoints.push({ label: 'pause', hh: ph.h, mi: ph.m }); }
-    var dstLines = describeDst(draft.timezone, dstCheckpoints, draft.days).map(function (l) { return '<p class="sched-dst-line">' + esc(l) + '</p>'; }).join('');
-    var existing = buildsForTarget(planId);
-    var existingList = existing.length ? existing.map(function (b) { return renderBuildRow(ctx, b); }).join('') : '<p class="sched-empty">No existing schedule for this Plan yet.</p>';
 
-    return '<section class="dialog sched-dialog sched-dialog--build" style="width:min(700px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Build At">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('document', 13) + '</span>' +
-      '<strong>Build At…</strong><span class="meta-pill">' + esc(planId) + ' · V' + esc(version) + ' · hash ' + esc(hash) + '</span><span class="spacer"></span>' +
-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="dialog-body">' +
-      '<p class="sched-honesty">Binds this exact version and hash, never “the current Plan”. If ' + esc(planId) + ' is revised after this, the schedule is invalidated with a reason and offers rebinding — it will not silently build the newer version.</p>' +
-      '<div class="sched-field"><label>Schedule kind</label><div class="sched-radio-row">' +
-      '<label><input type="radio" name="sched-build-kind" data-action="sched-set-build-kind" data-value="one_time"' + (oneTime ? ' checked' : '') + '> One-time start</label>' +
-      '<label><input type="radio" name="sched-build-kind" data-action="sched-set-build-kind" data-value="recurring_window"' + (!oneTime ? ' checked' : '') + '> Recurring window</label>' +
-      '</div></div>' +
-      (oneTime ?
-        '<div class="sched-field-grid">' +
-        '<div class="sched-field"><label>Date</label><input type="date" data-sched-input="build-date" value="' + esc(draft.date) + '"></div>' +
-        '<div class="sched-field"><label>Start time</label><input type="time" data-sched-input="build-time" value="' + esc(draft.time) + '"></div>' +
-        '<div class="sched-field"><label>Timezone</label><select data-sched-input="build-tz">' + tzOpts + '</select></div>' +
-        '</div>'
-        :
-        '<div class="sched-field-grid">' +
-        '<div class="sched-field"><label>Start time (local)</label><input type="time" data-sched-input="build-start" value="' + esc(draft.startTime) + '"></div>' +
-        '<div class="sched-field"><label>Pause time (local)</label><input type="time" data-sched-input="build-pause" value="' + esc(draft.pauseTime) + '"></div>' +
-        '<div class="sched-field"><label>Timezone</label><select data-sched-input="build-tz">' + tzOpts + '</select></div>' +
-        '<div class="sched-field"><label>Wind-down (minutes)</label><input type="number" min="0" max="180" data-sched-input="build-wind" value="' + esc(draft.windDown) + '"></div>' +
-        '</div>' +
-        '<div class="sched-field"><label>Days</label><div class="sched-days">' + dayChips + '</div><span class="sched-hint">' + esc(daysSummary(draft.days)) + '</span></div>' +
-        '<label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume"' + (draft.autoResumeNext ? ' checked' : '') + '> Auto-resume next window</label>' +
-        '<div class="sched-dst" data-k="sched-dst">' + dstLines + '</div>'
-      ) +
-      '<div class="sched-field"><label>If a window is missed</label><select data-sched-input="build-missed">' +
-      '<option value="hold"' + (draft.missed === 'hold' ? ' selected' : '') + '>Hold</option>' +
-      '<option value="next_available"' + (draft.missed === 'next_available' ? ' selected' : '') + '>Next available</option>' +
-      '<option value="cancel_after_grace"' + (draft.missed === 'cancel_after_grace' ? ' selected' : '') + '>Cancel after grace</option></select></div>' +
-      renderQuotaHint() +
-      '<div class="plan-actions"><button class="primary-button" data-action="sched-create-build" data-plan-id="' + esc(planId) + '" data-plan-version="' + esc(version) + '">Create schedule</button></div>' +
-      '<h3 class="sched-subhead">Existing schedules for ' + esc(planId) + '</h3><div class="sched-list">' + existingList + '</div>' +
-      '</div></section>';
+  function renderBuildDialog(ctx){
+    var x=ctx.state.dialog,d=ui.buildDraft;if(!d||d.planId!==x.planId)d=ui.buildDraft=defaultBuildDraft(x.planId,x.version);
+    var plan=window.PM56_PLANS?.get(d.planId),one=d.kind==='one_time';
+    var zones=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(d.timezone===t.id?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
+    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
+    return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
+      '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
+      '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
+      '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
+      '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
+      (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div><label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume" '+(d.autoResumeNext?'checked':'')+'>Resume next window</label>':'')+
+      '<details class="schedule-details"><summary>More options '+ctx.icon('down',11)+'</summary><div class="sched-field-grid">'+(!one?'<label class="sched-field"><span>Wind-down · minutes</span><input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'"></label>':'')+
+      '<label class="sched-field"><span>If missed</span><select data-sched-input="build-missed">'+[['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><details class="sched-audit"><summary>Timezone rules</summary>'+describeDst(d.timezone,[],d.days).map(l=>'<p>'+esc(l)+'</p>').join('')+'</details></details>'+
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div></section>';
   }
 
-  function renderPrecedenceSection() {
-    var S = P();
-    return '<p class="sched-honesty">Manual Stop, Pause or Cancel always outranks a schedule, a quota reset, or a Goal/Plan/Crew continuation. Latching increments a stop epoch; a decision computed against an older epoch is discarded rather than delivered, and nothing automatic can clear the latch.</p>' +
-      '<div class="sched-precedence" data-k="sched-precedence">' +
-      '<div class="metric-card"><label>Stop epoch</label><strong>' + S.stopEpoch + '</strong></div>' +
-      '<div class="metric-card"><label>Latched</label><strong>' + (S.stopped ? 'Yes' : 'No') + '</strong></div>' +
-      '</div>' +
-      (S.stopped ? '<p class="sched-reason">' + esc(S.stopReason || 'Manual Stop') + ' — latched at ' + esc(fmtClock(S.stopAt)) + '.</p>' : '') +
-      '<div class="plan-actions">' +
-      (S.stopped
-        ? '<button class="primary-button" data-action="sched-clear-stop">Explicit resume (clears the latch)</button>'
-        : '<button class="soft-button danger" data-action="sched-simulate-stop">Simulate manual Stop</button>') +
-      '<button class="text-button" data-action="sched-race-demo">Race demo: decide, then Stop, then try to deliver</button>' +
-      '</div>' +
-      '<p class="sched-hint">The race demo captures a decision at the current epoch, latches a stop, then attempts delivery under that older decision — proving it is discarded, not delivered.</p>';
+
+  function renderPrecedenceSection(){
+    var S=P();return '<section class="schedule-safety"><div><strong>Manual stop</strong><span>'+(S.stopped?'Automations paused':'Not active')+'</span></div>'+
+      (S.stopped?'<button class="soft-button" data-action="sched-clear-stop">Resume automations</button>':'')+'</section>'+
+      (S.stopped?'<p class="schedule-attention">'+esc(S.stopReason||'Stopped by you')+'</p>':'')+
+      '<details class="sched-audit"><summary>Stop record</summary>'+facts([['Epoch',S.stopEpoch],['Stopped',S.stopAt],['Rule','Manual stop, pause or cancel wins over automatic continuation.']])+'</details>';
   }
 
-  function renderQuotaSection() {
-    var q = RT.quota;
-    var consent = P().quotaConsents[0];
-    var mirror = q ?
-      ('<div class="sched-precedence">' +
-        '<div class="metric-card"><label>Waiting</label><strong>' + (q.waiting ? 'Yes' : 'No') + '</strong></div>' +
-        '<div class="metric-card"><label>Reset</label><strong>' + esc(q.resetAt || 'unknown') + '</strong></div>' +
-        '<div class="metric-card"><label>Truth</label><strong>' + esc(q.resetSource) + '</strong></div>' +
-        '<div class="metric-card"><label>Auto-resume checked</label><strong>' + (q.resumeAutomatically ? 'Yes' : 'No') + '</strong></div>' +
-        '</div>')
-      : '<p class="sched-empty">composer-state.js has not initialised RT.quota yet.</p>';
-    var consentBlock = consent ? '<p class="sched-hint">QuotaResumeConsent is scoped to one run, provider and account — never a global default. This run: <b>' + esc(consent.run_id) + '</b> · ' + esc(consent.provider_id) + ' · ' + esc(consent.account_id) + '.</p>' : '';
-    return '<p class="sched-honesty">This mirrors the quota wait strip owned by composer-state.js below the composer — the checkbox lives there, not here. This section revalidates the same shared eligibility predicate and attempts the resume that checkbox opts into.</p>' +
-      mirror + consentBlock +
-      '<div class="plan-actions">' +
-      '<button class="soft-button" data-action="sched-attempt-resume">Attempt auto-resume now</button>' +
-      '<button class="text-button" data-action="sched-simulate-quota-reset">Simulate: provider window reopens</button>' +
-      '</div>';
+
+  function renderQuotaSection(){
+    var q=RT.quota,c=P().quotaConsents[0];return '<section class="schedule-safety"><div><strong>Quota resume</strong><span>'+(q?.waiting?'Waiting for provider quota':'No quota wait')+'</span></div>'+chip(q?.resumeAutomatically?'Opted in':'Off','idle')+'</section>'+facts([
+      ['Expected reset',q?.resetAt||'Unknown'],['Reset source',q?.resetSource||'Unknown'],['Provider',c?.provider_id],['Account',c?.account_id]
+    ])+'<details class="sched-audit"><summary>Consent record</summary>'+facts([['Run',c?.run_id],['Scope','This run and account only'],['Control','Use the quota wait strip in chat.']])+'</details>';
   }
 
   function renderEventLog() {
@@ -1255,34 +1196,25 @@
     }).join('') + '</div>';
   }
 
-  function renderPersistenceFooter(ctx) {
-    var S = P();
-    return '<div class="sched-persist-foot">' +
-      '<p class="sched-honesty">No client-side timer is authoritative here — every occurrence above is recomputed from the stored IANA timezone and local wall time, exactly as a restart would. These records persist to this browser’s local storage only so the concept survives a reload; the product’s real timers are server-owned.</p>' +
-      '<div class="sched-persist-row"><span>' + (S.lastSavedAt ? ('Last saved locally ' + esc(fmtClock(S.lastSavedAt)) + ' ' + esc(fmtDay(S.lastSavedAt))) : 'Not yet saved') + '</span>' +
-      '<button class="soft-button" data-action="sched-reload-now">' + ctx.icon('reset', 12) + ' Reload page now</button></div></div>';
-  }
 
-  function renderManageDialog(ctx) {
-    var S = P();
-    var tab = ui.manageTab || 'messages';
-    var tabs = [['messages', 'Messages'], ['builds', 'Build windows'], ['quota', 'Quota resume'], ['precedence', 'Precedence'], ['events', 'Event log']];
-    var tabRow = tabs.map(function (t) { return '<button class="text-button sched-tab' + (tab === t[0] ? ' active' : '') + '" data-action="sched-manage-tab" data-tab="' + t[0] + '">' + t[1] + '</button>'; }).join('');
-    var body = '';
-    if (tab === 'messages') body = S.scheduledMessages.length ? S.scheduledMessages.map(function (m) { return renderMessageRow(ctx, m); }).join('') : '<p class="sched-empty">No scheduled messages.</p>';
-    else if (tab === 'builds') body = S.buildSchedules.length ? S.buildSchedules.map(function (b) { return renderBuildRow(ctx, b); }).join('') : '<p class="sched-empty">No build schedules.</p>';
-    else if (tab === 'quota') body = renderQuotaSection();
-    else if (tab === 'precedence') body = renderPrecedenceSection();
-    else if (tab === 'events') body = renderEventLog();
+  function renderPersistenceFooter(ctx){return '<div class="schedule-footer"><span title="This HTML demonstrates schedules; no background dispatch service runs here.">Concept · local records</span><span title="'+(ui.persistenceAvailable===false?'Browser storage unavailable. Changes last for this session.':'')+'">'+(ui.persistenceAvailable===false?'Session only':P().lastSavedAt?'Saved '+esc(fmtClock(P().lastSavedAt)):'')+'</span></div>';}
 
-    return '<section class="dialog sched-dialog sched-dialog--manage" style="width:min(760px,calc(100vw - 20px));height:min(640px,calc(100vh - 20px))" role="dialog" aria-modal="true" aria-label="Scheduled and Automations">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon('refresh', 13) + '</span><strong>Scheduled &amp; Automations</strong>' +
-      (S.stopped ? '<span class="meta-pill sched-pill-stop">Manual Stop latched</span>' : '') + '<span class="spacer"></span>' +
-      '<button class="icon-button" data-action="sched-close-dialog" aria-label="Close">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="sched-tabs">' + tabRow + '</div>' +
-      '<div class="dialog-body">' + body + '</div>' +
-      renderPersistenceFooter(ctx) +
-      '</section>';
+
+  function renderManageDialog(ctx){
+    var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
+    var active=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state)),attention=active.filter(m=>m.state!=='scheduled'),upcoming=active.filter(m=>m.state==='scheduled').sort((a,b)=>Date.parse(a.scheduled_at_utc)-Date.parse(b.scheduled_at_utc)),past=S.scheduledMessages.filter(m=>!active.includes(m));
+    var tabs=[['messages','Messages',active.length],['builds','Build windows',S.buildSchedules.filter(b=>['active','paused','invalidated'].includes(b.state)).length],['quota','Resume & safety',null],['events','Activity',null]];
+    function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
+    var content='';
+    if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!S.scheduledMessages.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No scheduled messages</strong><button class="soft-button" data-action="sched-open-message">Schedule a message</button></div>':'');
+    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
+    else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
+    else content=renderEventLog();
+    return '<section class="dialog sched-dialog sched-dialog--manage" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>Scheduled &amp; automations</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
+      '<div class="schedule-overview"><div><strong>'+active.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':attention.length?attention.length+' need attention':'No blockers',S.stopped||attention.length?'attention':'done')+'</div></div>'+
+      '<div class="sched-tabs">'+tabs.map(([v,l,n])=>'<button class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+(n!==null?'<span>'+n+'</span>':'')+'</button>').join('')+'</div>'+
+      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':'')+'<span class="spacer"></span><span>All threads</span></div>'+
+      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+'</section>';
   }
 
   EXT.slot('wandRows', function (ctx) {
@@ -1330,6 +1262,7 @@
   function list(v){ return Array.isArray(v) ? v : []; }
   var SM_STATE = {
     scheduled:{ label:'Scheduled', tone:'idle' },
+    dispatched:{label:'Sent',tone:'done'}, cancelled:{label:'Canceled',tone:'idle'},
     held:     { label:'Held',      tone:'warn' },
     sent:     { label:'Sent',      tone:'done' },
     canceled: { label:'Canceled',  tone:'idle' },
@@ -1393,41 +1326,16 @@
     });
   }
 
-  function renderMessageCard(ctx, rec){
-    var pr=messageProjection(rec);
-    var st=SM_STATE[rec.state] || { label:rec.state, tone:'idle' };
-    var why = pr.held_reason || pr.failure_reason || pr.cancel_reason || pr.expired_reason;
-    var snaps=attachmentSnapshots(rec);
-    return '<article class="event-card sched-card sched-card-'+esc(rec.state)+'" data-k="sched-card-'+esc(rec.scheduled_dispatch_id)+'"'+
-      ' data-schedule-id="'+esc(rec.scheduled_dispatch_id)+'" data-schedule-state="'+esc(rec.state)+'">'+
-      '<div class="sched-card-head">'+
-        '<span class="sched-kind">'+ctx.icon('clock',13)+'Scheduled message</span>'+
-        '<span class="sched-state sched-state-'+esc(st.tone)+'" data-state="'+esc(rec.state)+'">'+esc(st.label)+'</span>'+
-      '</div>'+
-      '<p class="sched-card-preview">'+esc(pr.text_preview)+(String(rec.text||'').length>120?'…':'')+'</p>'+
-      '<div class="sched-card-facts">'+
-        '<span>'+esc(rec.local_wall_time)+' '+esc(rec.timezone)+'</span>'+
-        '<span>'+esc(rec.scheduled_at_utc)+'</span>'+
-        '<span>'+esc(rec.destination_ref ? rec.destination_ref.label : 'This thread')+'</span>'+
-        '<span>'+esc((rec.requested_runtime&&rec.requested_runtime.modelName)||'Default')+'</span>'+
-        '<span>'+pr.attachment_count+' attachment'+(pr.attachment_count===1?'':'s')+'</span>'+
-      '</div>'+
-      (why ? '<p class="sched-card-why">'+esc(why)+'</p>' : '')+
-      (pr.dispatched_message_id
-        ? '<p class="sched-card-link">Sent at '+esc(pr.dispatched_at)+' — <button type="button" class="text-button" data-action="sched-open-sent" data-id="'+esc(rec.scheduled_dispatch_id)+'">open the dispatched message</button> (<code>'+esc(pr.dispatched_message_id)+'</code>)</p>'
-        : '')+
-      (snaps.length
-        ? '<ul class="sched-card-snaps">'+snaps.map(function(s){
-            return '<li data-availability="'+esc(s.availability)+'"><code>'+esc(s.attachment_id)+(s.artifact_version?'@'+esc(s.artifact_version):'')+'</code>'+
-                   '<span>'+esc(s.content_hash||'no hash')+'</span><em>'+esc(s.availability)+'</em>'+
-                   (s.unavailable_note?'<em class="sched-snap-why">'+esc(s.unavailable_note)+'</em>':'')+'</li>'; }).join('')+'</ul>'
-        : '')+
-      '<div class="sched-card-foot">'+
-        '<button type="button" class="soft-button" data-action="sched-card-details" data-id="'+esc(rec.scheduled_dispatch_id)+'">Details</button>'+
-        '<button type="button" class="soft-button" data-action="sched-card-edit" data-id="'+esc(rec.scheduled_dispatch_id)+'"'+(pr.can_edit?'':' disabled title="Only a Scheduled, Held or Failed schedule can be edited; a Sent one is immutable."')+'>Edit</button>'+
-        '<button type="button" class="soft-button danger" data-action="sched-card-cancel" data-id="'+esc(rec.scheduled_dispatch_id)+'"'+(pr.can_cancel?'':' disabled title="Nothing to cancel in this state."')+'>Cancel</button>'+
-      '</div>'+
-    '</article>';
+  function renderMessageCard(ctx,m){
+    var pr=messageProjection(m),st=SM_STATE[m.state]||{label:m.state,tone:'idle'},id=esc(m.scheduled_dispatch_id),open=!!ui.cardOpen?.[m.scheduled_dispatch_id];
+    var why=pr.held_reason||pr.failure_reason||pr.expired_reason;
+    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'"><div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
+      '<p class="sched-card-preview">'+esc(pr.text_preview)+(m.text.length>120?'…':'')+'</p>'+
+      '<div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
+      (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',12)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
+      '<div class="sched-card-foot"><button class="text-button" data-action="sched-card-details" data-id="'+id+'" aria-expanded="'+open+'">'+(open?'Less':'Details')+'</button>'+
+      (pr.can_edit?'<button class="text-button" data-action="sched-card-edit" data-id="'+id+'">Edit</button>':'')+(pr.dispatched_message_id?'<button class="text-button" data-action="sched-open-sent" data-id="'+id+'">Open message</button>':'')+'</div>'+
+      (open?messageDetails(ctx,m)+'<div class="sched-card-foot">'+(pr.can_cancel?'<button class="text-button danger" data-action="sched-card-cancel" data-id="'+id+'">Cancel schedule</button>':'')+'<button class="text-button" data-action="sched-focus-record" data-id="'+id+'">All schedules</button></div>':'')+'</article>';
   }
 
   EXT.slot('transcriptMessage', function (ctx) {
@@ -1465,12 +1373,16 @@
      put a second element carrying it in the transcript, ahead of the wand row
      in DOM order, and any harness selecting by action alone then clicked the
      card instead of the menu item. */
-  EXT.action('sched-card-details', function(ctx){ ctx.openDialog({ type:'sched-manage' }); return true; });
-  EXT.action('sched-open-sent', function(ctx,btn){
-    var rec=smById(btn.dataset.id); if(!rec) return true;
-    ctx.toast('Dispatched message', 'The schedule links to '+rec.dispatchedMessageId+', inserted at the real dispatch time '+rec.dispatchedAt+
-      '. Transcript order is never backdated to when the schedule was created, and replay returns this same message id.');
-    return true;
+  EXT.action('sched-card-details', function(ctx,btn){ ui.cardOpen=ui.cardOpen||{}; ui.cardOpen[btn.dataset.id]=!ui.cardOpen[btn.dataset.id]; ctx.renderApp(); return true; });
+  EXT.action('sched-open-sent',function(ctx,btn){
+    var m=smById(btn.dataset.id);if(!m?.dispatchedMessageId)return true;
+    ctx.closeDialog();ctx.switchThread(m.thread_id);
+    requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(m.dispatchedMessageId)+'"]')?.scrollIntoView({block:'center',behavior:'smooth'}));return true;
+  });
+  EXT.action('sched-focus-record',function(ctx,btn){ui.focusSchedule=btn.dataset.id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});return true;});
+  EXT.action('sched-pick-model',function(ctx,btn){
+    var d=ui.msgDraft;if(!d)return true;
+    window.PM56_PICKERS.openModel(btn,{model:d.modelId,effort:d.effort,fast:d.fast},v=>{if(ui.msgDraft!==d||ctx.state.dialog?.type!=='sched-message')return;d.modelId=v.model;d.effort=v.effort;d.fast=v.fast;ctx.renderOverlays();});return true;
   });
   EXT.action('sched-card-edit', function(ctx,btn){
     var rec=smById(btn.dataset.id); if(!rec) return true;
@@ -1480,7 +1392,8 @@
       return true;
     }
     ui.editingMsgId=rec.scheduled_dispatch_id;
-    ctx.openDialog({ type:'sched-manage' });
+    ui.msgDraft=loadMessageForEdit(rec);
+    ctx.openDialog({ type:'sched-message' });
     return true;
   });
   EXT.action('sched-card-cancel', function(ctx,btn){
@@ -1562,13 +1475,17 @@
     openBuildAt(ctx, btn.dataset.planId, btn.dataset.planVersion);
   };
   ACT['sched-close-dialog'] = function (ctx) {
-    ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;
+    ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;ui.editingBuildId=null;
     ctx.closeDialog();
   };
   ACT['sched-create-message'] = function (ctx) {
+    var draft=ui.msgDraft;if(!draft)return;
+    var err=validateWall(draft.date,draft.time,draft.timezone);
+    if(!String(draft.text||'').trim()||draft.text.length>8000)err='Enter a message of 1–8,000 characters.';
+    if(err){draft.error=err;ctx.renderOverlays();return;}draft.error='';
     if (ui.editingMsgId) {
       var rec = findMessage(ui.editingMsgId);
-      if (!rec || rec.state === 'dispatched') { ctx.toast('Cannot update', 'This schedule already dispatched; updates are refused once dispatch has started.'); return; }
+      if (!rec || !messageProjection(rec).can_edit) { ctx.toast('Cannot update', 'This schedule already dispatched; updates are refused once dispatch has started.'); return; }
       var d = ui.msgDraft, text = String(d.text || '').trim();
       if (!text) return;
       var dt = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d.date || ''), hhmm = parseHHMM(d.time);
@@ -1579,15 +1496,15 @@
       rec.revision += 1; rec.state = 'scheduled'; rec.heldReason = null; rec.updatedAt = nowIso();
       logEvent('scheduled_dispatch.updated', rec.scheduled_dispatch_id, null, 'Rebound under revision ' + rec.revision + '.');
       persistNow();
-      ui.editingMsgId = null;
-      reRender(ctx);
+      ui.editingMsgId = null;ui.msgDraft=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
+      ctx.openDialog({type:'sched-manage'});ctx.renderApp();
       ctx.toast('Schedule updated', 'Revision ' + rec.revision + ' recorded.');
       return;
     }
     var rec2 = commitMessage(ctx);
     if (!rec2) { ctx.toast('Nothing scheduled', 'Message text is required.'); return; }
-    ui.msgDraft = defaultMsgDraft(ctx);
-    reRender(ctx);
+    if(!ctx.state.threads.find(t=>t.id===rec2.thread_id)?.messages.some(m=>m.scheduleId===rec2.scheduled_dispatch_id)){ctx.appendMessage({id:'sched-card-'+rec2.scheduled_dispatch_id,role:'system',type:'sched-message',scheduleId:rec2.scheduled_dispatch_id,time:rec2.createdAt},threadByIdRaw(rec2.thread_id));}
+    ui.msgDraft=null;ui.focusSchedule=rec2.scheduled_dispatch_id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});ctx.renderApp();
     ctx.toast('Message scheduled', 'Frozen for ' + to12h(rec2.local_wall_time) + ' ' + tzLabel(rec2.timezone) + '. It revalidates its destination and route immediately before dispatch.');
   };
   ACT['sched-cancel-message'] = function (ctx, btn) {
@@ -1600,25 +1517,38 @@
     if (!res) return;
     reRender(ctx);
     if (res.duplicate) ctx.toast('Duplicate suppressed', 'Idempotency key already resolved; nothing sent twice.');
+    else if (res.refused) ctx.toast('Not sent',res.reason);
     else if (res.held) ctx.toast('Dispatch held', res.reason);
     else if (res.dispatched) ctx.toast('Scheduled message sent', 'Delivered the exact text frozen at schedule time into ' + (res.thread ? res.thread.title : 'the thread') + '.');
   };
   ACT['sched-edit-message'] = function (ctx, btn) {
     var rec = findMessage(btn.dataset.id); if (!rec) return;
     ui.editingMsgId = rec.scheduled_dispatch_id;
+    if(!messageProjection(rec).can_edit)return;
     ui.msgDraft = loadMessageForEdit(rec);
-    reRender(ctx);
+    ctx.openDialog({type:'sched-message'});
   };
   ACT['sched-cancel-edit-message'] = function (ctx) {
     ui.editingMsgId = null; ui.msgDraft = defaultMsgDraft(ctx);
     reRender(ctx);
   };
+  ACT['sched-edit-build']=function(ctx,btn){
+    var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
+    ui.editingBuildId=b.schedule_id;
+    var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
+    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
+  };
   ACT['sched-create-build'] = function (ctx, btn) {
     if (!ui.buildDraft) ui.buildDraft = defaultBuildDraft(btn.dataset.planId, Number(btn.dataset.planVersion));
-    var rec = commitBuild(ctx);
-    if (!rec) return;
+    var d=ui.buildDraft,err=d.kind==='one_time'?validateWall(d.date,d.time,d.timezone):(!d.days.length?'Select at least one day.':d.startTime===d.pauseTime?'Start and pause must be different.':'');
+    if(err){d.error=err;ctx.renderOverlays();return;}
+    var old=ui.editingBuildId?findBuild(ui.editingBuildId):null;
+    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
+    var rec=commitBuild(ctx);if(!rec)return;
+    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});
     reRender(ctx);
-    ctx.toast('Build schedule created', rec.schedule_kind === 'one_time'
+    ctx.toast(old?'Build window updated':'Build window scheduled', rec.schedule_kind === 'one_time'
       ? ('One-time at ' + to12h(rec.local_start) + ' ' + tzLabel(rec.timezone) + '.')
       : ('Recurring ' + to12h(rec.local_start) + '–' + to12h(rec.local_pause) + ' ' + tzLabel(rec.timezone) + ', ' + daysSummary(rec.days_of_week) + '.'));
   };
@@ -1710,6 +1640,11 @@
   };
   Object.keys(ACT).forEach(function (name) { EXT.action(name, function (ctx, btn, ev) { ACT[name](ctx, btn, ev); return true; }); });
 
+  document.addEventListener('input',function(e){
+    if(e.target.dataset.schedInput!=='msg-text'||!ui.msgDraft)return;
+    ui.msgDraft.text=e.target.value;ui.msgDraft.error='';
+    var save=document.querySelector('[data-action="sched-create-message"]');if(save)save.disabled=!e.target.value.trim()||e.target.value.length>8000;
+  });
   document.addEventListener('change', function (e) {
     var t = e.target; if (!t || !t.getAttribute) return;
     var k = t.getAttribute('data-sched-input'); if (!k) return;
@@ -1739,7 +1674,7 @@
   var prevReset = EXT._actions && EXT._actions['reset-all'];
   EXT.chainAction('reset-all', function (ctx, btn, ev) {
     restoreFixture();
-    return prevReset ? prevReset(ctx, btn, ev) : false;
+    return false;
   });
 
   window.PM56_SCHED = {

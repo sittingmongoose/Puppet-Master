@@ -1,0 +1,212 @@
+{
+  "html_sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8",
+  "checks": [
+    {
+      "check": "Persona preserves Default model binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Advisor identity change resets cursor and increments session",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Old held findings not reconfirmed by new advisor",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Old finding retains identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Second identity change gets distinct session",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD details stripe actually removed",
+      "passed": true,
+      "detail": {
+        "left": "0px",
+        "shadow": "none"
+      }
+    },
+    {
+      "check": "Step Rail reset invokes prior owner once",
+      "passed": true,
+      "detail": 1
+    },
+    {
+      "check": "No late Step Rail registration collision",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "Plan usable at 390",
+      "passed": true,
+      "detail": {
+        "editor": {
+          "x": 0,
+          "y": 40,
+          "width": 390,
+          "height": 936,
+          "top": 40,
+          "right": 390,
+          "bottom": 976,
+          "left": 0
+        },
+        "doc": {
+          "x": 24,
+          "y": 96,
+          "width": 341,
+          "height": 700.0625,
+          "top": 96,
+          "right": 365,
+          "bottom": 796.0625,
+          "left": 24
+        },
+        "tabs": {
+          "x": 0,
+          "y": 40,
+          "width": 389,
+          "height": 36,
+          "top": 40,
+          "right": 389,
+          "bottom": 76,
+          "left": 0
+        },
+        "overflow": 0
+      }
+    },
+    {
+      "check": "Plan Return to chat at 390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Return releases editor at 390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Plan usable at 768",
+      "passed": true,
+      "detail": {
+        "editor": {
+          "x": 0,
+          "y": 42,
+          "width": 768,
+          "height": 934,
+          "top": 42,
+          "right": 768,
+          "bottom": 976,
+          "left": 0
+        },
+        "doc": {
+          "x": 24,
+          "y": 98,
+          "width": 719,
+          "height": 780.28125,
+          "top": 98,
+          "right": 743,
+          "bottom": 878.28125,
+          "left": 24
+        },
+        "tabs": {
+          "x": 0,
+          "y": 42,
+          "width": 767,
+          "height": 36,
+          "top": 42,
+          "right": 767,
+          "bottom": 78,
+          "left": 0
+        },
+        "overflow": 0
+      }
+    },
+    {
+      "check": "Plan Return to chat at 768",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Return releases editor at 768",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Plan usable at 1024",
+      "passed": true,
+      "detail": {
+        "editor": {
+          "x": 0,
+          "y": 42,
+          "width": 704,
+          "height": 934,
+          "top": 42,
+          "right": 704,
+          "bottom": 976,
+          "left": 0
+        },
+        "doc": {
+          "x": 24,
+          "y": 98,
+          "width": 655,
+          "height": 790.28125,
+          "top": 98,
+          "right": 679,
+          "bottom": 888.28125,
+          "left": 24
+        },
+        "tabs": {
+          "x": 0,
+          "y": 42,
+          "width": 703,
+          "height": 36,
+          "top": 42,
+          "right": 703,
+          "bottom": 78,
+          "left": 0
+        },
+        "overflow": 0
+      }
+    },
+    {
+      "check": "Plan Return to chat at 1024",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Return releases editor at 1024",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Work record formatter escapes HTML",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Work record renders inline formatting",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "No picker left-edge marker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "No runtime errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "passed": 21,
+  "failed": 0,
+  "errors": []
+}

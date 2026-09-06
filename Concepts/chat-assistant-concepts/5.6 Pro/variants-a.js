@@ -71,7 +71,7 @@
   /* This file loads BEFORE the EXT shim (see build.py), so the actions are
      wired on the first take-8 render instead of at module scope. The
      lifecycle hooks CHAIN the previously-registered handler — orbit.js owns
-     one too, and the registry is last-wins, so replacing it would strand
+     one too, and the registry chains declared owners, so replacing it would strand
      orbit's per-card UI. */
   let rail8Wired = false;
   const rail8Wire = () => {
@@ -101,11 +101,10 @@
       return true;
     });
     /* Only RESET clears the view state — play/complete respect the pin and
-       the collapse. Chains orbit.js's reset hook (last-wins registry). */
+       the collapse. Chains orbit.js's reset hook exactly once. */
     {
-      const prev = EXT._actions && EXT._actions['reset-working'];
-      EXT.action('reset-working', (ctx, btn) => {
-        if (prev) { try { prev(ctx, btn); } catch (e) { /* keep the chain alive */ } }
+      // The registry invokes the previous owner once when this hook declines.
+      EXT.chainAction('reset-working', (ctx, btn) => {
         const card = btn && btn.closest ? btn.closest('.working-card') : null;
         if (card) { const ui = RAIL8_UI[card.dataset.cardUi]; if (ui) { ui.pin = null; ui.expanded = null; } }
         return false;

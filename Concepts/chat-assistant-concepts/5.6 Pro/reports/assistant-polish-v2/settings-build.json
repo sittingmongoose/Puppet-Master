@@ -1,0 +1,30 @@
+{
+  "build": "verified_checkpoint_plus_T49",
+  "upstream_complete_build": "blocked before T49 by pre-existing T45 tour source/guard mismatch",
+  "checkpoint": {
+    "source_commit": "4c88c0f01300cea36135b73eec96991d73969aa2",
+    "source_path": "Concepts/TestPMConcept.html",
+    "sha256": "ea9c502a1c4a456f3e092c45d3524105153f9bba52d36f26fbfad922e885a4ef",
+    "policy": "immutable published checkpoint; no silent repin"
+  },
+  "transform": {
+    "source": "assistant_settings_source.py",
+    "input_settings_count": 883,
+    "output_settings_count": 888,
+    "new_setting_ids": [
+      "branching.crew.crew-auto-roster",
+      "branching.crew.chat-room-roster",
+      "branching.crew.brainstorm-roster",
+      "planning.verification.review-roster",
+      "safety.approvals.bsd-stage-bindings"
+    ],
+    "existing_settings_engine_before_sha256": "4b61cecbb07a44c396777740df8355d1749ccb3dc6e04d2c35007c91af78c2b1",
+    "existing_settings_engine_after_sha256": "bf720fdf22c3d1146c79eb279c97faa171b61f142f21a7f847b5c8883e4e2cdc",
+    "canonical_plans_modified": false,
+    "native_runtime_certified": false,
+    "scope": "Settings engine, reference/inert inventory, scoped CSS only"
+  },
+  "script_syntax_checks": 26,
+  "output_sha256": "219c816c600cfd7653c7e773e0b8c0c55971d2adaddf4ed69d36389bb0eef852",
+  "all_non_settings_scripts_byte_identical": true
+}

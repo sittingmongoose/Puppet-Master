@@ -1,0 +1,114 @@
+{
+  "sha256": "219c816c600cfd7653c7e773e0b8c0c55971d2adaddf4ed69d36389bb0eef852",
+  "checks": [
+    {
+      "check": "Settings audit healthy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Canonical working control once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Step Rail selected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD one projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Shared Settings model/account choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD exact route committed",
+      "passed": true,
+      "detail": "claude-code::claude-opus::personal-claude"
+    },
+    {
+      "check": "Persona catalog",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Persona setting committed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Stages editor",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Stages cancel no mutation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Roster row added",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Roster uses same picker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Roster dialog remains",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Roster committed correct values",
+      "passed": true,
+      "detail": [
+        {
+          "role": "Security reviewer",
+          "model": "claude-code::claude-opus::personal-claude",
+          "persona": "Critical Advisor"
+        }
+      ]
+    },
+    {
+      "check": "No temporary row IDs persisted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "No model leak to BSD",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Malformed lineup is not silently dropped",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Unavailable Persona is not silently replaced",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "No runtime errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "passed": 19,
+  "failed": 0,
+  "errors": [],
+  "persistence_reloaded": false,
+  "limitations": [
+    "Opaque browser origin: reload persistence not tested",
+    "Full pre-T49 builder has known upstream guard failure"
+  ]
+}

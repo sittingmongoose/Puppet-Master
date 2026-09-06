@@ -1,0 +1,2394 @@
+{
+  "html_sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8",
+  "checks": [
+    {
+      "check": "startup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew0 main model renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew0 draft choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew0 main isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew1 main model renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew1 draft choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew1 main isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "chat_room0 main model renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "chat_room0 draft choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "chat_room0 main isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "brainstorm0 main model renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "brainstorm0 draft choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "brainstorm0 main isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "review0 main model renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "review0 draft choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "review0 main isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD full configuration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD cancel preserves policy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD save model and cadence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "BSD isolated from main",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Lens in flow",
+      "passed": true,
+      "detail": {
+        "t": 319.140625,
+        "l": 319.140625,
+        "h": 231.140625
+      }
+    },
+    {
+      "check": "Lens releases height",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "todo one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "todo no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "todo no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "todo opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "subagents one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "subagents no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "subagents no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "subagents opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "subagents selected record visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "changes one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "changes no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "changes no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "changes opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "changes selected record visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "artifacts one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "artifacts no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "artifacts no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "artifacts opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "artifacts selected record visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "goal one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "goal no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "goal no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "goal opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew no scroll",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew no Open Activity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crew opens pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Plan deduplicated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Plan one controls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "File destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "File real focused hunk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Record inline code",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Schedule created",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Edit actual form",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Edit identity and revision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Canceled cannot dispatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Nonexistent DST time rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Build edit no orphan",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Build edit single event",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Demo landing schedules-overview",
+      "passed": true,
+      "detail": {
+        "d": "sched-manage",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedules-windows",
+      "passed": true,
+      "detail": {
+        "d": "sched-manage",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-new",
+      "passed": true,
+      "detail": {
+        "d": "sched-message",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-edit",
+      "passed": true,
+      "detail": {
+        "d": "sched-message",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-once",
+      "passed": true,
+      "detail": {
+        "d": "sched-build-at",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-recurring",
+      "passed": true,
+      "detail": {
+        "d": "sched-build-at",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-stop",
+      "passed": true,
+      "detail": {
+        "d": "sched-manage",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-race",
+      "passed": true,
+      "detail": {
+        "d": "sched-manage",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing schedule-duplicate",
+      "passed": true,
+      "detail": {
+        "d": "sched-manage",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing bsd-config",
+      "passed": true,
+      "detail": {
+        "d": "bsd-stages",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing bsd-held",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": true,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing crew-config",
+      "passed": true,
+      "detail": {
+        "d": "collab-configure",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing crew-auto-config",
+      "passed": true,
+      "detail": {
+        "d": "collab-configure",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing chat-room-config",
+      "passed": true,
+      "detail": {
+        "d": "collab-configure",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing brainstorm-config",
+      "passed": true,
+      "detail": {
+        "d": "collab-configure",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing review-config",
+      "passed": true,
+      "detail": {
+        "d": "collab-configure",
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing lens-focus",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "plan-query",
+        "l": 356.03125,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing lens-subcompact",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "plan-query",
+        "l": 356.03125,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing plan-index",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "plan-query",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing plan-auth",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "plan:ap-auth",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing record-provider",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "file:threads/provider-selector.js",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing record-provider-second",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "file:threads/provider-selector.js",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing record-note",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "work-record:subagents-07",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing activity-todo",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "work-record:subagents-07",
+        "l": 0,
+        "h": "todo",
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing activity-changes",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "work-record:subagents-07",
+        "l": 0,
+        "h": "changes",
+        "c": false,
+        "w": false
+      }
+    },
+    {
+      "check": "Demo landing work-orbit",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "work-record:subagents-07",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": true
+      }
+    },
+    {
+      "check": "Demo landing work-simple",
+      "passed": true,
+      "detail": {
+        "d": null,
+        "e": "work-record:subagents-07",
+        "l": 0,
+        "h": null,
+        "c": false,
+        "w": true
+      }
+    },
+    {
+      "check": "Layout basic-dark 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        241,
+        241,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-dark 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-dark 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-dark 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-dark 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-dark 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-dark 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-dark 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-dark 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        561,
+        561,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-dark 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-dark 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-dark 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-dark 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-light 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-light 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-light 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-light 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout basic-light 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-light 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-light 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-light 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout basic-light 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-light 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-light 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-light 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout basic-light 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-light 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-light 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-light 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout basic-light 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-light 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-light 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-light 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout basic-light 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-light 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-light 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout basic-light 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        561,
+        561,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-dark 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-light 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-light 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-light 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-light 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout friendly-light 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-light 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-light 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-light 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout friendly-light 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-light 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-light 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-light 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout friendly-light 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-dark 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-dark 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-dark 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-dark 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-dark 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-dark 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-dark 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-dark 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-dark 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        561,
+        561,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-dark 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-dark 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-dark 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-dark 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-light 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-light 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-light 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-light 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout glass-light 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-light 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-light 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-light 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout glass-light 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        565,
+        565,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-light 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-light 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-light 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout glass-light 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-light 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-light 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-light 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout glass-light 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-light 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-light 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-light 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout glass-light 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-light 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-light 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout glass-light 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-dark 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-dark 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-dark 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-dark 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-dark 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-dark 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-dark 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-dark 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-dark 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-dark 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-dark 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-dark 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-dark 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-light 390 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-light 390 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-light 390 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-light 390 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        380,
+        380,
+        390
+      ]
+    },
+    {
+      "check": "Layout retro-light 480 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-light 480 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-light 480 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-light 480 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        470,
+        470,
+        480
+      ]
+    },
+    {
+      "check": "Layout retro-light 768 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        559,
+        559,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-light 768 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-light 768 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        558,
+        558,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-light 768 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        319,
+        319,
+        768
+      ]
+    },
+    {
+      "check": "Layout retro-light 1024 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-light 1024 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-light 1024 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        256,
+        256,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-light 1024 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        534,
+        534,
+        1024
+      ]
+    },
+    {
+      "check": "Layout retro-light 1440 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-light 1440 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-light 1440 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        447,
+        447,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-light 1440 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        350,
+        350,
+        1440
+      ]
+    },
+    {
+      "check": "Layout retro-light 1920 v1 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-light 1920 v1 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-light 1920 v8 pinFalse",
+      "passed": true,
+      "detail": [
+        668,
+        668,
+        1920
+      ]
+    },
+    {
+      "check": "Layout retro-light 1920 v8 pinTrue",
+      "passed": true,
+      "detail": [
+        388,
+        388,
+        1920
+      ]
+    },
+    {
+      "check": "Working identity 1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Working identity 8",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "No runtime errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "No action collisions",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "passed": 284,
+  "failed": 0,
+  "errors": [],
+  "limits": [
+    "about:blank injection, no persistent-origin reload test",
+    "No native/backend execution",
+    "Not exhaustive frame-by-frame motion acceptance"
+  ]
+}

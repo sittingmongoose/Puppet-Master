@@ -224,6 +224,7 @@
       requestedAccountId: (modelById(reqId) || {}).accountId || '',
       requestedModelId: reqId,
       requestedModelName: modelLabel(reqId),
+      requestedEffort: o.requestedEffort || '', requestedFast: !!o.requestedFast,
       effectiveModelId: unavailable ? (eff ? eff.id : null) : reqId,
       effectiveModelName: unavailable ? (eff ? modelLabel(eff.id) : 'None available') : modelLabel(reqId),
       requestedPersona: o.persona,
@@ -1533,7 +1534,7 @@
   var KIND_PARTICIPANT_LIMIT = { crew: [1, 8], brainstorm: [2, 8], review: [1, 8], chat_room: [2, 8] };
 
   function draftRow(role, modelId, persona, additive) {
-    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', additiveRoleKind: additive || 'none' };
+    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', requestedEffort:'', requestedFast:false, additiveRoleKind: additive || 'none' };
   }
 
   function openConfigureDraft(kind, reconfigureRunId, autoMode) {
@@ -1559,38 +1560,37 @@
     };
   }
 
-  function modelOptions(selectedId) {
-    return list(D.models).map(function (m) {
-      var flag = UNAVAILABLE_DEMO[m.id] ? ' — unavailable (demo)' : '';
-      return '<option value="' + esc(m.id) + '"' + (m.id === selectedId ? ' selected' : '') + '>' + esc(m.name) + ' · ' + esc(m.provider) + flag + '</option>';
-    }).join('');
-  }
-  var PERSONA_OPTIONS = ['Product Manager', 'Architect', 'Implementer', 'Reviewer', 'Teacher', 'Wonderer'];
-  function personaOptions(sel) {
-    return PERSONA_OPTIONS.map(function (p) { return '<option value="' + esc(p) + '"' + (p === sel ? ' selected' : '') + '>' + esc(p) + '</option>'; }).join('');
-  }
-
   function draftRowHtml(ctx, row, idx) {
-    var eff = UNAVAILABLE_DEMO[row.requestedModelId] ? fallbackModelFor(row.requestedModelId) : null;
-    var effLine = UNAVAILABLE_DEMO[row.requestedModelId]
-      ? '<span class="collab-route-eff ' + (eff ? 'collab-route-eff-sub' : 'collab-route-eff-failed') + '">' + ctx.icon('warning', 11) + (eff ? 'effective ' + esc(modelLabel(eff.id)) : 'no substitute — slot disabled') + '</span>' : '';
-    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-' + esc(row.rowId) + '">' +
-      '<input class="collab-field-role" type="text" data-collab-input="role" data-row="' + esc(row.rowId) + '" value="' + esc(row.role) + '" placeholder="Role">' +
-      '<select data-collab-input="model" data-row="' + esc(row.rowId) + '">' + modelOptions(row.requestedModelId) + '</select>' +
-      '<select data-collab-input="persona" data-row="' + esc(row.rowId) + '">' + personaOptions(row.persona) + '</select>' +
-      effLine +
-      (row.additiveRoleKind !== 'none' ? '<span class="collab-additive-tag">' + esc(row.additiveRoleKind === 'wonderer' ? 'Wonderer' : 'Grill Me') + '</span>' : '') +
-      '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="' + esc(row.rowId) + '" title="Duplicate">' + ctx.icon('copy', 12) + '</button>' +
-      '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="' + esc(row.rowId) + '" title="Remove">' + ctx.icon('close', 12) + '</button>' +
-      '</div>';
+    const pick=window.PM56_PICKERS;
+    const attrs='data-row="'+esc(row.rowId)+'"';
+    const fallback=UNAVAILABLE_DEMO[row.requestedModelId]?fallbackModelFor(row.requestedModelId):null;
+    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
+      '<div class="collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
+      '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="'+esc(row.rowId)+'" title="Duplicate participant">'+ctx.icon('copy',12)+'</button>'+
+      '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="'+esc(row.rowId)+'" title="Remove participant">'+ctx.icon('close',12)+'</button></div>'+
+      '<div class="collab-member-pickers"><label>Model'+pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs)+'</label>'+
+      '<label>Persona'+pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs)+'</label></div>'+
+      (row.requestedEffort?'<span class="collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</span>':'')+
+      (UNAVAILABLE_DEMO[row.requestedModelId]?'<span class="collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</span>':'')+'</div>';
   }
+  ['model','persona'].forEach(function(kind){
+    EXT.action('collab-pick-'+kind,function(ctx,btn){
+      var draft=RTC.draft, row=draft&&draft.rows.find(function(r){return r.rowId===btn.dataset.row;});
+      if(!row)return true;
+      window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:row.requestedModelId,persona:row.persona,effort:row.requestedEffort,fast:row.requestedFast},function(v){
+        if(RTC.draft!==draft||!draft.rows.includes(row)||!['collab-configure','collaboration-configure'].includes(ctx.state.dialog?.type))return;
+        row.requestedModelId=v.model;row.persona=v.persona;row.requestedEffort=v.effort;row.requestedFast=v.fast;
+        ctx.renderOverlays();
+      });return true;
+    });
+  });
 
   function kindConfigFields(ctx, d) {
     if (d.kind === 'crew') {
       return '<div class="collab-field-row"><label>Coordinator<select data-collab-input="cfg-coordinator"><option value="parent_assistant"' + (d.config.coordinator === 'parent_assistant' ? ' selected' : '') + '>Parent assistant</option><option value="dedicated_synthesis_model"' + (d.config.coordinator !== 'parent_assistant' ? ' selected' : '') + '>Dedicated synthesis model</option></select></label>' +
         '<label>Assignment strategy<select data-collab-input="cfg-assignmentStrategy"><option value="manager_directed"' + (d.config.assignmentStrategy === 'manager_directed' ? ' selected' : '') + '>Manager-directed</option><option value="explicit_static"' + (d.config.assignmentStrategy === 'explicit_static' ? ' selected' : '') + '>Explicit static</option><option value="adaptive"' + (d.config.assignmentStrategy === 'adaptive' ? ' selected' : '') + '>Adaptive</option></select></label>' +
         '<label>Parallelism<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
-        '<p class="collab-sub">Mutation authority is inherited from this thread’s mode and Plan permissions — it is not a field here and cannot be raised from this modal.</p>';
+        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
     }
     if (d.kind === 'brainstorm') {
       var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
@@ -1601,8 +1601,8 @@
     if (d.kind === 'review') {
       return '<div class="collab-field-row"><label>Strategy<select data-collab-input="cfg-strategy"><option value="multi_pass"' + (d.config.strategy === 'multi_pass' ? ' selected' : '') + '>Multi-Pass Review</option><option value="single_agent"' + (d.config.strategy === 'single_agent' ? ' selected' : '') + '>Single Agent</option></select></label>' +
         '<label>Reviewers (1–8, default 3)<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Blind, concurrent initial passes against one frozen target pack (always on)</span></label>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Auto-repair — permanently off. <code>assistant.multi_agent.review.auto_repair</code> is locked and is not a user-reachable escape hatch.</span></label>';
+        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
+        '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
     }
     return '<div class="collab-field-row"><label>Turn policy<select data-collab-input="cfg-turnPolicy"><option value="moderated"' + (d.config.turnPolicy === 'moderated' ? ' selected' : '') + '>Moderated</option><option value="round_robin"' + (d.config.turnPolicy === 'round_robin' ? ' selected' : '') + '>Round robin</option><option value="free_discussion"' + (d.config.turnPolicy === 'free_discussion' ? ' selected' : '') + '>Free discussion</option><option value="ask_everyone_once"' + (d.config.turnPolicy === 'ask_everyone_once' ? ' selected' : '') + '>Ask everyone once</option></select></label>' +
       '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
@@ -1626,13 +1626,12 @@
       '<h4>' + esc(KIND_LABEL[d.kind]) + ' configuration</h4>' +
       kindConfigFields(ctx, d) +
       (supportsAdditive ? '<div class="collab-add-specialists"><strong>Add specialists</strong>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span>Wonderer — explores adjacent leads, labelled hypothesis until researched</span></label>' +
+        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
         '</div>' : '') +
-      '<p class="collab-sub">No provider brand marks are drawn here — this concept’s shared context object does not expose a provider-mark renderer, so routes are shown as text rather than a letter-only substitute glyph.</p>' +
-      (d.autoMode ? '<div class="collab-refusal-demo"><strong>Admission-gate refusal</strong><p class="collab-sub">Crew Auto criteria can only narrow admission. This always-refuses control proves it rather than describing it:</p><button class="soft-button" data-action="collab-crew-auto-refuse-demo">' + ctx.icon('lock', 12) + ' Try to widen authority (always refused)</button></div>' : '') +
+      '' +
       '</div>' +
-      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p><p class="collab-sub">Everything you configured above is still here. Fix the cause and press Start again; nothing partial was created.</p></div>' : '') +
+      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -1801,7 +1800,7 @@
       var crewDefA = RTC.definitions.crew;
       crewDefA.autoConfigured = true;
       crewDefA.autoEnabled = true;
-      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona }; });
+      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast }; });
       crewDefA.autoMaxMembers = clamp(d.rows.length, 1, 8);
       effect('settingsWrites');            /* MODAL-006/008: only HERE. */
       RTC.draft = null;
@@ -1824,7 +1823,7 @@
       ctx.toast('Start refused', preflight.message);
       return true;
     }
-    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
+    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
     /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition;
        Wonderer and Grill Me are additive and therefore optional. An additive
        specialist never replaces a core role. */
@@ -1935,13 +1934,10 @@
      own "Open Panel", independent of Activity Detail.
      ===================================================================== */
   var ACTIVITY_KINDS = ['brainstorm', 'review', 'chat_room'];
-  function renderActivityHover(ctx, run) {
-    return '<div class="hover-card collab-hover" data-overlay="hover" data-k="collab-hover-' + esc(run.id) + '" role="dialog" aria-modal="false" aria-label="' + esc(run.title) + '">' +
-      '<strong>' + esc(KIND_LABEL[run.kind]) + ' · ' + esc(run.title) + '</strong>' +
-      '<p>' + esc(latestSummary(run)) + '</p>' +
-      '<div class="hover-stats"><span class="hover-stat">' + run.participants.length + ' participants</span><span class="hover-stat">' + esc(RUN_STATE_LABEL[run.status] || run.status) + '</span></div>' +
-      '</div>';
+  function renderActivityHover(ctx,run){
+    return '<button type="button" class="ab-row polish-collab-preview" data-k="collab-hover:'+esc(run.id)+'" data-action="collab-open-panel" data-run="'+esc(run.id)+'"><span class="ab-row-copy"><b>'+esc(run.title)+'</b><i>'+esc(KIND_LABEL[run.kind]||run.kind)+' · '+esc(run.status)+' · '+run.participants.length+' participants</i></span>'+ctx.icon('chevron',12)+'</button>';
   }
+
   function renderActivityBody(ctx, run) {
     return '<div class="collab-activity-body" data-k="collab-ab-' + esc(run.id) + '">' +
       '<div class="collab-activity-head"><strong>' + esc(run.title) + '</strong>' + statusChip(run.status, run.blockedReason) + '</div>' +
@@ -1959,7 +1955,7 @@
     var runs = runsForThread(ctx.state.selectedThread).filter(function (r) { return r.kind === dom; });
     if (!runs.length) return '';
     return '<div class="hover-card ab-card" id="activity-domain-preview" data-overlay="hover" data-k="collab-hovercard" data-domain="' + esc(dom) + '" role="dialog" aria-modal="false" aria-label="' + esc(KIND_LABEL[dom]) + ' activity preview">' +
-      runs.map(function (r) { return renderActivityHover(ctx, r); }).join('') + '</div>';
+      runs.slice(0,4).map(function (r) { return renderActivityHover(ctx, r); }).join('') + '</div>';
   });
   EXT.slot('activityPanelBody', function (ctx) {
     var dom = ctx.domain;
@@ -1967,6 +1963,8 @@
     if (ctx.state.activity && ctx.state.activity.scope !== 'focus') return '';
     var runs = runsForThread(ctx.state.selectedThread).filter(function (r) { return r.kind === dom; });
     if (!runs.length) return '';
+    const selected=ctx.state.activity.selected;
+    if(selected?.domain===dom&&runs.some(r=>r.id===selected.id))runs=runs.filter(r=>r.id===selected.id);
     return runs.map(function (r) { return renderActivityBody(ctx, r); }).join('');
   });
 
@@ -2244,7 +2242,7 @@
   EXT.chainAction('reset-all', function (ctx, btn, ev) {
     restoreFixture();
     UI.expanded = {}; UI.more = {}; UI.selectedFindings = {};
-    return prevReset ? prevReset(ctx, btn, ev) : false;
+    return false;
   });
 
   window.PM56_COLLAB = {

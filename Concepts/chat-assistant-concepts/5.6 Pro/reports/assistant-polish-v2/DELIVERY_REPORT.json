@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "repository_baseline": "4c88c0f01300cea36135b73eec96991d73969aa2",
+  "assistant_sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8",
+  "testpm_sha256": "219c816c600cfd7653c7e773e0b8c0c55971d2adaddf4ed69d36389bb0eef852",
+  "browser_suites": {
+    "verification.json": {
+      "passed": 284,
+      "failed": 0,
+      "sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8"
+    },
+    "extra-verification.json": {
+      "passed": 21,
+      "failed": 0,
+      "sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8"
+    },
+    "surface-verification.json": {
+      "passed": 24,
+      "failed": 0,
+      "sha256": "906619207c75c598a89a0805770971478e937811c5d34d7fdf1e67fd9e4649c8"
+    },
+    "settings-verification.json": {
+      "passed": 19,
+      "failed": 0,
+      "sha256": "219c816c600cfd7653c7e773e0b8c0c55971d2adaddf4ed69d36389bb0eef852"
+    }
+  },
+  "total_browser_assertions": 348,
+  "failed_browser_assertions": 0,
+  "viewport_cases": 192,
+  "new_gallery_landings": 27,
+  "thread_stripe_census": 26,
+  "protected_files_unchanged": [
+    "motion.css",
+    "motion.js",
+    "orbit.css",
+    "orbit.js",
+    "variants-a.css",
+    "variants-b.css",
+    "variants-b.js",
+    "variants-c.css",
+    "variants-c.js",
+    "styles.css",
+    "history.css",
+    "history.js"
+  ],
+  "working_integration_exception": "variants-a.js: declared reset chaining, prior owner exactly once; no visual/animation change",
+  "builds": {
+    "assistant": "fresh build check passed; outputs byte-identical",
+    "testpm": "verified immutable checkpoint + same T49 source transform; 26 scripts parse; non-Settings scripts byte-identical",
+    "full_pm7_pipeline": "BLOCKED by reproduced pre-existing T45 guided-tour source/command guard mismatch before T49"
+  },
+  "limits": [
+    "Full original feature-to-demo denominator and multiple complete workflows per feature remain unaudited",
+    "Exhaustive 60fps recordings and every-frame visual review not completed",
+    "Opaque about:blank harness: persistent-origin reload not tested",
+    "No native runtime/provider/daemon/storage certification; new Settings projection rows pending canonical admission"
+  ],
+  "not_modified": [
+    "canonical Plans including settings_inventory.json",
+    "Spec Lock, generated governance, Event Authority, PNC-019",
+    "non-Settings TestPM scripts",
+    "GitHub main"
+  ]
+}

@@ -21,6 +21,9 @@
   const uid = (p='id') => `${p}-${Math.random().toString(36).slice(2,9)}-${Date.now().toString(36)}`;
 
   const PATHS = {
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/>',
+    chat:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"/>',
+    sliders:'<path d="M4 6h5M13 6h7M4 12h10M18 12h2M4 18h2M10 18h10M9 3v6M14 9v6M6 15v6"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
     history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
     reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
@@ -82,7 +85,7 @@
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
-    activity:{open:false,pinned:false,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
+    activity:{open:false,pinned:true,domain:'goal',scope:'all',filterVisible:true,expanded:['goal','todo','subagents','crew','changes','artifacts']},
     context:{
       compact:false,details:false,compacted:false,drawerView:'curated',dispatchSeq:0,
       projections:clone(D.contextByThread||{})
@@ -209,7 +212,7 @@
     'transcriptMessage','composerTray','composerRibbon','composerBelow','wandRows','submenu','modeRows',
     /* Append points inside context.js's own replace-slot output, so BSD adds a row and a
        section without re-registering (and therefore duplicating) the whole Context menu. */
-    'contextBsdRow','contextBsdSection'];
+    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord'];
 
   function ensureExt(){
     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
@@ -252,7 +255,7 @@
   function extCtx(extra){
     return Object.assign({
       /* data */
-      state, D, M, clone, clamp, esc, uid, icon,
+      state, D, M, clone, clamp, esc, uid, icon, providerMark,
       thread: activeThread(), model: selectedModel(),
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
@@ -359,7 +362,8 @@
     return Math.max(0,window.innerWidth*(1-state.editorWidth/100)-5);
   }
   function activityPinnedInLayout() {
-    return !!(state.activity.open && state.activity.pinned && !isPhone() && assistantLayoutWidth()>=540);
+    const gutter=document.body.dataset.phDrawer==='pinned'?Math.min(360,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-user-w'))||200):0;
+    return !!(state.activity.open && state.activity.pinned && !isPhone() && (innerWidth>=821 || innerWidth-gutter>=540));
   }
   function focusActivityControl(selector) {
     requestAnimationFrame(() => {
@@ -424,6 +428,9 @@
     return {kind, a, b};
   }
   function editorTabLabel(id){
+    const owned=extReplace('editorTabLabel',{editorId:id},'');if(owned)return owned;
+    const planId=window.PM56_PLANS?.editorPlanId(id);
+    if(planId)return window.PM56_PLANS.get(planId)?.title||'Plan';
     const a=D.artifacts.find(x=>x.id===id);
     if(a) return a.title;
     const ag=D.subagents.find(x=>`thread-${x.id}`===id);
@@ -447,7 +454,7 @@
   }
   function renderEditor() {
     return `<section class="editor-pane">
-      <div class="editor-tabs">${state.editorTabs.map(id => {
+      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat" title="Return to chat">${icon('chat',15)}</button>${state.editorTabs.map(id => {
         const label=editorTabLabel(id);
         return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}" title="${esc(label)}"><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
       }).join('')}</div>
@@ -457,6 +464,8 @@
 
   function renderEditorBody() {
     const id=state.activeEditor;
+    const owned=extReplace('editorDocument',{editorId:id},'');if(owned)return owned;
+    if(id?.startsWith('plan:'))return window.PM56_PLANS?.editorBody(id)||'<div class="editor-empty">Plan unavailable</div>';
     if (!id) return `<div class="editor-empty">${icon('document',28)}<div><strong>No artifact open</strong><br><span>Plans, files, visual artifacts, links, and child-agent threads open here.</span></div></div>`;
     const agent=D.subagents.find(a=>`thread-${a.id}`===id);
     if (agent) return renderAgentEditor(agent);
@@ -501,6 +510,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
   }
   function renderArtifactEditor(art){
+    if(art.kind==='plan'){const owned=window.PM56_PLANS?.editorBody(art.id);if(owned)return owned;}
     /* Assistant-redesign wave: ONE Plan truth, in the header chrome too. This row
        read the legacy artifact record, so the pane's own header said
        "Version 4 · Ready" directly above a card that said "Plan · V5" -- the same
@@ -628,7 +638,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      override local to the file editor. */
   function renderFileEditor(path){
     const c=D.changes.find(x=>x.path===path);
-    const line=c?.line||null;
+    const line=state.fileFocus?.[path]||c?.line||null;
     const deleted=c?.status==='deleted';
     const statusLabel=(D.labels&&D.labels.changeStatus&&D.labels.changeStatus[c?.status])
       || (c?.status ? String(c.status).replace(/^./,ch=>ch.toUpperCase()) : 'Working tree');
@@ -677,6 +687,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const t=activeThread();
     return `<section class="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
+      <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
       <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.filter(messageVisible).map(m=>renderMessage(m,t)).join('')}</div></div>
       ${renderDecisionHost()}
       ${renderChatFloat()}
@@ -844,6 +855,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderEventMessage(m){
+    const record=extReplace('workRecord',{m},'');if(record)return record;
     const map={
       'question-receipt':['todo','Questionnaire waiting','warning'],'bsd-evaluating':['search','BSD evaluating',''],'bsd-advice':['warning','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eyeoff','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['lock','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['users','Crew',''],'new-message':['down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['artifact','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
     };
@@ -857,7 +869,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><strong>${esc(m.title||d[1])}</strong><p>${esc(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><span class="event-kind">${esc(d[1])}</span><strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m){
     const rec=workRecFor(m)||state.work;
@@ -1752,17 +1764,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const composer=stage.querySelector('.composer');
     const dock=composer?composer.getBoundingClientRect().height:0;
     setStageVar(stage, '--chat-dock-h', dock);
-    /* Bar is in-flow; do not pad the transcript as if the float overlayed it. */
-    setStageVar(stage, '--thread-float-h', 0);
+    const float=stage.querySelector('.chat-float');
+    setStageVar(stage, '--thread-float-h', float ? float.offsetHeight : 0);
     const host=stage.querySelector('.decision-host');
     const decisionH=(host && !host.classList.contains('empty') && host.offsetHeight)?host.getBoundingClientRect().height:0;
     setStageVar(stage, '--decision-h', decisionH);
-    const lensOn=!!(state.menu&&state.menu.type==='lens');
-    const strip=lensOn?document.querySelector('.overlay-menu.lens-strip'):null;
-    /* offsetHeight is transform-safe; getBoundingClientRect shrinks mid-sprout. */
-    const lensH=strip?strip.offsetHeight+8:0;
-    setStageVar(stage, '--lens-strip-h', lensH);
-    if(lensOn&&strip) observeLensStrip(strip);
+    const strip=stage.querySelector('.lens-inline');
+    // The grid already reserves the lens height. No scroll-away padding proxy.
+    setStageVar(stage, '--lens-strip-h', 0);
+    if(strip) observeLensStrip(strip);
     else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
   }
   function activityRowWidth(bar){
@@ -1958,10 +1968,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const activityPinned=activityPinnedInLayout();
     activityPinLayout=activityPinned;
     const gridClass=`assistant-grid ${historyPinned?'':'history-closed'} ${activityPinned?'activity-pinned':''}`;
-    document.documentElement.style.setProperty('--editor-w',`${state.editorWidth}%`);
-    document.documentElement.style.setProperty('--history-w',`${state.historyWidth}px`);
+    const panelWidth=(historyPinned?Math.min(state.historyWidth,200):0)+(activityPinned?state.activityWidth:0);
+    const editorMax=Math.max(220,window.innerWidth-5-panelWidth-360);
+    const effectiveEditor=Math.min(state.editorWidth,editorMax/window.innerWidth*100);
+    document.documentElement.style.setProperty('--editor-w',`${effectiveEditor}%`);
+    document.documentElement.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
     document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
-    pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
+    pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     flipHeights(flipTargets, flipBefore);
     flipMoves(moveTargets, moveBefore);
@@ -2395,6 +2408,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     };
     requestAnimationFrame(tick);
   }
+  // The lens is an in-flow sibling, never a positioned transcript overlay.
+  function renderInlineLens(){
+    return state.menu?.type==='lens' ? `<div class="lens-inline" data-k="lens-inline">${extReplace('contextLensMenu',{},'')}</div>` : '';
+  }
+  function syncInlineLens(){
+    const dock=document.querySelector('.lens-dock');
+    if(!dock)return;
+    pmPatch(dock,renderInlineLens());
+    dock.classList.toggle('is-open',state.menu?.type==='lens');
+  }
   let lastOverlayPayload='';
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
@@ -2402,7 +2425,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.historyMode==='floating') parts.push(`<aside class="history-flyout" data-history-variant="${state.variants[1]}">${renderHistoryContent(true)}</aside>`);
     if(state.context.details) parts.push(renderContextDrawer());
     if(state.dialog) parts.push(renderDialog());
-    if(state.menu) parts.push(renderMenu());
+    if(state.menu && state.menu.type!=='lens') parts.push(renderMenu());
+    syncInlineLens();
     /* Hover tips are synced after the patch so tip-only updates can avoid
        re-patching menus/drawers (which live in this same overlay root). */
     if(state.toast.length) parts.push(`<div class="toast-stack">${state.toast.slice(-3).map(t=>`<div class="toast"><strong>${esc(t.title)}</strong><span>${esc(t.detail||'')}</span></div>`).join('')}</div>`);
@@ -2492,10 +2516,60 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
 
+  const PERSONA_CATALOG=[
+    ['Product Manager','Product planning and coordination'], ['Architect','Architecture and trade-offs'],
+    ['Implementer','Code and tests'], ['Reviewer','Independent review'],
+    ['Teacher','Explanations and guidance'], ['Wonderer','Adjacent ideas and research'],
+    ['Critical Advisor','Read-only second opinion']
+  ];
+  let scopedPicker=null;
+  function pickerSelection(){ return state.menu?.scopedPicker && scopedPicker ? scopedPicker.value : state; }
+  function pickerAnchor(button){
+    if(!button.dataset.menuAnchor) button.dataset.menuAnchor=uid('picker');
+    return button.dataset.menuAnchor;
+  }
+  function beginScopedPicker(type,button,value,onChange){
+    scopedPicker={type,value:{model:value.model||state.model,effort:value.effort||'',fast:!!value.fast,persona:value.persona||state.persona},onChange};
+    state.modelSearch=''; state.modelProvider='all';
+    openMenu(type,pickerAnchor(button),{scopedPicker:true});
+  }
+  function handleScopedPickerAction(a,btn,e){
+    if(!state.menu?.scopedPicker||!scopedPicker)return false;
+    if(!['set-model','set-effort','toggle-fast','set-persona'].includes(a))return false;
+    e.stopPropagation();
+    const session=scopedPicker, value=session.value;
+    if(a==='set-persona'){
+      value.persona=btn.dataset.value;
+      session.onChange({...value}); closeMenu(); return true;
+    }
+    const id=a==='set-model'?btn.dataset.value:btn.dataset.model;
+    const model=D.models.find(x=>x.id===id); if(!model)return true;
+    value.model=id;
+    if(!model.efforts.includes(value.effort))value.effort='';
+    if(!model.fast)value.fast=false;
+    if(a==='set-effort')value.effort=btn.dataset.value;
+    if(a==='toggle-fast')value.fast=!value.fast;
+    session.onChange({...value});
+    if(a==='set-model')setSubmenu('model:'+id);else renderOverlays();
+    return true;
+  }
+  window.PM56_PICKERS={
+    openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
+    openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
+    personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
+    modelButton(action,anchor,modelId,extra=''){
+      const m=D.models.find(x=>x.id===modelId);
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
+    },
+    personaButton(action,anchor,persona,extra=''){
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
+    }
+  };
+
   function renderMenu(){
     const m=state.menu;
     let content='';
-    if(m.type==='persona') content=renderSimpleMenu('Persona',[['Product Manager','Product planning, product judgment, and coordination'],['Architect','Architecture, contracts, boundaries, and trade-offs'],['Implementer','Code, tests, and working product slices'],['Reviewer','Adversarial review, evidence, and risk'],['Teacher','Explanations, tours, and approachable guidance'],['Wonderer','Adjacent domains and overlooked possibilities; leads stay hypotheses until researched']],state.persona,'set-persona');
+    if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
@@ -2553,7 +2627,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          build, and `set-eli5-cap` is still chained by assistant-features.js. */
       ['thought','Thought Stream','Control permitted reasoning visibility','thought-menu',state.capabilities.thought,'brain']
     ];
-    return `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${icon('wand',13)}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
+    const wandHtml = `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${icon('wand',13)}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
+    return window.PM56_POLISH ? window.PM56_POLISH.wand(wandHtml,EXT.ctx()) : wandHtml;
   }
 
   function isFavorite(id){ return state.favorites.includes(id); }
@@ -2591,13 +2666,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function effortWords(m){
     return `<span class="effort-words">${m.efforts.map((e,i)=>{
-      const lit=!!state.effort && state.model===m.id && state.effort===e;
+      const lit=!!pickerSelection().effort && pickerSelection().model===m.id && pickerSelection().effort===e;
       return `${i?'<span class="effort-sep"> / </span>':''}<span class="effort-word${lit?' is-lit':''}">${esc(e)}</span>`;
     }).join('')}</span>`;
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${state.model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${state.model===m.id&&state.fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -2631,7 +2706,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderSubmenu(id){
     if(id.startsWith('model:')){
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${state.model===model.id&&state.effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${state.model===model.id&&state.effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${state.model===model.id&&state.fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${state.model===model.id&&state.fast?icon('check',11):''}</button>`:''}`;
+      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
     }
     /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
        Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy
@@ -2730,7 +2805,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     const triggerGroups=demoTriggerGroups();
     const g=clampDemoGeom(state.dialog.geom||lastDemoGeom||defaultDemoGeom());
     state.dialog.geom=g;
-    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail · Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Orbit is the default working activity; Step Rail is the simplified option. Every lab take stays available below.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section><div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
+    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
   }
 
   function positionOverlays(){
@@ -2788,6 +2863,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     syncChatDock();
   }
   function openMenu(type,anchor,extra={}){
+    if(!extra.scopedPicker) scopedPicker=null;
     const anchorEl=document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`);
     const rect=anchorEl?.getBoundingClientRect();
     const side=rect&&rect.left<window.innerWidth*.53?'right':'left';
@@ -2800,7 +2876,11 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(state.menu&&state.menu.type===type&&state.menu.anchor===anchor){ closeMenu(); return; }
     openMenu(type,anchor,extra);
   }
-  function closeMenu(){state.menu=null;renderOverlays();}
+  function closeMenu(){
+    const anchor=state.menu?.scopedPicker?state.menu.anchor:null;
+    state.menu=null;scopedPicker=null;renderOverlays();
+    if(anchor)requestAnimationFrame(()=>document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`)?.focus({preventScroll:true}));
+  }
   function setSubmenu(id){
     if(!state.menu)return;
     clearTimeout(submenuTimer);
@@ -2811,8 +2891,13 @@ recommended path                  migration 0043 + rollback</div></div></section
   function toast(title,detail=''){
     const t={id:uid('toast'),title,detail};state.toast.push(t);renderOverlays();setTimeout(()=>{state.toast=state.toast.filter(x=>x.id!==t.id);renderOverlays();},2800);
   }
-  function openEditor(id){ if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp(); }
-  function closeEditor(id){ const i=state.editorTabs.indexOf(id);state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
+  function openEditor(id){
+    // Artifact aliases and plan tabs address one plan, never two copies.
+    const planId=window.PM56_PLANS?.editorPlanId(id);
+    if(planId){const existing=state.editorTabs.find(t=>window.PM56_PLANS?.editorPlanId(t)===planId);id=existing||'plan:'+planId;}
+    state.editorRevealed=true;if(!state.editorTabs.includes(id))state.editorTabs.push(id);state.activeEditor=id;renderApp();
+  }
+  function closeEditor(id){ const i=state.editorTabs.indexOf(id);if(state.editorTabs.length===1)state.editorRevealed=false;state.editorTabs=state.editorTabs.filter(x=>x!==id);if(state.activeEditor===id)state.activeEditor=state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null;renderApp(); }
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
@@ -3122,8 +3207,26 @@ recommended path                  migration 0043 + rollback</div></div></section
     const btn=e.target.closest('[data-action]');
     const sub=e.target.closest('[data-submenu]');
     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
-    if(!btn){if(state.menu&&!e.target.closest('.overlay-menu'))closeMenu();return;}
+    if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
+    if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
+    if(handleScopedPickerAction(a,btn,e)) return;
+    const preview=btn.closest('.ab-card');
+    if(preview && ['open-activity','todo-show-item','open-agent','open-crew','open-change','open-artifact','collab-open-panel','collab-open-participant'].includes(a)){
+      state.activity.pinned=true;
+      if(!['open-activity','todo-show-item'].includes(a)){
+        const run=btn.dataset.run&&window.PM56_COLLAB?.run(btn.dataset.run);
+        const domain=run?run.kind:a==='open-change'?'changes':a==='open-artifact'?'artifacts':a==='open-crew'?'crew':'subagents';
+        let id=btn.dataset.id||btn.dataset.path||btn.dataset.run||btn.dataset.participant;
+        if(a==='open-change'){const file=D.changes.find(c=>c.path===btn.dataset.path);id=file?.id||file?.path||id;}
+        state.activity.open=true;state.activity.domain=domain;state.activity.scope='focus';
+        state.activity.selected={domain,id};
+        if(!state.activity.expanded.includes(domain))state.activity.expanded.push(domain);
+        state.hover=null;renderApp();
+        requestAnimationFrame(()=>document.querySelector('.activity-panel .pmap-detail,.activity-panel .collab-activity-body')?.scrollIntoView({block:'nearest'}));
+        return;
+      }
+    }
     /* Feature modules first, so a module can add an action or override one. */
     if(extRun(a,btn,e))return;
     if(a==='open-menu'){e.stopPropagation();const type=btn.dataset.menu,anchor=btn.dataset.menuAnchor;toggleMenu(type,anchor);return;}
@@ -3191,13 +3294,13 @@ recommended path                  migration 0043 + rollback</div></div></section
       if(a==='inspect-work-step'){rec.running=false;scrubTo(rec,Number(btn.dataset.value));if(!runningRecs().length)stopWorkTimer();renderApp();return;}
       if(a==='toggle-work-phase'){const k=btn.dataset.value;rec.openPhase=(rec.openPhase===k?null:k);renderApp();return;}
     }
-    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!isPhone())state.activity.pinned=true;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
+    if(a==='open-activity'){if(!activityDefs()[btn.dataset.domain])return;const fromPreview=!!btn.closest('.ab-card');if(fromPreview||!state.activity.open)state.activity.pinned=true;state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();if(fromPreview)focusActivityControl('.activity-panel [data-action="unpin-activity"], .activity-panel [data-action="pin-activity"]');return;}
     if(a==='focus-activity'){if(!activityDefs()[btn.dataset.domain])return;state.activity.domain=btn.dataset.domain;if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);renderApp();return;}
     if(a==='toggle-activity-section'){const id=btn.dataset.domain;state.activity.expanded=state.activity.expanded.includes(id)?state.activity.expanded.filter(x=>x!==id):[...state.activity.expanded,id];renderApp();return;}
     if(a==='toggle-activity-filter'){state.activity.filterVisible=!state.activity.filterVisible;renderApp();return;}
     if(a==='pin-activity'){state.activity.pinned=true;state.activity.open=true;renderApp();focusActivityControl('.activity-panel [data-action="unpin-activity"]');return;}
     if(a==='unpin-activity'){state.activity.pinned=false;renderApp();focusActivityControl('.activity-panel [data-action="pin-activity"]');return;}
-    if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
+    if(a==='close-activity'){const domain=state.activity.domain;state.activity.open=false;renderApp();focusActivityBarDomain(domain);return;}
     if(a==='context-details'){state.context.details=true;state.menu=null;renderApp();return;}
     if(a==='close-context-details'){state.context.details=false;renderOverlays();return;}
     if(a==='compact-now'){state.menu=null;state.dialog={type:'compact'};renderOverlays();return;}

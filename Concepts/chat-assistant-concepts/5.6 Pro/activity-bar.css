@@ -343,16 +343,18 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
    content and clip nowrap labels.
    ===================================================================== */
 .chat-stage {
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
 }
 .chat-float {
-  position: relative;
+  position: absolute;
+  left:12px; right:12px;
+  bottom:calc(var(--chat-dock-h,100px) + var(--decision-h,0px) + 12px);
   z-index: 8;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 4px;
-  padding: 0 10px 8px;
+  padding: 0;
   pointer-events: none;
 }
 .chat-float .activity-wrap {
@@ -373,7 +375,7 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 .jump-bottom {
   position: absolute;
   right: 10px;
-  bottom: calc(100% + var(--decision-h, 0px) + 8px);
+  bottom: calc(100% + 8px);
   z-index: 9;
   width: 30px;
   height: 30px;
@@ -532,3 +534,20 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8
   .hover-card.ab-card { animation: none !important; }
   .jump-bottom.is-working > svg { animation: none !important; }
 }
+
+/* The transcript occupies the space under and around the floating pill. */
+.chat-stage > .transcript { grid-row:3; padding-top:18px; padding-bottom:calc(var(--thread-float-h,44px) + 36px); }
+.chat-stage > .decision-host { grid-row:4; }
+.chat-stage > .composer { grid-row:5; }
+.chat-stage > .chat-header { grid-row:1; }
+.lens-dock { grid-row:2; min-height:0; min-width:0; z-index:7; }
+.lens-dock:empty { display:none; }
+.lens-inline { padding:10px 14px 12px; background:var(--surface-2); border-bottom:1px solid var(--border); }
+.lens-inline .lens-strip-head { margin-top:0; }
+.lens-inline .lens-note, .lens-inline .lens-foot { display:none; }
+.shared-picker-button { display:flex; align-items:center; gap:8px; min-height:40px; min-width:0; width:100%; padding:7px 10px; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); color:var(--text); text-align:left; cursor:pointer; }
+.shared-picker-button:hover { background:var(--surface-3); border-color:var(--border-strong); }
+.shared-picker-copy { display:grid; min-width:0; flex:1; gap:2px; }
+.shared-picker-copy strong { font-size:11px; font-weight:550; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.shared-picker-copy small { font-size:9px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.shared-picker-button > svg { flex:none; }

@@ -38,7 +38,7 @@
    source order, which it does: this file is concatenated last.
    ========================================================================== */
 .decision-host[data-variant] .decision-surface{
-  border-left:1px solid color-mix(in srgb,var(--accent) 30%,var(--border));
+  border-left:1px solid var(--border);
   border-radius:14px;
   font-family:inherit;
   max-width:none;

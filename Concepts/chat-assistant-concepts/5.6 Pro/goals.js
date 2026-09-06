@@ -597,7 +597,7 @@
   var prevReset = EXT._actions && EXT._actions['reset-all'];
   EXT.chainAction('reset-all', function(ctx,btn,ev){
     restoreFixture();
-    return prevReset ? prevReset(ctx,btn,ev) : false;
+    return false;
   });
 
   /* Own delegated input listener. Deliberately does NOT re-render: the

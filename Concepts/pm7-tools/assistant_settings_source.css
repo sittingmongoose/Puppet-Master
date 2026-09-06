@@ -1,0 +1,23 @@
+/* T49: scoped, portable Settings paint; no side stripes or browser filters. */
+#pm-settings-root .pm49-bsd .panel-card{padding:18px 22px;margin-bottom:14px;}
+#pm-settings-root .pm49-setting{display:grid;grid-template-columns:minmax(160px,1fr) minmax(160px,1fr);align-items:center;gap:20px;padding:12px 0;border-bottom:1px solid var(--line);}
+#pm-settings-root .pm49-setting:last-child{border-bottom:0;}
+#pm-settings-root .pm49-choice{display:flex;width:100%;justify-content:flex-start;gap:10px;min-height:36px;}
+#pm-settings-root .pm49-choice>span{flex:1;text-align:left;overflow-wrap:anywhere;}
+#pm-settings-root .pm49-policy{padding:18px 22px;border:1px solid var(--line);border-radius:12px;}
+#pm-settings-root .pm49-policy summary{cursor:pointer;font-weight:600;}
+#pm-settings-root .pm49-policy[open] summary{margin-bottom:18px;}
+#pm-settings-root .pm49-bsd h3{font-size:13px;margin:0 0 8px;}
+#pm-settings-portals .pm49-picker{width:360px;max-width:calc(100vw - 32px);max-height:440px;overflow:auto;}
+#pm-settings-portals .pm49-picker input{position:sticky;top:0;z-index:1;width:100%;margin-bottom:8px;}
+#pm-settings-portals .pm49-picker [hidden]{display:none!important;}
+#pm-settings-portals .pm49-roster{display:grid;gap:12px;}
+#pm-settings-portals .pm49-member{border:1px solid var(--line);border-radius:12px;padding:14px;}
+#pm-settings-portals .pm49-member-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+#pm-settings-portals .pm49-member-head input{flex:1;min-width:0;}
+#pm-settings-portals .pm49-member-pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+#pm-settings-portals .pm49-choice{display:flex;align-items:center;gap:8px;min-width:0;}
+#pm-settings-portals .pm49-choice span{flex:1;text-align:left;overflow-wrap:anywhere;}
+#pm-settings-portals .pm49-stage-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:10px;}
+#pm-settings-portals .pm49-caption{margin:0;font-size:12px;}
+@media(max-width:720px){#pm-settings-root .pm49-setting{grid-template-columns:1fr;gap:8px;}#pm-settings-portals .pm49-member-pickers{grid-template-columns:1fr;}}

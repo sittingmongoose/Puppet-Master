@@ -322,17 +322,13 @@
 
   function head(ctx, id, def, meta) {
     var tone = barTone(id, ctx);
-    return '<div class="ab-head" data-k="ab-head">' +
+    return '<button type="button" class="ab-head" data-k="ab-head" data-action="open-activity" data-domain="'+esc(id)+'">' +
       '<span class="ab-head-icon" data-tone="' + tone + '">' + ctx.icon(def.icon, 13) + '</span>' +
       '<strong>' + esc(def.label) + '</strong>' +
       '<span class="ab-head-meta">' + esc(meta) + '</span>' +
-      '</div>';
+      '</button>';
   }
-  function foot(ctx, id) {
-    return '<button class="ab-foot" type="button" data-k="ab-foot" data-action="open-activity" data-domain="' +
-      esc(id) + '" aria-label="Open ' + esc(id) + ' Activity Detail"><span>Open Activity</span>' +
-      ctx.icon('chevron', 11) + '</button>';
-  }
+  function foot(ctx, id) { return ''; }
   function row(opts) {
     var tag = opts.action ? 'button' : 'div';
     var attrs = ' class="ab-row" data-k="' + esc(opts.k) + '" data-state="' + esc(opts.state || 'idle') + '"';
@@ -528,7 +524,7 @@
     return '<div class="hover-card ab-card" id="activity-domain-preview" data-overlay="hover" data-k="ab-card" ' +
       'data-domain="' + esc(id) + '" data-tone="' + barTone(id, ctx) +
       '" role="dialog" aria-modal="false" aria-label="' + esc(def.label) + ' activity preview">' +
-      build(ctx, def) + '</div>';
+      (window.PM56_POLISH ? window.PM56_POLISH.hover(build(ctx, def),id,ctx) : build(ctx, def)) + '</div>';
   });
 
   /* ------------------------------------------------------- keep-open repair

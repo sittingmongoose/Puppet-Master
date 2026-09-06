@@ -30,7 +30,7 @@ MODULES=['activity-panel','activity-bar','goals','context','history','menus',
          # because attachments, plans, collaboration and browser-capture all read and
          # write the composer destination it owns.
          'composer-state','attachments','plans','todos','collaboration','bsd',
-         'scheduling','browser-capture','assistant-features']
+         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos']
 
 def read(name):
     f=root/name

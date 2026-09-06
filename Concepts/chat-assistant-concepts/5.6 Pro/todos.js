@@ -372,7 +372,7 @@
 
   function restoreFixture(){
     RT.todos = JSON.parse(TODO0);
-    ui.collapsed = {}; ui.receiptsOpen = {}; ui.refusalsOpen = false;
+    ui.collapsed = {}; ui.receiptsOpen = {}; ui.refusalsOpen = false; ui.detailOpen = {};
   }
 
   /* =====================================================================
@@ -648,31 +648,12 @@
      (id/data-overlay/data-k/data-domain/data-tone/role) so aria-controls on
      the Activity Bar button still resolves once this owns the 'todo' domain. */
   function renderCompact(ctx){
-    var tid = currentThreadId(ctx);
-    var feed = hoverFeed(tid);
-    if(!feed) return '';
-    var anyCurrent = feed.rows.some(function(r){ return r.current; });
-    var tone = feed.blockedCount ? 'blocked' : anyCurrent ? 'working' : (feed.total && feed.done===feed.total) ? 'done' : 'idle';
-    var rowsHtml = feed.rows.length ? feed.rows.map(function(r){
-      var it = r.item;
-      return '<li class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'">'+
-        '<span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span>'+
-        '<span class="todo-hover-title">'+esc(it.title)+'</span>'+
-      '</li>';
-    }).join('') : '<li class="todo-hover-empty" data-k="todo-hr:empty">Nothing runnable is waiting right now.</li>';
-    return '<div class="hover-card todo-hover" id="activity-domain-preview" data-overlay="hover" data-k="ab-card" '+
-      'data-domain="todo" data-tone="'+esc(tone)+'" role="dialog" aria-modal="false" aria-label="To-Dos activity preview">'+
-      '<div class="todo-hover-head" data-k="todo-hover-head">'+
-        '<span class="todo-hover-head-icon">'+ctx.icon('todo',13)+'</span>'+
-        '<strong>To-Dos</strong>'+
-        '<span class="todo-hover-head-meta">'+feed.done+' of '+feed.total+'</span>'+
-      '</div>'+
-      '<ul class="todo-hover-list" data-k="todo-hover-list">'+rowsHtml+'</ul>'+
-      (feed.blockedCount ? '<p class="todo-hover-blocked" data-k="todo-hover-blocked">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</p>' : '')+
-      '<button class="todo-hover-foot" type="button" data-k="todo-hover-foot" data-action="open-activity" data-domain="todo" aria-label="Open To-Dos Activity Detail">'+
-        '<span>Open Activity</span>'+ctx.icon('chevron',11)+
-      '</button>'+
-    '</div>';
+    var feed=hoverFeed(currentThreadId(ctx)); if(!feed) return '';
+    var rows=feed.rows.slice(0,4);
+    return '<button type="button" class="todo-hover-head" data-action="open-activity" data-domain="todo">'+
+      '<span class="todo-hover-head-icon">'+ctx.icon('todo',13)+'</span><strong>To-Dos</strong><span class="todo-hover-head-meta">'+feed.done+' of '+feed.total+'</span></button>'+
+      '<div class="todo-hover-list">'+(rows.length?rows.map(function(r){var it=r.item;return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span></button>';}).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>')+'</div>'+
+      (feed.blockedCount?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</button>':'');
   }
 
   /* extReplace('activityPanelBody',{domain:d,transient}, ...) (app.js) passes
@@ -746,42 +727,23 @@
     return btns;
   }
 
-  function renderNode(ctx, list, item, depth){
-    var kids = childrenOf(list, item.todo_id);
-    var hasKids = kids.length>0;
-    var collapsed = !!ui.collapsed[item.todo_id];
-    var receiptsOpen = !!ui.receiptsOpen[item.todo_id];
-    var chips = (item.depends_on&&item.depends_on.length?depChip(list,item):'') + (item.parallel_group_id?parallelChip(list,item):'');
-    /* Only a leaf ever carries its own blocked_reason_ref (a parent's blocked
-       status is always a derived rollup, per bubbleRollup above) — so a
-       blocked parent shows no reason line of its own rather than a
-       fabricated-looking placeholder; its rollupNote already says which
-       child is blocked. */
-    var blockedLine = (item.status==='blocked' && item.blocked_reason_ref) ? '<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>' : '';
-    var outcomeLine = (!hasKids && item.expected_outcome) ? '<p class="todo-outcome">'+esc(item.expected_outcome)+'</p>' : '';
-    var rollupNote = hasKids ? '<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>' : '';
-    var caret = hasKids
-      ? '<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" type="button" data-action="todo-toggle-parent" data-id="'+esc(item.todo_id)+'" aria-expanded="'+(collapsed?'false':'true')+'" title="'+(collapsed?'Expand':'Collapse')+'">'+ctx.icon('chevron',11)+'</button>'
-      : '<span class="todo-caret-spacer" aria-hidden="true"></span>';
-    var titleCls = 'todo-title'+(item.status==='completed'?' is-struck':'');
-    return '<div class="todo-node" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'">'+
-      '<div class="todo-row">'+
-        caret+
-        '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
-        '<div class="todo-copy">'+
-          '<span class="'+titleCls+'">'+esc(item.title)+'</span>'+
-          rollupNote + outcomeLine +
-          (chips?'<div class="todo-chips">'+chips+'</div>':'')+
-          blockedLine+
-        '</div>'+
-        '<div class="todo-row-actions">'+
-          rowActions(ctx,list,item)+
-          '<button class="text-button todo-receipts-toggle" type="button" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+(receiptsOpen?'true':'false')+'">Receipts ('+item.transitions.length+')</button>'+
-        '</div>'+
-      '</div>'+
-      renderReceipts(item)+
-      (hasKids && !collapsed ? '<div class="todo-children" data-k="todo-children:'+esc(item.todo_id)+'">'+kids.map(function(k){ return renderNode(ctx,list,k,depth+1); }).join('')+'</div>' : '')+
-    '</div>';
+  function renderNode(ctx,list,item,depth){
+    var kids=childrenOf(list,item.todo_id), hasKids=kids.length>0, collapsed=!!ui.collapsed[item.todo_id];
+    var more=!!(ui.detailOpen&&ui.detailOpen[item.todo_id]);
+    var caret=hasKids?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" type="button" data-action="todo-toggle-parent" data-id="'+esc(item.todo_id)+'" aria-expanded="'+(!collapsed)+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>';
+    var detail='';
+    if(more){
+      detail='<div class="todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'">'+
+        (item.expected_outcome?'<p class="todo-outcome">'+esc(item.expected_outcome)+'</p>':'')+
+        (hasKids?'<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>':'')+
+        '<div class="todo-chips">'+depChip(list,item)+parallelChip(list,item)+'</div>'+
+        (item.blocked_reason_ref?'<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>':'')+
+        '<div class="todo-detail-actions">'+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
+    }
+    return '<div class="todo-node" data-todo-id="'+esc(item.todo_id)+'" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'"><div class="todo-row">'+caret+
+      '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
+      '<button type="button" class="todo-copy todo-title-button" data-action="todo-toggle-detail" data-id="'+esc(item.todo_id)+'" aria-expanded="'+more+'"><span class="todo-title'+(item.status==='completed'?' is-struck':'')+'">'+esc(item.title)+'</span></button></div>'+detail+
+      (hasKids&&!collapsed?'<div class="todo-children" data-k="todo-children:'+esc(item.todo_id)+'">'+kids.map(function(k){return renderNode(ctx,list,k,depth+1);}).join('')+'</div>':'')+'</div>';
   }
 
   function pickDemoTarget(list){
@@ -838,10 +800,10 @@
     if(s.skipped) extra.push(s.skipped+' skipped');
     var tree = topLevel(list).map(function(p){ return renderNode(ctx,list,p,0); }).join('');
     return '<div class="todo-panel" data-k="todo-panel">'+
-      '<div class="todo-panel-summary" data-k="todo-summary"><strong>'+s.completed+' of '+s.total+' leaves complete</strong>'+
+      '<div class="todo-panel-summary" data-k="todo-summary"><strong>'+s.completed+' of '+s.total+' complete</strong>'+
         (extra.length?'<span class="todo-summary-extra">'+esc(extra.join(' · '))+'</span>':'')+
       '</div>'+
-      renderTools(ctx, list)+
+      /* Simulation controls live in Demo Studio, not the task inspector. */ ''+
       '<div class="todo-refusals-wrap" data-k="todo-refusals-wrap">'+renderRefusals(tid)+'</div>'+
       '<div class="todo-tree" data-k="todo-tree">'+tree+'</div>'+
     '</div>';
@@ -856,6 +818,16 @@
         ctx.renderApp() before toasting — the toast never stands alone.
      ===================================================================== */
   var ACTIONS = {
+    'todo-toggle-detail': function(ctx,btn){
+      ui.detailOpen=ui.detailOpen||{}; ui.detailOpen[btn.dataset.id]=!ui.detailOpen[btn.dataset.id]; ctx.renderApp();
+    },
+    'todo-show-item': function(ctx,btn){
+      var id=btn.dataset.id,list=itemsOf(currentThreadId(ctx)),it=list&&findItem(list,id); if(!it)return;
+      ui.detailOpen=ui.detailOpen||{}; ui.detailOpen[id]=true;
+      var parent=it.parent_todo_id; while(parent){delete ui.collapsed[parent];var p=findItem(list,parent);parent=p&&p.parent_todo_id;}
+      Object.assign(ctx.state.activity,{open:true,pinned:true,domain:'todo',scope:'focus'});ctx.state.hover=null;ctx.renderApp();
+      requestAnimationFrame(function(){var el=document.querySelector('[data-todo-id="'+CSS.escape(id)+'"]');if(el)el.scrollIntoView({block:'nearest'});});
+    },
     'todo-toggle-parent': function(ctx,btn){
       var id = btn && btn.dataset && btn.dataset.id; if(!id) return;
       if(ui.collapsed[id]) delete ui.collapsed[id]; else ui.collapsed[id]=true;
@@ -952,7 +924,7 @@
   var prevReset = EXT._actions && EXT._actions['reset-all'];
   EXT.chainAction('reset-all', function(ctx,btn,ev){
     restoreFixture();
-    return prevReset ? prevReset(ctx,btn,ev) : false;
+    return false;
   });
 
   /* =====================================================================
