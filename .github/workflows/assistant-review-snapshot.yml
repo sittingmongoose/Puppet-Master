@@ -1,0 +1,53 @@
+name: Assistant review source snapshot
+on:
+  push:
+    branches: [review/assistant-polish-20260905]
+    paths: [.github/workflows/assistant-review-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 60
+      - name: Package exact tracked review inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/assistant-review
+          python3 - <<'PY'
+          import subprocess, pathlib, zipfile, hashlib, json
+          prefix='Concepts/chat-assistant-concepts/5.6 Pro/'
+          tracked=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          selected=[]
+          for p in tracked:
+              if not p: continue
+              q=pathlib.PurePosixPath(p)
+              use=p=='AGENTS.md' or p.startswith('scripts/') or p.startswith('.agents/skills/pm-bootstrap-planning-ledger/')
+              if p.startswith(prefix):
+                  tail=p[len(prefix):]
+                  use=('/' not in tail or tail.startswith(('assets/','tests/','test/'))) and q.suffix.lower() not in {'.mp4','.webm','.mov','.zip','.gif'}
+              if p.startswith('Plans/'):
+                  tail=p[len('Plans/'):]
+                  use=not any(part.startswith('.') or part in {'ledgers','_shards','bootstrap_migration'} for part in pathlib.PurePosixPath(tail).parts) and q.suffix.lower() in {'.md','.json','.jsonl','.yaml','.yml','.txt'}
+              if use and pathlib.Path(p).is_file(): selected.append(p)
+          manifest={'commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'base_commit':subprocess.check_output(['git','rev-parse','HEAD^']).decode().strip(),'files':[]}
+          with zipfile.ZipFile('/tmp/assistant-review/assistant-review-inputs.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in selected:
+                  data=pathlib.Path(p).read_bytes(); z.writestr(p,data)
+                  manifest['files'].append({'path':p,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+              z.writestr('REVIEW_SOURCE_MANIFEST.json',json.dumps(manifest,indent=2))
+              z.writestr('REVIEW_GIT_LOG.txt',subprocess.check_output(['git','log','-55','--date=iso-strict','--format=fuller','--name-status']))
+              z.writestr('REVIEW_TREE.txt',subprocess.check_output(['git','ls-tree','-rl','HEAD']))
+          print('Packaged',len(selected),'files')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assistant-review-inputs
+          path: /tmp/assistant-review/assistant-review-inputs.zip
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
