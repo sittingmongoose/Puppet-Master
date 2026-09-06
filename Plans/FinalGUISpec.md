@@ -27740,7 +27740,15 @@ canonical_text: >-
   mode/disable-notification fields. The routing matrix uses canonical event categories and default sound mappings, and
   the sound library shows built-in normal notification sound entries with source/license/version/duration/hash metadata
   beside uploaded and imported assets. Sound is never the sole carrier for important state, and missing audio support
-  hides or labels controls rather than failing silently. The in-app toast/banner destination renders through the
+  hides or labels controls rather than failing silently. Preview starts the selected available audio only after an
+  explicit user gesture; its playing indicator follows actual playback rather than an independent animation timer.
+  The same control stops playback, a different selection replaces it without overlap, and leaving the sound view,
+  closing Settings, changing Project, or disposing the view releases playback resources. Missing or undecodable
+  recordings expose a non-audio unavailable/failure state and never play an unrelated substitute under the selected
+  asset's name. A browser concept may label generated demonstration tones and session-only user-selected files, but
+  must not present them as bundled licensed recordings, native audio evidence, pack validation, or notification
+  delivery. Mapping preview is read-only inspection and is distinct from local playback and explicit test-send.
+  The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
 gui_related: true
@@ -27754,6 +27762,7 @@ acceptance_criteria:
   - Built-in normal notification sounds show source, license, version, duration, hash, and default mapping metadata.
   - Preview is local only; test-send is explicit, labeled, rate-limited, masked, receipt-recorded, and never mutates alert state.
   - Audio absence or disabled sound remains accessible through visible labels and non-audio state.
+  - Playback tests cover actual audio start, zero volume, Stop, replacement, natural completion, navigation/Project cleanup, unavailable assets, decode/device failure, and rejected startup without false playing or delivery-success state.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Notifications and Sounds settings GUI fixtures
@@ -35103,7 +35112,7 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md]
 ```
 
-### F3-521 - Guided Tour Directed Beginner Film Presentation
+### F3-521 - Guided Tour Newbie-First Practice Presentation
 
 ```yaml
 plan_unit_id: F3-521
@@ -35111,17 +35120,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Guided Tour is a directed beginner film over the mounted Puppet Master application in one stable order: Usage,
-  Planning Wizard, then Assistant Chat with Teacher. Usage first establishes basic page navigation and the meaning of
-  the workspace panels, demonstrates how a real card hides and returns, and visually demonstrates that panels/cards
-  can be moved and resized; the performed Try beat advances only after the person opens that card's exact Options
-  control. Navigation, move, resize, change, and hide remain a compact coherent lesson rather than separate chapters.
-  Planning Wizard then explains how a plain-language goal becomes a reviewable sequence, shows the resulting editable
-  planning structure, and advances only after the person chooses one real intent on its mounted surface and sees the
-  action acknowledged. Assistant Chat docks at the far right, shows the real guide selector, waits for the person to
-  select Teacher and send one supported question through the real composer, and displays a deterministic local answer
-  in that same conversation. Teacher exposes a large categorized beginner question library in addition to accepting
-  free-form supported questions. ELI5 remains a persistent top control beside Pause and Skip and is called
+  Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable chapter
+  order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
+  the learner sends the supplied local question, sees Teacher's answer stream in the same labeled guided-example
+  conversation, and applies ELI5 to that same answer. Workspace practice explains navigation and panels, asks the
+  learner to move/dock Chat and use a real widget, and shares state across docked/undocked views. Every important
+  action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
+  predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
+  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time: a book-club
+  goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
+  unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
+  approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called
   out in the first scene; the same opening moment explains that people who prefer less animation can enable Reduced
   Motion later in Settings. All visible copy is written for a person who has never coded or used an IDE and never
   calls the application a `shell` or exposes command IDs, owners, providers, models, tokens, receipts, routes, or
@@ -35132,45 +35141,49 @@ canonical_text: >-
   inert or skip required practice. Basic, Friendly, Glass, and Retro direct the film with substantially different
   callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
   using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
-  flash. Skip restores the pre-tour layout and exact composer placeholder; successful completion keeps Assistant Chat
-  at the far right so Teacher remains the natural final destination.
+  flash. Skip restores captured layout, Chat state, and focus. Finish restores the temporary arrangement by default
+  or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
+  committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
 depends_on: [F3-520, PWIZ-023, ACD-431]
 unblocks: [F3-524]
 acceptance_criteria:
-  - "The three visible scenes occur in the exact order Usage, Planning Wizard, and Assistant Chat/Teacher; replay and Back preserve that story instead of bouncing between features."
+  - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
-  - "The first Usage beat introduces the persistent `ui.guided_tour.toggle_eli5` control beside Pause and Skip and explains Reduced Motion in the same concise moment; it reads the effective `general.visual.reduce-animations` preference and directs changes to Settings without inventing `ui.guided_tour.toggle_reduced_motion` or another screen."
-  - "Usage establishes basic page navigation and panel purpose, groups card hide/reveal into one Watch beat, visibly demonstrates panel/card movement and resizing, requires the exact real card Options control for its Try beat, and explains move, resize, change, and hide together rather than dropping those concepts or splitting them into verbose pages."
-  - "The Usage demonstration observes real widget-owner results for hide and reveal; highlighting, narration, elapsed animation, clicking a look-alike, or any unrelated screen change never counts as successful Try completion. The required action receives same-frame acknowledgement before the film advances, so the learner can tell that it worked."
-  - "Planning Wizard explains the purpose of planning, shows how one plain-language goal becomes a reviewable and editable sequence, identifies what the learner can change next, and advances only from activation of the exact mounted intent control; it shows and narrates that real result before leaving the scene and adds no redundant confirmation click."
-  - "Assistant Chat is docked at the far right before its scene begins and remains there after successful completion; the tour never returns to Usage or Planning after entering the final scene."
+  - "The brief opening introduces `ui.guided_tour.toggle_eli5` beside Pause and Skip and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
+  - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
+  - "Every important action offers visible Try it and Show Me using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
+  - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
+  - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
+  - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
-  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives a concise adult beginner explanation with useful detail, while ELI5 replaces jargon and abstraction with a concrete familiar analogy and smaller next action rather than merely shortening the same sentence."
+  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The same already-visible answer updates."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
-  - "Teacher's first view exposes four calm suggestions plus `Browse 26 more`. The expanded categorized question library is mounted inside Assistant Chat; while it is open the tour callout yields completely, the library and its Close control remain topmost and keyboard-reachable, and closing the library restores the same tour beat without growing, relocating, or clipping the callout."
+  - "Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable, and restores the same beat on close without clipping or losing the target."
   - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
-  - "The final Teacher practice requires opening the real Assistant Chat guide selector, choosing Teacher, sending a user-authored supported message through the real composer, and receiving the deterministic reply in that same conversation before Finish becomes the concluding action."
+  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 before workspace practice; the thread is subtly labeled Guided example."
+  - "The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry is not zero-use proof. Ordinary conversations keep their normal behavior."
   - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
   - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
   - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
-  - "Pause, Back, forward navigation where applicable, and Skip are always reachable and operational; Back restores the prior beat and target state without resetting the whole film, Skip restores the captured starting arrangement, and successful Finish deliberately keeps Chat on the far right without asking for a redundant layout decision."
-  - "Effective Reduced Motion removes travel choreography while retaining focus, hierarchy, announcements, and action parity; a preference change made in Settings is honored without discarding the active tour step."
+  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
+  - "Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements, and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative work and duplicate subscriptions."
   - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
   - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
   - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
   - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (directed three-scene order and exact-target progression revision required before current acceptance)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (current v2 three-scene story, exact-target progression, ten-action census, Teacher, focus, and terminal-disposition contract)"
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first revision required before current acceptance)"
+  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v2 is superseded migration input; current acceptance requires Chat/workspace/Planning order, eleven tour actions, shared Show Me predicates, same-answer ELI5, safe resume, and default restoration/explicit Keep)"
   - Concepts/pm7-tools/guided_tour_source.py authored guards
+  - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
 risk_class: guided_tour_fake_state_or_story_loss
 reasoning_tier: high
-context_scope: guided_tour_directed_beginner_film_presentation
+context_scope: guided_tour_newbie_first_practice_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Concepts/pm7-tools/guided_tour_source.py
@@ -35180,19 +35193,21 @@ source_lineage:
   - Plans/Planning_Wizard.md#PWIZ-023
   - Plans/assistant-chat-design.md#ACD-431
   - Concepts/pm7-tools/guided_tour_source.py
-preserved_exact_tokens: [Usage, Planning Wizard, Assistant Chat, Teacher, Ask Teacher anything about Puppet Master…, ELI5, ELI5: Off, Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, programmatic-focus-landmark, Pause, Skip Tour, Back, Finish tour]
+  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
+  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
+preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour]
 negative_constraints:
   - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
   - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
   - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
-  - "Do not restore the superseded order that opens Assistant Chat first or bounces from Chat to Usage and back."
-  - "Do not omit basic navigation or the panel/card move and resize demonstration; do not teach panel float/redock or card move, resize, configure, focus, hide, and reveal as separate verbose pages."
-  - "Do not put the Reduced Motion introduction into Product Onboarding or a separate tour chapter; keep the explanation in the opening Usage/ELI5 moment and preference ownership in Settings."
+  - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."
+  - "Do not omit navigation, real Chat movement, or the real widget practice; do not turn workspace instruction into a long feature checklist."
+  - "Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership in Settings."
   - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
   - "Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible tour copy."
   - "Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip."
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
-  - "Do not offer a redundant restore-or-keep decision after the final Teacher reply; successful completion keeps Chat at the far right and Skip restores the captured start."
+  - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
 owner_boundary_notes:
   - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."

@@ -1080,3 +1080,43 @@ negative_constraints:
   - Do not report PROC-001/PROC-002 as implemented without their later execution receipts.
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Shared_Integration_Runtime.md, Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Contracts_V0.md]
 ```
+
+## Working Notebook Backup Participation Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Notebook records and required notebook checkpoints are owned project data and participate in Project Backup and selected project/thread exports through existing families — not through a separate sync service: `project.working_notebook` (notebook + entry records) and `project.notebook_checkpoints` join the §3.2 project family list, follow the same reason-coded exclusion manifest rules, and stay out of the Settings transfer product (BRS-001 four-product separation). On restore or copy, identity-bearing refs remap per RestoreRun mode (`as_new` rewrites notebook/entry/checkpoint identities and scope bindings; `in_place` retains), provenance and effective restrictions are preserved, unavailable/pruned source evidence is represented explicitly (never fabricated or silently omitted), and no restored note, checkpoint, or transition record carries foreign write authority or triggers execution. Selective exports distinguish missing/excluded source bodies without leaking them.
+
+```yaml
+plan_unit_id: BRS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Notebook records and required notebook checkpoints participate in Project Backup and selected exports as owned project data families (project.working_notebook, project.notebook_checkpoints) under existing manifest rules, never through a separate sync service and never in Settings transfer. Restore/copy remaps identity-bearing refs per RestoreRun mode, preserves provenance and restrictions, represents missing evidence explicitly, and confers no foreign write authority or automatic execution.
+gui_related: false
+gui_classification_reason: Backup participation is data/recovery behavior, not GUI work.
+depends_on: [BRS-019, SP-257]
+unblocks: []
+acceptance_criteria:
+  - Restored/copied notes cannot retain foreign write authority and never auto-execute.
+  - Selective export distinguishes missing/excluded source bodies without leaking them.
+  - Settings transfer carries no note bodies.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-forge-backup-acceptance
+risk_class: restore_authority_leak
+reasoning_tier: standard
+context_scope: backup_restore
+implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/Project_System.md]
+node_compile_hint: {mode: backup_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I12
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-T04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A48
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A49
+preserved_exact_tokens: ["project.working_notebook", "project.notebook_checkpoints", "as_new", "reason-coded excluded families"]
+negative_constraints:
+  - Do not create a separate notebook sync service.
+  - Do not include note bodies in Settings transfer.
+owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md]
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Project_System.md, ContractName:Plans/Settings_System.md

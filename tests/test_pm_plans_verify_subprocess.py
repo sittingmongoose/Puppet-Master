@@ -308,22 +308,25 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
     """
 
     def test_run_named_check_normal_subprocess_return(self) -> None:
-        """A normal aggregate subcheck (json_syntax) returns a structured report."""
+        """A bounded real custody subcheck returns a structured report.
+
+        Repository-wide JSON scanning is an integration gate, not a stable
+        unit-test workload: retained evidence can grow independently of this test.
+        """
         import argparse
 
         ns = argparse.Namespace()
         started = time.monotonic()
         name, report = pm_plans_verify.run_named_check(
-            "json_syntax",
-            pm_plans_verify.cmd_json_syntax,
+            "validate_forge_backup_acceptance",
+            pm_plans_verify.cmd_validate_forge_backup_acceptance,
             ns,
             progress=False,
             timeout_seconds=120,
         )
         elapsed = time.monotonic() - started
-        self.assertEqual(name, "json_syntax")
-        # json_syntax re-invokes as a subprocess; the returned check name is normalized.
-        self.assertEqual(report["check"], "json-syntax")
+        self.assertEqual(name, "validate_forge_backup_acceptance")
+        self.assertEqual(report["check"], "validate-forge-backup-acceptance")
         self.assertIn(report["status"], {"pass", "fail"})
         # The subprocess route must not hang and must be bounded.
         self.assertLess(elapsed, 60.0)

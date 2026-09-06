@@ -777,3 +777,38 @@ bulk mutation, and a test receipt is not required for a conversational outcome.
 A quota or execution-window wait leaves an admitted in-progress item `in_progress` with the run
 wait state attached. Resume continues the same binding. An item becomes `blocked` only when the
 item itself has a genuine blocker; a Usage wait is not a blocker.
+
+## Notebook Promotion Boundary Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Working Notebook content reaches the To-Do list only through the existing `ToDoController` proposal path: a note may propose a To-Do, and the controller validates that proposal exactly like any other — a proposal never carries a status assertion the controller has not independently derived from a work binding and an accepted outcome receipt. Note text, checkpoint references, or capsule content never directly change item status, structure, or ordering, and a rejected promotion leaves the original note unchanged with truthful state.
+
+```yaml
+plan_unit_id: TDR-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/ToDo_Runtime.md
+canonical_text: Notebook-to-To-Do promotion runs only through ToDoController proposal validation with lineage back to the source note revision. Note text never directly changes item status or structure, never carries a status assertion the controller has not independently derived, and a rejected promotion leaves the note with truthful state.
+gui_related: false
+gui_classification_reason: To-Do authority semantics are runtime behavior, not GUI work.
+depends_on: [TDR-005, WN-011]
+unblocks: []
+acceptance_criteria:
+  - A note cannot mark a task complete; only receipted controller transitions can.
+  - Rejected promotion leaves the note unchanged and truthful.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: authority_bypass
+reasoning_tier: standard
+context_scope: todo_runtime
+implementation_surfaces: [Plans/ToDo_Runtime.md, Plans/Working_Notebook.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-N13
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I03
+preserved_exact_tokens: ["ToDoController", "proposal", "receipted"]
+negative_constraints:
+  - Do not let note writes mutate To-Do state outside the controller.
+owner_hints: [Plans/ToDo_Runtime.md, Plans/Working_Notebook.md]
+```
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Working_Notebook.md

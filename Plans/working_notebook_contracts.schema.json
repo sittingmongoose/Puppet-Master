@@ -1,0 +1,1270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/working_notebook_contracts.schema.json",
+  "title": "Working Notebook static contract schemas",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "notebooks",
+    "entry_envelopes",
+    "revision_mutations",
+    "resume_capsules",
+    "notebook_checkpoints",
+    "context_transitions",
+    "tool_requests",
+    "typed_errors"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.working_notebook_contracts.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notebooks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/working_notebook_record"
+      }
+    },
+    "entry_envelopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/working_notebook_entry_record"
+      }
+    },
+    "revision_mutations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/notebook_revision_mutation"
+      }
+    },
+    "resume_capsules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/resume_capsule"
+      }
+    },
+    "notebook_checkpoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/notebook_checkpoint_record"
+      }
+    },
+    "context_transitions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/context_transition_record"
+      }
+    },
+    "tool_requests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tool_request"
+      }
+    },
+    "typed_errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/typed_error"
+      }
+    }
+  },
+  "$defs": {
+    "scope_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "project_id",
+        "binding_refs"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binding_refs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "thread_id": {
+              "type": "string",
+              "pattern": "^thr_[A-Za-z0-9]+$"
+            },
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "node_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "attempt_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "collaboration_run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "participant_slot_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "recipient_policy_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "thread"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "thread_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "worker_lineage"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "run_id",
+                  "node_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "coordinator_run"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "run_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "participant"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "collaboration_run_id",
+                  "participant_slot_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "shared_slice"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "collaboration_run_id",
+                  "recipient_policy_ref"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "identity_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "message",
+            "artifact",
+            "tool_result",
+            "commit",
+            "plan",
+            "goal",
+            "workflow_record",
+            "memory_gist",
+            "note_entry"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision_or_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "restriction_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "restriction_kind",
+        "source_ref"
+      ],
+      "properties": {
+        "restriction_kind": {
+          "enum": [
+            "assistant_only_memory",
+            "blind_phase",
+            "muted_source",
+            "revoked_source",
+            "protected_evidence",
+            "participant_private"
+          ]
+        },
+        "source_ref": {
+          "$ref": "#/$defs/identity_ref"
+        },
+        "inherited_from_entry_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "working_notebook_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "notebook_id",
+        "project_id",
+        "scope",
+        "owner_actor",
+        "created_at_utc",
+        "updated_at_utc",
+        "capsule_ref",
+        "policy_generation"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/scope_binding"
+        },
+        "owner_actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "capsule_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "storage_key": {
+          "const": null,
+          "description": "reserved; canonical keys are owned by Plans/storage_value_registry.json rows"
+        }
+      }
+    },
+    "working_notebook_entry_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "notebook_id",
+        "entry_id",
+        "project_id",
+        "scope",
+        "revision",
+        "revision_cas",
+        "author",
+        "created_at_utc",
+        "updated_at_utc",
+        "lifecycle",
+        "epistemic_kind",
+        "freshness",
+        "body",
+        "body_sha256",
+        "provenance_refs",
+        "validity_refs",
+        "restriction_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.working_notebook_entry_record.v1"
+        },
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "entry_id": {
+          "type": "string",
+          "pattern": "^wne_[A-Za-z0-9]+$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/scope_binding"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "author": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "actor_ref"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "user",
+                "agent",
+                "system"
+              ]
+            },
+            "actor_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lifecycle": {
+          "enum": [
+            "active",
+            "superseded",
+            "archived",
+            "tombstoned"
+          ]
+        },
+        "epistemic_kind": {
+          "enum": [
+            "hypothesis",
+            "observation",
+            "rejected_approach",
+            "reference",
+            "continuation",
+            "user_note"
+          ]
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "needs_revalidation",
+            "source_unavailable"
+          ]
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 65536
+        },
+        "body_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "provenance_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity_ref"
+          }
+        },
+        "validity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity_ref"
+          }
+        },
+        "restriction_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/restriction_ref"
+          }
+        },
+        "supersedes_entry_revision": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "entry_id",
+            "revision"
+          ],
+          "properties": {
+            "entry_id": {
+              "type": "string",
+              "pattern": "^wne_[A-Za-z0-9]+$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "revision_cas": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provenance_refs": {
+                "contains": {
+                  "properties": {
+                    "kind": {
+                      "const": "note_entry"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "provenance_refs"
+            ]
+          },
+          "then": {
+            "properties": {
+              "restriction_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "notebook_revision_mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "notebook_id",
+        "entry_id",
+        "expected_revision",
+        "actor",
+        "policy_generation",
+        "operation",
+        "outcome"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "entry_id": {
+          "type": "string",
+          "pattern": "^wne_[A-Za-z0-9]+$"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation": {
+          "enum": [
+            "create",
+            "update",
+            "append",
+            "supersede",
+            "archive",
+            "tombstone"
+          ]
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "applied",
+                "conflict_stale_revision",
+                "stale_policy_generation",
+                "duplicate_idempotent_replay",
+                "denied",
+                "scope_unavailable",
+                "limit_exceeded"
+              ]
+            },
+            "result_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "conflicting_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "applied"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "status",
+                  "result_revision"
+                ],
+                "properties": {
+                  "result_revision": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "conflict_stale_revision"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "status",
+                  "conflicting_revision"
+                ],
+                "properties": {
+                  "conflicting_revision": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "resume_capsule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "notebook_id",
+        "scope",
+        "source_revisions",
+        "current_position",
+        "unresolved_issues",
+        "suggested_next_inspection",
+        "selected_refs",
+        "estimated_tokens",
+        "body_bytes"
+      ],
+      "properties": {
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope_binding"
+        },
+        "source_revisions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entry_id",
+              "revision"
+            ],
+            "properties": {
+              "entry_id": {
+                "type": "string",
+                "pattern": "^wne_[A-Za-z0-9]+$"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "current_position": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "unresolved_issues": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "maxLength": 512
+          }
+        },
+        "suggested_next_inspection": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 512
+        },
+        "selected_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/identity_ref"
+          }
+        },
+        "estimated_tokens": {
+          "type": "integer",
+          "maximum": 512
+        },
+        "body_bytes": {
+          "type": "integer",
+          "maximum": 2048
+        }
+      }
+    },
+    "notebook_checkpoint_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "checkpoint_id",
+        "notebook_id",
+        "project_id",
+        "required_entry_revisions",
+        "capsule_sha256",
+        "workflow_checkpoint_refs",
+        "source_visibility_generation",
+        "policy_generation",
+        "state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "checkpoint_id": {
+          "type": "string",
+          "pattern": "^nbc_[A-Za-z0-9]+$"
+        },
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_entry_revisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entry_id",
+              "revision"
+            ],
+            "properties": {
+              "entry_id": {
+                "type": "string",
+                "pattern": "^wne_[A-Za-z0-9]+$"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "capsule_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "workflow_checkpoint_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_visibility_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch_observed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "commit_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "sequence": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "state": {
+          "enum": [
+            "preparing",
+            "committed",
+            "failed",
+            "superseded"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "committed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "commit_receipt_ref": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "preparing",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "commit_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "context_transition_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "transition_id",
+        "project_id",
+        "thread_id",
+        "run_lineage",
+        "old_context_window_id",
+        "new_context_window_id",
+        "requested_controller",
+        "effective_controller",
+        "route_snapshot_ref",
+        "reason",
+        "initiator",
+        "state",
+        "checkpoint_ref",
+        "policy_generation"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "transition_id": {
+          "type": "string",
+          "pattern": "^cwt_[A-Za-z0-9]+$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[A-Za-z0-9]+$"
+        },
+        "run_lineage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "attempt_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          }
+        },
+        "old_context_window_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "new_context_window_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_controller": {
+          "enum": [
+            "pm_managed",
+            "provider_native",
+            "unavailable"
+          ]
+        },
+        "effective_controller": {
+          "enum": [
+            "pm_managed",
+            "provider_native",
+            "unavailable",
+            "degraded_fallback"
+          ]
+        },
+        "route_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "proactive_before_overflow",
+            "pressure_rising",
+            "pre_overflow_material_progress",
+            "overflow_imminent",
+            "model_change",
+            "recovery_reconstruction"
+          ]
+        },
+        "initiator": {
+          "enum": [
+            "agent_request",
+            "user_request",
+            "runtime_policy"
+          ]
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "checkpoint_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^nbc_[A-Za-z0-9]+$"
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch_observed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "admission_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "failure_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "timestamps": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requested_at_utc"
+          ],
+          "properties": {
+            "requested_at_utc": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "checkpointed_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "activated_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "terminal_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "activated",
+                  "recovered_resumed"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "admission_receipt_ref": {
+                "type": "string"
+              },
+              "checkpoint_ref": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_reason": {
+                "type": "string",
+                "pattern": "^crash_after_(commit|native_activation)"
+              }
+            },
+            "required": [
+              "failure_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checkpoint_ref": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_reason": {
+                "const": "crash_before_checkpoint_commit"
+              }
+            },
+            "required": [
+              "failure_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checkpoint_ref": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tool_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "args"
+      ],
+      "properties": {
+        "tool": {
+          "enum": [
+            "notebook_search",
+            "notebook_read",
+            "notebook_write",
+            "notebook_supersede",
+            "fresh_context_request",
+            "chatread"
+          ]
+        },
+        "args": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "enum": [
+                  "notebook_read",
+                  "chatread"
+                ]
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "range": {
+                    "type": "object",
+                    "required": [
+                      "convention"
+                    ],
+                    "properties": {
+                      "convention": {
+                        "enum": [
+                          "unicode_char_offsets",
+                          "utf8_byte_offsets"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "typed_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "notebook_scope_unavailable",
+            "notebook_denied",
+            "notebook_not_found",
+            "notebook_stale_revision",
+            "notebook_stale_policy_generation",
+            "notebook_invalid_range",
+            "notebook_limit_exceeded",
+            "notebook_source_unavailable",
+            "notebook_index_lag",
+            "notebook_route_unsupported",
+            "notebook_checkpoint_failed",
+            "transition_deferred",
+            "transition_cancelled",
+            "transition_retry_exhausted"
+          ]
+        },
+        "detail": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nondiscriminating": {
+          "type": "boolean",
+          "description": "true when the user/model-facing payload must not reveal denied existence"
+        }
+      }
+    }
+  }
+}

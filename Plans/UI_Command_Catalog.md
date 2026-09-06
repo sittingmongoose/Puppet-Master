@@ -430,6 +430,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the
 Canonical Orchestrator commands are:
 - `cmd.orchestrator.focus_object`
 - `cmd.orchestrator.focus_run`
+- `cmd.orchestrator.open_notebook` (Working Notebook access for the selected run/worker; candidate disposition `candidate_not_registered` per Plans/Working_Notebook.md §3; fail-closed `command_not_registered` until production wiring exists)
 - `cmd.orchestrator.open_graph_generation`
 - `cmd.orchestrator.open_graph_patch`
 - `cmd.orchestrator.open_concern`
@@ -777,6 +778,8 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integrat
 | `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
 | `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
 | `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+| `cmd.chat.open_working_notebook` | `{ thread_id }` | No persisted EventRecord family is currently registered; candidate disposition `candidate_not_registered` per Plans/Working_Notebook.md §3 (fail-closed `command_not_registered` until production wiring exists) | Chat notebook entry (thread header/context controls), command palette |
+| `cmd.chat.request_fresh_context` | `{ thread_id }` | No persisted EventRecord family is currently registered; the request records a Prompt_Pipeline transition lifecycle state; candidate disposition `candidate_not_registered`; result vocabulary `requested | deferred | denied` | Context controls, separately labeled from Compact Now |
 
 Rules:
 - hover-summary disclosure is passive UI and does not require its own stable command ID
@@ -12696,3 +12699,40 @@ Two internal owner actions carry their own idempotency domains and are **not** u
 
 Retired planning-depth values: `Light`, `Balanced`, and `Comprehensive` carry no question budget;
 the BrainStorm base of 15 and the Grill Me extension of `+10` are replaced by 20 and `+25`.
+
+## Working Notebook Command Rows Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Three catalog rows are registered above with candidate dispositions: `cmd.chat.open_working_notebook` (opens the thread Working Notebook editor/detail tab), `cmd.chat.request_fresh_context` (separately labeled fresh-context request distinct from Compact Now), and `cmd.orchestrator.open_notebook` (selected run/worker notebook access). Disposition truth: these rows are Plans-level command contracts only — no production wiring row exists in `Plans/Wiring_Matrix.production.json`, no handler is registered, and no event family is persisted; a dispatch before wiring fails closed with `command_not_registered`/`unknown_command` per the strict overlay (`error_codes`/`disabled_reason_codes` vocabularies unchanged). Payloads/availability/owner refs: `cmd.chat.open_working_notebook { thread_id }` requires a valid Project-bound thread; `cmd.chat.request_fresh_context { thread_id }` requires transition eligibility and returns `requested | deferred | denied` truthfully with disabled reasons; `cmd.orchestrator.open_notebook { focused_run_id, subject_id }` requires a selected run/worker.
+
+```yaml
+plan_unit_id: UCC-158
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Three Working Notebook command rows are registered with truthful candidate dispositions (cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook). No production wiring row, handler, or persisted event family exists for them; dispatch before wiring fails closed (command_not_registered/unknown_command), and every row names payload, availability, owner refs, and error vocabulary within the existing strict overlay.
+gui_related: true
+gui_classification_reason: Command catalog rows define user-visible command contracts.
+depends_on: [UCC-157, WN-019]
+unblocks: []
+acceptance_criteria:
+  - Every proposed visible action has availability, payload, owner, errors, and registration disposition.
+  - An unregistered candidate is not presented as a working command anywhere.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: phantom_command
+reasoning_tier: high
+context_scope: ui_commands
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: command_catalog_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-X05
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+preserved_exact_tokens: ["cmd.chat.open_working_notebook", "cmd.chat.request_fresh_context", "cmd.orchestrator.open_notebook", "candidate_not_registered", "command_not_registered"]
+negative_constraints:
+  - Do not add production wiring rows for unwired candidate commands.
+  - Do not claim handlers or emitted events from schema/catalog rows.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Working_Notebook.md

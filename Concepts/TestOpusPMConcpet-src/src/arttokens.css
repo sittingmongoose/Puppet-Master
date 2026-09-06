@@ -1,0 +1,153 @@
+/* =====================================================================
+   PMO ART TOKENS — one authored palette per theme, not a hue rotation.
+   Each family gets its own pigment logic; light/dark change the lighting
+   model (which surface is lit, where shadow falls), not just the values.
+   ===================================================================== */
+
+/* ---------- FRIENDLY — warm gouache on cream paper ---------- */
+[data-theme="friendly-light"] {
+  --pmo-art-on-accent: #FFFFFF;
+  --pmo-art-page:   #FBF7F3;
+  --pmo-art-plate:  #F2E7DC;
+  --pmo-art-wash-1: #FFE0CE;
+  --pmo-art-wash-2: #DDD5F3;
+  --pmo-art-wash-3: #CFEFE2;
+  --pmo-art-solid:  #FFFFFF;
+  --pmo-art-solid-deep: #F0A98C;
+  --pmo-art-ink-accent: #F07A55;
+  --pmo-art-ink-warm:   #F4C67C;
+  --pmo-art-ink-soft:   #9678C9;
+  --pmo-art-hilite: #FFFFFF;
+  --pmo-art-line:   #8A6F86;
+  --pmo-art-shadow: #C9A18F;
+  --pmo-art-label:  #4A4550;
+}
+[data-theme="friendly-dark"] {
+  --pmo-art-on-accent: #2A1E22;
+  --pmo-art-page:   #211E26;
+  --pmo-art-plate:  #2A2731;
+  --pmo-art-wash-1: #4A3A4E;
+  --pmo-art-wash-2: #33405A;
+  --pmo-art-wash-3: #2F4A44;
+  --pmo-art-solid:  #4E4760;
+  --pmo-art-solid-deep: #6B4352;
+  --pmo-art-ink-accent: #FFAD93;
+  --pmo-art-ink-warm:   #FFD97F;
+  --pmo-art-ink-soft:   #C3B1E4;
+  --pmo-art-hilite: #FFF3EC;
+  --pmo-art-line:   #C3B1E4;
+  --pmo-art-shadow: #121016;
+  --pmo-art-label:  #F0EDF4;
+}
+
+/* ---------- GLASS — light through tinted panes ---------- */
+[data-theme="glass-light"] {
+  --pmo-art-on-accent: #FFFFFF;
+  --pmo-art-page:   #EEF2F8;
+  --pmo-art-plate:  #D7E3F2;
+  --pmo-art-wash-1: #A9CBF5;
+  --pmo-art-wash-2: #C9B6F2;
+  --pmo-art-wash-3: #A6E6E0;
+  --pmo-art-solid:  #FFFFFF;
+  --pmo-art-solid-deep: #6F97CD;
+  --pmo-art-ink-accent: #1F63AE;
+  --pmo-art-ink-warm:   #7B5FD0;
+  --pmo-art-ink-soft:   #5E8FBF;
+  --pmo-art-hilite: #FFFFFF;
+  --pmo-art-line:   #4A6B92;
+  --pmo-art-shadow: #8FA6C4;
+  --pmo-art-label:  #24374F;
+  --pmo-art-pane-mid: 0.20;
+  --pmo-art-pane-end: 0.42;
+}
+[data-theme="glass-dark"] {
+  --pmo-art-on-accent: #06121E;
+  --pmo-art-page:   #0D1220;
+  --pmo-art-plate:  #131A2C;
+  --pmo-art-wash-1: #1E4C8A;
+  --pmo-art-wash-2: #4A2E86;
+  --pmo-art-wash-3: #12564F;
+  --pmo-art-solid:  #1B2540;
+  --pmo-art-solid-deep: #0A0F1C;
+  --pmo-art-ink-accent: #58C8FF;
+  --pmo-art-ink-warm:   #B08BFF;
+  --pmo-art-ink-soft:   #6FA8D8;
+  --pmo-art-hilite: #E8F6FF;
+  --pmo-art-line:   #7FD3FF;
+  --pmo-art-shadow: #04070F;
+  --pmo-art-label:  #DCE9F7;
+}
+
+/* ---------- RETRO — CRT phosphor / risograph ink ---------- */
+[data-theme="retro-light"] {
+  --pmo-art-on-accent: #F7F3E8;
+  --pmo-art-page:   #F2EDE0;
+  --pmo-art-plate:  #EAE3D2;
+  --pmo-art-wash-1: #EAE3D2;
+  --pmo-art-wash-2: #D6663F;
+  --pmo-art-wash-3: #2F6E62;
+  --pmo-art-solid:  #F7F3E8;
+  --pmo-art-solid-deep: #D6663F;
+  --pmo-art-ink-accent: #C2452B;
+  --pmo-art-ink-warm:   #E0A32E;
+  --pmo-art-ink-soft:   #2F6E62;
+  --pmo-art-hilite: #FFFDF5;
+  --pmo-art-line:   #2B2118;
+  --pmo-art-shadow: #B7A78C;
+  --pmo-art-scan:   #2B2118;
+  --pmo-art-label:  #2B2118;
+}
+[data-theme="retro-dark"] {
+  --pmo-art-on-accent: #06180D;
+  --pmo-art-page:   #0E1410;
+  --pmo-art-plate:  #121A14;
+  --pmo-art-wash-1: #0B120D;
+  --pmo-art-wash-2: #143C28;
+  --pmo-art-wash-3: #2A1E08;
+  --pmo-art-solid:  #1B2A1E;
+  --pmo-art-solid-deep: #0A100C;
+  --pmo-art-ink-accent: #55F08A;
+  --pmo-art-ink-warm:   #FFC531;
+  --pmo-art-ink-soft:   #2E9E5E;
+  --pmo-art-hilite: #C9FFDC;
+  --pmo-art-line:   #55F08A;
+  --pmo-art-shadow: #050806;
+  --pmo-art-scan:   #000000;
+  --pmo-art-label:  #C9FFDC;
+}
+
+/* ---------- BASIC — draughting paper, one accent ---------- */
+[data-theme="basic-light"] {
+  --pmo-art-on-accent: #FFFFFF;
+  --pmo-art-page:   #FFFFFF;
+  --pmo-art-plate:  #F2F4F8;
+  --pmo-art-wash-1: #F7F8FA;
+  --pmo-art-wash-2: #EDEFF3;
+  --pmo-art-wash-3: #F2F4F7;
+  --pmo-art-solid:  #FFFFFF;
+  --pmo-art-solid-deep: #D8DDE5;
+  --pmo-art-ink-accent: #1F6FEB;
+  --pmo-art-ink-warm:   #5A6B80;
+  --pmo-art-ink-soft:   #8D99A8;
+  --pmo-art-hilite: #FFFFFF;
+  --pmo-art-line:   #5A6B80;
+  --pmo-art-shadow: #C4CBD5;
+  --pmo-art-label:  #1E2733;
+}
+[data-theme="basic-dark"] {
+  --pmo-art-on-accent: #0B0E11;
+  --pmo-art-page:   #101418;
+  --pmo-art-plate:  #171C22;
+  --pmo-art-wash-1: #171C22;
+  --pmo-art-wash-2: #1D242C;
+  --pmo-art-wash-3: #1A2027;
+  --pmo-art-solid:  #1D242C;
+  --pmo-art-solid-deep: #0B0E11;
+  --pmo-art-ink-accent: #58A6FF;
+  --pmo-art-ink-warm:   #9BA9BA;
+  --pmo-art-ink-soft:   #6B7A8C;
+  --pmo-art-hilite: #E6EDF3;
+  --pmo-art-line:   #8B98A8;
+  --pmo-art-shadow: #05070A;
+  --pmo-art-label:  #E6EDF3;
+}

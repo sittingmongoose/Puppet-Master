@@ -735,16 +735,16 @@ STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "2.0.0"
 STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/storage_value_registry/2.0.0/storage_value_registry.schema.json"
 )
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 84
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 88
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 24
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 66,
-    "deferred_not_build_blocking": 17,
+    "deferred_not_build_blocking": 21,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 16,
-    "later_gui_or_feature_projection": 67,
+    "later_gui_or_feature_projection": 71,
     "migration_only": 1,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

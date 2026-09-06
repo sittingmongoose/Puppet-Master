@@ -145,6 +145,11 @@
      "description": "What the assistant keeps between sessions, how it finds it again, and how to forget things."
     },
     {
+     "id": "notebook",
+     "title": "Working Notebook",
+     "description": "How working notes are captured and included when a task continues."
+    },
+    {
      "id": "limits",
      "title": "Limits & Budgets",
      "description": "Token ceilings, context-window sizing, and what happens when a run's head gets too full."
@@ -20578,6 +20583,86 @@
    "devtools",
    "policy"
   ]
- }
- ]
+ },
+{
+  "id": "memory.notebook.auto-capture",
+  "label": "Working Notebook Auto-Capture",
+  "desc": "Automatically save material discoveries, rejected approaches, and continuation handoffs to the project Working Notebook during long tasks. Disabling this keeps existing notes and manual saves.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "project"
+  ],
+  "tier": "simple",
+  "search": [
+   "working notebook",
+   "notes",
+   "capture",
+   "continuity"
+  ],
+  "related_features": [
+   "working-notebook",
+   "assistant-chat"
+  ]
+  },
+{
+  "id": "memory.notebook.resume-capsule",
+  "label": "Working Notebook Resume Capsule",
+  "desc": "Include a small bounded summary of current position and open issues when context is rebuilt after a fresh context window or resume.",
+  "type": "toggle",
+  "default": true,
+  "scope": [
+   "project"
+  ],
+  "tier": "simple",
+  "search": [
+   "working notebook",
+   "resume",
+   "capsule",
+   "fresh context"
+  ],
+  "related_features": [
+   "working-notebook",
+   "assistant-chat"
+  ]
+  },
+{
+  "id": "memory.notebook.capsule-budget-tokens",
+  "label": "Working Notebook Capsule Budget (tokens)",
+  "desc": "Upper bound for the resume capsule size in estimated tokens before admission (never a reservation).",
+  "type": "number",
+  "default": 512,
+  "scope": [
+   "project"
+  ],
+  "tier": "advanced",
+  "search": [
+   "working notebook",
+   "capsule",
+   "token budget"
+  ],
+  "related_features": [
+   "working-notebook"
+  ]
+  },
+{
+  "id": "memory.notebook.injection-budget-tokens",
+  "label": "Working Notebook Injection Budget (tokens)",
+  "desc": "Upper bound for capsule plus notebook entries automatically included in context per turn, in estimated tokens (never a reservation).",
+  "type": "number",
+  "default": 1024,
+  "scope": [
+   "project"
+  ],
+  "tier": "advanced",
+  "search": [
+   "working notebook",
+   "injection",
+   "token budget"
+  ],
+  "related_features": [
+   "working-notebook"
+  ]
+  }
+]
 }

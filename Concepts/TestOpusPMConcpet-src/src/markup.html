@@ -1,0 +1,71 @@
+<!-- ===================================================================
+     PMO — Onboarding window. A real window over the live shell, not a
+     slideshow: the stage plate on the left is a persistent object that
+     re-draws between beats, the content column carries one idea at a time.
+     =================================================================== -->
+<div id="pmo" class="pmo" data-slint-counterpart="OnboardingWindow" data-open="false" data-screen="welcome"
+     data-motion="idle" data-phase="setup" hidden>
+  <div class="pmo-scrim" data-pmo-act="scrim" aria-hidden="true"></div>
+
+  <section class="pmo-window" role="dialog" aria-modal="true" aria-labelledby="pmo-title" aria-describedby="pmo-purpose"
+           data-slint-counterpart="OnboardingWindowFrame">
+    <p id="pmo-purpose" class="pmo-sr">Setting up Puppet Master: where the work happens, how your first project begins,
+      and what powers it. Nothing is created until you confirm.</p>
+
+    <header class="pmo-chrome">
+      <div class="pmo-brand">
+        <span class="pmo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 4h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M9 4v4M15 4v4M12 4v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <rect x="8" y="8" width="8" height="9" rx="4" fill="currentColor"/>
+            <path d="M8 19h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+          </svg>
+        </span>
+        <span class="pmo-brand-text">Puppet Master setup</span>
+      </div>
+
+      <div class="pmo-chrome-actions">
+        <div class="pmo-look" role="group" aria-label="Look and feel">
+          <span class="pmo-look-label">Look</span>
+          <div class="pmo-look-chips" data-pmo-slot="looks"></div>
+          <button type="button" class="pmo-look-mode" data-pmo-act="toggle-mode" aria-label="Switch between light and dark">
+            <span class="pmo-look-mode-track"><span class="pmo-look-mode-knob"></span></span>
+          </button>
+        </div>
+        <button type="button" class="pmo-text-btn" data-pmo-act="skip" data-ui-action-id="ui.onboarding.skip">Skip setup</button>
+        <button type="button" class="pmo-icon-btn" data-pmo-act="close" data-ui-action-id="ui.onboarding.close" aria-label="Close setup">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="pmo-body">
+      <figure class="pmo-plate" data-slint-counterpart="OnboardingStagePlate" aria-hidden="true">
+        <div class="pmo-plate-art" data-pmo-slot="art"></div>
+        <div class="pmo-plate-art pmo-plate-art--out" data-pmo-slot="art-out" style="display:none"></div>
+        <div class="pmo-plate-sweep" aria-hidden="true"></div>
+        <figcaption class="pmo-plate-cap" data-pmo-slot="platecap"></figcaption>
+      </figure>
+
+      <div class="pmo-content" data-slint-counterpart="OnboardingContentColumn">
+        <div class="pmo-scroll" data-pmo-slot="content" aria-live="polite"></div>
+        <div class="pmo-scroll pmo-scroll--out" data-pmo-slot="content-out" aria-hidden="true" style="display:none"></div>
+      </div>
+    </div>
+
+    <footer class="pmo-foot">
+      <button type="button" class="pmo-back" data-pmo-act="back" data-ui-action-id="ui.onboarding.back">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Back</span>
+      </button>
+      <nav class="pmo-rail" data-pmo-slot="rail" aria-label="Setup progress"></nav>
+      <div class="pmo-foot-actions" data-pmo-slot="actions"></div>
+    </footer>
+  </section>
+</div>
+
+<button type="button" id="pm7-onboarding-resume" class="pmo-resume" data-pmo-act="resume"
+        data-ui-action-id="ui.onboarding.start" data-source-surface="resume" hidden>
+  <span class="pmo-resume-dot" aria-hidden="true"></span>Finish setting up
+</button>

@@ -267,6 +267,13 @@ canonical_text: >-
   Recommended, Not configured, Managed, Custom, Unavailable, and Effective value differs are explicit states rather
   than empty values. Managers reuse header, search/filter, primary setup action, health summary, resource list,
   detail/inspector, requested/effective state, loading/empty/failed/unavailable/managed states, and logs/receipts routes.
+  Each manager uses a concise task-specific introduction and one primary placement for each action in the current
+  view; repeated chapter prose, identical index parent/child destinations, and shortcut panels that merely repeat
+  adjacent tabs are not required chrome. Secondary explanations, detailed provenance, and advanced configuration
+  use labeled keyboard-operable disclosures or their dedicated detail/tab. Collapsing secondary material never
+  hides a blocking error, unavailable reason, consent boundary, requested/effective difference, or live-versus-example
+  distinction. Sound preview and explicit notification test-send consume F3-405 rather than sharing a simulated
+  delivery-success presentation.
   Hidden origin/breadcrumb metadata may preserve return context. A visible Back, Close, or breadcrumb is not required;
   Settings must remain keyboard-escapable through the host's standard navigation contract without adding geometry.
 gui_related: true
@@ -276,6 +283,8 @@ unblocks: [SSYS-011, SSYS-012, SSYS-013, SSYS-014, SSYS-015]
 acceptance_criteria:
   - Every ordinary row exposes value, source, Project scope, availability, validation, Help/Details, and effect timing.
   - Every manager implements the shared semantic states without pretending status, action, and persisted value are equivalent rows.
+  - Manager curation preserves stable destinations and action availability while removing duplicate in-view navigation and actions; secondary controls remain discoverable and keyboard-operable.
+  - Advanced disclosures do not suppress actionable warnings, permission or consent boundaries, owner-currentness reasons, or example-data labels.
   - Return context survives without requiring visible Back, Close, or breadcrumb chrome.
 validation_surfaces: [future row renderer matrix, future manager-state matrix, future navigation and focus tests]
 risk_class: settings_state_or_manager_grammar_drift
@@ -1565,3 +1574,43 @@ Settings owns the shell, the inventory, project-scoped values, transactions, def
 manager routing. Domain runtimes own their records and operations, and a manager action routes to
 its owner. Participant dispositions, run state, schedule state, and progress are never stored as
 settings values.
+
+## Working Notebook Settings Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Four Project-scoped notebook values are registered as static inventory registrations under the existing `memory` category, written through the generic Settings transaction (QMAX-018 pattern; no per-setting commands): `memory.notebook.auto-capture` (toggle, default true — optional automatic capture of material events), `memory.notebook.resume-capsule` (toggle, default true — include the resume capsule in reconstructed context), `memory.notebook.capsule-budget-tokens` (number, default 512 — capsule ceiling, advanced tier), and `memory.notebook.injection-budget-tokens` (number, default 1024 — capsule+entries injection ceiling, advanced tier). Budgets are ceilings further reduced by the Prompt_Pipeline allocation, never reservations. Semantics: disabling auto-capture does not grant sharing, does not clear existing notes, does not disable explicit authorized operations, and does not disable any mandatory ledger/workflow checkpoint owned elsewhere. All values are Project-scoped persisted ordinary settings: no global values, no silent inheritance, no note bodies in any settings export or transfer, and requested/effective overrides reconcile through the existing snapshot model.
+
+```yaml
+plan_unit_id: SSYS-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: Working Notebook preferences are Project-scoped ordinary settings registered in the settings inventory (memory.notebook.auto-capture, memory.notebook.resume-capsule, memory.notebook.capsule-budget-tokens, memory.notebook.injection-budget-tokens) as static inventory registrations through the generic transaction. Budgets are ceilings, not reservations. Disabling auto-capture does not grant sharing, clear notes, or disable mandatory ledger/workflow checkpoints. Settings export/transfer never carries note bodies, and no global notebook settings values exist.
+gui_related: true
+gui_classification_reason: These are user-visible Settings values rendered through existing settings surfaces.
+depends_on: [SSYS-028, WN-018]
+unblocks: []
+acceptance_criteria:
+  - Setting IDs, types, defaults, and Project scope match the inventory schema.
+  - A disable-auto-capture control never widens sharing or disables owned checkpoints.
+  - Settings transfer contains no note bodies.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py json-syntax
+risk_class: settings_scope_creep
+reasoning_tier: standard
+context_scope: settings_system
+implementation_surfaces: [Plans/Settings_System.md, Plans/settings_inventory.json, Plans/Working_Notebook.md]
+node_compile_hint: {mode: settings_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-X04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-T04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A13
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A14
+preserved_exact_tokens: ["memory.notebook.auto-capture", "static inventory registrations", "ceilings, not reservations"]
+negative_constraints:
+  - Do not add global ordinary notebook settings.
+  - Do not bundle note bodies into settings export.
+owner_hints: [Plans/Settings_System.md, Plans/Working_Notebook.md]
+```
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Working_Notebook.md, ContractName:Plans/Backup_Restore_System.md

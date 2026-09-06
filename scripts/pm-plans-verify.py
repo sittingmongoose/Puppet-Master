@@ -559,6 +559,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_gui_asset_policy": "validate-gui-asset-policy",
     "validate_web_capability_contracts": "validate-web-capability-contracts",
     "validate_new_contracts": "validate-new-contracts",
+    "validate_forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
     "validate_filesafe_security_policy": "validate-filesafe-security-policy",
@@ -588,6 +590,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "gui_asset_policy": "validate-gui-asset-policy",
     "web_capability_contracts": "validate-web-capability-contracts",
     "server_command_gap": "validate-server-command-gap",
+    "forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
     "wiring_matrix": "validate-wiring-matrix",
@@ -609,6 +613,10 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "validate_new_contracts",
     "validate_server_command_gap",
     "server_command_gap",
+    "validate_forge_backup_acceptance",
+    "forge_backup_acceptance",
+    "validate_working_notebook_contracts",
+    "working_notebook_contracts",
     "validate_touch_closure",
     "touch_closure",
     "validate_case_l_non_event_materialization",
@@ -6371,6 +6379,42 @@ def cmd_validate_new_contracts(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
+def cmd_validate_forge_backup_acceptance(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate exact packet acceptance custody without claiming scenario execution."""
+    validator = ROOT / "scripts" / "pm-forge-backup-acceptance-verify.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-forge-backup-acceptance",
+        [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-forge-backup-acceptance", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate Working Notebook contract schemas and static fixtures."""
+    validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-working-notebook-contracts",
+        [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-working-notebook-contracts", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_server_command_gap(args: argparse.Namespace) -> dict[str, Any]:
     """Validate the frozen 171-row server adjudication and every materialized schema ref."""
 
@@ -6700,6 +6744,8 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("validate_new_contracts", cmd_validate_new_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("validate_implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
@@ -6751,6 +6797,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -6804,6 +6852,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         server_command_gap=compact_gate_report(check_map["server_command_gap"]),
+        forge_backup_acceptance=compact_gate_report(check_map["forge_backup_acceptance"]),
+        working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
@@ -6825,6 +6875,8 @@ COMMANDS = {
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "validate-new-contracts": cmd_validate_new_contracts,
+    "validate-forge-backup-acceptance": cmd_validate_forge_backup_acceptance,
+    "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
     "validate-case-l-non-event-materialization": cmd_validate_case_l_non_event_materialization,
@@ -6859,6 +6911,8 @@ def main() -> int:
         "check-shards",
         "validate-prd-planning-runtime-contracts",
         "validate-new-contracts",
+        "validate-forge-backup-acceptance",
+        "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",
         "validate-case-l-non-event-materialization",

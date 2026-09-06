@@ -17,13 +17,21 @@ import sys
 from pathlib import Path
 from typing import Any, Iterable, Iterator
 
+# Also support the existing importlib-based harness entry point.
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_packet_audit_verdicts import validate_suite_case_verdicts
+from pm_packet_audit_census import (
+    CURRENT_SCHEMA, LEGACY_CASE_COUNT, build_census_contract,
+    validate_manifest_census, validate_source_freeze,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "scripts" / "pm-integration-packet-audit.spec.json"
 DEFAULT_OUT = ROOT / "scratchpad" / "approval-gated-packet-audit-20260831-001"
 TOUCH_PATH = ROOT / "Plans" / "touch_closure.json"
 COMPLETED_REPORT_NAME = "audit_report.completed.json"
-EXPECTED_CASE_COUNT = 8_252
+EXPECTED_CASE_COUNT = LEGACY_CASE_COUNT  # Compatibility name for historical V1 harnesses only.
 TERMINAL_CASE_STATUSES = {"pass", "partial", "fail", "blocked", "not_applicable"}
 ALL_CASE_STATUSES = TERMINAL_CASE_STATUSES | {"not_run"}
 TERMINAL_VERDICTS = {"pass", "fail", "blocked"}
@@ -459,7 +467,12 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
         if "touch_id" not in columns:
             raise AuditError("Plans/touch_closure.json row_columns is missing touch_id")
     dimensions = spec["touch_closure_dimensions"]
+    if (not isinstance(dimensions, list) or not dimensions
+            or any(not isinstance(value, str) or not value.strip() for value in dimensions)
+            or len(set(dimensions)) != len(dimensions)):
+        raise AuditError("Touch Closure dimensions must be nonempty unique strings")
     cases = []
+    touch_ids: list[str] = []
     for row_index, raw_row in enumerate(rows):
         if columns is not None:
             if not isinstance(raw_row, list) or len(raw_row) != len(columns):
@@ -472,8 +485,9 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
                 raise AuditError(f"Plans/touch_closure.json legacy touch {row_index} is not an object")
             row = raw_row
         touch_id = row.get("touch_id")
-        if not isinstance(touch_id, str):
-            raise AuditError("touch closure row missing touch_id")
+        if not isinstance(touch_id, str) or not touch_id.strip() or touch_id in touch_ids:
+            raise AuditError("touch closure row has missing, empty, or duplicate touch_id")
+        touch_ids.append(touch_id)
         for dimension in dimensions:
             cases.append({
                 "case_id": f"{touch_id}/{dimension}",
@@ -490,6 +504,8 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
         "row_count": len(rows),
         "dimension_count": len(dimensions),
         "case_count": len(cases),
+        "touch_ids": sorted(touch_ids),
+        "dimensions": list(dimensions),
     }, cases)
 
 
@@ -560,13 +576,9 @@ def build_manifest() -> dict[str, Any]:
             key = case["applicability"]
             applicability_counts[key] = applicability_counts.get(key, 0) + 1
     case_count = sum(len(group["cases"]) for group in groups)
-    if case_count != EXPECTED_CASE_COUNT:
-        failures.append(
-            f"audit census must contain exactly {EXPECTED_CASE_COUNT} cases; found {case_count}"
-        )
-    return {
-        "schema_id": "pm.integration_packet_audit_manifest.v1",
-        "schema_version": "1.0.0",
+    manifest = {
+        "schema_id": CURRENT_SCHEMA,
+        "schema_version": "2.0.0",
         "created_at": utc_now(),
         "spec_path": "scripts/pm-integration-packet-audit.spec.json",
         "spec_sha256": sha256_file(SPEC_PATH),
@@ -585,7 +597,11 @@ def build_manifest() -> dict[str, Any]:
         "group_count": len(groups),
         "case_count": case_count,
         "groups": groups,
+        "census_contract": build_census_contract(groups, sha256_file(SPEC_PATH)),
     }
+    failures.extend(validate_manifest_census(manifest))
+    manifest["source_census_valid"] = not failures
+    return manifest
 
 
 def build_report_template(manifest: dict[str, Any]) -> dict[str, Any]:
@@ -819,8 +835,7 @@ def validate_manifest_snapshot(manifest: Any) -> list[str]:
         failures.append("manifest group_count does not match groups array")
     if manifest.get("case_count") != case_count:
         failures.append("manifest case_count does not match groups")
-    if case_count != EXPECTED_CASE_COUNT:
-        failures.append(f"manifest must contain exactly {EXPECTED_CASE_COUNT} cases; found {case_count}")
+    failures.extend(validate_manifest_census(manifest))
     if manifest.get("suite_case_counts") != suite_counts:
         failures.append("manifest suite_case_counts does not match cases")
     if manifest.get("applicability_counts") != applicability_counts:
@@ -837,6 +852,7 @@ def validate_manifest_snapshot(manifest: Any) -> list[str]:
 
 def validate_report(manifest: dict[str, Any], report: Any) -> list[str]:
     failures: list[str] = []
+    expected_case_count = sum(len(group["cases"]) for group in manifest["groups"])
     if not isinstance(report, dict):
         return ["completed audit report must be a JSON object"]
     if set(report) != REPORT_KEYS:
@@ -847,8 +863,8 @@ def validate_report(manifest: dict[str, Any], report: Any) -> list[str]:
         failures.append("completed audit report schema_version mismatch")
     if report.get("report_kind") != "completed":
         failures.append("report_kind must be completed; a template is not completion evidence")
-    if report.get("case_count") != EXPECTED_CASE_COUNT:
-        failures.append(f"completed report case_count must be exactly {EXPECTED_CASE_COUNT}")
+    if report.get("case_count") != expected_case_count:
+        failures.append(f"completed report case_count must be exactly {expected_case_count}")
     if not is_nonempty_string(report.get("implementation_freeze_ref")):
         failures.append("completed report implementation_freeze_ref must be non-empty")
     elif is_placeholder_evidence(report["implementation_freeze_ref"]):
@@ -862,8 +878,8 @@ def validate_report(manifest: dict[str, Any], report: Any) -> list[str]:
     rows = report.get("case_results")
     if not isinstance(rows, list):
         return failures + ["audit report case_results must be an array"]
-    if len(rows) != EXPECTED_CASE_COUNT:
-        failures.append(f"completed report must contain exactly {EXPECTED_CASE_COUNT} case results")
+    if len(rows) != expected_case_count:
+        failures.append(f"completed report must contain exactly {expected_case_count} case results")
     actual: dict[str, dict[str, Any]] = {}
     for position, row in enumerate(rows):
         if not isinstance(row, dict):
@@ -924,6 +940,7 @@ def validate_report(manifest: dict[str, Any], report: Any) -> list[str]:
     required_suites = set(manifest["required_suite_verdicts"])
     if set(verdicts) != required_suites:
         failures.append("suite_verdict keys do not match manifest required_suite_verdicts")
+    failures.extend(validate_suite_case_verdicts(manifest, list(actual.values()), verdicts))
     for suite, item in verdicts.items():
         verdict = item.get("verdict") if isinstance(item, dict) else None
         if not isinstance(item, dict) or set(item) != {"verdict", "evidence_refs", "residual_risk"}:
@@ -940,9 +957,6 @@ def validate_report(manifest: dict[str, Any], report: Any) -> list[str]:
         if not is_nonempty_string(item.get("residual_risk")):
             failures.append(f"suite {suite}: residual_risk must be non-empty")
         if verdict == "pass":
-            relevant = [row for row in actual.values() if row.get("suite") == suite]
-            if any(row.get("status") not in {"pass", "not_applicable"} for row in relevant):
-                failures.append(f"suite {suite}: pass with incomplete/failing cases")
             if not item.get("evidence_refs"):
                 failures.append(f"suite {suite}: pass requires aggregate evidence")
     aggregate = report.get("aggregate_verdict")
@@ -1066,29 +1080,7 @@ def validate_directory(directory: Path) -> dict[str, Any]:
         else:
             failures.append(f"{COMPLETED_REPORT_NAME} must be a JSON object")
     current = build_manifest()
-    if not current.get("source_census_valid"):
-        failures.extend(current.get("source_census_failures", []))
-    manifest_groups = manifest.get("groups", []) if isinstance(manifest, dict) else []
-    stored_groups = {
-        group["group_id"]: group
-        for group in manifest_groups
-        if isinstance(group, dict) and is_nonempty_string(group.get("group_id"))
-    }
-    current_groups = {group["group_id"]: group for group in current.get("groups", [])}
-    if set(stored_groups) != set(current_groups):
-        failures.append("audit group set drifted from current source/Touch Closure freeze")
-    for group_id in set(stored_groups).intersection(current_groups):
-        left, right = stored_groups[group_id], current_groups[group_id]
-        if left.get("actual_count") != right.get("actual_count"):
-            failures.append(f"{group_id}: case count drift")
-        if left.get("identifier_set_sha256") != right.get("identifier_set_sha256"):
-            failures.append(f"{group_id}: identifier set drift")
-        if left.get("case_content_sha256") != right.get("case_content_sha256"):
-            failures.append(f"{group_id}: source case content/applicability drift")
-        if left.get("source") != right.get("source"):
-            failures.append(f"{group_id}: source custody or Touch Closure snapshot drift")
-    if not isinstance(manifest, dict) or manifest.get("spec_sha256") != current.get("spec_sha256"):
-        failures.append("audit extraction/adaptation spec drift")
+    failures.extend(validate_source_freeze(manifest if isinstance(manifest, dict) else {}, current))
     if report_loaded:
         if report.get("manifest_sha256") != sha256_file(manifest_path):
             failures.append("completed audit report manifest_sha256 does not match audit_manifest.json")
@@ -1103,7 +1095,7 @@ def validate_directory(directory: Path) -> dict[str, Any]:
         "failure_count": len(failures),
         "failures": failures,
         "case_count": manifest.get("case_count") if isinstance(manifest, dict) else None,
-        "expected_case_count": EXPECTED_CASE_COUNT,
+        "expected_case_count": current.get("case_count"),
         "completed_report": report_path.relative_to(ROOT).as_posix() if report_path.is_relative_to(ROOT) else str(report_path),
         "completed_report_present": report_path.is_file() and not report_path.is_symlink(),
         "source_census_valid": manifest.get("source_census_valid") if isinstance(manifest, dict) else False,
@@ -1115,6 +1107,7 @@ def main() -> int:
     subparsers = parser.add_subparsers(dest="command", required=True)
     prepare_parser = subparsers.add_parser("prepare", help="create a new retained audit workbook")
     prepare_parser.add_argument("--outdir", type=Path, default=DEFAULT_OUT)
+    subparsers.add_parser("census", help="inspect current source coverage without creating a review workbook")
     validate_parser = subparsers.add_parser("validate", help="validate census and a filled report")
     validate_parser.add_argument("--dir", type=Path, default=DEFAULT_OUT)
     validate_parser.add_argument(
@@ -1123,6 +1116,23 @@ def main() -> int:
     )
     args = parser.parse_args()
     try:
+        if args.command == "census":
+            manifest = build_manifest()
+            contract = manifest["census_contract"]
+            result = {
+                "schema_id": "pm.integration_packet_audit_census_inspection.v1",
+                "manifest_schema": manifest["schema_id"],
+                "source_census_valid": manifest["source_census_valid"],
+                "source_census_failures": manifest["source_census_failures"],
+                "spec_sha256": manifest["spec_sha256"],
+                "touch_source_sha256": contract["touch_source"]["sha256"],
+                **{key: contract[key] for key in ("packet_case_count", "touch_row_count", "dimension_count", "touch_case_count", "total_case_count")},
+                "packet_groups": contract["packet_groups"],
+                "implementation_verdict": "not_run",
+                "claim_boundary": "Read-only source census, not a review freeze, execution result, or implementation verdict.",
+            }
+            print(json.dumps(result, indent=2, sort_keys=True))
+            return 0 if result["source_census_valid"] else 1
         if args.command == "prepare":
             outdir = args.outdir if args.outdir.is_absolute() else ROOT / args.outdir
             result = prepare(outdir)

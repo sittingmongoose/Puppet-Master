@@ -1357,3 +1357,38 @@ cites its convergent evidence path; fertility alone is never promoted to truth.
 Progress projection changes are owner events and internal projector updates. No user command and
 no model tool sets Plan progress; `cmd.chat.plan.progress.set` is not registered, and the
 internal recompute is `internal.plan_progress.recompute`.
+
+## Working Notebook Plan Identity Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Fresh context-window continuation never changes approved Plan identity: a reconstructed window rebinds the exact `assistant_plan_id`, `plan_version`, and `approved_hash` that were current, from owner state — never from a note, capsule, or summary. Notebook research may assist ongoing planning work, but notes cannot substitute for accepted planning atoms, required Deep Plan ledger turn commits, or Build approval, and a regular Plan never implicitly acquires a Deep Plan ledger session because a notebook referenced one.
+
+```yaml
+plan_unit_id: APR-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: A fresh context window rebinds the exact approved plan_id, plan_version, and content hash from owner state; notes and capsules cannot select a different approved Plan revision. Notebook content never substitutes for accepted planning atoms, required ledger turn commits, or Build approval, and a regular Plan never implicitly gains a Deep Plan ledger session through a notebook reference.
+gui_related: false
+gui_classification_reason: Plan identity binding is runtime behavior, not GUI work.
+depends_on: [APR-012, PP-087]
+unblocks: []
+acceptance_criteria:
+  - A new window cannot select a different approved Plan revision than owner state holds.
+  - Regular Plan does not acquire a Deep Plan ledger implicitly.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: plan_identity_drift
+reasoning_tier: high
+context_scope: plan_runtime
+implementation_surfaces: [Plans/Assistant_Plan_Runtime.md, Plans/Prompt_Pipeline.md, Plans/Planning_Ledger_System.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A42
+preserved_exact_tokens: ["approved_version", "approved_hash", "exact current Plan revision"]
+negative_constraints:
+  - Do not rebind Plan identity from notebook or capsule content.
+owner_hints: [Plans/Assistant_Plan_Runtime.md, Plans/Prompt_Pipeline.md]
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Planning_Ledger_System.md

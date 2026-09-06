@@ -13,7 +13,12 @@ persistence, layout, widget, Planning Wizard, or AuthBrowserSession state.
 
 from __future__ import annotations
 
+import hashlib
+from pathlib import Path
 import re
+
+import guided_tour_practice_source
+from guided_tour_practice_source import PLANNING_PRACTICE_SCRIPT
 
 from pm7_transform_guards import (
     assert_effect_delta,
@@ -59,6 +64,7 @@ GUIDED_TOUR_STYLE = r'''
   --pm7gt-step-dur: 500ms;
   --pm7gt-focus-dur: 460ms;
   --pm7gt-micro-dur: 160ms;
+  --pm7gt-demo-dur: 920ms;
 }
 .pm7gt { position: fixed; inset: 0; z-index: 2147481600; pointer-events: none; color: var(--text-primary); font-family: var(--body-font); }
 .pm7gt[hidden] { display: none; }
@@ -71,7 +77,7 @@ GUIDED_TOUR_STYLE = r'''
 .pm7gt-pointer { position:fixed; z-index:2; left:50%; top:50%; width:16px; height:16px; border:2px solid var(--surface); border-radius:50%; background:var(--accent-primary); box-shadow:0 2px 9px rgba(0,0,0,.28); opacity:0; pointer-events:none; transform:translate(-50%,-50%); transition:left var(--pm7gt-focus-dur) var(--ease-out),top var(--pm7gt-focus-dur) var(--ease-out),opacity var(--pm7gt-micro-dur) var(--ease-default); }
 .pm7gt[data-choreography="pre_cue"] .pm7gt-pointer,.pm7gt[data-choreography="travel"] .pm7gt-pointer,.pm7gt[data-choreography="arrival"] .pm7gt-pointer { opacity:1; }
 .pm7gt[data-choreography="arrival"] .pm7gt-pointer { transform:translate(-50%,-50%) scale(.82); }
-.pm7gt-callout { position: fixed; left: 50%; top: 50%; width: min(var(--pm7gt-theme-w,420px),var(--pm7gt-fit-w,100vw),calc(100vw - 24px)); max-height: min(520px,var(--pm7gt-fit-h,100vh),calc(100vh - 24px));
+.pm7gt-callout { position: fixed; left: 50%; top: 50%; width: min(var(--pm7gt-theme-w,420px),var(--pm7gt-fit-w,100vw),calc(100vw - 24px)); max-height: min(640px,var(--pm7gt-fit-h,100vh),calc(100vh - 24px));
   box-sizing: border-box; display: grid; grid-template-rows: auto minmax(0,1fr) auto; overflow: visible;
   border: 1px solid var(--border); border-radius: var(--radius-lg); color: var(--text-primary); background: var(--surface-elevated);
   box-shadow: var(--elev-3); pointer-events: auto; transform: translate(-50%,-50%) scale(1); transform-origin: center; }
@@ -167,6 +173,63 @@ html[data-pm7-guided-tour-open="true"] #pm7-onboarding-resume { display: none !i
 .pm7gt-library-group { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
 .pm7gt-library-group h3 { grid-column:1/-1; margin:0 0 2px; color:var(--accent-primary); font-size:10px; letter-spacing:.07em; text-transform:uppercase; }
 .pm7gt-library-group button { min-height:34px; padding:7px 9px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface); color:var(--text-secondary); font:600 12px/1.3 var(--body-font); text-align:left; cursor:pointer; }
+.pm7gt-practice-host { position:relative !important; overflow:hidden !important; }
+.pm7gt-planning-practice { position:absolute; inset:0; z-index:80; box-sizing:border-box; overflow:auto; overscroll-behavior:contain; padding:clamp(16px,3vw,38px); color:var(--text-primary); background:var(--background); font-family:var(--body-font); }
+.pm7gt-practice-head,.pm7gt-practice-body { width:min(820px,100%); margin-inline:auto; box-sizing:border-box; }
+.pm7gt-practice-head { display:grid; gap:5px; margin-bottom:16px; }
+.pm7gt-practice-head > span { color:var(--accent-primary); font-size:10px; font-weight:900; letter-spacing:.12em; }
+.pm7gt-practice-head > strong { font:800 clamp(21px,3vw,30px)/1.1 var(--display-font); }
+.pm7gt-practice-head > small { color:var(--text-muted); font-size:12px; }
+.pm7gt-practice-body { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; align-content:start; }
+.pm7gt-practice-body button,.pm7gt-practice-goal { min-width:0; box-sizing:border-box; border:1px solid var(--border); border-radius:var(--radius-md); color:var(--text-primary); background:var(--surface); font:inherit; }
+.pm7gt-practice-body button { min-height:54px; padding:11px 13px; cursor:pointer; text-align:left; transition:transform 180ms var(--ease-out),background 180ms var(--ease-default),border-color 180ms var(--ease-default); }
+.pm7gt-practice-body button:hover,.pm7gt-practice-body button:focus-visible { border-color:var(--accent-primary); background:var(--surface-elevated); outline:3px solid var(--accent-primary); outline-offset:2px; }
+.pm7gt-practice-body button:active { transform:scale(.985); }
+.pm7gt-practice-project,.pm7gt-practice-guided { display:grid; gap:3px; }
+.pm7gt-practice-project span,.pm7gt-practice-guided span,.pm7gt-practice-goal small { color:var(--text-muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.pm7gt-practice-project strong,.pm7gt-practice-guided strong { font-size:14px; }
+.pm7gt-practice-project[aria-pressed="true"],.pm7gt-practice-guided[aria-pressed="true"] { border-color:var(--accent-primary); box-shadow:inset 0 0 0 2px var(--accent-primary); }
+.pm7gt-practice-goal { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:9px; padding:13px; }
+.pm7gt-practice-goal > span,.pm7gt-practice-goal > small { grid-column:1/-1; color:var(--text-secondary); font-size:12px; font-weight:800; }
+.pm7gt-practice-goal textarea { min-width:0; min-height:72px; resize:vertical; box-sizing:border-box; padding:10px 11px; border:1px solid var(--border-light); border-radius:var(--radius-sm); color:var(--text-primary); background:var(--background); font:600 13px/1.45 var(--body-font); }
+.pm7gt-practice-goal button { min-height:42px; align-self:end; text-align:center; font-weight:800; }
+.pm7gt-practice-goal.is-set { display:grid; grid-template-columns:1fr; }
+.pm7gt-practice-goal.is-set strong { font-size:13px; line-height:1.45; }
+.pm7gt-practice-primary { grid-column:1/-1; border-color:var(--accent-primary) !important; color:var(--surface) !important; background:var(--accent-primary) !important; text-align:center !important; font-weight:900 !important; }
+.pm7gt-practice-outcomes,.pm7gt-practice-question,.pm7gt-practice-review { grid-column:1/-1; display:grid; gap:9px; padding:14px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface-elevated); animation:pm7gt-practice-arrive 420ms var(--ease-out) both; }
+.pm7gt-practice-outcomes > div { padding:9px 11px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface); font-size:13px; }
+.pm7gt-practice-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.pm7gt-practice-choices button { min-height:44px; text-align:center; }
+.pm7gt-practice-choices button[aria-pressed="true"] { border-color:var(--accent-primary); box-shadow:inset 0 0 0 2px var(--accent-primary); }
+.pm7gt-practice-link { justify-self:start; min-height:34px !important; padding:6px 9px !important; color:var(--accent-primary) !important; font-weight:800 !important; }
+.pm7gt-practice-why { margin:0; padding:10px 11px; border:1px solid var(--accent-primary); border-radius:var(--radius-sm); color:var(--text-secondary); background:var(--surface); font-size:12px; line-height:1.45; }
+.pm7gt-practice-review { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.pm7gt-practice-review header { grid-column:1/-1; display:flex; justify-content:space-between; gap:12px; align-items:center; }
+.pm7gt-practice-review header span { color:var(--accent-primary); font-size:11px; font-weight:850; }
+.pm7gt-practice-review > div { display:grid; gap:4px; min-height:58px; padding:10px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface); }
+.pm7gt-practice-review small { color:var(--text-muted); font-size:9px; font-weight:900; letter-spacing:.08em; }
+.pm7gt-practice-body button:disabled { cursor:default; opacity:.7; transform:none; }
+.pm7gt-practice-body button:disabled:hover { outline:none; background:var(--surface); }
+.pm7gt-practice-question[data-editing="true"] { border-color:var(--accent-primary); }
+.pm7gt-practice-review .pm7gt-practice-changed { animation:pm7gt-practice-consequence 560ms var(--ease-out) both; }
+@keyframes pm7gt-practice-consequence { from { transform:translateY(4px); outline:2px solid var(--accent-primary); outline-offset:3px; } to { transform:none; outline:2px solid transparent; outline-offset:0; } }
+html[data-motion="reduced"] .pm7gt-practice-review .pm7gt-practice-changed { animation:none; outline:2px solid var(--accent-primary); outline-offset:2px; }
+@media (prefers-reduced-motion:reduce) { .pm7gt-practice-review .pm7gt-practice-changed { animation:none; outline:2px solid var(--accent-primary); outline-offset:2px; } }
+.pm7gt-practice-review b { font-size:12px; line-height:1.35; }
+.pm7gt-practice-review > button { grid-column:1/-1; min-height:42px; text-align:center; font-weight:800; }
+@keyframes pm7gt-practice-arrive { from { opacity:.2; transform:translateY(8px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+html[data-theme^="friendly"] .pm7gt-planning-practice { background:var(--surface-alt); }
+html[data-theme^="friendly"] .pm7gt-practice-body button,html[data-theme^="friendly"] .pm7gt-practice-goal,html[data-theme^="friendly"] .pm7gt-practice-outcomes,html[data-theme^="friendly"] .pm7gt-practice-question,html[data-theme^="friendly"] .pm7gt-practice-review { border-radius:20px 14px 22px 15px; box-shadow:0 8px 20px rgba(0,0,0,.10); }
+html[data-theme^="glass"] .pm7gt-planning-practice { background:var(--background); }
+html[data-theme^="glass"] .pm7gt-practice-body { padding:12px; border:1px solid var(--border-light); border-radius:20px; background:var(--surface-alt); box-shadow:12px 12px 0 -6px var(--border-light); }
+html[data-theme^="glass"] .pm7gt-practice-body button,html[data-theme^="glass"] .pm7gt-practice-goal,html[data-theme^="glass"] .pm7gt-practice-outcomes,html[data-theme^="glass"] .pm7gt-practice-question,html[data-theme^="glass"] .pm7gt-practice-review { border-color:var(--border-light); background:var(--surface-elevated); box-shadow:inset 0 0 0 1px var(--border-light); }
+html[data-theme^="basic"] .pm7gt-practice-body { gap:8px; }
+html[data-theme^="basic"] .pm7gt-practice-body button,html[data-theme^="basic"] .pm7gt-practice-goal,html[data-theme^="basic"] .pm7gt-practice-outcomes,html[data-theme^="basic"] .pm7gt-practice-question,html[data-theme^="basic"] .pm7gt-practice-review,html[data-theme^="basic"] .pm7gt-practice-review > div { border-radius:0; box-shadow:none; }
+html[data-theme^="retro"] .pm7gt-planning-practice { background:var(--background); font-family:monospace; }
+html[data-theme^="retro"] .pm7gt-practice-head > strong { font-family:monospace; text-transform:uppercase; }
+html[data-theme^="retro"] .pm7gt-practice-body { padding:10px; border:2px solid var(--accent-primary); box-shadow:6px 6px 0 var(--border); }
+html[data-theme^="retro"] .pm7gt-practice-body button,html[data-theme^="retro"] .pm7gt-practice-goal,html[data-theme^="retro"] .pm7gt-practice-outcomes,html[data-theme^="retro"] .pm7gt-practice-question,html[data-theme^="retro"] .pm7gt-practice-review,html[data-theme^="retro"] .pm7gt-practice-review > div { border-radius:0; font-family:monospace; box-shadow:none; }
+html[data-theme^="retro"] .pm7gt-practice-outcomes,html[data-theme^="retro"] .pm7gt-practice-question,html[data-theme^="retro"] .pm7gt-practice-review { animation-duration:140ms; animation-timing-function:steps(2,end); }
 /* Four distinct visual directing systems. They share the same lesson and
    measured target adapter, but deliberately do not share one card silhouette. */
 .pm7gt-callout::before,.pm7gt-callout::after { content:""; position:absolute; pointer-events:none; box-sizing:border-box; }
@@ -247,6 +310,10 @@ html[data-theme^="basic"] .pm7gt[data-motion="forward"] .pm7gt-stage { animation
   .pm7gt-foot { grid-template-columns:auto 1fr minmax(112px,1.2fr); }
   .pm7gt-status,.pm7gt-control-cue { max-width:132px; }
   .pm7gt-library-group { grid-template-columns:1fr; }
+  .pm7gt-planning-practice { padding:12px; }
+  .pm7gt-practice-body,.pm7gt-practice-review { grid-template-columns:1fr; }
+  .pm7gt-practice-goal,.pm7gt-practice-primary,.pm7gt-practice-outcomes,.pm7gt-practice-question,.pm7gt-practice-review,.pm7gt-practice-review header,.pm7gt-practice-review > button { grid-column:1; }
+  .pm7gt-practice-choices { grid-template-columns:1fr; }
 }
 @media (max-width: 420px) {
   .pm7gt-boundary { display:none; }
@@ -459,7 +526,7 @@ _GUIDED_TOUR_LEGACY_SCRIPT = r'''
   function installTeacherSendAdapter(){var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.send!=='function')return false;if(teacherOriginalSend)return true;teacherOriginalSend=d.chat.send;d.chat.send=function(threadId,text){var duringTour=state.open&&state.step==='chat_teacher'&&state.phase_key==='teacher_composer',afterTour=!state.open&&state.teacher_available_after_tour&&state.completed;if((!duringTour&&!afterTour)||!state.teacher_thread_id||threadId!==state.teacher_thread_id)return teacherOriginalSend.apply(d.chat,arguments);text=String(text==null?'':text).trim();if(!text)return {toast:'Type a message first.'};if(d.state.chat.busy)return {toast:'Teacher is finishing the last reply.'};var thread=d.state.chat.threads[threadId],answer=teacherAnswer(text),msgId='pm7gt-teacher-'+(++teacherMessageSerial);if(!thread)return {toast:'Teacher’s practice chat is not available.'};thread.messages.push({role:'user',text:text});d.emit('chat.stream',{threadId:threadId,type:'user',text:text});d.state.chat.busy=true;d.emit('chat.state',{busy:true,context:d.state.chat.context,queue:d.state.chat.queue});d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'start',intent:'guided_teacher'});if(duringTour)transitionTo(2,3,'forward',true);teacherPending={session:sessionSerial,thread:threadId,message:msgId,transition:state.transition_serial,after_tour:afterTour};if(d.stream&&typeof d.stream.start==='function'){d.state.chat.activeStream=d.stream.start(function(chunk){d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:chunk});},answer.html,{onDone:function(how){completeTeacherTurn(d,threadId,msgId,text,answer,how);}});}else{d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:answer.html});completeTeacherTurn(d,threadId,msgId,text,answer,'done');}return {ok:true,local_deterministic:true,provider_use_count:0,answer_id:answer.id,copy_mode:answer.copy_mode,available_after_tour:afterTour};};return true;}
   function uninstallTeacherSendAdapter(){var d=window.PM_DEMO;if(teacherOriginalSend&&d&&d.chat){d.chat.send=teacherOriginalSend;teacherOriginalSend=null;}teacherPending=null;return true;}
   function teacherPersonaButton(){return document.querySelector('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem[data-persona="Teacher"]');}
-  function mountTeacherPersonaControl(){var existing=teacherPersonaButton(),list=document.querySelector('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personalist');if(existing||!list)return existing;var teacher=document.createElement('button');teacher.type='button';teacher.className='pm6-chat-personaitem';teacher.setAttribute('data-persona','Teacher');teacher.setAttribute('data-od-id','persona-item-teacher');teacher.setAttribute('data-pm-hover-label','Choose Teacher');teacher.setAttribute('data-pm-hover-detail','Ask for a clear explanation or a safe next step in Puppet Master.');teacher.innerHTML='<span class="pm6-chat-personaname">Teacher</span><span class="pm6-chat-personacheck" aria-hidden="true"></span>';list.insertBefore(teacher,list.firstChild);return teacher;}
+  function mountTeacherPersonaControl(){var existing=teacherPersonaButton(),list=document.querySelector('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personalist');if(existing||!list)return existing;var teacher=document.createElement('button');teacher.type='button';teacher.className='pm6-chat-personaitem';teacher.setAttribute('data-persona','Teacher');teacher.setAttribute('data-od-id','persona-item-teacher');teacher.setAttribute('data-ui-action-id','ui.assistant_chat.select_persona');teacher.setAttribute('data-pm-hover-label','Choose Teacher');teacher.setAttribute('data-pm-hover-detail','Ask for a clear explanation or a safe next step in Puppet Master.');teacher.innerHTML='<span class="pm6-chat-personaname">Teacher</span><span class="pm6-chat-personacheck" aria-hidden="true"></span>';list.insertBefore(teacher,list.firstChild);return teacher;}
   function closeTeacherPicker(){var portal=document.querySelector('.pm6-chat-persona-popout-portal.is-open'),button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(portal&&button)button.click();return !document.querySelector('.pm6-chat-persona-popout-portal.is-open');}
   function openTeacherPicker(attempt){openChat();var button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(!button)return false;if(!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))button.click();var teacher=mountTeacherPersonaControl();if(teacher){try{teacher.focus({preventScroll:true});}catch(error){}scheduleTargetTracking();return true;}if((attempt||0)<3)setTimeout(function(){if(state.open&&state.step==='chat_teacher'&&state.phase===1)openTeacherPicker((attempt||0)+1);},80);return false;}
   function prepareTeacherPractice(){openChat();removeTeacherCard();installTeacherSendAdapter();setTeacherInputPlaceholder();var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.newThread!=='function')return false;if(!state.teacher_thread_id){var created=d.chat.newThread('teacher');state.teacher_thread_id=created&&created.threadId||null;if(state.teacher_thread_id&&d.state.chat.threads[state.teacher_thread_id])d.state.chat.threads[state.teacher_thread_id].title='Teacher — guided help';if(window.PM6_CHAT_THREADS&&state.teacher_thread_id&&window.PM6_CHAT_THREADS[state.teacher_thread_id])window.PM6_CHAT_THREADS[state.teacher_thread_id].title='Teacher — guided help';document.querySelectorAll('.chat-thread-item[data-thread="'+state.teacher_thread_id+'"] .thread-title').forEach(function(node){node.textContent='Teacher — guided help';});}syncEli5();return true;}
@@ -643,12 +710,12 @@ _GUIDED_TOUR_V3_PREFIX = r'''
   var UI_ACTIONS=['ui.guided_tour.start','ui.guided_tour.next','ui.guided_tour.show_me','ui.guided_tour.back','ui.guided_tour.pause','ui.guided_tour.resume','ui.guided_tour.skip','ui.guided_tour.focus_route','ui.guided_tour.toggle_eli5','ui.guided_tour.finish','ui.guided_tour.replay'];
   var STEP_DEFS=[
     {id:'tour.intro.comfort',chapter:'intro',meaningful:false,dwell_ms:0,action_id:'ui.guided_tour.next'},
-    {id:'tour.chat.open',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'cmd.panel.switch'},
-    {id:'tour.chat.teacher.select',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'ui.assistant_chat.select_persona'},
-    {id:'tour.chat.teacher.ask',chapter:'chat_teacher',meaningful:true,dwell_ms:700,action_id:'ui.assistant_chat.send'},
+    {id:'tour.chat.open',chapter:'chat_teacher',meaningful:false,dwell_ms:650,action_id:'ui.guided_tour.next'},
+    {id:'tour.chat.teacher.select',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'cmd.persona.select'},
+    {id:'tour.chat.teacher.ask',chapter:'chat_teacher',meaningful:true,dwell_ms:700,action_id:'cmd.chat.send'},
     {id:'tour.chat.teacher.reply',chapter:'chat_teacher',meaningful:false,dwell_ms:500,action_id:'ui.guided_tour.next'},
-    {id:'tour.chat.teacher.eli5',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'ui.assistant_chat.toggle_eli5'},
-    {id:'tour.workspace.navigation',chapter:'workspace',meaningful:true,dwell_ms:650,action_id:'ui.guided_tour.focus_route'},
+    {id:'tour.chat.teacher.eli5',chapter:'chat_teacher',meaningful:true,dwell_ms:650,action_id:'cmd.chat.eli5.set'},
+    {id:'tour.workspace.navigation',chapter:'workspace',meaningful:false,dwell_ms:650,action_id:'ui.guided_tour.next'},
     {id:'tour.workspace.chat.dock',chapter:'workspace',meaningful:true,dwell_ms:700,action_id:'cmd.workspace_layout.move_surface'},
     {id:'tour.workspace.panels.rearrange',chapter:'workspace',meaningful:true,dwell_ms:750,action_id:'cmd.workspace_layout.move_surface'},
     {id:'tour.workspace.usage.open',chapter:'workspace',meaningful:true,dwell_ms:650,action_id:'ui.guided_tour.focus_route'},
@@ -678,9 +745,10 @@ _GUIDED_TOUR_V3_PREFIX = r'''
   function stepDef(id){return STEP_BY_ID[id||state.step_id]||STEP_DEFS[0];}
   function chapterPhase(def){var rows=STEP_DEFS.filter(function(row){return row.chapter===def.chapter;});return Math.max(0,rows.indexOf(def));}
   function syncCompatibility(){var def=stepDef();state.step=def.chapter;state.step_index=def.index;state.phase=chapterPhase(def);state.phase_key=def.id.split('.').slice(2).join('_')||'comfort';}
-  function counterNumber(value){if(Array.isArray(value))return value.length;value=Number(value);return Number.isFinite(value)?value:0;}
-  function measureCounters(){var d=window.PM_DEMO,s=d&&d.state||{},usage=s.usage||{},provider=s.providers||{};return {provider_requests:counterNumber(s.provider_request_count||provider.request_count||provider.requests||d&&d.provider_request_log),usage:counterNumber(s.usage_count||usage.request_count||usage.events||usage.receipts)};}
-  function updateCounterDeltas(){var now=measureCounters();state.provider_request_delta=now.provider_requests-state.provider_request_baseline;state.usage_delta=now.usage-state.usage_baseline;state.zero_provider_verified=state.provider_request_delta===0;state.zero_usage_verified=state.usage_delta===0;return now;}
+  function counterNumber(value){if(Array.isArray(value))return value.length;return typeof value==='number'&&Number.isFinite(value)&&value>=0?value:null;}
+  function firstCounter(values){for(var i=0;i<values.length;i+=1){var value=counterNumber(values[i]);if(value!==null)return value;}return null;}
+  function measureCounters(){var d=window.PM_DEMO,s=d&&d.state||{},usage=s.usage||{},provider=s.providers||{};return {provider_requests:firstCounter([s.provider_request_count,provider.request_count,provider.requests,d&&d.provider_request_log]),usage:firstCounter([s.usage_count,usage.request_count,usage.events,usage.receipts])};}
+  function updateCounterDeltas(){var now=measureCounters();state.provider_request_delta=now.provider_requests===null||state.provider_request_baseline===null?null:now.provider_requests-state.provider_request_baseline;state.usage_delta=now.usage===null||state.usage_baseline===null?null:now.usage-state.usage_baseline;state.zero_provider_verified=state.provider_request_delta===0;state.zero_usage_verified=state.usage_delta===0;return now;}
   function recordUi(id,payload){var row={action_id:id,step_id:state.step_id,serial:uiActionLog.length+1,payload:clone(payload||{})};uiActionLog.push(row);return row;}
   function receipt(actionId,targetId,status,reason,before,after,owner,mode,metadata){var row={schema_id:'pm.guided_tour.concept_effect_receipt.v2',receipt_id:'guided-tour-effect-'+(++receiptSerial),action_id:actionId,step_id:state.step_id,target_id:targetId||null,status:status,reason:reason||null,before:clone(before),after:clone(after),owner_receipt:clone(owner||null),mode:mode||state.action_mode||'try',concept_simulation_only:true,production_receipt:false};if(metadata)row.local_action_result=clone(metadata);effectReceipts.push(row);state.last_result=clone(row);state.last_error=status==='failed'||status==='disabled'?reason||status:null;notify();return row;}
   function snapshot(){syncCompatibility();updateCounterDeltas();var def=stepDef();return {schema_id:'pm.guided_tour.concept_snapshot.v2',schema_version:'2.0.0',concept_simulation_only:true,durable_session_record:false,real_shell_owner_observation:true,production_runtime_certification:false,open:state.open,status:state.status,step_id:state.step_id,step:state.step,step_index:state.step_index,phase:state.phase,phase_key:state.phase_key,chapter:def.chapter,last_action:state.last_action,last_result:clone(state.last_result),last_error:state.last_error,action_mode:state.action_mode,action_status:state.action_status,choreography_state:state.choreography_state,layout_disposition:state.layout_disposition,layout_snapshot_restored:state.layout_snapshot_restored,completed:state.completed,skipped:state.skipped,transition_serial:state.transition_serial,motion:state.motion,source:state.source,eli5_enabled:state.eli5_enabled,teacher_mode:state.teacher_mode,teacher_thread_id:state.teacher_thread_id,teacher_persona_selected:state.teacher_persona_selected,teacher_message_sent:state.teacher_message_sent,teacher_answer_id:state.teacher_answer_id,teacher_response_message_id:state.teacher_response_message_id,teacher_copy_mode:state.teacher_copy_mode,active_widget_id:state.active_widget_id,panel_demo_pair_ids:clone(state.panel_demo_pair_ids),panel_demo_complete:state.panel_demo_complete,usage_card_demo_complete:state.usage_card_demo_complete,planning_goal:state.planning_goal,planning_answer:state.planning_answer,planning_why_open:state.planning_why_open,planning_reviewed:state.planning_reviewed,planning_edited:state.planning_edited,planning_consequence_visible:state.planning_consequence_visible,planning_project_selected:state.planning_project_selected,planning_requirements_opened:state.planning_requirements_opened,work_started:false,provider_request_baseline:state.provider_request_baseline,provider_request_delta:state.provider_request_delta,provider_use_count:state.provider_request_delta,usage_baseline:state.usage_baseline,usage_delta:state.usage_delta,zero_provider_verified:state.zero_provider_verified,zero_usage_verified:state.zero_usage_verified,reduced_motion:reduced,low_resource_profile:state.low_resource_profile,shell_squeezed:state.shell_squeezed,theme:currentTheme(),timings:clone(timings),storyboard_revision:STORYBOARD.revision,story_order:STORYBOARD.order.slice(),chapter_order:STORYBOARD.chapter_order.slice(),meaningful_action_count:meaningful.length,planning_meaningful_action_count:planningMeaningful.length,meaningful_dwell_ms:meaningfulDwell,planning_dwell_ms:planningDwell,planning_action_share:planningMeaningful.length/meaningful.length,planning_dwell_share:planningDwell/meaningfulDwell,history:history.slice(),layout_snapshot_captured:!!original,journal_depth:0,effect_receipts:clone(effectReceipts),ui_action_log:clone(uiActionLog),target:targetAdapter.status(state.step_id)};}
@@ -693,7 +761,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   var broadTeacherAnswer=teacherAnswer;
   function guidedTeacherAnswer(text){if(/what happens before puppet master changes my files/i.test(String(text||'')))return {id:AUTHORITATIVE_ANSWER.id,copy_mode:state.eli5_enabled?'eli5':'normal',html:state.eli5_enabled?AUTHORITATIVE_ANSWER.eli5:AUTHORITATIVE_ANSWER.normal};return broadTeacherAnswer(text);}
   function homeSurface(id,layout){return (layout&&layout.surfaces||[]).filter(function(row){return row.surface_instance_id===id;})[0]||null;}
-  function semanticHome(layout){return (layout&&layout.surfaces||[]).map(function(surface){return {id:surface.surface_instance_id,host:surface.host,slot_index:surface.slot_index,visible:surface.visible,collapsed:surface.collapsed,size:clone(surface.size||{}),floating_bounds:clone(surface.floating_bounds||null)};}).sort(function(a,b){return a.id.localeCompare(b.id);});}
+  function semanticHome(layout){var surfaces=layout&&layout.surfaces||[],mainTotal=surfaces.reduce(function(sum,surface){return sum+(surface.visible&&!surface.collapsed&&surface.host==='home_main'?Number(surface.size&&surface.size.basis_px)||0:0);},0);return surfaces.map(function(surface){var size=surface.size||{},semanticSize=surface.host==='home_main'&&surface.visible&&!surface.collapsed&&mainTotal?{basis_share_ppm:Math.round((Number(size.basis_px)||0)*1000000/mainTotal),cross_basis_px:Number(size.cross_basis_px),flex_weight:Number(size.flex_weight),min_width_px:Number(size.min_width_px),min_height_px:Number(size.min_height_px)}:{basis_px:Number(size.basis_px),cross_basis_px:Number(size.cross_basis_px),flex_weight:Number(size.flex_weight),min_width_px:Number(size.min_width_px),min_height_px:Number(size.min_height_px)};return {id:surface.surface_instance_id,host:surface.host,slot_index:surface.slot_index,visible:surface.visible,collapsed:surface.collapsed,size:semanticSize,floating_bounds:surface.host==='floating'?clone(surface.floating_bounds):null};}).sort(function(a,b){return a.id.localeCompare(b.id);});}
   function usageLayout(){var api=window.PM7_USAGE;if(!api||!api.state)return null;var ids=[];try{ids=api.visibleWidgets().map(function(item){return item.id;});}catch(error){}var layouts={};ids.forEach(function(id){var item=api.widgetById&&api.widgetById(id);if(item&&api.layoutFor)layouts[id]=clone(api.layoutFor(item));});return {room:api.state.room,visible_widget_ids:ids,hidden:clone(api.state.hidden||{}),layouts:layouts};}
   function layoutNow(){var home=window.PM_HOME_WORKSPACE;return {home:home?semanticHome(home.layout):null,usage:usageLayout()};}
   function rememberOutsideFocus(event){var node=event&&event.target&&event.target.closest?event.target.closest('button,a,input,textarea,select,[tabindex]:not([tabindex="-1"])'):null;if(!node||root.contains(node))return;lastOutsideFocus=node;lastOutsideFocusAt=Date.now();}
@@ -701,11 +769,52 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function captureOriginal(preferredFocus){var api=window.PM_HOME_WORKSPACE,tab=document.querySelector('.page-tab.active[data-page]'),toggle=document.querySelector('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5'),persona=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label'),input=document.querySelector('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input'),active=document.activeElement,focus=preferredFocus||(active&&active!==document.body&&active!==document.documentElement&&active!==root?active:(lastOutsideFocus&&Date.now()-lastOutsideFocusAt<1200?lastOutsideFocus:null)),attach=document.querySelector('#panel-wizard .pm6-wiz-attach-card.selected'),intent=document.querySelector('#panel-wizard .pm6-wiz-intent-chip.sel'),wizStage=document.querySelector('#panel-wizard .pm6-wiz-stage.active[data-wiz-stage]'),counters=measureCounters();original={semantic:layoutNow(),home_layout:api?clone(api.layout):null,usage:usageLayout(),page:window.PM_PAGES&&window.PM_PAGES.current||tab&&tab.getAttribute('data-page')||'dashboard',chat_thread:window.PM_DEMO&&window.PM_DEMO.state&&window.PM_DEMO.state.chat&&window.PM_DEMO.state.chat.activeThread||null,persona:persona&&persona.textContent.trim()||'Product Manager',chat_placeholder:input&&input.getAttribute('placeholder')||'',chat_draft:input&&input.value||'',eli5_active:!!(toggle&&toggle.classList.contains('active')),attach:attach&&attach.getAttribute('data-demo-arg')||null,intent:intent&&intent.getAttribute('data-demo-arg')||null,wizard_stage:wizStage&&wizStage.getAttribute('data-wiz-stage')||'intake',focus_node:focus&&focus!==document.body?focus:null,scroll_left:Number(window.scrollX)||0,scroll_top:Number(window.scrollY||(document.scrollingElement&&document.scrollingElement.scrollTop))||0,counters:counters};state.provider_request_baseline=counters.provider_requests;state.usage_baseline=counters.usage;return clone(original.semantic);}
   function restoreDocumentScroll(){var left=original?original.scroll_left:0,top=original?original.scroll_top:0;try{window.scrollTo(left,top);}catch(error){}if(document.scrollingElement){document.scrollingElement.scrollLeft=left;document.scrollingElement.scrollTop=top;}}
   function setUsageVisible(id,visible){var api=window.PM7_USAGE,item=api&&api.widgetById&&api.widgetById(id),key=api&&api.state&&(api.state.room+':'+id);if(!api||!item)return false;var current=!api.state.hidden[key];if(current===visible)return true;if(!visible){var card=document.querySelector('#pm7uBoard .pm7u-card[data-widget="'+id+'"]'),menu=card&&card.querySelector('.pm7u-cardmenu');if(menu)menu.click();var hide=document.querySelector('#pm7uCardPop [data-hide-card="'+id+'"]');if(hide)hide.click();}else{var chooser=document.getElementById('pm7uCustomize');if(chooser)chooser.click();var show=document.querySelector('#pm7uCustomizePop [data-toggle-widget="'+id+'"]');if(show)show.click();if(document.querySelector('#pm7uCustomizePop.open')&&chooser)chooser.click();}return !api.state.hidden[key]===visible;}
-  function restoreWorkspaceSnapshot(){var failures=[],api=window.PM_HOME_WORKSPACE;if(original&&api&&original.home_layout){(original.home_layout.surfaces||[]).slice().sort(function(a,b){return a.slot_index-b.slot_index;}).forEach(function(want){try{var now=homeSurface(want.surface_instance_id,api.layout);if(!now)return failures.push('missing:'+want.surface_instance_id);if(!now.visible&&want.visible)api.setSurfaceVisible(want.surface_instance_id,true,'cmd.panel.switch');var insertion={index:want.slot_index};if(want.floating_bounds)insertion.bounds=clone(want.floating_bounds);api.moveSurface(want.surface_instance_id,want.host,insertion);now=homeSurface(want.surface_instance_id,api.layout);if(now&&now.collapsed!==want.collapsed)api.setCollapsed(want.surface_instance_id,want.collapsed);now=homeSurface(want.surface_instance_id,api.layout);if(now&&now.visible!==want.visible)api.setSurfaceVisible(want.surface_instance_id,want.visible,'cmd.panel.switch');}catch(error){failures.push(want.surface_instance_id);}});}var u=window.PM7_USAGE;if(original&&original.usage&&u){Object.keys(original.usage.layouts||{}).forEach(function(id){var item=u.widgetById&&u.widgetById(id),want=original.usage.layouts[id];if(item&&want&&u.setLayout)u.setLayout(item,want.cols,want.rows,'cmd.widget.resize','guided_tour_snapshot_restore');});Object.keys(u.state.hidden||{}).forEach(function(key){var id=key.split(':').slice(1).join(':'),want=!!original.usage.hidden[key];if(id)setUsageVisible(id,!want);});if(u.rerender)u.rerender();}var after=layoutNow(),ok=!!original&&same(original.semantic,after);return {ok:ok&&failures.length===0,failures:failures,before:original&&clone(original.semantic),after:after};}
+  function restoreHomeSizes(api,surfaces){
+    // Placement can normalize row bases; restore their saved ratios only after
+    // moving, through the workspace's bounded semantic resize owner.
+    if(typeof api.resizeSurface!=='function')return false;
+    return surfaces.every(function(want){
+      var layout=api.layout,now=homeSurface(want.surface_instance_id,layout);if(!now)return false;
+      if(now.size.basis_px===want.size.basis_px&&now.size.cross_basis_px===want.size.cross_basis_px&&now.size.flex_weight===want.size.flex_weight)return true;
+      var result=api.resizeSurface(want.surface_instance_id,{width_px:want.size.basis_px,height_px:want.size.cross_basis_px,flex_weight:want.size.flex_weight,expected_layout_revision:layout.layout_revision});
+      return !!result&&result.ok===true;
+    });
+  }
+  function restoreWorkspaceSnapshot(){
+    var failures=[],api=window.PM_HOME_WORKSPACE;
+    if(original&&api&&original.home_layout){
+      var surfaces=original.home_layout.surfaces||[];
+      surfaces.slice().sort(function(a,b){return a.slot_index-b.slot_index;}).forEach(function(want){
+        try{
+          var id=want.surface_instance_id,now=homeSurface(id,api.layout);if(!now)return failures.push('missing:'+id);
+          // Unchanged hidden panels must not be opened and reinserted as visible slots.
+          if(now.host!==want.host||now.slot_index!==want.slot_index||want.host==='floating'&&!same(now.floating_bounds,want.floating_bounds)){
+            var insertion={index:want.slot_index};if(want.floating_bounds)insertion.bounds=clone(want.floating_bounds);var moved=api.moveSurface(id,want.host,insertion);if(!moved||moved.ok===false)failures.push('move:'+id);
+          }
+          now=homeSurface(id,api.layout);if(now&&now.collapsed!==want.collapsed)api.setCollapsed(id,want.collapsed);
+          now=homeSurface(id,api.layout);if(now&&now.visible!==want.visible)api.setSurfaceVisible(id,want.visible,'cmd.panel.switch');
+        }catch(error){failures.push(want.surface_instance_id);}
+      });
+      try{if(!restoreHomeSizes(api,surfaces))failures.push('size_restore');}catch(error){failures.push('size_restore');}
+    }
+    var u=window.PM7_USAGE;if(original&&original.usage&&u){Object.keys(original.usage.layouts||{}).forEach(function(id){var item=u.widgetById&&u.widgetById(id),want=original.usage.layouts[id];if(item&&want&&u.setLayout&&!same(u.layoutFor(item),want))u.setLayout(item,want.cols,want.rows,'cmd.widget.resize','guided_tour_snapshot_restore');});Object.keys(u.state.hidden||{}).forEach(function(key){var id=key.split(':').slice(1).join(':'),want=!!original.usage.hidden[key];if(id)setUsageVisible(id,!want);});if(u.rerender)u.rerender();}
+    var after=layoutNow(),ok=!!original&&same(original.semantic,after);return {ok:ok&&failures.length===0,failures:failures,before:original&&clone(original.semantic),after:after};
+  }
   function selectPersona(name){var label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');if(label&&label.textContent.trim()===name)return true;var button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(!button)return false;if(!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))button.click();var item=[].slice.call(document.querySelectorAll('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem')).find(function(row){return row.getAttribute('data-persona')===name;});if(item)item.click();label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');return !!(label&&label.textContent.trim()===name);}
-  function restoreChatState(){if(!original)return false;selectPersona(original.persona);var d=window.PM_DEMO;if(original.chat_thread){var item=document.querySelector('.chat-thread-item[data-thread="'+original.chat_thread+'"]');if(item)item.click();if(d&&d.state&&d.state.chat)d.state.chat.activeThread=original.chat_thread;}document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input').forEach(function(input){input.setAttribute('placeholder',original.chat_placeholder);input.value=original.chat_draft;input.dispatchEvent(new Event('input',{bubbles:true}));});document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',original.eli5_active);});var id=state.teacher_thread_id;if(id&&id!==original.chat_thread&&d&&d.state&&d.state.chat){delete d.state.chat.threads[id];if(Array.isArray(d.state.chat.order))d.state.chat.order=d.state.chat.order.filter(function(row){return row!==id;});if(window.PM6_CHAT_THREADS)delete window.PM6_CHAT_THREADS[id];document.querySelectorAll('.chat-thread-item[data-thread="'+id+'"]').forEach(function(row){row.remove();});}return true;}
+  function restoreChatState(preserveTeacher){
+    var d=window.PM_DEMO;if(!original||!d||!d.state||!d.state.chat)return false;
+    if(original.chat_thread&&!d.state.chat.threads[original.chat_thread])return false;
+    if(!selectPersona(original.persona))return false;
+    if(original.chat_thread){var item=document.querySelector('.chat-thread-item[data-thread="'+original.chat_thread+'"]');if(item)item.click();d.state.chat.activeThread=original.chat_thread;}
+    var inputs=document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!inputs.length)return false;
+    inputs.forEach(function(input){input.setAttribute('placeholder',original.chat_placeholder);input.value=original.chat_draft;input.dispatchEvent(new Event('input',{bubbles:true}));});
+    document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',original.eli5_active);});
+    var id=state.teacher_thread_id;if(!preserveTeacher&&id&&id!==original.chat_thread){delete d.state.chat.threads[id];if(Array.isArray(d.state.chat.order))d.state.chat.order=d.state.chat.order.filter(function(row){return row!==id;});if(window.PM6_CHAT_THREADS)delete window.PM6_CHAT_THREADS[id];document.querySelectorAll('.chat-thread-item[data-thread="'+id+'"]').forEach(function(row){row.remove();});}
+    return (!original.chat_thread||d.state.chat.activeThread===original.chat_thread)&&[].every.call(inputs,function(input){return input.value===original.chat_draft&&input.getAttribute('placeholder')===original.chat_placeholder;});
+  }
   function restorePlanningChoice(){if(!original)return;restoring=true;var attach=original.attach&&document.querySelector('#panel-wizard .pm6-wiz-attach-card[data-demo-arg="'+original.attach+'"]'),intent=original.intent&&document.querySelector('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="'+original.intent+'"]');if(attach&&!attach.classList.contains('selected'))attach.click();if(intent&&!intent.classList.contains('sel'))intent.click();restoring=false;}
   function originalFocus(){var node=original&&original.focus_node;if(node&&node.isConnected&&node.getClientRects().length){requestAnimationFrame(function(){try{node.focus({preventScroll:true});}catch(error){}restoreDocumentScroll();});}}
+  function mountedTarget(selector){if(!selector)return null;var selectors=selector.split(',');for(var i=0;i<selectors.length;i+=1){var nodes=document.querySelectorAll(selectors[i].trim());for(var j=0;j<nodes.length;j+=1){var rect=nodes[j].getBoundingClientRect();if(rect.width>0&&rect.height>0)return nodes[j];}}return null;}
   function visibleTarget(selector){if(!selector)return null;var selectors=selector.split(',');for(var i=0;i<selectors.length;i+=1){var nodes=document.querySelectorAll(selectors[i].trim());for(var j=0;j<nodes.length;j+=1){var rect=nodes[j].getBoundingClientRect();if(rect.width>0&&rect.height>0&&rect.bottom>0&&rect.right>0&&rect.top<innerHeight&&rect.left<innerWidth)return nodes[j];}}return null;}
   function activeChat(){return visibleTarget('#chatPanel:not(.hidden),#floatingChat');}
   function chatOpenControl(){return visibleTarget('.activity-bar .icon[title="Chat"],[data-demo-action="cmd.panel.switch"][data-demo-arg*="chat"]');}
@@ -713,17 +822,445 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function mountTeacherPersonaControl(){var existing=teacherPersonaButton(),list=document.querySelector('.pm6-chat-persona-popout-portal.is-open .pm6-chat-personalist');if(existing||!list)return existing;var teacher=document.createElement('button');teacher.type='button';teacher.className='pm6-chat-personaitem';teacher.setAttribute('data-persona','Teacher');teacher.setAttribute('data-od-id','persona-item-teacher');teacher.setAttribute('data-pm-hover-label','Choose Teacher');teacher.setAttribute('data-pm-hover-detail','Ask for a clear explanation or a safe next step in Puppet Master.');teacher.innerHTML='<span class="pm6-chat-personaname">Teacher</span><span class="pm6-chat-personacheck" aria-hidden="true"></span>';list.insertBefore(teacher,list.firstChild);return teacher;}
   function openChatSurface(){var api=window.PM_HOME_WORKSPACE,chat=api&&homeSurface('chat',api.layout);if(api&&chat&&!chat.visible)api.setSurfaceVisible('chat',true,'cmd.panel.switch');var panel=document.getElementById('chatPanel');if(panel)panel.classList.remove('hidden');return !!activeChat();}
   function setTeacherPlaceholder(){document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input').forEach(function(input){input.setAttribute('placeholder','Ask Teacher anything about Puppet Master…');});}
-  function completeTeacherTurn(d,threadId,msgId,answer,how){var thread=d.state.chat.threads[threadId];if(thread){thread.messages.push({role:'assistant',html:answer.html,stopped:how==='stopped',guided_example:true});state.teacher_response_index=thread.messages.length-1;}d.state.chat.busy=false;d.state.chat.activeStream=null;d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:how==='stopped'?'stopped':'done'});d.emit('chat.state',{busy:false,context:d.state.chat.context,queue:d.state.chat.queue});state.teacher_message_sent=how!=='stopped';state.teacher_answer_id=answer.id;state.teacher_response_message_id=msgId;state.teacher_copy_mode=answer.copy_mode;teacherPending=null;setTimeout(function(){var message=document.querySelector('[data-pm6-mid="'+msgId+'"]'),sink=message&&message.querySelector('.pm6-chat-sink');if(message){message.classList.add('pm7gt-teacher-message');message.setAttribute('data-guided-example','true');message.querySelectorAll('.runtime-snapshot,.msg-runtime-compact').forEach(function(node){node.remove();});}if(sink)sink.setAttribute('data-pm7gt-teacher-response','true');if(state.open&&state.step_id==='tour.chat.teacher.ask')completeStep('applied',{thread_id:threadId,message_id:msgId,local_deterministic:true,provider_request_delta:0,usage_delta:0});},0);}
-  function installTeacherSendAdapter(){var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.send!=='function')return false;if(teacherOriginalSend)return true;teacherOriginalSend=d.chat.send;d.chat.send=function(threadId,text){var during=state.open&&state.step_id==='tour.chat.teacher.ask',threadOk=state.teacher_thread_id&&threadId===state.teacher_thread_id;if(!during||!threadOk)return teacherOriginalSend.apply(d.chat,arguments);text=String(text==null?'':text).trim();if(!text)return {toast:'Type a message first.'};if(d.state.chat.busy)return {toast:'Teacher is finishing the last reply.'};var thread=d.state.chat.threads[threadId],answer=guidedTeacherAnswer(text),msgId='pm7gt-teacher-'+(++teacherMessageSerial);if(!thread)return {toast:'Teacher’s guided example is not available.'};thread.messages.push({role:'user',text:text,guided_example:true});d.emit('chat.stream',{threadId:threadId,type:'user',text:text});d.state.chat.busy=true;d.emit('chat.state',{busy:true,context:d.state.chat.context,queue:d.state.chat.queue});d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'start',intent:'guided_teacher'});teacherPending={session:sessionSerial,thread:threadId,message:msgId};if(d.stream&&typeof d.stream.start==='function'){d.state.chat.activeStream=d.stream.start(function(chunk){d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:chunk});},answer.html,{onDone:function(how){completeTeacherTurn(d,threadId,msgId,answer,how);}});}else{d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:answer.html});completeTeacherTurn(d,threadId,msgId,answer,'done');}return {ok:true,local_deterministic:true,provider_request_delta:0,usage_delta:0,answer_id:answer.id,copy_mode:answer.copy_mode};};return true;}
-  function uninstallTeacherSendAdapter(){var d=window.PM_DEMO;if(teacherOriginalSend&&d&&d.chat)d.chat.send=teacherOriginalSend;teacherOriginalSend=null;teacherPending=null;}
-  function prepareTeacherPractice(){openChatSurface();installTeacherSendAdapter();setTeacherPlaceholder();var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.newThread!=='function')return false;if(!state.teacher_thread_id){var created=d.chat.newThread('teacher');state.teacher_thread_id=created&&created.threadId||null;if(state.teacher_thread_id&&d.state.chat.threads[state.teacher_thread_id])d.state.chat.threads[state.teacher_thread_id].title='Guided example · Teacher';if(window.PM6_CHAT_THREADS&&state.teacher_thread_id)window.PM6_CHAT_THREADS[state.teacher_thread_id].title='Guided example · Teacher';document.querySelectorAll('.chat-thread-item[data-thread="'+state.teacher_thread_id+'"] .thread-title').forEach(function(node){node.textContent='Guided example · Teacher';});}return true;}
+  var guidedThreadIds=Object.create(null);
+  function teacherTurnCurrent(pending){var d=window.PM_DEMO;return !!(pending&&teacherPending===pending&&pending.session===sessionSerial&&d&&d.state.chat.threads[pending.thread]===pending.thread_record&&(!pending.stream||d.state.chat.activeStream===pending.stream));}
+  function cancelTeacherTurn(){
+    var pending=teacherPending,d=window.PM_DEMO;if(!pending)return;teacherPending=null;
+    if(pending.stream&&typeof pending.stream.cancel==='function')pending.stream.cancel();
+    if(d&&d.state.chat.activeStream===pending.stream){d.state.chat.busy=false;d.state.chat.activeStream=null;d.emit('chat.stream',{threadId:pending.thread,msgId:pending.message,type:'stopped'});d.emit('chat.state',{busy:false,context:d.state.chat.context,queue:d.state.chat.queue});}
+  }
+  function completeTeacherTurn(d,pending,answer,how){
+    if(!teacherTurnCurrent(pending))return false;
+    var threadId=pending.thread,msgId=pending.message,thread=pending.thread_record,currentLesson=threadId===state.teacher_thread_id&&d.state.chat.activeThread===threadId;
+    thread.messages.push({role:'assistant',html:answer.html,stopped:how==='stopped',guided_example:true});
+    d.state.chat.busy=false;d.state.chat.activeStream=null;
+    d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:how==='stopped'?'stopped':'done'});d.emit('chat.state',{busy:false,context:d.state.chat.context,queue:d.state.chat.queue});
+    if(currentLesson){state.teacher_response_index=thread.messages.length-1;state.teacher_message_sent=how!=='stopped';state.teacher_answer_id=answer.id;state.teacher_response_message_id=msgId;state.teacher_copy_mode=answer.copy_mode;}
+    teacherPending=null;
+    setTimeout(function(){
+      if(pending.session!==sessionSerial||d.state.chat.threads[threadId]!==thread)return;
+      var message=document.querySelector('[data-pm6-mid="'+msgId+'"]'),sink=message&&message.querySelector('.pm6-chat-sink');
+      if(message){message.classList.add('pm7gt-teacher-message');message.setAttribute('data-guided-example','true');message.querySelectorAll('.runtime-snapshot,.msg-runtime-compact').forEach(function(node){node.remove();});}
+      if(sink)sink.setAttribute('data-pm7gt-teacher-response','true');
+      if(how!=='stopped'&&currentLesson&&state.open&&state.step_id===pending.step_id&&pending.step_id==='tour.chat.teacher.ask'&&state.action_status==='watching')completeStep('applied',{thread_id:threadId,message_id:msgId,local_deterministic:true});
+    },0);return true;
+  }
+  function installTeacherSendAdapter(){
+    var d=window.PM_DEMO;if(!d||!d.chat||typeof d.chat.send!=='function')return false;if(teacherOriginalSend)return true;
+    teacherOriginalSend=d.chat.send;
+    d.chat.send=function(threadId,text){
+      var thread=d.state.chat.threads[threadId],guided=!!(guidedThreadIds[threadId]||thread&&thread.guided_example===true);
+      if(!guided)return teacherOriginalSend.apply(d.chat,arguments);
+      // A guided thread remains local when paused, in another chapter, or retained after a replay.
+      if(!thread)return {ok:false,toast:'This guided example has ended. Replay the tour to start another.'};
+      text=String(text==null?'':text).trim();if(!text)return {toast:'Type a message first.'};
+      if(d.state.chat.busy)return {toast:'Teacher is finishing the last reply.'};
+      var answer=guidedTeacherAnswer(text),msgId='pm7gt-teacher-'+(++teacherMessageSerial),pending={session:sessionSerial,thread:threadId,thread_record:thread,message:msgId,step_id:state.step_id,stream:null};
+      if(threadId===state.teacher_thread_id)state.teacher_last_prompt=text;
+      thread.messages.push({role:'user',text:text,guided_example:true});d.emit('chat.stream',{threadId:threadId,type:'user',text:text});d.state.chat.busy=true;
+      d.emit('chat.state',{busy:true,context:d.state.chat.context,queue:d.state.chat.queue});d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'start',intent:'guided_teacher'});teacherPending=pending;
+      function chunk(html){if(teacherTurnCurrent(pending))d.emit('chat.stream',{threadId:threadId,msgId:msgId,type:'chunk',html:html});}
+      if(d.stream&&typeof d.stream.start==='function'){pending.stream=d.stream.start(chunk,answer.html,{onDone:function(how){completeTeacherTurn(d,pending,answer,how);}});if(teacherTurnCurrent(pending))d.state.chat.activeStream=pending.stream;}
+      else{chunk(answer.html);completeTeacherTurn(d,pending,answer,'done');}
+      return {ok:true,local_deterministic:true,provider_dispatch:false,usage_write:false,answer_id:answer.id,copy_mode:answer.copy_mode,available_after_tour:!state.open};
+    };return true;
+  }
+  function uninstallTeacherSendAdapter(){cancelTeacherTurn();/* Keep the local guard for retained threads and retired IDs. Ordinary threads still delegate. */}
+  function prepareTeacherPractice(){
+    openChatSurface();installTeacherSendAdapter();setTeacherPlaceholder();var d=window.PM_DEMO;
+    if(!d||!d.chat||typeof d.chat.newThread!=='function')return false;
+    if(!state.teacher_thread_id){
+      var created=d.chat.newThread('teacher');state.teacher_thread_id=created&&created.threadId||null;
+      if(state.teacher_thread_id&&d.state.chat.threads[state.teacher_thread_id]){var thread=d.state.chat.threads[state.teacher_thread_id];thread.title='Guided example · Teacher';thread.guided_example=true;guidedThreadIds[state.teacher_thread_id]=true;}
+      if(window.PM6_CHAT_THREADS&&state.teacher_thread_id)window.PM6_CHAT_THREADS[state.teacher_thread_id].title='Guided example · Teacher';
+      document.querySelectorAll('.chat-thread-item[data-thread="'+state.teacher_thread_id+'"] .thread-title').forEach(function(node){node.textContent='Guided example · Teacher';});
+      // Re-enter through the existing thread switcher after the title is set;
+      // changing only the roster model left the mounted header saying New thread.
+      var row=document.querySelector('.chat-thread-item[data-thread="'+state.teacher_thread_id+'"]');if(row)row.click();
+      document.querySelectorAll('#chatPanel .pm6-chat-sys,#floatingChat .pm6-chat-sys').forEach(function(node){if(node.textContent.indexOf('New thread')===0)node.textContent='Guided example · Replies are built into this tour. No online AI service is used.';});
+    }
+    return !!(state.teacher_thread_id&&d.state.chat.threads[state.teacher_thread_id]);
+  }
+  function sendGuidedComposer(event){
+    var target=event.target,d=window.PM_DEMO;if(!target||!target.closest||!d||!d.state||!d.state.chat)return;
+    var input=event.type==='keydown'&&target.matches('.pm6-chat-input')?target:null;
+    if(event.type==='keydown'&&(!input||event.key!=='Enter'||event.shiftKey||event.isComposing))return;
+    if(event.type==='click'){var button=target.closest('.pm6-chat-send');if(!button)return;var host=button.closest('#chatPanel,#floatingChat');input=host&&host.querySelector('.pm6-chat-input');}
+    if(!input||!input.closest('#chatPanel,#floatingChat'))return;
+    var id=d.state.chat.activeThread,thread=d.state.chat.threads[id];if(!guidedThreadIds[id]&&!(thread&&thread.guided_example===true))return;
+    // Capture before the ordinary composer's /web parser or queue shortcuts.
+    // Deterministic guided text must never become a tool or provider request.
+    event.preventDefault();event.stopImmediatePropagation();installTeacherSendAdapter();
+    var result=d.chat.send(id,input.value);if(result&&result.ok){input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));}
+    else if(result&&result.toast){state.last_error=result.toast;if(state.open)render('forward');}
+  }
+  document.addEventListener('keydown',sendGuidedComposer,true);
+  document.addEventListener('click',sendGuidedComposer,true);
   function fillTeacherQuestion(){var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!input)return false;input.value=AUTHORITATIVE_PROMPT;input.dispatchEvent(new Event('input',{bubbles:true}));try{input.focus({preventScroll:true});}catch(error){}return true;}
-  function applyTeacherMode(){var d=window.PM_DEMO,thread=d&&d.state&&d.state.chat&&d.state.chat.threads[state.teacher_thread_id],html=state.eli5_enabled?AUTHORITATIVE_ANSWER.eli5:AUTHORITATIVE_ANSWER.normal;if(thread&&Number.isFinite(state.teacher_response_index)&&thread.messages[state.teacher_response_index])thread.messages[state.teacher_response_index].html=html;var sink=document.querySelector('[data-pm6-mid="'+state.teacher_response_message_id+'"] .pm6-chat-sink,[data-pm7gt-teacher-response="true"]');if(sink)sink.textContent=html;state.teacher_copy_mode=state.eli5_enabled?'eli5':'normal';return !!sink;}
-  function syncEli5(){eli5Button.setAttribute('aria-pressed',String(state.eli5_enabled));eli5Button.textContent=state.eli5_enabled?'ELI5: On':'ELI5: Off';document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',state.eli5_enabled);});}
+  function applyTeacherMode(){var d=window.PM_DEMO,thread=d&&d.state&&d.state.chat&&d.state.chat.threads[state.teacher_thread_id],answer=guidedTeacherAnswer(state.teacher_last_prompt||AUTHORITATIVE_PROMPT),html=answer.html;if(thread&&Number.isFinite(state.teacher_response_index)&&thread.messages[state.teacher_response_index])thread.messages[state.teacher_response_index].html=html;var sink=document.querySelector('[data-pm6-mid="'+state.teacher_response_message_id+'"] .pm6-chat-sink,[data-pm7gt-teacher-response="true"]');if(sink)sink.textContent=html;state.teacher_answer_id=answer.id;state.teacher_copy_mode=answer.copy_mode;return !!sink;}
+  function syncEli5(){eli5Button.setAttribute('aria-pressed',String(state.eli5_enabled));eli5Button.textContent=state.eli5_enabled?'ELI5: On':'ELI5: Off';eli5Button.setAttribute('data-pm-hover-label',state.eli5_enabled?'Use regular wording':'Use simpler wording');eli5Button.setAttribute('data-pm-hover-detail',state.eli5_enabled?'Return to the fuller explanation.':'Keep the same meaning with fewer, friendlier words.');document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',state.eli5_enabled);});}
+  function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(character){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character];});}
+  var STEP_COPY={
+    'tour.intro.comfort':{kicker:'A short guided film',title:'Let’s make Puppet Master feel familiar.',normal:'You’ll try a few real actions. This guided example does not change your files or use your AI plan.',eli5:'We will practice together. Nothing here changes your files or uses your AI plan.',note:'Want gentler movement or simpler words? Reduced Motion is in Settings, and ELI5 stays at the top of this tour.'},
+    'tour.chat.open':{kicker:'Ask and understand',title:'Meet Assistant Chat.',normal:'Assistant Chat begins at the far right, where you can ask for help without leaving what you are doing.',eli5:'Assistant Chat waits on the right so help stays beside your work.',success:'Assistant Chat is ready.'},
+    'tour.chat.teacher.select':{kicker:'Ask and understand',title:'Choose Teacher.',normal:'Teacher explains the screen you are on, an unfamiliar term, or why a choice matters.',eli5:'Teacher explains what you see and why a choice matters.',success:'Teacher is listening.'},
+    'tour.chat.teacher.ask':{kicker:'Ask and understand',title:'Ask the example question.',normal:'Send “What happens before Puppet Master changes my files?” The answer is built into this guide and uses no online AI service.',eli5:'Send the example question. Its answer is already in this guide, so it costs nothing.',success:'Teacher answered inside Assistant Chat.'},
+    'tour.chat.teacher.reply':{kicker:'Teacher answered',title:'A useful answer stays close to the work.',normal:AUTHORITATIVE_ANSWER.normal,eli5:AUTHORITATIVE_ANSWER.eli5,note:'This thread is labeled as a guided example. After the tour, Teacher can explain many more Puppet Master topics.'},
+    'tour.chat.teacher.eli5':{kicker:'Choose your reading style',title:'Try ELI5.',normal:'ELI5 makes the same answer shorter and clearer without changing what it means.',eli5:'ELI5 uses fewer, simpler words but keeps the same meaning.',success:'The same answer is now easier to read.'},
+    'tour.workspace.navigation':{kicker:'Make the workspace yours',title:'Pages and panels do different jobs.',normal:'The tabs across the top change your main page. Panels such as Assistant Chat can stay beside you as you move around.',eli5:'Top tabs change the main page. Side panels can follow you.'},
+    'tour.workspace.chat.dock':{kicker:'Make the workspace yours',title:'Move Assistant Chat.',normal:'Drag Assistant Chat toward the highlighted side. The same conversation stays with you; only its place changes.',eli5:'Move Chat to the highlighted side. The messages stay the same.',success:'Assistant Chat moved and kept the same conversation.'},
+    'tour.workspace.panels.rearrange':{kicker:'Make the workspace yours',title:'Rearrange one more panel.',normal:'Use a panel’s move handle to put the tools you need next to each other. Your project files do not move.',eli5:'Move one panel. Only the window moves, not your files.',success:'The panel moved to its new place.'},
+    'tour.workspace.usage.open':{kicker:'Make the workspace yours',title:'Open Usage.',normal:'Usage gathers activity, limits, and cost signals into cards. Moving a card never changes the work it reports.',eli5:'Usage is a page of gauges. Moving a gauge does not change your work.',success:'Usage is open.'},
+    'tour.workspace.widget.manage':{kicker:'Make the workspace yours',title:'Keep a useful card nearby.',normal:'Add or resize a card so the information you check often is easy to glance at while planning.',eli5:'Put one useful card where it is easy to see.',success:'The card changed through its real widget controls.'},
+    'tour.planning.open':{kicker:'Plan before building',title:'Open Planning Wizard.',normal:'Planning Wizard turns a rough idea into a plan you can inspect before any work begins.',eli5:'Planning Wizard turns your idea into steps you can check first.',success:'Planning Wizard is open.'},
+    'tour.planning.project_source':{kicker:'Plan before building',title:'Choose the project for this practice.',normal:'The Wizard keeps every decision attached to the right Project. Choose the local practice Project.',eli5:'Choose which Project this practice belongs to.',success:'The practice Project is selected.'},
+    'tour.planning.goal':{kicker:'Plan before building',title:'Describe the outcome in one sentence.',normal:'Use the book-club example. A clear result is more useful than a list of technical instructions.',eli5:'Say what you want to make. One clear sentence is enough.',success:'The idea is ready to turn into outcomes.'},
+    'tour.planning.guided_help':{kicker:'Plan before building',title:'Choose guided planning.',normal:'Guided planning asks only the decisions that can change the result and explains why each one matters.',eli5:'Guided planning asks one useful question at a time.',success:'Guided planning is selected.'},
+    'tour.planning.requirements':{kicker:'Plan before building',title:'Turn the idea into outcomes.',normal:'Open the outcome view and check that it describes what visitors should be able to do.',eli5:'See the three things the finished site should do.',success:'Three clear outcomes are visible.'},
+    'tour.planning.question':{kicker:'Plan before building',title:'Answer the question that changes the result.',normal:'Choose who should be able to update the meeting and book. This affects whether shared sign-in and editing are needed.',eli5:'Choose who can change the meeting and book.',success:'Your decision is part of the plan.'},
+    'tour.planning.why':{kicker:'Plan before building',title:'See why the question matters.',normal:WHY_COPY,eli5:'This answer decides whether other people need a safe way to sign in and edit.',success:'The reason is visible beside the decision.'},
+    'tour.planning.review':{kicker:'Plan before building',title:'Review before anything starts.',normal:'Check the outcomes, decisions, assumptions, and anything that is still uncertain.',eli5:'Read what Puppet Master understood before it starts.',success:'The complete practice plan is open for review.'},
+    'tour.planning.edit':{kicker:'Plan before building',title:'Change one answer and watch the plan react.',normal:'Choose Edit, then select a different answer about who can update the site. Only shared sign-in and organizer access should change; the three outcomes stay still.',eli5:'Choose Edit, then change who can update the site. Only the related part of the plan should move.',success:'One answer changed one consequence.'},
+    'tour.planning.consequence':{kicker:'Cause and effect',title:'The unaffected outcomes stayed put.',normal:'Shared sign-in and organizer access changed because your answer changed. The meeting, book, and join outcomes did not.',eli5:'Your one answer changed one matching part. Everything else stayed still.'},
+    'tour.planning.approval_boundary':{kicker:'Ready when you are',title:'This is the boundary before building.',normal:'Nothing has been built yet. That is the planning loop: describe the outcome, answer only what matters, review the plan, then decide whether to begin.',eli5:'Nothing started. You described, answered, checked, and now you decide.',note:'Your Project is ready. Start with one sentence about what you want to make or change.'}
+  };
+  var chapterLabels={intro:'Introduction',chat_teacher:'Ask and understand',workspace:'Make the workspace yours',planning_wizard:'Plan before building'};
+  var stepBaseline=null,stepPoll=0,practiceRoot=null,practiceWidget=null,practiceWidgetId=null,workspacePanelId=null;
+  function cancelStepPoll(){if(stepPoll){clearInterval(stepPoll);stepPoll=0;}}
+  function clearChoreography(){choreographyTimers.forEach(clearTimeout);choreographyTimers=[];state.choreography_state='idle';root.dataset.choreography='idle';pointer.style.opacity='';}
+  function scheduleChoreography(fn,delay){var timer=setTimeout(fn,delay);choreographyTimers.push(timer);return timer;}
+  function currentDef(){return stepDef(state.step_id);}
+  function copyForStep(){var row=STEP_COPY[state.step_id]||STEP_COPY['tour.intro.comfort'];return {kicker:row.kicker,title:row.title,body:state.eli5_enabled?row.eli5:row.normal,note:row.note||'',success:row.success||''};}
+  function localActionResult(actionId,status,reason,extra){return Object.assign({schema_id:'pm.guided_tour.local_action_result.v1',action_id:actionId,step_id:state.step_id,status:status,disabled_reason:reason||null,domain_mutation:false,persistence_write:false,concept_simulation_only:true},extra||{});}
+  function persistCheckpoint(){try{sessionStorage.setItem('pm7:guided-tour:checkpoint:v3',JSON.stringify({schema_id:'pm.guided_tour.safe_checkpoint.v1',step_id:state.step_id,eli5_enabled:state.eli5_enabled,status:state.status,source:state.source}));}catch(error){}}
+  function clearCheckpoint(){try{sessionStorage.removeItem('pm7:guided-tour:checkpoint:v3');}catch(error){}}
+  function savedCheckpoint(){try{var value=JSON.parse(sessionStorage.getItem('pm7:guided-tour:checkpoint:v3')||'null');return value&&value.schema_id==='pm.guided_tour.safe_checkpoint.v1'&&STEP_BY_ID[value.step_id]?value:null;}catch(error){return null;}}
+  function ownerActionEvent(actionId,payload){var detail=Object.assign({schema_id:'pm.guided_tour.owner_action.v1',action_id:actionId,step_id:state.step_id,mode:state.action_mode||'try',concept_simulation_only:true,production_receipt:false},payload||{});window.dispatchEvent(new CustomEvent('pm7.guided-tour.owner-action',{detail:detail}));return detail;}
+  function pageIs(page){return !!(window.PM_PAGES&&window.PM_PAGES.current===page)||!!document.querySelector('.page-tab.active[data-page="'+page+'"]');}
+  function goPage(page){var tab=visibleTarget('.page-tab[data-page="'+page+'"]');if(tab)tab.click();else if(window.PM_PAGES&&typeof window.PM_PAGES.go==='function')window.PM_PAGES.go(page);return pageIs(page);}
+  function chatSurfaceRecord(){var api=window.PM_HOME_WORKSPACE;return api&&homeSurface('chat',api.layout);}
+  function chatMoved(){var now=chatSurfaceRecord();return !!(stepBaseline&&stepBaseline.chat&&now&&(now.host!==stepBaseline.chat.host||now.slot_index!==stepBaseline.chat.slot_index));}
+  function movablePanel(){var api=window.PM_HOME_WORKSPACE,surfaces=api&&api.layout&&api.layout.surfaces||[],row=surfaces.filter(function(item){return item.visible&&item.surface_instance_id!=='chat';})[0]||null;workspacePanelId=row&&row.surface_instance_id||null;return row;}
+  function panelMoved(){var api=window.PM_HOME_WORKSPACE,now=api&&homeSurface(workspacePanelId,api.layout);return !!(stepBaseline&&stepBaseline.panel&&now&&(now.host!==stepBaseline.panel.host||now.slot_index!==stepBaseline.panel.slot_index));}
+  function alternateHost(surface){var api=window.PM_HOME_WORKSPACE,hosts=Object.keys(api&&api.host_registries||{}),preferred=['dock_right','home_right','home_main','dock_left','floating'];for(var i=0;i<preferred.length;i+=1)if(hosts.indexOf(preferred[i])>=0&&preferred[i]!==surface.host)return preferred[i];return hosts.filter(function(host){return host!==surface.host;})[0]||surface.host;}
+  function moveWorkspaceSurface(id){var api=window.PM_HOME_WORKSPACE,surface=api&&homeSurface(id,api.layout);if(!api||!surface||typeof api.moveSurface!=='function')return false;var host=alternateHost(surface),before=clone(surface);api.moveSurface(id,host,{index:0});var after=homeSurface(id,api.layout),ok=!!after&&(after.host!==before.host||after.slot_index!==before.slot_index);ownerActionEvent('cmd.workspace_layout.move_surface',{surface_instance_id:id,from_host:before.host,to_host:host,success:ok});return ok;}
+  function chooseUsageWidget(){var api=window.PM7_USAGE;if(!api||!api.state)return null;var rows=typeof api.roomWidgets==='function'?api.roomWidgets(api.state.room):[],hidden=rows.filter(function(item){return api.state.hidden[api.state.room+':'+item.id];})[0],visible=rows.filter(function(item){return !api.state.hidden[api.state.room+':'+item.id];})[0];return hidden||visible||null;}
+  function usageWidgetReady(){var item=practiceWidgetId&&window.PM7_USAGE&&window.PM7_USAGE.widgetById&&window.PM7_USAGE.widgetById(practiceWidgetId),card=item&&document.querySelector('#pm7uBoard .pm7u-card[data-widget="'+practiceWidgetId+'"]');if(!item||!card)return false;var layout=window.PM7_USAGE.layoutFor&&window.PM7_USAGE.layoutFor(item);return !!layout&&!!stepBaseline&&!!stepBaseline.widget&&(layout.cols!==stepBaseline.widget.cols||layout.rows!==stepBaseline.widget.rows||stepBaseline.widget.hidden);}
+  function configureUsageWidget(){var api=window.PM7_USAGE,item=chooseUsageWidget();if(!api||!item)return false;practiceWidgetId=item.id;state.active_widget_id=item.id;var key=api.state.room+':'+item.id,hidden=!!api.state.hidden[key];if(hidden){setUsageVisible(item.id,true);ownerActionEvent('cmd.widget.add',{widget_id:item.id,success:!api.state.hidden[key]});return !api.state.hidden[key];}var before=api.layoutFor(item),presets=api.sizePresets?api.sizePresets(item):[],next=presets.filter(function(row){return row[0]!==before.cols||row[1]!==before.rows;})[0];if(!next)next=[Math.min((before.cols||2)+1,6),before.rows||2];api.setLayout(item,next[0],next[1],'cmd.widget.configure','guided_tour');var after=api.layoutFor(item),ok=after.cols!==before.cols||after.rows!==before.rows;ownerActionEvent('cmd.widget.configure',{widget_id:item.id,before:before,after:after,success:ok});return ok;}
+  var practiceModel=createGuidedPlanningPractice({goal:BOOK_CLUB_GOAL});
+  function freshPlanningFixture(){return practiceModel.create();}
+  function practiceButton(action,label,extra){
+    return '<button type="button" data-ui-action-id="ui.guided_tour.next" data-practice-action="'+action+'" '+(extra||'')+' data-pm-hover-label="'+esc(label)+'" data-pm-hover-detail="Use this choice in the local guided example.">'+esc(label)+'</button>';
+  }
+  function planningFixtureMarkup(){
+    var f=planningFixture||freshPlanningFixture(),view=practiceModel.view(f);
+    var outcomes=f.outcomes_visible?'<section data-practice-key="outcomes" class="pm7gt-practice-outcomes" data-tour-fixture-id="planning-outcomes"><strong>What success looks like</strong>'+BOOK_CLUB_OUTCOMES.map(function(item,index){return '<div data-practice-key="outcome-'+index+'">'+esc(item)+'</div>';}).join('')+'</section>':'';
+    var question=f.outcomes_visible?'<section data-practice-key="question" class="pm7gt-practice-question" data-tour-fixture-id="planning-question" data-editing="'+String(f.editing)+'"><strong>Who should be able to update the meeting and book?</strong><div class="pm7gt-practice-choices">'+[['me','Only me.'],['organizers','A few organizers.'],['unsure','I’m not sure yet.']].map(function(row){
+      return practiceButton('answer',row[1],'data-practice-key="answer-'+row[0]+'" data-practice-value="'+row[0]+'" aria-pressed="'+String(f.answer===row[0])+'"'+(f.editing&&row[0]===f.edit_from?' disabled':''));
+    }).join('')+'</div>'+(f.editing?'<p data-practice-key="edit-instruction" class="pm7gt-practice-why" role="status">Choose a different answer. The review below will show exactly what changes.</p>':'')+
+      (f.why_visible?'<p data-practice-key="why" class="pm7gt-practice-why" role="note">'+esc(WHY_COPY)+'</p>':practiceButton('why','Why this matters','data-practice-key="why" class="pm7gt-practice-link"'))+'</section>':'';
+    var review=f.review_visible?'<section data-practice-key="review" class="pm7gt-practice-review" data-tour-fixture-id="planning-review"><header><strong>Plan review</strong><span>Nothing has been built</span></header>'+
+      '<div data-practice-key="review-outcomes"><small>OUTCOMES</small><b>3 clear results</b></div>'+
+      '<div data-practice-key="review-decision"><small>DECISION</small><b>'+esc(view.decision)+'</b></div>'+
+      '<div data-practice-key="review-access" data-tour-fixture-id="planning-shared-access" data-state="'+view.access_state+'" data-consequence-revision="'+f.consequence_revision+'"><small>SHARED ACCESS</small><b>'+esc(view.access)+'</b></div>'+
+      '<div data-practice-key="review-assumptions"><small>ASSUMPTION</small><b>'+esc(view.assumption)+'</b></div>'+
+      '<div data-practice-key="review-uncertain"><small>UNRESOLVED CHOICES</small><b>'+esc(view.unresolved)+'</b></div>'+
+      practiceButton('edit',f.editing?'Choose your new answer above':'Edit who can update it','data-practice-key="review-edit"'+(f.editing?' disabled':''))+'</section>':'';
+    var goal=f.goal_submitted?'<div data-practice-key="goal" class="pm7gt-practice-goal is-set" data-tour-fixture-id="planning-goal"><small>Your practice goal</small><strong>'+esc(f.goal)+'</strong></div>':
+      '<label data-practice-key="goal" class="pm7gt-practice-goal" data-tour-fixture-id="planning-goal"><span>What would you like to make?</span><textarea rows="3" data-practice-goal data-pm-hover-label="Practice goal" data-pm-hover-detail="Describe the result in everyday words.">'+esc(f.goal)+'</textarea>'+practiceButton('goal','Use this idea')+'</label>';
+    return '<header data-practice-key="head" class="pm7gt-practice-head"><span>PLANNING WIZARD · GUIDED EXAMPLE</span><strong>Neighborhood book club</strong><small>Local practice · no files changed · no work started</small></header><div data-practice-key="body" class="pm7gt-practice-body">'+
+      '<button type="button" data-practice-key="project" class="pm7gt-practice-project" data-ui-action-id="ui.guided_tour.next" data-practice-action="project" aria-pressed="'+String(f.project_selected)+'" data-pm-hover-label="Choose the practice Project" data-pm-hover-detail="Keep these practice decisions together in the local guided example."><span>Project</span><strong>'+(f.project_selected?'Book club · selected':'Choose Book club')+'</strong></button>'+goal+
+      '<button type="button" data-practice-key="guided" class="pm7gt-practice-guided" data-ui-action-id="ui.guided_tour.next" data-practice-action="guided" aria-pressed="'+String(f.guided_selected)+'" data-pm-hover-label="Use guided planning" data-pm-hover-detail="Ask only decisions that can change the result."><span>Planning style</span><strong>'+(f.guided_selected?'Guided planning · selected':'Use guided planning')+'</strong></button>'+
+      (f.goal_submitted&&f.guided_selected&&!f.outcomes_visible?practiceButton('outcomes','Show the outcomes','data-practice-key="open-outcomes" class="pm7gt-practice-primary"'):'')+outcomes+question+
+      (f.answer&&!f.review_visible?practiceButton('review','Review this plan','data-practice-key="open-review" class="pm7gt-practice-primary"'):'')+review+'</div>';
+  }
+  function ensurePlanningFixture(){
+    if(practiceRoot&&practiceRoot.isConnected)return practiceRoot;
+    var host=document.getElementById('panel-wizard');if(!host)return null;
+    planningFixture=planningFixture||freshPlanningFixture();host.classList.add('pm7gt-practice-host');
+    practiceRoot=document.createElement('section');practiceRoot.id='pm7gt-planning-practice';practiceRoot.className='pm7gt-planning-practice';
+    practiceRoot.setAttribute('data-concept-fixture-only','true');practiceRoot.setAttribute('aria-label','Guided Planning Wizard example');
+    practiceRoot.innerHTML=planningFixtureMarkup();host.appendChild(practiceRoot);return practiceRoot;
+  }
+  function updatePracticeTree(current,next){
+    if(current.isEqualNode(next))return current;
+    if(current.nodeType!==next.nodeType||current.nodeName!==next.nodeName){var replacement=next.cloneNode(true);current.replaceWith(replacement);return replacement;}
+    if(current.nodeType!==1){current.nodeValue=next.nodeValue;return current;}
+    [].slice.call(current.attributes).forEach(function(attr){if(!next.hasAttribute(attr.name))current.removeAttribute(attr.name);});
+    [].slice.call(next.attributes).forEach(function(attr){if(current.getAttribute(attr.name)!==attr.value)current.setAttribute(attr.name,attr.value);});
+    var prior=[].slice.call(current.childNodes),used=[];
+    [].slice.call(next.childNodes).forEach(function(want,index){
+      var key=want.nodeType===1&&want.getAttribute('data-practice-key'),have=key?prior.find(function(node){return node.nodeType===1&&node.getAttribute('data-practice-key')===key;}):prior[index];
+      if(have&&(used.indexOf(have)>=0||(!key&&have.nodeType===1&&have.hasAttribute('data-practice-key'))))have=null;
+      if(have){used.push(have);if(current.childNodes[index]!==have)current.insertBefore(have,current.childNodes[index]||null);updatePracticeTree(have,want);}
+      else current.insertBefore(want.cloneNode(true),current.childNodes[index]||null);
+    });
+    prior.forEach(function(node){if(used.indexOf(node)<0&&node.parentNode===current)node.remove();});
+    return current;
+  }
+  function renderPlanningFixture(){
+    var node=ensurePlanningFixture();if(!node)return null;
+    var template=document.createElement('section');template.innerHTML=planningFixtureMarkup();
+    var before=node.querySelector('[data-tour-fixture-id="planning-shared-access"]'),revision=before&&before.getAttribute('data-consequence-revision');
+    [].slice.call(template.children).forEach(function(next){var current=node.querySelector(':scope > [data-practice-key="'+next.getAttribute('data-practice-key')+'"]');if(current)updatePracticeTree(current,next);else node.appendChild(next.cloneNode(true));});
+    var consequence=node.querySelector('[data-tour-fixture-id="planning-shared-access"]');
+    if(consequence&&revision!==null&&revision!==consequence.getAttribute('data-consequence-revision')){
+      consequence.classList.remove('pm7gt-practice-changed');void consequence.offsetWidth;consequence.classList.add('pm7gt-practice-changed');
+    }
+    return node;
+  }
+  function removePlanningFixture(){var host=document.getElementById('panel-wizard');if(practiceRoot&&practiceRoot.isConnected)practiceRoot.remove();if(host)host.classList.remove('pm7gt-practice-host');practiceRoot=null;}
+  function planningAction(action,value){
+    planningFixture=planningFixture||freshPlanningFixture();
+    if(action==='goal'){var input=practiceRoot&&practiceRoot.querySelector('[data-practice-goal]');value=input?input.value:planningFixture.goal;}
+    var result=practiceModel.apply(planningFixture,action,value);
+    if(!result.ok){state.last_error=result.error;return false;}
+    planningFixture=result.state;
+    Object.assign(state,{planning_project_selected:planningFixture.project_selected,planning_goal:planningFixture.goal_submitted?planningFixture.goal:'',
+      planning_answer:planningFixture.answer,planning_why_open:planningFixture.why_visible,planning_reviewed:planningFixture.review_visible,
+      planning_edited:planningFixture.edited,planning_consequence_visible:planningFixture.edited&&!planningFixture.editing,planning_requirements_opened:planningFixture.outcomes_visible});
+    renderPlanningFixture();
+    if(action==='edit'){
+      var choice=practiceRoot&&practiceRoot.querySelector('[data-practice-action="answer"]:not([disabled])');
+      if(choice){choice.scrollIntoView({block:'nearest'});if(state.action_mode!=='show_me')choice.focus({preventScroll:true});}
+    }
+    ownerActionEvent(({project:'wizard.attach',goal:'wizard.practice_goal',guided:'wizard.intent',outcomes:'wizard.to_requirements',answer:'wizard.practice_answer',why:'wizard.practice_why',review:'wizard.practice_review',edit:'wizard.practice_edit'})[action]||'ui.guided_tour.next',{fixture_action:action,value:value||null,editing:planningFixture.editing,consequence_revision:planningFixture.consequence_revision,work_started:false});
+    scheduleTargetTracking();return true;
+  }
+  function planningPredicate(id){var f=planningFixture||{};return id==='tour.planning.project_source'?!!f.project_selected:id==='tour.planning.goal'?!!f.goal_submitted:id==='tour.planning.guided_help'?!!f.guided_selected:id==='tour.planning.requirements'?!!f.outcomes_visible:id==='tour.planning.question'?!!f.answer:id==='tour.planning.why'?!!f.why_visible:id==='tour.planning.review'?!!f.review_visible:id==='tour.planning.edit'?!!f.edited&&!f.editing:false;}
+  var TEACHER_SUGGESTIONS=['What are the main parts of Puppet Master?','How do I rearrange panels?','What does Planning do?','Can I use Safe History with GitHub?','What is a Server?','How does local discovery work?'];
+  var TEACHER_MORE_GROUPS=[
+    {label:'Projects and save points',questions:['How do I open a folder on this computer?','How do I bring a project from online?','What is the difference between Git and Jujutsu?','What does FileSafe protect?','How do I restore a backup?','How does Cursor Origin work?']},
+    {label:'Computers and connections',questions:['Can Storage live on a different computer?','How do I connect through Tailscale?','How does Headscale differ?','What is a reverse proxy?','How does Remote Link work?','How does a VPN help?']},
+    {label:'Planning and the work',questions:['What should I put in requirements?','When does work actually begin?','How do I read a plan before approving it?','What does a run show me?','How do I stop something safely?','Where do I see errors?']},
+    {label:'Comfort and safety',questions:['What does ELI5 change?','How do I use calmer motion?','How do permissions keep me safe?','What can Teacher explain?','When should I use Settings?','When should I use Doctor?']}
+  ];
+  function teacherQuestionButton(question){return '<li><button type="button" data-ui-action-id="ui.guided_tour.next" data-teacher-question="'+esc(question)+'" data-pm-hover-label="Ask Teacher" data-pm-hover-detail="Send this built-in question without using an online AI service.">'+esc(question)+'</button></li>';}
+  function teacherQuestionsMarkup(){return '<details class="pm7gt-question-more"><summary>See 30 example questions</summary><ul class="pm7gt-question-list"><li class="pm7gt-question-group">Good starting points</li>'+TEACHER_SUGGESTIONS.map(teacherQuestionButton).join('')+TEACHER_MORE_GROUPS.map(function(group){return '<li class="pm7gt-question-group">'+esc(group.label)+'</li>'+group.questions.map(teacherQuestionButton).join('');}).join('')+'</ul></details><p class="pm7gt-question-count">Teacher knows 46 built-in Puppet Master topics and works without an online AI account.</p>';}
+  function closeTeacherPicker(){var portal=document.querySelector('.pm6-chat-persona-popout-portal.is-open'),button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(portal&&button)button.click();return !document.querySelector('.pm6-chat-persona-popout-portal.is-open');}
+  function placeChatRight(){var api=window.PM_HOME_WORKSPACE,chat=api&&homeSurface('chat',api.layout);if(!api||!chat)return false;if(!chat.visible&&api.setSurfaceVisible)api.setSurfaceVisible('chat',true,'cmd.panel.switch');chat=homeSurface('chat',api.layout);if(chat&&chat.host!=='dock_right'&&api.moveSurface){var hosts=Object.keys(api.host_registries||{});if(hosts.indexOf('dock_right')>=0)api.moveSurface('chat','dock_right',{index:0});}openChatSurface();return !!activeChat();}
+  function fillTeacherQuestionText(question){var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!input)return false;input.value=String(question||AUTHORITATIVE_PROMPT);input.dispatchEvent(new Event('input',{bubbles:true}));try{input.focus({preventScroll:true});}catch(error){}return true;}
+  function sendTeacherQuestion(question){prepareTeacherPractice();fillTeacherQuestionText(question);var send=visibleTarget('#chatPanel .pm6-chat-send,#floatingChat .pm6-chat-send');if(send){send.click();return true;}var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(input){input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));return true;}return false;}
+  function toggleEli5(force){var before=state.eli5_enabled;state.eli5_enabled=typeof force==='boolean'?force:!before;syncEli5();if(state.teacher_response_message_id)applyTeacherMode();ownerActionEvent('cmd.chat.eli5.set',{enabled:state.eli5_enabled,meaning_preserved:true});recordUi('ui.guided_tour.toggle_eli5',{enabled:state.eli5_enabled});return state.eli5_enabled!==before||state.eli5_enabled===force;}
+  function stepTargetSelector(id){
+    if(id==='tour.chat.open')return '#chatPanel:not(.hidden),#floatingChat';
+    if(id==='tour.chat.teacher.select')return '.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem[data-persona="Teacher"],#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn';
+    if(id==='tour.chat.teacher.ask')return '#chatPanel .pm6-chat-send,#floatingChat .pm6-chat-send,#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input';
+    if(id==='tour.chat.teacher.reply')return state.teacher_response_message_id?'[data-pm6-mid="'+state.teacher_response_message_id+'"] .pm6-chat-sink,[data-pm7gt-teacher-response="true"]':'#chatPanel .messageStream,#floatingChat .messageStream';
+    if(id==='tour.chat.teacher.eli5')return '#pm7gt-eli5';
+    if(id==='tour.workspace.navigation')return '.title-bar .page-tabs,.page-tabs';
+    if(id==='tour.workspace.chat.dock')return '[data-pm-home-handle="chat"],[data-pm-home-surface="chat"]';
+    if(id==='tour.workspace.panels.rearrange')return workspacePanelId?'[data-pm-home-handle="'+workspacePanelId+'"],[data-pm-home-surface="'+workspacePanelId+'"]':'[data-pm-home-host="home_main"]';
+    if(id==='tour.workspace.usage.open')return '.page-tab[data-page="usage"],#tab-usage';
+    if(id==='tour.workspace.widget.manage')return practiceWidgetId?'#pm7uBoard .pm7u-card[data-widget="'+practiceWidgetId+'"] .pm7u-cardmenu,#pm7uBoard .pm7u-card[data-widget="'+practiceWidgetId+'"],#pm7uCustomize':'#pm7uCustomize,#pm7uBoard';
+    if(id==='tour.planning.open')return '.page-tab[data-page="wizard"],#tab-wizard';
+    if(id==='tour.planning.project_source')return '#pm7gt-planning-practice [data-practice-action="project"]';
+    if(id==='tour.planning.goal')return '#pm7gt-planning-practice [data-practice-action="goal"],#pm7gt-planning-practice [data-practice-goal]';
+    if(id==='tour.planning.guided_help')return '#pm7gt-planning-practice [data-practice-action="guided"]';
+    if(id==='tour.planning.requirements')return '#pm7gt-planning-practice [data-practice-action="outcomes"]';
+    if(id==='tour.planning.question')return '#pm7gt-planning-practice .pm7gt-practice-choices';
+    if(id==='tour.planning.why')return '#pm7gt-planning-practice [data-practice-action="why"],#pm7gt-planning-practice .pm7gt-practice-why';
+    if(id==='tour.planning.review')return '#pm7gt-planning-practice [data-practice-action="review"]';
+    if(id==='tour.planning.edit')return planningFixture&&planningFixture.editing?'#pm7gt-planning-practice .pm7gt-practice-choices':'#pm7gt-planning-practice [data-practice-action="edit"]';
+    if(id==='tour.planning.consequence')return '#pm7gt-planning-practice [data-tour-fixture-id="planning-shared-access"]';
+    if(id==='tour.planning.approval_boundary')return '#pm7gt-planning-practice .pm7gt-practice-review,#pm7gt-planning-practice';
+    return '';
+  }
+  function prepareStep(def){
+    cancelStepPoll();clearChoreography();stepBaseline=null;state.action_mode=null;state.action_status=stepIsComplete(def.id)?'complete':'idle';state.last_error=null;root.dataset.actionMode=state.action_status;
+    if(def.id.indexOf('tour.chat.')===0){placeChatRight();installTeacherSendAdapter();setTeacherPlaceholder();}
+    if(def.id==='tour.chat.teacher.select'){var picker=visibleTarget('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(picker&&!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))picker.click();mountTeacherPersonaControl();}
+    if(def.id==='tour.chat.teacher.ask'){selectPersona('Teacher');state.teacher_persona_selected=true;prepareTeacherPractice();fillTeacherQuestion();}
+    if(def.id==='tour.workspace.navigation'){closeTeacherPicker();goPage('dashboard');}
+    if(def.id==='tour.workspace.chat.dock'){goPage('dashboard');var chat=chatSurfaceRecord();stepBaseline={chat:clone(chat)};}
+    if(def.id==='tour.workspace.panels.rearrange'){goPage('dashboard');var panel=movablePanel();stepBaseline={panel:clone(panel)};}
+    if(def.id==='tour.workspace.widget.manage'){goPage('usage');if(window.PM7_USAGE&&window.PM7_USAGE.rerender)window.PM7_USAGE.rerender();var widget=chooseUsageWidget();practiceWidgetId=widget&&widget.id||null;var hidden=!!(widget&&window.PM7_USAGE.state.hidden[window.PM7_USAGE.state.room+':'+widget.id]),layout=widget&&window.PM7_USAGE.layoutFor(widget);stepBaseline={widget:{id:practiceWidgetId,hidden:hidden,cols:layout&&layout.cols,rows:layout&&layout.rows}};}
+    if(def.id.indexOf('tour.planning.')===0&&def.id!=='tour.planning.open'){goPage('wizard');ensurePlanningFixture();renderPlanningFixture();}
+    syncCompatibility();persistCheckpoint();var mounted=mountedTarget(stepTargetSelector(def.id));if(mounted&&mounted.scrollIntoView)mounted.scrollIntoView({block:'nearest',inline:'nearest'});setTimeout(function(){activeTarget=targetAdapter.resolve(def.id);scheduleTargetTracking();},0);
+  }
+  function stepPredicate(id){
+    if(id==='tour.chat.teacher.select'){var label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');return !!(label&&label.textContent.trim()==='Teacher');}
+    if(id==='tour.chat.teacher.ask')return !!state.teacher_message_sent;
+    if(id==='tour.chat.teacher.eli5')return !!state.eli5_enabled&&state.teacher_copy_mode==='eli5';
+    if(id==='tour.workspace.chat.dock')return chatMoved();
+    if(id==='tour.workspace.panels.rearrange')return panelMoved();
+    if(id==='tour.workspace.usage.open')return pageIs('usage');
+    if(id==='tour.workspace.widget.manage')return usageWidgetReady();
+    if(id==='tour.planning.open')return pageIs('wizard');
+    if(id.indexOf('tour.planning.')===0)return planningPredicate(id);
+    return false;
+  }
+  function performOwnerAction(def){
+    var ok=false,action=def.action_id;
+    if(def.id==='tour.chat.teacher.select'){ok=selectPersona('Teacher');state.teacher_persona_selected=ok;}
+    else if(def.id==='tour.chat.teacher.ask')ok=sendTeacherQuestion(AUTHORITATIVE_PROMPT);
+    else if(def.id==='tour.chat.teacher.eli5')ok=toggleEli5(true);
+    else if(def.id==='tour.workspace.chat.dock')ok=moveWorkspaceSurface('chat');
+    else if(def.id==='tour.workspace.panels.rearrange')ok=!!workspacePanelId&&moveWorkspaceSurface(workspacePanelId);
+    else if(def.id==='tour.workspace.usage.open'){ok=goPage('usage');ownerActionEvent(action,{page_id:'usage',success:ok});}
+    else if(def.id==='tour.workspace.widget.manage')ok=configureUsageWidget();
+    else if(def.id==='tour.planning.open'){ok=goPage('wizard');ownerActionEvent(action,{page_id:'wizard',success:ok});}
+    else if(def.id==='tour.planning.project_source')ok=planningAction('project');
+    else if(def.id==='tour.planning.goal')ok=planningAction('goal');
+    else if(def.id==='tour.planning.guided_help')ok=planningAction('guided');
+    else if(def.id==='tour.planning.requirements')ok=planningAction('outcomes');
+    else if(def.id==='tour.planning.question')ok=planningAction('answer','organizers');
+    else if(def.id==='tour.planning.why')ok=planningAction('why');
+    else if(def.id==='tour.planning.review')ok=planningAction('review');
+    else if(def.id==='tour.planning.edit'){
+      ok=planningAction('edit');
+      if(ok&&state.action_mode==='show_me'){
+        var changeTo=practiceModel.view(planningFixture).edit_choice,session=sessionSerial;
+        scheduleChoreography(function(){
+          if(!state.open||state.step_id!==def.id||state.action_mode!=='show_me'||session!==sessionSerial)return;
+          var choice=visibleTarget('#pm7gt-planning-practice [data-practice-action="answer"][data-practice-value="'+changeTo+'"]');
+          if(choice){var box=choice.getBoundingClientRect();pointer.style.opacity='1';pointer.style.left=(box.left+box.width/2)+'px';pointer.style.top=(box.top+box.height/2)+'px';}
+          scheduleChoreography(function(){if(choice&&choice.isConnected&&state.open&&state.step_id===def.id&&state.action_mode==='show_me'&&session===sessionSerial)choice.click();},reduced?80:560);
+        },reduced?80:360);
+      }
+    }
+    return localActionResult(action,ok?'applied':'failed',ok?null:'The highlighted action is not available yet.',{owner_action_dispatched:true,target_id:def.id,work_started:false});
+  }
+  var completedSteps={},autoAdvanceTimer=0;
+  function clearAutoAdvance(){if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=0;}}
+  function stepIsComplete(id){return !!completedSteps[id];}
+  function completeStep(status,metadata){
+    var def=currentDef();if(status!=='applied'&&status!=='no_change'){state.action_status='failed';state.last_error=metadata&&metadata.reason||'That action did not finish. Try it again or choose Show Me.';render('forward');return snapshot();}
+    if(stepIsComplete(def.id))return snapshot();
+    cancelStepPoll();clearChoreography();state.action_status='complete';state.last_error=null;completedSteps[def.id]={status:status,mode:state.action_mode||'try',at:Date.now(),metadata:clone(metadata||{})};
+    receipt(def.action_id,def.id,status,null,stepBaseline,{predicate:true,work_started:false},metadata&&metadata.owner_receipt||null,state.action_mode||'try',localActionResult(def.action_id,status,null,{predicate_verified:true,work_started:false}));
+    render('forward');clearAutoAdvance();autoAdvanceTimer=setTimeout(function(){autoAdvanceTimer=0;if(state.open&&state.step_id===def.id)goTo(def.index+1,'forward',true);},reduced?90:560);return snapshot();
+  }
+  function watchCurrentPredicate(){
+    cancelStepPoll();var id=state.step_id;
+    function check(){if(!state.open||state.step_id!==id){cancelStepPoll();return;}var ok=false;try{ok=stepPredicate(id);}catch(error){state.last_error=String(error&&error.message||error);}if(ok)completeStep('applied',{observed_predicate:id,provider_request_delta:0,usage_delta:0,work_started:false});}
+    stepPoll=setInterval(check,120);setTimeout(check,0);
+  }
+  function beginTry(control){var def=currentDef();if(!def.meaningful)return next();ack(control,'ui.guided_tour.next');state.action_mode='try';state.action_status='watching';state.last_error=null;root.dataset.actionMode='try';recordUi('ui.guided_tour.next',{mode:'try',step_id:def.id,owner_action_id:def.action_id});render('forward');watchCurrentPredicate();return snapshot();}
+  function runShowMeAction(def){if(!state.open||state.step_id!==def.id)return;state.choreography_state='arrival';root.dataset.choreography='arrival';var result=performOwnerAction(def);state.last_result=clone(result);scheduleTargetTracking();watchCurrentPredicate();scheduleChoreography(function(){if(state.open&&state.step_id===def.id){state.choreography_state='settle';root.dataset.choreography='settle';pointer.style.opacity='0';if(result.status==='failed'&&!stepPredicate(def.id)){state.action_status='failed';state.last_error=result.disabled_reason;render('forward');}}},reduced?80:180);}
+  function beginShowMe(control){
+    var def=currentDef();if(!def.meaningful)return next();ack(control,'ui.guided_tour.show_me');clearChoreography();state.action_mode='show_me';state.action_status='watching';state.last_error=null;root.dataset.actionMode='show_me';recordUi('ui.guided_tour.show_me',{step_id:def.id,owner_action_id:def.action_id,same_handler:'performOwnerAction',predicate:'stepPredicate'});render('forward');
+    var target=targetAdapter.resolve(def.id),calloutRect=callout.getBoundingClientRect(),targetRect=target&&target.getBoundingClientRect(),startX=Math.max(16,Math.min(innerWidth-16,calloutRect.right-28)),startY=Math.max(16,Math.min(innerHeight-16,calloutRect.bottom-24));pointer.style.left=startX+'px';pointer.style.top=startY+'px';pointer.style.opacity='1';state.choreography_state='pre_cue';root.dataset.choreography='pre_cue';
+    var pre=reduced?0:90,travel=reduced?80:460;scheduleChoreography(function(){if(!state.open||state.step_id!==def.id)return;state.choreography_state='travel';root.dataset.choreography='travel';if(targetRect){pointer.style.left=(targetRect.left+targetRect.width/2)+'px';pointer.style.top=(targetRect.top+targetRect.height/2)+'px';}},pre);scheduleChoreography(function(){runShowMeAction(def);},pre+travel);return snapshot();
+  }
+  function stageButton(action,label,kind,extra){return '<button type="button" class="'+(kind==='primary'?'pm7gt-primary':'pm7gt-secondary')+'" data-ui-action-id="'+action+'" '+(extra||'')+'>'+esc(label)+'</button>';}
+  function render(direction){
+    clearTimeout(transitionTimer);reduced=motionReduced();syncCompatibility();syncEli5();var def=currentDef(),copy=copyForStep(),done=stepIsComplete(def.id),actions='',status='Ready';state.motion=direction||'forward';state.transition_serial+=1;root.dataset.stepId=def.id;root.dataset.chapter=def.chapter;root.dataset.motion=reduced?'idle':state.motion;root.dataset.actionMode=state.action_mode||'idle';
+    if(def.id==='tour.planning.approval_boundary'){actions='<label class="pm7gt-note"><input type="checkbox" data-tour-keep-layout '+(state.keep_layout?'checked':'')+'> Keep this workspace arrangement</label><p class="pm7gt-note">Leave this off to restore your starting layout. Your practice plan will be cleared either way.</p>'+stageButton('ui.guided_tour.finish','Finish at Planning','primary','data-tour-action="finish"');status='No work has started';}
+    else if(!def.meaningful){actions=stageButton('ui.guided_tour.next',def.index===0?'Begin with Teacher':'Continue','primary','data-tour-action="continue"');status='Take this at your pace';}
+    else if(done||state.action_status==='complete'){actions=stageButton('ui.guided_tour.next','Continue','primary','data-tour-action="continue"');status=copy.success||'Done';}
+    else if(state.action_status==='watching'){actions=stageButton('ui.guided_tour.show_me','Show me','secondary','data-tour-action="show"');status=state.action_mode==='show_me'?'Showing the same action':'Waiting for the highlighted control';}
+    else{actions=stageButton('ui.guided_tour.next','Try it','primary','data-tour-action="try"')+stageButton('ui.guided_tour.show_me','Show me','secondary','data-tour-action="show"');status='You stay in control';}
+    var note=copy.note?'<p class="pm7gt-note">'+esc(copy.note)+'</p>':'',error=state.last_error?'<p class="pm7gt-reason" role="alert">'+esc(state.last_error)+'</p>':'',questions=def.id==='tour.chat.teacher.reply'?teacherQuestionsMarkup():'';
+    stage.innerHTML='<p class="pm7gt-kicker">'+esc(copy.kicker)+'</p><h2 id="pm7gt-title" tabindex="-1" data-pm-hover-exempt="programmatic-focus-landmark">'+esc(copy.title)+'</h2><p class="pm7gt-copy" id="pm7gt-copy">'+esc(done&&copy.success?copy.success:copy.body)+'</p>'+note+error+'<div class="pm7gt-actions">'+actions+'</div>'+questions;
+    var clip=stage.parentElement;if(clip)clip.scrollTop=0;callout.setAttribute('aria-labelledby','pm7gt-title');callout.setAttribute('aria-describedby','pm7gt-copy');backButton.disabled=def.index===0;backButton.setAttribute('aria-disabled',String(def.index===0));progress.textContent='Step '+(def.index+1)+' of '+STEP_DEFS.length+' · '+chapterLabels[def.chapter];forwardSlot.innerHTML='<span class="pm7gt-status">'+esc(status)+'</span>';
+    activeTarget=targetAdapter.resolve(def.id);positionTarget(activeTarget);scheduleTargetTracking();var heading=stage.querySelector('h2');if(!def.meaningful&&heading)try{heading.focus({preventScroll:true});}catch(error){}
+    var serial=state.transition_serial,delay=reduced?80:(currentTheme().indexOf('retro')===0?timings.retro_ms:timings.step_ms);transitionTimer=setTimeout(function(){if(serial!==state.transition_serial)return;root.dataset.motion='idle';state.motion='idle';transitionTimer=0;notify();},delay);notify();
+  }
+  function goTo(index,direction,remember){
+    clearAutoAdvance();cancelStepPoll();clearChoreography();if(index<0||index>=STEP_DEFS.length)return snapshot();var leaving=state.step_id;if(remember&&leaving)history.push(leaving);state.step_id=STEP_DEFS[index].id;state.step_index=index;state.action_mode=null;state.action_status=stepIsComplete(state.step_id)?'complete':'idle';state.last_error=null;prepareStep(STEP_DEFS[index]);render(direction||'forward');return snapshot();
+  }
+  function next(){var def=currentDef();recordUi('ui.guided_tour.next',{step_id:def.id});if(def.id==='tour.planning.approval_boundary')return finish('complete');if(def.meaningful&&!stepIsComplete(def.id)){state.last_error='Try the highlighted action, or choose Show Me and I will demonstrate it.';render('forward');return snapshot();}return goTo(def.index+1,'forward',true);}
+  function back(){var def=currentDef();recordUi('ui.guided_tour.back',{step_id:def.id});if(def.index===0)return snapshot();if(history.length)history.pop();return goTo(def.index-1,'back',false);}
+  function stopTargetTracking(){if(targetFrame){cancelAnimationFrame(targetFrame);targetFrame=0;}if(targetResizeObserver){targetResizeObserver.disconnect();targetResizeObserver=null;}}
+  function scheduleTargetTracking(){if(!state.open)return;if(targetFrame)cancelAnimationFrame(targetFrame);targetFrame=requestAnimationFrame(function(){targetFrame=0;activeTarget=targetAdapter.resolve(state.step_id);positionTarget(activeTarget);});if(typeof ResizeObserver!=='undefined'){if(targetResizeObserver)targetResizeObserver.disconnect();targetResizeObserver=new ResizeObserver(function(){if(state.open&&!targetFrame)scheduleTargetTracking();});try{targetResizeObserver.observe(callout);if(activeTarget)targetResizeObserver.observe(activeTarget);}catch(error){}}}
+  function overlapArea(a,b){return Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));}
+  function positionTarget(target){
+    var margin=10,descriptor=targetAdapter.descriptor(state.step_id);callout.style.setProperty('--pm7gt-fit-w',Math.max(1,innerWidth-margin*2)+'px');callout.style.setProperty('--pm7gt-fit-h',Math.max(1,innerHeight-margin*2)+'px');
+    if(target&&callout.contains(target)){root.dataset.target='internal';root.dataset.targetKey=descriptor.key;root.dataset.targetOverlapPx='0';halo.style.opacity='0';callout.style.left='50%';callout.style.top='50%';return;}
+    var rect=target&&target.getBoundingClientRect?target.getBoundingClientRect():null,visible=rect?{left:Math.max(margin,rect.left),top:Math.max(margin,rect.top),right:Math.min(innerWidth-margin,rect.right),bottom:Math.min(innerHeight-margin,rect.bottom)}:null,usable=!!(visible&&rect.width>0&&rect.height>0&&visible.right>visible.left&&visible.bottom>visible.top);
+    root.dataset.target=usable?'available':'missing';root.dataset.targetKey=descriptor.key;if(!usable){halo.style.opacity='0';callout.style.left='50%';callout.style.top='50%';root.dataset.targetOverlapPx='0';return;}
+    halo.style.opacity='';var pad=8,hLeft=Math.max(margin,visible.left-pad),hTop=Math.max(margin,visible.top-pad),hRight=Math.min(innerWidth-margin,visible.right+pad),hBottom=Math.min(innerHeight-margin,visible.bottom+pad);halo.style.left=((hLeft+hRight)/2)+'px';halo.style.top=((hTop+hBottom)/2)+'px';halo.style.width=(hRight-hLeft)+'px';halo.style.height=(hBottom-hTop)+'px';
+    var cw=Math.min(callout.offsetWidth||420,innerWidth-margin*2),ch=Math.min(callout.offsetHeight||360,innerHeight-margin*2),gap=22,cx=(visible.left+visible.right)/2,cy=(visible.top+visible.bottom)/2,candidates=[{side:'right',x:visible.right+gap+cw/2,y:cy},{side:'left',x:visible.left-gap-cw/2,y:cy},{side:'below',x:cx,y:visible.bottom+gap+ch/2},{side:'above',x:cx,y:visible.top-gap-ch/2}],best=null;
+    if(innerWidth<680)candidates=[candidates[2],candidates[3],candidates[0],candidates[1]];
+    candidates.forEach(function(candidate,index){var x=Math.max(margin+cw/2,Math.min(innerWidth-margin-cw/2,candidate.x)),y=Math.max(margin+ch/2,Math.min(innerHeight-margin-ch/2,candidate.y)),box={left:x-cw/2,top:y-ch/2,right:x+cw/2,bottom:y+ch/2},overlap=overlapArea(box,visible),travel=Math.abs(x-candidate.x)+Math.abs(y-candidate.y),score=overlap*1000+travel+index;if(!best||score<best.score)best={x:x,y:y,side:candidate.side,overlap:overlap,score:score};});
+    callout.style.left=best.x+'px';callout.style.top=best.y+'px';root.dataset.calloutSide=best.side;root.dataset.targetOverlapPx=String(Math.round(best.overlap));
+  }
+  var targetAdapter={
+    schema_id:'pm.guided_tour.deterministic_target_adapter.v3',
+    descriptor:function(step){var id=step||state.step_id;return {key:id+':'+(practiceWidgetId||workspacePanelId||'default'),step_id:id,selector:stepTargetSelector(id)};},
+    resolve:function(step){var descriptor=this.descriptor(step);return visibleTarget(descriptor.selector);},
+    status:function(step){var descriptor=this.descriptor(step),target=this.resolve(step),def=stepDef(step),reason=null;if(def.chapter==='workspace'&&!window.PM_HOME_WORKSPACE)reason='The workspace controls are not ready yet.';if(def.chapter==='planning_wizard'&&!window.PM_PAGES)reason='Planning is not ready yet.';if(def.chapter==='chat_teacher'&&!window.PM_DEMO)reason='Assistant Chat is not ready yet.';return {step_id:def.id,target_key:descriptor.key,selector:descriptor.selector,available:!!target&&!reason,visible:!!target,reason:reason||(!target&&def.meaningful?'The highlighted control is still coming into view.':null)};},
+    perform:function(actionId){var def=currentDef();if(actionId&&actionId!==def.action_id&&actionId!=='ui.guided_tour.show_me')return localActionResult(actionId,'disabled','That action belongs to another tour step.');return performOwnerAction(def);},
+    predicate:function(step){return stepPredicate(step||state.step_id);},layoutSnapshot:function(){return layoutNow();},captureOriginal:function(){return captureOriginal();}
+  };
+  function cleanupForExit(complete){
+    clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();closeTeacherPicker();
+    var keep=!!complete&&state.keep_layout===true,restoration,chatOk=false,routeOk=false;
+    try{restoration=keep?{ok:!!original,kept_by_explicit_choice:true,before:original&&clone(original.semantic),after:layoutNow()}:restoreWorkspaceSnapshot();}catch(error){restoration={ok:false,failures:['workspace_restore_failed']};}
+    try{chatOk=restoreChatState(complete);restorePlanningChoice();}catch(error){chatOk=false;}
+    removePlanningFixture();
+    try{routeOk=goPage(complete?'wizard':original&&original.page);if(!complete&&routeOk&&original.page==='wizard'&&window.PM_PAGES)window.PM_PAGES.go('wizard',original.wizard_stage);}catch(error){routeOk=false;}
+    state.layout_snapshot_restored=!keep&&!!restoration.ok;state.layout_disposition=restoration.ok?(keep?'kept':'restored'):'restore_failed';
+    restoreDocumentScroll();return {ok:!!restoration.ok&&chatOk!==false&&routeOk,layout:restoration,chat_restored:chatOk!==false,teacher_preserved:!!complete,final_page:routeOk?(complete?'wizard':original&&original.page):null,work_started:false};
+  }
+  function finish(reason){
+    var complete=reason==='complete',action=complete?'ui.guided_tour.finish':'ui.guided_tour.skip';
+    if(!original||(!state.open&&state.status!=='paused'&&state.status!=='recovery_required'))return snapshot();
+    if(complete&&(state.step_id!=='tour.planning.approval_boundary'||meaningful.some(function(def){return !stepIsComplete(def.id);})||!planningFixture||!planningFixture.review_visible||!planningFixture.edited||teacherPending)){
+      state.last_error='Finish the practice actions before ending the tour. You can skip at any time.';if(state.open)render('forward');return snapshot();
+    }
+    recordUi(action,{reason:reason,keep_layout:complete&&state.keep_layout===true});var restoration=cleanupForExit(complete);
+    if(!restoration.ok){
+      state.completed=false;state.skipped=false;state.status='recovery_required';state.open=true;state.action_status='failed';state.last_error='Your starting arrangement could not be fully restored. The tour has not finished. Try again when the workspace controls are ready.';
+      root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;
+      receipt(action,'original_workspace','failed',state.last_error,original&&original.semantic,layoutNow(),restoration,'try',localActionResult(action,'failed','restore_incomplete',{work_started:false}));persistCheckpoint();render('forward');return snapshot();
+    }
+    state.open=false;state.completed=complete;state.skipped=!complete;state.status=complete?'completed':'skipped';state.work_started=false;root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=true;replayButton.hidden=false;clearCheckpoint();
+    receipt(action,complete?'planning_wizard':'original_workspace','applied',null,original&&original.semantic,layoutNow(),restoration,'try',localActionResult(action,'applied',null,{final_page:restoration.final_page,work_started:false}));if(complete)focusPlanningPage();else originalFocus();notify();return snapshot();
+  }
+  function focusPlanningPage(){var session=sessionSerial;requestAnimationFrame(function(){if(session!==sessionSerial||state.open||!state.completed||!pageIs('wizard'))return;var host=document.getElementById('panel-wizard');if(!host)return;if(!host.hasAttribute('tabindex'))host.setAttribute('tabindex','-1');if(!host.hasAttribute('role'))host.setAttribute('role','region');if(!host.hasAttribute('aria-label'))host.setAttribute('aria-label','Planning Wizard');try{host.focus({preventScroll:true});}catch(error){host.focus();}});}
+  function skip(){return finish('skip');}
+  function pause(reason){if(!state.open)return snapshot();clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();removePlanningFixture();state.open=false;state.status='paused';root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=false;replayButton.hidden=true;recordUi('ui.guided_tour.pause',{reason:reason||'user',step_id:state.step_id});persistCheckpoint();notify();return snapshot();}
+  function start(options){
+    options=options||{};clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();if(original&&!state.completed&&!state.skipped){var previous=cleanupForExit(false);if(!previous.ok){state.last_error='The previous practice could not be restored. Resume it and retry before starting another tour.';state.status='recovery_required';resumeButton.hidden=false;return snapshot();}}uninstallTeacherSendAdapter();removePlanningFixture();planningFixture=null;practiceWidgetId=null;workspacePanelId=null;completedSteps={};history=[];effectReceipts.length=0;uiActionLog.length=0;receiptSerial=0;sessionSerial+=1;captureOriginal(options.focus_node||null);state.keep_layout=false;
+    Object.assign(state,{open:true,status:'demonstrating',completed:false,skipped:false,last_action:'ui.guided_tour.start',last_result:null,last_error:null,action_mode:null,action_status:'idle',choreography_state:'idle',layout_disposition:'pending',layout_snapshot_restored:false,source:options.source||'manual',teacher_thread_id:null,teacher_persona_selected:false,teacher_message_sent:false,teacher_answer_id:null,teacher_response_message_id:null,teacher_response_index:null,teacher_copy_mode:'normal',teacher_last_prompt:AUTHORITATIVE_PROMPT,eli5_enabled:false,active_widget_id:null,panel_demo_pair_ids:null,panel_demo_complete:false,usage_card_demo_complete:false,planning_goal:'',planning_answer:null,planning_why_open:false,planning_reviewed:false,planning_edited:false,planning_consequence_visible:false,planning_project_selected:false,planning_requirements_opened:false,work_started:false,shell_squeezed:innerWidth<720||innerHeight<560});
+    var aliases={chat_teacher:'tour.chat.open',workspace:'tour.workspace.navigation',usage:'tour.workspace.usage.open',widget_workspace:'tour.workspace.widget.manage',planning_wizard:'tour.planning.open'},requested=aliases[options.step]||options.step,index=requested&&STEP_BY_ID[requested]?STEP_BY_ID[requested].index:0;state.step_id=STEP_DEFS[index].id;state.step_index=index;root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;placeChatRight();recordUi('ui.guided_tour.start',{source:state.source,session:'concept-'+sessionSerial,storyboard_revision:STORYBOARD.revision});prepareStep(STEP_DEFS[index]);render('forward');return snapshot();
+  }
+  function resume(){recordUi('ui.guided_tour.resume',{step_id:state.step_id});if(!original)return start({source:'checkpoint',step:state.step_id});state.open=true;state.status='demonstrating';root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;prepareStep(currentDef());render('forward');return snapshot();}
+  function replay(options){return start(Object.assign({source:'replay'},options||{}));}
+  root.addEventListener('change',function(event){if(event.target&&event.target.matches('[data-tour-keep-layout]'))state.keep_layout=event.target.checked===true;});
+  root.addEventListener('click',function(event){
+    var control=event.target&&event.target.closest&&event.target.closest('button[data-ui-action-id],button[data-command-id]');if(!control||!root.contains(control)||control.disabled||control.getAttribute('aria-disabled')==='true')return;var id=control.getAttribute('data-ui-action-id')||control.getAttribute('data-command-id'),tourAction=control.getAttribute('data-tour-action');
+    if(control.hasAttribute('data-teacher-question')){ack(control,id);sendTeacherQuestion(control.getAttribute('data-teacher-question'));return;}
+    if(tourAction==='try'){beginTry(control);return;}if(tourAction==='show'){beginShowMe(control);return;}if(tourAction==='continue'){ack(control,id);next();return;}if(tourAction==='finish'){ack(control,id);finish('complete');return;}
+    if(id==='ui.guided_tour.toggle_eli5'){ack(control,id);toggleEli5();render('forward');if(state.step_id==='tour.chat.teacher.eli5'&&state.action_status==='watching'&&stepPredicate(state.step_id))completeStep('applied',{eli5_enabled:true,meaning_preserved:true});}
+    else if(id==='ui.guided_tour.back'){ack(control,id);back();}
+    else if(id==='ui.guided_tour.pause'){ack(control,id);pause('user');}
+    else if(id==='ui.guided_tour.skip'){ack(control,id);skip();}
+  });
+  document.addEventListener('click',function(event){
+    var control=event.target&&event.target.closest&&event.target.closest('[data-practice-action],[data-teacher-question]');if(!control)return;
+    if(control.hasAttribute('data-teacher-question')&&!root.contains(control)){sendTeacherQuestion(control.getAttribute('data-teacher-question'));return;}
+    if(!state.open||!control.hasAttribute('data-practice-action'))return;planningAction(control.getAttribute('data-practice-action'),control.getAttribute('data-practice-value'));if(state.action_status==='watching')setTimeout(function(){if(stepPredicate(state.step_id))completeStep('applied',{via:'planning_practice_control',work_started:false});},0);
+  },true);
+  document.addEventListener('click',function(){if(!state.open||state.action_status!=='watching')return;setTimeout(function(){if(state.open&&state.action_status==='watching'&&stepPredicate(state.step_id))completeStep('applied',{via:'mounted_owner_control',work_started:false});},0);});
+  resumeButton.addEventListener('click',function(){ack(resumeButton,'ui.guided_tour.resume');resume();});
+  replayButton.addEventListener('click',function(){ack(replayButton,'ui.guided_tour.replay');replay();});
+  function tabStops(){var selector='button:not([disabled]):not([aria-disabled="true"]),input:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',nodes=[].slice.call(callout.querySelectorAll(selector));if(state.action_status==='watching'){var target=targetAdapter.resolve(state.step_id);if(target)nodes.push(target);if(practiceRoot)nodes=nodes.concat([].slice.call(practiceRoot.querySelectorAll(selector)));}return nodes.filter(function(node,index,list){var rect=node.getBoundingClientRect();return rect.width>0&&rect.height>0&&list.indexOf(node)===index;});}
+  document.addEventListener('keydown',function(event){if(!state.open)return;if(event.key==='Escape'){event.preventDefault();pause('escape');return;}if(event.key!=='Tab')return;var nodes=tabStops();if(!nodes.length)return;var index=nodes.indexOf(document.activeElement),next=event.shiftKey?(index<=0?nodes[nodes.length-1]:nodes[index-1]):(index<0||index===nodes.length-1?nodes[0]:nodes[index+1]);event.preventDefault();try{next.focus({preventScroll:true});}catch(error){next.focus();}},true);
+  window.addEventListener('resize',function(){state.shell_squeezed=innerWidth<720||innerHeight<560;if(state.open)scheduleTargetTracking();},{passive:true});
+  window.addEventListener('scroll',function(){if(state.open)scheduleTargetTracking();},{passive:true,capture:true});
+  if(window.matchMedia){var motionQuery=window.matchMedia('(prefers-reduced-motion: reduce)'),onMotionChange=function(){reduced=motionReduced();if(state.open)render('forward');};if(motionQuery.addEventListener)motionQuery.addEventListener('change',onMotionChange);else if(motionQuery.addListener)motionQuery.addListener(onMotionChange);}
+  if(window.MutationObserver){
+    new MutationObserver(function(records){var motionChanged=records.some(function(record){return record.attributeName==='data-motion'&&record.oldValue!==document.documentElement.getAttribute('data-motion');}),themeChanged=records.some(function(record){return record.attributeName==='data-theme'&&record.oldValue!==document.documentElement.getAttribute('data-theme');});if(!state.open)return;if(motionChanged){reduced=motionReduced();render('forward');}else if(themeChanged)scheduleTargetTracking();}).observe(document.documentElement,{attributes:true,attributeOldValue:true,attributeFilter:['data-motion','data-theme']});
+    new MutationObserver(function(){if(state.open&&state.step_id==='tour.chat.teacher.select'&&!teacherPersonaButton())mountTeacherPersonaControl();}).observe(document.body,{childList:true,subtree:true});
+  }
+  var checkpoint=savedCheckpoint();if(checkpoint&&checkpoint.status==='paused'){state.step_id=checkpoint.step_id;state.step_index=stepDef(checkpoint.step_id).index;state.eli5_enabled=!!checkpoint.eli5_enabled;state.source=checkpoint.source||'checkpoint';state.status='paused';resumeButton.hidden=false;}
+  window.PM7_GUIDED_TOUR={schema_id:'pm.guided_tour.concept_api.v3',concept_simulation_only:true,production_runtime_certification:false,timings:clone(timings),storyboard:clone(STORYBOARD),start:start,next:next,back:back,pause:pause,resume:resume,skip:skip,finish:function(){return finish('complete');},replay:replay,snapshot:snapshot,target_adapter:targetAdapter,effect_receipts:effectReceipts,ui_action_log:uiActionLog,teacher_topics:TEACHER_ANSWERS.length,subscribe:function(fn){if(typeof fn==='function')listeners.push(fn);return function(){listeners=listeners.filter(function(item){return item!==fn;});};}};
+  }
+  var installObserver=null;
+  function mountGuidedTour(){installGuidedTour();if(window.PM7_GUIDED_TOUR&&installObserver){installObserver.disconnect();installObserver=null;}}
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',mountGuidedTour,{once:true});
+    if(window.MutationObserver){installObserver=new MutationObserver(mountGuidedTour);installObserver.observe(document.documentElement,{childList:true,subtree:true});}
+  }else mountGuidedTour();
+})();
+</script>
 '''
 
 
-GUIDED_TOUR_SCRIPT = _GUIDED_TOUR_V3_PREFIX + _TEACHER_LIBRARY_FRAGMENT + _GUIDED_TOUR_V3_SUFFIX
+GUIDED_TOUR_SCRIPT = _GUIDED_TOUR_V3_PREFIX + PLANNING_PRACTICE_SCRIPT + _TEACHER_LIBRARY_FRAGMENT + _GUIDED_TOUR_V3_SUFFIX
 
 
 def apply(doc, notes, need):
@@ -754,10 +1291,16 @@ def apply(doc, notes, need):
         effects_before,
         effects_after,
         {
-            "command_ids": {"added": [], "removed": []},
-            "domain_event_ids": {"added": [], "removed": []},
+            "command_ids": {"added": ["cmd.chat.eli5.set", "cmd.chat.send", "cmd.persona.select", "cmd.widget.configure"], "removed": []},
+            "domain_event_ids": {"added": ["pm7.guided-tour.owner-action"], "removed": []},
             "dom_event_types": {"added": [], "removed": []},
-            "persistence_targets": {"added": [], "removed": []},
+            "persistence_targets": {
+                "added": [
+                    "sessionStorage.removeItem:'pm7:guided-tour:checkpoint:v3'",
+                    "sessionStorage.setItem:'pm7:guided-tour:checkpoint:v3'",
+                ],
+                "removed": [],
+            },
         },
         need,
         "guided tour",
@@ -790,65 +1333,98 @@ def apply(doc, notes, need):
             "ui.guided_tour.pause",
             "ui.guided_tour.replay",
             "ui.guided_tour.resume",
+            "ui.guided_tour.show_me",
             "ui.guided_tour.skip",
             "ui.guided_tour.start",
             "ui.guided_tour.toggle_eli5",
         ]
     )
     need(ui_ids == expected_ui_ids, "guided tour: authored UI action vocabulary drifted: %r" % ui_ids)
-    need("cmd.nav.focus_route" not in authored, "guided tour: optional navigation command alias returned instead of the typed local focus-route action")
-    need("disabled aria-disabled=\"true\"" not in authored, "guided tour: unavailable dynamic actions must stay keyboard-focusable for their reason and hover tag")
-    need(authored.count("pm.guided_tour.focus_route_result.v1") == 1, "guided tour: typed local focus-route result identity census drifted")
-    need("local_action_result" in authored, "guided tour: typed local focus-route result is not attached to the concept receipt")
-    need("domain_mutation:false" in authored and "persistence_write:false" in authored, "guided tour: local focus route lost its no-domain/no-persistence boundary")
-    need("orientation-panel-usage-planning-teacher-2026-09-01" in authored and "order:['usage','planning_wizard','chat_teacher']" in authored and "orientation and Usage to Planning and then Chat" in authored, "guided tour: orientation/Usage to Planning to Teacher storyboard is incomplete")
-    need("usage:['orientation','panel_round_trip','open_usage','usage_overview','usage_options_try','usage_card_film','usage_success']" in authored and "planning_wizard:['planning_scan','planning_intent_try','planning_requirements_try','planning_success','planning_review']" in authored and "chat_teacher:['chat_picker','teacher_select','teacher_composer','teacher_wait','teacher_reply']" in authored, "guided tour: declarative three-scene phase order is incomplete")
-    need('id="pm7gt-eli5"' in authored and "ui.guided_tour.toggle_eli5" in authored and "ELI5 changes both the tour wording" in authored, "guided tour: persistent labeled ELI5 top control is incomplete")
-    need("active_widget_id" in authored and "targetAdapter.resolve" in authored and "callout.offsetWidth" in authored and "overlapArea(box,visible)" in authored and "targetOverlapPx" in authored and "safe=strips.filter" in authored, "guided tour: phase-aware highlight, safe-strip fitting, and measured viewport clamping are missing")
-    need("startDemoSequence('panel-round-trip'" in authored and "rearranged_surface_ids" in authored and "round_trip_restore:true" in authored and "if(demoSequence){finishDemoSequence();return snapshot();}" in authored, "guided tour: reversible multi-panel round trip is incomplete")
-    need("startDemoSequence('usage-card-film'" in authored and "setUsageVisibilityThroughMountedControl" in authored and "mounted_control:'card_size_option'" in authored and "mounted_control:'remove_panel'" in authored and "mounted_control:'panel_chooser'" in authored, "guided tour: real Usage resize/hide/reveal film is incomplete")
-    need("startDemoSequence('planning-scan'" in authored and "updatePlanningWatchBeat('attach')" in authored and "updatePlanningWatchBeat('intent')" in authored and "updatePlanningWatchBeat('continue')" in authored and "Read and change the plan here. Nothing starts until you approve it." in authored and "planningTarget" in authored and "via:'exact_planning_requirements'" in authored and "planning_requirements_opened" in authored, "guided tour: named Planning preview, real intent/requirements progression, or approval beat is incomplete")
-    need("prepareTeacherPractice" in authored and "mountTeacherPersonaControl" in authored and "mounted_teacher_control:true" in authored and "cloneNode" not in authored and "teacher_persona_selected" in authored and "teacher_message_sent" in authored and "TEACHER_ANSWERS" in authored and "data-pm7gt-teacher-response" in authored, "guided tour: final mounted Teacher select/message/reply practice is incomplete")
-    need("Ask Teacher anything about Puppet Master…" in authored and "chat_placeholder" in authored and "focus=heading||primary" in authored, "guided tour: novice chat prompt or non-obscuring automatic focus regressed")
+    need("cmd.nav.focus_route" not in authored, "guided tour: a false navigation domain command entered the local UI-action boundary")
+    need("local_action_result" in authored and "domain_mutation:false" in authored and "persistence_write:false" in authored, "guided tour: typed local action result or no-domain/no-persistence boundary is incomplete")
+    step_rows = re.findall(
+        r"\{id:'([^']+)',chapter:'([^']+)',meaningful:(true|false),dwell_ms:(\d+),action_id:'([^']+)'\}",
+        GUIDED_TOUR_SCRIPT,
+    )
+    expected_step_ids = [
+        "tour.intro.comfort",
+        "tour.chat.open",
+        "tour.chat.teacher.select",
+        "tour.chat.teacher.ask",
+        "tour.chat.teacher.reply",
+        "tour.chat.teacher.eli5",
+        "tour.workspace.navigation",
+        "tour.workspace.chat.dock",
+        "tour.workspace.panels.rearrange",
+        "tour.workspace.usage.open",
+        "tour.workspace.widget.manage",
+        "tour.planning.open",
+        "tour.planning.project_source",
+        "tour.planning.goal",
+        "tour.planning.guided_help",
+        "tour.planning.requirements",
+        "tour.planning.question",
+        "tour.planning.why",
+        "tour.planning.review",
+        "tour.planning.edit",
+        "tour.planning.consequence",
+        "tour.planning.approval_boundary",
+    ]
+    actual_step_ids = [row[0] for row in step_rows]
+    need(actual_step_ids == expected_step_ids and len(set(actual_step_ids)) == len(actual_step_ids), "guided tour: stable newbie-first step manifest drifted: %r" % actual_step_ids)
+    meaningful_rows = [row for row in step_rows if row[2] == "true"]
+    planning_rows = [row for row in meaningful_rows if row[1] == "planning_wizard"]
+    meaningful_dwell = sum(int(row[3]) for row in meaningful_rows)
+    planning_dwell = sum(int(row[3]) for row in planning_rows)
+    need(len(planning_rows) * 2 >= len(meaningful_rows) and planning_dwell * 2 >= meaningful_dwell, "guided tour: Planning Wizard no longer owns at least half of meaningful practice and dwell")
+    need("newbie-first-chat-workspace-planning-2026-09-04" in authored and "chapter_order:['chat_teacher','workspace','planning_wizard']" in authored and "final_destination:'planning_wizard'" in authored and "work_started:false" in authored, "guided tour: Chat to workspace to Planning story or no-build boundary is incomplete")
+    authoritative_prompt = "What happens before Puppet Master changes my files?"
+    need(authoritative_prompt in authored and "Before work begins, Puppet Master turns your request into a plan." in authored and "First, Puppet Master writes down what it thinks you want." in authored, "guided tour: authoritative Teacher prompt/normal/ELI5 fixture drifted")
+    need("Create a simple website for my neighborhood book club." in authored and all(outcome in authored for outcome in ("Visitors can see the next meeting.", "Visitors can see the current book.", "New members can learn how to join.")), "guided tour: book-club goal or outcomes drifted")
+    need("This decides whether the site needs shared sign-in and editing." in authored and "Who should be able to update the meeting and book?" in authored, "guided tour: question/why cause-and-effect fixture drifted")
+    need("ui.guided_tour.show_me" in authored and "same_handler:'performOwnerAction'" in authored and "function performOwnerAction(def)" in authored and "function stepPredicate(id)" in authored and "function watchCurrentPredicate()" in authored, "guided tour: Try It and Show Me do not share one action/predicate path")
+    need("if(ok)completeStep('applied'" in authored and "observed_predicate:id" in authored and "setInterval(check,120)" in authored, "guided tour: completion is not driven by a verified owner predicate")
+    need("pre_cue" in authored and "travel" in authored and "arrival" in authored and "settle" in authored and "runShowMeAction(def)" in authored, "guided tour: interruptible Show Me choreography is incomplete")
+    need("placeChatRight" in authored and "chat.host!=='dock_right'" in authored and "cmd.workspace_layout.move_surface" in authored, "guided tour: Assistant Chat is not staged at the far right or movable through its owner")
+    need("restoreWorkspaceSnapshot" in authored and "restoreChatState(complete)" in authored and "removePlanningFixture();" in authored and "goPage(complete?'wizard':original&&original.page)" in authored and "teacher_preserved:!!complete" in authored and "state.status='recovery_required'" in authored and "data-tour-keep-layout" in authored, "guided tour: verified cleanup, explicit Keep, or final real Planning destination is incomplete")
+    need("teacherTurnCurrent(pending)" in authored and "thread.guided_example===true" in authored and "guidedThreadIds[threadId]" in authored and "cancelTeacherTurn();removePlanningFixture();state.open=false;state.status='paused'" in authored, "guided tour: local Teacher ownership or interrupted-turn fencing is incomplete")
+    need("pm7:guided-tour:checkpoint:v3" in authored and "safe_checkpoint.v1" in authored and "function savedCheckpoint()" in authored, "guided tour: safe step checkpoint/resume is incomplete")
+    need("callout.offsetWidth" in authored and "overlapArea(box,visible)" in authored and "targetOverlapPx" in authored and "Math.min(innerWidth-margin-cw/2" in authored, "guided tour: target measurement, collision scoring, or viewport clamping is incomplete")
+    need("data-concept-fixture-only" in authored and "pm7gt-planning-practice" in authored and "data-practice-action" in authored and "Nothing has been built" in authored, "guided tour: real Planning page practice fixture or explicit simulation boundary is incomplete")
+    need("prepareTeacherPractice" in authored and "mountTeacherPersonaControl" in authored and all(action in authored for action in ("cmd.persona.select", "cmd.chat.send", "cmd.chat.eli5.set")) and "teacher_message_sent" in authored and "TEACHER_ANSWERS" in authored and "data-pm7gt-teacher-response" in authored, "guided tour: mounted Teacher selection/message/reply practice is incomplete")
+    need("ui.assistant_chat." not in authored, "guided tour: concept-only Chat aliases replaced canonical owner commands")
+    need("createGuidedPlanningPractice" in authored and "updatePracticeTree" in authored and "consequence_revision" in authored and "Shared access needs a decision" in authored, "guided tour: genuine answer edit, unresolved choice, or stable outcome identity regressed")
     need("A project is one labeled box" in authored and "A project groups one goal" in authored, "guided tour: normal and ELI5 Teacher answers are not materially distinct")
     need("Safe History creates recoverable versions on this computer" in authored and "Git or Jujutsu can organize that local timeline" in authored and "GitHub or GitLab can hold an optional online copy" in authored and "FileSafe protects selected file copies beside it" in authored, "guided tour: Safe History/source-control/FileSafe relationship drifted")
-    need(authored.count("teacherTopic('") >= 40 and "TEACHER_SUGGESTIONS" in authored and "data-teacher-question" in authored, "guided tour: deterministic Teacher topic breadth or clickable suggestions regressed")
-    need("TEACHER_FALLBACK" in authored and "id:'supported_topics'" in authored and "can answer more than forty" in authored and "TEACHER_MORE_GROUPS" in authored and "Browse 26 more" in authored and "mounted_in:'assistant_chat'" in authored, "guided tour: Teacher lacks an honest, discoverable Assistant Chat topic library")
-    need('data-teacher-library="open"' in GUIDED_TOUR_STYLE and "root.dataset.teacherLibrary='open'" in authored and "callout.setAttribute('inert','')" in authored and "delete root.dataset.teacherLibrary" in authored, "guided tour: Teacher question library can be obscured by the tour callout")
-    need("via:'exact_usage_card_options'" in authored and "via:'exact_planning_choice'" in authored and "via:'exact_planning_requirements'" in authored and "via:'exact_teacher_picker'" in authored and "teacher_persona_selected:true" in authored, "guided tour: exact watched controls do not advance automatically")
-    need("chat.host!=='dock_right'" in authored and "teacher_terminal_scene_completed" in authored and "teacher_destination_kept:state.teacher_available_after_tour" in authored and "exit_state_restored:!state.teacher_available_after_tour" in authored, "guided tour: Teacher terminal scene or exact Skip restoration is incomplete")
-    need("chat_draft" in authored and "chat_placeholder" in authored and "focus_node" in authored and "rememberOutsideFocus" in authored and "lastOutsideFocusAt<1200" in authored and "options.source==='settings'" in authored and "settingsReturn=state.source==='settings'" in authored and 'button[data-action="start-guided-tour"]' in authored and "captureOriginal(settingsTrigger)" in authored and "restoreOriginalChatState" in authored and "originalFocusCandidate" in authored and "attempt<24" in authored and "window.PM_PAGES.go(original.page)" in authored, "guided tour: Skip/Finish page, layout, composer, placeholder, or delayed focus restoration is incomplete")
-    need("if(clip)clip.scrollTop=0" in authored, "guided tour: phase changes do not reset the actual scroll container")
-    need("pm7gt-forward-slot" in authored and "Use the highlighted control" in authored and "syncFooterAction" in authored, "guided tour: stable contextual footer action/status slot is incomplete")
-    need("bounded_owner_readiness_ms:250" in authored and "requestAnimationFrame(waitForMatchingMenu)" in authored, "guided tour: Usage Options lacks the bounded first-click owner-readiness observation")
-    need("ownerPageReady" in authored and "painted>=2" in authored and "That page took too long to get ready" in authored and "background: transparent" in GUIDED_TOUR_STYLE, "guided tour: route-ready handoff or recoverable non-opaque timeout is incomplete")
-    need("panel_demo_pair_ids" in authored and "state.panel_demo_target_id=pair[1].surface_instance_id" in authored and "if(state.phase===1)panelPairForDemo()" in authored and "editor_panel_2" not in authored, "guided tour: pre-film panel pair and exact visible handle target are not stable")
-    need("function tabStops()" in authored and "event.key!=='Tab'" in authored, "guided tour: phase-aware focus containment is incomplete")
+    need(authored.count("teacherTopic('") >= 40 and "TEACHER_SUGGESTIONS" in authored and "TEACHER_MORE_GROUPS" in authored and "See 30 example questions" in authored and "data-teacher-question" in authored, "guided tour: broad deterministic Teacher topic library regressed")
+    need("function tabStops()" in authored and "event.key!=='Tab'" in authored and "event.key==='Escape'" in authored, "guided tour: focus containment or Escape pause is incomplete")
     need("border-left" not in GUIDED_TOUR_STYLE.lower(), "guided tour: rejected left-edge accent returned")
     for family in ("friendly", "glass", "basic", "retro"):
         need('html[data-theme="%s-light"] .pm7gt-callout' % family in GUIDED_TOUR_STYLE and 'html[data-theme="%s-dark"] .pm7gt-callout' % family in GUIDED_TOUR_STYLE, "guided tour: %s light/dark paint variants are incomplete" % family)
     need("border-radius:36px 36px 36px 12px" in GUIDED_TOUR_STYLE and "inset:14px -14px -14px 14px" in GUIDED_TOUR_STYLE and "border-top-width:8px" in GUIDED_TOUR_STYLE and 'content:"TOUR.EXE"' in GUIDED_TOUR_STYLE, "guided tour: theme families collapsed into color-only variants")
-    need("from { opacity: 0" not in GUIDED_TOUR_STYLE and ".pm7gt-scrim { position: absolute; inset: 0; background: transparent" in GUIDED_TOUR_STYLE and "full-screen scrim" in GUIDED_TOUR_STYLE and ".pm7gt-stage" in GUIDED_TOUR_STYLE, "guided tour: stable non-flashing callout shell regressed")
+    need("from { opacity: 0" not in GUIDED_TOUR_STYLE and ".pm7gt-scrim { position: absolute; inset: 0; background: transparent" in GUIDED_TOUR_STYLE and "full-screen scrim" in GUIDED_TOUR_STYLE and ".pm7gt-stage" in GUIDED_TOUR_STYLE, "guided tour: stable non-flashing callout surface regressed")
     need("#pm7-onboarding-resume:not([hidden]) ~ #pm7-guided-tour-resume" in GUIDED_TOUR_STYLE, "guided tour: paused-tour Resume can overlap setup Resume")
-    for retired_story_id in ("shell_navigation", "panel_layout", "widget_workspace"):
-        need(retired_story_id not in "var STEPS=" + GUIDED_TOUR_SCRIPT.split("var UI_ACTIONS=", 1)[0], "guided tour: rejected story order returned: %s" % retired_story_id)
+    need("reduced_ms:80" in authored and "show_me_reduced_ms:80" in authored and "animation-duration: 80ms !important" in GUIDED_TOUR_STYLE, "guided tour: reduced motion lost its restrained 80 ms cause-and-effect path")
+    need("<canvas" not in authored.lower() and "html2canvas" not in authored.lower() and "screenshot" not in authored.lower(), "guided tour: screenshot/canvas substitution entered the live-control lesson")
     need('data-pm-hover-exempt="programmatic-focus-landmark"' in authored and 'h2[data-pm-hover-exempt="programmatic-focus-landmark"]:focus-visible' in GUIDED_TOUR_STYLE, "guided tour: announced headings must not show a stray programmatic focus outline or hover tag")
     for retired_visible_copy in ("LOCAL TOUR TEACHER", "Shell navigation ·", "Next: shell navigation", "Provider/model/token/AI-plan use", "Last receipt:", "owner command is cmd.widget"):
         need(retired_visible_copy not in authored, "guided tour: developer-facing tour copy returned: %s" % retired_visible_copy)
 
     notes.update(
         {
-            "decision": "three-scene beginner film: page navigation, reversible multi-panel rearrangement, and real Usage resize/hide/reveal; then mounted Planning intent/requirements; then Assistant Chat and its mounted Teacher control",
+            "decision": "newbie-first guided film: Assistant Chat and local Teacher first; reversible workspace and Usage practice second; Planning Wizard owns the final and longest chapter",
             "integration_position": "after T45 Product Onboarding and before later system/hover transforms",
-            "step_ids": ["usage", "planning_wizard", "chat_teacher"],
-            "storyboard_revision": "orientation-panel-usage-planning-teacher-2026-09-01",
+            "step_ids": expected_step_ids,
+            "chapter_order": ["chat_teacher", "workspace", "planning_wizard"],
+            "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
+            "planning_practice_helper_sha256": hashlib.sha256(Path(guided_tour_practice_source.__file__).read_bytes()).hexdigest(),
             "teacher_boundary": "baked-in local deterministic exchange; provider/model/network/token/AI-plan use is exactly zero",
             "runtime_ownership_boundary": "calls mounted PM_HOME_WORKSPACE, PM7_USAGE, Assistant Chat, and PM_PAGES owners; owns no parallel runtime, layout, widget, command, persistence, or Planning Wizard state",
             "simulation_boundary": "browser concept behavior and observed owner receipts only; not native Slint compilation, production wiring, runtime certification, or protected AuthBrowserSession evidence",
-            "timings_ms": {"non_retro": 500, "non_retro_allowed": [420, 560], "retro_stepped": 140, "reduced_motion": 0, "same_frame_ack": 0},
+            "timings_ms": {"non_retro": 500, "non_retro_allowed": [420, 560], "retro_stepped": 140, "reduced_motion": 80, "same_frame_ack": 0},
             "slint_portability": "opacity/translation/scale/clipping states only; no Canvas, WebGL, backdrop blur, SVG filter, runtime color mixing, or network primitive",
-            "deterministic_api": "window.PM7_GUIDED_TOUR with start/next/back/skip/resume/replay/snapshot and target_adapter",
-            "layout_exit": "Skip restores the captured page, layout, composer draft, placeholder, ELI5 state, document scroll, and focus; successful Finish keeps the Teacher thread active with Assistant Chat visible and docked at the far right",
+            "deterministic_api": "window.PM7_GUIDED_TOUR with start/next/back/pause/skip/resume/finish/replay/snapshot and target_adapter",
+            "layout_exit": "Skip restores the captured page, layout, composer draft, placeholder, ELI5 state, document scroll, and focus; successful Finish restores layout, preserves the local Teacher thread, and leaves Planning Wizard visible with work_started false",
             "protected_embedded_source_guard": protected_receipt,
             "effect_surface_set_diff": effect_receipt,
         }

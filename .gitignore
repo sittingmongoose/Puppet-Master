@@ -35,6 +35,13 @@ node_modules/
 scratchpad/
 Plans/.audits/
 tests/
+# Keep reusable packet/custody regressions visible without admitting bulk evidence.
+!/tests/
+/tests/*
+!/tests/test_pm_forge_backup_acceptance.py
+!/tests/test_pm_touch_closure_source.py
+!/tests/test_pm_packet_audit_verdicts.py
+!/tests/test_pm_packet_audit_census.py
 Concepts/**/evidence/
 **/simulator_runs/
 **/staged_windows_build*/

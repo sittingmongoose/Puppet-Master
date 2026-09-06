@@ -327,3 +327,40 @@ negative_constraints:
   - Do not claim runtime copy/move/restore, native GUI, storage, safety, or PROC execution evidence from this static consumer contract.
 owner_hints: [Plans/Project_System.md, Plans/Backup_Restore_System.md, Plans/Project_Sync_and_Backbone.md, Plans/storage-plan.md]
 ```
+
+## Notebook Project Data Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Working Notebook records are Project data joined by `project_id`, not ordinary Settings values and not operational manager objects. `cmd.project.duplicate_configuration` excludes notebook bodies and checkpoints (it copies portable settings/bindings only, so note bodies never travel through settings transfer); `cmd.project.duplicate_with_history` includes them through the verified backup/import path with identity rewrite (new `project_id`, remapped notebook/entry/checkpoint identities and scope bindings), explicit inclusion, and no duplicated execution lease or writer authority. Forks and rewinds of threads keep source revisions and destination identity: a branch built from a restore point sees note revisions as of that boundary, never future-branch decisions as current, and cloned usage history is not newly incurred cost.
+
+```yaml
+plan_unit_id: PJCT-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_System.md
+canonical_text: Working Notebook records are Project data, not Settings values or operational objects. duplicate_configuration excludes note bodies and checkpoints; duplicate_with_history includes them through verified backup/import with identity rewrite and no duplicated writer authority or execution lease. Thread forks/rewinds use correct source revisions and destination identity, never leaking future-branch note decisions as current or cloning usage as new cost.
+gui_related: false
+gui_classification_reason: Project data classification is system behavior, not GUI work.
+depends_on: [PJCT-005, BRS-020]
+unblocks: []
+acceptance_criteria:
+  - Configuration duplication carries no note bodies.
+  - History duplication remaps identities and grants no foreign write authority.
+  - Fork/rewind branches see correct as-of note revisions.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: identity_leak
+reasoning_tier: standard
+context_scope: project_system
+implementation_surfaces: [Plans/Project_System.md, Plans/Backup_Restore_System.md, Plans/Working_Notebook.md]
+node_compile_hint: {mode: project_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I12
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-T04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A49
+preserved_exact_tokens: ["duplicate_configuration", "duplicate_with_history", "identity rewrite"]
+negative_constraints:
+  - Do not carry note bodies through configuration duplication or settings transfer.
+owner_hints: [Plans/Project_System.md, Plans/Backup_Restore_System.md]
+```
+
+ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Working_Notebook.md

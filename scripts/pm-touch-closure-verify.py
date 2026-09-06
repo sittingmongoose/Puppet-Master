@@ -9,6 +9,7 @@ support isolated fixture testing without weakening canonical defaults.
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import re
@@ -131,10 +132,148 @@ def literal_attribute_actions(path: str) -> set[str]:
     return set(re.findall(r'data-(?:command|ui-action)-id=["\']([^"\']+)', text))
 
 
-def expected_inventory() -> dict[str, tuple[str, str, str]]:
+def effective_guided_tour_bands(source: str) -> tuple[str, str, str]:
+    """Statically resolve the three emitted Guided Tour source bands.
+
+    The authored module may compose ``GUIDED_TOUR_SCRIPT`` from bounded string
+    fragments.  Resolve only the small expression vocabulary used by those
+    module-level assignments; importing or scanning the whole legacy script
+    would either execute concept code or promote retired controller actions.
+    """
+
+    try:
+        module = ast.parse(source)
+    except SyntaxError as error:
+        raise ValueError(f"Guided Tour authored source is not valid Python: {error}") from error
+
+    assignments: dict[str, list[ast.expr]] = defaultdict(list)
+    unsupported_writes: set[str] = set()
+    for statement in module.body:
+        if (
+            isinstance(statement, ast.ImportFrom)
+            and statement.level == 0
+            and statement.module == "guided_tour_practice_source"
+            and len(statement.names) == 1
+            and statement.names[0].name == "PLANNING_PRACTICE_SCRIPT"
+            and statement.names[0].asname is None
+        ):
+            # This one source-owned helper is a closed literal, not an import
+            # execution mechanism. Unknown imports remain unresolved below.
+            helper = ast.parse(read("Concepts/pm7-tools/guided_tour_practice_source.py"))
+            writes = [node for node in ast.walk(helper) if isinstance(node, ast.Name)
+                      and node.id == "PLANNING_PRACTICE_SCRIPT"
+                      and isinstance(node.ctx, (ast.Store, ast.Del))]
+            definitions = [node for node in helper.body if isinstance(node, ast.Assign)
+                           and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name)
+                           and node.targets[0].id == "PLANNING_PRACTICE_SCRIPT"]
+            if (len(writes) != 1 or len(definitions) != 1
+                    or not isinstance(definitions[0].value, ast.Constant)
+                    or not isinstance(definitions[0].value.value, str)):
+                raise ValueError("Guided Tour practice helper must contain one literal string assignment")
+            assignments["PLANNING_PRACTICE_SCRIPT"].append(definitions[0].value)
+        if (
+            isinstance(statement, ast.Assign)
+            and len(statement.targets) == 1
+            and isinstance(statement.targets[0], ast.Name)
+        ):
+            assignments[statement.targets[0].id].append(statement.value)
+        elif isinstance(statement, ast.AnnAssign) and isinstance(statement.target, ast.Name):
+            assignments[statement.target.id].append(statement.value)
+        elif not isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            # An if/loop/augmented or destructuring assignment must not silently
+            # override a band (or one of its dependencies) after static resolution.
+            unsupported_writes.update(
+                node.id for node in ast.walk(statement)
+                if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+            )
+
+    resolved: dict[str, str | int | None] = {}
+    resolving: set[str] = set()
+
+    def evaluate(expression: ast.expr | None) -> str | int | None:
+        if expression is None:
+            return None
+        if isinstance(expression, ast.Constant) and (
+            isinstance(expression.value, str) or type(expression.value) is int
+        ):
+            return expression.value
+        if isinstance(expression, ast.Name):
+            return resolve_name(expression.id)
+        if isinstance(expression, ast.BinOp) and isinstance(expression.op, ast.Add):
+            left = evaluate(expression.left)
+            right = evaluate(expression.right)
+            if not isinstance(left, str) or not isinstance(right, str):
+                raise ValueError("Guided Tour composed source may concatenate strings only")
+            return left + right
+        if (
+            isinstance(expression, ast.Call)
+            and isinstance(expression.func, ast.Attribute)
+            and expression.func.attr == "index"
+            and len(expression.args) == 1
+            and not expression.keywords
+        ):
+            value = evaluate(expression.func.value)
+            needle = evaluate(expression.args[0])
+            if not isinstance(value, str) or not isinstance(needle, str):
+                raise ValueError("Guided Tour source slice markers must be literal strings")
+            try:
+                return value.index(needle)
+            except ValueError as error:
+                raise ValueError(f"Guided Tour source slice marker is missing: {needle!r}") from error
+        if isinstance(expression, ast.Subscript) and isinstance(expression.slice, ast.Slice):
+            value = evaluate(expression.value)
+            lower = evaluate(expression.slice.lower)
+            upper = evaluate(expression.slice.upper)
+            step = evaluate(expression.slice.step)
+            if not isinstance(value, str):
+                raise ValueError("Guided Tour source slices must operate on strings")
+            if any(bound is not None and not isinstance(bound, int) for bound in (lower, upper, step)):
+                raise ValueError("Guided Tour source slice bounds must resolve to integers")
+            if lower is None or upper is None or not 0 <= lower < upper <= len(value):
+                raise ValueError("Guided Tour source slices require explicit in-range forward bounds")
+            if step not in (None, 1):
+                raise ValueError("Guided Tour source slices may not reorder or skip legacy text")
+            return value[slice(lower, upper, step)]
+        raise ValueError(
+            "Guided Tour effective source uses an unsupported expression: "
+            f"{ast.dump(expression, include_attributes=False)}"
+        )
+
+    def resolve_name(name: str) -> str | int | None:
+        if name in unsupported_writes:
+            raise ValueError(f"Guided Tour effective source symbol {name!r} has unsupported writes")
+        if name in resolved:
+            return resolved[name]
+        definitions = assignments.get(name, [])
+        if len(definitions) != 1:
+            raise ValueError(
+                f"Guided Tour effective source symbol {name!r} has {len(definitions)} assignments"
+            )
+        if name in resolving:
+            raise ValueError(f"Guided Tour effective source contains a cycle at {name!r}")
+        resolving.add(name)
+        try:
+            value = evaluate(definitions[0])
+        finally:
+            resolving.remove(name)
+        resolved[name] = value
+        return value
+
+    band_names = ("GUIDED_TOUR_MARKUP", "GUIDED_TOUR_STYLE", "GUIDED_TOUR_SCRIPT")
+    bands: list[str] = []
+    for name in band_names:
+        value = resolve_name(name)
+        if not isinstance(value, str) or not value:
+            raise ValueError(f"Guided Tour effective source band {name!r} is not a non-empty string")
+        bands.append(value)
+    return bands[0], bands[1], bands[2]
+
+
+def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     """Build the independent expected action -> (profile, kind, disposition) map."""
 
     expected: dict[str, tuple[str, str, str]] = {}
+    inventory_failures: list[str] = []
 
     def add(profile: str, kind: str, actions: Iterable[str], disposition: str = "partial") -> None:
         for action in actions:
@@ -451,15 +590,20 @@ def expected_inventory() -> dict[str, tuple[str, str, str]]:
     if missing_source_locals:
         raise ValueError(f"PMConcept7 system local actions missing from authored source: {sorted(missing_source_locals)}")
 
-    guided_source = read("Concepts/pm7-tools/guided_tour_source.py")
-    guided_authored_parts = re.findall(
-        r"GUIDED_TOUR_(?:MARKUP|STYLE|SCRIPT)\s*=\s*r'''(.*?)'''",
-        guided_source,
-        flags=re.DOTALL,
+    guided_authored_parts = effective_guided_tour_bands(
+        read("Concepts/pm7-tools/guided_tour_source.py")
     )
-    if len(guided_authored_parts) != 3:
-        raise ValueError(f"Guided Tour authored source band census drifted: {len(guided_authored_parts)}")
     guided_tokens = tokens("\n".join(guided_authored_parts))
+    effective_guided_actions = {item for item in guided_tokens if ACTION_RE.fullmatch(item)}
+    effective_guided_local_actions = {
+        item for item in effective_guided_actions if item.startswith("ui.guided_tour.")
+    }
+    if effective_guided_local_actions != guided_local_actions:
+        inventory_failures.append(
+            "Guided Tour effective source/schema action inventory drift: "
+            f"schema_missing={sorted(effective_guided_local_actions - guided_local_actions)}, "
+            f"source_missing={sorted(guided_local_actions - effective_guided_local_actions)}"
+        )
     add("TCP-GUIDED-NAV", "ui_action", {guided_focus_action})
     add("TCP-PANEL", "command", {"cmd.panel.switch", "cmd.panel.undock", "cmd.panel.redock"})
     add("TCP-WIDGET", "command", {"cmd.widget.add", "cmd.widget.remove", "cmd.widget.configure"})
@@ -474,14 +618,6 @@ def expected_inventory() -> dict[str, tuple[str, str, str]]:
             "cmd.workspace_layout.reset",
         },
     )
-    required_guided = {
-        "cmd.panel.switch",
-        "cmd.panel.redock",
-        "cmd.widget.add",
-        "cmd.widget.remove",
-    }
-    if not required_guided <= guided_tokens:
-        raise ValueError(f"Guided Tour required command tokens missing from source: {sorted(required_guided - guided_tokens)}")
     if "cmd.nav.focus_route" in guided_tokens:
         raise ValueError("Guided Tour must use typed local ui.guided_tour.focus_route, not the optional command alias")
     required_home_layout = {"cmd.workspace_layout.set_collapsed", "cmd.workspace_layout.reset"}
@@ -491,7 +627,13 @@ def expected_inventory() -> dict[str, tuple[str, str, str]]:
 
     add("TCP-HOVER", "presentation", {"ui.hover_tag.show", "ui.hover_tag.hide", "ui.hover_tag.dismiss", "ui.hover_tag.reposition"})
     add("TCP-TOOL-DISCOVERY", "command", {"cmd.tool.discover"})
-    return expected
+    uncovered_guided_actions = sorted(effective_guided_actions - set(expected))
+    if uncovered_guided_actions:
+        inventory_failures.append(
+            "Guided Tour effective emitted actions lack retained owner/concept inventory entries: "
+            f"{uncovered_guided_actions}"
+        )
+    return expected, inventory_failures
 
 
 def repository_path(ref: str) -> Path | None:
@@ -1089,7 +1231,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         failures.append(f"handler/closure profiles without an action row: {unused_profiles}")
 
     try:
-        expected = expected_inventory()
+        expected, expected_inventory_failures = expected_inventory()
+        failures.extend(expected_inventory_failures)
     except (OSError, json.JSONDecodeError, ValueError) as error:
         failures.append(f"expected inventory extraction failed: {error}")
         expected = {}

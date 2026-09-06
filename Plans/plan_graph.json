@@ -104,7 +104,8 @@
         "ContractName:Plans/storage-plan.md",
         "ContractName:Plans/Commands_System.md",
         "ContractName:Plans/UI_Wiring_Rules.md",
-        "ContractName:Plans/DRY_Rules.md"
+        "ContractName:Plans/DRY_Rules.md",
+        "ContractName:Plans/Working_Notebook.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -120,7 +121,8 @@
         "dec-2026-07-09-web-capability-agentic-routing-governance-registration",
         "dec-2026-08-10-storage-value-registry-v2-governance-registration",
         "dec-2026-08-28-pm7-usage-recovery",
-        "dec-2026-08-29-pm7-widget-followup"
+        "dec-2026-08-29-pm7-widget-followup",
+        "dec-2026-09-05-working-notebook-registration"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -373,6 +375,11 @@
           "kind": "file",
           "ref": "Plans/DRY_Rules.md",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Working_Notebook.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -620,6 +627,11 @@
           "kind": "file",
           "ref": "Plans/DRY_Rules.md",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Working_Notebook.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "policy_mode": "workspace-write",
@@ -727,14 +739,14 @@
           "kind": "directory",
           "ref": "Plans/_shards"
         },
-      {
-        "kind": "file",
-        "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json"
-      },
-      {
-        "kind": "file",
-        "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json"
-      }
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json"
+        }
       ],
       "policy_mode": "workspace-write",
       "spec_lock_requirements": {

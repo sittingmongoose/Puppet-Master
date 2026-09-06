@@ -1197,3 +1197,71 @@ requested and effective control tier. Independent review is never certified with
 Wonderer remains additive in BrainStorm, Crew, Chat Room, PRD Builder, and Planning Wizard and
 never replaces a required core participant. Where concurrency is lower than the logical roster,
 the roster runs in waves; a core role is never dropped to fit a participant cap.
+
+## Working Notebook Collaboration Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. One notebook capability serves collaborative workflows through the existing identities and ceilings: each participant slot already owns a distinct participant identity and private working slice; the notebook `participant` scope is that private slice made durable, and `shared_slice` scope is an explicitly shared set of exact note revisions to an explicit roster/phase policy. Personal working slices and shared findings are projections over the existing `CollaborativeRun`/slot records — no new parallel agent, session, or transcript store exists, and there is no implicit all-participant visibility.
+
+Blind-phase protection is absolute across every notebook route: during Review initial passes (7.4) and BrainStorm blind proposals (phase 2), independent reviewer notes and proposals remain inaccessible to other participants through direct read, search, exact-ID read, import, resume capsule, checkpoint selection, or shared notes; no existence metadata, counts, titles, or snippets leak. Recovery, fresh-window continuation, and shared search cannot bypass the phase boundary; coordinator access follows the protocol (normalized findings at the release point), never role-name assumption.
+
+```yaml
+plan_unit_id: CWR-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: Collaborative notebooks use participant and shared_slice scopes over existing CollaborativeRun and participant_slot identities. Each participant retains a distinct current identity and private working slice; sharing selects exact revisions and explicit recipients; there is no implicit all-participant visibility and no new parallel transcript/agent/session store.
+gui_related: false
+gui_classification_reason: Scope semantics are runtime behavior, not GUI work.
+depends_on: [CWR-011, WN-005]
+unblocks: [CWR-013]
+acceptance_criteria:
+  - Each participant and coordinator retains a distinct current identity.
+  - Sharing exposes exactly the selected revisions to exactly the permitted roster/phase.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: ambient_visibility
+reasoning_tier: standard
+context_scope: collaborative_workflows
+implementation_surfaces: [Plans/Collaborative_Workflows.md, Plans/Working_Notebook.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I06
+preserved_exact_tokens: ["participant", "shared_slice", "private working slice"]
+negative_constraints:
+  - Do not create implicit all-participant notebook visibility.
+owner_hints: [Plans/Collaborative_Workflows.md, Plans/Working_Notebook.md]
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Working_Notebook.md
+
+```yaml
+plan_unit_id: CWR-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: "Blind-phase notebook protection is absolute: independent reviewer notes and blind BrainStorm proposals stay inaccessible to other participants until the workflow owner releases them. Recovery, fresh-window continuation, shared search, exact-ID reads, imports, resume capsules, checkpoint selection, and shared notes all enforce the phase boundary at read time; no content or existence metadata leaks, and coordinator access follows the protocol release point rather than role-name assumption."
+gui_related: false
+gui_classification_reason: Phase protection is runtime/permission behavior, not GUI work.
+depends_on: [CWR-012, PS-140]
+unblocks: []
+acceptance_criteria:
+  - Every route (direct read, search, import, capsule, shared notes) is checked against blind access.
+  - No forbidden content or existence metadata leaks during blind phases.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - Plans/working_notebook_contract_fixtures.json
+risk_class: blind_phase_breach
+reasoning_tier: high
+context_scope: collaborative_workflows
+implementation_surfaces: [Plans/Collaborative_Workflows.md, Plans/Permissions_System.md, Plans/Working_Notebook.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I07
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A09
+preserved_exact_tokens: ["blind", "release point", "existence metadata"]
+negative_constraints:
+  - Do not let recovery or shared search bypass the blind-phase boundary.
+owner_hints: [Plans/Collaborative_Workflows.md, Plans/Permissions_System.md]
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Working_Notebook.md
