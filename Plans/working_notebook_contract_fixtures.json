@@ -456,7 +456,6 @@
           "operation": "create",
           "request_id": "req_create_001",
           "expected_revision": null,
-          "actor": "assistant:thread:thr_01JEXAMPLETHREAD",
           "body": "Observation: locale matrix run scoped to rev A of module X; details bounded, raw log stays an artifact ref.",
           "scope": {
             "kind": "thread",
@@ -464,7 +463,16 @@
             "binding_refs": {
               "thread_id": "thr_01JEXAMPLETHREAD"
             }
-          }
+          },
+          "epistemic_kind": "observation",
+          "provenance_refs": [
+            {
+              "kind": "tool_result",
+              "id": "tr_01JEXAMPLE",
+              "revision_or_hash": null
+            }
+          ],
+          "validity_refs": []
         }
       },
       {
@@ -475,7 +483,6 @@
           "operation": "update",
           "request_id": "req_update_002",
           "expected_revision": 1,
-          "actor": "user:principal",
           "body": "Unconfirmed hypothesis: the flaky test depends on locale. Not verified; do not treat as fact. User correction attributed to principal.",
           "scope": {
             "kind": "worker_lineage",
@@ -485,7 +492,16 @@
               "node_id": "node-7",
               "attempt_id": "attempt-2"
             }
-          }
+          },
+          "epistemic_kind": "hypothesis",
+          "provenance_refs": [],
+          "validity_refs": [
+            {
+              "kind": "workflow_record",
+              "id": "inv_01JEXAMPLE",
+              "revision_or_hash": "7"
+            }
+          ]
         }
       },
       {
@@ -495,7 +511,11 @@
           "entry_id": "wne_01JEXAMPLEIMPORT03",
           "request_id": "req_supersede_003",
           "expected_revision": 1,
-          "target_state": "superseded"
+          "operation": "supersede",
+          "supersedes_entry_revision": {
+            "entry_id": "wne_01JEXAMPLEIMPORT00",
+            "revision": 2
+          }
         }
       }
     ],
@@ -747,11 +767,11 @@
       }
     },
     {
-      "negative_id": "neg_supersede_unknown_target_state",
+      "negative_id": "neg_supersede_unknown_operation",
       "rejects": "tool_requests[6]",
-      "reason": "Lifecycle transitions are closed (superseded|archived|tombstoned); an unknown target state is rejected (WNC-N16/WNC-R02).",
+      "reason": "Lifecycle actions are closed (supersede|archive|tombstone); an unknown operation is rejected (WNC-N16/WNC-R02/FU-01).",
       "mutation": {
-        "path": "tool_requests[6].args.target_state",
+        "path": "tool_requests[6].args.operation",
         "value": "deleted"
       }
     },
@@ -763,6 +783,15 @@
         "path": "tool_requests[2].args.message_id",
         "value": null
       }
+    },
+    {
+      "negative_id": "neg_supersede_null_expected_revision",
+      "rejects": "tool_requests[6]",
+      "reason": "supersede requires a non-null CAS expected revision; a null revision cannot guard the lifecycle transition (WNC-N06/FU-01).",
+      "mutation": {
+        "path": "tool_requests[6].args.expected_revision",
+        "value": null
+      }
     }
   ],
   "acceptance_scenario_map": {
@@ -772,28 +801,35 @@
     "scenarios": {
       "WNC-A01": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-004",
+          "Plans/assistant-chat-design.md#ACD-451",
+          "Plans/usage-feature.md#UF-100"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A02": {
         "disposition": "static_fixture",
         "refs": [
           "entry_envelopes[0]",
-          "entry_envelopes[1]",
-          "neg_bad_epistemic_kind"
+          "entry_envelopes[1]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A03": {
         "disposition": "static_fixture",
         "refs": [
-          "resume_capsules[0]",
-          "neg_capsule_over_token_bound",
-          "neg_capsule_over_byte_bound"
+          "resume_capsules[0]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A04": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-002",
+          "Plans/Tools.md#T-183",
+          "Plans/Prompt_Pipeline.md#PP-089"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A05": {
@@ -802,277 +838,460 @@
           "revision_mutations[0]",
           "revision_mutations[1]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A06": {
         "disposition": "static_fixture",
         "refs": [
-          "revision_mutations[2]",
-          "neg_applied_without_result_revision"
+          "revision_mutations[2]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A07": {
         "disposition": "static_fixture",
         "refs": [
-          "entry_envelopes[1] (freshness needs_revalidation)"
+          "entry_envelopes[1]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A08": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-010",
+          "Plans/assistant-memory-subsystem.md#AMS-046",
+          "Plans/orchestrator-subagent-integration.md#OSI-436"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A09": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Collaborative_Workflows.md#CWR-013",
+          "Plans/Permissions_System.md#PS-140"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A10": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Permissions_System.md#PS-140",
+          "Plans/Prompt_Pipeline.md#PP-090"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A11": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-087",
+          "Plans/Permissions_System.md#PS-141"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A12": {
         "disposition": "static_fixture",
         "refs": [
-          "entry_envelopes[2]",
-          "neg_import_without_restriction"
+          "entry_envelopes[2]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A13": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-018",
+          "Plans/Settings_System.md#SSYS-029"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A14": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-004",
+          "Plans/Planning_Ledger_System.md#PLS-022",
+          "Plans/Settings_System.md#SSYS-029"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A15": {
         "disposition": "static_fixture",
         "refs": [
-          "neg_body_over_limit"
+          "entry_envelopes[0]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A16": {
         "disposition": "static_fixture",
         "refs": [
-          "tool_requests[1] range",
-          "neg_mixed_range_convention",
-          "neg_read_negative_offset"
+          "tool_requests[1]",
+          "tool_requests[2]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A17": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Tools.md#T-183",
+          "Plans/storage-plan.md#SP-255"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A18": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Tools.md#T-183",
+          "Plans/Working_Notebook.md#WN-014"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A19": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Permissions_System.md#PS-140",
+          "Plans/Tools.md#T-183"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A20": {
         "disposition": "static_fixture",
         "refs": [
-          "context_transitions[0]",
-          "neg_transition_done_rotated_conflation"
+          "context_transitions[0]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A21": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-088",
+          "Plans/Run_Modes.md#RM-052",
+          "Plans/Working_Notebook.md#WN-005"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A22": {
         "disposition": "static_fixture",
         "refs": [
-          "notebook_checkpoints[0]",
-          "neg_committed_checkpoint_without_receipt"
+          "notebook_checkpoints[0]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A23": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-016"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A24": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Executor_Protocol.md#EP-115",
+          "Plans/Shared_Integration_Runtime.md#SIR-036"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A25": {
         "disposition": "static_fixture",
         "refs": [
-          "context_transitions[1]",
-          "neg_crash_before_commit_claims_checkpoint"
+          "context_transitions[1]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A26": {
         "disposition": "static_fixture",
         "refs": [
-          "context_transitions[2]",
-          "neg_crash_after_commit_discards_checkpoint"
+          "context_transitions[2]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A27": {
         "disposition": "static_fixture",
         "refs": [
-          "context_transitions[3]",
-          "neg_transition_native_success_without_observation"
+          "context_transitions[3]"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "schema/fixture static coverage in this file; runtime proof NOT_RUN"
       },
       "WNC-A28": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-088",
+          "Plans/usage-feature.md#UF-101"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A29": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Models_System.md#MS-138",
+          "Plans/Prompt_Pipeline.md#PP-086",
+          "Plans/Prompt_Pipeline.md#PP-087"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A30": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-086"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A31": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Permissions_System.md#PS-141",
+          "Plans/Working_Notebook.md#WN-015"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A32": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-057",
+          "Plans/Scheduling_and_Quota_Resume.md#SQR-008"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A33": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/CLI_Bridged_Providers.md#CBP-030",
+          "Plans/Prompt_Pipeline.md#PP-088"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A34": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/CLI_Bridged_Providers.md#CBP-031",
+          "Plans/usage-feature.md#UF-100",
+          "Plans/assistant-chat-design.md#ACD-450"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A35": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/CLI_Bridged_Providers.md#CBP-030",
+          "Plans/Working_Notebook.md#WN-003"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A36": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/usage-feature.md#UF-099"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A37": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/usage-feature.md#UF-099",
+          "Plans/orchestrator-subagent-integration.md#OSI-436"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A38": {
-        "disposition": "static_fixture",
+        "disposition": "preexisting_static_fixture",
         "refs": [
-          "(pre-existing GUI-USG-007 usage fixture family; not in this file)"
+          "external:tests/fixtures/usage_gui/golden"
         ],
-        "note": "schema/fixture static coverage in this file or the named pre-existing family; runtime proof NOT_RUN"
+        "note": "pre-existing GUI-USG-007 inclusive/exclusive no-double-count fixture family; runtime proof NOT_RUN"
       },
       "WNC-A39": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/usage-feature.md#UF-100",
+          "Plans/usage-feature.md#UF-101"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A40": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-086",
+          "Plans/usage-feature.md#UF-101"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A41": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/PRD_Builder.md#PRDB-012",
+          "Plans/Planning_Wizard.md#PWIZ-026",
+          "Plans/Planning_Ledger_System.md#PLS-022"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A42": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-057",
+          "Plans/Assistant_Plan_Runtime.md#APR-013"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A43": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/agent-rules-context.md#ARC-037",
+          "Plans/Working_Notebook.md#WN-012"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A44": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/orchestrator-subagent-integration.md#OSI-436"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A45": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Back_Seat_Driver.md#BSD-025",
+          "Plans/usage-feature.md#UF-100"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A46": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/assistant-chat-design.md#ACD-451",
+          "Plans/Runtime_Artifacts_Panel.md#RAP-055",
+          "Plans/FileSafe.md#F2-210"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A47": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Project_Sync_and_Backbone.md#PSB-006",
+          "Plans/Server_System.md#SRV-014",
+          "Plans/Shared_Integration_Runtime.md#SIR-037"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A48": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Backup_Restore_System.md#BRS-020",
+          "Plans/Project_System.md#PJCT-006"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A49": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Project_System.md#PJCT-006",
+          "Plans/usage-feature.md#UF-099"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A50": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-011",
+          "Plans/assistant-memory-subsystem.md#AMS-044"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A51": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/assistant-memory-subsystem.md#AMS-044",
+          "Plans/assistant-memory-subsystem.md#AMS-045"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A52": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/MCP_Integration.md#MI-043",
+          "Plans/Prompt_Pipeline.md#PP-087",
+          "Plans/Permissions_System.md#PS-141"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A53": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/assistant-chat-design.md#ACD-449",
+          "Plans/assistant-chat-design.md#ACD-450",
+          "Plans/Orchestrator_Page.md#OP-035"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A54": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Settings_System.md#SSYS-029",
+          "Plans/UI_Command_Catalog.md#UCC-158",
+          "Plans/UI_Wiring_Rules.md#UIW-019",
+          "Plans/Working_Notebook.md#WN-017"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A55": {
         "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Prompt_Pipeline.md#PP-089",
+          "Plans/MCP_Integration.md#MI-043"
+        ],
         "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A56": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-057",
+          "Plans/00-plans-index.md"
+        ],
+        "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       },
       "WNC-A57": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "process_evidence",
+        "refs": [
+          "Plans/Plan_To_Node_Compilation.md",
+          "Plans/Working_Notebook.md"
+        ],
+        "note": "current process/governance obligation evidenced by the referenced tracked artifacts; product runtime remains NOT_RUN"
       },
       "WNC-A58": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "process_evidence",
+        "refs": [
+          "Plans/.audits/wnc-20260905/implementation/validator_results.json",
+          "Plans/.audits/wnc-20260905/implementation/logs/seal3_wn_contracts.log"
+        ],
+        "note": "current process/governance obligation evidenced by the referenced tracked artifacts; product runtime remains NOT_RUN"
       },
       "WNC-A59": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "process_evidence",
+        "refs": [
+          "Plans/.audits/wnc-20260905/audit/REAUDIT_2.md",
+          "Plans/.audits/wnc-20260905/audit/repair_closure_audit.jsonl"
+        ],
+        "note": "current process/governance obligation evidenced by the referenced tracked artifacts; product runtime remains NOT_RUN"
       },
       "WNC-A60": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "process_evidence",
+        "refs": [
+          "Plans/.audits/wnc-20260905/implementation/doc_impact_matrix.json"
+        ],
+        "note": "current process/governance obligation evidenced by the referenced tracked artifacts; product runtime remains NOT_RUN"
       },
       "WNC-A61": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "process_evidence",
+        "refs": [
+          "Plans/.audits/wnc-20260905/implementation/logs/seal3_spec_lock_refresh.log",
+          "Plans/.audits/wnc-20260905/implementation/governance_status.json"
+        ],
+        "note": "current process/governance obligation evidenced by the referenced tracked artifacts; product runtime remains NOT_RUN"
       },
       "WNC-A62": {
-        "disposition": "runtime_only_future",
-        "note": "governance/runtime obligation; static owner prose applies, execution is future-runtime evidence (NOT_RUN)"
+        "disposition": "owner_prose_only",
+        "refs": [
+          "Plans/Working_Notebook.md#WN-014",
+          "Plans/storage-plan.md#SP-257"
+        ],
+        "note": "owner prose covers the scenario; no representable static fixture; runtime proof NOT_RUN"
       }
     }
   }

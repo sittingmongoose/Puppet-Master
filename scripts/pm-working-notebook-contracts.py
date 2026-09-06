@@ -52,7 +52,8 @@ EXPECTED_NEGATIVE_IDS = {
     "neg_fresh_context_legacy_arg_name", "neg_read_negative_offset",
     "neg_read_unknown_arg", "neg_write_create_with_entry_id",
     "neg_success_without_new_window", "neg_success_unavailable_controller",
-    "neg_write_update_without_expected_revision", "neg_supersede_unknown_target_state",
+    "neg_write_update_without_expected_revision", "neg_supersede_unknown_operation",
+    "neg_supersede_null_expected_revision",
     "neg_chatread_without_message_or_item",
 }
 FAMILY_MINIMUMS = {
@@ -70,7 +71,39 @@ ANCHOR_RECORDS = {
 TOOL_COVERAGE = {"notebook_search", "notebook_read", "notebook_write",
                  "notebook_supersede", "fresh_context_request", "chatread"}
 EXPECTED_SCENARIO_IDS = {f"WNC-A{i:02d}" for i in range(1, 63)}
-SCENARIO_DISPOSITIONS = {"static_fixture", "owner_prose_only", "runtime_only_future"}
+SCENARIO_DISPOSITIONS = {"static_fixture", "preexisting_static_fixture", "owner_prose_only", "process_evidence", "runtime_only_future"}
+# Semantic identity pins: each negative id must declare (and mutate within) this
+# exact rejection target, so repointing cases cannot silently replace each other.
+EXPECTED_NEGATIVE_TARGETS = {
+    "neg_bad_epistemic_kind": "entry_envelopes[0]",
+    "neg_body_over_limit": "entry_envelopes[0]",
+    "neg_unknown_lifecycle": "entry_envelopes[0]",
+    "neg_thread_scope_missing_thread": "entry_envelopes[0]",
+    "neg_capsule_over_token_bound": "resume_capsules[0]",
+    "neg_capsule_over_byte_bound": "resume_capsules[0]",
+    "neg_committed_checkpoint_without_receipt": "notebook_checkpoints[0]",
+    "neg_transition_native_success_without_observation": "context_transitions[0]",
+    "neg_transition_done_rotated_conflation": "context_transitions[0]",
+    "neg_unknown_tool": "tool_requests[0]",
+    "neg_mixed_range_convention": "tool_requests[1]",
+    "neg_unknown_error_code": "typed_errors[0]",
+    "neg_applied_without_result_revision": "revision_mutations[0]",
+    "neg_conflict_without_conflicting_revision": "revision_mutations[1]",
+    "neg_import_without_restriction": "entry_envelopes[2]",
+    "neg_crash_after_commit_discards_checkpoint": "context_transitions[2]",
+    "neg_crash_before_commit_claims_checkpoint": "context_transitions[1]",
+    "neg_chatread_missing_thread": "tool_requests[2]",
+    "neg_fresh_context_legacy_arg_name": "tool_requests[3]",
+    "neg_read_negative_offset": "tool_requests[1]",
+    "neg_read_unknown_arg": "tool_requests[1]",
+    "neg_write_create_with_entry_id": "tool_requests[4]",
+    "neg_success_without_new_window": "context_transitions[0]",
+    "neg_success_unavailable_controller": "context_transitions[0]",
+    "neg_write_update_without_expected_revision": "tool_requests[5]",
+    "neg_supersede_unknown_operation": "tool_requests[6]",
+    "neg_supersede_null_expected_revision": "tool_requests[6]",
+    "neg_chatread_without_message_or_item": "tool_requests[2]",
+}
 
 
 def _parse_mutation_path(path: str) -> list:
@@ -132,6 +165,17 @@ def iter_validation_errors(schema: dict[str, Any], document: Any) -> list[Any] |
         return None
     validator = jsonschema.Draft202012Validator(schema)
     return list(validator.iter_errors(document))
+
+
+def subschema_errors(schema: dict[str, Any], definition: str, value: Any) -> list[str]:
+    """Validate a bare object against one $defs entry, keeping the shared $defs
+    reference environment so $ref-bearing subschemas resolve (WNC-R02/FU-03)."""
+    wrapper = {
+        "$schema": schema.get("$schema", "https://json-schema.org/draft/2020-12/schema"),
+        "$defs": schema.get("$defs", {}),
+        "$ref": f"#/$defs/{definition}",
+    }
+    return validate_with_jsonschema(wrapper, value)
 
 
 def validate_with_jsonschema(schema: dict[str, Any], document: Any) -> list[str]:
@@ -200,16 +244,26 @@ def check_explicit_invariants(fixtures: dict[str, Any]) -> list[str]:
                 problems.append(f"{label}: reversed range (end < start) corrupts evidence addressing (WNC-H04)")
         if request.get("tool") == "notebook_write":
             operation = args.get("operation")
+            # Byte limit applies to every write operation before branching; the
+            # schema character cap alone under-counts multibyte bodies (FU-02).
+            body = args.get("body")
+            if isinstance(body, str) and len(body.encode("utf-8")) > 65536:
+                problems.append(f"{label}: write body exceeds 64 KiB UTF-8 (WNC-N05/FU-02)")
             if operation == "create":
                 if args.get("entry_id") is not None or args.get("expected_revision") is not None:
                     problems.append(f"{label}: create mints the entry host-side; it cannot carry a preassigned entry id or expected revision (WNC-N06)")
                 if not args.get("body"):
                     problems.append(f"{label}: create without a bounded body (WNC-N05)")
+                if not isinstance(args.get("epistemic_kind"), str):
+                    problems.append(f"{label}: create without the registered epistemic kind (WNC-N02/FU-01)")
             elif operation in {"update", "append"}:
                 if not isinstance(args.get("expected_revision"), int) or not args.get("entry_id"):
                     problems.append(f"{label}: update/append require the CAS expected revision and an entry id (WNC-N06)")
-                if len(args.get("body", "").encode("utf-8")) > 65536:
-                    problems.append(f"{label}: write body exceeds 64 KiB UTF-8 (WNC-N05)")
+        if request.get("tool") == "notebook_supersede":
+            if args.get("operation") not in {"supersede", "archive", "tombstone"}:
+                problems.append(f"{label}: supersede requires a registered lifecycle action (WNC-N16/FU-01)")
+            if not isinstance(args.get("expected_revision"), int):
+                problems.append(f"{label}: supersede requires a non-null CAS expected revision (WNC-N06/FU-01)")
     for index, error in enumerate(fixtures["positive"]["typed_errors"]):
         label = f"typed_errors[{index}]"
         if error.get("nondiscriminating") and error.get("detail"):
@@ -262,6 +316,22 @@ def check_fixture_inventory(fixtures: dict[str, Any]) -> list[str]:
         problems.append(f"no positive request covers registered tool {tool}")
     negatives = fixtures.get("negative", [])
     seen = [negative.get("negative_id") for negative in negatives]
+    for negative in negatives:
+        negative_id = negative.get("negative_id")
+        expected_target = EXPECTED_NEGATIVE_TARGETS.get(negative_id)
+        declared = negative.get("rejects")
+        if expected_target is not None and declared != expected_target:
+            problems.append(
+                f"negative {negative_id!r} declares rejects {declared!r} but its semantic case is pinned to {expected_target!r} (FU-04)"
+            )
+        mutation_path = (negative.get("mutation") or {}).get("path", "")
+        mutation_tokens = _parse_mutation_path(mutation_path)
+        if expected_target is not None:
+            target_tokens = _parse_mutation_path(expected_target)
+            if mutation_tokens[:2] != target_tokens[:2]:
+                problems.append(
+                    f"negative {negative_id!r} mutates {mutation_path!r} outside its pinned target {expected_target!r} (FU-04)"
+                )
     for negative_id in sorted(set(seen) - EXPECTED_NEGATIVE_IDS):
         problems.append(f"unknown negative fixture id {negative_id!r} (inventory drift)")
     for negative_id in sorted(EXPECTED_NEGATIVE_IDS - set(seen)):
@@ -276,9 +346,58 @@ def check_fixture_inventory(fixtures: dict[str, Any]) -> list[str]:
     for extra in sorted(present_ids - EXPECTED_SCENARIO_IDS):
         problems.append(f"unknown acceptance scenario {extra} in the scenario map")
     for scenario_id, entry in sorted(scenarios.items()):
-        if isinstance(entry, dict) and entry.get("disposition") not in SCENARIO_DISPOSITIONS:
-            problems.append(f"scenario {scenario_id} has disposition {entry.get('disposition')!r}")
+        # A non-dictionary row must not slip past the disposition check (FU-04).
+        if not isinstance(entry, dict):
+            problems.append(f"scenario {scenario_id} entry must be an object with a disposition")
+            continue
+        disposition = entry.get("disposition")
+        if disposition not in SCENARIO_DISPOSITIONS:
+            problems.append(f"scenario {scenario_id} has disposition {disposition!r}")
+            continue
+        refs = entry.get("refs")
+        if disposition in {"static_fixture", "preexisting_static_fixture", "owner_prose_only", "process_evidence"}:
+            if not isinstance(refs, list) or not refs:
+                problems.append(f"scenario {scenario_id} ({disposition}) requires non-empty refs")
+                continue
+            for ref in refs:
+                problem = _scenario_ref_problem(disposition, ref, positive)
+                if problem:
+                    problems.append(f"scenario {scenario_id} ref {ref!r}: {problem}")
+        elif disposition == "runtime_only_future" and not str(entry.get("note") or "").strip():
+            problems.append(f"scenario {scenario_id} (runtime_only_future) requires a non-empty note")
     return problems
+
+
+def _scenario_ref_problem(disposition: str, ref: Any, positive: dict[str, Any]) -> str | None:
+    if not isinstance(ref, str) or not ref.strip():
+        return "ref must be a non-empty string"
+    if disposition == "static_fixture":
+        match = re.match(r"^([a-z_]+)\[(\d+)\]$", ref)
+        if match is None:
+            return "static refs must look like family[index]"
+        family, index = match.group(1), int(match.group(2))
+        rows = positive.get(family)
+        if not isinstance(rows, list):
+            return f"family {family} does not exist in the positive fixtures"
+        if index >= len(rows):
+            return f"index {index} out of range for {family} ({len(rows)} records)"
+        return None
+    if disposition == "preexisting_static_fixture":
+        if not ref.startswith("external:"):
+            return "preexisting refs must start with 'external:'"
+        target = ref[len("external:"):].split()[0].strip()
+        if not target:
+            return "external ref needs a path"
+        if not (ROOT / target).exists():
+            return f"external path {target!r} does not exist"
+        return None
+    # owner_prose_only / process_evidence: concrete, existing repository reference
+    target = ref.split("#", 1)[0].strip()
+    if not target.startswith("Plans/"):
+        return "owner/process refs must point into Plans/ (anchor optional)"
+    if not (ROOT / target).exists():
+        return f"referenced path {target!r} does not exist"
+    return None
 
 
 def run_validation(

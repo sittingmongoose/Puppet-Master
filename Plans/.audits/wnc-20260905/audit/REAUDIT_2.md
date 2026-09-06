@@ -1,5 +1,6 @@
 # Re-Audit 2 — Independent Review Repair Wave (work item `wnc-20260905`)
 
+> **UPDATE (superseded status):** the recheck of this commit (see `review_2/RECHECK_REPORT.md`) found that the "all seven findings closed" claim here was premature — mutation-tool signatures still conflicted with the owner, UTF-8 byte enforcement skipped create, seven regressions validated at the wrong schema level, inventory pins did not bind content, and coverage stamps were stale. All of those are repaired and verified in `REAUDIT_3.md` (reviewer live-checkout script exit 0). This report is retained as history.
 Scope: repair and close the seven findings in the external independent review of commit `2826699f7e` (`review_2/REVIEW_REPORT.md`, findings WNC-R01..WNC-R07). Per-finding closure evidence: `review2_closure.jsonl`. Prior rounds: `AUDIT_REPORT.md` (findings AUD-F01..F04), `REAUDIT_1.md`.
 
 ## R01 — AMS §5.3 conflicting verification rules — CLOSED
