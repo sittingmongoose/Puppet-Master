@@ -4,7 +4,7 @@ Source: `Plans/assistant-memory-subsystem.md`
 
 Source lines: L1-L4
 
-Source SHA256: `8d3a9b8eeb8228d19e1926c9c6d3a53d3780f7f90c0f394bbdd18055e4d3e995`
+Source SHA256: `7b10a22be6347ac99d87c7a8ecb5e0b901523944c34c376b34bb91320deda431`
 
 ---
 

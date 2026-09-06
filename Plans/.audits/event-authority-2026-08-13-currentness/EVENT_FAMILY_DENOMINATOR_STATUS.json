@@ -13,8 +13,8 @@
     "event_types_sha256": "cc35579b4cabf2d5459c5dff1e01f15e382ef62dcabbace1925fe0c1019174ef"
   },
   "live_mechanical_census": {
-    "unique_tokens": 3235,
-    "occurrences": 7810,
+    "unique_tokens": 3238,
+    "occurrences": 7816,
     "classification_counts": {
       "ambiguous_event_like_token": 153,
       "compatibility_or_source_lineage": 91,
@@ -23,7 +23,7 @@
       "likely_persisted_event_candidate": 75,
       "non_event_command": 1311,
       "registered_event_family_declaration": 39,
-      "schema_or_fixture_event_example": 541,
+      "schema_or_fixture_event_example": 544,
       "schema_or_identifier_non_event": 66
     },
     "unregistered_likely_persisted_candidates": [

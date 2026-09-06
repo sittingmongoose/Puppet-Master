@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "anchor_alias_rows": 11230,
+    "batch_report_doc_entries": 95,
+    "batch_report_rows": 10,
+    "conversion_performed": false,
+    "coverage_rows": 11230,
+    "coverage_status_counts": {
+      "already_standardized_existing_planunits": 11230
+    },
+    "current_run_pointer": "Plans/.plan_migration/current_run.json",
+    "doc_count": 95,
+    "live_plan_unit_count": 6362,
+    "plans_manifest_sha256": "280c6239f40c87185a1b80ecd758fd6784b5d42938aabab1db53093221fef788",
+    "source_preserving_unit_count": 0,
+    "source_preserving_unit_ids": [],
+    "span_count": 11230,
+    "unique_live_plan_unit_count": 6362
+  },
+  "run_id": "pds-20260905-012-current-planunit-snapshot",
+  "schema_id": "pm.plan_migration.current_snapshot_report.v1",
+  "status": "pass"
+}

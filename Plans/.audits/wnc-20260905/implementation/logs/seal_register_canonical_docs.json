@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.governance_seal.register_canonical_docs.v1",
+  "docs": [
+    "Plans/Working_Notebook.md"
+  ],
+  "sharding_config": {
+    "path": "Plans/sharding_config.json",
+    "changed": false,
+    "added_sources": []
+  },
+  "spec_lock": {
+    "path": "Plans/Spec_Lock.json",
+    "changed": true,
+    "added_files": [
+      "Plans/Working_Notebook.md"
+    ],
+    "updated_hashes": []
+  },
+  "plan_graph": {
+    "path": "Plans/plan_graph.json",
+    "changed": true,
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "added_inputs": [
+      "Plans/Working_Notebook.md"
+    ],
+    "added_outputs": [
+      "Plans/Working_Notebook.md"
+    ],
+    "added_contract_refs": [
+      "ContractName:Plans/Working_Notebook.md"
+    ],
+    "decision_id": "dec-2026-09-05-working-notebook-registration"
+  },
+  "auto_decision": {
+    "path": "Plans/auto_decisions.jsonl",
+    "changed": true,
+    "decision_id": "dec-2026-09-05-working-notebook-registration"
+  }
+}

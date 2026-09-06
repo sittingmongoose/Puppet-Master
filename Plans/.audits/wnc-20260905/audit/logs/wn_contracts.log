@@ -1,0 +1,36 @@
+working-notebook-contracts: PASS
+{
+  "checks": [
+    {
+      "detail": "pm.working_notebook_contract_fixtures.v1",
+      "name": "fixtures_schema_id",
+      "status": "pass"
+    },
+    {
+      "detail": [],
+      "name": "positive_fixtures_validate",
+      "status": "pass"
+    },
+    {
+      "detail": [],
+      "name": "negative_fixtures_rejected",
+      "status": "pass"
+    },
+    {
+      "detail": [],
+      "name": "explicit_invariants",
+      "status": "pass"
+    },
+    {
+      "detail": [],
+      "name": "storage_registry_linkage",
+      "status": "pass"
+    }
+  ],
+  "evidence_boundary": "static schema and fixture validation only; runtime NOT_RUN",
+  "fixtures_ref": "Plans/working_notebook_contract_fixtures.json",
+  "negative_fixture_count": 14,
+  "schema_ref": "Plans/working_notebook_contracts.schema.json",
+  "status": "pass",
+  "validator": "pm-working-notebook-contracts"
+}

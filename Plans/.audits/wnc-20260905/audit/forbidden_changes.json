@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.audit.wnc.forbidden_changes.v1",
+  "checked_at_utc": "2026-09-06",
+  "product_runtime_code": {
+    "result": "none",
+    "evidence": "git status shows no src/, app/, Cargo.toml, .rs, or native handler paths; 1347 modified + 66 untracked all under Plans/, scripts/, tests/, Concepts/, .gitignore"
+  },
+  "concept_changes_by_this_work": {
+    "result": "none attributable",
+    "evidence": "Concepts/.gitignore dirty files are pre-existing baseline in-flight work (baseline/dirty_files.txt); 3 new untracked Concepts files (pm7-tools guided_tour_practice_source.py, verify/*.mjs) belong to the parallel guided-tour polish, not WNC"
+  },
+  "worknodes_nodeseeds_candidates": {
+    "result": "none",
+    "evidence": "node_compile_hint create_worknodes:false + create_nodeseeds:false on all new PlanUnits; Plan_To_Node_Compilation.md unchanged; no WorkNode/NodeSeed files in status"
+  },
+  "executable_queues_or_manifests": {
+    "result": "none",
+    "evidence": "no executable build queue/manifest artifacts in status or diffs"
+  },
+  "runtime_success_receipts": {
+    "result": "none",
+    "evidence": "no activation/success receipts created; coverage records state runtime not_run"
+  },
+  "readiness_unlock_incl_PNC_019": {
+    "result": "none",
+    "evidence": "PNC-019 certification receipt remains failing (pre-existing); node_readiness_report references WN-019 only as PlanUnit source ref; Working_Notebook.md \u00a76 'neither unlocked nor claimed'"
+  },
+  "event_family_registry_edits": {
+    "result": "none",
+    "evidence": "Plans/event_family_registry.json unmodified; 5 notebook event types are candidate_not_registered prose rows only"
+  },
+  "production_wiring_rows": {
+    "result": "none",
+    "evidence": "Wiring_Matrix.production.json unmodified; 3 candidate commands in exclusions file; fail-closed command_not_registered"
+  },
+  "global_closure_registry_edits": {
+    "result": "none",
+    "evidence": "Plans/.audits/_semantic_closure_registry.jsonl absent from git status/diff"
+  },
+  "broad_provider_policy_changes": {
+    "result": "none",
+    "evidence": "CBP-030/031 + MS-138 restricted to context capability/continuity/observability; no tier/preview/endpoint policy (F2 verified, incl negative greps)"
+  },
+  "validator_weakening": {
+    "result": "none",
+    "evidence": "script diffs inspected: pm-plans-verify.py purely additive subcheck registration; working-notebook validator genuinely validates + rejects all 14 negative fixtures; readiness counts updated consistently; touch-closure/packet-audit changes belong to pre-existing in-flight work and strengthen checks"
+  },
+  "untracked_count": 66,
+  "verdict": "no forbidden changes introduced by work item wnc-20260905"
+}

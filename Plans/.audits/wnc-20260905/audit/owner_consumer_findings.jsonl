@@ -1,0 +1,21 @@
+{"path": "Plans/Commands_System.md", "claim": "no_change", "supported": true, "evidence": "UICommand dispatch IDs owned by UI_Command_Catalog.md (Commands_System.md:29,94); file unmodified"}
+{"path": "Plans/FinalGUISpec.md", "claim": "no_change_for_notebook", "supported": true, "evidence": "F3-421 (29237) + F3-445 (31376) non-file tab families; ACD-449 owns notebook states; current diff of this file is unrelated in-flight work"}
+{"path": "Plans/FileManager.md", "claim": "no_change", "supported": true, "evidence": "defers chat UX to assistant-chat-design.md (26); path-backed tabs (159); file unmodified"}
+{"path": "Plans/Contracts_V0.md", "claim": "no_change", "supported": true, "evidence": "0 PM-WNC refs; ProviderDispatchAdmissionReceipt already closed by pre-existing CV-324/325 (20976-21085); cross-surface envelopes domain-owned"}
+{"path": "Plans/Plan_Document_System.md", "claim": "no_change", "supported": true, "evidence": "New Plan Authoring Profile followed by new doc without policy change; profile compliance verified by F7"}
+{"path": "Plans/DRY_Rules.md", "claim": "no_change", "supported": true, "evidence": "ContractRef taxonomy covers new content; lint gates pass"}
+{"path": "Plans/Decision_Policy.md", "claim": "no_change", "supported": true, "evidence": "seal followed existing Spec Lock Update Protocol; decision recorded in plan_graph.json"}
+{"path": "Plans/Plan_To_Node_Compilation.md", "claim": "no_change", "supported": true, "evidence": "node_compile_hint create_worknodes:false on all new units; zero nodes created"}
+{"path": "Plans/event_family_registry.json", "claim": "no_change", "supported": true, "evidence": "unmodified; notebook events are candidate_not_registered rows in Working_Notebook.md \u00a73 only"}
+{"path": "Plans/Wiring_Matrix.production.json", "claim": "no_change", "supported": true, "evidence": "unmodified; candidates fail closed via exclusions file"}
+{"path": "Plans/settings_inventory.schema.json", "claim": "no_change", "supported": true, "evidence": "existing schema accepts the 4 Project-scoped rows (json-syntax gate passes)"}
+{"path": "Plans/Architecture_Invariants.md", "claim": "no_change", "supported": true, "evidence": "no invariant changed; no new authority center (F6 sweep)"}
+{"path": "Plans/Crosswalk.md", "claim": "no_change", "supported": true, "evidence": "new owner registered via 00-plans-index plan map"}
+{"path": "Plans/Named_Plan_System.md", "claim": "no_change", "supported": true, "evidence": "approved-Plan binding handled in Assistant_Plan_Runtime addendum"}
+{"path": "Plans/Section15_MVP_Promoted_Features_Spec.md", "claim": "no_change", "supported": true, "evidence": "no MVP scope change"}
+{"path": "Plans/Project_Output_Artifacts.md", "claim": "no_change", "supported": true, "evidence": "notebook bodies are PM sidecar state, not output artifacts"}
+{"path": "Plans/bootstrap/Bootstrap_Planning_Workflow.md", "claim": "no_change", "supported": true, "evidence": "no ledger created; packet is the source lineage"}
+{"path": "Plans/bootstrap/Codex_Prompts.md", "claim": "no_change", "supported": true, "evidence": "lineage-only; unmodified"}
+{"path": "Plans/interview-subagent-integration.md", "claim": "no_change", "supported": true, "evidence": "NullMemoryProvider path gains no notebook scope; unmodified"}
+{"path": "Plans/Skills_System.md", "claim": "MISSING_ROW_AUD-F03", "supported": null, "evidence": "absent from doc_impact_matrix.json; substantive sameness via MI-043 + PP-086/087; no notebook rows in file"}
+{"path": "Plans/Plugins_System.md", "claim": "MISSING_ROW_AUD-F03", "supported": null, "evidence": "absent from doc_impact_matrix.json; pre-dispatch transform point unchanged (2020-2027)"}

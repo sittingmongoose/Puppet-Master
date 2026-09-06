@@ -1,0 +1,739 @@
+{
+  "schema_id": "pm.handoff.wnc.doc_impact_matrix.v1",
+  "packet_id": "PM-WNC-2026-09-05-v1",
+  "work_item_id": "wnc-20260905",
+  "created_utc": "2026-09-05",
+  "basis": "Built from the packet owner matrix (all 61 candidates reviewed; 61 recorded across these rows plus the covered_above merge, including Plans/Skills_System.md and Plans/Plugins_System.md rows added in the post-audit repair of finding AUD-F03) plus live-checkout recon (7 bounded read-only specialist passes) and direct backlink greps. Classifications reflect actual live ownership at working-tree baseline 4c88c0f01300cea36135b73eec96991d73969aa2 plus pre-existing uncommitted work (forge-backup acceptance ATS-044/045 registration, pm7-tools concept refresh); none of that unrelated dirty work is reverted.",
+  "equivalence_search": {
+    "searched": [
+      "notebook",
+      "working notes",
+      "scratchpad",
+      "resume capsule",
+      "working notebook",
+      "note mechanism"
+    ],
+    "verdict": "No live Plans/*.md owner claims Working Notebook semantics. Nearest neighbors (ARC-019 attempt_journal.md per-node-attempt ephemeral sidecar, ARC-020 parent_summary.md 5-10 line handoff artifact, AMS Verified-gist Assistant-only memory, OSI structured-attempt-handoff receipts, BSD held findings) are all deliberately scoped away from durable PM-owned working notes. Plans/Working_Notebook.md is a genuinely new semantic owner.",
+    "evidence": [
+      "Plans/agent-rules-context.md:173-181 (attempt journal/parent summary contracts)",
+      "Plans/assistant-memory-subsystem.md:21,50-53 (Assistant-only memory; NullMemoryProvider for subagents)",
+      "Plans/orchestrator-subagent-integration.md:92,120 (no hidden orchestrator memory; structured-attempt-handoff)",
+      "Plans/Back_Seat_Driver.md:104 (held findings live outside advisor transcript)"
+    ]
+  },
+  "rows": [
+    {
+      "path": "Plans/Working_Notebook.md",
+      "status": "new_owner",
+      "requirements": [
+        "WNC-S02",
+        "WNC-S03",
+        "WNC-N01",
+        "WNC-N02",
+        "WNC-N03",
+        "WNC-N04",
+        "WNC-N05",
+        "WNC-N06",
+        "WNC-N07",
+        "WNC-N08",
+        "WNC-N09",
+        "WNC-N10",
+        "WNC-N11",
+        "WNC-N12",
+        "WNC-N13",
+        "WNC-N14",
+        "WNC-N15",
+        "WNC-N16",
+        "WNC-N17",
+        "WNC-C06",
+        "WNC-H05",
+        "WNC-M01",
+        "WNC-I01",
+        "WNC-P02",
+        "WNC-X02",
+        "WNC-X04",
+        "WNC-T01",
+        "WNC-T02",
+        "WNC-V02",
+        "WNC-V03"
+      ],
+      "change": "Create New Plan Authoring Profile owner for notebook identity/scope, entry envelope, CAS revisions, epistemic kinds, capsule, checkpoints, capture rules, sharing/promotion, validity, retention, storage disposition, events-candidate dispositions."
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-S02",
+        "WNC-S03",
+        "WNC-N08",
+        "WNC-N10",
+        "WNC-N11",
+        "WNC-N15",
+        "WNC-C01",
+        "WNC-C02",
+        "WNC-C03",
+        "WNC-C04",
+        "WNC-C05",
+        "WNC-C06",
+        "WNC-C07",
+        "WNC-C10",
+        "WNC-C11",
+        "WNC-C12",
+        "WNC-C13",
+        "WNC-C14",
+        "WNC-C15",
+        "WNC-H04",
+        "WNC-H05",
+        "WNC-H06",
+        "WNC-M04",
+        "WNC-I08",
+        "WNC-I09",
+        "WNC-I10",
+        "WNC-P01",
+        "WNC-V02"
+      ],
+      "change": "Add dated addendum: five distinct context operations; proactive fresh-window request/admission lifecycle; checkpoint reserve reusing contingency bucket; one admission budget; reconstruction from owner state; read-only continuation; thrash prevention; authorization survival; replay integrity; shaping policy snapshot on replay."
+    },
+    {
+      "path": "Plans/Tools.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N09",
+        "WNC-C13",
+        "WNC-H01",
+        "WNC-H02",
+        "WNC-H03",
+        "WNC-H04"
+      ],
+      "change": "Register chatread exact bounded history read; notebook tool family (notebook_search/notebook_read/notebook_write/notebook_supersede/fresh_context_request) with schemas, caps, permission classes, error mapping; shaping policy snapshot retention."
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N06",
+        "WNC-N16",
+        "WNC-C06",
+        "WNC-C08",
+        "WNC-H01",
+        "WNC-H03",
+        "WNC-H06",
+        "WNC-M03",
+        "WNC-I12",
+        "WNC-U03",
+        "WNC-T01",
+        "WNC-T02"
+      ],
+      "change": "Add dated addendum: notebook storage families (registry rows), checkpoint commit barrier (durability_class=barrier + commit manifest), read-after-commit, index watermark, retention/recovery holds."
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C02",
+        "WNC-C05",
+        "WNC-C08",
+        "WNC-C15",
+        "WNC-I11",
+        "WNC-P03"
+      ],
+      "change": "Add dated addendum: fresh-window admission routing through ProviderDispatchAdmissionService checks, transition recovery cut points reusing outbox/reconciliation, host-transfer fencing for notebook state."
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N02",
+        "WNC-C10",
+        "WNC-C14",
+        "WNC-P01",
+        "WNC-P02",
+        "WNC-P03",
+        "WNC-P04",
+        "WNC-U03",
+        "WNC-U04"
+      ],
+      "change": "Add dated addendum: one effective context controller (requested/effective strategy), PM truth survives native execution, honest opacity boundary, no provider config scope creep negative constraints."
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-P03",
+        "WNC-U01",
+        "WNC-U02",
+        "WNC-U03",
+        "WNC-U04",
+        "WNC-U05",
+        "WNC-X03"
+      ],
+      "change": "Add dated addendum: active-window occupancy vs cumulative usage vs quota; notebook/helper attribution; exactly-once across transition/fork/replay; unknown-not-zero; efficiency measurement plan NOT_RUN."
+    },
+    {
+      "path": "Plans/assistant-memory-subsystem.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N07",
+        "WNC-N12",
+        "WNC-N13",
+        "WNC-H06",
+        "WNC-M01",
+        "WNC-M02",
+        "WNC-M03",
+        "WNC-M04"
+      ],
+      "change": "Add dated addendum: per-claim evidence support/currentness strengthening Verified semantics; correction/invalidation; migration of weakly-verified gists; notebook promotion gates; dedup vs notebook retrieval."
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N10",
+        "WNC-N12",
+        "WNC-C03",
+        "WNC-C15",
+        "WNC-H02",
+        "WNC-H05",
+        "WNC-I07",
+        "WNC-T03"
+      ],
+      "change": "Add dated addendum: derived-content restriction/revocation propagation; search and direct-ID read parity; note text is data not authority; blind-phase read-time checks."
+    },
+    {
+      "path": "Plans/agent-rules-context.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N13",
+        "WNC-N14"
+      ],
+      "change": "Add dated addendum: Attempt Journal/Parent Summary keep bounded injection; worker notebook extends detail by reference, no duplicate retry summary."
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N04",
+        "WNC-N14",
+        "WNC-M01",
+        "WNC-I02",
+        "WNC-I06"
+      ],
+      "change": "Add dated addendum: worker_lineage and coordinator_run notebook scopes bound to existing run/node/attempt identities; coordinator truth from runtime owners; retry lineage reuse without unrelated history."
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-S04",
+        "WNC-C07",
+        "WNC-C09",
+        "WNC-I03"
+      ],
+      "change": "Add dated addendum: notes cannot write objective_text/state/budgets; fresh-window continuation re-checks user_stop_epoch at dispatch; no Goal fields/phases added."
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C08",
+        "WNC-C09",
+        "WNC-I02"
+      ],
+      "change": "Add dated addendum: transitions only at safe boundaries; in-flight operation identity/receipt retention; late-result fencing via replan_generation/stop epoch."
+    },
+    {
+      "path": "Plans/Collaborative_Workflows.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I06",
+        "WNC-I07"
+      ],
+      "change": "Add dated addendum: participant working slices and explicitly shared findings as projections over existing run/slot identities; blind-phase notebook protection."
+    },
+    {
+      "path": "Plans/Back_Seat_Driver.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I08",
+        "WNC-U02"
+      ],
+      "change": "Add dated addendum: BSD does not become notebook manager/transition authority/verification gate; reset rules unchanged; BSD helper usage keeps existing Usage lineage."
+    },
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C07",
+        "WNC-I04"
+      ],
+      "change": "Add dated addendum: reconstructed window rebinds exact approved plan_id/plan_version/content_hash; notes cannot select a different revision."
+    },
+    {
+      "path": "Plans/ToDo_Runtime.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N13",
+        "WNC-I03"
+      ],
+      "change": "Add dated addendum: note-to-To-Do promotion only via ToDoController proposal validation; notes never carry status assertions."
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-S04",
+        "WNC-S05",
+        "WNC-I04",
+        "WNC-I05",
+        "WNC-V05",
+        "WNC-V06"
+      ],
+      "change": "Add dated addendum: notebook content is not ledger source; mandatory ledger turn writes unchanged; promotion into planning atoms requires explicit ledger capture."
+    },
+    {
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C09",
+        "WNC-I04"
+      ],
+      "change": "Add dated addendum: scheduled/resumed builds revalidate exact Plan version and stop epoch regardless of notebook/checkpoint continuity."
+    },
+    {
+      "path": "Plans/PRD_Builder.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I05"
+      ],
+      "change": "Add dated addendum: notebook research assists intake; PRD ledger per-turn writes and source manifests remain the requirement source."
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I05"
+      ],
+      "change": "Add dated addendum: topic research notebooks assist; Planning Run ledger topic records remain canonical; no WorkNode creation."
+    },
+    {
+      "path": "Plans/Collaborative_Workflows.md",
+      "status": "covered_above",
+      "requirements": [],
+      "change": "(merged into single row above)"
+    },
+    {
+      "path": "Plans/Run_Modes.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C01",
+        "WNC-C03",
+        "WNC-C11"
+      ],
+      "change": "Add dated addendum: fresh window is not run rotation; done.rotated only on genuine rotation; ask/plan can continue in fresh window without mode escalation."
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C04",
+        "WNC-P01",
+        "WNC-P04"
+      ],
+      "change": "Add dated addendum: capability snapshot feeds transition/reserve sizing; capability resolved per route/model/account/version; no new provider policy."
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C13",
+        "WNC-I10"
+      ],
+      "change": "Add dated addendum: per-MCP-tool output caps follow Tools shaping policy snapshot; no notebook-specific MCP exemptions."
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-C15",
+        "WNC-T03"
+      ],
+      "change": "Add dated addendum: secret redaction/sensitivity checks run before note capture/ingestion and on later retrieval; revoked artifacts not rehydrated via notes."
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I09",
+        "WNC-T03"
+      ],
+      "change": "Add dated addendum: notes reference artifacts identity-native with frozen version; revoked/expired artifact state revalidated at reuse."
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I11",
+        "WNC-P04"
+      ],
+      "change": "Add dated addendum: account change revalidates notebook scope/authorization and route; usage lineage preserved; no credentials from notes."
+    },
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I12",
+        "WNC-T04",
+        "WNC-N16"
+      ],
+      "change": "Add dated addendum: notebook/checkpoint families are owned project data families in Project Backup; restore identity remapping; no automatic execution; settings transfer carries no note bodies."
+    },
+    {
+      "path": "Plans/Project_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I12",
+        "WNC-T04"
+      ],
+      "change": "Add dated addendum: notebook records are project data (not ordinary settings); duplicate_configuration excludes note bodies, duplicate_with_history includes them under owned families."
+    },
+    {
+      "path": "Plans/Project_Sync_and_Backbone.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I11"
+      ],
+      "change": "Add dated addendum: notebook/checkpoint records move with the Vault under one-writer cutover; stale-host writers fenced by lease/generation."
+    },
+    {
+      "path": "Plans/Server_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I11"
+      ],
+      "change": "Add dated addendum: stale host cannot keep writing notebook/checkpoint records after Project Move cutover."
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N17",
+        "WNC-H01",
+        "WNC-H02",
+        "WNC-I01",
+        "WNC-I09",
+        "WNC-U01",
+        "WNC-X01",
+        "WNC-X02",
+        "WNC-X03"
+      ],
+      "change": "Add dated addendum: notebook editor-tab entry/inspection states; user corrections via attributed revisions; Context Details discloses notebook/capsule contributions and transition reason; separately labeled fresh-context request distinct from Compact Now."
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-I02",
+        "WNC-X01"
+      ],
+      "change": "Add dated addendum: notebook access for selected run/worker through existing detail surfaces; no new rail."
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-N03",
+        "WNC-X04",
+        "WNC-T04"
+      ],
+      "change": "Add dated addendum: memory.notebook.* Project-scoped inventory registrations; disable-auto-capture semantics; settings transfer excludes note bodies."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-X02",
+        "WNC-X05"
+      ],
+      "change": "Add catalog rows cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook with truthful no-production-wiring dispositions."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-X05"
+      ],
+      "change": "Add dated addendum: new notebook commands await production wiring rows; fail-closed command_not_registered until then; no view-local shadow intents."
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-S06",
+        "WNC-U05",
+        "WNC-V03",
+        "WNC-V04"
+      ],
+      "change": "Register ATS-046 working-notebook contract schema/fixture validation family; static-only evidence; runtime NOT_RUN."
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-V01"
+      ],
+      "change": "Add Working Notebook, Resume Capsule, Notebook Checkpoint, Fresh Context Window Transition, Epistemic Kind terms."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "status": "edit_owner",
+      "requirements": [
+        "WNC-S03",
+        "WNC-V01"
+      ],
+      "change": "Change Summary entry, Plan map subsection, owner seam bullet, shard index row; preserve unrelated 2026-09-05 entries already present."
+    },
+    {
+      "path": "Plans/settings_inventory.json",
+      "status": "edit_registry",
+      "requirements": [
+        "WNC-X04"
+      ],
+      "change": "Add four Project-scoped memory.notebook.* settings (auto-capture toggle, resume-capsule toggle, capsule budget, injection budget) as static inventory registrations."
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "status": "edit_registry",
+      "requirements": [
+        "WNC-T01",
+        "WNC-T02"
+      ],
+      "change": "Add four deferred_not_build_blocking families (working_notebook_record, working_notebook_entry_record, notebook_checkpoint_record, context_transition_record) with value schema refs."
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-C05",
+        "WNC-X05"
+      ],
+      "change": "No edit: Contracts_V0 owns only stable cross-surface envelopes (EventRecord pm.event.v0); notebook contracts are domain-owned per Contracts_V0.md:228-230 ('Domain-specific docs own their behavior'); new schemas live in working_notebook_contracts.schema.json with owner-planned event families documented as candidates."
+    },
+    {
+      "path": "Plans/Plan_Document_System.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-S01",
+        "WNC-S04",
+        "WNC-S05",
+        "WNC-V01",
+        "WNC-V02",
+        "WNC-V04",
+        "WNC-V05",
+        "WNC-V06",
+        "WNC-V07"
+      ],
+      "change": "No edit: New Plan Authoring Profile, PlanUnit field contract, index boundary, closure registry already current; the new doc follows them; no policy change needed."
+    },
+    {
+      "path": "Plans/DRY_Rules.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-V02"
+      ],
+      "change": "No edit: ContractRef taxonomy and lint rules already cover new content; no new primitive needed."
+    },
+    {
+      "path": "Plans/Decision_Policy.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-V05"
+      ],
+      "change": "No edit: seal follows existing Spec Lock Update Protocol; decisions recorded per existing policy."
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-S01",
+        "WNC-S06",
+        "WNC-I05"
+      ],
+      "change": "No edit: WorkNode/NodeSeed prohibition already canonical; this change creates zero nodes; node_compile_hint create_worknodes:false everywhere."
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X05"
+      ],
+      "change": "No edit: Commands_System delegates UI command registration to UI_Command_Catalog.md (Commands_System.md:15); new commands are catalog rows, not user command presets."
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X01",
+        "WNC-X03"
+      ],
+      "change": "No edit: non-file editor/detail tab pattern (F3-421, F3-445) and context-detail tab (F3 §2573-2574) already cover the notebook tab pattern; ACD addendum specifies the notebook tab behavior under those patterns."
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X01"
+      ],
+      "change": "No edit: identity-native opens already route via OpenArtifact (FileManager.md:408); notebook tab is a non-file tab per F3 pattern, not a path-backed file tab (FileManager.md:171)."
+    },
+    {
+      "path": "Plans/Architecture_Invariants.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-S03"
+      ],
+      "change": "No edit: no invariant changed; notebook adds no new authority center (verified against invariants list)."
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: crosswalk indexes existing SSOT maps; new owner registered via 00-plans-index plan map; no crosswalk row semantics affected."
+    },
+    {
+      "path": "Plans/Document_Packaging_Policy.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: policy governs runtime/project docsets only; Plans/*.md owner doc is not a Document Set (Document_Packaging_Policy.md:6-15)."
+    },
+    {
+      "path": "Plans/Named_Plan_System.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: named plan registry unaffected; approved-Plan binding handled in Assistant_Plan_Runtime addendum."
+    },
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: MVP promotion spec is feature-governance history; this packet adds no MVP scope change."
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: notebook bodies are PM sidecar state, not project output artifacts; artifact references reuse runtime-artifact owners."
+    },
+    {
+      "path": "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: ledger workflow unchanged; no ledger created by this packet (source lineage is the packet itself)."
+    },
+    {
+      "path": "Plans/bootstrap/Codex_Prompts.md",
+      "status": "no_change_with_evidence",
+      "requirements": [],
+      "change": "No edit: prompt chain history is lineage-only; not used or modified."
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-M01"
+      ],
+      "change": "No edit: interview path is wired to NullMemoryProvider and gains no notebook scope; thread/participant scopes are Assistant/orchestration/collaboration surfaces per packet scope table."
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X05"
+      ],
+      "change": "No edit at Plans-authoring stage: no notebook event family is registered yet; candidate families and payload minima are documented in Plans/Working_Notebook.md §3 with disposition candidate_not_registered; registration is runtime-wave work through the event authority (adding rows without payload schemas would create quarantined families)."
+    },
+    {
+      "path": "Plans/settings_inventory.schema.json",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X04"
+      ],
+      "change": "No edit: existing schema accepts the new Project-scoped rows without change (verified against required fields and enums)."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X05"
+      ],
+      "change": "No edit: template doc; production matrix unchanged because no production wiring exists for candidate commands; disposition recorded in UI_Wiring_Rules addendum."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-X05"
+      ],
+      "change": "No edit: adding production rows would claim registered handlers that do not exist; candidate commands fail closed instead."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "status": "seal_only",
+      "requirements": [
+        "WNC-V05"
+      ],
+      "change": "Refreshed only in the explicit governance seal after canonical inputs stabilize (rehash of touched locked files + auto-decision row + evidence bundle per Decision_Policy §5)."
+    },
+    {
+      "path": "Plans/_shards/** + Plans/.evidence/** + Plans/.plan_index/**",
+      "status": "seal_only",
+      "requirements": [
+        "WNC-V05"
+      ],
+      "change": "Regenerated only in the seal phase via supported scripts after semantic closure; never hand-edited."
+    },
+    {
+      "path": "Plans/storage_value_registry.schema.json",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-T01"
+      ],
+      "change": "No edit: new families conform to existing required fields (verified)."
+    },
+    {
+      "path": "Plans/Skills_System.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-I10"
+      ],
+      "change": "No edit: Skills_System.md contains no notebook rows and gains no notebook scope. Skill delivery sameness for notebook/transition material is owned by Plans/MCP_Integration.md MI-043 (same instruction precedence, tool schemas, availability checks; no notebook-specific shadow registry) and Plans/Prompt_Pipeline.md PP-086/PP-087 (stable mandatory instruction prefixes; required context survives reconstruction). Required instruction/acceptance content is never replaced by on-demand notes (Working_Notebook.md WN-015/WN-020). Added in post-audit repair AUD-F03.",
+      "no_change_evidence": "grep of Plans/Skills_System.md for notebook: zero mentions; MI-043 and PP-086/087 verified in live owners during audit family F5."
+    },
+    {
+      "path": "Plans/Plugins_System.md",
+      "status": "no_change_with_evidence",
+      "requirements": [
+        "WNC-I10"
+      ],
+      "change": "No edit: the plugin transform checkpoint already fires only after system prompt assembly and before provider send (Plugins_System.md system.prompt.transform, ~lines 2020-2027); notebook and transition paths reuse it unchanged, so no post-dispatch-admission transform is possible and no plugin policy change is needed. Added in post-audit repair AUD-F03.",
+      "no_change_evidence": "Plans/Plugins_System.md transform-point prose verified live during audit family F5; no notebook-specific plugin transform exists."
+    }
+  ],
+  "discovered_consumers_beyond_packet": [
+    {
+      "path": "Plans/Glossary.md",
+      "reason": "packet lists it only as inspect; adding terms is required by WNC-V02 vocabulary closure and index navigation"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "reason": "selected run/worker detail surface is the WNC-X01 orchestrator entry route"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md + Plans/UI_Wiring_Rules.md",
+      "reason": "WNC-X05 requires concrete command rows and wiring dispositions in their actual owners"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "reason": "WNC-V03 requires the fixture family to be registered with a named validation surface"
+    }
+  ]
+}

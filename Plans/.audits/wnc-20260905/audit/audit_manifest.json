@@ -1,0 +1,117 @@
+{
+  "schema_id": "pm.audit.wnc.manifest.v1",
+  "packet_id": "PM-WNC-2026-09-05-v1",
+  "packet_manifest_sha256_repo_recorded": "e2a503f0ab61df1eddaba85cb2138c6e3f719541694242384b15624a541066f9",
+  "work_item_id": "wnc-20260905",
+  "audit_started_utc": "2026-09-06T15:16:02Z",
+  "subject": {
+    "kind": "uncommitted_working_tree",
+    "baseline_head": "4c88c0f01300cea36135b73eec96991d73969aa2",
+    "head_at_audit": "4c88c0f01300cea36135b73eec96991d73969aa2",
+    "branch": "main",
+    "head_includes_subject": false,
+    "committed": false,
+    "dirty_file_count_at_audit": 1415,
+    "identity_basis": "packet/work-item identity + implementation_manifest.json content fingerprint; hashes verified against live tree",
+    "manifest_hash_verification": {
+      "total_semantic_hashes": 49,
+      "matched": 43,
+      "drifted": {
+        "Plans/00-plans-index.md": {
+          "manifest_sha256": "4b521edf404c05cf505a876a000544fa306cfb3d13cd4345638de819685940b2",
+          "current_sha256": "b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf"
+        },
+        "Plans/Automated_Testing_System.md": {
+          "manifest_sha256": "03ca4efd6e4237111917a6650dc202418352a3ac73b59d31a0bbd32dd678ae98",
+          "current_sha256": "2784aa665905ce1837fcfa0b299d5f1d93f34a01d3cd6dc07ae8eb3ccea86e23"
+        },
+        "Plans/FinalGUISpec.md": {
+          "manifest_sha256": "c51ce9cef58fdb0faef5bda29d8db0927e01780c24f16fa755f453a475a1a77a",
+          "current_sha256": "5d32c1acf5e427b2d8ba7ea26655f70ca3b0ab35ab319f2caa577c50cd12ba3e"
+        },
+        "Plans/Planning_Wizard.md": {
+          "manifest_sha256": "93af24d65df40bdb26ba00e54d639292816683ad79043244f2373ffb652b995f",
+          "current_sha256": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce"
+        },
+        "Plans/Spec_Lock.json": {
+          "manifest_sha256": "eb6a93b9a05f9bd97dc2a57b7a9af41a9f3f993f7b6f2116941f36ba9c404330",
+          "current_sha256": "b01fa26b04c7da06869f73f01cd78cb757bac00efbd9007478466b5b2d834457"
+        },
+        "Plans/settings_inventory.json": {
+          "manifest_sha256": "71149850cf5a6612e067f4174266b2c3f03771e9916bc330b1343ab146c8676e",
+          "current_sha256": "7bc1bac7d64e0df6c6c4b6cb47f562ec674d33feab45f80102f01cae64b4bf87"
+        }
+      }
+    },
+    "drift_attribution": {
+      "implementer_post_manifest_steps": [
+        "Plans/FinalGUISpec.md (mtime 05:44, after manifest 05:41)",
+        "Plans/Spec_Lock.json (mtime 05:51, final validation/seal steps)"
+      ],
+      "later_unrelated_session_2026_09_06_12xx": {
+        "files": [
+          "Plans/00-plans-index.md",
+          "Plans/Automated_Testing_System.md",
+          "Plans/Planning_Wizard.md",
+          "Plans/settings_inventory.json"
+        ],
+        "evidence": "00-plans-index.md 2026-09-06 Guided Tour owner reconciliation entry states the four Working Notebook settings controls are retained in the 887-row inventory and their feature work remains owned by Working Notebook; overlap window 12:12-12:21 shared with unrelated Concepts/pm7-tools and touch-closure files",
+        "consequence": "audit evaluates current live content, not manifest-time snapshots; WNC anchors re-verified in current files"
+      }
+    }
+  },
+  "audit_write_dir": "Plans/.audits/wnc-20260905/audit/",
+  "read_only_outside": true,
+  "implementation_report_trusted_as_proof": false,
+  "counts": {
+    "requirements": 85,
+    "scenarios": 62,
+    "doc_impact_rows": 66,
+    "semantic_docs_modified": 40,
+    "registries_modified": 6,
+    "new_owner_docs": 1
+  },
+  "gates_planned": [
+    "pm-plans-verify run-gates (disposable copy)",
+    "pm-shard-plans --check (disposable copy)",
+    "validate-working-notebook-contracts",
+    "packet validator (already run, pass)"
+  ],
+  "specialist_families": [
+    {
+      "id": "F1",
+      "name": "notebook core semantics",
+      "requirements": "WNC-N01..N17"
+    },
+    {
+      "id": "F2",
+      "name": "context transition + provider",
+      "requirements": "WNC-C01..C15, WNC-P01..P04"
+    },
+    {
+      "id": "F3",
+      "name": "history/retrieval/storage",
+      "requirements": "WNC-H01..H06, WNC-T01..T04"
+    },
+    {
+      "id": "F4",
+      "name": "memory + usage",
+      "requirements": "WNC-M01..M04, WNC-U01..U05"
+    },
+    {
+      "id": "F5",
+      "name": "integration + UI/settings",
+      "requirements": "WNC-I01..I12, WNC-X01..X05"
+    },
+    {
+      "id": "F6",
+      "name": "governance/fidelity/no-build/registries",
+      "requirements": "WNC-S01..S06, WNC-V01..V07"
+    },
+    {
+      "id": "F7",
+      "name": "cross-document diff integrity + consumers",
+      "requirements": "all (diff-level)"
+    }
+  ]
+}

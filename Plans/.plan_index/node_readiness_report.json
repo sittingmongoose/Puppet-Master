@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2631,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-06T17:41:08Z",
+  "generated_at_utc": "2026-09-06T19:06:57Z",
   "gui_related_units": {
     "count": 3043,
     "units": [
@@ -3685,8 +3685,8 @@
         "source_location": {
           "heading": "AMS-002 - Assistant Memory SSOT Authority",
           "heading_level": 3,
-          "heading_line": 606,
-          "line": 608,
+          "heading_line": 614,
+          "line": 616,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3696,8 +3696,8 @@
         "source_location": {
           "heading": "AMS-010 - MemoryGist GUI Operations Canonical Writes",
           "heading_level": 3,
-          "heading_line": 985,
-          "line": 987,
+          "heading_line": 993,
+          "line": 995,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3707,8 +3707,8 @@
         "source_location": {
           "heading": "AMS-017 - AutoMilestone GUI Done Source",
           "heading_level": 3,
-          "heading_line": 1288,
-          "line": 1290,
+          "heading_line": 1296,
+          "line": 1298,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3718,8 +3718,8 @@
         "source_location": {
           "heading": "AMS-021 - Gist Review Panel",
           "heading_level": 3,
-          "heading_line": 1458,
-          "line": 1460,
+          "heading_line": 1466,
+          "line": 1468,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3729,8 +3729,8 @@
         "source_location": {
           "heading": "AMS-023 - Memory Maintenance GUI Invocation",
           "heading_level": 3,
-          "heading_line": 1552,
-          "line": 1554,
+          "heading_line": 1560,
+          "line": 1562,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3740,8 +3740,8 @@
         "source_location": {
           "heading": "AMS-036 - GUI Memory Acceptance Criteria",
           "heading_level": 3,
-          "heading_line": 2094,
-          "line": 2096,
+          "heading_line": 2102,
+          "line": 2104,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3751,8 +3751,8 @@
         "source_location": {
           "heading": "AMS-042 - P1-MEMORY-TIERING-CONTRACT",
           "heading_level": 3,
-          "heading_line": 2356,
-          "line": 2358,
+          "heading_line": 2364,
+          "line": 2366,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -3762,8 +3762,8 @@
         "source_location": {
           "heading": "AMS-043 - P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
           "heading_level": 3,
-          "heading_line": 2442,
-          "line": 2444,
+          "heading_line": 2450,
+          "line": 2452,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -37327,7 +37327,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "cca282071bcb94bb66c752ce4e25bee41f07e8bdc4963d585a60000e223698eb",
+        "expected": "f80d0273a215fb466f82cbcb35b83864cec554a22ff778e30c8c7d49d16822cb",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -37381,6 +37381,22 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Working_Notebook.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-memory-subsystem.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/working_notebook_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/working_notebook_contracts.schema.json"
       },
       {
         "error": "event_authority_currentness_live_registry_drift"

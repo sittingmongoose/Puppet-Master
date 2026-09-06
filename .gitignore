@@ -33,7 +33,16 @@ node_modules/
 .playwright-mcp/
 .tmp/
 scratchpad/
+# Audit history stays local except the current work item's published evidence bundle
+# (WNC-R07): Plans/.audits/wnc-20260905/{implementation,audit} are tracked so the
+# delivery's coverage, findings, and gate records are fetchable.
 Plans/.audits/
+!Plans/.audits/
+Plans/.audits/*
+!Plans/.audits/wnc-20260905
+Plans/.audits/wnc-20260905/*
+!Plans/.audits/wnc-20260905/implementation/
+!Plans/.audits/wnc-20260905/audit/
 tests/
 # Keep reusable packet/custody regressions visible without admitting bulk evidence.
 !/tests/
@@ -42,6 +51,7 @@ tests/
 !/tests/test_pm_touch_closure_source.py
 !/tests/test_pm_packet_audit_verdicts.py
 !/tests/test_pm_packet_audit_census.py
+!/tests/test_pm_working_notebook_contracts.py
 Concepts/**/evidence/
 **/simulator_runs/
 **/staged_windows_build*/

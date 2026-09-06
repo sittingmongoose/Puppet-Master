@@ -1,0 +1,26 @@
+{
+  "review_subject": "2826699f7e7f23ab12a8fdfaf5f1518748f12d5a",
+  "packet_id": "PM-WNC-2026-09-05-v1",
+  "packet_zip_sha256": "c35dc37436c97b3d3c7286b09d5e536dd889e3e83ed13884ba4fd9dea1a2f8b5",
+  "repository_writes": false,
+  "full_repository_gates_executed": false,
+  "full_85_requirement_62_scenario_certification": false,
+  "local_source_fragment_probe_count": 10,
+  "files": [
+    {
+      "path": "REVIEW_REPORT.md",
+      "sha256": "3b67e30e335d66284cc19c757ab99bc05e5c9a9e39378984dd6bbdc7fb5c1123",
+      "bytes": 18127
+    },
+    {
+      "path": "schema_fragment_probe_results.json",
+      "sha256": "9f5e9c4ca966517045f4e97e23cc7d98e81ebf9b35267c0933001df09c72f3db",
+      "bytes": 6347
+    },
+    {
+      "path": "schema_fragment_probes.py",
+      "sha256": "5ef87ee2bfd8deede609e178958916beb7797b40be2ba85ef4c5e0eaeac615fc",
+      "bytes": 10007
+    }
+  ]
+}

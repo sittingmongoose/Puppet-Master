@@ -1,6 +1,6 @@
 # Shard Index: Plans/Tools.md
 
-Generated: 2026-09-06T17:37:25Z
+Generated: 2026-09-06T19:03:19Z
 
 Source SHA256: `c3d6f4fdface5ac79ba6ff55e2364d479346bbdc0e095481ce8cb2e65b432663`
 

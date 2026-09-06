@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.audit.wnc.validator_results.v1",
+  "environment": "disposable slim copy at /tmp/wnc-audit-disposable (Plans+scripts+tests; excluded 4 unrelated historical audit-media dirs ~30G under Plans/.audits and tests/agent_packet_restrictions sims; Concepts/, AGENTS.md, .git NOT copied \u2014 affects only path-lint-type checks, noted per gate)",
+  "subject": "current working tree content (post-drift)",
+  "mutation_check": {
+    "before_tree_fingerprint": "596b23f0cdb7e24988ab2e2f70c5f09c85d63b39b5e3d2a0405e7bdd447f4f58",
+    "after_tree_fingerprint": "596b23f0cdb7e24988ab2e2f70c5f09c85d63b39b5e3d2a0405e7bdd447f4f58",
+    "validator_mutations": "none"
+  },
+  "gates": [
+    {
+      "gate": "packet validator (tools/validate_packet.py)",
+      "exit_code": 0,
+      "result": "pass",
+      "detail": "23 files, hashes OK, 85 requirements, 62 scenarios, all requirements have scenarios",
+      "log": "(packet run at audit start; output in conversation + audit_manifest)"
+    },
+    {
+      "gate": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 1,
+      "result": "fail",
+      "log_ref": "logs/run_gates.log",
+      "classification": {
+        "pre_existing_evidenced_baseline_failures": {
+          "classes": [
+            "json_syntax (pre-existing component)",
+            "lint_contractrefs",
+            "lint_path_refs",
+            "validate_implementation_readiness (PNC-019 receipt)",
+            "validate_touch_closure",
+            "validate_audit_closure",
+            "validate_audit_status_index"
+          ],
+          "evidence": "Plans/.audits/wnc-20260905/implementation/baseline/baseline_run_gates_summary.json lists 8 failing classes at HEAD baseline: json_syntax, lint_contractrefs, lint_path_refs, validate_implementation_readiness, validate_pm7_gui_fixtures, validate_touch_closure, validate_audit_closure, validate_audit_status_index"
+        },
+        "copy_artifact_components": {
+          "classes": [
+            "json_syntax missing_ref under excluded tests/agent_packet_restrictions",
+            "lint_contractrefs missing_ref to excluded audit-20260829-* dir",
+            "lint_path_refs missing AGENTS.md/Concepts",
+            "validate_touch_closure missing Concepts/pm7-tools files",
+            "validate_plan_migration doc_count 72 vs 95 (incomplete repo copy)"
+          ],
+          "note": "environment limits of the slim disposable copy, not subject defects"
+        },
+        "real_drift_failures_not_wnc_introduced": {
+          "classes": [
+            "verify_spec_lock",
+            "validate_plan_graph",
+            "validate_evidence",
+            "check_shards",
+            "validate_implementation_readiness (buildability_gate_report_stale)",
+            "validate_audit_status_index (drift component)"
+          ],
+          "evidence": "all stale-hash failures target exactly Plans/00-plans-index.md, Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/settings_inventory.json \u2014 the five post-implementation edits (4 by the later unrelated Guided-Tour session 12:12-12:21 + FinalGUISpec implementer post-manifest step) not followed by re-seal",
+          "attribution": "post-implementation drift; WNC subject itself was clean at close (implementer final run-gates 23/26 with only the 3 evidenced pre-existing failures; their final_run_gates.json/logs recorded)"
+        },
+        "introduced_in_scope_failures": {
+          "classes": [],
+          "note": "none \u2014 WNC's own content, shards (working_notebook), and registry edits pass all applicable gates; validate_pm7_gui_fixtures (baseline fail) now passes"
+        }
+      }
+    },
+    {
+      "gate": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 1,
+      "result": "fail",
+      "log_ref": "logs/shard_check.log",
+      "detail": "98 sources; stale sources are exactly the 5 drift-attributed files; working_notebook shards clean (00-index.md source hash matches current Working_Notebook.md)",
+      "classification": "drift, not WNC-introduced; regenerate via supported script in a future seal"
+    },
+    {
+      "gate": "python3 scripts/pm-working-notebook-contracts.py",
+      "exit_code": 0,
+      "result": "pass",
+      "log_ref": "logs/wn_contracts.log",
+      "detail": "positive fixtures valid; 14/14 negative fixtures rejected; evidence_boundary 'static schema and fixture validation only; runtime NOT_RUN'"
+    },
+    {
+      "gate": "python3 -m unittest tests.test_pm_working_notebook_contracts",
+      "exit_code": 0,
+      "result": "pass",
+      "log_ref": "logs/wn_tests.log",
+      "detail": "7 tests OK"
+    },
+    {
+      "gate": "skipped/not-run",
+      "result": "not_tested",
+      "detail": "validate-wiring-matrix and other non-run-gates subchecks were exercised within run-gates; runtime/native gates out of scope (runtime NOT_RUN per packet)"
+    }
+  ],
+  "baseline_comparison": "implementer baseline 8 failing classes at HEAD; implementer final 3 failing classes; audit rerun failing classes = the 3 pre-existing + drift classes on 5 later-edited files + slim-copy artifacts",
+  "currentness_problem": "governance artifacts (Spec_Lock, plan_graph, .evidence, shards, audit status index) are stale relative to the current tree because post-implementation edits (later Guided-Tour session) were not followed by a re-seal; this is disclosed as drift, not hidden"
+}
