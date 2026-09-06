@@ -1476,9 +1476,9 @@ canonical_text: >-
   PWIZ-021 through PWIZ-023 own the current nine-stage `welcome` / `simple_path` / `first_project` /
   `source_control_setup` / `server_storage_client` / `remote_access_setup` / `review_setup_plan` /
   `automatic_preparation` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
-  three-scene Guided Tour.
+  three-chapter Guided Tour.
   Provider and advanced setup are optional and deferrable, incomplete provider state remains a truthful warning rather
-  than a false Health/Doctor Ready claim, and the secondary Guided Tour completes with Assistant Chat at the far right.
+  than a false Health/Doctor Ready claim; PWIZ-023's September 3 correction makes Planning Wizard the tour destination.
   The current handoff
   consumes bounded typed Onboarding state and owner receipt refs rather than a raw transcript or legacy
   `onboarding_setup_state` shape. The retired exact copy and tokens below remain searchable for migration and audit;
@@ -1762,7 +1762,7 @@ This addendum records ownership boundaries from the user-approved PMConcept7 con
 
 ## Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-01)
 
-This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: any seven-stage, no-current-`simple_path`, five-chapter, restore-or-keep, or tour-ends-at-Planning-Wizard values in those files are superseded and cannot override this owner document until separately reconciled.
+This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: Onboarding's seven-stage and no-current-`simple_path` values and both predecessor tour controllers are migration inputs, not current authority. For Guided Tour, the September 3 correction below and PWIZ-023 now own Chat-first/Planning-final, default restoration or explicit Keep, and safe-step resume; the conflicting v2 schema values cannot override that correction.
 
 ### Product-design law
 
@@ -1810,21 +1810,27 @@ The motion storyboard is restrained and cinematic: the interruptible opening her
 
 Every stage has a programmatic heading, path-correct progress text (`Step n of 9` or `Step n of 6`), concise description, one primary action, keyboard-reachable secondary action, persistent Back/Close/Escape semantics, visible focus, non-color state, and an announcement for async phase changes. Focus never moves because a background projection refreshes. Long/localized copy wraps without clipping; narrow layouts stack visually distinct choices while preserving primary-before-secondary order. A screen reader receives stage, decision, review-confirmation boundary, current owner work, wait reason, errors, and return outcome without decorative narration. Inline SVG help controls have stable accessible names and descriptions and never rely on hover alone.
 
-### Guided Tour real-application contract
+### Guided Tour real-application contract — September 3 newbie-first correction
 
-Guided Tour is a directed three-scene beginner film in this exact order: Usage -> Planning Wizard -> Assistant Chat/Teacher. It runs in the real application, never a tooltip carousel or parallel demo. The top tour controls contain an `ELI5` toggle beside `Pause` and `Skip Tour`. The opening Usage moment calls out ELI5 and Reduced Motion together: ELI5 changes explanation detail, while motion always honors the effective accessibility preference. The copy explains that Reduced Motion can be changed later in Settings; Guided Tour MUST NOT invent a separate Reduced Motion toggle or require another navigation step.
+Guided Tour teaches through successful actions in this exact chapter order: Assistant Chat/Teacher -> workspace -> Planning Wizard. This accepted September 3 correction supersedes the September 1 Usage-first/Chat-final film and its no-resume/keep-Chat terminal rules; it does not revive the older five-chapter controller. It runs in the real application, never a tooltip carousel or parallel demo. The top controls contain `ELI5`, `Pause`, and always-available `Skip Tour`. A brief comfort introduction explains ELI5 and the Settings-owned Reduced Motion preference without becoming a separate chapter or requiring a Settings detour. ELI5 changes explanation detail; Guided Tour MUST NOT invent a separate Reduced Motion toggle.
 
-The current scene IDs are `usage`, `planning_wizard`, and `chat_teacher`. The superseded five-chapter order used `chat_teacher`, `shell_navigation`, `panel_layout`, `widget_workspace`, and `planning_wizard`; those old ordering and chapter-boundary semantics are migration/source-lineage only, while the reused `chat_teacher` ID now names the third scene. In Usage, one Watch beat hides and returns the same real card through observed widget-owner results. The Try beat advances only when the learner opens that card's exact mounted Options control. One compact explanatory note says that the handle moves a card, the corner changes its size, and Options changes or hides it; move, resize, configure, and focus are not separate performed checkpoints. Narration, a timer, generic Next, or a look-alike control cannot fabricate completion. In Planning Wizard, the learner activates the exact highlighted intent chip in the real page; that intent-chip handler result alone advances to the final scene. In Assistant Chat, the layout places Chat at the far right, the learner opens the real guide selector, selects `Teacher`, types a real message into the real composer, and sends it through the real send handler. A deterministic local novice reply in that conversation completes the film with zero provider, model, token, or AI-plan use. The Tour controller never serializes chat content; the real Chat owner owns the message and reply records.
+The current chapter IDs are `chat_teacher`, `workspace`, and `planning_wizard`; stable step IDs belong to those chapters, with an optional non-action introduction. Assistant Chat opens first through its existing shell control. The learner selects Teacher, sends the supplied question `What happens before Puppet Master changes my files?` through the real composer, sees the local answer stream in that same conversation, and applies ELI5 to the same answer. The thread is labeled `Guided example`. ELI5 uses clearer adult language, shorter structure, and less assumed knowledge; forced analogies or baby talk are not required. The real Chat owner owns the messages and reply; the Tour controller stores refs, not chat content. Normal Chat send and ELI5 retain their domain owners; a local tour fixture must never fall through to a provider-backed send or claim a production receipt.
 
-The exact current typed actions are `ui.guided_tour.start`, `ui.guided_tour.next`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`, `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and `ui.guided_tour.replay`. `ui.guided_tour.focus_route` changes only the mounted application's visible page and focus. `next` and `back` may move through watch-only narration but cannot satisfy a required performed-action checkpoint. `skip` owns the local exit request and invokes exact layout/placeholder/focus restoration through their existing owners; `finish` records the completed local presentation state and keeps Assistant Chat at the far right. The predecessor `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` tokens are retired and forbidden in current requests rather than retained as compatibility actions.
+Workspace practice explains page navigation and panels, then asks for a real Chat move/dock and a real widget add, move, resize, or focus action. Manual practice and `Show Me` use the same mounted owner handler and success predicate. Every important action first brings its target into view, explains one outcome, offers Try it and visible Show Me, and acknowledges the observed result. Show Me adds interruptible pre-cue, visible travel, destination reaction, and settle around that handler; timers, narration, screenshot substitution, a second mutation implementation, and generic Next never satisfy an action checkpoint.
 
-At start, Guided Tour captures stable refs for the pre-tour layout and the real composer's exact placeholder. `Skip Tour` is always available; it cancels pending choreography, restores both captured values, returns focus to the restored page heading or initiating control, and does not leave a partial Teacher selection or draft message. Successful completion does not restore the old layout: Assistant Chat remains at the far right. Replay starts a fresh ephemeral session. The Tour controller itself is never persisted or migrated; a process exit during an active tour uses the stable layout-owner snapshot rather than attempting to resume ephemeral scene state.
+Planning Wizard owns at least half of meaningful actions and meaningful dwell time. It opens through its visible route; the local book-club practice goal becomes three outcomes (next meeting, current book, how to join). The learner answers who may update the meeting and book, can read why shared sign-in/editing depends on that answer, reviews outcomes/decisions/assumptions/unresolved choices, and edits one answer. Only the affected shared-access consequence changes; unaffected outcomes retain their identity and position. `I’m not sure yet` remains unresolved, never an implicit denial of shared access or a completed decision. The current real Wizard names and modes apply; example controls are scoped fixtures, not a replacement planning engine. Finish lands on the real Planning Wizard with the committed Project selected, removes the practice surface, and starts no live work. Tour completion does not grant approval or create a second approval fence.
+
+The exact current typed tour actions are `ui.guided_tour.start`, `ui.guided_tour.next`, `ui.guided_tour.show_me`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`, `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and `ui.guided_tour.replay`. `focus_route` changes only the mounted application's visible page/focus; `show_me` orchestrates the current action rather than becoming its domain command. `next`/`back` move through valid story state but cannot satisfy required practice. `finish` carries the layout disposition, defaulting to `restore`; `keep` requires an explicit user selection, never an inferred default. This parameter does not revive separate `ui.guided_tour.restore_layout` or `ui.guided_tour.keep_layout` actions. Those predecessor tokens and `ui.guided_tour.toggle_reduced_motion` remain retired. Assistant Chat reuses `cmd.persona.select`, `cmd.chat.send`, and `cmd.chat.eli5.set`; concept-local `ui.assistant_chat.select_persona`, `ui.assistant_chat.send`, and `ui.assistant_chat.toggle_eli5` must not become competing production commands.
+
+At start, Guided Tour captures stable owner refs for the pre-tour layout and Chat state (thread/selection, exact placeholder, draft, and focus), keeping docked and undocked views on shared state. Skip cancels tour choreography, restores the captured layout/Chat state, and returns focus to the initiating control or restored page heading without leaving a partial draft. Finish restores temporary state by default, or retains the demonstrated layout only after explicit Keep selection, then lands on Planning Wizard. Restoration failure is recoverable and cannot be reported as completed. Close/reload can resume the last safe step using a bounded checkpoint of session/Project/step identities, completed predicates, layout-owner snapshot ref, effective explanation mode, and revision; it stores no raw conversation, credential, or transient animation geometry. Resume revalidates owner state and returns to the earliest unsatisfied prerequisite without replaying domain work. Pause stops decorative work/subscriptions; Replay starts a fresh session. Settings exposes Replay Guided Tour separately from Run Onboarding Again and Doctor.
 
 Every scene heading receives programmatic focus when that scene settles. Each callout measures its actual target after layout, clamps the callout and pointer to the usable viewport, and remeasures after page change, resize, scaling, localization, panel movement, or target geometry change. A missing or unreachable target pauses with a plain recovery action instead of pointing at empty space or auto-completing. Callouts do not steal focus from the heading or the learner's required control. Protected authentication content is excluded.
 
-Tour motion retains bounded interruptible focus reveals and the single card hide/return demonstration. Any user action, resize, reversal, Skip, route return, or effective preference change lands deterministically in the correct semantic state. With Reduced Motion effective, the same scenes and action checkpoints use focus/ring/state changes with no travel animation. The tour runs locally with no provider and on low-resource or squeezed layouts; it pauses rather than hiding an unreachable target.
+Tour motion preserves cause/effect through bounded interruptible pre-cue, travel, arrival, and settle. User action, resize, reversal, Skip, route return, or effective preference change lands in the correct semantic state. Reduced Motion retains sequence, focus, announcements, and action parity through restrained state transitions without long travel. Hidden/collapsed surfaces stop decorative work and duplicate subscriptions. All eight themes receive intentional materials, focus, contrast, and motion. Background interaction is blocked only where it would invalidate the current action. Low-resource or squeezed layouts retain every choice and recover honestly from an unreachable target.
 
-Acceptance requires positive and negative fixtures for the exact nine-stage primary order and exact six-stage connect-existing order; a current visible `simple_path`; the hard no-side-effect-before-current-review-confirmation fence plus bounded pre-Review read-only discovery/projection; current-review one-dispatch behavior; migration of four-screen, five-stage, and superseded seven-stage records without auto-confirmation or replay; path-correct progress; no-secret persistence; keyboard/screen-reader/focus tests; six-width and eight-theme rendering; interruption/reversal/resize tests; and truthful Ready semantics. Tour acceptance requires the exact Usage -> Planning Wizard -> Assistant Chat/Teacher scene order; explicit retirement of the five-chapter sequence; top ELI5/Pause/Skip placement and the early ELI5/Reduced Motion explanation; Settings-owned motion adjustment with no tour-specific motion toggle; owner-observed Usage hide/return followed by the exact real Options click, the exact Planning intent-chip click, the exact guide-selector and Teacher choices, a real-composer send, and a deterministic novice reply; measured/clamped/remeasured callouts; focused scene headings; Skip restoration of layout, placeholder, and focus; and completion with Chat at the far right. Static schemas, fixtures, and browser concepts are not native runtime or visual-acceptance proof.
+Onboarding acceptance for the preceding owner revision requires positive and negative fixtures for the exact nine-stage primary order and exact six-stage connect-existing order; a current visible `simple_path`; the hard no-side-effect-before-current-review-confirmation fence plus bounded pre-Review read-only discovery/projection; current-review one-dispatch behavior; migration of four-screen, five-stage, and superseded seven-stage records without auto-confirmation or replay; path-correct progress; no-secret persistence; keyboard/screen-reader/focus tests; six-width and eight-theme rendering; interruption/reversal/resize tests; and truthful Ready semantics. This Guided Tour correction does not silently reconcile the separate September 3 Onboarding migration.
+
+Tour acceptance requires the current Chat -> workspace -> Planning sequence, every manual and Show Me path with shared owner predicates, measured zero provider requests and usage increments, same-answer ELI5, planning action/dwell shares of at least one half, a real answer edit with visible specific consequence, restore/default versus explicit Keep, safe checkpoint recovery, missing-target and restoration-failure negatives, keyboard/focus/geometry checks, all eight themes, constrained widths, and Reduced Motion. The v2 schemas/fixtures and their ten-action/Usage-first/Chat-final/no-resume assertions are migration inputs only until reconciled to this revision; passing them cannot establish current acceptance. Static schemas, fixtures, and browser concepts are not native runtime or visual-acceptance proof.
 
 ### PWIZ-021 - Product Onboarding nine-stage state machine and connect-existing shortcut
 
@@ -1911,7 +1917,7 @@ source_lineage:
 negative_constraints: [Do not block input on animation., Do not require browser-only effects., Do not overwrite saved Project or application layout., Do not migrate any predecessor record directly into confirmed Review or Automatic Preparation.]
 ```
 
-### PWIZ-023 - Guided Tour directed three-scene beginner film
+### PWIZ-023 - Guided Tour newbie-first real-application practice
 
 ```yaml
 plan_unit_id: PWIZ-023
@@ -1919,41 +1925,45 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
-  Guided Tour is the secondary optional Onboarding handoff and a directed three-scene beginner film in exact Usage,
-  Planning Wizard, Assistant Chat/Teacher order. Usage watches the same real card hide and return, then advances only
-  from its exact mounted Options control; move, resize, change, and hide are explained together rather than becoming
-  separate performed checkpoints. The highlighted Planning intent chip advances next. The final scene requires the
-  real guide selector, Teacher selection, and a real-composer message producing a deterministic novice reply in that
-  conversation. ELI5 is a top toggle beside Pause and Skip and is introduced early with Reduced Motion; motion honors
-  the effective Settings-owned preference. Callouts measure and clamp targets, scene headings receive focus, Skip
-  restores the pre-tour layout, placeholder, and focus, and completion keeps Chat at the far right. The superseded
-  five-chapter behavior and restore-or-keep action pair are source lineage only.
+  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard order.
+  The learner sends the supplied local question, reads Teacher's same-conversation answer, and applies ELI5 to it;
+  moves Chat and performs a real widget action; then describes the book-club goal, answers a meaningful question,
+  reviews the plan, edits an answer, and sees the specific consequence before the approval boundary. Planning owns
+  at least half of meaningful actions and dwell time. Try it and Show Me share each mounted owner's handler and
+  success predicate. Tour state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume,
+  Settings-owned Reduced Motion, measured callouts, and focused headings remain usable. Skip restores captured state;
+  Finish restores temporary layout by default or keeps it only on explicit selection, then lands on the real
+  Planning Wizard with the committed Project selected. Both predecessor controllers remain source lineage only.
 gui_related: true
-gui_classification_reason: Defines the visible three-scene film, performed real-application interactions, motion, controls, callouts, focus, and exit state.
+gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
 depends_on: [PWIZ-021, ACD-431]
 unblocks: []
 acceptance_criteria:
-  - The exact scene order is `usage`, `planning_wizard`, `chat_teacher`; the former five-chapter ordering and its Chat-first/final-Planning behavior are retired to source lineage.
-  - The top controls place `ELI5` beside `Pause` and `Skip Tour`, and the early Usage callout explains ELI5 and Reduced Motion together.
+  - The exact chapter order is `chat_teacher`, `workspace`, `planning_wizard`; neither the five-chapter controller nor Usage-first/Chat-final v2 is current.
+  - The top controls place `ELI5` beside `Pause` and `Skip Tour`, and the short opening explains ELI5 and Reduced Motion together.
   - Reduced Motion uses the effective preference; adjustment routes to Settings and there is no Guided Tour-specific motion toggle.
-  - Usage Watch observes owner-confirmed hide and reveal of the same targeted real card; Try advances only from opening that card's exact mounted Options control, while move, resize, change, and hide remain one compact explanatory note rather than separate action gates.
-  - Planning Wizard advances only from the handler result for the exact highlighted intent chip.
-  - Assistant Chat is placed at the far right; the learner selects Teacher and sends a real message in the real composer before the deterministic novice reply completes the film.
+  - Chat opens first; the supplied question is sent through the real composer, the deterministic answer streams in the same labeled conversation, and ELI5 rewrites that answer without changing its facts.
+  - Manual and Show Me practice share the same existing owner action and success predicate for Chat movement and a real widget action; choreography never invents success.
+  - Planning Wizard receives at least half of meaningful actions and dwell time, including goal, outcomes, meaningful answer, why, review, answer edit, and the specific shared-access consequence with unaffected outcomes held still.
+  - Unknown editor access remains unresolved; the tour uses the real Wizard names/modes and ends before approval with no work started.
   - The deterministic novice reply never silently falls back to a provider, model, token, or AI plan.
   - Every scene heading receives programmatic focus, and every callout measures, clamps, and remeasures its actual target across resize, scale, localization, movement, and route changes.
-  - Skip is always available and restores the exact pre-tour layout and composer placeholder with no partial draft; successful completion keeps Chat at the far right and offers no restore-or-keep choice.
-  - The Tour controller is ephemeral and never persists chat content; stable layout refs and records owned by real surfaces may outlive it.
+  - Skip is always available and restores layout, Chat state, and focus; Finish defaults to restoration, accepts Keep only by explicit selection, and lands on the real Planning Wizard with the committed Project selected.
+  - Close/reload resumes the last safe checkpoint after owner-state revalidation without replaying work; checkpoints carry stable refs and never raw chat content, secrets, or transient animation geometry.
   - Reduced Motion, low-resource, missing-target, squeezed-layout, interruption, process-exit, and replay states are covered.
 validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, real-application action observation, callout geometry, focus, Skip-restore, and completion-layout fixtures]
 risk_class: tour_fake_shell_or_layout_loss
 reasoning_tier: high
-context_scope: guided_tour_three_scene_real_application
+context_scope: guided_tour_newbie_first_real_application
 implementation_surfaces: [Plans/Planning_Wizard.md, Plans/guided_tour_contracts.schema.json]
 node_compile_hint: {mode: guided_tour_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - "source_report:register-settings-onboarding.md#O-07"
   - "source_report:wave3-lane2.md#S0095"
-negative_constraints: [Do not restore the five-chapter or Chat-first tour., Do not require separate Usage move resize configure or focus checkpoints., Do not restore ui.guided_tour.restore_layout or ui.guided_tour.keep_layout as current actions., Do not build a tooltip carousel or parallel demo., Do not use provider credentials or tokens., Do not fabricate action success., Do not add a Guided Tour-specific Reduced Motion toggle., Do not let callouts escape the viewport or point at stale geometry., Do not restore the old layout after successful completion., Do not leave a partial composer draft after Skip., Do not expose protected authentication content., Do not promote local page/focus presentation into a domain command or handler.]
+  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
+  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
+  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md"
+negative_constraints: [Do not restore either predecessor controller., Do not restore ui.guided_tour.restore_layout or ui.guided_tour.keep_layout as separate current actions., Do not build a tooltip carousel or parallel demo., Do not use provider credentials or tokens., Do not fabricate action success., Do not add a Guided Tour-specific Reduced Motion toggle., Do not let callouts escape the viewport or point at stale geometry., Do not keep a demonstrated layout without explicit selection., Do not leave a partial composer draft after Skip., Do not expose protected authentication content., Do not promote local page/focus presentation into a domain command or handler., Do not treat fixture completion as runtime certification or approval to begin work.]
 ```
 
 ## Product Onboarding route-and-review correction addendum - 2026-09-01
@@ -2086,3 +2096,38 @@ owner_boundary_notes:
   - Planning Wizard owns Product Onboarding orchestration, local draft/session/continuation, and owner projection; Server Claim/Bootstrap, Backup/Restore, Remote Access, Source Control/Forge, and auth owners retain effects and truth.
 owner_hints: [Plans/Planning_Wizard.md, Plans/Server_System.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Forge_Integrations.md, Plans/Source_Control_System.md]
 ```
+
+## Notebook Topic Research Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Topic agents may keep scoped Working Notebooks for research progress and rejected directions and may continue across fresh context windows, but the Planning Run ledger remains the canonical record: topic_id-scoped ledger records and global cross-topic decisions/constraints are still written at their owned boundaries, ledger-to-Plan compilation and PlanUnit preparation consume ledger records (not notes), and Approve And Build authority is untouched. Future WorkNode integration with notebooks is described only as readiness metadata; this packet creates no WorkNodes, NodeSeeds, or candidates.
+
+```yaml
+plan_unit_id: PWIZ-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: Topic agents may use scoped Working Notebooks and fresh context windows for research, but topic ledger records, cross-topic decisions, compilation inputs, and Approve And Build authority remain ledger-owned and unchanged. Notebook content never becomes compile authority, and future WorkNode integration is readiness metadata only with no nodes created.
+gui_related: false
+gui_classification_reason: Planning Wizard authority semantics are workflow behavior, not GUI work.
+depends_on: [PWIZ-025, PLS-022]
+unblocks: []
+acceptance_criteria:
+  - Topic requirements and corrections are captured in Planning Run ledger records, not only in notes.
+  - Future WorkNode integration is specified without creating any nodes.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: compile_authority_drift
+reasoning_tier: standard
+context_scope: planning_wizard
+implementation_surfaces: [Plans/Planning_Wizard.md, Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md]
+node_compile_hint: {mode: workflow_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I05
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A41
+preserved_exact_tokens: ["Planning Run ledger", "Approve And Build", "no nodes created"]
+negative_constraints:
+  - Do not create WorkNodes, NodeSeeds, or candidates from notebook integration.
+owner_hints: [Plans/Planning_Wizard.md, Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_To_Node_Compilation.md

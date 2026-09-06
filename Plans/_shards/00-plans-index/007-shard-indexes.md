@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L598-L700
+Source lines: L618-L721
 
-Source SHA256: `82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be`
+Source SHA256: `b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf`
 
 ---
 
@@ -14,6 +14,7 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 
 | Source doc | Shard index |
 | --- | --- |
+| `Working_Notebook.md` | [`Plans/_shards/working_notebook/00-index.md`](Plans/_shards/working_notebook/00-index.md) |
 | `orchestrator-subagent-integration.md` | [`Plans/_shards/orchestrator-subagent-integration/00-index.md`](Plans/_shards/orchestrator-subagent-integration/00-index.md) |
 | `FinalGUISpec.md` | [`Plans/_shards/finalguispec/00-index.md`](Plans/_shards/finalguispec/00-index.md) |
 | `interview-subagent-integration.md` | [`Plans/_shards/interview-subagent-integration/00-index.md`](Plans/_shards/interview-subagent-integration/00-index.md) |

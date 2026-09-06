@@ -191,6 +191,17 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
 
+### Working Notebook terms
+
+- **Working Notebook** -- a lightweight PM-owned working-state record for the Assistant, workers, coordinators, and explicitly scoped collaboration participants. It preserves authored observations, hypotheses, rejected approaches with conditions, evidence locations, and continuation suggestions; it is not Assistant memory, a ledger, a Plan, a To-Do, a Goal, or an execution receipt, and its text can never approve, verify, complete, or authorize anything.
+- **Notebook scope kinds** -- the closed set `thread | worker_lineage | coordinator_run | participant | shared_slice`, each bound to an existing runtime identity. There is no ambient all-project notebook and no default cross-thread injection.
+- **Epistemic kind** -- the closed entry vocabulary `hypothesis | observation | rejected_approach | reference | continuation | user_note`. There is no verified kind; certainty upgrades happen only through destination-owner gates.
+- **Resume Capsule** -- a bounded navigation aid (at most 512 estimated tokens and 2 KiB UTF-8 before admission) holding current position, unresolved issues, suggested next inspection, and selected exact references. It is not where required authoritative constraints live.
+- **Notebook Checkpoint** -- the durable record of the exact note revisions and references required before a context-window transition may commit. It commits only through the storage commit barrier and is never a substitute for tool receipts.
+- **Fresh Context Window Transition** -- a host-admitted operation that checkpoints required state and continues the same logical work in a new model context window inside the same run/attempt lineage. It is not run rotation, never emits `done.rotated`, and never resets usage, quota, or Goal state.
+
+ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
 ### Help architecture and project status terms
 
 - **History/Ledger help links** -- `History` and `Ledger` keep exact records first while exposing concept help links for unfamiliar states and `/actions`.

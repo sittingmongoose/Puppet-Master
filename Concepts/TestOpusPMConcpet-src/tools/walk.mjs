@@ -1,0 +1,27 @@
+import { launch } from './drive.mjs';
+const theme = process.env.THEME || 'friendly-dark';
+const out = process.env.OUT || 'evidence/ob';
+const { browser, page, errs } = await launch({ theme });
+const shot = async n => page.screenshot({ path: `${out}_${n}.png` });
+const st  = async () => page.evaluate(() => window.PMO_ONBOARDING ? window.PMO_ONBOARDING.screen : 'NO-API');
+const act = async (sel, ms=780) => { const ok = await page.evaluate(s => { const e=document.querySelector(s); if(!e||e.disabled) return false; e.click(); return true; }, sel); if(!ok) console.log('  ! click failed', sel); await page.waitForTimeout(ms); return ok; };
+const primary = () => act('#pmo .pmo-foot-actions .pmo-btn--primary');
+const type = async (sel, v) => { await page.fill(sel, v); await page.waitForTimeout(420); };
+
+await page.evaluate(() => window.PMO_ONBOARDING.open('test'));
+await page.waitForTimeout(1200);
+console.log('screen:', await st()); await shot('01_welcome');
+await primary(); console.log('screen:', await st()); await shot('02_where');
+await primary(); console.log('screen:', await st()); await shot('03_begin');
+await primary(); console.log('screen:', await st()); await shot('04_project');
+await type('#pmo-name', 'Book club website'); await shot('05_named');
+await primary(); console.log('screen:', await st()); await shot('06_inherit');
+await act('#pmo [data-pmo-act="inherit"][data-arg="tastebook"]'); await shot('07_inherit_picked');
+await primary(); console.log('screen:', await st()); await shot('08_review');
+await primary(); console.log('screen:', await st()); await page.waitForTimeout(900); await shot('09_commit_running');
+await page.waitForTimeout(4200); await shot('10_commit_done');
+await primary(); console.log('screen:', await st()); await page.waitForTimeout(900); await shot('11_power');
+await primary(); console.log('screen:', await st()); await shot('12_free');
+await act('#pmo [data-pmo-act="next"]'); console.log('screen:', await st()); await shot('13_done');
+console.log('ERRS:', JSON.stringify(errs.slice(0,10), null, 1));
+await browser.close();

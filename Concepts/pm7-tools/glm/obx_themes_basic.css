@@ -1,0 +1,92 @@
+/* ============================================================
+   GLM Onboarding — BASIC material: the technical rider
+   Flat paper, precise ink strokes, drafting annotations.
+   ============================================================ */
+.obx[data-mat="basic"]{
+  --obx-radius:12px;
+}
+/* dark: graphite board */
+.obx[data-mat="basic"][data-mode="dark"]{
+  --obx-ink:#dfe6ee; --obx-ink-dim:#b6c2ce; --obx-ink-faint:#8b98a6;
+  --obx-paper:#14181d; --obx-paper-2:#191f26; --obx-card:#1e252d;
+  --obx-line:#2c3540; --obx-line-strong:#43505e;
+  --obx-accent:#5b9dd6; --obx-accent-soft:rgba(91,157,214,.13); --obx-accent-ink:#7fb1dd; --obx-cta-ink:#0c1826;
+  --obx-good:#48b878; --obx-warn:#d3a04c; --obx-bad:#d37088;
+}
+/* light: white drafting table */
+.obx[data-mat="basic"][data-mode="light"]{
+  --obx-ink:#22292f; --obx-ink-dim:#414b53; --obx-ink-faint:#626d76;
+  --obx-paper:#ffffff; --obx-paper-2:#f6f8fa; --obx-card:#fbfcfd;
+  --obx-line:#dde3e8; --obx-line-strong:#b7c2cb;
+  --obx-accent:#2f6ea8; --obx-accent-soft:rgba(47,110,168,.10); --obx-accent-ink:#255a89;
+  --obx-good:#1e7345; --obx-warn:#9a7420; --obx-bad:#a84458;
+  --obx-shadow-1:0 1px 2px rgba(20,30,40,.08);
+  --obx-shadow-2:0 10px 28px rgba(20,30,40,.12);
+  --obx-shadow-3:0 26px 68px rgba(20,30,40,.18);
+}
+.obx[data-mat="basic"] .obx-window{border-radius:var(--obx-radius);box-shadow:var(--obx-shadow-3);}
+.obx[data-mat="basic"] .obx-window::after{box-shadow:none;border:1px solid var(--obx-line);border-radius:inherit;}
+.obx[data-mat="basic"] .obx-title{letter-spacing:-.006em;font-weight:800;}
+.obx[data-mat="basic"] .obx-kicker,.obx[data-mat="basic"] .obx-act{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;letter-spacing:.22em;}
+.obx[data-mat="basic"] .obx-cta{border-radius:9px;font-weight:750;}
+.obx[data-mat="basic"] .obx-choice,.obx[data-mat="basic"] .obx-row,.obx[data-mat="basic"] .obx-themecard{border-radius:10px;}
+.obx[data-mat="basic"] .obx-choice .obx-dot,.obx[data-mat="basic"] .obx-row .obx-dot{border-radius:4px;}
+.obx[data-mat="basic"] .obx-hint code,.obx[data-mat="basic"] .obx-receipt code{font-family:ui-monospace,Menlo,Consolas,monospace;}
+
+/* basic inputs: readable on dark too */
+.obx[data-mat="basic"] .obx-input,.obx[data-mat="basic"] .obx-select{
+  background:var(--obx-paper-2);color:var(--obx-ink);caret-color:var(--obx-accent);border-radius:8px;
+}
+.obx[data-mat="basic"][data-mode="dark"] .obx-input,.obx[data-mat="basic"][data-mode="dark"] .obx-select{background:#10141a;color:#dfe6ee;}
+
+/* stage: drafting sheet */
+.obx[data-mat="basic"] .obx-stage{background:var(--obx-paper-2);}
+.obx[data-mat="basic"] .obx-stage::after{background:radial-gradient(120% 90% at 50% 38%,transparent 62%,rgba(10,16,24,.10));}
+.obx[data-mat="basic"] .ob-grid{position:absolute;inset:0;background:
+  linear-gradient(color-mix(in srgb,var(--obx-ink) 4%,transparent) 1px,transparent 1px) 0 0 / 100% 44px,
+  linear-gradient(90deg,color-mix(in srgb,var(--obx-ink) 4%,transparent) 1px,transparent 1px) 0 0 / 44px 100%;}
+.obx[data-mat="basic"] .ob-backdrop{background:transparent;}
+.obx[data-mat="basic"] .ob-ground{background:transparent;border-top:1.5px solid var(--obx-line-strong);border-radius:0;box-shadow:none;}
+.obx[data-mat="basic"] .ob-horizon{display:none;}
+.obx[data-mat="basic"] .ob-star{background:transparent;border:1.5px solid var(--obx-ink-faint);border-radius:0;transform:rotate(45deg);width:6px;height:6px;box-shadow:none;}
+/* technical wireframe objects */
+.obx[data-mat="basic"] .os-where .ob-desk{background:transparent;border:1.5px solid var(--obx-ink);border-radius:3px;}
+.obx[data-mat="basic"] .os-where .ob-machine,
+.obx[data-mat="basic"] .os-where .ob-node-b,
+.obx[data-mat="basic"] .ob-machine2{background:color-mix(in srgb,var(--obx-ink) 5%,transparent);border:1.5px solid var(--obx-ink);border-radius:3px;box-shadow:none;}
+.obx[data-mat="basic"] .os-where .ob-led{background:var(--obx-accent);box-shadow:none;border-radius:0;}
+.obx[data-mat="basic"] .os-where .ob-crate{background:transparent;border:1.5px dashed var(--obx-ink-faint);border-radius:3px;}
+.obx[data-mat="basic"] .os-welcome .ob-curtain > i{background:color-mix(in srgb,var(--obx-ink) 6%,transparent);border:1.5px solid var(--obx-ink);border-top:none;border-radius:0;}
+.obx[data-mat="basic"] .os-welcome .ob-stagefloor{background:none;border:none;border-top:1.5px solid var(--obx-ink);border-radius:0;height:0;}
+.obx[data-mat="basic"] .os-welcome .ob-seed::before{border-radius:0;border:1.5px solid var(--obx-ink);background:color-mix(in srgb,var(--obx-accent) 14%,transparent);box-shadow:none;}
+.obx[data-mat="basic"] .os-welcome .ob-seed::after{background:var(--obx-ink);}
+.obx[data-mat="basic"] .os-project .ob-playbill{background:var(--obx-paper);border:1.5px solid var(--obx-ink);border-radius:3px;box-shadow:none;}
+.obx[data-mat="basic"] .os-project .ob-playbill::before,.obx[data-mat="basic"] .os-project .ob-playbill::after{background:var(--obx-line-strong);}
+.obx[data-mat="basic"] .os-project .ob-pb-line{background:color-mix(in srgb,var(--obx-ink) 26%,transparent);border-radius:0;height:1.4%;}
+.obx[data-mat="basic"] .os-project .ob-quill{background:var(--obx-ink);border-radius:0;}
+.obx[data-mat="basic"] .os-project .ob-reel{color:var(--obx-ink);border:1.5px solid var(--obx-ink);background:transparent;box-shadow:none;}
+.obx[data-mat="basic"] .os-keep .ob-cloud{background:color-mix(in srgb,var(--obx-ink) 4%,transparent);border:1.5px solid var(--obx-line-strong);}
+.obx[data-mat="basic"] .os-keep .ob-door{background:transparent;border:1.5px solid var(--obx-ink);color:var(--obx-ink);border-radius:3px;}
+.obx[data-mat="basic"] .os-keep .ob-key{background:var(--obx-ink);color:var(--obx-ink);border-radius:1px;}
+.obx[data-mat="basic"] .os-keep .ob-net{opacity:.5;}
+.obx[data-mat="basic"] .os-review .ob-node{background:var(--obx-paper);border:1.5px solid var(--obx-ink);border-radius:3px;box-shadow:none;}
+.obx[data-mat="basic"] .os-commit .ob-bill{background:var(--obx-paper);border:1.5px solid var(--obx-ink);border-radius:3px;box-shadow:none;}
+.obx[data-mat="basic"] .os-commit .ob-stamp{border-width:2px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;}
+.obx[data-mat="basic"] .os-commit .ob-paper{border:1px solid var(--obx-line-strong);border-radius:1px;}
+.obx[data-mat="basic"] .os-power .ob-rack{background:transparent;border:1.5px solid var(--obx-ink);border-radius:4px;box-shadow:none;}
+.obx[data-mat="basic"] .os-power .ob-slot{background:color-mix(in srgb,var(--obx-ink) 4%,transparent);border:1px dashed var(--obx-line-strong);border-radius:2px;}
+.obx[data-mat="basic"] .os-power .ob-battery{background:transparent;border:1.5px solid var(--obx-ink);border-radius:2px;}
+.obx[data-mat="basic"] .os-power .ob-battery::before{background:var(--obx-ink);}
+.obx[data-mat="basic"] .os-finish .ob-swatchcard{background:var(--obx-paper);border:1.5px solid var(--obx-line-strong);border-radius:4px;box-shadow:none;}
+.obx[data-mat="basic"] .os-finish .ob-swatchcard.s2{border-color:var(--obx-ink);}
+.obx[data-mat="basic"] .os-finish .ob-spark{display:none;}
+.obx[data-mat="basic"] .ob-motes i{display:none;}
+
+/* drafting annotation on the stage */
+.obx[data-mat="basic"] .obx-stage .ob-note{position:absolute;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:9.5px;letter-spacing:.08em;color:var(--obx-ink-faint);text-transform:uppercase;}
+.obx[data-mat="basic"] .obx-stage .ob-note::before{content:"— ";opacity:.6;}
+
+/* basic theme picker swatches */
+.obx[data-mat="basic"] .obx-themecard .obx-swatch i:nth-child(1){background:#ffffff;border-right:1px solid #dde3e8;}
+.obx[data-mat="basic"] .obx-themecard .obx-swatch i:nth-child(2){background:#14181d;border-right:1px solid #2c3540;}
+.obx[data-mat="basic"] .obx-themecard .obx-swatch i:nth-child(3){background:linear-gradient(135deg,#5b9dd6,#2f6ea8);}

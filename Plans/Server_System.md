@@ -776,3 +776,37 @@ owner_boundary_notes:
   - Remote_Access_System owns connector process/node/route/exposure behavior; Server owns server_id, endpoint association, pairing, trust, and deduplication.
 owner_hints: [Plans/Server_System.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Shared_Integration_Runtime.md]
 ```
+
+## Notebook Writer Authority Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Working Notebook and checkpoint records follow the Server-first rule: exactly one Project Home Server holds canonical writer authority for them; Clients render read-only notebook projections and issue canonical notebook commands with typed idempotent envelopes, never becoming writable notebook databases. After a Project Move cutover, the previous Server cannot keep writing notebook or checkpoint records (stale-owner fencing per SRV-006/PSB-006), and no automatic failover creates a second writer.
+
+```yaml
+plan_unit_id: SRV-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: Notebook and checkpoint records have exactly one canonical writer, the Project Home Server. Clients render read-only projections and issue idempotent canonical commands; a previous Server cannot keep writing after Project Move cutover, and no automatic failover or offline replica creates a second notebook writer.
+gui_related: false
+gui_classification_reason: Writer authority is server behavior, not GUI work.
+depends_on: [SRV-013, PSB-006]
+unblocks: []
+acceptance_criteria:
+  - Stale Server writes after cutover are rejected.
+  - No Client becomes a writable notebook database.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: dual_writer
+reasoning_tier: standard
+context_scope: server_system
+implementation_surfaces: [Plans/Server_System.md, Plans/Project_Sync_and_Backbone.md]
+node_compile_hint: {mode: server_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+preserved_exact_tokens: ["one canonical writer", "Project Home Server"]
+negative_constraints:
+  - Do not create a second notebook writer through failover or Client replicas.
+owner_hints: [Plans/Server_System.md]
+```
+
+ContractRef: ContractName:Plans/Server_System.md, ContractName:Plans/Project_Sync_and_Backbone.md

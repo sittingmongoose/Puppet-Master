@@ -1,0 +1,134 @@
+/* ============================================================
+   GLM Onboarding — RETRO material: CRT matinee
+   Phosphor glow, chunky pixels, scanlines, amber/green duotone.
+   ============================================================ */
+.obx[data-mat="retro"]{
+  --obx-radius:6px;
+  --obx-ease:cubic-bezier(.2,0,.2,1);
+  --obx-spring:cubic-bezier(.2,0,.2,1.2);
+}
+/* dark: night terminal */
+.obx[data-mat="retro"][data-mode="dark"]{
+  --obx-ink:#f5deb0; --obx-ink-dim:#cbb279; --obx-ink-faint:#a28d57;
+  --obx-paper:#171208; --obx-paper-2:#1f1809; --obx-card:#241c0c;
+  --obx-line:#4a3d1c; --obx-line-strong:#6b592a;
+  --obx-accent:#f0b429; --obx-accent-soft:rgba(240,180,41,.14); --obx-accent-ink:#f6c14a; --obx-cta-ink:#241b04;
+  --obx-good:#7bc84f; --obx-warn:#f0b429; --obx-bad:#e06c5a;
+  --obx-focus:#f0b429;
+}
+/* light: cream terminal */
+.obx[data-mat="retro"][data-mode="light"]{
+  --obx-ink:#33260c; --obx-ink-dim:#5f4d20; --obx-ink-faint:#6f5d30;
+  --obx-paper:#f2e6c4; --obx-paper-2:#e9d9ae; --obx-card:#f7eed2;
+  --obx-line:#c9b478; --obx-line-strong:#a68d4e;
+  --obx-accent:#b35c00; --obx-accent-soft:rgba(179,92,0,.13); --obx-accent-ink:#8f4900;
+  --obx-good:#446b26; --obx-warn:#b35c00; --obx-bad:#a8442e;
+  --obx-focus:#b35c00;
+}
+/* CRT window: chunky bezel */
+.obx[data-mat="retro"] .obx-window{
+  border:3px solid var(--obx-line-strong);
+  border-radius:var(--obx-radius);
+  box-shadow:var(--obx-shadow-3),0 0 0 6px color-mix(in srgb,var(--obx-paper) 90%,#000);
+}
+.obx[data-mat="retro"] .obx-window::after{
+  box-shadow:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px);
+  opacity:.5; z-index:9; pointer-events:none;
+}
+.obx[data-mat="retro"] .obx-brandbar{border-bottom-width:2px;}
+.obx[data-mat="retro"] .obx-title{font-family:'Orbitron','Rajdhani',sans-serif;letter-spacing:.02em;}
+.obx[data-mat="retro"] .obx-kicker,.obx[data-mat="retro"] .obx-act{font-family:'Orbitron','Rajdhani',sans-serif;}
+.obx[data-mat="retro"] .obx-cta{
+  border-radius:5px;border:2px solid color-mix(in srgb,var(--obx-accent) 60%,#000);
+  box-shadow:3px 3px 0 color-mix(in srgb,var(--obx-accent) 40%,#000);
+  font-family:'Orbitron','Rajdhani',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--obx-accent);
+  image-rendering:pixelated;
+}
+.obx[data-mat="retro"] .obx-cta:active{transform:translate(2px,2px);box-shadow:1px 1px 0 color-mix(in srgb,var(--obx-accent) 40%,#000);}
+.obx[data-mat="retro"] .obx-choice,.obx[data-mat="retro"] .obx-row{border-radius:5px;border-width:2px;}
+.obx[data-mat="retro"] .obx-choice[aria-pressed="true"]{box-shadow:3px 3px 0 color-mix(in srgb,var(--obx-accent) 40%,#000);}
+.obx[data-mat="retro"] .obx-dot,.obx[data-mat="retro"] .obx-row .obx-dot{border-radius:3px;}
+.obx[data-mat="retro"] .obx-row .obx-dot::after,.obx[data-mat="retro"] .obx-choice .obx-dot::after{border-radius:2px;}
+.obx[data-mat="retro"] .obx-iconbtn{border-radius:5px;border-width:2px;}
+.obx[data-mat="retro"] .obx-iconbtn svg{shape-rendering:crispEdges;}
+
+/* retro panel/inputs: always readable ink fields */
+.obx[data-mat="retro"] .obx-input,.obx[data-mat="retro"] .obx-select{
+  border-radius:4px;border-width:2px;
+  background:var(--obx-paper-2);color:var(--obx-ink);caret-color:var(--obx-accent);
+  font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:.02em;
+}
+.obx[data-mat="retro"] .obx-disclosure{border-radius:5px;border-style:solid;border-width:2px;}
+.obx[data-mat="retro"] .obx-panel > .obx-set,.obx[data-mat="retro"] .obx-sheet,.obx[data-mat="retro"] .obx-reviewcard{border-radius:5px;border-width:2px;}
+.obx[data-mat="retro"] .obx-reviewcard .obx-edit{font-family:'Orbitron','Rajdhani',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;}
+.obx[data-mat="retro"][data-mode="light"] .obx-panel{background:color-mix(in srgb,var(--obx-paper) 86%,#fff 14%);border-left:2px solid var(--obx-line);}
+.obx[data-mat="retro"][data-mode="light"] .obx-input,.obx[data-mat="retro"][data-mode="light"] .obx-select{background:#faf3dd;}
+.obx[data-mat="retro"][data-mode="light"] .obx-row,.obx[data-mat="retro"][data-mode="light"] .obx-choice{background:#f7eed2;}
+
+/* stage: phosphor matinee */
+.obx[data-mat="retro"] .obx-stage{background:var(--obx-paper-2);}
+.obx[data-mat="retro"] .ob-backdrop{background:radial-gradient(70% 55% at 50% 12%,color-mix(in srgb,var(--obx-accent) 14%,transparent),transparent 74%);}
+.obx[data-mat="retro"] .ob-ground{background:repeating-linear-gradient(90deg,var(--obx-line) 0 4px,transparent 4px 12px);border-radius:0;border-top:2px solid var(--obx-line-strong);}
+.obx[data-mat="retro"] .ob-horizon{display:none;}
+.obx[data-mat="retro"] .ob-star{background:var(--obx-accent);box-shadow:0 0 8px var(--obx-accent);border-radius:0;transform:rotate(45deg);}
+.obx[data-mat="retro"] .os-welcome .ob-curtain > i{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--obx-accent) 30%,#000) 0 6px,color-mix(in srgb,var(--obx-accent) 16%,#000) 6px 12px);border:2px solid var(--obx-line-strong);border-top:none;border-radius:0;}
+.obx[data-mat="retro"] .os-welcome .ob-stagefloor{background:repeating-linear-gradient(90deg,var(--obx-line-strong) 0 6px,transparent 6px 18px);border:2px solid var(--obx-line-strong);border-radius:0;height:1.2%;}
+.obx[data-mat="retro"] .os-welcome .ob-seed::before{border-radius:3px 3px 3px 0;box-shadow:0 0 14px var(--obx-accent);}
+.obx[data-mat="retro"] .os-where .ob-desk{background:var(--obx-card);border:2px solid var(--obx-line-strong);}
+.obx[data-mat="retro"] .os-where .ob-machine,
+.obx[data-mat="retro"] .os-where .ob-node-b,
+.obx[data-mat="retro"] .ob-machine2{
+  background:var(--obx-card);border:2px solid var(--obx-accent);border-radius:3px;
+  box-shadow:4px 4px 0 rgba(0,0,0,.35),0 0 14px var(--obx-accent-soft);
+}
+.obx[data-mat="retro"] .os-where .ob-machine::before,
+.obx[data-mat="retro"] .ob-machine2::before{background:var(--obx-accent-soft);border:1px solid var(--obx-accent);}
+.obx[data-mat="retro"] .os-where .ob-led{border-radius:0;background:var(--obx-good);box-shadow:0 0 8px var(--obx-good);}
+.obx[data-mat="retro"] .os-where .ob-crate{background:color-mix(in srgb,var(--obx-accent) 20%,var(--obx-card));border:2px solid var(--obx-line-strong);border-radius:0;box-shadow:3px 3px 0 rgba(0,0,0,.3);}
+.obx[data-mat="retro"] .os-project .ob-playbill{background:var(--obx-card);border:2px solid var(--obx-line-strong);border-radius:0;box-shadow:5px 5px 0 rgba(0,0,0,.35);}
+.obx[data-mat="retro"] .os-project .ob-pb-line{background:var(--obx-line-strong);border-radius:0;height:1.6%;}
+.obx[data-mat="retro"] .os-project .ob-quill{background:var(--obx-accent);box-shadow:0 0 10px var(--obx-accent-soft);border-radius:0;}
+.obx[data-mat="retro"] .os-project .ob-reel{color:var(--obx-accent);border:2px dashed var(--obx-accent);border-radius:0;box-shadow:0 0 12px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-keep .ob-cloud{background:var(--obx-card);border:2px solid var(--obx-line-strong);}
+.obx[data-mat="retro"] .os-keep .ob-door{background:var(--obx-card);border:2px solid var(--obx-accent);color:var(--obx-accent);border-radius:0;box-shadow:0 0 12px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-keep .ob-key{background:var(--obx-accent);color:var(--obx-accent);border-radius:0;box-shadow:0 0 8px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-review .ob-node{background:var(--obx-card);border:2px solid var(--obx-accent);border-radius:0;box-shadow:0 0 12px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-review .ob-node::after{border-radius:0;}
+.obx[data-mat="retro"] .os-commit .ob-bill{background:var(--obx-card);border:2px solid var(--obx-line-strong);border-radius:0;box-shadow:5px 5px 0 rgba(0,0,0,.35);}
+.obx[data-mat="retro"] .os-commit .ob-stamp{border-width:4px;border-radius:0;font-family:'Orbitron',sans-serif;box-shadow:0 0 16px color-mix(in srgb,var(--obx-good) 30%,transparent);}
+.obx[data-mat="retro"] .os-commit .ob-paper{border-radius:0;border-width:2px;}
+.obx[data-mat="retro"] .os-power .ob-rack{background:var(--obx-card);border:2px solid var(--obx-line-strong);border-radius:0;box-shadow:5px 5px 0 rgba(0,0,0,.35);}
+.obx[data-mat="retro"] .os-power .ob-slot{border:2px solid var(--obx-line);border-radius:0;}
+.obx[data-mat="retro"] .os-power .ob-battery{border:2px solid var(--obx-accent);border-radius:0;box-shadow:0 0 12px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-finish .ob-swatchcard{border:2px solid var(--obx-line-strong);border-radius:0;box-shadow:4px 4px 0 rgba(0,0,0,.3);}
+.obx[data-mat="retro"] .os-finish .ob-swatchcard.s2{border-color:var(--obx-accent);box-shadow:0 0 14px var(--obx-accent-soft);}
+.obx[data-mat="retro"] .os-finish .ob-spark{background:var(--obx-accent);box-shadow:0 0 8px var(--obx-accent);border-radius:0;}
+.obx[data-mat="retro"] .ob-motes i{background:var(--obx-accent);border-radius:0;box-shadow:0 0 6px var(--obx-accent);}
+
+/* retro theme picker swatches */
+.obx[data-mat="retro"] .obx-themecard .obx-swatch i:nth-child(1){background:repeating-linear-gradient(0deg,#f2e6c4 0 3px,#e4d3a0 3px 6px);}
+.obx[data-mat="retro"] .obx-themecard .obx-swatch i:nth-child(2){background:repeating-linear-gradient(0deg,#241c0c 0 3px,#171208 3px 6px);}
+.obx[data-mat="retro"] .obx-themecard .obx-swatch i:nth-child(3){background:#f0b429;}
+
+/* marquee bulbs along the window top */
+.obx[data-mat="retro"] .obx-brandbar{position:relative;}
+.obx[data-mat="retro"] .obx-brandbar::after{content:"";position:absolute;left:10px;right:10px;bottom:-2px;height:3px;
+  background:repeating-linear-gradient(90deg,var(--obx-accent) 0 3px,transparent 3px 9px);opacity:.55;
+  animation:obx-marquee 5.2s linear infinite;}
+@keyframes obx-marquee{to{background-position:36px 0;}}
+/* phosphor bloom on stage subjects */
+.obx[data-mat="retro"] .ob-machine,.obx[data-mat="retro"] .ob-machine2,
+.obx[data-mat="retro"] .ob-playbill,.obx[data-mat="retro"] .ob-bill,
+.obx[data-mat="retro"] .ob-rack,.obx[data-mat="retro"] .ob-swatchcard.s2{filter:drop-shadow(0 0 9px color-mix(in srgb,var(--obx-accent) 42%,transparent));}
+/* deep vignette so the phosphor reads */
+.obx[data-mat="retro"] .obx-stage::before{background:
+  radial-gradient(72% 58% at 50% 40%,transparent 42%,rgba(0,0,0,.5) 100%),
+  repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);}
+
+/* CRT flicker on the stage only — very low amplitude */
+@keyframes obx-crt-flicker{0%,100%{opacity:.5;}50%{opacity:.62;}}
+.obx[data-mat="retro"] .obx-stage{position:relative;}
+.obx[data-mat="retro"] .obx-stage::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);animation:obx-crt-flicker 4.4s var(--obx-ease-inout) infinite;}
+@media (prefers-reduced-motion: reduce){.obx[data-mat="retro"] .obx-stage::before{animation:none;}}

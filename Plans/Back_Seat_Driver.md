@@ -1684,3 +1684,39 @@ opening or editing it creates local draft state only.
 
 Once the owning Start commits, BSD's existing admission, isolation, and attribution rules apply
 unchanged, and its Usage stays attributed separately from the main run.
+
+## Working Notebook Boundary Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. BSD's isolation is unchanged by the Working Notebook and context-transition work: BSD keeps its own advisor context window, cursor, epoch, bounded deltas, self-compaction, and held/reconfirmed findings; it does not become the notebook manager, a main-run transition authority, or a verification/completion gate, and it never writes or arbitrates notebook content. Primary-run fresh-window transitions and notebook checkpoints follow their own owners; where a primary transition triggers a BSD reset, the existing §12 reset/re-prime and epoch-fencing rules apply verbatim (held findings survive, late prior-epoch callbacks are rejected). BSD advisor model calls keep their existing separate Usage lineage (UF-100), and no recursive advice ingestion occurs.
+
+```yaml
+plan_unit_id: BSD-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: BSD retains its isolated advisor session, cursor, epoch, bounded deltas, self-compaction, and held/reconfirmed findings under the Working Notebook work. BSD is not the notebook manager, not a main-run transition authority, and not a verification or completion gate; primary transitions follow their own owners and a primary-triggered BSD reset follows the existing §12 epoch-fencing rules with held findings preserved. BSD advisor usage stays separately attributed, and no recursive advice ingestion exists.
+gui_related: false
+gui_classification_reason: BSD isolation is runtime behavior, not GUI work.
+depends_on: [BSD-024, PP-084]
+unblocks: []
+acceptance_criteria:
+  - Held findings and epoch/cursor semantics stay coherent across primary context changes.
+  - BSD never promotes itself to transition authority or a verification gate.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: authority_drift
+reasoning_tier: standard
+context_scope: advisor_runtime
+implementation_surfaces: [Plans/Back_Seat_Driver.md, Plans/Prompt_Pipeline.md, Plans/usage-feature.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I08
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A45
+preserved_exact_tokens: ["held findings", "epoch", "not a verification gate"]
+negative_constraints:
+  - Do not make BSD the notebook manager or transition authority.
+  - Do not ingest BSD advice recursively into notebooks as evidence.
+owner_hints: [Plans/Back_Seat_Driver.md]
+```
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md

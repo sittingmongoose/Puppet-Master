@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27651-L28115
+Source lines: L27651-L28124
 
-Source SHA256: `d5dd0b8f0f130cf3a4834576d4ac87136d579819ec48bf6b3f165ac4874adc2b`
+Source SHA256: `342462919f6e41f5f85d7c9e4eaf265d109a277d8ac29b0b7343a69abd20694c`
 
 ---
 
@@ -100,7 +100,15 @@ canonical_text: >-
   mode/disable-notification fields. The routing matrix uses canonical event categories and default sound mappings, and
   the sound library shows built-in normal notification sound entries with source/license/version/duration/hash metadata
   beside uploaded and imported assets. Sound is never the sole carrier for important state, and missing audio support
-  hides or labels controls rather than failing silently. The in-app toast/banner destination renders through the
+  hides or labels controls rather than failing silently. Preview starts the selected available audio only after an
+  explicit user gesture; its playing indicator follows actual playback rather than an independent animation timer.
+  The same control stops playback, a different selection replaces it without overlap, and leaving the sound view,
+  closing Settings, changing Project, or disposing the view releases playback resources. Missing or undecodable
+  recordings expose a non-audio unavailable/failure state and never play an unrelated substitute under the selected
+  asset's name. A browser concept may label generated demonstration tones and session-only user-selected files, but
+  must not present them as bundled licensed recordings, native audio evidence, pack validation, or notification
+  delivery. Mapping preview is read-only inspection and is distinct from local playback and explicit test-send.
+  The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
 gui_related: true
@@ -114,6 +122,7 @@ acceptance_criteria:
   - Built-in normal notification sounds show source, license, version, duration, hash, and default mapping metadata.
   - Preview is local only; test-send is explicit, labeled, rate-limited, masked, receipt-recorded, and never mutates alert state.
   - Audio absence or disabled sound remains accessible through visible labels and non-audio state.
+  - Playback tests cover actual audio start, zero volume, Stop, replacement, natural completion, navigation/Project cleanup, unavailable assets, decode/device failure, and rejected startup without false playing or delivery-success state.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Notifications and Sounds settings GUI fixtures

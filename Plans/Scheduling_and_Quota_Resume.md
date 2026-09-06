@@ -779,3 +779,39 @@ schedule, and browser local storage is never authoritative.
 `Schedule Message` stays in the Assistant wand menu, which opens the exact scheduling modal. The
 thread card is the later lifecycle projection, not a second creation entry point, and scheduling
 is not moved into extra non-wand chrome.
+
+## Continuation Revalidation Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Notebook checkpoints and fresh-window continuity change nothing about scheduled/resumed build revalidation: at dispatch, the scheduler revalidates the exact bound Plan version/hash, currentness, topology, permissions, account, model, tools, window, and quota exactly as before, and captures/compares the current `user_stop_epoch`. A notebook checkpoint or resume capsule is continuation aid, never a dispatch qualification: quota reset, schedule re-fire, provider retry, or notebook work never auto-resumes work after a manual Stop, and a fresh window cannot rebinding a scheduled build to a different Plan revision.
+
+```yaml
+plan_unit_id: SQR-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: "Scheduled and resumed builds revalidate everything they revalidate today regardless of notebook/checkpoint continuity: exact Plan version/hash, currentness, topology, permissions, account, model, tools, window, quota, and the two-point user_stop_epoch comparison. Notebook checkpoints are continuation aids, never dispatch qualifications, and quota reset, schedule re-fire, provider retry, or notebook work never auto-resumes Stop-cancelled work."
+gui_related: false
+gui_classification_reason: Scheduling revalidation is runtime behavior, not GUI work.
+depends_on: [SQR-001, PP-085]
+unblocks: []
+acceptance_criteria:
+  - Stop between admission and dispatch discards stale continuation and blocks auto-resume.
+  - A new window cannot select a different approved Plan revision for a scheduled build.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: auto_resume_after_stop
+reasoning_tier: standard
+context_scope: scheduling
+implementation_surfaces: [Plans/Scheduling_and_Quota_Resume.md, Plans/Prompt_Pipeline.md, Plans/Assistant_Plan_Runtime.md]
+node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-C09
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I04
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A32
+preserved_exact_tokens: ["user_stop_epoch", "dispatch qualification", "exact Plan version/hash"]
+negative_constraints:
+  - Do not auto-resume Stop-cancelled work from notebook or quota events.
+owner_hints: [Plans/Scheduling_and_Quota_Resume.md]
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Goal_Runtime_System.md

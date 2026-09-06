@@ -4,7 +4,7 @@ Source: `Plans/Run_Modes.md`
 
 Source lines: L4-L9
 
-Source SHA256: `d7be41e69ee6aceaf934c98677c2adbb6e9a8041f08ce5e707937f6cbb9575cd`
+Source SHA256: `a55e0f6be429d71cc0380293d4d2ddfeac8abf084f4f1667346376ce9380f178`
 
 ---
 

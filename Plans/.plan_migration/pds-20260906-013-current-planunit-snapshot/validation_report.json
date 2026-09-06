@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "anchor_alias_rows": 11230,
+    "batch_report_doc_entries": 95,
+    "batch_report_rows": 10,
+    "coverage_rows": 11230,
+    "coverage_status_counts": {
+      "already_standardized_existing_planunits": 11230
+    },
+    "doc_count": 95,
+    "live_plan_unit_count": 6362,
+    "source_preserving_unit_count": 0,
+    "source_preserving_unit_ids": [],
+    "span_count": 11230,
+    "unique_live_plan_unit_count": 6362
+  },
+  "failures": [],
+  "generated_at_utc": "2026-09-06T16:57:21Z",
+  "run_id": "pds-20260906-013-current-planunit-snapshot",
+  "schema_id": "pm.plan_migration.validation_report.v1",
+  "status": "pass",
+  "warnings": []
+}

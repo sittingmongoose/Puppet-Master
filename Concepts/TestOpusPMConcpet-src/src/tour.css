@@ -1,0 +1,329 @@
+/* =====================================================================
+   PMO GUIDED TOUR — runs through the real shell.
+   A spotlight that travels between targets, one instruction at a time, and
+   a visible pointer for Show Me. Nothing here replaces the app with a
+   screenshot: the dim layer sits over the live UI and the target stays live.
+   ===================================================================== */
+
+.pmot { position: fixed; inset: 0; z-index: 9500; pointer-events: none; font-family: var(--body-font, system-ui, sans-serif); }
+.pmot[hidden] { display: none !important; }
+
+/* ------------------------------------------------------------ spotlight */
+/* A huge outer shadow dims everything except the hole, so the target keeps
+   receiving real pointer events. */
+.pmot-spot {
+  position: absolute; border-radius: 14px;
+  box-shadow: 0 0 0 9999px color-mix(in srgb, #05060a 72%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    left   var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)),
+    top    var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)),
+    width  var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)),
+    height var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)),
+    border-radius var(--pmo-t-base, 280ms) linear,
+    opacity var(--pmo-t-base, 280ms) linear;
+}
+.pmot[data-open="true"] .pmot-spot { opacity: 1; }
+.pmot-spot::after {
+  content: ""; position: absolute; inset: -3px; border-radius: inherit;
+  border: 2px solid var(--accent-blue); opacity: .9;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-blue) 22%, transparent);
+}
+/* Pre-cue: the target is emphasised before anything moves. */
+.pmot[data-phase="cue"] .pmot-spot::after { animation: pmot-cue 900ms var(--pmo-ease-inout, ease) 2; }
+@keyframes pmot-cue {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-blue) 20%, transparent); }
+  50%      { box-shadow: 0 0 0 12px color-mix(in srgb, var(--accent-blue) 4%, transparent); }
+}
+/* Arrival: the destination reacts before the object settles. */
+.pmot-spot[data-arrived="true"]::after { animation: pmot-arrive 460ms var(--pmo-ease-spring, ease-out); }
+@keyframes pmot-arrive { 0% { transform: scale(1.04); } 60% { transform: scale(.995); } 100% { transform: scale(1); } }
+
+/* ---------------------------------------------------------------- card */
+
+.pmot-card {
+  position: absolute; width: min(376px, calc(100vw - 32px));
+  pointer-events: auto;
+  /* opaque base: glass themes make --surface-elevated translucent */
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 26px 70px -18px rgba(0,0,0,.6);
+  padding: 17px 18px 14px;
+  color: var(--text-primary);
+  transition: left var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)),
+              top  var(--pmo-t-travel, 400ms) var(--pmo-ease-out, cubic-bezier(.16,1,.3,1));
+  animation: pmot-card-in 460ms var(--pmo-ease-out, cubic-bezier(.16,1,.3,1)) both;
+}
+@keyframes pmot-card-in { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+.pmot-card[data-quiet="true"] { animation: none; }
+
+/* A distinct voice: the guide is an annotation, not another app panel. */
+.pmot-head { display: flex; align-items: center; gap: 8px; margin: 0 0 9px; }
+.pmot-chapter {
+  font-size: 10.5px; letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
+  color: var(--accent-magenta, var(--accent-blue));
+}
+.pmot-count { font-size: 11px; color: var(--text-muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.pmot-title { font-size: 15.5px; font-weight: 700; line-height: 1.3; margin: 0 0 6px; letter-spacing: -.005em; }
+.pmot-body { font-size: 13px; line-height: 1.55; color: var(--text-secondary); margin: 0; }
+.pmot-ask {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin: 12px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-blue) 12%, transparent);
+  font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.45;
+}
+.pmot-ask svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px; color: var(--accent-blue); }
+.pmot-why {
+  margin: 10px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: var(--surface-alt); font-size: 12.5px; line-height: 1.5; color: var(--text-secondary);
+}
+.pmot-why b { color: var(--text-primary); font-weight: 650; }
+
+.pmot-lost { display: none; }
+.pmot-card[data-lost="true"] .pmot-lost {
+  display: block; margin: 10px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-warning) 14%, transparent);
+  font-size: 12.5px; line-height: 1.5; color: var(--text-secondary);
+}
+.pmot-card[data-lost="true"] .pmot-ask { display: none; }
+.pmot-link {
+  font: inherit; font-size: inherit; font-weight: 650; cursor: pointer;
+  border: 0; background: none; padding: 0; color: var(--accent-blue); text-decoration: underline;
+}
+
+.pmot-foot { display: flex; align-items: center; gap: 8px; margin: 13px 0 0; }
+.pmot-btn {
+  font: inherit; font-size: 12.5px; font-weight: 650; cursor: pointer;
+  padding: 8px 13px; border-radius: 9px;
+  border: 1px solid var(--border); background: var(--surface-alt); color: var(--text-primary);
+  transition: transform 150ms var(--pmo-ease-spring, ease-out), background 150ms linear, border-color 150ms linear, opacity 150ms linear;
+}
+.pmot-btn:hover:not(:disabled) { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent-blue) 45%, var(--border)); }
+.pmot-btn:disabled { opacity: .45; cursor: not-allowed; }
+.pmot-btn--primary { background: var(--accent-blue); border-color: var(--accent-blue); color: color-mix(in srgb, var(--background) 88%, #000); }
+.pmot-btn--ghost { background: none; border-color: transparent; color: var(--text-secondary); }
+.pmot-btn--ghost:hover { background: var(--surface-alt); }
+.pmot-skip { margin-left: auto; }
+
+.pmot-progress { display: flex; gap: 10px; margin: 12px 0 0; }
+.pmot-progress-ch { display: flex; gap: 3px; flex: 1; }
+.pmot-progress i {
+  height: 3px; flex: 1; border-radius: 2px; display: block;
+  background: color-mix(in srgb, var(--text-muted) 30%, transparent);
+  transition: background var(--pmo-t-base, 280ms) linear;
+}
+.pmot-progress i[data-on="done"] { background: var(--accent-lime); }
+.pmot-progress i[data-on="current"] { background: var(--accent-blue); }
+
+/* --------------------------------------------------------- Show Me cursor */
+
+.pmot-cursor {
+  position: absolute; width: 26px; height: 26px; pointer-events: none;
+  opacity: 0; transform: translate(-4px, -3px);
+  transition: opacity 200ms linear;
+  z-index: 3;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
+}
+.pmot-cursor[data-on="true"] { opacity: 1; }
+.pmot-cursor svg { width: 100%; height: 100%; }
+.pmot-cursor::after {
+  content: ""; position: absolute; left: 2px; top: 2px; width: 22px; height: 22px;
+  border-radius: 50%; border: 2px solid var(--accent-blue); opacity: 0; transform: scale(.4);
+}
+.pmot-cursor[data-press="true"]::after { animation: pmot-press 460ms var(--pmo-ease-out, ease-out); }
+@keyframes pmot-press { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(2.1); } }
+
+/* A caption rides with the pointer so the demonstration explains itself. */
+.pmot-cursor-label {
+  position: absolute; left: 30px; top: 12px; white-space: nowrap;
+  font-size: 11.5px; font-weight: 650; padding: 5px 9px; border-radius: 7px;
+  background: var(--accent-blue); color: color-mix(in srgb, var(--background) 88%, #000);
+  opacity: 0; transition: opacity 180ms linear;
+}
+.pmot-cursor[data-on="true"] .pmot-cursor-label { opacity: 1; }
+
+/* ----------------------------------------------------- ghost drag object */
+/* Show Me for docking carries a real-looking object along a visible path. */
+/* A miniature of the panel being carried: title bar, content lines, a lift and
+   a slight tilt in flight. A flat coloured box does not read as an object. */
+.pmot-ghost {
+  position: absolute; border-radius: 12px; pointer-events: none; z-index: 2;
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  border: 1px solid color-mix(in srgb, var(--accent-blue) 70%, var(--border));
+  box-shadow: 0 26px 60px -14px rgba(0,0,0,.6),
+              0 0 0 1px color-mix(in srgb, var(--accent-blue) 30%, transparent) inset;
+  opacity: 0; overflow: hidden;
+  transform-origin: center;
+}
+.pmot-ghost[data-on="true"] { opacity: .97; }
+.pmot-ghost-bar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 11px; border-bottom: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--accent-blue) 14%, transparent);
+  font-size: 12px; font-weight: 700; color: var(--text-primary);
+}
+.pmot-ghost-bar span:first-child {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent-blue); flex: 0 0 auto;
+}
+.pmot-ghost-lines { padding: 12px 11px; display: flex; flex-direction: column; gap: 8px; }
+.pmot-ghost-lines i {
+  display: block; height: 7px; border-radius: 4px;
+  background: color-mix(in srgb, var(--text-muted) 34%, transparent);
+}
+.pmot-ghost-lines i:nth-child(2) { width: 78%; }
+.pmot-ghost-lines i:nth-child(3) { width: 54%; }
+.pmot-ghost-lines i:nth-child(4) { width: 66%; }
+.pmot-drop {
+  position: absolute; border-radius: 12px; pointer-events: none; z-index: 1;
+  border: 2px dashed var(--accent-blue);
+  background: color-mix(in srgb, var(--accent-blue) 10%, transparent);
+  opacity: 0; transition: opacity 220ms linear, transform 220ms var(--pmo-ease-spring, ease-out);
+  transform: scale(.97);
+}
+.pmot-drop[data-on="true"] { opacity: 1; transform: scale(1); }
+
+/* --------------------------------------------------------- practice tag */
+/* Deterministic tour content is always labelled as a guided example. */
+.pmot-example-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+  padding: 3px 7px; border-radius: 5px;
+  background: color-mix(in srgb, var(--accent-magenta) 20%, transparent);
+  color: var(--accent-magenta);
+}
+
+/* ------------------------------------------------------------- finished */
+
+.pmot-done-card { text-align: left; }
+
+/* ------------------------------------------------------------- resume */
+
+.pmot-resume {
+  position: fixed; right: 18px; bottom: 18px; z-index: 9400;
+  display: inline-flex; align-items: center; gap: 9px; pointer-events: auto;
+  font: inherit; font-size: 13px; font-weight: 650; cursor: pointer;
+  padding: 11px 17px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-primary);
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  box-shadow: var(--elev-2, 0 10px 24px rgba(0,0,0,.22));
+}
+.pmot-resume[hidden] { display: none; }
+
+/* ----------------------------------------------------- reduced motion */
+/* The lesson survives; the travel does not. */
+@media (prefers-reduced-motion: reduce) {
+  .pmot-spot { transition-duration: 1ms !important; }
+  .pmot-card { animation: none !important; transition-duration: 1ms !important; }
+  .pmot-spot::after, .pmot-cursor::after { animation: none !important; }
+  .pmot-cursor { transition: none !important; }
+}
+
+/* ------------------------------------------------------ practice fixture */
+/* Rendered into the real Wizard panels so the components are the finished
+   ones; the guided-example tag keeps it honest. */
+
+.pmot-practice { display: flex; flex-direction: column; gap: 0; padding: 2px; }
+.pmot-p-head { display: flex; align-items: center; gap: 9px; margin: 0 0 12px; flex-wrap: wrap; }
+.pmot-p-note { font-size: 11px; color: var(--text-muted); }
+.pmot-p-h { font-size: 16px; font-weight: 700; margin: 0 0 14px; color: var(--text-primary); line-height: 1.3; }
+.pmot-p-goal {
+  font-size: 13.5px; line-height: 1.5; color: var(--text-secondary); margin: 0 0 14px;
+  padding: 11px 13px; border-radius: 10px; background: var(--surface-alt);
+}
+.pmot-p-k {
+  font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; font-weight: 700;
+  color: var(--text-muted); margin: 16px 0 8px;
+}
+.pmot-p-k:first-of-type { margin-top: 0; }
+.pmot-p-list { display: flex; flex-direction: column; gap: 7px; }
+.pmot-p-row {
+  display: grid; grid-template-columns: 16px 1fr; gap: 10px; align-items: start;
+  font-size: 13.5px; line-height: 1.45; color: var(--text-primary);
+  padding: 9px 11px; border-radius: 9px; background: var(--surface-alt);
+}
+.pmot-p-dot {
+  width: 9px; height: 9px; border-radius: 50%; margin-top: 5px;
+  background: var(--accent-lime);
+}
+.pmot-p-dot--new { background: var(--accent-blue); }
+.pmot-p-dot--open { background: var(--accent-warning); }
+.pmot-p-new { background: color-mix(in srgb, var(--accent-blue) 13%, var(--surface-alt)); }
+.pmot-p-open { background: color-mix(in srgb, var(--accent-warning) 13%, var(--surface-alt)); }
+@keyframes pmot-p-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+
+.pmot-p-dec {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 10px 12px; border-radius: 9px; background: var(--surface-alt);
+  font-size: 13px; color: var(--text-secondary);
+}
+.pmot-p-dec b { color: var(--text-primary); font-weight: 650; font-size: 13.5px; }
+.pmot-p-dec--muted b { color: var(--accent-warning); }
+
+.pmot-p-boundary {
+  display: flex; align-items: center; gap: 9px; margin-top: 18px;
+  padding: 11px 13px; border-radius: 10px;
+  border: 1px dashed var(--border);
+  font-size: 12.5px; color: var(--text-secondary);
+}
+.pmot-p-lock {
+  width: 14px; height: 14px; flex: 0 0 auto; border-radius: 3px;
+  border: 2px solid var(--accent-warning); position: relative;
+}
+.pmot-p-lock::before {
+  content: ""; position: absolute; left: 2px; top: -5px; width: 6px; height: 6px;
+  border: 2px solid var(--accent-warning); border-bottom: 0; border-radius: 4px 4px 0 0;
+}
+
+.pmot-p-choices { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.pmot-p-choice {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-alt); color: var(--text-primary);
+  transition: transform 150ms cubic-bezier(.34,1.4,.5,1), background 150ms linear, border-color 150ms linear;
+}
+.pmot-p-choice:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent-blue) 50%, var(--border)); }
+.pmot-p-choice[aria-pressed="true"] {
+  background: var(--accent-blue); border-color: var(--accent-blue);
+  color: color-mix(in srgb, var(--background) 88%, #000);
+}
+.pmot-p-why {
+  font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); margin: 0;
+  padding: 11px 13px; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-magenta) 10%, transparent);
+}
+.pmot-p-why b { color: var(--text-primary); }
+
+/* ------------------------------------------------------------- Teacher */
+
+.pmot-teach-host { display: block; margin: 12px 0; }
+.pmot-teach-host--float {
+  position: fixed; right: 20px; bottom: 92px; width: min(380px, calc(100vw - 40px));
+  pointer-events: auto; z-index: 2;
+}
+.pmot-teach {
+  border: 1px solid var(--border); border-radius: 13px;
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  padding: 13px 15px; box-shadow: var(--elev-2, 0 8px 22px rgba(0,0,0,.24));
+  animation: pmot-p-in 460ms cubic-bezier(.16,1,.3,1) both;
+}
+.pmot-teach-q {
+  font-size: 13px; font-weight: 650; color: var(--text-primary); margin: 0 0 9px;
+  padding-bottom: 9px; border-bottom: 1px solid var(--border-light);
+}
+.pmot-teach-a { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+.pmot-teach-tag { font-size: 11.5px; color: var(--accent-lime); margin: 9px 0 0; font-weight: 600; }
+
+
+/* The shell's own Replay Guided Tour control kept its markup when the legacy
+   tour module was removed; give it the same treatment as the resume chip so it
+   is presentable wherever the shell chooses to show it. */
+#pm7-guided-tour-replay {
+  font: inherit; font-size: 13px; font-weight: 650; cursor: pointer;
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-primary);
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  transition: transform 150ms var(--pmo-ease-spring, ease-out), border-color 150ms linear;
+}
+#pm7-guided-tour-replay:hover { transform: translateY(-1px); border-color: var(--accent-blue); }

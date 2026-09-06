@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L17951-L18125
 
-Source SHA256: `6a4eb20b9d80825dd1ca6acc4735de58c878a316d4183d8632bc80fb2d0b63da`
+Source SHA256: `6cae6d4bebe68a39b13ecadcec32580598254209e62566daff4d272354e4dd08`
 
 ---
 
@@ -41,7 +41,7 @@ stacks, and console data remain session-ephemeral. `ProviderRequestPermit` is no
 storage family. Its only durable evidence remains
 `provider_dispatch_admission_receipt`.
 
-The registry therefore contains 84 families: 66 materialized, 17 deferred, and one
+The registry therefore contains 88 families: 66 materialized, 21 deferred, and one
 compatibility alias. The exact closed set added or promoted by this addendum is 27
 families: 26 roots from `Plans/shared_runtime_contracts.schema.json` (pairwise
 connection/domain/outbox/replay/lease/MCP transition and provider-dispatch-attempt
@@ -119,7 +119,7 @@ acceptance_criteria:
   - Tantivy indexes only redacted labels/summaries/refs and is always rebuildable from authoritative source.
   - ProviderRequestPermit is absent as a family; exactly one provider_dispatch_admission_receipt row and one permission_snapshot_record row remain materialized from the closed shared schema bundle.
   - The 26 durable Shared Runtime bundle roots and one Goal lineage root are each materialized exactly once with transitive owner-schema dependencies; pairwise transition and dispatch-attempt validation envelopes are not persisted.
-  - The registry has exactly 84 families with 66 materialized, 17 deferred, and one compatibility alias; materialization does not imply a database migration, runtime implementation, Event Authority, or buildability readiness.
+  - The registry has exactly 88 families with 66 materialized, 21 deferred, and one compatibility alias; materialization does not imply a database migration, runtime implementation, Event Authority, or buildability readiness.
 validation_surfaces:
   - JSON Schema validation of Plans/storage_value_registry.json
   - python3 scripts/pm-shared-runtime-storage-materialize.py check

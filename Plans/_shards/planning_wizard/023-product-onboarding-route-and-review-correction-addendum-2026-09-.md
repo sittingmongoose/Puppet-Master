@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1959-L2013
+Source lines: L1969-L2023
 
-Source SHA256: `de4da73fc489b3041304f58d5cf5d6563aa152b5ba4bd3256b81f4c1bc43351e`
+Source SHA256: `e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce`
 
 ---
 

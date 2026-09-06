@@ -1,6 +1,6 @@
 # Shard Index: Plans/web_capability_findings_coverage.schema.json
 
-Generated: 2026-09-04T00:24:12Z
+Generated: 2026-09-06T17:37:25Z
 
 Source SHA256: `b77c39683525ff8a1d1ed6c68e4889b875be834bf98dcf6fdae71c2547d676fc`
 

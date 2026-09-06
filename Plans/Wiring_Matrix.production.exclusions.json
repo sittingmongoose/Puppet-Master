@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T00:00:00Z",
+  "generated_at": "2026-09-06T00:00:00Z",
   "excluded_tokens": [
     "cmd.account",
     "cmd.actions",
@@ -39,6 +39,8 @@
     "cmd.chat.plan.export_report",
     "cmd.chat.plan.progress.set",
     "cmd.chat.web",
+    "cmd.chat.open_working_notebook",
+    "cmd.chat.request_fresh_context",
     "cmd.client.open_details",
     "cmd.client.pair.qr.import",
     "cmd.cluster_connection.add",
@@ -125,6 +127,7 @@
     "cmd.onboarding.skip",
     "cmd.onboarding.skip_to_planning_wizard",
     "cmd.orchestrator",
+    "cmd.orchestrator.open_notebook",
     "cmd.origin.review.create",
     "cmd.panel.detach",
     "cmd.permissions",

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3370-L3865
+Source lines: L3376-L4002
 
-Source SHA256: `18f4feddbfd15e2f5063fe7d821aac7d37c050b7c597cc8532b94f4eb86ae557`
+Source SHA256: `cca282071bcb94bb66c752ce4e25bee41f07e8bdc4963d585a60000e223698eb`
 
 ---
 
@@ -503,4 +503,135 @@ negative_constraints:
   - Do not use real user secrets in fixtures or broaden CA, redirect, localhost, metadata, SSH, permission, FileSafe, or currentness policy to make a test pass.
   - Do not represent mocks, schemas, fixtures, planned handlers, concept simulations, screenshots, or documentation inspection as native/runtime/provider/security/visual/readiness proof.
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Forge_Integrations.md, Plans/Source_Control_System.md]
+```
+
+### ATS-044 - Exact Forge Backup And Connector Acceptance Custody
+
+```yaml
+plan_unit_id: ATS-044
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Plans/forge_backup_tsnet_acceptance.json retains the September 1 packet's
+  exact E2E-001 through E2E-067 scenario identities, setup, ordered steps,
+  expected outcomes, requirement references, and required evidence. It also
+  retains all 132 requirement-to-test mappings, including empty scenario lists
+  and their additional owner-test obligations. This is the Automated Testing
+  owner's acceptance inventory; domain semantics remain with the referenced
+  owner PlanUnits. The schema and standalone validator enforce exact source
+  custody, unique identifiers, resolved owner references, and truthful NOT_RUN
+  execution state. Retaining or validating a scenario never means executing it.
+gui_related: true
+gui_classification_reason: The retained scenarios include Source Control, repository automation, Backup, restore, onboarding, Doctor, theme, and motion acceptance alongside non-GUI provider and recovery behavior.
+split_recommended: false
+depends_on: [ATS-043]
+unblocks: []
+acceptance_criteria:
+  - The 67 scenario IDs are unique and exactly E2E-001 through E2E-067; original setup, steps, expected outcome, requirement references, and evidence requirements survive without summarization.
+  - All 132 requirement-to-test mappings remain present, including mappings with no E2E scenario; the per-owner acceptance obligation is never replaced by the E2E denominator.
+  - Every scenario requirement resolves to a retained requirement and its current owner PlanUnit references; every referenced PlanUnit is present in its named live owner document.
+  - Source hashes and the exact packet identity are retained; missing sources, changed bodies, unresolved references, duplicate IDs, dropped mappings, and fabricated execution evidence fail the static custody check.
+  - Every unexecuted scenario remains NOT_RUN with no execution evidence; static custody success cannot promote native, provider, security, recovery, performance, accessibility, visual, motion, or readiness status.
+  - The standalone verifier is available through validate-forge-backup-acceptance and is a distinct timeout-bounded subcheck in run-gates and audit-governance.
+validation_surfaces:
+  - Plans/forge_backup_tsnet_acceptance.schema.json
+  - Plans/forge_backup_tsnet_acceptance.json
+  - python3 scripts/pm-forge-backup-acceptance-verify.py
+  - python3 scripts/pm-plans-verify.py validate-forge-backup-acceptance
+  - python3 scripts/pm-plans-verify.py run-gates
+  - tests/test_pm_forge_backup_acceptance.py
+  - tests/test_pm_plans_verify_subprocess.py
+risk_class: dropped_packet_acceptance_or_false_execution_claim
+reasoning_tier: high
+context_scope: forge_backup_tsnet_exact_acceptance_inventory
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/forge_backup_tsnet_acceptance.schema.json
+  - Plans/forge_backup_tsnet_acceptance.json
+  - scripts/pm-forge-backup-acceptance-verify.py
+  - scripts/pm-plans-verify.py
+node_compile_hint: {mode: static_acceptance_custody, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01.zip
+  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/independent_audit_rerun/REPORT.md
+preserved_exact_tokens: [E2E-001, E2E-067, NOT_RUN, 67, 132, validate-forge-backup-acceptance]
+negative_constraints:
+  - Do not infer complete per-requirement testing from the 67-scenario count.
+  - Do not execute external mutations or use user credentials to populate the custody inventory.
+  - Do not convert static schema or reference validation into execution evidence.
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+### ATS-045 - Source-Bound Packet Suite Verdicts
+
+```yaml
+plan_unit_id: ATS-045
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Packet audit suite verdicts must be validated against source-manifest case
+  identities, not selected by the result row's editable suite label. The combined
+  onboarding_doctor source suite has separate onboarding, guided_tour, doctor,
+  and onboarding_doctor_overall verdicts. Source areas onboarding, tour, and
+  doctor constrain their respective product verdict; shared, impact, testing,
+  performance, remote_access, and server_discovery constrain all three
+  conservatively. The combined verdict covers every combined-packet case and
+  overall covers every manifest case. Both chunk-metadata validation and final
+  report validation consume one shared scope implementation. This is a
+  fail-closed coverage rule, not an automatic review or a product pass.
+  Historical pm.integration_packet_audit_manifest.v1 workbooks retain their
+  exact 8252-case denominator and original review evidence. Fresh
+  pm.integration_packet_audit_manifest.v2 workbooks carry a versioned,
+  source-hashed census contract: all extracted packet groups plus the exact
+  Cartesian product of every frozen Touch Closure ID and every extraction-spec
+  review dimension. Preparation, chunk union, result counts, merge, and final
+  validation consume that same source-bound denominator. Fresh review work
+  re-extracts the current custody corpus before accepting a manifest; changing
+  row lists, dimensions, counts, or self-reported hashes cannot admit omitted
+  source cases. A changed source freeze requires a new workbook, not silently
+  migrated results. Source-census inspection may run without creating a review
+  workbook or asserting an implementation freeze.
+gui_related: false
+gui_classification_reason: This unit owns audit-result validation only and adds no product control or presentation behavior.
+split_recommended: false
+depends_on: [ATS-044]
+unblocks: []
+acceptance_criteria:
+  - Every required verdict has nonempty source case coverage; unknown source areas, missing suite routes, or uncovered verdicts fail validation even when every supplied verdict is blocked.
+  - A supplied pass is rejected when any relevant source case is missing, duplicated, relabelled, partial, failed, blocked, or unreviewed.
+  - Product-specific failures affect their own product verdict and both rollups; cross-cutting failures affect all three product verdicts and both rollups.
+  - Not-applicable case acceptance remains restricted by the existing independent applicability and authority-evidence validator; this scope rule grants no new exemption.
+  - Result rows, original custody manifests, reviewer identities, evidence, and historical findings remain unchanged by the scope check.
+  - Fresh census validation rejects missing or duplicate groups, rows, dimensions, or row-by-dimension pairs; packet case edits and source/spec hash drift fail comparison with independently re-extracted custody.
+  - All chunk and report count checks derive from the validated manifest; the historical 8252 constant applies only to v1 snapshots and cannot cap a fresh review.
+  - Fresh preparation refuses a stale source freeze, and incomplete results remain incomplete regardless of the denominator version; synthetic blocked regression results are never promoted to implementation passes.
+  - Completed-review structure, implementation verdict, static custody, browser simulation, native runtime, and readiness remain distinct claims.
+validation_surfaces:
+  - scripts/pm_packet_audit_verdicts.py
+  - scripts/pm_packet_audit_census.py
+  - scripts/pm-integration-packet-audit-work.py
+  - scripts/pm-integration-packet-audit.py
+  - tests/test_pm_packet_audit_verdicts.py
+  - tests/test_pm_packet_audit_census.py
+  - python3 scripts/pm-integration-packet-audit.py census
+risk_class: synthetic_suite_false_pass_or_unreviewed_case_omission
+reasoning_tier: high
+context_scope: exact_packet_case_to_product_and_aggregate_verdict_coverage
+implementation_surfaces:
+  - scripts/pm_packet_audit_verdicts.py
+  - scripts/pm_packet_audit_census.py
+  - scripts/pm-integration-packet-audit-work.py
+  - scripts/pm-integration-packet-audit.py
+node_compile_hint: {mode: static_audit_validation_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM_Onboarding_Doctor_Concept_Bakeoff_Packet_2026-08-15.zip
+  - source_report:scratchpad/pm-nonpreview-closure-20260905/packet_inventory/README.md
+preserved_exact_tokens: [onboarding_doctor, onboarding, guided_tour, doctor, onboarding_doctor_overall, overall, case_ref, not_applicable]
+negative_constraints:
+  - Do not narrow the source scope with result-row labels or infer pass from an empty set.
+  - Do not mutate retained reviews or replace independent case-by-case evidence with a generated verdict.
+  - Do not convert the conservative shared-area rule into permission to omit per-product audit evidence.
+owner_hints: [Plans/Automated_Testing_System.md]
 ```

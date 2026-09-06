@@ -21,6 +21,8 @@ import re
 from pathlib import Path
 
 import css_audit
+import settings_manager_polish_source
+import settings_sound_preview_source
 from pm7_transform_guards import capture_effect_surfaces
 
 
@@ -138,7 +140,12 @@ def _project_inventory_json(need):
             row["default"] = None
             row["recommended"] = None
     inventory["scope_policy"] = "all persisted Settings values are project-owned; no-project is ephemeral"
-    need(len(rows) == 883, "T44: compatibility Settings inventory count changed")
+    need(len(rows) == 887, "T44: compatibility Settings inventory count changed")
+    notebook_ids = {
+        "memory.notebook.auto-capture", "memory.notebook.resume-capsule",
+        "memory.notebook.capsule-budget-tokens", "memory.notebook.injection-budget-tokens",
+    }
+    need(notebook_ids <= {row.get("id") for row in rows}, "T44: accepted Working Notebook settings are missing")
     need(len({row.get("id") for row in rows}) == len(rows), "T44: compatibility Settings inventory ids are not unique")
     return json.dumps(inventory, separators=(",", ":"), ensure_ascii=False)
 
@@ -148,7 +155,7 @@ def _transfer_category_registry(need):
 
     The inventory does not own this ten-way UX taxonomy, so this adapter
     materializes explicit, pairwise-disjoint ID sets and validates every
-    member against the current 883-row inventory at build time.
+    member against the current canonical inventory at build time.
     """
     rows = json.loads((REPO / "Plans" / "settings_inventory.json").read_text(encoding="utf-8"))["settings"]
     canonical = {row["id"] for row in rows}
@@ -742,6 +749,38 @@ def _scope_css(css, need):
 }
 #panel-settings .workspace-lazy-placeholder {
   width:100%; min-height:inherit; pointer-events:none; visibility:hidden;
+}
+/* Bound the implicit grid column to the actual manager width. The default
+   auto column was expanding to the header's min-content width, clipping the
+   entire detail pane behind the neighbouring Chat panel. No motion changes. */
+#panel-settings .resource-detail { grid-template-columns:minmax(0,1fr); }
+#panel-settings .resource-head,
+#panel-settings .resource-content,
+#panel-settings .resource-detail > .manager-tabs { min-width:0; max-width:100%; }
+#panel-settings .resource-head { flex-wrap:wrap; }
+#panel-settings .resource-head-main { flex:1 1 160px; }
+#panel-settings .resource-name-line,
+#panel-settings .resource-actions { flex-wrap:wrap; }
+#panel-settings .provider-overview { display:grid; gap:10px; min-width:0; }
+#panel-settings .provider-overview .info-grid { grid-template-columns:minmax(0,1fr); }
+#panel-settings .provider-summary-stats { display:flex; flex-wrap:wrap; gap:8px; }
+#panel-settings .provider-summary-stats > .stat-card { flex:1 1 100px; min-width:0; }
+#panel-settings .provider-plan-value { font-size:13px; overflow-wrap:anywhere; }
+#panel-settings .settings-secondary-details > summary { cursor:pointer; font-weight:600; font-size:12px; }
+#panel-settings .settings-secondary-details[open] > summary { margin-bottom:12px; }
+#panel-settings .settings-secondary-details .section-description { margin:12px 0 0; }
+#panel-settings .settings-secondary-details > summary:focus-visible { outline:2px solid var(--k3-accent); outline-offset:4px; }
+#panel-settings .sound-layout { grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr)); }
+#panel-settings .sound-layout .panel-title-row { flex-wrap:wrap; }
+#panel-settings .sound-layout .panel-title-row > div { flex:1 1 180px; min-width:0; }
+#panel-settings .sound-layout .settings-secondary-details { margin-top:10px; }
+#panel-settings .sound-copy span { color:var(--text-secondary); }
+@container settings-host (max-width:720px) {
+  #panel-settings .sound-row { display:grid; grid-template-columns:28px minmax(0,1fr) 28px; }
+  #panel-settings .sound-play { grid-column:1; grid-row:1 / span 2; }
+  #panel-settings .sound-copy { grid-column:2; grid-row:1; }
+  #panel-settings .sound-waveform { grid-column:2; grid-row:2; }
+  #panel-settings .sound-row > .icon-btn { grid-column:3; grid-row:1 / span 2; }
 }
 /* The Providers roster is a compact, fixed catalog.  On desktop it belongs
    to the outer Settings document rather than owning a second scrollport. */
@@ -2940,7 +2979,8 @@ def _adapt_js(source, need):
         "data-filter=\"resultType\"",
     ):
         need(required in source, "T44 JS: SSYS-005 search/facet contract missing %s" % required)
-    return source
+    source = settings_manager_polish_source.apply_to_adapted_js(source, need)
+    return settings_sound_preview_source.apply_to_adapted_js(source, need)
 
 
 def _settings_script(reference, data, js):
@@ -2994,7 +3034,7 @@ def apply(doc, notes, need):
     doc = _replace_once(
         doc,
         "PM7 SECTION 18/32: settings-data-json - inert JSON payload for PM_SETTINGS_DATA (T11 parse defer); parsed lazily on first settings access (script#pm7-settings-data)",
-        "PM7 SECTION 18/32: settings-data-json - current 883-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
+        "PM7 SECTION 18/32: settings-data-json - current 887-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
         need,
         "Settings section description",
     )
@@ -3080,6 +3120,11 @@ def apply(doc, notes, need):
             "decision": "port exact K3 Tome Tabs geometry into the generated PM7 Settings owner",
             "winner_sha256": WINNER_SHA,
             "source_sha256": dict(ASSET_SHAS),
+            "settings_polish_helper_sha256": {
+                module.__name__: hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
+                for module in (settings_manager_polish_source, settings_sound_preview_source)
+            },
+            "sound_preview_boundary": "browser-local generated tones and session-only user-selected recordings; no bundled PeonPing assets, pack validation, event delivery, native audio, or owner execution claimed",
             "canonical_inventory_sha256": reference_projection["inventory_sha256"],
             "canonical_setting_count": reference_projection["total"],
             "layout_contract": "K3 rail/topbar/workspace tabs/continuous document/index/detail/manager geometry retained; only PM7 host containment and later-authority content additions applied",

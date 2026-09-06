@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L1462-L1550
 
-Source SHA256: `de4da73fc489b3041304f58d5cf5d6563aa152b5ba4bd3256b81f4c1bc43351e`
+Source SHA256: `e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce`
 
 ---
 
@@ -25,9 +25,9 @@ canonical_text: >-
   PWIZ-021 through PWIZ-023 own the current nine-stage `welcome` / `simple_path` / `first_project` /
   `source_control_setup` / `server_storage_client` / `remote_access_setup` / `review_setup_plan` /
   `automatic_preparation` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
-  three-scene Guided Tour.
+  three-chapter Guided Tour.
   Provider and advanced setup are optional and deferrable, incomplete provider state remains a truthful warning rather
-  than a false Health/Doctor Ready claim, and the secondary Guided Tour completes with Assistant Chat at the far right.
+  than a false Health/Doctor Ready claim; PWIZ-023's September 3 correction makes Planning Wizard the tour destination.
   The current handoff
   consumes bounded typed Onboarding state and owner receipt refs rather than a raw transcript or legacy
   `onboarding_setup_state` shape. The retired exact copy and tokens below remain searchable for migration and audit;

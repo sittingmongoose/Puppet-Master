@@ -57,18 +57,26 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
+# Also support the existing importlib-based harness entry point.
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_packet_audit_verdicts import validate_suite_case_verdicts
+from pm_packet_audit_census import (
+    CURRENT_SCHEMA, LEGACY_CASE_COUNT, validate_manifest_census, validate_source_freeze,
+)
 
 WORK_DIR = "review-work"
 CHUNKS_DIR = "chunks"
 RESULTS_DIR = "results"
 METADATA_NAME = "audit_report.metadata.json"
 COMPLETED_NAME = "audit_report.completed.json"
-EXPECTED_CASE_COUNT = 8_252
+EXPECTED_CASE_COUNT = LEGACY_CASE_COUNT  # Historical V1 harness compatibility only.
 REVIEW_METHOD = "case_by_case_direct_evidence"
 TERMINAL_STATUSES = {"pass", "partial", "fail", "blocked", "not_applicable"}
 TERMINAL_VERDICTS = {"pass", "fail", "blocked"}
@@ -172,6 +180,20 @@ def string_list(value: Any, field: str, failures: list[str], *, nonempty: bool =
     return value
 
 
+def current_source_manifest() -> dict[str, Any]:
+    """Use the authoritative extractor, never a second packet interpretation."""
+    path = Path(__file__).with_name("pm-integration-packet-audit.py")
+    spec = importlib.util.spec_from_file_location("pm_packet_audit_source_census", path)
+    if spec is None or spec.loader is None:
+        raise WorkError("cannot load packet source-census validator")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    try:
+        return module.build_manifest()
+    except (module.AuditError, OSError, ValueError, KeyError) as error:
+        raise WorkError(f"cannot revalidate current packet source census: {error}") from error
+
+
 def load_manifest(directory: Path) -> tuple[dict[str, Any], str]:
     path = directory / "audit_manifest.json"
     manifest = read_json(path)
@@ -220,10 +242,11 @@ def load_manifest(directory: Path) -> tuple[dict[str, Any], str]:
         raise WorkError(
             f"manifest case_count {manifest.get('case_count')!r} does not match {actual_count} cases"
         )
-    if actual_count != EXPECTED_CASE_COUNT:
-        raise WorkError(
-            f"manifest must contain exactly {EXPECTED_CASE_COUNT} cases; found {actual_count}"
-        )
+    failures = validate_manifest_census(manifest)
+    if not failures and manifest.get("schema_id") == CURRENT_SCHEMA:
+        failures.extend(validate_source_freeze(manifest, current_source_manifest()))
+    if failures:
+        raise WorkError("; ".join(failures))
     if manifest.get("group_count") != len(manifest["groups"]):
         raise WorkError("manifest group_count does not match groups array")
     return manifest, sha256_file(path)
@@ -317,16 +340,16 @@ def prepare(directory: Path, max_cases: int) -> dict[str, Any]:
     }
 
 
-def load_index(directory: Path, manifest_sha: str) -> dict[str, Any]:
+def load_index(directory: Path, manifest_sha: str, expected_case_count: int) -> dict[str, Any]:
     index = read_json(directory / WORK_DIR / "index.json")
     if not isinstance(index, dict) or index.get("manifest_sha256") != manifest_sha:
         raise WorkError("review index is missing, malformed, or bound to a different manifest")
     rows = index.get("chunks")
     if not isinstance(rows, list) or index.get("chunk_count") != len(rows):
         raise WorkError("review index chunk_count does not match chunks array")
-    if index.get("case_count") != EXPECTED_CASE_COUNT:
+    if index.get("case_count") != expected_case_count:
         raise WorkError(
-            f"review index must cover exactly {EXPECTED_CASE_COUNT} cases"
+            f"review index must cover exactly {expected_case_count} source-bound cases"
         )
     if index.get("aggregate_metadata_relative_path") != f"{WORK_DIR}/{RESULTS_DIR}/{METADATA_NAME}":
         raise WorkError("review index has non-canonical aggregate metadata path")
@@ -401,8 +424,8 @@ def load_chunks(directory: Path, index: dict[str, Any], manifest: dict[str, Any]
         if chunk.get("result_relative_path") != expected_result or row.get("result_relative_path") != expected_result:
             raise WorkError(f"{chunk_id}: non-canonical result_relative_path")
         chunks.append(chunk)
-    if seen_cases != set(manifest_cases) or len(seen_cases) != EXPECTED_CASE_COUNT:
-        raise WorkError("chunk case union does not exactly match the 8,252-case manifest")
+    if seen_cases != set(manifest_cases) or len(seen_cases) != manifest["case_count"]:
+        raise WorkError("chunk case union does not exactly match the source-bound manifest")
     return chunks
 
 
@@ -490,7 +513,7 @@ def validate_result_file(chunk: dict[str, Any], value: Any, manifest_sha: str) -
 
 def collect(directory: Path) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, Any]]:
     manifest, manifest_sha = load_manifest(directory)
-    index = load_index(directory, manifest_sha)
+    index = load_index(directory, manifest_sha, manifest["case_count"])
     chunks = load_chunks(directory, index, manifest, manifest_sha)
     results_root = directory / WORK_DIR / RESULTS_DIR
     expected_names = {f"{chunk['chunk_id']}.result.json" for chunk in chunks}
@@ -558,7 +581,7 @@ def collect(directory: Path) -> tuple[dict[str, Any], list[dict[str, Any]], dict
         "complete": (
             not missing_names and not extra_names and not failures
             and not (raw_refs - expected_refs) and missing_case_count == 0 and duplicate_count == 0
-            and raw_result_row_count == EXPECTED_CASE_COUNT and len(all_rows) == EXPECTED_CASE_COUNT
+            and raw_result_row_count == expected_case_count and len(all_rows) == expected_case_count
         ),
         "missing_results": sorted(missing_names),
         "failures": failures,
@@ -587,6 +610,7 @@ def validate_metadata(directory: Path, manifest: dict[str, Any], manifest_sha: s
     if not isinstance(verdicts, dict) or set(verdicts) != required_suites:
         failures.append(f"{METADATA_NAME}: suite_verdict keys must exactly match the manifest")
         verdicts = verdicts if isinstance(verdicts, dict) else {}
+    failures.extend(validate_suite_case_verdicts(manifest, rows, verdicts))
     for suite, item in verdicts.items():
         if not isinstance(item, dict) or set(item) != {"verdict", "evidence_refs", "residual_risk"}:
             failures.append(f"suite {suite}: metadata keys must be verdict, evidence_refs, residual_risk")
@@ -602,11 +626,6 @@ def validate_metadata(directory: Path, manifest: dict[str, Any], manifest_sha: s
             failures.append(f"suite {suite}: placeholder/bulk/inferred evidence is rejected")
         if not is_nonempty_string(item.get("residual_risk")):
             failures.append(f"suite {suite}: residual_risk must be a non-empty string")
-        if verdict == "pass" and any(
-            row.get("status") not in {"pass", "not_applicable"}
-            for row in rows if row.get("suite") == suite
-        ):
-            failures.append(f"suite {suite}: supplied pass conflicts with non-pass case results")
     aggregate = value.get("aggregate_verdict")
     if aggregate not in TERMINAL_VERDICTS:
         failures.append(f"invalid or non-terminal aggregate_verdict {aggregate!r}")
@@ -665,7 +684,7 @@ def merge(directory: Path) -> dict[str, Any]:
         or template.get("schema_version") != "1.0.0"
         or template.get("aggregate_verdict") != "not_run"
         or template.get("report_kind") not in {None, "template"}
-        or template.get("case_count", EXPECTED_CASE_COUNT) != EXPECTED_CASE_COUNT
+        or template.get("case_count", manifest["case_count"]) != manifest["case_count"]
     ):
         raise WorkError("audit_report.template.json is not an untouched report template")
     report = {key: template[key] for key in BASE_REPORT_KEYS}
@@ -678,7 +697,7 @@ def merge(directory: Path) -> dict[str, Any]:
     report["unresolved_findings"] = metadata["unresolved_findings"]
     report["reviewers"] = metadata["reviewers"]
     report["report_kind"] = "completed"
-    report["case_count"] = EXPECTED_CASE_COUNT
+    report["case_count"] = manifest["case_count"]
     output = directory / COMPLETED_NAME
     write_json_new(output, report)
     return {

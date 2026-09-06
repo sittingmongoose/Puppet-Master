@@ -1,0 +1,58 @@
+<!-- PM7 GLM Onboarding + Guided Tour hosts (obx/gtx system) -->
+<div id="pmx-onboarding" class="obx" data-open="false" data-mat="friendly" data-mode="dark" hidden>
+  <div class="obx-veil" data-ui-action-id="ui.onboarding.close" role="presentation"></div>
+  <section class="obx-window" role="dialog" aria-modal="true" aria-labelledby="pmx-ob-title" aria-describedby="pmx-ob-lede">
+    <header class="obx-brandbar">
+      <div class="obx-brand"><span class="obx-mark" aria-hidden="true"><span class="obx-mark-dot"></span><span class="obx-mark-dot"></span><span class="obx-mark-dot"></span></span><span class="obx-brand-name">Puppet Master</span><span class="obx-brand-sep" aria-hidden="true"></span><span class="obx-act" id="pmx-ob-act">Welcome</span></div>
+      <div class="obx-brandbar-actions">
+        <button type="button" class="obx-ghostbtn obx-skipbtn" data-ui-action-id="ui.onboarding.skip">Skip setup</button>
+        <button type="button" class="obx-iconbtn" data-ui-action-id="ui.onboarding.close" aria-label="Close setup"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+      </div>
+    </header>
+    <div class="obx-progressline" aria-hidden="true"><i id="pmx-ob-progress"></i></div>
+    <div class="obx-body">
+      <div class="obx-stage" aria-hidden="true">
+        <div class="obx-scene" id="pmx-ob-scene"></div>
+        <div class="obx-stage-caption" id="pmx-ob-caption"></div>
+      </div>
+      <div class="obx-panel">
+        <div class="obx-head">
+          <p class="obx-kicker" id="pmx-ob-kicker"></p>
+          <h1 class="obx-title" id="pmx-ob-title"></h1>
+          <p class="obx-lde" id="pmx-ob-lede"></p>
+        </div>
+        <div class="obx-content" id="pmx-ob-content"></div>
+        <footer class="obx-foot">
+          <button type="button" class="obx-ghostbtn obx-backbtn" data-ui-action-id="ui.onboarding.back">Back</button>
+          <div class="obx-foot-mid" id="pmx-ob-footmid"></div>
+          <button type="button" class="obx-cta" id="pmx-ob-cta" data-ui-action-id="ui.onboarding.next">Continue</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<button type="button" id="pmx-onboarding-resume" class="obx-resume" data-ui-action-id="ui.onboarding.start" data-source-surface="resume" hidden>Resume setup</button>
+
+<div id="pmx-tour" class="gtx" data-open="false" hidden>
+  <div class="gtx-veil" aria-hidden="true"></div>
+  <div class="gtx-hole" aria-hidden="true"></div>
+  <div class="gtx-ring" aria-hidden="true"></div>
+  <div class="gtx-pointer" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.13 5.9 5.9-.72-3.86 4.72 4.83 3.53-6.02 1.06.9 6.31-4.4-3.9-4.4 3.9.9-6.31-6.02-1.06 4.83-3.53L3.97 7.78l5.9.72z" fill="currentColor" stroke="var(--gtx-ring,#58a6ff)" stroke-width=".8" stroke-linejoin="round"/></svg></div>
+  <section class="gtx-slate" role="dialog" aria-modal="false" aria-labelledby="pmx-gt-title" aria-describedby="pmx-gt-body">
+    <header class="gtx-slate-head">
+      <span class="gtx-chip" id="pmx-gt-act">Act 1</span>
+      <div class="gtx-ticks" id="pmx-gt-ticks" aria-hidden="true"></div>
+      <button type="button" class="gtx-skip" data-ui-action-id="ui.guided_tour.skip">Skip tour</button>
+    </header>
+    <h2 class="gtx-title" id="pmx-gt-title"></h2>
+    <p class="gtx-body" id="pmx-gt-body"></p>
+    <div class="gtx-actions">
+      <button type="button" class="gtx-showme" id="pmx-gt-showme" hidden>Show me</button>
+      <button type="button" class="gtx-next" id="pmx-gt-next" hidden>Continue</button>
+    </div>
+  </section>
+  <div class="gtx-ack" id="pmx-gt-ack" role="status"></div>
+  <div class="gtx-cursor" id="pmx-gt-cursor" aria-hidden="true"><span></span></div>
+</div>
+<button type="button" id="pm7-guided-tour-resume" class="gtx-return" data-ui-action-id="ui.guided_tour.resume" hidden>Resume Guided Tour</button>
+<button type="button" id="pm7-guided-tour-replay" class="gtx-return gtx-replay" data-ui-action-id="ui.guided_tour.replay" hidden>Replay Guided Tour</button>

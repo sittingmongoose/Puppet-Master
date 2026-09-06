@@ -220,3 +220,38 @@ negative_constraints:
   - Do not create a domain handler or EventRecord for either typed local details action.
   - Do not make any command available from schema, fixture, catalog prose, or static evidence alone.
 ```
+
+## Notebook Vault Move Addendum (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1`. Notebook, checkpoint, and transition records are Project Vault content and move with the Vault under the existing staged move: one-writer authority is retained until cutover, and after cutover the previous host's lease/generation is fenced so a late notebook or checkpoint writer on the old host is rejected with an explicit receipt (no silent last-writer-wins). The destination host resumes notebook-backed continuation only after current access and route validation, and PM note identities are retained across the move.
+
+```yaml
+plan_unit_id: PSB-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Sync_and_Backbone.md
+canonical_text: Notebook, checkpoint, and transition records move with the Project Vault under the staged one-writer cutover. After cutover, a stale writer on the previous host is fenced by lease/generation with an explicit receipt, the destination resumes only after access/route validation, and PM note identities are retained.
+gui_related: false
+gui_classification_reason: Vault move semantics are sync behavior, not GUI work.
+depends_on: [PSB-005, SIR-037]
+unblocks: []
+acceptance_criteria:
+  - Old host cannot keep writing notebook state after lease transfer.
+  - Destination resumes only after current access/route validation.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: stale_writer
+reasoning_tier: standard
+context_scope: project_sync
+implementation_surfaces: [Plans/Project_Sync_and_Backbone.md, Plans/Shared_Integration_Runtime.md, Plans/Server_System.md]
+node_compile_hint: {mode: sync_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+  - source_packet:PM-WNC-2026-09-05-v1:WNC-A47
+preserved_exact_tokens: ["one-writer", "cutover", "fenced"]
+negative_constraints:
+  - Do not permit silent last-writer-wins on notebook records across hosts.
+owner_hints: [Plans/Project_Sync_and_Backbone.md]
+```
+
+ContractRef: ContractName:Plans/Project_Sync_and_Backbone.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Server_System.md

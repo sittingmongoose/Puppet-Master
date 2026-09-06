@@ -2,13 +2,22 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L55
+Source lines: L7-L64
 
-Source SHA256: `82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be`
+Source SHA256: `b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf`
 
 ---
 
 ## Change Summary
+
+- 2026-09-06: Guided Tour owner reconciliation applies the accepted September 3 newbie-first story to `PWIZ-023`, `F3-521`, and `ATS-020`: Assistant Chat/Teacher -> workspace -> Planning Wizard, shared manual/Show Me predicates, same-answer ELI5, Planning-majority actions/dwell, safe resume, default layout restoration or explicit Keep, and final real-Wizard/no-work-start boundary. The older v2 schemas, fixture expectations, and Touch Closure profile still require coordinated migration; their passing predecessor checks cannot establish current acceptance. A focused concept polish repairs genuine answer editing, visible unresolved choices, stable outcome identity, and answer-group callout positioning; it reuses catalogued Chat commands and adds scoped regression checks, not native runtime or final visual approval. The Settings adapter retains the four independently added Working Notebook controls in the 887-row inventory, with their missing subgroup registered; their underlying feature work remains owned by Working Notebook.
+
+- 2026-09-06: Automated Testing `ATS-045` also owns the versioned packet-audit census contract. Historical v1 workbooks retain their 8,252-case snapshot; fresh v2 workbooks derive their denominator from every extracted packet case and every current Touch Closure row-by-review-dimension pair, with shared source-freeze validation. This tooling change does not create a final review workbook, populate review results, refresh generated governance, or change the pending onboarding/tour designs.
+
+- 2026-09-05: Registered `Plans/forge_backup_tsnet_acceptance.json` and `Plans/forge_backup_tsnet_acceptance.schema.json` under Automated Testing `ATS-044`. The registry preserves all 67 exact September 1 acceptance scenarios and all 132 requirement-to-test mappings, including additional owner-test obligations where the packet names no E2E scenario. `scripts/pm-forge-backup-acceptance-verify.py` validates custody through `validate-forge-backup-acceptance`, `run-gates`, and `audit-governance`. These records remain unexecuted acceptance obligations; source retention and validator success establish no runtime, provider, recovery, security, visual, motion, performance, native Slint, or readiness result.
+- 2026-09-05: Automated Testing `ATS-045` binds separate Onboarding, Guided Tour, Doctor, combined, and overall audit verdicts to their source-manifest case identities through the shared `scripts/pm_packet_audit_verdicts.py` contract. Both chunk metadata and final reports reject empty-scope or incomplete-case passes without changing retained review judgments or evidence.
+- 2026-09-05: Implemented packet `PM-WNC-2026-09-05-v1` (work item `wnc-20260905`). Registered `Plans/Working_Notebook.md` as the canonical New Plan Authoring Profile owner for the PM-owned Working Notebook (scopes, entry envelope, CAS revisions, epistemic vocabulary, resume capsule, notebook checkpoints, capture rules, sharing/promotion, validity, retention) with contract schemas `Plans/working_notebook_contracts.schema.json`, fixtures `Plans/working_notebook_contract_fixtures.json`, validator `scripts/pm-working-notebook-contracts.py` (named subcheck `validate-working-notebook-contracts`), and `ATS-046`. Added fresh context-window transition policy (Prompt_Pipeline PP-084..090), notebook/history tools (Tools T-183/184 incl. `chatread`), storage families SP-255..257, transition runtime SIR-036/037, one-effective-controller CBP-030/031, usage fidelity UF-099..101, per-claim memory verification AMS-044..046, restriction propagation PS-140/141, and consumer dispositions across 30+ owners. Static contract validation only; runtime, recovery, security, visual, and performance proof remains NOT_RUN; no WorkNodes, NodeSeeds, queues, or readiness unlocks.
+  ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Automated_Testing_System.md
 
 
 > **2026-08-30 PMConcept7 supersession routing:** The 2026-08-27 and 2026-08-29 entries below are historical predecessor states. Their T41 tail, old-audit currentness, and Usage frozen-resize-preview clause are superseded by the 2026-08-30 T43 entry; their Dashboard frozen-resize clause remains current.

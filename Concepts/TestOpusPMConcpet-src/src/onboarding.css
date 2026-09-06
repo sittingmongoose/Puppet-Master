@@ -1,0 +1,584 @@
+/* =====================================================================
+   PMO ONBOARDING — window, stage plate, content column, motion.
+   Eight authored themes; Reduced Motion keeps every cause/effect but
+   removes travel. Art palettes are appended at the end of this sheet.
+   ===================================================================== */
+
+:root {
+  /* Motion grammar. Travel is expo-out so objects decelerate into place;
+     arrivals get a small overshoot so the destination reads as reacting. */
+  --pmo-ease-out:    cubic-bezier(.16, 1, .3, 1);
+  --pmo-ease-spring: cubic-bezier(.34, 1.4, .5, 1);
+  --pmo-ease-inout:  cubic-bezier(.65, 0, .35, 1);
+  --pmo-t-quick: 170ms;
+  --pmo-t-base:  280ms;
+  --pmo-t-travel: 400ms;
+  --pmo-t-scene: 640ms;
+  --pmo-stagger: 38ms;
+
+  --pmo-radius: 20px;
+  --pmo-radius-sm: 12px;
+  --pmo-pad: 34px;
+}
+
+/* ---------------------------------------------------------------- root */
+
+.pmo {
+  position: fixed;
+  inset: 0;
+  z-index: 9600;
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  font-family: var(--body-font, system-ui, sans-serif);
+  color: var(--text-primary);
+}
+.pmo[hidden] { display: none !important; }
+
+.pmo-sr {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+.pmo-scrim {
+  position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--background) 52%, transparent);
+  backdrop-filter: blur(18px) saturate(.9) brightness(.72);
+  -webkit-backdrop-filter: blur(18px) saturate(.9) brightness(.72);
+  opacity: 0;
+  transition: opacity var(--pmo-t-travel) var(--pmo-ease-out);
+}
+.pmo[data-open="true"] .pmo-scrim { opacity: 1; }
+
+/* -------------------------------------------------------------- window */
+
+.pmo-window {
+  position: relative;
+  width: min(1120px, 100%);
+  height: min(690px, 100%);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--pmo-radius);
+  /* Glass themes define --surface as rgba(), so a bare var(--surface) lets the
+     shell read straight through the window. Composite it over an opaque base. */
+  background: linear-gradient(var(--surface), var(--surface)), var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 40px 120px -24px rgba(0, 0, 0, .55), 0 2px 0 rgba(255, 255, 255, .05) inset;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(22px) scale(.975);
+  transition: opacity var(--pmo-t-travel) var(--pmo-ease-out),
+              transform var(--pmo-t-scene) var(--pmo-ease-out);
+}
+.pmo[data-open="true"] .pmo-window { opacity: 1; transform: none; }
+
+/* A hairline of light along the top edge reads as a real pane of material. */
+.pmo-window::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text-primary) 26%, transparent), transparent);
+  pointer-events: none; z-index: 4;
+}
+
+/* -------------------------------------------------------------- chrome */
+
+.pmo-chrome {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 18px 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+  flex: 0 0 auto;
+}
+.pmo-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.pmo-mark {
+  width: 26px; height: 26px; display: grid; place-items: center;
+  color: var(--accent-blue); flex: 0 0 auto;
+}
+.pmo-mark svg { width: 22px; height: 22px; }
+.pmo-brand-text {
+  font-size: 13px; font-weight: 600; letter-spacing: .01em; color: var(--text-secondary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pmo-chrome-actions { display: flex; align-items: center; gap: 8px; }
+
+/* Look picker — one quiet row, never a step of its own. */
+.pmo-look { display: flex; align-items: center; gap: 8px; margin-right: 6px; }
+.pmo-look-label {
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+.pmo-look-chips { display: flex; gap: 5px; }
+.pmo-look-chip {
+  width: 26px; height: 22px; border-radius: 7px; cursor: pointer; padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  position: relative; overflow: hidden;
+  transition: transform var(--pmo-t-quick) var(--pmo-ease-spring),
+              border-color var(--pmo-t-quick) linear, box-shadow var(--pmo-t-quick) linear;
+}
+.pmo-look-chip:hover { transform: translateY(-2px); }
+.pmo-look-chip[aria-pressed="true"] {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-blue) 30%, transparent);
+}
+.pmo-look-chip i { position: absolute; inset: 0; display: block; }
+/* each chip previews its family's actual drawing language */
+.pmo-look-chip[data-family="friendly"] i {
+  background: radial-gradient(circle at 30% 30%, #FFAD93 0 34%, transparent 36%),
+              radial-gradient(circle at 72% 68%, #C3B1E4 0 30%, transparent 32%),
+              linear-gradient(150deg, #3B3644, #2A2731);
+}
+.pmo-look-chip[data-family="glass"] i {
+  background: linear-gradient(140deg, rgba(255,255,255,.55), rgba(88,200,255,.35) 45%, rgba(176,139,255,.5)),
+              linear-gradient(#131A2C, #131A2C);
+}
+.pmo-look-chip[data-family="retro"] i {
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.45) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(90deg, #55F08A 0 4px, #143C28 4px 8px);
+}
+.pmo-look-chip[data-family="basic"] i {
+  background:
+    repeating-linear-gradient(0deg, rgba(139,152,168,.5) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(139,152,168,.5) 0 1px, transparent 1px 6px),
+    linear-gradient(#171C22, #171C22);
+}
+.pmo-look-mode {
+  width: 38px; height: 22px; padding: 0; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-alt);
+}
+.pmo-look-mode-track { display: block; position: relative; width: 100%; height: 100%; }
+.pmo-look-mode-knob {
+  position: absolute; top: 50%; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--accent-warning);
+  transition: left var(--pmo-t-base) var(--pmo-ease-spring), background var(--pmo-t-base) linear;
+}
+.pmo[data-mode="dark"] .pmo-look-mode-knob { left: 19px; background: var(--accent-blue); }
+
+.pmo-text-btn {
+  border: 0; background: none; cursor: pointer; padding: 6px 10px; border-radius: 8px;
+  font: inherit; font-size: 12.5px; color: var(--text-secondary);
+  transition: background var(--pmo-t-quick) linear, color var(--pmo-t-quick) linear;
+}
+.pmo-text-btn:hover { background: var(--surface-alt); color: var(--text-primary); }
+.pmo-icon-btn {
+  width: 28px; height: 28px; display: grid; place-items: center; cursor: pointer;
+  border: 0; border-radius: 8px; background: none; color: var(--text-secondary);
+  transition: background var(--pmo-t-quick) linear, color var(--pmo-t-quick) linear;
+}
+.pmo-icon-btn svg { width: 15px; height: 15px; }
+.pmo-icon-btn:hover { background: var(--surface-alt); color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- body */
+
+.pmo-body {
+  flex: 1 1 auto; min-height: 0;
+  display: grid; grid-template-columns: minmax(280px, 43%) 1fr;
+}
+
+/* ------------------------------------------------------------ the plate */
+
+.pmo-plate {
+  position: relative; margin: 0; overflow: hidden; min-height: 0; min-width: 0;
+  background: var(--pmo-art-plate, var(--surface-alt));
+  border-right: 1px solid var(--border-light);
+  display: grid; place-items: center;
+}
+.pmo-plate-art { position: absolute; inset: 0; display: grid; place-items: center; }
+.pmo-plate-art svg { width: 100%; height: 100%; display: block; }
+
+/* Scene change: the outgoing plate recedes and softens while the incoming
+   one rises into focus. Object continuity, never a cut. */
+.pmo-plate-art { animation: pmo-scene-in var(--pmo-t-scene) var(--pmo-ease-out) both; }
+.pmo-plate-art--out { animation: pmo-scene-out 460ms var(--pmo-ease-inout) both; pointer-events: none; }
+@keyframes pmo-scene-in  { from { opacity: 0; transform: scale(1.06) translateY(10px); filter: blur(9px); }
+                           to   { opacity: 1; transform: none; filter: none; } }
+@keyframes pmo-scene-out { from { opacity: 1; transform: none; filter: none; }
+                           to   { opacity: 0; transform: scale(.94) translateY(-8px); filter: blur(10px); } }
+
+/* A light sweeps the plate as the scene changes — the "travel" beat. */
+.pmo-plate-sweep {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(102deg, transparent 42%,
+              color-mix(in srgb, var(--pmo-art-hilite, #fff) 11%, transparent) 50%, transparent 58%);
+  transform: translateX(-60%);
+  mix-blend-mode: plus-lighter;
+}
+.pmo[data-motion="scene"] .pmo-plate-sweep { animation: pmo-sweep 720ms var(--pmo-ease-inout); }
+@keyframes pmo-sweep { 0% { opacity: 0; transform: translateX(-70%); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateX(70%); } }
+
+.pmo-plate-cap {
+  position: absolute; left: 20px; right: 20px; bottom: 16px;
+  font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--pmo-art-label, var(--text-muted)) 72%, transparent);
+  text-align: center;
+  animation: pmo-rise var(--pmo-t-travel) var(--pmo-ease-out) 160ms both;
+}
+
+/* Ambient life in the art — slow enough to feel like weather, not a loop. */
+.pmo-drift { animation: pmo-drift 19s var(--pmo-ease-inout) infinite alternate; transform-origin: center; }
+.pmo-drift-b { animation-duration: 23s; animation-delay: -6s; }
+.pmo-drift-c { animation-duration: 27s; animation-delay: -12s; }
+@keyframes pmo-drift { from { transform: translate3d(-10px, -6px, 0) scale(1); }
+                       to   { transform: translate3d(12px, 8px, 0) scale(1.06); } }
+
+.pmo-figure { animation: pmo-breathe 5.2s var(--pmo-ease-inout) infinite alternate; transform-box: fill-box; transform-origin: 50% 0%; }
+@keyframes pmo-breathe { from { transform: translateY(0) rotate(-.7deg); } to { transform: translateY(4px) rotate(.7deg); } }
+
+.pmo-a-thread { animation: pmo-sway 5.2s var(--pmo-ease-inout) infinite alternate; transform-box: fill-box; transform-origin: 50% 0%; }
+@keyframes pmo-sway { from { transform: rotate(-.5deg); } to { transform: rotate(.5deg); } }
+
+.pmo-a-star, .pmo-a-sat, .pmo-twinkle {
+  animation: pmo-pulse 3.4s var(--pmo-ease-inout) infinite alternate;
+  animation-delay: calc(var(--i, 0) * 340ms);
+}
+@keyframes pmo-pulse { from { opacity: .55; } to { opacity: 1; } }
+
+.pmo-a-hub { animation: pmo-hub 4.6s var(--pmo-ease-inout) infinite alternate; transform-box: fill-box; transform-origin: center; }
+@keyframes pmo-hub { from { transform: scale(.97); } to { transform: scale(1.03); } }
+
+/* The review pulse actually travels the route it describes. */
+.pmo-a-pulse { animation: pmo-travel 3.4s var(--pmo-ease-inout) infinite; }
+@keyframes pmo-travel {
+  0%   { transform: translate(0, 0);         opacity: 0; }
+  8%   { opacity: 1; }
+  44%  { transform: translate(138px, -56px); }
+  56%  { transform: translate(138px, -56px); }   /* pauses in the project */
+  92%  { transform: translate(336px, 0);     opacity: 1; }
+  100% { transform: translate(336px, 0);     opacity: 0; }
+}
+
+.pmo-a-net { animation: pmo-netflex 6s var(--pmo-ease-inout) infinite alternate;
+             animation-delay: calc(var(--i, 0) * 120ms); transform-box: fill-box; transform-origin: center top; }
+@keyframes pmo-netflex { from { transform: scaleY(.94); } to { transform: scaleY(1.06); } }
+
+.pmo-curtain-l { animation: pmo-part-l 1.5s var(--pmo-ease-out) both; }
+.pmo-curtain-r { animation: pmo-part-r 1.5s var(--pmo-ease-out) both; }
+@keyframes pmo-part-l { from { transform: translateX(126px); } to { transform: none; } }
+@keyframes pmo-part-r { from { transform: translateX(-126px); } to { transform: none; } }
+
+.pmo-stratum { animation: pmo-rise-s 620ms var(--pmo-ease-out) both; animation-delay: calc(var(--i, 0) * 80ms + 180ms); }
+@keyframes pmo-rise-s { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------- content column */
+
+/* A grid item defaults to min-height:auto, which stops the scroll area from
+   ever shrinking — the column then overflows the window instead of scrolling. */
+.pmo-content { position: relative; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+/* The departing beat leaves over the top of the arriving one, so the column
+   is never empty between two screens. */
+.pmo-scroll--out {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  animation: pmo-depart 240ms var(--pmo-ease-inout) both;
+}
+@keyframes pmo-depart {
+  from { opacity: 1; transform: none; filter: blur(0); }
+  to   { opacity: 0; transform: translateY(-16px); filter: blur(3px); }
+}
+/* The clone is already-arrived content: it must not replay its entrance. */
+.pmo-scroll--out .pmo-step > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+.pmo-scroll {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding: var(--pmo-pad) var(--pmo-pad) 22px;
+  scrollbar-width: thin;
+  display: flex; flex-direction: column;
+}
+/* `justify-content: center` clips the top of an overflowing column and makes it
+   unscrollable. `margin-block: auto` centres a short beat and lets a long one
+   scroll normally. */
+.pmo-step { width: 100%; margin-block: auto; }
+
+/* Every direct child rises in sequence — one idea arriving after another. */
+.pmo-step > * { animation: pmo-rise var(--pmo-t-travel) var(--pmo-ease-out) both;
+                animation-delay: calc(var(--i, 0) * var(--pmo-stagger)); }
+@keyframes pmo-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.pmo-step[data-quiet="true"] > * { animation: none; opacity: 1; transform: none; }
+
+.pmo-eyebrow {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700;
+  color: var(--accent-blue); margin: 0 0 12px;
+}
+.pmo-h {
+  font-family: var(--display-font, inherit);
+  font-size: clamp(24px, 2.6vw, 33px); line-height: 1.14; letter-spacing: -.015em;
+  font-weight: 700; margin: 0 0 12px; color: var(--text-primary); text-wrap: balance; max-width: 17ch;
+}
+.pmo-sub {
+  font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 22px; max-width: 46ch;
+}
+.pmo-note { font-size: 12.5px; line-height: 1.5; color: var(--text-muted); margin: 14px 0 0; max-width: 48ch; }
+
+/* -------------------------------------------------------- choice cards */
+
+.pmo-choices { display: flex; flex-direction: column; gap: 10px; margin: 0 0 4px; }
+.pmo-choice {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 15px 16px; border-radius: var(--pmo-radius-sm);
+  border: 1px solid var(--border); background: var(--surface-alt);
+  font: inherit; color: inherit; position: relative;
+  transition: border-color var(--pmo-t-quick) linear, background var(--pmo-t-quick) linear,
+              transform var(--pmo-t-quick) var(--pmo-ease-spring), box-shadow var(--pmo-t-quick) linear;
+}
+.pmo-choice:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent-blue) 45%, var(--border)); }
+.pmo-choice[aria-pressed="true"] {
+  border-color: var(--accent-blue);
+  background: color-mix(in srgb, var(--accent-blue) 11%, var(--surface-alt));
+  box-shadow: 0 0 0 1px var(--accent-blue) inset;
+}
+.pmo-choice-ic {
+  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--accent-blue) 14%, var(--surface));
+  color: var(--accent-blue); flex: 0 0 auto;
+  transition: background var(--pmo-t-base) linear, transform var(--pmo-t-base) var(--pmo-ease-spring);
+}
+.pmo-choice[aria-pressed="true"] .pmo-choice-ic { transform: scale(1.06); background: color-mix(in srgb, var(--accent-blue) 26%, var(--surface)); }
+.pmo-choice-ic svg { width: 20px; height: 20px; }
+.pmo-choice-t { display: block; font-size: 14.5px; font-weight: 650; margin: 0 0 3px; color: var(--text-primary); }
+.pmo-choice-d { display: block; font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); margin: 0; }
+.pmo-choice-tag {
+  font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px; white-space: nowrap;
+  background: color-mix(in srgb, var(--accent-lime) 20%, transparent); color: var(--accent-lime);
+}
+.pmo-choice-check {
+  width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px solid var(--border); color: transparent; flex: 0 0 auto;
+  transition: border-color var(--pmo-t-quick) linear, background var(--pmo-t-quick) linear, color var(--pmo-t-quick) linear;
+}
+.pmo-choice[aria-pressed="true"] .pmo-choice-check {
+  background: var(--accent-blue); border-color: var(--accent-blue); color: var(--surface);
+}
+.pmo-choice-check svg { width: 12px; height: 12px; }
+
+/* ------------------------------------------------------------- fields */
+
+.pmo-field { margin: 0 0 18px; }
+.pmo-label { display: block; font-size: 12.5px; font-weight: 650; color: var(--text-secondary); margin: 0 0 7px; }
+.pmo-input {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 15px;
+  padding: 12px 14px; border-radius: var(--pmo-radius-sm);
+  border: 1px solid var(--border); background: var(--surface-alt); color: var(--text-primary);
+  transition: border-color var(--pmo-t-quick) linear, box-shadow var(--pmo-t-quick) linear;
+}
+.pmo-input:focus {
+  outline: none; border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-blue) 22%, transparent);
+}
+.pmo-input::placeholder { color: var(--text-muted); }
+
+.pmo-inline {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 12px 14px; border-radius: var(--pmo-radius-sm);
+  border: 1px dashed var(--border); background: color-mix(in srgb, var(--surface-alt) 60%, transparent);
+}
+.pmo-inline-k { font-size: 12px; color: var(--text-muted); }
+.pmo-inline-v { font-size: 13px; color: var(--text-primary); font-family: var(--mono-font, ui-monospace, monospace); word-break: break-all; }
+.pmo-inline-act { margin-left: auto; }
+
+/* --------------------------------------------------------- switch row */
+
+.pmo-switch-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: start;
+  padding: 15px 16px; border-radius: var(--pmo-radius-sm);
+  border: 1px solid var(--border); background: var(--surface-alt);
+}
+.pmo-switch-row + .pmo-switch-row { margin-top: 10px; }
+.pmo-switch {
+  width: 44px; height: 26px; border-radius: 999px; border: 0; cursor: pointer; padding: 0;
+  background: color-mix(in srgb, var(--text-muted) 40%, transparent); position: relative;
+  transition: background var(--pmo-t-base) var(--pmo-ease-inout);
+}
+.pmo-switch::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  transition: transform var(--pmo-t-base) var(--pmo-ease-spring);
+}
+.pmo-switch[aria-checked="true"] { background: var(--accent-lime); }
+.pmo-switch[aria-checked="true"]::after { transform: translateX(18px); }
+
+/* ------------------------------------------------------------- review */
+
+.pmo-review { display: flex; flex-direction: column; gap: 2px; margin: 0 0 18px; }
+.pmo-review-row {
+  display: grid; grid-template-columns: 128px 1fr auto; gap: 12px; align-items: baseline;
+  padding: 9px 2px; border-bottom: 1px solid var(--border-light);
+}
+.pmo-review-row:last-child { border-bottom: 0; }
+.pmo-review-k { font-size: 12px; color: var(--text-muted); }
+.pmo-review-v { font-size: 13.5px; color: var(--text-primary); line-height: 1.45; }
+.pmo-edit {
+  border: 0; background: none; cursor: pointer; font: inherit; font-size: 12px;
+  color: var(--accent-blue); padding: 3px 7px; border-radius: 6px;
+  transition: background var(--pmo-t-quick) linear;
+}
+.pmo-edit:hover { background: color-mix(in srgb, var(--accent-blue) 14%, transparent); }
+
+/* ------------------------------------------------------------ phases */
+
+.pmo-phases { display: flex; flex-direction: column; gap: 3px; margin: 6px 0 0; }
+.pmo-phase {
+  display: grid; grid-template-columns: 22px 1fr; gap: 11px; align-items: center;
+  padding: 9px 2px; font-size: 13.5px; color: var(--text-muted);
+  transition: color var(--pmo-t-base) linear;
+}
+.pmo-phase[data-state="running"] { color: var(--text-primary); }
+.pmo-phase[data-state="done"] { color: var(--text-secondary); }
+.pmo-phase[data-state="failed"] { color: var(--accent-error); }
+.pmo-phase-dot {
+  width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px solid var(--border); color: transparent;
+  transition: border-color var(--pmo-t-base) linear, background var(--pmo-t-base) linear, color var(--pmo-t-base) linear;
+}
+.pmo-phase-dot svg { width: 10px; height: 10px; }
+.pmo-phase[data-state="running"] .pmo-phase-dot {
+  border-color: var(--accent-blue);
+  border-right-color: transparent;
+  animation: pmo-spin 720ms linear infinite;
+}
+@keyframes pmo-spin { to { transform: rotate(360deg); } }
+.pmo-phase[data-state="done"] .pmo-phase-dot { background: var(--accent-lime); border-color: var(--accent-lime); color: var(--surface); }
+.pmo-phase[data-state="failed"] .pmo-phase-dot { background: var(--accent-error); border-color: var(--accent-error); color: var(--surface); }
+
+/* ---------------------------------------------------------- providers */
+
+.pmo-acct {
+  display: grid; grid-template-columns: 40px 1fr auto; gap: 13px; align-items: center;
+  padding: 13px 15px; border-radius: var(--pmo-radius-sm);
+  border: 1px solid var(--border); background: var(--surface-alt);
+  transition: border-color var(--pmo-t-base) linear, background var(--pmo-t-base) linear;
+}
+.pmo-acct + .pmo-acct { margin-top: 9px; }
+.pmo-acct[data-state="ready"] { border-color: color-mix(in srgb, var(--accent-lime) 55%, var(--border)); }
+.pmo-acct-logo {
+  width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  font-size: 15px; font-weight: 700; color: var(--text-secondary);
+}
+.pmo-acct-n { display: block; font-size: 14px; font-weight: 650; margin: 0 0 2px; }
+.pmo-acct-d { display: block; font-size: 12px; color: var(--text-muted); margin: 0; }
+.pmo-acct-plan {
+  display: inline; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700;
+  color: var(--text-muted); margin-left: 7px;
+}
+.pmo-ready {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650;
+  color: var(--accent-lime);
+}
+.pmo-ready svg { width: 14px; height: 14px; }
+
+/* ------------------------------------------------------------ buttons */
+
+.pmo-btn {
+  font: inherit; font-size: 13.5px; font-weight: 650; cursor: pointer;
+  padding: 10px 18px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface-alt); color: var(--text-primary);
+  transition: transform var(--pmo-t-quick) var(--pmo-ease-spring), background var(--pmo-t-quick) linear,
+              border-color var(--pmo-t-quick) linear, box-shadow var(--pmo-t-quick) linear, opacity var(--pmo-t-quick) linear;
+}
+.pmo-btn:hover:not(:disabled) { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent-blue) 45%, var(--border)); }
+.pmo-btn:active:not(:disabled) { transform: translateY(0) scale(.985); }
+.pmo-btn:disabled { opacity: .42; cursor: not-allowed; }
+.pmo-btn--primary {
+  background: var(--accent-blue); border-color: var(--accent-blue);
+  color: color-mix(in srgb, var(--background) 88%, #000);
+  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--accent-blue) 70%, transparent);
+}
+.pmo-btn--primary:hover:not(:disabled) { box-shadow: 0 8px 22px -6px color-mix(in srgb, var(--accent-blue) 80%, transparent); }
+.pmo-btn--ghost { background: none; border-color: transparent; color: var(--text-secondary); }
+.pmo-btn--ghost:hover:not(:disabled) { background: var(--surface-alt); }
+.pmo-btn--sm { font-size: 12.5px; padding: 7px 13px; border-radius: 8px; }
+
+/* --------------------------------------------------------------- foot */
+
+.pmo-foot {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 16px;
+  padding: 13px 18px; border-top: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+}
+.pmo-back {
+  display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 13px;
+  border: 0; background: none; cursor: pointer; color: var(--text-secondary);
+  padding: 7px 11px 7px 8px; border-radius: 8px;
+  transition: background var(--pmo-t-quick) linear, color var(--pmo-t-quick) linear, opacity var(--pmo-t-quick) linear;
+}
+.pmo-back svg { width: 14px; height: 14px; }
+.pmo-back:hover { background: var(--surface-alt); color: var(--text-primary); }
+.pmo-back[hidden] { display: none; }
+
+/* Chapter rail — named phases, never a wall of dots. */
+.pmo-rail { display: flex; align-items: center; gap: 5px; margin: 0 auto; }
+.pmo-rail-item { display: flex; align-items: center; gap: 7px; }
+.pmo-rail-pip {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: color-mix(in srgb, var(--text-muted) 42%, transparent);
+  transition: background var(--pmo-t-base) linear, transform var(--pmo-t-base) var(--pmo-ease-spring);
+}
+.pmo-rail-item[data-state="done"] .pmo-rail-pip { background: var(--accent-lime); }
+.pmo-rail-item[data-state="current"] .pmo-rail-pip { background: var(--accent-blue); transform: scale(1.5); }
+.pmo-rail-name {
+  font-size: 11.5px; font-weight: 600; color: var(--text-muted); white-space: nowrap;
+  max-width: 0; overflow: hidden; opacity: 0;
+  transition: max-width var(--pmo-t-travel) var(--pmo-ease-out), opacity var(--pmo-t-base) linear,
+              color var(--pmo-t-base) linear;
+}
+.pmo-rail-item[data-state="current"] .pmo-rail-name { max-width: 120px; opacity: 1; color: var(--text-secondary); }
+.pmo-rail-sep { width: 14px; height: 1px; background: var(--border); }
+
+.pmo-foot-actions { display: flex; align-items: center; gap: 9px; margin-left: auto; }
+
+/* ------------------------------------------------------------- resume */
+
+.pmo-resume {
+  position: fixed; right: 18px; bottom: 18px; z-index: 9400;
+  display: inline-flex; align-items: center; gap: 9px;
+  font: inherit; font-size: 13px; font-weight: 650; cursor: pointer;
+  padding: 11px 17px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-primary);
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
+  box-shadow: var(--elev-2, 0 10px 24px rgba(0,0,0,.22));
+  animation: pmo-rise var(--pmo-t-travel) var(--pmo-ease-out) both;
+}
+.pmo-resume[hidden] { display: none; }
+.pmo-resume-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-orange);
+                  animation: pmo-pulse 1.8s var(--pmo-ease-inout) infinite alternate; }
+
+/* --------------------------------------------------------- responsive */
+
+@media (max-width: 900px), (max-height: 620px) {
+  .pmo { padding: 0; }
+  .pmo-window { width: 100%; height: 100%; border-radius: 0; border: 0; }
+  .pmo-body { grid-template-columns: 1fr; grid-template-rows: minmax(150px, 30%) 1fr; }
+  .pmo-plate { border-right: 0; border-bottom: 1px solid var(--border-light); }
+  .pmo-look-label, .pmo-brand-text { display: none; }
+  .pmo-scroll { padding: 22px 20px 18px; }
+  /* In a short band the caption lands on the drawing; the headline carries the
+     same idea, so drop it rather than overlap the art. */
+  .pmo-plate-cap { display: none; }
+}
+@media (max-width: 620px) {
+  .pmo-rail-name { display: none; }
+  .pmo-look { display: none; }
+}
+
+/* ----------------------------------------------------- reduced motion */
+/* Sequence and cause/effect survive; travel does not. */
+@media (prefers-reduced-motion: reduce) {
+  .pmo * , .pmo *::before, .pmo *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .pmo-drift, .pmo-figure, .pmo-a-thread, .pmo-a-star, .pmo-a-sat, .pmo-twinkle,
+  .pmo-a-hub, .pmo-a-pulse, .pmo-a-net, .pmo-resume-dot { animation: none !important; }
+  .pmo-window, .pmo-scrim { transition-duration: 90ms !important; }
+  .pmo-step > * { opacity: 1 !important; transform: none !important; }
+  .pmo-plate-sweep { display: none; }
+}
+html[data-reduced-motion="true"] .pmo *,
+html[data-reduce-motion="true"] .pmo * { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+html[data-reduced-motion="true"] .pmo-drift,
+html[data-reduced-motion="true"] .pmo-figure,
+html[data-reduced-motion="true"] .pmo-a-pulse { animation: none !important; }
+
+
+/* The shell's global hover tags annotate the app behind the window; inside a
+   modal setup flow they duplicate the labels that are already on screen. */
+html[data-pmo-open="true"] #pm-hover-tag-root { display: none !important; }

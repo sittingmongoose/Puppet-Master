@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/forge_backup_tsnet_acceptance.schema.json",
+  "title": "Forge, Backup, and tsnet exact acceptance custody",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "created_at", "packet_id",
+    "claim_boundary", "source_files", "counts", "integrity",
+    "execution_state", "requirements", "scenarios", "requirement_joins"
+  ],
+  "properties": {
+    "schema_id": {"const": "pm.forge_backup_tsnet_acceptance.v1"},
+    "schema_version": {"const": "1.0.0"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "packet_id": {"const": "PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01.zip"},
+    "claim_boundary": {"type": "string", "minLength": 1},
+    "source_files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acceptance_scenarios", "requirement_test_mapping", "requirements", "live_requirement_disposition"],
+      "properties": {
+        "acceptance_scenarios": {"$ref": "#/$defs/acceptanceSource"},
+        "requirement_test_mapping": {"$ref": "#/$defs/mappingSource"},
+        "requirements": {"$ref": "#/$defs/requirementsSource"},
+        "live_requirement_disposition": {"$ref": "#/$defs/dispositionSource"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_count", "requirement_count", "requirement_join_count", "scenario_join_edge_count", "empty_scenario_join_count"],
+      "properties": {
+        "scenario_count": {"const": 67},
+        "requirement_count": {"const": 132},
+        "requirement_join_count": {"const": 132},
+        "scenario_join_edge_count": {"const": 116},
+        "empty_scenario_join_count": {"const": 46}
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirements_body_sha256", "scenarios_body_sha256", "requirement_joins_body_sha256"],
+      "properties": {
+        "requirements_body_sha256": {"const": "bac7ccf3a5200feb196dc6e10d8c6fb0d2a28d34d62f8ee10812248eb8acae44"},
+        "scenarios_body_sha256": {"const": "e28e818db3449bc1c8b073a3499c60ade5cef927c18ee2b9578592473e41b0e7"},
+        "requirement_joins_body_sha256": {"const": "2ede616bd0e0c8b67c3c81a6cb2832c2b2d44f65fab64a477f3c7863763a7d11"}
+      }
+    },
+    "execution_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "executed_scenario_count", "scenario_evidence_count", "static_custody_only"],
+      "properties": {
+        "status": {"const": "NOT_RUN"},
+        "executed_scenario_count": {"const": 0},
+        "scenario_evidence_count": {"const": 0},
+        "static_custody_only": {"const": true}
+      }
+    },
+    "requirements": {
+      "type": "array", "minItems": 132, "maxItems": 132,
+      "items": {"$ref": "#/$defs/requirement"}
+    },
+    "scenarios": {
+      "type": "array", "minItems": 67, "maxItems": 67,
+      "items": {"$ref": "#/$defs/scenario"}
+    },
+    "requirement_joins": {
+      "type": "array", "minItems": 132, "maxItems": 132,
+      "items": {"$ref": "#/$defs/requirementJoin"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "nonEmptyStringArray": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "acceptanceSource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["logical_path", "sha256"],
+      "properties": {
+        "logical_path": {"const": "machine/acceptance_scenarios.json"},
+        "sha256": {"const": "51fcea0739ddbb9eb7a2357e15beab8250b25b4b02f3d295082622e01a799e3f"}
+      }
+    },
+    "mappingSource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["logical_path", "sha256"],
+      "properties": {
+        "logical_path": {"const": "machine/requirement_test_mapping.json"},
+        "sha256": {"const": "3ef66fe1320e7c17cb9f6fb20cb44b537933ab270d7b05780f23fc5c4ad2027b"}
+      }
+    },
+    "requirementsSource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["logical_path", "sha256"],
+      "properties": {
+        "logical_path": {"const": "machine/requirements.json"},
+        "sha256": {"const": "baff2a614eb4ac96543c6a3e0c3ad5f6e3961f7315557147f8bc82f3575e50cd"}
+      }
+    },
+    "dispositionSource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["logical_path", "sha256"],
+      "properties": {
+        "logical_path": {"const": "agent_reports/live_requirement_disposition.json"},
+        "sha256": {"const": "9ac5c5678ef83ec85c954d28cec7a1299dddc9c12ae06ffbb3c0d1766516c2f8"}
+      }
+    },
+    "requirementId": {
+      "type": "string",
+      "pattern": "^(TSN|AUTH|SCM|FORGE|GUI|MAT|SAUTH|BKP|CLOUD|KEY|REST|AUTO|BGUI|TSX|CMDX|OWN|TEST|PROC)-[0-9]{3}$"
+    },
+    "requirement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "domain", "owner_role", "contract_path", "requirement", "acceptance", "source_refs", "implementation_status", "runtime_test_status", "authority_basis"],
+      "properties": {
+        "id": {"$ref": "#/$defs/requirementId"},
+        "title": {"$ref": "#/$defs/nonEmptyString"},
+        "domain": {"$ref": "#/$defs/nonEmptyString"},
+        "owner_role": {"$ref": "#/$defs/nonEmptyString"},
+        "contract_path": {"$ref": "#/$defs/nonEmptyString"},
+        "requirement": {"$ref": "#/$defs/nonEmptyString"},
+        "acceptance": {"$ref": "#/$defs/nonEmptyString"},
+        "source_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "implementation_status": {"const": "NOT_ASSESSED_LIVE_REPO"},
+        "runtime_test_status": {"const": "NOT_RUN"},
+        "authority_basis": {"enum": ["preserved_explicit_tsnet_requirement", "new_PM_design_contract_implementing_approved_user_scope"]},
+        "anchor": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scenario_id", "title", "kind", "setup", "steps", "expected", "requirement_refs", "execution_status", "evidence_required", "evidence"],
+      "properties": {
+        "scenario_id": {"type": "string", "pattern": "^E2E-[0-9]{3}$"},
+        "title": {"$ref": "#/$defs/nonEmptyString"},
+        "kind": {"enum": ["integration", "visual", "specification"]},
+        "setup": {"$ref": "#/$defs/nonEmptyString"},
+        "steps": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "expected": {"$ref": "#/$defs/nonEmptyString"},
+        "requirement_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "execution_status": {"const": "NOT_RUN"},
+        "evidence_required": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "evidence": {"type": "array", "maxItems": 0}
+      }
+    },
+    "requirementJoin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requirement_id", "specification_acceptance", "scenario_ids", "additional_test_owner_requirement", "runtime_status", "source_qualified_id", "current_owner_plan_units", "live_disposition", "residual_evidence_boundary"],
+      "properties": {
+        "requirement_id": {"$ref": "#/$defs/requirementId"},
+        "specification_acceptance": {"$ref": "#/$defs/nonEmptyString"},
+        "scenario_ids": {
+          "type": "array", "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^E2E-[0-9]{3}$"}
+        },
+        "additional_test_owner_requirement": {"$ref": "#/$defs/nonEmptyString"},
+        "runtime_status": {"const": "NOT_RUN"},
+        "source_qualified_id": {"type": "string", "pattern": "^PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01::[A-Z]+-[0-9]{3}$"},
+        "current_owner_plan_units": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^Plans/[^#]+\\.md#[A-Z0-9]+-[0-9]{3}$"}
+        },
+        "live_disposition": {"enum": ["implemented", "already_current_with_evidence", "partial"]},
+        "residual_evidence_boundary": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    }
+  }
+}

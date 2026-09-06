@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L238-L575
+Source lines: L247-L595
 
-Source SHA256: `82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be`
+Source SHA256: `b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf`
 
 ---
 
@@ -21,6 +21,17 @@ The bootstrap planning packet uses the following owner split:
 The ledger `Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/` is source-lineage/planning memory for these docs, not canonical product prose. Generated governance artifacts remain seal-phase only: ordinary ledger writing, plan drafting, plan conversion, PlanUnit indexing, and node-readiness reporting do not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`.
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### Working Notebook and Context Continuity Map (2026-09-05)
+
+Packet `PM-WNC-2026-09-05-v1` (work item `wnc-20260905`) uses this owner split:
+- `Plans/Working_Notebook.md` owns Working Notebook semantics: notebook identity and the closed scope kinds `thread | worker_lineage | coordinator_run | participant | shared_slice`, the typed entry envelope and epistemic/freshness vocabulary, CAS revisions and idempotency, the resume capsule content contract, notebook checkpoint content, materiality-triggered capture, explicit sharing and derivation restrictions, promotion requests through destination owners, validity/staleness, lifecycle/retention, and the four deferred storage-value families (with `Plans/storage-plan.md` SP-255..257 and `Plans/storage_value_registry.json`).
+- `Plans/Prompt_Pipeline.md` (PP-084..090) owns context-assembly policy for continuity: the five distinct context operations, proactive fresh-window request/admission lifecycle, checkpoint reserve inside the existing one admission budget, reconstruction from current owner state, read-only continuation, fallback, thrash prevention, and replay-safe tool-result shaping.
+- `Plans/Tools.md` (T-183/184) owns the agent tool contracts `chatread`, `notebook_search`, `notebook_read`, `notebook_write`, `notebook_supersede`, and `fresh_context_request`; `Plans/Shared_Integration_Runtime.md` (SIR-036/037) owns transition runtime reconciliation and host-lease fencing; `Plans/CLI_Bridged_Providers.md` (CBP-030/031) owns one-effective-controller strategy and honest observability; `Plans/usage-feature.md` (UF-099..101) owns occupancy/cumulative/quota distinctions, helper attribution, and exactly-once accounting; `Plans/assistant-memory-subsystem.md` (AMS-044..046) owns per-claim verification and the Assistant-only memory boundary; `Plans/Permissions_System.md` (PS-140/141) owns derived-content restriction propagation and note-data authority rules.
+- Consumers keep their own surfaces: `Plans/assistant-chat-design.md` (ACD-449..451), `Plans/Orchestrator_Page.md` (OP-035), `Plans/orchestrator-subagent-integration.md` (OSI-436/437), `Plans/Collaborative_Workflows.md` (CWR-012/013), `Plans/agent-rules-context.md` (ARC-037), `Plans/Settings_System.md` (SSYS-029), `Plans/Backup_Restore_System.md` (BRS-020), `Plans/UI_Command_Catalog.md` (UCC-158), `Plans/UI_Wiring_Rules.md` (UIW-019), and the workflow/authority owners (GRS-057, EP-115, APR-013, TDR-010, PLS-022, SQR-008, RM-052, MS-138, MI-043, F2-210, RAP-055, MA-072, BSD-025, PJCT-006, PSB-006, SRV-014, PRDB-012, PWIZ-026).
+- `Plans/Automated_Testing_System.md` / `ATS-046` owns the static contract-fixture validation family (`validate-working-notebook-contracts`). Static validation only: runtime, recovery, security, visual, and performance proof remains NOT_RUN; no WorkNodes, NodeSeeds, executable queues, or readiness unlocks.
+
+ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/Automated_Testing_System.md
 
 ### PM Semantic Audit Closure Map (2026-06-17)
 

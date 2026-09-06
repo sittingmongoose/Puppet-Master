@@ -4419,6 +4419,37 @@ HOME_SCRIPT = r'''
     previewResize(gesture.draft, surfaceId);
   }
 
+  /* Semantic resize entry point for owner-driven restoration. Pointer gestures
+     and this path settle through the same revisioned command/persistence owner;
+     callers cannot replace a layout, owner ref, buffer, or terminal session. */
+  function resizeSurface(surfaceId, values) {
+    var current = surfaceById(committed, surfaceId);
+    if (!current) return { ok: false, reason: "unknown_surface" };
+    if (gesture) return { ok: false, reason: "gesture_in_progress" };
+    var allowed = ["width_px", "height_px", "flex_weight", "expected_layout_revision"];
+    if (!values || typeof values !== "object" || Array.isArray(values) || Object.keys(values).some(function (key) { return allowed.indexOf(key) === -1; })) return { ok: false, reason: "invalid_resize_values" };
+    if (!Number.isInteger(values.expected_layout_revision) || values.expected_layout_revision !== committed.layout_revision) return { ok: false, reason: "stale_layout_revision" };
+    if (["width_px", "height_px", "flex_weight"].some(function (key) { return values[key] !== undefined && (typeof values[key] !== "number" || !isFinite(values[key]) || values[key] <= 0); })) return { ok: false, reason: "invalid_resize_values" };
+    var next = clone(committed), after = surfaceById(next, surfaceId), band = resizeBandFor(current);
+    if (values.width_px !== undefined) after.size.basis_px = Math.max(band.min, Math.min(band.max, values.width_px));
+    if (values.height_px !== undefined) {
+      var crossBand = HOST_BANDS[current.host];
+      after.size.cross_basis_px = crossBand && (current.host === "dock_top" || current.host === "dock_bottom") ? Math.max(crossBand.min, Math.min(crossBand.max, values.height_px)) : values.height_px;
+    }
+    if (values.flex_weight !== undefined) after.size.flex_weight = values.flex_weight;
+    if (current.host === "floating" && after.floating_bounds) {
+      if (values.width_px !== undefined) after.floating_bounds.width = values.width_px;
+      if (values.height_px !== undefined) after.floating_bounds.height = values.height_px;
+      after.floating_bounds = clampBounds(after.floating_bounds);
+    }
+    var result = commitLayout(next, "resize_commit", "cmd.workspace_layout.resize_surface", {
+      skip_render: true, source_host: current.host, target_host: current.host,
+      command_payload: { surface_instance_id: surfaceId, width_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.width : after.size.basis_px, height_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.height : after.size.cross_basis_px, flex_weight: after.size.flex_weight }
+    });
+    if (result.ok) previewResize(committed, surfaceId);
+    return result;
+  }
+
   function finishResize() {
     if (!gesture || gesture.kind !== "resize") return;
     var active = gesture;
@@ -4985,6 +5016,7 @@ HOME_SCRIPT = r'''
     commitDrop: function () { finishDrag(true); },
     cancelDrag: function () { finishDrag(false); },
     beginResize: beginResize,
+    resizeSurface: resizeSurface,
     updateResize: updateResize,
     commitResize: finishResize,
     cancelResize: cancelResizeGesture
