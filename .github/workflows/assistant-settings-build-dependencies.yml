@@ -1,0 +1,39 @@
+name: Assistant Settings build dependencies
+on:
+  push:
+    branches: [review/assistant-polish-20260905]
+    paths: [.github/workflows/assistant-settings-build-dependencies.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html
+            Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-kimi
+            Plans/settings_inventory.json
+          sparse-checkout-cone-mode: false
+      - name: Package pinned sources
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile,hashlib,json,subprocess
+          root=Path('Concepts/settings-redesign-concepts/kimi-k3-polish')
+          files=[root/'concept-12-tome-tabs.html',Path('Plans/settings_inventory.json')]+[root/'concept-12-kimi'/p for p in ['kimi.css','kimi.js','kimi-data.js','kimi-reference.js']]
+          manifest={'commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'files':[]}
+          with zipfile.ZipFile('/tmp/assistant-settings-build-dependencies.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in files:
+                  d=p.read_bytes();z.writestr(str(p),d);manifest['files'].append({'path':str(p),'sha256':hashlib.sha256(d).hexdigest()})
+              z.writestr('DEPENDENCY_MANIFEST.json',json.dumps(manifest,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assistant-settings-build-dependencies
+          path: /tmp/assistant-settings-build-dependencies.zip
+          retention-days: 7
