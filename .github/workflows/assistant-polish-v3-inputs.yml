@@ -1,0 +1,50 @@
+name: Assistant polish v3 review inputs
+on:
+  push:
+    branches: [review/assistant-polish-20260905]
+    paths: [.github/workflows/assistant-polish-v3-inputs.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: d91d3ad92b88fd824f1c98214f2f79b97f7d5f03
+          fetch-depth: 1
+          sparse-checkout: |
+            Concepts/chat-assistant-concepts/5.6 Pro
+            Concepts/pm7-tools
+            Concepts/pm6-build/checks
+            Plans
+            scripts
+      - name: Package exact review source
+        run: |
+          python3 - <<'PY'
+          import subprocess,pathlib,zipfile,json,hashlib
+          paths=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          manifest={'commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'files':[]}
+          with zipfile.ZipFile('/tmp/assistant-v3-inputs.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in paths:
+              f=pathlib.Path(p)
+              if not f.is_file(): continue
+              ok=p in ['AGENTS.md','Concepts/CONCEPT_RULES.md','Concepts/TestPMConcept.html']
+              if p.startswith('Concepts/chat-assistant-concepts/5.6 Pro/'):
+                tail=p.split('5.6 Pro/',1)[1];ok='/' not in tail or tail.startswith('tests/')
+              if p.startswith(('Concepts/pm7-tools/','Concepts/pm6-build/checks/')): ok=True
+              if p.startswith('Plans/'):
+                ok=f.suffix in ['.md','.json','.jsonl'] and not any(s.startswith('.') or s in ['_shards','ledgers'] for s in f.parts[1:])
+              if p.startswith('scripts/') and f.suffix=='.py': ok=True
+              if ok and f.suffix.lower() not in ['.mp4','.mov','.webm','.zip','.woff','.woff2','.ttf','.otf']:
+                data=f.read_bytes();z.writestr(p,data);manifest['files'].append({'path':p,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)})
+            z.writestr('SOURCE_SNAPSHOT.json',json.dumps(manifest,indent=2))
+          print(len(manifest['files']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assistant-v3-inputs
+          path: /tmp/assistant-v3-inputs.zip
+          retention-days: 7
+          compression-level: 0
