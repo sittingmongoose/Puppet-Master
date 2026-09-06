@@ -1,0 +1,43 @@
+name: Assistant Settings review inputs
+on:
+  push:
+    branches: [review/assistant-polish-20260905]
+    paths: [.github/workflows/assistant-settings-inputs.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            Concepts/pm7-tools
+            Concepts/pm6-build/checks
+            Concepts/TestPMConcept.html
+            Concepts/CONCEPT_RULES.md
+            AGENTS.md
+          sparse-checkout-cone-mode: false
+      - name: Package generator inputs
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile, hashlib, json, subprocess
+          files=[p for p in Path('Concepts/pm7-tools').glob('*') if p.is_file()]
+          files += [Path('Concepts/pm7-tools/base/PM7-base.html'), Path('Concepts/pm6-build/checks/check_no_emoji.py'), Path('Concepts/TestPMConcept.html'), Path('Concepts/CONCEPT_RULES.md'), Path('AGENTS.md')]
+          manifest={'commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'files':[]}
+          with zipfile.ZipFile('/tmp/assistant-settings-inputs.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in files:
+                  if not p.is_file(): raise SystemExit('Missing '+str(p))
+                  d=p.read_bytes(); z.writestr(str(p),d)
+                  manifest['files'].append({'path':str(p),'sha256':hashlib.sha256(d).hexdigest()})
+              z.writestr('INPUT_MANIFEST.json',json.dumps(manifest,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assistant-settings-inputs
+          path: /tmp/assistant-settings-inputs.zip
+          retention-days: 7
