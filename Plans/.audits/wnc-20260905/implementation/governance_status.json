@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.handoff.wnc.governance_status.v1",
+  "packet_id": "PM-WNC-2026-09-05-v1",
+  "work_item_id": "wnc-20260905",
+  "seal_phase": {
+    "authorized": true,
+    "trigger": "Semantic closure reached: all 85 requirements dispositioned with live owner evidence, all 62 scenarios mapped, in-scope repairs closed, allowed PlanUnit indexes stable.",
+    "executed_serially": [
+      {"step": 1, "command": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/Working_Notebook.md --spec-lock Plans/Spec_Lock.json --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-09-05-working-notebook-registration --scope plans_governance --decision \"Register Plans/Working_Notebook.md as canonical Working Notebook owner (PM-WNC-2026-09-05-v1)\" --rationale \"...\"", "exit_code": 0, "log": "logs/seal_register_canonical_docs.json", "effects": ["Plans/sharding_config.json sources += Plans/Working_Notebook.md (idempotent with manual registration)", "Plans/Spec_Lock.json canonical file list += Plans/Working_Notebook.md", "Plans/plan_graph.json node pm.build-governance.spec-lock-support-refresh inputs/outputs += Plans/Working_Notebook.md", "Plans/auto_decisions.jsonl += dec-2026-09-05-working-notebook-registration"]},
+      {"step": 2, "command": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json", "exit_code": 0, "log": "logs/seal_shard_generate.json", "effects": ["Plans/_shards/** regenerated for 98 docs / 2132 shards", "shard_report.json restamped"]},
+      {"step": 3, "command": "python3 scripts/pm-shard-plans.py --check --report Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json", "exit_code": 0, "log": "logs/seal_shard_check.json", "effects": ["shard-check-report.json restamped", "status pass, 0 failures"]},
+      {"step": 4, "command": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json --report Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json", "exit_code": 0, "log": "logs/seal_sync_evidence.json", "effects": ["evidence.json artifact hashes restamped to the final shard state"]},
+      {"step": 5, "command": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json --evidence Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json", "exit_code": 0, "log": "logs/seal_refresh_spec_lock.json", "effects": ["All canonical_ssot_hashes recomputed after every other governed input stabilized; evidence artifact hash refreshed", "verify-spec-lock: pass"]}
+    ],
+    "hand_edits_of_generated_outputs": [],
+    "readiness_unlocks": [],
+    "note_on_shared_tree": "The working tree also carries an unrelated in-flight work item (forge-backup acceptance ATS-044/ATS-045 registration, pm7-tools concept refresh). Its edits were preserved untouched; shard/evidence/spec-lock regeneration necessarily reflects the combined tree state, which is the honest final subject."
+  },
+  "post_seal_verification": {
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "check_shards": "pass (0 failures, 2132 shards, 98 docs)",
+    "validate_plan_graph": "pass",
+    "validate_auto_decisions": "pass",
+    "lint_contractrefs": "pass",
+    "lint_banned_phrases": "pass",
+    "lint_path_refs": "pass",
+    "json_syntax": "pass",
+    "pm_plan_index_validate": "pass (after final regeneration)",
+    "validate_working_notebook_contracts": "pass",
+    "tests_test_pm_working_notebook_contracts": "OK (7 tests)"
+  },
+  "pre_existing_baseline_failures_not_addressed": {
+    "scope": "Recorded at HEAD in disposable worktree /tmp/wnc_baseline_wt; classified pre-existing/out-of-scope",
+    "failing_subchecks_at_baseline": ["json_syntax (missing/unparsable test-fixture JSON absent from a clean checkout)", "lint_contractrefs (missing historical audit report ref)", "lint_path_refs (implementation surfaces pointing at scratchpad/absent files)", "validate_implementation_readiness (stale pnc019 certification receipt + event-authority currentness drift)", "validate_pm7_gui_fixtures (validator traceback)", "validate_touch_closure (orphan actions/census drift)", "validate_audit_closure (reopened rows present)", "validate_audit_status_index (stale index)"],
+    "policy": "Left closed to this work per the runbook: runtime/buildability blockers (PNC-019 receipt) are neither unlocked nor repaired by this Plans-only packet, and repairing unrelated audit/closure drift belongs to those work items."
+  },
+  "not_run": ["native handlers and production wiring", "provider execution", "crash recovery", "security enforcement", "visual quality", "performance", "PNC-019 certification"]
+}

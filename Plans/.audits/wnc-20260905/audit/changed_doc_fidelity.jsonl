@@ -1,0 +1,46 @@
+{"doc": "Plans/00-plans-index.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Assistant_Plan_Runtime.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Back_Seat_Driver.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Backup_Restore_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/CLI_Bridged_Providers.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Collaborative_Workflows.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Executor_Protocol.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/FileSafe.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Glossary.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Goal_Runtime_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/MCP_Integration.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Models_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Multi-Account.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Orchestrator_Page.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/PRD_Builder.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Permissions_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Planning_Ledger_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Project_Sync_and_Backbone.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Project_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Prompt_Pipeline.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Run_Modes.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Runtime_Artifacts_Panel.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Scheduling_and_Quota_Resume.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Server_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Settings_System.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Shared_Integration_Runtime.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/ToDo_Runtime.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Tools.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/UI_Command_Catalog.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/UI_Wiring_Rules.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Working_Notebook.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/agent-rules-context.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/assistant-chat-design.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/assistant-memory-subsystem.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/storage_value_registry.json", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/usage-feature.md", "classification": "additive_wnc_only", "deletions": "none", "suspicious": false}
+{"doc": "Plans/Automated_Testing_System.md", "classification": "mixed_or_generated", "deletions": "ATS-046 WNC registration + unrelated Sept-3 guided-tour ATS-020 supersession (explicit supersession language; no WNC-scope loss)", "suspicious": false}
+{"doc": "Plans/FinalGUISpec.md", "classification": "mixed_or_generated", "deletions": "zero WNC content; entire diff unrelated in-flight work (F3-521 tour rewrite + sound preview) \u2014 correctly preserved", "suspicious": false}
+{"doc": "Plans/Planning_Wizard.md", "classification": "mixed_or_generated", "deletions": "PWIZ-026 WNC addendum + unrelated Sept-3 guided-tour PWIZ-021/023 supersession", "suspicious": false}
+{"doc": "Plans/Spec_Lock.json", "classification": "mixed_or_generated", "deletions": "generated sha256 refresh + Working_Notebook entry", "suspicious": false}
+{"doc": "Plans/Wiring_Matrix.production.exclusions.json", "classification": "mixed_or_generated", "deletions": "+3 excluded candidate tokens + generated_at bump; script-consistent", "suspicious": false}
+{"doc": "Plans/orchestrator-subagent-integration.md", "classification": "mixed_or_generated", "deletions": "OSI-436/437 WNC addendum + AUD-F04 corrupted pre-existing code line", "suspicious": true}
+{"doc": "Plans/plan_graph.json", "classification": "mixed_or_generated", "deletions": "generated decision + coverage refs + whitespace normalization", "suspicious": false}
+{"doc": "Plans/settings_inventory.json", "classification": "mixed_or_generated", "deletions": "4 notebook rows + nav entry; structural JSON rewiring only", "suspicious": false}
+{"doc": "Plans/sharding_config.json", "classification": "mixed_or_generated", "deletions": "Working_Notebook.md added to canonical docs list", "suspicious": false}
+{"doc": "Plans/storage-plan.md", "classification": "mixed_or_generated", "deletions": "2-line family count 84\u219288 consistency edit + SP-255..257 addendum", "suspicious": false}

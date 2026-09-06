@@ -1,0 +1,86 @@
+{
+  "probe_suite": "reviewer schema_fragment_probes re-executed against repaired schema/validator",
+  "results": [
+    {
+      "probe": "empty chatread args",
+      "expected": "rejected",
+      "result": "rejected ('thread_id' is a required property)"
+    },
+    {
+      "probe": "empty notebook_write args",
+      "expected": "rejected",
+      "result": "rejected ('notebook_id' is a required property)"
+    },
+    {
+      "probe": "negative read offsets",
+      "expected": "rejected",
+      "result": "rejected (minimum 0)"
+    },
+    {
+      "probe": "reversed range",
+      "expected": "rejected",
+      "result": "rejected by explicit invariant (reversed range WNC-H04); JSON Schema cannot compare siblings"
+    },
+    {
+      "probe": "unknown tool argument",
+      "expected": "rejected",
+      "result": "rejected (additionalProperties)"
+    },
+    {
+      "probe": "legacy drifted fresh_context arg",
+      "expected": "rejected",
+      "result": "rejected (additionalProperties)"
+    },
+    {
+      "probe": "write update w/o expected_revision",
+      "expected": "rejected",
+      "result": "rejected (precondition branch)"
+    },
+    {
+      "probe": "chatread without message/item id",
+      "expected": "rejected",
+      "result": "rejected (oneOf identity requirement)"
+    },
+    {
+      "probe": "valid controls (search/read/chatread/write-create/write-update/supersede)",
+      "expected": "accepted",
+      "result": "accepted"
+    },
+    {
+      "probe": "success w/ null receipt",
+      "expected": "rejected",
+      "result": "rejected (type string)"
+    },
+    {
+      "probe": "activated w/ null new window",
+      "expected": "rejected",
+      "result": "rejected (type string)"
+    },
+    {
+      "probe": "activated w/ unavailable controller",
+      "expected": "rejected",
+      "result": "rejected (enum)"
+    },
+    {
+      "probe": "success missing receipt property",
+      "expected": "rejected",
+      "result": "rejected (required)"
+    },
+    {
+      "probe": "empty negatives set",
+      "expected": "validator fail",
+      "result": "fail"
+    },
+    {
+      "probe": "emptied positive family",
+      "expected": "validator fail",
+      "result": "fail (fail-closed)"
+    },
+    {
+      "probe": "documented command forms (bare/validate/--json)",
+      "expected": "exit 0",
+      "result": "exit 0"
+    }
+  ],
+  "all_pass": true
+}

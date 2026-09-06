@@ -37,6 +37,52 @@ EXPECTED_REGISTRY_FAMILIES = {
 ENTRY_ID_RE = re.compile(r"^wne_[A-Za-z0-9]+$")
 HEX64_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 
+# Fail-closed fixture inventory: a validator that accepts an emptied or shuffled
+# fixture corpus proves nothing. These pins make coverage loss a validation failure.
+EXPECTED_NEGATIVE_IDS = {
+    "neg_bad_epistemic_kind", "neg_body_over_limit", "neg_unknown_lifecycle",
+    "neg_thread_scope_missing_thread", "neg_capsule_over_token_bound",
+    "neg_capsule_over_byte_bound", "neg_committed_checkpoint_without_receipt",
+    "neg_transition_native_success_without_observation",
+    "neg_transition_done_rotated_conflation", "neg_unknown_tool",
+    "neg_mixed_range_convention", "neg_unknown_error_code",
+    "neg_applied_without_result_revision", "neg_conflict_without_conflicting_revision",
+    "neg_import_without_restriction", "neg_crash_after_commit_discards_checkpoint",
+    "neg_crash_before_commit_claims_checkpoint", "neg_chatread_missing_thread",
+    "neg_fresh_context_legacy_arg_name", "neg_read_negative_offset",
+    "neg_read_unknown_arg", "neg_write_create_with_entry_id",
+    "neg_success_without_new_window", "neg_success_unavailable_controller",
+    "neg_write_update_without_expected_revision", "neg_supersede_unknown_target_state",
+    "neg_chatread_without_message_or_item",
+}
+FAMILY_MINIMUMS = {
+    "notebooks": 1, "entry_envelopes": 3, "revision_mutations": 3,
+    "resume_capsules": 1, "notebook_checkpoints": 1, "context_transitions": 4,
+    "tool_requests": 7, "typed_errors": 3,
+}
+ANCHOR_RECORDS = {
+    "notebooks": ["nb_01JEXAMPLENOTEBOOK"],
+    "entry_envelopes": ["wne_01JEXAMPLEENTRY01", "wne_01JEXAMPLESTALE02", "wne_01JEXAMPLEIMPORT03"],
+    "context_transitions": ["cwt_01JEXAMPLETRANS01", "cwt_01JEXAMPLECRASH01",
+                             "cwt_01JEXAMPLECRASH02", "cwt_01JEXAMPLECRASH03"],
+    "notebook_checkpoints": ["nbc_01JEXAMPLECKPT01"],
+}
+TOOL_COVERAGE = {"notebook_search", "notebook_read", "notebook_write",
+                 "notebook_supersede", "fresh_context_request", "chatread"}
+EXPECTED_SCENARIO_IDS = {f"WNC-A{i:02d}" for i in range(1, 63)}
+SCENARIO_DISPOSITIONS = {"static_fixture", "owner_prose_only", "runtime_only_future"}
+
+
+def _parse_mutation_path(path: str) -> list:
+    tokens: list = []
+    for segment in path.split("."):
+        head, *brackets = segment.split("[")
+        if head:
+            tokens.append(head)
+        for bracket in brackets:
+            tokens.append(int(bracket.rstrip("]")))
+    return tokens
+
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -55,13 +101,7 @@ def apply_mutation(document: dict[str, Any], mutation: dict[str, Any]) -> Any:
         value = "x" * int(mutation["value_char_count"])
     else:
         value = copy.deepcopy(mutation["value"])
-    tokens: list[Any] = []
-    for segment in path.split("."):
-        head, *brackets = segment.split("[")
-        if head:
-            tokens.append(head)
-        for bracket in brackets:
-            tokens.append(int(bracket.rstrip("]")))
+    tokens = _parse_mutation_path(path)
     target: Any = mutated
     for token in tokens[:-1]:
         target = target[token]
@@ -85,13 +125,20 @@ def resolve_validator_pointer(schema: dict[str, Any], fixture_pointer: str) -> d
     return family_schema.get("items", family_schema)
 
 
-def validate_with_jsonschema(schema: dict[str, Any], document: Any) -> list[str]:
+def iter_validation_errors(schema: dict[str, Any], document: Any) -> list[Any] | None:
     try:
         import jsonschema
     except ImportError:  # pragma: no cover - environment guard
-        return ["environment_error: jsonschema library unavailable"]
+        return None
     validator = jsonschema.Draft202012Validator(schema)
-    return [error.message for error in sorted(validator.iter_errors(document), key=str)]
+    return list(validator.iter_errors(document))
+
+
+def validate_with_jsonschema(schema: dict[str, Any], document: Any) -> list[str]:
+    errors = iter_validation_errors(schema, document)
+    if errors is None:  # pragma: no cover - environment guard
+        return ["environment_error: jsonschema library unavailable"]
+    return [error.message for error in sorted(errors, key=str)]
 
 
 def check_explicit_invariants(fixtures: dict[str, Any]) -> list[str]:
@@ -129,6 +176,10 @@ def check_explicit_invariants(fixtures: dict[str, Any]) -> list[str]:
                 problems.append(f"{label}: success state without observed admission boundary (WNC-C05)")
             if not transition.get("checkpoint_ref"):
                 problems.append(f"{label}: success state without committed checkpoint (WNC-C06)")
+            if not transition.get("new_context_window_id"):
+                problems.append(f"{label}: success state without an established next-window identity (WNC-C05/WNC-R03)")
+            if transition.get("effective_controller") not in {"pm_managed", "provider_native"}:
+                problems.append(f"{label}: success state recorded under an unavailable/degraded controller (WNC-P01/WNC-R03)")
         if transition["reason"] == "run_rotation":
             problems.append(f"{label}: fresh-window transition conflated with run rotation (WNC-C01)")
         if transition["requested_controller"] == "pm_managed" and transition["effective_controller"] == "provider_native" and not transition.get("failure_reason"):
@@ -139,6 +190,26 @@ def check_explicit_invariants(fixtures: dict[str, Any]) -> list[str]:
                 problems.append(f"{label}: crash after commit must retain the committed checkpoint ref (WNC-C08)")
         if failure == "crash_before_checkpoint_commit" and transition.get("checkpoint_ref"):
             problems.append(f"{label}: crash before commit cannot claim a committed checkpoint (WNC-C08)")
+    for index, request in enumerate(fixtures["positive"]["tool_requests"]):
+        label = f"tool_requests[{index}]"
+        args = request.get("args", {})
+        range_spec = args.get("range")
+        if isinstance(range_spec, dict) and range_spec.get("convention") in {"unicode_char_offsets", "utf8_byte_offsets"}:
+            start, end = range_spec.get("start"), range_spec.get("end")
+            if isinstance(start, int) and isinstance(end, int) and end < start:
+                problems.append(f"{label}: reversed range (end < start) corrupts evidence addressing (WNC-H04)")
+        if request.get("tool") == "notebook_write":
+            operation = args.get("operation")
+            if operation == "create":
+                if args.get("entry_id") is not None or args.get("expected_revision") is not None:
+                    problems.append(f"{label}: create mints the entry host-side; it cannot carry a preassigned entry id or expected revision (WNC-N06)")
+                if not args.get("body"):
+                    problems.append(f"{label}: create without a bounded body (WNC-N05)")
+            elif operation in {"update", "append"}:
+                if not isinstance(args.get("expected_revision"), int) or not args.get("entry_id"):
+                    problems.append(f"{label}: update/append require the CAS expected revision and an entry id (WNC-N06)")
+                if len(args.get("body", "").encode("utf-8")) > 65536:
+                    problems.append(f"{label}: write body exceeds 64 KiB UTF-8 (WNC-N05)")
     for index, error in enumerate(fixtures["positive"]["typed_errors"]):
         label = f"typed_errors[{index}]"
         if error.get("nondiscriminating") and error.get("detail"):
@@ -168,10 +239,56 @@ def check_registry_linkage(registry: dict[str, Any]) -> list[str]:
     return problems
 
 
-def run_validation() -> dict[str, Any]:
+def check_fixture_inventory(fixtures: dict[str, Any]) -> list[str]:
+    """Fail-open validation is no validation: pin the fixture corpus itself (WNC-R04)."""
+    problems: list[str] = []
+    positive = fixtures.get("positive")
+    if not isinstance(positive, dict):
+        return ["positive fixture families missing entirely"]
+    for family, minimum in FAMILY_MINIMUMS.items():
+        rows = positive.get(family)
+        if not isinstance(rows, list) or len(rows) < minimum:
+            problems.append(f"positive family {family} has fewer than {minimum} records (coverage loss)")
+    for family, ids in ANCHOR_RECORDS.items():
+        rows = positive.get(family, [])
+        id_field = {"notebooks": "notebook_id", "entry_envelopes": "entry_id",
+                    "context_transitions": "transition_id", "notebook_checkpoints": "checkpoint_id"}[family]
+        present = {row.get(id_field) for row in rows}
+        for anchor in ids:
+            if anchor not in present:
+                problems.append(f"anchor record {family}/{anchor} missing from the fixture corpus")
+    tools = {request.get("tool") for request in positive.get("tool_requests", [])}
+    for tool in sorted(TOOL_COVERAGE - tools):
+        problems.append(f"no positive request covers registered tool {tool}")
+    negatives = fixtures.get("negative", [])
+    seen = [negative.get("negative_id") for negative in negatives]
+    for negative_id in sorted(set(seen) - EXPECTED_NEGATIVE_IDS):
+        problems.append(f"unknown negative fixture id {negative_id!r} (inventory drift)")
+    for negative_id in sorted(EXPECTED_NEGATIVE_IDS - set(seen)):
+        problems.append(f"required negative fixture {negative_id!r} missing (coverage loss)")
+    if len(seen) != len(set(seen)):
+        problems.append("duplicate negative fixture ids present")
+    scenario_map = fixtures.get("acceptance_scenario_map") or {}
+    scenarios = scenario_map.get("scenarios") or {}
+    present_ids = set(scenarios)
+    for missing in sorted(EXPECTED_SCENARIO_IDS - present_ids):
+        problems.append(f"acceptance scenario {missing} missing from the scenario map")
+    for extra in sorted(present_ids - EXPECTED_SCENARIO_IDS):
+        problems.append(f"unknown acceptance scenario {extra} in the scenario map")
+    for scenario_id, entry in sorted(scenarios.items()):
+        if isinstance(entry, dict) and entry.get("disposition") not in SCENARIO_DISPOSITIONS:
+            problems.append(f"scenario {scenario_id} has disposition {entry.get('disposition')!r}")
+    return problems
+
+
+def run_validation(
+    fixtures: dict[str, Any] | None = None,
+    schema: dict[str, Any] | None = None,
+    registry: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     checks: list[dict[str, Any]] = []
-    schema = load_json(SCHEMA_PATH)
-    fixtures = load_json(FIXTURES_PATH)
+    schema = schema if schema is not None else load_json(SCHEMA_PATH)
+    fixtures = fixtures if fixtures is not None else load_json(FIXTURES_PATH)
 
     if schema.get("schema_id") is None and schema.get("$id") is None:
         checks.append({"name": "schema_identity", "status": "fail", "detail": "schema missing $id"})
@@ -189,21 +306,59 @@ def run_validation() -> dict[str, Any]:
 
     negative_results: list[dict[str, Any]] = []
     for negative in fixtures.get("negative", []):
-        mutated = apply_mutation(fixtures, negative["mutation"])
-        target_pointer = negative["rejects"]
-        errors = validate_with_jsonschema(schema, mutated)
+        # Fail closed: a corpus so broken that a mutation cannot even be applied
+        # is a validation failure, not a crash (WNC-R04).
+        try:
+            mutated = apply_mutation(fixtures, negative["mutation"])
+        except Exception as error:  # noqa: BLE001 - deliberate fail-closed net
+            negative_results.append({
+                "negative_id": negative.get("negative_id"),
+                "rejected": False,
+                "attributed": False,
+                "rejects": negative.get("rejects"),
+                "sample_error": f"mutation could not be applied against this corpus: {error!r}",
+            })
+            continue
+        raw_errors = iter_validation_errors(schema, mutated)
+        if raw_errors is None:  # pragma: no cover - environment guard
+            errors: list[str] = ["environment_error: jsonschema library unavailable"]
+            raw_errors = []
+        else:
+            errors = [error.message for error in sorted(raw_errors, key=str)]
         rejected = bool(errors)
+        # Constraint-specific attribution: the rejection must be caused at (or under)
+        # the intended object, not by an unrelated subschema (WNC-R04). jsonschema
+        # reports `required`/`additionalProperties` violations at the parent object,
+        # so parent-level errors within the mutated record count when they name the
+        # mutated leaf or sit at or above the mutated location.
+        mutated_tokens = _parse_mutation_path(negative["mutation"]["path"])
+
+        def _attributed(error: Any) -> bool:
+            path = list(error.absolute_path)
+            if path[: len(mutated_tokens)] == mutated_tokens:
+                return True
+            if path[:2] != mutated_tokens[:2]:
+                return False
+            if len(path) <= len(mutated_tokens):
+                return True
+            leaf = mutated_tokens[-1]
+            return isinstance(leaf, str) and leaf in (error.message or "")
+
+        attributed = any(_attributed(error) for error in raw_errors)
         result = {
             "negative_id": negative["negative_id"],
             "rejected": rejected,
+            "attributed": attributed,
+            "rejects": negative.get("rejects"),
             "sample_error": errors[0] if errors else None,
         }
         negative_results.append(result)
     rejected_all = all(result["rejected"] for result in negative_results)
+    attributed_all = all(result["attributed"] for result in negative_results)
     checks.append({
         "name": "negative_fixtures_rejected",
-        "status": "pass" if rejected_all else "fail",
-        "detail": [result for result in negative_results if not result["rejected"]],
+        "status": "pass" if rejected_all and attributed_all and negative_results else "fail",
+        "detail": [result for result in negative_results if not result["rejected"] or not result["attributed"]],
     })
 
     invariants = check_explicit_invariants(fixtures)
@@ -213,7 +368,14 @@ def run_validation() -> dict[str, Any]:
         "detail": invariants,
     })
 
-    registry = load_json(REGISTRY_PATH)
+    inventory = check_fixture_inventory(fixtures)
+    checks.append({
+        "name": "fixture_inventory_integrity",
+        "status": "pass" if not inventory else "fail",
+        "detail": inventory,
+    })
+
+    registry = registry if registry is not None else load_json(REGISTRY_PATH)
     linkage = check_registry_linkage(registry)
     checks.append({
         "name": "storage_registry_linkage",
@@ -235,6 +397,10 @@ def run_validation() -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    # `validate` is the documented PlanUnit invocation form (WN/ATS validation
+    # surfaces); it is the default behavior, accepted explicitly for interface
+    # compatibility (WNC-R05).
+    parser.add_argument("command", nargs="?", choices=["validate"], help="optional; 'validate' is the default behavior")
     parser.add_argument("--json", action="store_true", help="print the full JSON verdict")
     args = parser.parse_args(argv)
     try:

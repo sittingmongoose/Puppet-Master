@@ -1,0 +1,20 @@
+{
+  "evidence_valid": true,
+  "event_authority_closed": false,
+  "checks": {
+    "exact_live_source_set": true,
+    "every_direct_plans_markdown_inventoried": true,
+    "all_live_sources_rehashed": true,
+    "source_manifest_digest_matches": true,
+    "occurrence_ledger_hash_matches": true,
+    "live_registry_exactly_matches_status": true,
+    "status_remains_fail_closed": true,
+    "august_pass_marked_stale_void": true,
+    "depth_remains_incomplete": true,
+    "explicit_exclusions_present": true,
+    "quarantined_252_exact_set_and_custody": true,
+    "artifact_hashes_match_receipt": true,
+    "validator_hash_matches_receipt": true,
+    "receipt_is_explicitly_non_closing": true
+  }
+}

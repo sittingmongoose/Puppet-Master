@@ -1,0 +1,43 @@
+ M .gitignore
+ M Concepts/TestPMConcept.html
+ M Concepts/pm7-tools/global_hover_tags_source.py
+ M Concepts/pm7-tools/guided_tour_source.py
+ M Concepts/pm7-tools/onboarding_cinematic_source.py
+ M Concepts/pm7-tools/settings_tome_source.py
+ M Plans/00-plans-index.md
+ M Plans/Automated_Testing_System.md
+ M Plans/FinalGUISpec.md
+ M Plans/Settings_System.md
+ M scripts/pm-integration-packet-audit-work.py
+ M scripts/pm-integration-packet-audit.py
+ M scripts/pm-plans-verify.py
+ M scripts/pm-touch-closure-verify.py
+ M tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-005/cases/process-completion-prefix-reopen-invalid/sandbox_repo
+ M tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-005/cases/process-root-eof-trailing-bytes/sandbox_repo
+ M tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-005/cases/process-same-root-reinvoke-zero-request/sandbox_repo
+ M tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-006/cases/process-root-eof-trailing-bytes/sandbox_repo
+ M tests/test_pm_plans_verify_subprocess.py
+?? Concepts/TestAGYPMConcept.html
+?? Concepts/TestFablePMConcpet-src/
+?? Concepts/TestFablePMConcpet.html
+?? Concepts/TestGLMFlashPMConcept.html
+?? Concepts/TestGLMPMConcept.html
+?? Concepts/TestK3PMConcept.html
+?? Concepts/TestMusePMConcept.html
+?? Concepts/TestOpusPMConcpet-src/
+?? Concepts/TestOpusPMConcpet.html
+?? Concepts/TestQwenPMConcept.html
+?? Concepts/pm7-tools/glm/
+?? Concepts/pm7-tools/settings_manager_polish_source.py
+?? Concepts/pm7-tools/settings_sound_preview_source.py
+?? Concepts/pm7-tools/verify/settings_polish_checkpoint.mjs
+?? Concepts/pm7-tools/verify/settings_sound_preview_selftest.mjs
+?? Plans/forge_backup_tsnet_acceptance.json
+?? Plans/forge_backup_tsnet_acceptance.schema.json
+?? scripts/pm-forge-backup-acceptance-verify.py
+?? scripts/pm_packet_audit_verdicts.py
+?? tests/test_pm_forge_backup_acceptance.py
+?? tests/test_pm_packet_audit_verdicts.py
+?? tests/test_pm_touch_closure_source.py
+?? tmp/audit_qwen.py
+?? tmp/rules.txt

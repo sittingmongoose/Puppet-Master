@@ -1,0 +1,142 @@
+{
+  "schema_id": "pm.handoff.wnc.validator_results.v1",
+  "packet_id": "PM-WNC-2026-09-05-v1",
+  "work_item_id": "wnc-20260905",
+  "subject_fingerprint": "d8f63e6c35fcefb7ba05cdb4f5576e6d50bb10fc4227f1168ff7145da4b48832",
+  "evidence_boundary": "Static Plans-governance and schema/fixture validation only. Runtime, native handler, provider, recovery, security, visual, and performance proof is NOT_RUN and is not claimed.",
+  "runs": [
+    {
+      "name": "packet validator (tools/validate_packet.py)",
+      "subject": "extracted packet",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "23 files, 85 requirements, 62 scenarios, owner candidates 61",
+      "log": "inline (recorded in report)"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py run-gates",
+      "subject": "final combined working tree",
+      "exit_code": 1,
+      "status": "fail_pre_existing_only",
+      "detail": "26 subchecks: 23 pass, 3 fail — all three failing classes fail identically at baseline HEAD (validate_audit_closure reopened/stale rows; validate_implementation_readiness pnc019 receipt ×16 + event-authority adjudication; validate_touch_closure Guided Tour drift). Zero new failures versus baseline; 5 baseline-failing subchecks now pass (json_syntax, lint_contractrefs, lint_path_refs, validate_audit_status_index, validate_pm7_gui_fixtures).",
+      "log": "logs/final_run_gates.json",
+      "failures_ref": "logs/final_run_gates_failures.json",
+      "baseline_ref": "baseline/baseline_run_gates_summary.json"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py audit-governance",
+      "subject": "final combined working tree",
+      "exit_code": 1,
+      "status": "fail_pre_existing_only",
+      "detail": "Same 3 pre-existing failing classes; includes validate-working-notebook-contracts pass.",
+      "log": "logs/final_audit_governance.json",
+      "failures_ref": "logs/final_audit_governance_failures.json"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "all canonical hashes refreshed after governed inputs stabilized"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "status": "pass"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py check-shards",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "2132 shards / 98 docs, 0 failures"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "current snapshot run pds-20260905-012 (supersedes 011)"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "status": "pass"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py validate-working-notebook-contracts",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "positive fixtures validate; 14 negative fixtures rejected; registry linkage pass"
+    },
+    {
+      "name": "python3 scripts/pm-plans-verify.py lint-contractrefs / lint-banned-phrases / lint-path-refs / json-syntax / validate-plan-graph / validate-auto-decisions",
+      "exit_code": 0,
+      "status": "pass"
+    },
+    {
+      "name": "python3 scripts/pm-plan-index.py generate && validate",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "6362 PlanUnits; New Plan Authoring Profile layout validated"
+    },
+    {
+      "name": "python3 -m unittest tests.test_pm_working_notebook_contracts",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "7 tests OK"
+    },
+    {
+      "name": "python3 scripts/pm-event-authority-currentness.py generate && validate",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "shifted evidence restamped; receipt explicitly non-closing"
+    },
+    {
+      "name": "final Spec Lock + evidence restamp (post-gate-capture)",
+      "detail": "A final pm-governance-seal.py refresh of Plans/Spec_Lock.json and the sharding evidence bundle was applied after the run-gates/audit-governance capture, because governed artifact hashes had shifted during sealing. verify-spec-lock and validate-evidence re-verified pass immediately afterwards and hashes were confirmed stable over a 90-second window. The three pre-existing failing subchecks are independent of these governance hashes.",
+      "exit_code": 0,
+      "status": "pass"
+    }
+  ],
+  "baseline_comparison": {
+    "baseline_subject": "HEAD 4c88c0f01300cea36135b73eec96991d73969aa2 in disposable worktree /tmp/wnc_baseline_wt (no working-tree changes)",
+    "baseline_failing_subchecks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_implementation_readiness",
+      "validate_pm7_gui_fixtures",
+      "validate_touch_closure",
+      "validate_audit_closure",
+      "validate_audit_status_index"
+    ],
+    "final_failing_subchecks": [
+      "validate_audit_closure",
+      "validate_implementation_readiness",
+      "validate_touch_closure"
+    ],
+    "introduced_failures": [],
+    "resolved_since_baseline": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_status_index",
+      "validate_pm7_gui_fixtures"
+    ],
+    "pre_existing_failure_detail": {
+      "validate_implementation_readiness": "pnc019_certification_receipt.json pins hashes of runtime-certified docs/scripts; restamping requires the PNC-019 certification harness (runtime), which this packet must not run. Event-authority residual failures (live registry drift, checkpoint approvals ×2, denominator ×2, family depth ×2) pre-date this packet and require their own adjudication/approval flow.",
+      "validate_audit_closure": "global semantic closure registry rows pin owner evidence hashes (incl. Planning_Ledger_System.md edited by this packet) and previously reopened rows; registry repair belongs to audit cycles per PDS-014 and was deliberately not hand-edited.",
+      "validate_touch_closure": "Guided Tour/agent_plugin census drift from an unrelated in-flight work item; pre-existing at baseline."
+    }
+  },
+  "mutations_disclosure": {
+    "disposable_checkout": "/tmp/wnc_baseline_wt created from HEAD for baseline runs; no generated changes copied back.",
+    "working_tree_mutations_by_validation": [
+      "Plans/.plan_index/** regenerated (pm-plan-index.py generate)",
+      "Plans/_shards/** + Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/** regenerated/restamped (pm-shard-plans.py, pm-governance-seal.py sync)",
+      "Plans/.implementation_readiness/buildability_gate_report.json regenerated (pm-implementation-readiness.py generate)",
+      "Plans/.audits/event-authority-2026-08-13-currentness/** restamped (pm-event-authority-currentness.py generate)",
+      "Plans/.plan_migration/pds-20260905-011/012 + current_run.json (pm-plan-migration.py snapshot-current)",
+      "Plans/Spec_Lock.json + Plans/auto_decisions.jsonl + Plans/plan_graph.json (pm-governance-seal.py register-canonical-docs + refresh)"
+    ],
+    "user_edits_reverted": "Only this work item's own formatting-only rewrite of two registry JSON files was reverted and re-applied minimally. No user or third-party edits were reverted or weakened; no gate was weakened (the implementation-readiness count pins track a legitimate registry growth of +4 fully-dispositioned families)."
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "subject_commit": "2826699f7e7f23ab12a8fdfaf5f1518748f12d5a",
+  "method": "Local focused source-fragment reproduction; not full repo gates or product runtime.",
+  "probe_count": 10,
+  "probes": [
+    {
+      "probe_id": "tool_empty_chatread",
+      "schema_accepts": true,
+      "errors": [],
+      "payload": {
+        "tool": "chatread",
+        "args": {}
+      }
+    },
+    {
+      "probe_id": "tool_empty_notebook_write",
+      "schema_accepts": true,
+      "errors": [],
+      "payload": {
+        "tool": "notebook_write",
+        "args": {}
+      }
+    },
+    {
+      "probe_id": "tool_negative_range",
+      "schema_accepts": true,
+      "errors": [],
+      "payload": {
+        "tool": "chatread",
+        "args": {
+          "range": {
+            "convention": "unicode_char_offsets",
+            "start": -20,
+            "end": -5
+          }
+        }
+      }
+    },
+    {
+      "probe_id": "tool_unknown_parameter",
+      "schema_accepts": true,
+      "errors": [],
+      "payload": {
+        "tool": "fresh_context_request",
+        "args": {
+          "reason": "proactive_before_overflow",
+          "invented_parameter": true
+        }
+      }
+    },
+    {
+      "probe_id": "transition_control",
+      "schema_accepts": true,
+      "retrieved_transition_invariant_predicates_accept": true,
+      "schema_errors": [],
+      "invariant_errors": [],
+      "payload": {
+        "schema_version": "1.0.0",
+        "transition_id": "cwt_PROBE1",
+        "project_id": "project_probe",
+        "thread_id": "thr_PROBE1",
+        "run_lineage": {
+          "run_id": "run-probe",
+          "attempt_id": "attempt-probe"
+        },
+        "old_context_window_id": "cw-old",
+        "new_context_window_id": "cw-new",
+        "requested_controller": "pm_managed",
+        "effective_controller": "pm_managed",
+        "route_snapshot_ref": "route:probe",
+        "reason": "proactive_before_overflow",
+        "initiator": "agent_request",
+        "state": "activated",
+        "checkpoint_ref": "nbc_PROBE1",
+        "policy_generation": 1,
+        "stop_epoch_observed": 0,
+        "admission_receipt_ref": "ProviderDispatchAdmissionReceipt:probe",
+        "failure_reason": null,
+        "timestamps": {
+          "requested_at_utc": "2026-09-06T00:00:00Z",
+          "activated_at_utc": "2026-09-06T00:00:01Z"
+        }
+      }
+    },
+    {
+      "probe_id": "transition_missing_receipt",
+      "schema_accepts": true,
+      "retrieved_transition_invariant_predicates_accept": false,
+      "schema_errors": [],
+      "invariant_errors": [
+        "success without admission"
+      ],
+      "payload": {
+        "schema_version": "1.0.0",
+        "transition_id": "cwt_PROBE1",
+        "project_id": "project_probe",
+        "thread_id": "thr_PROBE1",
+        "run_lineage": {
+          "run_id": "run-probe",
+          "attempt_id": "attempt-probe"
+        },
+        "old_context_window_id": "cw-old",
+        "new_context_window_id": "cw-new",
+        "requested_controller": "pm_managed",
+        "effective_controller": "pm_managed",
+        "route_snapshot_ref": "route:probe",
+        "reason": "proactive_before_overflow",
+        "initiator": "agent_request",
+        "state": "activated",
+        "checkpoint_ref": "nbc_PROBE1",
+        "policy_generation": 1,
+        "stop_epoch_observed": 0,
+        "failure_reason": null,
+        "timestamps": {
+          "requested_at_utc": "2026-09-06T00:00:00Z",
+          "activated_at_utc": "2026-09-06T00:00:01Z"
+        }
+      }
+    },
+    {
+      "probe_id": "activated_null_new_window",
+      "schema_accepts": true,
+      "retrieved_transition_invariant_predicates_accept": true,
+      "schema_errors": [],
+      "invariant_errors": [],
+      "payload": {
+        "schema_version": "1.0.0",
+        "transition_id": "cwt_PROBE1",
+        "project_id": "project_probe",
+        "thread_id": "thr_PROBE1",
+        "run_lineage": {
+          "run_id": "run-probe",
+          "attempt_id": "attempt-probe"
+        },
+        "old_context_window_id": "cw-old",
+        "new_context_window_id": null,
+        "requested_controller": "pm_managed",
+        "effective_controller": "pm_managed",
+        "route_snapshot_ref": "route:probe",
+        "reason": "proactive_before_overflow",
+        "initiator": "agent_request",
+        "state": "activated",
+        "checkpoint_ref": "nbc_PROBE1",
+        "policy_generation": 1,
+        "stop_epoch_observed": 0,
+        "admission_receipt_ref": "ProviderDispatchAdmissionReceipt:probe",
+        "failure_reason": null,
+        "timestamps": {
+          "requested_at_utc": "2026-09-06T00:00:00Z",
+          "activated_at_utc": "2026-09-06T00:00:01Z"
+        }
+      }
+    },
+    {
+      "probe_id": "activated_unavailable_controller",
+      "schema_accepts": true,
+      "retrieved_transition_invariant_predicates_accept": true,
+      "schema_errors": [],
+      "invariant_errors": [],
+      "payload": {
+        "schema_version": "1.0.0",
+        "transition_id": "cwt_PROBE1",
+        "project_id": "project_probe",
+        "thread_id": "thr_PROBE1",
+        "run_lineage": {
+          "run_id": "run-probe",
+          "attempt_id": "attempt-probe"
+        },
+        "old_context_window_id": "cw-old",
+        "new_context_window_id": "cw-new",
+        "requested_controller": "pm_managed",
+        "effective_controller": "unavailable",
+        "route_snapshot_ref": "route:probe",
+        "reason": "proactive_before_overflow",
+        "initiator": "agent_request",
+        "state": "activated",
+        "checkpoint_ref": "nbc_PROBE1",
+        "policy_generation": 1,
+        "stop_epoch_observed": 0,
+        "admission_receipt_ref": "ProviderDispatchAdmissionReceipt:probe",
+        "failure_reason": null,
+        "timestamps": {
+          "requested_at_utc": "2026-09-06T00:00:00Z",
+          "activated_at_utc": "2026-09-06T00:00:01Z"
+        }
+      }
+    },
+    {
+      "probe_id": "empty_positive_fixture_families",
+      "root_schema_accepts": true,
+      "empty_negative_rejected_all_expression": true,
+      "scope_note": "Registry checks are separate; they are not rerun here."
+    },
+    {
+      "probe_id": "documented_validate_argument",
+      "exit_code": 2,
+      "stderr": "usage: schema_fragment_probes.py [-h] [--json]\nschema_fragment_probes.py: error: unrecognized arguments: validate\n"
+    }
+  ]
+}

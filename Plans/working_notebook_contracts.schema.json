@@ -31,49 +31,57 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/working_notebook_record"
-      }
+      },
+      "minItems": 1
     },
     "entry_envelopes": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/working_notebook_entry_record"
-      }
+      },
+      "minItems": 3
     },
     "revision_mutations": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/notebook_revision_mutation"
-      }
+      },
+      "minItems": 3
     },
     "resume_capsules": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/resume_capsule"
-      }
+      },
+      "minItems": 1
     },
     "notebook_checkpoints": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/notebook_checkpoint_record"
-      }
+      },
+      "minItems": 1
     },
     "context_transitions": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/context_transition_record"
-      }
+      },
+      "minItems": 4
     },
     "tool_requests": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/tool_request"
-      }
+      },
+      "minItems": 4
     },
     "typed_errors": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/typed_error"
-      }
+      },
+      "minItems": 3
     }
   },
   "$defs": {
@@ -1103,31 +1111,6 @@
         {
           "if": {
             "properties": {
-              "state": {
-                "enum": [
-                  "activated",
-                  "recovered_resumed"
-                ]
-              }
-            },
-            "required": [
-              "state"
-            ]
-          },
-          "then": {
-            "properties": {
-              "admission_receipt_ref": {
-                "type": "string"
-              },
-              "checkpoint_ref": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
               "failure_reason": {
                 "type": "string",
                 "pattern": "^crash_after_(commit|native_activation)"
@@ -1163,6 +1146,45 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "activated",
+                  "recovered_resumed"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "admission_receipt_ref",
+              "checkpoint_ref",
+              "new_context_window_id"
+            ],
+            "properties": {
+              "admission_receipt_ref": {
+                "type": "string"
+              },
+              "checkpoint_ref": {
+                "type": "string"
+              },
+              "new_context_window_id": {
+                "type": "string"
+              },
+              "effective_controller": {
+                "enum": [
+                  "pm_managed",
+                  "provider_native"
+                ]
+              }
+            }
+          }
         }
       ]
     },
@@ -1193,10 +1215,7 @@
           "if": {
             "properties": {
               "tool": {
-                "enum": [
-                  "notebook_read",
-                  "chatread"
-                ]
+                "const": "notebook_search"
               }
             },
             "required": [
@@ -1207,20 +1226,417 @@
             "properties": {
               "args": {
                 "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "scope"
+                ],
                 "properties": {
-                  "range": {
-                    "type": "object",
-                    "required": [
-                      "convention"
+                  "query": {
+                    "type": [
+                      "string",
+                      "null"
                     ],
-                    "properties": {
-                      "convention": {
-                        "enum": [
-                          "unicode_char_offsets",
-                          "utf8_byte_offsets"
-                        ]
+                    "maxLength": 512
+                  },
+                  "scope": {
+                    "$ref": "#/$defs/scope_binding"
+                  },
+                  "filters": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "cursor": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 256
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_read"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "notebook_id",
+                  "entry_id"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": "string",
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "entry_id": {
+                    "type": "string",
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "range": {
+                    "$ref": "#/$defs/read_range"
+                  },
+                  "include_provenance": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "chatread"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "pattern": "^thr_[A-Za-z0-9]+$"
+                  },
+                  "message_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "item_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "range": {
+                    "$ref": "#/$defs/read_range"
+                  },
+                  "include_neighbors": {
+                    "type": "boolean"
+                  },
+                  "include_tool_pair": {
+                    "type": "boolean"
+                  }
+                },
+                "allOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "required": [
+                          "message_id"
+                        ],
+                        "properties": {
+                          "message_id": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "required": [
+                          "item_id"
+                        ],
+                        "properties": {
+                          "item_id": {
+                            "type": "string"
+                          }
+                        }
                       }
-                    }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "notebook_id",
+                  "operation",
+                  "request_id"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": "string",
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "entry_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "operation": {
+                    "enum": [
+                      "create",
+                      "update",
+                      "append"
+                    ]
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expected_revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "actor": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 65536
+                  },
+                  "scope": {
+                    "$ref": "#/$defs/scope_binding"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_supersede"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "notebook_id",
+                  "entry_id",
+                  "request_id"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": "string",
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "entry_id": {
+                    "type": "string",
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expected_revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "target_state": {
+                    "enum": [
+                      "superseded",
+                      "archived",
+                      "tombstoned"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "fresh_context_request"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "reason": {
+                    "enum": [
+                      "proactive_before_overflow",
+                      "pressure_rising",
+                      "pre_overflow_material_progress",
+                      "overflow_imminent",
+                      "model_change",
+                      "recovery_reconstruction"
+                    ]
+                  },
+                  "checkpoint_required": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              },
+              "args": {
+                "properties": {
+                  "operation": {
+                    "const": "create"
+                  }
+                },
+                "required": [
+                  "operation"
+                ]
+              }
+            },
+            "required": [
+              "tool",
+              "args"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "required": [
+                  "body",
+                  "scope"
+                ],
+                "properties": {
+                  "entry_id": {
+                    "type": "null"
+                  },
+                  "expected_revision": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              },
+              "args": {
+                "properties": {
+                  "operation": {
+                    "enum": [
+                      "update",
+                      "append"
+                    ]
+                  }
+                },
+                "required": [
+                  "operation"
+                ]
+              }
+            },
+            "required": [
+              "tool",
+              "args"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "required": [
+                  "entry_id",
+                  "expected_revision",
+                  "body"
+                ],
+                "properties": {
+                  "entry_id": {
+                    "type": "string"
+                  },
+                  "expected_revision": {
+                    "type": "integer"
                   }
                 }
               }
@@ -1263,6 +1679,31 @@
         "nondiscriminating": {
           "type": "boolean",
           "description": "true when the user/model-facing payload must not reveal denied existence"
+        }
+      }
+    },
+    "read_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "convention",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "convention": {
+          "enum": [
+            "unicode_char_offsets",
+            "utf8_byte_offsets"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
         }
       }
     }

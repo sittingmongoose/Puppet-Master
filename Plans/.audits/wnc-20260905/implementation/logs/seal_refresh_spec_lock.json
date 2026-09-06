@@ -1,0 +1,40 @@
+{
+  "evidence": [
+    {
+      "changed": false,
+      "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "updated_artifact_hashes": [],
+      "updated_node_fields": []
+    }
+  ],
+  "spec_lock": {
+    "changed": true,
+    "path": "Plans/Spec_Lock.json",
+    "schema_version_requests": [],
+    "schema_version_updates": [],
+    "updated_hashes": [
+      "Plans/00-plans-index.md",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Glossary.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Models_System.md",
+      "Plans/Multi-Account.md",
+      "Plans/PRD_Builder.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Planning_Wizard.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/UI_Wiring_Rules.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/plan_graph.json",
+      "Plans/sharding_config.json",
+      "Plans/storage-plan.md",
+      "Plans/storage_value_registry.json",
+      "Plans/usage-feature.md",
+      "scripts/pm-implementation-readiness.py",
+      "scripts/pm-plans-verify.py"
+    ]
+  }
+}

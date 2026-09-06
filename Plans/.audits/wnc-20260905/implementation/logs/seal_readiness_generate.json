@@ -1,0 +1,357 @@
+{
+  "approve_and_build_gate": {
+    "command_id": "cmd.planning_wizard.approve_and_build",
+    "disabled": true,
+    "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
+    "disabled_reasons": [
+      {
+        "blocker_family": "runtime_lifecycle",
+        "blocker_ids": [
+          "IRB-005"
+        ],
+        "code": "buildability_blocked.runtime_lifecycle",
+        "message": "Approve And Build is disabled because implementation buildability requires runtime_lifecycle evidence in the exact owner docs listed here.",
+        "owner_docs": [
+          "Plans/Automated_Testing_System.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Goal_Runtime_System.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Plan_To_Node_Compilation.md"
+        ]
+      },
+      {
+        "blocker_family": "clean_room_harness",
+        "blocker_ids": [
+          "IRB-011"
+        ],
+        "code": "buildability_blocked.clean_room_harness",
+        "message": "Approve And Build is disabled because implementation buildability requires clean_room_harness evidence in the exact owner docs listed here.",
+        "owner_docs": [
+          "Plans/Automated_Testing_System.md",
+          "Plans/Plan_To_Node_Compilation.md",
+          "Plans/Planning_Wizard.md",
+          "Plans/Progression_Gates.md"
+        ]
+      }
+    ],
+    "enabled": false,
+    "hard_disabled_reasons": [
+      {
+        "code": "hard_disabled.PNC-019",
+        "message": "PNC-019 blocks runtime buildability until executable lifecycle certification evidence exists.",
+        "owner_docs": [
+          "Plans/Plan_To_Node_Compilation.md"
+        ],
+        "plan_unit_id": "PNC-019",
+        "source": "Plans/.plan_index/node_readiness_report.json"
+      }
+    ],
+    "must_list_blocker_families": true,
+    "must_list_exact_owner_docs": true
+  },
+  "buildability_gate_passed": false,
+  "buildability_pass_requirements": {
+    "no_hard_disabled_reasons": false,
+    "node_readiness_executable_lifecycle_certification_complete": false,
+    "open_blocker_count_zero": false,
+    "source_hashes_current": true
+  },
+  "buildability_status": "blocked",
+  "captured_plan_complete_buildable_ladder": [
+    {
+      "rule": "Captured source, ledger atoms, or preserved lineage are not plan-complete and are not buildable.",
+      "state": "captured",
+      "sufficient_for_buildability": false
+    },
+    {
+      "rule": "Plan-complete docs and green validators are necessary preconditions only.",
+      "state": "plan_complete",
+      "sufficient_for_buildability": false
+    },
+    {
+      "rule": "Buildability requires concrete schemas, command wiring, security boundaries, behavioral acceptance, and clean-room lifecycle evidence.",
+      "state": "buildable",
+      "sufficient_for_buildability": true
+    }
+  ],
+  "false_proof_guardrails": [
+    "schema_existence_is_not_buildability",
+    "validator_pass_is_not_buildability",
+    "source_preservation_is_not_behavioral_acceptance",
+    "semantic_closure_is_not_buildability",
+    "wiring_json_existence_is_not_command_execution"
+  ],
+  "family_summary": [
+    {
+      "blocker_family": "contract_materialization",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "persistence_materialization",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "gui_wiring",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "security_boundary",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "runtime_lifecycle",
+      "open_blocker_ids": [
+        "IRB-005"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "status": "blocked"
+    },
+    {
+      "blocker_family": "provider_stream",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "behavioral_acceptance",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "structural_integrity",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "owner_routing",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "currentness",
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
+    },
+    {
+      "blocker_family": "clean_room_harness",
+      "open_blocker_ids": [
+        "IRB-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "status": "blocked"
+    }
+  ],
+  "generated_at_utc": "2026-09-06T04:37:32Z",
+  "node_readiness": {
+    "available": true,
+    "bootstrap_authority_ref": "PNC-022",
+    "bootstrap_authorized": true,
+    "build_order_available": true,
+    "certification_harness_specified": true,
+    "executable_lifecycle_certification_complete": false,
+    "hard_disabled": true,
+    "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete",
+    "ordinary_product_worknodes_allowed": false,
+    "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+    "runtime_blocked_by_ref": "PNC-019",
+    "runtime_enabled": false,
+    "source": "Plans/.plan_index/node_readiness_report.json",
+    "status": "blocked_runtime_certification_incomplete",
+    "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary.",
+    "true_cycle_component_count": 0
+  },
+  "open_blocker_count": 2,
+  "remaining_open_blockers": [
+    {
+      "acceptance_to_close": [
+        "Plans/.plan_index/node_readiness_report.json no longer reports blocked_runtime_certification_incomplete.",
+        "PNC-019 executable_lifecycle_certification_complete is true with evidence refs.",
+        "No indexer, doc edit, or static fixture is used as substitute for executable lifecycle proof."
+      ],
+      "blocked_false_proofs": [
+        "static_clean_room_scenarios",
+        "json_parse_success",
+        "schema_validation",
+        "validator_pass"
+      ],
+      "blocked_surfaces": [
+        "PlanCompile runtime enablement",
+        "NodeSeed/WorkNode materialization",
+        "Executor activation",
+        "Orchestrator projection",
+        "Goal Runtime certification"
+      ],
+      "blocker_family": "runtime_lifecycle",
+      "blocker_id": "IRB-005",
+      "closure_evidence_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/positive_cases",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/lifecycle_trace",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "closure_scope": "reopened_until_current_pnc019_executable_lifecycle_certification",
+      "effective_reopen_reason": "pnc019_certification_not_current",
+      "notes": "The blocker registry preserves the historical closure row, but this generated currentness projection reopens it until the executable certification receipt passes with current source bindings and Event Authority evidence.",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "required_evidence": [
+        "Executable PNC-019 lifecycle harness result with positive and negative cases.",
+        "Recorded evidence for PlanApproved to PlanCompileRun to Executor intake to activation to queued entrypoint to Orchestrator projection.",
+        "Cancellation, restart, idempotency, testing, and negative-case rejection receipts linked to Goal Runtime certification."
+      ],
+      "schema_id": "pm.implementation_readiness.blocker.v1",
+      "severity": "hard_blocker",
+      "source_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+        "scripts/pm-pnc019-certification-harness.py"
+      ],
+      "status": "open",
+      "summary": "IRB-005 runtime_lifecycle is effectively open because the governed PNC-019 certification receipt is not current."
+    },
+    {
+      "acceptance_to_close": [
+        "PNC-019 lifecycle harness passes and records evidence refs.",
+        "The buildability gate report shows buildability_gate_passed=true only after all other blocker families are closed.",
+        "Static scenario lists remain targets, not proof."
+      ],
+      "blocked_false_proofs": [
+        "static_clean_room_scenarios",
+        "contract_scenario_presence",
+        "semantic_closure"
+      ],
+      "blocked_surfaces": [
+        "PNC-019 certification",
+        "clean-room fixture execution",
+        "adversarial rejection",
+        "end-to-end buildability gate"
+      ],
+      "blocker_family": "clean_room_harness",
+      "blocker_id": "IRB-011",
+      "closure_evidence_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/positive_cases",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/lifecycle_trace",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "closure_scope": "reopened_until_current_pnc019_executable_lifecycle_certification",
+      "effective_reopen_reason": "pnc019_certification_not_current",
+      "notes": "The blocker registry preserves the historical closure row, but this generated currentness projection reopens it until the executable certification receipt passes with current source bindings and Event Authority evidence.",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "required_evidence": [
+        "Executable clean-room harness report with positive lifecycle cases and all adversarial cases run.",
+        "Evidence that rejected cases fail for the expected reason and cannot still emit PlanApproved, PlanCompileRun, WorkNodeRequest, or activation receipts.",
+        "Harness receipts linked to PNC-019 and buildability_gate_report.json."
+      ],
+      "schema_id": "pm.implementation_readiness.blocker.v1",
+      "severity": "hard_blocker",
+      "source_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/prd_planning_runtime_contracts.json",
+        "scripts/pm-prd-planning-runtime-validate.py",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+        "scripts/pm-pnc019-certification-harness.py",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "status": "open",
+      "summary": "IRB-011 clean_room_harness is effectively open because the governed PNC-019 certification receipt is not current."
+    }
+  ],
+  "required_proof_dimensions": [
+    "concrete_schemas",
+    "command_wiring",
+    "security_boundaries",
+    "behavioral_acceptance",
+    "currentness",
+    "persistence_lifecycle",
+    "provider_stream_behavior",
+    "structural_integrity",
+    "owner_routing",
+    "clean_room_lifecycle_evidence"
+  ],
+  "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
+  "source_hashes": {
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428",
+    "Plans/.implementation_readiness/pnc019_certification_receipt.json": "8441b81e28e3e09b4ddd4f1b09a3d0329df33b1f8e4a49a5deb328a1ea2cd41d",
+    "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62",
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": "a2c7ebc8b98fe8565a63ca974b1b32d694812b35bd4f5f8e739124e2cb36b3d4",
+    "Plans/.implementation_readiness/readiness_matrix.json": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897",
+    "Plans/.plan_index/node_readiness_report.json": "96301d9565df1f56b52d7ee3d846b8e988cc00d1ffc3433b1d102400d4b326e2",
+    "Plans/00-plans-index.md": "16868950f5a3f98d23c27c9c1d0af30878fb08f7843694008cb44289351990f1",
+    "Plans/CLI_Bridged_Providers.md": "fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff",
+    "Plans/Commands_System.md": "fda89aac8b3d6c391f15e7011082e08ccbe2db214c3b73b2dab1bf16d0f6194b",
+    "Plans/Contracts_V0.md": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+    "Plans/Executor_Protocol.md": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+    "Plans/FinalGUISpec.md": "c51ce9cef58fdb0faef5bda29d8db0927e01780c24f16fa755f453a475a1a77a",
+    "Plans/Multi-Account.md": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a",
+    "Plans/Orchestrator_Page.md": "cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689",
+    "Plans/Permissions_System.md": "65f8cfc8efb2bacf69961629152d9bdba0f2c626c8121147d3ec11b2985f1c53",
+    "Plans/Plan_Document_System.md": "ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3",
+    "Plans/Plan_To_Node_Compilation.md": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+    "Plans/Planning_Wizard.md": "93af24d65df40bdb26ba00e54d639292816683ad79043244f2373ffb652b995f",
+    "Plans/Progression_Gates.md": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33",
+    "Plans/Prompt_Pipeline.md": "cbda2ffd980a861f82ffab67431b1190940e9227a2d3302a8337a726502f14b7",
+    "Plans/Provider_OpenCode.md": "da910664ca195b0eb4ff2ca5c5e370531f7bf020d0f191d563619afce1bfe50e",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906",
+    "Plans/UI_Command_Catalog.md": "48f2f431bc886525e5510bb8e41fad60dbbf4147bb6d4ee78cee4261da7f608d",
+    "Plans/UI_Wiring_Rules.md": "b0c77ecbeb53ef195661544a2bf03d3adc352ca3524d3ccee5e53c5d101ce5d8",
+    "Plans/Wiring_Matrix.production.json": "9f9843b2bba67e69d35258bfc16d190f2c3ba95fa07176cc1ba1f80a495ce42a",
+    "Plans/WorktreeGitImprovement.md": "a91952094251ba92ee185e07d897f219d7f8a47942834c70e88d45e77fe6a5fb",
+    "Plans/assistant-chat-design.md": "6042b076a4835fecf4c2297bc51de70c98e5f604a4552c5ef425289124ebb4b7",
+    "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
+    "Plans/event_family_registry.json": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123",
+    "Plans/event_family_registry.schema.json": "c4afe062bcd097180cc948cc52998b77926b195d197ebea779e4ff992c89d072",
+    "Plans/event_record.schema.json": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+    "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+    "Plans/orchestrator-subagent-integration.md": "05bc18c68441e84f8bbe0cbc61bd4ede114da514d66ca66eaa31273708e9e84d",
+    "Plans/storage-plan.md": "6cae6d4bebe68a39b13ecadcec32580598254209e62566daff4d272354e4dd08",
+    "Plans/storage_recovery_contracts.schema.json": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+    "Plans/storage_value_registry.json": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5",
+    "Plans/storage_value_registry.schema.json": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+    "scripts/pm-implementation-readiness.py": "6292e1c6973b80ad9774827e2d2ded017fbc54aa79a4a2d0ba9db4cf55763c2f",
+    "scripts/pm-plan-index.py": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293",
+    "scripts/pm-plans-verify.py": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4",
+    "scripts/pm-pnc019-certification-harness.py": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d",
+    "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json": "86c1637bad94a6402fc562d7edee895c551104bf0749a5d5c32433b531fb2990"
+  },
+  "validation_status_semantics": "The validator passes when this report is current and truthful; buildability_gate_passed is the product gate used by Planning Wizard."
+}

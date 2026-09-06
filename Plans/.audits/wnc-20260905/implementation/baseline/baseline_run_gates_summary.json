@@ -1,0 +1,34 @@
+{
+  "json_syntax": {
+    "check": "json_syntax",
+    "status": "fail"
+  },
+  "lint_contractrefs": {
+    "check": "lint_contractrefs",
+    "status": "fail"
+  },
+  "lint_path_refs": {
+    "check": "lint_path_refs",
+    "status": "fail"
+  },
+  "validate_implementation_readiness": {
+    "check": "validate_implementation_readiness",
+    "status": "fail"
+  },
+  "validate_pm7_gui_fixtures": {
+    "check": "validate_pm7_gui_fixtures",
+    "status": "fail"
+  },
+  "validate_touch_closure": {
+    "check": "validate_touch_closure",
+    "status": "fail"
+  },
+  "validate_audit_closure": {
+    "check": "validate_audit_closure",
+    "status": "fail"
+  },
+  "validate_audit_status_index": {
+    "check": "validate_audit_status_index",
+    "status": "fail"
+  }
+}

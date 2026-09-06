@@ -1,0 +1,2410 @@
+{
+  "docs_checked": 98,
+  "failures": [
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "actual_body_bytes": 70651,
+      "actual_body_sha256": "3b4a89767ca0d424945ee70df2747c5353dfda4855fa90349e0c5f1322ca24b2",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 70800,
+      "expected_body_sha256": "dc8e96564cb9f07e3fe6588df4e793dde0cadee7c87166d4b32531b7d4aa2bf4",
+      "first_difference": {
+        "actual_byte": 68,
+        "expected_byte": 78,
+        "offset": 27247
+      },
+      "path": "Plans/_shards/finalguispec/071-settings-product-onboarding-guided-tour-doctor-and-hover-present.md",
+      "source": "Plans/FinalGUISpec.md",
+      "source_line_end": 35587,
+      "source_line_start": 34896
+    },
+    {
+      "actual_body_bytes": 12551,
+      "actual_body_sha256": "89d91fd646a438fe8c6906d1211260740ca9d44bfce2b5e7a8f7280ee31beae3",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 12369,
+      "expected_body_sha256": "d234a339cfc66f47d73f8f4ff58902918517a683b8b2861d139d97a70c405259",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/finalguispec/072-forge-backup-tsnet-shared-gui-consumer-addendum-2026-09-01.md",
+      "source": "Plans/FinalGUISpec.md",
+      "source_line_end": 35672,
+      "source_line_start": 35589
+    },
+    {
+      "actual_body_bytes": 18069,
+      "actual_body_sha256": "5e2e647551033e87296867bd43bcb80f354635e7faefe369de55aee24c066ee9",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 18082,
+      "expected_body_sha256": "6e41ac9a388dbf8b9c68b4dfcc97ad26e6bd7bcadc615ae7f3cd1c1fd1885261",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/finalguispec/073-source-control-and-provider-operational-gui-depth-repair-2026-09.md",
+      "source": "Plans/FinalGUISpec.md",
+      "source_line_end": 35832,
+      "source_line_start": 35674
+    },
+    {
+      "actual_body_bytes": 26880,
+      "actual_body_sha256": "530b5daa228a2e799138ca1b86de68ad33bf5cfb416f114adeeb8b531469eeb6",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 27069,
+      "expected_body_sha256": "0c036034758243596a2373ea93c19c943ee8a22b951fc35f68c389df2a3927c2",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/finalguispec/074-puppet-master-assistant-redesign-gui-specification-2026-09-03.md",
+      "source": "Plans/FinalGUISpec.md",
+      "source_line_end": 36129,
+      "source_line_start": 35834
+    },
+    {
+      "actual_body_bytes": 10058,
+      "actual_body_sha256": "784ba3b9876459daa5e5c3baa4f6e98a993839f6e5da5400255db4062baf9be0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 9807,
+      "expected_body_sha256": "e038cc685238175d135b1dd693034713b1b3e42e13f456b374f8ebbe048b355f",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 111,
+        "offset": 0
+      },
+      "path": "Plans/_shards/finalguispec/075-additive-correction-v4-assistant-correction-surfaces-2026-09-03.md",
+      "source": "Plans/FinalGUISpec.md",
+      "source_line_end": 36303,
+      "source_line_start": 36131
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "actual_body_bytes": 40958,
+      "actual_body_sha256": "2258c32171e7151adc5e53294de6dca03ab021024dee87c3bdaa7dca04cd874d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 38468,
+      "expected_body_sha256": "52b46a0d6b5f89f9339f6d1275284059c40f43453f6899676fa23c9b0fbbd53d",
+      "first_difference": {
+        "actual_byte": 53,
+        "expected_byte": 54,
+        "offset": 30
+      },
+      "path": "Plans/_shards/00-plans-index/002-change-summary.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 60,
+      "source_line_start": 7
+    },
+    {
+      "actual_body_bytes": 24894,
+      "actual_body_sha256": "6873dad0e8686f33065f6f4dad6e6f2b096a1e43f503976530b2d0ec55f1a3a1",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 27671,
+      "expected_body_sha256": "562cc39866b5f1374b067a04006db6defff18c9de92726f2c31e8059acdb1b01",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 73,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 219,
+      "source_line_start": 62
+    },
+    {
+      "actual_body_bytes": 3200,
+      "actual_body_sha256": "da637dbf99c0a8857057bcffcc667e22610aaf0bc60a76c80e99c4b77dedadc0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 3136,
+      "expected_body_sha256": "d17f87597fbdb95ef77fb2837872b7caff38406ff042a26f1f22345d358d0d67",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 45,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 241,
+      "source_line_start": 221
+    },
+    {
+      "actual_body_bytes": 72210,
+      "actual_body_sha256": "0295db49e85bf2d2425f78ddd77eb64f9675a4640b3456abd5ddfc2dae20f71c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 72634,
+      "expected_body_sha256": "718aee1fe3a96c3d8afe28cb47aa3c64eedd20f067fe6fdc2aa5225b80b0be34",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 80,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/005-plan-map.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 591,
+      "source_line_start": 243
+    },
+    {
+      "actual_body_bytes": 1088,
+      "actual_body_sha256": "348cc489c43a6f7222bb3ef0fc3351755fcc228ca2cf4c179a3a6b44d9553b5d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1121,
+      "expected_body_sha256": "8054833088e8f0a4d9de4b34a7a5ce02b495d1838dd8c450aeb791ced53f0559",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 45,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 613,
+      "source_line_start": 593
+    },
+    {
+      "actual_body_bytes": 14068,
+      "actual_body_sha256": "a91ab6a19c0925db4bd486d96b04b86fd80770642ed568a2bab98a9493cdab89",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 13792,
+      "expected_body_sha256": "aecb037a99a247f406e307f219e70e2b87c9e3b41022a525db82345c975b42f9",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 45,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/007-shard-indexes.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 717,
+      "source_line_start": 614
+    },
+    {
+      "actual_body_bytes": 765,
+      "actual_body_sha256": "64ce579f014ed047feb79e66327c4299995a3ce350869f90066e9efe390c994c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 902,
+      "expected_body_sha256": "dc9f365c2b5a1d58dae2ff01c055e20bb8875d913b3ace25b80b0adb6f980ce2",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 124,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 724,
+      "source_line_start": 718
+    },
+    {
+      "actual_body_bytes": 1273,
+      "actual_body_sha256": "ce49866e074ba2adcde461c476223e3a2b5a14023d8532d032002769b3eb7813",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1282,
+      "expected_body_sha256": "aead3e6075942aab4d10979323beead3e36a865c7b804d083ae2ce63b5dff36a",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 124,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 743,
+      "source_line_start": 726
+    },
+    {
+      "actual_body_bytes": 2535,
+      "actual_body_sha256": "fef798ce8632fec43fa4a20a3a27a6b4b98e025d9a8a4176855d9d6add9f34ac",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 2190,
+      "expected_body_sha256": "835ee5fb07df1aff7ad928ffd1fd33796dedf2b0d0ea22b6da2430b61e364126",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 45,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 761,
+      "source_line_start": 745
+    },
+    {
+      "actual_body_bytes": 11186,
+      "actual_body_sha256": "7fb30450c9ccad86b1b7ca4063f3fd5bfedc1f7006a3199adee4385097286d98",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 9211,
+      "expected_body_sha256": "60c0c67b5e1daa980059a876cdc8be69c5d05c7aa628ed9c13fd9ba6dd12d84b",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 10,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 828,
+      "source_line_start": 764
+    },
+    {
+      "actual_body_bytes": 8866,
+      "actual_body_sha256": "7eb69eb47d9ea9a67440110c1562620c968927be2132167a8e250b6c5e56df07",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 9746,
+      "expected_body_sha256": "258601f9dfd424faf4174f797314ac6733013516941b544c94d31e4a0a297c01",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 65,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 852,
+      "source_line_start": 830
+    },
+    {
+      "actual_body_bytes": 480,
+      "actual_body_sha256": "aab2f1d72d1db3dc1fabd817e6e8c295d965983c9cd4a5847640dae0a87f6afc",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1298,
+      "expected_body_sha256": "460db3a424224366b8c287d39d514bac2fd0119eead2fb580f120cdf055ecf47",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 65,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 858,
+      "source_line_start": 854
+    },
+    {
+      "actual_body_bytes": 153908,
+      "actual_body_sha256": "6b97c66c9f437178d6c854a363468cd0de4d71303a9337ec7659f5f6016538ec",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 154096,
+      "expected_body_sha256": "422a2183bff084dae045688eda49520b84af91e833fd6660721767e21c3f8f67",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 84,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/014-planunits.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4411,
+      "source_line_start": 860
+    },
+    {
+      "actual_body_bytes": 1249,
+      "actual_body_sha256": "d4c97f42f4e03e18b7422b26fe4a1a667a2dab63e371f6416f9c8b5db3a1f9a4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 526,
+      "expected_body_sha256": "5e1bf6f432564dcb91077e248b7a8249462174343774d6576bb1537d2e605c8b",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 10,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/015-migration-coverage.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4424,
+      "source_line_start": 4414
+    },
+    {
+      "actual_body_bytes": 11925,
+      "actual_body_sha256": "fa195be483b68f1bb6e2f268dfa6bcb51db25b38a61b8792801f71397f159cb6",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 12277,
+      "expected_body_sha256": "c064d0f1911b803b6eb5820aeeab2cc553c89b1117fa172f0f4ae19483f832be",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 10,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4619,
+      "source_line_start": 4427
+    },
+    {
+      "actual_body_bytes": 4271,
+      "actual_body_sha256": "f0ef2413fb03332787442788d093f5d234bf9c0661cb529baa2897fc8a2df59e",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4501,
+      "expected_body_sha256": "9ff26304f0fd0ad49246ccd7b8b9de2060424e3b4d4ed6c5b910fecf8d8f3a83",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4698,
+      "source_line_start": 4621
+    },
+    {
+      "actual_body_bytes": 8462,
+      "actual_body_sha256": "75469d37906160d25cda9a6e705698de569bcd80bd8b1737fb0ab9b21f5e5197",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 8320,
+      "expected_body_sha256": "67b566f7a8a0ddb4e6056390ca2567b049793d0f14c66ddfc913d50c8d300cbc",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4908,
+      "source_line_start": 4701
+    },
+    {
+      "actual_body_bytes": 3772,
+      "actual_body_sha256": "12b6538287b71465419dbf6396a17422af87c6deb83a3149e7006fcb301dc816",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 3820,
+      "expected_body_sha256": "ee47370a89479596d79a6e1532194b7e4bd0e029be22dd2f379a1afc5b58be61",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 45,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 4992,
+      "source_line_start": 4910
+    },
+    {
+      "actual_body_bytes": 3962,
+      "actual_body_sha256": "dc80bc97a66a847cdd12d8043c30a15487b5056455b11acd246718ef8e7b8e50",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 3952,
+      "expected_body_sha256": "503567d4feb0f307c5a6359535db62aa279f105a34e8de0bd5a4ab32355f4045",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 5055,
+      "source_line_start": 4994
+    },
+    {
+      "actual_body_bytes": 5769,
+      "actual_body_sha256": "488677dc4680c32e6f05adb297896eb3f99234f96f383db0e96015aa04392b1c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 5726,
+      "expected_body_sha256": "f66ec8964ab5a36b7d100151294afe3f22a8a20d124b6608fb2e516bba8fd2a2",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 5152,
+      "source_line_start": 5057
+    },
+    {
+      "actual_body_bytes": 40832,
+      "actual_body_sha256": "1a021e71043a66a3c9ef95b86bc06a3e9c48cc4fe68674f965759f681799f984",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 40579,
+      "expected_body_sha256": "19a1ada8ed832965f02d84fbbb3cf87d7cb1b1cdfccff9d83af8cee69efc7af2",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/00-plans-index/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "source": "Plans/00-plans-index.md",
+      "source_line_end": 5942,
+      "source_line_start": 5154
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/automated_testing_system/manifest.json",
+      "source": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/automated_testing_system/manifest.json",
+      "source": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "actual_body_bytes": 26952,
+      "actual_body_sha256": "7a9bed28edba23135a472869c08240c0deaddebb66c7deb094162a2952db775f",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 27814,
+      "expected_body_sha256": "571fa734938fe345a42a2a9b6ef29960977cfdd8903ffeed6369212f59d0da9d",
+      "first_difference": {
+        "actual_byte": 105,
+        "expected_byte": 97,
+        "offset": 1525
+      },
+      "path": "Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 1875,
+      "source_line_start": 1633
+    },
+    {
+      "actual_body_bytes": 8486,
+      "actual_body_sha256": "a52efef3a4775c28aa9fa6e03c6553a5236bd4cdc52fc7dec6e7d6f482f2839e",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 8390,
+      "expected_body_sha256": "df7372d5458a246c36c3f5b1f038cd6372bf308e574ac17bf7e0126cbc6f3a22",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2009,
+      "source_line_start": 1877
+    },
+    {
+      "actual_body_bytes": 58915,
+      "actual_body_sha256": "76194333e32ca132832ab4dc525947a4637c48830c4cf42165e57fa93d67a605",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 58909,
+      "expected_body_sha256": "38df69869cc843d2c83b092c0e76ed5b25390d595a42a805887548db739c74f4",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 99,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2373,
+      "source_line_start": 2011
+    },
+    {
+      "actual_body_bytes": 2351,
+      "actual_body_sha256": "b98d84ec56adcca670354de60cf0cf3d058cd96946a103530362d38413deac72",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1816,
+      "expected_body_sha256": "d47f55f5a6179e5573579f022c61bf52b15d279e7baaaa21e014b2124869ca92",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2403,
+      "source_line_start": 2375
+    },
+    {
+      "actual_body_bytes": 1835,
+      "actual_body_sha256": "cae55932af56fcaba2603601cc72df89ca5a111edf89571aa8728695139d2e2d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1923,
+      "expected_body_sha256": "c53f0ea8e05c62b53137153f8268aba1cc43cb8996274c769c9eb3eabfc3019e",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 84,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/022-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2412,
+      "source_line_start": 2404
+    },
+    {
+      "actual_body_bytes": 50856,
+      "actual_body_sha256": "960bfc52d632b9374fc8312e844681673caef0e291ea84743721ef5dbb7eadc0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 50434,
+      "expected_body_sha256": "f0893deede75b184871b4a928c0b653534c5cc5372a4fad85ad030ed1bee78c3",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 10,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/023-known-37-owner-oracle-materialization-and-execution-status-ledge.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2668,
+      "source_line_start": 2414
+    },
+    {
+      "actual_body_bytes": 21494,
+      "actual_body_sha256": "6ba53917dd0519ce2d63c44c051ff49d6e831b06c481dd0d70abe0090b404085",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 21680,
+      "expected_body_sha256": "634ef2cde00d75c7359dafc37194e81cae8eb6e122a78f64235280b9c59d9021",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 10,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 2982,
+      "source_line_start": 2670
+    },
+    {
+      "actual_body_bytes": 8173,
+      "actual_body_sha256": "964cf405d586ea155a959dd4db313d4c74ad07a19d930b80cd932a8b9063cce0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 7781,
+      "expected_body_sha256": "e132290ab53e22bb9f1e39a64a6a2ecab0a96ec395fd4a324fe6d4eec608d664",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/025-pmconcept7-home-workspace-test-contract-2026-08-04.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 3081,
+      "source_line_start": 2984
+    },
+    {
+      "actual_body_bytes": 23525,
+      "actual_body_sha256": "a6e792a05f84193cbd84fa9529a647805abec92c2ad797838ef28f6a5d26f7c0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 23406,
+      "expected_body_sha256": "5e41de5e8ff4041213b411205e9d6c37630f0419750f7beb794391c680656ebf",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 111,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/026-runtime-integration-acceptance-matrices-2026-08-13.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 3368,
+      "source_line_start": 3083
+    },
+    {
+      "actual_body_bytes": 58836,
+      "actual_body_sha256": "a36789751178a2bbaec996cf520c3f3f64e2944f3c15b42ef1afc727ee158746",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 59286,
+      "expected_body_sha256": "81ff56e7ba04963a1119087e99d075564f012fdd44cf2a77936a7278457c55ea",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 111,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 3977,
+      "source_line_start": 3370
+    },
+    {
+      "actual_body_bytes": 4381,
+      "actual_body_sha256": "3a9899364882065c105b9d773ac0b51e9eae9ece055a517ceb4136fc603cf081",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4496,
+      "expected_body_sha256": "6ac59e5cc1461b8c572057045acd45aca278510ae21f94773bcf2b1c3a08a1d8",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/automated_testing_system/028-additive-correction-v4-correction-test-obligations-2026-09-03.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 4030,
+      "source_line_start": 3979
+    },
+    {
+      "actual_body_bytes": 3374,
+      "actual_body_sha256": "86e9d3f262a85b6272433abe140a77bc14d531c3b77f573a9f4391115bb67b29",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 3091,
+      "expected_body_sha256": "bd16276a8c5b326b7a9994aa4f43b20247e3ae83fa752312524fba706b9532fc",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 35,
+        "offset": 2
+      },
+      "path": "Plans/_shards/automated_testing_system/029-working-notebook-contract-validation-registration-2026-09-05.md",
+      "source": "Plans/Automated_Testing_System.md",
+      "source_line_end": 4086,
+      "source_line_start": 4032
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/planning_wizard/manifest.json",
+      "source": "Plans/Planning_Wizard.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/planning_wizard/manifest.json",
+      "source": "Plans/Planning_Wizard.md"
+    },
+    {
+      "actual_body_bytes": 5805,
+      "actual_body_sha256": "7a90544d6c104020bd361b88b341a67a1cacc7d457cb7761c9dab85cae3c8513",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 5807,
+      "expected_body_sha256": "5be360a78ca28d46a39aa1866e5f68ab62b450f4bda38f6d0237eb732ba8456a",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 99,
+        "offset": 1130
+      },
+      "path": "Plans/_shards/planning_wizard/015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "source": "Plans/Planning_Wizard.md",
+      "source_line_end": 1550,
+      "source_line_start": 1462
+    },
+    {
+      "actual_body_bytes": 39181,
+      "actual_body_sha256": "a00bed017c02217f55a34c171d06cc2f53fafd8f5328524187961c6d2cf17beb",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 40786,
+      "expected_body_sha256": "40dd9e2fad61acf6ffb6b56bb138f3543fdff8435ff41f4cad17660a87f5aa9a",
+      "first_difference": {
+        "actual_byte": 97,
+        "expected_byte": 79,
+        "offset": 906
+      },
+      "path": "Plans/_shards/planning_wizard/022-product-onboarding-and-guided-tour-owner-addendum-reconciled-202.md",
+      "source": "Plans/Planning_Wizard.md",
+      "source_line_end": 1957,
+      "source_line_start": 1763
+    },
+    {
+      "actual_body_bytes": 6260,
+      "actual_body_sha256": "1709712a184152ff4f4c05276a191da1a9489b6b7ceeee2a23e7f44025dbf85a",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 6631,
+      "expected_body_sha256": "2a422308b5f658f902540d42125641384d529fcfba83b55a9bdb7881f8f8494b",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 110,
+        "offset": 0
+      },
+      "path": "Plans/_shards/planning_wizard/023-product-onboarding-route-and-review-correction-addendum-2026-09-.md",
+      "source": "Plans/Planning_Wizard.md",
+      "source_line_end": 2013,
+      "source_line_start": 1959
+    },
+    {
+      "actual_body_bytes": 8187,
+      "actual_body_sha256": "fee1d1c398355a0293095113cde7aff244c0d84986df6e0fc962cf6fed716603",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 7776,
+      "expected_body_sha256": "3c8a0f7c8245e11f61084ff3e27e704e6e8b4386f80fca6bdd4636f375a3e032",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 112,
+        "offset": 0
+      },
+      "path": "Plans/_shards/planning_wizard/024-forge-backup-tsnet-product-onboarding-consumer-addendum-2026-09-.md",
+      "source": "Plans/Planning_Wizard.md",
+      "source_line_end": 2088,
+      "source_line_start": 2015
+    },
+    {
+      "actual_body_bytes": 2424,
+      "actual_body_sha256": "00ba84149f3b4ef80e91cf7a9ad4f7cd5ed1a9a624840ba020d996fcff614d71",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 2918,
+      "expected_body_sha256": "03f6758a14f81d9446eddae48115270121fa7b002314ed00316930db8618f43b",
+      "first_difference": {
+        "actual_byte": 35,
+        "expected_byte": 32,
+        "offset": 0
+      },
+      "path": "Plans/_shards/planning_wizard/025-notebook-topic-research-addendum-2026-09-05.md",
+      "source": "Plans/Planning_Wizard.md",
+      "source_line_end": 2123,
+      "source_line_start": 2090
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/settings_inventory/manifest.json",
+      "source": "Plans/settings_inventory.json"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/settings_inventory/manifest.json",
+      "source": "Plans/settings_inventory.json"
+    },
+    {
+      "actual_body_bytes": 6127,
+      "actual_body_sha256": "0c484e341ca5a60c3054946a7cf0c431ea7b01d6b78b907570c85976c55770c8",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 6142,
+      "expected_body_sha256": "4eb421ce518b67b9078f30bb47d8386a0a9214a59f30585e9565cf9a1256e5c7",
+      "first_difference": {
+        "actual_byte": 108,
+        "expected_byte": 110,
+        "offset": 4514
+      },
+      "path": "Plans/_shards/settings_inventory/001-lines-1-200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 200,
+      "source_line_start": 1
+    },
+    {
+      "actual_body_bytes": 5655,
+      "actual_body_sha256": "738c975d0131fd848b71fe4c402da4ce77921d7a2d7f83b62d0619b7cd774b9a",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 5703,
+      "expected_body_sha256": "92ac384da5d45a4f8af8dbeaff7549ebb10016ac85d855e2147c25e26d884a89",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/002-lines-201-400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 400,
+      "source_line_start": 201
+    },
+    {
+      "actual_body_bytes": 4744,
+      "actual_body_sha256": "31cf16d1be3b088ca68630ef832dbc94f2cf935009db61574a0f9178644e8b40",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4773,
+      "expected_body_sha256": "9088c9ace3d3eb70a21b16a0004a56298af25a31118ad1ee9f46fe04b9d2d58d",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/003-lines-401-600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 600,
+      "source_line_start": 401
+    },
+    {
+      "actual_body_bytes": 4506,
+      "actual_body_sha256": "bcfb837afe85c33679ba1510ddac6026aae876d1c29802a74ebd7c75a3900606",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4481,
+      "expected_body_sha256": "b256ff4f0100b6745c8e008f1b1559aee26f17fa006480c0530a3ffe2246774b",
+      "first_difference": {
+        "actual_byte": 97,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/004-lines-601-800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 800,
+      "source_line_start": 601
+    },
+    {
+      "actual_body_bytes": 4423,
+      "actual_body_sha256": "0e85fa731c3d20dd2544e2419f2f4060bcb42b5a990c046c1fc61d3dcabe76ef",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4442,
+      "expected_body_sha256": "fa170373dcdf3131d964e9fdb8be3c9f33dee5e7b0183233f9a36c6dd9f97b30",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/005-lines-801-1000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 1000,
+      "source_line_start": 801
+    },
+    {
+      "actual_body_bytes": 4749,
+      "actual_body_sha256": "27eb262a4fb1aa80e6aba60db77cc279eb4127f9e8825a058571009ec6da6331",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4748,
+      "expected_body_sha256": "c668916f7a86d93161ccb0d5edcb0de4b207f3bbb96f7a14265c7c1974f977f7",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/006-lines-1001-1200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 1200,
+      "source_line_start": 1001
+    },
+    {
+      "actual_body_bytes": 4691,
+      "actual_body_sha256": "982e03ccd64f8f3ef6a64b2bf8e92b555953e4ac500c61ff38f3e60676f38aa5",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4677,
+      "expected_body_sha256": "a0c38641e8e44374ee6489d41d89befbb6514a7ac5e68a47143a378fd0c04932",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 100,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/007-lines-1201-1400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 1400,
+      "source_line_start": 1201
+    },
+    {
+      "actual_body_bytes": 4607,
+      "actual_body_sha256": "e1f0ffbdeddd20bec8f22bc027060bbf0f5b26164ca6b398a91b28154357f281",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4488,
+      "expected_body_sha256": "2dd909925e9fab91eda1eba3d7d77acddc5ac55566aef4335be738fd888f2464",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/008-lines-1401-1600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 1600,
+      "source_line_start": 1401
+    },
+    {
+      "actual_body_bytes": 4626,
+      "actual_body_sha256": "616f59f0cb420672c855cc5a62b4d25358fdbfccabd1711e2578caf520c4940e",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4761,
+      "expected_body_sha256": "74c1b460d184524af77313992c4b79ea890f5d36f1c924c3ba04a5e4ad19f002",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/009-lines-1601-1800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 1800,
+      "source_line_start": 1601
+    },
+    {
+      "actual_body_bytes": 4874,
+      "actual_body_sha256": "4da7a6398c0a8a9ee8c486c6a347f61daca9dd6110bc5febc0b92032e18d264f",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4727,
+      "expected_body_sha256": "05d15a2257bf0e072dc0f1e027d35ca14790ee6b9a91a85ab64d191b13091f61",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/010-lines-1801-2000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 2000,
+      "source_line_start": 1801
+    },
+    {
+      "actual_body_bytes": 4442,
+      "actual_body_sha256": "c3b01170f346c114ff47a65f618424812aa0a7f97552e63c31ab9579ca3e89f0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4564,
+      "expected_body_sha256": "f449a6fa626a59398f15e3a6eb2a336ae126ad65322ff9751784220f1cb88437",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 123,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/011-lines-2001-2200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 2200,
+      "source_line_start": 2001
+    },
+    {
+      "actual_body_bytes": 4263,
+      "actual_body_sha256": "4be867d774435dbc9d518a3207540d003755f6b1ee892d5af563b022980efcd0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4276,
+      "expected_body_sha256": "1de8906ad7fedb20c405d42d7f62b9e95e15ce0a90eab363fc2a22519fe6b026",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/012-lines-2201-2400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 2400,
+      "source_line_start": 2201
+    },
+    {
+      "actual_body_bytes": 4408,
+      "actual_body_sha256": "00dddddfbd7ff24d824e39d99b77c6af9734cd831528df4df19843563f6ad4bf",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4269,
+      "expected_body_sha256": "deaa191cadb46cf1dc6ae7cdf457cfcf85869b6c64be12a657be01fd8c7eee16",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/013-lines-2401-2600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 2600,
+      "source_line_start": 2401
+    },
+    {
+      "actual_body_bytes": 4299,
+      "actual_body_sha256": "d9e6e3babab750cfee9d46f5338b6657cc7d4f351b490650c321d1754bab0b29",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4428,
+      "expected_body_sha256": "e73e0fce0c3ec90e0b9cdb58150e34a91e22341a7a66082c82ec8d905bed2149",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/014-lines-2601-2800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 2800,
+      "source_line_start": 2601
+    },
+    {
+      "actual_body_bytes": 4270,
+      "actual_body_sha256": "9c5bf4922c0f1b1f5eb14d21fafd156f59b10ad817aa03f9f6b673cc0562e297",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4312,
+      "expected_body_sha256": "ea962d279f850f87e1e755f9d092fee3b9ebe5d7deb4e476b1a0944145bf75d4",
+      "first_difference": {
+        "actual_byte": 109,
+        "expected_byte": 101,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/015-lines-2801-3000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 3000,
+      "source_line_start": 2801
+    },
+    {
+      "actual_body_bytes": 4499,
+      "actual_body_sha256": "1388cacbf08555887877b0c48f24f925d090257738dc8c025d08d8c02e5ef1d7",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4462,
+      "expected_body_sha256": "983d842d0ace07472a956c2e49de1e710a2a7411e79951e9df35486c19ea9d89",
+      "first_difference": {
+        "actual_byte": 105,
+        "expected_byte": 114,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/016-lines-3001-3200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 3200,
+      "source_line_start": 3001
+    },
+    {
+      "actual_body_bytes": 4217,
+      "actual_body_sha256": "a8a87586d1de053a18973465de1de5e4bd8baecc246f7116d7f4ca026924cf0d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4221,
+      "expected_body_sha256": "a9ced8770fc574ac9a760d9ba5bc6c145736401db73bd6897111842803963394",
+      "first_difference": {
+        "actual_byte": 112,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/017-lines-3201-3400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 3400,
+      "source_line_start": 3201
+    },
+    {
+      "actual_body_bytes": 4345,
+      "actual_body_sha256": "c361d1464b455ae63aa777a41ece8b8911f4b9c9912341556f1fd12ecdfe8156",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4253,
+      "expected_body_sha256": "67e1aeb00ecf2474c7c146d04ed37f44e6e0be95d18870decbf0e62596d65f5e",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/018-lines-3401-3600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 3600,
+      "source_line_start": 3401
+    },
+    {
+      "actual_body_bytes": 4387,
+      "actual_body_sha256": "bcab402da6acfbb5b59e4f1a1cb242f3aae58d9ed7e63b16a5911c227d7d56ac",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4348,
+      "expected_body_sha256": "e8abd1f0b8b6af57e31160984083e5ab6599776288a9c3f6e61993cb2af2fa0e",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/019-lines-3601-3800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 3800,
+      "source_line_start": 3601
+    },
+    {
+      "actual_body_bytes": 4358,
+      "actual_body_sha256": "1c7bd6b335c4de64a5bc10394fdcc6cda5d0436e6486432517bf4f77ee1f9571",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4365,
+      "expected_body_sha256": "95f03779ccfc2c201b6b4de0cc8b6e1949ebc86666fecddc80ae5683dbef20f6",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 125,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/020-lines-3801-4000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 4000,
+      "source_line_start": 3801
+    },
+    {
+      "actual_body_bytes": 4518,
+      "actual_body_sha256": "dd0f7147c4b8ad58d55683b5188dbdcc04a1d0c12afba1a11f9daed4653445df",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4655,
+      "expected_body_sha256": "29e1063d39863520c6d47416da83b77d701f91799606749ba826920e28a6bfc0",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/021-lines-4001-4200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 4200,
+      "source_line_start": 4001
+    },
+    {
+      "actual_body_bytes": 4054,
+      "actual_body_sha256": "87f18aa7f2c0941ae53a3103e84442368e701d19e01c3cc3165df4b898e9cdba",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4026,
+      "expected_body_sha256": "97725b7cb258288b85c11e9973cb5425da14129e6dad9be06f43a6ce899a24a8",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/022-lines-4201-4400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 4400,
+      "source_line_start": 4201
+    },
+    {
+      "actual_body_bytes": 4387,
+      "actual_body_sha256": "b8cba51d11eb384fb763bfb9ef185d2ffa4b7ab3563fe3d9bc776d6164b93dae",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4403,
+      "expected_body_sha256": "25a74809e2ad0ee1e4662023d0f855188e693586d33e69fe93ca01530b090106",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/023-lines-4401-4600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 4600,
+      "source_line_start": 4401
+    },
+    {
+      "actual_body_bytes": 4231,
+      "actual_body_sha256": "926a688254b94ce65211f459ac17177036c37dde008ff7b48121bfae1d250e4c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4216,
+      "expected_body_sha256": "3f340172e2f9d8a379b4eff2fec7e0102e47ef1fd9aead3b078e7f4f83de0061",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/024-lines-4601-4800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 4800,
+      "source_line_start": 4601
+    },
+    {
+      "actual_body_bytes": 4265,
+      "actual_body_sha256": "156e0565344dd97f6f126cbf602d50bb19f5f664d6c08b60736ab4cd03730089",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4284,
+      "expected_body_sha256": "ed90b8b2a9ba55b58d861683d781c3fb091effbf2ad9dd354c52d3bfbf3211c1",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/025-lines-4801-5000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 5000,
+      "source_line_start": 4801
+    },
+    {
+      "actual_body_bytes": 4213,
+      "actual_body_sha256": "ffc08eb48fb6be3efff7399605dbe1f2e5ed1bd68561ef0646f96909787f51a0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4220,
+      "expected_body_sha256": "d81dc5ace3a935d00e5dfe5ebbf2a90b25fbb4d5e6aa9a3ed39da769386225c3",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/026-lines-5001-5200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 5200,
+      "source_line_start": 5001
+    },
+    {
+      "actual_body_bytes": 4532,
+      "actual_body_sha256": "4f06f573f03e04f97ad382ffaab371f6efedd46beae70f8b8d50bf63977d3783",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4388,
+      "expected_body_sha256": "732476c9f5d788a35794bfd6976dd168f825659e146d8c364fcdaa101ef9a44c",
+      "first_difference": {
+        "actual_byte": 108,
+        "expected_byte": 114,
+        "offset": 6
+      },
+      "path": "Plans/_shards/settings_inventory/027-lines-5201-5400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 5400,
+      "source_line_start": 5201
+    },
+    {
+      "actual_body_bytes": 4454,
+      "actual_body_sha256": "7325477fde34cf97b810e04689ac3b8e0dc406c4fa2e813ab5ed68a51c1ebb81",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4575,
+      "expected_body_sha256": "c5f1aeeb19fa297e9db878891907c3268ee95582e59dd2ce8f2c9f05ec4b3a3e",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 125,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/028-lines-5401-5600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 5600,
+      "source_line_start": 5401
+    },
+    {
+      "actual_body_bytes": 4729,
+      "actual_body_sha256": "8066a7a5b79966e5f7fc7e110a6dccde1dc40c11eb1ccf1335a57ab35aff754e",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4740,
+      "expected_body_sha256": "b4b2e9dcc7d5afc5202419ddbee3d24185bfb8b353ad65161f1dac5c3ef274bf",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/029-lines-5601-5800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 5800,
+      "source_line_start": 5601
+    },
+    {
+      "actual_body_bytes": 4610,
+      "actual_body_sha256": "bde844d1284401ce7d341d880676d06efb0d9a2675ecc2024fd59b45e0338046",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4621,
+      "expected_body_sha256": "b5228115df1e1187b4da69c264ad5ddb2f1a6373fc6ccbea1a5dccbfc669ea56",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/030-lines-5801-6000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 6000,
+      "source_line_start": 5801
+    },
+    {
+      "actual_body_bytes": 4799,
+      "actual_body_sha256": "cb8a01c6c2cde4aaa8034cf413471554fd604ddf544a41a10fc862b2374a1179",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4781,
+      "expected_body_sha256": "5a5a2d06a58aaf1b27b79be12f692a235e54d666f335f1628ea9007c13c86747",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 100,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/031-lines-6001-6200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 6200,
+      "source_line_start": 6001
+    },
+    {
+      "actual_body_bytes": 4074,
+      "actual_body_sha256": "3348dbe1bf9aa3450c848273544eec7870c4f3dc89377ff5f1b067973293b2b3",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4101,
+      "expected_body_sha256": "600a5d5d59a5bd9c7bd97db836ab69c185c6715befe9907b5cdbbd73941e7598",
+      "first_difference": {
+        "actual_byte": 114,
+        "expected_byte": 115,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/032-lines-6201-6400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 6400,
+      "source_line_start": 6201
+    },
+    {
+      "actual_body_bytes": 4361,
+      "actual_body_sha256": "1b4027cf91f5ea72780b2db82ea952e6d029af241f37e856b86d5ba6404213eb",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4338,
+      "expected_body_sha256": "585041901c69c47f9cb55e176c1741a195f806b0bf5eeada81293404313cbde6",
+      "first_difference": {
+        "actual_byte": 125,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/033-lines-6401-6600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 6600,
+      "source_line_start": 6401
+    },
+    {
+      "actual_body_bytes": 4275,
+      "actual_body_sha256": "9f41e856e06d56f625547612e0d9d71869249c5a7548852876380c647b36c5e8",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4292,
+      "expected_body_sha256": "51fb5cca9b8209c176af8a5605532ec13a427b277e080673f2742dc5e92d134c",
+      "first_difference": {
+        "actual_byte": 100,
+        "expected_byte": 116,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/034-lines-6601-6800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 6800,
+      "source_line_start": 6601
+    },
+    {
+      "actual_body_bytes": 4275,
+      "actual_body_sha256": "22c8f011b0bb55bdbe6a69a4960e984ecab43f26ff407c78faf74cfb7a61395a",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4264,
+      "expected_body_sha256": "2d7a330211963a469a8c70a9986e60cb05b2598ce2fa919d5a70a0a0a2d3a6a2",
+      "first_difference": {
+        "actual_byte": 101,
+        "expected_byte": 99,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/035-lines-6801-7000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 7000,
+      "source_line_start": 6801
+    },
+    {
+      "actual_body_bytes": 4459,
+      "actual_body_sha256": "55aa6e996566e7a2b5404388eb2b478d2dcdc181e695038dbd4c9e0f32f942aa",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4457,
+      "expected_body_sha256": "13dbf834b923b19070cf52e8d0bb4e61f1b8042e9c34fff382010be78705d802",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/036-lines-7001-7200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 7200,
+      "source_line_start": 7001
+    },
+    {
+      "actual_body_bytes": 4600,
+      "actual_body_sha256": "22e246fcbaa56baac5816981441565bed41f47709ac56423a98e4c1e68012daf",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4601,
+      "expected_body_sha256": "d2f4c83eb6895202079b5d6c4eaa2f9ba339292940f29a6537c7fe35465fe2a6",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/037-lines-7201-7400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 7400,
+      "source_line_start": 7201
+    },
+    {
+      "actual_body_bytes": 4398,
+      "actual_body_sha256": "17b33ef55450b48d23b6cdf1204d76e4e939ac4cbcf79200c49f9c3748885f89",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4412,
+      "expected_body_sha256": "29eec836c03088eef04be602dcd6be3ca2d566f2c3958b219db9a5262b35a824",
+      "first_difference": {
+        "actual_byte": 116,
+        "expected_byte": 119,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/038-lines-7401-7600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 7600,
+      "source_line_start": 7401
+    },
+    {
+      "actual_body_bytes": 4206,
+      "actual_body_sha256": "821622f0e6cb365f1e839c282fa50dea47a51a90b44f0d11dd2efcc21d1fccf7",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4206,
+      "expected_body_sha256": "45ed607e6695a9a283e6441df267ba72ed7bfe2319695ceb4ea42896cb623cfd",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/039-lines-7601-7800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 7800,
+      "source_line_start": 7601
+    },
+    {
+      "actual_body_bytes": 4188,
+      "actual_body_sha256": "0b109c7ee6f54a178a28cb582d8330d543b2d95febd0e943deb74e5d6f4d5c9d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4110,
+      "expected_body_sha256": "093a7e006cee2da0d6956d157570609107d0c4273b77f6d52a84522ad3ece645",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/040-lines-7801-8000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 8000,
+      "source_line_start": 7801
+    },
+    {
+      "actual_body_bytes": 4033,
+      "actual_body_sha256": "df501c890895516a64299e5a7235ed02d77a61ee30a0e705f83e0c39d4a88268",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4111,
+      "expected_body_sha256": "88465cad70b44015b03de64031da6fd33dc45e2282ec7c3b7f4f70785d0d9902",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/041-lines-8001-8200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 8200,
+      "source_line_start": 8001
+    },
+    {
+      "actual_body_bytes": 4071,
+      "actual_body_sha256": "b33fc300b3ac5eba2e58d51b6e6554218cfc4dda3c918d34618a8c4a61174c07",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4063,
+      "expected_body_sha256": "504769d6b308f3636934f777288d8351ad864ab5636ce4953f49ce3570cdb067",
+      "first_difference": {
+        "actual_byte": 114,
+        "expected_byte": 115,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/042-lines-8201-8400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 8400,
+      "source_line_start": 8201
+    },
+    {
+      "actual_body_bytes": 4132,
+      "actual_body_sha256": "4fc6e12fed97f5ac086c054933bbb720497f254362b89db95e6fcb52070f2dd7",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 3963,
+      "expected_body_sha256": "cf70de287a545aa23d545f7a57b8a495e77552be142dc7fca749be3ed2518bd5",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/043-lines-8401-8600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 8600,
+      "source_line_start": 8401
+    },
+    {
+      "actual_body_bytes": 4473,
+      "actual_body_sha256": "c70ef8eba257448d93c79d1ff7b63274a4dddc2a598c5dd1805f1e8f48bd772d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4479,
+      "expected_body_sha256": "852abdada5d3c8f8346e7434b3d2bd233b7ee9e7f8e15a7a4e882804b06c427c",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 105,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/044-lines-8601-8800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 8800,
+      "source_line_start": 8601
+    },
+    {
+      "actual_body_bytes": 4260,
+      "actual_body_sha256": "3ab28cf39bab0fc49b3574b6a6e9c6cde269532237afc5b8795fb6b76dd5e543",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4436,
+      "expected_body_sha256": "665ab27a1b725b0acbb3f008408df2fccce84a48895c174f05e7cca4b38753f2",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 105,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/045-lines-8801-9000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 9000,
+      "source_line_start": 8801
+    },
+    {
+      "actual_body_bytes": 4663,
+      "actual_body_sha256": "42c21b4f7c6be1f2352afa80355b9857e9907c0ffb5483b09d9c513ae3994209",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4620,
+      "expected_body_sha256": "36832d5446ef67ecb5ef2ce474a5e2a7f731466d14fba44af085801083fb64ea",
+      "first_difference": {
+        "actual_byte": 123,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/046-lines-9001-9200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 9200,
+      "source_line_start": 9001
+    },
+    {
+      "actual_body_bytes": 4797,
+      "actual_body_sha256": "3d64557dc50baf7fc8c36d98ca18073f702fb9c9deeb7d86a6df7ad8af1e65ab",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4798,
+      "expected_body_sha256": "96d2337f17946a77dae62336e7561221f711f253e9875575b6b24e7ef2c32dca",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/047-lines-9201-9400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 9400,
+      "source_line_start": 9201
+    },
+    {
+      "actual_body_bytes": 4435,
+      "actual_body_sha256": "f35c91e6f2c8e3fe602ab93b92c26426531fd5cf955b6f32d5303a6a8c8ef691",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4433,
+      "expected_body_sha256": "71ff0a27f635921defed2f39d3842f7210e5b08db753626f0ad13fb7349a08f6",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/048-lines-9401-9600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 9600,
+      "source_line_start": 9401
+    },
+    {
+      "actual_body_bytes": 4752,
+      "actual_body_sha256": "5d0e4d9e20c2d8493e41f9fd6e20e8e426218fb6d3cb7bd84adb08622e51afe4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4787,
+      "expected_body_sha256": "b54cfed622f8bf0bad4211cb60465e0d5cc0de1ba84246f104a13242f2e21163",
+      "first_difference": {
+        "actual_byte": 97,
+        "expected_byte": 99,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/049-lines-9601-9800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 9800,
+      "source_line_start": 9601
+    },
+    {
+      "actual_body_bytes": 4542,
+      "actual_body_sha256": "3c2ab110a8840b79336deaef5005ddff87905620da6f6323a6b30783d77c633c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4509,
+      "expected_body_sha256": "af2fee69aa6ff8716231b5a5c1fb79b4b72a8757bdf64b62119aaaa7dc331bde",
+      "first_difference": {
+        "actual_byte": 125,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/050-lines-9801-10000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 10000,
+      "source_line_start": 9801
+    },
+    {
+      "actual_body_bytes": 4642,
+      "actual_body_sha256": "3b984eb086bcf65e55ad190dd9a716c013b67471932017cbfb6522f9c18f8fb0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4647,
+      "expected_body_sha256": "e14a3efc69c9aaf3af2ca0160fb3ad12ebfa6425bb6d73a3afb99e0fc6451c78",
+      "first_difference": {
+        "actual_byte": 108,
+        "expected_byte": 99,
+        "offset": 6
+      },
+      "path": "Plans/_shards/settings_inventory/051-lines-10001-10200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 10200,
+      "source_line_start": 10001
+    },
+    {
+      "actual_body_bytes": 4623,
+      "actual_body_sha256": "b1b69b91b35d8c64fe46fbdf3a76853ba01d4276beca96d9bec619d8508f4cb9",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4634,
+      "expected_body_sha256": "ff06c9e1eb32d0bfd0fd642f20f26ead402ce6a0c71c53cabb9dca5c3d4ce1c8",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/052-lines-10201-10400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 10400,
+      "source_line_start": 10201
+    },
+    {
+      "actual_body_bytes": 4638,
+      "actual_body_sha256": "e2c2db588a9a6dede79502131bb7e978456d01f6112a5c9009c92c85f8d72fc5",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4632,
+      "expected_body_sha256": "6118dcbc23591d954e108e2619326ca9a09adda0df1939cd88dd0f138640490e",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/053-lines-10401-10600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 10600,
+      "source_line_start": 10401
+    },
+    {
+      "actual_body_bytes": 4652,
+      "actual_body_sha256": "1822bec8af84608338a11fb1dbebd6fff5ff3963c964895f6d9455c4497e3349",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4653,
+      "expected_body_sha256": "391922a5dbd375d599284b81e45fc5cb79dabb84e1b9b239ec4b52235de0627c",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/054-lines-10601-10800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 10800,
+      "source_line_start": 10601
+    },
+    {
+      "actual_body_bytes": 4292,
+      "actual_body_sha256": "e9e4b4249acb77c66a06a4a9744bf0c8274352a38ae9819c1ceddacc88ab20ce",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4275,
+      "expected_body_sha256": "8ca4f9f578fae25649070161e5e074ac6c2a0e8fd1ed45575f10e48ba748f422",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/055-lines-10801-11000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 11000,
+      "source_line_start": 10801
+    },
+    {
+      "actual_body_bytes": 4010,
+      "actual_body_sha256": "b3822be5b13fcc0ea7839f5941bd9c2d607366e0293576c825c8607d15c61808",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4041,
+      "expected_body_sha256": "36c52f8e05cd0a0993a37ed3a2bb58798ec08a53afba47e4db09184c516aa9c8",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/056-lines-11001-11200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 11200,
+      "source_line_start": 11001
+    },
+    {
+      "actual_body_bytes": 4067,
+      "actual_body_sha256": "b3708d3c0173b0548fec6c435bbeae8b7ba337ab01d72d942054640cb342d6d4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4034,
+      "expected_body_sha256": "8afb89c325abf8bb2db8fb426418b092eda7f728ba42f94ca765d364a33674e7",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/057-lines-11201-11400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 11400,
+      "source_line_start": 11201
+    },
+    {
+      "actual_body_bytes": 4641,
+      "actual_body_sha256": "48cac4b1dbf44a4e72bacf2af0c4a5ba6cc67208b3f3ee74d3c1647458e1ab31",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4658,
+      "expected_body_sha256": "120c7999176ac779278d7fbfdf42f94a4397caed16da7f79d5264f199ee4cc2f",
+      "first_difference": {
+        "actual_byte": 114,
+        "expected_byte": 116,
+        "offset": 10
+      },
+      "path": "Plans/_shards/settings_inventory/058-lines-11401-11600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 11600,
+      "source_line_start": 11401
+    },
+    {
+      "actual_body_bytes": 4514,
+      "actual_body_sha256": "ec9d26026c5d2d644a4d930ad5f449dbcbc0e5dc29d0498bef577484aef71a51",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4526,
+      "expected_body_sha256": "25a9bc54dcc200e79d9dd52d96bf4a39eeb752a51537fab31702f9920bb12a07",
+      "first_difference": {
+        "actual_byte": 114,
+        "expected_byte": 115,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/059-lines-11601-11800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 11800,
+      "source_line_start": 11601
+    },
+    {
+      "actual_body_bytes": 4582,
+      "actual_body_sha256": "a953c284c3cac3c26c48e1fef564ea81c55c56f19f2ebd6dc645dac8283e26a0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4552,
+      "expected_body_sha256": "f13ad7d85cfbb58985f441ae9d77185c933f802e069c52648c4512878f233069",
+      "first_difference": {
+        "actual_byte": 103,
+        "expected_byte": 99,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/060-lines-11801-12000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 12000,
+      "source_line_start": 11801
+    },
+    {
+      "actual_body_bytes": 4601,
+      "actual_body_sha256": "b73765fc359bd7979f477766f065047c0eacddc8673b369d3e3a16a6e8625362",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4635,
+      "expected_body_sha256": "e7c9142a06cfb65a87691d76e5f11c8285150aafe80f8dd38171651dbec6d20f",
+      "first_difference": {
+        "actual_byte": 112,
+        "expected_byte": 118,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/061-lines-12001-12200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 12200,
+      "source_line_start": 12001
+    },
+    {
+      "actual_body_bytes": 4663,
+      "actual_body_sha256": "fef137baef3b6fe27c6918dc5bb9ff10e04121ee564f58ce2f9adbec26543f29",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4666,
+      "expected_body_sha256": "bc9874cd5c5d043f5307a28313c1010adee034b2e9342a271fc085811ba41fdf",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/062-lines-12201-12400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 12400,
+      "source_line_start": 12201
+    },
+    {
+      "actual_body_bytes": 4521,
+      "actual_body_sha256": "44a0404ba3d330cce9cb3f1dc5cd3a3cc5c2d6bbbf68f199a1922eb9a897cbd1",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4502,
+      "expected_body_sha256": "94b8f6a89454067927853c1eba69bc2ad1be790ecebfbbd2492a511c73bb8d48",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/063-lines-12401-12600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 12600,
+      "source_line_start": 12401
+    },
+    {
+      "actual_body_bytes": 4570,
+      "actual_body_sha256": "4516d5df6f34da997e022d30ad1f52722e77cb8385ce60d136d8e70dc38cc3a4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4577,
+      "expected_body_sha256": "5f7518e44776ce4a02ab3e9ca2fb8ac6eb1876710ab0228474e14c1f96f3ad25",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/064-lines-12601-12800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 12800,
+      "source_line_start": 12601
+    },
+    {
+      "actual_body_bytes": 4276,
+      "actual_body_sha256": "259049e357ddb0fc92a1990ebd848610000091e4317c02483ba5b38ca7c9b62c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4293,
+      "expected_body_sha256": "8641a5ee890a578f77b7fc016afed88e07e276abaad825262d523f8f8a8083e3",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/065-lines-12801-13000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 13000,
+      "source_line_start": 12801
+    },
+    {
+      "actual_body_bytes": 4782,
+      "actual_body_sha256": "8bd39b8790519dde613dd7299f283275554fe3a656aee7c17807d901a7dc2ff0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4611,
+      "expected_body_sha256": "afa2cd63a1a89cec6677795ccfc8b7884d9b6c1e7166cdd44f8423b1708745b7",
+      "first_difference": {
+        "actual_byte": 123,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/066-lines-13001-13200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 13200,
+      "source_line_start": 13001
+    },
+    {
+      "actual_body_bytes": 4794,
+      "actual_body_sha256": "77c00653005f75ba2da1569fde2b9b5e4f12882721593a9aa1dd162eb73ec6d9",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4935,
+      "expected_body_sha256": "1ef21a080ce83582c99e1abe356e4872a27cbb4cb06ab40c3dd5f858ff5e8b47",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 125,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/067-lines-13201-13400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 13400,
+      "source_line_start": 13201
+    },
+    {
+      "actual_body_bytes": 4702,
+      "actual_body_sha256": "1f12f276de4a6e2febdca833fc77a474220cbb49ee9c452553a38bee64102813",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4735,
+      "expected_body_sha256": "554b93576589636dd94fa05610b6e67bddf941a7f913c29b8575ab2edb9531dc",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/068-lines-13401-13600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 13600,
+      "source_line_start": 13401
+    },
+    {
+      "actual_body_bytes": 4829,
+      "actual_body_sha256": "b438068fbb06f2943761e69ae04bc0221bd8b670f2590a0d11e9e9e39ff69dfa",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4696,
+      "expected_body_sha256": "3f0b16059cb78a853cb7282f18a826f948bc11cbc97236b5b7aa084cf1296fa9",
+      "first_difference": {
+        "actual_byte": 112,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/069-lines-13601-13800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 13800,
+      "source_line_start": 13601
+    },
+    {
+      "actual_body_bytes": 4941,
+      "actual_body_sha256": "4bf39bc71c47a45a3ab3cfd397833d6a787f54b98526b61c691c1274ff8f9b14",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 5036,
+      "expected_body_sha256": "9c368005be1f7d57e9cab6bdca4b98e31cb5643f151ec4c6d34e3921b5b749c9",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/070-lines-13801-14000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 14000,
+      "source_line_start": 13801
+    },
+    {
+      "actual_body_bytes": 4541,
+      "actual_body_sha256": "7c23b532d409aabe4fab833c7adcb336acecb007011391ebef67da4ed17d14c5",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4585,
+      "expected_body_sha256": "87de3275a7541ca853d808460b15da8b861b8b0631168d971e17aaa9b6f443a0",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/071-lines-14001-14200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 14200,
+      "source_line_start": 14001
+    },
+    {
+      "actual_body_bytes": 4607,
+      "actual_body_sha256": "c858772d7fad5873abbe77aef11874630f25e04a3027f86561ab36a4f12577b4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4584,
+      "expected_body_sha256": "d001784015c133db94dbe5e30f3f33245b2ca317208d5cdd51a3d155679813fa",
+      "first_difference": {
+        "actual_byte": 123,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/072-lines-14201-14400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 14400,
+      "source_line_start": 14201
+    },
+    {
+      "actual_body_bytes": 4130,
+      "actual_body_sha256": "b8aa090f219a46494288829af9bb9124b9e767b1a14abc9d2e56d85591cd4820",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4055,
+      "expected_body_sha256": "efa362fc8e1b1a723d0439c4e3d5ab503809fca43ec9398cc1b9d44f96e801c3",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/073-lines-14401-14600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 14600,
+      "source_line_start": 14401
+    },
+    {
+      "actual_body_bytes": 4190,
+      "actual_body_sha256": "6e00e0a9dd30d64684c551427d544d87e946b06c3643bda40f837e3be6d9723b",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4263,
+      "expected_body_sha256": "c94e0c987125177c2738a201a22968ae058f4dfc3d54260b72bf3c1bf50ef533",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/074-lines-14601-14800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 14800,
+      "source_line_start": 14601
+    },
+    {
+      "actual_body_bytes": 4510,
+      "actual_body_sha256": "a65dc6d8b2430a1783775b1e924d3243c24ec21812ee462a7ac88cbbac68b874",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4537,
+      "expected_body_sha256": "2dfc3a14df6267a535a6266c803013af2cd74eeaceae58bfca6fbfe3d5dfde74",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/075-lines-14801-15000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 15000,
+      "source_line_start": 14801
+    },
+    {
+      "actual_body_bytes": 4859,
+      "actual_body_sha256": "882869f5736bc25b98f04f1e63de6f5d9fb0cd21b20f7c14bf46e4a1c4890062",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4728,
+      "expected_body_sha256": "0b01126a2587ee34bf7adf4bf0fdef92edc7c9be114d9e109d5241c88005b58a",
+      "first_difference": {
+        "actual_byte": 123,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/076-lines-15001-15200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 15200,
+      "source_line_start": 15001
+    },
+    {
+      "actual_body_bytes": 4511,
+      "actual_body_sha256": "c9a2e6223797704a3657592f82f767b125a66ed61e425fa9b909bde519648397",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4624,
+      "expected_body_sha256": "7ab20d0bfc3365f06810954480684680dfd25a488860826f5531bf3d5641bce6",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/077-lines-15201-15400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 15400,
+      "source_line_start": 15201
+    },
+    {
+      "actual_body_bytes": 4556,
+      "actual_body_sha256": "bb6227e3b3df9798fb0f0537b805fadd602311f61ef3daacd6d6f3daaf102712",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4437,
+      "expected_body_sha256": "14cbc66aa6b7c5e71da1089c937e208c63bf80e1bb2a44fa3afe353d8d061668",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/078-lines-15401-15600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 15600,
+      "source_line_start": 15401
+    },
+    {
+      "actual_body_bytes": 4432,
+      "actual_body_sha256": "fd2c16a9ad57b0de687fa0024a31917257b8b23643cf26d81f27e30bf8736b37",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4535,
+      "expected_body_sha256": "9ada588b943b780096633eb8bf6f6632a5241de264a48ab3666357ee93ae74b4",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/079-lines-15601-15800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 15800,
+      "source_line_start": 15601
+    },
+    {
+      "actual_body_bytes": 4382,
+      "actual_body_sha256": "e058602d0f3237d6264f091425cdd609a386605fedb3b7b3ab809e7f9766b4a8",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4388,
+      "expected_body_sha256": "0fd186492f855a33e2339de0acfbb0e84e546dfe091a9241ec197d3e0aa04be6",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/080-lines-15801-16000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 16000,
+      "source_line_start": 15801
+    },
+    {
+      "actual_body_bytes": 4365,
+      "actual_body_sha256": "ca5e7f66b00b9dda03173561557aafd18c02adbec619091a31db8c0f10c201f7",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4352,
+      "expected_body_sha256": "6352a18285fa7b9ab956cf9ffac5637d246c095d4c48e9ee248db62224253d58",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/081-lines-16001-16200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 16200,
+      "source_line_start": 16001
+    },
+    {
+      "actual_body_bytes": 4140,
+      "actual_body_sha256": "8ffd037a0ed62c34e9762bd62ff2b8707ae04c01a8a2fbf5f6049f296b5cf24b",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4152,
+      "expected_body_sha256": "2cdde38088d78a741600c69d5909a9809ab9554452b52df7fb8bc1f5784eea3f",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/082-lines-16201-16400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 16400,
+      "source_line_start": 16201
+    },
+    {
+      "actual_body_bytes": 4202,
+      "actual_body_sha256": "4dbf00fbc12ca9bfc449f4699776c46792530d5387a9ae303600054fd8235747",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4236,
+      "expected_body_sha256": "8d612f277c8619acd9a959f31b0592f6b803329b9cdf9847ffb29d7b9dc7b32a",
+      "first_difference": {
+        "actual_byte": 109,
+        "expected_byte": 99,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/083-lines-16401-16600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 16600,
+      "source_line_start": 16401
+    },
+    {
+      "actual_body_bytes": 4362,
+      "actual_body_sha256": "46492c03a7fb60a302e763012c23805a6ae1057b213e79b05294708a832ddaf4",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4335,
+      "expected_body_sha256": "f6c9aeff8696f4d4a9c5b3e77079004a4d41895f90e92071fce98d531ae65ff5",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/084-lines-16601-16800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 16800,
+      "source_line_start": 16601
+    },
+    {
+      "actual_body_bytes": 4439,
+      "actual_body_sha256": "6a90f87e0728bc379e732fd2b8825465b00cec727366a8ee472e17d881c38a2c",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4273,
+      "expected_body_sha256": "afb4ea5357c7ebeb6fab9907e0eaf7bec99d1dd35f4cd27b9d2b00ab8ce45803",
+      "first_difference": {
+        "actual_byte": 112,
+        "expected_byte": 97,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/085-lines-16801-17000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 17000,
+      "source_line_start": 16801
+    },
+    {
+      "actual_body_bytes": 4072,
+      "actual_body_sha256": "1ffe62bbb596e1bd73db5d56bc2453fc352ff566e0432620d40a885c57a0bfff",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4261,
+      "expected_body_sha256": "1882dda6d92a2337555221eb0b5a6f0be11c2c753d54478ac092aa1a58b80e5f",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 123,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/086-lines-17001-17200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 17200,
+      "source_line_start": 17001
+    },
+    {
+      "actual_body_bytes": 4294,
+      "actual_body_sha256": "b25e10d4c48d02a9fc8ec28fa5c508741e788868f8a9d7a24563fdd1050c9890",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4255,
+      "expected_body_sha256": "dc698f5d19c618eeb21fc1b95abe797872c6df8cd0eec40efb21582cc362d6aa",
+      "first_difference": {
+        "actual_byte": 125,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/087-lines-17201-17400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 17400,
+      "source_line_start": 17201
+    },
+    {
+      "actual_body_bytes": 4463,
+      "actual_body_sha256": "c177b28ae091104a8d76af8c21e2535360c8d2eb390eaf9d7c84fae2fcd2ab64",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4491,
+      "expected_body_sha256": "7d1ccde3fd9c0d9a348174d080e4590214a3b076c2483657a865d3c27b44498b",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/088-lines-17401-17600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 17600,
+      "source_line_start": 17401
+    },
+    {
+      "actual_body_bytes": 4555,
+      "actual_body_sha256": "445611890f149fa8f7a40258a8867cc1437c7972ae991b60e4449ca90013789f",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4553,
+      "expected_body_sha256": "63860b509ad2bec69024466bd10e3cee794d7451245fe5771e64e09b4e7f55d9",
+      "first_difference": {
+        "actual_byte": 99,
+        "expected_byte": 103,
+        "offset": 5
+      },
+      "path": "Plans/_shards/settings_inventory/089-lines-17601-17800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 17800,
+      "source_line_start": 17601
+    },
+    {
+      "actual_body_bytes": 4524,
+      "actual_body_sha256": "e05231998cc0905cc9ad699e2bb208b0b89a6fd31da4000ac1f4cbbb63ab7250",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4538,
+      "expected_body_sha256": "b5f7e0396ac69bda6090f3f4a9ed52939f242fd64a15dc5b71c910d1649f1876",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 111,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/090-lines-17801-18000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 18000,
+      "source_line_start": 17801
+    },
+    {
+      "actual_body_bytes": 4290,
+      "actual_body_sha256": "8d69bf9aef5f87c2aa2c609ca94dd63157b85018c9223d671746787818d598b7",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4255,
+      "expected_body_sha256": "d95505dce1fc35d670a1da5aca6900d3736358b51808731183dc5a86304df702",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 32,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/091-lines-18001-18200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 18200,
+      "source_line_start": 18001
+    },
+    {
+      "actual_body_bytes": 4690,
+      "actual_body_sha256": "03e715a6772a3b857e1b80df015576b5fad133633515d187ee566a7e55927a3d",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4706,
+      "expected_body_sha256": "908d633b530033ca6608c8cf78a76d5f2767001b61c366e6f7808823876bed51",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/092-lines-18201-18400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 18400,
+      "source_line_start": 18201
+    },
+    {
+      "actual_body_bytes": 4764,
+      "actual_body_sha256": "ec45099d0664a7b0008a3c5041b379912fff288d41941bfb0e000cfed009b401",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4765,
+      "expected_body_sha256": "d666406a7d91d3a942667dd5e9c879beec00552f06d6c9f7768f28e3c23309b7",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 34,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/093-lines-18401-18600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 18600,
+      "source_line_start": 18401
+    },
+    {
+      "actual_body_bytes": 4495,
+      "actual_body_sha256": "b90ff133e5fd0b4683299ed75ca1cd4064c9e15a05c53a3594b8befb253f182b",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4509,
+      "expected_body_sha256": "b5c01767d0c3f7ab643d0aca6972e9d68caf96cc0def8015e21d856f0197c2ae",
+      "first_difference": {
+        "actual_byte": 123,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/094-lines-18601-18800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 18800,
+      "source_line_start": 18601
+    },
+    {
+      "actual_body_bytes": 4656,
+      "actual_body_sha256": "72817b860ba796fecf03723fc5014081312442579377dfaa94090384653ed196",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4629,
+      "expected_body_sha256": "7bc77cc534ba8b72ba492657f110aa56a388f9323ebaa6c1b54143144af28aad",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/095-lines-18801-19000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 19000,
+      "source_line_start": 18801
+    },
+    {
+      "actual_body_bytes": 6607,
+      "actual_body_sha256": "bc6b1041b4eaa102d5277f32ba7d8abe63e70de029842e1b877334b6cc28eeb6",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 6401,
+      "expected_body_sha256": "6217cec412f82718be56a41b4768c942446cba51adf20655d8a47fbdc5e81d36",
+      "first_difference": {
+        "actual_byte": 34,
+        "expected_byte": 93,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/096-lines-19001-19200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 19200,
+      "source_line_start": 19001
+    },
+    {
+      "actual_body_bytes": 4411,
+      "actual_body_sha256": "f85bd0a23f3629ca0f1eb25c39a2bc2f4784350a5a8ddac8b70045679951ed51",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4600,
+      "expected_body_sha256": "e2d7834a9e3dedd519396f6efd79b8055d2639d97ffa740289bf5ddc0534bc95",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/097-lines-19201-19400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 19400,
+      "source_line_start": 19201
+    },
+    {
+      "actual_body_bytes": 4524,
+      "actual_body_sha256": "659aba4c3655ccb4ac921d770ea743207f32026892418541d3f80cad732e4662",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4535,
+      "expected_body_sha256": "0ec5146c14da7aeb384375fbbc10dcdff05f4fed35dbbdd97fe244a6e39e4fe6",
+      "first_difference": {
+        "actual_byte": 115,
+        "expected_byte": 114,
+        "offset": 3
+      },
+      "path": "Plans/_shards/settings_inventory/098-lines-19401-19600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 19600,
+      "source_line_start": 19401
+    },
+    {
+      "actual_body_bytes": 4540,
+      "actual_body_sha256": "2222eb587405aeed245b25fa6c4a52cad260423fe531f228ef63892362946aa2",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4543,
+      "expected_body_sha256": "6b143af66beec53065b8f48f295943211d3cc5386fe8fb848e525c9f5d5302fb",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 93,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/099-lines-19601-19800.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 19800,
+      "source_line_start": 19601
+    },
+    {
+      "actual_body_bytes": 4518,
+      "actual_body_sha256": "cb1397a37bd78c487712b5c95da8e126db5ebedd7aef3fe7a9574e918b279bb0",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4525,
+      "expected_body_sha256": "1b350582adb1d26c08b1c11c1bfcbee107171c0242ea661287cee451c6325802",
+      "first_difference": {
+        "actual_byte": 46,
+        "expected_byte": 45,
+        "offset": 13
+      },
+      "path": "Plans/_shards/settings_inventory/100-lines-19801-20000.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 20000,
+      "source_line_start": 19801
+    },
+    {
+      "actual_body_bytes": 4325,
+      "actual_body_sha256": "a5375251e58ed2a9d1cc7cf542d23fdc8a43fc58ba7878513998353feeb744dc",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4188,
+      "expected_body_sha256": "da218f3ee04ede3bef5ec87721695915055edd302279962aa294b000a3679945",
+      "first_difference": {
+        "actual_byte": 97,
+        "expected_byte": 112,
+        "offset": 4
+      },
+      "path": "Plans/_shards/settings_inventory/101-lines-20001-20200.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 20200,
+      "source_line_start": 20001
+    },
+    {
+      "actual_body_bytes": 4260,
+      "actual_body_sha256": "1f7d1d8a3c2df09d6ee71e99341c04859ee08f6fc59f06a36839a7e632064262",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4381,
+      "expected_body_sha256": "d5619c27dec296e72dfa3846fe0724c60d8e349c927bd446b48a5d93dffdc1cd",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 123,
+        "offset": 1
+      },
+      "path": "Plans/_shards/settings_inventory/102-lines-20201-20400.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 20400,
+      "source_line_start": 20201
+    },
+    {
+      "actual_body_bytes": 4713,
+      "actual_body_sha256": "8593657856448ab46b37541114507ad34469f399045161f66b4cf11762c83a98",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 4728,
+      "expected_body_sha256": "29a107d8b65875c8d23f622fa6840a40a8ee4709ac2ebd0d8663e00658eef2b2",
+      "first_difference": {
+        "actual_byte": 32,
+        "expected_byte": 34,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/103-lines-20401-20600.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 20600,
+      "source_line_start": 20401
+    },
+    {
+      "actual_body_bytes": 1419,
+      "actual_body_sha256": "d597011a3f2adb4059a8647462bb286d380095d51c6e8e91188d496e34876074",
+      "error": "shard_body_mismatch",
+      "expected_body_bytes": 1473,
+      "expected_body_sha256": "6df961f99212bd5e1527fe00383311f52f5b248853d81ba2fe20dbf6fb15e5dd",
+      "first_difference": {
+        "actual_byte": 93,
+        "expected_byte": 32,
+        "offset": 2
+      },
+      "path": "Plans/_shards/settings_inventory/104-lines-20601-20663.md",
+      "source": "Plans/settings_inventory.json",
+      "source_line_end": 20663,
+      "source_line_start": 20601
+    }
+  ],
+  "shards_checked": 2132,
+  "source_count": 98,
+  "status": "fail"
+}

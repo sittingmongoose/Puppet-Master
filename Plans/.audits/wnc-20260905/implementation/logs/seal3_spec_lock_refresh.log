@@ -1,0 +1,21 @@
+{
+  "evidence": [
+    {
+      "changed": false,
+      "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "updated_artifact_hashes": [],
+      "updated_node_fields": []
+    }
+  ],
+  "spec_lock": {
+    "changed": true,
+    "path": "Plans/Spec_Lock.json",
+    "schema_version_requests": [],
+    "schema_version_updates": [],
+    "updated_hashes": [
+      "Plans/.implementation_readiness/buildability_gate_report.json",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Working_Notebook.md"
+    ]
+  }
+}
