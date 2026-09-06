@@ -1,5 +1,6 @@
 # Re-Audit 3 — Recheck Repair Wave (work item `wnc-20260905`)
 
+> **UPDATE (superseded status):** the follow-up recheck of commit `a4111ec28b` (`review_3/RECHECK_REPORT.md`) found two residual items — negative-case intent pinned only to the enclosing record (RC3-01) and the supersede `request_id` omission from the public signature (RC3-02). Both are repaired and verified in `REAUDIT_4.md` (reviewer follow-up script exit 0, 15/15 checks). This report is retained as history.
 Scope: close FU-01..FU-05 from the recheck of commit `07382a95e9` (`review_2/RECHECK_REPORT.md`, `review_2/live_repo_recheck.py`). Prior rounds: `AUDIT_REPORT.md`, `REAUDIT_1.md`, `REAUDIT_2.md` (its "all closed" claim is superseded — see banner).
 
 ## FU-01 — Mutation-tool contracts vs live owner — CLOSED
