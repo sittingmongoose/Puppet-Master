@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2631,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-06T19:06:57Z",
+  "generated_at_utc": "2026-09-06T20:08:04Z",
   "gui_related_units": {
     "count": 3043,
     "units": [
@@ -37327,7 +37327,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "f80d0273a215fb466f82cbcb35b83864cec554a22ff778e30c8c7d49d16822cb",
+        "expected": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -37363,7 +37363,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "917c0ec15de06605bf46e163051f56dbcceb42a78702c099c61cd5fddc52ea04",
+        "expected": "e14558c7b80c27e5f90c186df60d9dec7cb477121b7590ca9d73f6cb31a6dff4",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
@@ -37372,31 +37372,7 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Spec_Lock.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Working_Notebook.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-memory-subsystem.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/working_notebook_contract_fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/working_notebook_contracts.schema.json"
       },
       {
         "error": "event_authority_currentness_live_registry_drift"

@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L4057-L4117
 
-Source SHA256: `f80d0273a215fb466f82cbcb35b83864cec554a22ff778e30c8c7d49d16822cb`
+Source SHA256: `92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7`
 
 ---
 
@@ -18,7 +18,7 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Plans/working_notebook_contracts.schema.json and Plans/working_notebook_contract_fixtures.json
   retain the Working Notebook static contract family: positive fixtures prove schema shape and
-  explicitly encoded invariants, and 27 negative fixtures prove the validator rejects encoded
+  explicitly encoded invariants, and 28 negative fixtures prove the validator rejects encoded
   malformed inputs at the mutated location (verified epistemic kind, oversize bodies/capsules,
   uncommitted checkpoint receipts, unwitnessed activation success, rotation conflation,
   unregistered tools, mixed or negative ranges, unknown argument names and error codes,
@@ -60,7 +60,7 @@ source_lineage:
   - source_packet:PM-WNC-2026-09-05-v1:WNC-V04
   - source_packet:PM-WNC-2026-09-05-v1:WNC-A57
   - source_packet:PM-WNC-2026-09-05-v1:WNC-A58
-preserved_exact_tokens: ["validate-working-notebook-contracts", "NOT_RUN", "static schema/fixture evidence only", "27 negative fixtures"]
+preserved_exact_tokens: ["validate-working-notebook-contracts", "NOT_RUN", "static schema/fixture evidence only", "28 negative fixtures"]
 negative_constraints:
   - Do not infer runtime, recovery, security, visual, or performance results from fixture validation.
   - Do not add schemas or fixture pairs to the gate through an ambient glob.

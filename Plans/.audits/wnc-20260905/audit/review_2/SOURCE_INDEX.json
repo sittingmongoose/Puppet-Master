@@ -1,0 +1,68 @@
+{
+  "repository": "sittingmongoose/Puppet-Master",
+  "commit": "07382a95e9765890c8b56ab291c29144da60bf81",
+  "retrieval": "GitHub plugin, pinned ref; no full checkout",
+  "source_identities": "Git blob SHA-1 values returned by connector; not SHA256 content hashes",
+  "sources": [
+    {
+      "path": "Plans/assistant-memory-subsystem.md",
+      "git_blob_sha1": "b50655e1db05a26ab664a471f889dd530ee29e81",
+      "inspected_surface": "\u00a75.2/\u00a75.3 and \u00a76 injection consumers"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "git_blob_sha1": "a5c41fa5ff5c2540848854028b12efdcadf291a2",
+      "inspected_surface": "Working Notebook addendum, T-183/T-184"
+    },
+    {
+      "path": "Plans/working_notebook_contracts.schema.json",
+      "git_blob_sha1": "75f90a76ea26512f2ee128a6cd9eb30f6d2de227",
+      "inspected_surface": "root; tool_request; read_range; context_transition_record success conditional"
+    },
+    {
+      "path": "Plans/working_notebook_contract_fixtures.json",
+      "git_blob_sha1": "71570acce8297d18e8bc73b821978c8a119a3fc9",
+      "inspected_surface": "tool_requests; negative fixtures; acceptance_scenario_map"
+    },
+    {
+      "path": "scripts/pm-working-notebook-contracts.py",
+      "git_blob_sha1": "7372febc2e4ef5d8fd530193565c6e3eb4c245f5",
+      "inspected_surface": "invariants; inventory; run_validation; argparse"
+    },
+    {
+      "path": "tests/test_pm_working_notebook_contracts.py",
+      "git_blob_sha1": "bf8f399f25d5176b2ba9c8ffcd8060c2095812af",
+      "inspected_surface": "complete published test source"
+    },
+    {
+      "path": ".gitignore",
+      "git_blob_sha1": "135607843883665696b44a0394c04c07ea821e9f",
+      "inspected_surface": "test and audit exceptions"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/audit/REAUDIT_2.md",
+      "git_blob_sha1": "28cbcfbdde37f2a644d862fc2f4a94230acdf3fe",
+      "inspected_surface": "claimed closure and verification scope"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/audit/review2_closure.jsonl",
+      "git_blob_sha1": "e89f927d3121067b119fb0c46a4a8ff921f2378e",
+      "inspected_surface": "all seven claimed closures"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/audit/review2_probe_rerun.json",
+      "git_blob_sha1": "cbbe3279c652a8c54489bd4aeccdd5ab5c036b37",
+      "inspected_surface": "agent-reported rerun results; not independently executed here"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/implementation/implementation_manifest.json",
+      "git_blob_sha1": "f8f6e09291646aa59c6e96e8c070804094897a91",
+      "inspected_surface": "content hashes and repair-wave-2 metadata"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/implementation/acceptance_coverage.jsonl",
+      "git_blob_sha1": "64945c63204c70f7f9ba8f30be023f2c19771c1f",
+      "inspected_surface": "selected rows WNC-A54..A62"
+    }
+  ]
+}

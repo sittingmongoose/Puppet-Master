@@ -19,11 +19,11 @@
     "head_at_finish": "4c88c0f01300cea36135b73eec96991d73969aa2",
     "committed": false,
     "content_fingerprint": {
-      "full_diff_sha256": "efcb49b09b3bd824654acc7aff3c0594bc4adc873b7d5f5c9a40cc8721f6c21a",
+      "full_diff_sha256": "7aa033592565f69eda6b210b2857ee4296d5de6088c6742e53e3a86a3f5f8ac6",
       "semantic_doc_content_hashes": {
         "Plans/00-plans-index.md": "b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf",
         "Plans/Assistant_Plan_Runtime.md": "27864006b72eb17ada4a376e9cbdca95d86484bea2169c2863be95cf439efd92",
-        "Plans/Automated_Testing_System.md": "f80d0273a215fb466f82cbcb35b83864cec554a22ff778e30c8c7d49d16822cb",
+        "Plans/Automated_Testing_System.md": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7",
         "Plans/Back_Seat_Driver.md": "0da8164e78d0b26b7375b361d7e0dee35ef1efb564eb586cc206b4294d3c1b05",
         "Plans/Backup_Restore_System.md": "7638c06e29a7bffa0cd6cce46f88902e000a56f7e3edf6c7c27cdcd7d6ccb089",
         "Plans/CLI_Bridged_Providers.md": "fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff",
@@ -51,7 +51,7 @@
         "Plans/Settings_System.md": "b741ed1279fec66b498ad0e31cb1a042038a99f269ce9439bb68cb5a7890cd85",
         "Plans/Shared_Integration_Runtime.md": "68f490730360190a462e589a2e83adc0276929bc4a170d5a69b7be7d9f502852",
         "Plans/ToDo_Runtime.md": "07f548bd892bd77b74e2a89185ce0c5356eba70d2c5d1eae8eaac2b9da9e9f9e",
-        "Plans/Tools.md": "c3d6f4fdface5ac79ba6ff55e2364d479346bbdc0e095481ce8cb2e65b432663",
+        "Plans/Tools.md": "151ae97002f04f5abb1a940614750fb3417e0c7ddec0b530358a58b333a2cc6f",
         "Plans/UI_Command_Catalog.md": "48f2f431bc886525e5510bb8e41fad60dbbf4147bb6d4ee78cee4261da7f608d",
         "Plans/UI_Wiring_Rules.md": "b0c77ecbeb53ef195661544a2bf03d3adc352ca3524d3ccee5e53c5d101ce5d8",
         "Plans/agent-rules-context.md": "af088bfdefbd05fb66d86da2f524238b1f51e9006f900ca84a88fc982b910b97",
@@ -60,16 +60,16 @@
         "Plans/orchestrator-subagent-integration.md": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
         "Plans/storage-plan.md": "6cae6d4bebe68a39b13ecadcec32580598254209e62566daff4d272354e4dd08",
         "Plans/usage-feature.md": "b992d366f78133b51691900eac1e8a6e32e7b48648348bd6984c1acc2ab781d1",
-        "Plans/Spec_Lock.json": "43456e96978f5a62f741c2650af30011b1d4ffd21d040cb28c950af47f8093e9",
+        "Plans/Spec_Lock.json": "4d7a81edadb4027f8a46fbdbc58a5995dd44efff24358f5c7fdb2b54da2e1edc",
         "Plans/Wiring_Matrix.production.exclusions.json": "8ef3c70a4ff346f9d0595040eeef39c0fe5897c464154947f67eb3d3a8d2f277",
         "Plans/plan_graph.json": "6c78f4c85f4aa11e3f7e95361fd9d59b425cb0df9daeacd2acf17bcfbaf5c255",
         "Plans/settings_inventory.json": "7bc1bac7d64e0df6c6c4b6cb47f562ec674d33feab45f80102f01cae64b4bf87",
         "Plans/sharding_config.json": "91d918be2a958c0d60fb189a9ef532682951ce3b564b2c942ba97677eb752eaf",
         "Plans/storage_value_registry.json": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5",
         "Plans/Working_Notebook.md": "0cf913e129241c8826dd1adee740d0cdce435fd1df5a2da3c3e7be1a3bc71a5c",
-        "Plans/working_notebook_contract_fixtures.json": "8c8a85c554c292301a5e0568cc3d604ccaa9aecc13fb234a4e3b15e0f98416b5",
-        "Plans/working_notebook_contracts.schema.json": "de81bfe57f528fe16561fffd5f7377dcc935e296e64bb6cc090f1db58b7990ac",
-        "scripts/pm-working-notebook-contracts.py": "3f87127d1aa79b7b4aafe36ee90325f8e7e58eec72fe60f933bdb268ead04b0a"
+        "Plans/working_notebook_contract_fixtures.json": "7e14599ec0cc1eecb54c957902959b78b48a2ff6922a762454731c955eb1b046",
+        "Plans/working_notebook_contracts.schema.json": "8598b798a8de0e64dc7f9a16f068eb1c700c972c26b3ebc606e7f12af9cd58f0",
+        "scripts/pm-working-notebook-contracts.py": "8640639c3a024b8962babbdfb47f18175dbf7576459d5d0d7a4b333150fe8893"
       },
       "full_diff_sha256_method": "sha256 of `git diff HEAD --binary` output plus trailing newline, computed after the post-audit repair wave"
     },
@@ -238,5 +238,24 @@
       "scripts/pm-working-notebook-contracts.py"
     ],
     "evidence_publication": "Plans/.audits/wnc-20260905/{implementation,audit} now tracked (see .gitignore exceptions)"
+  },
+  "post_recheck_repair_wave": {
+    "updated_at_utc": "2026-09-06T20:01:41Z",
+    "trigger": "External recheck of commit 07382a95e9 (FU-01..FU-05)",
+    "repairs": [
+      "FU-01 notebook_write/supersede schema+fixtures realigned to the registered Tools.md signatures (operation discriminator documented in the owner; epistemic_kind/provenance_refs/validity_refs accepted; required non-null CAS revision; supersedes_entry_revision admitted)",
+      "FU-02 UTF-8 byte limit enforced for every write operation pre-branch with boundary tests",
+      "FU-03 seven regressions moved to subschema-isolated validation with positive controls and ablation tests",
+      "FU-04 scenario-map record/ref resolution, process_evidence disposition, negative identity target pins, substitution/loss regressions",
+      "FU-05 coverage evidence hashes restamped with wave labels; A58 marked process_evidence"
+    ],
+    "rehashed_semantic_files": [
+      "Plans/Automated_Testing_System.md",
+      "Plans/Spec_Lock.json",
+      "Plans/Tools.md",
+      "Plans/working_notebook_contract_fixtures.json",
+      "Plans/working_notebook_contracts.schema.json",
+      "scripts/pm-working-notebook-contracts.py"
+    ]
   }
 }

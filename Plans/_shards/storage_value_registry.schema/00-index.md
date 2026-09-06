@@ -1,6 +1,6 @@
 # Shard Index: Plans/storage_value_registry.schema.json
 
-Generated: 2026-09-06T19:03:19Z
+Generated: 2026-09-06T20:04:21Z
 
 Source SHA256: `8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7`
 

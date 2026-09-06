@@ -1413,14 +1413,21 @@
                 "type": "object",
                 "additionalProperties": false,
                 "required": [
-                  "notebook_id",
                   "operation",
-                  "request_id"
+                  "request_id",
+                  "body",
+                  "epistemic_kind"
                 ],
                 "properties": {
                   "notebook_id": {
-                    "type": "string",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
                     "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "scope": {
+                    "$ref": "#/$defs/scope_binding"
                   },
                   "entry_id": {
                     "type": [
@@ -1447,19 +1454,31 @@
                     ],
                     "minimum": 1
                   },
-                  "actor": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
-                    "minLength": 1
-                  },
                   "body": {
                     "type": "string",
                     "maxLength": 65536
                   },
-                  "scope": {
-                    "$ref": "#/$defs/scope_binding"
+                  "epistemic_kind": {
+                    "enum": [
+                      "hypothesis",
+                      "observation",
+                      "rejected_approach",
+                      "reference",
+                      "continuation",
+                      "user_note"
+                    ]
+                  },
+                  "provenance_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/identity_ref"
+                    }
+                  },
+                  "validity_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/identity_ref"
+                    }
                   }
                 }
               }
@@ -1485,7 +1504,9 @@
                 "required": [
                   "notebook_id",
                   "entry_id",
-                  "request_id"
+                  "request_id",
+                  "expected_revision",
+                  "operation"
                 ],
                 "properties": {
                   "notebook_id": {
@@ -1501,18 +1522,33 @@
                     "minLength": 1
                   },
                   "expected_revision": {
-                    "type": [
-                      "integer",
-                      "null"
-                    ],
+                    "type": "integer",
                     "minimum": 1
                   },
-                  "target_state": {
+                  "operation": {
                     "enum": [
-                      "superseded",
-                      "archived",
-                      "tombstoned"
+                      "supersede",
+                      "archive",
+                      "tombstone"
                     ]
+                  },
+                  "supersedes_entry_revision": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "entry_id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "entry_id": {
+                        "type": "string",
+                        "pattern": "^wne_[A-Za-z0-9]+$"
+                      },
+                      "revision": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
                   }
                 }
               }
@@ -1583,7 +1619,6 @@
             "properties": {
               "args": {
                 "required": [
-                  "body",
                   "scope"
                 ],
                 "properties": {
@@ -1628,8 +1663,7 @@
               "args": {
                 "required": [
                   "entry_id",
-                  "expected_revision",
-                  "body"
+                  "expected_revision"
                 ],
                 "properties": {
                   "entry_id": {

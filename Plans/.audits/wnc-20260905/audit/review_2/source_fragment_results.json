@@ -1,0 +1,265 @@
+{
+  "commit": "07382a95e9765890c8b56ab291c29144da60bf81",
+  "boundary": "Bounded reproductions of GitHub source inspected at 07382a95e9765890c8b56ab291c29144da60bf81.\n\nThese are source-fragment experiments, NOT a full checkout, the repository's\n21-test suite, or runtime/governance execution. Relevant JSON Schema branches\nare reproduced semantically; unrelated object families are not implemented.\nThe corpus-inventory checker below is copied from the inspected source.\n",
+  "observation_count": 29,
+  "observations": [
+    {
+      "probe": "valid chatread control",
+      "observed": "accepted",
+      "category": "repaired_control",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "empty chatread args",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {
+        "schema_errors": [
+          "'thread_id' is a required property",
+          "{} is not valid under any of the given schemas"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "empty write args",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {
+        "schema_errors": [
+          "'notebook_id' is a required property",
+          "'operation' is a required property",
+          "'request_id' is a required property"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "negative read start",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {
+        "schema_errors": [
+          "-4 is less than the minimum of 0"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "schema-conforming create control",
+      "observed": "accepted",
+      "category": "control",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "documented write field epistemic_kind",
+      "observed": "rejected",
+      "category": "remaining_contract_drift",
+      "detail": {
+        "schema_errors": [
+          "Additional properties are not allowed ('epistemic_kind' was unexpected)"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "documented write field provenance_refs",
+      "observed": "rejected",
+      "category": "remaining_contract_drift",
+      "detail": {
+        "schema_errors": [
+          "Additional properties are not allowed ('provenance_refs' was unexpected)"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "documented write field validity_refs",
+      "observed": "rejected",
+      "category": "remaining_contract_drift",
+      "detail": {
+        "schema_errors": [
+          "Additional properties are not allowed ('validity_refs' was unexpected)"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "create without documented optional notebook_id",
+      "observed": "rejected",
+      "category": "remaining_contract_drift",
+      "detail": {
+        "schema_errors": [
+          "'notebook_id' is a required property"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "supersede without CAS revision or action",
+      "observed": "accepted",
+      "category": "remaining_acceptance_hole",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "supersede with null CAS revision",
+      "observed": "accepted",
+      "category": "remaining_acceptance_hole",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "documented supersede operation argument",
+      "observed": "rejected",
+      "category": "remaining_contract_drift",
+      "detail": {
+        "schema_errors": [
+          "Additional properties are not allowed ('operation' was unexpected)",
+          "'request_id' is a required property"
+        ],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "create with 32769 chars / 65538 UTF-8 bytes",
+      "observed": "accepted",
+      "category": "remaining_byte_bound_hole",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": []
+      }
+    },
+    {
+      "probe": "update with same oversized UTF-8 body",
+      "observed": "rejected",
+      "category": "control",
+      "detail": {
+        "schema_errors": [],
+        "invariant_errors": [
+          "tool_requests[0]: write body exceeds 64 KiB UTF-8 (WNC-N05)"
+        ]
+      }
+    },
+    {
+      "probe": "success-state control",
+      "observed": "accepted",
+      "category": "repaired_control",
+      "detail": {}
+    },
+    {
+      "probe": "success-state admission_receipt_ref=None",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": [
+        "None is not of type 'string'"
+      ]
+    },
+    {
+      "probe": "success-state new_context_window_id=None",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": [
+        "None is not of type 'string'"
+      ]
+    },
+    {
+      "probe": "success-state effective_controller=unavailable",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": [
+        "'unavailable' is not one of ['pm_managed', 'provider_native']"
+      ]
+    },
+    {
+      "probe": "success-state absent receipt",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {}
+    },
+    {
+      "probe": "valid tool object tested against fixture root",
+      "observed": "rejected",
+      "category": "vacuous_regression_control",
+      "detail": [
+        "Additional properties are not allowed ('args', 'tool' were unexpected)",
+        "'schema_id' is a required property",
+        "'schema_version' is a required property",
+        "'notebooks' is a required property"
+      ]
+    },
+    {
+      "probe": "valid success-state object tested against fixture root",
+      "observed": "rejected",
+      "category": "vacuous_regression_control",
+      "detail": [
+        "Additional properties are not allowed ('admission_receipt_ref', 'checkpoint_ref', 'effective_controller', 'new_context_window_id', 'state' were unexpected)",
+        "'schema_id' is a required property",
+        "'schema_version' is a required property",
+        "'notebooks' is a required property"
+      ]
+    },
+    {
+      "probe": "inventory control",
+      "observed": "accepted",
+      "category": "control",
+      "detail": {}
+    },
+    {
+      "probe": "delete all negatives",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {}
+    },
+    {
+      "probe": "delete scenario key",
+      "observed": "rejected",
+      "category": "repaired_counterexample",
+      "detail": {}
+    },
+    {
+      "probe": "all 62 scenario values null",
+      "observed": "accepted",
+      "category": "remaining_inventory_hole",
+      "detail": {}
+    },
+    {
+      "probe": "all static references invalid",
+      "observed": "accepted",
+      "category": "remaining_inventory_hole",
+      "detail": {}
+    },
+    {
+      "probe": "all static references removed",
+      "observed": "accepted",
+      "category": "remaining_inventory_hole",
+      "detail": {}
+    },
+    {
+      "probe": "27 expected ids all use one identical unrelated mutation",
+      "observed": "accepted",
+      "category": "remaining_inventory_hole",
+      "detail": {
+        "negative_count": 27
+      }
+    },
+    {
+      "probe": "four documented argument forms",
+      "observed": "accepted",
+      "category": "repaired_parser_control",
+      "detail": {
+        "boundary": "argparse interface only, not execution of repository commands"
+      }
+    }
+  ]
+}

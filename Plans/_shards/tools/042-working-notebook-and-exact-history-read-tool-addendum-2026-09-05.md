@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12770-L12859
 
-Source SHA256: `c3d6f4fdface5ac79ba6ff55e2364d479346bbdc0e095481ce8cb2e65b432663`
+Source SHA256: `151ae97002f04f5abb1a940614750fb3417e0c7ddec0b530358a58b333a2cc6f`
 
 ---
 
@@ -20,7 +20,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 **`notebook_read` — exact bounded entry read.** Input: `{ notebook_id, entry_id, revision?, range?, include_provenance? }`. Returns the immutable entry revision (or the clearly qualified current object), envelope metadata (author, lifecycle, epistemic kind, freshness), provenance/validity/restriction references, and explicit truncation. Same single range convention rule and bounds as `chatread`. Read-time checks match `notebook_search` exactly.
 
-**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
+**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
 
 **`notebook_supersede` — lifecycle transitions.** Input: `{ notebook_id, entry_id, expected_revision, operation: supersede | archive | tombstone, supersedes_entry_revision? }`. Runs through owner policy (WN-014); current checkpoint dependencies hold retention and cannot be silently purged.
 
