@@ -72,37 +72,39 @@ TOOL_COVERAGE = {"notebook_search", "notebook_read", "notebook_write",
                  "notebook_supersede", "fresh_context_request", "chatread"}
 EXPECTED_SCENARIO_IDS = {f"WNC-A{i:02d}" for i in range(1, 63)}
 SCENARIO_DISPOSITIONS = {"static_fixture", "preexisting_static_fixture", "owner_prose_only", "process_evidence", "runtime_only_future"}
-# Semantic identity pins: each negative id must declare (and mutate within) this
-# exact rejection target, so repointing cases cannot silently replace each other.
-EXPECTED_NEGATIVE_TARGETS = {
-    "neg_bad_epistemic_kind": "entry_envelopes[0]",
-    "neg_body_over_limit": "entry_envelopes[0]",
-    "neg_unknown_lifecycle": "entry_envelopes[0]",
-    "neg_thread_scope_missing_thread": "entry_envelopes[0]",
-    "neg_capsule_over_token_bound": "resume_capsules[0]",
-    "neg_capsule_over_byte_bound": "resume_capsules[0]",
-    "neg_committed_checkpoint_without_receipt": "notebook_checkpoints[0]",
-    "neg_transition_native_success_without_observation": "context_transitions[0]",
-    "neg_transition_done_rotated_conflation": "context_transitions[0]",
-    "neg_unknown_tool": "tool_requests[0]",
-    "neg_mixed_range_convention": "tool_requests[1]",
-    "neg_unknown_error_code": "typed_errors[0]",
-    "neg_applied_without_result_revision": "revision_mutations[0]",
-    "neg_conflict_without_conflicting_revision": "revision_mutations[1]",
-    "neg_import_without_restriction": "entry_envelopes[2]",
-    "neg_crash_after_commit_discards_checkpoint": "context_transitions[2]",
-    "neg_crash_before_commit_claims_checkpoint": "context_transitions[1]",
-    "neg_chatread_missing_thread": "tool_requests[2]",
-    "neg_fresh_context_legacy_arg_name": "tool_requests[3]",
-    "neg_read_negative_offset": "tool_requests[1]",
-    "neg_read_unknown_arg": "tool_requests[1]",
-    "neg_write_create_with_entry_id": "tool_requests[4]",
-    "neg_success_without_new_window": "context_transitions[0]",
-    "neg_success_unavailable_controller": "context_transitions[0]",
-    "neg_write_update_without_expected_revision": "tool_requests[5]",
-    "neg_supersede_unknown_operation": "tool_requests[6]",
-    "neg_supersede_null_expected_revision": "tool_requests[6]",
-    "neg_chatread_without_message_or_item": "tool_requests[2]",
+# Semantic identity pins (RC3-01): each negative id is bound to its intended
+# rejection target AND its exact mutation path, so a same-record substitution
+# (e.g. neg_body_over_limit repointed at epistemic_kind) cannot silently replace
+# one required case with another while keeping its label.
+EXPECTED_NEGATIVE_CASES = {
+    "neg_bad_epistemic_kind": {"rejects": "entry_envelopes[0]", "path": "entry_envelopes[0].epistemic_kind"},
+    "neg_body_over_limit": {"rejects": "entry_envelopes[0]", "path": "entry_envelopes[0].body", "value_kind": "char_count"},
+    "neg_unknown_lifecycle": {"rejects": "entry_envelopes[0]", "path": "entry_envelopes[0].lifecycle"},
+    "neg_thread_scope_missing_thread": {"rejects": "entry_envelopes[0]", "path": "entry_envelopes[0].scope.binding_refs"},
+    "neg_capsule_over_token_bound": {"rejects": "resume_capsules[0]", "path": "resume_capsules[0].estimated_tokens"},
+    "neg_capsule_over_byte_bound": {"rejects": "resume_capsules[0]", "path": "resume_capsules[0].body_bytes"},
+    "neg_committed_checkpoint_without_receipt": {"rejects": "notebook_checkpoints[0]", "path": "notebook_checkpoints[0].commit_receipt_ref"},
+    "neg_transition_native_success_without_observation": {"rejects": "context_transitions[0]", "path": "context_transitions[0].admission_receipt_ref"},
+    "neg_transition_done_rotated_conflation": {"rejects": "context_transitions[0]", "path": "context_transitions[0].reason"},
+    "neg_unknown_tool": {"rejects": "tool_requests[0]", "path": "tool_requests[0].tool"},
+    "neg_mixed_range_convention": {"rejects": "tool_requests[1]", "path": "tool_requests[1].args.range.convention"},
+    "neg_unknown_error_code": {"rejects": "typed_errors[0]", "path": "typed_errors[0].code"},
+    "neg_applied_without_result_revision": {"rejects": "revision_mutations[0]", "path": "revision_mutations[0].outcome.result_revision"},
+    "neg_conflict_without_conflicting_revision": {"rejects": "revision_mutations[1]", "path": "revision_mutations[1].outcome.conflicting_revision"},
+    "neg_import_without_restriction": {"rejects": "entry_envelopes[2]", "path": "entry_envelopes[2].restriction_refs"},
+    "neg_crash_after_commit_discards_checkpoint": {"rejects": "context_transitions[2]", "path": "context_transitions[2].checkpoint_ref"},
+    "neg_crash_before_commit_claims_checkpoint": {"rejects": "context_transitions[1]", "path": "context_transitions[1].checkpoint_ref"},
+    "neg_chatread_missing_thread": {"rejects": "tool_requests[2]", "path": "tool_requests[2].args"},
+    "neg_fresh_context_legacy_arg_name": {"rejects": "tool_requests[3]", "path": "tool_requests[3].args"},
+    "neg_read_negative_offset": {"rejects": "tool_requests[1]", "path": "tool_requests[1].args.range.start"},
+    "neg_read_unknown_arg": {"rejects": "tool_requests[1]", "path": "tool_requests[1].args.wildcard_dump"},
+    "neg_write_create_with_entry_id": {"rejects": "tool_requests[4]", "path": "tool_requests[4].args.entry_id"},
+    "neg_success_without_new_window": {"rejects": "context_transitions[0]", "path": "context_transitions[0].new_context_window_id"},
+    "neg_success_unavailable_controller": {"rejects": "context_transitions[0]", "path": "context_transitions[0].effective_controller"},
+    "neg_write_update_without_expected_revision": {"rejects": "tool_requests[5]", "path": "tool_requests[5].args.expected_revision"},
+    "neg_supersede_unknown_operation": {"rejects": "tool_requests[6]", "path": "tool_requests[6].args.operation"},
+    "neg_chatread_without_message_or_item": {"rejects": "tool_requests[2]", "path": "tool_requests[2].args.message_id"},
+    "neg_supersede_null_expected_revision": {"rejects": "tool_requests[6]", "path": "tool_requests[6].args.expected_revision"},
 }
 
 
@@ -318,20 +320,20 @@ def check_fixture_inventory(fixtures: dict[str, Any]) -> list[str]:
     seen = [negative.get("negative_id") for negative in negatives]
     for negative in negatives:
         negative_id = negative.get("negative_id")
-        expected_target = EXPECTED_NEGATIVE_TARGETS.get(negative_id)
+        expected_case = EXPECTED_NEGATIVE_CASES.get(negative_id)
         declared = negative.get("rejects")
-        if expected_target is not None and declared != expected_target:
-            problems.append(
-                f"negative {negative_id!r} declares rejects {declared!r} but its semantic case is pinned to {expected_target!r} (FU-04)"
-            )
         mutation_path = (negative.get("mutation") or {}).get("path", "")
-        mutation_tokens = _parse_mutation_path(mutation_path)
-        if expected_target is not None:
-            target_tokens = _parse_mutation_path(expected_target)
-            if mutation_tokens[:2] != target_tokens[:2]:
-                problems.append(
-                    f"negative {negative_id!r} mutates {mutation_path!r} outside its pinned target {expected_target!r} (FU-04)"
-                )
+        if expected_case is None:
+            continue
+        if declared != expected_case["rejects"]:
+            problems.append(
+                f"negative {negative_id!r} declares rejects {declared!r} but its semantic case is pinned to {expected_case['rejects']!r} (FU-04/RC3-01)"
+            )
+        if mutation_path != expected_case["path"]:
+            problems.append(
+                f"negative {negative_id!r} mutates {mutation_path!r} but its pinned case path is {expected_case['path']!r}; "
+                "a same-record substitution would silently replace the intended constraint (RC3-01)"
+            )
     for negative_id in sorted(set(seen) - EXPECTED_NEGATIVE_IDS):
         problems.append(f"unknown negative fixture id {negative_id!r} (inventory drift)")
     for negative_id in sorted(EXPECTED_NEGATIVE_IDS - set(seen)):
@@ -392,11 +394,20 @@ def _scenario_ref_problem(disposition: str, ref: Any, positive: dict[str, Any]) 
             return f"external path {target!r} does not exist"
         return None
     # owner_prose_only / process_evidence: concrete, existing repository reference
-    target = ref.split("#", 1)[0].strip()
+    target, _, anchor = ref.partition("#")
+    target = target.strip()
     if not target.startswith("Plans/"):
         return "owner/process refs must point into Plans/ (anchor optional)"
     if not (ROOT / target).exists():
         return f"referenced path {target!r} does not exist"
+    anchor = (anchor or "").strip()
+    if anchor:
+        try:
+            content = (ROOT / target).read_text(encoding="utf-8")
+        except OSError as exc:
+            return f"referenced path {target!r} is unreadable: {exc}"
+        if anchor not in content:
+            return f"anchor {anchor!r} does not resolve inside {target}"
     return None
 
 

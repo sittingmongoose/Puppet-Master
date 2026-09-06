@@ -243,6 +243,32 @@ class WorkingNotebookContractTests(unittest.TestCase):
         self._assert_fail(validator.run_validation(fixtures=broken),
                           "negatives repointed to one identical mutation must fail the target pins")
 
+    def test_same_record_substitutions_fail(self) -> None:
+        # RC3-01: swapping a case's mutation for a different constraint inside the
+        # same record must fail, even though the replacement value is itself invalid.
+        substitutions = [
+            ("neg_body_over_limit",
+             {"path": "entry_envelopes[0].epistemic_kind", "value": "verified"}),
+            ("neg_read_negative_offset",
+             {"path": "tool_requests[1].args.range.convention", "value": "mixed_byte_and_char"}),
+            ("neg_supersede_null_expected_revision",
+             {"path": "tool_requests[6].args.operation", "value": "deleted"}),
+        ]
+        for case_id, mutation in substitutions:
+            broken = copy.deepcopy(self.fixtures)
+            match = next(n for n in broken["negative"] if n["negative_id"] == case_id)
+            match["mutation"] = mutation
+            report = validator.run_validation(fixtures=broken)
+            self.assertEqual(report["status"], "fail",
+                             f"same-record substitution of {case_id} must fail the case pins")
+
+    def test_unresolvable_owner_anchor_fails(self) -> None:
+        broken = copy.deepcopy(self.fixtures)
+        row = broken["acceptance_scenario_map"]["scenarios"]["WNC-A04"]
+        row["refs"] = ["Plans/Working_Notebook.md#WNC-ANCHOR-DOES-NOT-EXIST"]
+        self._assert_fail(validator.run_validation(fixtures=broken),
+                          "an owner ref with an unresolvable anchor must fail")
+
     def test_invalid_declared_rejects_fails(self) -> None:
         broken = copy.deepcopy(self.fixtures)
         for negative in broken["negative"]:

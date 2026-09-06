@@ -1,0 +1,156 @@
+{
+  "commit": "a4111ec28b91f0f8ebbec139a43db8416771fbcf",
+  "evidence_boundary": "source fragments + synthetic inventory; full checkout validator/test suite NOT_RUN",
+  "count": 21,
+  "observations": [
+    {
+      "probe": "supersede with all schema fields",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "supersede with exactly the documented required signature",
+      "observed": false,
+      "expected_contract_outcome": true,
+      "conforms": false,
+      "detail": [
+        "'request_id' is a required property"
+      ]
+    },
+    {
+      "probe": "supersede rejects operation=null",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "supersede rejects expected_revision=null",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "create byte limit: 65536 bytes",
+      "observed": false,
+      "expected_contract_outcome": false,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "create byte limit: 65537 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "create byte limit: 65538 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "update byte limit: 65536 bytes",
+      "observed": false,
+      "expected_contract_outcome": false,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "update byte limit: 65537 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "update byte limit: 65538 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "append byte limit: 65536 bytes",
+      "observed": false,
+      "expected_contract_outcome": false,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "append byte limit: 65537 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "append byte limit: 65538 bytes",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "inventory synthetic baseline",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "size case replaced by epistemic-kind case within same record is rejected",
+      "observed": false,
+      "expected_contract_outcome": true,
+      "conforms": false,
+      "detail": null
+    },
+    {
+      "probe": "cross-record replacement is rejected",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "null scenario row is rejected",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "missing static refs rejected",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "nonexistent static refs rejected",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "owner file reference accepted",
+      "observed": true,
+      "expected_contract_outcome": true,
+      "conforms": true,
+      "detail": null
+    },
+    {
+      "probe": "missing owner anchor detected",
+      "observed": false,
+      "expected_contract_outcome": true,
+      "conforms": false,
+      "detail": null
+    }
+  ]
+}

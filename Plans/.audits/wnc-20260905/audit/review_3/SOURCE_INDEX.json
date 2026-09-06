@@ -1,0 +1,43 @@
+{
+  "repository": "sittingmongoose/Puppet-Master",
+  "commit": "a4111ec28b91f0f8ebbec139a43db8416771fbcf",
+  "retrieval": "GitHub plugin; bounded source reads",
+  "files": [
+    {
+      "path": "scripts/pm-working-notebook-contracts.py",
+      "git_blob_sha1": "3b439a105abeb59352aee24b30f13eee24b6bfda"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "git_blob_sha1": "badecd34e678aab20abcdbf97c130d17ab3783b8"
+    },
+    {
+      "path": "Plans/working_notebook_contracts.schema.json",
+      "git_blob_sha1": "e598938dd15454df11df839280ae3124cb51461f"
+    },
+    {
+      "path": "Plans/working_notebook_contract_fixtures.json",
+      "git_blob_sha1": "c37c92051ca4342a1cc474907a01bfdd5c65912a"
+    },
+    {
+      "path": "tests/test_pm_working_notebook_contracts.py",
+      "git_blob_sha1": "b57d16b1c0f0afeded7ee770593d50f4e52c60a0"
+    },
+    {
+      "path": "Plans/Working_Notebook.md",
+      "git_blob_sha1": "2be6c3c8c9bebbc7311421dd4d2273a01d60ad5b"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/implementation/acceptance_coverage.jsonl",
+      "git_blob_sha1": "c8d5149083169483753c32ed1cc4092ae46fa45e"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/implementation/implementation_manifest.json",
+      "git_blob_sha1": "36c2389817671cb9422f22361d4fe7d9ef3d80e4"
+    },
+    {
+      "path": "Plans/.audits/wnc-20260905/audit/REAUDIT_3.md",
+      "git_blob_sha1": "37e7d402134704d18ca776a5f6290fb8472c4cfc"
+    }
+  ]
+}

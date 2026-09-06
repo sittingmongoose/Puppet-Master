@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2631,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-06T20:08:04Z",
+  "generated_at_utc": "2026-09-06T21:28:58Z",
   "gui_related_units": {
     "count": 3043,
     "units": [
@@ -37363,7 +37363,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "e14558c7b80c27e5f90c186df60d9dec7cb477121b7590ca9d73f6cb31a6dff4",
+        "expected": "1c7d0eb72233afd8f6fae7ca3bf5d5a307e03510fa751f1b6de86c0230a6000d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
@@ -37373,6 +37373,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
       },
       {
         "error": "event_authority_currentness_live_registry_drift"

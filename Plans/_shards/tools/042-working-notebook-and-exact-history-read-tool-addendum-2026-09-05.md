@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12770-L12859
 
-Source SHA256: `151ae97002f04f5abb1a940614750fb3417e0c7ddec0b530358a58b333a2cc6f`
+Source SHA256: `f184b9325f823a984b7eaf731ec462d3716de09e767f6480d03ec145027175db`
 
 ---
 
@@ -22,7 +22,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 **`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
 
-**`notebook_supersede` — lifecycle transitions.** Input: `{ notebook_id, entry_id, expected_revision, operation: supersede | archive | tombstone, supersedes_entry_revision? }`. Runs through owner policy (WN-014); current checkpoint dependencies hold retention and cannot be silently purged.
+**`notebook_supersede` — lifecycle transitions.** Input: `{ notebook_id, entry_id, expected_revision, request_id, operation: supersede | archive | tombstone, supersedes_entry_revision? }`. `request_id` is the mutation idempotency identity per the Working Notebook revision contract (WN-007): retrying the same request returns the original result without a second write. Runs through owner policy (WN-014); current checkpoint dependencies hold retention and cannot be silently purged.
 
 **`fresh_context_request` — transition request (request-only).** Input: `{ reason, checkpoint_required? }`. Submits a fresh context-window request to the Prompt Pipeline admission lifecycle (PP-085). The request never performs admission, never discards context, and returns the recorded request identity and current typed state (`requested | deferred | denied` reasons) immediately.
 
