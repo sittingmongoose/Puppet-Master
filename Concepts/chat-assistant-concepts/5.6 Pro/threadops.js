@@ -236,6 +236,7 @@
         if (ref && ref.kind === 'note') return true;
       } catch (e) {}
     }
+    if (m.title && m.title.indexOf('Orphan Gate failed') !== -1) return true;
     return false;
   }
   function ordinaryMessages(t) {
@@ -367,14 +368,15 @@
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
-      atTurn: at + 1,
+      atTurn: ordinaryCovered.length,
       messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
       deleted: false,
-      /* Immutable means immutable: the covered prefix is captured here, so a
-         later edit to the live thread cannot rewrite what the point restores. */
-      snapshot: ctx.clone(t.messages.slice(0, at + 1))
+      /* Ordinary user-facing messages are captured in snapshot */
+      snapshot: ctx.clone(ordinaryCovered),
+      /* Diagnostic/recovery history is preserved separately in rawSnapshot */
+      rawSnapshot: ctx.clone(t.messages.slice(0, at + 1))
     };
     s.restorePoints.push(rp);
     dispatch(CMD.createRestorePoint, t.id);
@@ -417,8 +419,9 @@
       summary: 'Branched from ' + rp.label + ' of ' + src.title,
       worktree: null,
       /* The SNAPSHOT, not the live prefix: that is what an immutable restore
-         point is for. */
-      messages: ctx.clone(rp.snapshot),
+         point is for. Internal notes are filtered from ordinary messages. */
+      messages: ctx.clone(rp.snapshot).filter(function (m) { return !isInternalNote(m); }),
+      rawMessages: rp.rawSnapshot ? ctx.clone(rp.rawSnapshot) : ctx.clone(rp.snapshot),
       lineage: {
         kind: 'branch-from-restore',
         sourceThreadId: src.id,
@@ -1290,14 +1293,15 @@
       var rw = findRewind(m.rewindId);
       if (!rw) return '';
       if (rw.restored) return '<span class="pm-tops-card-note" data-kind="rewind">Restored · every folded turn is back in place.</span>';
-      var listed = rw.messages.slice(0, 6).map(function (x, i) {
+      var ordFolded = (rw.messages || []).filter(function (x) { return !isInternalNote(x); });
+      var listed = ordFolded.slice(0, 6).map(function (x, i) {
         return '<li><span class="pm-tops-fold-role">' + esc(x.role === 'user' ? 'You' : x.role === 'assistant' ? 'Assistant' : 'System') + '</span>' +
           '<span class="pm-tops-fold-text">' + esc(snippet(x, 96) || ('[' + x.type + ']')) + '</span></li>';
       }).join('');
-      var more = rw.messages.length > 6 ? '<li class="pm-tops-fold-more">and ' + (rw.messages.length - 6) + ' more</li>' : '';
+      var more = ordFolded.length > 6 ? '<li class="pm-tops-fold-more">and ' + (ordFolded.length - 6) + ' more</li>' : '';
       return '<span class="pm-tops-card" data-kind="rewind">' +
         '<ul class="pm-tops-fold">' + listed + more + '</ul>' +
-        '<button class="soft-button" data-action="restore-rewind" data-value="' + esc(rw.id) + '">' + ctx.icon('restore', 12) + ' Restore ' + plural(rw.messages.length, 'turn', 'turns') + '</button>' +
+        '<button class="soft-button" data-action="restore-rewind" data-value="' + esc(rw.id) + '">' + ctx.icon('restore', 12) + ' Restore ' + plural(ordFolded.length, 'turn', 'turns') + '</button>' +
         '</span>';
     }
 

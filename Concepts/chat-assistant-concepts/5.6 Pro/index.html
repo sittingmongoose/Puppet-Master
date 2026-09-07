@@ -23492,6 +23492,7 @@ window.PM56_EXT = window.PM56_EXT || {
         if (ref && ref.kind === 'note') return true;
       } catch (e) {}
     }
+    if (m.title && m.title.indexOf('Orphan Gate failed') !== -1) return true;
     return false;
   }
   function ordinaryMessages(t) {
@@ -23623,14 +23624,15 @@ window.PM56_EXT = window.PM56_EXT || {
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
-      atTurn: at + 1,
+      atTurn: ordinaryCovered.length,
       messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
       deleted: false,
-      /* Immutable means immutable: the covered prefix is captured here, so a
-         later edit to the live thread cannot rewrite what the point restores. */
-      snapshot: ctx.clone(t.messages.slice(0, at + 1))
+      /* Ordinary user-facing messages are captured in snapshot */
+      snapshot: ctx.clone(ordinaryCovered),
+      /* Diagnostic/recovery history is preserved separately in rawSnapshot */
+      rawSnapshot: ctx.clone(t.messages.slice(0, at + 1))
     };
     s.restorePoints.push(rp);
     dispatch(CMD.createRestorePoint, t.id);
@@ -23673,8 +23675,9 @@ window.PM56_EXT = window.PM56_EXT || {
       summary: 'Branched from ' + rp.label + ' of ' + src.title,
       worktree: null,
       /* The SNAPSHOT, not the live prefix: that is what an immutable restore
-         point is for. */
-      messages: ctx.clone(rp.snapshot),
+         point is for. Internal notes are filtered from ordinary messages. */
+      messages: ctx.clone(rp.snapshot).filter(function (m) { return !isInternalNote(m); }),
+      rawMessages: rp.rawSnapshot ? ctx.clone(rp.rawSnapshot) : ctx.clone(rp.snapshot),
       lineage: {
         kind: 'branch-from-restore',
         sourceThreadId: src.id,
@@ -24546,14 +24549,15 @@ window.PM56_EXT = window.PM56_EXT || {
       var rw = findRewind(m.rewindId);
       if (!rw) return '';
       if (rw.restored) return '<span class="pm-tops-card-note" data-kind="rewind">Restored · every folded turn is back in place.</span>';
-      var listed = rw.messages.slice(0, 6).map(function (x, i) {
+      var ordFolded = (rw.messages || []).filter(function (x) { return !isInternalNote(x); });
+      var listed = ordFolded.slice(0, 6).map(function (x, i) {
         return '<li><span class="pm-tops-fold-role">' + esc(x.role === 'user' ? 'You' : x.role === 'assistant' ? 'Assistant' : 'System') + '</span>' +
           '<span class="pm-tops-fold-text">' + esc(snippet(x, 96) || ('[' + x.type + ']')) + '</span></li>';
       }).join('');
-      var more = rw.messages.length > 6 ? '<li class="pm-tops-fold-more">and ' + (rw.messages.length - 6) + ' more</li>' : '';
+      var more = ordFolded.length > 6 ? '<li class="pm-tops-fold-more">and ' + (ordFolded.length - 6) + ' more</li>' : '';
       return '<span class="pm-tops-card" data-kind="rewind">' +
         '<ul class="pm-tops-fold">' + listed + more + '</ul>' +
-        '<button class="soft-button" data-action="restore-rewind" data-value="' + esc(rw.id) + '">' + ctx.icon('restore', 12) + ' Restore ' + plural(rw.messages.length, 'turn', 'turns') + '</button>' +
+        '<button class="soft-button" data-action="restore-rewind" data-value="' + esc(rw.id) + '">' + ctx.icon('restore', 12) + ' Restore ' + plural(ordFolded.length, 'turn', 'turns') + '</button>' +
         '</span>';
     }
 
@@ -34329,6 +34333,13 @@ window.PM56_EXT = window.PM56_EXT || {
       window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:row.requestedModelId,persona:row.persona,effort:row.requestedEffort,fast:row.requestedFast},function(v){
         if(RTC.draft!==draft||!draft.rows.includes(row)||!['collab-configure','collaboration-configure'].includes(ctx.state.dialog?.type))return;
         row.requestedModelId=v.model;row.persona=v.persona;row.requestedEffort=v.effort;row.requestedFast=v.fast;
+        if(draft.kind==='review'){
+          if(draft.config.strategy==='multi_pass'){
+            draft._previousMultiRows=draft.rows.slice();
+          } else if(draft._previousMultiRows && draft._previousMultiRows.length>0 && draft.rows.length>0 && draft.rows[0].rowId===row.rowId){
+            draft._previousMultiRows[0]=Object.assign({},draft._previousMultiRows[0],row);
+          }
+        }
         ctx.renderOverlays();
       });return true;
     });
@@ -34338,9 +34349,10 @@ window.PM56_EXT = window.PM56_EXT || {
   const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
   function handleReviewStrategyTransition(d, oldStrategy, newStrategy) {
     if (!d || d.kind !== 'review') return;
+    if (oldStrategy === newStrategy) return;
     d.config.strategy = newStrategy;
     if (newStrategy === 'single_agent') {
-      if (d.rows && d.rows.length > 1) {
+      if (d.rows && d.rows.length >= 1) {
         d._previousMultiRows = d.rows.slice();
       }
       if (!d.rows || !d.rows.length) {
@@ -34353,15 +34365,21 @@ window.PM56_EXT = window.PM56_EXT || {
       d.grillMe = false;
       d._lastStrategy = 'single_agent';
     } else if (newStrategy === 'multi_pass') {
-      if (d._previousMultiRows && d._previousMultiRows.length > 1) {
+      if (d._previousMultiRows && d._previousMultiRows.length >= 1) {
+        if (d.rows && d.rows.length > 0) {
+          d._previousMultiRows[0] = d.rows[0];
+        }
         d.rows = d._previousMultiRows.slice();
-      } else if (!d.rows || d.rows.length < 1) {
+      } else if (d.rows && d.rows.length >= 1) {
+        d.rows = d.rows.slice();
+      } else {
         d.rows = [];
         for (var i = 0; i < 3; i++) {
           d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i] || ('Reviewer ' + (i + 1)), DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length], 'Reviewer'));
         }
       }
       d.config.reviewerCount = d.rows.length;
+      d._previousMultiRows = d.rows.slice();
       d._lastStrategy = 'multi_pass';
     }
   }
@@ -34396,9 +34414,7 @@ window.PM56_EXT = window.PM56_EXT || {
         d.rows=d.rows.slice(0,8);
       }
       d.config.reviewerCount=d.rows.length;
-      if(d.rows.length>1){
-        d._previousMultiRows=d.rows.slice();
-      }
+      d._previousMultiRows=d.rows.slice();
     }
   }
   function configChoice(ctx,d,key,title){
@@ -34549,7 +34565,7 @@ window.PM56_EXT = window.PM56_EXT || {
     d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
     if(d.kind==='review'){
       d.config.reviewerCount=d.rows.length;
-      if(d.rows.length>1)d._previousMultiRows=d.rows.slice();
+      if(d.config.strategy==='multi_pass') d._previousMultiRows=d.rows.slice();
     }
     ctx.renderOverlays(); return true;
   });
@@ -34566,7 +34582,7 @@ window.PM56_EXT = window.PM56_EXT || {
         d.rows.push(copy);
         if(d.kind==='review'){
           d.config.reviewerCount=d.rows.length;
-          d._previousMultiRows=d.rows.slice();
+          if(d.config.strategy==='multi_pass') d._previousMultiRows=d.rows.slice();
         }
       }
     }
@@ -34587,6 +34603,13 @@ window.PM56_EXT = window.PM56_EXT || {
       if (k === 'role') row.role = t.value;
       else if (k === 'model') row.requestedModelId = t.value;
       else if (k === 'persona') row.persona = t.value;
+      if (d.kind === 'review') {
+        if (d.config.strategy === 'multi_pass') {
+          d._previousMultiRows = d.rows.slice();
+        } else if (d._previousMultiRows && d._previousMultiRows.length > 0 && d.rows.length > 0 && d.rows[0].rowId === row.rowId) {
+          d._previousMultiRows[0] = Object.assign({}, d._previousMultiRows[0], row);
+        }
+      }
       return true;
     }
     if (k === 'name') d.name = t.value;
@@ -40804,7 +40827,7 @@ window.PM56_EXT = window.PM56_EXT || {
     const payload={
       exportedAt:new Date().toISOString(), redacted:true,
       note:'Secrets, tokens and provider credentials are excluded by construction.',
-      thread:{id:th.id,title:th.title,status:th.status,messages:th.messages.length},
+      thread:{id:th.id,title:th.title,status:th.status,messages:th.messages.filter(m=>!isInternalNote(m)).length},
       route:{provider:selectedModel().provider,account:selectedModel().account,model:selectedModel().name,effort:state.effort,fast:state.fast,mode:state.mode,persona:state.persona,worktree:state.worktree},
       capabilities:{...state.capabilities},
       context:{compacted:state.context.compacted}
@@ -41220,6 +41243,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!m)return false;
     if(m.internalOnly)return true;
     if(m.type==='agent-work'&&window.PM56_RECORDS?.reference(m)?.kind==='note')return true;
+    if(m.title&&m.title.indexOf('Orphan Gate failed')!==-1)return true;
     return false;
   }
   function messageVisible(m){

@@ -460,11 +460,11 @@
       },
       {
         "canonical_manager_id": "dry-method",
-        "workspace_id": "testing",
-        "subpanel": "dry_eval",
+        "workspace_id": "context-memory",
+        "subpanel": "agent_rules",
         "controls": [
-          "dry_run_toggle",
-          "mock_disposition"
+          "default_guard_toggle",
+          "disclosure_state_view"
         ],
         "evidence_path": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections"
       }
@@ -897,13 +897,32 @@
     },
     "dry-method": {
       "source_keys": [
-        "testing.dry_run.*",
-        "eval.mock.*"
+        "app.agent_rules.dry_method_default_guard"
       ],
-      "workspace_id": "testing",
-      "subpanel": "dry_eval",
+      "workspace_id": "context-memory",
+      "subpanel": "agent_rules",
       "authority": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections",
-      "type": "frozen_named_projection"
+      "type": "frozen_named_projection",
+      "owner_refs": [
+        "Plans/DRY_Rules.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "visible_state_fields": [
+        "requested_default_guard",
+        "effective_default_guard",
+        "origin",
+        "scope",
+        "availability",
+        "disabled_reason",
+        "owner_evidence",
+        "exceptions",
+        "consequence_disclosure"
+      ],
+      "negative_constraints": [
+        "do_not_weaken_instructions_or_safety",
+        "do_not_weaken_secrets_source_authority_governance_permissions_or_source_control",
+        "do_not_present_the_default_guard_as_a_universal_runtime_override"
+      ]
     }
   },
   "domain_section_projections": {

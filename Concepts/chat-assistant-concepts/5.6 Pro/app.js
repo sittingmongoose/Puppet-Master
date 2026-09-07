@@ -306,7 +306,7 @@
     const payload={
       exportedAt:new Date().toISOString(), redacted:true,
       note:'Secrets, tokens and provider credentials are excluded by construction.',
-      thread:{id:th.id,title:th.title,status:th.status,messages:th.messages.length},
+      thread:{id:th.id,title:th.title,status:th.status,messages:th.messages.filter(m=>!isInternalNote(m)).length},
       route:{provider:selectedModel().provider,account:selectedModel().account,model:selectedModel().name,effort:state.effort,fast:state.fast,mode:state.mode,persona:state.persona,worktree:state.worktree},
       capabilities:{...state.capabilities},
       context:{compacted:state.context.compacted}
@@ -722,6 +722,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!m)return false;
     if(m.internalOnly)return true;
     if(m.type==='agent-work'&&window.PM56_RECORDS?.reference(m)?.kind==='note')return true;
+    if(m.title&&m.title.indexOf('Orphan Gate failed')!==-1)return true;
     return false;
   }
   function messageVisible(m){

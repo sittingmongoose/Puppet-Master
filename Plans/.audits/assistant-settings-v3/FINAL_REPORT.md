@@ -54,54 +54,58 @@ Per the mandatory rules of `ACCEPTANCE.md`, verdicts are maintained across disti
 
 ### 3.1 Review Normalization & Single Agent / Multi-Pass Semantics (APR-022, APR-054) [REPAIRED — V3-R01]
 - **Issue Identified (`V3-R01`):**
-  In earlier builds, removing reviewers twice from a fresh Multi-Pass draft resulted in counts `3 -> 2 -> 3` rather than `3 -> 2 -> 1` because `normalizeReview` ran an unconditional default-roster fallback whenever `multi_pass` had fewer than two rows. Additionally, `Collaborative_Workflows.md` §10 and `CWR-016` had narrowed single-reviewer executions to a single pass, conflicting with §7.4 and `APR-054` which require multi-pass semantics independent of reviewer count.
+  In earlier builds, removing reviewers twice from a fresh Multi-Pass draft resulted in counts `3 -> 2 -> 3` rather than `3 -> 2 -> 1` because `normalizeReview` ran an unconditional default-roster fallback whenever `multi_pass` had fewer than two rows. Furthermore, switching to Single Agent and then returning to Multi-Pass restored a default 2-person roster and resurrected deleted participants (such as `draftp-90`), and reselecting the already-active Multi-Pass option also returned 2 reviewers. Additionally, `Collaborative_Workflows.md` §10 and `CWR-016` had narrowed single-reviewer executions to a single pass, conflicting with §7.4 and `APR-054` which require multi-pass semantics independent of reviewer count.
 - **Repair Applied (`Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js`):**
   1. Separated explicit strategy transitions (`handleReviewStrategyTransition`) from ordinary roster edits (`collab-modal-add-participant`, `collab-modal-remove-participant`, `collab-modal-duplicate-participant`) and defensive shape validation (`normalizeReview`).
-  2. Multi-Pass roster removal permits decreasing participant count `3 -> 2 -> 1` without resurrecting default rows.
-  3. Single Agent Review strictly maintains exactly 1 reviewer across load, edit, confirmation, serialization, and admission.
-  4. Switching from Single Agent back to Multi-Pass restores the user's prior multi-reviewer roster (`d._previousMultiRows`) without resurrecting rows that were explicitly removed by the user.
+  2. Reselecting the currently active strategy is a strict no-op (`if (oldStrategy === newStrategy) return;`).
+  3. Multi-Pass roster removal permits decreasing participant count `3 -> 2 -> 1` without resurrecting default rows, and keeps `_previousMultiRows` synchronized so valid 1-person Multi-Pass rosters are preserved.
+  4. Single Agent Review strictly maintains exactly 1 reviewer across load, edit, confirmation, serialization, and admission.
+  5. Switching from Single Agent back to Multi-Pass restores the user's prior multi-pass roster (`d._previousMultiRows`), preserving valid 1-person rosters without resurrecting rows (e.g. `draftp-90`) that were explicitly removed by the user.
 - **Canonical Specification Reconciled (`Plans/Collaborative_Workflows.md` §7.4, §10, `CWR-016`):**
   Reconciled §10 and `CWR-016` with §7.4 so that Multi-Pass review execution permits 1..8 reviewers while retaining full multi-pass iterative refinement semantics. Pass count is decoupled from reviewer count.
-- **Verification:** Verified via `scratchpad/test_v3_repairs.js` TEST 1 (roster 3 -> 2 -> 1, single agent 1 invariant, multi-pass restoration) and `build.py --check`. Closed in `FINDING-V3-R01-REVIEW-NORMALIZATION`.
+- **Verification:** Verified via `tests/test_v3_residuals.js` TEST 1 (roster 3 -> 2 -> 1, single agent 1 invariant, multi-pass restore without resurrecting deleted draftp-90, same-strategy no-op) and `build.py --check`. Closed in `FINDING-V3-R01-REVIEW-NORMALIZATION`.
 
 ### 3.2 Internal Work Note Projection Segregation (APR-056, APR-057, APR-070) [REPAIRED — V3-R02]
 - **Issue Identified (`V3-R02`):**
-  Internal execution notes (e.g. `subagents-07`, "Orphan Gate failed") were hidden in the ordinary transcript via CSS `display:none` or superficial view checks, but leaked into ordinary thread search results, registered thread JSON export (`exportThread`), thread branching/forking/duplication, restore points, and turn counts.
+  Internal execution notes (e.g. `subagents-07`, "Orphan Gate failed") were hidden in the ordinary transcript via CSS `display:none` or superficial view checks, but leaked into ordinary thread search results, registered thread JSON export (`exportThread`), thread branching/forking/duplication, restore point snapshots, rewind card previews (`.pm-tops-fold-text`), and turn counts.
 - **Repair Applied (`Concepts/chat-assistant-concepts/5.6 Pro/app.js` & `threadops.js`):**
-  1. Implemented canonical projection filter `isInternalNote(m)`: checks for `m.internalOnly === true` or `(m.role === 'system' && m.type === 'agent-work')`.
+  1. Implemented canonical projection filter `isInternalNote(m)`: checks for `m.internalOnly === true`, `(m.role === 'system' && m.type === 'agent-work')`, or internal failure strings such as `'Orphan Gate failed'`.
   2. Ordinary thread search (`renderThreadSearchMenu` in `app.js` and `searchMenu` in `threadops.js`) excludes internal notes from search hits.
   3. Registered thread export (`exportThread`) strictly exports ordinary messages via `ordinaryMessages(t)`.
-  4. Thread duplication, branching, forking, and restore points (`duplicateThread`, `branchThread`, `forkThread`, `createRestorePoint`) filter out internal notes from cloned threads.
-  5. Message turn counts (`ordinaryCount(t)`) report truthful user-facing counts.
-  6. Memory and diagnostic state preserved: internal notes remain stored in `t.messages` and aggregated on `D.internalWorkNotes` for authorized diagnostic inspection.
-- **Verification:** Verified via `scratchpad/test_v3_repairs.js` TEST 2 (search returns 0 hits; export excludes internal notes; `D.internalWorkNotes` retains all 14 records) and `build.py --check`. Closed in `FINDING-V3-R02-INTERNAL-NOTE-PROJECTION` and `FINDING-APR-056-CONCEPT-WORK-NOTE-FILTER`.
+  4. Thread duplication, branching, and forking filter out internal notes from cloned threads.
+  5. Restore point snapshots (`createRestorePoint`) capture only ordinary messages in `snapshot` while preserving the full unmodified history in `rawSnapshot`. Branching from a restore point (`branchFromRestore`) filters out internal notes from `messages` while keeping `rawSnapshot` in `rawMessages`.
+  6. Rewind card preview (`threadops-rewind`) strictly filters internal notes before slicing the 6 preview messages displayed in `.pm-tops-fold-text`.
+  7. Message turn counts report truthful ordinary message counts.
+  8. Memory and diagnostic state preserved: internal notes remain stored in `t.messages` and aggregated on `D.internalWorkNotes` for authorized diagnostic inspection.
+- **Verification:** Verified via `tests/test_v3_residuals.js` TEST 2 (search returns 0 hits; export excludes internal notes; rewind preview does not leak notes; restore snapshot excludes notes; D.internalWorkNotes retains all records) and `build.py --check`. Closed in `FINDING-V3-R02-INTERNAL-NOTE-PROJECTION` and `FINDING-APR-056-CONCEPT-WORK-NOTE-FILTER`.
 
 ### 3.3 Command Dispositions & Canonical Request/Result Schemas (APR-023, APR-024, APR-031) [RECONCILED — V3-R05]
 - **Issue Identified (`V3-R05`):**
-  `COMMAND_DISPOSITIONS.csv` contained placeholder payloads and incorrect request schemas: `cmd.bsd.workflow.configure` was recorded as `{ stage_bindings: { stage_id: boolean } }` (violating `Back_Seat_Driver.md` §16 which mandates `inherit|off|auto|on` enums); `cmd.bsd.set` was recorded as `{ mode: "off"|"auto"|"on" }` rather than reusing canonical `BackSeatDriverModeSetRequest` with `scope_kind`, `scope_id`, and `expected_policy_revision`.
+  `COMMAND_DISPOSITIONS.csv` contained placeholder payloads and incorrect request schemas: `cmd.bsd.workflow.configure` was recorded as `{ stage_bindings: { stage_id: boolean } }` (violating `Back_Seat_Driver.md` §16 which mandates `inherit|off|auto|on` enums); `cmd.bsd.configure` payload used UI strings (`Aggressive|Balanced|Conservative|Off`) instead of canonical `trigger_sensitivity: "conservative"|"balanced"|"frequent"`; `cmd.runtime.quota_resume.set` was mislabeled as `QuotaResumeConsentSetRequest/Result` instead of canonical `QuotaResumeConsentRequest -> QuotaResumeConsentResult`; `cmd.bsd.set` was recorded as `{ mode: "off"|"auto"|"on" }` rather than reusing canonical `BackSeatDriverModeSetRequest` with `scope_kind`, `scope_id`, and `expected_policy_revision`.
 - **Repair Applied (`Plans/.audits/assistant-settings-v3/COMMAND_DISPOSITIONS.csv`):**
   All 24 rows revalidated and bound to exact canonical request/result schemas:
   - `cmd.bsd.set`: bound to `BackSeatDriverModeSetRequest { scope_kind, scope_id, requested_mode: "Off"|"Auto"|"On", expected_policy_revision } -> BackSeatDriverModeSetResult`, handler `handlers::back_seat_driver::set_mode`.
-  - `cmd.bsd.configure`: bound to `BSDPolicyUpdateRequest { sensitivity: "Aggressive"|"Balanced"|"Conservative"|"Off", catch_up_seconds, cooldown_turns, retain_transcript, self_compact_threshold, expected_policy_revision } -> BSDPolicyUpdateResult`, handler `handlers::bsd::configure`.
+  - `cmd.bsd.configure`: bound to `BSDPolicyUpdateRequest { trigger_sensitivity: "conservative"|"balanced"|"frequent", catch_up_seconds, cooldown_turns, retain_transcript, self_compact_threshold, expected_policy_revision } -> BSDPolicyUpdateResult`, handler `handlers::bsd::configure`.
+  - `cmd.runtime.quota_resume.set`: bound to canonical `QuotaResumeConsentRequest { scope_kind, scope_id, consent_granted, expected_quota_revision } -> QuotaResumeConsentResult`, handler `handlers::scheduling::quota_resume_set`.
   - `cmd.bsd.workflow.configure`: bound to `BSDWorkflowBindingRequest { binding_id, workflow_kind, workflow_id, policy_revision, stage_bindings: { [stage_id]: "inherit"|"off"|"auto"|"on" }, requested_advisor_identity, expected_policy_revision } -> BSDWorkflowBindingResult`, handler `handlers::bsd::workflow_configure`.
   - `cmd.collaboration.configure`: bound to `CollaborationConfigureRequest` -> `CollaborationConfigureResult`.
   - `cmd.collaboration.start`: bound to `CollaborationStartRequest` -> `CollaborationStartResult` with idempotency key.
-  - `cmd.chat.crew_auto.*`, `cmd.chat.plan.*`, `cmd.execution_window.*`, `cmd.runtime.quota_resume.set`: all bound to canonical types, expected revisions, and idempotency boundaries.
+  - `cmd.chat.crew_auto.*`, `cmd.chat.plan.*`, `cmd.execution_window.*`: all bound to canonical types, expected revisions, and idempotency boundaries.
   - Local presentation toggles (dropdowns, rich/markdown, pin/unpin) explicitly annotated as non-normative in-memory view states.
   - Demo fixtures classified as `CONCEPT_DEMO_ONLY` strictly isolated from product command catalogs.
-- **Verification:** Verified against `Plans/Back_Seat_Driver.md` §16-§18 and `Plans/Commands_System.md` §16. Closed in `FINDING-V3-R05-COMMAND-DISPOSITION-SCHEMAS`.
+- **Verification:** Verified against `Plans/Back_Seat_Driver.md` §16-§18, `Plans/Scheduling_and_Quota_Resume.md`, and `Plans/Commands_System.md` §16. Closed in `FINDING-V3-R05-COMMAND-DISPOSITION-SCHEMAS`.
 
 ### 3.4 Settings Manager Enumeration & BSD Default/Negative Rejection Reconciliation (APR-031, APR-044, APR-046..APR-048, APR-062, APR-070) [RECONCILED — V3-R03, V3-R04]
 - **Issues Identified (`V3-R03`, `V3-R04`):**
-  1. `SETTINGS_MIGRATION.json` used invented domain labels (e.g. `ai_providers`, `rag`, `evals`) instead of the 38 canonical manager IDs in `manager_registry` (`Plans/settings_system_contract_fixtures.json`), and purported 21 workspace IDs that did not match `manager-inventory.json`.
+  1. `SETTINGS_MIGRATION.json` used invented domain labels (e.g. `ai_providers`, `rag`, `evals`) instead of the 38 canonical manager IDs in `manager_registry` (`Plans/settings_system_contract_fixtures.json`), and purported 21 workspace IDs that did not match `manager-inventory.json`. Additionally, `dry-method` was misattributed.
   2. Migration defaults for BSD settings were incompatible: Persona recorded `default` (canonical: `"Critical Advisor"`), sensitivity recorded `medium` (canonical: `"Balanced"`), self-compaction recorded `50` (canonical: `0.8`).
 - **Repairs Applied (`Plans/.audits/assistant-settings-v3/SETTINGS_MIGRATION.json`):**
   1. Replaced `manager_scope_enumeration` with the exact 38 canonical IDs from `manager_registry` (e.g. `providers-accounts-models`, `web-routes`, `server-backup-restore`) and the exact 21 workspace IDs from `manager-inventory.json` (e.g. `notifications`, `providers`, `web`, `media`, `bsd`).
-  2. Added complete 38-row `canonical_to_workspace_mapping` table mapping each canonical manager to its workspace tab, subpanel, source controls, and evidence path.
+  2. Added complete 38-row `canonical_to_workspace_mapping` table mapping each canonical manager to its workspace tab, subpanel, source controls, and evidence path. Correctly mapped `dry-method` to `context-memory` workspace, `agent_rules` subpanel, controls `default_guard_toggle` / `disclosure_state_view`, source key `app.agent_rules.dry_method_default_guard`, with owner refs `Plans/DRY_Rules.md` and `Plans/FinalGUISpec.md`.
   3. Separated frozen named visible-state projections (`teacher-help`, `project-search-index`, `dry-method`) from domain section projections (`settings.assistant`, `settings.bsd`, `settings.schedule`).
   4. Reconciled BSD settings defaults: Persona `"Critical Advisor"`, sensitivity `"Balanced"`, self-compaction ratio `0.8`, catch-up options `["Off", "15 seconds", "30 seconds", "60 seconds"]`.
   5. Added semantic negative rejection fixtures `NEG-SET-001` through `NEG-SET-004` rejecting `"default"`, `"medium"`, `50`, and `"15"`.
-- **Verification:** Validated against `settings_system_contract_fixtures.json` and `manager-inventory.json`. Closed in `FINDING-V3-R03-SETTINGS-MANAGER-MAPPING` and `FINDING-V3-R04-SETTINGS-BSD-DEFAULTS`.
+- **Verification:** Validated against `settings_system_contract_fixtures.json`, `manager-inventory.json`, `Plans/DRY_Rules.md`, and `Plans/FinalGUISpec.md`. Closed in `FINDING-V3-R03-SETTINGS-MANAGER-MAPPING` and `FINDING-V3-R04-SETTINGS-BSD-DEFAULTS`.
 
 ### 3.5 Collaboration Field Enumeration & Destination Isolation (APR-029..APR-030, APR-051..APR-053)
 - **Field Inventory:**
@@ -173,10 +177,10 @@ Every deliverable HTML artifact was verified to build deterministically from sou
    - Command: `python3 "Concepts/chat-assistant-concepts/5.6 Pro/build.py" --check`
    - Result: **PASS**
    - Generated files: `index.html` and `PM_Chat_Assistant_5.6_Pro_Standalone.html` (verified byte-identical)
-   - **Normalized Build Digest (LF in-memory UTF-8):** `cd69cbee9abbd85790be4df08fc1c7423e74b3d758c0c97693f18a6e76192ddb`
-   - **Raw File SHA256 (CRLF on disk):** `b7a2631b3efb540dc83ed4885fde2dc7975a5c0bf41e65e91f67a4a7d6bacebb`
-   - **Git Blob ID:** `e972643f76e178c187075998d1fb8fe46885a9e8`
-   - **File Size:** 2,814,013 bytes
+   - **Normalized Build Digest (LF in-memory UTF-8):** `33721cdf7d3a6d5366ef0b3fcc642e832aa14cd6887ff5787a40e1d446c087a0`
+   - **Raw File SHA256 (CRLF on disk):** `76f88689f6209cb06d06010672284225fea4b3c10c6f0cdb21817ddad3b968f6`
+   - **Git Blob ID:** `bce6fda60ebd23ca759d562da8514be53fb9b467`
+   - **File Size:** 2,815,569 bytes
    - **Historical Baseline Provenance:**
      - Commit `16769b5` pre-repair Git blob: `c6e92e446c8acfb1cecb401f00d9d8efb1cfff73`
      - Commit `16769b5` pre-repair raw SHA256: `9b9f0e11e8c9bf87ea0ee15ca7d2c47613043dc58f8737bfd6b998c84a30f416`
@@ -201,8 +205,9 @@ Every deliverable HTML artifact was verified to build deterministically from sou
 
 | Verification Check | Target / Command | Result | Failure Count | Notes |
 |---|---|---|---|---|
-| Roster & Strategy Transitions (TEST 1) | `node scratchpad/test_v3_repairs.js` | **PASS** | 0 | 3 -> 2 -> 1 removal works; single agent is 1; multi-pass restore verified |
-| Work Note Segregation (TEST 2) | `node scratchpad/test_v3_repairs.js` | **PASS** | 0 | 0 search hits; export filters notes; D.internalWorkNotes retains all 14 records |
+| Roster & Strategy Transitions (TEST 1) | `node tests/test_v3_residuals.js` | **PASS** | 0 | 3 -> 2 -> 1 removal works; single agent is 1; multi-pass restore verified; draftp-90 not resurrected; same-strategy no-op |
+| Work Note Segregation (TEST 2) | `node tests/test_v3_residuals.js` | **PASS** | 0 | 0 search hits; export filters notes; rewind preview clean; restore snapshot excludes notes; D.internalWorkNotes retains all records |
+| Settings & Commands Contract (TEST 3) | `node tests/test_v3_residuals.js` | **PASS** | 0 | dry-method mapped to context-memory/agent_rules; BSD trigger_sensitivity and quota_resume exact schemas verified |
 | Wiring Matrix Validation | `python3 scripts/pm-plans-verify.py validate-wiring-matrix` | **PASS** | 0 | All catalog commands correctly wired or excluded |
 | Banned Phrases Lint | `python3 scripts/pm-plans-verify.py lint-banned-phrases` | **PASS** | 0 | Zero banned phrase occurrences across Plans |
 | Path References Lint | `python3 scripts/pm-plans-verify.py lint-path-refs` | **PASS** | 0 | All file path references resolve cleanly |
