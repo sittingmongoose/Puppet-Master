@@ -1,0 +1,67 @@
+{
+  "batch_id": "assistant-demo-b01-regular-plan",
+  "status": "COMPLETED_BOUNDED_BATCH_WITH_RENDER_CADENCE_CAVEAT",
+  "base_commit": "26dbc13b38fcab2fc4a38f6f6cd0d5464e2abd77",
+  "html_sha256": "4fdd4ffd0917825d13e60ea9d2543382abcf5df36b98ca7993044071ddd1248c",
+  "html_normalized_sha256": "40b906f3d498ae60e1e7fd5656daeb30d1fce12d140c28ee7991470a6dd153ca",
+  "html_git_blob": "ccf379e32496c7a922539ed0ec95809230f575b9",
+  "scenario_ids": [
+    "B01-PLAN-COMPLETE",
+    "B01-PLAN-REVISE"
+  ],
+  "functional_checks": 46,
+  "supplemental_checks": 18,
+  "recorded_frames": 1144,
+  "recording_rate": "60/1",
+  "recording_dimensions": [
+    1280,
+    900
+  ],
+  "frame_review": "All 1144 consecutive frames in 40 contact sheets; 5 selected native-resolution frames.",
+  "render_cadence": "6 and 2 RAF intervals over 25ms; maxima 33.4 and 33.5ms. Not perfect 60 fresh renders/sec.",
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "governance_modified": false,
+  "protected_working_sources_unchanged": [
+    "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css"
+  ],
+  "completed_work": [
+    "Two gallery-only guided workflows using existing product controls after fixture initialization.",
+    "Typed Plan receipts replace incorrect ordinary-build Goal receipt.",
+    "Stop-and-revise timer boundary; exact composer feedback; proper Markdown heading.",
+    "Completion Replay creates fresh scenario identity."
+  ],
+  "next_batch": {
+    "id": "assistant-demo-b02-plan-scheduling",
+    "proposed_scope": [
+      "Exact-version Build At scheduling",
+      "Revision invalidation and canceled schedule non-dispatch"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "open_global": [
+    "Full 551-row / 67-group meaningful-demo coverage",
+    "All-feature and all-animation 60fps/frame review",
+    "Native-runtime proof",
+    "Existing unrelated repository-wide gate failures"
+  ],
+  "limits": [
+    "Both workflows begin from a ready fixture, not a generated planning interview.",
+    "Revision stores exact feedback in a V2 revision note; does not prove provider-based re-planning.",
+    "Final captures cover one 1280x900 default-theme view; two narrower initial-guide checks are not full narrow workflow review.",
+    "Browser input uses fresh about:blank + exact HTML set_content because URL navigation is restricted; persistent-origin reload not tested.",
+    "Replay functional checks occur after recording.",
+    "Full committed residual suite was not completed in selected checkout: earlier run reached missing Settings audit dependency after its first two test groups.",
+    "Completed Plan summary title still wraps densely at narrow width; no clipping observed."
+  ]
+}

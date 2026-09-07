@@ -3125,7 +3125,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     clearComposerField();
     t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
     const low=raw.toLowerCase();
-    if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
+    if(RTc && RTc.destination && RTc.destination.kind==='plan-revision'){
+      /* Plan owner authors the revision and receipt through the shared commit hook. */
+    }
+    else if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
     else if(low.startsWith('/deep-plan')||low.includes('deep plan')){state.mode='Deep Plan';state.decision={type:'plan',mode:'review'};t.messages.push({id:uid('plan'),role:'system',type:'plan-card',artifactId:'plan-query',deep:true});openEditor('plan-query');}
     else if(low.startsWith('/plan')||/make|create|write/.test(low)&&low.includes('plan')){state.mode='Plan';state.decision={type:'plan',mode:'review'};t.messages.push({id:uid('plan'),role:'system',type:'plan-card',artifactId:'plan-query'});openEditor('plan-query');}
     else if(low.startsWith('/ask')){state.mode='Ask';t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'Ask mode is active. I will answer and explain without making changes.',time:new Date().toISOString()});}

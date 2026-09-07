@@ -1146,7 +1146,7 @@
               cancel:false, todos:false, goal:false, report:false };
     if(r.status==='ready'){ e.revise=true; e.build=true; e.crew=true; e.at=true; e.cancel=true; e.goal=true; }
     else if(r.status==='building'){ e.cancel=true; e.todos=true; e.revise=false; e.report=true; }
-    else if(r.status==='completed'){ e.report=true; }
+    else if(r.status==='completed'){ e.report=true; e.todos=true; }
     var blk=buildBlockers(r);
     if(blk.length){ e.build=false; e.crew=false; e.at=false; e.goal=false; e.blocked_by=blk; }
     return e;
@@ -1159,6 +1159,7 @@
     if(e.at)     out.push(actionBtn('pd-build-at','Build At…',r.plan_id));
     if(e.revise) primary.push(actionBtn('pd-revise','Revise',r.plan_id));
     if(e.todos)  out.push(actionBtn('pd-open-todos','Open To-Dos',r.plan_id));
+    if(r.status==='building') out.push(actionBtn('pd-stop-revise','Stop and revise',r.plan_id));
     if(e.wizard) out.push(actionBtn('pd-wizard','Send To Planning Wizard',r.plan_id));
     if(e.exportx)out.push(actionBtn('pd-export','Export',r.plan_id));
     if(e.cancel) out.push(actionBtn('pd-cancel','Cancel',r.plan_id));
@@ -1318,14 +1319,10 @@
     r.todosCreated = { at:r.approved.at, from:(r.backend==='ledger_bound'?'planunits':'plan_steps'),
                        count:(made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length),
                        reused:!!(made&&made.reused) };
-    /* app.js's addReceipt is positional -- addReceipt(type,title,detail) -- and
-       `type` reaches renderEventMessage, which calls m.type.startsWith(). Passing
-       an object here threw inside renderApp and silently abandoned the rest of
-       admitBuild: the record said `building` while the button still said Build.
-       `goal-receipt` is an existing mapped receipt type, so the card renders. */
-    ctx.addReceipt && ctx.addReceipt('goal-receipt',
-      'Build admitted · '+r.title,
-      'V'+r.version+' · '+r.approved.hash+' · '+r.todosCreated.count+' To-Dos · Orchestrator not entered');
+    // A direct Plan build is not a Goal. Use its own linked transcript record.
+    ctx.appendMessage && ctx.appendMessage({id:ctx.uid('plan-run'),role:'system',
+      type:'plan-run-receipt',plan_id:r.plan_id,title:'Build started',
+      detail:'V'+r.version+' · '+r.todosCreated.count+' To-Dos',time:new Date().toISOString()});
     /* Advance the step gutter on a real interval so Building… is observable.
        Nothing here is authoritative -- §7.2's gutter is a projection. */
     stopRun(r);
@@ -1429,7 +1426,7 @@
      old body stays immutable under its own version key. */
   function applyRevision(ctx,r,feedback){
     var prev=body(r), next=prev.slice();
-    next = next.concat([ h('Revision note','3'),
+    next = next.concat([ h('Revision note',3),
       p('V'+(r.version+1)+' incorporates: '+feedback) ]);
     r.version = r.version+1;
     r.revisions[r.version] = next;
@@ -1891,9 +1888,20 @@
     },
 
     'pd-revise': function(ctx,btn){
-      var r=rec(btn.dataset.id); if(!r) return;
+      var r=rec(btn.dataset.id); if(!r || r.status!=='ready') return;
       RT.composer.destination = reviseTarget(r);
       ctx.toast('Composer targeted at '+r.title+' · V'+r.version);
+      ctx.renderApp();
+    },
+
+    // Revision must stop the admitted execution before retargeting the composer.
+    // This is a concept action over the existing owner, not a native registration.
+    'pd-stop-revise': function(ctx,btn){
+      var r=rec(btn.dataset.id); if(!r || r.status!=='building') return;
+      stopRun(r);
+      r.attention=null; r.wait=null; r.status='ready'; r.current=true;
+      r.scheduleInvalidation=invalidateSchedulesFor(r,'stop_for_revision');
+      RT.composer.destination=reviseTarget(r);
       ctx.renderApp();
     },
 
@@ -2218,8 +2226,13 @@
       var d=RT.composer.destination;
       if(!d || d.kind!=='plan-revision') return;
       var r=rec(d.refId); if(!r) return;
-      applyRevision(ctx, r, String((message&&message.text)||'').trim() || 'user feedback');
-      RT.composer.destination = null;
+      if(r.status!=='ready') return;
+      var feedback=String((message&&(message.body||message.text))||'').trim();
+      if(!feedback)return;
+      applyRevision(ctx,r,feedback);
+      RT.composer.destination=null;
+      ctx.appendMessage({id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',
+        plan_id:r.plan_id,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()});
     });
   }
   if(RT.composer && RT.composer.destinationProviders){
@@ -2260,6 +2273,12 @@
       cardFooter(r)+
     '</div>';
   }
+
+ // A Plan receipt is a linked record, not a Goal state or generic work note.
+ EXT.slot('transcriptMessage',c=>{
+  const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+ });
 
   window.PM56_PLANS = {
     get:rec, all:function(){ return P().records; },

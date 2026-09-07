@@ -1,0 +1,13 @@
+/* Gallery guide only; existing working component styles are deliberately untouched. */
+.plan-demo-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 4px 2px;margin-top:6px;border-top:1px solid var(--line);font-size:12px;}
+.plan-demo-guide>div:first-child{min-width:0;flex:1;}
+.plan-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px;}
+.plan-demo-guide strong{display:block;font-size:12px;font-weight:550;}
+.plan-demo-controls{display:flex;gap:8px;align-items:center;}
+.plan-demo-guide button,.plan-run-line button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2,transparent);color:inherit;font:inherit;cursor:pointer;}
+.plan-demo-guide button:disabled{opacity:.5;cursor:default;}
+.plan-demo-guide .plan-demo-close{padding:6px;display:grid;place-items:center;}
+.plan-demo-guide p{flex-basis:100%;margin:0;font-size:11px;}
+.plan-run-line{display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 0;color:var(--muted);font-size:12px;}
+.plan-run-line span{flex:1;min-width:0;}
+.plan-run-line small{display:block;margin-top:4px;}

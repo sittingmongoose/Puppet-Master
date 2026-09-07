@@ -114,6 +114,14 @@ try{
         const selector=manager==='sounds'?'.sound-layout':'.resource-detail';
         const geometry=await root.locator(selector).first().evaluate(e=>({width:e.clientWidth,scroll:e.scrollWidth}));
         report.responsive.push({host_width:width,manager,...geometry});assert.ok(geometry.width>0);assert.ok(geometry.scroll<=geometry.width+1,JSON.stringify({host_width:width,manager,...geometry}));
+        if(manager==='sounds'){
+          const controls=await root.locator('.sound-row').evaluateAll(rows=>rows.flatMap(row=>{
+            const bounds=row.getBoundingClientRect();
+            return [...row.querySelectorAll('button')].map(button=>{const b=button.getBoundingClientRect();return {sound:row.dataset.soundRow,width:b.width,left:b.left-bounds.left,right:bounds.right-b.right};});
+          }));
+          assert.ok(controls.length>0);
+          for(const control of controls)assert.ok(control.width>=28&&control.left>=-0.5&&control.right>=-0.5,JSON.stringify({host_width:width,...control}));
+        }
         if(width===320||width===1180)await page.screenshot({path:join(out,`${manager}-${width}.png`)});
       }
     }

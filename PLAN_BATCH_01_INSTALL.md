@@ -1,0 +1,1 @@
+Merge Concepts/ into the repository root. Replace the supplied delivery manifests too. This is Assistant-only; Settings and canonical Plans are untouched. Read Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_README.md.

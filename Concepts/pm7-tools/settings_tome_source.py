@@ -776,7 +776,9 @@ def _scope_css(css, need):
 #panel-settings .sound-layout .settings-secondary-details { margin-top:10px; }
 #panel-settings .sound-copy span { color:var(--text-secondary); }
 @container settings-host (max-width:720px) {
-  #panel-settings .sound-row { display:grid; grid-template-columns:28px minmax(0,1fr) 28px; }
+  /* Keep the menu column sized to its actual themed button, including its
+     border. A fixed 28px track clipped the 32px control in a 320px host. */
+  #panel-settings .sound-row { display:grid; grid-template-columns:28px minmax(0,1fr) max-content; }
   #panel-settings .sound-play { grid-column:1; grid-row:1 / span 2; }
   #panel-settings .sound-copy { grid-column:2; grid-row:1; }
   #panel-settings .sound-waveform { grid-column:2; grid-row:2; }
