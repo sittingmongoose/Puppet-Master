@@ -1,0 +1,386 @@
+{
+  "check": "verify-spec-lock",
+  "failures": [],
+  "generated_at_utc": "2026-09-07T15:39:51Z",
+  "locked_files": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929"
+    },
+    {
+      "path": "Plans/acceptance_manifest.schema.json",
+      "sha256": "864a49f575c56fb18f860db0fab330281bf7a8084d3e4120987768cd6fa0b0a5"
+    },
+    {
+      "path": "Plans/Architecture_Invariants.md",
+      "sha256": "6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b"
+    },
+    {
+      "path": "Plans/auto_decisions.schema.json",
+      "sha256": "5da5811a81e31a403965696ed257287eb17067a2839699bf6f3d6dccb2bd91b3"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7"
+    },
+    {
+      "path": "Plans/Bootstrap_Planning_Migration.md",
+      "sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "sha256": "15df9ed3508b90683979c3b365810cd89cba46ef428dc390c6a6e969e33f5058"
+    },
+    {
+      "path": "Plans/change_budget.schema.json",
+      "sha256": "277c72ce79ba09f8b78a3b8811043572c6cf143414da0f1a3362361ac42874d3"
+    },
+    {
+      "path": "Plans/contracts_index.schema.json",
+      "sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810"
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "sha256": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c"
+    },
+    {
+      "path": "Plans/Decision_Policy.md",
+      "sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+    },
+    {
+      "path": "Plans/Document_Packaging_Policy.md",
+      "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+    },
+    {
+      "path": "Plans/DRY_Rules.md",
+      "sha256": "595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec"
+    },
+    {
+      "path": "Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86"
+    },
+    {
+      "path": "Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5"
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "sha256": "3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2"
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "sha256": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07"
+    },
+    {
+      "path": "Plans/gui_automation_manifest.schema.json",
+      "sha256": "805ea39b2533cb50a07eddfdefa950c470e3126f4dddb09cdad8ef1c3aec814d"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+    },
+    {
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3"
+    },
+    {
+      "path": "Plans/Plan_Document_System.md",
+      "sha256": "ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3"
+    },
+    {
+      "path": "Plans/plan_graph.json",
+      "sha256": "6c78f4c85f4aa11e3f7e95361fd9d59b425cb0df9daeacd2acf17bcfbaf5c255"
+    },
+    {
+      "path": "Plans/plan_graph.schema.json",
+      "sha256": "dd95e5f644f860e28d88fb78e3f0b0b76cca018951e659a9991ef2c3731e5b7d"
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "sha256": "f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec"
+    },
+    {
+      "path": "Plans/plans_to_code_handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "sha256": "f26aaf82474af8d25a284a9515fae5789162c320bc40129358312da00915367d"
+    },
+    {
+      "path": "Plans/project_plan_graph_index.schema.json",
+      "sha256": "fe4a87fd35e5c9fd469f804b609d032907b242ba7953e4b968cb1952e9bf33a1"
+    },
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15"
+    },
+    {
+      "path": "Plans/requirements_coverage.schema.json",
+      "sha256": "d043a8d4bb238e479cb9f265fef3d3726c0dcc9c9782cde40fcb260a4e33251a"
+    },
+    {
+      "path": "Plans/requirements_quality_report.schema.json",
+      "sha256": "1e36f692a52420a3b3b5315bcd131ea6f818abaaf401fe1689e35fbc0ede7447"
+    },
+    {
+      "path": "Plans/sharding_config.json",
+      "sha256": "91d918be2a958c0d60fb189a9ef532682951ce3b564b2c942ba97677eb752eaf"
+    },
+    {
+      "path": "Plans/test_strategy.schema.json",
+      "sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "sha256": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4"
+    },
+    {
+      "path": "scripts/pm-shard-plans.py",
+      "sha256": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e"
+    },
+    {
+      "path": "Plans/PRD_Builder.md",
+      "sha256": "0dddb1aa7bb608605c65e6a5d043ae5afb2c4b91baa39260932698cb7af554ef"
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "sha256": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce"
+    },
+    {
+      "path": "Plans/prd_planning_runtime_contracts.json",
+      "sha256": "6038b2905b68550bf7454213c3d8acbc2bd2a4509b6de1c16fa8b8da3d7ab5dd"
+    },
+    {
+      "path": "Plans/prd_planning_runtime_contracts.schema.json",
+      "sha256": "0fb1518acc96c1be7c223593ac0b25519d1c00f8e0a554131a4ec0c7ba9848b9"
+    },
+    {
+      "path": "scripts/pm-prd-planning-runtime-validate.py",
+      "sha256": "d611dd364b3034571424659577ef47d245c025fcfa2306b9fd8f09994964214a"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "sha256": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3"
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "sha256": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "d108a46be70fbc2c9a91dc216f291f8238ed1201412f6582a4ad93a1ccad03f6"
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "sha256": "118be1d006503d8868bd2c1f8a80b1ca1c2c3f80417be9090296bb82770d777c"
+    },
+    {
+      "path": "scripts/pm-implementation-readiness.py",
+      "sha256": "6292e1c6973b80ad9774827e2d2ded017fbc54aa79a4a2d0ba9db4cf55763c2f"
+    },
+    {
+      "path": "scripts/pm-plan-index.py",
+      "sha256": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293"
+    },
+    {
+      "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
+      "sha256": "a2c7ebc8b98fe8565a63ca974b1b32d694812b35bd4f5f8e739124e2cb36b3d4"
+    },
+    {
+      "path": "Plans/.implementation_readiness/readiness_matrix.json",
+      "sha256": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897"
+    },
+    {
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "sha256": "35ad65d32b35a5ef01b534b86ad51e86ceac26159e8e8f230bf95d996083d6e3"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/storage_value_registry.schema.json",
+      "sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5"
+    },
+    {
+      "path": "scripts/pm-audit-closure.py",
+      "sha256": "97747e1ae60dd1c3a9ab2f03d714639d506347e33442c56e87db0fb9671776d8"
+    },
+    {
+      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+      "sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+    },
+    {
+      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+      "sha256": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee"
+    },
+    {
+      "path": "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+      "sha256": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62"
+    },
+    {
+      "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+      "sha256": "8441b81e28e3e09b4ddd4f1b09a3d0329df33b1f8e4a49a5deb328a1ea2cd41d"
+    },
+    {
+      "path": "scripts/pm-pnc019-certification-harness.py",
+      "sha256": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d"
+    },
+    {
+      "path": "Plans/web_agent_policy_fixtures.json",
+      "sha256": "058df7a41aafe00fdb6cddb17b04b5116288868d996a90b7ec106c2d4114693b"
+    },
+    {
+      "path": "Plans/web_capability_findings_coverage.json",
+      "sha256": "4ff5a20a2cd5aa4a3ad41dfae9dbe90bfd7c3a158a40be2124260cdd3817ecc1"
+    },
+    {
+      "path": "Plans/web_capability_findings_coverage.schema.json",
+      "sha256": "b77c39683525ff8a1d1ed6c68e4889b875be834bf98dcf6fdae71c2547d676fc"
+    },
+    {
+      "path": "Plans/web_capability_source_packet_receipt.json",
+      "sha256": "8991fbcf1b1a43893e66623963abb2ada833a177467303f853a1f8a71e847aea"
+    },
+    {
+      "path": "Plans/web_capability_source_packet_receipt.schema.json",
+      "sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"
+    },
+    {
+      "path": "Plans/web_intent_routing_fixtures.json",
+      "sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+    },
+    {
+      "path": "Plans/web_operation_card_fixtures.json",
+      "sha256": "25f749b27370d2ddb215d3d8376288093e2522f97060641e871bc7d25cf31140"
+    },
+    {
+      "path": "Plans/web_operation_contracts.schema.json",
+      "sha256": "494e7ea76445be07454297548038f6de97200a6d098d5727d3aa5f578229980b"
+    },
+    {
+      "path": "Plans/web_operation_job_fixtures.json",
+      "sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+    },
+    {
+      "path": "Plans/web_policy_negative_fixtures.json",
+      "sha256": "1d0b2f2c79cf0310030a42bbb5f201425f375dd73b4ed5a91c62b41fa3c23eb1"
+    },
+    {
+      "path": "Plans/web_policy_negative_fixtures.schema.json",
+      "sha256": "2d003f4fd6964b0f5ae5d4ce3ffb67b13ad7a3c845ed8de64bfeec43b67a18bf"
+    },
+    {
+      "path": "Plans/web_provider_adapter_registry.seed.json",
+      "sha256": "ae4e0619dcd2a7fc4c0c5a92ae3f285600900371c9069fef19831cd83a1aa5ab"
+    },
+    {
+      "path": "Plans/web_provider_projection_fixtures.json",
+      "sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+    },
+    {
+      "path": "Plans/web_research_run_fixtures.json",
+      "sha256": "3790c11b623e2cc1dada4a60f2657db2530aedc222d0d7370224e29b373ddbe8"
+    },
+    {
+      "path": "Plans/storage_recovery_contracts.schema.json",
+      "sha256": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd"
+    },
+    {
+      "path": "scripts/pm_pnc019_currentness.py",
+      "sha256": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "sha256": "b992d366f78133b51691900eac1e8a6e32e7b48648348bd6984c1acc2ab781d1"
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "sha256": "db711baae6304f4c31237a191c2082b2fa1927f0335f365800b690e34697555d"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "6cae6d4bebe68a39b13ecadcec32580598254209e62566daff4d272354e4dd08"
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "sha256": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a"
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "sha256": "b8367d078b36f222790f922a8751e07ad425eabf2f120618c6f8beb2c381f7d3"
+    },
+    {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "sha256": "09d4316fe4b4828aaa4edbab1c96835169abc01cbd00a916e8873c8986245451"
+    },
+    {
+      "path": "scripts/pm-shared-runtime-contracts.py",
+      "sha256": "9c857ec9634f85da7d75fd5623b1e1a1f8b81773fd4011633eea5b667b234c73"
+    },
+    {
+      "path": "scripts/pm-shared-runtime-storage-materialize.py",
+      "sha256": "7dcd2e74585c2e11e7386ffe161fb1dd95809d8d31c289517f651991960126c8"
+    },
+    {
+      "path": "Plans/evidence_artifact_binding_modes.json",
+      "sha256": "4db255a941328107d21f6da9fc44e0530fc64aef9b24550bc294a908d6ac45aa"
+    },
+    {
+      "path": "Plans/evidence_artifact_binding_modes.schema.json",
+      "sha256": "7ba50b7e127ede3f1ab22be823655f5fb4ce853a68c12c4d6a46f18266e9b3b7"
+    },
+    {
+      "path": "Plans/Working_Notebook.md",
+      "sha256": "0cf913e129241c8826dd1adee740d0cdce435fd1df5a2da3c3e7be1a3bc71a5c"
+    }
+  ],
+  "locked_files_checked": 94,
+  "schema_id": "pm.plans_verify.report.v1",
+  "status": "pass"
+}

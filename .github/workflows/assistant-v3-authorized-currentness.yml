@@ -1,0 +1,62 @@
+name: Assistant v3 authorized currentness
+on:
+  push:
+    branches: [completion/assistant-v3-demo-index-20260907]
+    paths: [.github/workflows/assistant-v3-authorized-currentness.yml]
+permissions:
+  contents: write
+jobs:
+  currentness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Install validator dependencies
+        run: python3 -m pip install PyYAML jsonschema
+      - name: Reconcile index and verify full-tree governance
+        run: python3 scripts/pm-assistant-v3-currentness.py --full-gates
+      - name: Commit only authorized generated surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import subprocess
+          allowed=('Plans/.plan_index/','Plans/_shards/','Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/','Plans/.audits/assistant-settings-v3/currentness-20260907/')
+          exact={'Plans/Spec_Lock.json','Plans/auto_decisions.jsonl'}
+          changed=subprocess.check_output(['git','diff','--name-only','-z']).decode().split('\0')
+          bad=[p for p in changed if p and p not in exact and not p.startswith(allowed)]
+          if bad: raise SystemExit('Out-of-scope mutations: '+str(bad))
+          PY
+          git config user.name 'Puppet Master currentness verification'
+          git config user.email '42017982+sittingmongoose@users.noreply.github.com'
+          git add -f Plans/.plan_index Plans/_shards Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29 Plans/.audits/assistant-settings-v3/currentness-20260907 Plans/Spec_Lock.json Plans/auto_decisions.jsonl
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Regenerate accepted PlanUnit index and current governance evidence; preserve blocked runtime readiness'
+            git push origin HEAD:completion/assistant-v3-demo-index-20260907
+          fi
+      - name: Package result and exact generated files
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile,subprocess,json
+          with zipfile.ZipFile('/tmp/assistant-currentness-results.zip','w',zipfile.ZIP_DEFLATED) as z:
+            roots=['Plans/.plan_index','Plans/_shards','Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29','Plans/.audits/assistant-settings-v3/currentness-20260907']
+            for root in roots:
+              for p in sorted(Path(root).rglob('*')):
+                if p.is_file():z.write(p,p.as_posix())
+            for p in ['Plans/Spec_Lock.json','Plans/auto_decisions.jsonl']:
+              z.write(p,p)
+            z.writestr('COMMIT.json',json.dumps({'sha':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: assistant-currentness-results
+          path: /tmp/assistant-currentness-results.zip
+          retention-days: 14
+          compression-level: 0
