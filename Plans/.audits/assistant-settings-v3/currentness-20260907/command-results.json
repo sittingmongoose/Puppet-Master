@@ -1,0 +1,208 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 1,
+    "label": "index-before",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/index-before.json",
+    "report_sha256": "b84bbccf5299c21a26a5ba4f6a79256fe8d0a69219fd63054d376f3b159a32b2",
+    "seconds": 26.866
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "verify-spec-lock",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/lock-before.json"
+    ],
+    "exit_code": 0,
+    "label": "lock-before",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/lock-before.json",
+    "report_sha256": "d47854dfb20fec6d029cf60ad63a414c978d4eadab7f2df14dbb8adf40a0622d",
+    "seconds": 0.2
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "run-gates",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/gates-before.json"
+    ],
+    "exit_code": 1,
+    "label": "gates-before",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/gates-before.json",
+    "report_sha256": "14bb24d031c2c345f8e3d80fa88fc5ba0a59f82a65a4188771d87630fdfbd0dd",
+    "seconds": 201.666
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "label": "index-generate",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/index-generate.json",
+    "report_sha256": "40aec26ea8ee2ef82831caf4fd4953e194aca23ca853272182a44608d0db8210",
+    "seconds": 21.571
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "label": "index-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/index-after.json",
+    "report_sha256": "22862e5860f26909a7d4b33139fba1564dfc3f62a391dcc07d6dc45decadc5f5",
+    "seconds": 23.011
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--report",
+      "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json"
+    ],
+    "exit_code": 0,
+    "label": "shards-generate",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/shards-generate.json",
+    "report_sha256": "7d5881f03e0d1d54db13d63f2931cbb73a7e8822c8c8ad0b00c31d73f8bce692",
+    "seconds": 1.234
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--report",
+      "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard-check-report.json"
+    ],
+    "exit_code": 0,
+    "label": "shards-check",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/shards-check.json",
+    "report_sha256": "e1a65006bab2cbcef49757ec7582399d6fba58594705eebd6686d590dffcac24",
+    "seconds": 3.05
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-governance-seal.py",
+      "sync-plan-sharding-evidence",
+      "--evidence",
+      "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "--report",
+      "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json"
+    ],
+    "exit_code": 0,
+    "label": "shard-evidence-sync",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/shard-evidence-sync.json",
+    "report_sha256": "1ac9cdaa8eba776ff0f0676ff8fef6e007c2d45f123545b8221cddab70d72f24",
+    "seconds": 0.209
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-governance-seal.py",
+      "refresh",
+      "--spec-lock",
+      "Plans/Spec_Lock.json"
+    ],
+    "exit_code": 0,
+    "label": "lock-refresh",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/lock-refresh.json",
+    "report_sha256": "4c8e84867b8837df20a42c312a1c62579064bb11ac800de463c858c1c8f424eb",
+    "seconds": 0.07
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "verify-spec-lock",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/lock-after.json"
+    ],
+    "exit_code": 0,
+    "label": "lock-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/lock-after.json",
+    "report_sha256": "4be8a438a9a47c73462577f7c4a69e89c2098a310801a11c9ed7cbd96d9a494d",
+    "seconds": 0.216
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "validate-auto-decisions",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/decisions-after.json"
+    ],
+    "exit_code": 0,
+    "label": "decisions-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/decisions-after.json",
+    "report_sha256": "6d152102885bd8f6bc2c549b61c4c92cb07268bf2ae8c19f41abcb67c396a6a3",
+    "seconds": 0.146
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "validate-plan-graph",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/graph-after.json"
+    ],
+    "exit_code": 0,
+    "label": "graph-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/graph-after.json",
+    "report_sha256": "73266941f2844f5e6151a7b10805925e8dcda17fc6f2520b4aeb679a2c40264a",
+    "seconds": 3.034
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "validate-evidence",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/evidence-after.json"
+    ],
+    "exit_code": 0,
+    "label": "evidence-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/evidence-after.json",
+    "report_sha256": "9478c87ea53aaa26676f0f8614e4924b105c966d4e3463f3feba463db3351bde",
+    "seconds": 3.0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "run-gates",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/gates-after.json"
+    ],
+    "exit_code": 1,
+    "label": "gates-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/gates-after.json",
+    "report_sha256": "fc88f665fc703d1de1db94ca970109fff4ad59235b6f6b8e2ebbc12ad9b2ce24",
+    "seconds": 201.914
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "audit-governance",
+      "--report",
+      "Plans/.audits/assistant-settings-v3/currentness-20260907/governance-after.json"
+    ],
+    "exit_code": 1,
+    "label": "governance-after",
+    "report": "Plans/.audits/assistant-settings-v3/currentness-20260907/governance-after.json",
+    "report_sha256": "fee1222ed0804e0327c930d3c44bf8ed39bc6b012e1f96b363195e48fa1bd01a",
+    "seconds": 169.071
+  }
+]

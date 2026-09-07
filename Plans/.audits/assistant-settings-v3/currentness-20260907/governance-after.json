@@ -1,0 +1,2368 @@
+{
+  "audit_closure": {
+    "failure_samples": [
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:5: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:6: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      {
+        "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+        "error": "audit_closure_validator_error",
+        "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      }
+    ],
+    "failures": 201,
+    "status": "fail"
+  },
+  "audit_status_index": {
+    "failure_samples": [
+      {
+        "error": "stale_audit_status_index",
+        "path": "Plans/.audits/_audit_status_index.json"
+      }
+    ],
+    "failures": 1,
+    "status": "fail"
+  },
+  "auto_decisions": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "case_l_non_event_materialization": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "check": "audit-governance",
+  "evidence": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "failures": [
+    {
+      "check": "support_refs",
+      "failures": [
+        {
+          "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json",
+          "error": "missing_ref",
+          "line": 57,
+          "path": "Plans/00-plans-index.md",
+          "ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"
+        }
+      ]
+    },
+    {
+      "check": "path_refs",
+      "failures": [
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/test_pm_evidence_artifact_binding_modes.py",
+          "line": 698,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-001",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
+          "line": 717,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-020",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 734,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-037",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 735,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-038",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 736,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-039",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+          "line": 737,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "ATS-040",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 2690,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-516",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 2691,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-517",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "tests/fixtures/pm7_shared",
+          "line": 2692,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "F3-518",
+          "surface_error": "missing_ref"
+        },
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current",
+          "line": 5382,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "SMPFS-151",
+          "surface_error": "missing_ref"
+        }
+      ]
+    },
+    {
+      "check": "implementation_readiness",
+      "failures": [
+        {
+          "error": "buildability_gate_report_stale_or_not_canonical",
+          "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+          "repair_command": "python3 scripts/pm-implementation-readiness.py generate"
+        },
+        {
+          "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
+          "error": "pnc019_source_hash_stale",
+          "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_record.schema.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_family_registry.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "actual": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+          "error": "pnc019_source_hash_stale",
+          "expected": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.schema.json"
+        },
+        {
+          "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+          "error": "pnc019_source_hash_stale",
+          "expected": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.json"
+        },
+        {
+          "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
+          "error": "pnc019_source_hash_stale",
+          "expected": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Planning_Wizard.md"
+        },
+        {
+          "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+          "error": "pnc019_source_hash_stale",
+          "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Executor_Protocol.md"
+        },
+        {
+          "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+          "error": "pnc019_source_hash_stale",
+          "expected": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
+          "error": "pnc019_source_hash_stale",
+          "expected": "cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Orchestrator_Page.md"
+        },
+        {
+          "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+          "error": "pnc019_source_hash_stale",
+          "expected": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "9f9843b2bba67e69d35258bfc16d190f2c3ba95fa07176cc1ba1f80a495ce42a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "b8367d078b36f222790f922a8751e07ad425eabf2f120618c6f8beb2c381f7d3",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Wiring_Rules.md"
+        },
+        {
+          "actual": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896",
+          "error": "pnc019_source_hash_stale",
+          "expected": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "scripts/pm-pnc019-certification-harness.py"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "scripts/pm_pnc019_currentness.py"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/00-plans-index.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Assistant_Plan_Runtime.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Back_Seat_Driver.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Collaborative_Workflows.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Commands_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Scheduling_and_Quota_Resume.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Settings_System.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/Spec_Lock.json"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/ToDo_Runtime.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/UI_Wiring_Rules.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/assistant-chat-design.md"
+        },
+        {
+          "error": "event_authority_currentness_source_drift",
+          "source_path": "Plans/settings_inventory.json"
+        },
+        {
+          "error": "event_authority_currentness_live_registry_drift"
+        },
+        {
+          "actual_checkpoint": {
+            "registered_kernel_rows": 39,
+            "registry_revision": "2026-08-27.1",
+            "registry_schema_id": "pm.event_family_registry.v1",
+            "registry_schema_version": "2.0.0"
+          },
+          "denominator_status": "UNKNOWN_OPEN",
+          "error": "event_authority_checkpoint_changed_requires_fresh_approval",
+          "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "expected_checkpoint": {
+            "registered_kernel_rows": 39,
+            "registry_revision": "2026-08-04.1",
+            "registry_schema_id": "pm.event_family_registry.v1",
+            "registry_schema_version": "2.0.0"
+          },
+          "path": "Plans/event_family_registry.json"
+        },
+        {
+          "bulk_registration_allowed": false,
+          "complete_denominator_known": false,
+          "corpus_complete": false,
+          "denominator_status": "UNKNOWN_OPEN",
+          "disposition": "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance",
+          "error": "event_denominator_unresolved",
+          "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "path": "Plans/event_family_registry.json",
+          "quarantined_row_count": 252,
+          "registered_kernel_rows": 39
+        },
+        {
+          "bulk_registration_allowed": false,
+          "contract_depth_complete": false,
+          "error": "event_family_contract_depth_unresolved",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "path": "Plans/event_family_registry.json",
+          "quarantined_row_count": 252,
+          "registered_kernel_rows": 39
+        },
+        {
+          "actual_checkpoint": {
+            "registered_kernel_rows": 39,
+            "registry_revision": "2026-08-27.1",
+            "registry_schema_id": "pm.event_family_registry.v1",
+            "registry_schema_version": "2.0.0"
+          },
+          "denominator_status": "UNKNOWN_OPEN",
+          "error": "event_authority_checkpoint_changed_requires_fresh_approval",
+          "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "expected_checkpoint": {
+            "registered_kernel_rows": 39,
+            "registry_revision": "2026-08-04.1",
+            "registry_schema_id": "pm.event_family_registry.v1",
+            "registry_schema_version": "2.0.0"
+          },
+          "path": "Plans/event_family_registry.json"
+        },
+        {
+          "bulk_registration_allowed": false,
+          "complete_denominator_known": false,
+          "corpus_complete": false,
+          "denominator_status": "UNKNOWN_OPEN",
+          "disposition": "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance",
+          "error": "event_denominator_unresolved",
+          "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "path": "Plans/event_family_registry.json",
+          "quarantined_row_count": 252,
+          "registered_kernel_rows": 39
+        },
+        {
+          "bulk_registration_allowed": false,
+          "contract_depth_complete": false,
+          "error": "event_family_contract_depth_unresolved",
+          "evidence_refs": [
+            {
+              "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+              "claim": "UNKNOWN_OPEN current status",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+            },
+            {
+              "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+              "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+              "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+            }
+          ],
+          "path": "Plans/event_family_registry.json",
+          "quarantined_row_count": 252,
+          "registered_kernel_rows": 39
+        }
+      ]
+    },
+    {
+      "check": "plan_migration",
+      "failures": [
+        {
+          "error": "historical_successor_terminal_current_snapshot_invalid",
+          "historical_run_id": "pds-20260611-002-atomize-planunits",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+          "terminal_failure_count": 3347,
+          "terminal_failure_errors": [
+            "complete_final_summary_live_plan_unit_count_stale",
+            "current_snapshot_anchor_aliases_json_exact_mismatch",
+            "current_snapshot_batch_doc_invalid",
+            "current_snapshot_batch_report_jsonl_exact_mismatch",
+            "current_snapshot_complete_md_exact_mismatch",
+            "current_snapshot_coverage_map_jsonl_exact_mismatch",
+            "current_snapshot_coverage_not_exact_same_document_planunit_set",
+            "current_snapshot_current_run_pointer_invalid",
+            "current_snapshot_final_summary_invalid",
+            "current_snapshot_final_validation_summary_json_exact_mismatch",
+            "current_snapshot_inventory_json_exact_mismatch",
+            "current_snapshot_live_bytes_mismatch",
+            "current_snapshot_live_line_count_mismatch",
+            "current_snapshot_live_sha256_mismatch",
+            "current_snapshot_live_span_count_mismatch",
+            "current_snapshot_live_span_metadata_mismatch",
+            "current_snapshot_live_span_set_mismatch",
+            "current_snapshot_original_hashes_json_exact_mismatch",
+            "current_snapshot_pilot_report_json_exact_mismatch",
+            "current_snapshot_plan_unit_count_stale",
+            "current_snapshot_plans_manifest_sha256_mismatch",
+            "current_snapshot_span_map_jsonl_exact_mismatch",
+            "current_snapshot_span_sha256_mismatch",
+            "stale_batch_report_sha256_after"
+          ],
+          "terminal_run_id": "pds-20260906-017-current-planunit-snapshot"
+        },
+        {
+          "actual": 72,
+          "error": "doc_count_mismatch",
+          "expected": 95,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "error": "inventory_doc_set_mismatch",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 1
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 2
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 3
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 4
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 5
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 6
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 7
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 8
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 9
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 10
+        },
+        {
+          "actual": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-memory-subsystem.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "7b10a22be6347ac99d87c7a8ecb5e0b901523944c34c376b34bb91320deda431",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 11
+        },
+        {
+          "actual": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-memory-subsystem.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "7b10a22be6347ac99d87c7a8ecb5e0b901523944c34c376b34bb91320deda431",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 12
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 13
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 14
+        },
+        {
+          "actual": "3d71c3787470639735ec333df9de0c01b2f0ba0c90101a322077f6f1b62425db",
+          "doc_index": 1,
+          "doc_path": "Plans/CLI_Bridged_Providers.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 24
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 25
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 26
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 27
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 28
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 29
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 30
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 31
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 32
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 33
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 34
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 35
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 36
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 37
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 38
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 39
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 40
+        },
+        {
+          "actual": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+          "doc_index": 1,
+          "doc_path": "Plans/Crosswalk.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 41
+        },
+        {
+          "actual": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+          "doc_index": 1,
+          "doc_path": "Plans/Crosswalk.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 42
+        },
+        {
+          "actual": "f39cd56d27a27c8bc55166b154e5924151b38f1d4e674aa413a1f2b14ae5c99b",
+          "doc_index": 1,
+          "doc_path": "Plans/DRY_Rules.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 49
+        },
+        {
+          "actual": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
+          "doc_index": 1,
+          "doc_path": "Plans/Executor_Protocol.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 50
+        },
+        {
+          "actual": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
+          "doc_index": 1,
+          "doc_path": "Plans/Executor_Protocol.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 51
+        },
+        {
+          "actual": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
+          "doc_index": 1,
+          "doc_path": "Plans/Executor_Protocol.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 52
+        },
+        {
+          "actual": "75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd",
+          "doc_index": 1,
+          "doc_path": "Plans/FileManager.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 54
+        },
+        {
+          "actual": "75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd",
+          "doc_index": 1,
+          "doc_path": "Plans/FileManager.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 55
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 56
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 57
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 58
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 59
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 60
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 61
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 62
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 63
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 64
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 65
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 66
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 67
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 68
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 69
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 70
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 71
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 72
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 73
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 74
+        },
+        {
+          "actual": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4",
+          "doc_index": 1,
+          "doc_path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 76
+        },
+        {
+          "actual": "608f0418a56b0f2a31ba473cb27d81579d6259deead06f6125a6c44166fcb50b",
+          "doc_index": 1,
+          "doc_path": "Plans/Glossary.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 78
+        },
+        {
+          "actual": "608f0418a56b0f2a31ba473cb27d81579d6259deead06f6125a6c44166fcb50b",
+          "doc_index": 1,
+          "doc_path": "Plans/Glossary.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 79
+        },
+        {
+          "actual": "53a8ed2454cf3d4c560b50218533c9ddfc5491176e044ec90803e36f162acd10",
+          "doc_index": 1,
+          "doc_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "19c2e9efe0fa0322b01ca45e4f2ddea6809e5d0581e5da73ca070c6ba9b55583",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 80
+        },
+        {
+          "actual": "137af191479bdbcc0be1842b821a31f22424163f8d17596740a9c891b279ca15",
+          "doc_index": 1,
+          "doc_path": "Plans/MCP_Integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "22868e7bba7c3acc240c3063bb40c425789141e6115ffc06e9d058965d7563a5",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 87
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 92
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 93
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 94
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 95
+        },
+        {
+          "actual": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "doc_index": 1,
+          "doc_path": "Plans/Models_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 96
+        },
+        {
+          "actual": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "doc_index": 1,
+          "doc_path": "Plans/Models_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 97
+        },
+        {
+          "actual": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "doc_index": 1,
+          "doc_path": "Plans/Models_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 98
+        },
+        {
+          "actual": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "doc_index": 1,
+          "doc_path": "Plans/Models_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 99
+        },
+        {
+          "actual": "212758101a5a559669f339c5e54fbb3c1e267dda2909a525195e52bada618db6",
+          "doc_index": 1,
+          "doc_path": "Plans/Multi-Account.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 100
+        },
+        {
+          "actual": "212758101a5a559669f339c5e54fbb3c1e267dda2909a525195e52bada618db6",
+          "doc_index": 1,
+          "doc_path": "Plans/Multi-Account.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 101
+        },
+        {
+          "actual": "212758101a5a559669f339c5e54fbb3c1e267dda2909a525195e52bada618db6",
+          "doc_index": 1,
+          "doc_path": "Plans/Multi-Account.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 102
+        },
+        {
+          "actual": "9efd71e6580783c988b1c7660d5ae8cd3304b2abad2976ba8500b0bcb03ac494",
+          "doc_index": 1,
+          "doc_path": "Plans/newtools.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 104
+        },
+        {
+          "actual": "9efd71e6580783c988b1c7660d5ae8cd3304b2abad2976ba8500b0bcb03ac494",
+          "doc_index": 1,
+          "doc_path": "Plans/newtools.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 105
+        },
+        {
+          "actual": "9efd71e6580783c988b1c7660d5ae8cd3304b2abad2976ba8500b0bcb03ac494",
+          "doc_index": 1,
+          "doc_path": "Plans/newtools.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 106
+        },
+        {
+          "actual": "9efd71e6580783c988b1c7660d5ae8cd3304b2abad2976ba8500b0bcb03ac494",
+          "doc_index": 1,
+          "doc_path": "Plans/newtools.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 107
+        },
+        {
+          "actual": "db49393309255f4564a11e51ef07cd0d0831631da8354872e1e05674d3a4931d",
+          "doc_index": 1,
+          "doc_path": "Plans/00-plans-index.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 111
+        },
+        {
+          "actual": "db49393309255f4564a11e51ef07cd0d0831631da8354872e1e05674d3a4931d",
+          "doc_index": 1,
+          "doc_path": "Plans/00-plans-index.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 112
+        },
+        {
+          "actual": "4ada052877422d058478c1d7cdbac00842b98b8d0a9e00ed2f802c8371851475",
+          "doc_index": 1,
+          "doc_path": "Plans/agent-rules-context.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "af088bfdefbd05fb66d86da2f524238b1f51e9006f900ca84a88fc982b910b97",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 113
+        },
+        {
+          "actual": "4ada052877422d058478c1d7cdbac00842b98b8d0a9e00ed2f802c8371851475",
+          "doc_index": 1,
+          "doc_path": "Plans/agent-rules-context.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "af088bfdefbd05fb66d86da2f524238b1f51e9006f900ca84a88fc982b910b97",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 114
+        },
+        {
+          "actual": "a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543",
+          "doc_index": 1,
+          "doc_path": "Plans/Architecture_Invariants.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 115
+        },
+        {
+          "actual": "a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543",
+          "doc_index": 1,
+          "doc_path": "Plans/Architecture_Invariants.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 116
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "doc_index": 1,
+          "doc_path": "Plans/Contracts_V0.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 117
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 118
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 119
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 120
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 121
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 122
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 123
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 124
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 125
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 126
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 127
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 128
+        },
+        {
+          "actual": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "doc_index": 1,
+          "doc_path": "Plans/orchestrator-subagent-integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 129
+        }
+      ]
+    },
+    {
+      "check": "pm7_gui_fixtures",
+      "failures": [
+        {
+          "error": "invalid_validator_output",
+          "output": "Traceback (most recent call last):\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 539, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 533, in main\n    report = validate()\n             ^^^^^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 329, in validate\n    motion_contract = load(SHARED_ROOT / \"motion_frame_matrix.json\")\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 116, in load\n    return json.loads(path.read_text(encoding=\"utf-8\"))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1029, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/Puppet-Master/Puppet-Master/tests/fixtures/pm7_shared/motion_frame_matrix.json'\n"
+        }
+      ]
+    },
+    {
+      "check": "touch_closure",
+      "failures": [
+        "Guided Tour effective source/schema action inventory drift: schema_missing=['ui.guided_tour.show_me'], source_missing=[]",
+        "Guided Tour effective emitted actions lack retained owner/concept inventory entries: ['cmd.chat.eli5.set', 'cmd.chat.send', 'cmd.persona.select', 'ui.guided_tour.show_me']"
+      ]
+    },
+    {
+      "check": "audit_closure",
+      "failures": [
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:5: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:6: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:8: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:11: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:11: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:13: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:13: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:14: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:14: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:18: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:19: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:19: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:20: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:23: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:24: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:25: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:25: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:25: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:26: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:26: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:28: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:29: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:29: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:29: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:30: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:30: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:32: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:32: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:32: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:33: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:35: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:35: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:35: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:36: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:36: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/Orchestrator_Page.md is stale (stored a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a, current cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498, current 9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:42: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:43: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:43: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:43: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:44: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:44: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:46: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:46: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:46: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:47: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 39280f953184aad3e5601d85c6338fe0cd5315868b321226b39c81974a446562)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:49: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:49: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:49: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:50: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        }
+      ]
+    },
+    {
+      "check": "audit_status_index",
+      "failures": [
+        {
+          "error": "stale_audit_status_index",
+          "path": "Plans/.audits/_audit_status_index.json"
+        }
+      ]
+    }
+  ],
+  "filesafe_security_policy": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "forge_backup_acceptance": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "generated_at_utc": "2026-09-07T15:50:20Z",
+  "goal_runtime_event_fixtures": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "gui_asset_policy": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "implementation_readiness": {
+    "failure_samples": [
+      {
+        "error": "buildability_gate_report_stale_or_not_canonical",
+        "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+        "repair_command": "python3 scripts/pm-implementation-readiness.py generate"
+      },
+      {
+        "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
+        "error": "pnc019_source_hash_stale",
+        "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/event_record.schema.json"
+      },
+      {
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/event_family_registry.json"
+      },
+      {
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/storage_recovery_contracts.schema.json"
+      },
+      {
+        "actual": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+        "error": "pnc019_source_hash_stale",
+        "expected": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/storage_value_registry.schema.json"
+      },
+      {
+        "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+        "error": "pnc019_source_hash_stale",
+        "expected": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
+        "error": "pnc019_source_hash_stale",
+        "expected": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/Planning_Wizard.md"
+      },
+      {
+        "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+        "error": "pnc019_source_hash_stale",
+        "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+        "error": "pnc019_source_hash_stale",
+        "expected": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
+        "error": "pnc019_source_hash_stale",
+        "expected": "cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689",
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "source_path": "Plans/Orchestrator_Page.md"
+      }
+    ],
+    "failures": 40,
+    "status": "fail"
+  },
+  "path_refs": {
+    "failure_samples": [
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/test_pm_evidence_artifact_binding_modes.py",
+        "line": 698,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-001",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
+        "line": 717,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-020",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 734,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-037",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 735,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-038",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 736,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-039",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+        "line": 737,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "ATS-040",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 2690,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "F3-516",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 2691,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "F3-517",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "tests/fixtures/pm7_shared",
+        "line": 2692,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "F3-518",
+        "surface_error": "missing_ref"
+      },
+      {
+        "error": "implementation_surface_missing_or_untyped",
+        "implementation_surface": "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current",
+        "line": 5382,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "plan_unit_id": "SMPFS-151",
+        "surface_error": "missing_ref"
+      }
+    ],
+    "failures": 10,
+    "status": "fail"
+  },
+  "plan_graph": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "plan_migration": {
+    "failure_samples": [
+      {
+        "error": "historical_successor_terminal_current_snapshot_invalid",
+        "historical_run_id": "pds-20260611-002-atomize-planunits",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "terminal_failure_count": 3347,
+        "terminal_failure_errors": [
+          "complete_final_summary_live_plan_unit_count_stale",
+          "current_snapshot_anchor_aliases_json_exact_mismatch",
+          "current_snapshot_batch_doc_invalid",
+          "current_snapshot_batch_report_jsonl_exact_mismatch",
+          "current_snapshot_complete_md_exact_mismatch",
+          "current_snapshot_coverage_map_jsonl_exact_mismatch",
+          "current_snapshot_coverage_not_exact_same_document_planunit_set",
+          "current_snapshot_current_run_pointer_invalid",
+          "current_snapshot_final_summary_invalid",
+          "current_snapshot_final_validation_summary_json_exact_mismatch",
+          "current_snapshot_inventory_json_exact_mismatch",
+          "current_snapshot_live_bytes_mismatch",
+          "current_snapshot_live_line_count_mismatch",
+          "current_snapshot_live_sha256_mismatch",
+          "current_snapshot_live_span_count_mismatch",
+          "current_snapshot_live_span_metadata_mismatch",
+          "current_snapshot_live_span_set_mismatch",
+          "current_snapshot_original_hashes_json_exact_mismatch",
+          "current_snapshot_pilot_report_json_exact_mismatch",
+          "current_snapshot_plan_unit_count_stale",
+          "current_snapshot_plans_manifest_sha256_mismatch",
+          "current_snapshot_span_map_jsonl_exact_mismatch",
+          "current_snapshot_span_sha256_mismatch",
+          "stale_batch_report_sha256_after"
+        ],
+        "terminal_run_id": "pds-20260906-017-current-planunit-snapshot"
+      },
+      {
+        "actual": 72,
+        "error": "doc_count_mismatch",
+        "expected": 95,
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+      },
+      {
+        "error": "inventory_doc_set_mismatch",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 1
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 2
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 3
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 4
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 5
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 6
+      },
+      {
+        "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "doc_index": 1,
+        "doc_path": "Plans/assistant-chat-design.md",
+        "error": "stale_batch_report_sha256_after",
+        "expected": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "row": 7
+      }
+    ],
+    "failures": 176,
+    "status": "fail"
+  },
+  "plans_to_code_handoff_schema": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "pm7_gui_fixtures": {
+    "failure_samples": [
+      {
+        "error": "invalid_validator_output",
+        "output": "Traceback (most recent call last):\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 539, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 533, in main\n    report = validate()\n             ^^^^^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 329, in validate\n    motion_contract = load(SHARED_ROOT / \"motion_frame_matrix.json\")\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/Puppet-Master/Puppet-Master/scripts/pm-validate-pm7-gui-fixtures.py\", line 116, in load\n    return json.loads(path.read_text(encoding=\"utf-8\"))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1029, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/Puppet-Master/Puppet-Master/tests/fixtures/pm7_shared/motion_frame_matrix.json'\n"
+      }
+    ],
+    "failures": 1,
+    "status": "fail"
+  },
+  "prd_planning_runtime_contracts": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "project_artifacts": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "project_output_fixtures": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "runtime_artifact_schemas": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "schema_id": "pm.plans_verify.report.v1",
+  "server_command_gap": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "shards": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "spec_lock": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "status": "fail",
+  "subcheck_timeout_seconds": 180,
+  "support_refs": {
+    "failure_samples": [
+      {
+        "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json",
+        "error": "missing_ref",
+        "line": 57,
+        "path": "Plans/00-plans-index.md",
+        "ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"
+      }
+    ],
+    "failures": 1,
+    "status": "fail"
+  },
+  "touch_closure": {
+    "failure_samples": [
+      "Guided Tour effective source/schema action inventory drift: schema_missing=['ui.guided_tour.show_me'], source_missing=[]",
+      "Guided Tour effective emitted actions lack retained owner/concept inventory entries: ['cmd.chat.eli5.set', 'cmd.chat.send', 'cmd.persona.select', 'ui.guided_tour.show_me']"
+    ],
+    "failures": 2,
+    "status": "fail"
+  },
+  "usage_contract_drift": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "usage_gui_fixtures": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "web_capability_contracts": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "wiring_matrix": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  },
+  "working_notebook_contracts": {
+    "failure_samples": [],
+    "failures": 0,
+    "status": "pass"
+  }
+}

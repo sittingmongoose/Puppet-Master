@@ -1,0 +1,37 @@
+{
+  "check": "validate-evidence",
+  "evidence_binding_manifest": "Plans/evidence_artifact_binding_modes.json",
+  "evidence_binding_mode_counts": {
+    "historical_snapshot": 21,
+    "live_current": 1
+  },
+  "evidence_files": [
+    "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+    "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+    "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+    "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+    "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+    "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+    "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+    "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+    "Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-2-2026-08-13/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-3-2026-08-13/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-4-2026-08-13/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-6-2026-08-14/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-7-2026-08-14/evidence.json",
+    "Plans/.evidence/pm7-tweak-wave-8-2026-08-15/evidence.json",
+    "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+    "Plans/.evidence/pm7-workspace-repair-2026-08-13/evidence.json",
+    "Plans/.evidence/pmconcept7-home-direct-manipulation-repair-2026-08-12/evidence.json",
+    "Plans/.evidence/pmconcept7-home-workspace-post-audit-repair-2026-08-05/evidence.json",
+    "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+    "Plans/.evidence/tier-0c-2-storage-value-registry/evidence.json"
+  ],
+  "evidence_files_checked": 22,
+  "failures": [],
+  "generated_at_utc": "2026-09-07T15:44:09Z",
+  "schema_id": "pm.plans_verify.report.v1",
+  "status": "pass"
+}

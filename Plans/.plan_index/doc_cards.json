@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5946,
+      "line_count": 5949,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "b7fcda0d1247d61af89e91994892aa52cd1dc94137e68c5a389f2acd1f6314cf",
+      "sha256": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -540,13 +540,18 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 268
+        "True": 275
       },
-      "heading_count": 658,
+      "heading_count": 659,
       "implementation_surfaces": [
         "AGENTS.md",
+        "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
+        "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
+        "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
         "Plans/Architecture_Invariants.md",
+        "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
+        "Plans/Back_Seat_Driver.md",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Commands_System.md",
@@ -612,9 +617,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 24762,
+      "line_count": 25112,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 451,
+      "plan_unit_count": 458,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1066,7 +1071,14 @@
         "ACD-448",
         "ACD-449",
         "ACD-450",
-        "ACD-451"
+        "ACD-451",
+        "ACD-452",
+        "ACD-453",
+        "ACD-454",
+        "ACD-455",
+        "ACD-456",
+        "ACD-457",
+        "ACD-458"
       ],
       "reasoning_tiers": [
         "high",
@@ -1196,9 +1208,11 @@
         "identity_model_drift",
         "injected_context_ui",
         "inline_child_cards",
+        "internal_telemetry_leak_into_transcript",
         "interview_question_bridge",
         "interview_runtime_display",
         "investigation_surface",
+        "layout_occlusion_and_visual_styling",
         "lifecycle_state",
         "linked_surface_routing",
         "log_payload_exposure",
@@ -1217,6 +1231,7 @@
         "message_history_safety",
         "migration_lineage",
         "misleading_disclosure",
+        "misleading_thread_telemetry_and_layout_crush",
         "mode_boundary",
         "mode_display",
         "mode_invocation",
@@ -1234,6 +1249,7 @@
         "owner_drift",
         "p0_multimodal_and_attachments_hardening",
         "pane_ia",
+        "panel_docking_and_navigation_defect",
         "parent_mediated_clarification",
         "payload_field_loss",
         "payload_schema",
@@ -1250,6 +1266,7 @@
         "persona_scope",
         "plan_crew_alignment",
         "plan_mode_delegation",
+        "plan_navigation_and_tab_defect",
         "plan_review_flow",
         "planning_control_sync",
         "planning_escalation",
@@ -1355,6 +1372,7 @@
         "transcript_schema",
         "transport_disclosure",
         "untruthful_surface_state",
+        "untruthful_work_records_and_diff_formatting",
         "usage_disclosure",
         "usage_owner_boundary",
         "user_visible_transparency_drift",
@@ -1363,6 +1381,7 @@
         "validation_storage",
         "vision_bridge_chat_opacity",
         "visual_flow_drift",
+        "visual_occlusion_and_scroll_defect",
         "visualizer_boundary",
         "visualizer_bridge",
         "visualizer_controls",
@@ -1388,17 +1407,18 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "6042b076a4835fecf4c2297bc51de70c98e5f604a4552c5ef425289124ebb4b7",
+      "sha256": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 451
+        "accepted": 458
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
         "compatibility_disposition": 7,
         "constraint": 137,
         "decision": 6,
-        "requirement": 299,
+        "gui_requirement": 5,
+        "requirement": 301,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1593,10 +1613,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 1,
-        "True": 12
+        "False": 2,
+        "True": 13
       },
-      "heading_count": 72,
+      "heading_count": 75,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "Plans/Assistant_Plan_Runtime.md",
@@ -1612,9 +1632,9 @@
         "Plans/Scheduling_and_Quota_Resume.md",
         "Plans/ToDo_Runtime.md"
       ],
-      "line_count": 1394,
+      "line_count": 1524,
       "path": "Plans/Assistant_Plan_Runtime.md",
-      "plan_unit_count": 13,
+      "plan_unit_count": 15,
       "plan_unit_ids": [
         "APR-001",
         "APR-002",
@@ -1628,7 +1648,9 @@
         "APR-010",
         "APR-011",
         "APR-012",
-        "APR-013"
+        "APR-013",
+        "APR-014",
+        "APR-015"
       ],
       "reasoning_tiers": [
         "high",
@@ -1645,20 +1667,22 @@
         "plan_projection_divergence",
         "plan_version_identity_drift",
         "regular_plan_leaks_into_orchestrator",
+        "schedule_invalidation_failure_or_duplicate_dispatch",
         "scoped_units_admitted_as_global_canon",
         "silent_plan_divergence",
+        "tab_duplication_or_control_disparity",
         "wrong_version_or_duplicate_scheduled_build"
       ],
-      "sha256": "27864006b72eb17ada4a376e9cbdca95d86484bea2169c2863be95cf439efd92",
+      "sha256": "87ba7bb3c734cdc203d511c907dfa0663bef50ad8847c45c7990d9354c79c099",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 13
+        "accepted": 15
       },
       "title": "Assistant Plan Runtime",
       "unit_type_counts": {
         "constraint": 1,
         "owner_boundary": 1,
-        "requirement": 11
+        "requirement": 13
       },
       "validation_surfaces": [
         "direct-edit attempt negative fixtures",
@@ -2044,17 +2068,20 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 3,
-        "True": 22
+        "True": 24
       },
-      "heading_count": 56,
+      "heading_count": 60,
       "implementation_surfaces": [
         "Plans/Back_Seat_Driver.md",
+        "Plans/FinalGUISpec.md",
         "Plans/Prompt_Pipeline.md",
+        "Plans/Settings_System.md",
+        "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1722,
+      "line_count": 1862,
       "path": "Plans/Back_Seat_Driver.md",
-      "plan_unit_count": 25,
+      "plan_unit_count": 27,
       "plan_unit_ids": [
         "BSD-001",
         "BSD-002",
@@ -2080,7 +2107,9 @@
         "BSD-022",
         "BSD-023",
         "BSD-024",
-        "BSD-025"
+        "BSD-025",
+        "BSD-026",
+        "BSD-027"
       ],
       "reasoning_tiers": [
         "high",
@@ -2088,6 +2117,7 @@
       ],
       "risk_classes": [
         "advisor_context_bleed",
+        "advisor_epoch_leak_or_visual_stripe_regression",
         "advisor_input_unbounded_or_unredacted",
         "advisor_restarts_or_alters_primary",
         "advisor_stalls_or_spams_primary",
@@ -2097,6 +2127,7 @@
         "bsd_mode_default_drift",
         "bsd_record_or_owner_collision",
         "bsd_trigger_invention",
+        "configuration_parameter_omission",
         "cross_epoch_advisor_write",
         "duplicate_command_registration",
         "duplicate_or_resurrected_advice",
@@ -2113,15 +2144,15 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "0da8164e78d0b26b7375b361d7e0dee35ef1efb564eb586cc206b4294d3c1b05",
+      "sha256": "b066d345b170cc098e47010734ee70a8533bab365f12593b7766bdd8f0e8711f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 25
+        "accepted": 27
       },
       "title": "Back Seat Driver (Canonical Owner)",
       "unit_type_counts": {
         "owner_boundary": 2,
-        "requirement": 23
+        "requirement": 25
       },
       "validation_surfaces": [
         "BSD mode resolution and Off-no-call fixtures",
@@ -3173,9 +3204,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 3,
-        "True": 10
+        "True": 14
       },
-      "heading_count": 84,
+      "heading_count": 89,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
         "Plans/Assistant_Plan_Runtime.md",
@@ -3200,9 +3231,9 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 1267,
+      "line_count": 1504,
       "path": "Plans/Collaborative_Workflows.md",
-      "plan_unit_count": 13,
+      "plan_unit_count": 17,
       "plan_unit_ids": [
         "CWR-001",
         "CWR-002",
@@ -3216,7 +3247,11 @@
         "CWR-010",
         "CWR-011",
         "CWR-012",
-        "CWR-013"
+        "CWR-013",
+        "CWR-014",
+        "CWR-015",
+        "CWR-016",
+        "CWR-017"
       ],
       "reasoning_tiers": [
         "high",
@@ -3233,19 +3268,23 @@
         "four_duplicate_collaborative_runtimes",
         "hidden_brainstorm_overlay_or_target_mutation",
         "implicit_promotion_from_room_discussion",
+        "mode_entry_bypass_or_demo_mutation_leak",
+        "popup_layout_or_choice_control_inconsistency",
         "provider_native_collaborative_authority_or_hidden_constraint",
+        "review_roster_count_inconsistency",
+        "selector_divergence_or_unintended_rebinding",
         "separate_workflow_input_or_invisible_destination",
         "silent_model_substitution_or_retroactive_default"
       ],
-      "sha256": "44ea275bd5e15fc2ebf97f06ba300efc2c088183c2fb524e68f79f2e970584d2",
+      "sha256": "38edd5230912dd65e2e09fc0ee67c8540182d984062dc38292b2bda3d39b2a90",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 13
+        "accepted": 17
       },
       "title": "Collaborative Workflows",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 12
+        "requirement": 16
       },
       "validation_surfaces": [
         "Plans/working_notebook_contract_fixtures.json",
@@ -3259,10 +3298,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 32,
+        "False": 33,
         "True": 46
       },
-      "heading_count": 185,
+      "heading_count": 187,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3311,9 +3350,9 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6173,
+      "line_count": 6262,
       "path": "Plans/Commands_System.md",
-      "plan_unit_count": 78,
+      "plan_unit_count": 79,
       "plan_unit_ids": [
         "CS-002",
         "CS-003",
@@ -3392,7 +3431,8 @@
         "CS-075",
         "CS-076",
         "CS-077",
-        "CS-078"
+        "CS-078",
+        "CS-079"
       ],
       "reasoning_tiers": [
         "high",
@@ -3412,6 +3452,7 @@
         "command_alias_or_authority_drift",
         "command_anchor_ambiguity",
         "command_consumer_surface_drift",
+        "command_duplication_or_demo_command_leak",
         "command_event_identity_or_durability_drift",
         "command_family_drift",
         "command_file_include_permission_drift",
@@ -3479,10 +3520,10 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "fda89aac8b3d6c391f15e7011082e08ccbe2db214c3b73b2dab1bf16d0f6194b",
+      "sha256": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 78
+        "accepted": 79
       },
       "title": "Commands System (Canonical SSOT)",
       "unit_type_counts": {
@@ -3495,7 +3536,7 @@
         "compatibility_disposition": 1,
         "constraint": 19,
         "reference": 1,
-        "requirement": 44
+        "requirement": 45
       },
       "validation_surfaces": [
         "CAS",
@@ -6292,9 +6333,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 499
+        "True": 507
       },
-      "heading_count": 893,
+      "heading_count": 903,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -6327,7 +6368,9 @@
         "Plans/00-plans-index.md",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
+        "Plans/Back_Seat_Driver.md",
         "Plans/BinaryLocator_Spec.md",
+        "Plans/Collaborative_Workflows.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -6410,9 +6453,9 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 36309,
+      "line_count": 36900,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 534,
+      "plan_unit_count": 542,
       "plan_unit_ids": [
         "F3-501",
         "F3-502",
@@ -6947,7 +6990,15 @@
         "F3-531",
         "F3-532",
         "F3-533",
-        "F3-534"
+        "F3-534",
+        "F3-535",
+        "F3-536",
+        "F3-537",
+        "F3-538",
+        "F3-539",
+        "F3-540",
+        "F3-541",
+        "F3-542"
       ],
       "reasoning_tiers": [
         "high",
@@ -6956,6 +7007,7 @@
       "risk_classes": [
         "accessibility_gui",
         "browser_concept_promoted_to_native_certification",
+        "collaboration_popup_or_activity_family_grammar_drift",
         "compatibility_drift",
         "docker_hosts_gui_density_and_owner_drift",
         "doctor_compact_false_green_or_private_repair",
@@ -6996,8 +7048,11 @@
         "home_platform_claim_drift",
         "home_workspace_identity_drift",
         "hover_overlay_accessibility_or_census_drift",
+        "hover_preview_nesting_or_navigation_drift",
         "inline_visualizer_gui_underspecification",
         "k3_geometry_or_owner_drift",
+        "layout_geometry_or_floating_bar_regression",
+        "lens_clipping_or_decorative_stripe_reintroduction",
         "media_capability_ui_overclaim",
         "mode_menu_or_lens_placement_drift",
         "notification_settings_gui_gap",
@@ -7009,6 +7064,7 @@
         "p2_terminal_runtime_coverage",
         "p2_ui_projection_and_hard_gates_coverage",
         "panel_transition_alias_or_duplicate_event_drift",
+        "plan_editor_tab_loss_or_split_deadzone",
         "plugin_manager_geometry_drift_or_false_owner_success",
         "pm7_cross_surface_theme_or_motion_regression",
         "pm7_fixture_or_visual_evidence_false_completion",
@@ -7029,14 +7085,17 @@
         "source_preservation",
         "static_or_misleading_plan_compile_ui",
         "teach_gui_underspecification",
+        "transcript_overflow_or_work_note_leakage",
+        "untyped_work_box_or_invalid_evidence_ref",
         "update_status_gui_noise",
         "user_visible_config_drift",
-        "visualizer_script_policy_drift"
+        "visualizer_script_policy_drift",
+        "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "342462919f6e41f5f85d7c9e4eaf265d109a277d8ac29b0b7343a69abd20694c",
+      "sha256": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 533,
+        "accepted": 541,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -7045,7 +7104,7 @@
         "compatibility_disposition": 3,
         "constraint": 72,
         "decision": 6,
-        "gui_requirement": 4,
+        "gui_requirement": 12,
         "integration_contract": 3,
         "interaction_contract": 5,
         "requirement": 437,
@@ -7709,13 +7768,14 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 22
+        "True": 23
       },
-      "heading_count": 139,
+      "heading_count": 141,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
+        "Plans/Assistant_Plan_Runtime.md",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/Contracts_V0.md",
@@ -7766,9 +7826,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 5437,
+      "line_count": 5502,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 57,
+      "plan_unit_count": 58,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -7826,7 +7886,8 @@
         "GRS-041",
         "GRS-042",
         "GRS-043",
-        "GRS-057"
+        "GRS-057",
+        "GRS-058"
       ],
       "reasoning_tiers": [
         "high",
@@ -7856,6 +7917,7 @@
         "goal_runtime_host_certification_drift",
         "goal_runtime_product_risk",
         "goal_runtime_replay_or_recovery_admission_bypass",
+        "goal_surface_duplication_or_hierarchy_drift",
         "goal_template_ambiguity",
         "governance_boundary",
         "hidden_blocker",
@@ -7886,17 +7948,17 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "62576d2ba5cc5495c0ec34c833274975525938d5686d0e4b45924cbb8a0fed2c",
+      "sha256": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 48,
+        "accepted": 49,
         "superseded": 9
       },
       "title": "Goal Runtime System",
       "unit_type_counts": {
         "compatibility_disposition": 2,
         "constraint": 8,
-        "requirement": 43,
+        "requirement": 44,
         "risk": 1,
         "schema_contract": 1,
         "validation_criterion": 2
@@ -14580,15 +14642,16 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 2,
-        "True": 6
+        "False": 3,
+        "True": 7
       },
-      "heading_count": 42,
+      "heading_count": 46,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
         "Plans/Goal_Runtime_System.md",
         "Plans/Permissions_System.md",
         "Plans/Prompt_Pipeline.md",
@@ -14599,9 +14662,9 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 817,
+      "line_count": 954,
       "path": "Plans/Scheduling_and_Quota_Resume.md",
-      "plan_unit_count": 8,
+      "plan_unit_count": 10,
       "plan_unit_ids": [
         "SQR-001",
         "SQR-002",
@@ -14610,7 +14673,9 @@
         "SQR-005",
         "SQR-006",
         "SQR-007",
-        "SQR-008"
+        "SQR-008",
+        "SQR-009",
+        "SQR-010"
       ],
       "reasoning_tiers": [
         "high",
@@ -14621,20 +14686,22 @@
         "automatic_resume_overrides_user_stop",
         "client_owned_timer_or_duplicate_dispatch",
         "fabricated_reset_time_or_global_auto_resume",
+        "schedule_mutation_duplication_or_stale_dispatch",
+        "schedule_surface_flattening_or_secret_leakage",
         "silent_destination_or_route_substitution",
         "stale_eligibility_or_replayed_side_effect",
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "df8242d97c9ad47b8e30b8847a7eef545db04ae17c8947fc864d69c4b5b64796",
+      "sha256": "fd4285ee893e251d62c1a4df244b12a8b893387cb24a19b5f530428e9056ab4b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 8
+        "accepted": 10
       },
       "title": "Scheduling and Quota Resume",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 7
+        "requirement": 9
       },
       "validation_surfaces": [
         "node tests/scheduling-verify.mjs",
@@ -15194,9 +15261,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 28
+        "True": 31
       },
-      "heading_count": 64,
+      "heading_count": 69,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/pm7-tools/build_pm7.py",
@@ -15245,9 +15312,9 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 1616,
+      "line_count": 1825,
       "path": "Plans/Settings_System.md",
-      "plan_unit_count": 29,
+      "plan_unit_count": 32,
       "plan_unit_ids": [
         "SSYS-001",
         "SSYS-002",
@@ -15277,7 +15344,10 @@
         "SSYS-026",
         "SSYS-027",
         "SSYS-028",
-        "SSYS-029"
+        "SSYS-029",
+        "SSYS-030",
+        "SSYS-031",
+        "SSYS-032"
       ],
       "reasoning_tiers": [
         "high",
@@ -15288,6 +15358,8 @@
         "cross_project_settings_leak",
         "duplicate_setting_identity_or_namespace_drift",
         "incomplete_or_parallel_settings_manager_system",
+        "manager_layout_inconsistency_or_context_loss",
+        "projection_store_divergence",
         "provider_setup_authority_or_target_drift",
         "settings_alias_double_dispatch_or_policy_bypass",
         "settings_atomicity_or_default_recovery_failure",
@@ -15296,6 +15368,7 @@
         "settings_doctor_false_readiness_or_owner_escape",
         "settings_false_acceptance_or_certification",
         "settings_geometry_or_host_width_drift",
+        "settings_identity_drift_or_optimistic_persistence",
         "settings_inventory_or_denominator_drift",
         "settings_manager_registry_or_dry_projection_drift",
         "settings_onboarding_doctor_false_readiness",
@@ -15314,10 +15387,10 @@
         "shadow_settings_ownership_or_retroactive_default",
         "theme_or_layout_cross_project_leak"
       ],
-      "sha256": "b741ed1279fec66b498ad0e31cb1a042038a99f269ce9439bb68cb5a7890cd85",
+      "sha256": "4835124706adf850121329777be884336c8f8216e6a56859fb9d9dd555f700e3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 29
+        "accepted": 32
       },
       "title": "Settings System",
       "unit_type_counts": {
@@ -15325,7 +15398,7 @@
         "contract": 5,
         "integration_contract": 3,
         "owner_boundary": 4,
-        "requirement": 14,
+        "requirement": 17,
         "security_constraint": 1,
         "validation": 1
       },
@@ -16436,9 +16509,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 5,
-        "True": 5
+        "True": 6
       },
-      "heading_count": 41,
+      "heading_count": 43,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
         "Plans/CLI_Bridged_Providers.md",
@@ -16450,9 +16523,9 @@
         "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 814,
+      "line_count": 893,
       "path": "Plans/ToDo_Runtime.md",
-      "plan_unit_count": 10,
+      "plan_unit_count": 11,
       "plan_unit_ids": [
         "TDR-001",
         "TDR-002",
@@ -16463,7 +16536,8 @@
         "TDR-007",
         "TDR-008",
         "TDR-009",
-        "TDR-010"
+        "TDR-010",
+        "TDR-011"
       ],
       "reasoning_tiers": [
         "high",
@@ -16476,20 +16550,21 @@
         "fabricated_todo_completion_on_recovery_or_migration",
         "provider_native_todo_authority_transfer",
         "single_current_item_assumption",
+        "todo_surface_nesting_or_visual_stripe_regression",
         "unbounded_todo_leaf_or_cyclic_graph",
         "unreceipted_or_bulk_completion",
         "verification_status_reintroduced",
         "whole_list_model_authority"
       ],
-      "sha256": "07f548bd892bd77b74e2a89185ce0c5356eba70d2c5d1eae8eaac2b9da9e9f9e",
+      "sha256": "0609ed471d2b10d56b8cfeef537eb117e2f94774371c4622f7a7b1c20ae139c0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 10
+        "accepted": 11
       },
       "title": "To-Do Runtime",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 9
+        "requirement": 10
       },
       "validation_surfaces": [
         "node tests/activity-detail-verify.mjs",
@@ -16866,9 +16941,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 20,
-        "True": 138
+        "True": 139
       },
-      "heading_count": 310,
+      "heading_count": 312,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
@@ -16919,9 +16994,9 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 12738,
+      "line_count": 12820,
       "path": "Plans/UI_Command_Catalog.md",
-      "plan_unit_count": 158,
+      "plan_unit_count": 159,
       "plan_unit_ids": [
         "UCC-002",
         "UCC-003",
@@ -17080,7 +17155,8 @@
         "UCC-155",
         "UCC-156",
         "UCC-157",
-        "UCC-158"
+        "UCC-158",
+        "UCC-159"
       ],
       "reasoning_tiers": [
         "high",
@@ -17100,6 +17176,7 @@
         "catalog_or_reverse_route_gap",
         "catalog_reverse_coverage_or_alias_promotion_drift",
         "chat_command_catalog_gap",
+        "command_catalog_duplication",
         "dev_preview_command_authority_leak",
         "docker_command_catalog_gap",
         "dry_method_settings_command_gap",
@@ -17143,10 +17220,10 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "48f2f431bc886525e5510bb8e41fad60dbbf4147bb6d4ee78cee4261da7f608d",
+      "sha256": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 157,
+        "accepted": 158,
         "retired": 1
       },
       "title": "UI Command Catalog (Canonical)",
@@ -17157,7 +17234,7 @@
         "compatibility_disposition": 1,
         "constraint": 1,
         "gui_command_catalog": 7,
-        "requirement": 116
+        "requirement": 117
       },
       "validation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
@@ -17221,9 +17298,9 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 19
+        "True": 20
       },
-      "heading_count": 60,
+      "heading_count": 62,
       "implementation_surfaces": [
         "Concepts/pm7-tools/",
         "Concepts/pm7-tools/global_hover_tags_source.py",
@@ -17249,9 +17326,9 @@
         "Plans/touch_closure.json",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1444,
+      "line_count": 1515,
       "path": "Plans/UI_Wiring_Rules.md",
-      "plan_unit_count": 19,
+      "plan_unit_count": 20,
       "plan_unit_ids": [
         "UIW-001",
         "UIW-002",
@@ -17271,7 +17348,8 @@
         "UIW-016",
         "UIW-017",
         "UIW-018",
-        "UIW-019"
+        "UIW-019",
+        "UIW-020"
       ],
       "reasoning_tiers": [
         "high",
@@ -17296,18 +17374,19 @@
         "simulated_command_success_or_undeclared_local_action",
         "ui_alias_bypass_or_phantom_runtime_claim",
         "ui_backend_bypass",
-        "unwired_gui"
+        "unwired_gui",
+        "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "b0c77ecbeb53ef195661544a2bf03d3adc352ca3524d3ccee5e53c5d101ce5d8",
+      "sha256": "b8367d078b36f222790f922a8751e07ad425eabf2f120618c6f8beb2c381f7d3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 19
+        "accepted": 20
       },
       "title": "UI Wiring Rules (Canonical)",
       "unit_type_counts": {
         "constraint": 1,
         "gui_wiring_rule": 1,
-        "requirement": 13,
+        "requirement": 14,
         "ui_wiring_rule": 1,
         "wiring_contract": 2,
         "wiring_rule": 1
@@ -18138,7 +18217,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-06T21:28:57Z",
+  "generated_at_utc": "2026-09-07T15:43:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18146,13 +18225,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3319,
-      "True": 3043
+      "False": 3322,
+      "True": 3073
     },
-    "plan_unit_count": 6362,
+    "plan_unit_count": 6395,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6171,
+      "accepted": 6204,
       "retired": 182,
       "superseded": 9
     },
@@ -18195,7 +18274,7 @@
       "gui_command_catalog": 7,
       "gui_consumer_rule": 1,
       "gui_contract": 15,
-      "gui_requirement": 4,
+      "gui_requirement": 17,
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
@@ -18219,7 +18298,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5081,
+      "requirement": 5101,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
