@@ -65,7 +65,7 @@ def main():
     fields=['coverage_id','feature_group','repo_inventory_reference','original_packet_reference','source_wording','wording_custody','required_scenario_a','required_scenario_b','candidate_gallery_ids','coverage_status','two_meaningful_demos_verified','native_proof','motion_proof']
     cp=OUT/'DEMO_REQUIREMENT_MATRIX.csv'
     with cp.open('w',encoding='utf-8',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(rows)
+        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore',lineterminator='\n');w.writeheader();w.writerows(rows)
     receipt={'matrix_identity_completeness':'pass','requirements':551,'features':67,'unique_requirement_ids':551,'source_counts':result['source_counts'],'json_sha256':digest(jp),'csv_sha256':digest(cp),'full_demo_acceptance':'open','native_runtime_enabled':False,'generated_from':str(table.relative_to(ROOT))}
     (OUT/'DEMO_MATRIX_VALIDATION.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(receipt,indent=2))
