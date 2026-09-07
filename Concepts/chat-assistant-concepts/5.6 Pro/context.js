@@ -804,7 +804,6 @@
     var rows = [
       ['Goal', c.goal ? 'On' : 'Off', c.goal, 'A durable goal artifact rides alongside whatever mode is active.'],
       ['Crew', c.crew ? 'On' : 'Off', c.crew, 'Parallel child agents with their own routes.'],
-      ['Back Seat Driver', c.bsd || 'Off', c.bsd && c.bsd !== 'Off', 'Independent evaluation of the current turn.'],
       ['Context Lens', c.context || 'Off', c.context && c.context !== 'Off', 'Mute, Focus and staged Subcompact over selected messages.'],
       ['ELI5', c.eli5 ? 'On' : 'Off', c.eli5, 'Plain-language restatement alongside the technical answer.'],
       ['Thought Stream', c.thought || 'Off', c.thought && c.thought !== 'Off', 'Streamed reasoning summary while a turn runs.']
@@ -844,6 +843,7 @@
 
     html += '<div class="metric-grid">' + card('Tokens loaded', ktok(w.used)) +
       card('Available', ktok(w.available != null ? w.available : (w.limit - w.used))) + card('Cache hit', noRoute ? 'not reported' : pct2(w.cacheHitPct)) + '</div>';
+    html += ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '';
     html += section('Token details', '<div class="metric-grid">'+card('Cached tokens', ktok(w.cached))+card('Input this turn', ktok(w.inputThisTurn))+card('Output this turn', ktok(w.outputThisTurn))+'</div>');
 
     html += section('Source composition', segBar(esc, sources, w.used, w.limit, false, 'composition-bar') +
@@ -894,7 +894,7 @@
     /* Back Seat Driver section. bsd.js owns the content; it appends here rather
        than re-registering the contextDrawer replace slot. Curated view only -- the
        Raw view returns above and keeps its existing redaction rules. */
-    html += section('Back Seat Driver',ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '');
+
 
     return html + '</div></aside>';
 

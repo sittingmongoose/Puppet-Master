@@ -1,0 +1,1773 @@
+{
+  "checks": [
+    {
+      "name": "Assistant boots",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No undeclared action collisions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "crew no native select",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew models use main picker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew footer insets",
+      "passed": true,
+      "detail": {
+        "left": 23.6766357421875,
+        "bottom": 15.784423828125
+      }
+    },
+    {
+      "name": "crew shared choice host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew choice filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew full model host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew model destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew Persona host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew Persona destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "crew main route isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm no native select",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm models use main picker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm footer insets",
+      "passed": true,
+      "detail": {
+        "left": 23.30474853515625,
+        "bottom": 15.5364990234375
+      }
+    },
+    {
+      "name": "brainstorm shared choice host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm choice filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm full model host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm model destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm Persona host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm Persona destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brainstorm main route isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review no native select",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review models use main picker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review footer insets",
+      "passed": true,
+      "detail": {
+        "left": 23.5184326171875,
+        "bottom": 15.678955078125
+      }
+    },
+    {
+      "name": "review shared choice host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review choice filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review full model host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review model destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review Persona host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review Persona destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "review main route isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Single Agent immediately trims draft",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Single Agent duplicate replaces slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Single Agent admission invariant",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room no native select",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room models use main picker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room footer insets",
+      "passed": true,
+      "detail": {
+        "left": 23.518524169921875,
+        "bottom": 15.6790771484375
+      }
+    },
+    {
+      "name": "chat_room shared choice host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room choice filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room full model host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room model destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room Persona host",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room Persona destination",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat_room main route isolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Crew Auto stores policy without starting run",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "One BSD detail section",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BSD overview exposes model",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BSD native selects removed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BSD configuration fields retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History query no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History query no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History query horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History orbit-run no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History orbit-run no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History orbit-run horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History queue-demo no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History queue-demo no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History queue-demo horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History plain no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plain no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plain horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History questions no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History questions no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History questions horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History subagents no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History subagents no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History subagents horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History bsd no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History bsd no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History bsd horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History context no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History context no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History context horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History visuals no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History visuals no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History visuals horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History debug no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History debug no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History debug horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History offline no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History offline no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History offline horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History attachments no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History attachments no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History attachments horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History tool-failure no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History tool-failure no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History tool-failure horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History goal-replan no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History goal-replan no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History goal-replan horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History route no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History route no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History route horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History plan-deep no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-deep no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-deep horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History crew no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History crew no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History crew horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History artifact-error no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History artifact-error no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History artifact-error horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History new-message no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History new-message no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History new-message horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History no-models no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History no-models no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History no-models horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-1 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-1 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-1 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-2 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-2 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-2 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-3 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-3 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-3 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-4 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-4 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-4 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-5 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-5 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-5 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History archived-6 no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-6 no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History archived-6 horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History plan-example-ap-auth no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-example-ap-auth no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-example-ap-auth horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History plan-example-ap-flags no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-example-ap-flags no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History plan-example-ap-flags horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History recovery-scheduling no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-scheduling no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-scheduling horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History recovery-attachments no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-attachments no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-attachments horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "History recovery-collaboration no visible internal note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-collaboration no obsolete side commentary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "History recovery-collaboration horizontal extent",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "File diff additions and deletions distinguished",
+      "passed": true,
+      "detail": {
+        "a": "rgb(92, 214, 155)",
+        "r": "rgb(255, 108, 125)"
+      }
+    },
+    {
+      "name": "File record opens exact path",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Layout 390/basic-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 332,
+        "scroll": 332,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 48.46875
+      }
+    },
+    {
+      "name": "Layout 390/basic-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/basic-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/basic-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/friendly-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/friendly-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/friendly-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/friendly-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/glass-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/glass-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/glass-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/glass-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/retro-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/retro-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/retro-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 390/retro-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 380,
+        "scroll": 380,
+        "overflow": 0,
+        "viewport": 390,
+        "right": 390,
+        "left": 0
+      }
+    },
+    {
+      "name": "Layout 720/basic-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 649,
+        "scroll": 649,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 61.5
+      }
+    },
+    {
+      "name": "Layout 720/basic-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/basic-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/basic-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/friendly-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/friendly-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/friendly-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/friendly-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/glass-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/glass-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/glass-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/glass-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/retro-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/retro-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/retro-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 720/retro-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 510,
+        "scroll": 510,
+        "overflow": 0,
+        "viewport": 720,
+        "right": 720,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/basic-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/basic-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/basic-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/basic-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/friendly-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/friendly-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/friendly-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/friendly-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/glass-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/glass-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/glass-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/glass-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/retro-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/retro-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/retro-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1024/retro-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 814,
+        "scroll": 814,
+        "overflow": 0,
+        "viewport": 1024,
+        "right": 1024,
+        "left": 200
+      }
+    },
+    {
+      "name": "Layout 1440/basic-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/basic-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/basic-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/basic-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/friendly-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/friendly-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/friendly-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/friendly-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/glass-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/glass-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/glass-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/glass-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/retro-dark/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/retro-dark/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/retro-light/take1",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Layout 1440/retro-light/take8",
+      "passed": true,
+      "detail": {
+        "width": 447,
+        "scroll": 447,
+        "overflow": 0,
+        "viewport": 1440,
+        "right": 1440,
+        "left": 982.59375
+      }
+    },
+    {
+      "name": "Activity goal pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Activity todo pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Activity subagents pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Activity crew pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Activity changes pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Activity artifacts pinned default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Reset retains v3 thread set",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No Assistant runtime errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "passed": 217,
+  "failed": 0,
+  "history_threads_opened": 31,
+  "sha256": "b8434d0e4acc4e4750635ad0e1861020ea9ed1bc6c51cd59fb6586d129c0e94f"
+}

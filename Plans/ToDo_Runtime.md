@@ -812,3 +812,82 @@ owner_hints: [Plans/ToDo_Runtime.md, Plans/Working_Notebook.md]
 ```
 
 ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Working_Notebook.md
+
+## Cumulative v3 To-Do Presentation and Hierarchy Specification (2026-09-07)
+
+This section incorporates the cumulative To-Do hover preview architecture, concise information
+hierarchy, and surface projection standards in accordance with APR-005, APR-008, APR-034, and
+APR-059.
+
+### 9. Single Bounded Hover Surface and Concise Detail Hierarchy (APR-005, APR-008)
+
+- **Single Outer Hover Surface (APR-005):** The To-Do hover preview renders within exactly one
+  bounded, non-scrolling outer surface. Nested floating panels, secondary popovers, and duplicated
+  DOM trees are strictly eliminated. Previews display a compact snapshot of active and upcoming
+  tasks with an overflow counter row that directly navigates to the pinned Activity Detail on click.
+- **Concise Information Hierarchy (APR-008):** To-Do Activity Detail prioritizes immediate
+  actionability:
+  1. *Primary Visibility:* Task title, state glyph (pending, in-progress, completed with strike-through,
+     blocked), ownership assignment (only when an explicit agent or persona is assigned), and the
+     next immediate action.
+  2. *Secondary Disclosure:* Execution metadata, attempt history, dependency links, and tool
+     receipts are placed behind deliberate disclosure toggles.
+  3. *Inline Completion:* Completed items remain inline within the hierarchy with a filled dot and
+     strike-through typography. Separate "Done" sections, verification badges, or artificial groupings
+     are forbidden.
+- **Prohibition of Decorative Stripes (APR-034):** Decorative left-edge accent borders, stripes,
+  and pseudo-element highlights are removed throughout To-Do surfaces, enforcing clean uniform
+  perimeters. Functional indentation and tree hierarchy connectors are explicitly preserved.
+- **Visual Alignment and Typography (APR-059):** Task rows enforce consistent baseline alignment,
+  proportional typography, and aligned action glyphs across all task states.
+
+```yaml
+plan_unit_id: TDR-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/ToDo_Runtime.md
+canonical_text: >-
+  To-Dos project a single bounded hover preview without nested panels or internal scrolling, routing
+  overflow clicks directly to pinned Activity Detail. To-Do Activity Detail prioritizes task title,
+  state, assigned ownership, and next action, placing secondary technical metadata behind deliberate
+  disclosures. Completed items remain inline with a filled dot and strike-through with no separate Done
+  heading or decorative left-edge accent stripes.
+gui_related: true
+gui_classification_reason: Governs To-Do hover preview surfaces, detail information hierarchy, and visual presentation.
+depends_on: [TDR-010]
+unblocks: []
+acceptance_criteria:
+  - Exactly one outer hover surface renders for To-Do previews with no nested panels.
+  - Task detail prioritizes title, state, ownership, and next action; technical metadata is behind disclosures.
+  - Completed items render inline with filled dot and strike-through without a separate Done section.
+  - Decorative left-edge accent stripes are eliminated while functional tree connectors remain.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: todo_surface_nesting_or_visual_stripe_regression
+reasoning_tier: standard
+context_scope: todo_ui_projection
+implementation_surfaces:
+  - Plans/ToDo_Runtime.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: todo_ui_specification
+  create_worknodes: false
+source_lineage:
+  - APR-005
+  - APR-008
+  - APR-034
+  - APR-059
+preserved_exact_tokens:
+  - "single bounded hover"
+  - "inline completion"
+  - "filled dot"
+negative_constraints:
+  - Do not render nested floating panels for To-Do previews.
+  - Do not create a separate Done heading or group for completed tasks.
+  - Do not render decorative left-edge accent stripes on To-Do rows.
+owner_hints:
+  - Plans/ToDo_Runtime.md
+```
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/FinalGUISpec.md
+

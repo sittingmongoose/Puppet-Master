@@ -1006,6 +1006,7 @@
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
     var c = completionProjection(run);
+    if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
     var bits = [];
     if (c.review_truth) bits.push('<span class="collab-truth-review">' + esc(c.review_truth.label) + '</span>');
@@ -1585,31 +1586,64 @@
     });
   });
 
+  // Choice presentation reuses the main menu/picker host. Only the draft owns values.
+  const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
+  function normalizeReview(d){
+    if(!d||d.kind!=='review')return;
+    if(d.config.strategy==='single_agent'){
+      if(d.rows.length>1){
+        d._previousMultiRows=d.rows.slice();
+      }
+      if(!d.rows.length)d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
+      d.rows=d.rows.slice(0,1);d.config.reviewerCount=1;d.wonderer=false;d.grillMe=false;
+    }else if(d.config.strategy==='multi_pass'){
+      if(d._previousMultiRows&&d._previousMultiRows.length>1&&d.rows.length<=1){
+        d.rows=d._previousMultiRows.slice();
+      }else if(d.rows.length<2){
+        while(d.rows.length<3){
+          var idx=d.rows.length;
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[idx]||('Reviewer '+(idx+1)),DEFAULT_ROW_MODEL[idx%DEFAULT_ROW_MODEL.length],'Reviewer'));
+        }
+      }
+      d.config.reviewerCount=d.rows.length;
+    }
+  }
+  function configChoice(ctx,d,key,title){
+    const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
+    return '<label>'+esc(title)+'<button type="button" class="shared-picker-button collab-choice" data-action="collab-pick-choice" data-field="'+key+'" data-menu-anchor="collab-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';
+  }
+  EXT.action('collab-pick-choice',function(ctx,btn){
+    const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
+    window.PM56_PICKERS.openChoice(btn,btn.closest('label').childNodes[0].textContent,draft.config[key],CONFIG_CHOICES[key],value=>{
+      if(RTC.draft!==draft)return;draft.config[key]=value;normalizeReview(draft);ctx.renderOverlays();
+    });return true;
+  });
   function kindConfigFields(ctx, d) {
     if (d.kind === 'crew') {
-      return '<div class="collab-field-row"><label>Coordinator<select data-collab-input="cfg-coordinator"><option value="parent_assistant"' + (d.config.coordinator === 'parent_assistant' ? ' selected' : '') + '>Parent assistant</option><option value="dedicated_synthesis_model"' + (d.config.coordinator !== 'parent_assistant' ? ' selected' : '') + '>Dedicated synthesis model</option></select></label>' +
-        '<label>Assignment strategy<select data-collab-input="cfg-assignmentStrategy"><option value="manager_directed"' + (d.config.assignmentStrategy === 'manager_directed' ? ' selected' : '') + '>Manager-directed</option><option value="explicit_static"' + (d.config.assignmentStrategy === 'explicit_static' ? ' selected' : '') + '>Explicit static</option><option value="adaptive"' + (d.config.assignmentStrategy === 'adaptive' ? ' selected' : '') + '>Adaptive</option></select></label>' +
-        '<label>Parallelism<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
+      return '<div class="collab-field-row">' + configChoice(ctx,d,'coordinator','Coordinator') + '' +
+        '' + configChoice(ctx,d,'assignmentStrategy','Task assignment') + '' +
+        '<label>Simultaneous tasks<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
         '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
     }
     if (d.kind === 'brainstorm') {
       var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
       return '<div class="collab-field-row"><label>Debate rounds<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '"></label>' +
-        '<label>Research strength<select data-collab-input="cfg-externalResearch"><option value="maximum"' + (d.config.externalResearch === 'maximum' ? ' selected' : '') + '>Maximum</option><option value="standard"' + (d.config.externalResearch === 'standard' ? ' selected' : '') + '>Standard</option></select></label></div>' +
+        '' + configChoice(ctx,d,'externalResearch','Research') + '</div>' +
         '<p class="collab-qmax">' + (d.grillMe ? 'Maximum questions: ' + (d.config.questionLimit + d.config.grillExtension) + ' (' + d.config.questionLimit + ' + Grill Me ' + d.config.grillExtension + ')' : 'Maximum questions: ' + d.config.questionLimit) + '</p>';
     }
     if (d.kind === 'review') {
-      return '<div class="collab-field-row"><label>Strategy<select data-collab-input="cfg-strategy"><option value="multi_pass"' + (d.config.strategy === 'multi_pass' ? ' selected' : '') + '>Multi-Pass Review</option><option value="single_agent"' + (d.config.strategy === 'single_agent' ? ' selected' : '') + '>Single Agent</option></select></label>' +
-        '<label>Reviewers (1–8, default 3)<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
+      return '<div class="collab-field-row">' + configChoice(ctx,d,'strategy','Review approach') + '' +
+        '<label>Reviewers<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
         '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
     }
-    return '<div class="collab-field-row"><label>Turn policy<select data-collab-input="cfg-turnPolicy"><option value="moderated"' + (d.config.turnPolicy === 'moderated' ? ' selected' : '') + '>Moderated</option><option value="round_robin"' + (d.config.turnPolicy === 'round_robin' ? ' selected' : '') + '>Round robin</option><option value="free_discussion"' + (d.config.turnPolicy === 'free_discussion' ? ' selected' : '') + '>Free discussion</option><option value="ask_everyone_once"' + (d.config.turnPolicy === 'ask_everyone_once' ? ' selected' : '') + '>Ask everyone once</option></select></label>' +
+    return '<div class="collab-field-row">' + configChoice(ctx,d,'turnPolicy','Conversation flow') + '' +
       '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
   }
 
   function renderConfigureModal(ctx) {
     var d = RTC.draft; if (!d) return '';
+    normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     var supportsAdditive = d.kind === 'crew' || d.kind === 'brainstorm' || d.kind === 'chat_room';
     var overLimit = d.rows.length > limits[1] || d.rows.length < limits[0];
@@ -1619,16 +1653,16 @@
       '<span class="spacer"></span><button class="icon-button" data-action="collab-modal-cancel">' + ctx.icon('close', 13) + '</button></div>' +
       '<div class="dialog-body collab-configure-body">' +
       '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
-      '<div class="collab-field-row"><label>Purpose<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
-      '<h4>Participants (' + d.rows.length + ', ' + limits[0] + '–' + limits[1] + ')' + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
+      '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
+      '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
-      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' Add participant</button>' +
-      '<h4>' + esc(KIND_LABEL[d.kind]) + ' configuration</h4>' +
+      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
+      '<h4>How they work</h4>' +
       kindConfigFields(ctx, d) +
-      (supportsAdditive ? '<div class="collab-add-specialists"><strong>Add specialists</strong>' +
+      (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
-        '</div>' : '') +
+        '</details>' : '') +
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
@@ -1692,18 +1726,20 @@
   });
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[];
     d.rows.push(draftRow((KIND_LABEL[d.kind] + ' member ' + (d.rows.length + 1)), DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length], d.kind === 'review' ? 'Reviewer' : 'Implementer'));
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-remove-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
+    if(d.rows.length<=KIND_PARTICIPANT_LIMIT[d.kind][0])return true;
     d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-duplicate-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
     var src = d.rows.filter(function (r) { return r.rowId === btn.dataset.row; })[0];
-    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); d.rows.push(copy); }
+    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[copy];else d.rows.push(copy); }
     ctx.renderOverlays(); return true;
   });
 
@@ -1730,7 +1766,7 @@
     else if (k.indexOf('cfg-') === 0) {
       var field = k.slice(4);
       var num = ['parallelism', 'debateRounds', 'maxRounds', 'reviewerCount'].indexOf(field) >= 0;
-      d.config[field] = num ? clamp(t.value, 1, 20) : t.value;
+      d.config[field] = num ? clamp(t.value, 1, 20) : t.value;normalizeReview(d);
     }
     return true;
   }
@@ -1773,6 +1809,7 @@
      drivable in a concept that has no provider to fail; every other clause is
      a real check over the draft the user configured. */
   function startPreflight(d) {
+    normalizeReview(d);
     if (d.forceFailure)
       return { ok:false, error:String(d.forceFailure), slot:null,
                message:'Start was refused ('+d.forceFailure+'). Your configuration is unchanged; no run, card or participant record was created.' };
@@ -1790,6 +1827,7 @@
 
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.toast('Out of range', KIND_LABEL[d.kind] + ' supports ' + limits[0] + '–' + limits[1] + ' participants.'); return true; }
     /* Crew Auto's own modal commits a POLICY, not a run (§5.3/CREW-004): the

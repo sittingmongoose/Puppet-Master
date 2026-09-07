@@ -815,3 +815,140 @@ owner_hints: [Plans/Scheduling_and_Quota_Resume.md]
 ```
 
 ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Goal_Runtime_System.md
+
+## Cumulative v3 Schedule Manager Redesign and Atomic Mutation Specification (2026-09-07)
+
+This section incorporates the cumulative Schedule Manager architectural redesign, scheduled message
+lifecycle card grammar, and atomic schedule mutation rules in accordance with APR-019, APR-027,
+APR-028, and APR-043.
+
+### 11. Schedule Manager Four-Category Architecture (APR-027)
+
+- **Categorical Separation:** The unified Schedule Manager surface rejects flat list presentations
+  and organizes all scheduled items into four distinct, dedicated categories:
+  1. *Scheduled Messages:* User-scheduled chat prompts, follow-ups, and thread-targeted messages.
+  2. *Execution & Build Windows:* Scheduled plan builds, batch runs, and recurring maintenance windows.
+  3. *Resume & Safety Policy:* Quota pause auto-resume settings, circuit breakers, grace periods,
+     and DST handling.
+  4. *Events & Automation:* System event listeners, webhook dispatches, and periodic cron routines.
+- **Filtering and Scope:** Each category provides independent status filtering (Active, Paused,
+  Completed, Failed, Expired), execution time sorting, and search filtering without cross-category
+  state confusion.
+
+### 12. Scheduled-Message Card Grammar and State Separation (APR-028)
+
+- **Card Lifecycle States:** Scheduled messages project clear visual separation between active and
+  historical states:
+  1. *Active/Pending Cards:* High-visibility cards with primary status badge `Scheduled` or `Held`,
+     disclosing destination target, exact dispatch time, IANA timezone, attachment count, requested
+     route/model, and active Edit / Cancel actions.
+  2. *Quiet Historical Receipts:* Sent, Canceled, Expired, and Failed records render as subtle,
+     compact receipts. A `Sent` receipt links directly to the dispatched message in thread history.
+- **Privacy and Secrets Protection:** Sensitive attachment file system paths, authentication tokens,
+  and cryptographic payload hashes are relegated strictly to the More Details disclosure panel and
+  never rendered in the primary card summary.
+
+### 13. Atomic Schedule Mutation and Future-Time Validation (APR-019, APR-043)
+
+- **Atomic Schedule Mutation (APR-043):** Editing an existing pending schedule updates the existing
+  record in place under the same schedule identity (`schedule_id`), incrementing its revision number.
+  Edits never spawn duplicate or orphaned schedules.
+- **Time and Timezone Validation:** The scheduling date-time picker enforces future time validation
+  calculated in the destination target's IANA timezone. Past timestamps or invalid timezone offsets
+  are rejected before admission.
+- **Safe Invalidation Precedence (APR-019):** Explicit schedule cancellation immediately dispatches
+  invalidation to the active scheduler timer. Immediate manual execution (e.g., clicking "Build" on a
+  scheduled plan) invalidates and removes the pending schedule before launching the run, leaving
+  unrelated schedules undisturbed.
+
+```yaml
+plan_unit_id: SQR-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  The Schedule Manager organizes schedules into four distinct categories: Scheduled Messages, Execution
+  & Build Windows, Resume & Safety Policy, and Events & Automation. Scheduled messages render editable
+  pending cards with destination, exact time, IANA timezone, attachments, route, and actions, while
+  sent/canceled/expired items render as quiet receipts without exposing secret paths in summaries.
+gui_related: true
+gui_classification_reason: Governs Schedule Manager layout categorization and scheduled message card presentation.
+depends_on: [SQR-008]
+unblocks: [SQR-010]
+acceptance_criteria:
+  - Schedule Manager presents four distinct categorical views, never a flat mixed list.
+  - Pending cards display destination, time, timezone, attachments, route, and Edit/Cancel controls.
+  - Historical states render as quiet receipts; secrets remain in Details.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: schedule_surface_flattening_or_secret_leakage
+reasoning_tier: standard
+context_scope: schedule_manager_ui
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: schedule_manager_specification
+  create_worknodes: false
+source_lineage:
+  - APR-027
+  - APR-028
+preserved_exact_tokens:
+  - "Scheduled Messages"
+  - "Execution & Build Windows"
+  - "Resume & Safety Policy"
+  - "Events & Automation"
+negative_constraints:
+  - Do not merge all schedule kinds into a single flat list.
+  - Do not expose secret attachment paths in scheduled message cards.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/FinalGUISpec.md
+
+```yaml
+plan_unit_id: SQR-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Schedule edits mutate existing pending schedules atomically with revision incrementation without
+  orphaning. The time picker enforces future-time validation in destination IANA timezones. Canceled
+  schedules are invalidated immediately; triggering immediate Build on a scheduled plan invalidates
+  its pending schedule before execution without disturbing unrelated schedules.
+gui_related: false
+gui_classification_reason: Governs atomic schedule mutation, timezone validation, and invalidation precedence.
+depends_on: [SQR-009]
+unblocks: []
+acceptance_criteria:
+  - Schedule edits mutate existing record with revision increment without creating duplicates.
+  - Time picker strictly prevents past-time submission in destination IANA timezone.
+  - Cancellation or immediate execution cleanly invalidates pending schedules.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: schedule_mutation_duplication_or_stale_dispatch
+reasoning_tier: high
+context_scope: schedule_mutation_lifecycle
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: schedule_mutation_specification
+  create_worknodes: false
+source_lineage:
+  - APR-019
+  - APR-043
+preserved_exact_tokens:
+  - "atomic mutation"
+  - "IANA timezone"
+  - "invalidation precedence"
+negative_constraints:
+  - Do not spawn orphan schedules when editing pending schedules.
+  - Do not dispatch a canceled or superseded schedule.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Assistant_Plan_Runtime.md
+

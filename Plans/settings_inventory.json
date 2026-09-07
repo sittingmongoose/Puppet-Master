@@ -19169,12 +19169,12 @@
   },
  {
   "id": "general.interaction.working-activity-style",
-  "label": "Working Animation",
-  "desc": "Which animation the assistant shows while it is working: Orbit is the default richer view, Step Rail is the simplified list. Applies instantly and changes nothing about the work itself.",
+  "label": "Working activity",
+  "desc": "Choose Orbit or the compact Step Rail Simple presentation.",
   "type": "select",
   "options": [
    "Orbit",
-   "Step Rail"
+   "Step Rail Simple"
   ],
   "default": "Orbit",
   "scope": [
@@ -19191,8 +19191,12 @@
    "animation",
    "assistant.chat.working_activity_style",
    "chat",
+   "general.interaction.working-activity-style",
+   "Step Rail",
+   "Step Rail Simple",
    "style",
-   "working"
+   "working",
+   "working-activity-style"
   ]
  },
  {
@@ -20229,7 +20233,7 @@
   "type": "select",
   "options": [
    "Off",
-   "15",
+   "15 seconds",
    "30 seconds",
    "60 seconds"
   ],

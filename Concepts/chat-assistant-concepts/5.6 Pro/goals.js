@@ -383,7 +383,7 @@
             '<button class="text-button" data-action="goal-cancel-edit">Cancel edit</button>'+
             '<button class="primary-button" data-action="goal-save"'+(over?' disabled':'')+'>Save</button>'+
           '</div>'+
-          '<p class="goal-note">Save is your approved change. There is no confirmation dialog for your own edit.</p>'+
+
         '</div>'
       : '<div class="goal-view" data-k="goal-view">'+
           '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
@@ -438,15 +438,15 @@
       '<div class="goal-head" data-k="goal-head">'+statusChip(g)+
         '<span class="goal-rev">Revision '+g.revision+'</span>'+
         '<span class="spacer"></span>'+
-        '<span class="goal-hash" title="Compare-and-swap token for every mutation">'+esc(g.currentnessHash)+'</span>'+
+
       '</div>'+
       (g.blockedReason?'<div class="goal-blocked-card" data-k="goal-blocked-card">'+ctx.icon('lock',13)+'<div><strong>Blocked</strong><p>'+esc(g.blockedReason)+'</p></div></div>':'')+
       body + lifecycle +
       '<div class="goal-disclosures" data-k="goal-disclosures">'+
         '<button class="text-button" data-action="goal-toggle-history">'+(ui.showHistory?'Hide':'Show')+' History ('+g.revisions.length+')</button>'+
         '<button class="text-button" data-action="goal-toggle-conts">'+(ui.showContinuations?'Hide':'Show')+' continuation log ('+g.continuations.length+')</button>'+
-        '<button class="text-button" data-action="goal-demo-proposal">Simulate an agent-proposed change</button>'+
-      '</div>'+ hist + conts +
+
+      '</div>'+ hist + conts + '<details class="goal-technical"><summary>Technical details</summary><dl><dt>Currentness</dt><dd>'+esc(g.currentnessHash)+'</dd></dl></details>' +
     '</div>';
   }
 

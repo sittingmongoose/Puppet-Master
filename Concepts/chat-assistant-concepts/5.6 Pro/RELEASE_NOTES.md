@@ -1,5 +1,11 @@
-# Repair v2
+# v3 rebuilt delivery notes
 
-Scheduling and scheduled-message hierarchy redesigned. Shared main-model/Persona pickers wired to detached collaborator and BSD drafts. Full BSD policy/stages with session identity reset/re-prime and historical finding attribution. Context Lens moves the transcript. Styled Activity Bar floats with transparent sides/bottom. Preview items route to pinned exact records. Plans open in deduplicated left tabs with their existing controls and a readable narrow editor. Generic work notices are typed and navigable; recorded file hunks are reused, not fabricated. Narrow History behavior preserved. Step Rail reset hook chains once. Demo Studio has 27 added refinement entries.
+- Shared searchable choice host, with option-specific labels/help, for collaboration and BSD non-model choices.
+- Single Agent Review normalized on rendering, configuration changes and admission; replacement rather than a second slot when adding/duplicating.
+- Footer insets and readable member layout; main model/Persona route selection retained.
+- No routine internal-note transcript cards; actual file change counters use semantic addition/deletion colors.
+- History fixture narrative refresh and explicitly labeled recovery conversations; moved records preserve corresponding owner/thread binding, including reset.
+- Compact row-based Activity and Context layouts, including one BSD summary backed by actual state and complete disclosed details.
+- Narrow editor no longer places chat in a five-pixel splitter track.
 
-Current evidence and explicit incomplete scope: reports/assistant-polish-v2/DELIVERY_REPORT.json. This supersedes the prior local repair's acceptance report; it is not a blanket no-bugs, native-runtime or full motion certification.
+See README.md and the delivery validation report for the exact executed scope and uncompleted acceptance work.

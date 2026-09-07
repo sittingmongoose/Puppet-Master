@@ -16,9 +16,9 @@ writeFileSync(join(out,'verifier.mjs'),readFileSync(fileURLToPath(import.meta.ur
 const report={scope:'concept full Show Me sequence and lifecycle faults only; not native, full manual, all-theme motion, or durable reload certification',artifact_sha256:sha(readFileSync(artifact)),verifier_sha256:sha(readFileSync(fileURLToPath(import.meta.url))),checks:[],errors:[],requests:[]};
 const browser=await chromium.launch({executablePath:chrome,headless:true});let context,page,observeNetwork=false;
 async function check(name,fn){await fn();report.checks.push({name,pass:true});console.log(`PASS ${name}`);}
-async function fresh(){
+async function fresh(reduced=true){
   observeNetwork=false;if(context)await context.close();
-  context=await browser.newContext({viewport:{width:1440,height:960},reducedMotion:'reduce',serviceWorkers:'block'});
+  context=await browser.newContext({viewport:{width:1440,height:960},reducedMotion:reduced?'reduce':'no-preference',serviceWorkers:'block'});
   page=await context.newPage();page.setDefaultTimeout(15000);page.on('pageerror',error=>report.errors.push(error.message));
   page.on('request',request=>{if(observeNetwork&&/^https?:/.test(request.url()))report.requests.push({url:request.url(),method:request.method()});});
   await page.route('**/*',route=>/^(file:|data:|blob:)/.test(route.request().url())?route.continue():route.abort());
@@ -69,7 +69,7 @@ try{
     });assert.equal(result.stale.reason,'stale_layout_revision');assert.equal(result.foreign.reason,'invalid_resize_values');assert.equal(result.invalid.reason,'invalid_resize_values');assert.equal(result.failed.ok,false);
     assert.equal(result.after.layout_revision,result.before.layout_revision);assert.deepEqual(result.afterSemantic,result.beforeSemantic);assert.equal(result.storageUnchanged,true);assert.equal(result.success.ok,true);assert.equal(result.receipt.command_id,'cmd.workspace_layout.resize_surface');
   });
-  await fresh();
+  await fresh(false);
   await check('paused guided Teacher messages never reach ordinary Chat',async()=>{
     await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'}));
     await page.locator('#pm7-guided-tour [data-ui-action-id="ui.guided_tour.pause"]').click();
@@ -81,6 +81,7 @@ try{
     await page.evaluate(()=>{const d=window.PM_DEMO;window.__lifecycle.webCalls=[];d.web.start=(...args)=>{window.__lifecycle.webCalls.push(args);return {ok:true};};});
     const input=page.locator('#chatPanel .pm6-chat-input');await input.fill('/web search example.com');await input.press('Enter');
     await page.waitForFunction(()=>!window.PM_DEMO.state.chat.busy);
+    await input.fill('/web fetch https://example.com');await page.locator('#chatPanel .pm6-chat-send').click();await page.waitForFunction(()=>!window.PM_DEMO.state.chat.busy);
     assert.deepEqual(await page.evaluate(()=>window.__lifecycle.webCalls),[]);assert.deepEqual(await page.evaluate(()=>window.__lifecycle.ordinary),[]);
     assert.equal((await snap()).status,'paused');assert.match(await page.locator('#chatPanel .chatHeaderTitle').textContent(),/Guided example/);
   });

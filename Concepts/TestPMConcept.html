@@ -24817,6 +24817,77 @@ html[data-theme$="-light"]:not([data-theme^="glass"]) #pm-hover-tag-root .pm-hov
 @media(max-width:720px){#pm-settings-root .pm49-setting{grid-template-columns:1fr;gap:8px;}#pm-settings-portals .pm49-member-pickers{grid-template-columns:1fr;}}
 
 </style>
+<style id="pm50-manager-layout">
+/* Scoped manager grammar. No decorative side bars; no domain actions removed. */
+#pm-settings-root .manager-page {container-type:inline-size;min-width:0;}
+#pm-settings-root .manager-body,#pm-settings-root .resource-detail,#pm-settings-root .resource-content {min-width:0;max-width:100%;}
+#pm-settings-root .manager-body {padding:18px 22px;}
+#pm-settings-root .resource-content {padding:18px 22px;}
+#pm-settings-root .panel-card {padding:17px 0;border:0;border-radius:0;background:transparent;box-shadow:none;border-bottom:1px solid var(--line);min-width:0;}
+#pm-settings-root .panel-title-row {display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin:0 0 12px;}
+#pm-settings-root .panel-title-row>div:first-child {flex:1;min-width:140px;}
+#pm-settings-root .panel-title {font-size:13px;font-weight:650;line-height:1.5;}
+#pm-settings-root .panel-subtitle {font-size:12px;line-height:1.6;}
+#pm-settings-root .pm50-explanation {font-size:11px;color:var(--text-muted,var(--muted));margin:6px 0 0;}
+#pm-settings-root .pm50-explanation summary {width:max-content;cursor:pointer;list-style:none;border-bottom:1px dotted currentColor;}
+#pm-settings-root .pm50-explanation summary::before {content:'›';display:inline-block;margin-right:6px;}
+#pm-settings-root .pm50-explanation[open] summary::before {content:'⌄';}
+#pm-settings-root .pm50-explanation[open] {padding:4px 0 8px;}
+#pm-settings-root .pm50-explanation .panel-subtitle,#pm-settings-root .pm50-explanation .stat-note {margin:8px 0;}
+#pm-settings-root .info-grid {display:grid;grid-template-columns:1fr;gap:0;}
+#pm-settings-root .info-row {display:grid;grid-template-columns:minmax(95px,.8fr) minmax(0,1fr);gap:24px;padding:10px 0;border:0;border-bottom:1px solid var(--line);align-items:baseline;background:transparent;border-radius:0;}
+#pm-settings-root .info-key {font-size:12px;line-height:1.5;}
+#pm-settings-root .info-value {font-size:12px;text-align:right;line-height:1.5;overflow-wrap:break-word;word-break:normal;min-width:0;}
+#pm-settings-root .card-grid {gap:16px;}
+#pm-settings-root .stat-card {padding:12px 0;border:0;border-radius:0;background:transparent;box-shadow:none;border-bottom:1px solid var(--line);}
+#pm-settings-root .stat-value {font-size:18px;line-height:1.6;}
+#pm-settings-root .resource-head {gap:12px;padding:18px 20px;flex-wrap:wrap;}
+#pm-settings-root .resource-head-main {min-width:0;flex:1;}
+#pm-settings-root .resource-actions {display:flex;gap:8px;flex-wrap:wrap;}
+#pm-settings-root .manager-tabs {gap:5px;padding:8px 14px;flex-wrap:wrap;}
+#pm-settings-root .manager-tab {white-space:normal;}
+#pm-settings-root .prompt-box {max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;box-sizing:border-box;border-left-width:1px;}
+#pm-settings-root .manager-page .alert-strip {border:0;border-radius:0;box-shadow:none;padding:12px 0;line-height:1.6;}
+#pm-settings-root .manager-page .panel-card::before,#pm-settings-root .manager-page .stat-card::before,#pm-settings-root .manager-page .alert-strip::before,#pm-settings-root .resource-row::before {display:none;}
+#pm-settings-root .resource-row.active {border-left-width:0;box-shadow:0 0 0 1px var(--line) inset;}
+#pm-settings-root .setting-row {gap:18px;padding:14px 0;border-left-width:0;}
+#pm-settings-root .setting-label {font-size:13px;line-height:1.55;}
+#pm-settings-root .setting-control {min-width:0;}
+#pm-settings-root .setting-control>input,#pm-settings-root .setting-control>select {max-width:100%;}
+#pm-settings-root .pm49-bsd .panel-card {padding:16px 0;}
+#pm-settings-root .pm49-setting {grid-template-columns:minmax(95px,.85fr) minmax(0,1fr);gap:22px;padding:12px 0;}
+#pm-settings-root .pm49-setting>strong {font-size:12px;font-weight:500;}
+#pm-settings-root .pm49-choice>span {word-break:normal;overflow-wrap:break-word;}
+#pm-settings-root .pm49-policy {border:0;border-radius:0;border-top:1px solid var(--line);padding:16px 0;}
+#pm-settings-portals .dialog-footer {padding:16px 22px;gap:9px;flex-wrap:wrap;}
+#pm-settings-portals .pm49-member {border:0;border-radius:0;border-bottom:1px solid var(--line);padding:16px 0;}
+@container (max-width:650px){
+ #pm-settings-root .card-grid.two,#pm-settings-root .card-grid.three {grid-template-columns:1fr;}
+ #pm-settings-root .split-manager {grid-template-columns:1fr;}
+ #pm-settings-root .split-manager>.resource-roster {max-height:200px;width:auto;min-width:0;}
+ #pm-settings-root .resource-actions {flex-basis:100%;padding-left:0;}
+ #pm-settings-root .resource-head {padding:16px 12px;}
+ #pm-settings-root .resource-content,#pm-settings-root .manager-body {padding:14px 12px;}
+ #pm-settings-root .pm49-setting {grid-template-columns:1fr;gap:7px;}
+}
+@media(max-width:560px){
+ #pm-settings-root .setting-row {grid-template-columns:minmax(0,1fr) auto;gap:10px;}
+ #pm-settings-root .setting-control {grid-row:2;grid-column:1/-1;}
+ #pm-settings-root .setting-row>.details-btn {grid-column:2;grid-row:1;}
+ #pm-settings-root .info-row {gap:12px;}
+}
+
+/* Statistics adapt to the actual detail pane, not the whole Settings window. */
+#pm-settings-root .resource-detail {container-type:inline-size;container-name:managerDetail;}
+@container managerDetail (max-width:530px){
+ #pm-settings-root .card-grid.two,#pm-settings-root .card-grid.three{grid-template-columns:minmax(0,1fr);gap:0;}
+ #pm-settings-root .stat-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 0;}
+ #pm-settings-root .stat-value{font-size:13px;text-align:right;font-weight:550;}
+ #pm-settings-root .stat-label{font-size:12px;line-height:1.5;letter-spacing:0;}
+ #pm-settings-root .resource-content .panel-card{padding:14px 0;}
+}
+
+</style>
 </head>
 <body>
 <!-- PM7 T20: Home workspace model-first transform -->
@@ -44396,6 +44467,43 @@ renderBSD=function(){
   if(model){b.provider=model.provider.name;b.model=model.model.name;b.account=model.account.nickname;}
   return '<div class="manager-page page-enter pm49-bsd">'+pageHeader('eye','Back Seat Driver','Read-only advisor','')+'<div class="manager-body"><div class="manager-scroll"><section class="panel-card">'+assistantBsdRows(['mode','model','persona'])+'</section><section class="panel-card"><h3>When to advise</h3>'+assistantBsdRows(['trigger-sensitivity','catch-up-seconds','cooldown-turns','stage-bindings'])+'</section><section class="panel-card"><h3>Advisor context</h3>'+assistantBsdRows(['retain-transcript','self-compact-threshold'])+'</section><details class="pm49-policy"><summary>Fallback & usage policy</summary><div class="form-grid">'+inlineSelect('Fallback provider','bsd-fallback-provider',b.fallbackProvider,state.providers.filter(p=>p.status==='active'&&p.id!=='free-models').map(p=>p.name),'change-bsd-fallback-provider')+inlineSelect('Fallback model','bsd-fallback-model',b.fallbackModel,(state.providers.find(p=>p.name===b.fallbackProvider)?.models||[]).filter(m=>m.enabled).map(m=>m.name),'change-bsd-field','fallbackModel')+'</div><div class="info-grid">'+infoRow('Usage boundary',b.usageBoundary)+infoRow('Intervention',b.intervention)+'</div><button class="btn" data-action="edit-bsd-policy">Edit policy</button></details></div></div></div>';
 };
+
+
+/* PM_ASSISTANT_NARROW_V3 */
+/* Existing manager dispatch, data and persistence stay authoritative. This
+   presentation pass makes non-essential explanations explicitly available,
+   rather than deleting them or mixing them into every first-view row. */
+function narrowManagerMarkup(html){
+  const tpl=document.createElement('template');tpl.innerHTML=html;
+  tpl.content.querySelectorAll('.stat-note').forEach(el=>{
+    if(el.querySelector('button,input,a,select'))return;
+    const card=el.closest('.stat-card'),label=card?.querySelector('.stat-label')||card;
+    if(label){label.title=el.textContent.trim();el.remove();}
+  });
+  tpl.content.querySelectorAll('.panel-subtitle').forEach(el=>{
+    if(!el.textContent.trim()||el.querySelector('button,input,a,select'))return;
+    const details=document.createElement('details');details.className='pm50-explanation';
+    const summary=document.createElement('summary');summary.textContent='About';
+    details.append(summary,el.cloneNode(true));el.replaceWith(details);
+  });
+  tpl.content.querySelectorAll('.panel-title-row').forEach(row=>{
+    const title=row.querySelector('.panel-title');const guide=row.querySelector('.pm50-explanation summary');
+    if(title&&guide)guide.setAttribute('aria-label','About '+title.textContent.trim());
+  });
+  return tpl.innerHTML;
+}
+const narrowOriginalWorkspaceBody=renderWorkspaceBody;
+renderWorkspaceBody=function(workspace,domain){return narrowManagerMarkup(narrowOriginalWorkspaceBody(workspace,domain));};
+// All Settings already has an explicit Details inspector; keep its label and
+// value visible, with its longer explanation in that existing inspector.
+const narrowOriginalSettingRow=renderSettingRow;
+renderSettingRow=function(setting,section,workspace){
+ const tpl=document.createElement('template');tpl.innerHTML=narrowOriginalSettingRow(setting,section,workspace);
+ const description=tpl.content.querySelector('.setting-description');
+ if(description){const label=tpl.content.querySelector('.setting-label');if(label)label.title=description.textContent;description.remove();}
+ return tpl.innerHTML;
+};
+window.PM50_NARROW_REVIEW={version:'3-rebuilt',managerInventory:()=>D.domains.flatMap(d=>d.workspaces.filter(w=>w.type!=='settings').map(w=>({domain:d.id,id:w.id,label:w.label,type:w.type}))),layout:'aligned rows with optional descriptions'};
 
   boot();
 })();

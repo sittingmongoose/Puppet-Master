@@ -1265,3 +1265,235 @@ owner_hints: [Plans/Collaborative_Workflows.md, Plans/Permissions_System.md]
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Working_Notebook.md
+
+## Cumulative v3 Collaboration Configuration and Semantics Specification (2026-09-07)
+
+This section incorporates the cumulative collaboration configuration, selector primitives, and
+operational invariants across Crew, Crew Auto, Chat Room, BrainStorm, and Review in accordance with
+APR-021, APR-022, APR-029, APR-030, APR-051, APR-052, APR-053, APR-054, and APR-067.
+
+### 8. Shared Collaborator Selectors and Destination Scoping (APR-029, APR-030)
+
+- **Shared Selector Primitives:** All collaboration workflow modals (Crew, Crew Auto, Chat Room,
+  BrainStorm, and Review) share the identical Model and Persona selection controls backed by the
+  canonical catalogs in `Plans/Models_System.md` and `Plans/Personas.md`. Ad-hoc or diverging picker
+  primitives are prohibited.
+- **Explicit Destination Isolation:** Every model or persona picker activation explicitly binds to
+  a precise target destination: the primary Assistant session, a specific draft participant slot
+  within a collaborative roster, or a project-level default template row.
+- **Cancellation Isolation:** Closing or canceling a picker leaves all other configuration fields,
+  unrelated participant assignments, and draft states completely untouched. A cancelled picker
+  never triggers global state resets or silent fallback rebindings.
+
+### 9. Choice Controls, Plain-Language Labels, and Popup Spacing (APR-051, APR-052, APR-053)
+
+- **Shared Choice Controls (APR-051):** Remaining collaboration configuration controls (including
+  strategy selectors, consensus thresholds, and execution modes) use anchored dropdown popups with
+  standardized option row geometry, clear keyboard focus rings, and search filtering.
+- **Plain-Language Descriptions (APR-052):** Choice controls present clear, plain-language option
+  labels accompanied by concise descriptions explaining the operational trade-offs (e.g., speed,
+  depth of analysis, reviewer independence, token expenditure) without exposing raw internal enum
+  names or developer jargon.
+- **Consistent Inset Footers (APR-053):** Configuration modal footers enforce 16 px inset padding,
+  distinct upper border separation, and a standardized button hierarchy featuring a primary action
+  (Start / Save) on the right and secondary actions (Cancel) adjacent with clear visual distinction.
+
+### 10. Single Agent Review Invariant and Dynamic Roster Sizing (APR-054)
+
+- **One-Agent Roster Invariant:** When the user selects the "Single Agent" strategy in the Review
+  configuration modal, the draft reviewer roster immediately and reactively collapses to exactly one
+  reviewer.
+- **State Preservation on Toggle:** If the user toggles back from Single Agent to Multi-Pass Review,
+  the previous multi-reviewer roster configuration is restored intact without requiring re-entry of
+  reviewer parameters.
+- **Single-Pass Rendering:** A single-reviewer execution renders as a single-pass result and omits
+  consensus or agreement sections in transcript cards and Activity Detail.
+
+### 11. Mode Entry Completeness and Read-Only Demographics (APR-021, APR-022, APR-067)
+
+- **Authentic Mode Entry Paths:** Review must enter through the primary mode menu and its sidecars.
+  BrainStorm must enter through Deep Plan sidecars. Neither mode may be bypassed or launched via
+  disconnected demo hooks. Retained v2 and Additive Correction v4 contracts are fully preserved.
+- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demonstration
+  cards display findings, static analysis, and code reviews without rendering interactive mutation
+  controls or misleading action buttons.
+
+```yaml
+plan_unit_id: CWR-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: >-
+  Crew, Crew Auto, Chat Room, BrainStorm, and Review use shared Model and Persona selection controls
+  backed by the canonical shared catalogs in Plans/Models_System.md and Plans/Personas.md. Picker
+  destinations are explicitly scoped to the primary Assistant, a specific draft participant slot, or
+  a default template row. Canceling a picker leaves all other configuration state and participant
+  assignments intact without global mutations.
+gui_related: true
+gui_classification_reason: Governs collaborator selector controls and destination scoping in collaboration configuration popups.
+depends_on: [CWR-011]
+unblocks: [CWR-015]
+acceptance_criteria:
+  - All five collaboration workflows use identical Model and Persona pickers backed by shared catalogs.
+  - Picker destination is explicitly bound to the intended slot or template.
+  - Canceling a picker preserves all draft state without unintended rebindings.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: selector_divergence_or_unintended_rebinding
+reasoning_tier: standard
+context_scope: collaboration_selectors
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Models_System.md
+  - Plans/Personas.md
+node_compile_hint:
+  mode: collaboration_selector_specification
+  create_worknodes: false
+source_lineage:
+  - APR-029
+  - APR-030
+preserved_exact_tokens:
+  - "shared catalogs"
+  - "participant slot"
+  - "destination"
+negative_constraints:
+  - Do not introduce diverging picker primitives across collaborative workflows.
+  - Do not mutate global assistant state when canceling a participant picker.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Models_System.md, ContractName:Plans/Personas.md
+
+```yaml
+plan_unit_id: CWR-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: >-
+  Collaboration configuration popups enforce shared anchored dropdown choice controls with plain-language
+  labels and option descriptions explaining trade-offs. Modal footers feature consistent 16 px inset
+  padding, subtle top divider separation, and a clear button hierarchy between primary Start/Save and
+  secondary Cancel actions.
+gui_related: true
+gui_classification_reason: Governs choice control presentation, plain-language option copy, and popup footer geometry.
+depends_on: [CWR-014]
+unblocks: [CWR-016]
+acceptance_criteria:
+  - Dropdown controls share anchored geometry, standard option rows, and keyboard navigation.
+  - Option descriptions explain operational trade-offs in plain language.
+  - Popups feature 16 px inset footers with distinct primary and secondary action styling.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: popup_layout_or_choice_control_inconsistency
+reasoning_tier: standard
+context_scope: collaboration_choice_controls
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: collaboration_ui_specification
+  create_worknodes: false
+source_lineage:
+  - APR-051
+  - APR-052
+  - APR-053
+preserved_exact_tokens:
+  - "plain-language"
+  - "inset footers"
+  - "option descriptions"
+negative_constraints:
+  - Do not display raw enum identifiers as user-facing option labels.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
+```yaml
+plan_unit_id: CWR-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: >-
+  Selecting the Single Agent strategy in the Review configuration modal immediately and reactively
+  reduces the active draft reviewer roster to exactly one reviewer. Switching back to Multi-Pass restores
+  the prior multi-reviewer roster without loss of choices. A single-reviewer execution renders as a
+  single-pass result omitting consensus sections.
+gui_related: true
+gui_classification_reason: Governs the reactive reviewer roster count and single-pass rendering invariant in Review configuration.
+depends_on: [CWR-015]
+unblocks: []
+acceptance_criteria:
+  - Single Agent Review immediately sets active draft reviewer roster to exactly 1.
+  - Toggling back to Multi-Pass restores the multi-reviewer roster.
+  - Single-pass review output omits agreement and consensus sections.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: review_roster_count_inconsistency
+reasoning_tier: high
+context_scope: review_roster_invariants
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: review_roster_specification
+  create_worknodes: false
+source_lineage:
+  - APR-054
+preserved_exact_tokens:
+  - "Single Agent"
+  - "Multi-Pass"
+  - "single-pass result"
+negative_constraints:
+  - Do not permit more than one active reviewer when Single Agent is selected.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
+```yaml
+plan_unit_id: CWR-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: >-
+  Review and BrainStorm enter through their designated product mode menu and sidecar paths, preserving
+  retained v2 and correction-v4 semantics without bypasses. Read-only demonstration fixtures present
+  inspection findings and static analysis without interactive mutation controls or misleading execution
+  states.
+gui_related: true
+gui_classification_reason: Governs canonical mode entry completeness and read-only demonstration semantics.
+depends_on: [CWR-014]
+unblocks: []
+acceptance_criteria:
+  - Review enters via primary mode menu; BrainStorm enters via Deep Plan sidecar.
+  - Retained v2 and correction-v4 semantics remain fully intact.
+  - Read-only fixtures render findings without interactive mutation buttons.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: mode_entry_bypass_or_demo_mutation_leak
+reasoning_tier: standard
+context_scope: collaborative_mode_entry
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: collaborative_mode_entry_specification
+  create_worknodes: false
+source_lineage:
+  - APR-021
+  - APR-022
+  - APR-067
+preserved_exact_tokens:
+  - "mode entry"
+  - "read-only demonstration"
+negative_constraints:
+  - Do not expose interactive mutation controls on read-only demo fixtures.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
