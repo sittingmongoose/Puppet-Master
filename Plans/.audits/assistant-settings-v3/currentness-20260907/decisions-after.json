@@ -1,0 +1,106 @@
+{
+  "check": "validate-auto-decisions",
+  "failures": [],
+  "generated_at_utc": "2026-09-07T15:44:03Z",
+  "historical_duplicate_decision_ids": [
+    {
+      "decision_id": "dec-r-20260312-160857-01-spec-lock-refresh",
+      "historical_identity_count": 3,
+      "present_identity_count": 3
+    },
+    {
+      "decision_id": "dec-r-20260316-160450-01-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-r-20260328-192850-02-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-r-20260328-192850-04-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-r-20260328-192850-05-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-r-20260329-235630-04-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260307-230437-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260308-010858-persona-runtime-audit-gap-closure-spec-lock-refresh",
+      "historical_identity_count": 8,
+      "present_identity_count": 8
+    },
+    {
+      "decision_id": "dec-rewrite-20260308-044815-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-packet-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff-spec-lock-refresh",
+      "historical_identity_count": 3,
+      "present_identity_count": 3
+    },
+    {
+      "decision_id": "dec-rewrite-20260308-203718-runtime-scheduler-scoring-wakeups-remediation-safe-points-and-decomposition-fallback-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260309-004657-runtime-scheduler-scoring-wakeups-remediation-lineage-safe-points-retry-taxonomy-and-draft-decomposition-degradation-boundaries-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260309-031700-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260309-041936-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-reconciliation-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260309-185017-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-recovery-cross-doc-reconciliation-spec-lock-refresh",
+      "historical_identity_count": 7,
+      "present_identity_count": 7
+    },
+    {
+      "decision_id": "dec-rewrite-20260310-172932-gui-artifacts-usage-panels-spec-lock-refresh",
+      "historical_identity_count": 3,
+      "present_identity_count": 3
+    },
+    {
+      "decision_id": "dec-rewrite-20260310-210122-gui-artifacts-usage-panels-spec-lock-refresh",
+      "historical_identity_count": 3,
+      "present_identity_count": 3
+    },
+    {
+      "decision_id": "dec-rewrite-20260311-030008-gui-artifacts-usage-panels-spec-lock-refresh",
+      "historical_identity_count": 2,
+      "present_identity_count": 2
+    },
+    {
+      "decision_id": "dec-rewrite-20260311-152314-implementation-readiness-reconciliation-spec-lock-refresh",
+      "historical_identity_count": 5,
+      "present_identity_count": 5
+    }
+  ],
+  "historical_duplicate_policy": "listed pre-existing (decision_id, inputs_hash) identities are grandfathered; any new duplicate decision_id or changed duplicate identity fails validation",
+  "rows_checked": 209,
+  "schema_id": "pm.plans_verify.report.v1",
+  "status": "pass"
+}

@@ -1,0 +1,48 @@
+name: Assistant v3 completion inputs
+on:
+  push:
+    branches: [completion/assistant-v3-demo-index-20260907]
+    paths: [.github/workflows/assistant-v3-completion-inputs.yml]
+permissions:
+  contents: read
+jobs:
+  inputs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c99872170dab69b46d82f0d0f0abb1e8d408fc1f
+          fetch-depth: 1
+      - name: Package pinned text sources and governance state
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess,zipfile,json,hashlib
+          paths=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          selected=[]
+          for p in paths:
+            if not p or not Path(p).is_file(): continue
+            keep=p in ['AGENTS.md','.gitignore','.gitattributes','REPLACEMENT_MANIFEST.json','package.json','package-lock.json','requirements.txt','pyproject.toml'] or p.startswith(('Plans/','scripts/','tests/','.agents/skills/pm-bootstrap-planning-ledger/','Concepts/pm7-tools/','Concepts/pm6-build/checks/')) or p in ['Concepts/CONCEPT_RULES.md','Concepts/TestPMConcept.html'] or p.startswith('Concepts/chat-assistant-concepts/5.6 Pro/')
+            if p.startswith('tests/agent_packet_restrictions/'): keep=False
+            if not keep: continue
+            if Path(p).suffix.lower() in ['.mp4','.mov','.webm','.gif','.zip','.tar','.gz','.ttf','.otf','.woff','.woff2','.png','.jpg','.jpeg','.webp','.pdf','.xlsx','.pptx']: continue
+            selected.append(p)
+          manifest={'base_commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'excluded_large_test_fixture_tree':'tests/agent_packet_restrictions/; full-tree checks run separately in Actions','files':[]}
+          with zipfile.ZipFile('/tmp/assistant-completion-inputs.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in selected:
+              b=Path(p).read_bytes();z.writestr(p,b)
+              manifest['files'].append({'path':p,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'git_blob':hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()})
+            z.writestr('INPUT_MANIFEST.json',json.dumps(manifest,indent=2))
+            z.writestr('TRACKED_TREE.txt',subprocess.check_output(['git','ls-tree','-rl','HEAD']))
+          print('Files:',len(selected),'ZIP bytes:',Path('/tmp/assistant-completion-inputs.zip').stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assistant-completion-inputs
+          path: /tmp/assistant-completion-inputs.zip
+          retention-days: 7
+          compression-level: 0
+          if-no-files-found: error
