@@ -236,7 +236,6 @@
         if (ref && ref.kind === 'note') return true;
       } catch (e) {}
     }
-    if (m.title && m.title.indexOf('Orphan Gate failed') !== -1) return true;
     return false;
   }
   function ordinaryMessages(t) {

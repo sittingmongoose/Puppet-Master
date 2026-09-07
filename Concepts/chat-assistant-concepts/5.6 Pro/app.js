@@ -722,7 +722,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!m)return false;
     if(m.internalOnly)return true;
     if(m.type==='agent-work'&&window.PM56_RECORDS?.reference(m)?.kind==='note')return true;
-    if(m.title&&m.title.indexOf('Orphan Gate failed')!==-1)return true;
     return false;
   }
   function messageVisible(m){

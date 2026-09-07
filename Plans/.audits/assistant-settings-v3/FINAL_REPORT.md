@@ -67,9 +67,9 @@ Per the mandatory rules of `ACCEPTANCE.md`, verdicts are maintained across disti
 
 ### 3.2 Internal Work Note Projection Segregation (APR-056, APR-057, APR-070) [REPAIRED — V3-R02]
 - **Issue Identified (`V3-R02`):**
-  Internal execution notes (e.g. `subagents-07`, "Orphan Gate failed") were hidden in the ordinary transcript via CSS `display:none` or superficial view checks, but leaked into ordinary thread search results, registered thread JSON export (`exportThread`), thread branching/forking/duplication, restore point snapshots, rewind card previews (`.pm-tops-fold-text`), and turn counts.
+  Internal execution notes (e.g. `subagents-07`, "Orphan Gate failed") were hidden in the ordinary transcript via CSS `display:none` or superficial view checks, but leaked into ordinary thread search results, registered thread JSON export (`exportThread`), thread branching/forking/duplication, restore point snapshots, rewind card previews (`.pm-tops-fold-text`), and turn counts. In earlier iterations, a title-based substring check inadvertently overfiltered legitimate File changes (such as `route-04`) if their title contained failure phrases (`V3-R02-TITLE-OVERFILTER`).
 - **Repair Applied (`Concepts/chat-assistant-concepts/5.6 Pro/app.js` & `threadops.js`):**
-  1. Implemented canonical projection filter `isInternalNote(m)`: checks for `m.internalOnly === true`, `(m.role === 'system' && m.type === 'agent-work')`, or internal failure strings such as `'Orphan Gate failed'`.
+  1. Implemented canonical projection filter `isInternalNote(m)`: classifies internal records strictly from authoritative visibility metadata (`m.internalOnly === true`) and typed output references (`m.type === 'agent-work' && PM56_RECORDS.reference(m).kind === 'note'`). Title-content exceptions were completely eliminated, ensuring legitimate File changes, inspections, activities, artifacts, and plans retain identity-preserving visibility and export.
   2. Ordinary thread search (`renderThreadSearchMenu` in `app.js` and `searchMenu` in `threadops.js`) excludes internal notes from search hits.
   3. Registered thread export (`exportThread`) strictly exports ordinary messages via `ordinaryMessages(t)`.
   4. Thread duplication, branching, and forking filter out internal notes from cloned threads.
@@ -77,7 +77,7 @@ Per the mandatory rules of `ACCEPTANCE.md`, verdicts are maintained across disti
   6. Rewind card preview (`threadops-rewind`) strictly filters internal notes before slicing the 6 preview messages displayed in `.pm-tops-fold-text`.
   7. Message turn counts report truthful ordinary message counts.
   8. Memory and diagnostic state preserved: internal notes remain stored in `t.messages` and aggregated on `D.internalWorkNotes` for authorized diagnostic inspection.
-- **Verification:** Verified via `tests/test_v3_residuals.js` TEST 2 (search returns 0 hits; export excludes internal notes; rewind preview does not leak notes; restore snapshot excludes notes; D.internalWorkNotes retains all records) and `build.py --check`. Closed in `FINDING-V3-R02-INTERNAL-NOTE-PROJECTION` and `FINDING-APR-056-CONCEPT-WORK-NOTE-FILTER`.
+- **Verification:** Verified via `tests/test_v3_residuals.js` TEST 2 (exercising real registered handlers, positive file changes with failure titles, negative notes with varied titles, search, export, rewind, and restore) and `build.py --check`. Closed in `FINDING-V3-R02-INTERNAL-NOTE-PROJECTION` and `FINDING-APR-056-CONCEPT-WORK-NOTE-FILTER`.
 
 ### 3.3 Command Dispositions & Canonical Request/Result Schemas (APR-023, APR-024, APR-031) [RECONCILED — V3-R05]
 - **Issue Identified (`V3-R05`):**
@@ -86,7 +86,7 @@ Per the mandatory rules of `ACCEPTANCE.md`, verdicts are maintained across disti
   All 24 rows revalidated and bound to exact canonical request/result schemas:
   - `cmd.bsd.set`: bound to `BackSeatDriverModeSetRequest { scope_kind, scope_id, requested_mode: "Off"|"Auto"|"On", expected_policy_revision } -> BackSeatDriverModeSetResult`, handler `handlers::back_seat_driver::set_mode`.
   - `cmd.bsd.configure`: bound to `BSDPolicyUpdateRequest { trigger_sensitivity: "conservative"|"balanced"|"frequent", catch_up_seconds, cooldown_turns, retain_transcript, self_compact_threshold, expected_policy_revision } -> BSDPolicyUpdateResult`, handler `handlers::bsd::configure`.
-  - `cmd.runtime.quota_resume.set`: bound to canonical `QuotaResumeConsentRequest { scope_kind, scope_id, consent_granted, expected_quota_revision } -> QuotaResumeConsentResult`, handler `handlers::scheduling::quota_resume_set`.
+  - `cmd.runtime.quota_resume.set`: bound to canonical `QuotaResumeConsentRequest { run_id: string, provider_id: string, account_id: string, enabled: boolean, reset_truth: "provider_reported"|"locally_inferred"|"user_supplied"|"unknown", user_stop_epoch: integer } -> QuotaResumeConsentResult` (`Plans/Scheduling_and_Quota_Resume.md`), handler `handlers::scheduling::quota_resume_set`.
   - `cmd.bsd.workflow.configure`: bound to `BSDWorkflowBindingRequest { binding_id, workflow_kind, workflow_id, policy_revision, stage_bindings: { [stage_id]: "inherit"|"off"|"auto"|"on" }, requested_advisor_identity, expected_policy_revision } -> BSDWorkflowBindingResult`, handler `handlers::bsd::workflow_configure`.
   - `cmd.collaboration.configure`: bound to `CollaborationConfigureRequest` -> `CollaborationConfigureResult`.
   - `cmd.collaboration.start`: bound to `CollaborationStartRequest` -> `CollaborationStartResult` with idempotency key.
@@ -177,10 +177,10 @@ Every deliverable HTML artifact was verified to build deterministically from sou
    - Command: `python3 "Concepts/chat-assistant-concepts/5.6 Pro/build.py" --check`
    - Result: **PASS**
    - Generated files: `index.html` and `PM_Chat_Assistant_5.6_Pro_Standalone.html` (verified byte-identical)
-   - **Normalized Build Digest (LF in-memory UTF-8):** `33721cdf7d3a6d5366ef0b3fcc642e832aa14cd6887ff5787a40e1d446c087a0`
-   - **Raw File SHA256 (CRLF on disk):** `76f88689f6209cb06d06010672284225fea4b3c10c6f0cdb21817ddad3b968f6`
-   - **Git Blob ID:** `bce6fda60ebd23ca759d562da8514be53fb9b467`
-   - **File Size:** 2,815,569 bytes
+   - **Normalized Build Digest (LF in-memory UTF-8):** `afde28c3638df7bfab881c1668ddef34065f58686cce2edfa438743e08c2875a`
+   - **Raw File SHA256 (CRLF on disk):** `31b4d0d29516f5ae96a3b084bee9b8e1c3fdca0b8c8df707edad4dab180cebcc`
+   - **Git Blob ID:** `428b2c67aa8e4354ba59dfcdf8d5cc4607b167d6`
+   - **File Size:** 2,815,417 bytes
    - **Historical Baseline Provenance:**
      - Commit `16769b5` pre-repair Git blob: `c6e92e446c8acfb1cecb401f00d9d8efb1cfff73`
      - Commit `16769b5` pre-repair raw SHA256: `9b9f0e11e8c9bf87ea0ee15ca7d2c47613043dc58f8737bfd6b998c84a30f416`
