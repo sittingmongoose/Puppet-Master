@@ -22866,10 +22866,10 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 @media (max-height:820px){ .obx{ --obx-window-gap:12px; } }
 
 /* ---------- veil + window open/close choreography ---------- */
-.obx-veil{position:fixed;inset:0;background:rgba(8,11,16,.58);backdrop-filter:blur(7px) saturate(1.05);opacity:0;transition:opacity var(--obx-med) var(--obx-ease);}
+.obx-veil{position:fixed;inset:0;z-index:2147482900;background:rgba(8,11,16,.58);backdrop-filter:blur(7px) saturate(1.05);opacity:0;transition:opacity var(--obx-med) var(--obx-ease);}
 .obx[data-open="true"] .obx-veil{opacity:1;}
 .obx-window{
-  position:fixed;left:50%;top:50%;
+  position:fixed;left:50%;top:50%;z-index:2147482901;
   width:min(var(--obx-window-w),calc(100vw - var(--obx-window-gap) * 2));
   height:min(780px,100%);
   max-height:min(var(--obx-window-maxh),100% - var(--obx-window-gap) * 2);
@@ -22996,6 +22996,7 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 .obx-dots i.on{background:var(--obx-accent);transform:scale(1.15);}
 .obx-dots i.now{background:var(--obx-accent);box-shadow:0 0 0 3.5px var(--obx-accent-soft);}
 .obx-foot-note{font-size:11.5px;color:var(--obx-ink-faint);}
+.obx-quietbtn{font-size:11.5px;}
 
 /* resume pill */
 .obx-resume{position:fixed;right:22px;bottom:20px;z-index:2147483000;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--obx-line-strong);border-radius:999px;background:var(--obx-paper);color:var(--obx-ink);font:inherit;font-size:13px;font-weight:700;box-shadow:var(--obx-shadow-2);cursor:pointer;transition:transform var(--obx-fast) var(--obx-spring),box-shadow var(--obx-fast);}
@@ -71093,11 +71094,12 @@ policies for tenant isolation, and add migration script.</textarea>
     var h = '<div class="ob-backdrop ob-in" style="--i:0"></div>';
     h += '<div class="ob-ground ob-in" style="--i:1"></div><div class="ob-horizon ob-in" style="--i:1"></div>';
     h += '<div class="ob-node src ob-in bloom" style="--i:2"></div>';
+    h += '<div class="ob-node dst ob-in bloom" style="--i:3"></div>';
     h += '<div class="ob-arrow a1 ob-in" style="--i:4"></div>';
-    h += '<div class="ob-pack ob-in" style="--i:3"></div>';
-    h += '<div class="ob-arrow a2 ob-in" style="--i:5"></div>';
-    h += '<div class="ob-node run ob-in bloom" style="--i:4"></div>';
-    h += '<div class="ob-route ob-in draw" style="--i:6"></div>';
+    h += '<div class="ob-pack ob-in" style="--i:5"></div>';
+    h += '<div class="ob-arrow a2 ob-in" style="--i:6"></div>';
+    h += '<div class="ob-node run ob-in bloom" style="--i:5"></div>';
+    h += '<div class="ob-route ob-in draw" style="--i:7"></div>';
     h += '<div class="ob-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>';
     return h;
   };
@@ -71111,7 +71113,7 @@ policies for tenant isolation, and add migration script.</textarea>
     h += '<div class="ob-stamp">Ready</div>';
     h += '<i class="ob-paper" style="left:34%;top:38%;--px:-34px"></i><i class="ob-paper p2" style="left:47%;top:33%;--px:-90px"></i><i class="ob-paper p3" style="left:56%;top:40%;--px:60px"></i><i class="ob-paper p4" style="left:64%;top:34%;--px:110px"></i><i class="ob-paper p5" style="left:40%;top:44%;--px:-130px"></i>';
     h += '<div class="ob-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>';
-    if (go) h = h.replace('os-commit', 'os-commit go').replace('<div class="ob-lightcue">', '<div class="ob-lightcue on">');
+    if (go) h = h.replace('<div class="ob-lightcue">', '<div class="ob-lightcue on">');
     return h;
   };
 
@@ -71592,6 +71594,9 @@ policies for tenant isolation, and add migration script.</textarea>
   var T = window.PMX_OBX;
   var root, windowEl, content, titleEl, ledeEl, kickerEl, actEl, ctaEl, backEl, footMid, sceneEl, captionEl, progressEl, resumeBtn;
   var transitioning = false;
+  var prevFocus = null;
+  var workspaceLocked = false;
+  var hideTimer = 0;
 
   /* ---------------- boot ---------------- */
   function init() {
@@ -71612,10 +71617,16 @@ policies for tenant isolation, and add migration script.</textarea>
     progressEl = root.querySelector('#pmx-ob-progress');
     resumeBtn = document.getElementById('pm7-onboarding-resume');
 
-    readTheme();
     observeTheme();
     bindEvents();
-    load();
+    var hadPersist = false;
+    try { hadPersist = !!localStorage.getItem(T.PERSIST_KEY); } catch (e) {}
+    var loadedTheme = load();
+    var done = false;
+    try { done = !!localStorage.getItem('pm.glm.onboarding.done'); } catch (e) {}
+    if (!hadPersist && !done) seedThemeFromRoot();
+    else if (loadedTheme) applyMat();
+    else readTheme();
     if (!T.state.open && (T.state.wasOpen || shouldAutoOpen())) open({ screen: T.state.screen || 'welcome' });
     else if (!T.state.open) resumeBtn.hidden = !(T.state.screen && T.state.screen !== 'welcome' && !T.state.committed);
     exposeApi();
@@ -71624,10 +71635,20 @@ policies for tenant isolation, and add migration script.</textarea>
   function shouldAutoOpen() {
     try {
       if (localStorage.getItem('pm.glm.onboarding.done')) return false;
-      var seen = localStorage.getItem('pm.glm.onboarding.visited');
-      if (!seen) { localStorage.setItem('pm.glm.onboarding.visited', '1'); return true; }
-      return false;
+      if (localStorage.getItem('pm.glm.onboarding.visited')) return false;
+      return true;
     } catch (e) { return true; }
+  }
+  function markVisited() {
+    try { localStorage.setItem('pm.glm.onboarding.visited', '1'); } catch (e) {}
+  }
+
+  function seedThemeFromRoot() {
+    T.state.mat = (root && root.getAttribute('data-mat')) || 'friendly';
+    T.state.mode = (root && root.getAttribute('data-mode')) || 'dark';
+    T.state.theme_family = T.state.mat;
+    T.state.theme_mode = T.state.mode;
+    applyMat();
   }
 
   function readTheme() {
@@ -71644,7 +71665,10 @@ policies for tenant isolation, and add migration script.</textarea>
     root.setAttribute('data-mode', T.state.mode);
   }
   function observeTheme() {
-    var io = new MutationObserver(function () { readTheme(); });
+    var io = new MutationObserver(function () {
+      if (T.state.open && T.state.screen !== 'finish') return;
+      readTheme();
+    });
     io.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
@@ -71655,14 +71679,15 @@ policies for tenant isolation, and add migration script.</textarea>
         open: T.state.open,
         screen: T.state.screen, stack: T.state.stack, draft: T.state.draft,
         committed: T.state.committed, receipt: T.state.receipt,
-        providers: T.state.providers, free_models: T.state.free_models
+        providers: T.state.providers, free_models: T.state.free_models,
+        mat: T.state.mat, mode: T.state.mode
       }));
     } catch (e) {}
   }
   function load() {
     try {
       var raw = localStorage.getItem(T.PERSIST_KEY);
-      if (!raw) return;
+      if (!raw) return false;
       var p = JSON.parse(raw);
       if (p.draft) T.state.draft = Object.assign(T.state.draft, p.draft);
       T.state.screen = p.screen || 'welcome';
@@ -71672,7 +71697,11 @@ policies for tenant isolation, and add migration script.</textarea>
       T.state.receipt = p.receipt || null;
       T.state.providers = p.providers || {};
       T.state.free_models = !!p.free_models;
-    } catch (e) {}
+      var loadedTheme = false;
+      if (p.mat) { T.state.mat = p.mat; T.state.theme_family = p.mat; loadedTheme = true; }
+      if (p.mode) { T.state.mode = p.mode; T.state.theme_mode = p.mode; loadedTheme = true; }
+      return loadedTheme;
+    } catch (e) { return false; }
   }
 
   /* ---------------- render ---------------- */
@@ -71696,6 +71725,7 @@ policies for tenant isolation, and add migration script.</textarea>
     /* head + content with step transition */
     var doSwap = function () {
       kickerEl.textContent = cp.kicker;
+      if (ledeEl) ledeEl.textContent = cp.lede || '';
       titleEl.innerHTML = T.esc(cp.title).replace(/\n/g, '<br>').split(/(<br>)/).map(function (part) {
         if (part === '<br>') return part;
         return part.split(' ').filter(Boolean).map(function (w, i) {
@@ -71712,7 +71742,7 @@ policies for tenant isolation, and add migration script.</textarea>
         ctaEl.style.display = spec.cta === null ? 'none' : '';
       }
       if (backEl) backEl.style.visibility = spec.hideBack ? 'hidden' : '';
-      if (footMid) footMid.innerHTML = spec.footMid || dots(name);
+      if (footMid) footMid.innerHTML = footMidHtml(name, spec);
       if (spec.mount) spec.mount(content);
       root.setAttribute('data-screen', name);
       swapScene(name, opts);
@@ -71734,22 +71764,35 @@ policies for tenant isolation, and add migration script.</textarea>
       return '<i class="' + (i < cur ? 'on' : i === cur ? 'now' : '') + '"></i>';
     }).join('') + '</div>';
   }
+  function footMidHtml(name, spec) {
+    var html = spec.footMid || dots(name);
+    if (spec.quiet) {
+      html += '<button type="button" class="obx-ghostbtn obx-quietbtn" data-ob-quiet="1">'
+        + T.esc(spec.quiet) + '</button>';
+    }
+    return html;
+  }
 
   /* scene swap with mid-hold so art reads before the change */
   var sceneSwapTimer = 0;
+  function setSceneShell(kind, opts) {
+    opts = opts || {};
+    sceneEl.className = 'obx-scene os-' + kind;
+    sceneEl.setAttribute('data-scene', kind);
+    if (kind === 'finish') sceneEl.setAttribute('data-phase', opts.phase || T.state.finish_phase || 'a');
+    else sceneEl.removeAttribute('data-phase');
+    if (kind === 'commit' && (opts.commitGo || T.state.committed)) sceneEl.classList.add('go');
+  }
   function swapScene(name, opts) {
     clearTimeout(sceneSwapTimer);
     var art = artFor(name);
     var caption = T.CAPTIONS[name] || '';
     var apply = function () {
+      var kind = sceneKind(name);
       sceneEl.innerHTML = art;
-      sceneEl.setAttribute('data-scene', sceneKind(name));
+      setSceneShell(kind, { commitGo: !!(opts && opts.commitGo) });
       captionEl.textContent = caption;
       captionEl.classList.add('on');
-      if (name === 'preparing' && opts.commitGo) {
-        var sc = sceneEl.querySelector('.os-commit');
-        if (sc) sc.classList.add('go');
-      }
     };
     if (sceneEl.childElementCount && !opts.instant) {
       sceneEl.classList.add('swap-out');
@@ -71814,9 +71857,55 @@ policies for tenant isolation, and add migration script.</textarea>
   }
 
   /* ---------------- open/close ---------------- */
+  function lockWorkspace() {
+    document.documentElement.setAttribute('data-pmx-onboarding-open', 'true');
+    var shell = document.querySelector('.app-shell');
+    if (shell) shell.inert = true;
+    if (!workspaceLocked) prevFocus = document.activeElement;
+    workspaceLocked = true;
+    requestAnimationFrame(function () {
+      var closeBtn = root.querySelector('.obx-iconbtn[data-ui-action-id="ui.onboarding.close"]');
+      var target = (ctaEl && ctaEl.style.display !== 'none') ? ctaEl : closeBtn;
+      try { if (target) target.focus({ preventScroll: true }); } catch (e) {}
+    });
+  }
+  function unlockWorkspace() {
+    document.documentElement.removeAttribute('data-pmx-onboarding-open');
+    var shell = document.querySelector('.app-shell');
+    if (shell) shell.inert = false;
+    workspaceLocked = false;
+    if (prevFocus && typeof prevFocus.focus === 'function') {
+      try { prevFocus.focus({ preventScroll: true }); } catch (e) {}
+    }
+    prevFocus = null;
+  }
+  function resetSessionState() {
+    T.state.open = false;
+    T.state.screen = 'welcome';
+    T.state.stack = [];
+    T.state.moreOpen = false;
+    T.state.keep_more = true;
+    T.state.finish_phase = 'a';
+    T.state.draft = {
+      where: null, kind: null, name: '', slug: '', location: '',
+      existing_source: null, restore: null, like: 'fresh', like_project: null,
+      safety: 'on', online: null, nas: null, power: null
+    };
+    T.state.detected_providers = null;
+    T.state.providers = {};
+    T.state.free_models = false;
+    T.state.committed = false;
+    T.state.receipt = null;
+    T.state.started_at = null;
+    T.state.finished_at = null;
+    T.state.wasOpen = false;
+  }
   function open(opts) {
     opts = opts || {};
     T.state.open = true;
+    markVisited();
+    clearTimeout(hideTimer);
+    lockWorkspace();
     root.hidden = false;
     resumeBtn.hidden = true;
     requestAnimationFrame(function () {
@@ -71828,10 +71917,14 @@ policies for tenant isolation, and add migration script.</textarea>
   function close(kind) {
     T.state.open = false;
     root.setAttribute('data-open', 'false');
-    setTimeout(function () { root.hidden = true; }, 360);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () { root.hidden = true; }, 360);
     save();
-    if (kind !== 'silent' && T.state.screen !== 'welcome' && !T.state.committed) resumeBtn.hidden = false;
-    toast(kind === 'skip' ? 'Setup skipped — resume anytime' : 'Setup saved — resume anytime');
+    unlockWorkspace();
+    if (kind !== 'silent') {
+      if (T.state.screen !== 'welcome' && !T.state.committed) resumeBtn.hidden = false;
+      toast(kind === 'skip' ? 'Setup skipped — resume anytime' : 'Setup saved — resume anytime');
+    }
   }
 
   /* ---------------- toast ---------------- */
@@ -71904,7 +71997,7 @@ policies for tenant isolation, and add migration script.</textarea>
         slot.innerHTML = '<div class="obx-receipt">' + T.icon('check')
           + '<span><b>Project created.</b> Receipt <code>' + T.state.receipt.id + '</code> · ' + T.esc(T.state.receipt.path) + '</span></div>';
       }
-      var sc = sceneEl.querySelector('.os-commit');
+      var sc = sceneEl;
       if (sc) sc.classList.add('go');
       ctaEl.setAttribute('aria-disabled', 'false'); ctaEl.removeAttribute('data-pm-hover-was-disabled');
       ctaEl.textContent = 'Continue';
@@ -72045,13 +72138,17 @@ policies for tenant isolation, and add migration script.</textarea>
     var stage = root.querySelector('.obx-stage');
     var shimmer = windowEl.querySelector('.obx-shimmer');
     var reducedMotion = document.documentElement.getAttribute('data-motion') === 'reduced' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-    if (reducedMotion) { sceneEl.innerHTML = T.artFinish(fam, T.state.finish_phase).html; return; }
+    if (reducedMotion) {
+      sceneEl.innerHTML = T.artFinish(fam, T.state.finish_phase).html;
+      setSceneShell('finish', { phase: T.state.finish_phase });
+      return;
+    }
     root.classList.add('restyling');
     if (stage) stage.classList.add('blink');
     if (shimmer) { windowEl.classList.remove('restyle'); void shimmer.offsetWidth; windowEl.classList.add('restyle'); }
     setTimeout(function () {
       sceneEl.innerHTML = T.artFinish(fam, T.state.finish_phase).html;
-      sceneEl.setAttribute('data-scene', 'finish');
+      setSceneShell('finish', { phase: T.state.finish_phase });
     }, 200);
     setTimeout(function () { if (stage) stage.classList.remove('blink'); windowEl.classList.remove('restyle'); root.classList.remove('restyling'); }, 820);
   }
@@ -72060,7 +72157,10 @@ policies for tenant isolation, and add migration script.</textarea>
     try { localStorage.setItem('pm.glm.onboarding.done', '1'); } catch (e) {}
     T.state.open = false;
     root.setAttribute('data-open', 'false');
-    setTimeout(function () { root.hidden = true; }, 360);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () { root.hidden = true; }, 360);
+    save();
+    unlockWorkspace();
     if (kind === 'wizard') {
       try { window.PM_PAGES && window.PM_PAGES.go('wizard'); } catch (e) {}
       toast('Planning Wizard is ready when you are');
@@ -72077,9 +72177,15 @@ policies for tenant isolation, and add migration script.</textarea>
   /* ---------------- events ---------------- */
   function bindEvents() {
     root.addEventListener('click', function (ev) {
-      var el = ev.target.closest ? ev.target.closest('[data-choice],[data-action],[data-edit],[data-transport],[data-forge],[data-provider],[data-theme],[data-mode-btn],[data-finish],[data-sheet]') : null;
+      var el = ev.target.closest ? ev.target.closest('[data-choice],[data-action],[data-edit],[data-transport],[data-forge],[data-provider],[data-theme],[data-mode-btn],[data-finish],[data-sheet],[data-ob-quiet]') : null;
       if (!el) return;
       var d = T.state.draft;
+
+      if (el.hasAttribute('data-ob-quiet')) {
+        if (T.state.screen === 'power') nav('free_models');
+        else if (T.state.screen === 'free_models') nav('finish');
+        return;
+      }
 
       if (el.hasAttribute('data-sheet')) {
         var sheet = el.closest('#pmx-sheet');
@@ -72098,6 +72204,7 @@ policies for tenant isolation, and add migration script.</textarea>
         T.state.finish_phase = String.fromCharCode(97 + Math.floor(Math.random() * 4));
         var fin = T.artFinish(fam, T.state.finish_phase);
         sceneEl.innerHTML = fin.html;
+        setSceneShell('finish', { phase: T.state.finish_phase });
         return;
       }
       if (el.hasAttribute('data-mode-btn')) {
@@ -72145,14 +72252,33 @@ policies for tenant isolation, and add migration script.</textarea>
     ctaEl.addEventListener('click', function () { advance(); });
     backEl.addEventListener('click', function () { back(); });
     var skipBtn = root.querySelector('[data-ui-action-id="ui.onboarding.skip"]');
-    var closeBtn = root.querySelector('[data-ui-action-id="ui.onboarding.close"]');
+    var veilEl = root.querySelector('.obx-veil');
+    var headerCloseBtn = root.querySelector('.obx-iconbtn[data-ui-action-id="ui.onboarding.close"]');
     if (skipBtn) skipBtn.addEventListener('click', function () { close('skip'); });
-    if (closeBtn) closeBtn.addEventListener('click', function () { close('defer'); });
+    if (veilEl) veilEl.addEventListener('click', function () { close('defer'); });
+    if (headerCloseBtn) headerCloseBtn.addEventListener('click', function () { close('defer'); });
     if (resumeBtn) resumeBtn.addEventListener('click', function () { open({ screen: T.state.screen }); });
 
     document.addEventListener('keydown', function (ev) {
       if (!T.state.open) return;
       if (ev.key === 'Escape') { close('defer'); return; }
+      if (ev.key === 'Tab') {
+        var focusables = Array.from(windowEl.querySelectorAll(
+          'button:not([disabled]):not([hidden]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )).filter(function (n) {
+          if (n.getAttribute('aria-hidden') === 'true') return false;
+          if (n.style && n.style.display === 'none') return false;
+          if (n.style && n.style.visibility === 'hidden') return false;
+          return n.offsetParent !== null || n.getClientRects().length > 0;
+        });
+        if (!focusables.length) { ev.preventDefault(); return; }
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+        else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+        else if (!windowEl.contains(document.activeElement)) { ev.preventDefault(); first.focus(); }
+        return;
+      }
       if (ev.key === 'Enter' && (ev.target.tagName === 'INPUT' || ev.target.tagName === 'SELECT')) {
         if (ctaEl.getAttribute('aria-disabled') !== 'true') { ev.preventDefault(); advance(); }
         return;
@@ -72259,8 +72385,11 @@ policies for tenant isolation, and add migration script.</textarea>
       back: function () { back(); return snapshot(); },
       resume: function () { open({ screen: T.state.screen }); return snapshot(); },
       replay: function (o) {
-        try { localStorage.removeItem('pm.glm.onboarding.done'); } catch (e) {}
-        T.state.stack = [];
+        try {
+          localStorage.removeItem('pm.glm.onboarding.done');
+          localStorage.removeItem(T.PERSIST_KEY);
+        } catch (e) {}
+        resetSessionState();
         open({ screen: 'welcome' });
         return snapshot();
       },
@@ -72542,7 +72671,7 @@ policies for tenant isolation, and add migration script.</textarea>
   function attr(el,name){return clean(el&&el.getAttribute&&el.getAttribute(name));}
   function setAttrIfChanged(el,name,value){value=String(value);if(el.getAttribute(name)!==value)el.setAttribute(name,value);}
   function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID));}
-  function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
+  function activeOverlay(){var tour=document.getElementById('pmx-tour'),onboarding=document.getElementById('pmx-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
   function overlayAllows(el){var overlay=activeOverlay();return !overlay||!!(el&&overlay.contains(el));}
   function activeSurface(payload){
     var overlay=activeOverlay();if(overlay)return overlay;

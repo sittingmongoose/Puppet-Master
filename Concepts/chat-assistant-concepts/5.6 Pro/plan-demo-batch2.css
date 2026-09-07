@@ -1,0 +1,15 @@
+/* Narrow, neutral rows; no left-edge highlights and no working-style changes. */
+.plan-schedule-line{display:flex;gap:10px;align-items:center;padding:10px 0;margin-bottom:10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);min-width:0;}
+.plan-schedule-line>span{flex:1;min-width:0;}
+.plan-schedule-line strong{display:block;font-size:12px;font-weight:550;color:var(--text);}
+.plan-schedule-line small{display:block;margin-top:4px;font-size:11px;overflow-wrap:anywhere;}
+.plan-schedule-line>button{flex:none;}
+.sched-dialog>.schedule-demo-guide{margin:0 18px 12px;padding-top:10px;}
+.schedule-demo-guide .plan-demo-controls{flex-wrap:wrap;}
+
+.sched-dialog--focused{height:auto;width:min(680px,calc(100vw - 24px));}
+.sched-dialog--focused>.schedule-overview,.sched-dialog--focused>.sched-tabs{display:none;}
+.sched-dialog--focused .schedule-list-section>h3{display:none;}
+.sched-dialog--focused>.dialog-body{padding-top:10px;}
+
+.editor-content>.schedule-demo-guide,.editor-body>.schedule-demo-guide{margin:12px 20px;padding:10px 0;}

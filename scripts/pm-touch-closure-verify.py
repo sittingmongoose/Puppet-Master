@@ -482,6 +482,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     exact_guided_local_actions = {
         "ui.guided_tour.start",
         "ui.guided_tour.next",
+        "ui.guided_tour.show_me",
         "ui.guided_tour.back",
         "ui.guided_tour.pause",
         "ui.guided_tour.resume",
@@ -493,7 +494,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     }
     if guided_local_actions != exact_guided_local_actions:
         raise ValueError(
-            "Guided Tour exact ten-action inventory drift: missing=%s extra=%s"
+            "Guided Tour exact eleven-action inventory drift: missing=%s extra=%s"
             % (
                 sorted(exact_guided_local_actions - guided_local_actions),
                 sorted(guided_local_actions - exact_guided_local_actions),
@@ -605,6 +606,20 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
             f"source_missing={sorted(guided_local_actions - effective_guided_local_actions)}"
         )
     add("TCP-GUIDED-NAV", "ui_action", {guided_focus_action})
+    # Reuse domain owners, not the predecessor concept-local Chat spellings.
+    # This closed projection admits only these three already catalogued routes;
+    # it must not turn the entire ambient catalog into a new Touch denominator.
+    guided_domain_actions = {
+        "TCP-TOUR-PERSONA": {"cmd.persona.select"},
+        "TCP-TOUR-CHAT": {"cmd.chat.send", "cmd.chat.eli5.set"},
+    }
+    catalog_tokens = tokens(read("Plans/UI_Command_Catalog.md"))
+    for profile, actions in guided_domain_actions.items():
+        if not actions <= catalog_tokens:
+            raise ValueError(f"Guided Tour domain routes absent from canonical catalog: {sorted(actions - catalog_tokens)}")
+        if not actions <= effective_guided_actions:
+            inventory_failures.append(f"Guided Tour reused domain routes missing from effective source: {sorted(actions - effective_guided_actions)}")
+        add(profile, "command", actions)
     add("TCP-PANEL", "command", {"cmd.panel.switch", "cmd.panel.undock", "cmd.panel.redock"})
     add("TCP-WIDGET", "command", {"cmd.widget.add", "cmd.widget.remove", "cmd.widget.configure"})
     add("TCP-WIDGET-MOTION", "command", {"cmd.widget.move", "cmd.widget.resize"})
@@ -1414,9 +1429,12 @@ def verify() -> tuple[list[str], dict[str, Any]]:
 # catalog.bsd_set because the shared-runtime command contract requires exactly
 # one production row per governed command. A pin is only useful while it is moved
     # for a stated reason; do not raise it to make an unexplained diff pass.
+    # 2026-09-07: +4 rows (Show Me and three reused domain commands),
+    # +2 owner profiles (Personas and Assistant Chat). No new production wiring,
+    # aliases, exclusions, native handlers, or closure promotion is admitted.
     exact_resolved_denominators = {
-        "row_count": 602,
-        "profile_count": 91,
+        "row_count": 606,
+        "profile_count": 93,
         "excluded_token_count": 58,
         "alias_binding_count": 64,
         "production_wiring_entry_count": 1154,

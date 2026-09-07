@@ -144,7 +144,7 @@
     // exit old
     var olds = U.$$('.pmf-screen', screensEl);
     olds.forEach(function (o) { o.setAttribute('data-phase', 'exit'); o.setAttribute('data-dir', dir === 'back' ? 'back' : 'fwd'); o.setAttribute('aria-hidden', 'true'); });
-    var exitMs = U.reduced() ? 60 : (olds.length ? 100 * U.timeScale() : 0);
+    var exitMs = U.reduced() ? 60 : (olds.length ? (280 * U.timeScale()) : 0);
     setTimeout(function () {
       if (token !== navToken) return;
       olds.forEach(function (o) { o.remove(); });

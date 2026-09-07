@@ -24160,7 +24160,7 @@ html[data-motion="reduced"] .pm7ob *::after {
         var fChat = document.getElementById('floatingChat');
         if (fChat) fChat.classList.remove('is-minimized', 'minimized');
         var chatPanel = document.getElementById('chatPanel');
-        if (chatPanel) chatPanel.style.display = 'flex';
+        if (chatPanel) { chatPanel.classList.remove('hidden'); chatPanel.style.display = 'flex'; }
         done();
       }
     },
@@ -24207,7 +24207,7 @@ html[data-motion="reduced"] .pm7ob *::after {
       chapter: 'Chapter 2 of 3: Workspace Layout',
       title: 'Project Overview Widget',
       instruction: 'Widgets keep important project information in view. Let us add the Project Overview widget.',
-      targetSelector: '.pm6-cozy-shelf, .pm6-dash-widget, #dash-widgets',
+      targetSelector: '.pm6-dash-widget, .dashboard-grid, .bento-card, .pm6-cozy-shelf, #dash-widgets',
       actionPrompt: 'Glance at your project widget while planning',
       autoAction: function(done) {
         done();
@@ -24309,12 +24309,33 @@ html[data-motion="reduced"] .pm7ob *::after {
     state.currentStepIndex = 0;
     state.eli5Active = false;
     state.isDemonstrating = false;
+    state.teacherAnswerStreamed = false;
     getRoot().hidden = false;
     getRoot().setAttribute('data-open', 'true');
     var rBtn = getResumeBtn(); if (rBtn) rBtn.hidden = true;
+    var repBtn = getReplayBtn(); if (repBtn) repBtn.hidden = true;
     if (window.PM7_SOUND) window.PM7_SOUND.whoosh();
     renderStep();
     notify();
+  }
+
+  function resumeTour() {
+    if (!state.open) {
+      getRoot().hidden = false;
+      getRoot().setAttribute('data-open', 'true');
+      state.open = true;
+    }
+    var rBtn = getResumeBtn(); if (rBtn) rBtn.hidden = true;
+    renderStep();
+    notify();
+  }
+
+  function replayTour() {
+    state.currentStepIndex = 0;
+    state.eli5Active = false;
+    state.isDemonstrating = false;
+    state.teacherAnswerStreamed = false;
+    start();
   }
 
   function skip() {
@@ -24682,7 +24703,7 @@ html[data-motion="reduced"] .pm7ob *::after {
   }
 
   function streamTeacherAnswer(done) {
-    var chatMessages = document.querySelector('.pm6-chat-thread, #chatMessages, .chat-thread');
+    var chatMessages = document.querySelector('#chatPanel .messageStream, #floatingChat .messageStream, .messageStream, #chatMessages, .chat-thread');
     var I = window.PM7_ICONS || {};
     if (chatMessages) {
       var msg = document.createElement('div');
@@ -24806,6 +24827,8 @@ html[data-motion="reduced"] .pm7ob *::after {
   window.PM7_GUIDED_TOUR = {
     snapshot: snapshot,
     start: start,
+    resume: resumeTour,
+    replay: replayTour,
     skip: skip,
     nextStep: nextStep,
     prevStep: prevStep,
@@ -71054,7 +71077,7 @@ policies for tenant isolation, and add migration script.</textarea>
 })();
 </script>
 <!-- PM7 Product Onboarding: Newbie-First Cinematic Guided Setup -->
-<div id="pm7-onboarding" class="pm7ob" data-open="true"></div>
+<div id="pm7-onboarding" class="pm7ob" data-open="false" hidden></div>
 <button type="button" id="pm7-onboarding-resume" class="pm7ob-btn-primary" style="position:fixed; bottom:24px; right:24px; z-index:99980;" hidden onclick="window.PM7_ONBOARDING_CINEMATIC.open()">Resume Setup</button>
 <script id="pm7-icons-js">
 /* PM7 Vector SVG Icons Engine: 100% SVG, Zero Emojis */
@@ -71517,7 +71540,9 @@ policies for tenant isolation, and add migration script.</textarea>
   var STORAGE_KEY = 'pm7_onboarding_state_v3';
 
   var state = {
-    open: true,
+    open: false,
+    completed: false,
+    deferred: false,
     screen: 'welcome',
     motion: 'forward',
     history: [],
@@ -71642,6 +71667,9 @@ policies for tenant isolation, and add migration script.</textarea>
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         screen: state.screen,
+        open: state.open,
+        completed: state.completed,
+        deferred: state.deferred,
         draft: state.draft,
         soundEnabled: soundEnabled
       }));
@@ -71654,6 +71682,10 @@ policies for tenant isolation, and add migration script.</textarea>
       if (raw) {
         var saved = JSON.parse(raw);
         if (saved.draft) state.draft = Object.assign(state.draft, saved.draft);
+        if (saved.screen) state.screen = saved.screen;
+        if (typeof saved.open === 'boolean') state.open = saved.open;
+        if (typeof saved.completed === 'boolean') state.completed = saved.completed;
+        if (typeof saved.deferred === 'boolean') state.deferred = saved.deferred;
         if (typeof saved.soundEnabled === 'boolean') soundEnabled = saved.soundEnabled;
       }
     } catch(e) {}
@@ -71728,8 +71760,13 @@ policies for tenant isolation, and add migration script.</textarea>
     state.open = false;
     root.hidden = true;
     root.setAttribute('data-open', 'false');
-    if (reason === 'defer' && resumeBtn) {
-      resumeBtn.hidden = false;
+    if (reason === 'complete' || reason === 'skip') {
+      state.completed = true;
+      state.deferred = false;
+      if (resumeBtn) resumeBtn.hidden = true;
+    } else if (reason === 'defer') {
+      state.deferred = true;
+      if (resumeBtn) resumeBtn.hidden = false;
     }
     notify();
   }
@@ -71789,7 +71826,7 @@ policies for tenant isolation, and add migration script.</textarea>
           { id: 'new_server', title: 'Set up another server', desc: 'Configure a dedicated remote machine, headless cloud box, or home server.', icon: (I.server ? I.server('pm7-icon-lg') : '') }
         ];
         return '<div class="pm7ob-art-stage">' + (art.host ? art.host(family, isLight) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 1 OF 6 · WORK COMPUTER</div>' +
+          '<div class="pm7ob-eyebrow">STEP 2 OF 9 · WORK COMPUTER</div>' +
           '<h1 class="pm7ob-title">Where will Puppet Master work?</h1>' +
           '<p class="pm7ob-copy">Puppet Master coordinates your projects and runs tools. Choose which computer handles the heavy lifting.</p>' +
           '<div class="pm7ob-grid">' +
@@ -71837,7 +71874,7 @@ policies for tenant isolation, and add migration script.</textarea>
           { id: 'restore', title: 'Restore a Project backup', desc: 'Recover a project archive or snapshot from previous backup.', icon: (I.box ? I.box('pm7-icon-lg') : '') }
         ];
         return '<div class="pm7ob-art-stage">' + (art.project_draft ? art.project_draft(family, isLight, d.projectName) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 2 OF 6 · PROJECT START</div>' +
+          '<div class="pm7ob-eyebrow">STEP 3 OF 9 · PROJECT START</div>' +
           '<h1 class="pm7ob-title">How should your Project begin?</h1>' +
           '<p class="pm7ob-copy">A Project keeps your files, plans, and preferences organized in one place. Tell us how you would like to start.</p>' +
           '<div class="pm7ob-grid">' +
@@ -71881,7 +71918,7 @@ policies for tenant isolation, and add migration script.</textarea>
         }
 
         return '<div class="pm7ob-art-stage">' + (art.project_draft ? art.project_draft(family, isLight, d.projectName) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 3 OF 6 · NAME & LOCATION</div>' +
+          '<div class="pm7ob-eyebrow">STEP 4 OF 9 · NAME & LOCATION</div>' +
           '<h1 class="pm7ob-title">Give your Project a name.</h1>' +
           '<p class="pm7ob-copy">Puppet Master uses this name to keep your workspace tidy. You can rename it anytime.</p>' +
           intentHtml +
@@ -71906,7 +71943,7 @@ policies for tenant isolation, and add migration script.</textarea>
 
       case 'settings_copy':
         return '<div class="pm7ob-art-stage">' + (art.project_draft ? art.project_draft(family, isLight, d.projectName) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 4 OF 6 · PREFERENCES BLUEPRINT</div>' +
+          '<div class="pm7ob-eyebrow">STEP 5 OF 9 · PREFERENCES BLUEPRINT</div>' +
           '<h1 class="pm7ob-title">Copy settings from your existing projects?</h1>' +
           '<p class="pm7ob-copy">Puppet Master can inherit coding preferences, linters, rules, and AI styling from another project so you don\'t have to reconfigure from scratch.</p>' +
           '<div class="pm7ob-grid">' +
@@ -71942,7 +71979,7 @@ policies for tenant isolation, and add migration script.</textarea>
 
       case 'storage_source':
         return '<div class="pm7ob-art-stage">' + (d.storageType === 'nas' && art.ssh_automate ? art.ssh_automate(family, isLight) : art.project_draft ? art.project_draft(family, isLight, d.projectName) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 5 OF 6 · STORAGE & SOURCE CONTROL</div>' +
+          '<div class="pm7ob-eyebrow">STEP 6 OF 9 · STORAGE & SOURCE CONTROL</div>' +
           '<h1 class="pm7ob-title">Where should files and version history live?</h1>' +
           '<p class="pm7ob-copy">You can keep files locally or on a home NAS server with automatic zero-config SSH connection.</p>' +
           '<div class="pm7ob-grid">' +
@@ -72043,7 +72080,7 @@ policies for tenant isolation, and add migration script.</textarea>
         var hostStatusText = d.hostChoice === 'paired_device' ? '● Mesh Paired' : '● Daemon 0.4ms';
 
         return '<div class="pm7ob-art-stage">' + (art.project_draft ? art.project_draft(family, isLight, d.projectName) : '') + '</div>' +
-          '<div class="pm7ob-eyebrow">STEP 6 OF 6 · FINAL REVIEW & BLUEPRINT</div>' +
+          '<div class="pm7ob-eyebrow">STEP 7 OF 9 · FINAL REVIEW & BLUEPRINT</div>' +
           '<h1 class="pm7ob-title">Review before Puppet Master begins.</h1>' +
           '<p class="pm7ob-copy">Everything remains a safe draft until you click Create Project below. Click any node to adjust.</p>' +
           '<div class="pm7ob-schematic">' +
@@ -72170,7 +72207,7 @@ policies for tenant isolation, and add migration script.</textarea>
 
   function renderFooter() {
     var s = state.screen;
-    var screens = ['welcome', 'host', 'project_intent', 'project_draft', 'settings_copy', 'storage_source', 'review_commit', 'ai_provider', 'ready_handoff'];
+    var screens = ['welcome', 'host', 'connect_device', 'project_intent', 'project_draft', 'settings_copy', 'storage_source', 'review_commit', 'ai_provider', 'ready_handoff'];
     var idx = screens.indexOf(s);
     if (idx < 0) idx = 0;
 
@@ -72275,17 +72312,15 @@ policies for tenant isolation, and add migration script.</textarea>
     });
   }
 
-  function render() {
-    root.setAttribute('data-motion', state.motion);
-    var I = window.PM7_ICONS || {};
-    var html = '<section class="pm7ob-window" role="dialog" aria-modal="true" tabindex="-1">' +
+  var agyShellReady = false;
+  function ensureAgyShell() {
+    if (agyShellReady) return;
+    root.innerHTML = '<section class="pm7ob-window" role="dialog" aria-modal="true" tabindex="-1">' +
       '<div class="pm7ob-ambient"></div>' +
       '<header class="pm7ob-chrome">' +
         '<div class="pm7ob-brand"><span class="pm7ob-mark">PM</span><span>Welcome to Puppet Master</span></div>' +
         '<div class="pm7ob-chrome-actions">' +
-          '<button type="button" class="pm7-sound-btn ' + (soundEnabled ? '' : 'is-muted') + '" data-action="toggle-sound" title="Toggle Sound Effects (M)">' +
-            '<span style="display:inline-flex; align-items:center; gap:6px;">' + (soundEnabled ? (I.volume ? I.volume() : '') + ' Sound On' : (I.volumeMute ? I.volumeMute() : '') + ' Muted') + '</span>' +
-          '</button>' +
+          '<button type="button" class="pm7-sound-btn" data-action="toggle-sound" title="Toggle Sound Effects (M)"><span class="pm7-sound-label">Sound</span></button>' +
           '<button type="button" class="pm7ob-text-action" data-action="close" data-value="defer">Do this later</button>' +
           '<button type="button" class="pm7ob-text-action" data-action="close" data-value="skip">Skip setup</button>' +
           '<button type="button" class="pm7ob-icon-action" data-action="close" data-value="close" aria-label="Close">' +
@@ -72293,17 +72328,28 @@ policies for tenant isolation, and add migration script.</textarea>
           '</button>' +
         '</div>' +
       '</header>' +
-      '<div class="pm7ob-stage">' +
-        '<article class="pm7ob-layer ' + (state.motion === 'backward' ? 'is-reverse' : '') + '">' +
-          renderScreenContent() +
-        '</article>' +
-      '</div>' +
-      renderFooter() +
-      renderAuthSheet() +
+      '<div class="pm7ob-stage"><article class="pm7ob-layer"></article></div>' +
+      '<div class="pm7ob-tail"></div>' +
     '</section>';
-
-    root.innerHTML = html;
+    agyShellReady = true;
+  }
+  function render() {
+    ensureAgyShell();
+    root.setAttribute('data-motion', state.motion);
+    var I = window.PM7_ICONS || {};
+    var layer = root.querySelector('.pm7ob-layer');
+    if (layer) {
+      layer.className = 'pm7ob-layer ' + (state.motion === 'backward' ? 'is-reverse' : '');
+      layer.innerHTML = renderScreenContent();
+    }
+    var tail = root.querySelector('.pm7ob-tail');
+    if (tail) tail.innerHTML = renderFooter() + renderAuthSheet();
     attachCardTiltEffects();
+    var soundBtn = root.querySelector('.pm7-sound-btn');
+    if (soundBtn) {
+      soundBtn.className = 'pm7-sound-btn ' + (soundEnabled ? '' : 'is-muted');
+      soundBtn.innerHTML = '<span style="display:inline-flex; align-items:center; gap:6px;">' + (soundEnabled ? (I.volume ? I.volume() : '') + ' Sound On' : (I.volumeMute ? I.volumeMute() : '') + ' Muted') + '</span>';
+    }
 
     // Attach dynamic live input handler for project draft
     var inp = document.getElementById('pm7ob-proj-name-input');
@@ -72529,7 +72575,7 @@ policies for tenant isolation, and add migration script.</textarea>
     } else if (state.open) {
       if (e.key === 'ArrowRight' || e.key === 'Enter') {
         if (state.commitState !== 'running' && !state.activeAuthSheet) {
-          var screens = ['welcome', 'host', 'project_intent', 'project_draft', 'settings_copy', 'storage_source', 'review_commit', 'ai_provider', 'ready_handoff'];
+          var screens = ['welcome', 'host', 'connect_device', 'project_intent', 'project_draft', 'settings_copy', 'storage_source', 'review_commit', 'ai_provider', 'ready_handoff'];
           var idx = screens.indexOf(state.screen);
           if (state.screen === 'review_commit') {
             executeCommit();
@@ -72558,6 +72604,24 @@ policies for tenant isolation, and add migration script.</textarea>
   });
 
   loadState();
+  if (state.completed) {
+    state.open = false;
+    root.hidden = true;
+    root.setAttribute('data-open', 'false');
+    if (resumeBtn) resumeBtn.hidden = true;
+  } else if (state.deferred) {
+    state.open = false;
+    root.hidden = true;
+    root.setAttribute('data-open', 'false');
+    if (resumeBtn) resumeBtn.hidden = false;
+  } else if (state.open) {
+    root.hidden = false;
+    root.setAttribute('data-open', 'true');
+    render();
+  } else {
+    root.hidden = true;
+    root.setAttribute('data-open', 'false');
+  }
 
   window.PM7_ONBOARDING_CINEMATIC = {
     snapshot: snapshot,
@@ -72583,7 +72647,7 @@ policies for tenant isolation, and add migration script.</textarea>
     }
   };
 
-  render();
+  if (state.open && !state.completed) render();
 })(window);
 
 </script>
@@ -72593,8 +72657,8 @@ policies for tenant isolation, and add migration script.</textarea>
   <div class="pm7gt-halo"></div>
   <section class="pm7gt-callout"></section>
 </div>
-<button type="button" id="pm7-guided-tour-resume" class="pm7gt-return" hidden onclick="window.PM7_GUIDED_TOUR.start()">Resume Guided Tour</button>
-<button type="button" id="pm7-guided-tour-replay" class="pm7gt-return pm7gt-replay" hidden onclick="window.PM7_GUIDED_TOUR.start()">Replay Guided Tour</button>
+<button type="button" id="pm7-guided-tour-resume" class="pm7gt-return" hidden onclick="window.PM7_GUIDED_TOUR.resume()">Resume Guided Tour</button>
+<button type="button" id="pm7-guided-tour-replay" class="pm7gt-return pm7gt-replay" hidden onclick="window.PM7_GUIDED_TOUR.replay()">Replay Guided Tour</button>
 
 <script id="pm7-t46-systems-js">
 /* PM7 T46: operational systems integration and K3 host adaptation */

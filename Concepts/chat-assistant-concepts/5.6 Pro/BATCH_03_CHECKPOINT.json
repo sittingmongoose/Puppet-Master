@@ -1,0 +1,277 @@
+{
+  "batch_id": "assistant-demo-b03-review",
+  "status": "BOUNDED_FUNCTIONAL_PASS_RECORDINGS_REVIEWED_WITH_CADENCE_LIMITS",
+  "source_main_checked": "010df9c7ff318b8e4fd7d321ba78986c44cceccb",
+  "basis": "Cumulative Batch 2 supplied archive; main still contains Batch 1 Assistant. Unrelated onboarding not touched.",
+  "basis_archive_sha256": "4cb03296ad37dff322a43e0a5fffc1a6bd72680cda993a96e4d3dc5f7f291011",
+  "html_sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
+  "html_normalized_sha256": "8a93298a14a95f2f0118799645bccf132bd5c9d3dcf09dccb204e38ecfb2dcc4",
+  "html_git_blob": "979db91b3b047173b9bf078a6b70fb1799b855c0",
+  "scenario_ids": [
+    "B03-REVIEW-SINGLE",
+    "B03-REVIEW-MULTI"
+  ],
+  "functional_checks": {
+    "review_integration": 112,
+    "supplemental": 27,
+    "vote_currentness": 9,
+    "batch_1_regressions": 18,
+    "batch_2_regressions": 153
+  },
+  "recorded_checks": 39,
+  "recordings": [
+    {
+      "scenario": "multi",
+      "file": "multi.mp4",
+      "video_sha256": "2c3dfd3a5ed8cda76d9e8c435255d6f743a465224fb668d97196170e7e6c32ee",
+      "frames": 1082,
+      "duration_seconds": 18.0337,
+      "nominal_rate": "60/1",
+      "average_rate": "10820000/180337",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "maximum_pts_gap": 0.021584000000000714,
+      "render_median_ms": 16.69999999999891,
+      "render_max_ms": 49.900000000001455,
+      "render_intervals_over_25ms": 1,
+      "without_capture_render_max_ms": 66.70000000000073,
+      "without_capture_intervals_over_25ms": 1
+    },
+    {
+      "scenario": "single",
+      "file": "single.mp4",
+      "video_sha256": "81caa9ccf8683c291b901d3282512d122b116823316cb00a8a742ceb49db241e",
+      "frames": 692,
+      "duration_seconds": 11.533567,
+      "nominal_rate": "60/1",
+      "average_rate": "20760000/346007",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "maximum_pts_gap": 0.020367000000000246,
+      "render_median_ms": 16.69999999999891,
+      "render_max_ms": 16.80000000000291,
+      "render_intervals_over_25ms": 0,
+      "without_capture_render_max_ms": 16.80000000000109,
+      "without_capture_intervals_over_25ms": 0
+    }
+  ],
+  "frames_reviewed_in_consecutive_sheets": 1774,
+  "contact_sheets": 38,
+  "native_frames_inspected": [
+    {
+      "file": "native-frames/multi-0000.png",
+      "sha256": "1ee366c06d667db3ec9418e1409d94281c775f72e5fe0fe243069844eecd7899",
+      "scenario": "multi",
+      "frame": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Three same-model reviewer slots with ordinary shared controls; Start/Cancel safely inset, no initial fullscreen overlay."
+    },
+    {
+      "file": "native-frames/multi-0490.png",
+      "sha256": "b2984f9c57d0828e84e087e6c1fc6511a2f159514251c47e75ff721cf8c8ecde",
+      "scenario": "multi",
+      "frame": 490,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Two confirmed findings and one uncertain suggestion clearly separated; checkboxes only on confirmed findings, two source origins retained for duplicate observation."
+    },
+    {
+      "file": "native-frames/multi-0590.png",
+      "sha256": "1844e418d102c5f7053f329736fb2bb907b81413ce5d2ddf4d357d1cb9c09501",
+      "scenario": "multi",
+      "frame": 590,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Ranking dissent disclosed verbatim with reviewer identity; agreement detail below includes reasons rather than manufactured unanimity."
+    },
+    {
+      "file": "native-frames/multi-0660.png",
+      "sha256": "90223cf05ecf8a034080cda4ea517bd7f4a8bd4445dc5db64724aacb2e86a7b4",
+      "scenario": "multi",
+      "frame": 660,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Frozen local test evidence shows padded-query and input-order mismatches. Evidence is not represented as production testing."
+    },
+    {
+      "file": "native-frames/multi-0745.png",
+      "sha256": "e09a45d8fe5a2fa3404183dc4217c3cd8bc03e839460c05691f33ce6f1c1d553",
+      "scenario": "multi",
+      "frame": 745,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Markdown shows three distinct reviewer identities using the same model and retained finding/evidence text."
+    },
+    {
+      "file": "native-frames/multi-0960.png",
+      "sha256": "2b9539519b0679393ed058de9b1843a1ad50ca1a4898977ae481dcf6d3b3981a",
+      "scenario": "multi",
+      "frame": 960,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Two pending To-Dos in pinned Activity Detail; expanded task has source-finding link. Report wraps without clipping. There is unused horizontal space between report and narrow activity content; no claim of perfect width utilization."
+    },
+    {
+      "file": "native-frames/multi-0990.png",
+      "sha256": "edab419c90ecf2a76308fa6489e97f77cd18e3e9d535ae2cafff296102cf6f3e",
+      "scenario": "multi",
+      "frame": 990,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Tasks remain pending with no automatic repair; retained report and composer stay usable."
+    },
+    {
+      "file": "native-frames/multi-1035.png",
+      "sha256": "a1fe076b463a92553d858224be987ad561bfd7dcde26a958fa13e3f2e2603505",
+      "scenario": "multi",
+      "frame": 1035,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Source-finding click returns the existing report to its first confirmed finding while pending tasks stay intact; no new duplicate report tab."
+    },
+    {
+      "file": "native-frames/single-0000.png",
+      "sha256": "6537a32c255f80f57565adb4930badd6894589f417656cfdcf2c28b290fb4b37",
+      "scenario": "single",
+      "frame": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "One reviewer, shared model/Persona selectors, source label and inset footer; configuration body intentionally scrolls."
+    },
+    {
+      "file": "native-frames/single-0400.png",
+      "sha256": "72db0c4666af53b3e49f25c5e6d8e86715f7a62dd5af756cf8092316d4320984",
+      "scenario": "single",
+      "frame": 400,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Compact completed summary and read-only report, one confirmed minor finding; no fabricated agreement matrix; evidence links legible."
+    },
+    {
+      "file": "native-frames/single-0450.png",
+      "sha256": "3a7eb4af36cb5d7cbff49e8e742f9d1f874019068f7f28bd0cc175001671ec38",
+      "scenario": "single",
+      "frame": 450,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Actual fixture test output in frozen evidence tab, with explicit local-example boundary and Back to report."
+    },
+    {
+      "file": "native-frames/single-0550.png",
+      "sha256": "e3588bb85f4d6b015dc53455baf91aab7170e36c43beb6fb1b396d79a5a105f2",
+      "scenario": "single",
+      "frame": 550,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Same report shown as Markdown with word wrapping; no transcript overflow or side accent. Replay visible."
+    },
+    {
+      "file": "native-frames/single-0600.png",
+      "sha256": "caa58247d366870ca821b54a8ec772154d3fd88d83f9af6d10bff83383a9764a",
+      "scenario": "single",
+      "frame": 600,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "visually_reviewed": true,
+      "observations": "Real export triggers Chromium download notification near top. This is browser chrome, not an application toast. Report body remains readable; notice overlaps part of top tab strip."
+    }
+  ],
+  "visual_review_method": "All 1,774 consecutive decoded frames traversed in 38 indexed contact sheets; 13 selected frames additionally inspected at native 1280x900. This is not individual native-resolution inspection of every frame.",
+  "source_changes": [
+    "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
+    "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.css",
+    "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.js",
+    "Concepts/chat-assistant-concepts/5.6 Pro/todos.js"
+  ],
+  "protected_working_sources_unchanged": [
+    "motion.js",
+    "motion.css",
+    "variants-a.js",
+    "variants-a.css",
+    "variants-b.js",
+    "variants-b.css",
+    "variants-c.js",
+    "variants-c.css",
+    "orbit.js",
+    "orbit.css"
+  ],
+  "settings_modified": false,
+  "canonical_plans_modified": false,
+  "governance_modified": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "inherited_open_findings": [
+    "B02: completed Plan title dense at narrow width",
+    "B02: notification toasts can temporarily overlap composer",
+    "B02: old guides may duplicate visible actions",
+    "B02: long render stalls not re-profiled in Plan scheduling recordings"
+  ],
+  "next_batch": {
+    "id": "assistant-demo-b04-brainstorm",
+    "scope": [
+      "One synthesized Deep Plan from collaborative exploration",
+      "Hard-constraint disqualification and dissent retained"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "global_open": [
+    "Full meaningful two-demo-per-feature coverage",
+    "Every in-scope feature and animation 60fps review",
+    "Native provider, persistence and permissions proof",
+    "Existing unrelated repository-wide gate failures"
+  ],
+  "limits": [
+    "Deterministic recorded reviewer observations, not live AI runs. Fixture test output is actually computed from the shown literal source.",
+    "Target checksum is labeled demo-only noncryptographic FNV1a.",
+    "New full Review protocol slice applies to explicitly supplied target packs; older unrelated fixture controls are not all migrated.",
+    "No partial-review acceptance, full retry/resume UI, or persisted restart proof. Interrupted demo playback offers a fresh Replay; closing the guide does not cancel the admitted run.",
+    "One captured default-theme 1280x900 viewport; 700/900 narrow checks are scoped functional/layout tests.",
+    "Fresh about:blank plus exact HTML set_content; persistent-origin reload not exercised.",
+    "Full upstream TestPM/PM7 pipeline, whole repository Node suite and governance gates not rerun."
+  ]
+}

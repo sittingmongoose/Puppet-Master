@@ -1710,6 +1710,9 @@ validation_surfaces:
   - Plans/product_onboarding_contract_fixtures.json
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
+  - tests/test_pm_guided_tour_v3_contracts.py static v3 positive/negative record coverage only
+  - tests/test_pm_finalgui_tour_v3.py static shared-owner references and causal presentation mutations only
+  - tests/test_pm_touch_closure_source.py source/action inventory and owner routing checks only
   - Concepts/pm7-tools/onboarding_cinematic_source.py static transform assertions
   - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
   - Concepts/pm7-tools/guided_tour_source.py static transform assertions

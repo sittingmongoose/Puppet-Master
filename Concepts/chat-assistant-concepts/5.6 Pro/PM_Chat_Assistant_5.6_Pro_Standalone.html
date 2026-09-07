@@ -12409,6 +12409,28 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-run-line span{flex:1;min-width:0;}
 .plan-run-line small{display:block;margin-top:4px;}
 
+/* Narrow, neutral rows; no left-edge highlights and no working-style changes. */
+.plan-schedule-line{display:flex;gap:10px;align-items:center;padding:10px 0;margin-bottom:10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);min-width:0;}
+.plan-schedule-line>span{flex:1;min-width:0;}
+.plan-schedule-line strong{display:block;font-size:12px;font-weight:550;color:var(--text);}
+.plan-schedule-line small{display:block;margin-top:4px;font-size:11px;overflow-wrap:anywhere;}
+.plan-schedule-line>button{flex:none;}
+.sched-dialog>.schedule-demo-guide{margin:0 18px 12px;padding-top:10px;}
+.schedule-demo-guide .plan-demo-controls{flex-wrap:wrap;}
+
+.sched-dialog--focused{height:auto;width:min(680px,calc(100vw - 24px));}
+.sched-dialog--focused>.schedule-overview,.sched-dialog--focused>.sched-tabs{display:none;}
+.sched-dialog--focused .schedule-list-section>h3{display:none;}
+.sched-dialog--focused>.dialog-body{padding-top:10px;}
+
+.editor-content>.schedule-demo-guide,.editor-body>.schedule-demo-guide{margin:12px 20px;padding:10px 0;}
+
+/* Aligned narrow document rows. No decorative side borders or working-card edits. */
+.review-compact{padding:8px 0;min-width:0}.review-status-line{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;font-size:12px}.review-status-line span,.review-caption{font-size:11px;color:var(--muted)}.review-caption{margin:6px 0}.review-document{max-width:850px;margin:0 auto;padding:22px 24px 32px!important;min-width:0}.review-document h1{font-size:20px;line-height:1.35;overflow-wrap:anywhere;margin:10px 0}.review-doc-meta,.review-tags{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:11px}.review-doc-meta{justify-content:space-between}.review-doc-summary{font-size:13px;margin:4px 0 14px}.review-doc-toolbar,.review-action-row,.review-doc-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.review-doc-toolbar{padding-bottom:16px}.review-target-label{display:grid;gap:5px;margin:6px 0 16px;font-size:12px;overflow-wrap:anywhere}.review-target-label span,.review-target-label small{color:var(--muted);font-size:11px}.review-finding{padding:17px 0;border-top:1px solid var(--line)}.review-finding-head{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.5}.review-finding-head input{flex:none;margin-top:3px}.review-finding-head strong{font-weight:600;overflow-wrap:anywhere}.review-tags{margin:7px 0;text-transform:capitalize}.review-tags span+span:before{content:'·';margin-right:8px}.review-finding p{font-size:12px;line-height:1.55;margin:8px 0;color:var(--muted)}.review-evidence-links{display:flex;flex-wrap:wrap;gap:8px;font-size:11px}.review-evidence-links button{display:inline-flex;align-items:center;gap:5px}.review-technical,.review-dissent{padding:11px 0;font-size:12px;border-top:1px solid var(--line)}.review-technical summary,.review-dissent summary{cursor:pointer;font-weight:550}.review-dissent{border-top:0;padding:6px 0 0}.review-dissent p{white-space:pre-line}.review-person-row{display:grid;gap:3px;padding:10px 0}.review-person-row code{font-size:10px;overflow-wrap:anywhere}.review-agreement>div{padding:12px 0}.review-agreement p{line-height:1.6;margin:7px 0}.review-agreement p span{color:var(--muted)}.review-doc-actions{padding-top:16px;margin-top:10px;border-top:1px solid var(--line)}.review-doc-actions button{font-size:11px}.review-provenance{font-size:10px!important;color:var(--muted);line-height:1.6;margin-top:18px}.review-source,.review-markdown{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-size:12px;line-height:1.65;padding:14px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2,transparent);max-width:100%}.review-action-row{padding:12px 16px}.review-document .soft-button{white-space:normal;text-align:left}.review-document .text-button{white-space:normal;text-align:left}.collab-kind-review .collab-card-title{min-width:0;overflow-wrap:anywhere}.collab-kind-review .collab-card-head{flex-wrap:wrap;align-items:center}.collab-kind-review .collab-card-title{flex:1 1 150px}.collab-kind-review .collab-card-foot{flex-wrap:wrap}
+@media(max-width:800px){.review-document{padding:16px!important}.review-document h1{font-size:18px}.review-doc-meta{justify-content:flex-start}}
+
+.review-demo-guide{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;margin-top:6px;border-top:1px solid var(--line);font-size:12px;flex-wrap:wrap}.review-demo-guide>div:first-child{flex:1;min-width:170px}.review-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.review-demo-guide strong{font-size:12px;font-weight:550;line-height:1.5;display:block}.review-demo-controls{display:flex;gap:7px;align-items:center}.review-demo-guide p{flex-basis:100%;margin:0}.collab-configure>.review-demo-guide{margin:0;padding:12px 16px}.review-document>.review-demo-guide{margin:0 0 16px}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -30340,7 +30362,8 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function cardHeader(r){
     var v = 'Plan · V'+r.version;
-    return '<div class="pd-head">'+
+    var scheduleLine=window.PM56_SCHED&&window.PM56_SCHED.planSummary?window.PM56_SCHED.planSummary(r.plan_id):'';
+    return scheduleLine+'<div class="pd-head">'+
       '<div class="pd-head-main">'+
         '<h3 class="pd-title"><button type="button" data-action="pd-info" data-id="'+esc(r.plan_id)+'">'+esc(r.title)+'</button></h3>'+
         '<span class="pd-strategy">'+esc(r.strategy)+'</span>'+
@@ -30460,6 +30483,7 @@ window.PM56_EXT = window.PM56_EXT || {
     return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
       '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
+      (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<div class="plan-preview-meta"><span>'+steps(body(r)).length+' steps</span><span>'+esc(r.status)+'</span></div>'+
       '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
@@ -30495,6 +30519,7 @@ window.PM56_EXT = window.PM56_EXT || {
     cur.status='canceled'; cur.current=false;
     cur.cancelReason=reason||'Canceled when a new Plan was requested for this thread while it was still unfinished.';
     stopRun(cur);
+    invalidateSchedulesFor(cur,'new_plan');
     return cur;
   }
 
@@ -30529,8 +30554,15 @@ window.PM56_EXT = window.PM56_EXT || {
        cannot deliver a second dispatch for work that has already started.
        Cancel did this and Build did not, which left exactly the duplicate
        admission the correction names -- two owners of one PlanRun. */
-    r.scheduleInvalidation = invalidateSchedulesFor(r, 'immediate_build');
+    r.scheduleInvalidation = invalidateSchedulesFor(r, opts.scheduleRef ? 'scheduled_build' : 'immediate_build', opts.scheduleRef);
     r.approved = freeze(r,ctx);
+    if(opts.scheduleSnapshot){
+      r.approved.runtime=opts.scheduleSnapshot.modelName;
+      r.approved.modelId=opts.scheduleSnapshot.modelId;
+      r.approved.provider=opts.scheduleSnapshot.provider;
+      r.approved.accountId=opts.scheduleSnapshot.accountId;
+    }
+    if(opts.scheduleRef)r.approved.schedule_id=opts.scheduleRef;
     r.status = 'building';
     r.buildStep = 0;
     r.wait = opts.wait || null;
@@ -30557,8 +30589,9 @@ window.PM56_EXT = window.PM56_EXT || {
                        count:(made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length),
                        reused:!!(made&&made.reused) };
     // A direct Plan build is not a Goal. Use its own linked transcript record.
-    ctx.appendMessage && ctx.appendMessage({id:ctx.uid('plan-run'),role:'system',
-      type:'plan-run-receipt',plan_id:r.plan_id,title:'Build started',
+    var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
+    if(thread)thread.messages.push({id:ctx.uid('plan-run'),role:'system',
+      type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',
       detail:'V'+r.version+' · '+r.todosCreated.count+' To-Dos',time:new Date().toISOString()});
     /* Advance the step gutter on a real interval so Building… is observable.
        Nothing here is authoritative -- §7.2's gutter is a projection. */
@@ -30600,7 +30633,7 @@ window.PM56_EXT = window.PM56_EXT || {
      holds it: this module's own card binding (`r.schedule`) and the scheduler's
      durable build schedules. Returns a receipt so the caller can show what was
      fenced rather than asserting it. */
-  function invalidateSchedulesFor(r, reason){
+  function invalidateSchedulesFor(r, reason, excludeScheduleId){
     var why = reason==='immediate_build'
       ? 'Build Now started this exact Plan version; the pending schedule is invalidated so no later dispatch can admit a second run.'
       : 'The bound execution ended; this schedule can no longer dispatch.';
@@ -30610,7 +30643,7 @@ window.PM56_EXT = window.PM56_EXT || {
     }
     var S=window.PM56_SCHED;
     if(S && S.invalidateForExecution){
-      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why });
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
       out.scheduler=(res&&res.schedules)||0;
     }
     return out;
@@ -31120,7 +31153,7 @@ window.PM56_EXT = window.PM56_EXT || {
       stopRun(r);
       r.status='canceled'; r.current=false;
       r.cancelReason='Canceled from the Plan card at V'+r.version+'.';
-      if(r.schedule){ r.schedule.invalid=true; r.schedule.invalidReason='The Plan was canceled; a manual cancel always overrides a scheduled build.'; }
+      r.scheduleInvalidation=invalidateSchedulesFor(r,'manual_cancel');
       ctx.renderApp();
     },
 
@@ -31151,7 +31184,11 @@ window.PM56_EXT = window.PM56_EXT || {
     'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
     'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
-    'pd-build-at':   function(ctx,btn){ openDlg(ctx,'at',    btn.dataset.id); },
+    'pd-build-at': function(ctx,btn){
+      var r=rec(btn.dataset.id);if(!r||!eligible(r).at)return;
+      if(window.PM56_SCHED)window.PM56_SCHED.openBuildAt(ctx,r.plan_id,r.version);
+      else openDlg(ctx,'at',r.plan_id);
+    },
     'pd-export':     function(ctx,btn){ openDlg(ctx,'export',btn.dataset.id); },
     'pd-dlg-close':  function(ctx){ ctx.closeDialog(); },
 
@@ -31504,7 +31541,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
     var r = id && rec(id);
     if(!r) return '';
-    return '<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
+    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
       cardHeader(r)+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
@@ -31519,6 +31556,17 @@ window.PM56_EXT = window.PM56_EXT || {
 
   window.PM56_PLANS = {
     get:rec, all:function(){ return P().records; },
+    // Concept-only admission seam. The scheduler validates its due time and
+    // receipt; the Plan owner independently rechecks exact identity and state.
+    admitScheduled:function(binding){
+      var c=EXT.ctx&&EXT.ctx(),r=binding&&rec(binding.target_id);
+      if(!c||!r||r.thread_id!==binding.thread_id)return {ok:false,clause:'target_not_found'};
+      if(r.version!==binding.exact_target_version||hashOf(body(r))!==binding.exact_target_hash)
+        return {ok:false,clause:'target_version_changed'};
+      if(r.status!=='ready'||!eligible(r).build)return {ok:false,clause:'plan_not_ready'};
+      var ok=admitBuild(c,r,{scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      c.renderApp();return {ok:ok,clause:ok?null:'plan_not_ready',approved:ok?r.approved:null};
+    },
     editorBody:editorBody,
     /* Which Plan an artifact id maps to, so app.js's artifact header can read
        the owner's version and Build label instead of the legacy record. */
@@ -32332,7 +32380,7 @@ window.PM56_EXT = window.PM56_EXT || {
         (hasKids?'<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>':'')+
         '<div class="todo-chips">'+depChip(list,item)+parallelChip(list,item)+'</div>'+
         (item.blocked_reason_ref?'<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>':'')+
-        '<div class="todo-detail-actions">'+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
+        '<div class="todo-detail-actions">'+(item.source_review_run_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
     }
     return '<div class="todo-node" data-todo-id="'+esc(item.todo_id)+'" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'"><div class="todo-row">'+caret+
       '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
@@ -32749,6 +32797,34 @@ window.PM56_EXT = window.PM56_EXT || {
     return null;
   }
 
+  /* Explicit Review conversion through the existing To-Do owner. All selected
+     records are validated before append; unrelated items and work bindings stay
+     byte-identical. Identity includes the source run and finding. */
+  function materializeForReview(run, selectedIds){
+    if(!run || run.kind!=='review' || run.status!=='completed' || !run.review)
+      return {ok:false,error:'review_not_completed'};
+    var ids=Array.from(new Set(selectedIds||[]));
+    if(!ids.length) return {ok:false,error:'no_findings_selected'};
+    var findings=ids.map(function(id){return (run.review.findings||[]).find(function(f){return f.id===id;});});
+    if(findings.some(function(f){return !f || f.disposition!=='confirmed' || !f.evidenceRefs || !f.evidenceRefs.length;}))
+      return {ok:false,error:'confirmed_evidenced_findings_only'};
+    var store=threadStore(run.threadId),existing=(store&&store.items)||[],mk=itemFactory(run.threadId),made=[],mapped=[];
+    findings.forEach(function(f){
+      var id='trv-'+run.id+'-'+f.id, found=existing.find(function(t){return t.todo_id===id;});
+      mapped.push({finding_id:f.id,todo_id:id});
+      if(!found) made.push(mk({todo_id:id,display_order:existing.length+made.length+1,title:f.proposedRemediation||f.claim,
+        expected_outcome:f.expectedOutcome||f.claim,status:'pending',source_review_run_id:run.id,source_finding_id:f.id,
+        source_target_hash:run.review.targetPack.targetHashes.primary,source_evidence_refs:JSON.parse(JSON.stringify(f.evidenceRefs))}));
+    });
+    var check=validateGraph(run.threadId,{items:existing.concat(made)});
+    if(!check.valid) return {ok:false,error:'invalid_graph',validation:check};
+    if(made.length){
+      if(!store){RT.todos.byThread[run.threadId]={items:[],refusals:[],revision:1};store=threadStore(run.threadId);}
+      store.items=existing.concat(made);store.revision=(store.revision||1)+1;
+    }
+    return {ok:true,created:made.length,items:mapped,reused:made.length===0};
+  }
+
   window.PM56_TODOS = {
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,
@@ -32765,6 +32841,7 @@ window.PM56_EXT = window.PM56_EXT || {
     replaceThreadList: replaceThreadList,
     applyTransition: applyTransition,
     materializeForPlan: materializeForPlan,
+    materializeForReview: materializeForReview,
     advanceForPlan: advanceForPlan,
     revisionOf: function(threadId){ var s=threadStore(threadId); return s?(s.revision||1):null; },
     rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; },
@@ -33711,6 +33788,7 @@ window.PM56_EXT = window.PM56_EXT || {
   var SEV_LABEL = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion' };
   var DISP_LABEL = { confirmed: 'Confirmed', rejected: 'Rejected', duplicate: 'Duplicate', uncertain: 'Uncertain' };
   function reviewInline(ctx, run) {
+    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderSummary(ctx,run);
     var r = run.review || {};
     var pack = r.targetPack || {};
     var findings = (r.findings || []).map(function (f) {
@@ -33779,6 +33857,7 @@ window.PM56_EXT = window.PM56_EXT || {
      outputs, coordinator failure, quorum and ties are all stated -- a generic
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
+    if(run.kind === 'review' && run.review && run.review.protocolVersion) return '';
     var c = completionProjection(run);
     if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
@@ -33826,6 +33905,7 @@ window.PM56_EXT = window.PM56_EXT || {
       body +
       '<div class="collab-card-foot">' +
         '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
+        (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
         '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
         '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
         '<button class="icon-button" data-action="collab-toggle-more" data-run="' + esc(run.id) + '" title="More">' + ctx.icon('more', 13) + '</button>' +
@@ -34110,11 +34190,12 @@ window.PM56_EXT = window.PM56_EXT || {
      ===================================================================== */
   UI.selectedFindings = UI.selectedFindings || {};
   function renderReviewFollowOn(ctx, run) {
+    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderActions(ctx,run);
     var r = run.review || {};
     var sel = UI.selectedFindings[run.id] || {};
     var confirmed = (r.findings || []).filter(function (f) { return f.disposition === 'confirmed'; });
     var picks = confirmed.map(function (f) {
-      return '<label class="collab-finding-pick" data-k="collab-pick-' + esc(f.id) + '"><input type="checkbox" data-action="collab-review-toggle-finding" data-run="' + esc(run.id) + '" data-finding="' + esc(f.id) + '"' + (sel[f.id] ? ' checked' : '') + (f.convertedToTodo ? ' disabled' : '') + '><span>' + esc(f.claim) + (f.convertedToTodo ? ' — <i>To-Do requested</i>' : '') + '</span></label>';
+      return '<label class="collab-finding-pick" data-k="collab-pick-' + esc(f.id) + '"><input type="checkbox" data-action="collab-review-toggle-finding" data-run="' + esc(run.id) + '" data-finding="' + esc(f.id) + '"' + (sel[f.id] ? ' checked' : '') + (f.convertedToTodo ? ' disabled' : '') + '><span>' + esc(f.claim) + (f.convertedToTodo ? ' — <i>To-Do created</i>' : '') + '</span></label>';
     }).join('');
     var anySelected = confirmed.some(function (f) { return sel[f.id] && !f.convertedToTodo; });
     return '<div class="collab-followon collab-review-followon" data-k="collab-review-followon-' + esc(run.id) + '">' +
@@ -34125,25 +34206,19 @@ window.PM56_EXT = window.PM56_EXT || {
       '</div></div>';
   }
   EXT.action('collab-review-toggle-finding', function (ctx, btn) {
+    if(window.PM56_REVIEW && window.PM56_REVIEW.owns(btn.dataset.run)) return window.PM56_REVIEW.toggleFinding(ctx,btn);
     var rid2 = btn.dataset.run, fid = btn.dataset.finding;
     UI.selectedFindings[rid2] = UI.selectedFindings[rid2] || {};
     UI.selectedFindings[rid2][fid] = !UI.selectedFindings[rid2][fid];
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-review-create-todos', function (ctx, btn) {
-    var run = findRun(btn.dataset.run); if (!run) return true;
-    var sel = UI.selectedFindings[run.id] || {};
-    var made = [];
-    (run.review.findings || []).forEach(function (f) {
-      if (sel[f.id] && f.disposition === 'confirmed' && !f.convertedToTodo) { f.convertedToTodo = true; made.push(f); }
-    });
-    if (!made.length) { ctx.toast('Nothing selected', 'Select at least one confirmed finding first.'); return true; }
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'request', body: 'To-Do request recorded for ' + made.length + ' confirmed finding(s): ' + made.map(function (f) { return f.claim; }).join('; ') + '. `cmd.review.create_todos` is not yet registered in the central command catalog, so this is recorded here with lineage back to each finding rather than claiming it landed on the To-Do owner’s list.' }));
-    ctx.renderApp();
-    ctx.toast('To-Do request recorded', made.length + ' finding(s) marked for conversion, with lineage back to their finding IDs.');
+    if(window.PM56_REVIEW) return window.PM56_REVIEW.createSelectedTodos(ctx,btn);
+    ctx.toast('Review unavailable','The Review module is not loaded. No To-Dos were created.');
     return true;
   });
   EXT.action('collab-review-send-findings', function (ctx, btn) {
+    if(window.PM56_REVIEW && window.PM56_REVIEW.owns(btn.dataset.run)) return window.PM56_REVIEW.sendSelected(ctx,btn);
     var run = findRun(btn.dataset.run); if (!run) return true;
     var sel = UI.selectedFindings[run.id] || {};
     var picked = (run.review.findings || []).filter(function (f) { return sel[f.id]; });
@@ -34162,20 +34237,11 @@ window.PM56_EXT = window.PM56_EXT || {
   });
   EXT.action('collab-review-run-again', function (ctx, btn) {
     var old = findRun(btn.dataset.run); if (!old) return true;
-    var fresh = mkRun({
-      kind: 'review', threadId: old.threadId, title: old.title.replace(/\s*\(re-run.*\)$/, '') + ' (re-run)',
-      purpose: old.purpose, status: 'running', config: old.config,
-      coordinator: old.coordinator,
-      participants: old.participants.map(function (p) { return mkParticipant({ role: p.role, requestedModelId: p.requestedModelId, persona: p.requestedPersona, status: 'working', current: 'Fresh-context pass against the newly frozen pack.' }); }),
-      review: { targetPack: { targetKind: old.review.targetPack.targetKind, targetRefs: old.review.targetPack.targetRefs, targetHashes: { primary: Math.random().toString(16).slice(2, 10) }, frozenAt: nowIso(), userConstraintRefs: old.review.targetPack.userConstraintRefs, acceptanceRefs: old.review.targetPack.acceptanceRefs }, findings: [], excludedFindings: [] }
-    });
-    fresh.participants.forEach(function (p) { p.runId = fresh.id; });
-    fresh.messages.push(mkMsg(fresh, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'New review started against a freshly frozen target pack (hash ' + fresh.review.targetPack.targetHashes.primary + '). This is a new run identity — it never merges into ' + old.id + '.' }));
-    RTC.runs.push(fresh);
-    attachCardToThread(ctx, fresh);
-    ctx.closeDialog && ctx.closeDialog();
-    ctx.renderApp();
-    ctx.toast('New review started', 'A new frozen target pack was captured. The prior run and its findings are untouched.');
+    openConfigureDraft('review',old.id,false);
+    RTC.draft.reconfigureRunId=null;
+    RTC.draft.name=old.title.replace(/\s*\(re-run.*\)$/,'')+' (re-run)';
+    if(old.review.protocolVersion) RTC.draft.reviewTarget=JSON.parse(JSON.stringify(old.review.targetPack));
+    ctx.openDialog({type:'collab-configure'});
     return true;
   });
 
@@ -34503,6 +34569,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '<div class="dialog-body collab-configure-body">' +
       '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
       '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
+      (d.kind==='review' && d.reviewTarget ? '<div class="review-target-label"><small>Frozen on Start · recorded example</small><strong>'+esc(d.reviewTarget.label)+'</strong><span>Read-only · no provider calls</span></div>' : '') +
       '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
       '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
@@ -34515,6 +34582,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
+      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -34784,6 +34852,7 @@ window.PM56_EXT = window.PM56_EXT || {
       effect('providerCalls', newRun.participants.length);
       effect('usageRecords', newRun.participants.length);
       RTC.runs.push(newRun);
+      if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }
@@ -35200,6 +35269,8 @@ window.PM56_EXT = window.PM56_EXT || {
     runStatusVocabulary: function(){
       return ['configuring','running','paused','blocked','completed','canceled','failed'];
     },
+    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);r.messages.push(m);return m;},
+    selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
     normalizeReview: normalizeReview
   };
 })();
@@ -35674,10 +35745,11 @@ window.PM56_EXT = window.PM56_EXT || {
  *    hemisphere) and a no-DST zone like Asia/Kolkata each get a truthfully
  *    different summary line instead of a copy-pasted "clocks spring forward in
  *    March" sentence that would be wrong for three of the ten offered zones.
- * 3. THE HASH IS A DEMO STAND-IN, LABELLED AS ONE. `demoHash()` is a short
- *    deterministic string hash of "planId:version" — not a real content-address.
+ * 3. THE HASH IS A DEMO STAND-IN, LABELLED AS ONE. `demoHash()` remains a short
+ *    legacy fixture hash of "planId:version" — not a real content-address.
  *    It exists only so `exact_target_hash` is never blank and never random
- *    (same id+version always produces the same hash, so idempotency and
+ *    (newly committed builds use PM56_PLANS.hash of the actual document;
+ *    legacy seed rows retain their old fixture hashes). Idempotency and
  *    invalidation stay internally consistent), and every place it renders
  *    calls it "hash" rather than implying provenance it does not have.
  * 4. QUOTA STATE IS CONSUMED, NOT DUPLICATED. `RT.quota` (waiting, resetSource,
@@ -36470,7 +36542,9 @@ window.PM56_EXT = window.PM56_EXT || {
      occurrence admission.
      ===================================================================== */
   function defaultBuildDraft(planId, version) {
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(planId);
     return {
+      contentHash:plan?window.PM56_PLANS.hash(planId):null,
       planId: planId, version: version, kind: 'recurring_window',
       date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
@@ -36479,7 +36553,11 @@ window.PM56_EXT = window.PM56_EXT || {
   }
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
-    var hash = demoHash(d.planId + ':' + d.version);
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(d.planId);
+    if(!plan||plan.status!=='ready'||plan.version!==d.version||window.PM56_PLANS.hash(d.planId)!==d.contentHash){
+      d.error='Plan changed. Close this form and schedule the current version.';ctx.renderOverlays();return null;
+    }
+    var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
     var oneTime = d.kind === 'one_time';
@@ -36493,6 +36571,10 @@ window.PM56_EXT = window.PM56_EXT || {
     var rec = {
       schedule_id: id, project_id: 'pm', target_kind: 'assistant_plan_run', target_id: d.planId,
       exact_target_version: d.version, exact_target_hash: hash,
+      binding_kind:'plan_content_v1',execution_topology:'agent',thread_id:plan.thread_id,
+      runtime_snapshot:{modelId:model.id,modelName:model.name,provider:model.provider,accountId:model.accountId},
+      permission_snapshot:ctx.state.permissions,worktree_snapshot:ctx.state.worktree,
+      dispatchReceipt:null,
       schedule_kind: d.kind,
       timezone: d.timezone,
       local_start: oneTime ? d.time : d.startTime,
@@ -36510,7 +36592,7 @@ window.PM56_EXT = window.PM56_EXT || {
       // Edit the existing owner record atomically: no temporary schedule or
       // orphan creation event and no loss of already admitted occurrence IDs.
       var retained={createdAt:existing.createdAt,revision:existing.revision+1,
-        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),
+        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),dispatchReceipt:existing.dispatchReceipt,
         runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
       Object.assign(existing,rec,retained);rec=existing;
       logBuildLine(rec,'Window updated.');
@@ -36524,7 +36606,8 @@ window.PM56_EXT = window.PM56_EXT || {
   }
   function cancelBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state === 'completed') return false;
-    rec.state = 'canceled'; rec.updatedAt = nowIso();
+    if(rec.state==='canceled')return true;
+    rec.state = 'canceled'; rec.revision++; rec.updatedAt = nowIso();
     logBuildLine(rec, 'Cancelled by the user. Any already-admitted work continues under its own owner — cancelling a window is not a Stop.');
     logEvent('execution_window.updated', id, null, 'Cancelled by the user.');
     persistNow();
@@ -36555,7 +36638,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var out = { invalidated: [], untouched: [] };
     P().buildSchedules.forEach(function (rec) {
       if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
-      if (rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state) || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+      if (['cancelled','canceled','completed'].includes(rec.state)) { out.untouched.push(rec.schedule_id); return; }
       if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
       rec.pendingVersion = newVersion;
       rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
@@ -36573,17 +36656,68 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function rebindBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state !== 'invalidated') return null;
-    if (rec.pendingVersion != null) rec.exact_target_version = rec.pendingVersion;
-    if (rec.pendingHash) rec.exact_target_hash = rec.pendingHash;
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(rec.target_id);
+    if(rec.binding_kind==='plan_content_v1'){
+      if(!plan||plan.status!=='ready')return null;
+      rec.exact_target_version=plan.version;rec.exact_target_hash=window.PM56_PLANS.hash(plan.plan_id);
+    }else{
+      if(rec.pendingVersion!=null)rec.exact_target_version=rec.pendingVersion;
+      if(rec.pendingHash)rec.exact_target_hash=rec.pendingHash;
+    }
     rec.pendingVersion = null; rec.pendingHash = null;
     rec.state = 'active'; rec.invalidated_reason = null; rec.revision += 1;
-    rec.occurrencesFired = []; rec.runPhase = 'idle';
+    rec.occurrencesFired = []; rec.runPhase = 'idle';rec.dispatchReceipt=null;
     rec.updatedAt = nowIso();
     logBuildLine(rec, 'Rebound to V' + rec.exact_target_version + ' (hash ' + rec.exact_target_hash + ') by explicit user action. It will not silently advance to a future revision again.');
     logEvent('execution_window.updated', id, null, 'Explicit rebind after invalidation.');
     persistNow();
     return rec;
   }
+  function planSummary(planId){
+    var rows=buildsForTarget(planId).filter(function(b){return b.binding_kind==='plan_content_v1';});
+    if(!rows.length)return '';
+    var b=rows[0],label=b.state==='invalidated'?'Schedule needs update':b.state==='canceled'?'Schedule canceled':b.dispatchReceipt?(window.PM56_PLANS.get(planId)?.status==='completed'?'Scheduled build completed':'Scheduled build started'):'Build scheduled';
+    var suffix=b.state==='invalidated'?'V'+b.exact_target_version+' → V'+b.pendingVersion:'V'+b.exact_target_version+' · '+whenLabel(b.scheduled_at_utc,b.timezone);
+    return '<div class="plan-schedule-line" data-plan-schedule="'+esc(b.schedule_id)+'"><span><strong>'+label+'</strong><small>'+esc(suffix)+'</small></span><button class="text-button" data-action="sched-open-plan-record" data-id="'+esc(b.schedule_id)+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></div>';
+  }
+
+  // A deterministic concept tick, invoked explicitly by the gallery guide.
+  // atMs is the demonstrated clock time, never a global Date override. This
+  // checks a real content binding and admits through the existing Plan owner.
+  // It is NOT a background service or production runtime implementation.
+  function dispatchBuildAt(id,atMs,expectedRevision){
+    var b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx&&EXT.ctx();
+    if(!b||!api||!c)return {ok:false,clause:'target_not_found'};
+    var fail=function(clause,detail){return {ok:false,clause:clause,detail:detail||clause};};
+    if(expectedRevision!=null&&expectedRevision!==b.revision)return fail('stale_schedule_revision');
+    if(b.dispatchReceipt)return {ok:true,duplicate:true,receipt:b.dispatchReceipt};
+    var eligible=evaluateEligibility('build',b,P().stopEpoch);
+    if(!eligible.ok)return fail(eligible.clause,eligible.detail);
+    if(b.state!=='active')return fail('schedule_not_active');
+    if(b.binding_kind!=='plan_content_v1'||b.schedule_kind!=='one_time'||b.execution_topology!=='agent')return fail('unsupported_demo_schedule');
+    if(!Number.isFinite(atMs)||atMs<Date.parse(b.scheduled_at_utc))return fail('window_not_open');
+    var plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
+    if(!plan||!thread||thread.archived||plan.thread_id!==b.thread_id)return fail('target_not_found');
+    if(plan.version!==b.exact_target_version||api.hash(plan.plan_id)!==b.exact_target_hash){
+      b.state='invalidated';b.pendingVersion=plan.version;b.pendingHash=api.hash(plan.plan_id);b.revision++;
+      b.invalidated_reason='The scheduled Plan content changed. Review the current version before dispatch.';
+      logBuildLine(b,b.invalidated_reason);persistNow();c.renderApp();return fail('target_version_changed');
+    }
+    var model=(D.models||[]).find(function(m){return m.id===b.runtime_snapshot.modelId&&m.accountId===b.runtime_snapshot.accountId;});
+    if(!model||model.status!=='ready')return fail('route_unavailable');
+    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_changed');
+    if(c.state.permissions!==b.permission_snapshot)return fail('permission_snapshot_changed');
+    if(RT.quota&&RT.quota.waiting)return fail('quota_unavailable');
+    var result=api.admitScheduled(b);if(!result.ok)return result;
+    b.lastOccurrenceStart=b.scheduled_at_utc;b.occurrencesFired.push(b.scheduled_at_utc);
+    b.dispatchReceipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,
+      hash:b.exact_target_hash,occurrence:b.scheduled_at_utc,at:new Date(atMs).toISOString(),concept:true};
+    b.state='completed';b.runPhase='admitted';b.revision++;b.updatedAt=nowIso();
+    logBuildLine(b,'One-time occurrence admitted through the Plan owner. Repeated ticks return this receipt.');
+    logEvent('scheduled_dispatch.dispatched',id,null,'V'+b.exact_target_version+' started with its frozen content binding.');
+    persistNow();c.renderApp();return {ok:true,duplicate:false,receipt:b.dispatchReceipt};
+  }
+
   function computeNextOccurrence(rec, fromMs) {
     if (rec.schedule_kind === 'one_time') return null;
     var hhmm = parseHHMM(rec.local_start);
@@ -36594,6 +36728,10 @@ window.PM56_EXT = window.PM56_EXT || {
   }
   function advanceWindow(id) {
     var rec = findBuild(id); if (!rec) return { refused: true, detail: 'Schedule not found.' };
+    if(rec.binding_kind==='plan_content_v1'&&rec.schedule_kind==='one_time'){
+      var dispatched=dispatchBuildAt(id,Date.parse(rec.scheduled_at_utc),rec.revision);
+      return {refused:!dispatched.ok,duplicate:!!dispatched.duplicate,detail:dispatched.detail||dispatched.clause||'Scheduled build started.'};
+    }
     if (rec.state !== 'active') return { refused: true, detail: 'This schedule is ' + rec.state + '; nothing to advance.' };
     var epoch = P().stopEpoch;
     var elig = evaluateEligibility('build', rec, epoch);
@@ -36700,7 +36838,7 @@ window.PM56_EXT = window.PM56_EXT || {
   var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', sent:'done', cancelled: 'idle', canceled:'idle', failed: 'blocked', expired: 'idle' };
   var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Canceled', canceled:'Canceled', completed: 'Completed', invalidated: 'Needs update' };
   var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', canceled:'idle', completed: 'done', invalidated: 'blocked' };
-  var PHASE_LABEL = { idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
+  var PHASE_LABEL = { completed:'Build completed', idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
   function chip(label, tone) { return '<span class="sched-chip sched-tone-' + esc(tone) + '">' + esc(label) + '</span>'; }
 
   function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
@@ -36764,7 +36902,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,Date.now())):null;
     var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
     return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
-      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting')+(nextIso?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
+      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
       '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
       (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
@@ -36810,7 +36948,7 @@ window.PM56_EXT = window.PM56_EXT || {
       (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div><label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume" '+(d.autoResumeNext?'checked':'')+'>Resume next window</label>':'')+
       '<details class="schedule-details"><summary>More options '+ctx.icon('down',11)+'</summary><div class="sched-field-grid">'+(!one?'<label class="sched-field"><span>Wind-down · minutes</span><input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'"></label>':'')+
       '<label class="sched-field"><span>If missed</span><select data-sched-input="build-missed">'+[['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><details class="sched-audit"><summary>Timezone rules</summary>'+describeDst(d.timezone,[],d.days).map(l=>'<p>'+esc(l)+'</p>').join('')+'</details></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div></section>';
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div>'+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
   }
 
 
@@ -36845,19 +36983,20 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function renderManageDialog(ctx){
     var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
+    var focused=tab==='builds'&&!!findBuild(ui.focusBuild);
     var active=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state)),attention=active.filter(m=>m.state!=='scheduled'),upcoming=active.filter(m=>m.state==='scheduled').sort((a,b)=>Date.parse(a.scheduled_at_utc)-Date.parse(b.scheduled_at_utc)),past=S.scheduledMessages.filter(m=>!active.includes(m));
     var tabs=[['messages','Messages',active.length],['builds','Build windows',S.buildSchedules.filter(b=>['active','paused','invalidated'].includes(b.state)).length],['quota','Resume & safety',null],['events','Activity',null]];
     function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
     var content='';
     if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!S.scheduledMessages.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No scheduled messages</strong><button class="soft-button" data-action="sched-open-message">Schedule a message</button></div>':'');
-    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
+    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild).map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
     else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
     else content=renderEventLog();
-    return '<section class="dialog sched-dialog sched-dialog--manage" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>Scheduled &amp; automations</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
+    return '<section class="dialog sched-dialog sched-dialog--manage'+(focused?' sched-dialog--focused':'')+'" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>'+(focused?'Build schedule':'Scheduled &amp; automations')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
       '<div class="schedule-overview"><div><strong>'+active.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':attention.length?attention.length+' need attention':'No blockers',S.stopped||attention.length?'attention':'done')+'</div></div>'+
       '<div class="sched-tabs">'+tabs.map(([v,l,n])=>'<button class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+(n!==null?'<span>'+n+'</span>':'')+'</button>').join('')+'</div>'+
-      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':'')+'<span class="spacer"></span><span>All threads</span></div>'+
-      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+'</section>';
+      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':tab==='builds'&&ui.focusBuild?'<button class="text-button" data-action="sched-show-all-builds">All build windows</button>':'')+'<span class="spacer"></span><span>'+(focused?'Selected plan':'All threads')+'</span></div>'+
+      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
   }
 
   EXT.slot('wandRows', function (ctx) {
@@ -37062,8 +37201,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var builds=P().buildSchedules;
     for(i=0;i<builds.length;i++){
       var b=builds[i];
-      if(b.target_id===assoc.plan_id && b.state!=='invalidated'){
-        b.state='invalidated';
+      if(b.target_id===assoc.plan_id && b.schedule_id!==assoc.exclude_schedule_id && ['active','paused','held'].includes(b.state)){
+        b.state='invalidated';b.revision++;
         b.invalidated_reason = assoc.why ||
           ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
         b.invalidReason = b.invalidated_reason;
@@ -37098,6 +37237,7 @@ window.PM56_EXT = window.PM56_EXT || {
     if (!ctx) return false;
     planId = String(planId);
     version = Number(version);
+    ui.editingBuildId=null;
     ui.buildDraft = defaultBuildDraft(planId, version);
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-build-at', planId: planId, version: version });
@@ -37110,7 +37250,10 @@ window.PM56_EXT = window.PM56_EXT || {
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-message' });
   };
+  ACT['sched-show-all-builds']=function(ctx){ui.focusBuild=null;ctx.renderApp();};
+  ACT['sched-open-plan-record']=function(ctx,btn){ui.focusBuild=btn.dataset.id;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});};
   ACT['sched-open-manage'] = function (ctx) {
+    ui.focusBuild=null;
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-manage' });
   };
@@ -37179,17 +37322,18 @@ window.PM56_EXT = window.PM56_EXT || {
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
-    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
   ACT['sched-create-build'] = function (ctx, btn) {
-    if (!ui.buildDraft) ui.buildDraft = defaultBuildDraft(btn.dataset.planId, Number(btn.dataset.planVersion));
+    // A completed or canceled form cannot be replayed into a second schedule.
+    if (!ui.buildDraft) return;
     var d=ui.buildDraft,err=d.kind==='one_time'?validateWall(d.date,d.time,d.timezone):(!d.days.length?'Select at least one day.':d.startTime===d.pauseTime?'Start and pause must be different.':'');
     if(err){d.error=err;ctx.renderOverlays();return;}
     var old=ui.editingBuildId?findBuild(ui.editingBuildId):null;
-    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
+    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version||old.revision!==d.expectedRevision)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
     var rec=commitBuild(ctx);if(!rec)return;
-    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});
+    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ui.focusBuild=rec.schedule_id;ctx.openDialog({type:'sched-manage'});
     reRender(ctx);
     ctx.toast(old?'Build window updated':'Build window scheduled', rec.schedule_kind === 'one_time'
       ? ('One-time at ' + to12h(rec.local_start) + ' ' + tzLabel(rec.timezone) + '.')
@@ -37198,12 +37342,12 @@ window.PM56_EXT = window.PM56_EXT || {
   ACT['sched-cancel-build'] = function (ctx, btn) {
     var ok = cancelBuild(btn.dataset.id);
     reRender(ctx);
-    ctx.toast(ok ? 'Schedule cancelled' : 'Could not cancel', ok ? 'Any already-admitted work continues under its own owner.' : 'It may have already completed.');
+    ctx.toast(ok ? 'Schedule canceled' : 'Could not cancel', ok ? 'No future dispatch.' : 'It may have already completed.');
   };
   ACT['sched-rebind-build'] = function (ctx, btn) {
     var rec = rebindBuild(btn.dataset.id);
     reRender(ctx);
-    if (rec) ctx.toast('Rebound', 'Now bound to V' + rec.exact_target_version + ' (hash ' + rec.exact_target_hash + ').');
+    if (rec) ctx.toast('Schedule updated', 'Bound to V' + rec.exact_target_version + '.');
   };
   ACT['sched-simulate-revision'] = function (ctx, btn) {
     var rec = simulateRevision(btn.dataset.id);
@@ -37322,6 +37466,8 @@ window.PM56_EXT = window.PM56_EXT || {
 
   window.PM56_SCHED = {
     openBuildAt: openBuildAt,
+    planSummary:planSummary,
+    dispatchBuildAt:dispatchBuildAt,
     list: function () { return { messages: P().scheduledMessages, builds: P().buildSchedules, consents: P().quotaConsents, events: P().events }; },
     /* Additive Correction v4 (SMSG / PSCHED). */
     messageProjection: function (id) { var r = smById(id); return r ? messageProjection(r) : null; },
@@ -40658,6 +40804,389 @@ window.PM56_EXT = window.PM56_EXT || {
  const G=window.PM56_REPAIR_DEMOS;
  if(G){const old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Plan workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="plan-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);}
  window.PM56_PLAN_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null};
+})();
+
+/* Batch 2, gallery only. The clock preview is explicit; no background schedule
+ * or native provider is simulated. All configuration/mutations use the visible
+ * product controls, and a due-time preview calls the scheduler's owner seam. */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,S=window.PM56_SCHED,P=window.PM56_PLANS;
+ let active=null;
+ const common=[['Open the plan','Open plan','open'],['Choose when to build','Build At…','at'],['Set a one-time schedule','Set time','time'],['Save this exact version','Schedule build','save']];
+ const flows={
+  due:{label:'Schedule and build',summary:'Bind V1 → preview due time → complete',steps:[...common,['Inspect the saved binding','Return to plan','close'],['Preview the scheduled time','Preview due time','due'],['Follow the build','Open To-Dos','todos'],['Tasks are running','Waiting for completion','wait']]},
+  revise:{label:'Revise a scheduled Plan',summary:'Schedule V1 → revise → explicitly use V2',steps:[...common,['Return to the document','Return to plan','close'],['Change the planned scope','Revise','revise'],['Create a new version','Send feedback','feedback'],['Inspect the outdated binding','Review schedule','review'],['Choose the new version explicitly','Use V2','rebind'],['Inspect the updated binding','Return to plan','close'],['Preview the new scheduled build','Preview due time','due']]},
+  cancel:{label:'Cancel a scheduled build',summary:'Schedule → cancel → prove no dispatch',steps:[...common,['Cancel this schedule only','Cancel schedule','cancel'],['Keep the canceled record','Return to plan','close'],['Preview its original due time','Preview due time','due']]}
+ };
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ function ctx(){return E.ctx();}function plan(){return active&&P.get(active.planId);}function schedule(){return active&&S.list().builds.find(b=>b.schedule_id===active.scheduleId);}
+ function control(action,data={}){
+  const q='[data-action="'+action+'"]'+Object.entries(data).map(([k,v])=>'[data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())+'="'+CSS.escape(String(v))+'"]').join('');
+  const b=[...document.querySelectorAll(q)].find(b=>b.getClientRects().length&&!b.disabled);if(!b)throw Error('Visible control unavailable: '+action);b.scrollIntoView({block:'nearest'});b.click();
+ }
+ function raw(action,data={}){const b=document.createElement('button');Object.assign(b.dataset,data);E.run(action,b,new Event('click'));}
+ function start(flow){
+  if(!flows[flow])return;
+  if(active){const old=plan(),b=schedule();if(old?.status==='building')raw('pd-cancel',{id:old.plan_id});if(b?.state==='active')raw('sched-cancel-build',{id:b.schedule_id});}
+  window.PM56_PLAN_DEMOS.start('complete');const seed=window.PM56_PLAN_DEMOS.snapshot();raw('plan-demo-close');
+  const c=ctx(),t=c.activeThread();t.title=flows[flow].label;
+  active={flow,planId:seed.planId,threadId:seed.threadId,step:0,scheduleId:null,initial:clone(P.get(seed.planId).revisions[1]),events:[],error:null,preview:null};
+  c.renderApp();
+ }
+ function field(name,value){const el=document.querySelector('[data-sched-input="'+name+'"]');if(!el)throw Error('Schedule field unavailable: '+name);el.value=value;el.dispatchEvent(new Event('change',{bubbles:true}));}
+ async function next(){
+  const a=active;if(!a||a.busy)return;const step=flows[a.flow].steps[a.step];if(!step||step[2]==='wait')return;
+  a.busy=true;const pause=()=>new Promise(r=>setTimeout(r,160));
+  try{
+   const p=plan(),kind=step[2];
+   if(kind==='open')control('pd-info',{id:p.plan_id});
+   if(kind==='at'){
+    if(!document.querySelector('.polish-plan-more')){control('pd-more-actions',{id:p.plan_id});await pause();}
+    control('pd-build-at',{id:p.plan_id});
+   }
+   if(kind==='time'){
+    control('sched-set-build-kind',{value:'one_time'});await pause();if(active!==a)return;
+    const date=new Date(Date.now()+86400000).toISOString().slice(0,10);
+    field('build-date',date);field('build-time','10:00');field('build-tz','America/New_York');
+   }
+   if(kind==='save'){
+    control('sched-create-build');const b=S.list().builds.find(b=>b.target_id===p.plan_id);
+    if(!b)throw Error('Schedule was not committed');a.scheduleId=b.schedule_id;
+    if(b.exact_target_hash!==P.hash(p.plan_id)||b.exact_target_version!==p.version)throw Error('Binding does not match the Plan');
+   }
+   if(kind==='close'){
+    control('sched-close-dialog');await pause();if(active!==a)return;
+    const b=document.querySelector('[data-action="pd-more-actions"][data-id="'+p.plan_id+'"][aria-expanded="true"]');if(b)b.click();
+   }
+   if(kind==='revise'){control('pd-revise',{id:p.plan_id});if(innerWidth<=1100)control('return-to-chat');}
+   if(kind==='feedback'){
+    const el=document.querySelector('textarea[data-input="composer"]');el.value='Also verify selection after favorites are reordered.';el.dispatchEvent(new Event('input',{bubbles:true}));control('send');
+    if(p.version!==2||schedule().state!=='invalidated')throw Error('The V1 schedule was not invalidated');
+   }
+   if(kind==='review')control('sched-open-plan-record',{id:a.scheduleId});
+   if(kind==='rebind'){
+    control('sched-rebind-build',{id:a.scheduleId});if(schedule().exact_target_version!==2)throw Error('V2 was not bound');
+   }
+   if(kind==='cancel'){control('sched-cancel-build',{id:a.scheduleId});if(schedule().state!=='canceled')throw Error('Cancellation did not persist');}
+   if(kind==='due'){
+    const b=schedule();a.preview=S.dispatchBuildAt(b.schedule_id,Date.parse(b.scheduled_at_utc),b.revision);
+    if(a.flow==='cancel'){
+     if(a.preview.ok||p.status!=='ready'||p.approved)throw Error('Canceled schedule admitted work');
+    }else if(!a.preview.ok||p.status!=='building')throw Error('Scheduled build was not admitted: '+a.preview.clause);
+   }
+   if(kind==='todos'){
+    control('pd-more-actions',{id:p.plan_id});await pause();if(active!==a)return;control('pd-open-todos',{id:p.plan_id});await pause();if(active!==a)return;control('pd-more-actions',{id:p.plan_id});
+   }
+   a.events.push({step:kind,at:performance.now(),planVersion:p.version,planStatus:p.status,scheduleState:schedule()?.state});a.step++;a.error=null;
+  }catch(err){a.error=String(err.message||err);}finally{a.busy=false;if(active===a)refreshGuide();}
+ }
+ function finished(){if(!active)return false;return active.flow==='due'?active.step>=7&&plan()?.status==='completed':active.step>=flows[active.flow].steps.length;}
+ function guide(c,inDialog,inEditor=false){
+  if(!active||c.state.selectedThread!==active.threadId)return '';
+  if(!!c.state.dialog!==inDialog)return '';
+  const covered=innerWidth<=1100&&c.state.editorRevealed;
+  if(!inDialog&&covered!==inEditor)return '';
+  const a=active,f=flows[a.flow],step=f.steps[a.step],done=finished(),wait=step?.[2]==='wait';
+  const title=done?(a.flow==='due'?'V1 completed · one scheduled build':a.flow==='revise'?'V2 started · V1 unchanged':'Canceled · no build or To-Dos'):step?.[0]||'Inspect result';
+  return '<div class="plan-demo-guide schedule-demo-guide" data-k="schedule-demo-guide"><div><small>Guided demo · '+c.esc(f.label)+(a.preview?' · Due time preview':'')+'</small><strong>'+c.esc(title)+'</strong></div><div class="plan-demo-controls"><button data-action="schedule-demo-'+(done?'replay':'next')+'"'+(!done&&(wait||a.busy)?' disabled':'')+'>'+c.esc(done?'Replay':step?.[1]||'Continue')+'</button><button class="plan-demo-close" data-action="schedule-demo-close" title="Close guide">'+c.icon('close',14)+'</button></div>'+(a.error?'<p role="status">'+c.esc(a.error)+'</p>':'')+'</div>';
+ }
+ // Product controls already rendered their owned surfaces. Updating the guide
+ // must not remount the entire app and restart unrelated transitions.
+ function refreshGuide(){
+  const c=ctx(),inDialog=!!c.state.dialog,inEditor=!inDialog&&innerWidth<=1100&&c.state.editorRevealed;
+  const html=guide(c,inDialog,inEditor),nodes=[...document.querySelectorAll('.schedule-demo-guide')];
+  const node=nodes.find(n=>!!n.closest('.sched-dialog')===inDialog);
+  nodes.filter(n=>n!==node).forEach(n=>n.remove());
+  if(node&&html)node.outerHTML=html;else c.renderApp();
+ }
+ E.slot('composerBelow',c=>guide(c,false));
+ E.action('schedule-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
+ E.action('schedule-demo-next',()=>{next();return true;});
+ E.action('schedule-demo-replay',()=>{if(active)start(active.flow);return true;});
+ E.action('schedule-demo-close',()=>{active=null;ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{active=null;return false;});
+ E.chainAction('plan-demo-start',()=>{active=null;return false;});
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
+ G.gallery=c=>'<section class="demo-section"><h3>Guided Plan scheduling</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="schedule-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_SCHEDULE_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null,dialogGuide:c=>guide(c,true),editorGuide:id=>active&&active.planId===id?guide(ctx(),false,true):''};
+})();
+
+/* Review protocol projection. Uses the existing CollaborativeRun/message store,
+ * To-Do owner and editor host. No provider adapter, file writes, or native runtime.
+ * Only a supplied immutable target enters this executable concept slice. Recorded
+ * demo results enter through the same validated ingress; they are never live AI. */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,C=window.PM56_COLLAB,T=window.PM56_TODOS;
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;};
+ const views=new Map();
+ const dispositions=['confirmed','rejected','duplicate','uncertain'],severities=['critical','major','minor','suggestion'];
+ const ctx=()=>E.ctx(),run=id=>C.run(id),owns=id=>!!run(id)?.review?.protocolVersion;
+ const say=(r,type,body,p)=>C.appendMessage(r.id,{senderKind:p?'participant':'coordinator',senderId:p?.id||null,senderName:p?.role||'Review coordinator',messageType:type,body});
+ const fail=error=>({ok:false,error});
+ const unique=a=>Array.from(new Set(a));
+ function passIsCurrent(r,a){const p=r.participants.find(p=>p.id===a.participantId);return !!(p&&a.status==='completed'&&p.assignmentRevision===a.assignmentRevision&&p.outcome==='completed'&&p.attempts.at(-1)?.attempt_id===a.completionAttemptId);}
+ function admit(r,d){
+  if(!d.reviewTarget)return;
+  const snapshot=clone(d.reviewTarget);snapshot.frozenAt=new Date().toISOString();const target=freeze(snapshot);
+  r.config.autoRepair=false;
+  r.review={protocolVersion:1,phase:'independent',targetPack:target,requestedPasses:r.participants.length,roundNumber:1,
+   passes:r.participants.map(p=>({id:'review-attempt-'+r.id+'-'+p.id,participantId:p.id,assignmentRevision:p.assignmentRevision,
+    epoch:r.stopEpoch,targetHash:target.targetHashes.primary,status:'running',findings:[],
+    input:{targetHash:target.targetHashes.primary,evidenceIds:target.evidence.map(e=>e.id),peerFindings:[],peerIdentities:[]}})),
+   findings:[],excludedFindings:[],duplicates:[],report:null};
+  r.participants.forEach(p=>{p.status='working';p.outcome=null;p.current='Independent inspection of the frozen target';});
+  r.expectedOutputs=[{id:'review-report-'+r.id,delivered:false}];
+  say(r,'message','Frozen '+target.label+'. Independent review contexts contain no peer findings. Recorded example; no provider calls.');
+ }
+ function gate(r,payload){
+  if(!r?.review?.protocolVersion)return 'review_unavailable';
+  if(r.status!=='running')return 'run_not_running';
+  if(payload.epoch!==r.stopEpoch)return 'stale_epoch';
+  if(payload.targetHash!==r.review.targetPack.targetHashes.primary)return 'different_target_hash';
+  return null;
+ }
+ function submitPass(id,payload){
+  const r=run(id),why=gate(r,payload);if(why){if(r?.review)r.review.excludedFindings.push({reason:why,payload:clone(payload)});return fail(why);}
+  const a=r.review.passes.find(a=>a.id===payload.attemptId),p=a&&r.participants.find(p=>p.id===a.participantId);
+  if(!a||!p)return fail('unknown_attempt');
+  if(a.assignmentRevision!==p.assignmentRevision||payload.assignmentRevision!==p.assignmentRevision)return fail('stale_assignment');
+  if(a.status==='completed')return JSON.stringify(a.findings)===JSON.stringify(payload.findings)?{ok:true,reused:true}:fail('conflicting_duplicate_pass');
+  if(r.review.phase!=='independent')return fail('initial_round_closed');
+  const fs=payload.findings;
+  if(!Array.isArray(fs)||fs.some(f=>!f.id||!f.findingKey||!f.claim||!severities.includes(f.severity)||
+      !Array.isArray(f.evidenceRefs)||!f.evidenceRefs.length||f.evidenceRefs.some(id=>!r.review.targetPack.evidence.some(e=>e.id===id))))return fail('invalid_finding_evidence');
+  if(new Set(fs.map(f=>f.id)).size!==fs.length)return fail('duplicate_finding_identity');
+  a.findings=freeze(clone(fs));a.status='completed';a.completedAt=new Date().toISOString();
+  C.setOutcome(r.id,p.id,'completed',{reason:'Recorded independent pass received against the frozen target'});
+  a.completionAttemptId=p.attempts.at(-1).attempt_id;
+  p.current=fs.length+' finding'+(fs.length===1?'':'s')+' submitted';
+  say(r,'pass',p.current,p);
+  return {ok:true,attemptId:a.id};
+ }
+ function normalize(id){
+  const r=run(id);if(!owns(id)||r.status!=='running')return fail('run_not_running');
+  if(r.review.phase!=='independent')return {ok:true,reused:true};
+  if(r.review.passes.some(a=>a.status!=='completed'))return fail('initial_passes_incomplete');
+  if(r.review.passes.some(a=>!passIsCurrent(r,a)))return fail('stale_assignment');
+  const grouped=new Map(),duplicates=[];
+  r.review.passes.forEach(a=>a.findings.forEach(f=>{
+   const rawId=a.id+':'+f.id;let dest=grouped.get(f.findingKey);
+   if(!dest){dest={...clone(f),id:'finding-'+r.id+'-'+(grouped.size+1),originalFindingIds:[],originatingReviewerIds:[],evidenceRefs:[],reviewerVotes:[],disposition:'uncertain',dissent:null};grouped.set(f.findingKey,dest);}
+   else duplicates.push({originalFindingId:rawId,canonicalFindingId:dest.id,participantId:a.participantId,evidenceRefs:clone(f.evidenceRefs)});
+   dest.originalFindingIds.push(rawId);dest.originatingReviewerIds=unique([...dest.originatingReviewerIds,a.participantId]);dest.evidenceRefs=unique([...dest.evidenceRefs,...f.evidenceRefs]);
+  }));
+  r.review.findings=[...grouped.values()];r.review.duplicates=duplicates;
+  r.review.phase=r.participants.length===1?'synthesis':'corroboration';
+  say(r,'message',grouped.size+' distinct findings; '+duplicates.length+' duplicate observation'+(duplicates.length===1?'':'s')+' linked to their original passes.');
+  return {ok:true,findings:r.review.findings.length,duplicates:duplicates.length};
+ }
+ function vote(id,participantId,findingId,decision){
+  const r=run(id),why=gate(r,decision);if(why)return fail(why);
+  if(r.review.phase!=='corroboration'||r.participants.length===1)return fail('no_peer_round');
+  if(!r.participants.some(p=>p.id===participantId))return fail('unknown_participant');
+  const attempt=r.review.passes.find(a=>a.participantId===participantId);
+  if(!attempt||!passIsCurrent(r,attempt))return fail('reviewer_not_current_completed');
+  const f=r.review.findings.find(f=>f.id===findingId);
+  if(!f||!dispositions.includes(decision.disposition)||!decision.reason||!['high','medium','low'].includes(decision.confidence))return fail('invalid_vote');
+  if(!Array.isArray(decision.evidenceRefs)||decision.evidenceRefs.some(id=>!r.review.targetPack.evidence.some(e=>e.id===id)))return fail('invalid_vote_evidence');
+  const record={participantId,disposition:decision.disposition,confidence:decision.confidence,reason:decision.reason,evidenceRefs:clone(decision.evidenceRefs),targetHash:decision.targetHash};
+  const old=f.reviewerVotes.find(v=>v.participantId===participantId);
+  if(old)return JSON.stringify(old)===JSON.stringify(record)?{ok:true,reused:true}:fail('conflicting_duplicate_vote');
+  f.reviewerVotes.push(record);return {ok:true};
+ }
+ function finalize(id,resolutions){
+  const r=run(id);if(!owns(id))return fail('review_unavailable');
+  if(r.review.report)return r.review.resolutionFingerprint===JSON.stringify(resolutions)?{ok:true,reused:true,artifactId:r.review.report.id}:fail('conflicting_finalization');
+  if(r.status!=='running'||!['corroboration','synthesis'].includes(r.review.phase))return fail('review_not_ready');
+  if(r.review.passes.some(a=>!passIsCurrent(r,a)))return fail('stale_assignment');
+  if(!Array.isArray(resolutions)||resolutions.length!==r.review.findings.length)return fail('resolution_coverage');
+  const ids=resolutions.map(x=>x.findingId);if(new Set(ids).size!==ids.length)return fail('duplicate_resolution');
+  for(const f of r.review.findings){
+   const d=resolutions.find(d=>d.findingId===f.id);
+   if(!d||!dispositions.includes(d.disposition)||!d.reason)return fail('invalid_resolution');
+   if(r.participants.length>1&&f.reviewerVotes.length!==r.participants.length)return fail('peer_round_incomplete');
+  }
+  r.review.findings.forEach(f=>{
+   const d=resolutions.find(d=>d.findingId===f.id);f.disposition=d.disposition;f.adjudication=d.reason;
+   const dissent=f.reviewerVotes.filter(v=>v.disposition!==f.disposition);
+   f.dissent=dissent.length?dissent.map(v=>r.participants.find(p=>p.id===v.participantId).role+': '+v.reason).join('\n'):null;
+  });
+  const report=freeze({id:'review-report-'+r.id,kind:'review_report',version:1,runId:r.id,title:r.title,target:clone(r.review.targetPack),
+   strategy:r.config.strategy,roundNumber:r.review.roundNumber,reviewers:r.participants.map(p=>({id:p.id,role:p.role,requestedModel:p.requestedModelName,effectiveModel:p.effectiveModelName,persona:p.effectivePersona})),
+   passes:clone(r.review.passes),findings:clone(r.review.findings),duplicates:clone(r.review.duplicates),
+   summary:r.review.findings.filter(f=>f.disposition==='confirmed').length+' confirmed · '+r.review.findings.filter(f=>f.disposition==='uncertain').length+' uncertain',
+   authority:'Read-only; repairs are a separate explicit action',provenance:'Deterministic recorded example; no live reviewer or provider execution',createdAt:new Date().toISOString()});
+  r.review.resolutionFingerprint=JSON.stringify(resolutions);r.review.report=report;r.review.phase='completed';r.status='completed';r.completedAt=report.createdAt;
+  r.expectedOutputs.forEach(o=>{o.delivered=true;});r.artifacts.push(report);
+  say(r,'message',report.summary+'. Review complete; the target has not been changed.');
+  return {ok:true,artifactId:report.id};
+ }
+ function selected(id){return C.selectedFindings(id);}
+ function toggleFinding(c,b){const r=run(b.dataset.run),f=r?.review?.findings.find(f=>f.id===b.dataset.finding);if(!f||r.status!=='completed'||f.disposition!=='confirmed'||f.todoId)return true;selected(r.id)[f.id]=!selected(r.id)[f.id];c.renderApp();return true;}
+ function createSelectedTodos(c,b){
+  const r=run(b.dataset.run);if(!r?.review)return true;
+  const sel=selected(r.id),ids=Object.keys(sel).filter(id=>sel[id]);
+  const res=T.materializeForReview(r,ids);if(!res.ok){c.toast('To-Dos not created',res.error);return true;}
+  res.items.forEach(x=>{const f=r.review.findings.find(f=>f.id===x.finding_id);f.todoId=x.todo_id;f.convertedToTodo=true;delete sel[f.id];});
+  if(res.created)say(r,'request',res.created+' confirmed finding'+(res.created===1?'':'s')+' converted to pending To-Dos. No repair has started.');
+  c.renderApp();return true;
+ }
+ function sendSelected(c,b){
+  const r=run(b.dataset.run);if(!r||r.status!=='completed')return true;
+  const fs=r.review.findings.filter(f=>selected(r.id)[f.id]&&f.disposition==='confirmed');if(!fs.length)return true;
+  const text='Please address the selected findings from '+r.title+':\n'+fs.map(f=>'- '+f.claim+' [Review '+r.id+' / '+f.id+']').join('\n');
+  const CS=window.PM56_COMPOSER_STATE,buffer=CS?.bufferFor(r.threadId);
+  // Explicitly target the source thread; never send or overwrite another draft.
+  if(buffer?.text){c.toast('Draft already exists','Keep or send the existing draft before inserting findings.');return true;}
+  c.switchThread(r.threadId);window.PM56_RUNTIME.composer.destination=null;
+  c.state.composer=text;c.state.drafts[r.threadId]=text;if(buffer){buffer.text=text;buffer.destination=null;}
+  c.closeDialog();c.state.editorRevealed=false;c.renderApp();return true;
+ }
+ function renderSummary(c,r){
+  const v=r.review,done=v.passes.filter(p=>p.status==='completed').length;
+  return '<div class="review-compact"><div class="review-status-line"><strong>'+c.esc(v.report?v.report.summary:({independent:'Independent review',corroboration:'Comparing findings',synthesis:'Preparing report'}[v.phase]||v.phase))+'</strong><span>'+done+'/'+v.passes.length+' reviewers</span></div><div class="review-caption">'+c.esc(v.targetPack.label)+' · read-only</div>'+(v.report?'<button class="text-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">'+c.icon('document',12)+' Open report · V1</button>':'')+'</div>';
+ }
+ function renderActions(c,r){return '<div class="review-action-row">'+(r.review.report?'<button class="soft-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">Open report</button>':'')+'<button class="soft-button" data-action="collab-review-run-again" data-run="'+c.esc(r.id)+'">Run another review…</button></div>';}
+ function findingHtml(c,r,f){
+  const esc=c.esc,sel=selected(r.id),todo=r.review.findings.find(x=>x.id===f.id)?.todoId;
+  return '<section class="review-finding" data-finding="'+esc(f.id)+'"><div class="review-finding-head">'+(f.disposition==='confirmed'?'<input type="checkbox" aria-label="Select '+esc(f.claim)+'" data-action="collab-review-toggle-finding" data-run="'+esc(r.id)+'" data-finding="'+esc(f.id)+'"'+(sel[f.id]?' checked':'')+(todo?' disabled':'')+'>':'')+'<strong>'+esc(f.claim)+'</strong></div><div class="review-tags"><span>'+esc(f.severity)+'</span><span>'+esc(f.disposition)+'</span><span>'+f.originatingReviewerIds.length+' source '+(f.originatingReviewerIds.length===1?'reviewer':'reviewers')+'</span>'+(todo?'<span>To-Do created</span>':'')+'</div><p>'+esc(f.adjudication)+'</p><div class="review-evidence-links">'+f.evidenceRefs.map(id=>'<button class="text-button" data-action="review-open-evidence" data-run="'+esc(r.id)+'" data-evidence="'+esc(id)+'">'+c.icon('document',11)+' '+esc(r.review.targetPack.evidence.find(e=>e.id===id)?.label||id)+'</button>').join('')+'</div>'+(f.dissent?'<details class="review-dissent"><summary>Dissent retained</summary><p>'+esc(f.dissent).replace(/\n/g,'<br>')+'</p></details>':'')+'</section>';
+ }
+ function markdown(report){
+  return '# '+report.title+'\n\nReview report V'+report.version+' · '+report.target.targetHashes.primary+'\n\n'+report.summary+'\n\n'+report.provenance+'\n\n'+report.authority+'\n\n## Reviewers\n'+report.reviewers.map(p=>'- '+p.role+' · '+p.effectiveModel+' · '+p.persona+' · '+p.id).join('\n')+'\n\n## Findings\n'+report.findings.map(f=>'### '+f.claim+'\n'+f.severity+' · '+f.disposition+'\n\n'+f.adjudication+'\n\nEvidence: '+f.evidenceRefs.join(', ')+'\nOrigins: '+f.originatingReviewerIds.join(', ')+(f.dissent?'\n\nDissent: '+f.dissent:'')).join('\n\n')+'\n\n## Duplicate observations\n'+report.duplicates.map(d=>'- '+d.originalFindingId+' → '+d.canonicalFindingId).join('\n')+(report.reviewers.length>1?'\n\n## Agreement matrix\n'+report.findings.map(f=>f.claim+'\n'+f.reviewerVotes.map(v=>'- '+v.participantId+': '+v.disposition+' · '+v.reason).join('\n')).join('\n\n'):'\n\nSingle reviewer; no peer corroboration is claimed.')+'\n';
+ }
+ function documentHtml(c,id){
+  const r=run(id);if(!r?.review?.report)return '<div class="editor-empty">Review report is not ready.</div>';
+  const a=r.review.report,v=views.get(id)||{},esc=c.esc;
+  const header='<div class="review-doc-meta"><span>Review report · V1</span><span>Read-only</span></div><h1>'+esc(a.title)+'</h1><p class="review-doc-summary">'+esc(a.summary)+'</p><div class="review-doc-toolbar"><button class="soft-button" data-action="review-report-view" data-run="'+esc(id)+'" data-view="'+(v.mode==='markdown'?'rich':'markdown')+'">'+(v.mode==='markdown'?'Rich Text':'Markdown')+'</button><button class="soft-button" data-action="review-export-report" data-run="'+esc(id)+'">Export Markdown</button></div>';
+  let body=v.mode==='markdown'?'<pre class="review-markdown">'+esc(markdown(a))+'</pre>':
+   '<div class="review-target-label"><strong>'+esc(a.target.label)+'</strong><span>Frozen '+esc(a.target.targetHashes.primary)+'</span></div>'+a.findings.slice().sort((x,y)=>(x.disposition==='confirmed'?0:1)-(y.disposition==='confirmed'?0:1)).map(f=>findingHtml(c,r,f)).join('')+
+   '<details class="review-technical"><summary>Reviewers and '+a.passes.length+' independent '+(a.passes.length===1?'pass':'passes')+'</summary>'+a.reviewers.map(p=>'<div class="review-person-row"><strong>'+esc(p.role)+'</strong><span>'+esc(p.effectiveModel)+' · '+esc(p.persona)+'</span><code>'+esc(p.id)+'</code></div>').join('')+'</details>'+
+   (a.reviewers.length>1?'<details class="review-technical"><summary>Agreement and duplicate observations</summary><div class="review-agreement">'+a.findings.map(f=>'<div><strong>'+esc(f.claim)+'</strong>'+f.reviewerVotes.map(v=>'<p>'+esc(a.reviewers.find(p=>p.id===v.participantId).role)+' · '+esc(v.disposition)+'<br><span>'+esc(v.reason)+'</span></p>').join('')+'</div>').join('')+'</div><p>'+a.duplicates.length+' duplicate observation(s); all original finding and reviewer identities retained.</p></details>':'<p class="review-caption">Single reviewer · no peer corroboration</p>');
+  const chosen=a.findings.some(f=>selected(id)[f.id]&&f.disposition==='confirmed'&&!r.review.findings.find(x=>x.id===f.id)?.todoId);
+  const count=r.review.findings.filter(f=>f.todoId).length;
+  const actions='<div class="review-doc-actions">'+(v.mode!=='markdown'?'<button class="soft-button" data-action="collab-review-create-todos" data-run="'+esc(id)+'"'+(!chosen?' disabled':'')+'>Create To-Dos</button><button class="soft-button" data-action="collab-review-send-findings" data-run="'+esc(id)+'"'+(!chosen?' disabled':'')+'>Send findings to Agent</button>':'')+(count?'<button class="soft-button" data-action="review-open-todos" data-run="'+esc(id)+'">Open '+count+' To-Do'+(count===1?'':'s')+'</button>':'')+'<button class="text-button" data-action="collab-review-run-again" data-run="'+esc(id)+'">Run another review…</button></div>';
+  return '<article class="editor-doc review-document" data-review-run="'+esc(id)+'">'+(window.PM56_REVIEW_DEMOS?.editorGuide(id)||'')+header+body+actions+'<p class="review-provenance">'+esc(a.provenance)+'</p></article>';
+ }
+ function evidenceHtml(c,id,eid){
+  const r=run(id),t=r?.review?.targetPack,e=t?.evidence.find(e=>e.id===eid);if(!e)return '<div class="editor-empty">Frozen evidence unavailable.</div>';
+  return '<article class="editor-doc review-document"><button class="text-button" data-action="review-open-report" data-run="'+c.esc(id)+'">'+c.icon('left',12)+' Back to report</button><div class="review-doc-meta">Frozen evidence · '+c.esc(t.targetHashes.primary)+'</div><h1>'+c.esc(e.label)+'</h1><p>'+c.esc(e.note||'Recorded fixture evidence, not production verification.')+'</p><pre class="review-source">'+c.esc(e.content)+'</pre></article>';
+ }
+ function openReport(c,id){if(!run(id)?.review?.report)return;c.closeMenu();c.closeDialog();c.state.editorRevealed=true;c.openEditor('review:'+id);}
+ E.action('review-open-report',(c,b)=>{if(b.dataset.finding)views.set(b.dataset.run,{mode:'rich'});openReport(c,b.dataset.run);if(b.dataset.finding)requestAnimationFrame(()=>document.querySelector('.review-document [data-finding="'+CSS.escape(b.dataset.finding)+'"]')?.scrollIntoView({block:'center'}));return true;});
+ E.action('review-open-evidence',(c,b)=>{c.closeDialog();c.state.editorRevealed=true;c.openEditor('review-evidence:'+b.dataset.run+':'+b.dataset.evidence);return true;});
+ E.action('review-report-view',(c,b)=>{views.set(b.dataset.run,{mode:b.dataset.view});c.renderApp();return true;});
+ E.action('review-open-todos',(c,b)=>{const r=run(b.dataset.run);if(!r)return true;c.closeDialog();c.switchThread(r.threadId);c.state.editorRevealed=false;Object.assign(c.state.activity,{open:true,pinned:true,domain:'todo',scope:'focus',selected:null});c.renderApp();return true;});
+ E.action('review-export-report',(c,b)=>{const a=run(b.dataset.run)?.review?.report;if(!a)return true;const u=URL.createObjectURL(new Blob([markdown(a)],{type:'text/markdown;charset=utf-8'})),link=document.createElement('a');link.href=u;link.download=a.id+'-v1.md';link.click();setTimeout(()=>URL.revokeObjectURL(u),1000);return true;});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('review:')?(run(c.editorId.slice(7))?.title||'Review'):c.editorId?.startsWith('review-evidence:')?'Review evidence':'');
+ E.slot('editorDocument',c=>{if(c.editorId?.startsWith('review:'))return documentHtml(c,c.editorId.slice(7));if(c.editorId?.startsWith('review-evidence:')){const [id,...eid]=c.editorId.slice(16).split(':');return evidenceHtml(c,id,eid.join(':'));}return '';});
+ E.chainAction('collab-open-configure',(c,b,e)=>{const old=run(b.dataset.reconfigure);if(old?.review?.report){const el=document.createElement('button');el.dataset.run=old.id;E.run('collab-review-run-again',el,e);return true;}return false;});
+ E.chainAction('reset-all',()=>{views.clear();return false;});
+ window.PM56_REVIEW={admit,owns,submitPass,normalize,vote,finalize,renderSummary,renderActions,toggleFinding,createSelectedTodos,sendSelected,markdown,openReport};
+})();
+
+/* Gallery-only recorded examples. The deterministic fixture evaluates its actual
+ * source to produce test evidence. Human-readable reviewer observations are
+ * recorded examples, not generated model output. Normal product controls start,
+ * inspect, export and convert. One bounded replay clock feeds the Review owner. */
+(function(){
+ 'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,P=window.PM56_REVIEW;
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const flows={single:{label:'Single Agent Review',summary:'One reviewer → evidence → read-only report'},multi:{label:'Multi-Pass Review',summary:'Three independent passes → dissent → selected To-Dos'}};
+ function checksum(text){let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return 'demo-fnv1a-'+(h>>>0).toString(16).padStart(8,'0');}
+ function fixture(kind){
+  const source='function filterEntries(entries, query) {\n  const q = query.toLowerCase();\n  return entries.filter(e => e.label.toLowerCase().includes(q))'+(kind==='multi'?'.sort((a, b) => a.label.localeCompare(b.label))':'')+';\n}';
+  // Only this literal developer-owned fixture is evaluated, never user input.
+  const filter=Function('"use strict";'+source+'; return filterEntries;')();
+  const entries=[{id:'z',label:'Zeta'},{id:'a',label:'Alpha'}],spaces=filter(clone(entries),'  alpha  ').map(x=>x.id),order=filter(clone(entries),'').map(x=>x.id);
+  const constraints=['Ignore surrounding spaces in the query.','Preserve the supplied ranking of matching entries.','Review only; do not change the target.'];
+  const tests='Fixture checks (actual output from the shown source)\n\nQuery: "  alpha  "\nExpected IDs: ["a"]\nActual IDs: '+JSON.stringify(spaces)+'\n\nQuery: ""\nExpected IDs: ["z","a"]\nActual IDs: '+JSON.stringify(order);
+  const evidence=[{id:'source',label:'filterEntries.js · L2–3',content:source,note:'Immutable source snapshot from this recorded example.'},
+   {id:'tests',label:'Query and ordering checks',content:tests,note:'Computed locally from this exact fixture source; not a production test run.'},
+   {id:'criteria',label:'Review criteria',content:constraints.map((x,i)=>(i+1)+'. '+x).join('\n'),note:'The acceptance criteria supplied with the frozen review target.'},
+   {id:'performance',label:'Performance evidence',content:'No latency or workload measurements were supplied. No performance claim can be confirmed from this pack.',note:'An evidence gap is retained as uncertainty, not a failed reviewer.'}];
+  const hash=checksum(JSON.stringify({source,constraints,evidence}));
+  return {targetKind:'diff',label:'Search filter · filterEntries.js',targetRefs:['fixture:filterEntries.js'],targetHashes:{primary:hash},
+   frozenAt:null,userConstraintRefs:['criteria'],acceptanceRefs:['tests'],source,evidence,hashKind:'demo-only noncryptographic checksum',fixtureKind:kind};
+ }
+ function draftTarget(kind){const d=C.draft();d.name=kind==='single'?'Search query review':'Search ranking review';d.purpose='Check matching and ranking without editing the source.';d.reviewTarget=fixture(kind);}
+ function start(kind){
+  if(!flows[kind])return;const c=E.ctx();
+  if(active?.runId){const r=C.run(active.runId);if(r?.status==='running'||r?.status==='paused'){const b=document.createElement('button');b.dataset.run=r.id;E.run('collab-cancel',b,new Event('click'));}stopClock(active.runId);}
+  window.PM56_PLAN_DEMOS?.close?.();
+  const tid='review-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));
+  Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:'Review the search filter. Show supporting evidence and leave the source unchanged.'}]});
+  c.state.threads.push(base);Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});
+  c.state.capabilities.goal=false;c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
+  window.PM56_RUNTIME.composer.destination=null;
+  active={kind,threadId:tid,runId:null,stage:'configure',played:false,reportOpened:false,markdownSeen:false,evidenceSeen:false,todosSeen:false,errors:[],events:[]};
+  c.switchThread(tid);C.openConfigure('review');draftTarget(kind);
+  // Initial scenario configuration; all subsequent edits use the normal shared pickers.
+  const d=C.draft();d.config.strategy=kind==='single'?'single_agent':'multi_pass';C.normalizeReview(d);
+  if(kind==='multi')d.rows.forEach(r=>{r.requestedModelId='sonnet46';});
+  c.openDialog({type:'collab-configure'});c.renderApp();
+ }
+ function stopClock(id){const a=clocks.get(id);if(a){a.timers.forEach(clearTimeout);clocks.delete(id);}}
+ function bound(){if(!active)return null;return active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>r.kind==='review'&&r.review?.protocolVersion);}
+ function current(){const r=bound();if(r&&active&&!active.runId)active.runId=r.id;return r;}
+ function observed(kind){
+  const trim={id:'spaces',findingKey:'trim-query',category:'correctness',severity:'minor',claim:'Padded queries miss valid entries',evidenceRefs:['source','tests'],proposedRemediation:'Trim the query before matching',expectedOutcome:'The query "  alpha  " returns entry a.',};
+  const order={id:'order',findingKey:'preserve-ranking',category:'correctness',severity:'minor',claim:'Matching entries lose their supplied ranking',evidenceRefs:['source','tests','criteria'],proposedRemediation:'Preserve input order when filtering',expectedOutcome:'An empty query retains [z, a] in the supplied order.'};
+  const perf={id:'perf',findingKey:'pre-index-search',category:'performance',severity:'suggestion',claim:'Pre-indexing may help large lists',evidenceRefs:['performance'],proposedRemediation:'Measure list-search latency before adding an index',expectedOutcome:'A representative benchmark establishes whether indexing is needed.'};
+  return kind==='single'?[[trim]]:[[trim],[{...clone(trim),id:'spacing-confirmed'},perf],[order]];
+ }
+ function play(){
+  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
+  const session=active;session.played=true;session.stage='playing';const clock={timers:[],runId:r.id};clocks.set(r.id,clock);
+  const expected=r.stopEpoch,results=observed(session.kind);
+  function after(ms,fn){clock.timers.push(setTimeout(()=>{
+   if(clocks.get(r.id)!==clock)return;
+   if(r.status!=='running'||r.stopEpoch!==expected){stopClock(r.id);session.errors.push('Replay stopped at a changed lifecycle boundary');E.ctx().renderApp();return;}
+   try{const res=fn();if(res&&!res.ok)throw Error(res.error);session.events.push({at:performance.now(),phase:r.review.phase});}
+   catch(e){session.errors.push(String(e.message||e));stopClock(r.id);}
+   E.ctx().renderApp();
+  },ms));}
+  r.review.passes.forEach((a,i)=>after(1200+i*500,()=>P.submitPass(r.id,{attemptId:a.id,assignmentRevision:a.assignmentRevision,epoch:expected,targetHash:r.review.targetPack.targetHashes.primary,findings:clone(results[i%results.length])})));
+  after(3000,()=>P.normalize(r.id));
+  if(r.participants.length>1)after(4200,()=>{
+   for(const f of r.review.findings)for(let i=0;i<r.participants.length;i++){
+    let disposition='confirmed',reason='The frozen source and fixture checks reproduce the mismatch.';
+    if(f.findingKey==='preserve-ranking'&&i===1){disposition='uncertain';reason='Alphabetical ordering could be intentional; confirm that the supplied ranking is the required order.';}
+    if(f.findingKey==='pre-index-search'){disposition=i===1?'rejected':'uncertain';reason=i===1?'An index is not justified by the supplied evidence.':'No representative latency measurements are in this target pack.';}
+    const result=P.vote(r.id,r.participants[i].id,f.id,{epoch:expected,targetHash:r.review.targetPack.targetHashes.primary,disposition,confidence:disposition==='confirmed'?'high':'low',reason,evidenceRefs:f.evidenceRefs});if(!result.ok)return result;
+   }return {ok:true};
+  });
+  after(r.participants.length>1?5400:4200,()=>{
+   const result=P.finalize(r.id,r.review.findings.map(f=>({findingId:f.id,disposition:f.findingKey==='pre-index-search'?'uncertain':'confirmed',reason:f.findingKey==='pre-index-search'?'Keep this as an open suggestion until a representative benchmark exists.':f.findingKey==='preserve-ranking'?'The supplied criterion explicitly requires the original ranking, and the fixture shows that sorting changes it.':'The exact source lowercases without trimming. The padded-query check returns no entries instead of a.'})));
+   if(result.ok){session.stage='inspect';stopClock(r.id);}return result;
+  });
+  E.ctx().renderApp();
+ }
+ function finished(){const r=current();return !!(active&&r?.status==='completed'&&active.reportOpened&&active.markdownSeen&&active.evidenceSeen&&(active.kind==='single'||active.todosSeen));}
+ function guide(c,inDialog=false,inEditor=false){
+  if(!active||c.state.selectedThread!==active.threadId||!!c.state.dialog!==inDialog)return '';
+  if(inDialog&&(C.draft()?.kind!=='review'||active.runId))return '';
+  if(!inDialog&&(innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
+  const r=current(),done=finished();
+  let text=!r?'Configure the reviewers, then Start Review.':!active.played?'Play the recorded passes against the frozen target.':r.status!=='completed'?'Independent passes → findings → report.':!active.reportOpened?'Open the report to inspect the findings.':!active.evidenceSeen?'Open a cited evidence item.':!active.markdownSeen?'Switch the report to Markdown.':active.kind==='multi'&&!active.todosSeen?'Select confirmed findings, create To-Dos, then open them.':'Workflow complete. The target is unchanged.';
+  if(active.errors.length)text='Recorded playback stopped. Replay starts a fresh example.';
+  const action=(done||active.errors.length)?'replay':r&&!active.played?'play':null;
+  return '<div class="review-demo-guide" data-k="review-demo-guide"><div><small>Recorded example · no provider calls</small><strong>'+c.esc(text)+'</strong></div><div class="review-demo-controls">'+(action?'<button class="soft-button" data-action="review-demo-'+action+'">'+(done?'Replay':'Play recorded passes')+'</button>':'')+'<button class="icon-button" data-action="review-demo-close" title="Close guide">'+c.icon('close',12)+'</button></div>'+(active.errors.length?'<p role="status">'+c.esc(active.errors.join('; '))+'</p>':'')+'</div>';
+ }
+ function note(action){E.chainAction(action,(c,b)=>{const r=current();if(r&&b.dataset.run===r.id){if(action==='review-open-report')active.reportOpened=true;if(action==='review-open-evidence')active.evidenceSeen=true;if(action==='review-report-view'&&b.dataset.view==='markdown')active.markdownSeen=true;if(action==='review-open-todos')active.todosSeen=true;}return false;});}
+ ['review-open-report','review-open-evidence','review-report-view','review-open-todos'].forEach(note);
+ E.slot('composerBelow',c=>guide(c));
+ E.action('review-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
+ E.action('review-demo-play',()=>{play();return true;});
+ E.action('review-demo-replay',()=>{if(active)start(active.kind);return true;});
+ E.action('review-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ ['plan-demo-start','schedule-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
+ G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_REVIEW_DEMOS={start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
 })();
 </script>
   <script>(() => {

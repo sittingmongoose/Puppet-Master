@@ -22838,7 +22838,7 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 
 <style id="pm7-onboarding-css">
 /* PMX Onboarding — cinematic two-pane setup ("First Day"). Scoped to #pm7-onboarding. */
-#pm7-onboarding{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:28px}
+#pm7-onboarding{position:fixed;inset:0;z-index:2147482000;display:flex;align-items:center;justify-content:center;padding:28px}
 #pm7-onboarding[hidden]{display:none!important}
 .pmx-scrim{position:absolute;inset:0;background:rgba(8,10,16,.58);backdrop-filter:blur(10px) saturate(1.1);-webkit-backdrop-filter:blur(10px) saturate(1.1)}
 .pmx-window{position:relative;width:min(920px,100%);max-height:min(640px,calc(100vh - 56px));display:flex;flex-direction:column;border-radius:22px;overflow:hidden;
@@ -22990,7 +22990,7 @@ html[data-theme^="retro"] .pmx-float,html[data-theme^="retro"] .pmx-drift{animat
 html[data-motion="reduced"] #pm7-onboarding .pmx-window,html[data-motion="reduced"] #pm7-onboarding .pmx-scrim,html[data-motion="reduced"] #pm7-onboarding .pmx-anim-in{animation:none}
 html[data-motion="reduced"] #pm7-onboarding .pmx-float,html[data-motion="reduced"] #pm7-onboarding .pmx-drift,html[data-motion="reduced"] #pm7-onboarding .pmx-twinkle,html[data-motion="reduced"] #pm7-onboarding .pmx-stepblink,html[data-motion="reduced"] #pm7-onboarding .pmx-phase[data-s="run"] .pmx-ring{animation:none}
 html[data-motion="reduced"] #pm7-onboarding .pmx-tick i{transition:none}
-#pm7-onboarding-resume{position:fixed;right:18px;bottom:18px;z-index:1200}
+#pm7-onboarding-resume{position:fixed;right:18px;bottom:18px;z-index:2147482000}
 
 </style>
 
@@ -23298,9 +23298,16 @@ html[data-motion="reduced"] #pm7-guided-tour .pmx-ch i{transition:none}
       if (mask && r) { mask.setAttribute('x', r.left - 10); mask.setAttribute('y', r.top - 10); mask.setAttribute('width', r.width + 20); mask.setAttribute('height', r.height + 20); mask.setAttribute('rx', 16); }
     }
   }
+  var pmxTourShellReady = false;
+  function ensurePmxTourShell() {
+    if (pmxTourShellReady) return;
+    root.innerHTML = '<div class="pmx-spot"><svg preserveAspectRatio="none" viewBox="0 0 ' + innerWidth + ' ' + innerHeight + '"><defs><mask id="pmx-mask"><rect width="100%" height="100%" fill="white"/><rect class="pmx-hole" x="0" y="0" width="0" height="0" rx="16" fill="black"/></mask></defs><rect width="100%" height="100%" fill="black" fill-opacity=".62" mask="url(#pmx-mask)"/></svg></div><div class="pmx-halo" style="opacity:0"></div><section class="pmx-card" role="dialog" aria-label="Guided tour"></section>';
+    pmxTourShellReady = true;
+  }
   function render() {
     var step = STEPS[state.idx];
     if (!step) return;
+    ensurePmxTourShell();
     var ch = CHAPTERS.map(function (c, i) { return '<span class="pmx-ch' + (i <= step.ch ? ' done' : '') + '"><i></i></span>'; }).join('');
     var cardSide = 'right:24px;bottom:24px';
     try {
@@ -23309,17 +23316,17 @@ html[data-motion="reduced"] #pm7-guided-tour .pmx-ch i{transition:none}
     } catch (e) {}
     var isLast = state.idx === STEPS.length - 1, isFirst = state.idx === 0;
     var primary = isLast ? 'Finish tour' : (step.id === 'ask' || step.id === 'arrange' || step.id === 'widget' || step.id === 'plan') ? 'Show me' : 'Continue';
-    root.innerHTML =
-      '<div class="pmx-spot"><svg preserveAspectRatio="none" viewBox="0 0 ' + innerWidth + ' ' + innerHeight + '"><defs><mask id="pmx-mask"><rect width="100%" height="100%" fill="white"/><rect class="pmx-hole" x="0" y="0" width="0" height="0" rx="16" fill="black"/></mask></defs><rect width="100%" height="100%" fill="black" fill-opacity=".62" mask="url(#pmx-mask)"/></svg></div>' +
-      '<div class="pmx-halo" style="opacity:0"></div>' +
-      '<section class="pmx-card" role="dialog" aria-label="Guided tour" style="' + cardSide + '">' +
-      '<div class="pmx-chapters">' + ch + '</div>' +
+    var card = root.querySelector('.pmx-card');
+    if (card) {
+      card.style.cssText = cardSide;
+      card.innerHTML = '<div class="pmx-chapters">' + ch + '</div>' +
       '<p class="pmx-k">' + esc(step.kicker) + '</p><h2 class="pmx-t">' + esc(step.title) + '</h2>' +
       '<p class="pmx-c">' + step.copy + '</p>' + (step.extra ? step.extra() : '') +
       '<div class="pmx-t-actions"><button type="button" class="pmx-t-primary" data-pmx-t="primary" data-ui-action-id="ui.guided_tour.next">' + esc(primary) + '</button>' +
       (isFirst ? '' : '<button type="button" class="pmx-t-ghost" data-pmx-t="back" data-ui-action-id="ui.guided_tour.back">Back</button>') + '</div>' +
       '<div class="pmx-t-row"><button type="button" class="pmx-t-link" data-pmx-t="skip" data-ui-action-id="ui.guided_tour.skip">Skip tour</button>' +
-      '<span class="pmx-k">Step ' + (state.idx + 1) + ' of ' + STEPS.length + '</span></div></section>';
+      '<span class="pmx-k">Step ' + (state.idx + 1) + ' of ' + STEPS.length + '</span></div>';
+    }
     track();
   }
   /* ---------- Show-Me choreography: pre-cue, travel, arrival, settle ---------- */
@@ -69809,9 +69816,11 @@ policies for tenant isolation, and add migration script.</textarea>
       var raw = localStorage.getItem(LS_KEY);
       if (!raw) return false;
       var d = JSON.parse(raw);
-      if (!d || d.completed) return false;
+      if (!d) return false;
+      if (d.completed) { state.completed = true; state.suspended = false; return false; }
       state.step = d.step || 'welcome'; state.view = d.view || 'main';
       state.draft = Object.assign(freshDraft(), d.draft || {});
+      state.completed = !!d.completed;
       state.suspended = true;
       return true;
     } catch (e) { return false; }
@@ -69985,7 +69994,18 @@ policies for tenant isolation, and add migration script.</textarea>
     var idx = TICKS.indexOf(state.step === 'creating' ? 'review' : state.step);
     return TICKS.map(function (t, i) { return '<span class="pmx-tick' + (i <= idx ? ' done' : '') + '"><i></i></span>'; }).join('');
   }
+  var pmxShellReady = false;
+  function ensurePmxShell() {
+    if (pmxShellReady) return;
+    root.innerHTML = '<div class="pmx-scrim" data-pmx="scrim"></div><section class="pmx-window" role="dialog" aria-modal="true" aria-labelledby="pmx-title">' +
+      '<header class="pmx-top"><span class="pmx-brand"><span class="pmx-mark">PM</span>Setup</span><span class="pmx-top-sp"></span><span class="pmx-themes" role="group" aria-label="Preview a theme"></span>' +
+      '<button type="button" class="pmx-quiet" data-pmx="later" data-ui-action-id="ui.onboarding.defer">Do this later</button>' +
+      '<button type="button" class="pmx-quiet" data-pmx="skip" data-ui-action-id="ui.onboarding.skip">Skip setup</button></header>' +
+      '<div class="pmx-body"><div class="pmx-art"></div><div class="pmx-main"></div></div><footer class="pmx-foot"></footer></section>';
+    pmxShellReady = true;
+  }
   function render() {
+    ensurePmxShell();
     var v = VIEWS[key()] || VIEWS.welcome;
     var body = v.body();
     root.dataset.screen = state.step;
@@ -69993,21 +70013,14 @@ policies for tenant isolation, and add migration script.</textarea>
     var dots = THEMES.map(function (t) {
       return '<button type="button" class="pmx-theme-dot" data-pmx="theme" data-theme-name="' + t + '" title="' + t + '" aria-pressed="' + String(themeName() === t) + '" aria-label="Use ' + t + ' theme"><span style="background:' + THEME_SWATCH[t] + '"></span></button>';
     }).join('');
-    root.innerHTML =
-      '<div class="pmx-scrim" data-pmx="scrim"></div>' +
-      '<section class="pmx-window" role="dialog" aria-modal="true" aria-labelledby="pmx-title">' +
-      '<header class="pmx-top"><span class="pmx-brand"><span class="pmx-mark">PM</span>Setup</span><span class="pmx-top-sp"></span>' +
-      '<span class="pmx-themes" role="group" aria-label="Preview a theme">' + dots + '</span>' +
-      '<button type="button" class="pmx-quiet" data-pmx="later" data-ui-action-id="ui.onboarding.defer">Do this later</button>' +
-      '<button type="button" class="pmx-quiet" data-pmx="skip" data-ui-action-id="ui.onboarding.skip">Skip setup</button></header>' +
-      '<div class="pmx-body"><div class="pmx-art">' + artHtml() + '</div>' +
-      '<div class="pmx-main"><p class="pmx-kicker pmx-anim-in">' + v.kicker + '</p>' +
+    $('.pmx-themes', root).innerHTML = dots;
+    $('.pmx-art', root).innerHTML = artHtml();
+    $('.pmx-main', root).innerHTML = '<p class="pmx-kicker pmx-anim-in">' + v.kicker + '</p>' +
       '<h1 class="pmx-title pmx-anim-in d1" id="pmx-title">' + v.title + '</h1>' +
-      '<p class="pmx-sub pmx-anim-in d2">' + v.sub + '</p>' + body + '</div></div>' +
-      '<footer class="pmx-foot"><button type="button" class="pmx-back" data-pmx="back" data-ui-action-id="ui.onboarding.back"' + (state.history.length ? '' : ' disabled') + '>‹ Back</button>' +
+      '<p class="pmx-sub pmx-anim-in d2">' + v.sub + '</p>' + body;
+    $('.pmx-foot', root).innerHTML = '<button type="button" class="pmx-back" data-pmx="back" data-ui-action-id="ui.onboarding.back"' + (state.history.length ? '' : ' disabled') + '>‹ Back</button>' +
       '<div class="pmx-track" aria-hidden="true">' + tickHtml() + '</div>' +
-      '<span class="pmx-count">' + (TICKS.indexOf(state.step === 'creating' ? 'review' : state.step) + 1) + ' of ' + TICKS.length + '</span></footer>' +
-      '</section>';
+      '<span class="pmx-count">' + (TICKS.indexOf(state.step === 'creating' ? 'review' : state.step) + 1) + ' of ' + TICKS.length + '</span>';
     var input = $('.pmx-main input[data-autofocus]', root) || $('.pmx-main input', root);
     if (input && !state.busy) { try { input.focus({ preventScroll: true }); } catch (e) {} }
     persist();
@@ -70416,8 +70429,8 @@ policies for tenant isolation, and add migration script.</textarea>
   function close(reason) {
     state.session++;
     state.open = false; state.busy = false; state.phases = [];
-    if (reason === 'complete') { state.completed = true; state.suspended = false; }
-    else if (reason === 'skip') { state.completed = true; state.suspended = false; }
+    if (reason === 'complete') { state.completed = true; state.suspended = false; try { localStorage.setItem('pmx.firstday.done', '1'); } catch (e) {} }
+    else if (reason === 'skip') { state.completed = true; state.suspended = false; try { localStorage.setItem('pmx.firstday.done', '1'); } catch (e) {} }
     else { state.suspended = true; }
     root.hidden = true;
     root.dataset.open = 'false';

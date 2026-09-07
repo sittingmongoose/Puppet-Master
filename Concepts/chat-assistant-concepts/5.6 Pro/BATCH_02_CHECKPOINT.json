@@ -1,0 +1,168 @@
+{
+  "batch_id": "assistant-demo-b02-plan-scheduling",
+  "status": "COMPLETED_BOUNDED_FUNCTIONAL_AND_FRAME_REVIEW_WITH_CADENCE_LIMITS",
+  "base_commit": "61cd18bb26c060982f709953b2495e9fd81a3543",
+  "previous_batch_html_sha256": "4fdd4ffd0917825d13e60ea9d2543382abcf5df36b98ca7993044071ddd1248c",
+  "html_sha256": "d6fa6c2e47515ceea45152b12daf04839d0b5a5096d7fc1068fd43a01559c8be",
+  "html_normalized_sha256": "78ed55f683e158703147c56b74f36057ebaf14dc9f8499f3dcf7e305e44eeab1",
+  "html_git_blob": "7b6193cea9d0c39aa408d426d97b477128676c34",
+  "scenario_ids": [
+    "B02-DUE",
+    "B02-REVISE",
+    "B02-CANCEL"
+  ],
+  "functional_checks": 153,
+  "prior_batch_regression_checks": 18,
+  "recording_checks": 58,
+  "recorded_frames": 1932,
+  "frame_review_method": "Traversed every decoded source frame in consecutive indexed contact sheets (30 frames per full sheet), plus nine selected source frames at native 1280x900. Not every frame was individually inspected at native resolution.",
+  "recording_dimensions": [
+    1280,
+    900
+  ],
+  "recording_sampling_target_hz": 60,
+  "recording_timing": "Actual variable acquisition PTS retained at 1/60000 precision; no interpolation or CFR conversion. See per-recording cadence.",
+  "render_timing": {
+    "due": {
+      "median_ms": 16.69999999999891,
+      "max_ms": 150.10000000000036,
+      "intervals_over_25ms": 29
+    },
+    "revise": {
+      "median_ms": 16.700000000000728,
+      "max_ms": 150.10000000000036,
+      "intervals_over_25ms": 48
+    },
+    "cancel": {
+      "median_ms": 16.700000000000728,
+      "max_ms": 166.70000000000073,
+      "intervals_over_25ms": 33
+    }
+  },
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "governance_modified": false,
+  "protected_working_sources_unchanged": [
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "completed_work": [
+    "Three discoverable, guided scheduling workflows use product controls after fixture initialization.",
+    "Direct Build At with content binding, stale-edit fencing and duplicate-create protection.",
+    "Explicit one-time gallery due-time preview revalidates and admits through the Plan owner.",
+    "Revision invalidation stays stale until explicit rebind; cancel and immediate Build prevent future scheduled admission.",
+    "Focused schedule detail and compact Plan summary; guide placement handles narrow editor.",
+    "Guide refresh avoids redundant whole-app remounts after product-owned actions."
+  ],
+  "next_batch": {
+    "id": "assistant-demo-b03-review",
+    "proposed_scope": [
+      "Meaningful completed Single Agent Review",
+      "Multi-Pass findings, disagreement and explicit To-Do conversion"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "remaining_scheduling": [
+    "Recurring windows/wind-down/DST lifecycle",
+    "Crew and Goal topology scheduling",
+    "Complete durable Held/Failed/fallback/tool admission contract",
+    "Real background scheduling and persistence across reload"
+  ],
+  "open_global": [
+    "Full 551-row / 67-group meaningful-demo acceptance",
+    "All-feature/all-animation 60fps frame review",
+    "Native runtime and full repository gate failures"
+  ],
+  "limitations": [
+    "Due time is an explicit gallery preview, not real background wait or global clock override.",
+    "Plan content checksum is demo-only, not cryptographic.",
+    "Fresh about:blank/set_content harness; persistent-origin restart not covered.",
+    "Recordings cover 1280x900 default theme; 900/700 form checks are not full narrow-workflow certification.",
+    "All source frames inspected in indexed contact sheets, selected frames at native size, not all individually at native size.",
+    "Capture and browser render cadence vary; 60 sampling target does not establish smooth 60 fresh frames per second.",
+    "Earlier candidate capture attempts are retained as pilots, not accepted final source evidence."
+  ],
+  "motion_quality_verdict": "REVIEWED_WITH_OPEN_PERFORMANCE_AND_PRESENTATION_FINDINGS",
+  "open_visual_findings": [
+    {
+      "id": "B02-M01",
+      "status": "OPEN",
+      "kind": "performance",
+      "finding": "requestAnimationFrame gaps reach 150.1ms (due/revise) and 166.7ms (cancel) in instrumented captured runs. Capture averages ~60 samples/s, not proof of smooth 60 fresh browser frames/s. Host capture load versus app contribution not isolated.",
+      "next": "Profile same source without recording and isolate whole-app rendering before any broad rewrite."
+    },
+    {
+      "id": "B02-V01",
+      "status": "OPEN",
+      "kind": "presentation",
+      "finding": "Existing completion capsule squeezes the title into short wrapped lines when pinned To-Dos narrows the transcript. See due source frame783.",
+      "next": "Bounded shared terminal-capsule responsive-layout pass; preserve action access."
+    },
+    {
+      "id": "B02-V02",
+      "status": "OPEN",
+      "kind": "presentation",
+      "finding": "Existing notification stack can cover part of composer after Schedule/Cancel; see cancel source frame340. It clears by final state.",
+      "next": "Bounded notification placement/deduplication test; do not claim zero transient occlusion."
+    },
+    {
+      "id": "B02-V03",
+      "status": "OPEN",
+      "kind": "demo ergonomics",
+      "finding": "Guide duplicates the visible product action (e.g. Schedule build) and navigation animates quickly in short recordings. Actual product action is still executed, but this is not final teaching/presentation polish.",
+      "next": "Consider guide focus/highlight rather than duplicate button when the product control is already visible; improve reading dwell in final showcase captures."
+    }
+  ],
+  "native_frames_reviewed": 9,
+  "reviewed_contact_sheets": 67,
+  "capture_average_rate_note": "Approximately 60 sampled frames/s with actual variable timestamps; browser render gaps remain."
+}

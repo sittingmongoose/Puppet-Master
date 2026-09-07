@@ -1,6 +1,6 @@
 {
-  "delivery": "assistant-plan-demo-batch-01",
-  "basis": "Published main 26dbc13b38fcab2fc4a38f6f6cd0d5464e2abd77",
+  "delivery": "assistant-review-demo-batch-03",
+  "basis": "Supplied Batch 2 + bounded Review repair; source main check 010df9c7ff318b8e4fd7d321ba78986c44cceccb",
   "basis_zip_sha256": "d69edae910924fc3c8a1e7b8339125905cdd8f7dd60aad49a5225f6363631f64",
   "canonical_plans_modified": false,
   "protected_working_sources": [
@@ -62,37 +62,104 @@
       "sha256": "cf0cae593a3d47891539cec3b87e02ed722c116817b14543d4cc72ba69e919f3",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_CHECKPOINT.json",
       "bytes": 3294,
       "sha256": "639c1a0ff65a26a6fd09b56d8d18412d35f3b09b0830527afc48c8986652511b",
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_README.md",
       "bytes": 5450,
       "sha256": "a0f1e6a488d9d14660d908d8450bec24b363ab6836fdbbe39b85bff94d8736c4",
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_02_CHECKPOINT.json",
+      "bytes": 7778,
+      "sha256": "ad64393f8139d3a618e52fb7b05487c634333c9919f9dd82794db15cdfd89289",
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_02_README.md",
+      "bytes": 1498,
+      "sha256": "561a1a6aae6a549edc4080bbc0734a030f0401f4d1a6592c73e3a64ce4e73fc8",
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_CHECKPOINT.json",
+      "bytes": 10778,
+      "sha256": "33be13f0afd7f03ecb06c4af7adc6917a35eb6e86c8129dc340ca6f626aebb9e",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_README.md",
+      "bytes": 7930,
+      "sha256": "80c56c5a89ab45ea1ffb904c30de99697dc0b81f2b5ad2f84a59dd53e93c8f78",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html",
-      "bytes": 2825969,
-      "sha256": "4fdd4ffd0917825d13e60ea9d2543382abcf5df36b98ca7993044071ddd1248c",
+      "bytes": 2883399,
+      "sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/README.md",
-      "bytes": 2234,
-      "sha256": "a78a129f9d1c0d925891b596dbc8f182235ce304a23489433dc7ecc788bc9628",
+      "bytes": 2413,
+      "sha256": "3b67b1c02c7a39e34290d99a4997c3039160a24ae2533d547003e8ca92d6592b",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/RELEASE_NOTES.md",
@@ -100,7 +167,13 @@
       "sha256": "640ec5d2ded146604c93bd525b3b2da5d7683bd2826d0e40381cc9d9ec621676",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/REPAIR_STATUS.md",
@@ -108,7 +181,13 @@
       "sha256": "7cc6dbc26cf159c51676c0e07bb1b0704752bb696e37c1e0fe98481f59957aa4",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.css",
@@ -116,7 +195,13 @@
       "sha256": "c0acffb1757b958cd956e6a40c37e80e0c25ef12d40fea6cd62f066ba3e82f33",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.js",
@@ -124,7 +209,13 @@
       "sha256": "44fdc3cab873fab8a7ee957908cfc8cfc22996f6a9cbb9710415cf37b2db3765",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.css",
@@ -132,7 +223,13 @@
       "sha256": "fcb6f3fee3659e5c4a0508ac8289e0e129e8a2b93615098ca1fc481ec61f0986",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
@@ -140,7 +237,13 @@
       "sha256": "fae749a66e243edcd7b351f72b28bb3e22bdff531783feddbbdd2f9e05337021",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -148,7 +251,13 @@
       "sha256": "7842cb3ea9894395f3413a5794f920698171f364d730218ac5b5234015c2c709",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assistant-features.css",
@@ -156,7 +265,13 @@
       "sha256": "ac9fe310a7f6cde6f027674ee02c197ff65e4d10bd6d0c5313672d05fa0e6149",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assistant-features.js",
@@ -164,7 +279,13 @@
       "sha256": "697bdb02f69c60f18f628c6583408c52fc2545a85b35f10c54f30d35524c7547",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/attachments.css",
@@ -172,7 +293,13 @@
       "sha256": "5a82b731d2adde53f93a26f98805540c5eeaa7909d2f5c6ce21da19e0805d665",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -180,7 +307,13 @@
       "sha256": "3bf9d5fa0831bc1643970ca34204feee6e9b416fa1e3c6a6e585aee7fdecebfc",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/browser-capture.css",
@@ -188,7 +321,13 @@
       "sha256": "1f37ca812bce137ade51f63fad3603b57a3bd17e70ec58b403acba45b3bb33a8",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/browser-capture.js",
@@ -196,7 +335,13 @@
       "sha256": "9091303f85ff7c0ea4b61276a653d65006d49211aa54ab3bd914dfea4ce3b756",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.css",
@@ -204,7 +349,13 @@
       "sha256": "0e798e8c5fdc47864775e0e2cf06978434607d8ea29c530c9feda02eaf67a76b",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.js",
@@ -212,15 +363,27 @@
       "sha256": "c4f6b11390d152e27e49a6119e2b9bd7589cbece5c57f3e8a90757f61b2b6add",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
-      "bytes": 7119,
-      "sha256": "c2ecab8493f555a0d55995e4dc210087067b84a20aef136c083b4a0a3e871f67",
+      "bytes": 7177,
+      "sha256": "7eeb4beb74b8675afad9942726e63433fcc3978e909e21a4c0074b6aacf3d3f7",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.css",
@@ -228,15 +391,27 @@
       "sha256": "5d91c98699075269037866c59e3b05944cdc34c1d8c0efa95ca000d90816e856",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
-      "bytes": 174856,
-      "sha256": "ee6fcf595f6ee5f5ebb654793be4822a9651db2197209f5d529f0ee18f16e636",
+      "bytes": 174228,
+      "sha256": "234d3fc99d9e2142bbb44dd7def908512a7bd8a20970d10f0ca36bcfd1a90f01",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer-state.css",
@@ -244,7 +419,13 @@
       "sha256": "0979a8c6988a207bbc7059657345e51eda0335c41ed76346a0a497e2091d4387",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer-state.js",
@@ -252,7 +433,13 @@
       "sha256": "62fed5bd43eb3d32e709f8174c8ba1742d5d35af2b9daf123ddc35d71588d407",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer.css",
@@ -260,7 +447,13 @@
       "sha256": "34174d8bca51c0c91c8edbcbb73fbb81124caf0f22d4dd855c667e1a1c235ea1",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/context.css",
@@ -268,7 +461,13 @@
       "sha256": "f831b350e54b90d24820178ba11dd58243eb1c7f1d1ce33716fae7ffe13ffedd",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/context.js",
@@ -276,7 +475,13 @@
       "sha256": "379b6457c9885b7d248ea8f69f74c4060f0411f3288a2de031963240ddad55e2",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/data.js",
@@ -284,7 +489,13 @@
       "sha256": "27800a1a3c79ec293edb03706c11aa08c3a3f990bec32c3fd32328ca0b825712",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.css",
@@ -292,7 +503,13 @@
       "sha256": "2248065a706b245b6e1335bdbd245396ae02db219d9ea504ec7aa5477d4c97c4",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js",
@@ -300,7 +517,13 @@
       "sha256": "43aa45a9c9be13e404373d2c3205094f834608a235c533948cc293551edc474b",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/goals.css",
@@ -308,7 +531,13 @@
       "sha256": "8e31237e14cff51895d617487ae617deb7e1bb6a92ee980633a358f7da7a4f4f",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
@@ -316,7 +545,13 @@
       "sha256": "97356bb0b8b2120c137095e964cd8ab00f8eed1440589464f04d3535033a4693",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/history.css",
@@ -324,7 +559,13 @@
       "sha256": "6300612e525b88c49edcb706fbb97fddb1ee6c1a9344960279ff90cb1c4f68f0",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/history.js",
@@ -332,15 +573,27 @@
       "sha256": "779364bd23d8f6e76901bf9c83bd39a8dccf833924f204c5655c3b947190571e",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/index.html",
-      "bytes": 2825969,
-      "sha256": "4fdd4ffd0917825d13e60ea9d2543382abcf5df36b98ca7993044071ddd1248c",
+      "bytes": 2883399,
+      "sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/lens.css",
@@ -348,7 +601,13 @@
       "sha256": "7735e4803491b5009f585ccf9ff635971661452149258cd26f7f1469c485027a",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/lens.js",
@@ -356,7 +615,13 @@
       "sha256": "380061c87ef5af5ffba6562ce3643064eac962fa046a75431840146e17026f8f",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/menus.css",
@@ -364,7 +629,13 @@
       "sha256": "466b3871340889c8be0022b9a16903d613a8584408878e5525524436eb5f8000",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/menus.js",
@@ -372,7 +643,13 @@
       "sha256": "a156a20e73db20e75f3f4a8ced8bf4a389cf2622c1a5511439390a52ee5569c4",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
@@ -380,7 +657,13 @@
       "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
@@ -388,7 +671,13 @@
       "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/narrow-review.css",
@@ -396,7 +685,13 @@
       "sha256": "1306469afb1ae0ec348d40bfe4e4170d59f6424efed4646cc4594cf84e71610c",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/narrow-review.js",
@@ -404,7 +699,13 @@
       "sha256": "2ce746e48ae58c625ab713092a91484c627f5a7a4b10bed7f1e4694b615ba7d3",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
@@ -412,7 +713,13 @@
       "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
@@ -420,21 +727,61 @@
       "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch1.css",
       "bytes": 1165,
       "sha256": "ea89b78985345cc90ad6cbad4aab6abfd2ec415489bcff5caeb3046d3216ce84",
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch1.js",
       "bytes": 7895,
       "sha256": "517a5ada53a0e766d7fc0e09adc481d8b062e8afa504fa40aa4347a4d0c19392",
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch2.css",
+      "bytes": 1055,
+      "sha256": "c1d449fe2d6c23be530919495f6f928e77d6bb1285b660c801ccd9e4c2af05a2",
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch2.js",
+      "bytes": 9186,
+      "sha256": "b90d886bf2035fa8329bfd91b99fc1afc064d570c3766310d6f21d2ac26204aa",
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.css",
@@ -442,15 +789,27 @@
       "sha256": "1ddc944a76b1347b4f6a492af8b2e779092091fe3ced8ab1adc2f3c6b03f0856",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
-      "bytes": 142372,
-      "sha256": "b291cc83ef81ce4942f7fc628f25ad63075f3628c0f86fc594f7313eb69bd39d",
+      "bytes": 144100,
+      "sha256": "843fe2e5117ae95c26bf2e017a1080b9b9eda43f52db8b776772ef2c5b813283",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": true,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/questions.css",
@@ -458,7 +817,13 @@
       "sha256": "1e09d3e294f831b0f5a236198b9df8f5c8209143fadc52b0cbe21c831266eb13",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/questions.js",
@@ -466,7 +831,13 @@
       "sha256": "ba235ee2224b4f3678db418a1245c945dc029c0331eff8c1e606adde339c6871",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.css",
@@ -474,7 +845,13 @@
       "sha256": "08af0784cf7b9a546bd892d32fbbf4ff8b937d94588ce2b576ee54b995777724",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.js",
@@ -482,7 +859,21 @@
       "sha256": "0aea7f61c5799619bb7999fdc68b6a803fa5c0c0f27d44314391d88ddc01795b",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/BATCH_03_COVERAGE.json",
+      "bytes": 31110,
+      "sha256": "2fd33512ac45973b93eae690dc7769d72f1867442eba2af5d325be054e8c02e4",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/assistant-results.json",
@@ -490,7 +881,13 @@
       "sha256": "5b24badb8034c5102af2419c134c95492e7a99c703c79be6d879d7981afb5c99",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/manager-inventory.json",
@@ -498,7 +895,13 @@
       "sha256": "bbc4ada876cc8da71dbd4eac124cd4b6c818c1b8801a8e3a842906b7a1d0ecfc",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/settings-results.json",
@@ -506,7 +909,56 @@
       "sha256": "616ec2dab5313fd07955a569d647c775fb12b4e86cffbd725de41a1134151a23",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/plan-demo-batch2-coverage.json",
+      "bytes": 15609,
+      "sha256": "07b1791308d337216c80fba50122412e62593be7528e2c054923e2f48e819cd0",
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.css",
+      "bytes": 644,
+      "sha256": "29d7a57dc89ed0162ca4c1e08c9a3167578fa12bd5f2f1ca7252814e3de7c666",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.js",
+      "bytes": 12309,
+      "sha256": "c422f1391c1216632ebefc8bbd98d161abb9fdac0e57f0a983ca5f1fbcf4637c",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.css",
+      "bytes": 3221,
+      "sha256": "06364f363d188a5e3ac022d8e4111729f91dc4665077bb7c7dcd147f9506fe9d",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.js",
+      "bytes": 20544,
+      "sha256": "2a8d3873a419c9f260dc4a99576f501efed8f54d39a9d0685c3cd77494702fe1",
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.css",
@@ -514,15 +966,27 @@
       "sha256": "4a78ca12a668d3a6f314f6ddf0dc66d90164b97bb539a39e092e1d9ebe959d84",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js",
-      "bytes": 112429,
-      "sha256": "2b360047d09dc552a9959eb48f2ec9e37b984abb8b6b4c936e7d6051ace4e379",
+      "bytes": 119019,
+      "sha256": "7c25c614c1334e85e71b520ad32d5609249f443634ca18f76674834e8dec28c4",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": true,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/shell.html",
@@ -530,7 +994,13 @@
       "sha256": "600a7ca2ef0bc8980df573317e587424d24515d5cd5dee1598ce747ae191e46c",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
@@ -538,7 +1008,13 @@
       "sha256": "83367adc12a707199895f60654b021c7cbbcada231b228be8646a54483972c1b",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/threadops.css",
@@ -546,7 +1022,13 @@
       "sha256": "b3ed0f4d090f8c225fe450e587262192b6073c97afcc8b7c9d0597828adbe020",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/threadops.js",
@@ -554,7 +1036,13 @@
       "sha256": "ebdb51a49df2c5167dddbc6abe665ded3d9c999052fe46d7d3a6535e174b9961",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/todos.css",
@@ -562,15 +1050,27 @@
       "sha256": "5e4a03f182c4c53435c2a4db019ec51760f5cc78c0b5c8452d568fc8bf4e3eba",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
-      "bytes": 78605,
-      "sha256": "549c3efd633a09631de7d7e31a102ca2cff34dc855b210bb72e9f668a9ece753",
+      "bytes": 80851,
+      "sha256": "96ae226635d7e54fee0e5c1aa0efee255540ccd16456b247a77c81a64d3dc92e",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": true
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.css",
@@ -578,7 +1078,13 @@
       "sha256": "aca7787e96bdbac3b821b8851f8f32dd75f3d3b19ee3d9f0754a03e1d33928ea",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
@@ -586,7 +1092,13 @@
       "sha256": "b1bbb411e2172ca8c248efe844eba71a8cedaf52537287a974bfe3411988457d",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript.css",
@@ -594,7 +1106,13 @@
       "sha256": "3efbe6fa3b9300bf7358ffbf1d579d5221485291461460941aee0c4138476c7f",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript.js",
@@ -602,7 +1120,13 @@
       "sha256": "b7ed837ebc657aa304c5b799a865da8137070cb9f287ded77c3b6764d918f2bf",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcripts.css",
@@ -610,7 +1134,13 @@
       "sha256": "83a437627f579cea5266bd5f2da908913c3cc935cb96ce3b8c32542fa608d8c2",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
@@ -618,7 +1148,13 @@
       "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
@@ -626,7 +1162,13 @@
       "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
@@ -634,7 +1176,13 @@
       "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
@@ -642,7 +1190,13 @@
       "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
@@ -650,7 +1204,13 @@
       "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
@@ -658,7 +1218,13 @@
       "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": true
+      "included_in_plan_batch_01": true,
+      "included_in_plan_batch_02": true,
+      "verified_in_plan_batch_02": true,
+      "changed_in_plan_batch_02": false,
+      "included_in_batch_03": true,
+      "verified_in_batch_03": true,
+      "changed_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/ASSISTANT_SETTINGS_V2.md",
@@ -666,7 +1232,12 @@
       "sha256": "0813405b3b81be0fd4065ac76dc64b8907a6ceee5bcd62955e601cbd47696c65",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/ASSISTANT_SETTINGS_V3.md",
@@ -674,7 +1245,12 @@
       "sha256": "fe3b9de93d3f20e89e9283a4a1b80fa45836c76b1d01b886ba933989411f1000",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.css",
@@ -682,7 +1258,12 @@
       "sha256": "98b72b443056cc4748ac26cd0083176061d76f58caabfc7a0df30c79982941b8",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.js",
@@ -690,7 +1271,12 @@
       "sha256": "6e88fbc442c3e66ec83c83dfcc05b40b0292381e0c177b563808ebd3a018e98b",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.py",
@@ -698,7 +1284,12 @@
       "sha256": "deb7b182387e44805da1f5c4751a24395cc73147f319c45968c18dc62f5bb232",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_checkpoint.json",
@@ -706,7 +1297,12 @@
       "sha256": "3be9b8feaef6bc86c288a0391d2490d9a791f9e8d2d8c21ee887033dcd85eab8",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_contract.json",
@@ -714,7 +1310,12 @@
       "sha256": "e1e53a4341236ab7469fac91234584cee74e5c10f37a8d06cf1fc4707a464f79",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.css",
@@ -722,7 +1323,12 @@
       "sha256": "73abc81f8a01571da1c18243f54467cff8716f9c69c9c36fb8ea8897d4777dd5",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.js",
@@ -730,7 +1336,12 @@
       "sha256": "418618caf8f2b654e61c0420c6837bf9913d45bd2e34ff40c787f578000ea464",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.py",
@@ -738,7 +1349,12 @@
       "sha256": "1ff44a8fb363b1181b459325fc88b3c5e1c1b5bbe4f0f93cd002b0f740598a6e",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/base/TestPMConcept-assistant-settings-base.html",
@@ -746,7 +1362,12 @@
       "sha256": "ea9c502a1c4a456f3e092c45d3524105153f9bba52d36f26fbfad922e885a4ef",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/build_pm7.py",
@@ -754,7 +1375,12 @@
       "sha256": "4e301c0f679677353e5f016ede31acfd99715dd02a9d0f5667821dd3afe9a758",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     },
     {
       "path": "Concepts/pm7-tools/build_testpm_assistant_settings.py",
@@ -762,11 +1388,25 @@
       "sha256": "92ec2bb7cfb8487d3f95ce1c67b97caff51d649000512f1772539439c0bdb433",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
-      "included_in_plan_batch_01": false
+      "included_in_plan_batch_01": false,
+      "included_in_plan_batch_02": false,
+      "verified_in_plan_batch_02": false,
+      "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
+      "included_in_batch_03": false,
+      "verified_in_batch_03": false
     }
   ],
-  "acceptance": "Bounded Plan pair completed; global APR-016/018 open; measured render-cadence caveat.",
+  "acceptance": {
+    "bounded_functional": "PASS",
+    "recorded_frames": 1774,
+    "visual_review": "Consecutive contact sheets + selected native frames",
+    "motion_cadence": "QUALIFIED; not perfect 60 fresh frames/sec",
+    "APR_016": "OPEN",
+    "APR_018": "OPEN"
+  },
   "settings_modified": false,
   "governance_modified": false,
-  "batch_checkpoint": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_CHECKPOINT.json"
+  "batch_checkpoint": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_CHECKPOINT.json",
+  "external_manifest_rows_currentness": "Rows outside the supplied Assistant folder are historical/out-of-scope; not supplied, not reverified, and not permission to replace current Settings/onboarding.",
+  "basis_archive_sha256": "4cb03296ad37dff322a43e0a5fffc1a6bd72680cda993a96e4d3dc5f7f291011"
 }

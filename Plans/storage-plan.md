@@ -18377,8 +18377,9 @@ This addendum owns the physical-persistence disposition for the Settings, Projec
 Onboarding, Guided Tour, Doctor, Server, Remote Access, Backup/Restore, Source Control, Forge, Browser Program,
 Test Capture, Full Thread, and Plugins contracts added by the 2026-08-31 packet-authoritative owner wave. The
 semantic record shapes remain with their named domain owners. `Plans/storage_value_registry.json` now carries a
-separate `contract_family_dispositions` layer because the existing 84-row `families` denominator is enforced by
-the Tier 0C-2 readiness validator and cannot be silently widened or reinterpreted. A disposition row proves a
+separate `contract_family_dispositions` layer because the physical `families` denominator is enforced by
+the Tier 0C-2 readiness validator and cannot be silently widened or reinterpreted. The historical 84-family packet
+baseline is now 88 under the separately admitted Working Notebook wave; this Guided Tour disposition adds none. A disposition row proves a
 machine-readable decision about durable versus nonpersisted state; it does not prove a physical redb/seglog or
 artifact implementation. `physical_family_registration_pending` and
 `external_artifact_store_registration_pending` are blockers, not aliases for materialized storage.
@@ -18404,10 +18405,13 @@ canonical_text: >-
   physical-family state, existing family refs, retention mode/refs/holds/expiry, registered redaction
   transforms, migration rule, Event Authority boundary, AuthBrowserSession disposition, source refs, and
   `runtime_evidence=false`. A durable disposition whose physical state is pending cannot be written, restored,
-  advertised as materialized, or used to enable a dependent command. Guided Tour session/action state, typed
+  advertised as materialized, or used to enable a dependent command. Guided Tour live session/action state, typed
   request/preview/route transport, Source Control credential leases, Browser compile/query transport, Test
   Capture playback comparison state, and protected AuthBrowserSession content/state are explicitly
-  nonpersisted. The existing 84 physical rows and 24 retention policies remain unchanged in membership.
+  nonpersisted. PWIZ-023's bounded safe checkpoint is a separate durable disposition with physical-family registration
+  pending, not a serialized live session or an onboarding_state extension. Its original layout/Chat snapshots remain
+  owner-held references; a schema or disposition alone permits no checkpoint write or resume claim. The current physical
+  family census and 24 retention policies remain unchanged in membership by this disposition layer.
 gui_related: false
 gui_classification_reason: This PlanUnit governs storage and contract custody rather than presentation.
 depends_on: [SP-222, SSYS-001, PWIZ-021, PWIZ-023, N2-151]
@@ -18415,7 +18419,8 @@ unblocks: []
 acceptance_criteria:
   - Every disposition ID is unique and schema-valid, and every row fixes runtime_evidence=false.
   - Durable rows that lack exact physical key/value registration remain physical_family_registration_pending or external_artifact_store_registration_pending rather than materialized.
-  - Nonpersisted action, preview, lease, Guided Tour, playback, and protected-auth rows have no physical family and no retention authority.
+  - Nonpersisted action, preview, lease, Guided Tour live-session/transport, playback, and protected-auth rows have no physical family and no retention authority.
+  - The Guided Tour v3 bounded checkpoint has a separate physical_family_registration_pending disposition; exact key/value, retention/redaction, owner snapshot custody, migration, adapter, and recovery evidence are required before durable writes or resume can be claimed. No physical family is added and onboarding_state accepts only a non-secret handoff ref.
   - Full Thread rows reference existing shared-runtime families only as explicit migration inputs and never reinterpret their schema IDs in place.
   - Browser and Test Capture legacy aggregate IDs are compatibility inputs only; one exact schema_id plus record_kind must be established before any durable admission.
   - No disposition adds an EventRecord family or treats a receipt/projection as event admission.
@@ -18437,8 +18442,8 @@ node_compile_hint:
 source_lineage: [source_manifest:Plans/storage_value_registry.json#/contract_family_dispositions/*/source_refs, source_ref:packet:PKT-04/03_REQUIREMENTS_COVERAGE_MATRIX.md:5-184, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:1-457]
 negative_constraints:
   - Do not treat a disposition row as a running storage handler, migration, replay, restore, backup, or recovery implementation.
-  - Do not add physical families by silently changing the enforced 84-row denominator.
-  - Do not persist request/preview transport, Guided Tour session state, credential leases, playback UI state, or AuthBrowserSession content/state.
+  - Do not add physical families by silently changing the readiness validator's enforced denominator; the current 88-row census includes the separately admitted Notebook wave, not a Guided Tour checkpoint store.
+  - Do not persist request/preview transport, Guided Tour live session state, credential leases, playback UI state, or AuthBrowserSession content/state; do not treat the pending bounded checkpoint disposition as storage admission.
   - Do not register any packet candidate as an EventRecord from this storage lane.
 owner_hints:
   - Plans/storage-plan.md
@@ -18473,9 +18478,9 @@ canonical_text: >-
   `pm.product_onboarding.legacy_migration_receipt.v1` is a domain reconciliation record that references that
   Storage receipt, proves exact source/accepted/stale/dropped/quarantined counts, `mapped_stage_counts`, and
   `mapped_path_counts` plus a hashed disposition manifest, and is not peer commit authority. New writes use only
-  v2 session identity. Guided
-  Tour session, scene, action, Teacher, focus, motion, and checkpoint state remains ephemeral and is never stored in
-  this family; only a stable non-secret handoff ref may be retained.
+  v2 session identity. Guided Tour live session, action, Teacher text, focus, and motion state is never stored in this
+  family; only a stable non-secret handoff ref may be retained. PWIZ-023's bounded safe checkpoint follows its separate
+  v3 contract and pending SP-251 disposition, not an extension of onboarding_state or a claim of implemented recovery.
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume point shown to the user.
 depends_on: [SP-251, PWIZ-021, PWIZ-022]
@@ -18491,7 +18496,7 @@ acceptance_criteria:
   - Migration covers provider-first/four-screen, predecessor-five-stage, and superseded seven-stage `server_setup` records, maps each admissible row to the first unresolved current stage, forces unconfirmed Review, reports exact per-stage and per-path counts, quarantines secrets, and never runs or replays installation, authentication, repository creation/publication, restore, Project, provider, Server, remote-access, or source-control work.
   - The domain migration receipt references the sole Storage migration receipt and never substitutes for it.
   - Raw transcripts, API keys, tokens, auth URLs/codes, credentials, profile roots, broad paths, and AuthBrowserSession content/state fail storage admission.
-  - Guided Tour session, scene, action, Teacher, focus, motion, and checkpoint state is ephemeral and absent from onboarding_state; only a stable non-secret handoff ref is admissible.
+  - Guided Tour live UI/session state and its separately specified bounded checkpoint are absent from onboarding_state; only a stable non-secret handoff ref is admissible. The checkpoint's pending physical registration cannot be bypassed through this family.
 validation_surfaces:
   - Draft 2020-12 validation of Plans/product_onboarding_contracts.schema.json
   - Draft 2020-12 validation of the onboarding_state inline registry value schema
@@ -18599,8 +18604,9 @@ owner_hints:
 
 ## Forge, Backup v2, And Go tsnet Storage/Redaction Transaction - 2026-09-01
 
-This transaction extends the SP-251 disposition layer and SP-253 transform registry without changing the enforced
-84-row physical-family membership. The newly detailed durable contract groups remain
+This transaction extends the SP-251 disposition layer and SP-253 transform registry without changing its historical
+84-row physical-family baseline; the later Notebook-owned additions establish the current 88-row census separately.
+The newly detailed durable contract groups remain
 `physical_family_registration_pending`; the deferred grouped automation projection remains non-build-blocking and its
 physical split remains pending. Registry/schema validity is static planning evidence only. It proves no redb/seglog or
 external-artifact writer, migration run, backup/restore, connector, forge adapter, protected channel, native handler,
@@ -18641,7 +18647,7 @@ gui_classification_reason: The unit defines storage custody, migration, redactio
 depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
 unblocks: []
 acceptance_criteria:
-  - The storage registry remains schema-valid with exactly the existing 84 physical-family rows; new classifications use contract_family_dispositions and do not claim a materialized family.
+  - The storage registry remains schema-valid and this disposition-only transaction adds no physical-family rows; the current census follows the readiness validator and separately admitted Notebook additions. New classifications use contract_family_dispositions and do not claim a materialized family.
   - Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected attachment/submission, and session payload.
   - Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2` with the deterministic Storage boot `recovery_set_id` work-set identity.
   - Forge persistence retains independent repository and automation binding identities/generations plus provider-instance and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH, private-CA, or protected-browser contents.

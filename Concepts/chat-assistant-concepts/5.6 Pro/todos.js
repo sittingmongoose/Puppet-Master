@@ -738,7 +738,7 @@
         (hasKids?'<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>':'')+
         '<div class="todo-chips">'+depChip(list,item)+parallelChip(list,item)+'</div>'+
         (item.blocked_reason_ref?'<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>':'')+
-        '<div class="todo-detail-actions">'+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
+        '<div class="todo-detail-actions">'+(item.source_review_run_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
     }
     return '<div class="todo-node" data-todo-id="'+esc(item.todo_id)+'" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'"><div class="todo-row">'+caret+
       '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
@@ -1155,6 +1155,34 @@
     return null;
   }
 
+  /* Explicit Review conversion through the existing To-Do owner. All selected
+     records are validated before append; unrelated items and work bindings stay
+     byte-identical. Identity includes the source run and finding. */
+  function materializeForReview(run, selectedIds){
+    if(!run || run.kind!=='review' || run.status!=='completed' || !run.review)
+      return {ok:false,error:'review_not_completed'};
+    var ids=Array.from(new Set(selectedIds||[]));
+    if(!ids.length) return {ok:false,error:'no_findings_selected'};
+    var findings=ids.map(function(id){return (run.review.findings||[]).find(function(f){return f.id===id;});});
+    if(findings.some(function(f){return !f || f.disposition!=='confirmed' || !f.evidenceRefs || !f.evidenceRefs.length;}))
+      return {ok:false,error:'confirmed_evidenced_findings_only'};
+    var store=threadStore(run.threadId),existing=(store&&store.items)||[],mk=itemFactory(run.threadId),made=[],mapped=[];
+    findings.forEach(function(f){
+      var id='trv-'+run.id+'-'+f.id, found=existing.find(function(t){return t.todo_id===id;});
+      mapped.push({finding_id:f.id,todo_id:id});
+      if(!found) made.push(mk({todo_id:id,display_order:existing.length+made.length+1,title:f.proposedRemediation||f.claim,
+        expected_outcome:f.expectedOutcome||f.claim,status:'pending',source_review_run_id:run.id,source_finding_id:f.id,
+        source_target_hash:run.review.targetPack.targetHashes.primary,source_evidence_refs:JSON.parse(JSON.stringify(f.evidenceRefs))}));
+    });
+    var check=validateGraph(run.threadId,{items:existing.concat(made)});
+    if(!check.valid) return {ok:false,error:'invalid_graph',validation:check};
+    if(made.length){
+      if(!store){RT.todos.byThread[run.threadId]={items:[],refusals:[],revision:1};store=threadStore(run.threadId);}
+      store.items=existing.concat(made);store.revision=(store.revision||1)+1;
+    }
+    return {ok:true,created:made.length,items:mapped,reused:made.length===0};
+  }
+
   window.PM56_TODOS = {
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,
@@ -1171,6 +1199,7 @@
     replaceThreadList: replaceThreadList,
     applyTransition: applyTransition,
     materializeForPlan: materializeForPlan,
+    materializeForReview: materializeForReview,
     advanceForPlan: advanceForPlan,
     revisionOf: function(threadId){ var s=threadStore(threadId); return s?(s.revision||1):null; },
     rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; },

@@ -147,8 +147,6 @@
   let appearanceTransitionSerial = 0;
   let previousFocus = null;
   let toastTimer = null;
-  let legacyHidden = [];
-
   function createShell() {
     if ($('#pmpro-root')) return;
     const shell = document.createElement('div');
@@ -1006,30 +1004,8 @@
     });
   }
 
-  function hideLegacyOverlays() {
-    legacyHidden = [];
-    const candidates = $$('body > div, body > section, body > dialog');
-    candidates.forEach(element => {
-      if (element.closest('#pmpro-root, #pmpro-tour-root, #pmpro-resume-chip, #pmpro-dev-launcher')) return;
-      const text = (element.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-      const role = element.getAttribute('role');
-      const style = getComputedStyle(element);
-      const likelyOverlay = role === 'dialog' || ['fixed', 'absolute'].includes(style.position) && Number(style.zIndex || 0) > 100;
-      if (likelyOverlay && (text.includes('guided tour') || text.includes('welcome to puppet master') || text.includes('onboarding'))) {
-        legacyHidden.push([element, element.style.display]);
-        element.style.display = 'none';
-      }
-    });
-  }
-
-  function restoreLegacyOverlays() {
-    legacyHidden.forEach(([element, display]) => { if (element.isConnected) element.style.display = display; });
-    legacyHidden = [];
-  }
-
   function openOnboarding(start = null) {
     previousFocus = document.activeElement;
-    hideLegacyOverlays();
     if (start) stepId = start;
     else stepId = draft.current_step || 'welcome';
     root.hidden = false;
@@ -1046,7 +1022,6 @@
     root.hidden = true;
     root.setAttribute('aria-hidden', 'true');
     document.documentElement.style.overflow = '';
-    restoreLegacyOverlays();
     updateResumeChip();
     previousFocus?.focus?.({ preventScroll: true });
   }
@@ -1094,6 +1069,66 @@
     showExternalToast('Onboarding and Guided Tour reset.');
     if (!root.hidden) renderStep({ animate: false });
     updateResumeChip();
+  }
+
+  function snapshotOnboarding() {
+    return {
+      schema_id: 'pm.onboarding.pmpro.compat.snapshot.v1',
+      concept_simulation_only: true,
+      open: !root.hidden,
+      step: stepId,
+      draft: JSON.parse(JSON.stringify(draft)),
+      completed: !!store.get(COMPLETE_KEY)
+    };
+  }
+
+  function snapshotTour() {
+    return {
+      schema_id: 'pm.guided_tour.pmpro.compat.snapshot.v1',
+      concept_simulation_only: true,
+      running: !tourRoot.hidden,
+      step_index: tourIndex,
+      step_id: currentTourStep()?.id || null,
+      status: tourState.status
+    };
+  }
+
+  function replayOnboarding(options = {}) {
+    store.remove(COMPLETE_KEY);
+    draft = defaultDraft();
+    stepId = 'welcome';
+    draft.current_step = 'welcome';
+    saveDraft();
+    openOnboarding('welcome');
+    return snapshotOnboarding();
+  }
+
+  function skipOnboarding() {
+    store.set(COMPLETE_KEY, JSON.stringify({ completed_at: now(), skipped: true }));
+    store.remove(DRAFT_KEY);
+    closeOnboarding();
+    return snapshotOnboarding();
+  }
+
+  function replayTour() {
+    store.remove(TOUR_KEY);
+    tourState = defaultTourState();
+    tourIndex = 0;
+    workspace = { teacherSent: false, teacherStreaming: false, eli5: false, chatDock: null, widgetAdded: false, wizardStage: 'goal', goalChosen: false, outcomesShown: false, answer: null, whyOpen: false, reviewOpen: false, editing: false, consequenceSeen: false };
+    openTour();
+    return snapshotTour();
+  }
+
+  function skipTourNow() {
+    tourState.status = 'skipped';
+    tourState.skipped_at = now();
+    saveTour();
+    tourSkipLayer.hidden = true;
+    tourRoot.hidden = true;
+    tourRoot.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+    resumeChip.hidden = true;
+    return snapshotTour();
   }
 
   async function runDeviceCheck() {
@@ -1334,7 +1369,6 @@
     root.hidden = true;
     root.setAttribute('aria-hidden', 'true');
     document.documentElement.style.overflow = '';
-    restoreLegacyOverlays();
     resumeChip.hidden = true;
     showExternalToast('Puppet Master setup complete.');
   }
@@ -2107,7 +2141,6 @@
 
   function openTour() {
     tourPreviousFocus = document.activeElement;
-    hideLegacyOverlays();
     root.hidden = true;
     root.setAttribute('aria-hidden', 'true');
     tourRoot.hidden = false;
@@ -2142,7 +2175,6 @@
     tourRoot.hidden = true;
     tourRoot.setAttribute('aria-hidden', 'true');
     document.documentElement.style.overflow = '';
-    restoreLegacyOverlays();
     resumeChip.hidden = false;
     $('#pmpro-resume-title').textContent = 'Resume Guided Tour';
     $('#pmpro-resume-detail').textContent = `Continue from step ${tourIndex + 1} of ${tourSteps.length}.`;
@@ -2172,7 +2204,6 @@
     tourRoot.hidden = true;
     tourRoot.setAttribute('aria-hidden', 'true');
     document.documentElement.style.overflow = '';
-    restoreLegacyOverlays();
     resumeChip.hidden = true;
     openPlanningWizardReal();
   }
@@ -2298,30 +2329,6 @@
     else if (action === 'reset') resetConcept();
   });
 
-  function interceptExistingEntryPoints(event) {
-    const control = event.target.closest('button, a, [role="button"]');
-    if (!control || control.closest('#pmpro-root, #pmpro-tour-root, #pmpro-resume-chip, #pmpro-dev-launcher')) return;
-    const text = (control.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    const explicitNew = control.matches('[data-new-project], [data-command="new-project"], [data-action="new-project"]');
-    const onboarding = control.matches('[data-onboarding], [data-command="run-onboarding"]') || /^(run )?onboarding( again)?$/.test(text) || text.includes('make this my puppet master') || text === 'set up this device' || text === 'get started';
-    const tour = control.matches('[data-guided-tour], [data-command="replay-guided-tour"]') || text.includes('guided tour') || text === 'take the tour';
-    const newProject = explicitNew || /^(create|start|add) (a )?new project$/.test(text);
-    if (onboarding || tour || newProject) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      if (tour) openTour();
-      else if (newProject) {
-        draft.project.intent = 'create';
-        draft.device.state = 'ready';
-        draft.device.name ||= 'This computer';
-        stepId = 'basics';
-        saveDraft();
-        openOnboarding('basics');
-      } else openOnboarding();
-    }
-  }
-
-  document.addEventListener('click', interceptExistingEntryPoints, true);
   addEventListener('resize', () => { if (!tourRoot.hidden) positionGuide(); });
 
   function startup() {
@@ -2338,9 +2345,13 @@
     version: VERSION,
     open: openOnboarding,
     close: closeOnboarding,
+    replay: replayOnboarding,
+    skip: skipOnboarding,
     openTour,
     pauseTour,
     reset: resetConcept,
+    snapshot: snapshotOnboarding,
+    tourSnapshot: snapshotTour,
     getDraft: () => JSON.parse(JSON.stringify(draft)),
     getTourState: () => JSON.parse(JSON.stringify(tourState)),
     goToStep(id) { if (!stepDefinition(id)) return; stepId = id; draft.current_step = id; saveDraft(); openOnboarding(id); },
@@ -2360,6 +2371,32 @@
     },
     setReducedMotion(value) { draft.theme.reduced = Boolean(value); saveDraft(); applyTheme(); },
     command: emitCommand
+  };
+
+  window.PM7_ONBOARDING_CINEMATIC = {
+    schema_id: 'pm.onboarding.pmpro.compat.v1',
+    concept_simulation_only: true,
+    open: (options) => openOnboarding(options?.screen || options?.start || null),
+    replay: replayOnboarding,
+    skip: skipOnboarding,
+    close: closeOnboarding,
+    snapshot: snapshotOnboarding
+  };
+
+  window.PM7_GUIDED_TOUR = {
+    schema_id: 'pm.guided_tour.pmpro.compat.v1',
+    concept_simulation_only: true,
+    start: (options) => {
+      if (options?.replay || options?.source === 'settings') return replayTour();
+      if (options?.source === 'resume' || tourState.status === 'paused') return openTour();
+      return openTour();
+    },
+    next: advanceTour,
+    back: backTour,
+    skip: skipTourNow,
+    resume: () => openTour(),
+    replay: replayTour,
+    snapshot: snapshotTour
   };
 
   startup();

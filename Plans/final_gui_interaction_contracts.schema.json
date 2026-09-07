@@ -275,101 +275,73 @@
     "guided_tour": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["contract_kind", "plan_unit_ref", "application_surface", "first_surface", "scenes", "actions", "watch_contract", "options_label", "options_actions", "planning_contract", "chat_contract", "top_controls", "reduced_motion_owner", "tour_reduced_motion_toggle", "skip_restores", "finish_layout", "fabricated_success", "protected_auth_content"],
+      "required": ["contract_kind", "plan_unit_ref", "contract_revision", "application_surface", "first_surface", "scenes", "actions", "practice_contract", "planning_contract", "chat_contract", "top_controls", "reduced_motion_owner", "tour_reduced_motion_toggle", "skip_restores", "finish_contract", "resume_contract", "fabricated_success", "protected_auth_content"],
       "properties": {
         "contract_kind": {"const": "guided_tour"},
         "plan_unit_ref": {"const": "F3-521"},
+        "contract_revision": {"const": "newbie-first-chat-workspace-planning-2026-09-04"},
         "application_surface": {"const": "mounted_real_application"},
-        "first_surface": {"const": "Usage"},
-        "scenes": {
-          "type": "array",
-          "prefixItems": [{"const": "usage"}, {"const": "planning_wizard"}, {"const": "chat_teacher"}],
-          "items": false,
-          "minItems": 3,
-          "maxItems": 3
-        },
-        "actions": {
-          "type": "array",
-          "prefixItems": [
-            {"const": "ui.guided_tour.start"},
-            {"const": "ui.guided_tour.next"},
-            {"const": "ui.guided_tour.back"},
-            {"const": "ui.guided_tour.pause"},
-            {"const": "ui.guided_tour.resume"},
-            {"const": "ui.guided_tour.skip"},
-            {"const": "ui.guided_tour.focus_route"},
-            {"const": "ui.guided_tour.toggle_eli5"},
-            {"const": "ui.guided_tour.finish"},
-            {"const": "ui.guided_tour.replay"}
-          ],
-          "items": false,
-          "minItems": 10,
-          "maxItems": 10
-        },
-        "watch_contract": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["label", "placement", "behavior"],
+        "first_surface": {"const": "Assistant Chat"},
+        "scenes": {"$ref": "https://puppetmaster.local/schemas/guided_tour/3.0.0/guided_tour_contracts.schema.json#/$defs/story_order"},
+        "actions": {"$ref": "https://puppetmaster.local/schemas/guided_tour/3.0.0/guided_tour_contracts.schema.json#/$defs/ui_actions"},
+        "practice_contract": {
+          "type": "object", "additionalProperties": false,
+          "required": ["manual_label", "show_me_label", "same_mounted_owner_handler", "same_success_predicate", "target_visible_before_action", "interruptible_choreography", "generic_next_satisfies_practice", "timer_satisfies_practice"],
           "properties": {
-            "label": {"const": "Watch"},
-            "placement": {"const": "same_card"},
-            "behavior": {"const": "hide_and_return_to_same_card"}
+            "manual_label": {"const": "Try it"}, "show_me_label": {"const": "Show Me"},
+            "same_mounted_owner_handler": {"const": true}, "same_success_predicate": {"const": true},
+            "target_visible_before_action": {"const": true}, "interruptible_choreography": {"const": true},
+            "generic_next_satisfies_practice": {"const": false}, "timer_satisfies_practice": {"const": false}
           }
         },
-        "options_label": {"const": "Options"},
-        "options_actions": {
-          "type": "array",
-          "prefixItems": [{"const": "Try"}],
-          "items": false,
-          "minItems": 1,
-          "maxItems": 1
-        },
         "planning_contract": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["surface", "progression"],
+          "type": "object", "additionalProperties": false,
+          "required": ["surface", "example_scope", "minimum_meaningful_action_share", "minimum_meaningful_dwell_share", "goal", "outcomes", "review_sections", "edit_requires_changed_answer", "uncertain_answer_remains_unresolved", "unchanged_outcomes_retain_identity_and_position", "only_affected_consequence_changes"],
           "properties": {
-            "surface": {"const": "mounted_real_planning_wizard"},
-            "progression": {"const": "intent_progression"}
+            "surface": {"const": "mounted_real_planning_wizard"}, "example_scope": {"const": "local_fixture_not_replacement_engine"},
+            "minimum_meaningful_action_share": {"const": 0.5}, "minimum_meaningful_dwell_share": {"const": 0.5},
+            "goal": {"const": "Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join."},
+            "outcomes": {"type": "array", "prefixItems": [{"const": "next_meeting"}, {"const": "current_book"}, {"const": "how_to_join"}], "items": false, "minItems": 3, "maxItems": 3},
+            "review_sections": {"type": "array", "prefixItems": [{"const": "outcomes"}, {"const": "decisions"}, {"const": "assumptions"}, {"const": "unresolved_choices"}], "items": false, "minItems": 4, "maxItems": 4},
+            "edit_requires_changed_answer": {"const": true}, "uncertain_answer_remains_unresolved": {"const": true},
+            "unchanged_outcomes_retain_identity_and_position": {"const": true}, "only_affected_consequence_changes": {"const": true}
           }
         },
         "chat_contract": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["placement", "progression"],
+          "type": "object", "additionalProperties": false,
+          "required": ["progression", "thread_label", "prompt", "domain_actions", "same_answer_eli5", "tour_stores_refs_not_content", "local_example_provider_fallthrough", "zero_use_requires_observation"],
           "properties": {
-            "placement": {"const": "far_right"},
-            "progression": {
-              "type": "array",
-              "prefixItems": [
-                {"const": "guide_selector"},
-                {"const": "Teacher"},
-                {"const": "real_composer_send"},
-                {"const": "deterministic_local_reply"}
-              ],
-              "items": false,
-              "minItems": 4,
-              "maxItems": 4
-            }
+            "progression": {"type": "array", "prefixItems": [{"const": "open_assistant_chat"}, {"const": "Teacher"}, {"const": "real_composer_send"}, {"const": "deterministic_local_reply"}, {"const": "same_answer_eli5"}], "items": false, "minItems": 5, "maxItems": 5},
+            "thread_label": {"const": "Guided example"}, "prompt": {"const": "What happens before Puppet Master changes my files?"},
+            "domain_actions": {"type": "array", "prefixItems": [{"const": "cmd.persona.select"}, {"const": "cmd.chat.send"}, {"const": "cmd.chat.eli5.set"}], "items": false, "minItems": 3, "maxItems": 3},
+            "same_answer_eli5": {"const": true}, "tour_stores_refs_not_content": {"const": true},
+            "local_example_provider_fallthrough": {"const": false}, "zero_use_requires_observation": {"const": true}
           }
         },
-        "top_controls": {
-          "type": "array",
-          "prefixItems": [{"const": "ELI5"}, {"const": "Pause"}, {"const": "Skip"}],
-          "items": false,
-          "minItems": 3,
-          "maxItems": 3
-        },
+        "top_controls": {"type": "array", "prefixItems": [{"const": "ELI5"}, {"const": "Pause"}, {"const": "Skip Tour"}], "items": false, "minItems": 3, "maxItems": 3},
         "reduced_motion_owner": {"const": "Settings"},
         "tour_reduced_motion_toggle": {"const": false},
-        "skip_restores": {
-          "type": "array",
-          "prefixItems": [{"const": "pre_tour_layout"}, {"const": "pre_tour_placeholder"}, {"const": "pre_tour_focus"}],
-          "items": false,
-          "minItems": 3,
-          "maxItems": 3
+        "skip_restores": {"type": "array", "prefixItems": [{"const": "pre_tour_layout"}, {"const": "pre_tour_chat_selection"}, {"const": "pre_tour_placeholder"}, {"const": "pre_tour_draft"}, {"const": "pre_tour_focus"}], "items": false, "minItems": 5, "maxItems": 5},
+        "finish_contract": {
+          "type": "object", "additionalProperties": false,
+          "required": ["default_layout_disposition", "keep_requires_explicit_selection", "real_destination", "committed_project_selected", "practice_removed", "work_started", "grants_approval", "second_approval_fence", "restoration_failure_is_recoverable", "restoration_failure_can_complete"],
+          "properties": {
+            "default_layout_disposition": {"const": "restore"}, "keep_requires_explicit_selection": {"const": true},
+            "real_destination": {"const": "planning_wizard"}, "committed_project_selected": {"const": true}, "practice_removed": {"const": true},
+            "work_started": {"const": false}, "grants_approval": {"const": false}, "second_approval_fence": {"const": false},
+            "restoration_failure_is_recoverable": {"const": true}, "restoration_failure_can_complete": {"const": false}
+          }
         },
-        "finish_layout": {"const": "Chat_far_right"},
+        "resume_contract": {
+          "type": "object", "additionalProperties": false,
+          "required": ["checkpoint", "owner_state_revalidated", "earliest_unsatisfied_prerequisite", "replay_domain_work", "raw_chat_content", "credentials", "transient_animation_geometry", "pause_stops_decorative_work", "replay_starts_fresh_session"],
+          "properties": {
+            "checkpoint": {"const": "bounded_session_project_step_predicates_layout_owner_ref_explanation_revision"},
+            "owner_state_revalidated": {"const": true}, "earliest_unsatisfied_prerequisite": {"const": true},
+            "replay_domain_work": {"const": false}, "raw_chat_content": {"const": false}, "credentials": {"const": false},
+            "transient_animation_geometry": {"const": false}, "pause_stops_decorative_work": {"const": true}, "replay_starts_fresh_session": {"const": true}
+          }
+        },
         "fabricated_success": {"const": false},
         "protected_auth_content": {"const": false}
       }

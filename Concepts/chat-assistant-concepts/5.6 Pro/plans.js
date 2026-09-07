@@ -1103,7 +1103,8 @@
 
   function cardHeader(r){
     var v = 'Plan · V'+r.version;
-    return '<div class="pd-head">'+
+    var scheduleLine=window.PM56_SCHED&&window.PM56_SCHED.planSummary?window.PM56_SCHED.planSummary(r.plan_id):'';
+    return scheduleLine+'<div class="pd-head">'+
       '<div class="pd-head-main">'+
         '<h3 class="pd-title"><button type="button" data-action="pd-info" data-id="'+esc(r.plan_id)+'">'+esc(r.title)+'</button></h3>'+
         '<span class="pd-strategy">'+esc(r.strategy)+'</span>'+
@@ -1223,6 +1224,7 @@
     return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
       '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
+      (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<div class="plan-preview-meta"><span>'+steps(body(r)).length+' steps</span><span>'+esc(r.status)+'</span></div>'+
       '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
@@ -1258,6 +1260,7 @@
     cur.status='canceled'; cur.current=false;
     cur.cancelReason=reason||'Canceled when a new Plan was requested for this thread while it was still unfinished.';
     stopRun(cur);
+    invalidateSchedulesFor(cur,'new_plan');
     return cur;
   }
 
@@ -1292,8 +1295,15 @@
        cannot deliver a second dispatch for work that has already started.
        Cancel did this and Build did not, which left exactly the duplicate
        admission the correction names -- two owners of one PlanRun. */
-    r.scheduleInvalidation = invalidateSchedulesFor(r, 'immediate_build');
+    r.scheduleInvalidation = invalidateSchedulesFor(r, opts.scheduleRef ? 'scheduled_build' : 'immediate_build', opts.scheduleRef);
     r.approved = freeze(r,ctx);
+    if(opts.scheduleSnapshot){
+      r.approved.runtime=opts.scheduleSnapshot.modelName;
+      r.approved.modelId=opts.scheduleSnapshot.modelId;
+      r.approved.provider=opts.scheduleSnapshot.provider;
+      r.approved.accountId=opts.scheduleSnapshot.accountId;
+    }
+    if(opts.scheduleRef)r.approved.schedule_id=opts.scheduleRef;
     r.status = 'building';
     r.buildStep = 0;
     r.wait = opts.wait || null;
@@ -1320,8 +1330,9 @@
                        count:(made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length),
                        reused:!!(made&&made.reused) };
     // A direct Plan build is not a Goal. Use its own linked transcript record.
-    ctx.appendMessage && ctx.appendMessage({id:ctx.uid('plan-run'),role:'system',
-      type:'plan-run-receipt',plan_id:r.plan_id,title:'Build started',
+    var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
+    if(thread)thread.messages.push({id:ctx.uid('plan-run'),role:'system',
+      type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',
       detail:'V'+r.version+' · '+r.todosCreated.count+' To-Dos',time:new Date().toISOString()});
     /* Advance the step gutter on a real interval so Building… is observable.
        Nothing here is authoritative -- §7.2's gutter is a projection. */
@@ -1363,7 +1374,7 @@
      holds it: this module's own card binding (`r.schedule`) and the scheduler's
      durable build schedules. Returns a receipt so the caller can show what was
      fenced rather than asserting it. */
-  function invalidateSchedulesFor(r, reason){
+  function invalidateSchedulesFor(r, reason, excludeScheduleId){
     var why = reason==='immediate_build'
       ? 'Build Now started this exact Plan version; the pending schedule is invalidated so no later dispatch can admit a second run.'
       : 'The bound execution ended; this schedule can no longer dispatch.';
@@ -1373,7 +1384,7 @@
     }
     var S=window.PM56_SCHED;
     if(S && S.invalidateForExecution){
-      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why });
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
       out.scheduler=(res&&res.schedules)||0;
     }
     return out;
@@ -1883,7 +1894,7 @@
       stopRun(r);
       r.status='canceled'; r.current=false;
       r.cancelReason='Canceled from the Plan card at V'+r.version+'.';
-      if(r.schedule){ r.schedule.invalid=true; r.schedule.invalidReason='The Plan was canceled; a manual cancel always overrides a scheduled build.'; }
+      r.scheduleInvalidation=invalidateSchedulesFor(r,'manual_cancel');
       ctx.renderApp();
     },
 
@@ -1914,7 +1925,11 @@
     'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
     'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
-    'pd-build-at':   function(ctx,btn){ openDlg(ctx,'at',    btn.dataset.id); },
+    'pd-build-at': function(ctx,btn){
+      var r=rec(btn.dataset.id);if(!r||!eligible(r).at)return;
+      if(window.PM56_SCHED)window.PM56_SCHED.openBuildAt(ctx,r.plan_id,r.version);
+      else openDlg(ctx,'at',r.plan_id);
+    },
     'pd-export':     function(ctx,btn){ openDlg(ctx,'export',btn.dataset.id); },
     'pd-dlg-close':  function(ctx){ ctx.closeDialog(); },
 
@@ -2267,7 +2282,7 @@
     var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
     var r = id && rec(id);
     if(!r) return '';
-    return '<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
+    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
       cardHeader(r)+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
@@ -2282,6 +2297,17 @@
 
   window.PM56_PLANS = {
     get:rec, all:function(){ return P().records; },
+    // Concept-only admission seam. The scheduler validates its due time and
+    // receipt; the Plan owner independently rechecks exact identity and state.
+    admitScheduled:function(binding){
+      var c=EXT.ctx&&EXT.ctx(),r=binding&&rec(binding.target_id);
+      if(!c||!r||r.thread_id!==binding.thread_id)return {ok:false,clause:'target_not_found'};
+      if(r.version!==binding.exact_target_version||hashOf(body(r))!==binding.exact_target_hash)
+        return {ok:false,clause:'target_version_changed'};
+      if(r.status!=='ready'||!eligible(r).build)return {ok:false,clause:'plan_not_ready'};
+      var ok=admitBuild(c,r,{scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      c.renderApp();return {ok:ok,clause:ok?null:'plan_not_ready',approved:ok?r.approved:null};
+    },
     editorBody:editorBody,
     /* Which Plan an artifact id maps to, so app.js's artifact header can read
        the owner's version and Build label instead of the legacy record. */

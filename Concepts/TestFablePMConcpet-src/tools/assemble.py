@@ -59,6 +59,11 @@ doc = fill(doc, 'TOUR:CSS', f'<style id="pmf-tour-css">\n{rd("tour.css")}\n</sty
 doc = fill(doc, 'ONBOARDING:BODY', f'{rd("onboarding.html")}\n<script id="pmf-onboarding-js">\n{rd("onboarding")}\n</script>')
 doc = fill(doc, 'TOUR:BODY', f'{rd("tour.html")}\n<script id="pmf-tour-js">\n{rd("tour")}\n</script>')
 
+doc = doc.replace(
+    "function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}",
+    "function activeOverlay(){var tour=document.getElementById('pmf-tour'),onboarding=document.getElementById('pmf-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}"
+)
+
 # emoji gate (project rule: no emoji glyphs)
 bad = re.findall(r'[\U0001F000-\U0001FAFF☀-➿⬀-⯿️]', rd('onboarding')+rd('tour')+rd('onboarding.css')+rd('tour.css')+rd('onboarding.html')+rd('tour.html'))
 if bad: print('EMOJI FOUND in sources:', bad[:5]); sys.exit(2)

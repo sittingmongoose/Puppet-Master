@@ -1,0 +1,681 @@
+{
+  "batch_id": "assistant-demo-b03-review",
+  "html_sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
+  "source_matrix_rows": 551,
+  "source_feature_groups": 67,
+  "source_freeze_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "rows": [
+    {
+      "coverage_id": "v2:REVIEW-001",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-001",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Review is a primary Assistant mode with Single Agent and Multi-Pass Review submenu choices.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Both gallery workflows enter the existing mandatory Review configuration.",
+      "remaining": "Primary-mode/submenu entry routes are not newly audited in this batch.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-002",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-002",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Single Agent creates a fresh-context reviewer subagent with selected model and Persona.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "One selected model/Persona slot, one distinct local attempt, frozen input with no peer findings.",
+      "remaining": "Recorded example, not a real fresh-context provider subagent.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-003",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-003",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Multi-Pass supports 1–8 reviewers with default 3 and permits repeated model choices.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "One and three reviewers; three same-model slots remain distinct; prior roster edits preserved.",
+      "remaining": "The full 1–8 reviewer/configuration space is not recorded here.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-004",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-004",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Every initial review pass receives a unique attempt and frozen target pack.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Unique attempt IDs, shared immutable target snapshot and per-pass hash bindings.",
+      "remaining": "Local demo checksum, not a production cryptographic pack or isolated provider session.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-005",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-005",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Initial review passes run concurrently and blind.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "All local initial pass slots are admitted together with no peer identities or findings.",
+      "remaining": "Results are replayed recorded observations; native parallel execution/isolation remains unproven.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-006",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-006",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Findings are normalized for likely duplicates without losing origin/evidence.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Four raw observations normalize to three findings; duplicate IDs, both originating reviewers and evidence refs survive.",
+      "remaining": "Broader semantic duplicate detection remains a provider/runtime obligation.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-007",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-007",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Reviewers then corroborate findings using confirm, reject, duplicate or uncertain dispositions.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Structured peer dispositions and confidence/evidence; failed, waived, replaced and retried attempts cannot vote against old passes.",
+      "remaining": "Not every disposition is a separate user-visible workflow; live corroboration is not executed.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-008",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-008",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Final adjudication preserves unresolved material disagreement rather than manufacturing consensus.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Confirmed ranking finding retains uncertain dissent and its reason; uncertain performance suggestion is retained.",
+      "remaining": "Provider adjudication quality is not inferred from deterministic recorded examples.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-009",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-009",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Reviews of different target hashes cannot silently merge.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Wrong hash, stale epoch/assignment/attempt refused; stale participant completion cannot finalize.",
+      "remaining": "Cross-machine target changes and real project state monitoring are not implemented here.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-010",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-010",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Review output is a versioned Rich/Markdown artifact plus concise thread summary.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "One frozen V1 report with Rich/Markdown views, stable left tab, explicit Markdown file export, concise linked card.",
+      "remaining": "General artifact retention, persistent restart and later report versions are not demonstrated.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-011",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-011",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Review is read-only and never automatically repairs target work.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Frozen target bytes and read-only report stay unchanged; no automatic task creation, source mutation or repair.",
+      "remaining": "Native tool/permission enforcement is outside this concept.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:REVIEW-012",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "REVIEW-012",
+        "category": "Review and Multi-Pass Review",
+        "statement": "Confirmed findings can be explicitly sent to agent or converted to To-Dos.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Selected confirmed findings create actual pending owner To-Dos with lineage; task links reopen the finding. Send drafts without dispatch or overwriting existing text.",
+      "remaining": "Agent dispatch and production persistence remain separate; only multi conversion is recorded.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:MODAL-001",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "MODAL-001",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Opening or editing any Crew, Crew Auto, BrainStorm, Review, Chat Room, BSD workflow, or Build-With-Crew modal creates only local WorkflowLaunchDraft state.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; FinalGUISpec",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "No durable run/session/provider effect before confirmation."
+        ],
+        "negative_constraints": [
+          "Do not create placeholder cards on modal open."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Gallery initialization opens the real local configuration draft.",
+      "remaining": "No new audit of the other collaborative workflows.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:MODAL-002",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "MODAL-002",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Before confirmed Start/Apply, there is no provider request, participant session, Usage record, durable start event, workflow artifact, project mutation, or permission grant.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Instrumentation proves zero side effects on cancel."
+        ],
+        "negative_constraints": [
+          "Do not treat capability preview as execution."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "No Review run or To-Dos before Start; cancel creates none.",
+      "remaining": "Native side-effect counters are not production provider proof.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:MODAL-009",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "MODAL-009",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Review target identity and hash freeze at Start, not when the modal first opens.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Currentness is checked immediately before admission."
+        ],
+        "negative_constraints": [
+          "Do not review an unintended changed target."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Snapshot frozenAt is set at Start and the admitted pack is deeply frozen.",
+      "remaining": "The gallery already supplies identified fixture source; no live target drift during configuration.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:MODAL-010",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "MODAL-010",
+        "category": "Workflow modal transaction boundary",
+        "statement": "If a Review target changed while the modal was open, the user must refresh to current or explicitly choose the identified old immutable target.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; FinalGUISpec",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "No silent target swap or mixed review."
+        ],
+        "negative_constraints": [
+          "Do not combine two target hashes."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Frozen target is explicitly identified as a recorded fixture.",
+      "remaining": "Live refresh-versus-old-target selection remains unexecuted.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:PART-007",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PART-007",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Multi-Pass Review with one reviewer performs one fresh independent review and does not claim peer corroboration, agreement, quorum, or consensus.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Artifact labels the single-pass result."
+        ],
+        "negative_constraints": [
+          "Do not fabricate a multi-agent agreement section."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Single Agent report has no peer votes or agreement matrix.",
+      "remaining": "A completed Multi-Pass configuration with one reviewer is not separately recorded.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:PART-008",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PART-008",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "When fewer Review passes complete than requested, the result discloses requested/completed/failed counts and remains attention-required until retry/reconfigure or explicit acceptance of partial review.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; FinalGUISpec",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Final artifact identifies partial coverage."
+        ],
+        "negative_constraints": [
+          "Do not silently finalize as full Multi-Pass."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Incomplete initial passes cannot normalize or produce a complete report.",
+      "remaining": "Partial-acceptance/retry recovery UX remains outside this two-happy-path batch.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:PART-009",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PART-009",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Only admitted, current, completed Review attempts can corroborate or vote; failed, timed-out, unavailable, canceled, stale, and waived attempts do not.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Agreement counts are reproducible."
+        ],
+        "negative_constraints": [
+          "Do not use provider text from a superseded attempt."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Actual participant lifecycle APIs challenge failed/timed-out/unavailable/canceled/waived/replaced/retried attempts; vote and finalization refuse stale completion.",
+      "remaining": "Full native admission, restart and retry scheduling remain unproven.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:PART-010",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PART-010",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Review finding disposition preserves unresolved disagreement; lack of quorum cannot be rendered as consensus.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Uncertain/disputed findings remain explicit."
+        ],
+        "negative_constraints": [
+          "Do not let coordinator manufacture unanimity."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Missing peer responses prevent finalization; recorded dissent is retained in Rich and Markdown.",
+      "remaining": "No claim of production quorum/consensus guarantees.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v4:PART-022",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PART-022",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Same-model repeated Review slots still use independent fresh sessions/attempt IDs and are not collapsed into one participant.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Independence evidence is retained or constrained disclosure shown."
+        ],
+        "negative_constraints": [
+          "Do not reuse hidden shared context while claiming blind passes."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Repeated same-model reviewers retain distinct slot and attempt identities.",
+      "remaining": "No actual isolated provider sessions are created.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-016",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Two distinct completed Review workflows added to cumulative gallery; outcomes and associated controls verified.",
+      "remaining": "All 551 requirements / 67 groups remain open globally.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-018",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Same final build drives functional checks and 60Hz-targeted X11 capture, all decoded frames inspected in consecutive sheets, selected native frames.",
+      "remaining": "All-feature/animation campaign and individual full-resolution inspection of every frame remain uncompleted.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-029",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-029",
+        "area": "Shared collaborator selectors",
+        "requirement": "Crew, Crew Auto, Chat Room, BrainStorm and Review use the same model and Persona picker components/catalogs as the main Assistant controls, with provider/account identities, search, favorites, effort/Fast support where available. No native select or copied subset as a substitute.",
+        "acceptance": "Five workflows × model/persona entry; selected row only changes; visible configured account choice and capability-dependent options."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Existing main model/Persona pickers retained in Review; cancellation preserves main model selection.",
+      "remaining": "Other workflows and exhaustive picker interactions not re-audited here.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-053",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-053",
+        "area": "Popup footer spacing",
+        "requirement": "Give every collaboration popup footer consistent inset padding and separation. Secondary buttons must not touch bottom/left corners; maintain action order, readable targets and narrow-width wrapping.",
+        "acceptance": "Measure button-to-surface clearances at desktop and narrow sizes for each mode, nested picker and confirmation state."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Real modal footer tested at 900 and 700 pixels with at least 12px inset.",
+      "remaining": "Not all popups/modes/themes reviewed.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-054",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-054",
+        "area": "One-agent Review invariant",
+        "requirement": "Switching Review strategy to Single Agent immediately reduces the active draft roster to exactly one valid reviewer. Enforce the invariant on confirmation/start, loaded configuration, repeated changes and serialized state, not just rendered rows. Retain multi-pass review semantics independently of agent count.",
+        "acceptance": "Start with several reviewers; switch to Single Agent; prove one rendered and one active participant; malicious/stale multi-entry draft cannot start multiple participants; other strategies remain correct."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Single Agent admits exactly one reviewer in these workflows; previous reviewer-removal repair remains in source.",
+      "remaining": "All malformed loaded config and multi-pass-count combinations are not newly covered.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-067",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-067",
+        "area": "Read-only demonstration semantics",
+        "requirement": "Read-only Review/Ask/inspection fixtures must show inspection and findings rather than cleanup or source mutation workflows. Required research tools remain available according to their distinct permission contracts.",
+        "acceptance": "Inspect task/action fixtures and controls; no build/modify action disguised as inspection; permitted tool setup does not broaden project-write authority."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Inspection evidence and read-only reports; explicit pending tasks do not start remediation.",
+      "remaining": "Other historical read-only fixtures not recertified.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-070",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-070",
+        "area": "Delivery and evidence integrity",
+        "requirement": "Provide actual repaired Assistant HTML, generated TestPM HTML, mergeable Concepts source folder, and independent implementation/audit prompts. Verify archive extraction/rebuild and file hashes. Report only tests and frame reviews actually performed on identifiable bytes.",
+        "acceptance": "Every link exists; no status-only archive labeled repaired HTML; no unsupported test totals or native 60fps/production readiness claims."
+      },
+      "source_file_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+      "scenario_ids": [
+        "B03-REVIEW-SINGLE",
+        "B03-REVIEW-MULTI"
+      ],
+      "new_proof": "Actual cumulative Assistant source/HTML ZIP, clean extraction/rebuild and hash-bound evidence.",
+      "remaining": "Assistant-only bounded batch; no TestPM, Plans packet or native acceptance is implied.",
+      "status": "PARTIAL_CONCEPT_EVIDENCE",
+      "native_proof": false
+    }
+  ],
+  "global_APR_016": "OPEN",
+  "global_APR_018": "OPEN"
+}

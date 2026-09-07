@@ -1,3 +1,5 @@
+> Latest bounded delivery: **Batch 3 — Review workflows**. Start with `BATCH_03_README.md` and `BATCH_03_CHECKPOINT.json`; earlier delivery/audit reports below are historical.
+
 # Puppet Master Assistant — v3 rebuilt delivery
 
 Open PM_Chat_Assistant_5.6_Pro_Standalone.html or index.html. They are generated, self-contained and byte-identical.

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -25,6 +26,48 @@ SOURCE = ROOT / "Concepts/pm7-tools/guided_tour_source.py"
 
 
 class EffectiveGuidedTourSourceTests(unittest.TestCase):
+    def test_current_tour_inventory_preserves_domain_owners_and_open_status(self) -> None:
+        expected, failures = validator.expected_inventory()
+        self.assertFalse([item for item in failures if "Guided Tour" in item], failures)
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
+        rows = {row[3]: row for row in registry["rows"]}
+        profiles = {profile["profile_id"]: profile for profile in registry["profiles"]}
+        targets = {
+            "ui.guided_tour.show_me": ("TCP-TOUR", "ui_action", "Plans/Planning_Wizard.md"),
+            "cmd.persona.select": ("TCP-TOUR-PERSONA", "command", "Plans/Personas.md"),
+            "cmd.chat.send": ("TCP-TOUR-CHAT", "command", "Plans/assistant-chat-design.md"),
+            "cmd.chat.eli5.set": ("TCP-TOUR-CHAT", "command", "Plans/assistant-chat-design.md"),
+        }
+        for action, (profile, kind, owner) in targets.items():
+            with self.subTest(action=action):
+                self.assertEqual(expected[action], (profile, kind, "partial"))
+                self.assertEqual(rows[action][1:5], [profile, kind, action, "partial"])
+                self.assertEqual(profiles[profile]["owner_plan"], owner)
+                self.assertEqual(profiles[profile]["handler_status"], "specified")
+                self.assertEqual(profiles[profile]["wiring_status"], "concept_simulated")
+
+    def test_extra_tour_action_cannot_expand_the_closed_inventory(self) -> None:
+        actual = validator.schema_enum_actions
+
+        def changed(path, pointer):
+            result = actual(path, pointer)
+            return result | {"ui.guided_tour.private_send"} if "guided_tour" in path else result
+
+        with mock.patch.object(validator, "schema_enum_actions", side_effect=changed):
+            with self.assertRaisesRegex(ValueError, "eleven-action inventory drift"):
+                validator.expected_inventory()
+
+    def test_missing_reused_domain_catalog_command_fails_closed(self) -> None:
+        actual = validator.read
+
+        def changed(path):
+            value = actual(path)
+            return value.replace("cmd.chat.eli5.set", "retired.eli5") if path == "Plans/UI_Command_Catalog.md" else value
+
+        with mock.patch.object(validator, "read", side_effect=changed):
+            with self.assertRaisesRegex(ValueError, "domain routes absent from canonical catalog"):
+                validator.expected_inventory()
+
     def test_current_composition_matches_emitted_bands_exactly(self) -> None:
         actual = validator.effective_guided_tour_bands(SOURCE.read_text(encoding="utf-8"))
         with mock.patch.object(sys, "path", [str(SOURCE.parent), *sys.path]):

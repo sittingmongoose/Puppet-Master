@@ -744,7 +744,7 @@
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
       "runtime_evidence": false,
-      "rationale": "The existing physical family binds the current nine-stage Product Onboarding session and exact six-stage connect-existing shortcut, including path_kind, queued setup-plan identity/revision, reviewed revision, person-confirmation state, approved-plan SHA-256, automatic-preparation currentness ref, continuation generation, and non-secret refs/handles only; Guided Tour state remains ephemeral and nonpersisted.",
+      "rationale": "The existing physical family binds the current nine-stage Product Onboarding session and exact six-stage connect-existing shortcut, including path_kind, queued setup-plan identity/revision, reviewed revision, person-confirmation state, approved-plan SHA-256, automatic-preparation currentness ref, continuation generation, and non-secret refs/handles only. Guided Tour live UI state is nonpersisted; its separate bounded v3 checkpoint remains physical-family-registration-pending and cannot be stored in onboarding_state.",
       "source_refs": [
         "Plans/Planning_Wizard.md#product-onboarding-and-guided-tour-owner-addendum-2026-08-31",
         "Plans/product_onboarding_contracts.schema.json"
@@ -822,7 +822,11 @@
       "schema_ref": "Plans/guided_tour_contracts.schema.json",
       "record_kinds": [
         "pm.guided_tour.session.v1",
-        "pm.guided_tour.action_request.v1"
+        "pm.guided_tour.action_request.v1",
+        "pm.guided_tour.session.v2",
+        "pm.guided_tour.action_request.v2",
+        "pm.guided_tour.session.v3",
+        "pm.guided_tour.action_request.v3"
       ],
       "persistence_disposition": "ephemeral_nonpersisted",
       "physical_family_status": "not_applicable_nonpersisted",
@@ -830,21 +834,53 @@
       "retention_disposition": {
         "mode": "not_applicable_nonpersisted",
         "refs": [],
-        "hold_rule": "Only stable layout snapshot and owner receipt refs may outlive the session under their existing owners.",
-        "expiry_rule": "Discard all tour step, status, Teacher text, focus, motion, and demonstrated/completed action state at session end or process exit."
+        "hold_rule": "Live controllers and action transport have no retention authority. Original layout/Chat snapshots remain under their existing owners; only the separately specified bounded checkpoint may refer to them after its physical registration and adapter are admitted.",
+        "expiry_rule": "Discard live controller, request, Teacher text, focus, motion, timer, and animation objects at session end or process exit. Do not serialize a live session as a substitute for the separately bounded checkpoint."
       },
       "redaction_transform_ids": [
         "rt.no_secret_refs.v1",
         "rt.auth_browser_session_exclusion.v1"
       ],
-      "migration_rule": "Guided Tour sessions are never migrated or resumed; replay creates a new session and layout recovery uses the existing layout owner.",
+      "migration_rule": "Predecessor v1/v2 controller/session records are not current resume authority. V3 reconstructs a live controller only from a valid separately bounded checkpoint after owner revalidation, never by replaying old domain work or replacing missing original snapshots with the temporary layout. Missing physical storage or owner recovery support remains unavailable.",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
       "runtime_evidence": false,
-      "rationale": "The owner schema fixes durability_class=ephemeral_session and session_persistence=not_persisted.",
+      "rationale": "V3 keeps durability_class=ephemeral_live_session and session_persistence=bounded_checkpoint_only. This row covers live session and action transport only; it does not veto the distinct PWIZ-023 safe-checkpoint requirement or materialize that checkpoint's storage.",
       "source_refs": [
         "Plans/Planning_Wizard.md#guided-tour-real-application-contract",
         "Plans/guided_tour_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.guided_tour.checkpoint.v1",
+      "system_id": "guided_tour",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_checkpoint",
+      "record_kinds": [
+        "pm.guided_tour.checkpoint.v3"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "No durable write or retention authority until exact physical key/value, owner snapshot custody, bounded retention/redaction, and adapter registration are admitted. A resumable session must retain valid original layout/Chat snapshot refs under their existing owners.",
+        "expiry_rule": "Registration must define terminal cleanup, stale/corrupt quarantine, and owner-reference release without erasing state required for a failed restoration retry. Schema fixtures establish no retention implementation."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Require the current v3 storyboard revision, bounded safe-step and predicate refs, original owner snapshot refs, and exact owner-state revisions. Resume revalidates prerequisites and returns to the earliest unsatisfied step without replaying domain work. A predecessor controller, missing original snapshot, unregistered store, or stale/corrupt/secret-bearing record cannot be silently resumed or converted into a new restoration baseline.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "PWIZ-023 requires safe close/reload recovery. The v3 bounded checkpoint schema is static contract evidence only; physical storage, layout/Chat snapshot adapters, migration, and recovery execution remain open. This disposition adds no physical family, onboarding_state field, event, or readiness admission.",
+      "source_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Plans/storage-plan.md#SP-251",
+        "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_checkpoint"
       ]
     },
     {

@@ -1,0 +1,367 @@
+{
+  "batch_id": "assistant-demo-b02-plan-scheduling",
+  "base_commit": "61cd18bb26c060982f709953b2495e9fd81a3543",
+  "html_sha256": "d6fa6c2e47515ceea45152b12daf04839d0b5a5096d7fc1068fd43a01559c8be",
+  "source_requirements_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "retained_requirement_count": 551,
+  "rows": [
+    {
+      "coverage_id": "v2:SCHED-003",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "SCHED-003",
+        "category": "Scheduling and quota resume",
+        "statement": "Plan Build At binds exact Plan ID/version/hash.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "observed": "The real Build At form stores Plan ID, current V1 and content-derived hash; scheduled admission consumes that exact binding.",
+      "remaining": "Noncryptographic concept hash, not canonical hashing or durable/provider proof.",
+      "scenario_ids": [
+        "B02-DUE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v2:SCHED-004",
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "SCHED-004",
+        "category": "Scheduling and quota resume",
+        "statement": "Plan revision invalidates its pending build schedule rather than retargeting silently.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "observed": "Actual composer revision leaves the schedule at V1, invalidated. V2 is bound only through Use V2; V1 contents preserved.",
+      "remaining": "Arbitrary provider replanning, durable restarts and remote scheduler invalidation not proven.",
+      "scenario_ids": [
+        "B02-REVISE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/revise-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-003",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-003",
+        "category": "Scheduled Plan build topology",
+        "statement": "A scheduled build creates no PlanRun, Goal, CrewRun, To-Do work binding, or provider attempt until first eligible dispatch admission.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "The schedule is durable but execution has not started."
+        ],
+        "negative_constraints": [
+          "Do not count scheduled work as active work."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "Saving or early-ticking the one-time schedule creates no approved run, Goal, or To-Dos.",
+      "remaining": "Native PlanRun/Goal/Crew/provider admission and persistence are outside the HTML.",
+      "scenario_ids": [
+        "B02-DUE",
+        "B02-REVISE",
+        "B02-CANCEL"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json",
+        "recordings/revise-result.json",
+        "recordings/cancel-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-004",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-004",
+        "category": "Scheduled Plan build topology",
+        "statement": "At dispatch, the scheduler revalidates exact Plan version/hash/currentness, topology configuration, project/worktree, permission, provider/account/model, tools, window, and quota.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Any unmet predicate yields Held or Failed with reason."
+        ],
+        "negative_constraints": [
+          "Do not silently alter Plan, topology, account, or model."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "Actual content/version recheck, local catalog route, worktree, permissions, quota and due time fences are exercised; negative counterexamples cause no admission.",
+      "remaining": "Tools, complete topology/config validation, native permission enforcement and durable Held/Failed projections remain open. Some local failures return exact refusal rather than persist Held.",
+      "scenario_ids": [
+        "B02-DUE",
+        "B02-REVISE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json",
+        "recordings/revise-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-005",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-005",
+        "category": "Scheduled Plan build topology",
+        "statement": "Immediate Build of the same Plan version atomically invalidates its pending schedule before admitting the run.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "No later duplicate dispatch."
+        ],
+        "negative_constraints": [
+          "Do not leave timer ownership ambiguous."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "The independent immediate-Build counterexample invalidates only its pending schedule and a subsequent scheduled tick cannot duplicate work.",
+      "remaining": "Native atomic admission, race concurrency, and durable timer ownership not proven.",
+      "scenario_ids": [
+        "B02-DUE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-006",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-006",
+        "category": "Scheduled Plan build topology",
+        "statement": "Plan revision invalidates schedules bound to older versions; the user must explicitly update or recreate them.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Schedule card identifies stale Plan version."
+        ],
+        "negative_constraints": [
+          "Do not retarget automatically."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "Visible stale V1-to-V2 notice, explicit V2 rebind and V2 admission; repeated revisions test rebinds the actual V3.",
+      "remaining": "Production event/receipt/durable consistency remains separate.",
+      "scenario_ids": [
+        "B02-REVISE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/revise-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-007",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-007",
+        "category": "Scheduled Plan build topology",
+        "statement": "Provider/model/account unavailability at dispatch follows the stored fallback policy; absent explicit fallback, the build is Held or Failed rather than substituted.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md; Provider control",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Requested/effective identity is visible."
+        ],
+        "negative_constraints": [
+          "Do not open a hidden modal or pick another route."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "An unavailable locally catalogued model prevents dispatch without selecting a different route.",
+      "remaining": "Stored fallback policy, full requested/effective projection and persistent Held/Failed outcome are not closed.",
+      "scenario_ids": [
+        "B02-DUE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-010",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-010",
+        "category": "Scheduled Plan build topology",
+        "statement": "Canceling the Plan or its bound Goal/Crew invalidates only schedules and quota consent associated with that execution; unrelated scheduled messages remain.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Association keys are exact."
+        ],
+        "negative_constraints": [
+          "Do not globally clear a thread's schedules."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "Cancel Plan invalidates its pending schedule; canceled records stay canceled; unrelated seeded schedules stay unchanged in guided tests.",
+      "remaining": "Goal/Crew association handling, all quota-consent combinations and native persistence not proven.",
+      "scenario_ids": [
+        "B02-CANCEL"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/cancel-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-012",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-012",
+        "category": "Scheduled Plan build topology",
+        "statement": "Editing a schedule uses expected revision/currentness and cannot mutate a schedule after dispatch has started.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Stale update is refused."
+        ],
+        "negative_constraints": [
+          "Do not race timer dispatch with user edits."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "A stale editor revision is refused before any update.",
+      "remaining": "Full dispatch-vs-edit concurrency and durable transaction proof not exercised.",
+      "scenario_ids": [
+        "B02-DUE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v4:PSCHED-014",
+      "source_record": {
+        "source": "v4",
+        "requirement_id": "PSCHED-014",
+        "category": "Scheduled Plan build topology",
+        "statement": "Schedule and first-dispatch idempotency are distinct: repeated schedule creation returns one schedule, and repeated timer delivery admits one run.",
+        "owner_hint": "Plans/Scheduling_and_Quota_Resume.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Both idempotency domains have independent tests."
+        ],
+        "negative_constraints": [
+          "Do not use wall-clock time as the sole dedup key."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "observed": "Replaying a submitted creation control creates no second schedule; repeated current-record clock ticks return one receipt and never create duplicate To-Dos/messages.",
+      "remaining": "Durable request-key idempotency, network retry reconciliation and concurrent service delivery are not proven.",
+      "scenario_ids": [
+        "B02-DUE",
+        "B02-REVISE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json",
+        "recordings/revise-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v3:APR-019",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-019",
+        "area": "Schedule cancellation",
+        "requirement": "A canceled schedule must not dispatch. Cancellation and immediate Build must invalidate the appropriate pending scheduled action without removing unrelated schedules.",
+        "acceptance": "Cancel before deadline, cancel/dispatch race, immediate Build, repeated clicks, revision/version rebinding."
+      },
+      "observed": "Canceled schedule due-time preview cannot create a build or To-Dos; immediate Build invalidation and repeated controls are independently checked.",
+      "remaining": "True concurrent cancellation/dispatch race and native runtime not tested.",
+      "scenario_ids": [
+        "B02-CANCEL",
+        "B02-DUE"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/cancel-result.json",
+        "recordings/due-result.json"
+      ],
+      "native_runtime_proven": false
+    },
+    {
+      "coverage_id": "v3:APR-027",
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-027",
+        "area": "Schedule manager redesign",
+        "requirement": "Separate scheduled messages, execution/build windows, resume/safety, and event history. Distinguish needs-attention, upcoming, inactive and terminal records. At a glance show the action, destination, local time/timezone, status and available next action; keep technical snapshot/log fields behind Details.",
+        "acceptance": "One-time/recurring/held/failed/canceled/sent states; no explanatory wall; no ambiguous run versus message identity."
+      },
+      "observed": "Build At is one direct form with a focused single-record follow-through; date/time/zone and action hierarchy are shown.",
+      "remaining": "The other Schedule Manager categories and every status/workflow are outside this batch.",
+      "scenario_ids": [
+        "B02-DUE",
+        "B02-REVISE",
+        "B02-CANCEL"
+      ],
+      "status": "BOUNDED_CONCEPT_SUBCHECKS_PASS_NOT_FULL_REQUIREMENT_CLOSURE",
+      "evidence": [
+        "verification/results.json",
+        "recordings/due-result.json",
+        "recordings/revise-result.json",
+        "recordings/cancel-result.json"
+      ],
+      "native_runtime_proven": false
+    }
+  ],
+  "global_APR_016": "OPEN",
+  "global_APR_018": "OPEN",
+  "prior_batch": "BATCH_01_CHECKPOINT.json",
+  "scope": "Three one-time agent-topology concept workflows; no native dispatch."
+}

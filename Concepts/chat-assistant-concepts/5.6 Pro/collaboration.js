@@ -937,6 +937,7 @@
   var SEV_LABEL = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion' };
   var DISP_LABEL = { confirmed: 'Confirmed', rejected: 'Rejected', duplicate: 'Duplicate', uncertain: 'Uncertain' };
   function reviewInline(ctx, run) {
+    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderSummary(ctx,run);
     var r = run.review || {};
     var pack = r.targetPack || {};
     var findings = (r.findings || []).map(function (f) {
@@ -1005,6 +1006,7 @@
      outputs, coordinator failure, quorum and ties are all stated -- a generic
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
+    if(run.kind === 'review' && run.review && run.review.protocolVersion) return '';
     var c = completionProjection(run);
     if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
@@ -1052,6 +1054,7 @@
       body +
       '<div class="collab-card-foot">' +
         '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
+        (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
         '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
         '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
         '<button class="icon-button" data-action="collab-toggle-more" data-run="' + esc(run.id) + '" title="More">' + ctx.icon('more', 13) + '</button>' +
@@ -1336,11 +1339,12 @@
      ===================================================================== */
   UI.selectedFindings = UI.selectedFindings || {};
   function renderReviewFollowOn(ctx, run) {
+    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderActions(ctx,run);
     var r = run.review || {};
     var sel = UI.selectedFindings[run.id] || {};
     var confirmed = (r.findings || []).filter(function (f) { return f.disposition === 'confirmed'; });
     var picks = confirmed.map(function (f) {
-      return '<label class="collab-finding-pick" data-k="collab-pick-' + esc(f.id) + '"><input type="checkbox" data-action="collab-review-toggle-finding" data-run="' + esc(run.id) + '" data-finding="' + esc(f.id) + '"' + (sel[f.id] ? ' checked' : '') + (f.convertedToTodo ? ' disabled' : '') + '><span>' + esc(f.claim) + (f.convertedToTodo ? ' — <i>To-Do requested</i>' : '') + '</span></label>';
+      return '<label class="collab-finding-pick" data-k="collab-pick-' + esc(f.id) + '"><input type="checkbox" data-action="collab-review-toggle-finding" data-run="' + esc(run.id) + '" data-finding="' + esc(f.id) + '"' + (sel[f.id] ? ' checked' : '') + (f.convertedToTodo ? ' disabled' : '') + '><span>' + esc(f.claim) + (f.convertedToTodo ? ' — <i>To-Do created</i>' : '') + '</span></label>';
     }).join('');
     var anySelected = confirmed.some(function (f) { return sel[f.id] && !f.convertedToTodo; });
     return '<div class="collab-followon collab-review-followon" data-k="collab-review-followon-' + esc(run.id) + '">' +
@@ -1351,25 +1355,19 @@
       '</div></div>';
   }
   EXT.action('collab-review-toggle-finding', function (ctx, btn) {
+    if(window.PM56_REVIEW && window.PM56_REVIEW.owns(btn.dataset.run)) return window.PM56_REVIEW.toggleFinding(ctx,btn);
     var rid2 = btn.dataset.run, fid = btn.dataset.finding;
     UI.selectedFindings[rid2] = UI.selectedFindings[rid2] || {};
     UI.selectedFindings[rid2][fid] = !UI.selectedFindings[rid2][fid];
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-review-create-todos', function (ctx, btn) {
-    var run = findRun(btn.dataset.run); if (!run) return true;
-    var sel = UI.selectedFindings[run.id] || {};
-    var made = [];
-    (run.review.findings || []).forEach(function (f) {
-      if (sel[f.id] && f.disposition === 'confirmed' && !f.convertedToTodo) { f.convertedToTodo = true; made.push(f); }
-    });
-    if (!made.length) { ctx.toast('Nothing selected', 'Select at least one confirmed finding first.'); return true; }
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'request', body: 'To-Do request recorded for ' + made.length + ' confirmed finding(s): ' + made.map(function (f) { return f.claim; }).join('; ') + '. `cmd.review.create_todos` is not yet registered in the central command catalog, so this is recorded here with lineage back to each finding rather than claiming it landed on the To-Do owner’s list.' }));
-    ctx.renderApp();
-    ctx.toast('To-Do request recorded', made.length + ' finding(s) marked for conversion, with lineage back to their finding IDs.');
+    if(window.PM56_REVIEW) return window.PM56_REVIEW.createSelectedTodos(ctx,btn);
+    ctx.toast('Review unavailable','The Review module is not loaded. No To-Dos were created.');
     return true;
   });
   EXT.action('collab-review-send-findings', function (ctx, btn) {
+    if(window.PM56_REVIEW && window.PM56_REVIEW.owns(btn.dataset.run)) return window.PM56_REVIEW.sendSelected(ctx,btn);
     var run = findRun(btn.dataset.run); if (!run) return true;
     var sel = UI.selectedFindings[run.id] || {};
     var picked = (run.review.findings || []).filter(function (f) { return sel[f.id]; });
@@ -1388,20 +1386,11 @@
   });
   EXT.action('collab-review-run-again', function (ctx, btn) {
     var old = findRun(btn.dataset.run); if (!old) return true;
-    var fresh = mkRun({
-      kind: 'review', threadId: old.threadId, title: old.title.replace(/\s*\(re-run.*\)$/, '') + ' (re-run)',
-      purpose: old.purpose, status: 'running', config: old.config,
-      coordinator: old.coordinator,
-      participants: old.participants.map(function (p) { return mkParticipant({ role: p.role, requestedModelId: p.requestedModelId, persona: p.requestedPersona, status: 'working', current: 'Fresh-context pass against the newly frozen pack.' }); }),
-      review: { targetPack: { targetKind: old.review.targetPack.targetKind, targetRefs: old.review.targetPack.targetRefs, targetHashes: { primary: Math.random().toString(16).slice(2, 10) }, frozenAt: nowIso(), userConstraintRefs: old.review.targetPack.userConstraintRefs, acceptanceRefs: old.review.targetPack.acceptanceRefs }, findings: [], excludedFindings: [] }
-    });
-    fresh.participants.forEach(function (p) { p.runId = fresh.id; });
-    fresh.messages.push(mkMsg(fresh, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'New review started against a freshly frozen target pack (hash ' + fresh.review.targetPack.targetHashes.primary + '). This is a new run identity — it never merges into ' + old.id + '.' }));
-    RTC.runs.push(fresh);
-    attachCardToThread(ctx, fresh);
-    ctx.closeDialog && ctx.closeDialog();
-    ctx.renderApp();
-    ctx.toast('New review started', 'A new frozen target pack was captured. The prior run and its findings are untouched.');
+    openConfigureDraft('review',old.id,false);
+    RTC.draft.reconfigureRunId=null;
+    RTC.draft.name=old.title.replace(/\s*\(re-run.*\)$/,'')+' (re-run)';
+    if(old.review.protocolVersion) RTC.draft.reviewTarget=JSON.parse(JSON.stringify(old.review.targetPack));
+    ctx.openDialog({type:'collab-configure'});
     return true;
   });
 
@@ -1729,6 +1718,7 @@
       '<div class="dialog-body collab-configure-body">' +
       '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
       '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
+      (d.kind==='review' && d.reviewTarget ? '<div class="review-target-label"><small>Frozen on Start · recorded example</small><strong>'+esc(d.reviewTarget.label)+'</strong><span>Read-only · no provider calls</span></div>' : '') +
       '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
       '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
@@ -1741,6 +1731,7 @@
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
+      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -2010,6 +2001,7 @@
       effect('providerCalls', newRun.participants.length);
       effect('usageRecords', newRun.participants.length);
       RTC.runs.push(newRun);
+      if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }
@@ -2426,6 +2418,8 @@
     runStatusVocabulary: function(){
       return ['configuring','running','paused','blocked','completed','canceled','failed'];
     },
+    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);r.messages.push(m);return m;},
+    selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
     normalizeReview: normalizeReview
   };
 })();

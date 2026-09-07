@@ -31,10 +31,11 @@
  *    hemisphere) and a no-DST zone like Asia/Kolkata each get a truthfully
  *    different summary line instead of a copy-pasted "clocks spring forward in
  *    March" sentence that would be wrong for three of the ten offered zones.
- * 3. THE HASH IS A DEMO STAND-IN, LABELLED AS ONE. `demoHash()` is a short
- *    deterministic string hash of "planId:version" — not a real content-address.
+ * 3. THE HASH IS A DEMO STAND-IN, LABELLED AS ONE. `demoHash()` remains a short
+ *    legacy fixture hash of "planId:version" — not a real content-address.
  *    It exists only so `exact_target_hash` is never blank and never random
- *    (same id+version always produces the same hash, so idempotency and
+ *    (newly committed builds use PM56_PLANS.hash of the actual document;
+ *    legacy seed rows retain their old fixture hashes). Idempotency and
  *    invalidation stay internally consistent), and every place it renders
  *    calls it "hash" rather than implying provenance it does not have.
  * 4. QUOTA STATE IS CONSUMED, NOT DUPLICATED. `RT.quota` (waiting, resetSource,
@@ -827,7 +828,9 @@
      occurrence admission.
      ===================================================================== */
   function defaultBuildDraft(planId, version) {
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(planId);
     return {
+      contentHash:plan?window.PM56_PLANS.hash(planId):null,
       planId: planId, version: version, kind: 'recurring_window',
       date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
@@ -836,7 +839,11 @@
   }
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
-    var hash = demoHash(d.planId + ':' + d.version);
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(d.planId);
+    if(!plan||plan.status!=='ready'||plan.version!==d.version||window.PM56_PLANS.hash(d.planId)!==d.contentHash){
+      d.error='Plan changed. Close this form and schedule the current version.';ctx.renderOverlays();return null;
+    }
+    var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
     var oneTime = d.kind === 'one_time';
@@ -850,6 +857,10 @@
     var rec = {
       schedule_id: id, project_id: 'pm', target_kind: 'assistant_plan_run', target_id: d.planId,
       exact_target_version: d.version, exact_target_hash: hash,
+      binding_kind:'plan_content_v1',execution_topology:'agent',thread_id:plan.thread_id,
+      runtime_snapshot:{modelId:model.id,modelName:model.name,provider:model.provider,accountId:model.accountId},
+      permission_snapshot:ctx.state.permissions,worktree_snapshot:ctx.state.worktree,
+      dispatchReceipt:null,
       schedule_kind: d.kind,
       timezone: d.timezone,
       local_start: oneTime ? d.time : d.startTime,
@@ -867,7 +878,7 @@
       // Edit the existing owner record atomically: no temporary schedule or
       // orphan creation event and no loss of already admitted occurrence IDs.
       var retained={createdAt:existing.createdAt,revision:existing.revision+1,
-        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),
+        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),dispatchReceipt:existing.dispatchReceipt,
         runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
       Object.assign(existing,rec,retained);rec=existing;
       logBuildLine(rec,'Window updated.');
@@ -881,7 +892,8 @@
   }
   function cancelBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state === 'completed') return false;
-    rec.state = 'canceled'; rec.updatedAt = nowIso();
+    if(rec.state==='canceled')return true;
+    rec.state = 'canceled'; rec.revision++; rec.updatedAt = nowIso();
     logBuildLine(rec, 'Cancelled by the user. Any already-admitted work continues under its own owner — cancelling a window is not a Stop.');
     logEvent('execution_window.updated', id, null, 'Cancelled by the user.');
     persistNow();
@@ -912,7 +924,7 @@
     var out = { invalidated: [], untouched: [] };
     P().buildSchedules.forEach(function (rec) {
       if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
-      if (rec.state === 'invalidated' || ['cancelled','canceled'].includes(rec.state) || rec.state === 'completed') { out.untouched.push(rec.schedule_id); return; }
+      if (['cancelled','canceled','completed'].includes(rec.state)) { out.untouched.push(rec.schedule_id); return; }
       if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
       rec.pendingVersion = newVersion;
       rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
@@ -930,17 +942,68 @@
 
   function rebindBuild(id) {
     var rec = findBuild(id); if (!rec || rec.state !== 'invalidated') return null;
-    if (rec.pendingVersion != null) rec.exact_target_version = rec.pendingVersion;
-    if (rec.pendingHash) rec.exact_target_hash = rec.pendingHash;
+    var plan=window.PM56_PLANS&&window.PM56_PLANS.get(rec.target_id);
+    if(rec.binding_kind==='plan_content_v1'){
+      if(!plan||plan.status!=='ready')return null;
+      rec.exact_target_version=plan.version;rec.exact_target_hash=window.PM56_PLANS.hash(plan.plan_id);
+    }else{
+      if(rec.pendingVersion!=null)rec.exact_target_version=rec.pendingVersion;
+      if(rec.pendingHash)rec.exact_target_hash=rec.pendingHash;
+    }
     rec.pendingVersion = null; rec.pendingHash = null;
     rec.state = 'active'; rec.invalidated_reason = null; rec.revision += 1;
-    rec.occurrencesFired = []; rec.runPhase = 'idle';
+    rec.occurrencesFired = []; rec.runPhase = 'idle';rec.dispatchReceipt=null;
     rec.updatedAt = nowIso();
     logBuildLine(rec, 'Rebound to V' + rec.exact_target_version + ' (hash ' + rec.exact_target_hash + ') by explicit user action. It will not silently advance to a future revision again.');
     logEvent('execution_window.updated', id, null, 'Explicit rebind after invalidation.');
     persistNow();
     return rec;
   }
+  function planSummary(planId){
+    var rows=buildsForTarget(planId).filter(function(b){return b.binding_kind==='plan_content_v1';});
+    if(!rows.length)return '';
+    var b=rows[0],label=b.state==='invalidated'?'Schedule needs update':b.state==='canceled'?'Schedule canceled':b.dispatchReceipt?(window.PM56_PLANS.get(planId)?.status==='completed'?'Scheduled build completed':'Scheduled build started'):'Build scheduled';
+    var suffix=b.state==='invalidated'?'V'+b.exact_target_version+' → V'+b.pendingVersion:'V'+b.exact_target_version+' · '+whenLabel(b.scheduled_at_utc,b.timezone);
+    return '<div class="plan-schedule-line" data-plan-schedule="'+esc(b.schedule_id)+'"><span><strong>'+label+'</strong><small>'+esc(suffix)+'</small></span><button class="text-button" data-action="sched-open-plan-record" data-id="'+esc(b.schedule_id)+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></div>';
+  }
+
+  // A deterministic concept tick, invoked explicitly by the gallery guide.
+  // atMs is the demonstrated clock time, never a global Date override. This
+  // checks a real content binding and admits through the existing Plan owner.
+  // It is NOT a background service or production runtime implementation.
+  function dispatchBuildAt(id,atMs,expectedRevision){
+    var b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx&&EXT.ctx();
+    if(!b||!api||!c)return {ok:false,clause:'target_not_found'};
+    var fail=function(clause,detail){return {ok:false,clause:clause,detail:detail||clause};};
+    if(expectedRevision!=null&&expectedRevision!==b.revision)return fail('stale_schedule_revision');
+    if(b.dispatchReceipt)return {ok:true,duplicate:true,receipt:b.dispatchReceipt};
+    var eligible=evaluateEligibility('build',b,P().stopEpoch);
+    if(!eligible.ok)return fail(eligible.clause,eligible.detail);
+    if(b.state!=='active')return fail('schedule_not_active');
+    if(b.binding_kind!=='plan_content_v1'||b.schedule_kind!=='one_time'||b.execution_topology!=='agent')return fail('unsupported_demo_schedule');
+    if(!Number.isFinite(atMs)||atMs<Date.parse(b.scheduled_at_utc))return fail('window_not_open');
+    var plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
+    if(!plan||!thread||thread.archived||plan.thread_id!==b.thread_id)return fail('target_not_found');
+    if(plan.version!==b.exact_target_version||api.hash(plan.plan_id)!==b.exact_target_hash){
+      b.state='invalidated';b.pendingVersion=plan.version;b.pendingHash=api.hash(plan.plan_id);b.revision++;
+      b.invalidated_reason='The scheduled Plan content changed. Review the current version before dispatch.';
+      logBuildLine(b,b.invalidated_reason);persistNow();c.renderApp();return fail('target_version_changed');
+    }
+    var model=(D.models||[]).find(function(m){return m.id===b.runtime_snapshot.modelId&&m.accountId===b.runtime_snapshot.accountId;});
+    if(!model||model.status!=='ready')return fail('route_unavailable');
+    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_changed');
+    if(c.state.permissions!==b.permission_snapshot)return fail('permission_snapshot_changed');
+    if(RT.quota&&RT.quota.waiting)return fail('quota_unavailable');
+    var result=api.admitScheduled(b);if(!result.ok)return result;
+    b.lastOccurrenceStart=b.scheduled_at_utc;b.occurrencesFired.push(b.scheduled_at_utc);
+    b.dispatchReceipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,
+      hash:b.exact_target_hash,occurrence:b.scheduled_at_utc,at:new Date(atMs).toISOString(),concept:true};
+    b.state='completed';b.runPhase='admitted';b.revision++;b.updatedAt=nowIso();
+    logBuildLine(b,'One-time occurrence admitted through the Plan owner. Repeated ticks return this receipt.');
+    logEvent('scheduled_dispatch.dispatched',id,null,'V'+b.exact_target_version+' started with its frozen content binding.');
+    persistNow();c.renderApp();return {ok:true,duplicate:false,receipt:b.dispatchReceipt};
+  }
+
   function computeNextOccurrence(rec, fromMs) {
     if (rec.schedule_kind === 'one_time') return null;
     var hhmm = parseHHMM(rec.local_start);
@@ -951,6 +1014,10 @@
   }
   function advanceWindow(id) {
     var rec = findBuild(id); if (!rec) return { refused: true, detail: 'Schedule not found.' };
+    if(rec.binding_kind==='plan_content_v1'&&rec.schedule_kind==='one_time'){
+      var dispatched=dispatchBuildAt(id,Date.parse(rec.scheduled_at_utc),rec.revision);
+      return {refused:!dispatched.ok,duplicate:!!dispatched.duplicate,detail:dispatched.detail||dispatched.clause||'Scheduled build started.'};
+    }
     if (rec.state !== 'active') return { refused: true, detail: 'This schedule is ' + rec.state + '; nothing to advance.' };
     var epoch = P().stopEpoch;
     var elig = evaluateEligibility('build', rec, epoch);
@@ -1057,7 +1124,7 @@
   var MSG_STATE_TONE = { scheduled: 'active', held: 'attention', dispatched: 'done', sent:'done', cancelled: 'idle', canceled:'idle', failed: 'blocked', expired: 'idle' };
   var BLD_STATE_LABEL = { active: 'Active', paused: 'Paused', cancelled: 'Canceled', canceled:'Canceled', completed: 'Completed', invalidated: 'Needs update' };
   var BLD_STATE_TONE = { active: 'active', paused: 'attention', cancelled: 'idle', canceled:'idle', completed: 'done', invalidated: 'blocked' };
-  var PHASE_LABEL = { idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
+  var PHASE_LABEL = { completed:'Build completed', idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
   function chip(label, tone) { return '<span class="sched-chip sched-tone-' + esc(tone) + '">' + esc(label) + '</span>'; }
 
   function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
@@ -1121,7 +1188,7 @@
     var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,Date.now())):null;
     var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
     return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
-      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting')+(nextIso?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
+      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
       '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
       (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
@@ -1167,7 +1234,7 @@
       (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div><label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume" '+(d.autoResumeNext?'checked':'')+'>Resume next window</label>':'')+
       '<details class="schedule-details"><summary>More options '+ctx.icon('down',11)+'</summary><div class="sched-field-grid">'+(!one?'<label class="sched-field"><span>Wind-down · minutes</span><input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'"></label>':'')+
       '<label class="sched-field"><span>If missed</span><select data-sched-input="build-missed">'+[['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><details class="sched-audit"><summary>Timezone rules</summary>'+describeDst(d.timezone,[],d.days).map(l=>'<p>'+esc(l)+'</p>').join('')+'</details></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div></section>';
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div>'+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
   }
 
 
@@ -1202,19 +1269,20 @@
 
   function renderManageDialog(ctx){
     var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
+    var focused=tab==='builds'&&!!findBuild(ui.focusBuild);
     var active=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state)),attention=active.filter(m=>m.state!=='scheduled'),upcoming=active.filter(m=>m.state==='scheduled').sort((a,b)=>Date.parse(a.scheduled_at_utc)-Date.parse(b.scheduled_at_utc)),past=S.scheduledMessages.filter(m=>!active.includes(m));
     var tabs=[['messages','Messages',active.length],['builds','Build windows',S.buildSchedules.filter(b=>['active','paused','invalidated'].includes(b.state)).length],['quota','Resume & safety',null],['events','Activity',null]];
     function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
     var content='';
     if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!S.scheduledMessages.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No scheduled messages</strong><button class="soft-button" data-action="sched-open-message">Schedule a message</button></div>':'');
-    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
+    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild).map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
     else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
     else content=renderEventLog();
-    return '<section class="dialog sched-dialog sched-dialog--manage" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>Scheduled &amp; automations</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
+    return '<section class="dialog sched-dialog sched-dialog--manage'+(focused?' sched-dialog--focused':'')+'" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>'+(focused?'Build schedule':'Scheduled &amp; automations')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
       '<div class="schedule-overview"><div><strong>'+active.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':attention.length?attention.length+' need attention':'No blockers',S.stopped||attention.length?'attention':'done')+'</div></div>'+
       '<div class="sched-tabs">'+tabs.map(([v,l,n])=>'<button class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+(n!==null?'<span>'+n+'</span>':'')+'</button>').join('')+'</div>'+
-      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':'')+'<span class="spacer"></span><span>All threads</span></div>'+
-      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+'</section>';
+      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':tab==='builds'&&ui.focusBuild?'<button class="text-button" data-action="sched-show-all-builds">All build windows</button>':'')+'<span class="spacer"></span><span>'+(focused?'Selected plan':'All threads')+'</span></div>'+
+      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
   }
 
   EXT.slot('wandRows', function (ctx) {
@@ -1419,8 +1487,8 @@
     var builds=P().buildSchedules;
     for(i=0;i<builds.length;i++){
       var b=builds[i];
-      if(b.target_id===assoc.plan_id && b.state!=='invalidated'){
-        b.state='invalidated';
+      if(b.target_id===assoc.plan_id && b.schedule_id!==assoc.exclude_schedule_id && ['active','paused','held'].includes(b.state)){
+        b.state='invalidated';b.revision++;
         b.invalidated_reason = assoc.why ||
           ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
         b.invalidReason = b.invalidated_reason;
@@ -1455,6 +1523,7 @@
     if (!ctx) return false;
     planId = String(planId);
     version = Number(version);
+    ui.editingBuildId=null;
     ui.buildDraft = defaultBuildDraft(planId, version);
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-build-at', planId: planId, version: version });
@@ -1467,7 +1536,10 @@
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-message' });
   };
+  ACT['sched-show-all-builds']=function(ctx){ui.focusBuild=null;ctx.renderApp();};
+  ACT['sched-open-plan-record']=function(ctx,btn){ui.focusBuild=btn.dataset.id;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});};
   ACT['sched-open-manage'] = function (ctx) {
+    ui.focusBuild=null;
     ctx.closeMenu && ctx.closeMenu();
     ctx.openDialog({ type: 'sched-manage' });
   };
@@ -1536,17 +1608,18 @@
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
-    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
   ACT['sched-create-build'] = function (ctx, btn) {
-    if (!ui.buildDraft) ui.buildDraft = defaultBuildDraft(btn.dataset.planId, Number(btn.dataset.planVersion));
+    // A completed or canceled form cannot be replayed into a second schedule.
+    if (!ui.buildDraft) return;
     var d=ui.buildDraft,err=d.kind==='one_time'?validateWall(d.date,d.time,d.timezone):(!d.days.length?'Select at least one day.':d.startTime===d.pauseTime?'Start and pause must be different.':'');
     if(err){d.error=err;ctx.renderOverlays();return;}
     var old=ui.editingBuildId?findBuild(ui.editingBuildId):null;
-    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
+    if(ui.editingBuildId&&(!old||old.state!=='active'||old.exact_target_version!==d.version||old.revision!==d.expectedRevision)){d.error='Schedule changed. Reopen it before editing.';ctx.renderOverlays();return;}
     var rec=commitBuild(ctx);if(!rec)return;
-    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ctx.openDialog({type:'sched-manage'});
+    ui.editingBuildId=null;ui.buildDraft=null;ui.manageTab='builds';ui.focusBuild=rec.schedule_id;ctx.openDialog({type:'sched-manage'});
     reRender(ctx);
     ctx.toast(old?'Build window updated':'Build window scheduled', rec.schedule_kind === 'one_time'
       ? ('One-time at ' + to12h(rec.local_start) + ' ' + tzLabel(rec.timezone) + '.')
@@ -1555,12 +1628,12 @@
   ACT['sched-cancel-build'] = function (ctx, btn) {
     var ok = cancelBuild(btn.dataset.id);
     reRender(ctx);
-    ctx.toast(ok ? 'Schedule cancelled' : 'Could not cancel', ok ? 'Any already-admitted work continues under its own owner.' : 'It may have already completed.');
+    ctx.toast(ok ? 'Schedule canceled' : 'Could not cancel', ok ? 'No future dispatch.' : 'It may have already completed.');
   };
   ACT['sched-rebind-build'] = function (ctx, btn) {
     var rec = rebindBuild(btn.dataset.id);
     reRender(ctx);
-    if (rec) ctx.toast('Rebound', 'Now bound to V' + rec.exact_target_version + ' (hash ' + rec.exact_target_hash + ').');
+    if (rec) ctx.toast('Schedule updated', 'Bound to V' + rec.exact_target_version + '.');
   };
   ACT['sched-simulate-revision'] = function (ctx, btn) {
     var rec = simulateRevision(btn.dataset.id);
@@ -1679,6 +1752,8 @@
 
   window.PM56_SCHED = {
     openBuildAt: openBuildAt,
+    planSummary:planSummary,
+    dispatchBuildAt:dispatchBuildAt,
     list: function () { return { messages: P().scheduledMessages, builds: P().buildSchedules, consents: P().quotaConsents, events: P().events }; },
     /* Additive Correction v4 (SMSG / PSCHED). */
     messageProjection: function (id) { var r = smById(id); return r ? messageProjection(r) : null; },

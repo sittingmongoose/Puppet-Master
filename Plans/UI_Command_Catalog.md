@@ -10826,7 +10826,7 @@ owner_hints:
 
 ## Guided Tour local focus-route catalog disposition - 2026-09-01
 
-The Guided Tour's `Open Usage` step binds to
+Guided Tour's `Open Usage` action during workspace practice binds to
 `ui.guided_tour.focus_route`, a closed typed local action carrying
 `route_target.page_id=usage`. The local controller checks the mounted shell
 router, moves only visible page/focus state, and returns the closed
@@ -10839,7 +10839,7 @@ not an adopted alias or catalog identity. It is recorded in
 `Plans/Wiring_Matrix.production.exclusions.json` and has no primary catalog
 row, fake `handlers::nav::focus_route` target, or production wiring row.
 
-ContractRef: ContractName:Plans/Commands_System.md#CS-072, ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.contracts.v1, ContractName:Plans/Wiring_Matrix.md#WM-049
+ContractRef: ContractName:Plans/Commands_System.md#CS-072, ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.focus_route_result.v1, ContractName:Plans/Wiring_Matrix.md#WM-049
 
 ### UCC-150 - Guided Tour focus route is catalog-external local presentation
 
@@ -12817,4 +12817,3 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
-

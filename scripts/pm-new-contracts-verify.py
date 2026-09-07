@@ -1236,7 +1236,7 @@ def main() -> int:
                 name = str(case.get("case_id", "unnamed"))
                 try:
                     value = pointer_set(base, case["json_pointer"], case.get("replacement"))
-                    if Draft202012Validator(schema).is_valid(value):
+                    if validator_for(schema, schema, schema_registry).is_valid(value):
                         findings.append({"code": "expected_negative_accepted", "fixture": fixture_rel, "case": name, "definition": "<root>"})
                     else:
                         counts["negative_cases_rejected"] += 1

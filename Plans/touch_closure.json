@@ -1068,19 +1068,19 @@
       "payload_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_request",
       "result_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_session",
       "error_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_session",
-      "availability_rule": "The current three-scene stage, exact mounted target, deterministic local Teacher target, current application geometry, and captured pre-tour layout/focus basis are required.",
+      "availability_rule": "Current session/Project/revision, valid step and completed prerequisites, exact mounted target, and resolvable pre-tour layout/Chat/focus owner refs are required.",
       "permission_gate": "Tour actions grant no domain mutation; real widget/layout commands remain owner-gated.",
       "disabled_reason_rule": "Name missing target/layout/command and preserve skip, reversal, focus, and safe exit.",
-      "handler_owner": "Guided Tour local teacher/controller plus existing Final GUI and Widget owner command routes; native Slint handler is absent.",
+      "handler_owner": "Guided Tour local controller consumes the existing Persona, Assistant Chat, Home layout, and Widget owner routes; it creates no parallel domain handler, and native Slint execution is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
       "production_or_simulation": "PMConcept7 mounted-application simulation and static verifier only.",
       "gui_triggers": [
-        "Exact Usage, Planning Wizard, and Assistant Chat/Teacher scenes in that order",
-        "Usage Watch hide/return plus exact mounted card Options control",
-        "exact mounted Planning intent chip and real Chat guide selector, Teacher choice, composer send, and deterministic local reply"
+        "Assistant Chat/Teacher -> workspace -> Planning Wizard; the comfort introduction is not an extra chapter.",
+        "Try it and Show Me share one mounted owner action and observed success predicate.",
+        "Same-answer Teacher ELI5 and book-club planning practice with a real changed answer and stable outcomes."
       ],
-      "return_route": "Skip restores the exact pre-tour page, focus, layout, and composer placeholder; Finish keeps Assistant Chat at the far right without a restore/keep prompt.",
+      "return_route": "Skip restores captured layout/Chat selection, placeholder, unsent state and focus. Finish restores by default or keeps only by explicit selection, removes practice, and lands on the real Planning Wizard with the committed Project selected. Failed restoration remains unfinished.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/FinalGUISpec.md",
@@ -1093,16 +1093,25 @@
         "existing Final GUI or Widget owner result only"
       ],
       "observable_work": [],
-      "persistence_refs": [],
+      "persistence_refs": [
+        "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_checkpoint",
+        "Plans/storage-plan.md#SP-251"
+      ],
       "migration_refs": [
-        "none; GuidedTourSession is ephemeral and is never persisted or migrated; stable layout refs remain owner-owned"
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Predecessor Usage-first/Chat-final/no-resume and older five-chapter records are lineage only, without implicit completion, Keep, or replay of domain work."
       ],
       "test_refs": [
         "Plans/guided_tour_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/guided_tour.mjs"
+        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
-        "concept_simulation_not_native_runtime"
+        "static_v3_contract_and_scoped_concept_checks_only",
+        "checkpoint_physical_family_registration_and_owner_snapshot_adapters_pending",
+        "nonterminal_action_result_and_error_materialization_pending",
+        "durable_checkpoint_owner_resolution_and_prerequisite_recovery_missing_in_concept",
+        "full_manual_all_theme_motion_and_native_runtime_evidence_pending"
       ]
     },
     {
@@ -2117,6 +2126,113 @@
       ]
     },
     {
+      "profile_id": "TCP-TOUR-PERSONA",
+      "requirement_refs": [
+        "Plans/Personas.md#P-056",
+        "Plans/Planning_Wizard.md#PWIZ-023"
+      ],
+      "owner_plan": "Plans/Personas.md",
+      "plan_unit": "P-056",
+      "dry_contract_ref": "Plans/UI_Command_Catalog.md#UCC-108",
+      "payload_schema_ref": "Owner catalog prose only; dedicated machine payload schema not yet evidenced.",
+      "result_schema_ref": "Owner catalog prose only; dedicated machine result schema not yet evidenced.",
+      "error_schema_ref": "Owner catalog errors; native typed-error implementation not evidenced.",
+      "availability_rule": "Exact Project/thread/target identity, current owner revision and owner availability are required.",
+      "permission_gate": "Existing owner permissions apply; the guided example must remain local without provider fallthrough.",
+      "disabled_reason_rule": "Expose absent/stale owner, missing target or unavailable handler without inferred success.",
+      "handler_owner": "Existing handlers::persona::select route; no new Tour handler.",
+      "handler_status": "specified",
+      "wiring_status": "concept_simulated",
+      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
+      "gui_triggers": [
+        "Existing Persona picker including Teacher selection during Guided Tour"
+      ],
+      "return_route": "Same conversation and initiating control; no cross-thread or cross-Project retargeting.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Concepts/pm7-tools/guided_tour_source.py"
+      ],
+      "event_refs": [
+        "Existing domain event candidates remain subject to Event Authority; no Tour event admission."
+      ],
+      "receipt_refs": [
+        "Existing owner request/result only; no independent Tour domain receipt."
+      ],
+      "observable_work": [
+        "Guided Teacher reply is local; ordinary Chat retains its owner/provider rules."
+      ],
+      "persistence_refs": [
+        "Chat and Persona owners retain state; the Tour checkpoint stores no conversation content."
+      ],
+      "migration_refs": [
+        "Concept ui.assistant_chat spellings are not canonical command alternatives."
+      ],
+      "test_refs": [
+        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+      ],
+      "evidence_refs": [
+        "static_catalog_wiring_candidate_and_scoped_concept_only",
+        "dedicated_machine_payload_and_native_execution_evidence_unproven"
+      ]
+    },
+    {
+      "profile_id": "TCP-TOUR-CHAT",
+      "requirement_refs": [
+        "Plans/assistant-chat-design.md#ACD-426",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/Planning_Wizard.md#PWIZ-023"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-426",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-426",
+      "payload_schema_ref": "Owner catalog prose only; dedicated machine payload schema not yet evidenced.",
+      "result_schema_ref": "Owner catalog prose only; dedicated machine result schema not yet evidenced.",
+      "error_schema_ref": "Owner catalog errors; native typed-error implementation not evidenced.",
+      "availability_rule": "Exact Project/thread/target identity, current owner revision and owner availability are required.",
+      "permission_gate": "Existing owner permissions apply; the guided example must remain local without provider fallthrough.",
+      "disabled_reason_rule": "Expose absent/stale owner, missing target or unavailable handler without inferred success.",
+      "handler_owner": "Existing handlers::chat::send and handlers::assistant_chat::eli5_set routes; no new Tour handler.",
+      "handler_status": "specified",
+      "wiring_status": "concept_simulated",
+      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
+      "gui_triggers": [
+        "Existing Chat composer send and same-answer ELI5 during Guided Tour"
+      ],
+      "return_route": "Same conversation and initiating control; no cross-thread or cross-Project retargeting.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Concepts/pm7-tools/guided_tour_source.py"
+      ],
+      "event_refs": [
+        "Existing domain event candidates remain subject to Event Authority; no Tour event admission."
+      ],
+      "receipt_refs": [
+        "Existing owner request/result only; no independent Tour domain receipt."
+      ],
+      "observable_work": [
+        "Guided Teacher reply is local; ordinary Chat retains its owner/provider rules."
+      ],
+      "persistence_refs": [
+        "Chat and Persona owners retain state; the Tour checkpoint stores no conversation content."
+      ],
+      "migration_refs": [
+        "Concept ui.assistant_chat spellings are not canonical command alternatives."
+      ],
+      "test_refs": [
+        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+      ],
+      "evidence_refs": [
+        "static_catalog_wiring_candidate_and_scoped_concept_only",
+        "dedicated_machine_payload_and_native_execution_evidence_unproven"
+      ]
+    },
+    {
       "profile_id": "TCP-GUIDED-NAV",
       "requirement_refs": [
         "Plans/Planning_Wizard.md#PWIZ-023"
@@ -2135,7 +2251,7 @@
       "wiring_status": "concept_simulated",
       "production_or_simulation": "Guided Tour uses ui.guided_tour.focus_route for local shell presentation; the optional cmd.nav.focus_route migration alias is not promoted or required.",
       "gui_triggers": [
-        "Guided Tour Open Usage focus-route step"
+        "Guided Tour workspace Open Usage step through the existing local shell focus route"
       ],
       "return_route": "Prior shell route and focus.",
       "reverse_consumers": [
@@ -2155,7 +2271,7 @@
       ],
       "test_refs": [
         "Plans/guided_tour_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/guided_tour.mjs"
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
         "authored typed local request/result current; final artifact browser evidence pending; native Slint evidence absent"
@@ -2179,10 +2295,10 @@
       "handler_owner": "Final GUI panel shell controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 Home exercises panel docking and the current Guided Tour uses only visibility switching plus far-right Chat redocking; native Slint/Rust wiring is absent.",
+      "production_or_simulation": "PMConcept7 Home retains undock/redock controls. Current tour visibility switching and workspace-layout move practice share their respective existing owners; no native execution is evidenced.",
       "gui_triggers": [
         "Home panel undock/redock controls",
-        "Guided Tour opening-scene Chat visibility switch and final-scene far-right Chat redock"
+        "Guided Tour Chat visibility and captured-state restoration"
       ],
       "return_route": "Tour target plus restorable pre-tour layout/focus.",
       "reverse_consumers": [
@@ -2203,7 +2319,7 @@
       "migration_refs": [],
       "test_refs": [
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/guided_tour.mjs"
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -2227,10 +2343,10 @@
       "handler_owner": "Widget System command router; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 exercises Widget System simulation; the current Guided Tour observes only hide and return through existing remove/add routes, while configure remains a separate Usage/Dashboard owner route. Native Slint/Rust wiring is absent.",
+      "production_or_simulation": "The current tour reuses Widget add/configure for practice and owner layout/visibility methods for restoration; remove remains retained in ordinary Usage/Dashboard. No native execution is evidenced.",
       "gui_triggers": [
         "Usage and Dashboard widget options",
-        "Guided Tour Usage Watch hide and return of the same mounted card"
+        "Guided Tour workspace widget practice and captured-state restoration"
       ],
       "return_route": "Tour target plus restorable pre-tour widget layout/focus.",
       "reverse_consumers": [
@@ -2252,7 +2368,7 @@
       "migration_refs": [],
       "test_refs": [
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/guided_tour.mjs"
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -2323,14 +2439,16 @@
       "handler_owner": "Final GUI workspace layout controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "Home and T48 exercise PMConcept7 layout simulation independently of Guided Tour; T48 is an authored-source refresh, not native Slint/Rust wiring or migration proof.",
+      "production_or_simulation": "Home and the current tour share settled move/resize owner methods for practice and checked restoration. T48 is source refresh only; no native execution or durable recovery is evidenced.",
       "gui_triggers": [
-        "Home move, resize, collapse/expand, and reset controls"
+        "Home move, resize, collapse/expand, and reset controls",
+        "Guided Tour real Chat move/dock and bounded restoration"
       ],
       "return_route": "Current Home target plus revision-checked settled workspace layout and focus.",
       "reverse_consumers": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/home_workspace_refresh_source.py",
+        "Concepts/pm7-tools/guided_tour_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -2347,7 +2465,8 @@
         "T48 exact untouched v1 factory layout upgrade; customized v1 layouts copy forward"
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs"
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -6926,7 +7045,7 @@
       "ui_action",
       "ui.guided_tour.start",
       "partial",
-      "The current authored three-scene directed beginner-film controller and integrated static/build gates exist; focused review-checkpoint browser smoke is concept-only, while exhaustive post-approval browser/video, native Slint mounted-application Teacher, and runtime evidence remain pending or unproven."
+      "Current Chat-first/workspace/Planning-final concept and scoped checks exist; durable owner-ref recovery, full manual/all-theme motion, committed-Project handoff and native evidence remain unproven."
     ],
     [
       "TOUCH-TOUR-002",
@@ -6934,7 +7053,7 @@
       "ui_action",
       "ui.guided_tour.next",
       "partial",
-      "The authored concept carries novice-safe Teacher copy and keeps automatic focus on a non-obscuring announced heading when no exact watched control is required; integrated static/build gates pass, but exhaustive post-approval browser/video and native Slint mounted-application Teacher/runtime evidence remain pending or unproven."
+      "Next cannot satisfy a required practice predicate; manual and Show Me use the same observed owner path. Scoped concept checks are not exhaustive visual or native runtime evidence."
     ],
     [
       "TOUCH-TOUR-003",
@@ -6958,7 +7077,7 @@
       "ui_action",
       "ui.guided_tour.resume",
       "partial",
-      "Concept simulation exists; native interruption behavior and runtime evidence are absent."
+      "Same-page pause/resume retains in-memory practice, but reload lacks original layout/Chat owner refs and prerequisite reconstruction. Durable recovery is missing; schema fixtures cannot establish implementation."
     ],
     [
       "TOUCH-TOUR-006",
@@ -6974,7 +7093,7 @@
       "ui_action",
       "ui.guided_tour.toggle_eli5",
       "partial",
-      "The top-bar ELI5 toggle switches Tour narration and the next deterministic Teacher reply without provider or network use; exact post-approval accessibility/browser and native Slint evidence remain pending or absent."
+      "Tour explanation mode and the same local Teacher answer change through existing owner identities. Scoped concept behavior is not native isolation, accessibility or final visual evidence."
     ],
     [
       "TOUCH-TOUR-008",
@@ -6982,7 +7101,7 @@
       "ui_action",
       "ui.guided_tour.finish",
       "partial",
-      "Finish is available only after the Teacher interaction and keeps Assistant Chat at the far right without a restore/keep prompt; exhaustive post-approval browser/video and native Slint evidence remain pending or absent."
+      "The concept requires completed practice, restores by default or keeps only explicitly, clears practice and focuses the real Wizard. Restore failure stays unfinished. Durable recovery, committed-Project proof and full visual/native evidence remain open."
     ],
     [
       "TOUCH-TOUR-009",
@@ -6991,6 +7110,38 @@
       "ui.guided_tour.replay",
       "partial",
       "Concept simulation exists; native replay persistence and runtime evidence are absent."
+    ],
+    [
+      "TOUCH-TOUR-010",
+      "TCP-TOUR",
+      "ui_action",
+      "ui.guided_tour.show_me",
+      "partial",
+      "Show Me orchestrates the same mounted owner handler and predicate as manual practice; full interruption/geometry/all-theme motion and native evidence remain unproven."
+    ],
+    [
+      "TOUCH-TPER-001",
+      "TCP-TOUR-PERSONA",
+      "command",
+      "cmd.persona.select",
+      "partial",
+      "Existing Persona owner and sole catalog wiring target reused; dedicated machine payload, native scope and selection execution remain unproven."
+    ],
+    [
+      "TOUCH-TCHAT-001",
+      "TCP-TOUR-CHAT",
+      "command",
+      "cmd.chat.send",
+      "partial",
+      "Existing Chat send owner reused; local guided threads are isolated in scoped pause/completion/replay checks. Dedicated machine payload, full provider-isolation and native execution remain unproven."
+    ],
+    [
+      "TOUCH-TCHAT-002",
+      "TCP-TOUR-CHAT",
+      "command",
+      "cmd.chat.eli5.set",
+      "partial",
+      "Existing thread ELI5 owner reused independently of the global default and Tour narration toggle. Same-answer concept behavior is not dedicated machine payload or native isolation evidence."
     ],
     [
       "TOUCH-DOC-001",
@@ -7670,7 +7821,7 @@
       "command",
       "cmd.panel.redock",
       "partial",
-      "The current Guided Tour uses the existing redock route to place Assistant Chat at the far right; concept evidence exists, while native Final GUI handling and post-approval tour evidence remain absent."
+      "Retained Home redock is independent of the current tour's workspace-layout move practice. Native handling and exhaustive Home interaction evidence remain unproven."
     ],
     [
       "TOUCH-GWID-001",
@@ -7678,7 +7829,7 @@
       "command",
       "cmd.widget.add",
       "partial",
-      "The current Usage Watch returns the same mounted card through the existing add route; concept evidence exists, while native Widget handler and post-approval tour evidence remain absent."
+      "Tour practice may reveal a hidden widget through the existing add route; ordinary Usage/Dashboard add controls remain. Full visual and native evidence remain unproven."
     ],
     [
       "TOUCH-GWID-002",
@@ -7686,7 +7837,7 @@
       "command",
       "cmd.widget.remove",
       "partial",
-      "The current Usage Watch hides the same mounted card through the existing remove route; concept evidence exists, while native Widget handler and post-approval tour evidence remain absent."
+      "Ordinary Usage/Dashboard retains remove; the old Usage Watch hide/return film is not the current tour checkpoint. Native handling and exhaustive visual evidence remain unproven."
     ],
     [
       "TOUCH-GWID-003",
@@ -7694,7 +7845,7 @@
       "command",
       "cmd.widget.configure",
       "partial",
-      "The retained Widget configuration route is a separate Usage/Dashboard owner behavior and is not a Guided Tour checkpoint; final authored control coverage, native Widget handling, and runtime evidence remain pending or unproven."
+      "Current tour widget practice reuses the existing configuration owner and success predicate. Scoped concept journeys are not exhaustive control coverage or native execution."
     ],
     [
       "TOUCH-GWID-004",
@@ -7718,7 +7869,7 @@
       "command",
       "cmd.workspace_layout.move_surface",
       "partial",
-      "The current Home workspace source exercises settled surface movement independently of Guided Tour; exhaustive post-approval browser/video, native layout handling, and persisted round-trip evidence remain pending or unproven."
+      "Home and current Tour share settled moves for practice and restoration. Full constrained-layout, durable recovery and native evidence remain unproven."
     ],
     [
       "TOUCH-GLAY-002",
@@ -7726,7 +7877,7 @@
       "command",
       "cmd.workspace_layout.resize_surface",
       "partial",
-      "The current Home workspace source exercises settled surface resizing independently of Guided Tour; exhaustive post-approval browser/video, native layout handling, and persisted round-trip evidence remain pending or unproven."
+      "The bounded owner method requires current-revision semantic size inputs and rolls back failed saves; the Tour reuses it for restoration. Full geometry, durable recovery and native evidence remain unproven."
     ],
     [
       "TOUCH-GLAY-003",

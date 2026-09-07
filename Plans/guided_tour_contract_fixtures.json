@@ -1,26 +1,26 @@
 {
-  "schema_id": "pm.guided_tour.contract_fixtures.v2",
-  "schema_version": "2.0.0",
-  "revision": "orientation-panel-usage-planning-teacher-2026-09-01",
+  "schema_id": "pm.guided_tour.contract_fixtures.v3",
+  "schema_version": "3.0.0",
+  "revision": "newbie-first-chat-workspace-planning-2026-09-04",
   "owner_schema": "Plans/guided_tour_contracts.schema.json",
   "valid": [
     {
-      "name": "canonical_directed_beginner_film_storyboard",
+      "name": "canonical_newbie_first_storyboard",
       "definition": "guided_tour_storyboard",
       "value": {
-        "schema_id": "pm.guided_tour.storyboard.v2",
-        "schema_version": "2.0.0",
-        "revision": "orientation-panel-usage-planning-teacher-2026-09-01",
-        "predecessor": {
-          "schema_id": "pm.guided_tour.storyboard.v1",
-          "disposition": "rejected_five_chapter_predecessor",
-          "migration": "replace_with_directed_three_scene_film"
-        },
-        "order": ["usage", "planning_wizard", "chat_teacher"],
+        "schema_id": "pm.guided_tour.storyboard.v3",
+        "schema_version": "3.0.0",
+        "revision": "newbie-first-chat-workspace-planning-2026-09-04",
+        "predecessors": [
+          {"schema_id": "pm.guided_tour.storyboard.v1", "disposition": "rejected_five_chapter_predecessor", "migration": "source_lineage_only"},
+          {"schema_id": "pm.guided_tour.storyboard.v2", "disposition": "superseded_usage_first_chat_final_predecessor", "migration": "replace_with_chat_workspace_planning_newbie_first"}
+        ],
+        "order": ["chat_teacher", "workspace", "planning_wizard"],
         "scene_count": 3,
         "ui_actions": [
           "ui.guided_tour.start",
           "ui.guided_tour.next",
+          "ui.guided_tour.show_me",
           "ui.guided_tour.back",
           "ui.guided_tour.pause",
           "ui.guided_tour.resume",
@@ -31,191 +31,331 @@
           "ui.guided_tour.replay"
         ],
         "scenes": [
-          {"id": "usage", "purpose": "Orient to page navigation, watch real work panels rearrange and return, then verify one Usage card menu before a reversible resize, hide, and reveal film."},
-          {"id": "planning_wizard", "purpose": "Visit the mounted Planning intake, choose an unselected work type, and open the mounted requirements experience."},
-          {"id": "chat_teacher", "purpose": "Use Chat’s mounted guide picker to select Teacher, send a real suggested question, and receive a built-in reply."}
+          {"id": "chat_teacher", "purpose": "Open real Assistant Chat, select Teacher, send the supplied local question, and apply ELI5 to the same answer."},
+          {"id": "workspace", "purpose": "Learn page and panel navigation, move or dock Chat, and perform a real widget action through its mounted owner."},
+          {"id": "planning_wizard", "purpose": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}
         ],
-        "continuity": "The story moves forward from orientation and Usage to Planning and then Chat.",
-        "mobile_rule": "Compact callouts stay fully visible and never replace the exact control being taught."
+        "continuity": "The story moves from Assistant Chat and Teacher to workspace practice and finishes at the real Planning Wizard.",
+        "mobile_rule": "Compact callouts keep the measured mounted target and every required choice usable inside the viewport."
       }
     },
     {
-      "name": "current_chat_teacher_session",
+      "name": "current_workspace_session_with_ref_only_capture",
       "definition": "guided_tour_session",
       "value": {
-        "schema_id": "pm.guided_tour.session.v2",
-        "schema_version": "2.0.0",
-        "predecessor_schema_id": "pm.guided_tour.session.v1",
-        "migration_disposition": "migrated_breaking_directed_film",
-        "tour_session_id": "tour:directed:session:1",
+        "schema_id": "pm.guided_tour.session.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.session.v2",
+        "migration_disposition": "replace_superseded_controller_without_replaying_domain_work",
+        "tour_session_id": "tour:newbie:session:1",
         "project_id": "project:1",
         "onboarding_session_id": "onboarding:1",
-        "storyboard_schema_id": "pm.guided_tour.storyboard.v2",
-        "storyboard_revision": "orientation-panel-usage-planning-teacher-2026-09-01",
-        "story_order": ["usage", "planning_wizard", "chat_teacher"],
+        "storyboard_schema_id": "pm.guided_tour.storyboard.v3",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
+        "story_order": ["chat_teacher", "workspace", "planning_wizard"],
         "scene_count": 3,
-        "step": "chat_teacher",
-        "step_index": 2,
-        "phase": "teacher_reply",
+        "step": "workspace",
+        "step_id": "tour-step:workspace:widget-action",
+        "step_index": 1,
+        "phase": "widget_action",
         "status": "awaiting_user",
-        "durability_class": "ephemeral_session",
-        "session_persistence": "not_persisted",
+        "durability_class": "ephemeral_live_session",
+        "session_persistence": "bounded_checkpoint_only",
+        "checkpoint_ref": "checkpoint:tour:newbie:1",
         "captured_state": {
-          "layout_snapshot_ref": "layout_snapshot:tour:directed:1",
-          "composer_placeholder": "Ask Puppet Master anything…",
-          "focus_id": "workspace.initiator"
+          "layout_owner_ref": "owner:workspace_layout",
+          "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+          "chat_state_owner_ref": "owner:assistant_chat",
+          "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+          "chat_thread_ref": "chat-thread:pre-tour:1",
+          "chat_selection_ref": "chat-selection:pre-tour:1",
+          "chat_placeholder_ref": "chat-placeholder:pre-tour:1",
+          "chat_draft_ref": "chat-draft:pre-tour:1",
+          "chat_focus_ref": "chat-focus:pre-tour:1",
+          "initiating_focus_ref": "workspace:initiator:1",
+          "restored_page_heading_ref": "page-heading:home:1",
+          "owner_refs_only": true
         },
         "layout_disposition": "pending",
         "owner_observations": [
           {
-            "action_id": "cmd.widget.remove",
-            "target_id": "usage-card:requests",
-            "scene": "usage",
-            "mode": "watch",
+            "owner_ref": "owner:workspace_layout",
+            "action_id": "cmd.workspace_layout.move_surface",
+            "target_ref": "surface:chat:1",
+            "scene": "workspace",
+            "mode": "manual",
+            "success_predicate_ref": "predicate:workspace:chat-moved",
             "status": "applied",
             "mounted_owner_result_observed": true,
-            "observation_ref": "observation:tour:usage:remove:1",
-            "evidence_scope": "contract_fixture_only",
-            "production_receipt_claim": false
-          },
-          {
-            "action_id": "cmd.widget.add",
-            "target_id": "usage-card:requests",
-            "scene": "usage",
-            "mode": "watch",
-            "status": "applied",
-            "mounted_owner_result_observed": true,
-            "observation_ref": "observation:tour:usage:add:1",
-            "evidence_scope": "contract_fixture_only",
-            "production_receipt_claim": false
-          },
-          {
-            "action_id": "cmd.panel.redock",
-            "target_id": "chat",
-            "scene": "chat_teacher",
-            "mode": "watch",
-            "status": "applied",
-            "mounted_owner_result_observed": true,
-            "observation_ref": "observation:tour:chat:dock-right:1",
+            "observation_ref": "observation:workspace:chat-moved:1",
             "evidence_scope": "contract_fixture_only",
             "production_receipt_claim": false
           }
         ],
         "teacher_mode": "local_deterministic_zero_provider",
         "provider_use_count": 0,
+        "usage_increment": 0,
         "network_used": false,
         "model_id": null,
         "token_budget": null,
-        "effective_reduced_motion": {
-          "setting_id": "general.visual.reduce-animations",
-          "owner": "Settings",
-          "effective": true,
-          "tour_write": false
-        },
+        "effective_reduced_motion": {"setting_id": "general.visual.reduce-animations", "owner": "Settings", "effective": true, "tour_write": false},
         "teacher_practice": {
-          "chat_host": "dock_right",
+          "chat_host": "docked",
           "guide_picker_opened": true,
           "selected_guide": "Teacher",
-          "composer_placeholder": "Ask Teacher anything about Puppet Master…",
+          "composer_placeholder_id": "teacher_novice_placeholder",
           "send_surface": "real_assistant_chat_composer",
-          "user_message": "What is a project?",
+          "question_id": "what_happens_before_files_change",
+          "guided_thread_ref": "chat-thread:guided-example:1",
+          "thread_label": "Guided example",
+          "user_message_ref": "chat-message:guided:user:1",
+          "answer_ref": "chat-answer:guided:1",
+          "normal_render_ref": "chat-render:guided:normal:1",
+          "eli5_render_ref": "chat-render:guided:eli5:1",
           "message_sent": true,
-          "answer_id": "project",
-          "response_message_id": "chat-message:teacher:1",
-          "copy_mode": "normal",
           "deterministic_reply": true,
-          "same_chat": true,
-          "finish_available": true
+          "same_conversation": true,
+          "same_answer": true,
+          "facts_preserved": true
         },
-        "heading_focus": {
-          "target": "guided_tour.chat_teacher.heading",
-          "element": "h2",
-          "tabindex": -1,
-          "focus_exemption": "programmatic-focus-landmark",
-          "automatic_action": false,
-          "pm_hover_tag_opened": false
-        },
+        "heading_focus": {"target": "guided_tour.workspace.heading", "element": "h2", "tabindex": -1, "focus_exemption": "programmatic-focus-landmark", "automatic_action": false, "pm_hover_tag_opened": false},
         "low_resource_profile": false,
-        "shell_squeezed": false,
-        "demonstrated_action_ids": ["cmd.widget.remove", "cmd.widget.add", "cmd.panel.redock"],
-        "completed_action_ids": ["cmd.widget.remove", "cmd.widget.add", "cmd.panel.redock", "ui.guided_tour.next"],
+        "workspace_squeezed": false,
+        "completed_predicate_refs": ["predicate:chat:teacher-selected", "predicate:chat:answer-streamed", "predicate:chat:same-answer-eli5", "predicate:workspace:chat-moved"],
         "evidence_scope": "contract_fixture_only",
         "production_receipt_claim": false,
-        "revision": 3,
+        "revision": 4,
         "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "updated_at_utc": "2026-09-01T00:00:00Z"
+        "updated_at_utc": "2026-09-04T00:00:00Z"
       }
     },
     {
-      "name": "skip_action_carries_captured_state",
+      "name": "bounded_safe_checkpoint",
+      "definition": "guided_tour_checkpoint",
+      "value": {
+        "schema_id": "pm.guided_tour.checkpoint.v3",
+        "schema_version": "3.0.0",
+        "checkpoint_id": "checkpoint:tour:newbie:1",
+        "tour_session_id": "tour:newbie:session:1",
+        "project_id": "project:1",
+        "storyboard_schema_id": "pm.guided_tour.storyboard.v3",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
+        "step": "planning_wizard",
+        "step_id": "tour-step:planning:access-answer",
+        "completed_predicate_refs": ["predicate:chat:same-answer-eli5", "predicate:workspace:chat-moved", "predicate:workspace:widget-action"],
+        "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+        "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+        "effective_explanation_mode": "eli5",
+        "session_revision": 4,
+        "checkpoint_revision": 2,
+        "owner_state_revision_refs": ["owner-state:layout:4", "owner-state:chat:9", "owner-state:planning:2"],
+        "persistence_scope": "bounded_safe_checkpoint_only",
+        "domain_work_replay_allowed": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false
+      }
+    },
+    {
+      "name": "resume_revalidates_to_earliest_unsatisfied_prerequisite",
+      "definition": "guided_tour_resume_result",
+      "value": {
+        "schema_id": "pm.guided_tour.resume_result.v3",
+        "schema_version": "3.0.0",
+        "checkpoint_ref": "checkpoint:tour:newbie:1",
+        "tour_session_id": "tour:newbie:session:1",
+        "project_id": "project:1",
+        "status": "resumed",
+        "owner_state_revalidated": true,
+        "validated_owner_state_refs": ["owner-state:layout:4", "owner-state:chat:9", "owner-state:planning:2"],
+        "earliest_unsatisfied_prerequisite_ref": "predicate:planning:access-answer",
+        "resume_step": "planning_wizard",
+        "resume_step_id": "tour-step:planning:access-answer",
+        "domain_work_replayed": false,
+        "completion_reported": false,
+        "error_code": null,
+        "reason": null,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1
+      }
+    },
+    {
+      "name": "manual_and_show_me_share_workspace_owner_predicate",
+      "definition": "guided_tour_practice_contract",
+      "value": {
+        "schema_id": "pm.guided_tour.practice_contract.v3",
+        "schema_version": "3.0.0",
+        "practice_action_ref": "practice:workspace:widget-add:1",
+        "scene": "workspace",
+        "owner_ref": "owner:widget",
+        "owner_action_id": "cmd.widget.add",
+        "target_ref": "widget-catalog:activity:1",
+        "success_predicate_ref": "predicate:workspace:widget-added",
+        "paths": ["manual", "show_me"],
+        "manual_invokes_owner_handler": true,
+        "show_me_invokes_same_owner_handler": true,
+        "show_me_choreography": {"phases": ["pre_cue", "travel", "destination_reaction", "settle"], "interruptible": true, "timer_completes_predicate": false},
+        "second_mutation_implementation": false,
+        "completion_source": "mounted_owner_observation",
+        "false_positive_controls": {"generic_next": false, "elapsed_time": false, "narration": false, "look_alike_control": false, "unrelated_click": false, "screenshot_substitution": false},
+        "observation": {
+          "owner_ref": "owner:widget",
+          "action_id": "cmd.widget.add",
+          "target_ref": "widget-catalog:activity:1",
+          "scene": "workspace",
+          "mode": "show_me",
+          "success_predicate_ref": "predicate:workspace:widget-added",
+          "status": "applied",
+          "mounted_owner_result_observed": true,
+          "observation_ref": "observation:workspace:widget-added:1",
+          "evidence_scope": "contract_fixture_only",
+          "production_receipt_claim": false
+        },
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false
+      }
+    },
+    {
+      "name": "skip_request_uses_captured_state_ref",
       "definition": "guided_tour_action_request",
       "value": {
-        "schema_id": "pm.guided_tour.action_request.v2",
-        "schema_version": "2.0.0",
-        "predecessor_schema_id": "pm.guided_tour.action_request.v1",
-        "migration_disposition": "retired_restore_keep_and_added_eli5_finish",
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
         "action_id": "ui.guided_tour.skip",
         "command_instance_id": "ui-action:tour:skip:1",
-        "tour_session_id": "tour:directed:skip-action:1",
-        "expected_revision": 3,
+        "tour_session_id": "tour:newbie:skip-request:1",
+        "expected_revision": 4,
         "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "step": "chat_teacher",
+        "step": "workspace",
+        "step_id": "tour-step:workspace:widget-action",
         "target_surface_id": "guided_tour",
         "target_control_id": "ui.guided_tour.skip",
         "target_label": "Skip Tour",
-        "captured_state": {
-          "layout_snapshot_ref": "layout_snapshot:tour:directed:1",
-          "composer_placeholder": "Ask Puppet Master anything…",
-          "focus_id": "workspace.initiator"
-        },
+        "captured_state_ref": "captured-state:tour:1",
         "actor_ref": "actor:user:1",
         "idempotency_key": "idempotency:tour:skip:1",
-        "return_focus_id": "guided_tour.chat_teacher.heading"
+        "return_focus_id": "guided_tour.workspace.heading"
       }
     },
     {
-      "name": "generic_next_action_request",
+      "name": "generic_next_request",
       "definition": "guided_tour_action_request",
       "value": {
-        "schema_id": "pm.guided_tour.action_request.v2",
-        "schema_version": "2.0.0",
-        "predecessor_schema_id": "pm.guided_tour.action_request.v1",
-        "migration_disposition": "retired_restore_keep_and_added_eli5_finish",
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
         "action_id": "ui.guided_tour.next",
         "command_instance_id": "ui-action:tour:next:1",
-        "tour_session_id": "tour:directed:next-action:1",
-        "expected_revision": 3,
+        "tour_session_id": "tour:newbie:next-request:1",
+        "expected_revision": 4,
         "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "step": "usage",
+        "step": "chat_teacher",
+        "step_id": "tour-step:chat:answer-stream",
         "target_surface_id": "guided_tour",
         "target_control_id": "ui.guided_tour.next",
         "target_label": "Continue",
         "actor_ref": "actor:user:1",
         "idempotency_key": "idempotency:tour:next:1",
-        "return_focus_id": "guided_tour.usage.heading"
+        "return_focus_id": "guided_tour.chat_teacher.heading"
+      }
+    },
+    {
+      "name": "show_me_request_names_shared_practice_action",
+      "definition": "guided_tour_action_request",
+      "value": {
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
+        "action_id": "ui.guided_tour.show_me",
+        "command_instance_id": "ui-action:tour:show-me:1",
+        "tour_session_id": "tour:newbie:show-me-request:1",
+        "expected_revision": 4,
+        "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "step": "workspace",
+        "step_id": "tour-step:workspace:widget-action",
+        "target_surface_id": "guided_tour",
+        "target_control_id": "ui.guided_tour.show_me",
+        "target_label": "Show Me",
+        "practice_action_ref": "practice:workspace:widget-add:1",
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:tour:show-me:1",
+        "return_focus_id": "guided_tour.workspace.heading"
+      }
+    },
+    {
+      "name": "finish_request_defaults_restore",
+      "definition": "guided_tour_action_request",
+      "value": {
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
+        "action_id": "ui.guided_tour.finish",
+        "command_instance_id": "ui-action:tour:finish:restore:1",
+        "tour_session_id": "tour:newbie:finish-restore-request:1",
+        "expected_revision": 9,
+        "expected_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "step": "planning_wizard",
+        "step_id": "tour-step:planning:completion-boundary",
+        "target_surface_id": "guided_tour",
+        "target_control_id": "ui.guided_tour.finish",
+        "target_label": "Finish tour",
+        "finish_layout": {"disposition": "restore", "selection_source": "default_restore"},
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:tour:finish:restore:1",
+        "return_focus_id": "guided_tour.planning_wizard.heading"
+      }
+    },
+    {
+      "name": "finish_request_explicit_keep",
+      "definition": "guided_tour_action_request",
+      "value": {
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
+        "action_id": "ui.guided_tour.finish",
+        "command_instance_id": "ui-action:tour:finish:keep:1",
+        "tour_session_id": "tour:newbie:finish-keep-request:1",
+        "expected_revision": 9,
+        "expected_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "step": "planning_wizard",
+        "step_id": "tour-step:planning:completion-boundary",
+        "target_surface_id": "guided_tour",
+        "target_control_id": "ui.guided_tour.finish",
+        "target_label": "Finish tour",
+        "finish_layout": {"disposition": "keep", "selection_source": "explicit_keep"},
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:tour:finish:keep:1",
+        "return_focus_id": "guided_tour.planning_wizard.heading"
       }
     },
     {
       "name": "focus_route_is_typed_local_presentation",
       "definition": "guided_tour_action_request",
       "value": {
-        "schema_id": "pm.guided_tour.action_request.v2",
-        "schema_version": "2.0.0",
-        "predecessor_schema_id": "pm.guided_tour.action_request.v1",
-        "migration_disposition": "retired_restore_keep_and_added_eli5_finish",
+        "schema_id": "pm.guided_tour.action_request.v3",
+        "schema_version": "3.0.0",
+        "predecessor_schema_id": "pm.guided_tour.action_request.v2",
+        "migration_disposition": "added_show_me_and_default_restore_explicit_keep_finish",
         "action_id": "ui.guided_tour.focus_route",
         "command_instance_id": "ui-action:tour:focus-route:1",
-        "tour_session_id": "tour:directed:focus-action:1",
-        "expected_revision": 3,
+        "tour_session_id": "tour:newbie:focus-route-request:1",
+        "expected_revision": 4,
         "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "step": "usage",
+        "step": "workspace",
+        "step_id": "tour-step:workspace:usage-route",
         "target_surface_id": "usage",
         "target_control_id": "ui.guided_tour.focus_route",
         "target_label": "Open Usage",
         "route_target": {"page_id": "usage"},
         "actor_ref": "actor:user:1",
         "idempotency_key": "idempotency:tour:focus-route:1",
-        "return_focus_id": "guided_tour.usage.heading"
+        "return_focus_id": "guided_tour.workspace.heading"
       }
     },
     {
@@ -225,10 +365,10 @@
         "schema_id": "pm.guided_tour.focus_route_result.v1",
         "schema_version": "1.0.0",
         "action_id": "ui.guided_tour.focus_route",
-        "tour_session_id": "tour:directed:focus-result:1",
+        "tour_session_id": "tour:newbie:focus-route-result:1",
         "route_target": {"page_id": "usage"},
         "status": "applied",
-        "before_page_id": "dashboard",
+        "before_page_id": "workspace",
         "after_page_id": "usage",
         "error_code": null,
         "reason": null,
@@ -245,11 +385,11 @@
         "schema_id": "pm.guided_tour.focus_route_result.v1",
         "schema_version": "1.0.0",
         "action_id": "ui.guided_tour.focus_route",
-        "tour_session_id": "tour:directed:disabled",
+        "tour_session_id": "tour:newbie:focus-route-disabled:1",
         "route_target": {"page_id": "usage"},
         "status": "disabled",
-        "before_page_id": "dashboard",
-        "after_page_id": "dashboard",
+        "before_page_id": "assistant_chat",
+        "after_page_id": "assistant_chat",
         "error_code": "page_router_unavailable",
         "reason": "Pages aren’t available right now.",
         "domain_mutation": false,
@@ -259,121 +399,110 @@
       }
     },
     {
-      "name": "usage_watch_and_exact_try_progression",
-      "definition": "guided_tour_usage_progression",
+      "name": "workspace_real_actions_and_predicates",
+      "definition": "guided_tour_workspace_progression",
       "value": {
-        "schema_id": "pm.guided_tour.usage_progression.v2",
-        "schema_version": "2.0.0",
-        "storyboard_revision": "orientation-panel-usage-planning-teacher-2026-09-01",
-        "step": "usage",
-        "orientation": {
-          "page_navigation_explained": true,
-          "panel_purpose_explained": true,
-          "real_visible_panels": true
-        },
-        "panel_round_trip": {
-          "demo_name": "panel-round-trip",
-          "visible_panel_count": 2,
-          "rearranged_surface_ids": ["editor:primary", "editor:secondary"],
-          "mounted_owner_result_observed": true,
-          "round_trip_restore": true,
-          "interruptible": true
-        },
-        "options_try": {
-          "target_token": "exact_usage_card_options",
-          "target_control_kind": "card_options",
-          "activation": "user",
-          "completion_source": "exact_mounted_control_activation",
-          "first_click": true,
-          "bounded_owner_readiness_ms": 250,
-          "same_frame_acknowledgement": true,
-          "look_alike": false,
-          "timer_only": false,
-          "narration_only": false
-        },
-        "card_film": {
-          "demo_name": "usage-card-film",
-          "card_id": "usage-card:requests",
-          "same_card": true,
-          "mounted_controls": ["card_size_option", "remove_panel", "panel_chooser"],
-          "sequence": ["resize", "hide", "reveal", "restore"],
-          "round_trip_restore": true,
-          "completion_source": "mounted_owner_results",
-          "interruptible": true
-        }
+        "schema_id": "pm.guided_tour.workspace_progression.v3",
+        "schema_version": "3.0.0",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
+        "step": "workspace",
+        "orientation": {"page_navigation_explained": true, "panel_purpose_explained": true, "mounted_application_visible": true},
+        "chat_layout_action": "practice:workspace:chat-move:1",
+        "widget_action": "practice:workspace:widget-add:1",
+        "layout_reversible": true,
+        "completed_predicate_refs": ["predicate:workspace:chat-moved", "predicate:workspace:widget-added"]
       }
     },
     {
-      "name": "planning_exact_choice_progression",
+      "name": "planning_majority_real_edit_and_boundary",
       "definition": "guided_tour_planning_progression",
       "value": {
-        "schema_id": "pm.guided_tour.planning_progression.v2",
-        "schema_version": "2.0.0",
-        "storyboard_revision": "orientation-panel-usage-planning-teacher-2026-09-01",
+        "schema_id": "pm.guided_tour.planning_progression.v3",
+        "schema_version": "3.0.0",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
         "step": "planning_wizard",
-        "preview_beats": ["attach", "intent", "continue"],
-        "intent": {
-          "target_token": "exact_planning_choice",
-          "real_mounted_control": true,
-          "plain_language_choice": true,
-          "activation": "user",
-          "auto_advance_after_activation": true
+        "majority": {"declared_census_ref": "tour-census:newbie:1", "planning_action_share_basis_points": 5714, "planning_dwell_share_basis_points": 6000},
+        "practice_goal": {"goal_id": "book_club", "description_id": "organize_a_local_book_club", "real_wizard_surface": true},
+        "outcomes": [
+          {"outcome_id": "next_meeting", "identity_ref": "planning-outcome:next-meeting:1"},
+          {"outcome_id": "current_book", "identity_ref": "planning-outcome:current-book:1"},
+          {"outcome_id": "how_to_join", "identity_ref": "planning-outcome:how-to-join:1"}
+        ],
+        "access_decision": {"question_id": "who_may_update_meeting_and_book", "answer": "selected_members", "resolution_status": "resolved", "why_visible": true, "consequence_ref": "planning-consequence:shared-access:1"},
+        "review": {"outcomes_visible": true, "decisions_visible": true, "assumptions_visible": true, "unresolved_choices_visible": true},
+        "answer_edit": {
+          "edit_control_activated": true,
+          "replacement_answer_selected": true,
+          "answer_changed": true,
+          "original_answer_ref": "planning-answer:organizer-only:1",
+          "replacement_answer_ref": "planning-answer:selected-members:1",
+          "affected_consequence_ref": "planning-consequence:shared-access:2",
+          "unaffected_outcome_refs": ["planning-outcome:next-meeting:1", "planning-outcome:current-book:1", "planning-outcome:how-to-join:1"],
+          "unaffected_identity_and_position_retained": true
         },
-        "requirements": {
-          "target_token": "exact_planning_requirements",
-          "real_mounted_control": true,
-          "stage": "requirements",
-          "opened": true,
-          "auto_advance_after_activation": true
-        },
-        "review_approval": {
-          "copy": "Read and change the plan here. Nothing starts until you approve it.",
-          "editable_before_approval": true,
-          "work_starts_before_approval": false,
-          "explicit_approval_required": true,
-          "redundant_confirmation_required": false,
-          "confirmation_clicks": 0
-        }
+        "approval_boundary": {"real_planning_wizard": true, "state": "before_approval", "work_started": false, "approval_granted": false, "second_approval_fence_created": false}
       }
     },
     {
-      "name": "chat_teacher_real_same_chat_progression",
+      "name": "planning_unsure_stays_unresolved",
+      "definition": "guided_tour_planning_progression",
+      "value": {
+        "schema_id": "pm.guided_tour.planning_progression.v3",
+        "schema_version": "3.0.0",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
+        "step": "planning_wizard",
+        "majority": {"declared_census_ref": "tour-census:newbie:1", "planning_action_share_basis_points": 5714, "planning_dwell_share_basis_points": 6000},
+        "practice_goal": {"goal_id": "book_club", "description_id": "organize_a_local_book_club", "real_wizard_surface": true},
+        "outcomes": [
+          {"outcome_id": "next_meeting", "identity_ref": "planning-outcome:next-meeting:1"},
+          {"outcome_id": "current_book", "identity_ref": "planning-outcome:current-book:1"},
+          {"outcome_id": "how_to_join", "identity_ref": "planning-outcome:how-to-join:1"}
+        ],
+        "access_decision": {"question_id": "who_may_update_meeting_and_book", "answer": "unsure", "resolution_status": "unresolved", "why_visible": true, "consequence_ref": null},
+        "review": {"outcomes_visible": true, "decisions_visible": true, "assumptions_visible": true, "unresolved_choices_visible": true},
+        "answer_edit": {
+          "edit_control_activated": true,
+          "replacement_answer_selected": true,
+          "answer_changed": true,
+          "original_answer_ref": "planning-answer:unsure:1",
+          "replacement_answer_ref": "planning-answer:selected-members:1",
+          "affected_consequence_ref": "planning-consequence:shared-access:2",
+          "unaffected_outcome_refs": ["planning-outcome:next-meeting:1", "planning-outcome:current-book:1", "planning-outcome:how-to-join:1"],
+          "unaffected_identity_and_position_retained": true
+        },
+        "approval_boundary": {"real_planning_wizard": true, "state": "before_approval", "work_started": false, "approval_granted": false, "second_approval_fence_created": false}
+      }
+    },
+    {
+      "name": "chat_first_local_stream_and_same_answer_eli5",
       "definition": "guided_tour_chat_teacher_progression",
       "value": {
-        "schema_id": "pm.guided_tour.chat_teacher_progression.v2",
-        "schema_version": "2.0.0",
-        "storyboard_revision": "orientation-panel-usage-planning-teacher-2026-09-01",
+        "schema_id": "pm.guided_tour.chat_teacher_progression.v3",
+        "schema_version": "3.0.0",
+        "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
         "step": "chat_teacher",
-        "entry": {"chat_host": "dock_right", "host_ready_before_scene": true},
-        "picker": {"target_token": "exact_teacher_picker", "real_guide_selector": true, "opened": true},
-        "selection": {"guide": "Teacher", "real_mounted_control": true, "selected": true},
-        "composer": {
-          "surface": "real_assistant_chat_composer",
-          "placeholder": "Ask Teacher anything about Puppet Master…",
-          "user_authored": true,
-          "supported_message": "What is a project?",
-          "sent": true
+        "entry": {"story_index": 0, "opened_through_real_control": true},
+        "teacher_practice": {
+          "chat_host": "docked",
+          "guide_picker_opened": true,
+          "selected_guide": "Teacher",
+          "composer_placeholder_id": "teacher_novice_placeholder",
+          "send_surface": "real_assistant_chat_composer",
+          "question_id": "what_happens_before_files_change",
+          "guided_thread_ref": "chat-thread:guided-example:1",
+          "thread_label": "Guided example",
+          "user_message_ref": "chat-message:guided:user:1",
+          "answer_ref": "chat-answer:guided:1",
+          "normal_render_ref": "chat-render:guided:normal:1",
+          "eli5_render_ref": "chat-render:guided:eli5:1",
+          "message_sent": true,
+          "deterministic_reply": true,
+          "same_conversation": true,
+          "same_answer": true,
+          "facts_preserved": true
         },
-        "reply": {
-          "execution_path": "local_deterministic",
-          "local_deterministic": true,
-          "same_chat": true,
-          "answer_id": "project",
-          "copy_mode": "normal",
-          "complete": true,
-          "provider_use_count": 0,
-          "network_used": false,
-          "model_id": null,
-          "token_budget": null,
-          "evidence_scope": "concept_fixture_only",
-          "production_receipt_claim": false
-        },
-        "finish": {
-          "available": true,
-          "control_id": "ui.guided_tour.finish",
-          "restore_or_keep_prompt_present": false,
-          "chat_host_after": "dock_right"
-        }
+        "reply": {"execution_path": "local_deterministic", "streamed": true, "provider_use_count": 0, "usage_increment": 0, "network_used": false, "model_id": null, "token_budget": null, "evidence_scope": "concept_fixture_only", "production_receipt_claim": false},
+        "eli5": {"same_facts": true, "materially_different_copy": true, "baby_talk_required": false, "forced_analogy_required": false}
       }
     },
     {
@@ -385,29 +514,11 @@
         "topic_id": "project",
         "same_facts": true,
         "materially_distinct": true,
-        "normal": {
-          "text": "A project groups one goal, its working files, configuration, recoverable versions, and approved work. Storage location and online source control are separate choices. Start with one clearly named project and verify its folder.",
-          "definition_present": true,
-          "familiar_example_present": true,
-          "safe_next_action_present": true
-        },
-        "eli5": {
-          "text": "A project is one labeled box for an idea. Its pieces and save points stay together. Start with one box whose name you recognize.",
-          "definition_present": true,
-          "familiar_example_present": true,
-          "safe_next_action_present": true
-        },
+        "normal": {"text": "A project groups one goal, its working files, configuration, recoverable versions, and approved work. Storage location and online source control are separate choices. Start with one clearly named project and verify its folder.", "definition_present": true, "familiar_example_present": true, "safe_next_action_present": true},
+        "eli5": {"text": "A project is one labeled box for an idea. Its pieces and save points stay together. Start with one box whose name you recognize.", "definition_present": true, "familiar_example_present": true, "safe_next_action_present": true},
         "supported_topic_count": 47,
-        "supported_topics": [
-          "app_map", "page_navigation", "panel_move", "panel_resize", "panel_restore", "panel_definition", "usage", "cards", "costs_limits", "open_local_folder", "bring_online", "cursor_origin", "already_connected_source", "project", "requirements", "review_approval", "planning", "source_control", "safe_history", "filesafe", "github", "gitlab", "ssh_folder", "network_share", "backup_location", "connect_existing", "local_discovery", "vpn", "tailscale", "headscale", "reverse_proxy", "remote_link", "pairing", "tls_certificates", "permissions", "privacy_secrets", "runs_queue", "teacher_doctor", "settings_accessibility", "remote_access", "server", "teacher", "getting_started", "device_name_address", "authentication", "setup_summary", "supported_topics"
-        ],
-        "unsupported": {
-          "answer_id": "supported_topics",
-          "bounded": true,
-          "lists_supported_topics": true,
-          "normal": "This practice Teacher can answer more than forty Puppet Master topics across navigation, panels, projects, Planning, history, online copies, storage, Servers, connections, security, runs, and accessibility. Ask one specific product question, such as “How do I rearrange panels?” or “How does local discovery work?” Broader questions can go to the regular Assistant after the tour.",
-          "eli5": "This guidebook knows more than forty Puppet Master questions. Ask about moving around, projects, save points, connecting devices, safety, or getting unstuck. Try “How do I rearrange panels?”"
-        }
+        "supported_topics": ["app_map", "page_navigation", "panel_move", "panel_resize", "panel_restore", "panel_definition", "usage", "cards", "costs_limits", "open_local_folder", "bring_online", "cursor_origin", "already_connected_source", "project", "requirements", "review_approval", "planning", "source_control", "safe_history", "filesafe", "github", "gitlab", "ssh_folder", "network_share", "backup_location", "connect_existing", "local_discovery", "vpn", "tailscale", "headscale", "reverse_proxy", "remote_link", "pairing", "tls_certificates", "permissions", "privacy_secrets", "runs_queue", "teacher_doctor", "settings_accessibility", "remote_access", "server", "teacher", "getting_started", "device_name_address", "authentication", "setup_summary", "supported_topics"],
+        "unsupported": {"answer_id": "supported_topics", "bounded": true, "lists_supported_topics": true, "normal": "This practice Teacher can answer more than forty Puppet Master topics across navigation, panels, projects, Planning, history, online copies, storage, Servers, connections, security, runs, and accessibility. Ask one specific product question, such as “How do I rearrange panels?” or “How does local discovery work?” Broader questions can go to the regular Assistant after the tour.", "eli5": "This guidebook knows more than forty Puppet Master questions. Ask about moving around, projects, save points, connecting devices, safety, or getting unstuck. Try “How do I rearrange panels?”"}
       }
     },
     {
@@ -416,12 +527,7 @@
       "value": {
         "schema_id": "pm.guided_tour.teacher_library.v2",
         "schema_version": "2.0.0",
-        "primary_suggestions": [
-          "What are the main parts of Puppet Master?",
-          "How do I rearrange panels?",
-          "What does Planning do?",
-          "Can I use Safe History with GitHub?"
-        ],
+        "primary_suggestions": ["What are the main parts of Puppet Master?", "How do I rearrange panels?", "What does Planning do?", "Can I use Safe History with GitHub?"],
         "browse_label": "Browse 26 more",
         "browse_question_count": 26,
         "groups": [
@@ -438,126 +544,121 @@
       }
     },
     {
-      "name": "opening_controls_reduced_motion_and_heading_focus",
+      "name": "chat_opening_controls_and_live_callouts",
       "definition": "guided_tour_presentation_contract",
       "value": {
-        "schema_id": "pm.guided_tour.presentation.v2",
-        "schema_version": "2.0.0",
-        "opening_scene": "usage",
+        "schema_id": "pm.guided_tour.presentation.v3",
+        "schema_version": "3.0.0",
+        "opening_scene": "chat_teacher",
         "top_action_ids": ["ui.guided_tour.toggle_eli5", "ui.guided_tour.pause", "ui.guided_tour.skip"],
-        "eli5": {
-          "control_id": "ui.guided_tour.toggle_eli5",
-          "placement": "top_beside_pause_and_skip",
-          "persistent": true,
-          "called_out_in_opening": true,
-          "changes": "tour_copy_and_next_teacher_reply"
-        },
-        "reduced_motion": {
-          "introduced_in": "usage_opening_eli5_moment",
-          "setting_id": "general.visual.reduce-animations",
-          "owner": "Settings",
-          "tour_write": false,
-          "separate_scene": false,
-          "effective": true,
-          "travel_choreography_removed": true,
-          "focus_preserved": true,
-          "hierarchy_preserved": true,
-          "announcements_preserved": true,
-          "action_parity_preserved": true
-        },
-        "scene_entry": {
-          "target": "guided_tour.usage.heading",
-          "element": "h2",
-          "tabindex": -1,
-          "focus_exemption": "programmatic-focus-landmark",
-          "automatic_action": false,
-          "pm_hover_tag_opened": false
-        },
-        "navigation_recovery": {
-          "back_operational": true,
-          "forward_operational": true,
-          "same_story_state_preserved": true,
-          "required_practice_not_skipped": true
-        },
-        "transition_continuity": {
-          "mounted_application_continuously_painted": true,
-          "black_frame_allowed": false,
-          "empty_frame_allowed": false
-        },
+        "eli5": {"control_id": "ui.guided_tour.toggle_eli5", "placement": "top_beside_pause_and_skip", "persistent": true, "called_out_in_opening": true, "changes": "same_visible_teacher_answer"},
+        "reduced_motion": {"introduced_in": "chat_opening_eli5_moment", "setting_id": "general.visual.reduce-animations", "owner": "Settings", "tour_write": false, "separate_scene": false, "effective": true, "long_travel_removed": true, "focus_preserved": true, "hierarchy_preserved": true, "announcements_preserved": true, "action_parity_preserved": true},
+        "scene_entry": {"target": "guided_tour.chat_teacher.heading", "element": "h2", "tabindex": -1, "focus_exemption": "programmatic-focus-landmark", "automatic_action": false, "pm_hover_tag_opened": false},
+        "callout_policy": {"measurement_source": "live_mounted_target", "measured_after_layout": true, "clamped_to_usable_viewport": true, "target_kept_usable": true, "remeasure_triggers": ["page_change", "resize", "scale", "localization", "panel_movement", "target_geometry_change"], "missing_target_disposition": "pause_with_recovery", "transient_geometry_persisted": false, "protected_auth_content_excluded": true},
+        "navigation_recovery": {"back_operational": true, "forward_operational": true, "same_story_state_preserved": true, "required_practice_not_skipped": true},
+        "transition_continuity": {"mounted_application_continuously_painted": true, "black_frame_allowed": false, "empty_frame_allowed": false},
         "visible_copy_internal_terms_exposed": false
       }
     },
     {
-      "name": "skip_restores_layout_placeholder_and_focus",
+      "name": "skip_restores_layout_chat_and_focus",
       "definition": "guided_tour_terminal_result",
       "value": {
-        "schema_id": "pm.guided_tour.terminal_result.v2",
-        "schema_version": "2.0.0",
+        "schema_id": "pm.guided_tour.terminal_result.v3",
+        "schema_version": "3.0.0",
         "action_id": "ui.guided_tour.skip",
-        "tour_session_id": "tour:directed:skip-result:1",
-        "step": "chat_teacher",
+        "tour_session_id": "tour:newbie:skip-terminal:1",
+        "project_id": "project:1",
+        "step": "workspace",
         "status": "skipped",
         "target_label": "Skip Tour",
         "layout_disposition": "restore",
-        "captured_state": {
-          "layout_snapshot_ref": "layout_snapshot:tour:directed:1",
-          "composer_placeholder": "Ask Puppet Master anything…",
-          "focus_id": "workspace.initiator"
-        },
-        "restoration": {
-          "layout_restored": true,
-          "composer_placeholder_restored": true,
-          "focus_restored": true,
-          "returned_focus_id": "workspace.initiator"
-        },
-        "chat_host_after": "captured_layout",
-        "teacher_prerequisites": {
-          "picker_opened": false,
-          "teacher_selected": false,
-          "real_message_sent": false,
-          "deterministic_same_chat_reply_complete": false
-        },
-        "restore_or_keep_prompt_present": false,
-        "domain_mutation": false,
-        "persistence_write": false,
+        "layout_selection_source": "skip_required_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {"status": "applied", "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1", "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1", "layout_restored": true, "chat_state_restored": true, "initiating_focus_restored": true, "returned_focus_ref": "workspace:initiator:1", "attempt_ref": "restore-attempt:tour:skip:1", "error_code": null, "reason": null, "retryable": false, "original_snapshot_reused": true},
+        "practice_content_removed": true,
+        "landing": {"real_planning_wizard": false, "committed_project_selected": false, "focus_ref": null},
+        "completion_reported": false,
+        "domain_work_started": false,
+        "approval_granted": false,
         "evidence_scope": "contract_fixture_only",
         "production_receipt_claim": false,
         "result_revision": 1
       }
     },
     {
-      "name": "finish_keeps_chat_docked_right",
+      "name": "finish_default_restore_lands_real_planning",
       "definition": "guided_tour_terminal_result",
       "value": {
-        "schema_id": "pm.guided_tour.terminal_result.v2",
-        "schema_version": "2.0.0",
+        "schema_id": "pm.guided_tour.terminal_result.v3",
+        "schema_version": "3.0.0",
         "action_id": "ui.guided_tour.finish",
-        "tour_session_id": "tour:directed:finish-result:1",
-        "step": "chat_teacher",
+        "tour_session_id": "tour:newbie:finish-restore-terminal:1",
+        "project_id": "project:1",
+        "step": "planning_wizard",
+        "status": "completed",
+        "target_label": "Finish tour",
+        "layout_disposition": "restore",
+        "layout_selection_source": "default_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {"status": "applied", "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1", "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1", "layout_restored": true, "chat_state_restored": true, "initiating_focus_restored": false, "returned_focus_ref": "planning-wizard:heading:1", "attempt_ref": "restore-attempt:tour:finish:1", "error_code": null, "reason": null, "retryable": false, "original_snapshot_reused": true},
+        "practice_content_removed": true,
+        "landing": {"real_planning_wizard": true, "committed_project_selected": true, "focus_ref": "planning-wizard:heading:1"},
+        "completion_reported": true,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1
+      }
+    },
+    {
+      "name": "finish_explicit_keep_lands_real_planning",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.v3",
+        "schema_version": "3.0.0",
+        "action_id": "ui.guided_tour.finish",
+        "tour_session_id": "tour:newbie:finish-keep-terminal:1",
+        "project_id": "project:1",
+        "step": "planning_wizard",
         "status": "completed",
         "target_label": "Finish tour",
         "layout_disposition": "keep",
-        "captured_state": {
-          "layout_snapshot_ref": "layout_snapshot:tour:directed:1",
-          "composer_placeholder": "Ask Puppet Master anything…",
-          "focus_id": "workspace.initiator"
-        },
-        "restoration": {
-          "layout_restored": false,
-          "composer_placeholder_restored": false,
-          "focus_restored": false,
-          "returned_focus_id": null
-        },
-        "chat_host_after": "dock_right",
-        "teacher_prerequisites": {
-          "picker_opened": true,
-          "teacher_selected": true,
-          "real_message_sent": true,
-          "deterministic_same_chat_reply_complete": true
-        },
-        "restore_or_keep_prompt_present": false,
-        "domain_mutation": false,
-        "persistence_write": false,
+        "layout_selection_source": "explicit_keep",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {"status": "not_required", "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1", "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1", "layout_restored": false, "chat_state_restored": true, "initiating_focus_restored": false, "returned_focus_ref": "planning-wizard:heading:1", "attempt_ref": "restore-attempt:tour:keep:1", "error_code": null, "reason": null, "retryable": false, "original_snapshot_reused": true},
+        "practice_content_removed": true,
+        "landing": {"real_planning_wizard": true, "committed_project_selected": true, "focus_ref": "planning-wizard:heading:1"},
+        "completion_reported": true,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1
+      }
+    },
+    {
+      "name": "restoration_failure_is_recoverable_not_complete",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.v3",
+        "schema_version": "3.0.0",
+        "action_id": "ui.guided_tour.finish",
+        "tour_session_id": "tour:newbie:finish-recovery-terminal:1",
+        "project_id": "project:1",
+        "step": "planning_wizard",
+        "status": "recovery_required",
+        "target_label": "Finish tour",
+        "layout_disposition": "restore",
+        "layout_selection_source": "default_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {"status": "failed", "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1", "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1", "layout_restored": false, "chat_state_restored": false, "initiating_focus_restored": false, "returned_focus_ref": null, "attempt_ref": "restore-attempt:tour:finish:failed:1", "error_code": "owner_restore_failed", "reason": "The original layout could not be restored yet.", "retryable": true, "original_snapshot_reused": true},
+        "practice_content_removed": true,
+        "landing": {"real_planning_wizard": true, "committed_project_selected": true, "focus_ref": "planning-wizard:heading:1"},
+        "completion_reported": false,
+        "domain_work_started": false,
+        "approval_granted": false,
         "evidence_scope": "contract_fixture_only",
         "production_receipt_claim": false,
         "result_revision": 1
@@ -565,349 +666,60 @@
     }
   ],
   "invalid": [
-    {
-      "name": "five_chapter_predecessor_order_is_rejected",
-      "definition": "guided_tour_storyboard",
-      "base_valid": "canonical_directed_beginner_film_storyboard",
-      "patch": {"order": ["chat_teacher", "shell_navigation", "panel_layout", "widget_workspace", "planning_wizard"]},
-      "expected_error": "predecessor five-chapter order is forbidden"
-    },
-    {
-      "name": "assistant_chat_first_permutation_is_rejected",
-      "definition": "guided_tour_storyboard",
-      "base_valid": "canonical_directed_beginner_film_storyboard",
-      "patch": {"order": ["chat_teacher", "usage", "planning_wizard"]},
-      "expected_error": "scene order must be usage, planning_wizard, chat_teacher"
-    },
-    {
-      "name": "usage_panel_round_trip_must_restore",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"panel_round_trip.round_trip_restore": false},
-      "expected_error": "visible panel round trip must restore its exact starting arrangement"
-    },
-    {
-      "name": "usage_look_alike_does_not_complete_try",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"options_try.look_alike": true},
-      "expected_error": "look-alike activation is forbidden"
-    },
-    {
-      "name": "usage_timer_does_not_complete_try",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"options_try.timer_only": true},
-      "expected_error": "timer-only completion is forbidden"
-    },
-    {
-      "name": "usage_narration_does_not_complete_try",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"options_try.narration_only": true},
-      "expected_error": "narration-only completion is forbidden"
-    },
-    {
-      "name": "usage_options_must_complete_on_first_click",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"options_try.first_click": false},
-      "expected_error": "the exact Options first click must complete after bounded owner readiness"
-    },
-    {
-      "name": "usage_card_film_must_be_reversible",
-      "definition": "guided_tour_usage_progression",
-      "base_valid": "usage_watch_and_exact_try_progression",
-      "patch": {"card_film.round_trip_restore": false},
-      "expected_error": "resize hide reveal film must restore the same card"
-    },
-    {
-      "name": "planning_look_alike_target_is_rejected",
-      "definition": "guided_tour_planning_progression",
-      "base_valid": "planning_exact_choice_progression",
-      "patch": {"intent.target_token": "planning_choice_preview"},
-      "expected_error": "Planning must use exact_planning_choice"
-    },
-    {
-      "name": "planning_redundant_confirmation_is_rejected",
-      "definition": "guided_tour_planning_progression",
-      "base_valid": "planning_exact_choice_progression",
-      "patch": {"review_approval.redundant_confirmation_required": true},
-      "expected_error": "Planning advances without a redundant confirmation"
-    },
-    {
-      "name": "planning_preview_requires_three_named_beats",
-      "definition": "guided_tour_planning_progression",
-      "base_valid": "planning_exact_choice_progression",
-      "patch": {"preview_beats": ["attach", "intent"]},
-      "expected_error": "Planning preview must include attach, intent, and continue"
-    },
-    {
-      "name": "planning_requirements_must_open_real_stage",
-      "definition": "guided_tour_planning_progression",
-      "base_valid": "planning_exact_choice_progression",
-      "patch": {"requirements.opened": false},
-      "expected_error": "Planning must observe the mounted requirements stage"
-    },
-    {
-      "name": "planning_requires_explicit_approval",
-      "definition": "guided_tour_planning_progression",
-      "base_valid": "planning_exact_choice_progression",
-      "patch": {"review_approval.explicit_approval_required": false},
-      "expected_error": "nothing starts before explicit review approval"
-    },
-    {
-      "name": "chat_finish_requires_complete_reply",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.complete": false},
-      "expected_error": "Finish requires the deterministic same-chat reply"
-    },
-    {
-      "name": "chat_remote_provider_route_is_rejected",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.execution_path": "remote_provider"},
-      "expected_error": "Teacher practice must be local deterministic"
-    },
-    {
-      "name": "chat_network_use_is_rejected",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.network_used": true},
-      "expected_error": "Teacher practice cannot use the network"
-    },
-    {
-      "name": "chat_model_route_is_rejected",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.model_id": "model:remote"},
-      "expected_error": "Teacher practice cannot select a model"
-    },
-    {
-      "name": "chat_token_budget_is_rejected",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.token_budget": 256},
-      "expected_error": "Teacher practice cannot allocate a token budget"
-    },
-    {
-      "name": "chat_provider_use_is_rejected",
-      "definition": "guided_tour_chat_teacher_progression",
-      "base_valid": "chat_teacher_real_same_chat_progression",
-      "patch": {"reply.provider_use_count": 1},
-      "expected_error": "Teacher practice provider use must be zero"
-    },
-    {
-      "name": "teacher_normal_and_eli5_must_be_materially_distinct",
-      "definition": "guided_tour_teacher_copy_contract",
-      "base_valid": "teacher_normal_eli5_parity_and_bounded_topics",
-      "patch": {"eli5.text": "A project groups one goal, its working files, configuration, recoverable versions, and approved work. Storage location and online source control are separate choices. Start with one clearly named project and verify its folder."},
-      "expected_error": "ELI5 copy cannot duplicate normal copy"
-    },
-    {
-      "name": "unsupported_topic_answer_must_be_bounded",
-      "definition": "guided_tour_teacher_copy_contract",
-      "base_valid": "teacher_normal_eli5_parity_and_bounded_topics",
-      "patch": {"unsupported.bounded": false},
-      "expected_error": "unsupported topics must receive the bounded supported-topic list"
-    },
-    {
-      "name": "teacher_topic_corpus_must_have_47_discoverable_topics",
-      "definition": "guided_tour_teacher_copy_contract",
-      "base_valid": "teacher_normal_eli5_parity_and_bounded_topics",
-      "remove": ["supported_topics.46"],
-      "expected_error": "Teacher corpus must expose all 47 supported topic identities"
-    },
-    {
-      "name": "teacher_first_view_must_have_exactly_four_suggestions",
-      "definition": "guided_tour_teacher_library_contract",
-      "base_valid": "teacher_library_yields_and_restores_same_beat",
-      "remove": ["primary_suggestions.3"],
-      "expected_error": "Teacher first view must expose exactly four primary suggestions"
-    },
-    {
-      "name": "teacher_library_must_mount_inside_chat_panel",
-      "definition": "guided_tour_teacher_library_contract",
-      "base_valid": "teacher_library_yields_and_restores_same_beat",
-      "patch": {"mounted_inside": "guided_tour_overlay"},
-      "expected_error": "the 26-question library belongs inside #chatPanel"
-    },
-    {
-      "name": "teacher_library_must_make_callout_inert_and_hidden",
-      "definition": "guided_tour_teacher_library_contract",
-      "base_valid": "teacher_library_yields_and_restores_same_beat",
-      "patch": {"callout.inert": false},
-      "expected_error": "open library requires the tour callout to yield and become inert"
-    },
-    {
-      "name": "teacher_library_close_must_remain_keyboard_reachable",
-      "definition": "guided_tour_teacher_library_contract",
-      "base_valid": "teacher_library_yields_and_restores_same_beat",
-      "patch": {"close.keyboard_reachable": false},
-      "expected_error": "Close must remain topmost and keyboard reachable"
-    },
-    {
-      "name": "teacher_library_close_must_restore_same_beat",
-      "definition": "guided_tour_teacher_library_contract",
-      "base_valid": "teacher_library_yields_and_restores_same_beat",
-      "patch": {"close_result.same_beat_restored": false},
-      "expected_error": "closing the library restores the same Teacher beat"
-    },
-    {
-      "name": "reduced_motion_remains_settings_owned",
-      "definition": "guided_tour_presentation_contract",
-      "base_valid": "opening_controls_reduced_motion_and_heading_focus",
-      "patch": {"reduced_motion.owner": "Guided Tour"},
-      "expected_error": "Reduced Motion owner must be Settings"
-    },
-    {
-      "name": "scene_entry_cannot_auto_activate_action",
-      "definition": "guided_tour_presentation_contract",
-      "base_valid": "opening_controls_reduced_motion_and_heading_focus",
-      "patch": {"scene_entry.automatic_action": true},
-      "expected_error": "automatic scene entry focuses the h2 and performs no action"
-    },
-    {
-      "name": "scene_entry_cannot_open_hover_tag",
-      "definition": "guided_tour_presentation_contract",
-      "base_valid": "opening_controls_reduced_motion_and_heading_focus",
-      "patch": {"scene_entry.pm_hover_tag_opened": true},
-      "expected_error": "programmatic heading focus cannot open PMHoverTag"
-    },
-    {
-      "name": "back_recovery_cannot_skip_required_practice",
-      "definition": "guided_tour_presentation_contract",
-      "base_valid": "opening_controls_reduced_motion_and_heading_focus",
-      "patch": {"navigation_recovery.required_practice_not_skipped": false},
-      "expected_error": "Back and forward recovery may not skip required practice"
-    },
-    {
-      "name": "black_transition_frame_is_rejected",
-      "definition": "guided_tour_presentation_contract",
-      "base_valid": "opening_controls_reduced_motion_and_heading_focus",
-      "patch": {"transition_continuity.black_frame_allowed": true},
-      "expected_error": "the mounted application must stay painted with no black transition"
-    },
-    {
-      "name": "skip_requires_layout_restore_proof",
-      "definition": "guided_tour_terminal_result",
-      "base_valid": "skip_restores_layout_placeholder_and_focus",
-      "patch": {"restoration.layout_restored": false},
-      "expected_error": "Skip must restore the captured layout"
-    },
-    {
-      "name": "finish_cannot_restore_layout",
-      "definition": "guided_tour_terminal_result",
-      "base_valid": "finish_keeps_chat_docked_right",
-      "patch": {"layout_disposition": "restore"},
-      "expected_error": "Finish keeps Chat docked right"
-    },
-    {
-      "name": "terminal_restore_or_keep_prompt_is_rejected",
-      "definition": "guided_tour_terminal_result",
-      "base_valid": "finish_keeps_chat_docked_right",
-      "patch": {"restore_or_keep_prompt_present": true},
-      "expected_error": "no restore-vs-keep prompt is allowed"
-    },
-    {
-      "name": "retired_restore_layout_action_is_rejected",
-      "definition": "guided_tour_action_request",
-      "base_valid": "generic_next_action_request",
-      "patch": {"action_id": "ui.guided_tour.restore_layout"},
-      "expected_error": "restore_layout is a rejected predecessor action"
-    },
-    {
-      "name": "retired_keep_layout_action_is_rejected",
-      "definition": "guided_tour_action_request",
-      "base_valid": "generic_next_action_request",
-      "patch": {"action_id": "ui.guided_tour.keep_layout"},
-      "expected_error": "keep_layout is a rejected predecessor action"
-    },
-    {
-      "name": "retired_toggle_reduced_motion_action_is_rejected",
-      "definition": "guided_tour_action_request",
-      "base_valid": "generic_next_action_request",
-      "patch": {"action_id": "ui.guided_tour.toggle_reduced_motion"},
-      "expected_error": "Reduced Motion is Settings-owned and has no tour action"
-    },
-    {
-      "name": "focus_route_requires_typed_route_target",
-      "definition": "guided_tour_action_request",
-      "base_valid": "focus_route_is_typed_local_presentation",
-      "remove": ["route_target"],
-      "expected_error": "ui.guided_tour.focus_route requires route_target.page_id"
-    },
-    {
-      "name": "old_shell_router_error_token_is_rejected",
-      "definition": "guided_tour_focus_route_result",
-      "base_valid": "focus_route_disabled_uses_page_router_error",
-      "patch": {"error_code": "shell_router_unavailable"},
-      "expected_error": "disabled focus-route uses page_router_unavailable"
-    },
-    {
-      "name": "focus_route_result_cannot_claim_persistence",
-      "definition": "guided_tour_focus_route_result",
-      "base_valid": "focus_route_result_is_local_and_nonpersistent",
-      "patch": {"persistence_write": true},
-      "expected_error": "local focus-route result cannot claim a persistence write"
-    },
-    {
-      "name": "provider_use_is_forbidden",
-      "definition": "guided_tour_session",
-      "base_valid": "current_chat_teacher_session",
-      "patch": {"provider_use_count": 1},
-      "expected_error": "provider_use_count must be zero"
-    },
-    {
-      "name": "protected_browser_content_is_forbidden",
-      "definition": "guided_tour_session",
-      "base_valid": "current_chat_teacher_session",
-      "patch": {
-        "step": "usage",
-        "step_index": 0,
-        "phase": "usage_success",
-        "heading_focus.target": "guided_tour.usage.heading",
-        "auth_browser_url": "forbidden"
-      },
-      "expected_error": "additional property auth_browser_url is forbidden"
-    },
-    {
-      "name": "durable_tour_session_is_forbidden",
-      "definition": "guided_tour_session",
-      "base_valid": "current_chat_teacher_session",
-      "patch": {
-        "step": "planning_wizard",
-        "step_index": 1,
-        "phase": "planning_review",
-        "heading_focus.target": "guided_tour.planning_wizard.heading",
-        "session_persistence": "persisted"
-      },
-      "expected_error": "session_persistence must be not_persisted"
-    },
-    {
-      "name": "absolute_layout_snapshot_path_is_forbidden",
-      "definition": "guided_tour_session",
-      "base_valid": "current_chat_teacher_session",
-      "patch": {"captured_state.layout_snapshot_ref": "/tmp/layout-receipt.json"},
-      "expected_error": "layout snapshot must be a stable ref, not an absolute path"
-    },
-    {
-      "name": "secret_bearing_layout_snapshot_ref_is_forbidden",
-      "definition": "guided_tour_session",
-      "base_valid": "current_chat_teacher_session",
-      "patch": {"captured_state.layout_snapshot_ref": "receipt:password:forbidden"},
-      "expected_error": "layout snapshot refs cannot contain secret-bearing tokens"
-    },
-    {
-      "name": "domain_command_alias_for_focus_route_is_forbidden",
-      "definition": "guided_tour_action_request",
-      "base_valid": "generic_next_action_request",
-      "patch": {
-        "action_id": "cmd.nav.focus_route",
-        "target_control_id": "ui.guided_tour.focus_route"
-      },
-      "expected_error": "local focus must use ui.guided_tour.focus_route, not a domain command alias"
-    }
+    {"name": "usage_first_v2_order_is_rejected", "definition": "guided_tour_storyboard", "base_valid": "canonical_newbie_first_storyboard", "patch": {"order": ["usage", "planning_wizard", "chat_teacher"]}, "expected_error": "the superseded Usage-first/Chat-final order is not current"},
+    {"name": "five_chapter_v1_order_is_rejected", "definition": "guided_tour_storyboard", "base_valid": "canonical_newbie_first_storyboard", "patch": {"order": ["chat_teacher", "shell_navigation", "panel_layout", "widget_workspace", "planning_wizard"]}, "expected_error": "the five-chapter predecessor is source lineage only"},
+    {"name": "ten_action_predecessor_without_show_me_is_rejected", "definition": "guided_tour_storyboard", "base_valid": "canonical_newbie_first_storyboard", "remove": ["ui_actions.2"], "expected_error": "the current inventory has exactly eleven actions including Show Me"},
+    {"name": "v2_storyboard_identity_is_rejected", "definition": "guided_tour_storyboard", "base_valid": "canonical_newbie_first_storyboard", "patch": {"schema_id": "pm.guided_tour.storyboard.v2"}, "expected_error": "v2 is predecessor input, not current storyboard identity"},
+    {"name": "session_cannot_claim_full_persistence", "definition": "guided_tour_session", "base_valid": "current_workspace_session_with_ref_only_capture", "patch": {"session_persistence": "persisted"}, "expected_error": "only the bounded safe checkpoint persists"},
+    {"name": "session_owner_capture_cannot_use_absolute_path", "definition": "guided_tour_session", "base_valid": "current_workspace_session_with_ref_only_capture", "patch": {"captured_state.layout_owner_snapshot_ref": "/tmp/layout.json"}, "expected_error": "capture uses a stable owner snapshot ref"},
+    {"name": "session_owner_capture_cannot_use_secret_ref", "definition": "guided_tour_session", "base_valid": "current_workspace_session_with_ref_only_capture", "patch": {"captured_state.chat_owner_snapshot_ref": "chat_owner_snapshot:password:raw"}, "expected_error": "secret-bearing refs fail closed"},
+    {"name": "checkpoint_rejects_raw_conversation", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"raw_conversation": "forbidden"}, "expected_error": "checkpoint is a closed stable-ref envelope"},
+    {"name": "checkpoint_rejects_raw_draft", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"composer_draft": "forbidden"}, "expected_error": "checkpoint does not store Chat draft content"},
+    {"name": "checkpoint_rejects_credential_material", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"credentials": {"value": "forbidden"}}, "expected_error": "checkpoint does not store credentials"},
+    {"name": "checkpoint_rejects_transient_geometry", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"callout_rect": {"x": 10, "y": 20}}, "expected_error": "checkpoint does not store animation geometry"},
+    {"name": "checkpoint_cannot_allow_domain_replay", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"domain_work_replay_allowed": true}, "expected_error": "resume never replays domain work"},
+    {"name": "checkpoint_requires_layout_owner_snapshot_ref", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"layout_owner_snapshot_ref": "snapshot:unowned:1"}, "expected_error": "layout capture is owner-qualified"},
+    {"name": "checkpoint_rejects_chat_snapshot_in_layout_field", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"layout_owner_snapshot_ref": "chat_owner_snapshot:tour:1"}, "expected_error": "layout snapshot custody cannot be swapped with Chat"},
+    {"name": "checkpoint_rejects_layout_snapshot_in_chat_field", "definition": "guided_tour_checkpoint", "base_valid": "bounded_safe_checkpoint", "patch": {"chat_owner_snapshot_ref": "layout_owner_snapshot:tour:1"}, "expected_error": "Chat snapshot custody cannot be swapped with layout"},
+    {"name": "resume_cannot_skip_owner_revalidation", "definition": "guided_tour_resume_result", "base_valid": "resume_revalidates_to_earliest_unsatisfied_prerequisite", "patch": {"owner_state_revalidated": false}, "expected_error": "resume revalidates owner state"},
+    {"name": "resume_requires_earliest_unsatisfied_prerequisite", "definition": "guided_tour_resume_result", "base_valid": "resume_revalidates_to_earliest_unsatisfied_prerequisite", "patch": {"earliest_unsatisfied_prerequisite_ref": null}, "expected_error": "resume returns to the earliest unsatisfied prerequisite"},
+    {"name": "resume_cannot_replay_domain_work", "definition": "guided_tour_resume_result", "base_valid": "resume_revalidates_to_earliest_unsatisfied_prerequisite", "patch": {"domain_work_replayed": true}, "expected_error": "resume observes existing owner state instead of replaying"},
+    {"name": "resume_cannot_report_completion", "definition": "guided_tour_resume_result", "base_valid": "resume_revalidates_to_earliest_unsatisfied_prerequisite", "patch": {"completion_reported": true}, "expected_error": "resume result never fabricates completion"},
+    {"name": "practice_must_offer_manual_and_show_me", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "remove": ["paths.1"], "expected_error": "both paths share one action contract"},
+    {"name": "show_me_cannot_use_second_mutation_implementation", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"second_mutation_implementation": true}, "expected_error": "Show Me uses the mounted owner handler"},
+    {"name": "generic_next_cannot_complete_practice", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"false_positive_controls.generic_next": true}, "expected_error": "generic Next cannot satisfy an owner predicate"},
+    {"name": "timer_cannot_complete_practice", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"show_me_choreography.timer_completes_predicate": true}, "expected_error": "timer cannot satisfy an owner predicate"},
+    {"name": "look_alike_cannot_complete_practice", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"false_positive_controls.look_alike_control": true}, "expected_error": "look-alike controls cannot satisfy the mounted target predicate"},
+    {"name": "applied_observation_requires_mounted_owner_result", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"observation.mounted_owner_result_observed": false}, "expected_error": "applied requires an observed mounted-owner result"},
+    {"name": "show_me_request_requires_practice_action_ref", "definition": "guided_tour_action_request", "base_valid": "show_me_request_names_shared_practice_action", "remove": ["practice_action_ref"], "expected_error": "Show Me must name the shared action contract"},
+    {"name": "finish_keep_requires_explicit_selection", "definition": "guided_tour_action_request", "base_valid": "finish_request_explicit_keep", "patch": {"finish_layout.selection_source": "default_restore"}, "expected_error": "Keep is never inferred"},
+    {"name": "finish_restore_is_the_default", "definition": "guided_tour_action_request", "base_valid": "finish_request_defaults_restore", "patch": {"finish_layout.selection_source": "explicit_keep"}, "expected_error": "Restore uses the default source"},
+    {"name": "retired_restore_layout_action_is_rejected", "definition": "guided_tour_action_request", "base_valid": "generic_next_request", "patch": {"action_id": "ui.guided_tour.restore_layout"}, "expected_error": "restore_layout is not a separate action"},
+    {"name": "retired_keep_layout_action_is_rejected", "definition": "guided_tour_action_request", "base_valid": "generic_next_request", "patch": {"action_id": "ui.guided_tour.keep_layout"}, "expected_error": "keep_layout is not a separate action"},
+    {"name": "tour_owned_reduced_motion_action_is_rejected", "definition": "guided_tour_action_request", "base_valid": "generic_next_request", "patch": {"action_id": "ui.guided_tour.toggle_reduced_motion"}, "expected_error": "Reduced Motion stays Settings-owned"},
+    {"name": "domain_alias_for_focus_route_is_rejected", "definition": "guided_tour_action_request", "base_valid": "generic_next_request", "patch": {"action_id": "cmd.nav.focus_route"}, "expected_error": "focus_route stays a typed local presentation action"},
+    {"name": "focus_route_requires_typed_route_target", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "remove": ["route_target"], "expected_error": "focus route requires a page identity"},
+    {"name": "focus_route_rejects_workspace_as_page_identity", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "patch": {"route_target.page_id": "workspace"}, "expected_error": "Usage remains the compatible page route inside the workspace chapter"},
+    {"name": "workspace_layout_must_remain_reversible", "definition": "guided_tour_workspace_progression", "base_valid": "workspace_real_actions_and_predicates", "patch": {"layout_reversible": false}, "expected_error": "workspace practice is reversible"},
+    {"name": "planning_action_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_action_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful actions"},
+    {"name": "planning_dwell_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_dwell_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful dwell"},
+    {"name": "unsure_cannot_be_resolved", "definition": "guided_tour_planning_progression", "base_valid": "planning_unsure_stays_unresolved", "patch": {"access_decision.resolution_status": "resolved"}, "expected_error": "I’m not sure yet remains unresolved"},
+    {"name": "edit_click_alone_cannot_choose_answer", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"answer_edit.replacement_answer_selected": false}, "expected_error": "a genuine replacement answer is required"},
+    {"name": "edit_must_preserve_unaffected_identity_and_position", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"answer_edit.unaffected_identity_and_position_retained": false}, "expected_error": "only the affected consequence changes"},
+    {"name": "tour_cannot_start_work_at_approval_boundary", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"approval_boundary.work_started": true}, "expected_error": "Tour stops before approval with no work"},
+    {"name": "chat_same_answer_flag_is_required", "definition": "guided_tour_chat_teacher_progression", "base_valid": "chat_first_local_stream_and_same_answer_eli5", "patch": {"teacher_practice.same_answer": false}, "expected_error": "ELI5 changes the same answer"},
+    {"name": "chat_raw_answer_text_is_rejected", "definition": "guided_tour_chat_teacher_progression", "base_valid": "chat_first_local_stream_and_same_answer_eli5", "patch": {"teacher_practice.answer_text": "forbidden"}, "expected_error": "session records carry refs, not raw conversation"},
+    {"name": "chat_provider_use_is_rejected", "definition": "guided_tour_chat_teacher_progression", "base_valid": "chat_first_local_stream_and_same_answer_eli5", "patch": {"reply.provider_use_count": 1}, "expected_error": "Teacher example uses zero provider requests"},
+    {"name": "chat_usage_increment_is_rejected", "definition": "guided_tour_chat_teacher_progression", "base_valid": "chat_first_local_stream_and_same_answer_eli5", "patch": {"reply.usage_increment": 1}, "expected_error": "Teacher example yields zero usage increment"},
+    {"name": "reduced_motion_remains_settings_owned", "definition": "guided_tour_presentation_contract", "base_valid": "chat_opening_controls_and_live_callouts", "patch": {"reduced_motion.owner": "Guided Tour"}, "expected_error": "Reduced Motion stays Settings-owned"},
+    {"name": "callout_transient_geometry_cannot_persist", "definition": "guided_tour_presentation_contract", "base_valid": "chat_opening_controls_and_live_callouts", "patch": {"callout_policy.transient_geometry_persisted": true}, "expected_error": "callout geometry is remeasured, not persisted"},
+    {"name": "missing_target_cannot_auto_complete", "definition": "guided_tour_presentation_contract", "base_valid": "chat_opening_controls_and_live_callouts", "patch": {"callout_policy.missing_target_disposition": "complete"}, "expected_error": "missing targets pause with recovery"},
+    {"name": "skip_requires_full_chat_restore", "definition": "guided_tour_terminal_result", "base_valid": "skip_restores_layout_chat_and_focus", "patch": {"restoration.chat_state_restored": false}, "expected_error": "Skip restores Chat state"},
+    {"name": "finish_keep_cannot_be_inferred", "definition": "guided_tour_terminal_result", "base_valid": "finish_explicit_keep_lands_real_planning", "patch": {"layout_selection_source": "default_restore"}, "expected_error": "Keep requires explicit selection"},
+    {"name": "finish_default_restore_must_restore_layout", "definition": "guided_tour_terminal_result", "base_valid": "finish_default_restore_lands_real_planning", "patch": {"status": "recovery_required", "completion_reported": false, "restoration.layout_restored": false}, "expected_error": "an applied Restore must have a restored layout"},
+    {"name": "completed_restore_cannot_claim_not_required", "definition": "guided_tour_terminal_result", "base_valid": "finish_default_restore_lands_real_planning", "patch": {"restoration.status": "not_required", "restoration.layout_restored": false, "restoration.chat_state_restored": false}, "expected_error": "completed default Restore requires applied owner restoration"},
+    {"name": "restoration_failure_cannot_report_completed", "definition": "guided_tour_terminal_result", "base_valid": "restoration_failure_is_recoverable_not_complete", "patch": {"status": "completed", "completion_reported": true}, "expected_error": "failed restoration remains recovery_required"},
+    {"name": "finish_must_land_on_real_planning", "definition": "guided_tour_terminal_result", "base_valid": "finish_default_restore_lands_real_planning", "patch": {"landing.real_planning_wizard": false}, "expected_error": "Finish lands on the real Planning Wizard"},
+    {"name": "finish_cannot_grant_approval", "definition": "guided_tour_terminal_result", "base_valid": "finish_default_restore_lands_real_planning", "patch": {"approval_granted": true}, "expected_error": "Tour does not grant approval"}
   ]
 }

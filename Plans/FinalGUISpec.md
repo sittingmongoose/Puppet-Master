@@ -35062,7 +35062,7 @@ acceptance_criteria:
   - "Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent."
   - "Every stage has a distinct visual scene and meaningful continuity of focus; the four theme families use different directing systems rather than paint-only variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling does not require browser-only effects."
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (current exact nine-stage/six-stage Onboarding presentation, welcome theme choice, and Review hard-fence contract; its current F3-521 Guided Tour remains three scenes and exactly ten actions)"
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (current exact nine-stage/six-stage Onboarding presentation, welcome theme choice, and Review hard-fence contract; F3-521 consumes the separate v3 three-chapter/eleven-action Guided Tour owner contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (current exact nine-stage/six-stage owner, action, persistence, Review-fence, independent local Safe History, optional online-forge, and typed choice-help contract)"
   - Concepts/pm7-tools/onboarding_cinematic_source.py authored guards
   - Concepts/pm7-tools/home_workspace_refresh_source.py authored guards
@@ -35176,8 +35176,8 @@ acceptance_criteria:
   - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first revision required before current acceptance)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v2 is superseded migration input; current acceptance requires Chat/workspace/Planning order, eleven tour actions, shared Show Me predicates, same-answer ELI5, safe resume, and default restoration/explicit Keep)"
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
+  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
   - Concepts/pm7-tools/guided_tour_source.py authored guards
   - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
@@ -36897,4 +36897,3 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
-

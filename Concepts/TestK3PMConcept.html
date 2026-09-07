@@ -263,7 +263,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        everywhere else. */
     :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }
     /* opt-in scroll panes (verified overflow:auto hosts across parts) */
-    .primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console {
+    .primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,     .activity-card-body, #bottomDebugHost .rd-console, .pm7ob-screen, .pm7ob-body {
       scrollbar-width: thin;
       scrollbar-color: var(--pm6-sb-ink, transparent) transparent;
     }
@@ -291,7 +291,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
-    .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
+    .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console, .pm7ob-screen, .pm7ob-body)::-webkit-scrollbar {
       width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
     /* .editor-code left both opt-in lists and its track-margin rule is gone:
@@ -22946,10 +22946,10 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 
 /* ---- stage + screen transitions ------------------------------------------ */
 .pm7ob-stage { position: relative; min-height: 0; background: var(--background); overflow: hidden; }
-.pm7ob-screen { position: absolute; inset: 0; display: grid; grid-template-rows: auto minmax(0,1fr);
+.pm7ob-screen { position: absolute; inset: 0; z-index: 0; display: grid; grid-template-rows: auto minmax(0,1fr);
   padding: clamp(14px,2.6vh,26px) clamp(18px,4vw,46px) clamp(12px,2vh,20px);
-  opacity: 0; pointer-events: none; overflow: hidden auto; scrollbar-width: thin; }
-.pm7ob-screen.is-current { opacity: 1; pointer-events: auto; position: relative; }
+  opacity: 0; pointer-events: none; overflow: hidden; min-height: 0; }
+.pm7ob-screen.is-current { opacity: 1; pointer-events: auto; z-index: 1; }
 .pm7ob-screen.is-outgoing { pointer-events: none; z-index: 2; }
 
 /* forward: outgoing lifts away with blur; incoming rises with settle */
@@ -22984,13 +22984,17 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 .pm7ob-screen[data-screen-id="pair"] .pm7ob-body,
 .pm7ob-screen[data-screen-id="server"] .pm7ob-body { padding-top: clamp(8px,1.6vh,14px); gap: 8px; }
 .pm7ob-screen[data-screen-id] .pm7ob-body h1 { font-size: clamp(23px,2.9vw,30px); }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice { min-height: 0; padding: 13px 15px; grid-auto-flow: column; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-hero { height: 110px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-body h1 { font-size: clamp(20px,2.4vw,24px); }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choices { gap: 9px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice { min-height: 0; padding: 9px 13px; grid-auto-flow: column; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; }
 .pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice-ico { width: 36px; height: 36px; grid-row: span 2; }
 .pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice strong { font-size: 15px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice small { font-size: 12px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice small { font-size: 11.5px; }
 .pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice-tag { top: 10px; right: 10px; }
 .pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-copy { font-size: 14px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-device { padding: 12px 15px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-device { padding: 10px 14px; }
+.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-device strong { font-size: 15px; }
 .pm7ob-screen[data-screen-id="inherit"] .pm7ob-row { padding: 10px 14px; }
 .pm7ob-screen[data-screen-id="inherit"] .pm7ob-account { padding: 12px 15px; gap: 8px; }
 .pm7ob-screen[data-screen-id="inherit"] .pm7ob-account small { font-size: 12px; }
@@ -22998,14 +23002,6 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 .pm7ob-screen[data-screen-id="inherit"] .pm7ob-copy { font-size: 14px; }
 .pm7ob-screen[data-screen-id="review"] .pm7ob-review-row { padding: 9px 13px; }
 .pm7ob-screen[data-screen-id="review"] .pm7ob-happens { font-size: 12.5px; padding: 11px 14px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-hero { height: 126px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-body h1 { font-size: clamp(21px,2.5vw,26px); }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choices { gap: 9px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice { padding: 9px 13px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-hero { height: 110px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-choice small { font-size: 11.5px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-device { padding: 10px 14px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-device strong { font-size: 15px; }
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-hero { height: 118px; }
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-field { gap: 5px; }
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-input { min-height: 44px; padding: 10px 14px; }
@@ -23013,7 +23009,6 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-transport { padding: 9px 8px; }
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-account { padding: 11px 15px; gap: 8px; }
 .pm7ob-screen[data-screen-id="sourceNas"] .pm7ob-copy { font-size: 14px; }
-.pm7ob-screen[data-screen-id="deviceReady"] .pm7ob-body h1 { font-size: clamp(20px,2.4vw,24px); }
 .pm7ob-screen[data-screen-id="provider"] .pm7ob-row { padding: 10px 14px; }
 .pm7ob-screen[data-screen-id="provider"] .pm7ob-account { padding: 11px 15px; }
 .pm7ob-screen[data-screen-id="provider"] .pm7ob-actions { margin-top: 6px; }
@@ -23090,6 +23085,7 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
 
 /* ---- body typography -------------------------------------------------------- */
 .pm7ob-body { width: min(680px,100%); margin: 0 auto; padding-top: clamp(12px,2.4vh,22px);
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   display: grid; gap: 10px; align-content: start; text-align: center; }
 .pm7ob-eyebrow { margin: 0; color: var(--obe-accent); font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .pm7ob h1 { margin: 0; color: var(--obe-ink); font-family: var(--display-font);
@@ -23115,7 +23111,7 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
   background: linear-gradient(105deg, transparent, rgba(255,255,255,.34), transparent);
   transform: skewX(-18deg); transition: left 640ms var(--obe-cinema); }
 .pm7ob-btn-primary:hover::after { left: 130%; }
-.pm7ob-btn[disabled] { opacity: .55; cursor: default; pointer-events: none; }
+.pm7ob-btn:is([disabled], [aria-disabled="true"]) { opacity: .55; cursor: default; pointer-events: none; }
 .pm7ob-link { border: 0; background: none; color: var(--obe-accent); font-weight: 700; cursor: pointer;
   padding: 4px 6px; border-radius: 6px; }
 .pm7ob-link:hover { text-decoration: underline; }
@@ -23173,6 +23169,7 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
   transition: all var(--obe-dur-micro) var(--obe-micro); }
 .pm7ob-mini:hover { border-color: var(--obe-accent); transform: translateY(-1px); }
 .pm7ob-mini.is-accent { border-color: var(--obe-accent); background: var(--obe-accent); color: var(--surface); }
+.pm7ob-mini:is([disabled], [aria-disabled="true"]) { opacity: .55; cursor: default; pointer-events: none; }
 
 /* ---- form fields -------------------------------------------------------------- */
 .pm7ob-field { width: min(560px,100%); margin: 4px auto 0; display: grid; gap: 7px; text-align: left; }
@@ -23308,6 +23305,9 @@ html[data-theme="retro-light"] .page-projects > .projects-header-bento .projects
   .pm7ob h1 { font-size: 24px; }
   .pm7ob-brand-sub { display: none; }
   .pm7ob-choices { grid-template-columns: 1fr; }
+}
+@media (max-height: 760px) {
+  .pm7ob-hero { height: clamp(96px, 16vh, 128px); }
 }
 
 /* ============================================================================
@@ -71760,11 +71760,11 @@ function row(id, ic, title, sub, end, opts) {
 }
 function primary(id, label, opts) {
   opts = opts || {};
-  return '<button type="button" class="pm7ob-btn pm7ob-btn-primary" data-ob-action="' + id + '" ' + (opts.uiAction ? 'data-ui-action-id="' + opts.uiAction + '"' : '') + ' data-rise style="--rise-i:' + (opts.rise == null ? 5 : opts.rise) + '"' + (opts.disabled ? ' aria-disabled="true"' : '') + '>' + esc(label) + '</button>';
+  return '<button type="button" class="pm7ob-btn pm7ob-btn-primary" data-ob-action="' + id + '" ' + (opts.uiAction ? 'data-ui-action-id="' + opts.uiAction + '"' : '') + ' data-rise style="--rise-i:' + (opts.rise == null ? 5 : opts.rise) + '"' + (opts.disabled ? ' disabled aria-disabled="true"' : '') + '>' + esc(label) + '</button>';
 }
 function secondary(id, label, opts) {
   opts = opts || {};
-  return '<button type="button" class="pm7ob-btn" data-ob-action="' + id + '" data-rise style="--rise-i:' + (opts.rise == null ? 5 : opts.rise) + '"' + (opts.disabled ? ' aria-disabled="true"' : '') + '>' + esc(label) + '</button>';
+  return '<button type="button" class="pm7ob-btn" data-ob-action="' + id + '" data-rise style="--rise-i:' + (opts.rise == null ? 5 : opts.rise) + '"' + (opts.disabled ? ' disabled aria-disabled="true"' : '') + '>' + esc(label) + '</button>';
 }
 function linkBtn(id, label, rise) { return '<button type="button" class="pm7ob-link" data-ob-action="' + id + '" data-rise style="--rise-i:' + (rise == null ? 6 : rise) + '">' + esc(label) + '</button>'; }
 function deviceName() { return state.device.remote ? state.device.name : 'This computer'; }
@@ -71939,7 +71939,7 @@ var SCREENS = {
       } else if (s.ssh.stage === 'idle') {
         body += '<div class="pm7ob-account" data-rise style="--rise-i:5"><div class="pm7ob-account-head"><span class="pm7ob-row-ico">' + icon('key') + '</span>'
           + '<span><strong>Puppet Master can set this up for you</strong><small style="display:block;color:var(--obe-ink-2);margin-top:2px">It creates a secure key on ' + deviceName().toLowerCase() + ', has the device trust it (its password, once), and checks the connection. No terminal windows, promise.</small></span></div>'
-          + '<div class="pm7ob-account-actions"><button type="button" class="pm7ob-mini is-accent" data-ob-action="ssh:automate"' + (s.nasHost.trim() ? '' : ' aria-disabled="true"') + '>Set up the connection for me</button></div></div>';
+          + '<div class="pm7ob-account-actions"><button type="button" class="pm7ob-mini is-accent" data-ob-action="ssh:automate"' + (s.nasHost.trim() ? '' : ' disabled aria-disabled="true"') + '>Set up the connection for me</button></div></div>';
       } else {
         body += '<div class="pm7ob-seq" data-rise style="--rise-i:5" data-ob-ssh-seq>' + sshSeqMarkup() + '</div>';
       }
@@ -72133,21 +72133,36 @@ function commitPhases() {
 }
 
 /* --------------------------------------------------------------- rendering */
+function resetScreenScroll(layer) {
+  if (!layer) return;
+  layer.scrollTop = 0;
+  var body = layer.querySelector('.pm7ob-body');
+  if (body) body.scrollTop = 0;
+}
 function render(dir) {
   root.dataset.screen = state.screen;
   root.dataset.motionDir = dir || 'forward';
   var tpl = SCREENS[state.screen] || SCREENS.welcome;
   var html = tpl();
-  if (dir === null) { currentLayer.innerHTML = html; afterRender(); return; }
+  if (dir === null) {
+    currentLayer.innerHTML = html;
+    currentLayer.classList.add('is-current');
+    currentLayer.classList.remove('is-outgoing');
+    resetScreenScroll(currentLayer);
+    afterRender();
+    return;
+  }
   outgoingLayer.innerHTML = currentLayer.innerHTML;
   outgoingLayer.classList.add('is-outgoing');
   outgoingLayer.classList.remove('is-current');
   currentLayer.innerHTML = html;
-  currentLayer.scrollTop = 0;
+  currentLayer.classList.add('is-current');
   currentLayer.classList.remove('is-outgoing');
+  resetScreenScroll(currentLayer);
   later(function () {
     outgoingLayer.innerHTML = '';
     outgoingLayer.classList.remove('is-outgoing');
+    outgoingLayer.classList.remove('is-current');
     outgoingLayer.setAttribute('aria-hidden', 'true');
     outgoingLayer.setAttribute('inert', '');
   }, 620);
@@ -72464,6 +72479,7 @@ function toggleScenario(force) {
 root.addEventListener('click', function (ev) {
   var t = ev.target.closest('[data-ob-action], [data-ob-scenario], [data-ob-scenario-toggle], [data-ui-action-id]');
   if (!t || !root.contains(t)) return;
+  if (t.disabled || t.getAttribute('aria-disabled') === 'true') return;
   if (t.hasAttribute('data-ob-scenario-toggle')) { toggleScenario(); return; }
   if (t.hasAttribute('data-ob-scenario')) {
     var parts = t.getAttribute('data-ob-scenario').split(':');

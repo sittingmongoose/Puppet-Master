@@ -71272,7 +71272,7 @@ policies for tenant isolation, and add migration script.</textarea>
     // exit old
     var olds = U.$$('.pmf-screen', screensEl);
     olds.forEach(function (o) { o.setAttribute('data-phase', 'exit'); o.setAttribute('data-dir', dir === 'back' ? 'back' : 'fwd'); o.setAttribute('aria-hidden', 'true'); });
-    var exitMs = U.reduced() ? 60 : (olds.length ? 100 * U.timeScale() : 0);
+    var exitMs = U.reduced() ? 60 : (olds.length ? (280 * U.timeScale()) : 0);
     setTimeout(function () {
       if (token !== navToken) return;
       olds.forEach(function (o) { o.remove(); });
@@ -72275,7 +72275,7 @@ policies for tenant isolation, and add migration script.</textarea>
   function attr(el,name){return clean(el&&el.getAttribute&&el.getAttribute(name));}
   function setAttrIfChanged(el,name,value){value=String(value);if(el.getAttribute(name)!==value)el.setAttribute(name,value);}
   function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID));}
-  function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
+  function activeOverlay(){var tour=document.getElementById('pmf-tour'),onboarding=document.getElementById('pmf-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
   function overlayAllows(el){var overlay=activeOverlay();return !overlay||!!(el&&overlay.contains(el));}
   function activeSurface(payload){
     var overlay=activeOverlay();if(overlay)return overlay;

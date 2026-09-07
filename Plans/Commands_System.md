@@ -5147,7 +5147,7 @@ event, receipt family, persistence authority, alias target, or production
 wiring row. Guided Tour must not manufacture those surfaces to satisfy a
 command census.
 
-ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.contracts.v1, ContractName:Plans/UI_Command_Catalog.md#UCC-150, ContractName:Plans/Wiring_Matrix.md#WM-049
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-023, SchemaID:pm.guided_tour.focus_route_result.v1, ContractName:Plans/UI_Command_Catalog.md#UCC-150, ContractName:Plans/Wiring_Matrix.md#WM-049
 
 ### CS-072 - Guided Tour focus route stays a typed local action
 
