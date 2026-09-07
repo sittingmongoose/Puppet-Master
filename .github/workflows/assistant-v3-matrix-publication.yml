@@ -2,7 +2,9 @@ name: Assistant v3 matrix publication
 on:
   push:
     branches: [completion/assistant-v3-demo-index-20260907]
-    paths: [.github/workflows/assistant-v3-matrix-publication.yml]
+    paths:
+      - .github/workflows/assistant-v3-matrix-publication.yml
+      - scripts/pm-assistant-v3-demo-matrix.py
 permissions:
   contents: write
 jobs:
