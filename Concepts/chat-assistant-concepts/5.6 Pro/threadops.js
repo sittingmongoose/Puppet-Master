@@ -227,6 +227,24 @@
   /*  OPERATIONS                                                            */
   /* ====================================================================== */
 
+  function isInternalNote(m) {
+    if (!m) return false;
+    if (m.internalOnly) return true;
+    if (m.type === 'agent-work' && window.PM56_RECORDS && typeof window.PM56_RECORDS.reference === 'function') {
+      try {
+        var ref = window.PM56_RECORDS.reference(m);
+        if (ref && ref.kind === 'note') return true;
+      } catch (e) {}
+    }
+    return false;
+  }
+  function ordinaryMessages(t) {
+    return ((t && t.messages) || []).filter(function (m) { return !isInternalNote(m); });
+  }
+  function ordinaryCount(t) {
+    return ordinaryMessages(t).length;
+  }
+
   /* --- Duplicate (the corrected `fork-thread`) --------------------------
      A duplicate is NOT a branch: it copies the conversation and carries no
      lineage and no message anchor, which is exactly why it may not be called
@@ -242,6 +260,7 @@
     copy.summary = 'Duplicate of ' + src.title;
     copy.worktree = null;          /* a copy does not inherit a worktree binding */
     copy.lineage = null;           /* stated absence: a duplicate has no lineage */
+    copy.messages = (copy.messages || []).filter(function (m) { return !isInternalNote(m); });
     ctx.state.threads.unshift(copy);
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(copy.id, src.id, 'duplicate');
     ctx.switchThread(copy.id);
@@ -303,7 +322,7 @@
       model: route ? route.effective.name : src.model,
       summary: 'Branched from ' + src.title + ' at turn ' + (at + 1),
       worktree: null,
-      messages: ctx.clone(src.messages.slice(0, at + 1)),
+      messages: ctx.clone(src.messages.slice(0, at + 1)).filter(function (m) { return !isInternalNote(m); }),
       lineage: {
         kind: opts.persona ? 'branch-persona' : (opts.modelId ? 'branch-model' : 'branch'),
         sourceThreadId: src.id,
@@ -342,13 +361,14 @@
     var s = slice(t.id);
     var at = atMessage ? msgIndexIn(t, atMessage.id) : t.messages.length - 1;
     if (at < 0) at = t.messages.length - 1;
+    var ordinaryCovered = t.messages.slice(0, at + 1).filter(function (m) { return !isInternalNote(m); });
     var rp = {
       id: nid('rp'),
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
       atTurn: at + 1,
-      messageCount: at + 1,
+      messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
       deleted: false,
@@ -537,15 +557,16 @@
   var lastExport = null;
   function exportThread(ctx, t) {
     var s = slice(t.id);
+    var exportMsgs = (t.messages || []).filter(function (m) { return !isInternalNote(m); });
     var payload = {
       exportedAt: new Date().toISOString(),
       format: 'pm56-thread-export/1',
       thread: {
         id: t.id, title: t.title, status: t.status, archived: !!t.archived, pinned: !!t.pinned,
         model: t.model, worktree: t.worktree || null, summary: t.summary,
-        lineage: t.lineage || null, messageCount: t.messages.length
+        lineage: t.lineage || null, messageCount: exportMsgs.length
       },
-      messages: t.messages.map(function (m) {
+      messages: exportMsgs.map(function (m) {
         return {
           id: m.id, role: m.role, type: m.type, sentAt: m.sentAt || m.time || null,
           body: m.body || null, title: m.title || null, detail: m.detail || null,
@@ -609,7 +630,7 @@
       }
     }
 
-    var title = t.title, count = t.messages.length;
+    var title = t.title, count = ordinaryCount(t);
     list.splice(idx, 1);
     delete store[t.id];
     ctx.state.dialog = null;
@@ -915,7 +936,7 @@
     }));
     rows.push(menuRow(ctx, {
       label: 'Export thread', icon: 'download', action: 'export-thread', id: t.id,
-      detail: 'Write ' + plural(t.messages.length, 'turn', 'turns') + ', restore points and folded regions to a JSON file.'
+      detail: 'Write ' + plural(ordinaryCount(t), 'turn', 'turns') + ', restore points and folded regions to a JSON file.'
     }));
     rows.push(menuRow(ctx, {
       label: 'Restore points', glyph: null, icon: 'history', action: 'open-restore-points', id: t.id, count: live,
@@ -1088,7 +1109,7 @@
 
     var facts = '<dl class="pm-tops-facts">' +
       '<div><dt>Thread</dt><dd>' + esc(t.title) + '</dd></div>' +
-      '<div><dt>Turns</dt><dd>' + t.messages.length + '</dd></div>' +
+      '<div><dt>Turns</dt><dd>' + ordinaryCount(t) + '</dd></div>' +
       '<div><dt>Status</dt><dd>' + esc(ctx.statusLabel(t.status)) + '</dd></div>' +
       '</dl>';
 
@@ -1333,6 +1354,7 @@
         var t = pool[i];
         for (var j = 0; j < t.messages.length && results.length < 24; j++) {
           var m = t.messages[j];
+          if (isInternalNote(m)) continue;
           var hay = ((m.body || '') + ' ' + (m.title || '') + ' ' + (m.detail || '')).toLowerCase();
           if (hay.indexOf(lq) >= 0) results.push({ thread: t, msg: m, turn: j + 1 });
         }

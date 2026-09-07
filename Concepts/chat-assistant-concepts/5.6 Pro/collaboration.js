@@ -1559,6 +1559,16 @@
       rows: rows, wonderer: wonderer, grillMe: grillMe,
       config: JSON.parse(JSON.stringify(run ? run.config : def))
     };
+    if (kind === 'review') {
+      RTC.draft._lastStrategy = RTC.draft.config.strategy || 'multi_pass';
+      if (RTC.draft._lastStrategy === 'single_agent') {
+        RTC.draft.rows = RTC.draft.rows.slice(0, 1);
+        RTC.draft.config.reviewerCount = 1;
+      } else {
+        RTC.draft._previousMultiRows = RTC.draft.rows.slice();
+        RTC.draft.config.reviewerCount = RTC.draft.rows.length;
+      }
+    }
   }
 
   function draftRowHtml(ctx, row, idx) {
@@ -1588,24 +1598,69 @@
 
   // Choice presentation reuses the main menu/picker host. Only the draft owns values.
   const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
+  function handleReviewStrategyTransition(d, oldStrategy, newStrategy) {
+    if (!d || d.kind !== 'review') return;
+    d.config.strategy = newStrategy;
+    if (newStrategy === 'single_agent') {
+      if (d.rows && d.rows.length > 1) {
+        d._previousMultiRows = d.rows.slice();
+      }
+      if (!d.rows || !d.rows.length) {
+        d.rows = [draftRow('Reviewer', 'sonnet46', 'Reviewer')];
+      } else {
+        d.rows = d.rows.slice(0, 1);
+      }
+      d.config.reviewerCount = 1;
+      d.wonderer = false;
+      d.grillMe = false;
+      d._lastStrategy = 'single_agent';
+    } else if (newStrategy === 'multi_pass') {
+      if (d._previousMultiRows && d._previousMultiRows.length > 1) {
+        d.rows = d._previousMultiRows.slice();
+      } else if (!d.rows || d.rows.length < 1) {
+        d.rows = [];
+        for (var i = 0; i < 3; i++) {
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i] || ('Reviewer ' + (i + 1)), DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length], 'Reviewer'));
+        }
+      }
+      d.config.reviewerCount = d.rows.length;
+      d._lastStrategy = 'multi_pass';
+    }
+  }
+
   function normalizeReview(d){
     if(!d||d.kind!=='review')return;
+    if(!d.config) d.config = {};
+    if(!d.config.strategy) d.config.strategy = 'multi_pass';
+    if(d._lastStrategy && d._lastStrategy !== d.config.strategy){
+      handleReviewStrategyTransition(d, d._lastStrategy, d.config.strategy);
+      return;
+    }
+    d._lastStrategy = d.config.strategy;
+
     if(d.config.strategy==='single_agent'){
+      if(!d.rows || !d.rows.length){
+        d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
+      } else if(d.rows.length>1){
+        d._previousMultiRows=d.rows.slice();
+        d.rows=d.rows.slice(0,1);
+      }
+      d.config.reviewerCount=1;
+      d.wonderer=false;
+      d.grillMe=false;
+    }else if(d.config.strategy==='multi_pass'){
+      if(!d.rows || d.rows.length===0){
+        d.rows=[];
+        for(var i=0;i<3;i++){
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i]||('Reviewer '+(i+1)),DEFAULT_ROW_MODEL[i%DEFAULT_ROW_MODEL.length],'Reviewer'));
+        }
+      } else if(d.rows.length>8){
+        d.rows=d.rows.slice(0,8);
+      }
+      d.config.reviewerCount=d.rows.length;
       if(d.rows.length>1){
         d._previousMultiRows=d.rows.slice();
       }
-      if(!d.rows.length)d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
-      d.rows=d.rows.slice(0,1);d.config.reviewerCount=1;d.wonderer=false;d.grillMe=false;
-    }else if(d.config.strategy==='multi_pass'){
-      if(d._previousMultiRows&&d._previousMultiRows.length>1&&d.rows.length<=1){
-        d.rows=d._previousMultiRows.slice();
-      }else if(d.rows.length<2){
-        while(d.rows.length<3){
-          var idx=d.rows.length;
-          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[idx]||('Reviewer '+(idx+1)),DEFAULT_ROW_MODEL[idx%DEFAULT_ROW_MODEL.length],'Reviewer'));
-        }
-      }
-      d.config.reviewerCount=d.rows.length;
     }
   }
   function configChoice(ctx,d,key,title){
@@ -1615,7 +1670,15 @@
   EXT.action('collab-pick-choice',function(ctx,btn){
     const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
     window.PM56_PICKERS.openChoice(btn,btn.closest('label').childNodes[0].textContent,draft.config[key],CONFIG_CHOICES[key],value=>{
-      if(RTC.draft!==draft)return;draft.config[key]=value;normalizeReview(draft);ctx.renderOverlays();
+      if(RTC.draft!==draft)return;
+      const prev=draft.config[key];
+      draft.config[key]=value;
+      if(draft.kind==='review'&&key==='strategy'){
+        handleReviewStrategyTransition(draft,prev,value);
+      }else{
+        normalizeReview(draft);
+      }
+      ctx.renderOverlays();
     });return true;
   });
   function kindConfigFields(ctx, d) {
@@ -1726,20 +1789,49 @@
   });
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
-    if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[];
+    if(d.kind==='review'){
+      if(d.config.strategy==='single_agent'){
+        d.rows=[draftRow('Reviewer',DEFAULT_ROW_MODEL[0],'Reviewer')];
+        d.config.reviewerCount=1;
+        ctx.renderOverlays();return true;
+      }
+      if(d.rows.length>=8)return true;
+    }
     d.rows.push(draftRow((KIND_LABEL[d.kind] + ' member ' + (d.rows.length + 1)), DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length], d.kind === 'review' ? 'Reviewer' : 'Implementer'));
+    if(d.kind==='review'){
+      d.config.reviewerCount=d.rows.length;
+      d._previousMultiRows=d.rows.slice();
+    }
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-remove-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
+    if(d.kind==='review'&&d.config.strategy==='single_agent')return true;
     if(d.rows.length<=KIND_PARTICIPANT_LIMIT[d.kind][0])return true;
     d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
+    if(d.kind==='review'){
+      d.config.reviewerCount=d.rows.length;
+      if(d.rows.length>1)d._previousMultiRows=d.rows.slice();
+    }
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-duplicate-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
     var src = d.rows.filter(function (r) { return r.rowId === btn.dataset.row; })[0];
-    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[copy];else d.rows.push(copy); }
+    if (src) {
+      var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none');
+      if(d.kind==='review'&&d.config.strategy==='single_agent'){
+        d.rows=[copy];
+        d.config.reviewerCount=1;
+      } else {
+        if(d.kind==='review'&&d.rows.length>=8)return true;
+        d.rows.push(copy);
+        if(d.kind==='review'){
+          d.config.reviewerCount=d.rows.length;
+          d._previousMultiRows=d.rows.slice();
+        }
+      }
+    }
     ctx.renderOverlays(); return true;
   });
 
@@ -2314,6 +2406,7 @@
        porting it, so the state word is normalised and published here. */
     runStatusVocabulary: function(){
       return ['configuring','running','paused','blocked','completed','canceled','failed'];
-    }
+    },
+    normalizeReview: normalizeReview
   };
 })();
