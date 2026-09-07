@@ -1,0 +1,53 @@
+{
+  "failures": [
+    {
+      "actual_stable_sha256": "1f1d2548e1213564f80ceee3839b8976d8caaf93bff32c206737f89467019296",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "73d6e7c076a0f12faa7ed4b3fea86bf9f23018c6ceb11db76446cc82deb9668e",
+      "path": "Plans/.plan_index/plan_units.jsonl"
+    },
+    {
+      "actual_stable_sha256": "4a2116422080bbb3a2e6f94566bd051efe697294f80340adda0e3d7ad70bea18",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "93204105fc88084c72967b87d0aac31f01c9895b300d3d73b379710f3795569f",
+      "path": "Plans/.plan_index/doc_cards.json"
+    },
+    {
+      "actual_stable_sha256": "a1764537ed2f5a1a49321cdfec2516c06ddd1695d0481362ceaf2bd87f101f7c",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "70bd6bb21d2a52c1c303172b7b0d726dda722be6200c14b8ec6fecf746940e60",
+      "path": "Plans/.plan_index/dependencies.json"
+    },
+    {
+      "actual_stable_sha256": "c048350286e8e0d4486be4a89b9bf419990a24be599ef25c24e3f4b544bacc0b",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "100f78a3d6cf07e4d8911fab8a2967ef771e12feb407ea2f74a2275069326c50",
+      "path": "Plans/.plan_index/acceptance_units.jsonl"
+    },
+    {
+      "actual_stable_sha256": "96617a8e330d908a4b6608d1b0946ecf90f9239d6ab1a0a9ef6f2c6f819275f9",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "87e12f85056ebffcb1d6bd4477c44069a8d0cb68e006b7f31f334e0e88272195",
+      "path": "Plans/.plan_index/coverage_report.json"
+    },
+    {
+      "actual_stable_sha256": "fa0c6dff3ddd3207b2ee7aa3fa78b14939d73b33968c2738d2cae0931bbe318e",
+      "error": "stale_generated_index_artifact",
+      "expected_stable_sha256": "309ecfd42e59dc30dc104a6928033a1336e381365f4dce88433538a796674577",
+      "path": "Plans/.plan_index/node_readiness_report.json"
+    },
+    {
+      "error": "plan_unit_ids_do_not_match_live_plans",
+      "path": "Plans/.plan_index/plan_units.jsonl"
+    }
+  ],
+  "generated_at_utc": "2026-09-07T15:39:51Z",
+  "schema_id": "pm.plan_index.validation_report.v1",
+  "status": "fail",
+  "summary": {
+    "acceptance_unit_count": 24128,
+    "coverage_status": "pass",
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "plan_unit_count": 6362
+  }
+}
