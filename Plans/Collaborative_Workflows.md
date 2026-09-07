@@ -1302,12 +1302,15 @@ APR-021, APR-022, APR-029, APR-030, APR-051, APR-052, APR-053, APR-054, and APR-
 
 - **One-Agent Roster Invariant:** When the user selects the "Single Agent" strategy in the Review
   configuration modal, the draft reviewer roster immediately and reactively collapses to exactly one
-  reviewer.
+  reviewer. Single Agent Review strategy enforces exactly one reviewer at initial draft, during row
+  edits, confirmation, serialization, and runtime admission.
 - **State Preservation on Toggle:** If the user toggles back from Single Agent to Multi-Pass Review,
   the previous multi-reviewer roster configuration is restored intact without requiring re-entry of
-  reviewer parameters.
-- **Single-Pass Rendering:** A single-reviewer execution renders as a single-pass result and omits
-  consensus or agreement sections in transcript cards and Activity Detail.
+  reviewer parameters and without resurrecting deleted rows.
+- **Pass Semantics Independent of Reviewer Count:** Multi-Pass Review (§7.4) preserves multi-pass
+  semantics across 1 to 8 reviewers, independent of reviewer count. Single Agent Review strategy
+  execution renders as a single-reviewer result omitting consensus or agreement sections in transcript
+  cards and Activity Detail.
 
 ### 11. Mode Entry Completeness and Read-Only Demographics (APR-021, APR-022, APR-067)
 
@@ -1418,16 +1421,18 @@ owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   Selecting the Single Agent strategy in the Review configuration modal immediately and reactively
   reduces the active draft reviewer roster to exactly one reviewer. Switching back to Multi-Pass restores
-  the prior multi-reviewer roster without loss of choices. A single-reviewer execution renders as a
-  single-pass result omitting consensus sections.
+  the prior multi-reviewer roster without loss of choices and without resurrecting deleted rows. Single
+  Agent Review strategy execution renders as a single-reviewer result omitting consensus sections,
+  whereas Multi-Pass Review preserves multi-pass semantics across 1 to 8 reviewers independent of reviewer count.
 gui_related: true
 gui_classification_reason: Governs the reactive reviewer roster count and single-pass rendering invariant in Review configuration.
 depends_on: [CWR-015]
 unblocks: []
 acceptance_criteria:
   - Single Agent Review immediately sets active draft reviewer roster to exactly 1.
-  - Toggling back to Multi-Pass restores the multi-reviewer roster.
-  - Single-pass review output omits agreement and consensus sections.
+  - Toggling back to Multi-Pass restores the multi-reviewer roster without resurrecting deleted rows.
+  - Multi-Pass Review supports 1 to 8 reviewers with multi-pass semantics independent of count.
+  - Single Agent Review execution renders as a single-reviewer result omitting agreement and consensus sections.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: review_roster_count_inconsistency

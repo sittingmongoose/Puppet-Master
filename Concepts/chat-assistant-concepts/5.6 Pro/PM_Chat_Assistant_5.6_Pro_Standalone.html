@@ -23483,6 +23483,24 @@ window.PM56_EXT = window.PM56_EXT || {
   /*  OPERATIONS                                                            */
   /* ====================================================================== */
 
+  function isInternalNote(m) {
+    if (!m) return false;
+    if (m.internalOnly) return true;
+    if (m.type === 'agent-work' && window.PM56_RECORDS && typeof window.PM56_RECORDS.reference === 'function') {
+      try {
+        var ref = window.PM56_RECORDS.reference(m);
+        if (ref && ref.kind === 'note') return true;
+      } catch (e) {}
+    }
+    return false;
+  }
+  function ordinaryMessages(t) {
+    return ((t && t.messages) || []).filter(function (m) { return !isInternalNote(m); });
+  }
+  function ordinaryCount(t) {
+    return ordinaryMessages(t).length;
+  }
+
   /* --- Duplicate (the corrected `fork-thread`) --------------------------
      A duplicate is NOT a branch: it copies the conversation and carries no
      lineage and no message anchor, which is exactly why it may not be called
@@ -23498,6 +23516,7 @@ window.PM56_EXT = window.PM56_EXT || {
     copy.summary = 'Duplicate of ' + src.title;
     copy.worktree = null;          /* a copy does not inherit a worktree binding */
     copy.lineage = null;           /* stated absence: a duplicate has no lineage */
+    copy.messages = (copy.messages || []).filter(function (m) { return !isInternalNote(m); });
     ctx.state.threads.unshift(copy);
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(copy.id, src.id, 'duplicate');
     ctx.switchThread(copy.id);
@@ -23559,7 +23578,7 @@ window.PM56_EXT = window.PM56_EXT || {
       model: route ? route.effective.name : src.model,
       summary: 'Branched from ' + src.title + ' at turn ' + (at + 1),
       worktree: null,
-      messages: ctx.clone(src.messages.slice(0, at + 1)),
+      messages: ctx.clone(src.messages.slice(0, at + 1)).filter(function (m) { return !isInternalNote(m); }),
       lineage: {
         kind: opts.persona ? 'branch-persona' : (opts.modelId ? 'branch-model' : 'branch'),
         sourceThreadId: src.id,
@@ -23598,13 +23617,14 @@ window.PM56_EXT = window.PM56_EXT || {
     var s = slice(t.id);
     var at = atMessage ? msgIndexIn(t, atMessage.id) : t.messages.length - 1;
     if (at < 0) at = t.messages.length - 1;
+    var ordinaryCovered = t.messages.slice(0, at + 1).filter(function (m) { return !isInternalNote(m); });
     var rp = {
       id: nid('rp'),
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
       atTurn: at + 1,
-      messageCount: at + 1,
+      messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
       deleted: false,
@@ -23793,15 +23813,16 @@ window.PM56_EXT = window.PM56_EXT || {
   var lastExport = null;
   function exportThread(ctx, t) {
     var s = slice(t.id);
+    var exportMsgs = (t.messages || []).filter(function (m) { return !isInternalNote(m); });
     var payload = {
       exportedAt: new Date().toISOString(),
       format: 'pm56-thread-export/1',
       thread: {
         id: t.id, title: t.title, status: t.status, archived: !!t.archived, pinned: !!t.pinned,
         model: t.model, worktree: t.worktree || null, summary: t.summary,
-        lineage: t.lineage || null, messageCount: t.messages.length
+        lineage: t.lineage || null, messageCount: exportMsgs.length
       },
-      messages: t.messages.map(function (m) {
+      messages: exportMsgs.map(function (m) {
         return {
           id: m.id, role: m.role, type: m.type, sentAt: m.sentAt || m.time || null,
           body: m.body || null, title: m.title || null, detail: m.detail || null,
@@ -23865,7 +23886,7 @@ window.PM56_EXT = window.PM56_EXT || {
       }
     }
 
-    var title = t.title, count = t.messages.length;
+    var title = t.title, count = ordinaryCount(t);
     list.splice(idx, 1);
     delete store[t.id];
     ctx.state.dialog = null;
@@ -24171,7 +24192,7 @@ window.PM56_EXT = window.PM56_EXT || {
     }));
     rows.push(menuRow(ctx, {
       label: 'Export thread', icon: 'download', action: 'export-thread', id: t.id,
-      detail: 'Write ' + plural(t.messages.length, 'turn', 'turns') + ', restore points and folded regions to a JSON file.'
+      detail: 'Write ' + plural(ordinaryCount(t), 'turn', 'turns') + ', restore points and folded regions to a JSON file.'
     }));
     rows.push(menuRow(ctx, {
       label: 'Restore points', glyph: null, icon: 'history', action: 'open-restore-points', id: t.id, count: live,
@@ -24344,7 +24365,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
     var facts = '<dl class="pm-tops-facts">' +
       '<div><dt>Thread</dt><dd>' + esc(t.title) + '</dd></div>' +
-      '<div><dt>Turns</dt><dd>' + t.messages.length + '</dd></div>' +
+      '<div><dt>Turns</dt><dd>' + ordinaryCount(t) + '</dd></div>' +
       '<div><dt>Status</dt><dd>' + esc(ctx.statusLabel(t.status)) + '</dd></div>' +
       '</dl>';
 
@@ -24589,6 +24610,7 @@ window.PM56_EXT = window.PM56_EXT || {
         var t = pool[i];
         for (var j = 0; j < t.messages.length && results.length < 24; j++) {
           var m = t.messages[j];
+          if (isInternalNote(m)) continue;
           var hay = ((m.body || '') + ' ' + (m.title || '') + ' ' + (m.detail || '')).toLowerCase();
           if (hay.indexOf(lq) >= 0) results.push({ thread: t, msg: m, turn: j + 1 });
         }
@@ -34275,6 +34297,16 @@ window.PM56_EXT = window.PM56_EXT || {
       rows: rows, wonderer: wonderer, grillMe: grillMe,
       config: JSON.parse(JSON.stringify(run ? run.config : def))
     };
+    if (kind === 'review') {
+      RTC.draft._lastStrategy = RTC.draft.config.strategy || 'multi_pass';
+      if (RTC.draft._lastStrategy === 'single_agent') {
+        RTC.draft.rows = RTC.draft.rows.slice(0, 1);
+        RTC.draft.config.reviewerCount = 1;
+      } else {
+        RTC.draft._previousMultiRows = RTC.draft.rows.slice();
+        RTC.draft.config.reviewerCount = RTC.draft.rows.length;
+      }
+    }
   }
 
   function draftRowHtml(ctx, row, idx) {
@@ -34304,24 +34336,69 @@ window.PM56_EXT = window.PM56_EXT || {
 
   // Choice presentation reuses the main menu/picker host. Only the draft owns values.
   const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
+  function handleReviewStrategyTransition(d, oldStrategy, newStrategy) {
+    if (!d || d.kind !== 'review') return;
+    d.config.strategy = newStrategy;
+    if (newStrategy === 'single_agent') {
+      if (d.rows && d.rows.length > 1) {
+        d._previousMultiRows = d.rows.slice();
+      }
+      if (!d.rows || !d.rows.length) {
+        d.rows = [draftRow('Reviewer', 'sonnet46', 'Reviewer')];
+      } else {
+        d.rows = d.rows.slice(0, 1);
+      }
+      d.config.reviewerCount = 1;
+      d.wonderer = false;
+      d.grillMe = false;
+      d._lastStrategy = 'single_agent';
+    } else if (newStrategy === 'multi_pass') {
+      if (d._previousMultiRows && d._previousMultiRows.length > 1) {
+        d.rows = d._previousMultiRows.slice();
+      } else if (!d.rows || d.rows.length < 1) {
+        d.rows = [];
+        for (var i = 0; i < 3; i++) {
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i] || ('Reviewer ' + (i + 1)), DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length], 'Reviewer'));
+        }
+      }
+      d.config.reviewerCount = d.rows.length;
+      d._lastStrategy = 'multi_pass';
+    }
+  }
+
   function normalizeReview(d){
     if(!d||d.kind!=='review')return;
+    if(!d.config) d.config = {};
+    if(!d.config.strategy) d.config.strategy = 'multi_pass';
+    if(d._lastStrategy && d._lastStrategy !== d.config.strategy){
+      handleReviewStrategyTransition(d, d._lastStrategy, d.config.strategy);
+      return;
+    }
+    d._lastStrategy = d.config.strategy;
+
     if(d.config.strategy==='single_agent'){
+      if(!d.rows || !d.rows.length){
+        d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
+      } else if(d.rows.length>1){
+        d._previousMultiRows=d.rows.slice();
+        d.rows=d.rows.slice(0,1);
+      }
+      d.config.reviewerCount=1;
+      d.wonderer=false;
+      d.grillMe=false;
+    }else if(d.config.strategy==='multi_pass'){
+      if(!d.rows || d.rows.length===0){
+        d.rows=[];
+        for(var i=0;i<3;i++){
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i]||('Reviewer '+(i+1)),DEFAULT_ROW_MODEL[i%DEFAULT_ROW_MODEL.length],'Reviewer'));
+        }
+      } else if(d.rows.length>8){
+        d.rows=d.rows.slice(0,8);
+      }
+      d.config.reviewerCount=d.rows.length;
       if(d.rows.length>1){
         d._previousMultiRows=d.rows.slice();
       }
-      if(!d.rows.length)d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
-      d.rows=d.rows.slice(0,1);d.config.reviewerCount=1;d.wonderer=false;d.grillMe=false;
-    }else if(d.config.strategy==='multi_pass'){
-      if(d._previousMultiRows&&d._previousMultiRows.length>1&&d.rows.length<=1){
-        d.rows=d._previousMultiRows.slice();
-      }else if(d.rows.length<2){
-        while(d.rows.length<3){
-          var idx=d.rows.length;
-          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[idx]||('Reviewer '+(idx+1)),DEFAULT_ROW_MODEL[idx%DEFAULT_ROW_MODEL.length],'Reviewer'));
-        }
-      }
-      d.config.reviewerCount=d.rows.length;
     }
   }
   function configChoice(ctx,d,key,title){
@@ -34331,7 +34408,15 @@ window.PM56_EXT = window.PM56_EXT || {
   EXT.action('collab-pick-choice',function(ctx,btn){
     const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
     window.PM56_PICKERS.openChoice(btn,btn.closest('label').childNodes[0].textContent,draft.config[key],CONFIG_CHOICES[key],value=>{
-      if(RTC.draft!==draft)return;draft.config[key]=value;normalizeReview(draft);ctx.renderOverlays();
+      if(RTC.draft!==draft)return;
+      const prev=draft.config[key];
+      draft.config[key]=value;
+      if(draft.kind==='review'&&key==='strategy'){
+        handleReviewStrategyTransition(draft,prev,value);
+      }else{
+        normalizeReview(draft);
+      }
+      ctx.renderOverlays();
     });return true;
   });
   function kindConfigFields(ctx, d) {
@@ -34442,20 +34527,49 @@ window.PM56_EXT = window.PM56_EXT || {
   });
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
-    if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[];
+    if(d.kind==='review'){
+      if(d.config.strategy==='single_agent'){
+        d.rows=[draftRow('Reviewer',DEFAULT_ROW_MODEL[0],'Reviewer')];
+        d.config.reviewerCount=1;
+        ctx.renderOverlays();return true;
+      }
+      if(d.rows.length>=8)return true;
+    }
     d.rows.push(draftRow((KIND_LABEL[d.kind] + ' member ' + (d.rows.length + 1)), DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length], d.kind === 'review' ? 'Reviewer' : 'Implementer'));
+    if(d.kind==='review'){
+      d.config.reviewerCount=d.rows.length;
+      d._previousMultiRows=d.rows.slice();
+    }
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-remove-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
+    if(d.kind==='review'&&d.config.strategy==='single_agent')return true;
     if(d.rows.length<=KIND_PARTICIPANT_LIMIT[d.kind][0])return true;
     d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
+    if(d.kind==='review'){
+      d.config.reviewerCount=d.rows.length;
+      if(d.rows.length>1)d._previousMultiRows=d.rows.slice();
+    }
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-duplicate-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
     var src = d.rows.filter(function (r) { return r.rowId === btn.dataset.row; })[0];
-    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[copy];else d.rows.push(copy); }
+    if (src) {
+      var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none');
+      if(d.kind==='review'&&d.config.strategy==='single_agent'){
+        d.rows=[copy];
+        d.config.reviewerCount=1;
+      } else {
+        if(d.kind==='review'&&d.rows.length>=8)return true;
+        d.rows.push(copy);
+        if(d.kind==='review'){
+          d.config.reviewerCount=d.rows.length;
+          d._previousMultiRows=d.rows.slice();
+        }
+      }
+    }
     ctx.renderOverlays(); return true;
   });
 
@@ -35030,7 +35144,8 @@ window.PM56_EXT = window.PM56_EXT || {
        porting it, so the state word is normalised and published here. */
     runStatusVocabulary: function(){
       return ['configuring','running','paused','blocked','completed','canceled','failed'];
-    }
+    },
+    normalizeReview: normalizeReview
   };
 })();
 
@@ -41035,7 +41150,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderHistoryContent(flyout=false){
     const q=state.historySearch.trim().toLowerCase();
-    const filtered=state.threads.filter(t=>!q || `${t.title} ${t.summary} ${t.messages.map(m=>m.body||m.title||m.detail||'').join(' ')}`.toLowerCase().includes(q));
+    const filtered=state.threads.filter(t=>!q || `${t.title} ${t.summary} ${t.messages.filter(m=>!isInternalNote(m)).map(m=>m.body||m.title||m.detail||'').join(' ')}`.toLowerCase().includes(q));
     const groups=[
       ['pinned','Pinned',filtered.filter(t=>!t.archived&&t.pinned)],
       ['recent','Recent',filtered.filter(t=>!t.archived&&!t.pinned)],
@@ -41101,8 +41216,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      run to complete, and a working card with a `workId` waits for its record
      to exist (the sequencer creates the record when the burst actually
      starts, so the card appears the moment its work begins). */
+  function isInternalNote(m){
+    if(!m)return false;
+    if(m.internalOnly)return true;
+    if(m.type==='agent-work'&&window.PM56_RECORDS?.reference(m)?.kind==='note')return true;
+    return false;
+  }
   function messageVisible(m){
-    if(m.internalOnly || (m.type==='agent-work'&&window.PM56_RECORDS?.reference(m).kind==='note'))return false;
+    if(isInternalNote(m))return false;
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
@@ -43099,7 +43220,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderThreadSearchMenu(){
-    const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
+    const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>!isInternalNote(m)&&`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
     return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>${esc(r.thread.title)}</strong><span>${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:11px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>Search current thread</strong><span>Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong>Browse archived threads</strong><span>Archived threads remain searchable and restorable</span></span></button>`}`);
   }
   function renderSubmenu(id){
@@ -43655,7 +43776,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='restore-thread'){mutateThread(btn.dataset.id,t=>{t.archived=false;t.updated='now'});state.menu=null;return;}
     if(a==='rename-thread'){const t=state.threads.find(x=>x.id===btn.dataset.id);state.dialog={type:'rename',threadId:t.id,value:t.title};state.menu=null;renderOverlays();return;}
     if(a==='save-thread-name'){const t=state.threads.find(x=>x.id===state.dialog.threadId);if(t)t.title=state.dialog.value.trim()||t.title;state.dialog=null;renderApp();return;}
-    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id,src.id,'fork');state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
+    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');const cloned=clone(src);cloned.messages=(cloned.messages||[]).filter(m=>!isInternalNote(m));state.threads.unshift({...cloned,id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id,src.id,'fork');state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
     if(a==='select-editor'){if(e.target.closest('[data-action="close-editor"]'))return;state.activeEditor=btn.dataset.id;renderApp();return;}
     if(a==='close-editor'){e.stopPropagation();closeEditor(btn.dataset.id);return;}
     if(a==='open-artifact'){decisionExit=null;state.decision=null;openEditor(btn.dataset.id);return;}

@@ -652,7 +652,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderHistoryContent(flyout=false){
     const q=state.historySearch.trim().toLowerCase();
-    const filtered=state.threads.filter(t=>!q || `${t.title} ${t.summary} ${t.messages.map(m=>m.body||m.title||m.detail||'').join(' ')}`.toLowerCase().includes(q));
+    const filtered=state.threads.filter(t=>!q || `${t.title} ${t.summary} ${t.messages.filter(m=>!isInternalNote(m)).map(m=>m.body||m.title||m.detail||'').join(' ')}`.toLowerCase().includes(q));
     const groups=[
       ['pinned','Pinned',filtered.filter(t=>!t.archived&&t.pinned)],
       ['recent','Recent',filtered.filter(t=>!t.archived&&!t.pinned)],
@@ -718,8 +718,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      run to complete, and a working card with a `workId` waits for its record
      to exist (the sequencer creates the record when the burst actually
      starts, so the card appears the moment its work begins). */
+  function isInternalNote(m){
+    if(!m)return false;
+    if(m.internalOnly)return true;
+    if(m.type==='agent-work'&&window.PM56_RECORDS?.reference(m)?.kind==='note')return true;
+    return false;
+  }
   function messageVisible(m){
-    if(m.internalOnly || (m.type==='agent-work'&&window.PM56_RECORDS?.reference(m).kind==='note'))return false;
+    if(isInternalNote(m))return false;
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
@@ -2716,7 +2722,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderThreadSearchMenu(){
-    const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
+    const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>!isInternalNote(m)&&`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
     return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>${esc(r.thread.title)}</strong><span>${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:11px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>Search current thread</strong><span>Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong>Browse archived threads</strong><span>Archived threads remain searchable and restorable</span></span></button>`}`);
   }
   function renderSubmenu(id){
@@ -3271,7 +3277,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='restore-thread'){mutateThread(btn.dataset.id,t=>{t.archived=false;t.updated='now'});state.menu=null;return;}
     if(a==='rename-thread'){const t=state.threads.find(x=>x.id===btn.dataset.id);state.dialog={type:'rename',threadId:t.id,value:t.title};state.menu=null;renderOverlays();return;}
     if(a==='save-thread-name'){const t=state.threads.find(x=>x.id===state.dialog.threadId);if(t)t.title=state.dialog.value.trim()||t.title;state.dialog=null;renderApp();return;}
-    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');state.threads.unshift({...clone(src),id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id,src.id,'fork');state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
+    if(a==='fork-thread'){const src=state.threads.find(x=>x.id===btn.dataset.id);const id=uid('fork');const cloned=clone(src);cloned.messages=(cloned.messages||[]).filter(m=>!isInternalNote(m));state.threads.unshift({...cloned,id,title:`${src.title} · Fork`,pinned:false,archived:false,updated:'now',summary:`Forked from ${src.title}`});if(window.PM56_CTX&&window.PM56_CTX.seedThread)window.PM56_CTX.seedThread(id,src.id,'fork');state.menu=null;switchThread(id);toast('Thread forked',`Created a child branch from ${src.title}.`);return;}
     if(a==='select-editor'){if(e.target.closest('[data-action="close-editor"]'))return;state.activeEditor=btn.dataset.id;renderApp();return;}
     if(a==='close-editor'){e.stopPropagation();closeEditor(btn.dataset.id);return;}
     if(a==='open-artifact'){decisionExit=null;state.decision=null;openEditor(btn.dataset.id);return;}

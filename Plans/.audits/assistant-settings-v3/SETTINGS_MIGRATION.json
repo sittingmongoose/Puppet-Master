@@ -4,26 +4,472 @@
   "description": "Settings migration, reconciliation, and manager enumeration registry for cumulative Assistant/Settings v3 packet",
   "manager_scope_enumeration": {
     "canonical_specification_managers_count": 38,
-    "canonical_specification_authority": "Plans/Settings_System.md#SSYS-032",
+    "canonical_specification_authority": "Plans/settings_system_contract_fixtures.json#manager_registry and Plans/Settings_System.md#\u00a722",
     "canonical_managers_list": [
-      "general", "appearance", "interaction", "ai_providers", "models",
-      "personas", "prompts", "rag", "evals", "back_seat_driver",
-      "branching", "crew", "chat_room", "brainstorm", "review",
-      "planning", "planning_wizard", "plan_runtime", "goals", "todos",
-      "workspaces", "editors", "git_integration", "terminals", "file_tree",
-      "search", "keybindings", "snippets", "command_palette", "extensions",
-      "telemetry", "privacy", "security", "approvals", "scheduling",
-      "usage_budgets", "storage", "diagnostics"
+      "all-settings",
+      "general-appearance-input",
+      "providers-accounts-models",
+      "web-routes",
+      "media-routes",
+      "back-seat-driver",
+      "memory-context-instructions",
+      "goals-crew-personas",
+      "permissions-filesafe",
+      "commands-shortcuts",
+      "tools-integrations",
+      "testing-debug-capture",
+      "files-editor-terminal",
+      "notifications-sounds",
+      "source-control",
+      "browser-policy",
+      "containers-registries",
+      "storage-retention-recovery",
+      "project-history-artifacts",
+      "settings-transfer",
+      "settings-export-migration",
+      "server-claim-bootstrap",
+      "servers-hosts-environments",
+      "clients-continuity",
+      "project-hosting-files",
+      "project-sync-move-copy",
+      "ssh-remote",
+      "remote-access",
+      "server-backup-restore",
+      "project-backup",
+      "updates",
+      "project-defaults-templates",
+      "onboarding-guided-tour",
+      "doctor",
+      "usage-budgets",
+      "teacher-help",
+      "project-search-index",
+      "dry-method"
     ],
     "standalone_testpm_workspace_tabs_count": 21,
-    "standalone_testpm_authority": "Concepts/pm7-tools/build_testpm_assistant_settings.py (manager-inventory.json)",
+    "standalone_testpm_authority": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/manager-inventory.json and Concepts/pm7-tools/build_testpm_assistant_settings.py",
     "standalone_testpm_tabs_list": [
-      "general", "appearance", "ai_providers", "models", "personas",
-      "rag", "evals", "back_seat_driver", "branching", "planning",
-      "goals", "todos", "workspaces", "git_integration", "terminals",
-      "search", "keybindings", "security", "scheduling", "usage_budgets", "diagnostics"
+      "notifications",
+      "providers",
+      "web",
+      "media",
+      "bsd",
+      "toolchain",
+      "testing",
+      "context-memory",
+      "goals",
+      "personas",
+      "owners",
+      "source-manager",
+      "browser-scm",
+      "project-sync",
+      "project-history",
+      "permissions",
+      "settings-transfer",
+      "backup",
+      "doctor",
+      "servers",
+      "updates"
     ],
-    "distinction_note": "The canonical Plans specification defines 38 granular functional manager descriptors. The standalone TestPM concept collapses nested functional categories into 21 top-level sidebar navigation tabs for HTML preview ergonomics while preserving the complete 38-manager configuration scope across subpanels and projections."
+    "canonical_to_workspace_mapping": [
+      {
+        "canonical_manager_id": "all-settings",
+        "workspace_id": "settings-transfer",
+        "subpanel": "search_all",
+        "controls": [
+          "global_search",
+          "facet_filters"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "general-appearance-input",
+        "workspace_id": "context-memory",
+        "subpanel": "appearance_input",
+        "controls": [
+          "theme_picker",
+          "input_font",
+          "spellcheck"
+        ],
+        "evidence_path": "Plans/FinalGUISpec.md#\u00a717"
+      },
+      {
+        "canonical_manager_id": "providers-accounts-models",
+        "workspace_id": "providers",
+        "subpanel": "routes_accounts",
+        "controls": [
+          "provider_list",
+          "account_auth",
+          "model_catalog"
+        ],
+        "evidence_path": "Plans/Models_System.md#\u00a712"
+      },
+      {
+        "canonical_manager_id": "web-routes",
+        "workspace_id": "web",
+        "subpanel": "search_routes",
+        "controls": [
+          "web_provider",
+          "search_quota",
+          "privacy_toggle"
+        ],
+        "evidence_path": "Plans/Tools.md#\u00a78"
+      },
+      {
+        "canonical_manager_id": "media-routes",
+        "workspace_id": "media",
+        "subpanel": "output_routes",
+        "controls": [
+          "tts_voice",
+          "image_provider",
+          "video_route"
+        ],
+        "evidence_path": "Plans/Models_System.md#\u00a714"
+      },
+      {
+        "canonical_manager_id": "back-seat-driver",
+        "workspace_id": "bsd",
+        "subpanel": "adviser_policy",
+        "controls": [
+          "mode_selector",
+          "sensitivity",
+          "persona",
+          "compaction_threshold",
+          "catch_up_seconds",
+          "stage_bindings"
+        ],
+        "evidence_path": "Plans/Back_Seat_Driver.md#\u00a716"
+      },
+      {
+        "canonical_manager_id": "memory-context-instructions",
+        "workspace_id": "context-memory",
+        "subpanel": "working_memory",
+        "controls": [
+          "token_budget",
+          "memory_persistence",
+          "custom_instructions"
+        ],
+        "evidence_path": "Plans/assistant-chat-design.md#ACD-440"
+      },
+      {
+        "canonical_manager_id": "goals-crew-personas",
+        "workspace_id": "goals",
+        "subpanel": "crews_personas",
+        "controls": [
+          "crew_auto_toggle",
+          "persona_catalog",
+          "goal_policies"
+        ],
+        "evidence_path": "Plans/Collaborative_Workflows.md#\u00a78"
+      },
+      {
+        "canonical_manager_id": "permissions-filesafe",
+        "workspace_id": "permissions",
+        "subpanel": "filesafe_policy",
+        "controls": [
+          "boundary_list",
+          "mutation_approval",
+          "secret_masking"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a715"
+      },
+      {
+        "canonical_manager_id": "commands-shortcuts",
+        "workspace_id": "toolchain",
+        "subpanel": "shortcuts",
+        "controls": [
+          "keybindings_editor",
+          "palette_config"
+        ],
+        "evidence_path": "Plans/Commands_System.md#\u00a716"
+      },
+      {
+        "canonical_manager_id": "tools-integrations",
+        "workspace_id": "toolchain",
+        "subpanel": "mcp_integrations",
+        "controls": [
+          "mcp_servers",
+          "tool_profile"
+        ],
+        "evidence_path": "Plans/Tools.md#\u00a710"
+      },
+      {
+        "canonical_manager_id": "testing-debug-capture",
+        "workspace_id": "testing",
+        "subpanel": "capture_replay",
+        "controls": [
+          "test_harness",
+          "session_capture",
+          "dry_run"
+        ],
+        "evidence_path": "Plans/Test_Capture_and_Motion_Evidence.md#\u00a74"
+      },
+      {
+        "canonical_manager_id": "files-editor-terminal",
+        "workspace_id": "toolchain",
+        "subpanel": "editor_terminal",
+        "controls": [
+          "editor_font",
+          "tab_size",
+          "terminal_shell"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "notifications-sounds",
+        "workspace_id": "notifications",
+        "subpanel": "audio_alerts",
+        "controls": [
+          "sound_enablement",
+          "toast_duration"
+        ],
+        "evidence_path": "Plans/FinalGUISpec.md#\u00a721"
+      },
+      {
+        "canonical_manager_id": "source-control",
+        "workspace_id": "source-manager",
+        "subpanel": "git_workflow",
+        "controls": [
+          "branch_protection",
+          "auto_fetch",
+          "worktree_policy"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "browser-policy",
+        "workspace_id": "browser-scm",
+        "subpanel": "browser_sandbox",
+        "controls": [
+          "isolation_mode",
+          "automation_guard"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "containers-registries",
+        "workspace_id": "servers",
+        "subpanel": "docker_containers",
+        "controls": [
+          "registry_auth",
+          "container_runtime"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "storage-retention-recovery",
+        "workspace_id": "backup",
+        "subpanel": "retention_policies",
+        "controls": [
+          "retention_days",
+          "compaction_point",
+          "checkpoint_quota"
+        ],
+        "evidence_path": "Plans/storage-plan.md#\u00a712"
+      },
+      {
+        "canonical_manager_id": "project-history-artifacts",
+        "workspace_id": "project-history",
+        "subpanel": "artifact_lifecycle",
+        "controls": [
+          "version_retention",
+          "diff_view_defaults"
+        ],
+        "evidence_path": "Plans/Runtime_Artifacts_Panel.md#\u00a77"
+      },
+      {
+        "canonical_manager_id": "settings-transfer",
+        "workspace_id": "settings-transfer",
+        "subpanel": "import_export",
+        "controls": [
+          "export_bundle",
+          "import_bundle",
+          "diff_preview"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a714"
+      },
+      {
+        "canonical_manager_id": "settings-export-migration",
+        "workspace_id": "settings-transfer",
+        "subpanel": "schema_migration",
+        "controls": [
+          "migration_strategy",
+          "rollback_snapshot"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a718"
+      },
+      {
+        "canonical_manager_id": "server-claim-bootstrap",
+        "workspace_id": "servers",
+        "subpanel": "node_claim",
+        "controls": [
+          "claim_token",
+          "bootstrap_status"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "servers-hosts-environments",
+        "workspace_id": "servers",
+        "subpanel": "hosts_overview",
+        "controls": [
+          "host_list",
+          "environment_vars",
+          "health_check"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "clients-continuity",
+        "workspace_id": "servers",
+        "subpanel": "session_continuity",
+        "controls": [
+          "device_sync",
+          "continuity_lease"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "project-hosting-files",
+        "workspace_id": "project-sync",
+        "subpanel": "remote_storage",
+        "controls": [
+          "sync_target",
+          "bandwidth_cap"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "project-sync-move-copy",
+        "workspace_id": "project-sync",
+        "subpanel": "worktree_sync",
+        "controls": [
+          "sync_mode",
+          "conflict_policy"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "ssh-remote",
+        "workspace_id": "servers",
+        "subpanel": "ssh_keys",
+        "controls": [
+          "key_agent",
+          "port_forwarding"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "remote-access",
+        "workspace_id": "servers",
+        "subpanel": "tunneling",
+        "controls": [
+          "tunnel_auth",
+          "relay_protocol"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "server-backup-restore",
+        "workspace_id": "backup",
+        "subpanel": "server_snapshots",
+        "controls": [
+          "backup_schedule",
+          "restore_point_list"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "project-backup",
+        "workspace_id": "backup",
+        "subpanel": "project_snapshots",
+        "controls": [
+          "archive_format",
+          "snapshot_trigger"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "updates",
+        "workspace_id": "updates",
+        "subpanel": "channel_management",
+        "controls": [
+          "update_channel",
+          "auto_download"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "project-defaults-templates",
+        "workspace_id": "project-history",
+        "subpanel": "templates",
+        "controls": [
+          "default_template",
+          "preset_list"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "onboarding-guided-tour",
+        "workspace_id": "doctor",
+        "subpanel": "guided_tour",
+        "controls": [
+          "replay_tour",
+          "skip_intro"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "doctor",
+        "workspace_id": "doctor",
+        "subpanel": "diagnostics",
+        "controls": [
+          "system_check",
+          "remediation_actions"
+        ],
+        "evidence_path": "Plans/Settings_System.md#\u00a722"
+      },
+      {
+        "canonical_manager_id": "usage-budgets",
+        "workspace_id": "providers",
+        "subpanel": "cost_budgets",
+        "controls": [
+          "spend_limit",
+          "quota_alert_threshold"
+        ],
+        "evidence_path": "Plans/usage-feature.md#\u00a76"
+      },
+      {
+        "canonical_manager_id": "teacher-help",
+        "workspace_id": "doctor",
+        "subpanel": "teacher_overlay",
+        "controls": [
+          "help_level",
+          "explain_prompts"
+        ],
+        "evidence_path": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections"
+      },
+      {
+        "canonical_manager_id": "project-search-index",
+        "workspace_id": "context-memory",
+        "subpanel": "indexer_cache",
+        "controls": [
+          "reindex_trigger",
+          "index_statistics"
+        ],
+        "evidence_path": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections"
+      },
+      {
+        "canonical_manager_id": "dry-method",
+        "workspace_id": "testing",
+        "subpanel": "dry_eval",
+        "controls": [
+          "dry_run_toggle",
+          "mock_disposition"
+        ],
+        "evidence_path": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections"
+      }
+    ],
+    "distinction_note": "The canonical manager registry defines 38 granular functional managers (Plans/settings_system_contract_fixtures.json#manager_registry). The standalone concept UI collapses nested operational categories into 21 ergonomic workspace tabs (manager-inventory.json), preserving complete coverage across subpanels, source controls, and evidence paths."
   },
   "canonical_admissions_and_updates": [
     {
@@ -111,8 +557,11 @@
       "old_keys": [
         "safety.approvals.bsd-persona"
       ],
-      "default": "default",
-      "scope": "project",
+      "default": "Critical Advisor",
+      "scope": [
+        "global",
+        "project"
+      ],
       "schema_ref": "Plans/settings_inventory.schema.json",
       "migration_behavior": "Maps to valid persona catalog entry.",
       "rollback_behavior": "Standard settings rollback.",
@@ -120,7 +569,15 @@
         "Plans/Back_Seat_Driver.md",
         "Plans/Personas.md"
       ],
-      "stale_unknown_data_behavior": "Missing persona triggers warning and prompts user selection."
+      "stale_unknown_data_behavior": "Missing persona triggers warning and prompts user selection.",
+      "recommended": "Critical Advisor",
+      "options": [
+        "Critical Advisor",
+        "Balanced",
+        "Technical Architect",
+        "Security Auditor"
+      ],
+      "drift_note": "Reconciled to canonical Plans/settings_inventory.json default Critical Advisor (not default)."
     },
     {
       "setting_id": "safety.approvals.bsd-trigger-sensitivity",
@@ -128,15 +585,30 @@
       "old_keys": [
         "safety.approvals.bsd-trigger-sensitivity"
       ],
-      "default": "medium",
-      "scope": "project",
+      "default": "Balanced",
+      "scope": [
+        "global",
+        "project"
+      ],
       "schema_ref": "Plans/settings_inventory.schema.json",
       "migration_behavior": "Preserves user sensitivity setting.",
       "rollback_behavior": "Standard settings rollback.",
       "consumers": [
         "Plans/Back_Seat_Driver.md"
       ],
-      "stale_unknown_data_behavior": "Defaults to medium on invalid input."
+      "stale_unknown_data_behavior": "Fails validation closed; invalid strings rejected.",
+      "recommended": "Balanced",
+      "current_options": [
+        "Conservative",
+        "Balanced",
+        "Frequent"
+      ],
+      "options": [
+        "Conservative",
+        "Balanced",
+        "Frequent"
+      ],
+      "drift_note": "Reconciled to canonical Plans/settings_inventory.json default Balanced and options Conservative|Balanced|Frequent (not medium)."
     },
     {
       "setting_id": "safety.approvals.bsd-catch-up-seconds",
@@ -169,7 +641,13 @@
         "Plans/Back_Seat_Driver.md",
         "Plans/Settings_System.md"
       ],
-      "stale_unknown_data_behavior": "Invalid string falls back to 30-second default."
+      "stale_unknown_data_behavior": "Invalid string falls back to 30-second default.",
+      "options": [
+        "Off",
+        "15 seconds",
+        "30 seconds",
+        "60 seconds"
+      ]
     },
     {
       "setting_id": "safety.approvals.bsd-cooldown-turns",
@@ -200,7 +678,7 @@
     {
       "setting_id": "safety.approvals.bsd-self-compact-threshold",
       "disposition": "CANONICAL_PRESERVED",
-      "default": 50,
+      "default": 0.8,
       "scope": [
         "global",
         "project"
@@ -208,7 +686,12 @@
       "schema_ref": "Plans/settings_inventory.schema.json",
       "consumers": [
         "Plans/Back_Seat_Driver.md"
-      ]
+      ],
+      "type": "number",
+      "recommended": 0.8,
+      "range": "(0.0, 1.0]",
+      "drift_note": "Reconciled to canonical Plans/settings_inventory.json ratio 0.8 (not integer percentage 50).",
+      "migration_behavior": "Validates decimal ratio within (0.0, 1.0]. Integer percentages (e.g. 50) fail validation and require normalization."
     },
     {
       "setting_id": "branching.crew.crew-members",
@@ -390,5 +873,96 @@
       ],
       "authority": "Plans/Settings_System.md#SSYS-031"
     }
-  }
+  },
+  "named_visible_state_projections": {
+    "teacher-help": {
+      "source_keys": [
+        "general.help.*",
+        "onboarding.*"
+      ],
+      "workspace_id": "doctor",
+      "subpanel": "teacher_overlay",
+      "authority": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections",
+      "type": "frozen_named_projection"
+    },
+    "project-search-index": {
+      "source_keys": [
+        "project.index.*",
+        "search.cache.*"
+      ],
+      "workspace_id": "context-memory",
+      "subpanel": "indexer_cache",
+      "authority": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections",
+      "type": "frozen_named_projection"
+    },
+    "dry-method": {
+      "source_keys": [
+        "testing.dry_run.*",
+        "eval.mock.*"
+      ],
+      "workspace_id": "testing",
+      "subpanel": "dry_eval",
+      "authority": "Plans/settings_system_contract_fixtures.json#named_visible_state_projections",
+      "type": "frozen_named_projection"
+    }
+  },
+  "domain_section_projections": {
+    "settings.assistant": {
+      "source_keys": [
+        "general.appearance.theme",
+        "general.interaction.working-activity-style",
+        "assistant.chat.plan.*.question_limit"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031",
+      "type": "domain_section_projection"
+    },
+    "settings.bsd": {
+      "source_keys": [
+        "safety.approvals.bsd-*"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031",
+      "type": "domain_section_projection"
+    },
+    "settings.schedule": {
+      "source_keys": [
+        "safety.approvals.schedule-*"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031",
+      "type": "domain_section_projection"
+    }
+  },
+  "semantic_negative_fixtures": [
+    {
+      "fixture_id": "NEG-SET-001",
+      "setting_id": "safety.approvals.bsd-persona",
+      "invalid_input": "default",
+      "expected_verdict": "REJECTED_UNKNOWN_PERSONA",
+      "canonical_rule": "safety.approvals.bsd-persona requires a valid persona from the Personas catalog; default is Critical Advisor, not literal default string.",
+      "evidence_ref": "Plans/settings_inventory.json#safety.approvals.bsd-persona"
+    },
+    {
+      "fixture_id": "NEG-SET-002",
+      "setting_id": "safety.approvals.bsd-trigger-sensitivity",
+      "invalid_input": "medium",
+      "expected_verdict": "REJECTED_UNKNOWN_OPTION",
+      "canonical_rule": "safety.approvals.bsd-trigger-sensitivity accepts only Conservative | Balanced | Frequent; medium is an invalid option.",
+      "evidence_ref": "Plans/settings_inventory.json#safety.approvals.bsd-trigger-sensitivity"
+    },
+    {
+      "fixture_id": "NEG-SET-003",
+      "setting_id": "safety.approvals.bsd-self-compact-threshold",
+      "invalid_input": 50,
+      "expected_verdict": "REJECTED_OUT_OF_RANGE_RATIO",
+      "canonical_rule": "safety.approvals.bsd-self-compact-threshold must be a float ratio in range (0.0, 1.0]; integer percentage 50 is invalid without normalization.",
+      "evidence_ref": "Plans/settings_inventory.json#safety.approvals.bsd-self-compact-threshold"
+    },
+    {
+      "fixture_id": "NEG-SET-004",
+      "setting_id": "safety.approvals.bsd-catch-up-seconds",
+      "invalid_input": "15",
+      "expected_verdict": "REJECTED_MISSING_UNIT",
+      "canonical_rule": "safety.approvals.bsd-catch-up-seconds accepts only exact unit strings: Off | 15 seconds | 30 seconds | 60 seconds; unadorned integer string 15 is rejected.",
+      "evidence_ref": "Plans/settings_inventory.json#safety.approvals.bsd-catch-up-seconds"
+    }
+  ]
 }
