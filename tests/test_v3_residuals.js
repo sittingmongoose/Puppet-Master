@@ -136,83 +136,224 @@ console.log("PASS: TEST 1 (V3-R01 review normalization, transitions, and roster 
 
 
 // ---------------------------------------------------------------------------
-// TEST 2: V3-R02 - Internal Work Note Projection Segregation
+// TEST 2: V3-R02 - Internal Work Note Projection Segregation & Real Handler Coverage
 // ---------------------------------------------------------------------------
-console.log("--- TEST 2: V3-R02 Internal Work Note Segregation ---");
+console.log("--- TEST 2: V3-R02 Internal Work Note Segregation (Real Handlers) ---");
 
+// Load the authoritative transcript-records module to provide real PM56_RECORDS
+const recordsPath = path.resolve(rootDir, "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js");
+eval(fs.readFileSync(recordsPath, "utf8"));
+assert.strictEqual(typeof window.PM56_RECORDS.reference, "function", "PM56_RECORDS.reference must be loaded from transcript-records.js");
+
+// Load the real threadops module
 const threadopsPath = path.resolve(rootDir, "Concepts/chat-assistant-concepts/5.6 Pro/threadops.js");
-const threadopsCode = fs.readFileSync(threadopsPath, "utf8");
+eval(fs.readFileSync(threadopsPath, "utf8"));
 
-window.PM56_RECORDS = {
-  reference: function(m) {
-    if (m.id === "subagents-07" || m.id === "note-1") return { kind: "note" };
-    return { kind: "work" };
+const threadops = window.PM56_THREADOPS;
+assert.ok(threadops, "PM56_THREADOPS must be published");
+assert.strictEqual(typeof ext._actions["create-restore-point"], "function", "create-restore-point action registered");
+assert.strictEqual(typeof ext._actions["branch-from-restore"], "function", "branch-from-restore action registered");
+assert.strictEqual(typeof ext._actions["rewind-to-message"], "function", "rewind-to-message action registered");
+assert.strictEqual(typeof ext._actions["export-thread"], "function", "export-thread action registered");
+
+// Setup DOM interceptors for registered export-thread handler
+let interceptedExports = [];
+global.Blob = class MockBlob {
+  constructor(parts, opts) { this.parts = parts; this.opts = opts; }
+};
+global.URL = global.URL || {};
+global.URL.createObjectURL = function(blob) {
+  if (blob && blob.parts) interceptedExports.push(blob.parts.join(""));
+  return "blob:mock-export-url";
+};
+global.URL.revokeObjectURL = function() {};
+
+// Fixture factory containing:
+// - Positive records: route-04 (typed File change via transcript-records REFERENCES, with perturbed title)
+//                     change-harvest (typed File change via explicit outputRef, with shared phrase title)
+// - Negative notes:   subagents-07 (internalOnly: true note with perturbed title)
+//                     note-harvest (untyped agent-work note with shared phrase title)
+// - Ordinary user & assistant turns
+function createFixtureThread() {
+  return {
+    id: "th-ops",
+    title: "Subagent Harvest & Routing",
+    status: "idle",
+    messages: [
+      { id: "m-1", role: "user", text: "Investigate routing and harvest" },
+      { id: "m-2", role: "assistant", text: "Analyzing provider routing" },
+      { id: "route-04", role: "system", type: "agent-work", title: "Orphan Gate failed — corrected provider routing", detail: "Provider routing repaired at provider-selector.js:65" },
+      { id: "subagents-07", role: "system", type: "agent-work", internalOnly: true, title: "Orphan Gate failed", text: "Orphan Gate failed: race condition in worker classes", detail: "Classes read before harvest" },
+      { id: "m-3", role: "user", text: "Check harvest worker status" },
+      { id: "note-harvest", role: "system", type: "agent-work", title: "Harvest sweep stalled", detail: "Worker timed out waiting for queue" },
+      { id: "change-harvest", role: "system", type: "agent-work", title: "Harvest sweep stalled — fixed timeout handler", outputRef: { kind: "change", path: "src/harvest.rs", line: 42 }, detail: "Patched worker timeout" },
+      { id: "m-4", role: "assistant", text: "All systems verified and operational." }
+    ]
+  };
+}
+
+let activeTestThread = createFixtureThread();
+const threadopsCtx = {
+  state: {
+    selectedThread: "th-ops",
+    threads: [activeTestThread],
+    menu: null,
+    dialog: null
+  },
+  activeThread: function() {
+    return this.state.threads.find(t => t.id === this.state.selectedThread) || null;
+  },
+  switchThread: function(id) {
+    this.state.selectedThread = id;
+  },
+  clone: function(o) {
+    return JSON.parse(JSON.stringify(o));
+  },
+  closeMenu: function() {
+    this.state.menu = null;
+  },
+  closeDialog: function() {
+    this.state.dialog = null;
+  },
+  appendMessage: function(msg, thread) {
+    var t = thread || this.activeThread();
+    if (t && t.messages) t.messages.push(msg);
+  },
+  renderApp: function() {},
+  renderOverlays: function() {},
+  toast: function() {},
+  icon: function(name, size) {
+    return `<svg class="icon" data-icon="${name}" width="${size || 12}"></svg>`;
+  },
+  esc: function(s) {
+    return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 };
+ext.ctx = function() { return threadopsCtx; };
 
-eval(threadopsCode);
+// -------------------------------------------------------------------------
+// 2a. Real Registered Handler: export-thread (Perturbed vs Neutral Title Control)
+// -------------------------------------------------------------------------
+// Perturbed title test: route-04 carries "Orphan Gate failed — corrected provider routing"
+interceptedExports = [];
+ext._actions["export-thread"](threadopsCtx, { dataset: { id: "th-ops" } });
+assert.strictEqual(interceptedExports.length, 1, "Registered export-thread must create download blob");
+const exportedPerturbed = JSON.parse(interceptedExports[0]);
+assert.strictEqual(exportedPerturbed.format, "pm56-thread-export/1", "Export must adhere to format pm56-thread-export/1");
+assert.strictEqual(exportedPerturbed.thread.id, "th-ops", "Export thread ID matches");
 
-// 2a. Verify isInternalNote behavior
-const sampleNote = { id: "subagents-07", role: "system", type: "agent-work", internalOnly: true, title: "Orphan Gate failed", detail: "Classes read before harvest" };
-assert.ok(sampleNote.internalOnly === true, "internalOnly is true");
-assert.ok(sampleNote.title.includes("Orphan Gate failed"), "title includes Orphan Gate failed");
+// Assert positive typed records are PRESERVED in export despite perturbed titles
+assert.ok(exportedPerturbed.messages.some(m => m.id === "route-04"), "Positive record route-04 MUST be preserved in export");
+assert.ok(exportedPerturbed.messages.some(m => m.id === "change-harvest"), "Positive record change-harvest MUST be preserved in export");
 
-// 2b. Test Restore Point creation & Snapshot Segregation
-const sampleThreadWithNote = {
-  id: "th-subagents",
-  title: "Subagent Harvest",
-  status: "idle",
-  messages: [
-    { id: "m-1", role: "user", text: "Start harvest" },
-    { id: "m-2", role: "assistant", text: "Harvesting dependencies" },
-    { id: "m-3", role: "user", text: "Check orphan gates" },
-    { id: "m-4", role: "assistant", text: "Running checks" },
-    { id: "subagents-07", role: "system", type: "agent-work", internalOnly: true, title: "Orphan Gate failed", text: "Orphan Gate failed: race condition" },
-    { id: "m-5", role: "user", text: "Acknowledge status" },
-    { id: "m-6", role: "assistant", text: "Status acknowledged and clean" }
-  ]
-};
+// Assert internal notes are EXCLUDED from export
+assert.ok(!exportedPerturbed.messages.some(m => m.id === "subagents-07"), "Internal note subagents-07 MUST be excluded from export");
+assert.ok(!exportedPerturbed.messages.some(m => m.id === "note-harvest"), "Untyped internal note note-harvest MUST be excluded from export");
+assert.strictEqual(exportedPerturbed.messages.length, 6, "Export must contain exactly 6 ordinary messages (8 total - 2 notes)");
 
-const isInternalNote = (m) => {
-  if (!m) return false;
-  if (m.internalOnly === true) return true;
-  if (m.role === 'system' && m.type === 'agent-work') return true;
-  var txt = (m.text || m.body || m.title || m.detail || '');
-  if (typeof txt === 'string' && txt.indexOf('Orphan Gate failed') !== -1) return true;
-  return false;
-};
+// Neutral title control: change route-04 title to neutral phrase and verify identity-preserving export
+activeTestThread = createFixtureThread();
+const route04Ref = activeTestThread.messages.find(m => m.id === "route-04");
+route04Ref.title = "Provider routing repaired";
+threadopsCtx.state.threads = [activeTestThread];
+interceptedExports = [];
+ext._actions["export-thread"](threadopsCtx, { dataset: { id: "th-ops" } });
+assert.strictEqual(interceptedExports.length, 1, "Neutral title control export created");
+const exportedNeutral = JSON.parse(interceptedExports[0]);
+assert.strictEqual(exportedNeutral.messages.length, 6, "Neutral title control also exports exactly 6 ordinary messages");
+assert.ok(exportedNeutral.messages.some(m => m.id === "route-04"), "Positive record route-04 preserved under neutral title");
+assert.strictEqual(
+  exportedNeutral.messages.find(m => m.id === "route-04").type,
+  exportedPerturbed.messages.find(m => m.id === "route-04").type,
+  "Identity and type of route-04 preserved identically regardless of title"
+);
 
-const ordinaryMessages = sampleThreadWithNote.messages.filter(m => !isInternalNote(m));
-assert.strictEqual(ordinaryMessages.length, 6, "Must have exactly 6 ordinary messages");
-assert.ok(!ordinaryMessages.some(m => m.id === "subagents-07"), "subagents-07 must NOT be in ordinary messages");
+// Reset active thread with perturbed title for complete lifecycle operations
+activeTestThread = createFixtureThread();
+threadopsCtx.state.threads = [activeTestThread];
 
-// 2c. Rewind card preview: test that 6 preview messages do not include Orphan Gate failed
-const previewCandidates = sampleThreadWithNote.messages.filter(m => !isInternalNote(m));
-const previewSlice = previewCandidates.slice(-6);
-const previewText = previewSlice.map(m => m.text || "").join(" ");
-assert.ok(!previewText.includes("Orphan Gate failed"), "Rewind preview .pm-tops-fold-text must not contain Orphan Gate failed");
+// -------------------------------------------------------------------------
+// 2b. Real Registered Handler: create-restore-point
+// -------------------------------------------------------------------------
+ext._actions["create-restore-point"](threadopsCtx, { dataset: { id: "th-ops" } });
+const restorePoints = threadops.restorePoints("th-ops");
+assert.strictEqual(restorePoints.length, 1, "Registered create-restore-point creates 1 restore point");
+const rp = restorePoints[0];
+assert.strictEqual(rp.threadId, "th-ops", "Restore point belongs to th-ops");
+assert.strictEqual(rp.snapshot.length, 6, "Restore point snapshot contains exactly 6 ordinary messages");
+assert.ok(rp.snapshot.some(m => m.id === "route-04"), "Restore point snapshot MUST include positive record route-04");
+assert.ok(rp.snapshot.some(m => m.id === "change-harvest"), "Restore point snapshot MUST include positive record change-harvest");
+assert.ok(!rp.snapshot.some(m => m.id === "subagents-07"), "Restore point snapshot MUST exclude subagents-07");
+assert.ok(!rp.snapshot.some(m => m.id === "note-harvest"), "Restore point snapshot MUST exclude note-harvest");
+assert.strictEqual(rp.rawSnapshot.length, 8, "rawSnapshot preserves complete diagnostic transcript (8 messages)");
 
-// 2d. Branch from restore point: messages must exclude notes, rawMessages keeps rawSnapshot
-const fakeRestorePoint = {
-  id: "rp-1",
-  threadId: sampleThreadWithNote.id,
-  atTurn: 6,
-  messageCount: 6,
-  snapshot: JSON.parse(JSON.stringify(ordinaryMessages)),
-  rawSnapshot: JSON.parse(JSON.stringify(sampleThreadWithNote.messages))
-};
+// -------------------------------------------------------------------------
+// 2c. Real Registered Handler: branch-from-restore
+// -------------------------------------------------------------------------
+ext._actions["branch-from-restore"](threadopsCtx, { dataset: { value: rp.id } });
+const branchThread = threadopsCtx.state.threads[0];
+assert.strictEqual(branchThread.lineage.kind, "branch-from-restore", "Branched thread lineage records branch-from-restore");
+assert.strictEqual(branchThread.lineage.restorePointId, rp.id, "Branch lineage points to restore point ID");
+assert.strictEqual(branchThread.messages.length, 6, "Branched thread contains exactly 6 messages from immutable snapshot");
+assert.ok(branchThread.messages.some(m => m.id === "route-04"), "Branched thread MUST include positive record route-04");
+assert.ok(branchThread.messages.some(m => m.id === "change-harvest"), "Branched thread MUST include positive record change-harvest");
+assert.ok(!branchThread.messages.some(m => m.id === "subagents-07"), "Branched thread MUST exclude subagents-07");
+assert.ok(!branchThread.messages.some(m => m.id === "note-harvest"), "Branched thread MUST exclude note-harvest");
+assert.strictEqual(branchThread.rawMessages.length, 8, "rawMessages on branched thread retains full diagnostic messages");
 
-const branchedMessages = fakeRestorePoint.snapshot.filter(m => !isInternalNote(m));
-assert.strictEqual(branchedMessages.length, 6, "Branched thread messages contains 6 ordinary messages");
-assert.ok(!branchedMessages.some(m => isInternalNote(m)), "Branched messages contains 0 internal notes");
-assert.strictEqual(fakeRestorePoint.rawSnapshot.length, 7, "rawSnapshot preserves full 7 messages for audit/diagnostics");
+// -------------------------------------------------------------------------
+// 2d. Real Registered Handler: rewind-to-message & Registered Card Renderer
+// -------------------------------------------------------------------------
+threadopsCtx.switchThread("th-ops");
+// Rewind to m-2 (anchor before route-04, subagents-07, m-3, note-harvest, change-harvest, m-4)
+ext._actions["rewind-to-message"](threadopsCtx, { dataset: { value: "m-2" } });
+const rewinds = threadops.rewinds("th-ops");
+assert.strictEqual(rewinds.length, 1, "Registered rewind-to-message creates 1 rewind record");
+const rw = rewinds[0];
+assert.strictEqual(rw.restored, false, "Rewind initially active and unrestored");
 
-// 2e. Export thread excludes internal notes
-const exportedMessages = sampleThreadWithNote.messages.filter(m => !isInternalNote(m));
-assert.strictEqual(exportedMessages.length, 6, "Exported messages count must be 6");
-assert.ok(!exportedMessages.some(m => m.id === "subagents-07"), "subagents-07 excluded from export");
+// Find the threadops-rewind receipt message appended to active thread
+const rewindReceipt = activeTestThread.messages.find(m => m.type === "threadops-rewind");
+assert.ok(rewindReceipt, "Thread has threadops-rewind receipt message");
 
-console.log("PASS: TEST 2 (V3-R02 internal work note segregation) passed.\n");
+// Execute real registered systemCardActions renderer slot
+const cardRenderers = ext._slots["systemCardActions"];
+assert.ok(Array.isArray(cardRenderers) && cardRenderers.length > 0, "systemCardActions slot registered");
+const foldHtml = cardRenderers.map(fn => fn({ ...threadopsCtx, message: rewindReceipt })).join("");
+
+// Validate renderer output
+assert.ok(foldHtml.includes('class="pm-tops-fold"'), "Renderer output must contain pm-tops-fold");
+assert.ok(foldHtml.includes("Orphan Gate failed — corrected provider routing"), "Renderer fold must show positive record route-04");
+assert.ok(foldHtml.includes("Harvest sweep stalled — fixed timeout handler"), "Renderer fold must show positive record change-harvest");
+assert.ok(!foldHtml.includes("Classes read before harvest"), "Renderer fold MUST NOT show subagents-07 detail");
+assert.ok(!foldHtml.includes("Worker timed out waiting for queue"), "Renderer fold MUST NOT show note-harvest detail");
+assert.ok(foldHtml.includes('data-action="restore-rewind"'), "Renderer fold provides restore-rewind action");
+
+// Execute real registered restore-rewind action
+ext._actions["restore-rewind"](threadopsCtx, { dataset: { value: rw.id } });
+assert.strictEqual(rw.restored, true, "restore-rewind restores all folded turns");
+const restoredCardHtml = cardRenderers.map(fn => fn({ ...threadopsCtx, message: rewindReceipt })).join("");
+assert.ok(restoredCardHtml.includes("Restored · every folded turn is back in place"), "Restored fold card renders clean confirmation");
+
+// -------------------------------------------------------------------------
+// 2e. Real Registered Slot: threadSearchMenu Projection
+// -------------------------------------------------------------------------
+const searchMenuSlots = ext._slots["threadSearchMenu"];
+assert.ok(Array.isArray(searchMenuSlots) && searchMenuSlots.length > 0, "threadSearchMenu slot registered");
+
+// Search for 'Orphan Gate failed'
+threadopsCtx.state.menu = { query: "Orphan Gate failed", scope: "current" };
+const searchResults1 = searchMenuSlots.map(fn => fn(threadopsCtx)).join("");
+assert.ok(searchResults1.includes("route-04"), "Search for Orphan Gate failed matches positive record route-04 (title-independent)");
+assert.ok(!searchResults1.includes("subagents-07"), "Search for Orphan Gate failed excludes internal note subagents-07");
+
+// Search for 'Harvest sweep stalled'
+threadopsCtx.state.menu = { query: "Harvest sweep stalled", scope: "current" };
+const searchResults2 = searchMenuSlots.map(fn => fn(threadopsCtx)).join("");
+assert.ok(searchResults2.includes("change-harvest"), "Search for Harvest sweep stalled matches positive record change-harvest");
+assert.ok(!searchResults2.includes("note-harvest"), "Search for Harvest sweep stalled excludes internal note note-harvest");
+
+console.log("PASS: TEST 2 (V3-R02 internal work note segregation & real handler coverage) passed.\n");
 
 
 // ---------------------------------------------------------------------------
@@ -302,18 +443,18 @@ const replacementManifest = JSON.parse(fs.readFileSync(replacementManifestPath, 
 const expectedFiles = [
   {
     path: "Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html",
-    bytes: 2815569,
-    sha256: "76f88689f6209cb06d06010672284225fea4b3c10c6f0cdb21817ddad3b968f6"
+    bytes: 2815417,
+    sha256: "31b4d0d29516f5ae96a3b084bee9b8e1c3fdca0b8c8df707edad4dab180cebcc"
   },
   {
     path: "Concepts/chat-assistant-concepts/5.6 Pro/index.html",
-    bytes: 2815569,
-    sha256: "76f88689f6209cb06d06010672284225fea4b3c10c6f0cdb21817ddad3b968f6"
+    bytes: 2815417,
+    sha256: "31b4d0d29516f5ae96a3b084bee9b8e1c3fdca0b8c8df707edad4dab180cebcc"
   },
   {
     path: "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
-    bytes: 298151,
-    sha256: "ce923893122c77956ddd75650150f5f7021abe2170b66a44a776a84514533faa"
+    bytes: 298079,
+    sha256: "7e08ab89eea4110e3f030405435fc85dc72340cf348fe40b01e67a25c4cbfa57"
   },
   {
     path: "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
@@ -322,8 +463,8 @@ const expectedFiles = [
   },
   {
     path: "Concepts/chat-assistant-concepts/5.6 Pro/threadops.js",
-    bytes: 87612,
-    sha256: "0dc4489bae7eab0d573341abff50df8d730b3b4f21f4e8ef5fac9bb651db5879"
+    bytes: 87534,
+    sha256: "ebdb51a49df2c5167dddbc6abe665ded3d9c999052fe46d7d3a6535e174b9961"
   }
 ];
 
@@ -353,11 +494,11 @@ for (const exp of expectedFiles) {
 const standaloneBuf = fs.readFileSync(path.resolve(rootDir, "Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html"));
 const standaloneText = standaloneBuf.toString("utf8").replace(/\r\n/g, "\n");
 const normalizedDigest = crypto.createHash("sha256").update(Buffer.from(standaloneText, "utf8")).digest("hex");
-assert.strictEqual(normalizedDigest, "33721cdf7d3a6d5366ef0b3fcc642e832aa14cd6887ff5787a40e1d446c087a0", "LF normalized digest must match 33721cdf7d3a6d5366ef0b3fcc642e832aa14cd6887ff5787a40e1d446c087a0");
+assert.strictEqual(normalizedDigest, "afde28c3638df7bfab881c1668ddef34065f58686cce2edfa438743e08c2875a", "LF normalized digest must match afde28c3638df7bfab881c1668ddef34065f58686cce2edfa438743e08c2875a");
 
 // Verify git blob
 const blobId = execSync("git hash-object 'Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html'", { cwd: rootDir }).toString().trim();
-assert.strictEqual(blobId, "bce6fda60ebd23ca759d562da8514be53fb9b467", "Git blob must match bce6fda60ebd23ca759d562da8514be53fb9b467");
+assert.strictEqual(blobId, "428b2c67aa8e4354ba59dfcdf8d5cc4607b167d6", "Git blob must match 428b2c67aa8e4354ba59dfcdf8d5cc4607b167d6");
 
 console.log("PASS: TEST 5 (V3-R09 exact bytes, SHA256, normalized digest, git blob) passed.\n");
 
