@@ -719,6 +719,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      to exist (the sequencer creates the record when the burst actually
      starts, so the card appears the moment its work begins). */
   function messageVisible(m){
+    if(m.internalOnly || (m.type==='agent-work'&&window.PM56_RECORDS?.reference(m).kind==='note'))return false;
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
@@ -2535,6 +2536,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function handleScopedPickerAction(a,btn,e){
     if(!state.menu?.scopedPicker||!scopedPicker)return false;
+    if(a==='shared-choice-pick' && scopedPicker.type==='choice'){
+      const session=scopedPicker, option=session.options.find(x=>String(x.value)===btn.dataset.value);
+      if(option){closeMenu();session.onChange(option.value);} return true;
+    }
     if(!['set-model','set-effort','toggle-fast','set-persona'].includes(a))return false;
     e.stopPropagation();
     const session=scopedPicker, value=session.value;
@@ -2553,7 +2558,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a==='set-model')setSubmenu('model:'+id);else renderOverlays();
     return true;
   }
+  function renderSharedChoice(){
+    if(!scopedPicker || scopedPicker.type!=='choice')return '';
+    const q=(state.menu.query||'').toLowerCase(),session=scopedPicker;
+    const options=session.options.filter(o=>(o.label+' '+(o.description||'')).toLowerCase().includes(q));
+    return `<div class="menu-head"><strong>${esc(session.title)}</strong></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="shared-choice-search" value="${esc(state.menu.query||'')}" placeholder="Find an option…"></label></div><div class="shared-choice-list">${options.map(o=>`<button type="button" class="menu-item ${String(session.current)===String(o.value)?'active':''}" data-action="shared-choice-pick" data-value="${esc(o.value)}"><span class="menu-copy"><strong>${esc(o.label)}</strong><span>${esc(o.description||'')}</span></span>${String(session.current)===String(o.value)?icon('check',12):''}</button>`).join('')||'<p class="choice-empty">No matching options.</p>'}</div>`;
+  }
   window.PM56_PICKERS={
+    openChoice(button,title,current,options,onChange){
+      scopedPicker={type:'choice',title,current,options,onChange,value:{}};
+      openMenu('choice',pickerAnchor(button),{scopedPicker:true});
+    },
     openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
     openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
@@ -2569,7 +2584,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderMenu(){
     const m=state.menu;
     let content='';
-    if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
+    if(m.type==='choice')content=renderSharedChoice();
+    else if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
@@ -3390,7 +3406,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     const k=e.target.dataset.input;if(!k)return;
     if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;syncSendStop();return;}
         if(k==='history-search'){state.historySearch=e.target.value;renderApp();return;}
-        if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
+        if(k==='shared-choice-search'&&state.menu?.type==='choice'){state.menu.query=e.target.value;renderOverlays();return;}
+    if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
         if(k==='thread-global-search'){state.menu.query=e.target.value;renderOverlays();return;}
     if(k==='rename-thread'){state.dialog.value=e.target.value;return;}
     if(k==='question-text'){state.questions[state.questionIndex].answer=e.target.value;return;}
@@ -3409,7 +3426,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if((e.metaKey||e.ctrlKey)&&e.key==='Enter'&&document.activeElement?.matches('[data-input="composer"]')){e.preventDefault();handleSend();}
     if(e.key==='Escape'){
       if(state.menu){closeMenu();return;}
-      if(state.dialog){if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
+      if(state.dialog){if(state.dialog.type==='collab-configure'){EXT._actions['collab-modal-cancel'](EXT.ctx(),null,e);return;}if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
       if(state.activity.open&&!activityPinnedInLayout()){const domain=state.activity.domain;state.hover=null;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
       if(state.hover){state.hover=null;syncHoverCard();return;}

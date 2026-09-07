@@ -59,4 +59,5 @@ def apply(doc,notes,need):
     doc=doc.replace('</head>','<style id="pm49-assistant-settings-css">\n'+css+'\n</style>\n</head>',1)
     need('localStorage' not in _read('assistant_settings_source.js'),'T49 must use existing project Settings persistence')
     notes.update({'source':'assistant_settings_source.py','input_settings_count':old_count,'output_settings_count':ref['total'],'new_setting_ids':[r['id'] for r in contract['new_settings']], 'existing_settings_engine_before_sha256':_sha(before),'existing_settings_engine_after_sha256':_sha(js),'canonical_plans_modified':False,'native_runtime_certified':False,'scope':'Settings engine, reference/inert inventory, scoped CSS only'})
-    return doc
+    import assistant_narrow_source
+    return assistant_narrow_source.apply(doc,notes.setdefault("narrow_v3",{}),need)

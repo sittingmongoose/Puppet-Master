@@ -1,5 +1,5 @@
 {
-  "body_reconstruction_checked": 2132,
+  "body_reconstruction_checked": 2138,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
@@ -12,11 +12,11 @@
       "source": "Plans/orchestrator-subagent-integration.md"
     },
     {
-      "body_reconstruction_checked": 75,
+      "body_reconstruction_checked": 76,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/finalguispec",
       "failures": [],
-      "shard_count": 75,
+      "shard_count": 76,
       "source": "Plans/FinalGUISpec.md"
     },
     {
@@ -100,11 +100,11 @@
       "source": "Plans/chain-wizard-flexibility.md"
     },
     {
-      "body_reconstruction_checked": 65,
+      "body_reconstruction_checked": 66,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/assistant-chat-design",
       "failures": [],
-      "shard_count": 65,
+      "shard_count": 66,
       "source": "Plans/assistant-chat-design.md"
     },
     {
@@ -268,11 +268,11 @@
       "source": "Plans/Run_Modes.md"
     },
     {
-      "body_reconstruction_checked": 37,
+      "body_reconstruction_checked": 38,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/commands_system",
       "failures": [],
-      "shard_count": 37,
+      "shard_count": 38,
       "source": "Plans/Commands_System.md"
     },
     {
@@ -284,11 +284,11 @@
       "source": "Plans/Executor_Protocol.md"
     },
     {
-      "body_reconstruction_checked": 40,
+      "body_reconstruction_checked": 41,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_command_catalog",
       "failures": [],
-      "shard_count": 40,
+      "shard_count": 41,
       "source": "Plans/UI_Command_Catalog.md"
     },
     {
@@ -460,11 +460,11 @@
       "source": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
     },
     {
-      "body_reconstruction_checked": 25,
+      "body_reconstruction_checked": 26,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_wiring_rules",
       "failures": [],
-      "shard_count": 25,
+      "shard_count": 26,
       "source": "Plans/UI_Wiring_Rules.md"
     },
     {
@@ -540,11 +540,11 @@
       "source": "Plans/Widget_System.md"
     },
     {
-      "body_reconstruction_checked": 30,
+      "body_reconstruction_checked": 31,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/goal_runtime_system",
       "failures": [],
-      "shard_count": 30,
+      "shard_count": 31,
       "source": "Plans/Goal_Runtime_System.md"
     },
     {
@@ -790,13 +790,13 @@
   ],
   "docs_checked": 98,
   "failures": [],
-  "generated_at_utc": "2026-09-06T04:44:01Z",
+  "generated_at_utc": "2026-09-07T01:52:10Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2132,
+  "shards_checked": 2138,
   "source_count": 98,
   "status": "pass"
 }

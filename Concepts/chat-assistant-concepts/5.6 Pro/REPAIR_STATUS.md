@@ -1,5 +1,3 @@
-# Current repair status
+# Current status: rebuilt concept; bounded verification
 
-The v2 delivery has 348 passing scoped browser assertions across the Assistant and TestPM Settings, current hash-bound reports, a reproducible Assistant rebuild and a reproducible pinned-checkpoint Settings rebuild. No native certification is claimed.
-
-Open acceptance: full original demo denominator, multiple complete workflows for every feature, all 60fps recordings/every-frame visual review, persistent-origin reload, and the pre-existing T45 full-builder guard conflict. See reports/assistant-polish-v2/DELIVERY_REPORT.json and the accompanying complete v2 Plans packet.
+This is actual v3 source/output, newly reconstructed from the surviving v2 delivery. Source builds and clean-extraction verification are required for this package. Broad visual, multi-demo and full 60fps acceptance are NOT claimed. See README.md and reports/delivery-rebuild for actual checks; older reports are historical only.

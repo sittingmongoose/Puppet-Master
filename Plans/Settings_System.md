@@ -1614,3 +1614,212 @@ owner_hints: [Plans/Settings_System.md, Plans/Working_Notebook.md]
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Working_Notebook.md, ContractName:Plans/Backup_Restore_System.md
+
+## Cumulative v3 Settings Inventory, Projections, and Manager Layout Specification (2026-09-07)
+
+This section incorporates the cumulative Settings system inventory alignments, truthful persistence
+semantics, shared projections, candidate roster/stage reconciliation, and universal manager layout
+principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-064, and APR-065.
+
+### 19. Working Activity Style and Inventory Reconciliation (APR-046, APR-048)
+
+- **Canonical Key Identity:** The working activity presentation preference is canonically registered
+  under `general.interaction.working-activity-style`. The short key `working-activity-style` is retained
+  exclusively as a query and migration alias; the curated duplicate short-key row is retired.
+- **Supported Selections:** The setting offers exactly `Orbit` (family/variant 2/1) and `Step Rail Simple`
+  (family/variant 2/8). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
+  input alias.
+- **Concept-Candidate Roster and Stage Rows (APR-048):** The five concept-candidate inventory keys:
+  1. `branching.crew.crew-auto-roster`
+  2. `branching.crew.chat-room-roster`
+  3. `branching.crew.brainstorm-roster`
+  4. `planning.verification.review-roster`
+  5. `safety.approvals.bsd-stage-bindings`
+  are recognized as concept-stage proposals that project specialized roster templates and stage toggles.
+  They are not canonically admitted into `Plans/settings_inventory.json` until their underlying domain
+  runtimes establish persistence schemas. Existing Crew defaults continue to use
+  `branching.crew.crew-members`.
+
+### 20. Truthful Persistence State (APR-044)
+
+- **Write Outcome Integrity:** Setting transactions must never report an optimistic "Saved" status or
+  display a success timestamp when the backing storage write fails or is rejected.
+- **Failure Disclosure:** If a persistence write fails (e.g., due to file system errors, lock
+  contention, or lack of an open project), Settings retains the user's uncommitted edit in the local
+  buffer, clearly displays the typed error message, and provides Retry and Revert actions.
+
+### 21. Shared Settings Projections (APR-047)
+
+- **Coherent Domain Views:** Dedicated named projections surface cohesive slices of the canonical
+  inventory to specific consuming domains without creating separate storage stores:
+  1. `settings.assistant`: Projects theme, interaction style, question limits, and composer defaults.
+  2. `settings.bsd`: Projects BSD mode, model, persona, sensitivity, catch-up, and cooldown settings.
+  3. `settings.schedule`: Projects execution windows, wind-down minutes, grace intervals, and DST rules.
+- **Single Source of Truth:** All projections read and mutate the exact Project-scoped settings keys
+  via the standard Settings transaction engine.
+
+### 22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)
+
+- **Universal Layout Principles (APR-064):** Derived from the visual reference motion analysis, every
+  Settings manager adheres to:
+  1. *Stable Alignment:* Left-aligned section headers and property labels, fixed-width input controls,
+     and uniform vertical baselines.
+  2. *Legible Short Labels:* Human-friendly descriptive names omitting internal dotted path prefixes.
+  3. *Trailing Controls:* Checkboxes, toggles, dropdowns, and numeric inputs align cleanly to the right edge.
+  4. *Deliberate Whitespace:* Standardized 24 px padding between distinct setting groups.
+  5. *Limited Simultaneous Detail:* Complex schemas, advanced tuning parameters, and raw JSON configurations
+     reside behind progressive disclosure toggles.
+  6. *One Quiet Action Row:* Per-section reset buttons and documentation links reside in an unobtrusive
+     bottom action bar.
+- **Universal Application Across 38 Managers:** These principles govern all thirty-eight registered
+  managers:
+  `all-settings`, `general-appearance-input`, `providers-accounts-models`, `web-routes`, `media-routes`,
+  `back-seat-driver`, `memory-context-instructions`, `goals-crew-personas`, `permissions-filesafe`,
+  `commands-shortcuts`, `tools-integrations`, `testing-debug-capture`, `files-editor-terminal`,
+  `notifications-sounds`, `source-control`, `browser-policy`, `containers-registries`,
+  `storage-retention-recovery`, `project-history-artifacts`, `settings-transfer`,
+  `settings-export-migration`, `server-claim-bootstrap`, `servers-hosts-environments`, `clients-continuity`,
+  `project-hosting-files`, `project-sync-move-copy`, `ssh-remote`, `remote-access`, `server-backup-restore`,
+  `project-backup`, `updates`, `project-defaults-templates`, `onboarding-guided-tour`, `doctor`,
+  `usage-budgets`, `teacher-help`, `project-search-index`, and `dry-method`.
+  And across the three named visible-state projections: `teacher-help`, `project-search-index`, and `dry-method`.
+- **Context-Sensitive Manager Navigation (APR-065):** Selecting a manager from a contextual link or
+  dropdown retains and highlights that manager's identity during navigation, avoiding disorientation.
+
+```yaml
+plan_unit_id: SSYS-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Working activity style is registered under general.interaction.working-activity-style offering Orbit
+  and Step Rail Simple, retaining short-key working-activity-style and Step Rail as compatibility aliases.
+  Settings writes must never report successful persistence when storage fails, disclosing typed errors
+  with retry/revert. The five concept-candidate roster/stage keys are tracked as proposed additions
+  without displacing canonical crew-members or canonical inventory schema.
+gui_related: true
+gui_classification_reason: Governs working activity setting identity, truthful persistence UI feedback, and candidate settings reconciliation.
+depends_on: [SSYS-029]
+unblocks: [SSYS-031]
+acceptance_criteria:
+  - general.interaction.working-activity-style offers Orbit and Step Rail Simple.
+  - Failed persistence writes disclose errors and never set optimistic last-saved success.
+  - Candidate roster/stage rows are tracked as proposals without breaking canonical schemas.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: settings_identity_drift_or_optimistic_persistence
+reasoning_tier: standard
+context_scope: settings_inventory_and_persistence
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: settings_inventory_specification
+  create_worknodes: false
+source_lineage:
+  - APR-044
+  - APR-046
+  - APR-048
+preserved_exact_tokens:
+  - "general.interaction.working-activity-style"
+  - "Step Rail Simple"
+  - "truthful persistence"
+negative_constraints:
+  - Do not create duplicate primary settings keys for working activity style.
+  - Do not show success status on failed persistence writes.
+owner_hints:
+  - Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md
+
+```yaml
+plan_unit_id: SSYS-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Settings exposes shared domain projections (settings.assistant, settings.bsd, settings.schedule)
+  reading and mutating exact Project-scoped settings keys through the canonical Settings transaction
+  engine, ensuring single-source-of-truth persistence without duplicate stores.
+gui_related: true
+gui_classification_reason: Governs shared domain settings projections for Assistant, BSD, and scheduling.
+depends_on: [SSYS-030]
+unblocks: [SSYS-032]
+acceptance_criteria:
+  - Named projections settings.assistant, settings.bsd, and settings.schedule map to canonical keys.
+  - Mutations route through the standard Settings transaction engine.
+  - No duplicate or out-of-band stores are created.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: projection_store_divergence
+reasoning_tier: standard
+context_scope: settings_projections
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/Scheduling_and_Quota_Resume.md
+node_compile_hint:
+  mode: settings_projections_specification
+  create_worknodes: false
+source_lineage:
+  - APR-047
+preserved_exact_tokens:
+  - "settings.assistant"
+  - "settings.bsd"
+  - "settings.schedule"
+negative_constraints:
+  - Do not create independent storage stores for named projections.
+owner_hints:
+  - Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Scheduling_and_Quota_Resume.md
+
+```yaml
+plan_unit_id: SSYS-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  All thirty-eight registered Settings managers and three named visible-state projections enforce the
+  reference-derived layout principles: stable alignment, legible short labels, trailing controls,
+  deliberate whitespace, limited simultaneous detail via progressive disclosure, and one quiet action
+  row. Manager section navigation preserves opened manager identity during routing.
+gui_related: true
+gui_classification_reason: Governs layout principles, visual structure, and navigation across all thirty-eight Settings managers.
+depends_on: [SSYS-031]
+unblocks: []
+acceptance_criteria:
+  - All 38 managers and 3 projections follow reference layout principles.
+  - Labels are concise, controls trail right, and advanced detail is behind disclosure.
+  - Contextual manager picker preserves opened manager identity.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: manager_layout_inconsistency_or_context_loss
+reasoning_tier: high
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - APR-062
+  - APR-064
+  - APR-065
+preserved_exact_tokens:
+  - "38 managers"
+  - "trailing controls"
+  - "progressive disclosure"
+negative_constraints:
+  - Do not exempt any of the 38 registered managers from the unified layout principles.
+  - Do not drop manager identity during section navigation.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/FinalGUISpec.md
+

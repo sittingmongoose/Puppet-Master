@@ -1392,3 +1392,133 @@ owner_hints: [Plans/Assistant_Plan_Runtime.md, Plans/Prompt_Pipeline.md]
 ```
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Planning_Ledger_System.md
+
+## Cumulative v3 Plan Tab Navigation and Schedule Invalidation Specification (2026-09-07)
+
+This section incorporates the cumulative Plan tab editor navigation, full surface control parity,
+and schedule invalidation semantics in accordance with APR-019, APR-036, APR-037, APR-038, and
+APR-066.
+
+### 16. Plan Tab Navigation, Deduplication, and Control Parity (APR-036, APR-037)
+
+- **Left Editor Plan Tab Navigation:** Activating a plan via title click, "Details" link, "Expand",
+  or "Open plan" in the transcript opens or activates the plan in the left editor tab bar.
+- **Tab Deduplication:** If the plan tab is already open in the editor tab bar, the existing tab is
+  focused and brought to the front. Duplicate editor tabs for the same `assistant_plan_id` are
+  strictly prohibited.
+- **Full Control Parity:** The left editor plan tab exposes the identical set of owner-backed plan
+  controls present on the transcript Plan card:
+  1. *Rich Text / Markdown toggle* (defaulting to Rich Text view).
+  2. *Primary status control:* Build / Building… / Completed / Canceled.
+  3. *Action triggers:* Build With Crew, Build At (schedule), Revise, Send To Planning Wizard,
+     Export, Cancel, and Open To-Dos.
+- **Responsive Split Resizing (APR-038, APR-066):** Explicitly opening a plan automatically expands
+  the editor pane to a readable width (minimum 480 px) if the split was previously collapsed to zero.
+  Subsequent user resizing of the editor-to-chat divider preserves a minimum functional width for the
+  chat canvas (minimum 360 px), preventing chat controls or the composer from collapsing into the
+  resize handle dead zone.
+
+### 17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)
+
+- **Cancellation Invalidation:** Explicitly canceling a pending scheduled plan build immediately
+  invalidates the registered timer or cron job in the scheduler. A canceled schedule is fenced and
+  will not dispatch under any condition.
+- **Immediate Build Precedence:** Triggering "Build" (immediate execution) on a plan that currently
+  has a future build scheduled automatically invalidates and removes that specific pending scheduled
+  action before admitting the active run. Unrelated schedules across other plans or messages remain
+  untouched.
+- **Version Rebinding:** Revisions to a plan invalidate pending schedules bound to the prior
+  unapproved version, requiring explicit re-scheduling against the approved new version hash.
+
+```yaml
+plan_unit_id: APR-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: >-
+  Clicking a plan title, Details, Expand, or Open plan in the transcript opens or focuses the plan in
+  the left editor tab bar with tab deduplication. The left plan tab exposes complete owner-backed control
+  parity with the transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise,
+  Send To Planning Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable
+  width, and split resizing preserves minimum chat canvas width.
+gui_related: true
+gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive editor/chat split geometry.
+depends_on: [APR-013]
+unblocks: [APR-015]
+acceptance_criteria:
+  - Plan navigation actions focus the existing tab if already open, preventing tab duplication.
+  - Left plan tab provides all plan card controls backed by the canonical plan runtime.
+  - Opening a plan reveals readable editor pane; divider resizing enforces minimum 360 px chat width.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: tab_duplication_or_control_disparity
+reasoning_tier: standard
+context_scope: plan_editor_tab
+implementation_surfaces:
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: plan_tab_specification
+  create_worknodes: false
+source_lineage:
+  - APR-036
+  - APR-037
+  - APR-038
+  - APR-066
+preserved_exact_tokens:
+  - "plan tab"
+  - "deduplication"
+  - "Build With Crew"
+negative_constraints:
+  - Do not create duplicate editor tabs for the same plan.
+  - Do not omit primary plan controls from the left editor tab.
+owner_hints:
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/FinalGUISpec.md
+
+```yaml
+plan_unit_id: APR-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: >-
+  Canceling a scheduled plan build invalidates the scheduled action and prevents dispatch. Triggering an
+  immediate Build on a scheduled plan automatically invalidates its pending schedule without affecting
+  unrelated schedules. Plan revisions invalidate schedules bound to earlier plan version hashes.
+gui_related: false
+gui_classification_reason: Governs schedule invalidation, execution precedence, and version binding in plan runtime.
+depends_on: [APR-014]
+unblocks: []
+acceptance_criteria:
+  - Canceled schedules are fenced and do not dispatch.
+  - Immediate Build invalidates the corresponding pending schedule.
+  - Version revisions invalidate schedules bound to older version hashes.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: schedule_invalidation_failure_or_duplicate_dispatch
+reasoning_tier: high
+context_scope: plan_scheduling_lifecycle
+implementation_surfaces:
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Scheduling_and_Quota_Resume.md
+node_compile_hint:
+  mode: plan_schedule_specification
+  create_worknodes: false
+source_lineage:
+  - APR-019
+preserved_exact_tokens:
+  - "immediate Build"
+  - "schedule invalidation"
+  - "version hash"
+negative_constraints:
+  - Do not dispatch a canceled plan schedule.
+  - Do not leave an orphaned pending schedule when immediate Build is triggered.
+owner_hints:
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Scheduling_and_Quota_Resume.md
+

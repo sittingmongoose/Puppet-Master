@@ -1,21 +1,22 @@
-# Puppet Master Assistant 5.6 Pro — repair delivery v2
+# Puppet Master Assistant — v3 rebuilt delivery
 
-Open PM_Chat_Assistant_5.6_Pro_Standalone.html or index.html. Both are self-contained and byte-identical. The complete replacement ZIP merges its Concepts folder at repository root; it also contains generated TestPMConcept and its Settings source/build lane.
+Open PM_Chat_Assistant_5.6_Pro_Standalone.html or index.html. They are generated, self-contained and byte-identical.
 
 ## Rebuild
-    python build.py
-    python build.py --check
+```sh
+python build.py
+python build.py --check
+```
+Edit the source modules, not either output. `narrow-review.js/css` is the v3 presentation and fixture layer; shared choices are registered in app.js. Existing owner modules retain their operations.
 
-Edit the feature source modules, not the generated HTML. Python and Node are needed for the supplied checks, not for opening the standalone.
+## This actual rebuild
+The previous v3 download links named files that were absent. This delivery was newly rebuilt from the surviving v2 source. It is not a recovery of the unverified prior v3 binaries.
 
-## This revision
-Restores the styled floating activity pill and clear transcript margins; pins item-specific previews; moves Context Lens into flow; adds full BSD configuration and shared main-model/Persona selectors for all collaborative flows; redesigns scheduling; opens exact plans in controllable left tabs; types and links work notices to actual recorded evidence or honest Work notes; preserves narrow History icons and Working design. Adds 27 scoped refinement demos under Demo Studio.
+Changes include remaining shared choice pickers and option descriptions; inset collaboration footers; one-reviewer Single Agent admission; internal notes omitted from routine transcript cards; red/green file-change counts; refreshed History narratives and explicit recovery groups; aligned Activity and Context views; one live BSD detail section; and a fix for the narrow editor pushing chat into the resize column. Retained v2 features include plan tabs, floating styled activity bar, pinned previews, in-flow Context Lens and main model/Persona pickers.
 
-The original Working visual/motion files remain unchanged. The only exception in a Working module is the Step Rail Simple reset registration hook in variants-a.js: it now chains the prior owner once, rather than manually invoking it and then invoking it again through the registry. No Working markup/style/choreography was redesigned.
+All ten listed working/motion source files are byte-identical to the supplied v2 source. Native runtime and canonical Plans are not implemented by this concept.
 
-## Verification and limits
-reports/assistant-polish-v2/ contains current hash-bound evidence: 329 Assistant browser assertions (including 192 layout cases and 27 gallery landings); 19 separate TestPM Settings assertions. All passed in the scoped harness. Captured screenshots were inspected for representative revised surfaces. These are concept tests, not native runtime certification.
+## Evidence boundaries
+217 scoped Assistant assertions were recorded on the final build, including 31 History opens and 64 width/theme/working-take cases. The browser process did not finish teardown within the runner timeout; these are recorded assertions, not a claim that the whole combined harness exited cleanly. Separate Settings checks completed with 66 passing assertions (21 top-level manager workspaces at three widths plus boot/style/error checks). A nested manager action census is not completed.
 
-Not completed: the full original feature-to-demo denominator, exhaustive 60fps recordings and every-frame visual acceptance, or persistent-origin reload (the browser harness uses opaque about:blank injection). Gallery landing is not a complete workflow outcome. Old reports elsewhere in the repository remain historical, not current acceptance.
-
-TestPM Settings are generated from an immutable published checkpoint plus T49 because the unchanged upstream full pipeline currently fails a pre-existing T45 tour-command guard. See Concepts/pm7-tools/ASSISTANT_SETTINGS_V2.md in the repository-root delivery. The full pipeline is NOT claimed green.
+The original exhaustive multiple-demos-per-feature and every-demo 60fps/frame-by-frame acceptance campaign remain open. The full reference-video every-frame review is not certified by this rebuild. Persistent-origin reload was not tested; the harness uses opaque set_content. Earlier totals such as 313/195, 35 threads, 39 demos or 58 managers are not reused as evidence.

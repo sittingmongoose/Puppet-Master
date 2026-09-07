@@ -29,7 +29,7 @@ def run():
             if not body.strip():continue
             f=Path(tmp)/(str(i)+'.js');f.write_text(body);r=subprocess.run(['node','--check',str(f)],capture_output=True,text=True)
             need(r.returncode==0,r.stderr);checked+=1
-    data=after.encode('utf-8');report={'build':'verified_checkpoint_plus_T49','upstream_complete_build':'blocked before T49 by pre-existing T45 tour source/guard mismatch','checkpoint':PIN,'transform':notes,'script_syntax_checks':checked,'output_sha256':hashlib.sha256(data).hexdigest(),'all_non_settings_scripts_byte_identical':True}
+    data=after.encode('utf-8');report={'build':'verified_checkpoint_plus_T49_narrow_v3','upstream_complete_build':'not_run_in_this_rebuild; prior v2 report identifies a T45 tour guard mismatch','checkpoint':PIN,'transform':notes,'script_syntax_checks':checked,'output_sha256':hashlib.sha256(data).hexdigest(),'all_non_settings_scripts_byte_identical':True}
     if a.check:need(a.out.is_file() and a.out.read_bytes()==data,'Output differs from a fresh checkpoint build')
     else:a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_bytes(data)
     if a.report:a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(report,indent=2)+'\n')

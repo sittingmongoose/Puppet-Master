@@ -1720,3 +1720,143 @@ owner_hints: [Plans/Back_Seat_Driver.md]
 ```
 
 ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
+
+## Cumulative v3 BSD Configuration, Session Invalidation, and Context Projection (2026-09-07)
+
+This section incorporates the cumulative Back Seat Driver (BSD) configuration parameters, session
+re-prime semantics, and unified context projection rules in accordance with APR-031, APR-032,
+APR-047, and APR-061.
+
+### 23. Full BSD Configuration and Stage Bindings (APR-031, APR-047)
+
+- **Comprehensive Configuration Surface:** The BSD Configure modal (accessible via the Assistant
+  wand menu BSD sidecar and Settings > AI & Providers > Back Seat Driver) exposes the complete set of
+  operational controls:
+  1. *Operational Mode:* Off, Auto, On.
+  2. *Advisor Identity:* Shared Model selector and Persona picker backed by `Plans/Models_System.md`
+     and `Plans/Personas.md`.
+  3. *Trigger Sensitivity:* High, Medium, Low thresholds for proactive intervention.
+  4. *Catch-up Delay:* Configurable duration threshold (seconds) before issuing advice during fast bursts.
+  5. *Cooldown Period:* Configurable turn threshold to avoid repetitive or spammy recommendations.
+  6. *Retain Transcript Policy:* Toggle governing advisor awareness of historical transcript turns.
+  7. *Self-Compaction Threshold:* Token ceiling triggering independent advisor context compaction.
+  8. *Ten Stage Bindings:* Explicit enablement toggles across all ten supported development stages:
+     PRD Builder, Planning Wizard, Plan Drafting, PlanUnit Compilation, WorkNode Generation,
+     Code Generation, Verification Run, Gate Evaluation, Audit Review, and Certification.
+- **Settings Store Alignment:** BSD configuration keys map directly to the canonical project settings
+  inventory in `Plans/settings_inventory.json` under `safety.approvals.bsd-*` (`safety.approvals.bsd-mode`,
+  `bsd-model`, `bsd-persona`, `bsd-trigger-sensitivity`, `bsd-catch-up-seconds`, `bsd-cooldown-turns`,
+  `bsd-retain-transcript`, `bsd-self-compact-threshold`). The stage bindings are projected coherently
+  into the proposed `safety.approvals.bsd-stage-bindings` schema.
+
+### 24. Advisor Session Identity Invalidation and Epoch Fencing (APR-032)
+
+- **Session Rebind Invalidation:** Reconfiguring the BSD Model, account, or Persona immediately
+  invalidates the existing advisor session handle.
+- **Re-Priming with Fresh State:** A fresh advisor session is created, re-primed with the newly
+  selected persona instructions and current project policy, and assigned a new session identity.
+- **Session Epoch Monotonicity:** Each rebind increments the advisor session epoch. In-flight advisor
+  requests from prior epochs are explicitly fenced and discarded upon receipt, ensuring no stale or
+  cross-model context pollutes the active session or generates phantom advice.
+
+### 25. Concise Context More Details Projection (APR-061)
+
+- **Compact Information Hierarchy:** The Context More Details view renders BSD status as a clean,
+  compact information hierarchy. Top-level status discloses mode (Off/Auto/On), active model, and
+  sensitivity. Deeper stage bindings and compaction stats are placed behind deliberate disclosure toggles.
+- **Strict Stripe Removal:** All decorative left-edge accent stripes, inset shadows, and pseudo-element
+  borders are eliminated from BSD context panels, enforcing uniform perimeter borders.
+
+```yaml
+plan_unit_id: BSD-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  The BSD Configure surface exposes mode (Off/Auto/On), shared Model and Persona selection, trigger
+  sensitivity, catch-up seconds, cooldown turns, retain-transcript policy, self-compaction threshold,
+  and ten stage bindings (PRD Builder, Planning Wizard, Plan Drafting, PlanUnit Compilation, WorkNode
+  Generation, Code Generation, Verification Run, Gate Evaluation, Audit Review, Certification). Values
+  map directly to canonical safety.approvals.bsd-* settings without ad-hoc storage keys.
+gui_related: true
+gui_classification_reason: Governs the BSD configuration modal controls, parameter inputs, and stage binding toggles.
+depends_on: [BSD-025]
+unblocks: [BSD-027]
+acceptance_criteria:
+  - Configuration exposes mode, shared model/persona pickers, sensitivity, catch-up, cooldown, and compaction controls.
+  - All ten development stage bindings are individually configurable.
+  - Settings map to canonical safety.approvals.bsd-* keys in project settings.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: configuration_parameter_omission
+reasoning_tier: standard
+context_scope: bsd_configuration
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: bsd_configuration_specification
+  create_worknodes: false
+source_lineage:
+  - APR-031
+  - APR-047
+preserved_exact_tokens:
+  - "bsd-mode"
+  - "bsd-model"
+  - "bsd-persona"
+  - "ten stage bindings"
+negative_constraints:
+  - Do not invent non-canonical storage keys for BSD configuration.
+  - Do not omit any of the ten stage bindings.
+owner_hints:
+  - Plans/Back_Seat_Driver.md
+```
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Settings_System.md
+
+```yaml
+plan_unit_id: BSD-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  Reconfiguring the BSD Model, account, or Persona invalidates the active advisor session, increments
+  the session epoch, fences prior-epoch asynchronous callbacks, and re-primes a fresh advisor session.
+  Context More Details projects BSD state in a compact information hierarchy with deep bindings behind
+  disclosures and no decorative left-edge accent stripes.
+gui_related: true
+gui_classification_reason: Governs advisor session lifecycle invalidation and compact BSD presentation in Context More Details.
+depends_on: [BSD-026]
+unblocks: []
+acceptance_criteria:
+  - Changing model, account, or persona invalidates old session and increments epoch.
+  - In-flight callbacks from prior epochs are discarded.
+  - Context More Details presents compact BSD state with no decorative left accent stripes.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: advisor_epoch_leak_or_visual_stripe_regression
+reasoning_tier: high
+context_scope: bsd_session_and_context_projection
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: bsd_lifecycle_and_ui_specification
+  create_worknodes: false
+source_lineage:
+  - APR-032
+  - APR-061
+preserved_exact_tokens:
+  - "session epoch"
+  - "re-prime"
+  - "Context More Details"
+negative_constraints:
+  - Do not allow prior-epoch callbacks to mutate the active advisor state.
+  - Do not render decorative left-edge stripes on BSD context panels.
+owner_hints:
+  - Plans/Back_Seat_Driver.md
+```
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/FinalGUISpec.md
+

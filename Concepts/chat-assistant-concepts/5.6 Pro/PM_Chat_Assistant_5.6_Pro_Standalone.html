@@ -12279,6 +12279,122 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .polish-demo-section .demo-trigger small{font-size:9px;color:var(--muted);font-weight:400;}
 .polish-demo-section .demo-trigger strong{font-size:11px;font-weight:500;}
 
+/* v3: narrow information layout. Deliberately excludes all working takes. */
+.shared-choice-list { max-height:min(420px,60vh);overflow-y:auto;padding:5px; }
+.shared-choice-list .menu-item { min-height:54px;align-items:center;padding:10px 12px; }
+.shared-choice-list .menu-copy strong {font-size:12px;line-height:1.4;}
+.shared-choice-list .menu-copy>span {font-size:11px;line-height:1.5;white-space:normal;}
+.choice-empty {margin:14px;color:var(--muted);font-size:12px;}
+.collab-configure .collab-configure-body {padding:20px 24px;}
+.collab-configure .collab-field-row {gap:16px;align-items:start;}
+.collab-configure label {font-size:12px;line-height:1.5;color:var(--muted);min-width:0;}
+.collab-configure h4 {font-size:12px;font-weight:650;letter-spacing:0;margin:22px 0 10px;color:var(--text);}
+.collab-configure .shared-picker-button {min-height:42px;margin-top:6px;}
+.collab-configure .collab-choice {background:var(--surface-2);}
+.collab-configure .collab-participant-editor {gap:0;}
+.collab-configure .collab-participant-editor-row {border:0;border-radius:0;background:transparent;padding:14px 0;border-bottom:1px solid var(--border);}
+.collab-member-name {gap:9px;}
+.collab-configure .collab-member-name input {border:0;background:transparent;font-size:13px;}
+.collab-configure .collab-member-pickers {gap:14px;padding-left:29px;}
+.collab-configure-foot,.collab-panel-foot {padding:16px 24px !important;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--border);}
+.collab-configure-foot>.soft-button:first-child {margin-right:auto;}
+.collab-add-specialists {border:0;margin-top:18px;}
+.collab-add-specialists>summary {cursor:pointer;font-size:12px;color:var(--muted);padding:10px 0;}
+.collab-checkbox-row {padding:9px 0;}
+.collab-qmax {font-size:11px;color:var(--muted);margin:8px 0;}
+.collab-panel .collab-followon,.collab-panel .collab-more-row {gap:8px;flex-wrap:wrap;}
+.diff-added {color:var(--positive);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.diff-removed {color:var(--danger);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.work-output-diff {display:inline-flex;gap:5px;}
+.work-output-summary p {margin:6px 0;font-size:12px;}
+.work-output {border-radius:0;background:transparent;border:0;border-bottom:1px solid var(--border);padding:8px 0;}
+.work-output-open {padding:9px 0;}
+.work-output-summary {padding:0 0 8px 30px;}
+/* Every Activity family shares insets and rules; keep structural tree connectors. */
+.activity-panel .activity-scroll {padding:14px 18px;}
+.activity-panel[data-variant] .pmap-section,.activity-panel .activity-section {
+ border:0;border-radius:0;box-shadow:none;background:transparent;border-bottom:1px solid var(--border);margin:0;padding:10px 0;
+}
+.activity-panel .activity-section-head {padding:9px 0;font-size:12px;}
+.activity-panel .activity-section-body {padding:6px 0;}
+.activity-panel .pmap-row,.activity-panel .activity-line {padding:11px 0;gap:9px;border-radius:5px;border:0;border-bottom:1px solid var(--border);background:transparent;min-width:0;}
+.activity-panel .pmap-row .copy,.activity-panel .activity-line .copy {min-width:0;}
+.activity-panel .pmap-row .copy strong,.activity-panel .activity-line .copy strong {font-size:12px;line-height:1.5;}
+.activity-panel .pmap-row .copy span,.activity-panel .activity-line .copy span {font-size:11px;line-height:1.5;}
+.activity-panel .pmap-row.is-selected {background:var(--surface-3);box-shadow:0 0 0 1px var(--border) inset;padding-inline:8px;}
+.activity-panel .pmap-section::before,.activity-panel .pmap-row::before {display:none;}
+.goal-section-v2 {font-size:12px;}
+.goal-section-v2 .goal-view,.goal-section-v2 .goal-bound {border:0;border-radius:0;box-shadow:none;background:transparent;padding:12px 0;}
+.goal-objective-full {font-size:13px;line-height:1.7;max-width:65ch;}
+.goal-section-v2 .goal-lifecycle {border:0;padding:14px 0;gap:8px;display:flex;flex-wrap:wrap;}
+.goal-section-v2 .goal-head {padding:10px 0;border-bottom:1px solid var(--border);}
+.goal-section-v2 .goal-disclosures {border:0;border-top:1px solid var(--border);padding:12px 0;gap:10px;}
+.goal-bound-wrap .goal-bound-h {font-size:11px;color:var(--muted);text-transform:none;}
+.goal-technical {margin:12px 0;font-size:11px;color:var(--muted);}
+.goal-technical summary {cursor:pointer;}
+.goal-technical dl {display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;margin:12px 0;}
+.goal-technical dd {margin:0;overflow-wrap:anywhere;}
+.goal-blocked-card {border:0;border-radius:0;background:transparent;padding:12px 0;}
+.todo-panel-summary {border:0;background:transparent;padding:8px 0 15px;}
+.todo-row {padding:12px 0;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;}
+.todo-title {font-size:12px;line-height:1.6;font-weight:500;}
+.todo-row.is-current .todo-title {font-weight:650;}
+.todo-children {border:0;margin-left:12px;}
+.todo-detail {padding:8px 0 12px 27px;}
+.todo-status-label {font-size:10px;}
+/* One bounded overview. Token composition and provenance remain in disclosures. */
+.ctx-drawer {width:min(470px,calc(100vw - 24px));}
+.ctx-drawer .drawer-scroll {padding:20px 24px;}
+.ctx-drawer .context-big>span {font-size:12px;}
+.ctx-drawer .metric-grid {display:grid;grid-template-columns:1fr;gap:0;}
+.ctx-drawer .metric-card {display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,1fr);gap:20px;align-items:baseline;padding:10px 0;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.ctx-drawer .metric-card label {font-size:12px;line-height:1.5;color:var(--muted);}
+.ctx-drawer .metric-card strong {text-align:right;font-size:12px;line-height:1.5;overflow-wrap:break-word;}
+.ctx-drawer .polish-context-section>h3>button {padding:14px 0;font-size:12px;}
+.ctx-drawer .context-section-body {padding:0 0 15px;}
+.ctx-drawer .context-section,.ctx-drawer .bsd-section {border-left:0;border-right:0;box-shadow:none;}
+.ctx-drawer .context-section::before,.ctx-drawer .bsd-section::before {display:none;}
+.ctx-drawer .ctx-grid2 {grid-template-columns:1fr;}
+.ctx-drawer .ctx-note {font-size:11px;line-height:1.6;}
+.bsd-overview {padding:4px 0 16px;border-bottom:1px solid var(--border);}
+.bsd-overview-head {display:flex;align-items:center;gap:10px;margin:0 0 12px;}
+.bsd-overview-head h3 {font-size:13px;margin:0;flex:1;}
+.bsd-summary-table {margin:0;}
+.bsd-summary-table>div,.bsd-session-grid>div {display:grid;grid-template-columns:minmax(78px,.7fr) minmax(0,1fr);gap:18px;padding:7px 0;align-items:baseline;}
+.bsd-summary-table dt,.bsd-session-grid dt {font-size:12px;color:var(--muted);}
+.bsd-summary-table dd,.bsd-session-grid dd {margin:0;text-align:right;font-size:12px;line-height:1.5;overflow-wrap:break-word;word-break:normal;}
+.bsd-summary-table dd strong {font:inherit;font-weight:600;}
+.bsd-disclosure {border:0;border-radius:0;background:transparent;padding:0;}
+.bsd-disclosure>summary {padding:13px 0;font-size:12px;display:flex;justify-content:space-between;cursor:pointer;border-top:1px solid var(--border);}
+.bsd-disclosure>summary::after {content:'›';margin-left:8px;}
+.bsd-disclosure[open]>summary::after {content:'⌄';}
+.bsd-finding {padding:12px 0;border:0;border-radius:0;background:transparent;border-bottom:1px solid var(--border);}
+.bsd-finding::before {display:none;}
+.bsd-session-grid {display:block;}
+.bsd-configure .demo-dialog-body {padding:20px 24px;}
+.bsd-configure .demo-dialog-foot {padding:16px 24px;gap:10px;}
+.bsd-config-pickers label,.bsd-config-grid label {font-size:12px;}
+/* Decorative card accents are not functional diff gutters or working rails. */
+:is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth,.bsd-finding,.ctx-cap,.ctx-fallback) {border-left-width:0;}
+:is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth)::before {display:none;}
+@media(max-width:620px){
+ .collab-configure .collab-configure-body {padding:18px;}
+ .collab-configure .collab-field-row,.collab-configure .collab-member-pickers {grid-template-columns:1fr;}
+ .collab-configure .collab-member-pickers {padding-left:0;}
+ .collab-configure-foot,.collab-panel-foot {padding:14px 18px !important;}
+ .ctx-drawer .drawer-scroll {padding:16px 18px;}
+ .activity-panel .activity-scroll {padding:12px 16px;}
+}
+
+/* Revealing an editor removes it from grid flow at narrow desktop widths.
+   Keep the remaining chat in the real content track, never the 5px resize track. */
+@media(max-width:1100px){
+ .workspace.editor-revealed{grid-template-columns:minmax(0,1fr)!important;}
+ .workspace.editor-revealed>.main-resizer{display:none;}
+ .workspace.editor-revealed>.assistant-pane{grid-column:1;min-width:0;}
+ .workspace.editor-revealed>.editor-pane{position:absolute;inset:0;width:100%;max-width:100%;z-index:40;}
+}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -19116,7 +19232,7 @@ window.PM56_EXT = window.PM56_EXT || {
             '<button class="text-button" data-action="goal-cancel-edit">Cancel edit</button>'+
             '<button class="primary-button" data-action="goal-save"'+(over?' disabled':'')+'>Save</button>'+
           '</div>'+
-          '<p class="goal-note">Save is your approved change. There is no confirmation dialog for your own edit.</p>'+
+
         '</div>'
       : '<div class="goal-view" data-k="goal-view">'+
           '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
@@ -19171,15 +19287,15 @@ window.PM56_EXT = window.PM56_EXT || {
       '<div class="goal-head" data-k="goal-head">'+statusChip(g)+
         '<span class="goal-rev">Revision '+g.revision+'</span>'+
         '<span class="spacer"></span>'+
-        '<span class="goal-hash" title="Compare-and-swap token for every mutation">'+esc(g.currentnessHash)+'</span>'+
+
       '</div>'+
       (g.blockedReason?'<div class="goal-blocked-card" data-k="goal-blocked-card">'+ctx.icon('lock',13)+'<div><strong>Blocked</strong><p>'+esc(g.blockedReason)+'</p></div></div>':'')+
       body + lifecycle +
       '<div class="goal-disclosures" data-k="goal-disclosures">'+
         '<button class="text-button" data-action="goal-toggle-history">'+(ui.showHistory?'Hide':'Show')+' History ('+g.revisions.length+')</button>'+
         '<button class="text-button" data-action="goal-toggle-conts">'+(ui.showContinuations?'Hide':'Show')+' continuation log ('+g.continuations.length+')</button>'+
-        '<button class="text-button" data-action="goal-demo-proposal">Simulate an agent-proposed change</button>'+
-      '</div>'+ hist + conts +
+
+      '</div>'+ hist + conts + '<details class="goal-technical"><summary>Technical details</summary><dl><dt>Currentness</dt><dd>'+esc(g.currentnessHash)+'</dd></dl></details>' +
     '</div>';
   }
 
@@ -20175,7 +20291,6 @@ window.PM56_EXT = window.PM56_EXT || {
     var rows = [
       ['Goal', c.goal ? 'On' : 'Off', c.goal, 'A durable goal artifact rides alongside whatever mode is active.'],
       ['Crew', c.crew ? 'On' : 'Off', c.crew, 'Parallel child agents with their own routes.'],
-      ['Back Seat Driver', c.bsd || 'Off', c.bsd && c.bsd !== 'Off', 'Independent evaluation of the current turn.'],
       ['Context Lens', c.context || 'Off', c.context && c.context !== 'Off', 'Mute, Focus and staged Subcompact over selected messages.'],
       ['ELI5', c.eli5 ? 'On' : 'Off', c.eli5, 'Plain-language restatement alongside the technical answer.'],
       ['Thought Stream', c.thought || 'Off', c.thought && c.thought !== 'Off', 'Streamed reasoning summary while a turn runs.']
@@ -20215,6 +20330,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
     html += '<div class="metric-grid">' + card('Tokens loaded', ktok(w.used)) +
       card('Available', ktok(w.available != null ? w.available : (w.limit - w.used))) + card('Cache hit', noRoute ? 'not reported' : pct2(w.cacheHitPct)) + '</div>';
+    html += ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '';
     html += section('Token details', '<div class="metric-grid">'+card('Cached tokens', ktok(w.cached))+card('Input this turn', ktok(w.inputThisTurn))+card('Output this turn', ktok(w.outputThisTurn))+'</div>');
 
     html += section('Source composition', segBar(esc, sources, w.used, w.limit, false, 'composition-bar') +
@@ -20265,7 +20381,7 @@ window.PM56_EXT = window.PM56_EXT || {
     /* Back Seat Driver section. bsd.js owns the content; it appends here rather
        than re-registering the contextDrawer replace slot. Curated view only -- the
        Raw view returns above and keeps its existing redaction rules. */
-    html += section('Back Seat Driver',ctx.extRender ? ctx.extRender('contextBsdSection', {}) : '');
+
 
     return html + '</div></aside>';
 
@@ -33606,6 +33722,7 @@ window.PM56_EXT = window.PM56_EXT || {
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
     var c = completionProjection(run);
+    if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
     var bits = [];
     if (c.review_truth) bits.push('<span class="collab-truth-review">' + esc(c.review_truth.label) + '</span>');
@@ -34185,31 +34302,64 @@ window.PM56_EXT = window.PM56_EXT || {
     });
   });
 
+  // Choice presentation reuses the main menu/picker host. Only the draft owns values.
+  const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
+  function normalizeReview(d){
+    if(!d||d.kind!=='review')return;
+    if(d.config.strategy==='single_agent'){
+      if(d.rows.length>1){
+        d._previousMultiRows=d.rows.slice();
+      }
+      if(!d.rows.length)d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
+      d.rows=d.rows.slice(0,1);d.config.reviewerCount=1;d.wonderer=false;d.grillMe=false;
+    }else if(d.config.strategy==='multi_pass'){
+      if(d._previousMultiRows&&d._previousMultiRows.length>1&&d.rows.length<=1){
+        d.rows=d._previousMultiRows.slice();
+      }else if(d.rows.length<2){
+        while(d.rows.length<3){
+          var idx=d.rows.length;
+          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[idx]||('Reviewer '+(idx+1)),DEFAULT_ROW_MODEL[idx%DEFAULT_ROW_MODEL.length],'Reviewer'));
+        }
+      }
+      d.config.reviewerCount=d.rows.length;
+    }
+  }
+  function configChoice(ctx,d,key,title){
+    const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
+    return '<label>'+esc(title)+'<button type="button" class="shared-picker-button collab-choice" data-action="collab-pick-choice" data-field="'+key+'" data-menu-anchor="collab-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';
+  }
+  EXT.action('collab-pick-choice',function(ctx,btn){
+    const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
+    window.PM56_PICKERS.openChoice(btn,btn.closest('label').childNodes[0].textContent,draft.config[key],CONFIG_CHOICES[key],value=>{
+      if(RTC.draft!==draft)return;draft.config[key]=value;normalizeReview(draft);ctx.renderOverlays();
+    });return true;
+  });
   function kindConfigFields(ctx, d) {
     if (d.kind === 'crew') {
-      return '<div class="collab-field-row"><label>Coordinator<select data-collab-input="cfg-coordinator"><option value="parent_assistant"' + (d.config.coordinator === 'parent_assistant' ? ' selected' : '') + '>Parent assistant</option><option value="dedicated_synthesis_model"' + (d.config.coordinator !== 'parent_assistant' ? ' selected' : '') + '>Dedicated synthesis model</option></select></label>' +
-        '<label>Assignment strategy<select data-collab-input="cfg-assignmentStrategy"><option value="manager_directed"' + (d.config.assignmentStrategy === 'manager_directed' ? ' selected' : '') + '>Manager-directed</option><option value="explicit_static"' + (d.config.assignmentStrategy === 'explicit_static' ? ' selected' : '') + '>Explicit static</option><option value="adaptive"' + (d.config.assignmentStrategy === 'adaptive' ? ' selected' : '') + '>Adaptive</option></select></label>' +
-        '<label>Parallelism<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
+      return '<div class="collab-field-row">' + configChoice(ctx,d,'coordinator','Coordinator') + '' +
+        '' + configChoice(ctx,d,'assignmentStrategy','Task assignment') + '' +
+        '<label>Simultaneous tasks<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
         '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
     }
     if (d.kind === 'brainstorm') {
       var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
       return '<div class="collab-field-row"><label>Debate rounds<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '"></label>' +
-        '<label>Research strength<select data-collab-input="cfg-externalResearch"><option value="maximum"' + (d.config.externalResearch === 'maximum' ? ' selected' : '') + '>Maximum</option><option value="standard"' + (d.config.externalResearch === 'standard' ? ' selected' : '') + '>Standard</option></select></label></div>' +
+        '' + configChoice(ctx,d,'externalResearch','Research') + '</div>' +
         '<p class="collab-qmax">' + (d.grillMe ? 'Maximum questions: ' + (d.config.questionLimit + d.config.grillExtension) + ' (' + d.config.questionLimit + ' + Grill Me ' + d.config.grillExtension + ')' : 'Maximum questions: ' + d.config.questionLimit) + '</p>';
     }
     if (d.kind === 'review') {
-      return '<div class="collab-field-row"><label>Strategy<select data-collab-input="cfg-strategy"><option value="multi_pass"' + (d.config.strategy === 'multi_pass' ? ' selected' : '') + '>Multi-Pass Review</option><option value="single_agent"' + (d.config.strategy === 'single_agent' ? ' selected' : '') + '>Single Agent</option></select></label>' +
-        '<label>Reviewers (1–8, default 3)<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
+      return '<div class="collab-field-row">' + configChoice(ctx,d,'strategy','Review approach') + '' +
+        '<label>Reviewers<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
         '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
     }
-    return '<div class="collab-field-row"><label>Turn policy<select data-collab-input="cfg-turnPolicy"><option value="moderated"' + (d.config.turnPolicy === 'moderated' ? ' selected' : '') + '>Moderated</option><option value="round_robin"' + (d.config.turnPolicy === 'round_robin' ? ' selected' : '') + '>Round robin</option><option value="free_discussion"' + (d.config.turnPolicy === 'free_discussion' ? ' selected' : '') + '>Free discussion</option><option value="ask_everyone_once"' + (d.config.turnPolicy === 'ask_everyone_once' ? ' selected' : '') + '>Ask everyone once</option></select></label>' +
+    return '<div class="collab-field-row">' + configChoice(ctx,d,'turnPolicy','Conversation flow') + '' +
       '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
   }
 
   function renderConfigureModal(ctx) {
     var d = RTC.draft; if (!d) return '';
+    normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     var supportsAdditive = d.kind === 'crew' || d.kind === 'brainstorm' || d.kind === 'chat_room';
     var overLimit = d.rows.length > limits[1] || d.rows.length < limits[0];
@@ -34219,16 +34369,16 @@ window.PM56_EXT = window.PM56_EXT || {
       '<span class="spacer"></span><button class="icon-button" data-action="collab-modal-cancel">' + ctx.icon('close', 13) + '</button></div>' +
       '<div class="dialog-body collab-configure-body">' +
       '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
-      '<div class="collab-field-row"><label>Purpose<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
-      '<h4>Participants (' + d.rows.length + ', ' + limits[0] + '–' + limits[1] + ')' + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
+      '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
+      '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
-      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' Add participant</button>' +
-      '<h4>' + esc(KIND_LABEL[d.kind]) + ' configuration</h4>' +
+      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
+      '<h4>How they work</h4>' +
       kindConfigFields(ctx, d) +
-      (supportsAdditive ? '<div class="collab-add-specialists"><strong>Add specialists</strong>' +
+      (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
-        '</div>' : '') +
+        '</details>' : '') +
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
@@ -34292,18 +34442,20 @@ window.PM56_EXT = window.PM56_EXT || {
   });
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[];
     d.rows.push(draftRow((KIND_LABEL[d.kind] + ' member ' + (d.rows.length + 1)), DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length], d.kind === 'review' ? 'Reviewer' : 'Implementer'));
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-remove-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
+    if(d.rows.length<=KIND_PARTICIPANT_LIMIT[d.kind][0])return true;
     d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
     ctx.renderOverlays(); return true;
   });
   EXT.action('collab-modal-duplicate-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
     var src = d.rows.filter(function (r) { return r.rowId === btn.dataset.row; })[0];
-    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); d.rows.push(copy); }
+    if (src) { var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none'); if(d.kind==='review'&&d.config.strategy==='single_agent')d.rows=[copy];else d.rows.push(copy); }
     ctx.renderOverlays(); return true;
   });
 
@@ -34330,7 +34482,7 @@ window.PM56_EXT = window.PM56_EXT || {
     else if (k.indexOf('cfg-') === 0) {
       var field = k.slice(4);
       var num = ['parallelism', 'debateRounds', 'maxRounds', 'reviewerCount'].indexOf(field) >= 0;
-      d.config[field] = num ? clamp(t.value, 1, 20) : t.value;
+      d.config[field] = num ? clamp(t.value, 1, 20) : t.value;normalizeReview(d);
     }
     return true;
   }
@@ -34373,6 +34525,7 @@ window.PM56_EXT = window.PM56_EXT || {
      drivable in a concept that has no provider to fail; every other clause is
      a real check over the draft the user configured. */
   function startPreflight(d) {
+    normalizeReview(d);
     if (d.forceFailure)
       return { ok:false, error:String(d.forceFailure), slot:null,
                message:'Start was refused ('+d.forceFailure+'). Your configuration is unchanged; no run, card or participant record was created.' };
@@ -34390,6 +34543,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.toast('Out of range', KIND_LABEL[d.kind] + ' supports ' + limits[0] + '–' + limits[1] + ' participants.'); return true; }
     /* Crew Auto's own modal commits a POLICY, not a run (§5.3/CREW-004): the
@@ -35071,15 +35225,15 @@ window.PM56_EXT = window.PM56_EXT || {
   }
 
   function detailsSection(ctx){
-    var p=P(), st=liveState(), bound=p.stages.filter(s=>s.bound);
-    return '<section class="bsd-section" data-k="bsd-section" id="ctx-bsd">'+
-      '<div class="bsd-summary-head"><span class="bsd-live">'+esc(STATE_LABEL[st])+' · '+esc(p.mode)+'</span><button class="soft-button" data-action="bsd-configure-stages">'+ctx.icon('sliders',12)+' Configure</button></div>'+
-      '<div class="bsd-summary-identity"><strong>'+esc(p.model.effective)+'</strong><span>'+esc(p.persona.effective)+'</span></div>'+
-      '<div class="bsd-summary-metrics"><span>Checked '+p.cursor+'/'+p.generation+'</span><span>'+bound.length+' stages</span><span>'+heldFindings().length+' held</span></div>'+
+    var p=P(),st=liveState(),bound=p.stages.filter(s=>s.bound);
+    function row(label,value){return '<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>';}
+    return '<section class="bsd-section bsd-overview" data-k="bsd-section" id="ctx-bsd">'+
+      '<div class="bsd-overview-head"><h3>Back Seat Driver</h3><button class="text-button" data-action="bsd-configure-stages">Configure</button></div>'+
+      '<dl class="bsd-summary-table">'+row('Status',STATE_LABEL[st])+row('Mode',p.mode[0].toUpperCase()+p.mode.slice(1))+row('Model',p.model.effective)+row('Persona',p.persona.effective)+row('Coverage',p.cursor+' / '+p.generation+' turns')+'</dl>'+
       '<details class="bsd-disclosure"><summary>Findings <span>'+p.findings.length+'</span></summary><div class="bsd-findings">'+p.findings.map(f=>findingRow(ctx,f)).join('')+'</div></details>'+
-      '<details class="bsd-disclosure"><summary>Session & usage</summary><dl class="bsd-session-grid">'+
-        [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Effective model',p.model.effective],['Persona',p.persona.requested],['Sensitivity',p.sensitivity],['Catch-up cap',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Self-compact',Math.round(p.selfCompactThreshold*100)+'%'],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>'+
-        '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Transcript</button></div></details>'+
+      '<details class="bsd-disclosure"><summary>Session and usage</summary><dl class="bsd-session-grid">'+
+      [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Sensitivity',p.sensitivity],['Catch-up',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Compaction',Math.round(p.selfCompactThreshold*100)+'%'],['Stages',bound.length+' of '+p.stages.length],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>row(...r)).join('')+'</dl>'+
+      '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Advisor transcript</button></div></details>'+
       (p.quarantined?'<p class="bsd-quarantine">Advisor unavailable · primary work unaffected</p>':'')+'</section>';
   }
 
@@ -35089,6 +35243,9 @@ window.PM56_EXT = window.PM56_EXT || {
     configDraft.modelId=configDraft.model.id||(D.models.find(m=>m.name===configDraft.model.effective)||D.models[0]).id;
     ctx.closeMenu();ctx.openDialog({type:'bsd-stages'});
   }
+  var BSD_CHOICES={sensitivity:[{value:'conservative',label:'Conservative',description:'Reserve advice for strong signals.'},{value:'balanced',label:'Balanced',description:'Balance useful feedback with fewer interruptions.'},{value:'frequent',label:'Frequent',description:'Surface more potential improvements.'}],catchUpSeconds:[0,15,30,60].map(v=>({value:v,label:v?v+' seconds':'Never wait',description:v?'Maximum wait for the advisor to catch up.':'Continue without waiting for the advisor.'}))};
+  function bsdChoice(ctx,d,key,label){var selected=BSD_CHOICES[key].find(o=>o.value===d[key])||BSD_CHOICES[key][0];return '<label>'+label+'<button type="button" class="shared-picker-button" data-action="bsd-pick-choice" data-field="'+key+'" data-menu-anchor="bsd-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';}
+  EXT.action('bsd-pick-choice',function(ctx,btn){var draft=configDraft,key=btn.dataset.field;if(!draft||!BSD_CHOICES[key])return true;window.PM56_PICKERS.openChoice(btn,key==='sensitivity'?'Trigger sensitivity':'Catch-up cap',draft[key],BSD_CHOICES[key],function(value){if(configDraft===draft){draft[key]=value;ctx.renderOverlays();}});return true;});
   function configDialog(ctx){
     var d=configDraft;if(!d){configDraft=JSON.parse(JSON.stringify(P()));d=configDraft;d.modelId=(D.models.find(m=>m.name===d.model.effective)||D.models[0]).id;}
     const pick=window.PM56_PICKERS;
@@ -35096,8 +35253,8 @@ window.PM56_EXT = window.PM56_EXT || {
       '<div class="demo-dialog-head"><strong>Back Seat Driver</strong><span class="meta-pill">Read-only advisor</span><span class="spacer"></span><button class="icon-button" data-action="bsd-close-dialog" title="Cancel">'+ctx.icon('close',13)+'</button></div>'+
       '<div class="demo-dialog-body"><div class="bsd-config-mode">'+['off','auto','on'].map(v=>'<button class="soft-button '+(d.mode===v?'active':'')+'" data-action="bsd-config-mode" data-value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</button>').join('')+'</div>'+
       '<div class="bsd-config-pickers"><label>Advisor model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona.requested)+'</label></div>'+
-      '<div class="bsd-config-grid"><label>Trigger sensitivity<select data-bsd-field="sensitivity">'+['conservative','balanced','frequent'].map(v=>'<option value="'+v+'" '+(d.sensitivity===v?'selected':'')+'>'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
-      '<label>Catch-up cap<select data-bsd-field="catchUpSeconds">'+[0,15,30,60].map(v=>'<option value="'+v+'" '+(d.catchUpSeconds===v?'selected':'')+'>'+(v?v+' seconds':'Never wait')+'</option>').join('')+'</select></label>'+
+      '<div class="bsd-config-grid">'+bsdChoice(ctx,d,'sensitivity','Trigger sensitivity')+''+
+      ''+bsdChoice(ctx,d,'catchUpSeconds','Catch-up cap')+''+
       '<label>Cooldown · turns<input data-bsd-field="cooldownTurns" type="number" min="0" max="100" value="'+d.cooldownTurns+'"></label>'+
       '<label>Self-compact · %<input data-bsd-field="selfCompactThreshold" type="number" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label></div>'+
       '<label class="bsd-retain"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label>'+
@@ -40022,7 +40179,7 @@ window.PM56_EXT = window.PM56_EXT || {
     const m=ctx.m;if(m?.type!=='agent-work')return '';
     const ref=reference(m),c=ref.path&&D.changes.find(c=>c.path===ref.path);
     const label=kindLabel(ref),icon=ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?'users':'document';
-    return '<article class="work-output" data-output-kind="'+ctx.esc(ref.kind)+'" data-message-id="'+ctx.esc(m.id)+'"><button class="work-output-open" type="button" data-action="open-work-record" data-id="'+ctx.esc(m.id)+'"><span class="work-output-icon">'+ctx.icon(icon,16)+'</span><span class="work-output-copy"><span class="work-output-kind">'+ctx.esc(label)+'</span><strong>'+ctx.esc(m.title||label)+'</strong>'+ (ref.path?'<span class="work-output-path">'+ctx.esc(ref.path)+'</span>':'')+'</span><span class="work-output-target">'+(c&&ref.kind==='change'?'<span class="work-output-diff">+'+c.add+' −'+c.del+'</span>':'')+ctx.icon('chevron',13)+'</span></button><div class="work-output-summary">'+formatRecord(ctx,m.detail)+'</div></article>';
+    return '<article class="work-output" data-output-kind="'+ctx.esc(ref.kind)+'" data-message-id="'+ctx.esc(m.id)+'"><button class="work-output-open" type="button" data-action="open-work-record" data-id="'+ctx.esc(m.id)+'"><span class="work-output-icon">'+ctx.icon(icon,16)+'</span><span class="work-output-copy"><span class="work-output-kind">'+ctx.esc(label)+'</span><strong>'+ctx.esc(m.title||label)+'</strong>'+ (ref.path?'<span class="work-output-path">'+ctx.esc(ref.path)+'</span>':'')+'</span><span class="work-output-target">'+(c&&ref.kind==='change'?'<span class="work-output-diff"><span class="diff-added">+'+c.add+'</span> <span class="diff-removed">−'+c.del+'</span></span>':'')+ctx.icon('chevron',13)+'</span></button><div class="work-output-summary">'+formatRecord(ctx,m.detail)+'</div></article>';
   });
   E.action('open-work-record',(ctx,btn)=>{
     const hit=lookup(ctx,btn.dataset.id);if(!hit)return true;
@@ -40118,6 +40275,110 @@ window.PM56_EXT = window.PM56_EXT || {
  }
  E.action('repair-demo',(ctx,btn)=>{launch(ctx,btn.dataset.scenario);return true;});
  window.PM56_REPAIR_DEMOS={list:()=>scenarios.map(([id,feature,label,expected])=>({id,feature,label,expected})),launch:id=>launch(E.ctx(),id),gallery:ctx=>'<section class="demo-section polish-demo-section"><h3>Assistant refinements</h3><div class="demo-section-body">'+scenarios.map(([id,feature,label,expected])=>'<button class="demo-trigger" data-action="repair-demo" data-scenario="'+id+'" title="'+ctx.esc(expected)+'"><small>'+ctx.esc(feature)+'</small><strong>'+ctx.esc(label)+'</strong></button>').join('')+'</div></section>'};
+})();
+
+/* v3 fixture presentation. This is authored demonstration data, never a
+   filter on real provider errors. Original source and negative fixtures remain
+   in data.js and the recovery threads. Product state machines are unchanged. */
+(function(){
+ 'use strict';
+ const D=window.PM56_DATA,E=window.PM56_EXT;
+ const stories={
+ query:['Query performance','Optimize the tenant-scoped analytics read path and show me the plan.','I’ll check the query and schema, then propose a bounded change with a benchmark and rollback check.','Keep the rollout reversible.','The plan is ready to inspect. Open it to review the steps, revise the scope, or start the build.'],
+ 'orbit-run':['Two-stage rollout'],
+ 'queue-demo':['Follow-up messages'],
+ plain:['Product design discussion','Help me simplify the project dashboard.','Start with the current project, the next useful action, and recent work. Keep secondary metrics in their own detail view.','What belongs above the fold?','The project name, current task, and one clear next action. History and advanced configuration can remain one click away.'],
+ questions:['Deployment questions','Plan a deployment for the analytics change.','First, let’s confirm the target and rollout window. Your answers stay with the plan.','Use staging before production.','Noted. The remaining questions cover the deployment window, rollback conditions, and who receives the result.'],
+ subagents:['Architecture review','Review the runtime boundary with independent specialists. Do not change files.','The reviewers will inspect ownership, persistence, and command routing, then return a combined findings report.','Keep the findings tied to their source.','Each finding includes its location and supporting evidence. Suggested repairs remain proposals until you choose to act.'],
+ bsd:['Advisor feedback','Check the migration approach before implementation.','Back Seat Driver can offer a separate read-only opinion without taking over the main task.','Preserve the existing migration history.','The proposed change uses a new forward migration. The file-change record opens the recorded diff.'],
+ context:['Focus a conversation','Focus this conversation on the current renderer and tests.','Context Lens lets you focus relevant turns, mute irrelevant material, and preview a smaller context without losing the original thread.','Show what changes before compacting.','Open Context More Details to inspect sources and the compaction preview. Applying a preview is a separate action.'],
+ visuals:['Working with artifacts','Show the architecture and benchmark results in a form I can explore.','The diagram, chart, and data table are separate artifacts. Open each one to inspect its underlying content.','Keep the source available.','Each artifact retains its source view; a rendered visualization is not a replacement for the original data.'],
+ debug:['Investigate a browser issue','Investigate the account-switching bug and verify the repair.','I’ll bind the target, reproduce the issue, inspect the evidence, then check the candidate repair and cleanup.','Use the existing browser session.','The session and evidence stay attached to this investigation. The recorded file change can be reviewed before applying it.'],
+ offline:['Recovery · offline delivery','Send this message when the connection returns.','The message is queued once. It will not create duplicate turns after reconnecting.','Has the connection returned?','The reconnect receipt shows the queued message was delivered once. Approval requests are never granted automatically during an outage.'],
+ attachments:['Files in a conversation','Inspect this schema and compare it with the attached runbook.','The files remain attached to this turn. Preview a file to inspect its source, version, and what was included in context.','Can I attach a folder as well?','Yes. The folder starts with a bounded manifest; its files are read only as needed rather than all being inserted into the prompt.'],
+ 'tool-failure':['Recovery · interrupted tool','The execution host disconnected. Keep the evidence and resume safely.','The interrupted step is recorded. Reconnect and revalidate the target before continuing.','Don’t repeat a completed change.','The resume path uses the existing operation identity and evidence. It does not blindly replay the entire run.'],
+ 'goal-replan':['Revise a goal','Keep improving the query until the benchmark is under the target.','The Goal holds that objective and its lifecycle. Its To-Dos remain the separate, actionable task list.','Pause while I change the scope.','Paused. You can edit the objective and resume when ready; changing the Goal does not silently rewrite an approved Plan.'],
+ route:['Provider route change','Use the coding-plan account for the next step.','The selected route includes the provider, model, and account—not just the model’s display name.','Show the related implementation change.','The file record opens the exact recorded diff. Subsequent messages retain their own route attribution.'],
+ 'plan-deep':['Deep Plan','Research the session cache problem and produce a plan before changing code.','I’ll compare the approaches and turn the chosen one into a plan with explicit verification steps.','Let me review it first.','Open the plan in the left tab. Build, Revise, and the other controls remain with the plan document.'],
+ crew:['Crew and shared work','Use a Crew to coordinate the implementation and review.','The coordinator assigns bounded work to each role and combines their results. Models and Personas can be chosen per participant.','How is this different from Chat Room?','Crew assigns work. Chat Room hosts a discussion; turning a conclusion into a task or plan requires an explicit action.'],
+ 'artifact-error':['Recovery · artifact rendering','The chart could not render. Keep the source so I can inspect it.','The source remains available. Retry the renderer without replacing the original artifact.','Is an empty result a renderer failure?','No. An empty dataset and a rendering error are separate states and should be reported separately.'],
+ 'new-message':['Continue reading','Continue the benchmark while I read the earlier results.','New messages will not move your reading position. Use the new-message indicator when you are ready to catch up.','Keep the last result visible when I reach the bottom.','The transcript clears the floating Activity Bar and composer at its settled bottom position.'],
+ 'no-models':['Recovery · unavailable account','This account needs attention. What happens to the pending request?','The request stays visible. Choose an available configured route or repair the account in Provider Settings.','Don’t silently switch accounts.','Account changes remain explicit; an unavailable route must not be represented as a successful provider attempt.'],
+ 'archived-1':['Archived · control review','Check the controls and navigation in this concept.','The review checks names, destinations, disabled states, and whether every visible action leads to the expected view.'],
+ 'archived-2':['Archived · route comparison','Compare the configured model routes for this project.','Model names, account identities, capabilities, and usage availability are separate properties. The picker keeps them together when choosing a route.'],
+ 'archived-3':['Archived · usage layout','Make the usage view easy to scan.','Show the active window, the amount used, and the reset time first. Keep additional meters and technical evidence behind disclosure.'],
+ 'archived-4':['Archived · onboarding decisions','Keep onboarding focused on what I need to get started.','Ask for essential connection details first. Move advanced settings into their manager rather than filling the first-run flow with options.'],
+ 'archived-5':['Archived · browser integration','How should browser work appear in Assistant Chat?','Browser actions use Puppet Master’s Browser Program surface. Captures can attach to a conversation, while the browser’s main launcher stays outside the composer.'],
+ 'archived-6':['Archived · Settings layout','Organize the Settings managers so they work in narrow layouts.','Use aligned labels and values, distinct section spacing, and short action rows. Show explanations on demand instead of repeating them beneath every control.']
+ };
+ const review=[];
+ function recoveryThread(id,title){
+   let t=D.threads.find(t=>t.id===id);if(t)return t;
+   t={id,title,summary:'Explicit recovery examples; not the normal workflow.',status:'idle',pinned:false,archived:false,unread:0,updated:'Demo',messages:[],model:'',worktree:'feature/query-index',goalId:null};D.threads.push(t);return t;
+ }
+ const scheduler=window.PM56_SCHED;
+ const notes=[];
+ D.threads.slice().forEach(t=>{
+   const before=t.messages.map(m=>({id:m.id,type:m.type})),story=stories[t.id];
+   if(!story)return;
+   t.title=story[0];t.summary=story[2]||t.summary;
+   if(story.length>1){let i=1;const messages=[];
+     t.messages.forEach(m=>{
+       if(m.type==='text'){
+         if(i>=story.length)return;
+         const intendedRole=i%2?'user':'assistant';if(m.role!==intendedRole)return;
+         m.body=story[i++];messages.push(m);
+       } else messages.push(m);
+     });t.messages=messages;
+   }
+   t.messages.forEach(m=>{
+     if(m.type==='agent-work'&&window.PM56_RECORDS.reference(m).kind==='note'){m.internalOnly=true;notes.push({thread:t.id,message:m});}
+     if(m.id==='bsd-09'){m.title='Forward migration';m.detail='Add the index in a new migration; preserve applied history.';}
+     if(m.id==='route-04'){m.title='Account-aware provider rows';m.detail='Each row identifies its provider and account.';}
+     if(m.id==='route-12'){m.title='Explicit route status';m.detail='Use the selected provider and account to resolve availability.';}
+     if(m.id==='route-07')m.detail='Selected Qwen 3.8 · Coding Plan for the next turn.';
+     if(t.id==='goal-replan'&&m.type==='goal-receipt'){
+       m.title=m.id==='goal-replan-06'?'Goal paused':'Goal updated';
+       m.detail=m.id==='goal-replan-06'?'Resume when the objective is ready.':'The objective changed; the approved Plan remains unchanged.';
+     }
+   });
+   // Keep failure fixtures intact, but out of the everyday query conversation.
+   if(t.id==='query')t.messages=t.messages.filter(m=>{
+     if(m.type==='sched-message'){
+       const record=scheduler?.list().messages.find(r=>r.scheduled_dispatch_id===m.scheduleId);
+       if(/failed|held|expired|canceled/.test(m.id)){
+         const dest=recoveryThread('recovery-scheduling','Recovery · scheduled delivery');dest.messages.push(m);if(record)record.thread_id=dest.id;return false;
+       }
+     }
+     if(m.type==='plan-card-v2'&&['ap-auth','ap-flags','ap-embeds'].includes(m.planId)){
+       const p=window.PM56_PLANS.get(m.planId),dest=recoveryThread('plan-example-'+m.planId,p?.title||'Plan example');dest.summary='Open the plan to inspect or control it.';dest.messages.push(m);if(p)p.thread_id=dest.id;return false;
+     }
+     return true;
+   });
+   if(t.id==='attachments')t.messages=t.messages.filter(m=>{if(m.type!=='attachment-error')return true;recoveryThread('recovery-attachments','Recovery · attachment input').messages.push(m);return false;});
+   review.push({thread_id:t.id,title:t.title,previous_components:before,components:t.messages.map(m=>({id:m.id,type:m.type,internal:!!m.internalOnly})),disposition:t.title.startsWith('Recovery')?'explicit_recovery':'current_example'});
+ });
+ // Exceptional collaboration fixture cards are grouped without mutating outcomes.
+ function regroupRuns(threads){
+  const runs=window.PM56_COLLAB.runs();
+  for(const run of runs){
+   if(!['blocked','failed'].includes(run.status)&&!run.participants.some(p=>['blocked','failed','disabled'].includes(p.status)))continue;
+   const target=threads.find(t=>t.id==='recovery-collaboration');if(!target)continue;
+   for(const thread of threads){if(thread===target)continue;const cards=thread.messages.filter(m=>m.type==='collab-run'&&m.runId===run.id);if(cards.length){thread.messages=thread.messages.filter(m=>!cards.includes(m));target.messages.push(...cards);}}
+   run.threadId=target.id;
+  }
+ }
+ recoveryThread('recovery-collaboration','Recovery · collaboration');regroupRuns(D.threads);
+ D.internalWorkNotes=notes;
+ function bindFixtureDestinations(threads){
+  for(const t of threads)for(const m of t.messages){
+   if(m.type==='sched-message'){const r=scheduler.list().messages.find(r=>r.scheduled_dispatch_id===m.scheduleId);if(r)r.thread_id=t.id;}
+   if(m.type==='plan-card-v2'){const r=window.PM56_PLANS.get(m.planId);if(r)r.thread_id=t.id;}
+  }
+ }
+ bindFixtureDestinations(D.threads);
+ E.actionAfter('reset-all',()=>{const ctx=E.ctx();regroupRuns(ctx.state.threads);bindFixtureDestinations(ctx.state.threads);ctx.renderApp();});
+ window.PM56_HISTORY_REVIEW={version:'3-rebuilt',review,internalNotes:notes,threadCount:()=>D.threads.length};
 })();
 </script>
   <script>(() => {
@@ -40841,6 +41102,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      to exist (the sequencer creates the record when the burst actually
      starts, so the card appears the moment its work begins). */
   function messageVisible(m){
+    if(m.internalOnly || (m.type==='agent-work'&&window.PM56_RECORDS?.reference(m).kind==='note'))return false;
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
@@ -42657,6 +42919,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function handleScopedPickerAction(a,btn,e){
     if(!state.menu?.scopedPicker||!scopedPicker)return false;
+    if(a==='shared-choice-pick' && scopedPicker.type==='choice'){
+      const session=scopedPicker, option=session.options.find(x=>String(x.value)===btn.dataset.value);
+      if(option){closeMenu();session.onChange(option.value);} return true;
+    }
     if(!['set-model','set-effort','toggle-fast','set-persona'].includes(a))return false;
     e.stopPropagation();
     const session=scopedPicker, value=session.value;
@@ -42675,7 +42941,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(a==='set-model')setSubmenu('model:'+id);else renderOverlays();
     return true;
   }
+  function renderSharedChoice(){
+    if(!scopedPicker || scopedPicker.type!=='choice')return '';
+    const q=(state.menu.query||'').toLowerCase(),session=scopedPicker;
+    const options=session.options.filter(o=>(o.label+' '+(o.description||'')).toLowerCase().includes(q));
+    return `<div class="menu-head"><strong>${esc(session.title)}</strong></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="shared-choice-search" value="${esc(state.menu.query||'')}" placeholder="Find an option…"></label></div><div class="shared-choice-list">${options.map(o=>`<button type="button" class="menu-item ${String(session.current)===String(o.value)?'active':''}" data-action="shared-choice-pick" data-value="${esc(o.value)}"><span class="menu-copy"><strong>${esc(o.label)}</strong><span>${esc(o.description||'')}</span></span>${String(session.current)===String(o.value)?icon('check',12):''}</button>`).join('')||'<p class="choice-empty">No matching options.</p>'}</div>`;
+  }
   window.PM56_PICKERS={
+    openChoice(button,title,current,options,onChange){
+      scopedPicker={type:'choice',title,current,options,onChange,value:{}};
+      openMenu('choice',pickerAnchor(button),{scopedPicker:true});
+    },
     openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
     openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
@@ -42691,7 +42967,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderMenu(){
     const m=state.menu;
     let content='';
-    if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
+    if(m.type==='choice')content=renderSharedChoice();
+    else if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
@@ -43513,7 +43790,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     const k=e.target.dataset.input;if(!k)return;
     if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;syncSendStop();return;}
         if(k==='history-search'){state.historySearch=e.target.value;renderApp();return;}
-        if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
+        if(k==='shared-choice-search'&&state.menu?.type==='choice'){state.menu.query=e.target.value;renderOverlays();return;}
+    if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
         if(k==='thread-global-search'){state.menu.query=e.target.value;renderOverlays();return;}
     if(k==='rename-thread'){state.dialog.value=e.target.value;return;}
     if(k==='question-text'){state.questions[state.questionIndex].answer=e.target.value;return;}
@@ -43532,7 +43810,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if((e.metaKey||e.ctrlKey)&&e.key==='Enter'&&document.activeElement?.matches('[data-input="composer"]')){e.preventDefault();handleSend();}
     if(e.key==='Escape'){
       if(state.menu){closeMenu();return;}
-      if(state.dialog){if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
+      if(state.dialog){if(state.dialog.type==='collab-configure'){EXT._actions['collab-modal-cancel'](EXT.ctx(),null,e);return;}if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
       if(state.activity.open&&!activityPinnedInLayout()){const domain=state.activity.domain;state.hover=null;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
       if(state.hover){state.hover=null;syncHoverCard();return;}

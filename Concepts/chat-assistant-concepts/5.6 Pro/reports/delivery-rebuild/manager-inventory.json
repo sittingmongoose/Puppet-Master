@@ -1,0 +1,128 @@
+[
+  {
+    "domain": "general",
+    "id": "notifications",
+    "label": "Notifications & Sounds",
+    "type": "notifications"
+  },
+  {
+    "domain": "ai",
+    "id": "providers",
+    "label": "Providers & Accounts",
+    "type": "providers"
+  },
+  {
+    "domain": "ai",
+    "id": "web",
+    "label": "Web & Research",
+    "type": "webRoutes"
+  },
+  {
+    "domain": "ai",
+    "id": "media",
+    "label": "Media & Output",
+    "type": "mediaRoutes"
+  },
+  {
+    "domain": "ai",
+    "id": "bsd",
+    "label": "Back Seat Driver",
+    "type": "bsd"
+  },
+  {
+    "domain": "code",
+    "id": "toolchain",
+    "label": "Toolchain & Extensions",
+    "type": "toolchain"
+  },
+  {
+    "domain": "code",
+    "id": "testing",
+    "label": "Testing & Debug",
+    "type": "testing"
+  },
+  {
+    "domain": "memory",
+    "id": "context-memory",
+    "label": "Context & Memory",
+    "type": "memory"
+  },
+  {
+    "domain": "memory",
+    "id": "goals",
+    "label": "Goals & Automation",
+    "type": "goals"
+  },
+  {
+    "domain": "memory",
+    "id": "personas",
+    "label": "Personas & Crews",
+    "type": "personas"
+  },
+  {
+    "domain": "memory",
+    "id": "owners",
+    "label": "Single Owners",
+    "type": "owners"
+  },
+  {
+    "domain": "source",
+    "id": "source-manager",
+    "label": "Source Control Manager",
+    "type": "sourceControl"
+  },
+  {
+    "domain": "source",
+    "id": "browser-scm",
+    "label": "Browser & SCM",
+    "type": "browserScm"
+  },
+  {
+    "domain": "projects",
+    "id": "project-sync",
+    "label": "Project Location & Sync",
+    "type": "projectSync"
+  },
+  {
+    "domain": "projects",
+    "id": "project-history",
+    "label": "History & Artifacts",
+    "type": "projectHistory"
+  },
+  {
+    "domain": "safety",
+    "id": "permissions",
+    "label": "Permissions & Safety",
+    "type": "permissions"
+  },
+  {
+    "domain": "system",
+    "id": "settings-transfer",
+    "label": "Settings Transfer",
+    "type": "settingsTransfer"
+  },
+  {
+    "domain": "system",
+    "id": "backup",
+    "label": "Data, Backup & Retention",
+    "type": "backup"
+  },
+  {
+    "domain": "system",
+    "id": "doctor",
+    "label": "Readiness & Setup",
+    "type": "doctor"
+  },
+  {
+    "domain": "system",
+    "id": "servers",
+    "label": "Servers & Installation",
+    "type": "servers"
+  },
+  {
+    "domain": "system",
+    "id": "updates",
+    "label": "App Updates",
+    "type": "updates"
+  }
+]

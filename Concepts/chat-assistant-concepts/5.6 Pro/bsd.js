@@ -189,15 +189,15 @@
   }
 
   function detailsSection(ctx){
-    var p=P(), st=liveState(), bound=p.stages.filter(s=>s.bound);
-    return '<section class="bsd-section" data-k="bsd-section" id="ctx-bsd">'+
-      '<div class="bsd-summary-head"><span class="bsd-live">'+esc(STATE_LABEL[st])+' · '+esc(p.mode)+'</span><button class="soft-button" data-action="bsd-configure-stages">'+ctx.icon('sliders',12)+' Configure</button></div>'+
-      '<div class="bsd-summary-identity"><strong>'+esc(p.model.effective)+'</strong><span>'+esc(p.persona.effective)+'</span></div>'+
-      '<div class="bsd-summary-metrics"><span>Checked '+p.cursor+'/'+p.generation+'</span><span>'+bound.length+' stages</span><span>'+heldFindings().length+' held</span></div>'+
+    var p=P(),st=liveState(),bound=p.stages.filter(s=>s.bound);
+    function row(label,value){return '<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>';}
+    return '<section class="bsd-section bsd-overview" data-k="bsd-section" id="ctx-bsd">'+
+      '<div class="bsd-overview-head"><h3>Back Seat Driver</h3><button class="text-button" data-action="bsd-configure-stages">Configure</button></div>'+
+      '<dl class="bsd-summary-table">'+row('Status',STATE_LABEL[st])+row('Mode',p.mode[0].toUpperCase()+p.mode.slice(1))+row('Model',p.model.effective)+row('Persona',p.persona.effective)+row('Coverage',p.cursor+' / '+p.generation+' turns')+'</dl>'+
       '<details class="bsd-disclosure"><summary>Findings <span>'+p.findings.length+'</span></summary><div class="bsd-findings">'+p.findings.map(f=>findingRow(ctx,f)).join('')+'</div></details>'+
-      '<details class="bsd-disclosure"><summary>Session & usage</summary><dl class="bsd-session-grid">'+
-        [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Effective model',p.model.effective],['Persona',p.persona.requested],['Sensitivity',p.sensitivity],['Catch-up cap',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Self-compact',Math.round(p.selfCompactThreshold*100)+'%'],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>'+
-        '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Transcript</button></div></details>'+
+      '<details class="bsd-disclosure"><summary>Session and usage</summary><dl class="bsd-session-grid">'+
+      [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Sensitivity',p.sensitivity],['Catch-up',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Compaction',Math.round(p.selfCompactThreshold*100)+'%'],['Stages',bound.length+' of '+p.stages.length],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>row(...r)).join('')+'</dl>'+
+      '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Advisor transcript</button></div></details>'+
       (p.quarantined?'<p class="bsd-quarantine">Advisor unavailable · primary work unaffected</p>':'')+'</section>';
   }
 
@@ -207,6 +207,9 @@
     configDraft.modelId=configDraft.model.id||(D.models.find(m=>m.name===configDraft.model.effective)||D.models[0]).id;
     ctx.closeMenu();ctx.openDialog({type:'bsd-stages'});
   }
+  var BSD_CHOICES={sensitivity:[{value:'conservative',label:'Conservative',description:'Reserve advice for strong signals.'},{value:'balanced',label:'Balanced',description:'Balance useful feedback with fewer interruptions.'},{value:'frequent',label:'Frequent',description:'Surface more potential improvements.'}],catchUpSeconds:[0,15,30,60].map(v=>({value:v,label:v?v+' seconds':'Never wait',description:v?'Maximum wait for the advisor to catch up.':'Continue without waiting for the advisor.'}))};
+  function bsdChoice(ctx,d,key,label){var selected=BSD_CHOICES[key].find(o=>o.value===d[key])||BSD_CHOICES[key][0];return '<label>'+label+'<button type="button" class="shared-picker-button" data-action="bsd-pick-choice" data-field="'+key+'" data-menu-anchor="bsd-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';}
+  EXT.action('bsd-pick-choice',function(ctx,btn){var draft=configDraft,key=btn.dataset.field;if(!draft||!BSD_CHOICES[key])return true;window.PM56_PICKERS.openChoice(btn,key==='sensitivity'?'Trigger sensitivity':'Catch-up cap',draft[key],BSD_CHOICES[key],function(value){if(configDraft===draft){draft[key]=value;ctx.renderOverlays();}});return true;});
   function configDialog(ctx){
     var d=configDraft;if(!d){configDraft=JSON.parse(JSON.stringify(P()));d=configDraft;d.modelId=(D.models.find(m=>m.name===d.model.effective)||D.models[0]).id;}
     const pick=window.PM56_PICKERS;
@@ -214,8 +217,8 @@
       '<div class="demo-dialog-head"><strong>Back Seat Driver</strong><span class="meta-pill">Read-only advisor</span><span class="spacer"></span><button class="icon-button" data-action="bsd-close-dialog" title="Cancel">'+ctx.icon('close',13)+'</button></div>'+
       '<div class="demo-dialog-body"><div class="bsd-config-mode">'+['off','auto','on'].map(v=>'<button class="soft-button '+(d.mode===v?'active':'')+'" data-action="bsd-config-mode" data-value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</button>').join('')+'</div>'+
       '<div class="bsd-config-pickers"><label>Advisor model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona.requested)+'</label></div>'+
-      '<div class="bsd-config-grid"><label>Trigger sensitivity<select data-bsd-field="sensitivity">'+['conservative','balanced','frequent'].map(v=>'<option value="'+v+'" '+(d.sensitivity===v?'selected':'')+'>'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
-      '<label>Catch-up cap<select data-bsd-field="catchUpSeconds">'+[0,15,30,60].map(v=>'<option value="'+v+'" '+(d.catchUpSeconds===v?'selected':'')+'>'+(v?v+' seconds':'Never wait')+'</option>').join('')+'</select></label>'+
+      '<div class="bsd-config-grid">'+bsdChoice(ctx,d,'sensitivity','Trigger sensitivity')+''+
+      ''+bsdChoice(ctx,d,'catchUpSeconds','Catch-up cap')+''+
       '<label>Cooldown · turns<input data-bsd-field="cooldownTurns" type="number" min="0" max="100" value="'+d.cooldownTurns+'"></label>'+
       '<label>Self-compact · %<input data-bsd-field="selfCompactThreshold" type="number" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label></div>'+
       '<label class="bsd-retain"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label>'+

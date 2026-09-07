@@ -1,0 +1,394 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-09-07T01:25:00Z",
+  "description": "Settings migration, reconciliation, and manager enumeration registry for cumulative Assistant/Settings v3 packet",
+  "manager_scope_enumeration": {
+    "canonical_specification_managers_count": 38,
+    "canonical_specification_authority": "Plans/Settings_System.md#SSYS-032",
+    "canonical_managers_list": [
+      "general", "appearance", "interaction", "ai_providers", "models",
+      "personas", "prompts", "rag", "evals", "back_seat_driver",
+      "branching", "crew", "chat_room", "brainstorm", "review",
+      "planning", "planning_wizard", "plan_runtime", "goals", "todos",
+      "workspaces", "editors", "git_integration", "terminals", "file_tree",
+      "search", "keybindings", "snippets", "command_palette", "extensions",
+      "telemetry", "privacy", "security", "approvals", "scheduling",
+      "usage_budgets", "storage", "diagnostics"
+    ],
+    "standalone_testpm_workspace_tabs_count": 21,
+    "standalone_testpm_authority": "Concepts/pm7-tools/build_testpm_assistant_settings.py (manager-inventory.json)",
+    "standalone_testpm_tabs_list": [
+      "general", "appearance", "ai_providers", "models", "personas",
+      "rag", "evals", "back_seat_driver", "branching", "planning",
+      "goals", "todos", "workspaces", "git_integration", "terminals",
+      "search", "keybindings", "security", "scheduling", "usage_budgets", "diagnostics"
+    ],
+    "distinction_note": "The canonical Plans specification defines 38 granular functional manager descriptors. The standalone TestPM concept collapses nested functional categories into 21 top-level sidebar navigation tabs for HTML preview ergonomics while preserving the complete 38-manager configuration scope across subpanels and projections."
+  },
+  "canonical_admissions_and_updates": [
+    {
+      "setting_id": "general.interaction.working-activity-style",
+      "disposition": "RECONCILED_CANONICAL_PRIMARY",
+      "old_keys": [
+        "working-activity-style"
+      ],
+      "old_values": [
+        "Step Rail",
+        "Orbit"
+      ],
+      "current_options": [
+        "Orbit",
+        "Step Rail Simple"
+      ],
+      "default": "Orbit",
+      "scope": "project",
+      "family_variant_map": {
+        "Orbit": "2/1",
+        "Step Rail Simple": "2/8"
+      },
+      "compatibility_aliases": [
+        "working-activity-style",
+        "Step Rail",
+        "Step Rail Simple"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Preserves explicit user selection. Untouched factory defaults migrate to Orbit. Value Step Rail maps automatically to Step Rail Simple.",
+      "rollback_behavior": "Reverting restores previous exact string value; unknown strings fail validation without overwriting.",
+      "consumers": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "stale_unknown_data_behavior": "Unknown value logs validation warning, falls back to Orbit in presentation, and preserves stored raw value for repair."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-mode",
+      "disposition": "CANONICAL_PRESERVED",
+      "old_keys": [
+        "safety.approvals.bsd-mode"
+      ],
+      "old_values": [
+        "off",
+        "auto",
+        "on"
+      ],
+      "current_options": [
+        "off",
+        "auto",
+        "on"
+      ],
+      "default": "auto",
+      "scope": "project",
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Retains stored project value; unassigned projects default to auto.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_unknown_data_behavior": "Fails validation closed; non-standard string treated as off with error banner."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-model",
+      "disposition": "CANONICAL_PRESERVED",
+      "old_keys": [
+        "safety.approvals.bsd-model"
+      ],
+      "default": "default",
+      "scope": "project",
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Maps to valid model catalog entry.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md",
+        "Plans/Models_System.md"
+      ],
+      "stale_unknown_data_behavior": "Missing or de-listed model triggers warning and prompts user selection; does not silently fallback."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-persona",
+      "disposition": "CANONICAL_PRESERVED",
+      "old_keys": [
+        "safety.approvals.bsd-persona"
+      ],
+      "default": "default",
+      "scope": "project",
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Maps to valid persona catalog entry.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md",
+        "Plans/Personas.md"
+      ],
+      "stale_unknown_data_behavior": "Missing persona triggers warning and prompts user selection."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-trigger-sensitivity",
+      "disposition": "CANONICAL_PRESERVED",
+      "old_keys": [
+        "safety.approvals.bsd-trigger-sensitivity"
+      ],
+      "default": "medium",
+      "scope": "project",
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Preserves user sensitivity setting.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "stale_unknown_data_behavior": "Defaults to medium on invalid input."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-catch-up-seconds",
+      "disposition": "CANONICAL_PRESERVED_REPAIRED_ALIGNMENT",
+      "old_keys": [
+        "safety.approvals.bsd-catch-up-seconds"
+      ],
+      "inventory_options": [
+        "Off",
+        "15 seconds",
+        "30 seconds",
+        "60 seconds"
+      ],
+      "contract_options": [
+        "Off",
+        "15 seconds",
+        "30 seconds",
+        "60 seconds"
+      ],
+      "default": "30 seconds",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "drift_note": "Repaired in Plans/settings_inventory.json line 20236 to '15 seconds', aligning with SETTINGS_CONTRACT.json and schema-validated. Closed FINDING-APR-031-SETTINGS-KEY-OPTION-DRIFT.",
+      "migration_behavior": "Parses '15 seconds' (or legacy '15') cleanly to 15-second numeric catchup window.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md",
+        "Plans/Settings_System.md"
+      ],
+      "stale_unknown_data_behavior": "Invalid string falls back to 30-second default."
+    },
+    {
+      "setting_id": "safety.approvals.bsd-cooldown-turns",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": 3,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.bsd-retain-transcript",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": true,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.bsd-self-compact-threshold",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": 50,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md"
+      ]
+    },
+    {
+      "setting_id": "branching.crew.crew-members",
+      "disposition": "CANONICAL_PRESERVED",
+      "old_keys": [
+        "branching.crew.crew-members"
+      ],
+      "default": [],
+      "scope": "project",
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "migration_behavior": "Preserves existing Crew member lineup template.",
+      "rollback_behavior": "Standard settings rollback.",
+      "consumers": [
+        "Plans/Collaborative_Workflows.md",
+        "Plans/Settings_System.md"
+      ],
+      "stale_unknown_data_behavior": "Unknown member models/personas flagged as needs-repair without deletion."
+    },
+    {
+      "setting_id": "safety.approvals.schedule-missed-policy",
+      "disposition": "CANONICAL_PRESERVED_PROJECTION_OPTIONS",
+      "contract_options": [
+        "Hold",
+        "Next available",
+        "Cancel after grace"
+      ],
+      "default": "Hold",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Scheduling_and_Quota_Resume.md",
+        "Plans/Settings_System.md"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.schedule-grace-minutes",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": 30,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.schedule-resume-next-window",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": true,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ]
+    },
+    {
+      "setting_id": "ai.usage.auto-resume-default",
+      "disposition": "CANONICAL_PRESERVED",
+      "default": false,
+      "scope": [
+        "global"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.schedule-dst-policy",
+      "disposition": "CANONICAL_PRESERVED_PROJECTION_OPTIONS",
+      "contract_options": [
+        "Preserve local wall clock"
+      ],
+      "default": "Preserve local wall clock",
+      "scope": [
+        "global"
+      ],
+      "schema_ref": "Plans/settings_inventory.schema.json",
+      "consumers": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ]
+    }
+  ],
+  "concept_candidate_proposals": [
+    {
+      "setting_id": "branching.crew.crew-auto-roster",
+      "disposition": "CONCEPT_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+      "proposed_scope": "project",
+      "proposed_type": "array",
+      "item_schema": "{ role: string, model: string, persona: string }",
+      "admission_status": "Tracked in SETTINGS_CONTRACT.json; awaiting domain runtime persistence implementation before inventory schema admission",
+      "consumers": [
+        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js"
+      ]
+    },
+    {
+      "setting_id": "branching.crew.chat-room-roster",
+      "disposition": "CONCEPT_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+      "proposed_scope": "project",
+      "proposed_type": "array",
+      "item_schema": "{ role: string, model: string, persona: string }",
+      "admission_status": "Tracked in SETTINGS_CONTRACT.json; awaiting domain runtime persistence implementation before inventory schema admission",
+      "consumers": [
+        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js"
+      ]
+    },
+    {
+      "setting_id": "branching.crew.brainstorm-roster",
+      "disposition": "CONCEPT_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+      "proposed_scope": "project",
+      "proposed_type": "array",
+      "item_schema": "{ role: string, model: string, persona: string }",
+      "admission_status": "Tracked in SETTINGS_CONTRACT.json; awaiting domain runtime persistence implementation before inventory schema admission",
+      "consumers": [
+        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js"
+      ]
+    },
+    {
+      "setting_id": "planning.verification.review-roster",
+      "disposition": "CONCEPT_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+      "proposed_scope": "project",
+      "proposed_type": "array",
+      "item_schema": "{ role: string, model: string, persona: string }",
+      "admission_status": "Tracked in SETTINGS_CONTRACT.json; awaiting domain runtime persistence implementation before inventory schema admission",
+      "consumers": [
+        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js"
+      ]
+    },
+    {
+      "setting_id": "safety.approvals.bsd-stage-bindings",
+      "disposition": "CONCEPT_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+      "proposed_scope": "project",
+      "proposed_type": "object",
+      "stage_keys": [
+        "prd_builder",
+        "planning_wizard",
+        "plan_drafting",
+        "planunit_compilation",
+        "worknode_generation",
+        "code_generation",
+        "verification_run",
+        "gate_evaluation",
+        "audit_review",
+        "certification"
+      ],
+      "admission_status": "Tracked in SETTINGS_CONTRACT.json; projected into BSD Configure modal; awaiting domain persistence schema before inventory schema admission",
+      "consumers": [
+        "Plans/Back_Seat_Driver.md#BSD-026",
+        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js"
+      ]
+    }
+  ],
+  "named_projections": {
+    "settings.assistant": {
+      "source_keys": [
+        "general.appearance.theme",
+        "general.interaction.working-activity-style",
+        "assistant.chat.plan.*.question_limit"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031"
+    },
+    "settings.bsd": {
+      "source_keys": [
+        "safety.approvals.bsd-*"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031"
+    },
+    "settings.schedule": {
+      "source_keys": [
+        "safety.approvals.schedule-*"
+      ],
+      "authority": "Plans/Settings_System.md#SSYS-031"
+    }
+  }
+}

@@ -70,8 +70,10 @@ try{
     assert.ok(!source.includes('ui.assistant_chat.'));
   });
   await check('Working Notebook additions are retained in both Settings read models',async()=>{
-    const data=await page.evaluate(()=>({total:window.PM12_REFERENCE.total,rows:window.PM12_REFERENCE.byCat.memory.settings.filter(row=>row.id.startsWith('memory.notebook.')),compat:JSON.parse(document.getElementById('pm7-settings-data').textContent).settings.filter(row=>row.id.startsWith('memory.notebook.'))}));
-    assert.equal(data.total,887);assert.equal(data.rows.length,4);assert.deepEqual(data.rows.map(x=>x.id).sort(),data.compat.map(x=>x.id).sort());report.notebook_settings=data.rows.map(x=>x.id);
+    const data=await page.evaluate(()=>({total:window.PM12_REFERENCE.total,rows:window.PM12_REFERENCE.byCat.memory.settings.filter(row=>row.id.startsWith('memory.notebook.')),compat:JSON.parse(document.getElementById('pm7-settings-data').textContent).settings.filter(row=>row.id.startsWith('memory.notebook.')),assistant:window.PM49_ASSISTANT_SETTINGS?.new_settings.map(row=>row.id)||null,all:Object.values(window.PM12_REFERENCE.byCat).flatMap(cat=>cat.settings.map(row=>row.id)),allCompat:JSON.parse(document.getElementById('pm7-settings-data').textContent).settings.map(row=>row.id)}));
+    const assistantIds=['branching.crew.crew-auto-roster','branching.crew.chat-room-roster','branching.crew.brainstorm-roster','planning.verification.review-roster','safety.approvals.bsd-stage-bindings'];
+    if(data.assistant){assert.deepEqual(data.assistant.sort(),assistantIds.sort());assert.ok(assistantIds.every(id=>data.all.includes(id)));report.assistant_concept_additions=assistantIds;}
+    assert.equal(data.total,data.assistant?892:887);assert.equal(new Set(data.all).size,data.total);assert.deepEqual(data.all.sort(),data.allCompat.sort());assert.equal(data.rows.length,4);assert.deepEqual(data.rows.map(x=>x.id).sort(),data.compat.map(x=>x.id).sort());report.notebook_settings=data.rows.map(x=>x.id);
   });
   for(const [before,after] of [['organizers','me'],['me','organizers'],['unsure','me']]){
     await newPage();await prepareReview(before);
