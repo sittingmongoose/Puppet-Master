@@ -1,0 +1,100 @@
+{
+  "batch_id": "assistant-demo-b08-automatic-memory",
+  "status": "BOUNDED_FUNCTIONAL_AND_REBUILD_VERIFIED_GLOBAL_ACCEPTANCE_OPEN",
+  "base_commit": "14e300865cb9d560ffc88fcd6a491d9f28d5bb91",
+  "assistant": {
+    "bytes": 3054610,
+    "raw_sha256": "182c1786bd26138b7fe9c3ff4f436b12cfb1a3142beb42ebfcce9abddbd5a080",
+    "lf_normalized_sha256": "d43e2d6890865b2a6766456f60f512013d506e9eaf658fbf7b13303434f3ba11",
+    "git_blob": "bb6ad9640ee5a1701d52758961f61ab883dadebc"
+  },
+  "scenarios": [
+    "B08-MEMORY-VERIFIED",
+    "B08-MEMORY-LOCKED"
+  ],
+  "checks": {
+    "new_memory": 76,
+    "polish": 52,
+    "prior_regression": 886,
+    "recorded": 46,
+    "matching_nonrecorded": 44
+  },
+  "recorded_frames": 1474,
+  "consecutive_contact_sheets": 32,
+  "selected_native_frames": 12,
+  "protected_working_sources": [
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "settings_modified": false,
+  "canonical_plans_modified": false,
+  "governance_modified": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "source_baseline": "Verified Batch7 package; not recovered interrupted Batch8 work.",
+  "next_batch": {
+    "id": "assistant-demo-b09-debug",
+    "scope": [
+      "Bounded Debug investigation from frozen target and baseline through reproduction, checked repair and cleanup",
+      "Carry forward remaining actual cadence and mid-scroll overlay findings"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "open": [
+    "Complete551-row/67-group meaningful-demo coverage",
+    "All-feature/all-animation motion review",
+    "Consistent60fps rendering across prior complex workflows",
+    "Mid-scroll floating-pill content occlusion",
+    "Native memory storage/retrieval/recovery and production tokenizer/context dispatch",
+    "Automatic completion hooks for every legacy asynchronous workflow",
+    "Full memory maintenance/filtering UI and generic semantic conflict evaluation",
+    "Unrelated repository governance and full upstream PM7 pipeline"
+  ]
+}

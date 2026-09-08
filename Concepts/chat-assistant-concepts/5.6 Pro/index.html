@@ -12453,6 +12453,38 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .teach-demo-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);margin:8px 0;min-width:0;}
 .teach-demo-guide>div{min-width:0;}.teach-demo-guide>div:last-child{display:flex;gap:8px;flex-shrink:0;}.teach-demo-guide small{display:block;font-size:10px;color:var(--muted);margin-bottom:4px;}.teach-demo-guide strong{font-size:12px;line-height:1.5;font-weight:500;}
 
+/* Native card grammar; no reference-video flattening or decorative side stripe. */
+.memory-document{padding:22px;min-width:0;max-width:100%;color:var(--text);font:13px/1.6 var(--font-ui)}
+.memory-document h2{font-size:22px;margin:10px 0 16px}.memory-document h3{font-size:12px;margin:12px 0 4px}
+.memory-controls{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.memory-controls button{white-space:normal;max-width:100%}
+.memory-controls .active{border-color:var(--accent);color:var(--accent)}
+.memory-gists{display:grid;gap:14px}.memory-gist,.memory-preview{padding:16px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;min-width:0}
+.memory-preview{margin:16px 0}.memory-gist header,.memory-preview header{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.memory-document small{color:var(--muted);font-size:11px}.memory-gist>p{font-size:14px;line-height:1.55;margin:12px 0 6px;overflow-wrap:anywhere}
+.memory-gist details{margin:10px 0 0}.memory-gist summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.memory-claim,.memory-evidence{padding:12px;border:1px solid var(--border);border-radius:8px;margin-top:10px}
+.memory-document pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.memory-document li{overflow-wrap:anywhere}
+.memory-empty{padding:24px 8px;color:var(--muted)}.memory-boundary{display:block;margin-top:18px}
+@media(max-width:820px){.memory-document{padding:16px}}
+
+.memory-demo-guide{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0;padding:12px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;font:12px/1.45 var(--font-ui)}
+.memory-demo-guide>div:first-child{display:grid;gap:3px;min-width:0}.memory-demo-guide small{font-size:10px;color:var(--muted)}.memory-demo-guide>div:last-child{display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+@media(max-width:1000px){.memory-demo-guide{flex-direction:column;align-items:stretch}.memory-demo-guide>div:last-child{justify-content:flex-end}}
+
+/* Completed summary: title gets a full line; no changes to working cards. */
+.plan-doc-compact .pd-compact-row{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:start}
+.plan-doc-compact .pd-compact-row .pd-compact-copy{grid-column:2;min-width:0}
+.plan-doc-compact .pd-compact-row .pd-compact-copy strong{overflow-wrap:anywhere}
+.plan-doc-compact .pd-compact-row>.soft-button,.plan-doc-compact .pd-compact-row>.text-button{grid-column:2;justify-self:start}
+/* Transient notifications no longer sit over composer controls. */
+.toast-stack{top:calc(var(--header-h,48px) + 12px);bottom:auto;max-width:min(320px,calc(100vw - 24px));max-height:25vh;overflow:hidden}
+.toast{min-width:0}.toast span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.transcript{scroll-padding-bottom:calc(var(--thread-float-h,44px) + 28px)}
+.transcript button,.transcript a,.transcript summary{scroll-margin-bottom:calc(var(--thread-float-h,44px) + 28px)}
+
+.pd-compact-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.pd-compact-actions>*{max-width:100%}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -20864,7 +20896,13 @@ window.PM56_EXT = window.PM56_EXT || {
      markup.  It is registered purely because it is called once per renderApp
      (app.js:502) and is therefore the cheapest reliable "the app just
      rendered" signal a module can get without reopening app.js. */
-  EXT.slot('headerExtras', function(){ heartbeat(); return ''; });
+  EXT.slot('headerExtras', function(){
+    if(S()?.historyMode==='closed' && mode()!=='closed'){
+      closing=false; clearTimeout(closeTimer); clearSettled(); clearPaneClip();
+      document.body.removeAttribute('data-ph-want-pin');document.body.removeAttribute('data-ph-closing');setMode('closed');
+    }
+    heartbeat(); return '';
+  });
 
   /* ---- the drawer's own chrome ------------------------------------------
      The built-in head button is hard-coded to `pin-history` with a pin icon
@@ -22087,7 +22125,7 @@ window.PM56_EXT = window.PM56_EXT || {
         (dis ? ' disabled aria-disabled="true"' : ' data-action="' + esc(it.action || '') + '"' +
           ' data-id="' + esc(m.id) + '"' +
           (it.value != null ? ' data-value="' + esc(it.value) + '"' : '')) +
-        tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, dis ? (it.reason || 'Not available for this message') : (it.detail || it.label)) + '>' +
+        (dis ? tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, it.reason || 'Not available for this message') : ' aria-label="' + esc(it.label) + '"') + '>' +
         '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 13) + '</span>' +
         '<span class="pm-overflow-copy"><strong>' + esc(it.label) + '</strong>' +
         '<span>' + esc(dis ? (it.reason || 'Not available for this message') : (it.detail || '')) + '</span></span></button>';
@@ -30476,9 +30514,8 @@ window.PM56_EXT = window.PM56_EXT || {
         '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?ICON.check:'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
-        '<span class="spacer"></span>'+
-        buildControl(r)+
-        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button>'+
+        '<div class="pd-compact-actions">'+buildControl(r)+
+        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
       '</div>'+why+
     '</article>';
   }
@@ -39493,56 +39530,8 @@ window.PM56_EXT = window.PM56_EXT || {
      records before it is allowed to "write" — FEATURE-004 in a single
      deterministic, inspectable function rather than only described.
      ===================================================================== */
-  /* Index 0 deliberately overlaps the seeded LOCKED taught record's keywords
-     (query / perf / benchmark / suite), so the very first "Simulate a
-     checkpoint" click demonstrates FEATURE-004's deferral — the more
-     important, less obvious case — rather than burying it a few clicks in.
-     The rest cycle through ordinary, unblocked events for contrast. */
-  var AUTO_SUMMARIES = [
-    'Run boundary reached: query-perf benchmark suite mentioned again in this thread.',
-    'Run boundary reached: composer buffer flushed and the last admitted turn was recorded as durable history.',
-    'Milestone: a Plan revision was reviewed in this thread; capturing the decision context for later recall.',
-    'Milestone: a new provider route was selected; capturing the reason for later recall.'
-  ];
-
-  function checkAutoMemoryAgainstLocks(summary, threadId){
-    var words=significantWords(summary);
-    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked && !r.supersededBy && (!window.PM56_TEACH || window.PM56_TEACH.applies(r,{...window.PM56_TEACH.context(),threadId:threadId})); });
-    for(var i=0;i<recs.length;i++){
-      var rw=significantWords(recs[i].text), hits=0;
-      for(var j=0;j<words.length;j++){ if(rw.indexOf(words[j])>=0) hits++; }
-      if(hits>=2) return recs[i];
-    }
-    return null;
-  }
-  function createAutoMemoryEvent(ctx, threadId, summaryOverride){
-    var idx = F.memory.simIndex % AUTO_SUMMARIES.length;
-    var summary = summaryOverride || AUTO_SUMMARIES[idx];
-    F.memory.simIndex++;
-    var blocker = checkAutoMemoryAgainstLocks(summary, threadId);
-    /* Derived from the summary's own wording, not array position — self
-       describing, so reordering AUTO_SUMMARIES can never desync the badge
-       from the text again (see the fix that caught this). */
-    var trigger = /^Milestone/.test(summary) ? 'milestone' : 'run_boundary';
-    var ev = {
-      id:afUid('auto'), trigger:trigger, threadId:threadId,
-      summary:summary, verification: blocker?'deferred':'unverified',
-      blocked: !!blocker, blockedByRecordId: blocker?blocker.id:null, at:nowIso()
-    };
-    F.memory.auto.push(ev);
-    var th=findThread(ctx, threadId);
-    if(th){
-      if(blocker){
-        ctx.appendMessage({ id:afUid('automem'), role:'system', type:'af-auto-memory',
-          title:'Automatic memory deferred', detail:'"'+truncateWords(summary,12)+'" overlaps a locked taught record ('+blocker.id+') and was not written over it.', eventId:ev.id, time:nowIso() }, th);
-      } else {
-        ctx.appendMessage({ id:afUid('automem'), role:'system', type:'af-auto-memory',
-          title:'Automatic memory checkpoint', detail:truncateWords(summary,14), eventId:ev.id, time:nowIso() }, th);
-      }
-    }
-    return ev;
-  }
-
+  // B08 retires summary-word matching and prewritten "verified" events.
+  // The authoritative in-memory concept evaluator is memory-protocol.js.
   EXT.action('af-memory-open', function(ctx){
     if(ctx.closeMenu) ctx.closeMenu();
     ctx.openDialog({ type:'af-memory' });
@@ -39554,17 +39543,12 @@ window.PM56_EXT = window.PM56_EXT || {
     return true;
   });
   EXT.action('af-memory-simulate', function(ctx){
-    var ev=createAutoMemoryEvent(ctx, ctx.thread.id, null);
-    ctx.toast(ev.blocked?'Automatic memory deferred':'Automatic memory recorded', ev.blocked?'A locked taught record took priority. See Memory for detail.':'Verification status: unverified until reviewed.');
-    return true;
+    if(window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.simulate();
+    ctx.renderApp();return true;
   });
-  EXT.action('af-memory-verify', function(ctx, btn){
-    var id=btn.dataset.value;
-    for(var i=0;i<F.memory.auto.length;i++){
-      if(F.memory.auto[i].id===id){ F.memory.auto[i].verification='verified'; break; }
-    }
-    ctx.renderOverlays();
-    return true;
+  EXT.action('af-memory-verify', function(ctx,btn){
+    if(window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.mutation(btn.dataset.value,'verify');
+    ctx.renderOverlays(); return true;
   });
 
   /* system-card fallback rendering (renderEventMessage's map does not know
@@ -39593,6 +39577,7 @@ window.PM56_EXT = window.PM56_EXT || {
   });
 
   function renderMemoryDialog(ctx){
+    if(window.PM56_AUTO_MEMORY) return window.PM56_AUTO_MEMORY.dialog(ctx);
     var icon=ctx.icon, e=ctx.esc;
     var taught=(window.PM56_TEACH?window.PM56_TEACH.visibleRecords(window.PM56_TEACH.context()):F.teach.records).slice().reverse();
     var auto=F.memory.auto.slice().reverse();
@@ -39630,7 +39615,7 @@ window.PM56_EXT = window.PM56_EXT || {
           '<p class="af-mem-text">'+e(ev.summary)+'</p>'+
           (ev.blocked?'<div class="af-mem-meta af-danger-text">Deferred: overlaps locked taught record '+e(ev.blockedByRecordId)+'.</div>'
             :'<div class="af-mem-meta">Thread: '+e(ev.threadId)+'</div>')+
-          (ev.verification==='unverified'?'<div class="af-mem-actions"><button class="text-button" data-action="af-memory-verify" data-value="'+e(ev.id)+'">'+icon('check',11)+' Mark verified</button></div>':'')+
+          (ev.verification==='unverified'?'<div class="af-mem-actions"><button class="text-button" data-action="af-memory-verify" data-value="'+e(ev.id)+'">'+icon('check',11)+' Recheck evidence</button></div>':'')+
         '</div>';
       }).join('') : emptyState(icon('brain',20),'No automatic memory yet.')) +
       '<div class="af-mem-foot"><button class="soft-button" data-action="af-memory-simulate">'+icon('refresh',12)+' Simulate a checkpoint</button></div>';
@@ -40412,8 +40397,8 @@ window.PM56_EXT = window.PM56_EXT || {
     openTeachCapture(ctx, { text:text, scope:'thread', sourceThreadId:thread.id, sourceMessageId:message.id });
   }
   function memoryCommitHook(ctx, thread){
-    var n=userMessageCount(thread);
-    if(n>0 && n%6===0) createAutoMemoryEvent(ctx, thread.id, null);
+    // User submission is not an Assistant run boundary. B08 records final responses.
+    return;
   }
   function titleCommitHook(ctx, thread){
     if(F.title.locks[thread.id]) return;
@@ -42082,6 +42067,161 @@ window.PM56_EXT = window.PM56_EXT || {
  const G=window.PM56_REPAIR_DEMOS,prev=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Teach workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="teach-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+prev(c);
  window.PM56_TEACH_DEMOS={start,rule,corrected,snapshot:()=>current?clone(current):null,editorGuide:id=>current?.threadId===id?guide(E.ctx(),true):''};
 })();
+
+/* B08 — in-memory Evidence-Backed Gists, not a production MemoryProvider.
+ * Owner: assistant-memory-subsystem §§3,5,6,7 + AMS-044/045/046.
+ * One state store: PM56_FEATURES.state().memory.auto. Evidence payloads stay in
+ * the local example registry; gists retain only compact claims and references.
+ * The evaluator recognizes one exact local check contract. It does NOT prove
+ * arbitrary natural-language claims, implement ANN search, or dispatch prompts.
+ */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,copy=x=>JSON.parse(JSON.stringify(x));
+ let epoch=1,seq=0,filter='Unverified',tab='auto';
+ const runs=new Map(),sources=new Map(),proofs=new Map(),seen=new Map(),views=new Map(),disclosures=new Map(),dedupIndex=new Map();
+ const uid=p=>'am-'+p+'-'+epoch+'-'+(++seq),now=()=>new Date().toISOString(),fail=error=>({ok:false,error});
+ const context=()=>T.context(),all=()=>F.state().memory.auto,get=id=>all().find(x=>x.id===id);
+ const fp=x=>{let h=2166136261;for(const c of String(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'fnv1a:'+ (h>>>0).toString(16).padStart(8,'0');};
+ const contentKey=x=>JSON.stringify(x);
+ const settings=()=>{const s=F.state().memory;s.options??={autoSaveUnverified:true,maxItems:5,budget:350};return s.options;};
+ function allowed(g,c=context()){return c.consumer==='assistant'&&(g.project_id||'concept:pm')===c.projectId&&(!g.teaching_proposal||T.visibleRecords(c).some(r=>r.id===g.teaching_proposal.id));}
+ function visible(){return all().filter(g=>allowed(g));}
+ function log(g,event,detail){g.history??=[];g.history.push({event,detail,at:now()});}
+ function summary(g){return (g.claims||[]).map(c=>c.text).join(' ');}
+ function assess(g){
+  if(!g)return fail('gist_missing');
+  const previous=g.verification_state||g.verification||'Unverified',oldReason=g.reason;
+  if(g.discarded){g.verification_state='Discarded';g.verification='discarded';g.reason='Discarded by you';return g;}
+  let ok=Array.isArray(g.claims)&&g.claims.length>0,why=ok?'Evidence supports the stated check only.':'Legacy entry has no claim-level support.';
+  for(const claim of g.claims||[]){
+   const refs=(claim.evidence_support||[]),p=refs.length===1?proofs.get(refs[0]):null,s=p?sources.get(p.sourceId):null;
+   claim.currentness=!s?'source_unavailable':s.body===p.sourceBody?'current':'needs_revalidation';
+   const expected=p?'Local label-order checks passed ('+p.passed+'/'+p.total+' cases).':null;
+   const ref=p&&(g.evidence_refs||[]).find(ref=>ref.ref===p.id&&ref.type==='TestRun'&&ref.run_id===p.runId&&ref.exit_code===p.exit_code&&ref.summary_hash===fp(JSON.stringify(p.cases)));
+   const supported=!!ref&&p.projectId===g.project_id&&p.exit_code===0&&p.passed===p.total&&claim.kind==='local_check_result'&&claim.text===expected&&claim.support_scope===p.scope&&claim.currentness==='current';
+   claim.support_state=supported?'supported':'unverified';
+   if(!supported){ok=false;why=claim.currentness==='needs_revalidation'?'Source changed; this result needs revalidation.':p?'The evidence does not support this claim.':'No resolvable, claim-specific evidence.';}
+  }
+  if(g.teaching_proposal){ok=false;why='Proposed teaching change requires your explicit review.';}
+  g.verification_state=ok?'Verified':'Unverified';g.verification=g.verification_state.toLowerCase();g.reason=why;
+  g.summary=summary(g)||g.summary||'';g.text_hash=fp(g.summary);
+  if(previous!==g.verification_state||oldReason!==why)log(g,'verification',g.verification_state+': '+why);
+  return g;
+ }
+ function source(seed){if(!seed||typeof seed.body!=='string'||!seed.path)return fail('invalid_source');const c=context(),id=uid('source');sources.set(id,{id,projectId:c.projectId,path:seed.path,body:seed.body,revision:1});return {ok:true,id};}
+ function begin(seed={}){
+  const c=context();if(c.consumer!=='assistant')return fail('assistant_only');
+  const s=seed.sourceId?sources.get(seed.sourceId):null;if(seed.sourceId&&(!s||s.projectId!==c.projectId))return fail('source_scope');
+  const replacement=seed.teachingId?T.get(seed.teachingId):null;
+  if(seed.teachingId&&(!replacement||!T.applies(replacement,c)))return fail('teaching_scope');
+  const r={id:uid('run'),epoch,context:copy(c),state:'running',sourceId:s?.id||null,sourceBody:s?.body||null,claims:[],proofIds:[],milestone:false,boundary:false,gistId:null,proposal:replacement?{id:replacement.id,version:replacement.version||1,text:String(seed.proposal||'')}:null};
+  runs.set(r.id,r);return {ok:true,id:r.id};
+ }
+ function validRun(id){const r=runs.get(id),c=context();return r&&r.epoch===epoch&&r.context.projectId===c.projectId&&r.context.userId===c.userId&&r.context.threadId===c.threadId?r:null;}
+ function execute(id){
+  const r=validRun(id);if(!r||r.state!=='running')return fail('run_not_active');const s=sources.get(r.sourceId);
+  if(!s||s.body!==r.sourceBody)return fail('source_changed');
+  if(r.proofIds.length)return {ok:true,evidence:copy(proofs.get(r.proofIds[0])),reused:true};
+  // Fixed, inspectable local contract: sort trimmed labels, preserve input array.
+  let config;try{config=JSON.parse(s.body);}catch{return fail('invalid_example_config');}
+  if(Object.keys(config).sort().join(',')!=='caseSensitive,trim'||typeof config.trim!=='boolean'||typeof config.caseSensitive!=='boolean')return fail('unsupported_example_config');
+  const solve=input=>input.slice().sort((a,b)=>{let x=config.trim?a.trim():a,y=config.trim?b.trim():b;if(!config.caseSensitive){x=x.toLowerCase();y=y.toLowerCase();}return x<y?-1:x>y?1:0;});
+  const cases=[{name:'Leading whitespace',input:[' zebra','apple'],expected:['apple',' zebra']},{name:'Case-independent order',input:['Zebra','apple'],expected:['apple','Zebra']},{name:'Input unchanged',input:['b','a'],expected:['a','b']}];
+  const result=cases.map(t=>{const original=JSON.stringify(t.input),actual=solve(t.input);return {...t,actual,pass:JSON.stringify(actual)===JSON.stringify(t.expected)&&JSON.stringify(t.input)===original};});
+  const p={id:uid('evidence'),sourceId:s.id,sourceBody:s.body,sourcePath:s.path,projectId:r.context.projectId,runId:r.id,scope:'local-label-order-three-cases-v1',cases:result,passed:result.filter(t=>t.pass).length,total:result.length,at:now()};p.exit_code=p.passed===p.total?0:1;proofs.set(p.id,p);r.proofIds=[p.id];
+  r.claims=[{claim_id:uid('claim'),kind:'local_check_result',text:'Local label-order checks passed ('+p.passed+'/'+p.total+' cases).',evidence_support:[p.id],support_scope:p.scope,currentness:'current'}];return {ok:true,evidence:copy(p)};
+ }
+ function persist(r,trigger){
+  const claims=copy(r.claims.length?r.claims:[{claim_id:uid('claim'),kind:'unreviewed_summary',text:r.proposal?.text||'Assistant run completed; no supported outcome supplied.',evidence_support:[],support_scope:'unassessed',currentness:'source_unavailable'}]);
+  const refs=r.proofIds.map(id=>{const p=proofs.get(id);return {type:'TestRun',ref:id,run_id:p.runId,exit_code:p.exit_code,summary_hash:fp(JSON.stringify(p.cases))};});
+  const normalizedEvidence=r.proofIds.map(id=>{const p=proofs.get(id);return [p.sourcePath,p.sourceBody,p.scope,p.exit_code,p.cases];});
+  const key=contentKey([r.context.projectId,claims.map(c=>[c.kind,c.text,c.support_scope]),normalizedEvidence,r.proposal]);
+  let g=r.gistId?get(r.gistId):get(dedupIndex.get(key));if(g?.discarded)g=null;
+  if(g){r.gistId=g.id;g.run_ids=[...new Set([...(g.run_ids||[]),r.id])];if(!g.triggers.includes(trigger)){g.triggers.push(trigger);log(g,'boundary',trigger);}return {ok:true,id:g.id,reused:true};}
+  g={id:uid('gist'),project_id:r.context.projectId,thread_id:r.context.threadId,threadId:r.context.threadId,run_id:r.id,run_ids:[r.id],kind:r.proofIds.length?'Outcome':'Note',status:'Active',source:trigger,trigger:trigger==='AutoMilestone'?'milestone':'run_boundary',triggers:[trigger],pinned:false,claims,evidence_refs:refs,summary:claims.map(c=>c.text).join(' '),details:'',verification_state:'Unverified',created_at:now(),updated_at:now(),at:now(),dedup_fingerprint:fp(key),teaching_proposal:r.proposal?copy(r.proposal):null,blocked:!!r.proposal,blockedByRecordId:r.proposal?.id||null,history:[]};
+  assess(g);if(g.verification_state==='Unverified'&&!settings().autoSaveUnverified)return {ok:true,dropped:true,reason:'unverified_saving_disabled'};
+  log(g,'created',trigger);all().push(g);dedupIndex.set(key,g.id);r.gistId=g.id;return {ok:true,id:g.id,reused:false};
+ }
+ function milestone(id){const r=validRun(id);if(!r||r.state!=='running'||r.boundary)return fail('run_not_active');if(!r.proofIds.length)return fail('evidence_missing');if(r.milestone)return {ok:true,id:r.gistId,reused:true};r.milestone=true;return persist(r,'AutoMilestone');}
+ function finish(id){const r=validRun(id);if(!r)return fail('stale_run');if(r.boundary)return {ok:true,id:r.gistId,reused:true};if(r.state!=='running')return fail('run_not_active');
+  if(r.proofIds.length&&!r.milestone)milestone(id);r.state='completed';r.boundary=true;return persist(r,'AutoRunBoundary');}
+ function boundary(t,m){if(!m||m.role!=='assistant'||m.type!=='text'||m.internalOnly)return fail('not_assistant_final');const key=(t.projectId||'concept:pm')+':'+t.id+':'+m.id;if(seen.has(key))return {ok:true,id:seen.get(key),reused:true};
+  const r={id:'assistant-final:'+key,epoch,context:{...context(),threadId:t.id,projectId:t.projectId||'concept:pm'},state:'completed',sourceId:null,claims:[{claim_id:uid('claim'),kind:'unreviewed_summary',text:String(m.body||'').slice(0,180),evidence_support:[],support_scope:'unassessed',currentness:'source_unavailable'}],proofIds:[],proposal:null,boundary:true};
+  const out=persist(r,'AutoRunBoundary');seen.set(key,out.id||null);return out;
+ }
+ function invalidate(id,body){const s=sources.get(id);if(!s||s.projectId!==context().projectId||typeof body!=='string')return fail('source_scope');s.body=body;s.revision++;for(const g of visible())assess(g);return {ok:true};}
+ function preview(c=context()){
+  if(c.consumer!=='assistant')return {kind:'concept_capsule_preview',items:[],teaching:[],excluded:[],payload:'',providerDispatched:false};
+  const items=[],excluded=[];let used=0,truncated=false;for(const g of all().filter(x=>allowed(x,c))){assess(g);if(g.verification_state!=='Verified'){excluded.push({id:g.id,reason:g.reason});continue;}const cost=Math.ceil(g.summary.length/4);if(items.length>=settings().maxItems||used+cost>settings().budget){truncated=true;continue;}used+=cost;items.push({id:g.id,summary:g.summary});}
+  const teaching=T.preview(c).items;return {kind:'concept_capsule_preview',items,teaching,excluded,payload:items.map(g=>g.summary).join('\n'),estimatedTokens:used,budget:settings().budget,truncated,providerDispatched:false};
+ }
+ function mutation(id,op){const g=get(id);if(!g||!allowed(g))return fail('outside_scope');if(op==='verify')assess(g);else if(op==='pin'){g.pinned=!g.pinned;log(g,'pin',g.pinned);}else if(op==='discard'){g.discarded=true;assess(g);log(g,'discard','Explicit user action');}else return fail('unknown_operation');return {ok:true,id:g.id,state:g.verification_state};}
+ function correction(id){const g=get(id);if(!g||!allowed(g)||!g.teaching_proposal)return fail('proposal_missing');const t=T.get(g.teaching_proposal.id);if(!t||!T.active(t)||!T.applies(t,context())||(t.version||1)!==g.teaching_proposal.version)return fail('teaching_changed');return T.correction(t.id);}
+ function exportData(){return JSON.stringify({kind:'concept_memory_history',persistence:'session_only',gists:visible().map(g=>copy(assess(g))),preview:preview()},null,2);}
+ const button=(c,a,label,id='')=>'<button class="soft-button" data-action="'+a+'" data-id="'+c.esc(id)+'">'+label+'</button>';
+ function render(c,editor=false){const e=c.esc,v=views.get(c.thread.id)||{},list=visible().map(assess),selection=v.id?list.filter(g=>g.id===v.id):list.filter(g=>filter==='All'||g.verification_state===filter);const p=preview();
+  return '<article class="memory-document" data-k="auto-memory-doc"><div class="room-meta"><span>Gist Review · session preview</span><span>'+p.items.length+' eligible</span></div><h2>Automatic memory</h2><div class="memory-controls">'+['Unverified','Verified','All'].map(x=>'<button class="soft-button'+(!v.id&&filter===x?' active':'')+'" data-action="memory-filter" data-value="'+x+'">'+x+'</button>').join('')+button(c,'memory-preview','Preview next context')+button(c,'memory-export','Export history')+button(c,'teach-open','Taught memory')+'</div>'+(v.preview?'<section class="memory-preview" data-k="memory-preview"><header><strong>Next Assistant context</strong><small>Preview only · not dispatched</small></header><h3>Verified summaries</h3>'+(p.items.map(x=>'<p data-capsule-gist="'+e(x.id)+'">'+e(x.summary)+'</p>').join('')||'<p>No automatic summaries eligible.</p>')+'<h3>Explicit teaching</h3>'+(p.teaching.map(x=>'<p data-capsule-teaching="'+e(x.id)+'">'+e(x.text)+'</p>').join('')||'<p>No teaching in this scope.</p>')+'<small>'+p.estimatedTokens+' / '+p.budget+' estimated automatic-summary tokens'+(p.truncated?' · limit applied':'')+'</small></section>':'')+'<div class="memory-gists">'+(selection.map(g=>'<section class="memory-gist" data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'"><header><strong>'+e(g.verification_state)+'</strong><small>'+e(g.source||'Legacy')+(g.pinned?' · Pinned':'')+'</small></header><p>'+e(g.summary)+'</p><small>'+e(g.reason)+'</small><div class="memory-controls">'+button(c,'memory-verify','Recheck evidence',g.id)+button(c,'memory-pin',g.pinned?'Unpin':'Pin',g.id)+(!g.discarded?button(c,'memory-discard','Discard',g.id):'')+(g.teaching_proposal?button(c,'memory-correct','Review teaching correction',g.id):'')+'</div><details data-k="evidence:'+e(g.id)+'" data-memory-disclosure="evidence:'+e(g.id)+'"'+(disclosures.get('evidence:'+g.id)?' open':'')+'><summary>Claims and evidence</summary>'+(g.claims||[]).map(cl=>'<div class="memory-claim"><strong>'+e(cl.support_state||'Unverified')+'</strong><p>'+e(cl.text)+'</p><small>'+e(cl.support_scope)+' · '+e(cl.currentness)+'</small></div>').join('')+(g.evidence_refs||[]).map(ref=>{const q=proofs.get(ref.ref);return q?'<div class="memory-evidence"><strong>'+e(q.sourcePath)+'</strong><pre>'+e(q.sourceBody)+'</pre>'+q.cases.map(t=>'<p>'+e(t.name)+' · '+(t.pass?'Pass':'Not passing')+'</p>').join('')+'</div>':'<p>Evidence not available in this session.</p>';}).join('')+'</details><details data-k="history:'+e(g.id)+'" data-memory-disclosure="history:'+e(g.id)+'"'+(disclosures.get('history:'+g.id)?' open':'')+'><summary>History</summary><ol>'+(g.history||[]).map(h=>'<li>'+e(h.event)+' · '+e(h.detail)+'</li>').join('')+'</ol></details></section>').join('')||'<p class="memory-empty">No '+(filter==='All'?'':filter.toLowerCase()+' ')+'gists in this project.</p>')+'</div><small class="memory-boundary">Local concept checks only. No persistent database or model dispatch.</small>'+(editor?(window.PM56_MEMORY_DEMOS?.guide(c,true)||''):'')+'</article>';
+ }
+ function show(id){const c=E.ctx();if(id&&(!get(id)||!allowed(get(id))))return fail('outside_scope');views.set(c.thread.id,{id:id||null,preview:false});filter='Unverified';c.closeMenu();c.closeDialog();c.state.editorRevealed=true;c.openEditor('memory:'+c.thread.id);return {ok:true};}
+ function dialog(c){return '<div class="dialog" style="width:min(740px,calc(100vw - 32px))"><div class="dialog-head"><h2>Memory</h2><button class="icon-button" data-action="close-dialog" aria-label="Close">'+c.icon('close',14)+'</button></div><div class="af-tabs"><button class="af-tab" data-action="af-memory-section" data-value="auto">Automatic · '+visible().length+'</button><button class="af-tab" data-action="af-memory-section" data-value="taught">Taught by you · '+T.visibleRecords(context()).filter(T.active).length+'</button></div><div class="dialog-body">'+(tab==='auto'?render(c):T.memoryRows(c))+'</div></div>';}
+ E.chainAction('af-memory-open',c=>{filter='Unverified';tab='auto';views.delete(c.thread.id);c.closeMenu();c.openDialog({type:'af-memory'});return true;});
+ E.chainAction('af-memory-verify',(c,b)=>{mutation(b.dataset.value,'verify');c.renderApp();return true;});
+ // Compatibility gallery replay: produces an unverified candidate, never evidence.
+ function simulate(){const locked=T.visibleRecords(context()).find(r=>T.active(r)&&r.locked);const r=begin(locked?{teachingId:locked.id,proposal:'Recorded proposal for explicit teaching review.'}:{});return r.ok?finish(r.id):r;}
+ E.chainAction('af-memory-simulate',c=>{simulate();c.renderApp();return true;});
+ E.action('memory-open',(c,b)=>{show(b.dataset.id);return true;});
+ E.action('memory-filter',(c,b)=>{if(['All','Verified','Unverified'].includes(b.dataset.value)){filter=b.dataset.value;views.set(c.thread.id,{...views.get(c.thread.id),id:null});}c.renderApp();return true;});
+ E.action('memory-preview',c=>{views.set(c.thread.id,{...views.get(c.thread.id),preview:!views.get(c.thread.id)?.preview});c.renderApp();return true;});
+ E.chainAction('af-memory-section',(c,b)=>{tab=b.dataset.value==='taught'?'taught':'auto';c.renderOverlays();return true;});
+ ['verify','pin','discard'].forEach(op=>E.action('memory-'+op,(c,b)=>{mutation(b.dataset.id,op);c.renderApp();return true;}));
+ E.action('memory-correct',(c,b)=>{const r=correction(b.dataset.id);if(!r.ok)c.toast('Teaching unchanged',r.error);return true;});
+ E.action('memory-export',()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([exportData()],{type:'application/json'}));a.href=url;a.download='automatic-memory-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);return true;});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('memory:')?'Gist Review':'');E.slot('editorDocument',c=>c.editorId?.startsWith('memory:')?render(c,true):'');
+ document.addEventListener('toggle',e=>{const n=e.target;if(n.isConnected&&n.matches?.('details[data-memory-disclosure]'))disclosures.set(n.dataset.memoryDisclosure,n.open);},true);
+ E.chainAction('reset-all',()=>{dedupIndex.clear();disclosures.clear();epoch++;runs.clear();sources.clear();proofs.clear();seen.clear();views.clear();filter='Unverified';return false;});
+ window.PM56_AUTO_MEMORY={simulate,source,begin,execute,milestone,finish,boundary,invalidate,preview,assess,mutation,correction,exportData,show,dialog,all,get,visible,settings,context,run:id=>runs.has(id)?copy(runs.get(id)):null,evidence:id=>proofs.has(id)?copy(proofs.get(id)):null};
+})();
+
+/* B08 gallery-only verified boundary and locked-teaching workflows. */
+(function(){
+ 'use strict';const E=window.PM56_EXT,M=window.PM56_AUTO_MEMORY,T=window.PM56_TEACH,clone=x=>JSON.parse(JSON.stringify(x));let active=null,seq=0;
+ const rule='Edit the source, rebuild generated output, and compare it before publishing.';
+ const corrected='Edit the source, rebuild generated output, compare it, and run the label-order checks before publishing.';
+ const flows={verified:{title:'Remember only the supported result',detail:'Run local checks, finish the run, inspect verification, then revalidate changed source.'},locked:{title:'Teaching stays under your control',detail:'An automatic proposal cannot replace locked guidance. Review and explicitly correct it.'}};
+ function start(kind){if(!flows[kind])return;const c=E.ctx(),id='memory-demo-'+kind+'-'+(++seq),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);Object.assign(t,{id,title:flows[kind].title+' · local example',projectId:'concept:memory:'+seq,pinned:false,archived:false,goalId:null,messages:[{id:id+'-user',role:'user',type:'text',body:kind==='verified'?'Check the label-order behavior and retain only what the tests establish.':rule},{id:id+'-assistant',role:'assistant',type:'text',body:kind==='verified'?'This example evaluates three local cases. It does not prove production performance.':'Capture this guidance first; automatic memory must not silently replace it.'}]});c.state.threads.push(t);Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};window.PM56_RUNTIME.composer.destination=null;active={kind,threadId:id,runId:null,sourceId:null,gistId:null,teachingId:null,invalidated:false};c.switchThread(id);c.renderApp();}
+ function invoke(action,ds={}){const b=document.createElement('button');Object.assign(b.dataset,ds);return E.run(action,b,new Event('click'));}
+ function checks(){if(!active||active.runId)return;const s=M.source({path:'label-order.config.json',body:JSON.stringify({trim:true,caseSensitive:false})});active.sourceId=s.id;const r=M.begin({sourceId:s.id});active.runId=r.id;const out=M.execute(r.id);if(!out.ok)throw Error(out.error);const c=E.ctx();c.thread.messages.push({id:active.threadId+'-checks',role:'system',type:'info',title:'Local checks · '+out.evidence.passed+'/'+out.evidence.total,detail:'Evidence is scoped to these three input/output cases.'});c.renderApp();}
+ function end(){if(!active||active.gistId)return;const c=E.ctx();if(active.kind==='locked'&&!active.runId){const t=T.preview().items[0];if(!t)return;c.state.composer='';active.teachingId=t.id;active.runId=M.begin({teachingId:t.id,proposal:'Skip comparing generated output before publishing.'}).id;}
+  if(!active.runId)return;const out=M.finish(active.runId);if(!out.ok)throw Error(out.error);active.gistId=out.id;c.thread.messages.push({id:active.threadId+'-end',role:'assistant',type:'text',body:active.kind==='verified'?'The three local label-order checks pass. The memory summary is limited to that result.':'The automatic proposal is held for review. Your locked teaching has not changed.'});c.renderApp();}
+ function guide(c,inEditor=false){if(!active||c.thread.id!==active.threadId||c.state.dialog)return '';if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';const t=T.preview().items;let label,action;
+  if(active.kind==='verified'){if(!active.runId){label='Run local checks';action='memory-demo-checks';}else if(!active.gistId){label='Finish example run';action='memory-demo-finish';}else if(!active.invalidated){label='Change example source';action='memory-demo-change';}else{label='Replay';action='memory-demo-replay';}}
+  else if(!t.length&&!active.teachingId){label='Capture teaching';action='memory-demo-teach';}else if(!active.gistId){label='Finish with a proposed change';action='memory-demo-finish';}else{label='Replay';action='memory-demo-replay';}
+  return '<div class="memory-demo-guide" data-k="memory-guide"><div><small>Local example · no provider calls</small><strong>'+c.esc(active.gistId?'Inspect evidence and preview next context.':flows[active.kind].title)+'</strong></div><div>'+(!active.gistId?'':'<button class="soft-button" data-action="memory-open" data-id="'+c.esc(active.gistId)+'">Gist Review</button>')+'<button class="soft-button" data-action="'+action+'">'+label+'</button><button class="icon-button" data-action="memory-demo-close" title="Close guide">'+c.icon('close',12)+'</button></div></div>';}
+ E.slot('composerBelow',c=>guide(c));
+ E.action('memory-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('memory-demo-checks',()=>{checks();return true;});E.action('memory-demo-finish',()=>{end();return true;});
+ E.action('memory-demo-change',()=>{if(active){M.invalidate(active.sourceId,JSON.stringify({trim:false,caseSensitive:false}));active.invalidated=true;E.ctx().renderApp();}return true;});
+ E.action('memory-demo-teach',()=>{T.open({text:rule,scope:'project',sourceMessageId:active.threadId+'-user'});return true;});
+ E.action('memory-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('memory-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{active=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start'].forEach(a=>E.chainAction(a,()=>{active=null;return false;}));
+ const G=window.PM56_REPAIR_DEMOS,prev=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided automatic memory workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="memory-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+prev(c);
+ window.PM56_MEMORY_DEMOS={start,checks,end,guide,rule,corrected,snapshot:()=>active?clone(active):null};
+})();
+
+/* B08 access to transcript controls near the floating pill. */
+(function(){
+ function reveal(e){
+  const b=e.target.closest?.('.transcript button,.transcript a,.transcript summary');
+  if(!b||b.closest('.working-card'))return;
+  const tr=b.closest('.transcript'),bar=document.querySelector('.chat-float .activity-bar');if(!tr||!bar)return;
+  const r=b.getBoundingClientRect(),f=bar.getBoundingClientRect();
+  if(r.bottom>f.top-10&&r.top<f.bottom+10&&r.right>f.left&&r.left<f.right)
+    tr.scrollTop+=r.bottom-f.top+14;
+ }
+ document.addEventListener('focusin',reveal);
+ // Keyboard focus and product-navigation scrolls use the same clearance.
+})();
 </script>
   <script>(() => {
   'use strict';
@@ -42961,7 +43101,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><span class="event-kind">${esc(d[1])}</span><strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m){
     const rec=workRecFor(m)||state.work;
@@ -43820,6 +43960,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
+  let composerMeasureCache=null, activityMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -43832,7 +43973,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const need=measureLabeledTools(box, tools);
+    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,document.body.dataset.theme,document.fonts?.status].join('|');
+    if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
+      composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
+    const need=composerMeasureCache.value;
     if(need>0) labeledToolsMin=need;
     if(composerCompact) composerCompact=avail<labeledToolsMin+slack;
     else composerCompact=labeledToolsMin>0 && avail<labeledToolsMin+slack;
@@ -43894,8 +44038,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const labeled=measureActivityTier(wrap, bar, 0);
-    const compact=measureActivityTier(wrap, bar, 1);
+    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,document.body.dataset.theme,document.fonts?.status].join('|');
+    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
+      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
+    const {labeled,compact}=activityMeasureCache;
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -43914,28 +44060,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     syncActivityCompact();
     syncJumpBottom();
   }
+  let chromeSyncFrame=null, chromeObserved=new Set();
   function armComposerObserver(){
-    const box=document.querySelector('.composer-box');
-    const stage=document.querySelector('.chat-stage');
+    // The keyed shell retains these nodes. Recreating the observer every render
+    // delivered another initial resize callback and repeated both forced-layout probes.
+    if(!composerRO) composerRO=new ResizeObserver(()=>{
+      if(chromeSyncFrame!==null)return;
+      chromeSyncFrame=requestAnimationFrame(()=>{chromeSyncFrame=null;syncChatChrome();});
+    });
+    const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
+    for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
+    for(const n of next)if(!chromeObserved.has(n))composerRO.observe(n);
+    chromeObserved=next;
     syncChatChrome();
-    requestAnimationFrame(syncChatChrome);
-    if(composerRO) composerRO.disconnect();
-    composerRO=new ResizeObserver(()=>{ if(!measuringCompact&&!abMeasuring) syncChatChrome(); });
-    if(box){
-      composerRO.observe(box);
-      const tools=document.querySelector('.composer-tools');
-      if(tools) composerRO.observe(tools);
-    }
-    if(stage){
-      const composer=stage.querySelector('.composer');
-      const decision=stage.querySelector('.decision-host');
-      const wrap=stage.querySelector('.activity-wrap');
-      const float=stage.querySelector('.chat-float');
-      if(composer) composerRO.observe(composer);
-      if(decision) composerRO.observe(decision);
-      if(wrap) composerRO.observe(wrap);
-      if(float) composerRO.observe(float);
-    }
   }
 
   /* ---------------------------------------------------------------------
@@ -43986,6 +44123,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function pmPatchNode(el,src){
     if(el.nodeType!==1){ if(el.nodeValue!==src.nodeValue) el.nodeValue=src.nodeValue; return; }
+    // Native equality skips unchanged text/icon/button subtrees. Do not skip
+    // form or JS-owned subtrees: live properties still need normal reconciliation.
+    if(['svg','SPAN','STRONG','SMALL','P','BUTTON','PRE','CODE'].includes(el.tagName) &&
+       !el.querySelector('input,textarea,select,[data-pm-keep]') && el.isEqualNode(src)) return;
     pmSyncAttrs(el,src);
     // A subtree owned by JS (streamed words, canvases) opts out of patching.
     if(el.hasAttribute('data-pm-keep')) return;
@@ -45223,6 +45364,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/todo')){state.activity={...state.activity,open:true,domain:'todo'};}
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
     else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
+    const finalMessage=t.messages[t.messages.length-1];
+    if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
     renderApp();
     scrollTranscriptToEnd();
   }

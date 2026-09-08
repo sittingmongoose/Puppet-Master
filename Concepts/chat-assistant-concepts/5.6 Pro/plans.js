@@ -1193,9 +1193,8 @@
         '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?ICON.check:'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
-        '<span class="spacer"></span>'+
-        buildControl(r)+
-        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button>'+
+        '<div class="pd-compact-actions">'+buildControl(r)+
+        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
       '</div>'+why+
     '</article>';
   }

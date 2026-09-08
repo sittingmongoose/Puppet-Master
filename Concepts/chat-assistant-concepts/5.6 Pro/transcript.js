@@ -259,7 +259,7 @@
         (dis ? ' disabled aria-disabled="true"' : ' data-action="' + esc(it.action || '') + '"' +
           ' data-id="' + esc(m.id) + '"' +
           (it.value != null ? ' data-value="' + esc(it.value) + '"' : '')) +
-        tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, dis ? (it.reason || 'Not available for this message') : (it.detail || it.label)) + '>' +
+        (dis ? tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, it.reason || 'Not available for this message') : ' aria-label="' + esc(it.label) + '"') + '>' +
         '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 13) + '</span>' +
         '<span class="pm-overflow-copy"><strong>' + esc(it.label) + '</strong>' +
         '<span>' + esc(dis ? (it.reason || 'Not available for this message') : (it.detail || '')) + '</span></span></button>';

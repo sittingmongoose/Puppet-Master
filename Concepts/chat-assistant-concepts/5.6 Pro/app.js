@@ -876,7 +876,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy"><span class="event-kind">${esc(d[1])}</span><strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m){
     const rec=workRecFor(m)||state.work;
@@ -1735,6 +1735,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
+  let composerMeasureCache=null, activityMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -1747,7 +1748,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const need=measureLabeledTools(box, tools);
+    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,document.body.dataset.theme,document.fonts?.status].join('|');
+    if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
+      composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
+    const need=composerMeasureCache.value;
     if(need>0) labeledToolsMin=need;
     if(composerCompact) composerCompact=avail<labeledToolsMin+slack;
     else composerCompact=labeledToolsMin>0 && avail<labeledToolsMin+slack;
@@ -1809,8 +1813,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const labeled=measureActivityTier(wrap, bar, 0);
-    const compact=measureActivityTier(wrap, bar, 1);
+    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,document.body.dataset.theme,document.fonts?.status].join('|');
+    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
+      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
+    const {labeled,compact}=activityMeasureCache;
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -1829,28 +1835,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     syncActivityCompact();
     syncJumpBottom();
   }
+  let chromeSyncFrame=null, chromeObserved=new Set();
   function armComposerObserver(){
-    const box=document.querySelector('.composer-box');
-    const stage=document.querySelector('.chat-stage');
+    // The keyed shell retains these nodes. Recreating the observer every render
+    // delivered another initial resize callback and repeated both forced-layout probes.
+    if(!composerRO) composerRO=new ResizeObserver(()=>{
+      if(chromeSyncFrame!==null)return;
+      chromeSyncFrame=requestAnimationFrame(()=>{chromeSyncFrame=null;syncChatChrome();});
+    });
+    const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
+    for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
+    for(const n of next)if(!chromeObserved.has(n))composerRO.observe(n);
+    chromeObserved=next;
     syncChatChrome();
-    requestAnimationFrame(syncChatChrome);
-    if(composerRO) composerRO.disconnect();
-    composerRO=new ResizeObserver(()=>{ if(!measuringCompact&&!abMeasuring) syncChatChrome(); });
-    if(box){
-      composerRO.observe(box);
-      const tools=document.querySelector('.composer-tools');
-      if(tools) composerRO.observe(tools);
-    }
-    if(stage){
-      const composer=stage.querySelector('.composer');
-      const decision=stage.querySelector('.decision-host');
-      const wrap=stage.querySelector('.activity-wrap');
-      const float=stage.querySelector('.chat-float');
-      if(composer) composerRO.observe(composer);
-      if(decision) composerRO.observe(decision);
-      if(wrap) composerRO.observe(wrap);
-      if(float) composerRO.observe(float);
-    }
   }
 
   /* ---------------------------------------------------------------------
@@ -1901,6 +1898,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function pmPatchNode(el,src){
     if(el.nodeType!==1){ if(el.nodeValue!==src.nodeValue) el.nodeValue=src.nodeValue; return; }
+    // Native equality skips unchanged text/icon/button subtrees. Do not skip
+    // form or JS-owned subtrees: live properties still need normal reconciliation.
+    if(['svg','SPAN','STRONG','SMALL','P','BUTTON','PRE','CODE'].includes(el.tagName) &&
+       !el.querySelector('input,textarea,select,[data-pm-keep]') && el.isEqualNode(src)) return;
     pmSyncAttrs(el,src);
     // A subtree owned by JS (streamed words, canvases) opts out of patching.
     if(el.hasAttribute('data-pm-keep')) return;
@@ -3137,6 +3138,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/todo')){state.activity={...state.activity,open:true,domain:'todo'};}
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
     else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
+    const finalMessage=t.messages[t.messages.length-1];
+    if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
     renderApp();
     scrollTranscriptToEnd();
   }

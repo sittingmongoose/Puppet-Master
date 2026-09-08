@@ -1,0 +1,13 @@
+/* Native card grammar; no reference-video flattening or decorative side stripe. */
+.memory-document{padding:22px;min-width:0;max-width:100%;color:var(--text);font:13px/1.6 var(--font-ui)}
+.memory-document h2{font-size:22px;margin:10px 0 16px}.memory-document h3{font-size:12px;margin:12px 0 4px}
+.memory-controls{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.memory-controls button{white-space:normal;max-width:100%}
+.memory-controls .active{border-color:var(--accent);color:var(--accent)}
+.memory-gists{display:grid;gap:14px}.memory-gist,.memory-preview{padding:16px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;min-width:0}
+.memory-preview{margin:16px 0}.memory-gist header,.memory-preview header{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.memory-document small{color:var(--muted);font-size:11px}.memory-gist>p{font-size:14px;line-height:1.55;margin:12px 0 6px;overflow-wrap:anywhere}
+.memory-gist details{margin:10px 0 0}.memory-gist summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.memory-claim,.memory-evidence{padding:12px;border:1px solid var(--border);border-radius:8px;margin-top:10px}
+.memory-document pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.memory-document li{overflow-wrap:anywhere}
+.memory-empty{padding:24px 8px;color:var(--muted)}.memory-boundary{display:block;margin-top:18px}
+@media(max-width:820px){.memory-document{padding:16px}}

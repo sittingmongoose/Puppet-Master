@@ -1,3 +1,5 @@
+> **Current continuation: Batch 8 — automatic memory and scoped polish repairs.** Read `BATCH_08_README.md`, `BATCH_08_CHECKPOINT.json`, and `BATCH_08_COVERAGE_DELTA.json`. Batches1–7 and the selective video-layout rollback are preserved. Older statements below are historical.
+
 > **Current continuation: Batch 7 — Teach.** Read `BATCH_07_README.md`, `BATCH_07_CHECKPOINT.json` and `BATCH_07_COVERAGE_DELTA.json`. Batches 1–6 and the selective video-layout rollback are preserved. Earlier notes below are historical, not fresh acceptance claims.
 
 ## Historical delivery notes

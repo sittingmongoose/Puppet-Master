@@ -249,7 +249,13 @@
      markup.  It is registered purely because it is called once per renderApp
      (app.js:502) and is therefore the cheapest reliable "the app just
      rendered" signal a module can get without reopening app.js. */
-  EXT.slot('headerExtras', function(){ heartbeat(); return ''; });
+  EXT.slot('headerExtras', function(){
+    if(S()?.historyMode==='closed' && mode()!=='closed'){
+      closing=false; clearTimeout(closeTimer); clearSettled(); clearPaneClip();
+      document.body.removeAttribute('data-ph-want-pin');document.body.removeAttribute('data-ph-closing');setMode('closed');
+    }
+    heartbeat(); return '';
+  });
 
   /* ---- the drawer's own chrome ------------------------------------------
      The built-in head button is hard-coded to `pin-history` with a pin icon

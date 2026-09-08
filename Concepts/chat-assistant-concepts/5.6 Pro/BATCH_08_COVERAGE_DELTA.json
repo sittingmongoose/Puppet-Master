@@ -1,0 +1,344 @@
+{
+  "batch": "assistant-demo-b08-automatic-memory",
+  "retained_source_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "original_denominator": 551,
+  "html_sha256": "182c1786bd26138b7fe9c3ff4f436b12cfb1a3142beb42ebfcce9abddbd5a080",
+  "rows": [
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-003",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Automatic Assistant memory at run boundaries/milestones remains enabled under the memory owner.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "705cd65ffa1af0d817a774e8a5f013714873c06e19637b55fc28d9f8c069a310",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Actual local evidence, one milestone before one run boundary, same-run/cross-run dedup, claim-level scope/currentness, no six-message heuristic or unconditional verification. Ordinary text completion records an unverified candidate. Not every legacy asynchronous workflow is wired.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-004",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Explicit taught/locked memory cannot be silently overridden by automatic memory.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "959415a8a7fd10e9a70dc55e768843d3fbab878e4b7985602286668c7e102329",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Automatic proposal names the exact teaching/version. It remains Unverified and cannot replace locked guidance; explicit Teach correction produces V2 and preserves V1.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-002",
+        "area": "History and Activity coexistence",
+        "requirement": "Pinned History and pinned Activity Detail must share the actual available width, rather than independently reserving overlapping gutters.",
+        "acceptance": "History closed/floating/pinned \u00d7 Activity closed/floating/pinned at the default editor split and narrow widths."
+      },
+      "source_record_sha256": "8667c11510430cf5cba57209396bad11e625e627af057b5464e7bb086632de35",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Closed History releases the lingering 200px reservation; visible pinned History still reserves its real width.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-003",
+        "area": "Transcript horizontal extent",
+        "requirement": "The chat transcript must not scroll horizontally. Fix intrinsic-width offenders, including attachments, hidden previews, rich-plan tables, and cards; do not merely conceal inaccessible content.",
+        "acceptance": "scrollWidth <= clientWidth (rounding tolerance only), long filenames/text/tables, hidden preview states, editor resizing."
+      },
+      "source_record_sha256": "9d3f3a1afe87c7722619487e6c56cb399d2795ee749e86935006a4eaa0355121",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Completed Plan/title/action grouping and chrome fitting measured at1280/900/700 plus eight theme variants. No hidden-content CSS used as overflow repair.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-004",
+        "area": "Floating activity bar",
+        "requirement": "Restore the styled inner Chat Activity Bar. Remove only its full-width enclosing strip. It floats over the transcript with transparent sides and bottom, pointer pass-through around the pill, and enough bottom padding that the final transcript item is entirely above it at settled bottom scroll. Do not replace the bar with plain text or put it in an opaque in-flow footer.",
+        "acceptance": "Styled pill visible; both transparent ancestors; positive side/bottom gaps; actual last transcript child clears pill at settled bottom; composer resizing and decision hosts."
+      },
+      "source_record_sha256": "4aee824e9f05258c4f2502aa72ed3a38935bef89ed4a2321a34f403299229b5b",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Styled floating pill and transparent wrapper retained. Settled-bottom Plan action clears pill; keyboard focus scrolls covered controls clear. Mid-scroll overlay remains by design and is not globally eliminated.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-011",
+        "area": "Transcript card grammar",
+        "requirement": "Use consistent grouping, spacing, headings, action placement, and progressive disclosure across non-working transcript cards. Reduce repetitive outer boxes and scheduled-message verbosity.",
+        "acceptance": "Mixed long transcript, multiple adjacent feature cards, scheduled message states, metadata disclosures."
+      },
+      "source_record_sha256": "f22e597e9206eb7c82a5304f630cfb93077fe13152f305818271fd03e7b7bebd",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Completed Plan actions moved below full-width title. Duplicated receipt caption removed; enabled message-menu descriptions no longer spawn repeated long tooltips. Evidence disclosure survives recheck.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-012",
+        "area": "Working activity protection",
+        "requirement": "Do not redesign the perfected working-activity components or their animation choreography. Repair surrounding integration only when necessary and prove it does not disturb component identity, timer ownership, or motion.",
+        "acceptance": "Protected source diff, DOM identity over ticks, no duplicate timers/remounts, screenshot/motion comparison."
+      },
+      "source_record_sha256": "91f2ce595296f6bc914175380af6322c50b6b63390acc7e3e30eb4da3747b0a5",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "All ten protected working source files byte-identical; Orbit and Step Rail Simple DOM identity/count checks pass.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-015",
+        "area": "Broad independent review",
+        "requirement": "Look for defects beyond the user's initial list. Do not restrict the work to a cosmetic checklist or infer correctness from an earlier report.",
+        "acceptance": "New findings ledger with reproduction, repair, regression assertion, and closure evidence."
+      },
+      "source_record_sha256": "1a9ca6e3816c506df8f07b56067862ee5cb9f56c67bff3211be0c651f6809b3e",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Reproduced/recorded gutter, caption, disclosure, verification and compact-record defects, then repaired and rechecked on final bytes.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "source_record_sha256": "fa0cd6d421328b39769ad21435a845756c0acaad4e084f5aa555f305a2a014b8",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Two distinct bounded memory workflows with observable state/output checks; not a census-wide acceptance result.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-017",
+        "area": "Selected family scope",
+        "requirement": "Test the default Independently swappable concept families plus Step Rail Simple. Preserve other options; do not expend acceptance work on all alternate variants or falsely claim them tested.",
+        "acceptance": "Record default family IDs from source/settings and the exact Step Rail Simple selection; test both working selections."
+      },
+      "source_record_sha256": "4f4a1b779c0431addf548b00f00c6ebd1c4e3222da10003545ebe3aab07453ff",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Default memory workflows recorded. Both selected working styles checked without redesign; other alternative animations not certified.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "source_record_sha256": "e82ef4cb6360891300397899e8cc890fefd98a43cdfed8116ec44f311f2934bf",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Both final memory workflows captured at60Hz target with original PTS and every consecutive decoded frame traversed at contact-sheet scale. Selected frames inspected natively. Continuous native60fps and all-feature campaign remain open.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-022",
+        "area": "Preserve required semantics",
+        "requirement": "UI simplification must not delete retained v2/correction-v4 requirements, payload fields, status semantics, lineage, permission checks, lifecycle behavior, or advanced detail access.",
+        "acceptance": "Requirement-level preservation/supersession map, owner cross-reference, positive and negative fixtures."
+      },
+      "source_record_sha256": "804eb0c4547c586bd8bff53b0f8239bbe4fe967a7b3ca4ab431b1d5d4df50f45",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Batches1\u20137 regression checks and protected-source equality preserve tested independent behavior; no native storage or global semantic preservation certification.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-025",
+        "area": "Safe governance boundary",
+        "requirement": "This is Plans/specification repair, not native implementation or readiness certification. Do not create WorkNodes/NodeSeeds/executable queues, close PNC-019, forge runtime evidence, or refresh protected generated governance merely to obtain green gates.",
+        "acceptance": "Changed-file allowlist; gate results classified as introduced/existing/blocked; no unrelated lock/hash repinning."
+      },
+      "source_record_sha256": "220fea09aa71fec117733333167f45efecdd0a4b32bcd72864a3fedff01d8001",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Assistant-only local delivery; Settings, Plans, governance, WorkNodes and execution queues not replaced.",
+      "scenarios": [
+        "B08-MEMORY-VERIFIED",
+        "B08-MEMORY-LOCKED"
+      ],
+      "evidence": [
+        "qa/memory-results/RESULTS.json",
+        "qa/polish-results/RESULTS.json",
+        "qa/PRIOR_REGRESSION_RUNS.json",
+        "recordings/verified-result.json",
+        "recordings/locked-result.json",
+        "recordings/FRAME_REVIEW_INDEX.json"
+      ],
+      "remaining": "Global551-row coverage and all-feature motion acceptance stay open. Native persistence, Tantivy/USearch, production prompt assembly/tokenizer, arbitrary-language entailment, general conflict detection, and complete memory maintenance are not proved."
+    }
+  ],
+  "unchanged_requirement_identities": true,
+  "global_APR_016": "OPEN",
+  "global_APR_018": "OPEN"
+}

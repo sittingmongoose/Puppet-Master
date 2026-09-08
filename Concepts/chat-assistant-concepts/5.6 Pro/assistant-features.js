@@ -430,56 +430,8 @@
      records before it is allowed to "write" — FEATURE-004 in a single
      deterministic, inspectable function rather than only described.
      ===================================================================== */
-  /* Index 0 deliberately overlaps the seeded LOCKED taught record's keywords
-     (query / perf / benchmark / suite), so the very first "Simulate a
-     checkpoint" click demonstrates FEATURE-004's deferral — the more
-     important, less obvious case — rather than burying it a few clicks in.
-     The rest cycle through ordinary, unblocked events for contrast. */
-  var AUTO_SUMMARIES = [
-    'Run boundary reached: query-perf benchmark suite mentioned again in this thread.',
-    'Run boundary reached: composer buffer flushed and the last admitted turn was recorded as durable history.',
-    'Milestone: a Plan revision was reviewed in this thread; capturing the decision context for later recall.',
-    'Milestone: a new provider route was selected; capturing the reason for later recall.'
-  ];
-
-  function checkAutoMemoryAgainstLocks(summary, threadId){
-    var words=significantWords(summary);
-    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked && !r.supersededBy && (!window.PM56_TEACH || window.PM56_TEACH.applies(r,{...window.PM56_TEACH.context(),threadId:threadId})); });
-    for(var i=0;i<recs.length;i++){
-      var rw=significantWords(recs[i].text), hits=0;
-      for(var j=0;j<words.length;j++){ if(rw.indexOf(words[j])>=0) hits++; }
-      if(hits>=2) return recs[i];
-    }
-    return null;
-  }
-  function createAutoMemoryEvent(ctx, threadId, summaryOverride){
-    var idx = F.memory.simIndex % AUTO_SUMMARIES.length;
-    var summary = summaryOverride || AUTO_SUMMARIES[idx];
-    F.memory.simIndex++;
-    var blocker = checkAutoMemoryAgainstLocks(summary, threadId);
-    /* Derived from the summary's own wording, not array position — self
-       describing, so reordering AUTO_SUMMARIES can never desync the badge
-       from the text again (see the fix that caught this). */
-    var trigger = /^Milestone/.test(summary) ? 'milestone' : 'run_boundary';
-    var ev = {
-      id:afUid('auto'), trigger:trigger, threadId:threadId,
-      summary:summary, verification: blocker?'deferred':'unverified',
-      blocked: !!blocker, blockedByRecordId: blocker?blocker.id:null, at:nowIso()
-    };
-    F.memory.auto.push(ev);
-    var th=findThread(ctx, threadId);
-    if(th){
-      if(blocker){
-        ctx.appendMessage({ id:afUid('automem'), role:'system', type:'af-auto-memory',
-          title:'Automatic memory deferred', detail:'"'+truncateWords(summary,12)+'" overlaps a locked taught record ('+blocker.id+') and was not written over it.', eventId:ev.id, time:nowIso() }, th);
-      } else {
-        ctx.appendMessage({ id:afUid('automem'), role:'system', type:'af-auto-memory',
-          title:'Automatic memory checkpoint', detail:truncateWords(summary,14), eventId:ev.id, time:nowIso() }, th);
-      }
-    }
-    return ev;
-  }
-
+  // B08 retires summary-word matching and prewritten "verified" events.
+  // The authoritative in-memory concept evaluator is memory-protocol.js.
   EXT.action('af-memory-open', function(ctx){
     if(ctx.closeMenu) ctx.closeMenu();
     ctx.openDialog({ type:'af-memory' });
@@ -491,17 +443,12 @@
     return true;
   });
   EXT.action('af-memory-simulate', function(ctx){
-    var ev=createAutoMemoryEvent(ctx, ctx.thread.id, null);
-    ctx.toast(ev.blocked?'Automatic memory deferred':'Automatic memory recorded', ev.blocked?'A locked taught record took priority. See Memory for detail.':'Verification status: unverified until reviewed.');
-    return true;
+    if(window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.simulate();
+    ctx.renderApp();return true;
   });
-  EXT.action('af-memory-verify', function(ctx, btn){
-    var id=btn.dataset.value;
-    for(var i=0;i<F.memory.auto.length;i++){
-      if(F.memory.auto[i].id===id){ F.memory.auto[i].verification='verified'; break; }
-    }
-    ctx.renderOverlays();
-    return true;
+  EXT.action('af-memory-verify', function(ctx,btn){
+    if(window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.mutation(btn.dataset.value,'verify');
+    ctx.renderOverlays(); return true;
   });
 
   /* system-card fallback rendering (renderEventMessage's map does not know
@@ -530,6 +477,7 @@
   });
 
   function renderMemoryDialog(ctx){
+    if(window.PM56_AUTO_MEMORY) return window.PM56_AUTO_MEMORY.dialog(ctx);
     var icon=ctx.icon, e=ctx.esc;
     var taught=(window.PM56_TEACH?window.PM56_TEACH.visibleRecords(window.PM56_TEACH.context()):F.teach.records).slice().reverse();
     var auto=F.memory.auto.slice().reverse();
@@ -567,7 +515,7 @@
           '<p class="af-mem-text">'+e(ev.summary)+'</p>'+
           (ev.blocked?'<div class="af-mem-meta af-danger-text">Deferred: overlaps locked taught record '+e(ev.blockedByRecordId)+'.</div>'
             :'<div class="af-mem-meta">Thread: '+e(ev.threadId)+'</div>')+
-          (ev.verification==='unverified'?'<div class="af-mem-actions"><button class="text-button" data-action="af-memory-verify" data-value="'+e(ev.id)+'">'+icon('check',11)+' Mark verified</button></div>':'')+
+          (ev.verification==='unverified'?'<div class="af-mem-actions"><button class="text-button" data-action="af-memory-verify" data-value="'+e(ev.id)+'">'+icon('check',11)+' Recheck evidence</button></div>':'')+
         '</div>';
       }).join('') : emptyState(icon('brain',20),'No automatic memory yet.')) +
       '<div class="af-mem-foot"><button class="soft-button" data-action="af-memory-simulate">'+icon('refresh',12)+' Simulate a checkpoint</button></div>';
@@ -1349,8 +1297,8 @@
     openTeachCapture(ctx, { text:text, scope:'thread', sourceThreadId:thread.id, sourceMessageId:message.id });
   }
   function memoryCommitHook(ctx, thread){
-    var n=userMessageCount(thread);
-    if(n>0 && n%6===0) createAutoMemoryEvent(ctx, thread.id, null);
+    // User submission is not an Assistant run boundary. B08 records final responses.
+    return;
   }
   function titleCommitHook(ctx, thread){
     if(F.title.locks[thread.id]) return;

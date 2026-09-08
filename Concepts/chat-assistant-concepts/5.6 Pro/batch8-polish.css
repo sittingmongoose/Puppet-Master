@@ -1,0 +1,13 @@
+/* Completed summary: title gets a full line; no changes to working cards. */
+.plan-doc-compact .pd-compact-row{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:start}
+.plan-doc-compact .pd-compact-row .pd-compact-copy{grid-column:2;min-width:0}
+.plan-doc-compact .pd-compact-row .pd-compact-copy strong{overflow-wrap:anywhere}
+.plan-doc-compact .pd-compact-row>.soft-button,.plan-doc-compact .pd-compact-row>.text-button{grid-column:2;justify-self:start}
+/* Transient notifications no longer sit over composer controls. */
+.toast-stack{top:calc(var(--header-h,48px) + 12px);bottom:auto;max-width:min(320px,calc(100vw - 24px));max-height:25vh;overflow:hidden}
+.toast{min-width:0}.toast span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.transcript{scroll-padding-bottom:calc(var(--thread-float-h,44px) + 28px)}
+.transcript button,.transcript a,.transcript summary{scroll-margin-bottom:calc(var(--thread-float-h,44px) + 28px)}
+
+.pd-compact-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.pd-compact-actions>*{max-width:100%}
