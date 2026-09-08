@@ -1832,7 +1832,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Governs advisor session lifecycle invalidation and compact BSD presentation in Context More Details.
 depends_on: [BSD-026]
-unblocks: []
+unblocks: [BSD-028]
 acceptance_criteria:
   - Changing model, account, or persona invalidates old session and increments epoch.
   - In-flight callbacks from prior epochs are discarded.
@@ -1864,3 +1864,66 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/FinalGUISpec.md
 
+
+### 26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)
+
+- **Own kit manager:** The Back Seat Driver Settings manager renders with the shared manager kit over the
+  `settings.bsd` projection and the eight canonical `safety.approvals.bsd-*` settings: a Mode row with an
+  Off / Auto / On segmented control and a plain-language status line (Off, Idle, Reviewing, Catching up,
+  Finding held, Advice delivered, Quota paused, Failed, Unavailable); a "Who advises" section (Model, Persona)
+  that states a fresh advisor session starts on change; a "When to advise" section (Sensitivity, Catch-up delay,
+  Cooldown); a "Where it watches" section whose side panel sets each of the ten stage bindings to Inherit,
+  Off, Auto, or On; and one Advanced disclosure holding transcript retention, the compaction threshold, the
+  usage boundary, the fallback model, recent findings, and technical details. It has no check control and no
+  header-level action strip, and keeps §25's stripe-free presentation.
+
+```yaml
+plan_unit_id: BSD-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  The Back Seat Driver Settings manager renders with the shared manager kit (USER-SETTINGS-MANAGER-REFRESH-20260908)
+  over the settings.bsd projection and the eight canonical safety.approvals.bsd-* settings: Mode as an Off,
+  Auto, On segmented control with a plain-language status line, Who advises (Model, Persona) noting that a
+  change starts a fresh advisor session, When to advise (Sensitivity, Catch-up delay, Cooldown), Where it
+  watches with a side panel that sets each of the ten stage bindings to Inherit, Off, Auto, or On, and one
+  Advanced disclosure for transcript retention, compaction threshold, usage boundary, fallback model, recent
+  findings, and technical details. It exposes no check control and no header-level action strip.
+gui_related: true
+gui_classification_reason: Governs the Settings manager presentation of Back Seat Driver in the published concept.
+depends_on: [BSD-027, SSYS-031, SSYS-033]
+unblocks: []
+acceptance_criteria:
+  - The BSD manager mounts through the shared kit with the four sections and one Advanced disclosure listed above.
+  - Mode, model, persona, sensitivity, catch-up, cooldown, transcript retention, and compaction threshold read and write the canonical safety.approvals.bsd-* keys.
+  - The stage side panel offers Inherit, Off, Auto, and On for all ten stages and updates safety.approvals.bsd-stage-bindings.
+validation_surfaces:
+  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: bsd_manager_presentation_drift
+reasoning_tier: standard
+context_scope: bsd_settings_presentation
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+  - Plans/Settings_System.md
+  - Concepts/pm7-tools/settings_refresh/managers/40-bsd.js
+node_compile_hint:
+  mode: bsd_ui_specification
+  create_worknodes: false
+source_lineage:
+  - USER-SETTINGS-MANAGER-REFRESH-20260908
+  - BSD-027
+  - SSYS-031
+preserved_exact_tokens:
+  - "settings.bsd"
+  - "Off, Auto, On"
+  - "ten stage bindings"
+negative_constraints:
+  - Do not render a check control, a top action bar, or a decorative accent bar in the BSD manager.
+  - Do not store BSD manager values outside the canonical safety.approvals.bsd-* keys.
+owner_hints:
+  - Plans/Back_Seat_Driver.md
+```
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Settings_System.md

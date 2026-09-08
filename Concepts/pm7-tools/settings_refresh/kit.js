@@ -46,23 +46,24 @@ PM51.dot = tone => `<span class="status-dot ${a({ ready: 'ready', attention: 'at
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
 
 PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disabled, reason, ui, cls, title, callback }) => {
-  const dis = disabled ? `aria-disabled="true" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"` : '';
-  const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
+  const dis = disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'Not available in this concept preview.')}" data-pm-hover-label="${a(label || '')}" data-pm-hover-detail="${a(reason || 'Not available in this concept preview.')}"` : '';
+  const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
   return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${ic ? icon(ic) : ''}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
 PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui }) => {
   const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
   return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}">${icon(ic || 'more')}</button>`;
 };
-PM51.link = ({ label, action, data, callback, cls }) => {
+PM51.link = ({ label, action, data, callback, cls, ui }) => {
   const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
-  return `<button type="button" class="pm51-link${cls ? ' ' + cls : ''}" ${act} ${dataAttrs(data)}>${h(label)}</button>`;
+  return `<button type="button" class="pm51-link${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)}>${h(label)}</button>`;
 };
 PM51.select = (value, options, { action, data, cls, label } = {}) => `<select class="select-control pm51-select${cls ? ' ' + cls : ''}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} ${label ? `aria-label="${a(label)}"` : ''}>${options.map(o => { const v = Array.isArray(o) ? o[0] : o, l = Array.isArray(o) ? o[1] : o; return `<option value="${a(v)}" ${String(v) === String(value) ? 'selected' : ''}>${h(l)}</option>`; }).join('')}</select>`;
-PM51.toggle = (on, { action, data, label } = {}) => `<button type="button" class="toggle pm51-toggle${on ? ' on' : ''}" role="switch" aria-checked="${on ? 'true' : 'false'}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} aria-label="${a(label || 'Toggle')}"></button>`;
+PM51.toggle = (on, { action, data, label, disabled, reason, ui } = {}) => `<button type="button" class="toggle pm51-toggle${on ? ' on' : ''}" role="switch" aria-checked="${on ? 'true' : 'false'}" ${ui ? `data-ui-action-id="${a(ui)}"` : ''} data-action="${a(disabled ? 'pm51-disabled' : (action || 'pm51-noop'))}" ${dataAttrs(data)} aria-label="${a(label || 'Toggle')}" ${disabled ? `aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason || 'This cannot be changed here.')}" data-pm-hover-label="${a(label || 'Toggle')}" data-pm-hover-detail="${a(reason || 'This cannot be changed here.')}"` : ''}></button>`;
 PM51.segmented = (value, options, { action, data, label } = {}) => `<div class="segmented pm51-seg" role="group" ${label ? `aria-label="${a(label)}"` : ''}>${options.map(o => { const v = Array.isArray(o) ? o[0] : o, l = Array.isArray(o) ? o[1] : o; return `<button type="button" class="${String(v) === String(value) ? 'active' : ''}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} data-value="${a(v)}" aria-pressed="${String(v) === String(value)}">${h(l)}</button>`; }).join('')}</div>`;
 PM51.input = (value, { action, data, placeholder, type, cls, label } = {}) => `<input class="text-control pm51-input${cls ? ' ' + cls : ''}" type="${a(type || 'text')}" value="${a(value == null ? '' : value)}" placeholder="${a(placeholder || '')}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} ${label ? `aria-label="${a(label)}"` : ''}/>`;
 PM51.chip = (label, tone) => `<span class="pm51-chip${tone ? ' tone-' + a(tone) : ''}">${h(label)}</span>`;
+PM51.chipToggle = (label, on, { action, data, label: aria } = {}) => `<button type="button" class="pm51-chip pm51-chip-toggle${on ? ' is-on' : ''}" aria-pressed="${on ? 'true' : 'false'}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)}>${h(label)}</button>`;
 PM51.tech = text => `<code class="pm51-tech">${h(text)}</code>`;
 
 PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui }) => {
@@ -74,7 +75,7 @@ PM51.grid = (cols, ...parts) => `<div class="pm51-grid cols-${a(cols)}">${parts.
 PM51.rows = (rows, { cls } = {}) => `<div class="pm51-rows${cls ? ' ' + cls : ''}">${rows.filter(Boolean).map(r => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}" ${r.id ? `data-row="${a(r.id)}"` : ''} ${dataAttrs(r.data)}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.pill ? ' ' + r.pill : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.control || (r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}">${h(String(r.value))}</span>` : '')}${r.action ? (typeof r.action === 'string' ? r.action : PM51.btn(Object.assign({ small: true }, r.action))) : ''}</div></div>`).join('')}</div>`;
 PM51.stats = items => `<div class="pm51-stats">${items.map(s => `<div class="pm51-stat${s.tone ? ' tone-' + a(s.tone) : ''}"><div class="pm51-stat-label">${h(s.label)}</div><div class="pm51-stat-value">${h(String(s.value))}</div>${s.help ? `<div class="pm51-stat-help">${h(s.help)}</div>` : ''}</div>`).join('')}</div>`;
 PM51.list = (items, { cls } = {}) => `<div class="pm51-list${cls ? ' ' + cls : ''}">${items.filter(Boolean).map(it => `<div class="pm51-item${it.cls ? ' ' + it.cls : ''}${it.action || it.callback ? ' is-clickable' : ''}" ${it.action ? `data-action="${a(it.action)}"` : ''} ${it.callback ? `data-callback="${a(registerAction(it.callback))}"` : ''} ${dataAttrs(it.data)} ${it.action || it.callback ? 'role="button" tabindex="0"' : ''}>${it.avatar ? `<span class="pm51-item-avatar">${it.avatar}</span>` : ''}<div class="pm51-item-copy"><div class="pm51-item-title">${h(it.title)}${it.pill ? ' ' + it.pill : ''}</div>${it.meta ? `<div class="pm51-item-meta">${h(it.meta)}</div>` : ''}${it.note ? `<div class="pm51-item-note">${h(it.note)}</div>` : ''}</div><div class="pm51-item-end">${it.end || ''}</div></div>`).join('')}</div>`;
-PM51.steps = items => `<ol class="pm51-steps">${items.filter(Boolean).map((s, i) => `<li class="pm51-step${s.tone ? ' tone-' + a(s.tone) : ''}${s.done ? ' is-done' : ''}"><span class="pm51-step-n">${s.done ? icon('check') : (i + 1)}</span><div class="pm51-step-copy"><div class="pm51-step-title">${h(s.title)}</div>${s.desc ? `<div class="pm51-step-desc">${h(s.desc)}</div>` : ''}</div><div class="pm51-step-end">${s.status ? PM51.pill(s.status, s.tone) : ''}${s.action ? (typeof s.action === 'string' ? s.action : PM51.btn(Object.assign({ small: true }, s.action))) : ''}</div></li>`).join('')}</ol>`;
+PM51.steps = (items, { start = 1 } = {}) => `<ol class="pm51-steps">${items.filter(Boolean).map((s, i) => `<li class="pm51-step${s.tone ? ' tone-' + a(s.tone) : ''}${s.done ? ' is-done' : ''}"><span class="pm51-step-n">${s.done ? icon('check') : (i + start)}</span><div class="pm51-step-copy"><div class="pm51-step-title">${h(s.title)}</div>${s.desc ? `<div class="pm51-step-desc">${h(s.desc)}</div>` : ''}</div><div class="pm51-step-end">${s.status ? PM51.pill(s.status, s.tone) : ''}${s.action ? (typeof s.action === 'string' ? s.action : PM51.btn(Object.assign({ small: true }, s.action))) : ''}</div></li>`).join('')}</ol>`;
 PM51.advanced = (body, { label, open, help } = {}) => `<details class="pm51-advanced" ${open ? 'open' : ''}><summary>${icon('chevron')}<span>${h(label || 'Advanced')}</span>${help ? `<small>${h(help)}</small>` : ''}</summary><div class="pm51-advanced-body">${body}</div></details>`;
 PM51.quiet = items => `<div class="pm51-quiet">${items.filter(Boolean).map(i => PM51.link(i)).join('')}</div>`;
 PM51.empty = (title, copy, action) => `<div class="empty-state pm51-empty"><div>${icon('info')}<div class="empty-title">${h(title)}</div>${copy ? `<div class="empty-copy">${h(copy)}</div>` : ''}${action ? `<div class="empty-actions">${PM51.btn(Object.assign({ primary: true }, action))}</div>` : ''}</div></div>`;
@@ -87,10 +88,10 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
   <aside class="resource-roster pm51-roster" ${rosterId ? `id="${a(rosterId)}"` : ''}>
     <div class="roster-head"><div class="roster-title">${h(rosterTitle)}${count != null ? ` (${count})` : ''}</div>${add ? PM51.iconBtn(Object.assign({ icon: 'plus' }, add)) : ''}</div>
     ${filter ? `<div class="roster-search"><input placeholder="${a(filter.placeholder || 'Filter')}" aria-label="${a(filter.placeholder || 'Filter')}" data-action="${a(filter.action || 'pm51-filter')}" data-manager="${a(id)}" value="${a(filter.value || '')}"/></div>` : ''}
-    <div class="roster-list">${items.map(it => `<button type="button" class="resource-row${it.selected ? ' active' : ''}" data-action="${a(it.action || selectAction || 'pm51-select')}" data-manager="${a(id)}" data-id="${a(it.id)}" ${dataAttrs(it.data)} aria-current="${it.selected ? 'true' : 'false'}"><span class="resource-avatar">${it.avatar || h(PM51.initials(it.title))}</span><span class="resource-row-copy"><span class="resource-row-name">${h(it.title)}</span><span class="resource-row-meta">${h(it.meta || '')}</span></span>${it.tone ? PM51.dot(it.tone) : ''}</button>`).join('')}</div>
+    <div class="roster-list">${items.map(it => `<button type="button" class="resource-row${it.selected ? ' active' : ''}" data-action="${a(it.action || selectAction || 'pm51-select')}" data-manager="${a(id)}" data-id="${a(it.id)}" ${dataAttrs(it.data)} aria-current="${it.selected ? 'true' : 'false'}"><span class="resource-avatar">${it.avatar || h(PM51.initials(it.title))}</span><span class="resource-row-copy"><span class="resource-row-name">${h(it.title)}</span><span class="resource-row-meta">${h(it.meta || '')}${it.pill ? ' ' + it.pill : ''}</span></span>${it.tone ? PM51.dot(it.tone) : ''}</button>`).join('')}</div>
   </aside>
   <section class="resource-detail pm51-detail">
-    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu }) : ''}</div></div>
+    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu }) : ''}</div></div>
     <div class="resource-content pm51-detail-content">${detail.body}</div>
   </section>
 </div>`;
@@ -139,6 +140,7 @@ PM51.onChange = (name, fn) => { changes[name] = fn; };
 PM51.onInput = (name, fn) => { inputs[name] = fn; };
 const pm51OriginalDispatch = dispatchAction;
 dispatchAction = function (action, el, event) {
+  if (el && el.dataset && el.dataset.pm51Disabled === '1') { showToast('Not available', el.dataset.disabledReason || 'Not available in this concept preview.', 'info', 2600); return; }
   if (typeof action === 'string' && action.startsWith('pm51-')) {
     if (el && el.getAttribute && el.getAttribute('aria-disabled') === 'true') { showToast('Not available', el.dataset.disabledReason || 'Not available in this concept preview.', 'info', 2600); return; }
     const fn = actions[action.slice(5)];
@@ -188,6 +190,7 @@ PM51.refresh = function (wsId, { swap = true } = {}) {
   body.innerHTML = renderContinuousWorkspaceBody(ws, domain);
   body.dataset.workspaceMounted = 'true';
   body.querySelectorAll('.manager-section').forEach(sec => sec.classList.add('section-block', 'is-revealed'));
+  PM51.applyFilters(body);
   const mb = body.querySelector('.manager-body');
   if (mb && swap && !motionReduced()) { const phase = body.dataset.pm51Phase === 'a' ? 'b' : 'a'; body.dataset.pm51Phase = phase; mb.classList.add('tab-swap-' + phase); }
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, body)));
@@ -201,7 +204,12 @@ PM51.on('select', el => { PM51.setSel(ds(el, 'manager'), ds(el, 'id')); state.re
 PM51.on('go', el => { PM51.go(ds(el, 'domain'), ds(el, 'workspace'), ds(el, 'section') ? { section: ds(el, 'section') } : {}); });
 PM51.on('open-detail', el => { openDetailSetting(ds(el, 'setting'), ds(el, 'workspace') || undefined, ds(el, 'section') || undefined); });
 PM51.on('noop', () => {});
-PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s().filters[ds(el, 'manager')] = el.value; const list = el.closest('.resource-roster')?.querySelector('.roster-list'); if (!list) return; const q = el.value.toLowerCase(); list.querySelectorAll('.resource-row').forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); }); });
+PM51.on('disabled', el => { showToast('Not available', el.dataset.disabledReason || 'This cannot be changed here.', 'info', 2600); });
+/* Narrow hosts: the roster becomes an off-canvas list toggled from the detail head. */
+PM51.on('toggle-roster', el => { state.resourceRosterOpen = !state.resourceRosterOpen; const body = el.closest('.manager-body'); if (body) body.classList.toggle('roster-open', state.resourceRosterOpen); });
+const applyRosterFilter = el => { const list = el.closest('.resource-roster')?.querySelector('.roster-list'); if (!list) return; const q = String(el.value || '').toLowerCase(); list.querySelectorAll('.resource-row').forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); }); };
+PM51.applyFilters = scope => { (scope || root).querySelectorAll('input[data-action="pm51-filter"]').forEach(el => { const stored = (PM51.s().filters || {})[ds(el, 'manager')]; if (stored != null && el.value !== stored) el.value = stored; if (el.value) applyRosterFilter(el); }); };
+PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s().filters[ds(el, 'manager')] = el.value; applyRosterFilter(el); });
 
 /* ---------- workspace registry changes -------------------------------- */
 (function pm51Registry() {
@@ -276,8 +284,87 @@ runCompletenessAudit = function () {
   return report;
 };
 
+/* ---------- exact landings: hydrate everything above the target first -- */
+/* Workspaces above the target are lazy placeholders with estimated heights. A smooth scroll to
+   an estimated offset then drifted while those blocks hydrated mid-flight (measured: Doctor landed
+   ~870 px low and the scroll spy lit the wrong tab). Mount the preceding blocks synchronously so the
+   offset is exact; blocks below stay lazy. Cross-domain landings (behavior 'auto') are instant. */
+const pm51MountPreceding = wsId => {
+  const domain = getDomain(); const ids = domain.workspaces.map(w => w.id); const idx = ids.indexOf(wsId);
+  for (let i = 0; i < idx; i++) mountContinuousWorkspace(ids[i]);
+};
+const pm51OriginalJump = jumpToWorkspace;
+jumpToWorkspace = function (wsId, behavior) {
+  pm51MountPreceding(wsId);
+  const scroller = root.querySelector('#settings-document');
+  if (behavior === 'auto' && scroller) {
+    const prev = scroller.style.scrollBehavior; scroller.style.scrollBehavior = 'auto';
+    try { return pm51OriginalJump(wsId, 'auto'); } finally { requestAnimationFrame(() => { scroller.style.scrollBehavior = prev; }); }
+  }
+  return pm51OriginalJump(wsId, behavior);
+};
+
+/* ---------- re-renders keep the reader's place ------------------------ */
+/* Host-driven setting changes (theme, density, host projections) call renderApp() without a
+   navigation intent. The engine's full remount reset the page to the top of the domain and the
+   scroll spy then reported the first workspace as active. When the rendered domain is unchanged
+   and no navigation scroll is pending, render softly and re-anchor the active workspace block at
+   the same offset it had before. Navigation (pendingScroll), Home, and explicit soft renders are
+   untouched. */
+const pm51OriginalRenderApp = renderApp;
+const pm51DocOffset = (scroller, block) => block.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
+let pm51Anchor = null;
+renderApp = function (options = {}) {
+  pm51Anchor = null;
+  if (!state.home && !options.soft && !pendingScroll) {
+    const rendered = root.querySelector('.domain-link.active');
+    const scroller = root.querySelector('#settings-document');
+    const block = scroller && state.workspace ? root.querySelector(`[data-workspace-block="${cssEscape(state.workspace)}"]`) : null;
+    if (rendered && rendered.dataset.domain === state.domain && block) {
+      pm51Anchor = { domain: state.domain, workspace: state.workspace, delta: scroller.scrollTop - pm51DocOffset(scroller, block) };
+      options = Object.assign({}, options, { soft: true });
+    }
+  }
+  return pm51OriginalRenderApp(options);
+};
+/* The engine restores a soft remount numerically (preservedScrollTop) in three consecutive frames,
+   before the blocks above the active workspace exist; that both landed on placeholder heights and
+   clobbered any navigation started in between (same-domain jumps do not re-render, so their smooth
+   scroll was overwritten by the second and third apply). The kit takes the restore over: hydrate the
+   blocks above, apply the exact offset once, re-check once, and yield to any navigation in flight. */
+const pm51OriginalAfterRender = afterRender;
+afterRender = function () {
+  const a = pm51Anchor; pm51Anchor = null;
+  let restore = null;
+  if (a) {
+    preservedScrollTop = null;
+    if (softRemount && !state.home && state.domain === a.domain && state.workspace === a.workspace && !pendingScroll) {
+      const scroller = root.querySelector('#settings-document');
+      const block = scroller && root.querySelector(`[data-workspace-block="${cssEscape(a.workspace)}"]`);
+      if (scroller && block) { pm51MountPreceding(a.workspace); restore = { scroller, workspace: a.workspace, wanted: Math.max(0, Math.round(pm51DocOffset(scroller, block) + a.delta)) }; }
+    }
+  }
+  /* the scroll spy would otherwise re-label the active workspace at scrollTop 0 before the restore */
+  if (restore) suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 200);
+  const out = pm51OriginalAfterRender.apply(this, arguments);
+  if (restore) {
+    const apply = () => {
+      if (state.workspace !== restore.workspace || pendingScroll || !restore.scroller.isConnected) return;
+      restore.scroller.style.scrollBehavior = 'auto'; restore.scroller.scrollTop = restore.wanted; restore.scroller.style.scrollBehavior = '';
+      suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 180);
+    };
+    apply();
+    requestAnimationFrame(() => { if (Math.abs(restore.scroller.scrollTop - restore.wanted) > 1) apply(); });
+  }
+  return out;
+};
+if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args);
+const pm51OriginalBoot = boot;
+boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
+
 /* ---------- motion: no blank frames ----------------------------------- */
 armSectionReveal = function () {
+  try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;

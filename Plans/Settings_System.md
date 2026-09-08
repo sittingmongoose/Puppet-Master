@@ -230,12 +230,15 @@ canonical_text: >-
   exposure, control type, applicability/scope metadata, owner-derived status, and result type without changing the
   underlying 828-ID denominator. The ordinary list uses variable-height virtualization with stable setting_id keys,
   cached measured heights, anchor-plus-offset preservation, overscan, latest-generation cancellation, and no manager
-  hydration merely because a search row is visible. Long or localized content expands rather than clipping.
+  hydration merely because a search row is visible. Long or localized content expands rather than clipping. Category
+  group headers are rows of the same virtualized model, measured like any row and never a separate non-virtualized
+  wrapper, and the list may scroll with the page rather than inside a fixed-height box (USER-SETTINGS-MANAGER-REFRESH-20260908).
 gui_related: true
 gui_classification_reason: Search, facets, highlighting, keyboard selection, and virtualized rows are user-visible interactions.
 depends_on: [SSYS-003, SSYS-004, F3-433]
 unblocks: [SSYS-017]
 acceptance_criteria:
+  - Category group headers belong to the virtualized model and the scroll anchor survives group expansion.
   - Search results are deterministic for the same registry, status generation, query, and facet set.
   - Arrow navigation, Enter focus, Escape clearing, pointer activation, and screen-reader result announcements retain one active stable ID.
   - Variable-height tests preserve the anchor across expansion, wrapping, status changes, theme changes, and facet/search changes.
@@ -269,7 +272,9 @@ canonical_text: >-
   detail/inspector, requested/effective state, loading/empty/failed/unavailable/managed states, and logs/receipts routes.
   Each manager uses a concise task-specific introduction and one primary placement for each action in the current
   view; repeated chapter prose, identical index parent/child destinations, and shortcut panels that merely repeat
-  adjacent tabs are not required chrome. Secondary explanations, detailed provenance, and advanced configuration
+  adjacent tabs are not required chrome. Every manager renders through one shared kit: no header-level action strip, at most
+  six tabs, exactly one labeled Advanced disclosure per view, one quiet bottom action row, exactly one check control per
+  connectable entity, and the shared side-panel anatomy (USER-SETTINGS-MANAGER-REFRESH-20260908). Secondary explanations, detailed provenance, and advanced configuration
   use labeled keyboard-operable disclosures or their dedicated detail/tab. Collapsing secondary material never
   hides a blocking error, unavailable reason, consent boundary, requested/effective difference, or live-versus-example
   distinction. Sound preview and explicit notification test-send consume F3-405 rather than sharing a simulated
@@ -550,7 +555,9 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Browser and SCM are Settings dependency and routing surfaces, not embedded operational workbenches. Settings may show
+  Browser and SCM are Settings dependency and routing surfaces, not embedded operational workbenches. Concept presentation
+  may fold their governance detail into one Advanced disclosure that never hides a blocking error, unavailable reason, consent
+  boundary, requested/effective difference, or live-versus-example distinction (USER-SETTINGS-MANAGER-REFRESH-20260908). Settings may show
   ordinary PM-native Browser policy, readiness, capture/retention policy, agent-sharing policy, and routes to the
   Browser owner; protected AuthBrowserSession remains human-only, ephemeral, non-capturable, non-automatable, and absent
   as an ordinary tab. Source Control settings show tool/forge/account/environment/worktree/default/safety/repair state
@@ -645,7 +652,10 @@ canonical_text: >-
   Terminal; Notifications and Sounds; Source Control and Actions & Pipelines; Browser and SCM dependencies; Storage,
   Retention, Recovery, and Cleanup; Project History, Sessions, Artifacts, and Outputs; Settings Transfer; Servers,
   Hosts, Environments, Clients, Remote Access, Project Hosting/Files/Sync/Move/Copy, SSH, Backup and Restore, Updates,
-  Readiness and Setup; Teacher and Help; Project Search Index; and DRY Method visible state. Each entry has one stable manager_id, owner route, lazy summary projection, supported actions,
+  Readiness and Setup; Teacher and Help; Project Search Index; and DRY Method visible state. Concept presentation may group or split these destinations into workspaces (one System workspace
+  Server & Project Location over the seven server/location keys; separate Code & Tools workspaces for Skills, Plugins, MCP
+  Servers, and Commands & Shortcuts over tools-integrations and commands-shortcuts) without changing manager_id keys, routes,
+  or details paths (USER-SETTINGS-MANAGER-REFRESH-20260908). Each entry has one stable manager_id, owner route, lazy summary projection, supported actions,
   exact unavailable reasons, and a details path; operational behavior remains in the retained owner.
 gui_related: true
 gui_classification_reason: The complete manager destination set and shared visible states define the Settings product surface.
@@ -680,8 +690,11 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
   The generated PMConcept7 Settings fixture is source-owned by the T44 transform in
-  Concepts/pm7-tools/settings_tome_source.py, composed by Concepts/pm7-tools/build_pm7.py, and emitted as
-  Concepts/PMConcept7.html; the generated HTML is never the authored production owner. T44 may demonstrate the K3
+  Concepts/pm7-tools/settings_tome_source.py and the T50 Settings-refresh transform in
+  Concepts/pm7-tools/settings_refresh_source.py (USER-SETTINGS-MANAGER-REFRESH-20260908), composed by
+  Concepts/pm7-tools/build_pm7.py, and emitted as Concepts/PMConcept7.html, with Concepts/TestPMConcept.html a second
+  generated concept artifact under the same concept_fixture_only boundary, published through
+  Concepts/pm7-tools/build_testpm_settings_refresh.py; the generated HTML is never the authored production owner. T44 may demonstrate the K3
   geometry, 828-row projection, later-packet manager additions, project/no-Project defaults, and command previews, but
   fixture state, local browser storage, simulated receipts, and JavaScript handlers are not runtime proof. Production
   targets Rust stable and Slint 1.17.1 using typed models, host-width layout states, variable-height virtualization,
@@ -1007,7 +1020,8 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  The K3 Toolchain and Extensions workspace retains one Plugins tab inside the existing split-manager geometry and
+  The K3 Toolchain and Extensions workspace presents Plugins as its own Code & Tools workspace over the unchanged tools-integrations key (USER-SETTINGS-MANAGER-REFRESH-20260908),
+  keeps the split-manager roster/detail geometry, and
   consumes Plugins System package, manifest, component, permission, topology, conformance, supply-chain, runtime-bound,
   rollback, and bounded-evidence projections. It exposes only the exact twelve centrally registered
   cmd.agent_plugin.* owner commands from PLUG-067/CS-071/UCC-149/WM-048. Each action carries current availability,
@@ -1620,7 +1634,8 @@ ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Working_N
 This section incorporates the cumulative Settings system inventory alignments, truthful persistence
 semantics, shared projections, candidate roster/stage reconciliation, and universal manager layout
 principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-064, and APR-065,
-as amended by the selective reference-layout supersession under USER-REFERENCE-LAYOUT-ROLLBACK-20260908.
+as amended by the selective reference-layout supersession under USER-REFERENCE-LAYOUT-ROLLBACK-20260908 and by the
+Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSYS-033).
 
 ### 19. Working Activity Style and Inventory Reconciliation (APR-046, APR-048)
 
@@ -1665,8 +1680,9 @@ as amended by the selective reference-layout supersession under USER-REFERENCE-L
   The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`)
   enforcing flat-row, borderless-section, and forced single-column layout is selectively superseded under
   user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior native card, section
-  box, and grid layouts across all thirty-eight registered managers and the 21 concrete manager workspaces measured
-  at the pinned base. Historical evidence and request records are retained intact. Active presentation across every
+  box, and grid layouts across all thirty-eight registered managers and the 23 concrete manager workspaces measured
+  at the pinned base `66cd9ca232ef6017c45ce93e0ab2dcd65a44923f95ea24b580b94f53187ddf30` after the Settings manager refresh (USER-SETTINGS-MANAGER-REFRESH-20260908; a presentation count over the unchanged
+  38-key registry). Historical evidence and request records are retained intact. Active presentation across every
   Settings manager enforces:
   1. *Stable Alignment:* Left-aligned section headers and property labels, fixed-width input controls,
      and uniform vertical baselines.
@@ -1677,6 +1693,14 @@ as amended by the selective reference-layout supersession under USER-REFERENCE-L
      reside behind progressive disclosure toggles.
   6. *One Quiet Action Row:* Per-section reset buttons and documentation links reside in an unobtrusive
      bottom action bar.
+  7. *No Top Action Bar:* A manager exposes no header-level action strip; every action lives in its row,
+     in a section title row, or in the single quiet bottom row.
+  8. *Bounded Tabs:* A manager exposes at most six tabs.
+  9. *Exactly One Advanced Disclosure:* Advanced, dangerous, rarely used, and diagnostic items collapse into
+     one labeled keyboard-operable disclosure per manager view, never scattered per-section toggles.
+  10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity
+     header, sectioned body, quiet footer), the same spring motion, and no decorative accent bars; the
+     inspector keeps its width tokens.
 - **Universal Application Across 38 Managers:** These principles govern all thirty-eight registered
   managers:
   `all-settings`, `general-appearance-input`, `providers-accounts-models`, `web-routes`, `media-routes`,
@@ -1689,13 +1713,31 @@ as amended by the selective reference-layout supersession under USER-REFERENCE-L
   `project-backup`, `updates`, `project-defaults-templates`, `onboarding-guided-tour`, `doctor`,
   `usage-budgets`, `teacher-help`, `project-search-index`, and `dry-method`.
   And across the three named visible-state projections: `teacher-help`, `project-search-index`, and `dry-method`.
-  All 892 settings in the inventory remain preserved.
-- **Source-Only Checkpoint Generation (APR-063):** Hand-editing of TestPMConcept.html is strictly forbidden.
-  Rebuilds occur through `Concepts/pm7-tools/build_testpm_layout_b06.py` against the immutable published checkpoint,
-  replacing only style block `pm50-manager-layout` and asserting that all 29 script elements (26 JavaScript, 3 JSON)
-  remain byte-identical.
+  All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
+- **Source-Only Checkpoint Generation (APR-063, amended by USER-SETTINGS-MANAGER-REFRESH-20260908):** Hand-editing of
+  TestPMConcept.html is strictly forbidden. The published file is generated by
+  `Concepts/pm7-tools/build_testpm_settings_refresh.py` from the pinned published checkpoint
+  (`Concepts/pm7-tools/settings_refresh_checkpoint.json`) through the authored T50 transform
+  `Concepts/pm7-tools/settings_refresh_source.py` (with `settings_refresh/kit.js`, `managers/*.js`, `styles.css`,
+  `data.json`), which is also registered as T50 in `Concepts/pm7-tools/build_pm7.py`; `--check` reproduces the
+  published bytes, every non-Settings script element is asserted byte-identical to the pinned base, and
+  `--parity` asserts identical Settings blocks between the checkpoint lane and the full pipeline. The earlier
+  `build_testpm_layout_b06.py` lane (`pm50-manager-layout` replacement with 29 byte-identical scripts) is
+  predecessor lineage contained in the new pinned base.
 - **Context-Sensitive Manager Navigation (APR-065):** Selecting a manager from a contextual link or
   dropdown retains and highlights that manager's identity during navigation, avoiding disorientation.
+- **Manager Kit and Workspace Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908):** Every Settings manager of the
+  published concept renders through one shared manager kit (plain-language primary copy, one check control per
+  connectable entity, the principles above). Presentation groups registry destinations into concept workspaces
+  without changing any of the 38 `manager_id` keys, routes, detail ids, or command ids: Skills, Plugins, MCP
+  Servers, and Commands & Shortcuts are separate Code & Tools workspaces over `tools-integrations` and
+  `commands-shortcuts`; one System workspace, Server & Project Location, presents `server-claim-bootstrap`,
+  `servers-hosts-environments`, `clients-continuity`, `project-hosting-files`, `project-sync-move-copy`,
+  `ssh-remote`, and `remote-access`; Single Owners and Browser & SCM governance detail are Advanced
+  disclosures; Back Seat Driver is its own kit manager. Every workspace carries `data-manager-key`. Domain
+  switches never blank (first frame at least 85 percent of settled brightness, per F3-513), built-in sounds play
+  as labelled demonstration tones (F3-405), and All Settings scrolls with the page while staying
+  variable-height virtualized (SSYS-005).
 
 ```yaml
 plan_unit_id: SSYS-030
@@ -1801,11 +1843,12 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Governs layout principles, visual structure, and navigation across all thirty-eight Settings managers.
 depends_on: [SSYS-031]
-unblocks: []
+unblocks: [SSYS-033]
 acceptance_criteria:
   - All 38 managers and 3 projections follow native card and grid layout with concise presentation, superseding reference-video flat-row styling.
   - Labels are concise, controls trail right, and advanced detail is behind disclosure.
   - Contextual manager picker preserves opened manager identity.
+  - No manager renders a header-level action strip, more than six tabs, or more than one Advanced disclosure per view (USER-SETTINGS-MANAGER-REFRESH-20260908).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: manager_layout_inconsistency_or_context_loss
@@ -1821,6 +1864,7 @@ source_lineage:
   - APR-062
   - APR-064
   - APR-065
+  - USER-SETTINGS-MANAGER-REFRESH-20260908
 preserved_exact_tokens:
   - "38 managers"
   - "trailing controls"
@@ -1829,6 +1873,78 @@ negative_constraints:
   - Do not exempt any of the 38 registered managers from native card/grid presentation and concise hierarchy.
   - Do not drop manager identity during section navigation.
   - Do not reintroduce reference-video flat-row or forced-single-column CSS into Settings managers.
+  - Do not reintroduce a per-manager top action bar, exceed six tabs, or add a second Advanced disclosure to a manager view.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/FinalGUISpec.md
+
+```yaml
+plan_unit_id: SSYS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Every Settings manager renders through one shared manager kit under USER-SETTINGS-MANAGER-REFRESH-20260908: no
+  header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per view holding technical,
+  diagnostic, rare, and dangerous items, one quiet bottom action row, exactly one check control per connectable
+  entity, plain-language beginner copy in primary rows, and one side-panel anatomy shared by manager drawers and
+  the setting Details inspector, which keeps its 350 px width token. Concept presentation groups registry
+  destinations into workspaces without changing manager_id keys, routes, detail ids, command ids, or the
+  settings inventory: Skills, Plugins, MCP Servers, and Commands & Shortcuts are separate Code & Tools
+  workspaces over tools-integrations and commands-shortcuts; one System workspace, Server & Project Location,
+  presents server-claim-bootstrap, servers-hosts-environments, clients-continuity, project-hosting-files,
+  project-sync-move-copy, ssh-remote, and remote-access; Single Owners and Browser & SCM governance are Advanced
+  disclosures; Back Seat Driver is its own kit manager. The published TestPMConcept.html is generated by
+  Concepts/pm7-tools/build_testpm_settings_refresh.py from the pinned checkpoint through the authored T50
+  transform Concepts/pm7-tools/settings_refresh_source.py, also registered in build_pm7.py. Domain switches
+  never blank (first frame at least 85 percent of settled brightness), built-in sounds play as labelled
+  demonstration tones, and All Settings scrolls with the page while staying variable-height virtualized.
+gui_related: true
+gui_classification_reason: Governs the shared manager kit, workspace grouping, side-panel anatomy, motion, sound, and build lane of every Settings manager in the published concept.
+depends_on: [SSYS-032, SSYS-005, SSYS-006, SSYS-015, SSYS-024]
+unblocks: []
+acceptance_criteria:
+  - Every manager workspace mounts through the shared kit with zero header-level action buttons, at most six tabs, and one Advanced disclosure per view.
+  - Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace carries data-manager-key.
+  - build_testpm_settings_refresh.py --check reproduces the published file and every non-Settings script is byte-identical to the pinned base.
+  - The browser checkpoint reports first-frame brightness at least 85 percent of settled on a domain switch, a playable labelled demonstration tone for every built-in sound row, no nested scroller in All Settings, and no page errors.
+  - The 60 fps slow-motion films of panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration.
+validation_surfaces:
+  - python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
+  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: manager_kit_regression_or_registry_drift
+reasoning_tier: high
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/settings_refresh_source.py
+  - Concepts/pm7-tools/build_testpm_settings_refresh.py
+  - Concepts/pm7-tools/settings_refresh/kit.js
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - USER-SETTINGS-MANAGER-REFRESH-20260908
+  - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
+  - SSYS-032
+  - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
+preserved_exact_tokens:
+  - "shared manager kit"
+  - "Server & Project Location"
+  - "one Advanced disclosure"
+  - "T50"
+negative_constraints:
+  - Do not reintroduce a per-manager top action bar.
+  - Do not exceed six tabs in a manager.
+  - Do not render a second Advanced disclosure in one manager view.
+  - Do not mint, rename, or remove a manager_id key for a presentation grouping.
+  - Do not hand-edit Concepts/TestPMConcept.html; rebuild through the lane.
 owner_hints:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md

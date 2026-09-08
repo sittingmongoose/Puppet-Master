@@ -2,11 +2,12 @@
 // Node 22, no playwright needed. Messages are NUL-delimited JSON on fd 3 (write) / fd 4 (read).
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 
 export async function launch({ width = 1600, height = 1000, scale = 1, profile, args = [] } = {}) {
-  profile = profile || `${process.env.PM_CDP_PROFILE_DIR || require("node:os").tmpdir()}/pm-cdp-profile-${process.pid}`;
+  profile = profile || `${process.env.PM_CDP_PROFILE_DIR || tmpdir()}/pm-cdp-profile-${process.pid}`;
   mkdirSync(profile, { recursive: true });
   const chrome = spawn(CHROME, [
     '--headless=new', '--remote-debugging-pipe', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
@@ -87,6 +88,7 @@ export async function launch({ width = 1600, height = 1000, scale = 1, profile, 
       for (;;) { const v = await page.evaluate(fn, ...(rest.args || [])); if (v) return v; if (Date.now() - start > timeout) throw new Error('waitFor timeout: ' + fn.toString().slice(0, 120)); await sleep(poll); }
     },
     async bringToFront() { await s('Page.bringToFront'); },
+    async addInitScript(fnOrSource) { const source = typeof fnOrSource === 'function' ? `(${fnOrSource.toString()})();` : String(fnOrSource); await s('Page.addScriptToEvaluateOnNewDocument', { source }); },
     async setViewport(w, h) { await s('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: scale, mobile: false }); },
     async close() { try { await send('Browser.close'); } catch {} chrome.kill('SIGKILL'); }
   };

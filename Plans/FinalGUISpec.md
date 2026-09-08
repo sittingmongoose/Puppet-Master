@@ -4817,7 +4817,7 @@ Rules:
 - status, cwd, command summary, elapsed time, exit code / truncation indicator
 - READ-ONLY and non-interactive
 - One card per command
-- Retries create a new terminal and therefore a new mini terminal card; Rerun in Terminal creates a new card rather than mutating the completed card
+- Execution replacement creates a new terminal_session_id and invocation card. Explicit same-session rerun preserves terminal_session_id and creates a fresh invocation/card, with a fresh command block when command metadata is available. Retrying attachment or reconciling presentation reuses the original invocation/card without replaying execution; a completed card is not mutated into a rerun.
 - Shell owns interactive state; chat owns preview+audit
 - Commands requiring stdin/TTY start Terminal immediately
 - Background/watch/server actions create terminal-owned session
@@ -4937,7 +4937,7 @@ Rules:
 - status, cwd, command summary, elapsed time, exit code / truncation indicator
 - READ-ONLY and non-interactive
 - One card per command
-- Retries create a new terminal and therefore a new mini terminal card
+- Terminal retry behavior follows section 15.1 and its linked owners; retained terminal vocabulary in this web/diff extract does not introduce terminal sessions or terminal actions into web, search, or diff cards.
 - Open in Terminal
 - Show Terminal
 - Rerun in Terminal
@@ -24720,9 +24720,12 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Terminal cards expose distinct Open in Terminal, Show Terminal, Rerun in Terminal, and
   Detach/Pop-Out actions; Open in Terminal and Show Terminal focus the same live session;
-  Rerun in Terminal creates a new card rather than mutating the completed card; commands
-  requiring stdin or TTY start Terminal immediately; background, watch, and server actions
-  create terminal-owned sessions.
+  execution replacement creates a new terminal_session_id and invocation card; explicit
+  same-session rerun preserves the session and creates a fresh invocation/card, with a fresh
+  command block when command metadata is available. Attachment/presentation recovery reuses
+  the existing invocation/card without replaying execution. A completed card is not mutated
+  into a rerun. Commands requiring stdin or TTY start Terminal immediately; background, watch,
+  and server actions create terminal-owned sessions.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
@@ -24730,6 +24733,8 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Terminal card consumers use ACD-108, UCC-067 and ATS-021: replacement creates a new session and invocation/card; same-session rerun preserves session identity with a fresh invocation/card, and a fresh observed command block when command metadata is available."
+- "Attachment retry, reveal, reconnect and presentation reconciliation emit no command replay or duplicate session/card; ended and inline-only cases preserve their existing historical/promotion rules. Web/search/diff cards do not inherit terminal actions from retained source vocabulary."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -24746,6 +24751,7 @@ node_compile_hint:
   mode: terminal_actions_and_reveal_semantics
   create_worknodes: false
 source_lineage:
+- "Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0003"
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0230"
 preserved_exact_tokens:
 - "Open in Terminal"
@@ -24759,7 +24765,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Terminal action canon must not collapse distinct terminal actions into one normalized target."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The unqualified rule that every retry creates a new terminal/card is superseded by owner-defined replacement, same-session rerun and attachment/presentation recovery semantics."
 owner_boundary_notes:
 - "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
 owner_hints:
@@ -27747,7 +27754,10 @@ canonical_text: >-
   recordings expose a non-audio unavailable/failure state and never play an unrelated substitute under the selected
   asset's name. A browser concept may label generated demonstration tones and session-only user-selected files, but
   must not present them as bundled licensed recordings, native audio evidence, pack validation, or notification
-  delivery. Mapping preview is read-only inspection and is distinct from local playback and explicit test-send.
+  delivery. Mapping preview is read-only inspection and is distinct from local playback and explicit test-send. The
+  concept sound library renders generated demonstration tones labelled as such; production built-in sounds still carry
+  source, license, version, duration, and hash metadata, and demonstration tones never stand in for a bundled licensed
+  recording, pack validation, or delivery (USER-SETTINGS-MANAGER-REFRESH-20260908).
   The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
@@ -34910,7 +34920,9 @@ The following predecessor clauses remain historical lineage, not current behavio
   truthful availability presentation remain current outside the simple default onboarding path.
 - F3-513's T33-T43 build-tail statement is predecessor lineage for these surfaces; authored T44 Settings/Doctor,
   T45 Product Onboarding/Guided Tour, T46 system consumers, T47 hover, and the bounded T48 Home refresh are the
-  current concept path. T48 may refresh authored Home source to expose the setup-wizard return route; it does not
+  current concept path; the authored T49 assistant-settings and T50 Settings-refresh transforms (USER-SETTINGS-MANAGER-REFRESH-20260908)
+  extend that path for the Settings manager surfaces, with the T44-T48 Settings presentation as their predecessor
+  lineage. T48 may refresh authored Home source to expose the setup-wizard return route; it does not
   authorize a hand edit to generated `Concepts/PMConcept7.html`.
 - F3-517's prohibition on Settings changes does not apply to this user-authorized Settings/Doctor port. Its rule
   against theme overlays changing functional identity remains current.
@@ -35409,7 +35421,8 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Plugins consumer lives inside K3 Toolchain and Extensions without changing the 250 px rail, 62 px topbar,
+  The Plugins consumer is its own Code & Tools workspace over the unchanged tools-integrations key (USER-SETTINGS-MANAGER-REFRESH-20260908),
+  without changing the 250 px rail, 62 px topbar,
   split-manager roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses
   calm progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards show
   Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is focusable,
@@ -36471,7 +36484,8 @@ invariants.
   enforcing flattened manager surfaces, borderless sections, and forced single-column rows is selectively
   superseded under user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior
   native card, section box, and grid layouts across all thirty-eight registered Settings managers and
-  the 21 concrete manager workspaces measured at the pinned base. The historical video analysis and
+  the 23 concrete manager workspaces measured at the pinned base `66cd9ca232ef6017c45ce93e0ab2dcd65a44923f95ea24b580b94f53187ddf30` after the Settings manager refresh
+  (USER-SETTINGS-MANAGER-REFRESH-20260908; a presentation count over the unchanged 38-key registry). The historical video analysis and
   packet evidence remain recorded, while active presentation enforces:
   1. *Stable Alignment:* Left-aligned labels, standardized form field widths, and predictable baseline alignments.
   2. *Legible Short Labels:* Plain-English setting names without nested technical paths.
@@ -36479,6 +36493,10 @@ invariants.
   4. *Deliberate Whitespace:* Standardized section spacing separating distinct logical setting groups.
   5. *Limited Simultaneous Detail:* Progressive disclosure for advanced, dangerous, or rarely used parameters.
   6. *One Quiet Action Row:* Secondary actions, resets, and documentation links cluster into a single subtle bottom action strip.
+  7. *No Top Action Bar:* No header-level action strip; actions live in rows, section title rows, or the single quiet bottom row.
+  8. *Bounded Tabs:* At most six tabs per manager.
+  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items.
+  10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity header, sectioned body, quiet footer) and the same spring motion, without decorative accent bars; inspector width tokens are unchanged.
 - **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
   grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)
@@ -36521,14 +36539,26 @@ invariants.
   38. `dry-method` (DRY enforcement and duplication guard policy)
   And across the three named visible-state projections: `teacher-help`, `project-search-index`,
   and `dry-method`, as well as the Assistant Settings projections (`settings.assistant`,
-  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved.
-- **Source-Only Builder Maintenance (APR-063):** Settings HTML is never hand-edited. Rebuilds use
-  the immutable published checkpoint builder `Concepts/pm7-tools/build_testpm_layout_b06.py`, replacing
-  only the `pm50-manager-layout` style block with `assistant_narrow_source.css` and preserving all 29
-  script elements (26 JavaScript, 3 JSON) byte-identical.
+  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
+- **Source-Only Builder Maintenance (APR-063, amended by USER-SETTINGS-MANAGER-REFRESH-20260908):** Settings HTML is never
+  hand-edited. The published `Concepts/TestPMConcept.html` is generated by
+  `Concepts/pm7-tools/build_testpm_settings_refresh.py` from the pinned published checkpoint through the
+  authored T50 transform `Concepts/pm7-tools/settings_refresh_source.py` (also registered in
+  `Concepts/pm7-tools/build_pm7.py`); the lane asserts every non-Settings script element byte-identical to the
+  pinned base and reproduces the published bytes under `--check`. The `build_testpm_layout_b06.py` lane is
+  predecessor lineage contained in the new pinned base.
 - **Context-Sensitive Manager Navigation (APR-065):** When opening a Settings manager from an
   in-canvas context link or dropdown picker, the picker retains and visually indicates the specific
   manager identity for which it was opened. Context is not dropped or reset during deep navigation.
+- **Manager Kit and Workspace Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908):** All manager workspaces of the
+  published concept render through one shared manager kit with the ten principles above; registry destinations
+  are grouped into concept workspaces (separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and
+  Commands & Shortcuts over `tools-integrations` and `commands-shortcuts`; one System workspace "Server &
+  Project Location" over the seven server/location keys; Single Owners and Browser & SCM governance as Advanced
+  disclosures; Back Seat Driver as its own kit manager) without changing manager keys, routes, detail ids, or
+  command ids. The setting Details inspector keeps F3-519's 350 px / min(370 px, 82 percent) tokens; domain
+  switches obey F3-513 (no black-screen or uniform-frame flash; first frame at least 85 percent of settled
+  brightness).
 
 ```yaml
 plan_unit_id: F3-535
@@ -36911,3 +36941,65 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
+
+```yaml
+plan_unit_id: F3-543
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles
+  beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled
+  Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting
+  Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no
+  decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are
+  presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills,
+  Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners
+  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain
+  switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls
+  with the page while remaining virtualized per SSYS-005.
+gui_related: true
+gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
+split_recommended: false
+depends_on: [F3-542, F3-519, F3-513, F3-405, SSYS-033]
+unblocks: []
+acceptance_criteria:
+  - No manager workspace renders a header-level action strip; no manager exposes more than six tabs; each view has at most one Advanced disclosure.
+  - Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below).
+  - The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close.
+  - Eight themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow.
+validation_surfaces:
+  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: manager_presentation_regression_or_motion_flash
+reasoning_tier: high
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Concepts/pm7-tools/settings_refresh/styles.css
+  - Concepts/pm7-tools/settings_refresh/kit.js
+node_compile_hint:
+  mode: gui_presentation_specification
+  create_worknodes: false
+source_lineage:
+  - USER-SETTINGS-MANAGER-REFRESH-20260908
+  - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
+  - F3-542
+  - SSYS-033
+preserved_exact_tokens:
+  - "No Top Action Bar"
+  - "Bounded Tabs"
+  - "Exactly One Advanced Disclosure"
+  - "Side Panel Anatomy"
+negative_constraints:
+  - Do not reintroduce a per-manager top action bar or more than six tabs.
+  - Do not give the Details inspector or a drawer a decorative accent bar.
+  - Do not change the inspector width tokens.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md

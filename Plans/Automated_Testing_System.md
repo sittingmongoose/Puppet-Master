@@ -3062,7 +3062,7 @@ acceptance_criteria:
 - Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
 - The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
 - "Amended 2026-08-13: the live matrix additionally carries the topbar_reset_layout_row, chat_popout_stays_in_canvas, grip_corner_hit_target_and_zorder, boot_never_floating, and dead_space_self_heal fixtures; the compact-menu fixture asserts four rows including Reset Layout; the drag fixture asserts the placeholder follows the pointer at the pickup-time footprint without jitter; and the resize fixture asserts adjacent-pair symmetry, post-commit stability, and floating height via the corner handle. The 72-case visual matrix is structurally unchanged."
-- A fresh second pipeline build is byte-identical to Concepts/PMConcept7.html and all PM7/static/Plans/governance gates pass in disposable shadows.
+- A fresh second pipeline build is byte-identical to Concepts/PMConcept7.html and all PM7/static/Plans/governance gates pass in disposable shadows (including the authored T49 assistant-settings and T50 Settings-refresh transforms, which are idempotent; USER-SETTINGS-MANAGER-REFRESH-20260908).
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - node Concepts/pm7-tools/verify/smoke.mjs

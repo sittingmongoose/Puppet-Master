@@ -52,6 +52,14 @@ several people write managers at once).
 * canonical AI-service and code-service inventories; all built-in sounds play (labelled demo tones);
 * All Project Settings scrolls with the page (still variable-height virtualized);
 * domain switches no longer blank: first frame ≥ 85 % of settled brightness (measured).
+* navigation lands exactly: workspaces above the target are hydrated before the scroll, so a
+  Home card or rail click no longer drifts into the wrong manager while placeholders grow
+  (measured before the fix: Doctor landed ~870 px low and the scroll spy lit "Backup & Restore");
+  cross-domain landings are instant, same-domain tab jumps keep the smooth scroll;
+* host-driven re-renders (theme, density, host projections) keep the reader's place: the kit
+  turns a same-domain `renderApp()` without navigation intent into a soft remount anchored on
+  the active workspace block, so changing the theme while reading Doctor stays on Doctor;
+* roster filters are re-applied after any re-render (`PM51.applyFilters`).
 
 Registry keys (`Plans/settings_system_contract_fixtures.json`, 38 managers), command ids and
 the 887-row inventory are unchanged; workspaces carry `data-manager-key`.
@@ -66,7 +74,33 @@ python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py <film-dir> <sheet.pn
 
 `pm_cdp.mjs` is a dependency-free Chrome DevTools driver (Chrome at `/usr/bin/google-chrome`
 or `$CHROME`; `file://` only). The checkpoint asserts the contract above and writes
-`settings-refresh-checkpoint.json` plus screenshots; the film tool captures true 60 fps frames
+`settings-refresh-checkpoint.json` plus screenshots (checks include the one-check-per-section rule,
+the flash metric, panel anatomy, inspector tokens, page-scrolled all-settings, Web Audio sound
+playback, roster-filter persistence, theme-change place-keeping, the 8-theme × 3-width matrix and
+zero page errors); the film tool captures true 60 fps frames
 in slow motion (`Animation.setPlaybackRate(0.05)` + scaled timers) and the sheet tool tiles
 them with frame index and motion time labels for frame-by-frame review. These are browser
 concept checks, not native Slint, runtime, provider, delivery or audibility certification.
+
+## Known limits and pre-existing findings (2026-09-08)
+
+* The shell page switch Dashboard → Settings (any page) keeps the outgoing Dashboard page in
+  flow for ~450 ms because `#panel-dashboard.pm-home-owned { position: relative }` beats the
+  pm8 transition's `.primary-content > .page.pm8-page-out { position: absolute }`; both pages
+  split the height and Settings snaps up when the outgoing page is cleaned up. Identical on the
+  pre-refresh file (commit 0fd770946c); it lives in the shell transform
+  (`full_thread_performance_source.py`), not in this lane, and is reported rather than patched
+  from here.
+* `verify/guided_tour_checkpoint_selftest.mjs` fails on `adoptCheckpointRecovery` (0 !== 1)
+  against the current tour script on both the pre-refresh and the refreshed file; the tour and
+  onboarding bands are byte-identical before/after this lane (`--check` asserts every
+  non-Settings script is unchanged).
+* `verify/settings_polish_checkpoint.mjs` (2026-09-07) asserts the pre-refresh manager markup:
+  its third check expects exactly one legacy "Set up provider" top-bar CTA, and its sound checks
+  drive `[data-action="notification-tab"]` and `.sound-row.is-playing`. Against the refreshed
+  build it passes "no audio context created on load" and "provider detail grid contains its
+  content", then fails by design at the CTA count (the top bar was removed on purpose). The
+  surfaces it covered are asserted by `verify/settings_refresh_checkpoint.mjs` instead (including
+  the no-audio-context-on-load rule). It needs `playwright-core` from a module directory
+  installed outside the repository (`npm install playwright-core --prefix <dir> --cache
+  <dir>/npm-cache`); the lane's own tools need no dependency beyond Chrome and ffmpeg.

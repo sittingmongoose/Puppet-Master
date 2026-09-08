@@ -97,10 +97,14 @@ def apply(doc: str, notes: dict, need) -> str:
     # ---- data bands ---------------------------------------------------------
     js = _replace_band(js, "  const providers = [", "  const freeRoutes = [",
                        "  const providers = " + _js(data["providers"]) + ";\n\n", need, "providers")
+    js = _replace_band(js, "    { id: 'free-community',", "  ];\n\n  const webRoutes = [", "", need, "free-community route removed")
     js = _replace_band(js, "    forges: [", "    repositories: [",
                        "    forges: " + _js(data["forges"]) + ",\n", need, "forges")
     js = _replace_band(js, "    sounds: [", "    packs: [",
                        "    sounds: " + _js(data["sounds"]) + ",\n", need, "sounds")
+    for old, new in data.get("providerNameRenames", []):
+        need(js.count(old) >= 1, "T50: provider name rename anchor missing: " + old)
+        js = js.replace(old, new)
     for old, new in data["eventSoundRenames"]:
         js = _replace_once(js, f"sound: '{old}'", f"sound: '{new}'", need, f"event sound {old}")
 
