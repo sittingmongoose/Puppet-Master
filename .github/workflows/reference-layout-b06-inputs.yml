@@ -1,0 +1,48 @@
+name: Reference layout rollback and B06 inputs
+on:
+  push:
+    branches: [review/reference-layout-rollback-b06-20260908]
+    paths: [.github/workflows/reference-layout-b06-inputs.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 28d5fe439257f8dbdc297ae311d6769a6476ab01
+          fetch-depth: 1
+          sparse-checkout: |
+            Concepts/chat-assistant-concepts/5.6 Pro
+            Concepts/pm7-tools
+            Plans
+            tests
+      - name: Package selected exact source bytes
+        run: |
+          python3 - <<'PY'
+          import pathlib,zipfile,subprocess,json,hashlib
+          files=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          selected=[]
+          for p in files:
+            f=pathlib.Path(p)
+            if not f.is_file(): continue
+            keep=p in ['AGENTS.md','REPLACEMENT_MANIFEST.json','Concepts/CONCEPT_RULES.md','Concepts/TestPMConcept.html']
+            if p.startswith(('Concepts/chat-assistant-concepts/5.6 Pro/','Concepts/pm7-tools/','tests/')): keep=True
+            if p.startswith('Plans/') and len(f.parts)==2: keep=True
+            if keep and f.suffix.lower() not in ['.ttf','.otf','.woff','.woff2','.mp4','.mov','.webm','.zip']:
+              selected.append(p)
+          manifest={'commit':'28d5fe439257f8dbdc297ae311d6769a6476ab01','files':[]}
+          with zipfile.ZipFile('/tmp/b06-inputs.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in selected:
+              b=pathlib.Path(p).read_bytes();z.writestr(p,b);manifest['files'].append({'path':p,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+            z.writestr('SOURCE_SNAPSHOT.json',json.dumps(manifest,indent=2))
+          print('Packaged',len(selected),'files')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reference-layout-b06-inputs
+          path: /tmp/b06-inputs.zip
+          compression-level: 0
+          retention-days: 7
