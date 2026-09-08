@@ -60,6 +60,7 @@ import forge_backup_post_integration_source as forge_backup_post_integration_sou
 import full_thread_performance_source as full_thread_performance_source  # noqa: E402  (authored T46P source)
 import global_hover_tags_source as global_hover_tags_source  # noqa: E402  (authored T47 source)
 import assistant_settings_source as assistant_settings_source
+import settings_refresh_source as settings_refresh_source  # noqa: E402  (authored T50 source)
 import home_workspace_refresh_source as home_workspace_refresh_source  # noqa: E402  (authored T48 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
@@ -2300,6 +2301,11 @@ def t48_home_workspace_source_refresh(doc, notes):
 def t49_assistant_settings(doc,notes):
     return assistant_settings_source.apply(doc,notes,need)
 
+
+def t50_settings_managers_refresh(doc, notes):
+    """Refresh every Settings manager with the shared newbie-first kit (authored source)."""
+    return settings_refresh_source.apply(doc, notes, need)
+
 TRANSFORMS = [
     ("T33_retro_drag_dashed_cutout", t33_retro_drag_dashed_cutout),
     ("T34_usage_audit_corrections", t34_usage_audit_corrections),
@@ -2321,6 +2327,7 @@ TRANSFORMS = [
     ("T47_global_hover_tags", t47_global_hover_tags),
     ("T48_home_workspace_source_refresh", t48_home_workspace_source_refresh),
     ("T49_assistant_settings", t49_assistant_settings),
+    ("T50_settings_managers_refresh", t50_settings_managers_refresh),
 ]
 
 ACTIVE_AUTHORED_TRANSFORM_SOURCES = [
@@ -2343,6 +2350,7 @@ ACTIVE_AUTHORED_TRANSFORM_SOURCES = [
     ("T47_global_hover_tags", global_hover_tags_source),
     ("T48_home_workspace_source_refresh", home_workspace_refresh_source),
     ("T49_assistant_settings", assistant_settings_source),
+    ("T50_settings_managers_refresh", settings_refresh_source),
 ]
 AUTHORED_TRANSFORM_SOURCE_BY_NAME = dict(ACTIVE_AUTHORED_TRANSFORM_SOURCES)
 

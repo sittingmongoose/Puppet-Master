@@ -1,4 +1,10 @@
-# Selective reference-layout rollback
+# Selective reference-layout rollback (superseded 2026-09-08)
+
+**Superseded:** the published `TestPMConcept.html` is now built by
+`build_testpm_settings_refresh.py` (T50 Settings managers refresh), whose pinned base already
+contains this lane's CSS-only rollback. `build_testpm_layout_b06.py --check` is therefore expected
+to differ from the published file. See `SETTINGS_REFRESH_README.md`.
+
 
 Rebuild the current published TestPMConcept through:
 

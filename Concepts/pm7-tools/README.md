@@ -390,6 +390,14 @@ recipe it used is preserved in the re-derivation section below.
   silent. One accepted release persists and retains the exact painted slots
   without board remount; cancellation, owner rejection, or adapter failure
   restores the captured authoritative layout. Dashboard resize is unchanged.
+- `settings_refresh_source.py` -- authored T50 source (2026-09-08). It rebuilds every
+  Settings manager on the shared newbie-first kit in `settings_refresh/` (`kit.js`,
+  `managers/*.js`, `styles.css`, `data.json`): no top action bars, bounded tabs, one
+  Advanced disclosure and one quiet row per view, one check per connectable entity,
+  shared side-panel anatomy, canonical provider/forge/sound fixtures, playable demo
+  tones, a page-scrolled virtualized All Project Settings list, and a domain-switch
+  entrance that never blanks. Published through the pinned checkpoint lane
+  `build_testpm_settings_refresh.py`; see `SETTINGS_REFRESH_README.md`.
 - `settings_tome_source.py` -- authored T44 source. It hash-pins the winning
   Kimi K3 HTML and companion assets, projects `Plans/settings_inventory.json`
   into the complete Settings read model, preserves the 250px rail and 62px
@@ -548,6 +556,17 @@ recoverable after the fact. Add a transform instead.
    anchor.
 
 ## Build and verification
+
+Published `Concepts/TestPMConcept.html` (2026-09-08 onward): rebuild and verify with the
+T50 checkpoint lane, then run its browser checkpoint and 60 fps film:
+
+    python3 Concepts/pm7-tools/build_testpm_settings_refresh.py
+    python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
+    node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs Concepts/TestPMConcept.html <out>
+    node Concepts/pm7-tools/verify/settings_refresh_film.mjs Concepts/TestPMConcept.html <film> all
+
+The full PM7 pipeline below carries the same transform as T50.
+
 
 Run from the repository root:
 
