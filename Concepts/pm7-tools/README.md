@@ -52,9 +52,10 @@ remain pending. No physical storage family or production handler is added.
 from an exact build and tests them with Node VM doubles. These tests cannot
 establish real browser, native, layout, or visual correctness.
 `verify/guided_tour_reload_checkpoint.mjs` supplies the real-browser checks, but
-that campaign could not run in this session. The published
-`Concepts/TestPMConcept.html` remains the September 7, 41-check build; the new
-guard is held in the authored source and scratch candidate until browser
+that campaign could not run in this session. The last published
+tour checkpoint verified in this thread was the September 7, 41-check build.
+Subsequent concurrent preview changes do not verify this new guard, which
+remains held in authored source and scratch candidates until browser
 verification is available. See `scratchpad/pm-tour-polish-20260906/README.md` for
 artifact-specific results and the remaining work.
 
@@ -79,6 +80,18 @@ cache; failed cleanup retains it. It is never serialized into the tour marker.
 Validation failures render their message without clearing the draft. This is
 still source/unit-verified only; real form, caret, focus, and browser behavior
 remain subject to the unpublished-candidate validation hold.
+
+The next source-only checkpoint rechecks the retained local Planning predicates
+in story order through the paused step, including a previously completed step.
+It returns to the earliest unsatisfied Planning prerequisite and removes its
+dependent completion credits without discarding the accepted practice data,
+unsent draft, original snapshots, or historical effect receipts. Resume does
+not repeat owner actions. Missing/malformed practice state or an unavailable
+predicate blocks progress and Finish, with Pause/retry and Skip still available;
+it does not create a replacement fixture. Goal acceptance requires nonblank text,
+and an edit requires a recorded consequence revision. This is a local Planning
+subset, not full cross-chapter owner or durable checkpoint revalidation. The
+browser campaign and integration with concurrent preview work remain pending.
 
 ## Re-baseline — 2026-08-27 (current)
 

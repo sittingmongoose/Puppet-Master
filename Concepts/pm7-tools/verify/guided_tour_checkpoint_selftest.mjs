@@ -18,6 +18,7 @@ function extract(name){
   assert.notEqual(end,-1,name);return rest.slice(0,end+1);
 }
 const functions=['savedCheckpoint','adoptCheckpointRecovery','recoveryBlocked','renderRecovery','localActionResult','persistCheckpoint','clearCheckpoint','start','resume','replay','pause','next','back','finish','performOwnerAction','teacherLessonActive','teacherContextRequired','teacherContextMessage','guidedTeacherTargetReady'];
+if(source.includes('  function planningResumePrerequisite('))functions.push('planningResumePrerequisite');
 const extracted=functions.map(extract).join('\n');
 const inspection=source.match(/captureOriginal:(function\(\)\{[^\n]+?\})\n/);assert.ok(inspection,'Closed read-only inspection entrypoint.');
 function fixture(raw=null,{unavailable=false}={}){
@@ -27,7 +28,7 @@ function fixture(raw=null,{unavailable=false}={}){
   const state={open:false,status:'first_launch',step_id:'tour.intro.comfort',step_index:0,source:'unknown',eli5_enabled:false,completed:false,skipped:false,layout_disposition:'pending',layout_snapshot_restored:false};
   const steps=[{id:'tour.intro.comfort',index:0,meaningful:false},{id:'tour.workspace.chat.dock',index:1,meaningful:true},{id:'tour.chat.teacher.ask',index:2,meaningful:true},{id:'tour.planning.approval_boundary',index:3,meaningful:false}];
   const context=vm.createContext({state,original:null,checkpointRecovery:null,STEP_BY_ID:Object.fromEntries(steps.map(step=>[step.id,step])),STEP_DEFS:steps,STORYBOARD:{revision},root,stage,heading,skip,callout:node(),resumeButton:node(),replayButton:node(),backButton:node(),eli5Button:node(),halo:node(),pointer:node(),progress:node(),forwardSlot:node(),transitionTimer:0,history:[],effectReceipts:[],uiActionLog:[],receiptSerial:0,sessionSerial:0,meaningful:[],planningFixture:null,teacherPending:null,practiceWidgetId:null,workspacePanelId:null,completedSteps:{},innerWidth:1440,innerHeight:960,
-    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',guidedThreadIds:Object.create(null),
+    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',guidedThreadIds:Object.create(null),resumeRevalidationError:null,
     document:{documentElement:node()},sessionStorage:{getItem(name){assert.equal(name,key);if(blockedRead)throw Error('fixture-unavailable');return stored;},setItem(name,value){writes.push(['set',name]);stored=value;},removeItem(name){writes.push(['remove',name]);stored=null;}},
     clone:value=>value==null?value:JSON.parse(JSON.stringify(value)),esc:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'),stageButton:(action,label)=>`<button data-ui-action-id="${action}">${label}</button>`,
     clearTimeout:()=>{},clearAutoAdvance:()=>{},cancelStepPoll:()=>{},clearChoreography:()=>{},stopTargetTracking:()=>{},cancelTeacherTurn:()=>{},removePlanningFixture:()=>{},uninstallTeacherSendAdapter:()=>{},notify:()=>{},positionTarget:()=>{},
@@ -83,6 +84,18 @@ function draftFixture(text='My unsent practice goal'){
   f.run(names.map(extract).join('\n'));
   f.run('var practiceModel=createGuidedPlanningPractice({goal:BOOK_CLUB_GOAL});planningFixture=freshPlanningFixture();');
   return {...f,input,markupGoal:()=>{const match=f.run('planningFixtureMarkup()').match(/<textarea\b[^>]*>([\s\S]*?)<\/textarea>/);return match?.[1]??null;}};
+}
+function planningResumeFixture(id='tour.planning.approval_boundary'){
+  const f=liveResumeFixture(id),defs=source.match(/  var STEP_DEFS=\[[\s\S]*?\n  var STORYBOARD=/);assert.ok(defs);
+  f.run(defs[0].replace(/\n  var STORYBOARD=$/,''));f.run(extract('createGuidedPlanningPractice'));
+  f.run('var practiceModel=createGuidedPlanningPractice({goal:"Accepted fixture goal"});planningFixture=practiceModel.create();');
+  for(const [action,value] of [['project'],['goal','Accepted fixture goal'],['guided'],['outcomes'],['answer','organizers'],['why'],['review'],['edit'],['answer','me']]){
+    const result=f.value(`practiceModel.apply(planningFixture,${JSON.stringify(action)},${JSON.stringify(value)})`);assert.equal(result.ok,true);f.context.planningFixture=result.state;
+  }
+  const def=f.context.STEP_BY_ID[id];Object.assign(f.context.state,{step_id:id,step_index:def.index,action_status:'complete',action_mode:'try'});
+  f.context.completedSteps=Object.fromEntries(f.context.STEP_DEFS.filter(row=>row.meaningful&&row.index<=def.index).map(row=>[row.id,{status:'applied',sentinel:row.id}]));
+  f.context.history=f.context.STEP_DEFS.filter(row=>row.index<def.index).map(row=>row.id);f.context.planningGoalDraft='Unsubmitted fixture text';
+  return f;
 }
 try{
   check('an absent marker differs from invalid or unreadable storage',()=>{const f=fixture();assert.equal(f.value('savedCheckpoint()').kind,'absent');assert.equal(f.run('adoptCheckpointRecovery(savedCheckpoint())'),false);assert.equal(f.context.state.status,'first_launch');});
@@ -195,6 +208,58 @@ try{
   });
   check('causal ablation: removing teardown capture restores the draft-loss bug',()=>{
     const f=draftFixture('A draft that must survive'),safe=extract('removePlanningFixture'),unsafe=safe.replace('capturePlanningGoalDraft();','');assert.notEqual(unsafe,safe);f.run(unsafe);f.run('pause()');assert.equal(f.markupGoal(),f.context.BOOK_CLUB_GOAL);assert.notEqual(f.markupGoal(),'A draft that must survive');assert.equal(f.context.planningFixture.goal_submitted,false);
+  });
+  check('Resume returns from the approval boundary to an interrupted answer edit without replay',()=>{
+    const f=planningResumeFixture();f.run('planningFixture=practiceModel.apply(planningFixture,"edit").state;');const before=f.value('planningFixture'),original=f.value('original');
+    f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.edit');assert.equal(f.context.state.action_status,'idle');assert.deepEqual(f.value('planningFixture'),before);assert.deepEqual(f.value('original'),original);assert.equal(f.context.planningGoalDraft,'Unsubmitted fixture text');assert.equal(f.context.completedSteps['tour.planning.edit'],undefined);assert.ok(f.context.completedSteps['tour.planning.review']);assert.equal(f.context.completion,undefined);assert.ok(!f.calls.includes('watchCurrentPredicate'));assert.ok(!f.calls.includes('captureOriginal'));
+  });
+  for(const [field,value,id] of [
+    ['project_selected',false,'project_source'],['goal_submitted',false,'goal'],['guided_selected',false,'guided_help'],
+    ['outcomes_visible',false,'requirements'],['answer',null,'question'],['why_visible',false,'why'],['review_visible',false,'review'],['edited',false,'edit']
+  ])check(`Resume revalidates the ${id} predicate and invalidates only its dependent Planning credits`,()=>{
+    const f=planningResumeFixture();f.context.planningFixture[field]=value;f.context.planningFixture.edited=false;const before=f.value('planningFixture'),credits=f.value('completedSteps');f.context.effectReceipts.push({historical:'keep'});
+    f.run('resume()');const step=f.context.STEP_BY_ID[`tour.planning.${id}`];assert.equal(f.context.state.step_id,step.id);assert.equal(f.context.state.step_index,step.index);assert.equal(f.context.state.action_status,'idle');assert.deepEqual(f.value('planningFixture'),before);assert.deepEqual(f.value('effectReceipts'),[{historical:'keep'}]);
+    for(const row of f.context.STEP_DEFS.filter(row=>row.meaningful))if(row.chapter==='planning_wizard'&&row.index>=step.index)assert.equal(f.context.completedSteps[row.id],undefined);else assert.deepEqual(f.value(`completedSteps[${JSON.stringify(row.id)}]`),credits[row.id]);
+    assert.ok(f.context.history.every(item=>f.context.STEP_BY_ID[item].index<step.index));assert.equal(f.records.at(-1).payload.resume_step_id,step.id);assert.equal(f.records.at(-1).payload.owner_action_dispatched,false);assert.equal(f.context.completion,undefined);assert.deepEqual(f.calls,['routeView','ensurePlanningFixture','renderPlanningFixture','render']);assert.ok(!f.raw().includes('Unsubmitted fixture text'));
+  });
+  check('an unchanged completed Planning checkpoint stays put without new completion or dispatch',()=>{
+    const f=planningResumeFixture(),before=f.value('completedSteps'),history=f.value('history');f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.approval_boundary');assert.deepEqual(f.value('completedSteps'),before);assert.deepEqual(f.value('history'),history);assert.equal(f.context.completion,undefined);assert.equal(f.records.at(-1).payload.planning_revalidation,'unchanged');
+  });
+  check('a stale current completion is revoked even when Resume need not change steps',()=>{
+    const f=planningResumeFixture('tour.planning.goal');f.context.planningFixture.goal_submitted=false;f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.goal');assert.equal(f.context.state.action_status,'idle');assert.equal(f.context.completedSteps['tour.planning.goal'],undefined);assert.ok(f.context.completedSteps['tour.planning.project_source']);assert.equal(f.context.completion,undefined);
+  });
+  check('Resume does not demand future Planning predicates before their step is reached',()=>{
+    const f=planningResumeFixture('tour.planning.goal');Object.assign(f.context.planningFixture,{guided_selected:false,outcomes_visible:false,answer:null,why_visible:false,review_visible:false,edited:false});const credits=f.value('completedSteps');f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.goal');assert.deepEqual(f.value('completedSteps'),credits);assert.equal(f.context.completion,undefined);
+  });
+  for(const invalid of [null,{schema_id:'old'}, {work_started:true}, {goal_submitted:'true'}, {answer:'not-a-choice'}])check(`unavailable or malformed Planning state is not replaced (${JSON.stringify(invalid)})`,()=>{
+    const f=planningResumeFixture();f.context.planningFixture=invalid===null?null:{...f.context.planningFixture,...invalid};const before=f.value('planningFixture'),credits=f.value('completedSteps'),original=f.value('original');f.run('resume()');assert.equal(f.context.state.status,'recovery_required');assert.equal(f.context.state.action_status,'failed');assert.match(f.context.state.last_error,/retained practice state is unavailable/);assert.deepEqual(f.value('planningFixture'),before);assert.deepEqual(f.value('completedSteps'),credits);assert.deepEqual(f.value('original'),original);assert.deepEqual(f.calls,['render']);assert.deepEqual(f.writes,[]);assert.equal(f.context.completion,undefined);
+  });
+  check('a predicate exception is bounded and blocks all progress actions but permits retry',()=>{
+    const f=planningResumeFixture(),predicate=f.context.stepPredicate,retained=f.value('planningFixture');f.context.stepPredicate=()=>{throw Error('private-owner-error');};f.run('resume()');assert.equal(f.context.state.status,'recovery_required');assert.doesNotMatch(f.context.state.last_error,/private-owner-error/);
+    f.run(['beginTry','beginShowMe','planningAction','toggleEli5','syncEli5','stepTargetSelector'].map(extract).join('\n'));
+    for(const action of ['next()','back()','finish("complete")','beginTry(null)','beginShowMe(null)']){f.run(action);assert.equal(f.context.state.step_id,'tour.planning.approval_boundary');assert.equal(f.context.state.completed,false);}
+    assert.equal(f.value('performOwnerAction(currentDef())').owner_action_dispatched,false);assert.equal(f.run('planningAction("project")'),false);assert.equal(f.run('toggleEli5(true)'),false);assert.equal(f.run('stepTargetSelector(state.step_id)'),'');f.run('syncEli5()');assert.deepEqual(f.value('planningFixture'),retained);assert.ok(f.calls.every(name=>name==='render'));assert.deepEqual(f.writes,[]);
+    f.context.stepPredicate=predicate;f.run('resume()');assert.equal(f.context.resumeRevalidationError,null);assert.equal(f.context.state.status,'demonstrating');assert.equal(f.context.state.step_id,'tour.planning.approval_boundary');assert.equal(f.context.completion,undefined);
+  });
+  check('causal ablation: bypassing Planning revalidation accepts a stale final step',()=>{
+    const f=planningResumeFixture();f.context.planningFixture.answer=null;f.context.planningResumePrerequisite=()=>({step:null,error:null});f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.approval_boundary');assert.ok(f.context.completedSteps['tour.planning.question']);
+  });
+  check('unavailable Planning state renders retry controls instead of cached success or Finish',()=>{
+    const f=planningResumeFixture();f.context.planningFixture=null;f.run('resume()');
+    Object.assign(f.context,{motionReduced:()=>true,syncEli5:()=>{},copyForStep:()=>({kicker:'Old',title:'Old success',body:'Old body',success:'Cached completion',note:'Old note'}),targetAdapter:{resolve:()=>null},scheduleTargetTracking:()=>{},chapterLabels:{planning_wizard:'Planning'},currentTheme:()=> 'paper'});
+    f.run(extract('render'));f.run('render("forward")');assert.match(f.context.stage.innerHTML,/Your practice needs another check/);assert.match(f.context.stage.innerHTML,/Pause to retry/);assert.doesNotMatch(f.context.stage.innerHTML,/Cached completion|data-tour-action="finish"|data-tour-keep-layout/);assert.equal(f.context.backButton.disabled,true);assert.equal(f.context.eli5Button.disabled,true);assert.equal(f.context.planningFixture,null);
+  });
+  check('unavailable Planning state keeps Skip available and clears the fence only after cleanup succeeds',()=>{
+    const f=planningResumeFixture();f.context.planningFixture=null;f.run('resume()');f.context.layoutNow=()=>({});f.context.receipt=()=>{};f.context.originalFocus=()=>{};
+    f.context.cleanupForExit=()=>({ok:false});f.run('finish("skip")');assert.equal(f.context.state.skipped,false);assert.ok(f.context.resumeRevalidationError);
+    f.context.cleanupForExit=()=>({ok:true,final_page:'dashboard'});f.run('finish("skip")');assert.equal(f.context.state.skipped,true);assert.equal(f.context.resumeRevalidationError,null);assert.equal(f.context.planningFixture,null);assert.equal(f.raw(),null);
+  });
+  for(const [field,value,id] of [['goal','   ','goal'],['consequence_revision',0,'edit']])check(`a cached completion cannot substitute for the accepted ${id} value`,()=>{
+    const f=planningResumeFixture();f.context.planningFixture[field]=value;f.run('resume()');assert.equal(f.context.state.step_id,'tour.planning.'+id);assert.equal(f.context.state.action_status,'idle');assert.equal(f.context.completion,undefined);assert.equal(f.run('stepPredicate(state.step_id)'),false);
+  });
+  check('an explicit fresh Replay clears the unavailable-state fence only after successful cleanup',()=>{
+    const f=planningResumeFixture();f.context.planningFixture=null;f.run('resume()');f.context.cleanupForExit=()=>({ok:false});f.run('replay()');assert.ok(f.context.resumeRevalidationError);assert.ok(!f.calls.includes('captureOriginal'));
+    f.context.cleanupForExit=()=>({ok:true});f.context.prepareStep=()=>f.calls.push('prepareStep');f.run('replay()');assert.equal(f.context.resumeRevalidationError,null);assert.equal(f.context.state.status,'demonstrating');assert.equal(f.context.state.step_id,'tour.intro.comfort');assert.equal(f.calls.filter(name=>name==='captureOriginal').length,1);
   });
   report.pass=true;
 }catch(error){report.pass=false;report.failure=String(error.stack||error);console.error(report.failure);process.exitCode=1;}

@@ -117,13 +117,29 @@ try{
       await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({step:'tour.planning.goal'}));const input=page.locator('#pm7gt-planning-practice [data-practice-goal]');await input.fill(text);
       await page.locator('#pm7-guided-tour [data-ui-action-id="ui.guided_tour.pause"]').click();assert.equal(await page.locator('#pm7gt-planning-practice').count(),0);
       const saved=await page.evaluate(key=>sessionStorage.getItem(key),key);assert.equal(saved.includes('UNSENT_BROWSER_FIXTURE'),false);assert.equal(Object.hasOwn(JSON.parse(saved),'planningGoalDraft'),false);
-      await page.locator('#pm7-guided-tour-resume').click();assert.equal(await input.inputValue(),text);assert.equal((await snap()).planning_goal,'');assert.equal((await snap()).planning_project_selected,false);
+      await page.locator('#pm7-guided-tour-resume').click();assert.equal(await input.inputValue(),text);assert.equal((await snap()).planning_goal,'');assert.equal((await snap()).planning_project_selected,false);assert.equal((await snap()).step_id,'tour.planning.project_source');
       await page.locator('#pm7gt-planning-practice [data-practice-action="project"]').click();assert.equal(await input.inputValue(),text);assert.equal((await snap()).planning_goal,'');
       await page.locator('#pm7gt-planning-practice [data-practice-action="goal"]').click();
       if(text.trim()){assert.equal((await snap()).planning_goal,text.trim());assert.equal(await input.count(),0);}
       else{assert.equal((await snap()).planning_goal,'');assert.equal(await input.inputValue(),'');assert.match(await page.locator('#pm7-guided-tour .pm7gt-reason').textContent(),/Add one sentence/);}
     });
   }
+  await fresh();
+  await check('Planning Resume leaves the final boundary for an interrupted second edit without replay',async()=>{
+    await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({source:'resume-prerequisite-check',step:'planning_wizard'}));
+    const steps=['open','project_source','goal','guided_help','requirements','question','why','review','edit','consequence'];
+    for(let index=0;index<steps.length-1;index++){
+      assert.equal((await snap()).step_id,'tour.planning.'+steps[index]);await page.locator('#pm7-guided-tour [data-tour-action="show"]').click();
+      await page.waitForFunction(id=>window.PM7_GUIDED_TOUR.snapshot().step_id===id,'tour.planning.'+steps[index+1]);
+    }
+    await page.locator('#pm7-guided-tour [data-tour-action="continue"]').click();assert.equal((await snap()).step_id,'tour.planning.approval_boundary');
+    await page.locator('#pm7gt-planning-practice [data-practice-action="edit"]').click();const before=await snap();assert.equal(before.planning_edited,false);assert.equal(before.planning_answer,'me');
+    await page.locator('#pm7-guided-tour [data-ui-action-id="ui.guided_tour.pause"]').click();await page.locator('#pm7-guided-tour-resume').click();
+    const resumed=await snap();assert.equal(resumed.step_id,'tour.planning.edit');assert.equal(resumed.action_status,'idle');assert.equal(resumed.planning_answer,before.planning_answer);assert.equal(resumed.planning_goal,before.planning_goal);assert.equal(resumed.effect_receipts.length,before.effect_receipts.length);assert.equal(resumed.work_started,false);
+    assert.equal(await page.locator('#pm7gt-planning-practice [data-practice-value="me"]').isDisabled(),true);assert.equal(await page.locator('#pm7-guided-tour [data-tour-action="finish"]').count(),0);
+    await page.locator('#pm7-guided-tour [data-tour-action="try"]').click();await page.locator('#pm7gt-planning-practice [data-practice-action="answer"][data-practice-value="organizers"]').click();
+    await page.waitForFunction(()=>window.PM7_GUIDED_TOUR.snapshot().step_id==='tour.planning.consequence');assert.equal((await snap()).planning_answer,'organizers');assert.equal(await page.locator('[data-tour-fixture-id="planning-shared-access"]').getAttribute('data-consequence-revision'),'2');
+  });
   for(const paused of [true,false]){
     await fresh();
     await check(`${paused?'paused':'active'} tour reload cannot replace the original snapshot or dispatch work`,async()=>{

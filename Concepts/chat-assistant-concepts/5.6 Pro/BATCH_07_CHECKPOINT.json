@@ -1,0 +1,47 @@
+{
+  "batch_id": "assistant-demo-b07-teach",
+  "status": "BOUNDED_FUNCTIONAL_AND_REBUILD_VERIFIED_MOTION_CAVEATS_OPEN",
+  "base_commit": "fd0b17ccff945646552668f742b7892e425e2aa2",
+  "assistant": {
+    "bytes": 3027495,
+    "raw_sha256": "ca04b923102f087301f133f3c92c385fe049723c3bb35803c2f1136adcb13284",
+    "lf_normalized_sha256": "cc0c9ae6608e343c49f1cd490b1017bc36eda6398dc98c4ce250a85cc784f517",
+    "git_blob": "76525b36f4f75dd776660517fe0506701d61578e"
+  },
+  "scenarios": [
+    "B07-TEACH-CAPTURE",
+    "B07-TEACH-CORRECT"
+  ],
+  "new_checks": 123,
+  "prior_regression_checks": 763,
+  "repo_preservation_checks": 50,
+  "recorded_checks": 44,
+  "matching_nonrecorded_trace_checks": 42,
+  "recorded_frames": 1359,
+  "consecutive_contact_sheets": 29,
+  "selected_native_frames": 10,
+  "memory_persistence": "IN_MEMORY_CONCEPT_ONLY",
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "governance_modified": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "previous_layout_supersession": "Confirmed in published main fd0b17ccff945646552668f742b7892e425e2aa2 by owner/source and 50 bounded preservation checks; no full governance certification.",
+  "next_batch": {
+    "id": "assistant-demo-b08-automatic-memory",
+    "scope": [
+      "Automatic Assistant memory at verified boundaries",
+      "Locked teaching precedence and explicit correction path"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "open": [
+    "Full551-row/67-group meaningful-demo coverage",
+    "All-feature/all-animation frame-review campaign",
+    "Continuous60fps rendering",
+    "Unused chat gutter and inherited long message menu tooltip overlap",
+    "Earlier batch non-bottom Activity pill/Plan-card overlap",
+    "Native provider/persistence/recovery and actual model-context dispatch",
+    "Production secret detection and every Teach input channel",
+    "Full upstream Settings pipeline and unrelated repository governance failures"
+  ]
+}

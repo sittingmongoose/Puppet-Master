@@ -1,0 +1,118 @@
+{
+  "batch": "assistant-demo-b07-teach",
+  "retained_source_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "original_denominator": 551,
+  "html_sha256": "ca04b923102f087301f133f3c92c385fe049723c3bb35803c2f1136adcb13284",
+  "rows": [
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-001",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Teach is user-to-Puppet-Master durable teaching through /teach and explicit natural language.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "69e9ebd87bbdacc791140b07d4c9fdfd5cac36f328d84eded1b5f6ed8488e6f2",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B07-TEACH-CAPTURE",
+        "B07-TEACH-CORRECT"
+      ],
+      "evidence": [
+        "qa/teach-results/RESULTS.json",
+        "qa/TEACH_SUPPLEMENTAL.json",
+        "recordings/capture-result.json",
+        "recordings/correct-result.json"
+      ],
+      "remaining": "Durable memory storage, native prompt dispatch, descendant inheritance, exhaustive input channels and all-feature acceptance are not proven.",
+      "observed": "Message action, /teach and explicit natural-language entry use confirmed, scoped capture in existing concept state. Stable source-linked inspection, correction, revoke and JSON export exercised."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-002",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Teacher is a separate Persona that explains Puppet Master and does not equal Teach.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "614b9f88dea87b9465bffd800978e8bbd10d8ea989d380d4fd3a777e6dd80416",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B07-TEACH-CAPTURE",
+        "B07-TEACH-CORRECT"
+      ],
+      "evidence": [
+        "qa/teach-results/RESULTS.json",
+        "qa/TEACH_SUPPLEMENTAL.json",
+        "recordings/capture-result.json",
+        "recordings/correct-result.json"
+      ],
+      "remaining": "Durable memory storage, native prompt dispatch, descendant inheritance, exhaustive input channels and all-feature acceptance are not proven.",
+      "observed": "Teacher Persona selection remains separate and does not capture teaching."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-003",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Automatic Assistant memory at run boundaries/milestones remains enabled under the memory owner.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "2daeb1a10fd1e98edfc889b69a27e5f02d9f95b74a94b2a8c88dc9a4d5b4e35e",
+      "disposition": "REGRESSION_ONLY_NEXT_BATCH",
+      "scenarios": [
+        "B07-TEACH-CAPTURE",
+        "B07-TEACH-CORRECT"
+      ],
+      "evidence": [
+        "qa/teach-results/RESULTS.json",
+        "qa/TEACH_SUPPLEMENTAL.json",
+        "recordings/capture-result.json",
+        "recordings/correct-result.json"
+      ],
+      "remaining": "Durable memory storage, native prompt dispatch, descendant inheritance, exhaustive input channels and all-feature acceptance are not proven.",
+      "observed": "Existing automatic-memory behavior is retained; locked teaching is not superseded by automatic capture. Complete automatic-memory workflows are next, not closed here."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-004",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Explicit taught/locked memory cannot be silently overridden by automatic memory.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "2724cc290b94770271886c1a5cdf02f356326e92035245bf990a18dac2e60d92",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B07-TEACH-CAPTURE",
+        "B07-TEACH-CORRECT"
+      ],
+      "evidence": [
+        "qa/teach-results/RESULTS.json",
+        "qa/TEACH_SUPPLEMENTAL.json",
+        "recordings/capture-result.json",
+        "recordings/correct-result.json"
+      ],
+      "remaining": "Durable memory storage, native prompt dispatch, descendant inheritance, exhaustive input channels and all-feature acceptance are not proven.",
+      "observed": "New teaching is locked by default; related-text suggestions cannot overwrite it without an explicit replacement decision; correction and revoke retain version history."
+    }
+  ],
+  "global_APR_016": "OPEN",
+  "global_APR_018": "OPEN"
+}

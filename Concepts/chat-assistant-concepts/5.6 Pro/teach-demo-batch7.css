@@ -1,0 +1,2 @@
+.teach-demo-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);margin:8px 0;min-width:0;}
+.teach-demo-guide>div{min-width:0;}.teach-demo-guide>div:last-child{display:flex;gap:8px;flex-shrink:0;}.teach-demo-guide small{display:block;font-size:10px;color:var(--muted);margin-bottom:4px;}.teach-demo-guide strong{font-size:12px;line-height:1.5;font-weight:500;}
