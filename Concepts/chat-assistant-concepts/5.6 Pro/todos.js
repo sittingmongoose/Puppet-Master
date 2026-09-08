@@ -738,7 +738,7 @@
         (hasKids?'<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>':'')+
         '<div class="todo-chips">'+depChip(list,item)+parallelChip(list,item)+'</div>'+
         (item.blocked_reason_ref?'<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>':'')+
-        '<div class="todo-detail-actions">'+(item.source_review_run_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
+        '<div class="todo-detail-actions">'+(item.source_room_run_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
     }
     return '<div class="todo-node" data-todo-id="'+esc(item.todo_id)+'" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'"><div class="todo-row">'+caret+
       '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
@@ -1183,7 +1183,25 @@
     return {ok:true,created:made.length,items:mapped,reused:made.length===0};
   }
 
+  // B06: explicit selected-message promotion. Never writes a task during discussion.
+  function materializeFromRoom(x){
+    const checked=window.PM56_ROOM?.validatePromotion(x,'todo');
+    if(!checked?.ok)return checked||{ok:false,error:'room_unavailable'};
+    const r=checked.run,m=checked.message,id='room-todo-'+r.id+'-'+m.id;
+    let store=threadStore(r.threadId);const existing=store?.items||[],prior=existing.find(t=>t.todo_id===id);
+    if(prior)return {ok:true,todoId:id,reused:true};
+    const item=itemFactory(r.threadId)({todo_id:id,display_order:existing.length+1,title:m.body,
+      expected_outcome:m.body,status:'pending',source_room_run_id:r.id,source_room_message_id:m.id,
+      source_participant_id:m.senderId,source_definition_revision:r.definitionRevision,source_message_hash:x.messageHash});
+    const check=validateGraph(r.threadId,{items:existing.concat(item)});
+    if(!check.valid)return {ok:false,error:'invalid_graph'};
+    if(!store){RT.todos.byThread[r.threadId]={items:[],refusals:[],revision:1};store=threadStore(r.threadId);}
+    store.items=existing.concat(item);store.revision=(store.revision||1)+1;
+    return {ok:true,todoId:id,reused:false};
+  }
+
   window.PM56_TODOS = {
+    materializeFromRoom:materializeFromRoom,
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,
     /* Flat item list (TodoItemV2[]) for one thread, or the current thread

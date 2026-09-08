@@ -1,0 +1,520 @@
+{
+  "batch": "assistant-demo-b06-chat-room-and-layout-rollback",
+  "retained_source_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "original_denominator": 551,
+  "rows": [
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-001",
+        "category": "Shared collaborative workflows",
+        "statement": "Crew, BrainStorm, Review and Chat Room share one participant/run/message/artifact/Usage/recovery/composer-target foundation.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "86da62dea6af0803d933513c80ba70118f2561f3afb936248540de0d339913b8",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-002",
+        "category": "Shared collaborative workflows",
+        "statement": "Every invocation opens a configuration modal populated from Settings defaults.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "1134d5ffd9e512778dc17f5310d2bcbb7ab4b09ea8b26fe9261f729346d2de4c",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-003",
+        "category": "Shared collaborative workflows",
+        "statement": "Every participant supports requested/effective model, account, Persona, Skills and tools.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "affefefd77bca3cea9f6bfca4dabe160306004a7293966dd072b1100e9cc647a",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-004",
+        "category": "Shared collaborative workflows",
+        "statement": "No selected model or Persona is silently substituted.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "0f568b014ede2e4c723cfce0032c3c47f6c474fd492c9c44d18a702464278323",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-005",
+        "category": "Shared collaborative workflows",
+        "statement": "Each workflow produces a transcript card, expandable recent detail, full panel and Activity domain.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "e42fff1dde713283885f8669bbea5b25ac87fccb45b1e9656f458b788641640d",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-006",
+        "category": "Shared collaborative workflows",
+        "statement": "Each participant is clickable to open the exact participant transcript and evidence.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "47c654d6e3af18e1a0bbd4b3b1548dba588e2d9344076aab39fd48c809cfe7e4",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-007",
+        "category": "Shared collaborative workflows",
+        "statement": "Workflow Message targets the ordinary composer with visual destination chrome.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "7e7fde2e233aac5019fa4fe01acc6757b1fa01680120a235193351e2ebff66a9",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-008",
+        "category": "Shared collaborative workflows",
+        "statement": "Pause/resume/cancel preserve truthful state, transcript and artifacts.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "0c34621d8484465195f335b5e52eee13972a214c72a8a2b1d1fe8e0b99ca48a0",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-009",
+        "category": "Shared collaborative workflows",
+        "statement": "Permissions are bounded by the parent ceiling and participants cannot self-authorize.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "e1a5bba23d97fd5ac759a49baf3926cd65cd6e78dc6c6cf3a483fb3ed126ac27",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "No provider/project writes occur in the example; this is not native permission enforcement proof."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "COLLAB-010",
+        "category": "Shared collaborative workflows",
+        "statement": "Multi-Agent Workflows Settings manager has Crew, BrainStorm, Review and Chat Room tabs.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "1637d1b0bc59f9be95b3d8f8e11c5fd3f35bbef53b97e77c3efb808f58293a29",
+      "disposition": "PRESERVED_UNCHANGED",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/ROLLBACK_PRESERVATION.json; qa/layout/RESULTS.json",
+      "remaining": "Existing manager navigation preserved, no new runtime proof."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-001",
+        "category": "Chat Room",
+        "statement": "Chat Room is a persistent multi-agent discussion distinct from Crew execution.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "c205647f113e19a1087ae84de58ca5d7766061478728e529a4575af25b5e659c",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Distinct discussion behavior is exercised; persistence is not proved."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-002",
+        "category": "Chat Room",
+        "statement": "Configuration includes participants, moderator, turn policy, mentions/replies, tools, rounds/stop and output.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "89a43311cb897b8e58dd3338b99ec18628df71bf2cda6e1abce971520955dbe6",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "The two recorded fixtures cover moderated two-round and ask-everyone-once policies, three participants; all other policy/configuration permutations are not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-003",
+        "category": "Chat Room",
+        "statement": "User can message the room through the ordinary targeted composer.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "3e47d816ce17d8721543c8632ee92a598cf9dcd75298264a8218357d5e19250c",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-004",
+        "category": "Chat Room",
+        "statement": "Room discussion does not automatically create To-Dos, Plans or Goals.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "46a4d67f7e28068d9da3192596ca902b49fc6699ac791915064781053c71818a",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-005",
+        "category": "Chat Room",
+        "statement": "Explicit promotions preserve source lineage into Plan, To-Do, Goal or artifact.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "dd3198ed7f70871ffe8b68969a31e1c6addb0f7802694b27e7173de6324e7adc",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Plan and To-Do promotion proved; Goal/artifact promotion remain unimplemented in this new validated path."
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "ROOM-006",
+        "category": "Chat Room",
+        "statement": "Room transcript and participant sessions survive restart.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "20973861ea8e0315ce519220993ae498bbd2b7a2221b1b2638eebc8c30fdf0c6",
+      "disposition": "NOT_RUN",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Restart and durable participant-session recovery remain unproven."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "source_record_sha256": "ebd5cfd09adaa1d5b13c0a22329556ba611ca28db9bd261bf7034d4d602864c5",
+      "disposition": "OPEN_GLOBAL",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "This batch does not close the all-feature demo/motion denominator."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "source_record_sha256": "a6a1a754f1af4b7c6234c7353a6195d1fcfccd6545eb62c8530dbfc5904f2b79",
+      "disposition": "OPEN_GLOBAL",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "This batch does not close the all-feature demo/motion denominator."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-059",
+        "area": "Goal and To-Do hierarchy",
+        "requirement": "Refresh Goal and To-Do Activity Detail using aligned compact rows, clear progress and state grouping, useful hierarchy and a quiet action row. Keep the Simple Goal objective and lifecycle separate from To-Do-derived progress; do not invent a phase hierarchy or completion percentage for Simple Goal and preserve actual controls and selected record identity.",
+        "acceptance": "Running/completed/paused/blocked fixtures; next useful action; row drilldown; no repeated card wall or excessive explanatory prose."
+      },
+      "source_record_sha256": "56585d992fe79b5d02727a36eec1e94ec882a53f4848f4dec2b8b5cb9783bb49",
+      "disposition": "SELECTIVE_PRESENTATION_SUPERSESSION_REQUIRES_OWNER_RECONCILIATION",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "User correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908; qa/ROLLBACK_PRESERVATION.json; source.diff",
+      "remaining": "Only the reference-video-derived layout treatment is withdrawn. Preserve independent content, controls, settings, schema, identity and usability requirements."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-060",
+        "area": "All Activity Detail families",
+        "requirement": "Apply the reference-derived narrow-layout grammar to every Activity Detail category, not only Goal/To-Do. Establish one shared presentation grammar while preserving type-specific content and canonical routing.",
+        "acceptance": "Enumerate every available category and test dense/empty/loading/selection states, pinned/floating placement and practical narrow widths."
+      },
+      "source_record_sha256": "7e5039bfe49903e004d7c0ea9764257b45d054e7064608e8fe937b9c78a045fa",
+      "disposition": "SELECTIVE_PRESENTATION_SUPERSESSION_REQUIRES_OWNER_RECONCILIATION",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "User correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908; qa/ROLLBACK_PRESERVATION.json; source.diff",
+      "remaining": "Only the reference-video-derived layout treatment is withdrawn. Preserve independent content, controls, settings, schema, identity and usability requirements."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-061",
+        "area": "Context and BSD detail redesign",
+        "requirement": "Rebuild Context More Details including BSD as a coherent compact information hierarchy with short labels, aligned values, grouped sections and optional deeper details. No decorative left border, gray substitute, accent pseudo-element or nested wall of boxes. Preserve all required metrics and configuration access.",
+        "acceptance": "Inspect overview and expanded state in each theme at narrow/normal widths; values align; model labels do not wrap letter by letter; technical details remain reachable."
+      },
+      "source_record_sha256": "dc9ea23937d760b31d1acd35fee341edc12dd6608263671f06704cdfdef6d2ce",
+      "disposition": "SELECTIVE_PRESENTATION_SUPERSESSION_REQUIRES_OWNER_RECONCILIATION",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "User correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908; qa/ROLLBACK_PRESERVATION.json; source.diff",
+      "remaining": "Only the reference-video-derived layout treatment is withdrawn. Preserve independent content, controls, settings, schema, identity and usability requirements."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-062",
+        "area": "All Settings managers",
+        "requirement": "Apply the reference-derived layout principles across the actual Settings manager inventory in TestPMConcept, not only Assistant/BSD additions. Use consistent rows, heading/section spacing, values, status, disclosure and restrained footer actions, adapting to each manager capability.",
+        "acceptance": "Inventory all managers and named projections from current source/owner; map each to revised/shared layout, interaction tests and visual evidence; no unrelated tool/manager function deleted."
+      },
+      "source_record_sha256": "8af9e9c51f029eabd0ca743c1677e79fcd04f74a4770de59d0b58cbe3976bed0",
+      "disposition": "SELECTIVE_PRESENTATION_SUPERSESSION_REQUIRES_OWNER_RECONCILIATION",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "User correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908; qa/ROLLBACK_PRESERVATION.json; source.diff",
+      "remaining": "Only the reference-video-derived layout treatment is withdrawn. Preserve independent content, controls, settings, schema, identity and usability requirements."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-063",
+        "area": "Settings source-only changes",
+        "requirement": "Never hand-edit TestPMConcept.html. Modify its real generator/source and rebuild. Preserve all unrelated source transforms and non-Settings scripts. Retain Step Rail Simple under the existing working-activity preference.",
+        "acceptance": "Output provenance and hashes; clean extracted rebuild; inventory and defaults survive reload; no duplicate setting ID; full-pipeline blocker remains explicit when using the authorized checkpoint transform."
+      },
+      "source_record_sha256": "a039df8c8f61f288d9ce7fe107b9978def6d6c03e249c9566f1477fd09764210",
+      "disposition": "PRESERVED_REQUIREMENT",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/ROLLBACK_PRESERVATION.json; qa/SETTINGS_SCRIPT_CHECKS.json; source-built TestPMConcept; clean-rebuild validation",
+      "remaining": "Not superseded: source-only generation, Step Rail Simple and context-sensitive manager navigation remain required. Existing scripts are preserved; no fresh persistent-origin reload certification."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-064",
+        "area": "Reference video evidence",
+        "requirement": "Use the uploaded ScreenRecording_08-11-2026 19-26-05_1(1).mov as layout/motion evidence. Record its hash, dimensions, frame count, timebase and exact inspected frame ranges. Derive stable aligned rows, short labels/trailing values, group spacing and a quiet action row; do not copy illegible font sizes or decorative dashboards.",
+        "acceptance": "Frame-indexed observations and mapping to actual changed components. Automated frame extraction/sampling is not equivalent to human-like visual inspection of every frame."
+      },
+      "source_record_sha256": "8ad07e9ca834f94d104a785330cd68e7e8275b7b67d9de8633f60134f83561d1",
+      "disposition": "SELECTIVE_PRESENTATION_SUPERSESSION_REQUIRES_OWNER_RECONCILIATION",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "User correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908; qa/ROLLBACK_PRESERVATION.json; source.diff",
+      "remaining": "Only the reference-video-derived layout treatment is withdrawn. Preserve independent content, controls, settings, schema, identity and usability requirements."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-065",
+        "area": "Context-sensitive manager navigation",
+        "requirement": "A manager section picker must retain the manager identity it was opened for even if page scroll tracking changes the active manager before selection. Closing or switching managers must not commit into a neighboring manager.",
+        "acceptance": "Open picker in manager A, change scroll-active manager to B, select A section; route remains A; repeat cancel/reset and narrow mode."
+      },
+      "source_record_sha256": "6d73846152a7a87f87bc0e386fe6e77148146c35a632111f2fdd1b3e1c49a19b",
+      "disposition": "PRESERVED_REQUIREMENT",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/ROLLBACK_PRESERVATION.json; qa/SETTINGS_SCRIPT_CHECKS.json; source-built TestPMConcept; clean-rebuild validation",
+      "remaining": "Not superseded: source-only generation, Step Rail Simple and context-sensitive manager navigation remain required. Existing scripts are preserved; no fresh persistent-origin reload certification."
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-070",
+        "area": "Delivery and evidence integrity",
+        "requirement": "Provide actual repaired Assistant HTML, generated TestPM HTML, mergeable Concepts source folder, and independent implementation/audit prompts. Verify archive extraction/rebuild and file hashes. Report only tests and frame reviews actually performed on identifiable bytes.",
+        "acceptance": "Every link exists; no status-only archive labeled repaired HTML; no unsupported test totals or native 60fps/production readiness claims."
+      },
+      "source_record_sha256": "14aacd3d9d8f3f293a7db832d4458d514392dcf96ec370a1087f70afb95bcb3f",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "scenarios": [
+        "B06-ROOM-DISCUSSION",
+        "B06-ROOM-PLAN"
+      ],
+      "evidence": "qa/room-results/RESULTS.json; qa/ROOM_SUPPLEMENTAL.json; recordings/*-result.json",
+      "remaining": "Full native/runtime and exhaustive clause coverage not certified."
+    }
+  ],
+  "user_correction": {
+    "id": "USER-REFERENCE-LAYOUT-ROLLBACK-20260908",
+    "requirement": "Undo only layout/style changes made because of the reference video; preserve additions of settings/managers and other functionality, then complete the next batch."
+  },
+  "canonical_plans_modified": false,
+  "APR-016": "OPEN",
+  "APR-018": "OPEN"
+}

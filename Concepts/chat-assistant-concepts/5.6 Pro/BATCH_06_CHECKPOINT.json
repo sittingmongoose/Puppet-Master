@@ -1,0 +1,47 @@
+{
+  "batch_id": "assistant-demo-b06-chat-room-and-layout-rollback",
+  "status": "BOUNDED_FUNCTIONAL_AND_REBUILD_VERIFIED_MOTION_CAVEATS_OPEN",
+  "base_commit": "28d5fe439257f8dbdc297ae311d6769a6476ab01",
+  "assistant": {
+    "raw_sha256": "8e23cfe2fbf30041111cb7dc6fc3e73dfa5407c87bbc0c5510bba1bf0a82c3e4",
+    "lf_normalized_sha256": "0b5548fd3c25ebe66cf30966281e7229b3c275a0780bbb34c929f3ecd3b4155f",
+    "git_blob": "60926bdaa65aa9793fa22e34558b9e45a27d8e80",
+    "bytes": 2997456
+  },
+  "settings_sha256": "66cd9ca232ef6017c45ce93e0ab2dcd65a44923f95ea24b580b94f53187ddf30",
+  "preserved_settings": 892,
+  "preserved_manager_workspaces": 21,
+  "settings_scripts_unchanged": 29,
+  "scenarios": [
+    "B06-ROOM-DISCUSSION",
+    "B06-ROOM-PLAN"
+  ],
+  "new_checks": 107,
+  "prior_regression_checks": 656,
+  "layout_checks": 52,
+  "recorded_checks": 37,
+  "recorded_frames": 1684,
+  "consecutive_contact_sheets": 36,
+  "selected_native_frames": 10,
+  "canonical_plans_modified": false,
+  "governance_modified": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "next_batch": {
+    "id": "assistant-demo-b07-teach",
+    "scope": [
+      "Teach capture",
+      "Correction by supersession with retained history"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "open": [
+    "Full551-source-row multiple meaningful demo coverage",
+    "All-feature/all-animation recording campaign",
+    "Perfect60fps rendering",
+    "Unused chat gutter/non-bottom pill overlap",
+    "Native/provider/durable sessions",
+    "Other Chat Room policies and Goal/artifact promotions",
+    "Full upstream Settings build reconciliation",
+    "Canonical visual-clause supersession via focused packet"
+  ]
+}

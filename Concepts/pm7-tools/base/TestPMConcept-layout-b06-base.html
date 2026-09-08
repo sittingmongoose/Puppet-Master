@@ -25224,21 +25224,74 @@ html[data-theme$="-light"]:not([data-theme^="glass"]) #pm-hover-tag-root .pm-hov
 
 </style>
 <style id="pm50-manager-layout">
-/* B06: video-inspired flat manager layout removed. Pre-video manager cards,
-   grids, spacing and label/value alignment come from their original owners.
-   Keep separately requested concise text, no-accent and safe wrapping fixes. */
-#pm-settings-root .manager-page,#pm-settings-root .manager-body,#pm-settings-root .resource-detail,#pm-settings-root .resource-content {min-width:0;max-width:100%;}
+/* Scoped manager grammar. No decorative side bars; no domain actions removed. */
+#pm-settings-root .manager-page {container-type:inline-size;min-width:0;}
+#pm-settings-root .manager-body,#pm-settings-root .resource-detail,#pm-settings-root .resource-content {min-width:0;max-width:100%;}
+#pm-settings-root .manager-body {padding:18px 22px;}
+#pm-settings-root .resource-content {padding:18px 22px;}
+#pm-settings-root .panel-card {padding:17px 0;border:0;border-radius:0;background:transparent;box-shadow:none;border-bottom:1px solid var(--k3-line);min-width:0;}
+#pm-settings-root .panel-title-row {display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin:0 0 12px;}
+#pm-settings-root .panel-title-row>div:first-child {flex:1;min-width:140px;}
+#pm-settings-root .panel-title {font-size:13px;font-weight:650;line-height:1.5;}
+#pm-settings-root .panel-subtitle {font-size:12px;line-height:1.6;}
 #pm-settings-root .pm50-explanation {font-size:11px;color:var(--text-muted);margin:6px 0 0;}
 #pm-settings-root .pm50-explanation summary {width:max-content;cursor:pointer;list-style:none;border-bottom:1px dotted currentColor;}
 #pm-settings-root .pm50-explanation summary::before {content:'›';display:inline-block;margin-right:6px;}
 #pm-settings-root .pm50-explanation[open] summary::before {content:'⌄';}
 #pm-settings-root .pm50-explanation[open] {padding:4px 0 8px;}
-#pm-settings-root .pm50-explanation .panel-subtitle {margin:8px 0;}
+#pm-settings-root .pm50-explanation .panel-subtitle,#pm-settings-root .pm50-explanation .stat-note {margin:8px 0;}
+#pm-settings-root .info-grid {display:grid;grid-template-columns:1fr;gap:0;}
+#pm-settings-root .info-row {display:grid;grid-template-columns:minmax(95px,.8fr) minmax(0,1fr);gap:24px;padding:10px 0;border:0;border-bottom:1px solid var(--k3-line);align-items:baseline;background:transparent;border-radius:0;}
+#pm-settings-root .info-key {font-size:12px;line-height:1.5;}
+#pm-settings-root .info-value {font-size:12px;text-align:right;line-height:1.5;overflow-wrap:break-word;word-break:normal;min-width:0;}
+#pm-settings-root .card-grid {gap:16px;}
+#pm-settings-root .stat-card {padding:12px 0;border:0;border-radius:0;background:transparent;box-shadow:none;border-bottom:1px solid var(--k3-line);}
+#pm-settings-root .stat-value {font-size:18px;line-height:1.6;}
+#pm-settings-root .resource-head {gap:12px;padding:18px 20px;flex-wrap:wrap;}
+#pm-settings-root .resource-head-main {min-width:0;flex:1;}
+#pm-settings-root .resource-actions {display:flex;gap:8px;flex-wrap:wrap;}
+#pm-settings-root .manager-tabs {gap:5px;padding:8px 14px;flex-wrap:wrap;}
+#pm-settings-root .manager-tab {white-space:normal;}
+#pm-settings-root .prompt-box {max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;box-sizing:border-box;border-left-width:1px;}
+#pm-settings-root .manager-page .alert-strip {border:0;border-radius:0;box-shadow:none;padding:12px 0;line-height:1.6;}
 #pm-settings-root .manager-page .panel-card::before,#pm-settings-root .manager-page .stat-card::before,#pm-settings-root .manager-page .alert-strip::before,#pm-settings-root .resource-row::before {display:none;}
 #pm-settings-root .resource-row.active {border-left-width:0;box-shadow:0 0 0 1px var(--k3-line) inset;}
-#pm-settings-root .setting-row {border-left-width:0;}
-#pm-settings-root .prompt-box {max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;box-sizing:border-box;border-left-width:1px;}
+#pm-settings-root .setting-row {gap:18px;padding:14px 0;border-left-width:0;}
+#pm-settings-root .setting-label {font-size:13px;line-height:1.55;}
+#pm-settings-root .setting-control {min-width:0;}
+#pm-settings-root .setting-control>input,#pm-settings-root .setting-control>select {max-width:100%;}
+#pm-settings-root .pm49-bsd .panel-card {padding:16px 0;}
+#pm-settings-root .pm49-setting {grid-template-columns:minmax(95px,.85fr) minmax(0,1fr);gap:22px;padding:12px 0;}
+#pm-settings-root .pm49-setting>strong {font-size:12px;font-weight:500;}
+#pm-settings-root .pm49-choice>span {word-break:normal;overflow-wrap:break-word;}
+#pm-settings-root .pm49-policy {border:0;border-radius:0;border-top:1px solid var(--k3-line);padding:16px 0;}
 #pm-settings-portals .dialog-footer {padding:16px 22px;gap:9px;flex-wrap:wrap;}
+#pm-settings-portals .pm49-member {border:0;border-radius:0;border-bottom:1px solid var(--k3-line);padding:16px 0;}
+@container (max-width:650px){
+ #pm-settings-root .card-grid.two,#pm-settings-root .card-grid.three {grid-template-columns:1fr;}
+ #pm-settings-root .split-manager {grid-template-columns:1fr;}
+ #pm-settings-root .split-manager>.resource-roster {max-height:200px;width:auto;min-width:0;}
+ #pm-settings-root .resource-actions {flex-basis:100%;padding-left:0;}
+ #pm-settings-root .resource-head {padding:16px 12px;}
+ #pm-settings-root .resource-content,#pm-settings-root .manager-body {padding:14px 12px;}
+ #pm-settings-root .pm49-setting {grid-template-columns:1fr;gap:7px;}
+}
+@media(max-width:560px){
+ #pm-settings-root .setting-row {grid-template-columns:minmax(0,1fr) auto;gap:10px;}
+ #pm-settings-root .setting-control {grid-row:2;grid-column:1/-1;}
+ #pm-settings-root .setting-row>.details-btn {grid-column:2;grid-row:1;}
+ #pm-settings-root .info-row {gap:12px;}
+}
+
+/* Statistics adapt to the actual detail pane, not the whole Settings window. */
+#pm-settings-root .resource-detail {container-type:inline-size;container-name:managerDetail;}
+@container managerDetail (max-width:530px){
+ #pm-settings-root .card-grid.two,#pm-settings-root .card-grid.three{grid-template-columns:minmax(0,1fr);gap:0;}
+ #pm-settings-root .stat-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 0;}
+ #pm-settings-root .stat-value{font-size:13px;text-align:right;font-weight:550;}
+ #pm-settings-root .stat-label{font-size:12px;line-height:1.5;letter-spacing:0;}
+ #pm-settings-root .resource-content .panel-card{padding:14px 0;}
+}
 
 </style>
 </head>

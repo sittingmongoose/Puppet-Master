@@ -1619,7 +1619,8 @@ ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Working_N
 
 This section incorporates the cumulative Settings system inventory alignments, truthful persistence
 semantics, shared projections, candidate roster/stage reconciliation, and universal manager layout
-principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-064, and APR-065.
+principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-064, and APR-065,
+as amended by the selective reference-layout supersession under USER-REFERENCE-LAYOUT-ROLLBACK-20260908.
 
 ### 19. Working Activity Style and Inventory Reconciliation (APR-046, APR-048)
 
@@ -1660,13 +1661,18 @@ principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-0
 
 ### 22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)
 
-- **Universal Layout Principles (APR-064):** Derived from the visual reference motion analysis, every
-  Settings manager adheres to:
+- **Reference-Layout Supersession and Universal Principles (APR-062, APR-064, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
+  The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`)
+  enforcing flat-row, borderless-section, and forced single-column layout is selectively superseded under
+  user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior native card, section
+  box, and grid layouts across all thirty-eight registered managers and the 21 concrete manager workspaces measured
+  at the pinned base. Historical evidence and request records are retained intact. Active presentation across every
+  Settings manager enforces:
   1. *Stable Alignment:* Left-aligned section headers and property labels, fixed-width input controls,
      and uniform vertical baselines.
   2. *Legible Short Labels:* Human-friendly descriptive names omitting internal dotted path prefixes.
   3. *Trailing Controls:* Checkboxes, toggles, dropdowns, and numeric inputs align cleanly to the right edge.
-  4. *Deliberate Whitespace:* Standardized 24 px padding between distinct setting groups.
+  4. *Deliberate Whitespace:* Standardized padding and section spacing between distinct setting groups.
   5. *Limited Simultaneous Detail:* Complex schemas, advanced tuning parameters, and raw JSON configurations
      reside behind progressive disclosure toggles.
   6. *One Quiet Action Row:* Per-section reset buttons and documentation links reside in an unobtrusive
@@ -1683,6 +1689,11 @@ principles in accordance with APR-044, APR-046, APR-047, APR-048, APR-062, APR-0
   `project-backup`, `updates`, `project-defaults-templates`, `onboarding-guided-tour`, `doctor`,
   `usage-budgets`, `teacher-help`, `project-search-index`, and `dry-method`.
   And across the three named visible-state projections: `teacher-help`, `project-search-index`, and `dry-method`.
+  All 892 settings in the inventory remain preserved.
+- **Source-Only Checkpoint Generation (APR-063):** Hand-editing of TestPMConcept.html is strictly forbidden.
+  Rebuilds occur through `Concepts/pm7-tools/build_testpm_layout_b06.py` against the immutable published checkpoint,
+  replacing only style block `pm50-manager-layout` and asserting that all 29 script elements (26 JavaScript, 3 JSON)
+  remain byte-identical.
 - **Context-Sensitive Manager Navigation (APR-065):** Selecting a manager from a contextual link or
   dropdown retains and highlights that manager's identity during navigation, avoiding disorientation.
 
@@ -1782,16 +1793,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  All thirty-eight registered Settings managers and three named visible-state projections enforce the
-  reference-derived layout principles: stable alignment, legible short labels, trailing controls,
-  deliberate whitespace, limited simultaneous detail via progressive disclosure, and one quiet action
-  row. Manager section navigation preserves opened manager identity during routing.
+  All thirty-eight registered Settings managers and three named visible-state projections enforce native
+  card and grid presentation per USER-REFERENCE-LAYOUT-ROLLBACK-20260908, superseding the reference-video
+  flat-row and forced single-column layout while preserving stable alignment, legible short labels, trailing
+  controls, deliberate whitespace, limited simultaneous detail via progressive disclosure, and one quiet
+  action row. Manager section navigation preserves opened manager identity during routing.
 gui_related: true
 gui_classification_reason: Governs layout principles, visual structure, and navigation across all thirty-eight Settings managers.
 depends_on: [SSYS-031]
 unblocks: []
 acceptance_criteria:
-  - All 38 managers and 3 projections follow reference layout principles.
+  - All 38 managers and 3 projections follow native card and grid layout with concise presentation, superseding reference-video flat-row styling.
   - Labels are concise, controls trail right, and advanced detail is behind disclosure.
   - Contextual manager picker preserves opened manager identity.
 validation_surfaces:
@@ -1814,8 +1826,9 @@ preserved_exact_tokens:
   - "trailing controls"
   - "progressive disclosure"
 negative_constraints:
-  - Do not exempt any of the 38 registered managers from the unified layout principles.
+  - Do not exempt any of the 38 registered managers from native card/grid presentation and concise hierarchy.
   - Do not drop manager identity during section navigation.
+  - Do not reintroduce reference-video flat-row or forced-single-column CSS into Settings managers.
 owner_hints:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md

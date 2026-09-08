@@ -3110,10 +3110,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     const RTc = (window.PM56_RUNTIME||{}).composer;
     if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
       for(let i=0;i<RTc.preSendHooks.length;i++){
-        let claimed=false;
-        try{ claimed = RTc.preSendHooks[i](extCtx(), t, raw)===true; }
+        let claimed=false,decision=null;
+        try{ decision=RTc.preSendHooks[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
         catch(err){ console.error('PM56 preSendHook threw', err); }
-        if(claimed){ state.composer=''; clearComposerField(); renderApp(); return; }
+        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();} renderApp();return; }
       }
     }
     state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
@@ -3125,7 +3125,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     clearComposerField();
     t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
     const low=raw.toLowerCase();
-    if(RTc && RTc.destination && RTc.destination.kind==='plan-revision'){
+    if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
       /* Plan owner authors the revision and receipt through the shared commit hook. */
     }
     else if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}

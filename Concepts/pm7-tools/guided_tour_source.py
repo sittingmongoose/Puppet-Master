@@ -823,6 +823,10 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function openChatSurface(){var api=window.PM_HOME_WORKSPACE,chat=api&&homeSurface('chat',api.layout);if(api&&chat&&!chat.visible)api.setSurfaceVisible('chat',true,'cmd.panel.switch');var panel=document.getElementById('chatPanel');if(panel)panel.classList.remove('hidden');return !!activeChat();}
   function setTeacherPlaceholder(){document.querySelectorAll('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input').forEach(function(input){input.setAttribute('placeholder','Ask Teacher anything about Puppet Master…');});}
   var guidedThreadIds=Object.create(null);
+  function teacherLessonActive(){return state.open&&state.step_id.indexOf('tour.chat.')===0;}
+  function teacherContextRequired(id){return ['tour.chat.teacher.ask','tour.chat.teacher.reply','tour.chat.teacher.eli5'].indexOf(id)>=0;}
+  function teacherContextMessage(){return 'Return to the Guided example conversation before continuing this lesson. To use another conversation, pause the tour first.';}
+  function guidedTeacherTargetReady(){var d=window.PM_DEMO,id=state.teacher_thread_id,chat=d&&d.state&&d.state.chat,thread=chat&&chat.threads&&chat.threads[id];return !!(id&&chat&&chat.activeThread===id&&thread&&thread.guided_example===true&&guidedThreadIds[id]);}
   function teacherTurnCurrent(pending){var d=window.PM_DEMO;return !!(pending&&teacherPending===pending&&pending.session===sessionSerial&&d&&d.state.chat.threads[pending.thread]===pending.thread_record&&(!pending.stream||d.state.chat.activeStream===pending.stream));}
   function cancelTeacherTurn(){
     var pending=teacherPending,d=window.PM_DEMO;if(!pending)return;teacherPending=null;
@@ -842,7 +846,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
       var message=document.querySelector('[data-pm6-mid="'+msgId+'"]'),sink=message&&message.querySelector('.pm6-chat-sink');
       if(message){message.classList.add('pm7gt-teacher-message');message.setAttribute('data-guided-example','true');message.querySelectorAll('.runtime-snapshot,.msg-runtime-compact').forEach(function(node){node.remove();});}
       if(sink)sink.setAttribute('data-pm7gt-teacher-response','true');
-      if(how!=='stopped'&&currentLesson&&state.open&&state.step_id===pending.step_id&&pending.step_id==='tour.chat.teacher.ask'&&state.action_status==='watching')completeStep('applied',{thread_id:threadId,message_id:msgId,local_deterministic:true});
+      if(how!=='stopped'&&currentLesson&&state.open&&state.step_id===pending.step_id&&pending.step_id==='tour.chat.teacher.ask'&&state.action_status==='watching'&&stepPredicate(pending.step_id))completeStep('applied',{thread_id:threadId,message_id:msgId,local_deterministic:true});
     },0);return true;
   }
   function installTeacherSendAdapter(){
@@ -850,7 +854,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
     teacherOriginalSend=d.chat.send;
     d.chat.send=function(threadId,text){
       var thread=d.state.chat.threads[threadId],guided=!!(guidedThreadIds[threadId]||thread&&thread.guided_example===true);
-      if(!guided)return teacherOriginalSend.apply(d.chat,arguments);
+      if(!guided){if(teacherLessonActive())return {ok:false,toast:teacherContextMessage(),provider_dispatch:false,usage_write:false};return teacherOriginalSend.apply(d.chat,arguments);}
       // A guided thread remains local when paused, in another chapter, or retained after a replay.
       if(!thread)return {ok:false,toast:'This guided example has ended. Replay the tour to start another.'};
       text=String(text==null?'':text).trim();if(!text)return {toast:'Type a message first.'};
@@ -887,10 +891,10 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
     if(event.type==='keydown'&&(!input||event.key!=='Enter'||event.shiftKey||event.isComposing))return;
     if(event.type==='click'){var button=target.closest('.pm6-chat-send');if(!button)return;var host=button.closest('#chatPanel,#floatingChat');input=host&&host.querySelector('.pm6-chat-input');}
     if(!input||!input.closest('#chatPanel,#floatingChat'))return;
-    var id=d.state.chat.activeThread,thread=d.state.chat.threads[id];if(!guidedThreadIds[id]&&!(thread&&thread.guided_example===true))return;
+    var id=d.state.chat.activeThread,thread=d.state.chat.threads[id],guided=!!(guidedThreadIds[id]||thread&&thread.guided_example===true);if(!guided&&!teacherLessonActive())return;
     // Capture before the ordinary composer's /web parser or queue shortcuts.
     // Deterministic guided text must never become a tool or provider request.
-    event.preventDefault();event.stopImmediatePropagation();installTeacherSendAdapter();
+    event.preventDefault();event.stopImmediatePropagation();if(teacherLessonActive()&&!guidedTeacherTargetReady()){state.last_error=teacherContextMessage();state.action_status='failed';render('forward');return;}installTeacherSendAdapter();
     var result=d.chat.send(id,input.value);if(result&&result.ok){input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));}
     else if(result&&result.toast){state.last_error=result.toast;if(state.open)render('forward');}
   }
@@ -898,7 +902,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   document.addEventListener('click',sendGuidedComposer,true);
   function fillTeacherQuestion(){var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!input)return false;input.value=AUTHORITATIVE_PROMPT;input.dispatchEvent(new Event('input',{bubbles:true}));try{input.focus({preventScroll:true});}catch(error){}return true;}
   function applyTeacherMode(){var d=window.PM_DEMO,thread=d&&d.state&&d.state.chat&&d.state.chat.threads[state.teacher_thread_id],answer=guidedTeacherAnswer(state.teacher_last_prompt||AUTHORITATIVE_PROMPT),html=answer.html;if(thread&&Number.isFinite(state.teacher_response_index)&&thread.messages[state.teacher_response_index])thread.messages[state.teacher_response_index].html=html;var sink=document.querySelector('[data-pm6-mid="'+state.teacher_response_message_id+'"] .pm6-chat-sink,[data-pm7gt-teacher-response="true"]');if(sink)sink.textContent=html;state.teacher_answer_id=answer.id;state.teacher_copy_mode=answer.copy_mode;return !!sink;}
-  function syncEli5(){eli5Button.setAttribute('aria-pressed',String(state.eli5_enabled));eli5Button.textContent=state.eli5_enabled?'ELI5: On':'ELI5: Off';eli5Button.setAttribute('data-pm-hover-label',state.eli5_enabled?'Use regular wording':'Use simpler wording');eli5Button.setAttribute('data-pm-hover-detail',state.eli5_enabled?'Return to the fuller explanation.':'Keep the same meaning with fewer, friendlier words.');document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',state.eli5_enabled);});}
+  function syncEli5(){eli5Button.setAttribute('aria-pressed',String(state.eli5_enabled));eli5Button.textContent=state.eli5_enabled?'ELI5: On':'ELI5: Off';eli5Button.setAttribute('data-pm-hover-label',state.eli5_enabled?'Use regular wording':'Use simpler wording');eli5Button.setAttribute('data-pm-hover-detail',state.eli5_enabled?'Return to the fuller explanation.':'Keep the same meaning with fewer, friendlier words.');if(teacherContextRequired(state.step_id)&&!guidedTeacherTargetReady())return;document.querySelectorAll('#chatPanel .toggle-eli5,#floatingChat .toggle-eli5').forEach(function(toggle){toggle.classList.toggle('active',state.eli5_enabled);});}
   function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(character){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character];});}
   var STEP_COPY={
     'tour.intro.comfort':{kicker:'A short guided film',title:'Let’s make Puppet Master feel familiar.',normal:'You’ll try a few real actions. This guided example does not change your files or use your AI plan.',eli5:'We will practice together. Nothing here changes your files or uses your AI plan.',note:'Want gentler movement or simpler words? Reduced Motion is in Settings, and ELI5 stays at the top of this tour.'},
@@ -981,7 +985,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function chooseUsageWidget(){var api=window.PM7_USAGE;if(!api||!api.state)return null;var rows=typeof api.roomWidgets==='function'?api.roomWidgets(api.state.room):[],hidden=rows.filter(function(item){return api.state.hidden[api.state.room+':'+item.id];})[0],visible=rows.filter(function(item){return !api.state.hidden[api.state.room+':'+item.id];})[0];return hidden||visible||null;}
   function usageWidgetReady(){var item=practiceWidgetId&&window.PM7_USAGE&&window.PM7_USAGE.widgetById&&window.PM7_USAGE.widgetById(practiceWidgetId),card=item&&document.querySelector('#pm7uBoard .pm7u-card[data-widget="'+practiceWidgetId+'"]');if(!item||!card)return false;var layout=window.PM7_USAGE.layoutFor&&window.PM7_USAGE.layoutFor(item);return !!layout&&!!stepBaseline&&!!stepBaseline.widget&&(layout.cols!==stepBaseline.widget.cols||layout.rows!==stepBaseline.widget.rows||stepBaseline.widget.hidden);}
   function configureUsageWidget(){var api=window.PM7_USAGE,item=chooseUsageWidget();if(!api||!item)return false;practiceWidgetId=item.id;state.active_widget_id=item.id;var key=api.state.room+':'+item.id,hidden=!!api.state.hidden[key];if(hidden){setUsageVisible(item.id,true);ownerActionEvent('cmd.widget.add',{widget_id:item.id,success:!api.state.hidden[key]});return !api.state.hidden[key];}var before=api.layoutFor(item),presets=api.sizePresets?api.sizePresets(item):[],next=presets.filter(function(row){return row[0]!==before.cols||row[1]!==before.rows;})[0];if(!next)next=[Math.min((before.cols||2)+1,6),before.rows||2];api.setLayout(item,next[0],next[1],'cmd.widget.configure','guided_tour');var after=api.layoutFor(item),ok=after.cols!==before.cols||after.rows!==before.rows;ownerActionEvent('cmd.widget.configure',{widget_id:item.id,before:before,after:after,success:ok});return ok;}
-  var practiceModel=createGuidedPlanningPractice({goal:BOOK_CLUB_GOAL});
+  var practiceModel=createGuidedPlanningPractice({goal:BOOK_CLUB_GOAL}),planningGoalDraft=null;
   function freshPlanningFixture(){return practiceModel.create();}
   function practiceButton(action,label,extra){
     return '<button type="button" data-ui-action-id="ui.guided_tour.next" data-practice-action="'+action+'" '+(extra||'')+' data-pm-hover-label="'+esc(label)+'" data-pm-hover-detail="Use this choice in the local guided example.">'+esc(label)+'</button>';
@@ -1001,7 +1005,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
       '<div data-practice-key="review-uncertain"><small>UNRESOLVED CHOICES</small><b>'+esc(view.unresolved)+'</b></div>'+
       practiceButton('edit',f.editing?'Choose your new answer above':'Edit who can update it','data-practice-key="review-edit"'+(f.editing?' disabled':''))+'</section>':'';
     var goal=f.goal_submitted?'<div data-practice-key="goal" class="pm7gt-practice-goal is-set" data-tour-fixture-id="planning-goal"><small>Your practice goal</small><strong>'+esc(f.goal)+'</strong></div>':
-      '<label data-practice-key="goal" class="pm7gt-practice-goal" data-tour-fixture-id="planning-goal"><span>What would you like to make?</span><textarea rows="3" data-practice-goal data-pm-hover-label="Practice goal" data-pm-hover-detail="Describe the result in everyday words.">'+esc(f.goal)+'</textarea>'+practiceButton('goal','Use this idea')+'</label>';
+      '<label data-practice-key="goal" class="pm7gt-practice-goal" data-tour-fixture-id="planning-goal"><span>What would you like to make?</span><textarea rows="3" data-practice-goal data-pm-hover-label="Practice goal" data-pm-hover-detail="Describe the result in everyday words.">'+esc(planningGoalDraft!==null?planningGoalDraft:f.goal)+'</textarea>'+practiceButton('goal','Use this idea')+'</label>';
     return '<header data-practice-key="head" class="pm7gt-practice-head"><span>PLANNING WIZARD · GUIDED EXAMPLE</span><strong>Neighborhood book club</strong><small>Local practice · no files changed · no work started</small></header><div data-practice-key="body" class="pm7gt-practice-body">'+
       '<button type="button" data-practice-key="project" class="pm7gt-practice-project" data-ui-action-id="ui.guided_tour.next" data-practice-action="project" aria-pressed="'+String(f.project_selected)+'" data-pm-hover-label="Choose the practice Project" data-pm-hover-detail="Keep these practice decisions together in the local guided example."><span>Project</span><strong>'+(f.project_selected?'Book club · selected':'Choose Book club')+'</strong></button>'+goal+
       '<button type="button" data-practice-key="guided" class="pm7gt-practice-guided" data-ui-action-id="ui.guided_tour.next" data-practice-action="guided" aria-pressed="'+String(f.guided_selected)+'" data-pm-hover-label="Use guided planning" data-pm-hover-detail="Ask only decisions that can change the result."><span>Planning style</span><strong>'+(f.guided_selected?'Guided planning · selected':'Use guided planning')+'</strong></button>'+
@@ -1032,7 +1036,15 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
     prior.forEach(function(node){if(used.indexOf(node)<0&&node.parentNode===current)node.remove();});
     return current;
   }
+  function capturePlanningGoalDraft(){
+    // Unsubmitted text is live UI state, not an accepted goal or a durable
+    // checkpoint field. Read it before this controller remounts the form.
+    if(!planningFixture||planningFixture.goal_submitted||!practiceRoot||!practiceRoot.isConnected)return false;
+    var input=practiceRoot.querySelector('[data-practice-goal]');if(!input||typeof input.value!=='string')return false;
+    planningGoalDraft=input.value;return true;
+  }
   function renderPlanningFixture(){
+    capturePlanningGoalDraft();
     var node=ensurePlanningFixture();if(!node)return null;
     var template=document.createElement('section');template.innerHTML=planningFixtureMarkup();
     var before=node.querySelector('[data-tour-fixture-id="planning-shared-access"]'),revision=before&&before.getAttribute('data-consequence-revision');
@@ -1043,13 +1055,14 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
     }
     return node;
   }
-  function removePlanningFixture(){var host=document.getElementById('panel-wizard');if(practiceRoot&&practiceRoot.isConnected)practiceRoot.remove();if(host)host.classList.remove('pm7gt-practice-host');practiceRoot=null;}
+  function removePlanningFixture(){capturePlanningGoalDraft();var host=document.getElementById('panel-wizard');if(practiceRoot&&practiceRoot.isConnected)practiceRoot.remove();if(host)host.classList.remove('pm7gt-practice-host');practiceRoot=null;}
   function planningAction(action,value){
     planningFixture=planningFixture||freshPlanningFixture();
-    if(action==='goal'){var input=practiceRoot&&practiceRoot.querySelector('[data-practice-goal]');value=input?input.value:planningFixture.goal;}
+    if(action==='goal'){var input=practiceRoot&&practiceRoot.querySelector('[data-practice-goal]');value=input?input.value:planningGoalDraft!==null?planningGoalDraft:planningFixture.goal;}
     var result=practiceModel.apply(planningFixture,action,value);
-    if(!result.ok){state.last_error=result.error;return false;}
+    if(!result.ok){state.last_error=result.error;render('forward');return false;}
     planningFixture=result.state;
+    if(action==='goal')planningGoalDraft=null;
     Object.assign(state,{planning_project_selected:planningFixture.project_selected,planning_goal:planningFixture.goal_submitted?planningFixture.goal:'',
       planning_answer:planningFixture.answer,planning_why_open:planningFixture.why_visible,planning_reviewed:planningFixture.review_visible,
       planning_edited:planningFixture.edited,planning_consequence_visible:planningFixture.edited&&!planningFixture.editing,planning_requirements_opened:planningFixture.outcomes_visible});
@@ -1074,9 +1087,10 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function closeTeacherPicker(){var portal=document.querySelector('.pm6-chat-persona-popout-portal.is-open'),button=document.querySelector('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(portal&&button)button.click();return !document.querySelector('.pm6-chat-persona-popout-portal.is-open');}
   function placeChatRight(){var api=window.PM_HOME_WORKSPACE,chat=api&&homeSurface('chat',api.layout);if(!api||!chat)return false;if(!chat.visible&&api.setSurfaceVisible)api.setSurfaceVisible('chat',true,'cmd.panel.switch');chat=homeSurface('chat',api.layout);if(chat&&chat.host!=='dock_right'&&api.moveSurface){var hosts=Object.keys(api.host_registries||{});if(hosts.indexOf('dock_right')>=0)api.moveSurface('chat','dock_right',{index:0});}openChatSurface();return !!activeChat();}
   function fillTeacherQuestionText(question){var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(!input)return false;input.value=String(question||AUTHORITATIVE_PROMPT);input.dispatchEvent(new Event('input',{bubbles:true}));try{input.focus({preventScroll:true});}catch(error){}return true;}
-  function sendTeacherQuestion(question){if(checkpointRecovery)return false;prepareTeacherPractice();fillTeacherQuestionText(question);var send=visibleTarget('#chatPanel .pm6-chat-send,#floatingChat .pm6-chat-send');if(send){send.click();return true;}var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(input){input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));return true;}return false;}
-  function toggleEli5(force){if(checkpointRecovery)return false;var before=state.eli5_enabled;state.eli5_enabled=typeof force==='boolean'?force:!before;syncEli5();if(state.teacher_response_message_id)applyTeacherMode();ownerActionEvent('cmd.chat.eli5.set',{enabled:state.eli5_enabled,meaning_preserved:true});recordUi('ui.guided_tour.toggle_eli5',{enabled:state.eli5_enabled});return state.eli5_enabled!==before||state.eli5_enabled===force;}
+  function sendTeacherQuestion(question){if(checkpointRecovery||!guidedTeacherTargetReady())return false;fillTeacherQuestionText(question);var send=visibleTarget('#chatPanel .pm6-chat-send,#floatingChat .pm6-chat-send');if(send){send.click();return true;}var input=visibleTarget('#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input');if(input){input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));return true;}return false;}
+  function toggleEli5(force){if(checkpointRecovery||teacherContextRequired(state.step_id)&&!guidedTeacherTargetReady())return false;var before=state.eli5_enabled;state.eli5_enabled=typeof force==='boolean'?force:!before;syncEli5();if(state.teacher_response_message_id)applyTeacherMode();ownerActionEvent('cmd.chat.eli5.set',{enabled:state.eli5_enabled,meaning_preserved:true});recordUi('ui.guided_tour.toggle_eli5',{enabled:state.eli5_enabled});return state.eli5_enabled!==before||state.eli5_enabled===force;}
   function stepTargetSelector(id){
+    if(teacherContextRequired(id)&&!guidedTeacherTargetReady())return '';
     if(id==='tour.chat.open')return '#chatPanel:not(.hidden),#floatingChat';
     if(id==='tour.chat.teacher.select')return '.pm6-chat-persona-popout-portal.is-open .pm6-chat-personaitem[data-persona="Teacher"],#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn';
     if(id==='tour.chat.teacher.ask')return '#chatPanel .pm6-chat-send,#floatingChat .pm6-chat-send,#chatPanel .pm6-chat-input,#floatingChat .pm6-chat-input';
@@ -1100,19 +1114,24 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
     if(id==='tour.planning.approval_boundary')return '#pm7gt-planning-practice .pm7gt-practice-review,#pm7gt-planning-practice';
     return '';
   }
-  function prepareStep(def){
-    cancelStepPoll();clearChoreography();stepBaseline=null;state.action_mode=null;state.action_status=stepIsComplete(def.id)?'complete':'idle';state.last_error=null;root.dataset.actionMode=state.action_status;
-    if(def.id.indexOf('tour.chat.')===0){placeChatRight();installTeacherSendAdapter();setTeacherPlaceholder();}
-    if(def.id==='tour.chat.teacher.select'){var picker=visibleTarget('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(picker&&!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))picker.click();mountTeacherPersonaControl();}
-    if(def.id==='tour.chat.teacher.ask'){selectPersona('Teacher');state.teacher_persona_selected=true;prepareTeacherPractice();fillTeacherQuestion();}
+  function prepareStep(def,resumeExisting){
+    // A same-step Resume must retain the pre-action comparison and must not
+    // replay Chat setup, replace the learner's draft, or choose another widget.
+    // View routing/remounting below does not replay the practice owner action.
+    var resuming=resumeExisting===true;
+    cancelStepPoll();clearChoreography();if(!resuming){stepBaseline=null;state.action_mode=null;}state.action_status=stepIsComplete(def.id)?'complete':resuming&&state.action_status==='watching'?'watching':'idle';state.last_error=null;root.dataset.actionMode=state.action_status;
+    if(!resuming&&def.id.indexOf('tour.chat.')===0){placeChatRight();installTeacherSendAdapter();setTeacherPlaceholder();}
+    if(!resuming&&def.id==='tour.chat.teacher.select'){var picker=visibleTarget('#chatPanel .pm6-chat-personabtn,#floatingChat .pm6-chat-personabtn');if(picker&&!document.querySelector('.pm6-chat-persona-popout-portal.is-open'))picker.click();mountTeacherPersonaControl();}
+    if(!resuming&&def.id==='tour.chat.teacher.ask'){selectPersona('Teacher');state.teacher_persona_selected=true;prepareTeacherPractice();fillTeacherQuestion();}
     if(def.id==='tour.workspace.navigation'){closeTeacherPicker();goPage('dashboard');}
-    if(def.id==='tour.workspace.chat.dock'){goPage('dashboard');var chat=chatSurfaceRecord();stepBaseline={chat:clone(chat)};}
-    if(def.id==='tour.workspace.panels.rearrange'){goPage('dashboard');var panel=movablePanel();stepBaseline={panel:clone(panel)};}
-    if(def.id==='tour.workspace.widget.manage'){goPage('usage');if(window.PM7_USAGE&&window.PM7_USAGE.rerender)window.PM7_USAGE.rerender();var widget=chooseUsageWidget();practiceWidgetId=widget&&widget.id||null;var hidden=!!(widget&&window.PM7_USAGE.state.hidden[window.PM7_USAGE.state.room+':'+widget.id]),layout=widget&&window.PM7_USAGE.layoutFor(widget);stepBaseline={widget:{id:practiceWidgetId,hidden:hidden,cols:layout&&layout.cols,rows:layout&&layout.rows}};}
+    if(def.id==='tour.workspace.chat.dock'){goPage('dashboard');if(!resuming){var chat=chatSurfaceRecord();stepBaseline={chat:clone(chat)};}}
+    if(def.id==='tour.workspace.panels.rearrange'){goPage('dashboard');if(!resuming){var panel=movablePanel();stepBaseline={panel:clone(panel)};}}
+    if(def.id==='tour.workspace.widget.manage'){goPage('usage');if(window.PM7_USAGE&&window.PM7_USAGE.rerender)window.PM7_USAGE.rerender();if(!resuming){var widget=chooseUsageWidget();practiceWidgetId=widget&&widget.id||null;var hidden=!!(widget&&window.PM7_USAGE.state.hidden[window.PM7_USAGE.state.room+':'+widget.id]),layout=widget&&window.PM7_USAGE.layoutFor(widget);stepBaseline={widget:{id:practiceWidgetId,hidden:hidden,cols:layout&&layout.cols,rows:layout&&layout.rows}};}}
     if(def.id.indexOf('tour.planning.')===0&&def.id!=='tour.planning.open'){goPage('wizard');ensurePlanningFixture();renderPlanningFixture();}
     syncCompatibility();persistCheckpoint();var mounted=mountedTarget(stepTargetSelector(def.id));if(mounted&&mounted.scrollIntoView)mounted.scrollIntoView({block:'nearest',inline:'nearest'});setTimeout(function(){activeTarget=targetAdapter.resolve(def.id);scheduleTargetTracking();},0);
   }
   function stepPredicate(id){
+    if(teacherContextRequired(id)&&!guidedTeacherTargetReady())return false;
     if(id==='tour.chat.teacher.select'){var label=document.querySelector('#chatPanel .persona-label,#floatingChat .persona-label');return !!(label&&label.textContent.trim()==='Teacher');}
     if(id==='tour.chat.teacher.ask')return !!state.teacher_message_sent;
     if(id==='tour.chat.teacher.eli5')return !!state.eli5_enabled&&state.teacher_copy_mode==='eli5';
@@ -1126,6 +1145,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   }
   function performOwnerAction(def){
     if(checkpointRecovery||!state.open||!original)return localActionResult(def.action_id,'disabled','original_snapshot_unavailable_or_tour_closed',{owner_action_dispatched:false,work_started:false});
+    if(teacherContextRequired(def.id)&&!guidedTeacherTargetReady())return localActionResult(def.action_id,'disabled',teacherContextMessage(),{owner_action_dispatched:false,work_started:false});
     var ok=false,action=def.action_id;
     if(def.id==='tour.chat.teacher.select'){ok=selectPersona('Teacher');state.teacher_persona_selected=ok;}
     else if(def.id==='tour.chat.teacher.ask')ok=sendTeacherQuestion(AUTHORITATIVE_PROMPT);
@@ -1168,11 +1188,11 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   }
   function watchCurrentPredicate(){
     cancelStepPoll();var id=state.step_id;
-    function check(){if(!state.open||state.step_id!==id){cancelStepPoll();return;}var ok=false;try{ok=stepPredicate(id);}catch(error){state.last_error=String(error&&error.message||error);}if(ok)completeStep('applied',{observed_predicate:id,provider_request_delta:0,usage_delta:0,work_started:false});}
+    function check(){if(!state.open||state.step_id!==id){cancelStepPoll();return;}var ok=false;try{ok=stepPredicate(id);}catch(error){state.last_error=String(error&&error.message||error);}if(ok){updateCounterDeltas();completeStep('applied',{observed_predicate:id,provider_request_delta:state.provider_request_delta,usage_delta:state.usage_delta,work_started:false});}}
     stepPoll=setInterval(check,120);setTimeout(check,0);
   }
   function beginTry(control){var def=currentDef();if(!def.meaningful)return next();ack(control,'ui.guided_tour.next');state.action_mode='try';state.action_status='watching';state.last_error=null;root.dataset.actionMode='try';recordUi('ui.guided_tour.next',{mode:'try',step_id:def.id,owner_action_id:def.action_id});render('forward');watchCurrentPredicate();return snapshot();}
-  function runShowMeAction(def){if(!state.open||state.step_id!==def.id)return;state.choreography_state='arrival';root.dataset.choreography='arrival';var result=performOwnerAction(def);state.last_result=clone(result);scheduleTargetTracking();watchCurrentPredicate();scheduleChoreography(function(){if(state.open&&state.step_id===def.id){state.choreography_state='settle';root.dataset.choreography='settle';pointer.style.opacity='0';if(result.status==='failed'&&!stepPredicate(def.id)){state.action_status='failed';state.last_error=result.disabled_reason;render('forward');}}},reduced?80:180);}
+  function runShowMeAction(def){if(!state.open||state.step_id!==def.id)return;state.choreography_state='arrival';root.dataset.choreography='arrival';var result=performOwnerAction(def);state.last_result=clone(result);scheduleTargetTracking();watchCurrentPredicate();scheduleChoreography(function(){if(state.open&&state.step_id===def.id){state.choreography_state='settle';root.dataset.choreography='settle';pointer.style.opacity='0';if((result.status==='failed'||result.status==='disabled')&&!stepPredicate(def.id)){state.action_status='failed';state.last_error=result.disabled_reason;render('forward');}}},reduced?80:180);}
   function beginShowMe(control){
     var def=currentDef();if(!def.meaningful)return next();ack(control,'ui.guided_tour.show_me');clearChoreography();state.action_mode='show_me';state.action_status='watching';state.last_error=null;root.dataset.actionMode='show_me';recordUi('ui.guided_tour.show_me',{step_id:def.id,owner_action_id:def.action_id,same_handler:'performOwnerAction',predicate:'stepPredicate'});render('forward');
     var target=targetAdapter.resolve(def.id),calloutRect=callout.getBoundingClientRect(),targetRect=target&&target.getBoundingClientRect(),startX=Math.max(16,Math.min(innerWidth-16,calloutRect.right-28)),startY=Math.max(16,Math.min(innerHeight-16,calloutRect.bottom-24));pointer.style.left=startX+'px';pointer.style.top=startY+'px';pointer.style.opacity='1';state.choreography_state='pre_cue';root.dataset.choreography='pre_cue';
@@ -1182,7 +1202,9 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function render(direction){
     if(checkpointRecovery){renderRecovery();return;}
     clearTimeout(transitionTimer);reduced=motionReduced();syncCompatibility();syncEli5();var def=currentDef(),copy=copyForStep(),done=stepIsComplete(def.id),actions='',status='Ready';state.motion=direction||'forward';state.transition_serial+=1;root.dataset.stepId=def.id;root.dataset.chapter=def.chapter;root.dataset.motion=reduced?'idle':state.motion;root.dataset.actionMode=state.action_mode||'idle';
-    if(def.id==='tour.planning.approval_boundary'){actions='<label class="pm7gt-note"><input type="checkbox" data-tour-keep-layout '+(state.keep_layout?'checked':'')+'> Keep this workspace arrangement</label><p class="pm7gt-note">Leave this off to restore your starting layout. Your practice plan will be cleared either way.</p>'+stageButton('ui.guided_tour.finish','Finish at Planning','primary','data-tour-action="finish"');status='No work has started';}
+    eli5Button.disabled=teacherContextRequired(def.id)&&!guidedTeacherTargetReady();
+    if(eli5Button.disabled){copy.kicker='Guided example';copy.title='Return to your guided conversation.';copy.body='Your draft stays as it is. No practice message will be sent to this conversation.';copy.success='';copy.note='';state.last_error=teacherContextMessage();actions=stageButton('ui.guided_tour.pause','Pause to switch Chat','primary');status='Guided example not selected';}
+    else if(def.id==='tour.planning.approval_boundary'){actions='<label class="pm7gt-note"><input type="checkbox" data-tour-keep-layout '+(state.keep_layout?'checked':'')+'> Keep this workspace arrangement</label><p class="pm7gt-note">Leave this off to restore your starting layout. Your practice plan will be cleared either way.</p>'+stageButton('ui.guided_tour.finish','Finish at Planning','primary','data-tour-action="finish"');status='No work has started';}
     else if(!def.meaningful){actions=stageButton('ui.guided_tour.next',def.index===0?'Begin with Teacher':'Continue','primary','data-tour-action="continue"');status='Take this at your pace';}
     else if(done||state.action_status==='complete'){actions=stageButton('ui.guided_tour.next','Continue','primary','data-tour-action="continue"');status=copy.success||'Done';}
     else if(state.action_status==='watching'){actions=stageButton('ui.guided_tour.show_me','Show me','secondary','data-tour-action="show"');status=state.action_mode==='show_me'?'Showing the same action':'Waiting for the highlighted control';}
@@ -1244,7 +1266,7 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
       root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;
       receipt(action,'original_workspace','failed',state.last_error,original&&original.semantic,layoutNow(),restoration,'try',localActionResult(action,'failed','restore_incomplete',{work_started:false}));persistCheckpoint();render('forward');return snapshot();
     }
-    state.open=false;state.completed=complete;state.skipped=!complete;state.status=complete?'completed':'skipped';state.work_started=false;root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=true;replayButton.hidden=false;clearCheckpoint();
+    state.open=false;state.completed=complete;state.skipped=!complete;state.status=complete?'completed':'skipped';state.work_started=false;root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=true;replayButton.hidden=false;clearCheckpoint();planningGoalDraft=null;
     receipt(action,complete?'planning_wizard':'original_workspace','applied',null,original&&original.semantic,layoutNow(),restoration,'try',localActionResult(action,'applied',null,{final_page:restoration.final_page,work_started:false}));if(complete)focusPlanningPage();else originalFocus();notify();return snapshot();
   }
   function focusPlanningPage(){var session=sessionSerial;requestAnimationFrame(function(){if(session!==sessionSerial||state.open||!state.completed||!pageIs('wizard'))return;var host=document.getElementById('panel-wizard');if(!host)return;if(!host.hasAttribute('tabindex'))host.setAttribute('tabindex','-1');if(!host.hasAttribute('role'))host.setAttribute('role','region');if(!host.hasAttribute('aria-label'))host.setAttribute('aria-label','Planning Wizard');host.setAttribute('data-pm-hover-exempt','programmatic-focus-landmark');try{host.focus({preventScroll:true});}catch(error){host.focus();}});}
@@ -1252,11 +1274,23 @@ _GUIDED_TOUR_V3_SUFFIX = r'''
   function pause(reason){if(!state.open)return snapshot();if(checkpointRecovery){state.open=false;root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=false;recordUi('ui.guided_tour.pause',{reason:reason||'user',recovery_preserved:true});try{resumeButton.focus({preventScroll:true});}catch(error){}notify();return snapshot();}clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();removePlanningFixture();state.open=false;state.status='paused';root.hidden=true;root.dataset.open='false';document.documentElement.removeAttribute('data-pm7-guided-tour-open');resumeButton.hidden=false;replayButton.hidden=true;recordUi('ui.guided_tour.pause',{reason:reason||'user',step_id:state.step_id});persistCheckpoint();notify();return snapshot();}
   function start(options){
     if(checkpointRecovery||(!original&&adoptCheckpointRecovery(savedCheckpoint())))return recoveryBlocked(options&&options.source==='replay'?'ui.guided_tour.replay':'ui.guided_tour.start');
-    options=options||{};clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();if(original&&!state.completed&&!state.skipped){var previous=cleanupForExit(false);if(!previous.ok){state.last_error='The previous practice could not be restored. Resume it and retry before starting another tour.';state.status='recovery_required';resumeButton.hidden=false;return snapshot();}}uninstallTeacherSendAdapter();removePlanningFixture();planningFixture=null;practiceWidgetId=null;workspacePanelId=null;completedSteps={};history=[];effectReceipts.length=0;uiActionLog.length=0;receiptSerial=0;sessionSerial+=1;captureOriginal(options.focus_node||null);state.keep_layout=false;
+    options=options||{};clearAutoAdvance();cancelStepPoll();clearChoreography();stopTargetTracking();cancelTeacherTurn();if(original&&!state.completed&&!state.skipped){var previous=cleanupForExit(false);if(!previous.ok){state.last_error='The previous practice could not be restored. Resume it and retry before starting another tour.';state.status='recovery_required';resumeButton.hidden=false;return snapshot();}}uninstallTeacherSendAdapter();removePlanningFixture();planningFixture=null;planningGoalDraft=null;practiceWidgetId=null;workspacePanelId=null;completedSteps={};history=[];effectReceipts.length=0;uiActionLog.length=0;receiptSerial=0;sessionSerial+=1;captureOriginal(options.focus_node||null);state.keep_layout=false;
     Object.assign(state,{open:true,status:'demonstrating',completed:false,skipped:false,last_action:'ui.guided_tour.start',last_result:null,last_error:null,action_mode:null,action_status:'idle',choreography_state:'idle',layout_disposition:'pending',layout_snapshot_restored:false,source:options.source||'manual',teacher_thread_id:null,teacher_persona_selected:false,teacher_message_sent:false,teacher_answer_id:null,teacher_response_message_id:null,teacher_response_index:null,teacher_copy_mode:'normal',teacher_last_prompt:AUTHORITATIVE_PROMPT,eli5_enabled:false,active_widget_id:null,panel_demo_pair_ids:null,panel_demo_complete:false,usage_card_demo_complete:false,planning_goal:'',planning_answer:null,planning_why_open:false,planning_reviewed:false,planning_edited:false,planning_consequence_visible:false,planning_project_selected:false,planning_requirements_opened:false,work_started:false,shell_squeezed:innerWidth<720||innerHeight<560});
     var aliases={chat_teacher:'tour.chat.open',workspace:'tour.workspace.navigation',usage:'tour.workspace.usage.open',widget_workspace:'tour.workspace.widget.manage',planning_wizard:'tour.planning.open'},requested=aliases[options.step]||options.step,index=requested&&STEP_BY_ID[requested]?STEP_BY_ID[requested].index:0;state.step_id=STEP_DEFS[index].id;state.step_index=index;root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;placeChatRight();recordUi('ui.guided_tour.start',{source:state.source,session:'concept-'+sessionSerial,storyboard_revision:STORYBOARD.revision});prepareStep(STEP_DEFS[index]);render('forward');return snapshot();
   }
-  function resume(){if(checkpointRecovery)return recoveryBlocked('ui.guided_tour.resume');if(!original){if(adoptCheckpointRecovery(savedCheckpoint()))return recoveryBlocked('ui.guided_tour.resume');return snapshot();}if(state.status!=='paused'&&state.status!=='recovery_required')return snapshot();recordUi('ui.guided_tour.resume',{step_id:state.step_id});state.open=true;state.status='demonstrating';root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;prepareStep(currentDef());render('forward');return snapshot();}
+  function resume(){
+    if(checkpointRecovery)return recoveryBlocked('ui.guided_tour.resume');if(!original){if(adoptCheckpointRecovery(savedCheckpoint()))return recoveryBlocked('ui.guided_tour.resume');return snapshot();}if(state.status!=='paused'&&state.status!=='recovery_required')return snapshot();
+    var def=currentDef(),wasWatching=state.action_status==='watching';recordUi('ui.guided_tour.resume',{step_id:state.step_id});state.open=true;state.status='demonstrating';root.hidden=false;root.dataset.open='true';document.documentElement.setAttribute('data-pm7-guided-tour-open','true');resumeButton.hidden=true;replayButton.hidden=true;prepareStep(def,true);
+    if(teacherContextRequired(def.id)&&!guidedTeacherTargetReady()){state.action_status='failed';state.last_error=teacherContextMessage();render('forward');return snapshot();}
+    if(wasWatching&&def.meaningful&&!stepIsComplete(def.id)){
+      var observed=false;try{observed=stepPredicate(def.id);}catch(error){state.action_status='failed';state.last_error='The tour could not recheck this action. Nothing has been replayed. You can retry the check or skip the tour.';render('forward');return snapshot();}
+      if(observed){updateCounterDeltas();return completeStep('no_change',{observed_predicate:def.id,resume_revalidated:true,owner_action_dispatched:false,provider_request_delta:state.provider_request_delta,usage_delta:state.usage_delta,work_started:false});}
+      // Interrupted Show Me stays interrupted. Observe manual progress until
+      // the learner explicitly asks for a new demonstration.
+      state.action_mode='try';state.action_status='watching';render('forward');watchCurrentPredicate();return snapshot();
+    }
+    render('forward');return snapshot();
+  }
   function replay(options){return start(Object.assign({source:'replay'},options||{}));}
   root.addEventListener('change',function(event){if(event.target&&event.target.matches('[data-tour-keep-layout]'))state.keep_layout=event.target.checked===true;});
   root.addEventListener('click',function(event){
@@ -1422,11 +1456,14 @@ def apply(doc, notes, need):
     need("Create a simple website for my neighborhood book club." in authored and all(outcome in authored for outcome in ("Visitors can see the next meeting.", "Visitors can see the current book.", "New members can learn how to join.")), "guided tour: book-club goal or outcomes drifted")
     need("This decides whether the site needs shared sign-in and editing." in authored and "Who should be able to update the meeting and book?" in authored, "guided tour: question/why cause-and-effect fixture drifted")
     need("ui.guided_tour.show_me" in authored and "same_handler:'performOwnerAction'" in authored and "function performOwnerAction(def)" in authored and "function stepPredicate(id)" in authored and "function watchCurrentPredicate()" in authored, "guided tour: Try It and Show Me do not share one action/predicate path")
-    need("if(ok)completeStep('applied'" in authored and "observed_predicate:id" in authored and "setInterval(check,120)" in authored, "guided tour: completion is not driven by a verified owner predicate")
+    need("if(ok){updateCounterDeltas();completeStep('applied'" in authored and "observed_predicate:id" in authored and "setInterval(check,120)" in authored, "guided tour: completion is not driven by a verified owner predicate and measured counter deltas")
+    need("function prepareStep(def,resumeExisting)" in authored and "prepareStep(def,true)" in authored and "resume_revalidated:true,owner_action_dispatched:false" in authored and "if(!resuming){var chat=chatSurfaceRecord()" in authored, "guided tour: same-step Resume can reset the action baseline or replay owner preparation")
+    need("function capturePlanningGoalDraft()" in authored and "capturePlanningGoalDraft();var host=document.getElementById('panel-wizard')" in authored and "if(action==='goal')planningGoalDraft=null;" in authored and "planningFixture=null;planningGoalDraft=null;" in authored, "guided tour: unsent Planning draft capture or accepted/new-session separation is incomplete")
     need("pre_cue" in authored and "travel" in authored and "arrival" in authored and "settle" in authored and "runShowMeAction(def)" in authored, "guided tour: interruptible Show Me choreography is incomplete")
     need("placeChatRight" in authored and "chat.host!=='dock_right'" in authored and "cmd.workspace_layout.move_surface" in authored, "guided tour: Assistant Chat is not staged at the far right or movable through its owner")
     need("restoreWorkspaceSnapshot" in authored and "restoreChatState(complete)" in authored and "removePlanningFixture();" in authored and "goPage(complete?'wizard':original&&original.page)" in authored and "teacher_preserved:!!complete" in authored and "state.status='recovery_required'" in authored and "data-tour-keep-layout" in authored, "guided tour: verified cleanup, explicit Keep, or final real Planning destination is incomplete")
     need("teacherTurnCurrent(pending)" in authored and "thread.guided_example===true" in authored and "guidedThreadIds[threadId]" in authored and "cancelTeacherTurn();removePlanningFixture();state.open=false;state.status='paused'" in authored, "guided tour: local Teacher ownership or interrupted-turn fencing is incomplete")
+    need("function guidedTeacherTargetReady()" in authored and "if(!guided){if(teacherLessonActive())return" in authored and "if(teacherContextRequired(id)&&!guidedTeacherTargetReady())return false;" in authored, "guided tour: changed Teacher context can dispatch ordinary Chat or satisfy a stale predicate")
     need("pm7:guided-tour:checkpoint:v3" in authored and "safe_checkpoint.v1" in authored and "function savedCheckpoint()" in authored and "resume_requires_live_snapshot:true" in authored and "function recoveryBlocked(action)" in authored and "adoptCheckpointRecovery(savedCheckpoint())" in authored, "guided tour: fail-closed concept reload guard is incomplete; durable owner recovery remains pending")
     need("return start({source:'checkpoint'" not in authored and "captureOriginal:function(){return original?clone(original.semantic):null;}" in authored, "guided tour: reload or inspection can replace the missing original snapshot")
     need("callout.offsetWidth" in authored and "overlapArea(box,visible)" in authored and "targetOverlapPx" in authored and "Math.min(innerWidth-margin-cw/2" in authored, "guided tour: target measurement, collision scoring, or viewport clamping is incomplete")

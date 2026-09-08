@@ -17,7 +17,7 @@ function extract(name){
   const start=starts[0].index,rest=source.slice(start),end=rest.slice(1).search(/\n  (?:function |var |root\.|document\.|window\.)/);
   assert.notEqual(end,-1,name);return rest.slice(0,end+1);
 }
-const functions=['savedCheckpoint','adoptCheckpointRecovery','recoveryBlocked','renderRecovery','localActionResult','persistCheckpoint','clearCheckpoint','start','resume','replay','pause','next','back','finish','performOwnerAction'];
+const functions=['savedCheckpoint','adoptCheckpointRecovery','recoveryBlocked','renderRecovery','localActionResult','persistCheckpoint','clearCheckpoint','start','resume','replay','pause','next','back','finish','performOwnerAction','teacherLessonActive','teacherContextRequired','teacherContextMessage','guidedTeacherTargetReady'];
 const extracted=functions.map(extract).join('\n');
 const inspection=source.match(/captureOriginal:(function\(\)\{[^\n]+?\})\n/);assert.ok(inspection,'Closed read-only inspection entrypoint.');
 function fixture(raw=null,{unavailable=false}={}){
@@ -27,7 +27,7 @@ function fixture(raw=null,{unavailable=false}={}){
   const state={open:false,status:'first_launch',step_id:'tour.intro.comfort',step_index:0,source:'unknown',eli5_enabled:false,completed:false,skipped:false,layout_disposition:'pending',layout_snapshot_restored:false};
   const steps=[{id:'tour.intro.comfort',index:0,meaningful:false},{id:'tour.workspace.chat.dock',index:1,meaningful:true},{id:'tour.chat.teacher.ask',index:2,meaningful:true},{id:'tour.planning.approval_boundary',index:3,meaningful:false}];
   const context=vm.createContext({state,original:null,checkpointRecovery:null,STEP_BY_ID:Object.fromEntries(steps.map(step=>[step.id,step])),STEP_DEFS:steps,STORYBOARD:{revision},root,stage,heading,skip,callout:node(),resumeButton:node(),replayButton:node(),backButton:node(),eli5Button:node(),halo:node(),pointer:node(),progress:node(),forwardSlot:node(),transitionTimer:0,history:[],effectReceipts:[],uiActionLog:[],receiptSerial:0,sessionSerial:0,meaningful:[],planningFixture:null,teacherPending:null,practiceWidgetId:null,workspacePanelId:null,completedSteps:{},innerWidth:1440,innerHeight:960,
-    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',
+    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',guidedThreadIds:Object.create(null),
     document:{documentElement:node()},sessionStorage:{getItem(name){assert.equal(name,key);if(blockedRead)throw Error('fixture-unavailable');return stored;},setItem(name,value){writes.push(['set',name]);stored=value;},removeItem(name){writes.push(['remove',name]);stored=null;}},
     clone:value=>value==null?value:JSON.parse(JSON.stringify(value)),esc:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'),stageButton:(action,label)=>`<button data-ui-action-id="${action}">${label}</button>`,
     clearTimeout:()=>{},clearAutoAdvance:()=>{},cancelStepPoll:()=>{},clearChoreography:()=>{},stopTargetTracking:()=>{},cancelTeacherTurn:()=>{},removePlanningFixture:()=>{},uninstallTeacherSendAdapter:()=>{},notify:()=>{},positionTarget:()=>{},
@@ -51,6 +51,39 @@ function expectBlocked(f,reason){
   const paused=f.value('pause("escape")');expectUnfinished(paused);assert.equal(paused.open,false);assert.equal(f.context.root.hidden,true);assert.equal(f.context.resumeButton.hidden,false);assert.equal(f.context.resumeButton.textContent,'Review tour recovery');
   assert.equal(f.context.state.step_id,step);assert.deepEqual(f.writes,[]);
 }
+function liveResumeFixture(id='tour.workspace.chat.dock'){
+  const f=fixture();
+  Object.assign(f.context,{original:{semantic:{test:'initial'}},stepBaseline:{chat:{host:'dock_left',slot_index:0}},
+    currentChat:{host:'dock_right',slot_index:0},practiceWidgetId:'retained-widget',workspacePanelId:'retained-panel',
+    window:{PM7_USAGE:{state:{room:'usage',hidden:{}},rerender:()=>f.calls.push('rerenderUsage'),layoutFor:()=>({cols:4,rows:2})},PM_DEMO:{state:{chat:{activeThread:'guided-thread',threads:{'guided-thread':{guided_example:true},ordinary:{guided_example:false}}}},chat:{send:()=>{f.calls.push('ordinarySend');return {ordinary_sentinel:true};}}}},
+    syncCompatibility:()=>{},mountedTarget:()=>null,stepTargetSelector:()=>'',setTimeout:()=>1,
+    chatSurfaceRecord:()=>f.context.currentChat,goPage:()=>f.calls.push('routeView'),closeTeacherPicker:()=>{},
+    installTeacherSendAdapter:()=>f.calls.push('installTeacherSendAdapter'),setTeacherPlaceholder:()=>f.calls.push('setTeacherPlaceholder'),selectPersona:()=>f.calls.push('selectPersona'),prepareTeacherPractice:()=>f.calls.push('prepareTeacherPractice'),fillTeacherQuestion:()=>f.calls.push('fillTeacherQuestion'),
+    chooseUsageWidget:()=>{f.calls.push('chooseUsageWidget');return {id:'new-widget'};},usageWidgetReady:()=>false,
+    ensurePlanningFixture:()=>f.calls.push('ensurePlanningFixture'),renderPlanningFixture:()=>f.calls.push('renderPlanningFixture'),
+    updateCounterDeltas:()=>{f.context.state.provider_request_delta=null;f.context.state.usage_delta=null;},
+    completeStep:(status,metadata)=>{f.calls.push('completeStep');f.context.completion={status,metadata};f.context.state.action_status='complete';return {...f.context.state};},
+    watchCurrentPredicate:()=>f.calls.push('watchCurrentPredicate')
+  });
+  f.context.guidedThreadIds['guided-thread']=true;
+  f.context.STEP_BY_ID[id]={id,index:1,meaningful:true};Object.assign(f.context.state,{status:'paused',step_id:id,step_index:1,action_status:'watching',action_mode:'show_me',teacher_thread_id:'guided-thread'});
+  f.run(['prepareStep','stepIsComplete','stepPredicate','chatMoved','planningPredicate'].map(extract).join('\n'));
+  return f;
+}
+function draftFixture(text='My unsent practice goal'){
+  const f=fixture(),input={value:text};
+  Object.assign(f.context,{BOOK_CLUB_GOAL:'Create the practice book-club website.',BOOK_CLUB_OUTCOMES:[],WHY_COPY:'Practice reason',planningGoalDraft:null,original:{semantic:{test:'initial'}},
+    practiceRoot:{isConnected:true,querySelector:()=>input,remove(){this.isConnected=false;}},
+    renderPlanningFixture:()=>f.calls.push('renderPlanningFixture'),ownerActionEvent:()=>f.calls.push('ownerActionEvent'),scheduleTargetTracking:()=>{},layoutNow:()=>({}),receipt:()=>{},originalFocus:()=>{}
+  });
+  f.context.document.getElementById=()=>({classList:{remove:()=>{}}});
+  f.context.STEP_BY_ID['tour.planning.goal']={id:'tour.planning.goal',index:1,meaningful:true};Object.assign(f.context.state,{step_id:'tour.planning.goal',step_index:1,open:true,status:'demonstrating',planning_goal:'',planning_project_selected:false});
+  const names=['createGuidedPlanningPractice','freshPlanningFixture','practiceButton','planningFixtureMarkup','removePlanningFixture','planningAction','esc'];
+  if(source.includes('  function capturePlanningGoalDraft('))names.push('capturePlanningGoalDraft');
+  f.run(names.map(extract).join('\n'));
+  f.run('var practiceModel=createGuidedPlanningPractice({goal:BOOK_CLUB_GOAL});planningFixture=freshPlanningFixture();');
+  return {...f,input,markupGoal:()=>{const match=f.run('planningFixtureMarkup()').match(/<textarea\b[^>]*>([\s\S]*?)<\/textarea>/);return match?.[1]??null;}};
+}
 try{
   check('an absent marker differs from invalid or unreadable storage',()=>{const f=fixture();assert.equal(f.value('savedCheckpoint()').kind,'absent');assert.equal(f.run('adoptCheckpointRecovery(savedCheckpoint())'),false);assert.equal(f.context.state.status,'first_launch');});
   check('inspection and Resume cannot start an untouched tour',()=>{const f=fixture();assert.equal(f.run('inspectOriginal()'),null);assert.equal(f.value('resume()').status,'first_launch');assert.deepEqual(f.calls,[]);assert.deepEqual(f.writes,[]);});
@@ -72,6 +105,49 @@ try{
   check('terminal Resume cannot reopen a completed session',()=>{const f=fixture();f.run('original={semantic:{test:"initial"}};state.status="completed";state.completed=true;');assert.equal(f.value('resume()').status,'completed');assert.deepEqual(f.calls,[]);});
   check('a new marker is bounded and explicitly cannot substitute for owner snapshots',()=>{const f=fixture();f.run('state.status="paused";state.source="x".repeat(180);persistCheckpoint();');const saved=JSON.parse(f.raw());assert.equal(saved.storyboard_revision,revision);assert.equal(saved.concept_simulation_only,true);assert.equal(saved.resume_requires_live_snapshot,true);assert.equal(saved.source.length,120);assert.equal(Object.hasOwn(saved,'raw_chat'),false);assert.equal(f.value('savedCheckpoint()').kind,'missing_original_snapshots');});
   check('terminal cleanup can remove a marker only with no recovery lock',()=>{const f=fixture(marker({}));f.run('clearCheckpoint()');assert.equal(f.raw(),null);assert.deepEqual(f.writes,[['remove',key]]);});
+  check('same-step Resume preserves the action baseline and acknowledges an already-applied move',()=>{
+    const f=liveResumeFixture(),before=f.value('stepBaseline');f.run('resume()');assert.deepEqual(f.value('stepBaseline'),before);assert.equal(f.context.completion?.status,'no_change');assert.equal(f.context.completion.metadata.resume_revalidated,true);assert.equal(f.context.completion.metadata.provider_request_delta,null);assert.equal(f.context.completion.metadata.usage_delta,null);assert.ok(!f.calls.includes('watchCurrentPredicate'));assert.ok(!f.calls.includes('placeChatRight'));assert.ok(!f.calls.includes('captureOriginal'));
+  });
+  check('Resume waits for an unapplied action without restarting Show Me choreography',()=>{
+    const f=liveResumeFixture();f.context.currentChat={host:'dock_left',slot_index:0};f.run('resume()');assert.equal(f.context.completion,undefined);assert.equal(f.context.state.action_status,'watching');assert.equal(f.context.state.action_mode,'try');assert.equal(f.calls.filter(name=>name==='watchCurrentPredicate').length,1);assert.ok(!f.calls.includes('placeChatRight'));assert.ok(!f.calls.includes('captureOriginal'));
+  });
+  check('Teacher Resume does not redock, reselect, recreate a thread, or replace the draft',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.state.teacher_message_sent=false;f.run('resume()');assert.deepEqual(f.calls,['render','watchCurrentPredicate']);assert.equal(f.context.state.action_status,'watching');
+  });
+  check('widget Resume retains its widget identity and original comparison geometry',()=>{
+    const f=liveResumeFixture('tour.workspace.widget.manage');f.context.stepBaseline={widget:{id:'retained-widget',cols:2,rows:2,hidden:false}};const before=f.value('stepBaseline');f.run('resume()');assert.deepEqual(f.value('stepBaseline'),before);assert.equal(f.context.practiceWidgetId,'retained-widget');assert.ok(!f.calls.includes('chooseUsageWidget'));assert.equal(f.context.completion,undefined);assert.equal(f.calls.filter(name=>name==='watchCurrentPredicate').length,1);
+  });
+  check('Planning Resume remounts its retained fixture and credits an already-observed edit once',()=>{
+    const f=liveResumeFixture('tour.planning.edit');const retained={edited:true,editing:false,answer:'me',consequence_revision:2};f.context.planningFixture=retained;f.run('resume()');assert.equal(f.context.planningFixture,retained);assert.equal(f.context.completion?.status,'no_change');assert.equal(f.calls.filter(name=>name==='ensurePlanningFixture').length,1);assert.equal(f.calls.filter(name=>name==='renderPlanningFixture').length,1);assert.ok(!f.calls.includes('watchCurrentPredicate'));
+  });
+  check('an unavailable resume predicate is not completed or replayed',()=>{
+    const f=liveResumeFixture();f.context.chatSurfaceRecord=()=>{throw Error('fixture-owner-unavailable');};f.run('resume()');assert.equal(f.context.completion,undefined);assert.equal(f.context.state.action_status,'failed');assert.match(f.context.state.last_error,/could not recheck/);assert.doesNotMatch(f.context.state.last_error,/fixture-owner-unavailable/);assert.ok(!f.calls.includes('watchCurrentPredicate'));assert.ok(!f.calls.includes('placeChatRight'));assert.ok(!f.calls.includes('captureOriginal'));
+  });
+  for(const deltas of [{provider_request_delta:null,usage_delta:null},{provider_request_delta:2,usage_delta:3}])check(`predicate receipts retain measured deltas ${JSON.stringify(deltas)}`,()=>{
+    const f=liveResumeFixture();f.context.state.open=true;f.context.updateCounterDeltas=()=>Object.assign(f.context.state,deltas);f.context.setInterval=()=>1;f.context.setTimeout=fn=>{fn();return 1;};f.run(extract('watchCurrentPredicate'));f.run('watchCurrentPredicate()');assert.equal(f.context.completion.status,'applied');assert.equal(f.context.completion.metadata.provider_request_delta,deltas.provider_request_delta);assert.equal(f.context.completion.metadata.usage_delta,deltas.usage_delta);
+  });
+  check('resuming into an ordinary thread cannot reuse a stale Teacher completion or dispatch Show Me',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.teacher_message_sent=true;f.run('resume()');assert.equal(f.context.completion,undefined);assert.equal(f.context.state.action_status,'failed');assert.match(f.context.state.last_error,/Guided example/);assert.equal(f.run('stepPredicate(state.step_id)'),false);assert.equal(f.value('performOwnerAction(currentDef())').owner_action_dispatched,false);f.run(extract('stepTargetSelector'));assert.equal(f.run('stepTargetSelector(state.step_id)'),'');assert.deepEqual(f.calls,['render']);
+  });
+  check('a missing or unowned guided thread is not accepted as the current Teacher context',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');assert.equal(f.run('guidedTeacherTargetReady()'),true);f.context.window.PM_DEMO.state.chat.threads['guided-thread'].guided_example=false;assert.equal(f.run('guidedTeacherTargetReady()'),false);f.context.window.PM_DEMO.state.chat.threads['guided-thread'].guided_example=true;delete f.context.guidedThreadIds['guided-thread'];assert.equal(f.run('guidedTeacherTargetReady()'),false);delete f.context.window.PM_DEMO.state.chat.threads['guided-thread'];assert.equal(f.run('guidedTeacherTargetReady()'),false);
+  });
+  check('ordinary Chat dispatch is blocked during Teacher but delegates while paused or in another chapter',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.teacherOriginalSend=null;f.context.state.open=true;f.run(extract('installTeacherSendAdapter'));assert.equal(f.run('installTeacherSendAdapter()'),true);const blocked=f.value('window.PM_DEMO.chat.send("ordinary","practice text")');assert.equal(blocked.ok,false);assert.equal(blocked.provider_dispatch,false);assert.deepEqual(f.calls,[]);f.context.state.open=false;assert.equal(f.value('window.PM_DEMO.chat.send("ordinary","ordinary text")').ordinary_sentinel,true);f.context.state.open=true;f.context.state.step_id='tour.workspace.chat.dock';assert.equal(f.value('window.PM_DEMO.chat.send("ordinary","ordinary text")').ordinary_sentinel,true);assert.deepEqual(f.calls,['ordinarySend','ordinarySend']);
+  });
+  check('the composer cancels ordinary slash/Enter dispatch without erasing the draft',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.open=true;f.run(extract('sendGuidedComposer'));
+    const input={value:'/web search example.com',matches:()=>true,closest:()=>({})};f.context.event={type:'keydown',key:'Enter',target:input,preventDefault:()=>f.calls.push('preventDefault'),stopImmediatePropagation:()=>f.calls.push('stopImmediatePropagation')};f.run('sendGuidedComposer(event)');assert.equal(input.value,'/web search example.com');assert.deepEqual(f.calls,['preventDefault','stopImmediatePropagation','render']);assert.equal(f.context.state.action_status,'failed');
+  });
+  check('a wrong-thread question cannot replace the draft or dispatch, and ELI5 cannot alter it',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.open=true;f.context.document.querySelectorAll=()=>{f.calls.push('ordinaryToggleQuery');return [];};f.run(['sendTeacherQuestion','toggleEli5','syncEli5'].map(extract).join('\n'));assert.equal(f.run('sendTeacherQuestion("practice text")'),false);assert.equal(f.run('toggleEli5(true)'),false);f.run('syncEli5()');assert.deepEqual(f.calls,[]);
+  });
+  for(const switchThread of [false,true])check(`deferred Teacher completion ${switchThread?'rejects a changed thread':'rechecks the active guided thread'}`,()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask'),d=f.context.window.PM_DEMO,thread=d.state.chat.threads['guided-thread'];let settle;
+    thread.messages=[];d.emit=()=>{};f.context.state.open=true;f.context.sessionSerial=1;f.context.teacherTurnCurrent=()=>true;f.context.document.querySelector=()=>null;f.context.setTimeout=fn=>{settle=fn;return 1;};
+    f.context.pending={session:1,thread:'guided-thread',thread_record:thread,message:'reply-1',step_id:'tour.chat.teacher.ask'};f.run(extract('completeTeacherTurn'));assert.equal(f.run('completeTeacherTurn(window.PM_DEMO,pending,{html:"Local answer",id:"example",copy_mode:"normal"},"done")'),true);assert.equal(typeof settle,'function');
+    if(switchThread)d.state.chat.activeThread='ordinary';settle();assert.equal(f.calls.includes('completeStep'),!switchThread);assert.equal(thread.messages.length,1);
+  });
   check('causal ablation: removing the restart guard is detected as baseline replacement',()=>{
     const f=fixture(marker({})),safe=extract('start');
     const unsafe=safe.replace(/    if\(checkpointRecovery\|\|\(!original&&adoptCheckpointRecovery\(savedCheckpoint\(\)\)\)\)return recoveryBlocked\([^\n]+\n/,'');assert.notEqual(unsafe,safe);
@@ -80,6 +156,45 @@ try{
   check('causal ablation: treating corrupt data as absent permits an unsafe fresh Start',()=>{
     const f=fixture('{broken');f.run('function savedCheckpoint(){return {kind:"absent"};}');
     const result=f.value('start()');assert.equal(result.status,'demonstrating');assert.equal(result.layout_snapshot_captured,true);assert.ok(f.calls.includes('captureOriginal'));
+  });
+  check('pausing preserves an unsent Planning goal without submitting or serializing it',()=>{
+    const f=draftFixture('UNSENT_FIXTURE_MARKER: my different goal'),before=f.value('planningFixture');f.run('pause()');assert.equal(f.context.practiceRoot,null);assert.equal(f.markupGoal(),'UNSENT_FIXTURE_MARKER: my different goal');assert.deepEqual(f.value('planningFixture'),before);assert.equal(f.context.state.planning_goal,'');assert.equal(f.context.state.planning_project_selected,false);assert.equal(f.context.state.status,'paused');assert.ok(!f.raw().includes('UNSENT_FIXTURE_MARKER'));assert.deepEqual(f.calls,[]);assert.deepEqual(f.writes,[['set',key]]);
+  });
+  for(const [name,text,escaped] of [
+    ['empty','', ''],
+    ['whitespace','  Draft\nsecond line\t  ','  Draft\nsecond line\t  '],
+    ['literal markup','A <script> & "quoted" goal','A &lt;script&gt; &amp; &quot;quoted&quot; goal']
+  ])check(`${name} Planning draft survives teardown exactly and remains unsubmitted`,()=>{
+    const f=draftFixture(text);f.run('removePlanningFixture()');assert.equal(f.markupGoal(),escaped);assert.equal(f.context.planningFixture.goal_submitted,false);assert.equal(f.context.planningFixture.goal,f.context.BOOK_CLUB_GOAL);assert.deepEqual(f.writes,[]);assert.deepEqual(f.calls,[]);
+  });
+  check('a practice rerender captures the edited goal before making its replacement markup',()=>{
+    const f=draftFixture('Text changed before choosing the Project');let markup='';
+    f.context.ensurePlanningFixture=()=>({querySelector:()=>null});f.context.document.createElement=()=>({children:[],set innerHTML(value){markup=value;}});f.run(extract('renderPlanningFixture'));assert.equal(f.run('planningAction("project")'),true);assert.ok(markup.includes('Text changed before choosing the Project'));assert.equal(f.context.planningFixture.goal_submitted,false);assert.equal(f.context.state.planning_goal,'');assert.equal(f.context.planningGoalDraft,'Text changed before choosing the Project');assert.deepEqual(f.calls,['ownerActionEvent']);
+  });
+  check('only explicit valid submission promotes the retained draft to the accepted goal',()=>{
+    const f=draftFixture('  The edited practice goal  ');f.run('removePlanningFixture()');assert.equal(f.run('planningAction("goal")'),false);assert.equal(f.context.planningFixture.goal_submitted,false);assert.equal(f.context.planningGoalDraft,'  The edited practice goal  ');
+    assert.equal(f.run('planningAction("project")'),true);assert.equal(f.run('planningAction("goal")'),true);assert.equal(f.context.planningFixture.goal,'The edited practice goal');assert.equal(f.context.state.planning_goal,'The edited practice goal');assert.equal(f.context.planningFixture.goal_submitted,true);assert.equal(f.context.planningGoalDraft,null);assert.equal(f.markupGoal(),null);assert.deepEqual(f.writes,[]);
+  });
+  check('a rejected blank submission remains a blank draft after Pause',()=>{
+    const f=draftFixture('   ');assert.equal(f.run('planningAction("project")'),true);assert.equal(f.run('planningAction("goal")'),false);assert.match(f.context.state.last_error,/Add one sentence/);assert.equal(f.calls.filter(name=>name==='render').length,1);assert.equal(f.input.value,'   ');f.run('pause()');assert.equal(f.markupGoal(),'   ');assert.equal(f.context.planningFixture.goal_submitted,false);assert.equal(f.context.state.planning_goal,'');assert.equal(Object.hasOwn(JSON.parse(f.raw()),'planningGoalDraft'),false);
+  });
+  check('an absent or detached form cannot overwrite a retained draft',()=>{
+    const f=draftFixture('stale input');f.context.planningGoalDraft='Retained text';f.context.practiceRoot.isConnected=false;assert.equal(f.run('capturePlanningGoalDraft()'),false);f.context.practiceRoot=null;assert.equal(f.run('capturePlanningGoalDraft()'),false);assert.equal(f.context.planningGoalDraft,'Retained text');assert.deepEqual(f.writes,[]);
+  });
+  check('submitted Planning goals cannot be replaced by stale form text',()=>{
+    const f=draftFixture('stale input');f.context.planningFixture.goal='Accepted goal';f.context.planningFixture.goal_submitted=true;assert.equal(f.run('capturePlanningGoalDraft()'),false);assert.equal(f.context.planningGoalDraft,null);assert.equal(f.markupGoal(),null);assert.ok(f.run('planningFixtureMarkup()').includes('Accepted goal'));assert.equal(f.context.planningFixture.goal,'Accepted goal');
+  });
+  check('Replay preserves the draft on failed cleanup and clears it only for a fresh session',()=>{
+    const f=draftFixture('Previous-session draft');f.run('removePlanningFixture()');f.context.cleanupForExit=()=>({ok:false});f.run('replay()');assert.equal(f.context.planningGoalDraft,'Previous-session draft');assert.ok(!f.calls.includes('captureOriginal'));
+    f.context.cleanupForExit=()=>({ok:true});f.run('replay()');assert.equal(f.context.planningGoalDraft,null);assert.equal(f.context.planningFixture,null);assert.ok(!f.markupGoal().includes('Previous-session draft'));assert.equal(f.calls.filter(name=>name==='captureOriginal').length,1);
+  });
+  for(const reason of ['skip','complete'])check(`${reason} clears the draft only after injected cleanup success`,()=>{
+    const f=draftFixture('Draft before exit');f.run('capturePlanningGoalDraft()');if(reason==='complete'){f.context.state.step_id='tour.planning.approval_boundary';f.context.planningFixture.review_visible=true;f.context.planningFixture.edited=true;f.context.focusPlanningPage=()=>{};}
+    f.context.cleanupForExit=()=>({ok:false});f.run(`finish(${JSON.stringify(reason)})`);assert.equal(f.context.planningGoalDraft,'Draft before exit');assert.equal(f.context.state.status,'recovery_required');
+    f.context.cleanupForExit=()=>({ok:true,final_page:reason==='complete'?'wizard':'dashboard'});f.run(`finish(${JSON.stringify(reason)})`);assert.equal(f.context.planningGoalDraft,null);assert.equal(f.context.state.status,reason==='complete'?'completed':'skipped');assert.equal(f.raw(),null);
+  });
+  check('causal ablation: removing teardown capture restores the draft-loss bug',()=>{
+    const f=draftFixture('A draft that must survive'),safe=extract('removePlanningFixture'),unsafe=safe.replace('capturePlanningGoalDraft();','');assert.notEqual(unsafe,safe);f.run(unsafe);f.run('pause()');assert.equal(f.markupGoal(),f.context.BOOK_CLUB_GOAL);assert.notEqual(f.markupGoal(),'A draft that must survive');assert.equal(f.context.planningFixture.goal_submitted,false);
   });
   report.pass=true;
 }catch(error){report.pass=false;report.failure=String(error.stack||error);console.error(report.failure);process.exitCode=1;}

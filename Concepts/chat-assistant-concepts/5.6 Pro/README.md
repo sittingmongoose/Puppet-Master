@@ -26,3 +26,7 @@ All ten listed working/motion source files are byte-identical to the supplied v2
 217 scoped Assistant assertions were recorded on the final build, including 31 History opens and 64 width/theme/working-take cases. The browser process did not finish teardown within the runner timeout; these are recorded assertions, not a claim that the whole combined harness exited cleanly. Separate Settings checks completed with 66 passing assertions (21 top-level manager workspaces at three widths plus boot/style/error checks). A nested manager action census is not completed.
 
 The original exhaustive multiple-demos-per-feature and every-demo 60fps/frame-by-frame acceptance campaign remain open. The full reference-video every-frame review is not certified by this rebuild. Persistent-origin reload was not tested; the harness uses opaque set_content. Earlier totals such as 313/195, 35 threads, 39 demos or 58 managers are not reused as evidence.
+
+## Batch 6: layout rollback and Chat Room
+
+See BATCH_06_README.md and BATCH_06_CHECKPOINT.json. Demo Studio → Guided Chat Room workflows. Batches1–5 remain; reference-derived layout is selectively withdrawn, with settings and behavior preserved.

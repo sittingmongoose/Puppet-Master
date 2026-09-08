@@ -1,0 +1,14 @@
+/* Chat Room uses the existing document and card tokens; no video-layout layer. */
+.room-document{min-width:0;max-width:100%;}
+.room-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px;}
+.room-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
+.room-message{border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin:10px 0;background:var(--surface-2);min-width:0;}
+.room-message.selected{outline:1px solid var(--accent);outline-offset:1px;}
+.room-message header{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.room-message p,.room-promotion p{font-size:13px;line-height:1.6;overflow-wrap:anywhere;margin:8px 0;}
+.room-message small{color:var(--muted);font-size:10px;}
+.room-select{margin-top:5px;}
+.room-promotion{padding:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-3);margin:16px 0;}
+.room-promotion>div{display:flex;gap:8px;flex-wrap:wrap;}
+.room-provenance{font-size:10px!important;color:var(--muted);margin-top:18px;}
+@media(max-width:750px){.room-message{padding:10px;}.room-meta{font-size:10px;}}

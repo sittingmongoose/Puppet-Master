@@ -1766,6 +1766,10 @@ APR-047, and APR-061.
   sensitivity. Deeper stage bindings and compaction stats are placed behind deliberate disclosure toggles.
 - **Strict Stripe Removal:** All decorative left-edge accent stripes, inset shadows, and pseudo-element
   borders are eliminated from BSD context panels, enforcing uniform perimeter borders.
+- **Reference-Layout Supersession (USER-REFERENCE-LAYOUT-ROLLBACK-20260908):** Per user correction
+  USER-REFERENCE-LAYOUT-ROLLBACK-20260908, Context More Details and BSD projections use native metric
+  cards rather than a reference-derived flat list, preserving concise hierarchy, disclosures, and zero
+  decorative left stripes.
 
 ```yaml
 plan_unit_id: BSD-026

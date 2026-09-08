@@ -5454,6 +5454,10 @@ hierarchy, and bound PlanRun synchronization in accordance with APR-059 and reta
 - **Surface Invariants:** No Goal thread card is rendered in the chat transcript. The objective text
   is never duplicated as a Plan card section. Goal and To-Dos reside strictly in the Activity panel,
   preserving hover and pinned detail controls.
+- **Reference-Layout Supersession (USER-REFERENCE-LAYOUT-ROLLBACK-20260908):** Per user correction
+  USER-REFERENCE-LAYOUT-ROLLBACK-20260908, Goal Activity Detail presentation restores native card and
+  panel hierarchy rather than reference-derived forced flat-row CSS, strictly preserving Simple Goal
+  objective editing, lifecycle actions (Pause, Resume, Cancel), revision history, and bidirectional PlanRun links.
 
 ```yaml
 plan_unit_id: GRS-058

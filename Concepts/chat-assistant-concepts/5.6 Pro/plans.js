@@ -1206,7 +1206,7 @@
        projector landed, so the key reads the projection's currentness. */
     var pk = r.approved ? progress(r).currentness_hash : 'unadmitted';
     return '<article class="system-card plan-doc pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-'+r.version+'-'+esc(r.status)+'-'+esc(r.view)+'-'+esc(pk)+'-'+((r.attention&&r.attention.kind)||'none')+'" data-plan-id="'+esc(r.plan_id)+'" data-topology="'+esc(r.topology||'agent')+'">'+
-      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</article>';
@@ -2283,7 +2283,7 @@
     var r = id && rec(id);
     if(!r) return '';
     return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+(window.PM56_BRAINSTORM_DEMOS?.planGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
-      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</div>';
@@ -2318,7 +2318,27 @@
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
 
+  // B06: selected conclusion is admitted by the existing Plan owner. No Build.
+  function createFromRoom(x){
+    const checked=window.PM56_ROOM?.validatePromotion(x,'plan');
+    if(!checked?.ok)return checked||{ok:false,error:'room_unavailable'};
+    const origin=checked.run,m=checked.message,c=EXT.ctx(),thread=c.state.threads.find(t=>t.id===origin.threadId);
+    const id='room-plan-'+origin.id+'-'+m.id,prior=rec(id);
+    if(prior)return prior.roomSource.messageHash===x.messageHash?{ok:true,planId:id,reused:true}:{ok:false,error:'source_changed'};
+    if(currentPlan(origin.threadId))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const blocks=[h(origin.title,1),h('Selected conclusion'),p(m.body),h('Source'),p('Chat Room · '+origin.title+' · '+m.senderName),
+      h('Implementation'),step('implement','Implement the selected conclusion',m.body),
+      step('verify','Verify the selected behavior','Check the implementation against the exact selected conclusion and retained discussion.',['implement']),
+      h('Rollback'),p('Revert the implementation change if verification does not match the selected conclusion.')];
+    const record=planRec({id,thread:origin.threadId,title:origin.title+' · Plan',strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,
+      sources:[{kind:'chat_room',ref:origin.id,message_id:m.id,participant_id:m.senderId,note:m.body}]});
+    record.roomSource={runId:origin.id,messageId:m.id,participantId:m.senderId,messageHash:x.messageHash};P().records[id]=record;
+    thread.messages.push({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id});
+    return {ok:true,planId:id,reused:false};
+  }
+
   window.PM56_PLANS = {
+    createFromRoom:createFromRoom,
     createFromBrainstorm:createFromBrainstorm,
     get:rec, all:function(){ return P().records; },
     // Concept-only admission seam. The scheduler validates its due time and

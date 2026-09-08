@@ -58,6 +58,28 @@ guard is held in the authored source and scratch candidate until browser
 verification is available. See `scratchpad/pm-tour-polish-20260906/README.md` for
 artifact-specific results and the remaining work.
 
+The same-tab follow-up preserves the current action's comparison baseline and
+widget identity. Resume rechecks the shared predicate, credits an already-applied
+action without replaying it, and leaves interrupted Show Me choreography stopped.
+It does not reselect Teacher, recreate the guided thread, or overwrite a paused
+draft. A changed Chat context cannot satisfy the Teacher predicate, receive a
+practice send through ordinary Chat, or receive an ELI5 mutation; the user can
+pause and return to the guided conversation. Ordinary Chat still delegates while
+paused or outside the Teacher chapter. Deferred Teacher completion rechecks the
+current context. Predicate receipts retain unknown or measured counter deltas
+instead of substituting zero. Full prerequisite and durable owner revalidation
+remain pending; these focused source/unit repairs do not establish that broader
+acceptance.
+
+Unsent Planning goal text is now captured before the practice form is remounted
+or removed. The cache is session-local and separate from the submitted goal;
+empty text and whitespace survive Pause, and only explicit valid submission
+promotes it. Successful submission or terminal cleanup/fresh Replay clears the
+cache; failed cleanup retains it. It is never serialized into the tour marker.
+Validation failures render their message without clearing the draft. This is
+still source/unit-verified only; real form, caret, focus, and browser behavior
+remain subject to the unpublished-candidate validation hold.
+
 ## Re-baseline — 2026-08-27 (current)
 
 The base is `base/PM7-base.html` (not PMConcept6). It hashes to

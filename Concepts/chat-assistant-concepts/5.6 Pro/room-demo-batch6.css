@@ -1,0 +1,2 @@
+.room-demo-guide{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);padding:10px 12px;margin:6px 0 10px;display:flex;gap:10px;align-items:center;justify-content:space-between;min-width:0;}
+.room-demo-guide>div:first-child{min-width:0;flex:1;}.room-demo-guide strong{display:block;font-size:12px;font-weight:550;line-height:1.5;}.room-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px;}.room-demo-guide>div:last-child{display:flex;gap:6px;flex:none;}

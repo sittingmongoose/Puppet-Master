@@ -1,4 +1,4 @@
-/* v3: narrow information layout. Deliberately excludes all working takes. */
+/* Retained v3 functional/picker styling; reference-video flat layout removed in B06. */
 .shared-choice-list { max-height:min(420px,60vh);overflow-y:auto;padding:5px; }
 .shared-choice-list .menu-item { min-height:54px;align-items:center;padding:10px 12px; }
 .shared-choice-list .menu-copy strong {font-size:12px;line-height:1.4;}
@@ -10,10 +10,7 @@
 .collab-configure h4 {font-size:12px;font-weight:650;letter-spacing:0;margin:22px 0 10px;color:var(--text);}
 .collab-configure .shared-picker-button {min-height:42px;margin-top:6px;}
 .collab-configure .collab-choice {background:var(--surface-2);}
-.collab-configure .collab-participant-editor {gap:0;}
-.collab-configure .collab-participant-editor-row {border:0;border-radius:0;background:transparent;padding:14px 0;border-bottom:1px solid var(--border);}
 .collab-member-name {gap:9px;}
-.collab-configure .collab-member-name input {border:0;background:transparent;font-size:13px;}
 .collab-configure .collab-member-pickers {gap:14px;padding-left:29px;}
 .collab-configure-foot,.collab-panel-foot {padding:16px 24px !important;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--border);}
 .collab-configure-foot>.soft-button:first-child {margin-right:auto;}
@@ -26,73 +23,22 @@
 .diff-removed {color:var(--danger);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .work-output-diff {display:inline-flex;gap:5px;}
 .work-output-summary p {margin:6px 0;font-size:12px;}
-.work-output {border-radius:0;background:transparent;border:0;border-bottom:1px solid var(--border);padding:8px 0;}
-.work-output-open {padding:9px 0;}
-.work-output-summary {padding:0 0 8px 30px;}
-/* Every Activity family shares insets and rules; keep structural tree connectors. */
-.activity-panel .activity-scroll {padding:14px 18px;}
-.activity-panel[data-variant] .pmap-section,.activity-panel .activity-section {
- border:0;border-radius:0;box-shadow:none;background:transparent;border-bottom:1px solid var(--border);margin:0;padding:10px 0;
-}
-.activity-panel .activity-section-head {padding:9px 0;font-size:12px;}
-.activity-panel .activity-section-body {padding:6px 0;}
-.activity-panel .pmap-row,.activity-panel .activity-line {padding:11px 0;gap:9px;border-radius:5px;border:0;border-bottom:1px solid var(--border);background:transparent;min-width:0;}
-.activity-panel .pmap-row .copy,.activity-panel .activity-line .copy {min-width:0;}
-.activity-panel .pmap-row .copy strong,.activity-panel .activity-line .copy strong {font-size:12px;line-height:1.5;}
-.activity-panel .pmap-row .copy span,.activity-panel .activity-line .copy span {font-size:11px;line-height:1.5;}
-.activity-panel .pmap-row.is-selected {background:var(--surface-3);box-shadow:0 0 0 1px var(--border) inset;padding-inline:8px;}
-.activity-panel .pmap-section::before,.activity-panel .pmap-row::before {display:none;}
-.goal-section-v2 {font-size:12px;}
-.goal-section-v2 .goal-view,.goal-section-v2 .goal-bound {border:0;border-radius:0;box-shadow:none;background:transparent;padding:12px 0;}
-.goal-objective-full {font-size:13px;line-height:1.7;max-width:65ch;}
-.goal-section-v2 .goal-lifecycle {border:0;padding:14px 0;gap:8px;display:flex;flex-wrap:wrap;}
-.goal-section-v2 .goal-head {padding:10px 0;border-bottom:1px solid var(--border);}
-.goal-section-v2 .goal-disclosures {border:0;border-top:1px solid var(--border);padding:12px 0;gap:10px;}
-.goal-bound-wrap .goal-bound-h {font-size:11px;color:var(--muted);text-transform:none;}
-.goal-technical {margin:12px 0;font-size:11px;color:var(--muted);}
-.goal-technical summary {cursor:pointer;}
-.goal-technical dl {display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;margin:12px 0;}
-.goal-technical dd {margin:0;overflow-wrap:anywhere;}
-.goal-blocked-card {border:0;border-radius:0;background:transparent;padding:12px 0;}
-.todo-panel-summary {border:0;background:transparent;padding:8px 0 15px;}
-.todo-row {padding:12px 0;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;}
-.todo-title {font-size:12px;line-height:1.6;font-weight:500;}
-.todo-row.is-current .todo-title {font-weight:650;}
-.todo-children {border:0;margin-left:12px;}
-.todo-detail {padding:8px 0 12px 27px;}
-.todo-status-label {font-size:10px;}
-/* One bounded overview. Token composition and provenance remain in disclosures. */
-.ctx-drawer {width:min(470px,calc(100vw - 24px));}
-.ctx-drawer .drawer-scroll {padding:20px 24px;}
-.ctx-drawer .context-big>span {font-size:12px;}
-.ctx-drawer .metric-grid {display:grid;grid-template-columns:1fr;gap:0;}
-.ctx-drawer .metric-card {display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,1fr);gap:20px;align-items:baseline;padding:10px 0;border:0;border-radius:0;background:transparent;box-shadow:none;}
-.ctx-drawer .metric-card label {font-size:12px;line-height:1.5;color:var(--muted);}
-.ctx-drawer .metric-card strong {text-align:right;font-size:12px;line-height:1.5;overflow-wrap:break-word;}
-.ctx-drawer .polish-context-section>h3>button {padding:14px 0;font-size:12px;}
-.ctx-drawer .context-section-body {padding:0 0 15px;}
-.ctx-drawer .context-section,.ctx-drawer .bsd-section {border-left:0;border-right:0;box-shadow:none;}
-.ctx-drawer .context-section::before,.ctx-drawer .bsd-section::before {display:none;}
-.ctx-drawer .ctx-grid2 {grid-template-columns:1fr;}
-.ctx-drawer .ctx-note {font-size:11px;line-height:1.6;}
-.bsd-overview {padding:4px 0 16px;border-bottom:1px solid var(--border);}
+/* B06 selective rollback: native Activity, Goal, To-Do and Context layouts
+   are again owned by their pre-video styles. New BSD data remains available. */
+.bsd-overview {padding:12px 0;}
 .bsd-overview-head {display:flex;align-items:center;gap:10px;margin:0 0 12px;}
 .bsd-overview-head h3 {font-size:13px;margin:0;flex:1;}
-.bsd-summary-table {margin:0;}
-.bsd-summary-table>div,.bsd-session-grid>div {display:grid;grid-template-columns:minmax(78px,.7fr) minmax(0,1fr);gap:18px;padding:7px 0;align-items:baseline;}
-.bsd-summary-table dt,.bsd-session-grid dt {font-size:12px;color:var(--muted);}
-.bsd-summary-table dd,.bsd-session-grid dd {margin:0;text-align:right;font-size:12px;line-height:1.5;overflow-wrap:break-word;word-break:normal;}
-.bsd-summary-table dd strong {font:inherit;font-weight:600;}
-.bsd-disclosure {border:0;border-radius:0;background:transparent;padding:0;}
-.bsd-disclosure>summary {padding:13px 0;font-size:12px;display:flex;justify-content:space-between;cursor:pointer;border-top:1px solid var(--border);}
-.bsd-disclosure>summary::after {content:'›';margin-left:8px;}
-.bsd-disclosure[open]>summary::after {content:'⌄';}
-.bsd-finding {padding:12px 0;border:0;border-radius:0;background:transparent;border-bottom:1px solid var(--border);}
-.bsd-finding::before {display:none;}
-.bsd-session-grid {display:block;}
-.bsd-configure .demo-dialog-body {padding:20px 24px;}
-.bsd-configure .demo-dialog-foot {padding:16px 24px;gap:10px;}
-.bsd-config-pickers label,.bsd-config-grid label {font-size:12px;}
+.bsd-summary-table,.bsd-session-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px;}
+.bsd-summary-table>div,.bsd-session-grid>div {min-width:0;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);}
+.bsd-summary-table dt,.bsd-session-grid dt {font-size:10px;color:var(--muted);margin-bottom:5px;}
+.bsd-summary-table dd,.bsd-session-grid dd {margin:0;font-size:12px;line-height:1.45;overflow-wrap:anywhere;}
+.bsd-disclosure {margin-top:8px;}
+.bsd-disclosure>summary {cursor:pointer;padding:10px 0;display:flex;justify-content:space-between;font-size:12px;}
+.bsd-summary-actions {display:flex;flex-wrap:wrap;gap:8px;}
+/* Separate earlier requests remain: no decorative left stripes, concise
+   first views and single live BSD summary. */
+.ctx-drawer .bsd-section,.ctx-drawer .context-section {border-left:0;}
+.ctx-drawer .bsd-section::before,.ctx-drawer .context-section::before,.bsd-finding::before {display:none;}
 /* Decorative card accents are not functional diff gutters or working rails. */
 :is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth,.bsd-finding,.ctx-cap,.ctx-fallback) {border-left-width:0;}
 :is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth)::before {display:none;}

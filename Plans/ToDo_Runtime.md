@@ -840,6 +840,11 @@ APR-059.
   perimeters. Functional indentation and tree hierarchy connectors are explicitly preserved.
 - **Visual Alignment and Typography (APR-059):** Task rows enforce consistent baseline alignment,
   proportional typography, and aligned action glyphs across all task states.
+- **Reference-Layout Supersession (USER-REFERENCE-LAYOUT-ROLLBACK-20260908):** Per user correction
+  USER-REFERENCE-LAYOUT-ROLLBACK-20260908, To-Do Activity Detail presentation restores native card and
+  hierarchy presentation rather than reference-derived forced flat-row CSS, preserving visual baseline
+  alignment, inline completion (filled dot + strike-through), single bounded hover preview without nested
+  panels, disclosures, and zero decorative left stripes.
 
 ```yaml
 plan_unit_id: TDR-011

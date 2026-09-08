@@ -36446,9 +36446,11 @@ invariants.
 - **Single Agent Review Invariant (APR-054):** Selecting the "Single Agent" strategy in the Review
   configuration modal immediately and reactively reduces the active draft reviewer roster to exactly
   one reviewer. Switching back to Multi-Pass restores the multi-reviewer configuration without loss of choices.
-- **Uniform Grammar Across All 9 Activity Detail Families (APR-060):** The narrow-layout,
-  compact-row, high-contrast information grammar is applied consistently across all nine Activity
-  Detail families:
+- **Uniform Native Card/Grid Grammar Across All 9 Activity Detail Families (APR-060, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
+  The reference-video-derived narrow-layout and forced flat-row grammar is selectively superseded under
+  user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Activity Detail restores prior native card,
+  section panel, and grid presentation across all nine Activity Detail families while preserving
+  concise hierarchy, high contrast, clear progress and state grouping, quiet action rows, and canonical routing:
   1. *Goal Detail:* Objective headline, lifecycle status, inline edit/save, progress indicators, and revision history.
   2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips, and action links without separate Done headers.
   3. *Subagents Detail:* Active and completed subagent cards, parent task link, model identity, tool invocation count, and termination status.
@@ -36464,16 +36466,21 @@ invariants.
 
 ### 25. Settings Manager Presentation Grammar Across All 38 Managers and Projections
 
-- **Reference-Derived Layout Principles (APR-064):** In alignment with visual reference motion
-  and layout analysis, Settings surfaces enforce:
+- **Reference-Layout Supersession and Native Presentation (APR-062, APR-064, USER-REFERENCE-LAYOUT-ROLLBACK-20260908):**
+  The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`)
+  enforcing flattened manager surfaces, borderless sections, and forced single-column rows is selectively
+  superseded under user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior
+  native card, section box, and grid layouts across all thirty-eight registered Settings managers and
+  the 21 concrete manager workspaces measured at the pinned base. The historical video analysis and
+  packet evidence remain recorded, while active presentation enforces:
   1. *Stable Alignment:* Left-aligned labels, standardized form field widths, and predictable baseline alignments.
   2. *Legible Short Labels:* Plain-English setting names without nested technical paths.
   3. *Trailing Values & Controls:* Input controls, toggles, and selectors sit at the right edge of rows.
-  4. *Deliberate Whitespace:* Generous section spacing separating distinct logical setting groups.
+  4. *Deliberate Whitespace:* Standardized section spacing separating distinct logical setting groups.
   5. *Limited Simultaneous Detail:* Progressive disclosure for advanced, dangerous, or rarely used parameters.
   6. *One Quiet Action Row:* Secondary actions, resets, and documentation links cluster into a single subtle bottom action strip.
-- **Exhaustive Application Across 38 Settings Managers (APR-062):** The unified presentation
-  grammar applies to all thirty-eight registered Settings managers:
+- **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
+  grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)
   2. `general-appearance-input` (Theme, font, interaction style, working-activity-style)
   3. `providers-accounts-models` (API keys, endpoints, default models)
@@ -36514,7 +36521,11 @@ invariants.
   38. `dry-method` (DRY enforcement and duplication guard policy)
   And across the three named visible-state projections: `teacher-help`, `project-search-index`,
   and `dry-method`, as well as the Assistant Settings projections (`settings.assistant`,
-  `settings.bsd`, `settings.schedule`).
+  `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved.
+- **Source-Only Builder Maintenance (APR-063):** Settings HTML is never hand-edited. Rebuilds use
+  the immutable published checkpoint builder `Concepts/pm7-tools/build_testpm_layout_b06.py`, replacing
+  only the `pm50-manager-layout` style block with `assistant_narrow_source.css` and preserving all 29
+  script elements (26 JavaScript, 3 JSON) byte-identical.
 - **Context-Sensitive Manager Navigation (APR-065):** When opening a Settings manager from an
   in-canvas context link or dropdown picker, the picker retains and visually indicates the specific
   manager identity for which it was opened. Context is not dropped or reset during deep navigation.
@@ -36857,8 +36868,10 @@ canonical_text: >-
   Collaboration configuration popups enforce shared choice controls, plain-language labels with option
   descriptions, and consistent inset footers with 16 px padding and clear button hierarchy. Selecting
   Single Agent Review immediately collapses the active reviewer roster to one. All nine Activity Detail
-  families adhere to the unified narrow-layout, high-contrast information grammar. Read-only inspection
-  fixtures present findings and code evidence without interactive mutation controls.
+  families adhere to the unified native card and grid presentation grammar per USER-REFERENCE-LAYOUT-ROLLBACK-20260908,
+  superseding the reference-video flat-row and forced single-column layout while preserving concise hierarchy,
+  clear progress/state grouping, and quiet action rows. Read-only inspection fixtures present findings
+  and code evidence without interactive mutation controls.
 gui_related: true
 gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review invariant, and all nine Activity Detail families.
 depends_on: [F3-531, F3-533, F3-535]
@@ -36866,7 +36879,7 @@ unblocks: []
 acceptance_criteria:
   - Popups use shared choice dropdowns, plain-language options, and 16 px inset footers.
   - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
-  - All nine Activity Detail families apply the reference narrow-layout grammar.
+  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription.
   - Read-only inspection demos render findings without interactive mutation controls.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -36894,6 +36907,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not retain multiple reviewers when Single Agent Review is active.
   - Do not omit any of the nine Activity Detail families from the unified grammar.
+  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

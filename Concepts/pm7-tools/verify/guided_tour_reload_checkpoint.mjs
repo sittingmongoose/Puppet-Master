@@ -75,6 +75,55 @@ try{
     assert.deepEqual(await page.evaluate(()=>window.PM7_GUIDED_TOUR.target_adapter.captureOriginal()),captured);
     const ended=await page.evaluate(()=>window.PM7_GUIDED_TOUR.skip());assert.equal(ended.skipped,true);assert.equal(ended.layout_snapshot_restored,true);assert.deepEqual(await page.evaluate(()=>window.PM7_GUIDED_TOUR.target_adapter.layoutSnapshot()),original);assert.equal(await page.evaluate(key=>sessionStorage.getItem(key),key),null);
   });
+  await fresh();
+  await check('pause before the predicate poll does not erase an applied move or replay it',async()=>{
+    const result=await page.evaluate(()=>{
+      const api=window.PM7_GUIDED_TOUR,workspace=window.PM_HOME_WORKSPACE;api.start({step:'tour.workspace.chat.dock'});
+      document.querySelector('#pm7-guided-tour [data-tour-action="try"]').click();
+      const applied=api.target_adapter.perform('ui.guided_tour.show_me');api.pause();
+      const before=JSON.stringify(api.target_adapter.layoutSnapshot()),receipts=workspace.receipt_log.length,resumed=api.resume();
+      return {applied,resumed,layoutUnchanged:before===JSON.stringify(api.target_adapter.layoutSnapshot()),receiptDelta:workspace.receipt_log.length-receipts};
+    });
+    assert.equal(result.applied.status,'applied');assert.equal(result.resumed.action_status,'complete');assert.equal(result.resumed.last_result.status,'no_change');assert.equal(result.layoutUnchanged,true);assert.equal(result.receiptDelta,0);
+    const ended=await page.evaluate(()=>window.PM7_GUIDED_TOUR.skip());assert.equal(ended.skipped,true);assert.equal(ended.layout_snapshot_restored,true);
+  });
+  await fresh();
+  await check('same-tab Teacher Resume preserves the paused draft and thread',async()=>{
+    await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'}));
+    await page.locator('#pm7-guided-tour [data-tour-action="try"]').click();await page.evaluate(()=>window.PM7_GUIDED_TOUR.pause());
+    const input=page.locator('#chatPanel .pm6-chat-input');await input.fill('My own unsent practice question');
+    const before=await page.evaluate(()=>({active:window.PM_DEMO.state.chat.activeThread,order:window.PM_DEMO.state.chat.order.slice()}));
+    await page.locator('#pm7-guided-tour-resume').click();
+    assert.equal(await input.inputValue(),'My own unsent practice question');assert.deepEqual(await page.evaluate(()=>({active:window.PM_DEMO.state.chat.activeThread,order:window.PM_DEMO.state.chat.order.slice()})),before);assert.equal((await snap()).teacher_message_sent,false);
+  });
+  await fresh();
+  await check('wrong-thread Resume fences ordinary send and slash shortcuts until Pause',async()=>{
+    await page.evaluate(()=>{
+      const d=window.PM_DEMO;window.__wrongThread={original:d.state.chat.activeThread,ordinary:[],web:[]};
+      d.chat.send=(...args)=>{window.__wrongThread.ordinary.push(args[0]);return {ok:false,ordinary_sentinel:true};};d.web.start=(...args)=>{window.__wrongThread.web.push(args);return {ok:false};};
+      window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'});window.PM7_GUIDED_TOUR.pause();
+      const row=document.querySelector('.chat-thread-item[data-thread="'+window.__wrongThread.original+'"]');if(!row)throw Error('Missing original thread fixture');row.click();
+    });
+    const input=page.locator('#chatPanel .pm6-chat-input');await input.fill('/web search example.com');await page.locator('#pm7-guided-tour-resume').click();
+    assert.equal((await snap()).action_status,'failed');assert.equal(await input.inputValue(),'/web search example.com');
+    const blocked=await page.evaluate(()=>window.PM_DEMO.chat.send(window.__wrongThread.original,'practice message'));assert.equal(blocked.provider_dispatch,false);
+    await input.press('Enter');assert.equal(await input.inputValue(),'/web search example.com');assert.deepEqual(await page.evaluate(()=>window.__wrongThread.ordinary),[]);assert.deepEqual(await page.evaluate(()=>window.__wrongThread.web),[]);
+    await page.getByRole('button',{name:'Pause to switch Chat',exact:true}).click();
+    assert.equal(await page.evaluate(()=>window.PM_DEMO.chat.send(window.__wrongThread.original,'ordinary sentinel').ordinary_sentinel),true);assert.equal(await page.evaluate(()=>window.__wrongThread.ordinary.length),1);
+  });
+  for(const text of ['UNSENT_BROWSER_FIXTURE: a <literal> goal','', '  A draft\nwith whitespace  ']){
+    await fresh();
+    await check(`Planning pause/resume retains an unsent ${text?'text':'empty'} draft`,async()=>{
+      await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({step:'tour.planning.goal'}));const input=page.locator('#pm7gt-planning-practice [data-practice-goal]');await input.fill(text);
+      await page.locator('#pm7-guided-tour [data-ui-action-id="ui.guided_tour.pause"]').click();assert.equal(await page.locator('#pm7gt-planning-practice').count(),0);
+      const saved=await page.evaluate(key=>sessionStorage.getItem(key),key);assert.equal(saved.includes('UNSENT_BROWSER_FIXTURE'),false);assert.equal(Object.hasOwn(JSON.parse(saved),'planningGoalDraft'),false);
+      await page.locator('#pm7-guided-tour-resume').click();assert.equal(await input.inputValue(),text);assert.equal((await snap()).planning_goal,'');assert.equal((await snap()).planning_project_selected,false);
+      await page.locator('#pm7gt-planning-practice [data-practice-action="project"]').click();assert.equal(await input.inputValue(),text);assert.equal((await snap()).planning_goal,'');
+      await page.locator('#pm7gt-planning-practice [data-practice-action="goal"]').click();
+      if(text.trim()){assert.equal((await snap()).planning_goal,text.trim());assert.equal(await input.count(),0);}
+      else{assert.equal((await snap()).planning_goal,'');assert.equal(await input.inputValue(),'');assert.match(await page.locator('#pm7-guided-tour .pm7gt-reason').textContent(),/Add one sentence/);}
+    });
+  }
   for(const paused of [true,false]){
     await fresh();
     await check(`${paused?'paused':'active'} tour reload cannot replace the original snapshot or dispatch work`,async()=>{

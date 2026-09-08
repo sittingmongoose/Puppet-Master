@@ -959,6 +959,7 @@
   }
 
   function roomInline(ctx, run) {
+    if(window.PM56_ROOM?.owns(run.id))return window.PM56_ROOM.inline(ctx,run);
     var c = run.chatRoom || {};
     var recent = run.messages.slice(-4).map(function (m) { return messageLine(ctx, run, m); }).join('');
     var promos = (c.promotions || []).map(function (p) {
@@ -1206,6 +1207,7 @@
       if (!dest || (dest.kind !== 'workflow' && dest.kind !== 'participant') || !KIND_LABEL[dest.destinationKind]) return;
       var run = findRun(dest.refId);
       if (!run || !message) return;
+      if(window.PM56_ROOM?.owns(run.id)){window.PM56_ROOM.receiveUser(run.id,message,buffer,thread);return;}
       run.messages.push(mkMsg(run, {
         senderKind: 'user', senderName: 'You', messageType: 'message',
         body: message.body || '', recipientIds: dest.participantId ? [dest.participantId] : [],
@@ -1462,6 +1464,7 @@
      (§6.3/§6.4, ROOM-004/ROOM-005).
      ===================================================================== */
   function renderRoomFollowOn(ctx, run) {
+    if(window.PM56_ROOM?.owns(run.id))return window.PM56_ROOM.controls(ctx,run);
     var c = run.chatRoom;
     var lastCoord = null;
     for (var i = run.messages.length - 1; i >= 0; i--) if (run.messages[i].senderKind === 'coordinator') { lastCoord = run.messages[i]; break; }
@@ -2014,9 +2017,9 @@
          Opening, editing and cancelling a modal reach none of these lines. */
       effect('runs'); effect('cards'); effect('events');
       effect('participants', newRun.participants.length);
-      effect('providerCalls', newRun.participants.length);
-      effect('usageRecords', newRun.participants.length);
+      if(!d.roomInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
       RTC.runs.push(newRun);
+      if(newRun.kind==='chat_room' && d.roomInput && window.PM56_ROOM) window.PM56_ROOM.admit(newRun,d);
       if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
       if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
       attachCardToThread(ctx, newRun);
