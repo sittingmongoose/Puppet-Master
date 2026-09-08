@@ -1,3 +1,5 @@
+> **Current continuation: Batch 4.** See `BATCH_04_README.md`, `BATCH_04_CHECKPOINT.json`, and `BATCH_04_COVERAGE_DELTA.json` for the current bounded demo/motion evidence. Earlier delivery notes below are historical.
+
 > Latest bounded delivery: **Batch 3 — Review workflows**. Start with `BATCH_03_README.md` and `BATCH_03_CHECKPOINT.json`; earlier delivery/audit reports below are historical.
 
 # Puppet Master Assistant — v3 rebuilt delivery

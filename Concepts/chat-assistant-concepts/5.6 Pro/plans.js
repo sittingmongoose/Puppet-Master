@@ -1206,7 +1206,7 @@
        projector landed, so the key reads the projection's currentness. */
     var pk = r.approved ? progress(r).currentness_hash : 'unadmitted';
     return '<article class="system-card plan-doc pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-'+r.version+'-'+esc(r.status)+'-'+esc(r.view)+'-'+esc(pk)+'-'+((r.attention&&r.attention.kind)||'none')+'" data-plan-id="'+esc(r.plan_id)+'" data-topology="'+esc(r.topology||'agent')+'">'+
-      cardHeader(r)+
+      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</article>';
@@ -2282,8 +2282,8 @@
     var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
     var r = id && rec(id);
     if(!r) return '';
-    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
-      cardHeader(r)+
+    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+(window.PM56_BRAINSTORM_DEMOS?.planGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
+      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</div>';
@@ -2295,7 +2295,31 @@
   return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
+  // The existing Plan owner accepts a validated BrainStorm synthesis. Its
+  // scoped ledger/units are concept records, not repository WorkNodes or canon.
+  function createFromBrainstorm(x){
+    const c=EXT.ctx(),thread=c.state.threads.find(t=>t.id===x?.threadId);
+    if(!thread||!x.runId||!x.sourceHash||!x.title||!Array.isArray(x.blocks)||!x.blocks.length||!Array.isArray(x.steps)||!x.steps.length)return {ok:false,error:'invalid_brainstorm_plan'};
+    const id='brainstorm-plan-'+x.runId,fingerprint=JSON.stringify(x),existing=rec(id);
+    if(existing)return existing.synthesisFingerprint===fingerprint?{ok:true,reused:true,planId:id}:{ok:false,error:'conflicting_plan_handoff'};
+    const origin=window.PM56_COLLAB?.run(x.runId);
+    if(!origin||origin.status!=='running'||origin.threadId!==x.threadId||origin.brainstorm?.phase!=='synthesis'||origin.brainstorm.input.sourceHash!==x.sourceHash)return {ok:false,error:'brainstorm_handoff_not_ready'};
+    if(JSON.stringify(window.PM56_BRAINSTORM.planPayload(origin))!==fingerprint)return {ok:false,error:'brainstorm_handoff_mismatch'};
+    if(currentPlan(x.threadId))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const blockSteps=steps(x.blocks),ids=new Set();
+    if(blockSteps.length!==x.steps.length)return {ok:false,error:'plan_step_coverage'};
+    for(const step of x.steps){const block=blockSteps.find(b=>b.plan_step_id===step.id);if(!block||ids.has(step.id)||!step.acceptance||step.dependsOn.some(d=>!ids.has(d))||JSON.stringify(block.depends_on)!==JSON.stringify(step.dependsOn))return {ok:false,error:'invalid_plan_steps'};ids.add(step.id);}
+    const units=x.steps.map(step=>({id:'APU-'+id+'-'+step.id,step:step.id,title:step.title,acceptance:[step.acceptance],negative:['No project mutation before an explicit Build.'],deps:step.dependsOn.map(d=>'APU-'+id+'-'+d)}));
+    const r=planRec({id,thread:x.threadId,title:x.title,strategy:'Deep: BrainStorm',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
+      ledger:{id:'apl-'+id,scope:'run',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'brainstorm',ref:x.runId,note:'Frozen recorded exploration '+x.sourceHash}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
+    r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
+    const card={id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id},at=thread.messages.findIndex(m=>m.runId===x.runId);
+    thread.messages.splice(at<0?thread.messages.length:at+1,0,card);
+    return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
+  }
+
   window.PM56_PLANS = {
+    createFromBrainstorm:createFromBrainstorm,
     get:rec, all:function(){ return P().records; },
     // Concept-only admission seam. The scheduler validates its due time and
     // receipt; the Plan owner independently rechecks exact identity and state.

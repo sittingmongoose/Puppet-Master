@@ -1,6 +1,6 @@
 {
-  "delivery": "assistant-review-demo-batch-03",
-  "basis": "Supplied Batch 2 + bounded Review repair; source main check 010df9c7ff318b8e4fd7d321ba78986c44cceccb",
+  "delivery": "assistant-brainstorm-demo-batch-04",
+  "basis": "Published main 636b911c30442b628cbb5a319a02b5c5b1bb7a16 + bounded cumulative BrainStorm demo changes",
   "basis_zip_sha256": "d69edae910924fc3c8a1e7b8339125905cdd8f7dd60aad49a5225f6363631f64",
   "canonical_plans_modified": false,
   "protected_working_sources": [
@@ -67,7 +67,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_CHECKPOINT.json",
@@ -80,7 +82,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_README.md",
@@ -93,7 +98,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_02_CHECKPOINT.json",
@@ -104,7 +112,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_02_README.md",
@@ -115,7 +126,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_CHECKPOINT.json",
@@ -123,7 +137,10 @@
       "sha256": "33be13f0afd7f03ecb06c4af7adc6917a35eb6e86c8129dc340ca6f626aebb9e",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_README.md",
@@ -131,12 +148,39 @@
       "sha256": "80c56c5a89ab45ea1ffb904c30de99697dc0b81f2b5ad2f84a59dd53e93c8f78",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_04_CHECKPOINT.json",
+      "bytes": 14821,
+      "sha256": "76334e8438f00bd7ab373828b016b0be16af7a69b086b8f07f5031e25daaa883",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_04_COVERAGE_DELTA.json",
+      "bytes": 20782,
+      "sha256": "5719084b609f8ffb804005dbaa92828d0264360d832b8bb7f0dd952f7c35d4bb",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_04_README.md",
+      "bytes": 6894,
+      "sha256": "ca3adc2bbce08e9d0f9a5fbd2c6ee4b3151454d03149ca1e3c90975c3a511405",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html",
-      "bytes": 2883399,
-      "sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
+      "bytes": 2931652,
+      "sha256": "c17ddfaff72a67981ad84e0cbf0d390908a95340f48c4cd7507f1ed6c0e612af",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
       "included_in_plan_batch_01": true,
@@ -145,12 +189,15 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/README.md",
-      "bytes": 2413,
-      "sha256": "3b67b1c02c7a39e34290d99a4997c3039160a24ae2533d547003e8ca92d6592b",
+      "bytes": 2631,
+      "sha256": "d8ce883c51663286bf7e47f5309d53f4657644ddb76ea78ba888b6592367d8c5",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
       "included_in_plan_batch_01": true,
@@ -159,7 +206,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/RELEASE_NOTES.md",
@@ -173,7 +223,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/REPAIR_STATUS.md",
@@ -187,7 +240,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.css",
@@ -201,7 +257,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-bar.js",
@@ -215,7 +274,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.css",
@@ -229,7 +291,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
@@ -243,7 +308,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -257,7 +325,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assistant-features.css",
@@ -271,7 +342,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assistant-features.js",
@@ -285,7 +359,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/attachments.css",
@@ -299,7 +376,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -313,7 +393,42 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-demo-batch4.css",
+      "bytes": 621,
+      "sha256": "672de1fbeb2e9d14ba8f59d60488ea712fdd571c43cc4cd18c03792f74f87f20",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-demo-batch4.js",
+      "bytes": 16315,
+      "sha256": "f3a649ddd7269108fb0b207dd6e5bcadc30988324e3408e4f8eb831a4e1a2c8c",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-protocol.css",
+      "bytes": 2993,
+      "sha256": "62c2b2fb1d94392798d109478ff2fbf01045d876eaf254a1986027f34f612824",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-protocol.js",
+      "bytes": 24191,
+      "sha256": "e7791ae354d028f451ce1acb8496554a7102aebc55f98a22a465bfbc083af59a",
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/browser-capture.css",
@@ -327,7 +442,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/browser-capture.js",
@@ -341,7 +459,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.css",
@@ -355,7 +476,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.js",
@@ -369,12 +493,15 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
-      "bytes": 7177,
-      "sha256": "7eeb4beb74b8675afad9942726e63433fcc3978e909e21a4c0074b6aacf3d3f7",
+      "bytes": 7224,
+      "sha256": "e5b3bb71abe8a24d992ca57f629c0e3e03568ee6fba531323800f89872d282a8",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
       "included_in_plan_batch_01": true,
@@ -383,7 +510,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.css",
@@ -397,12 +527,15 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
-      "bytes": 174228,
-      "sha256": "234d3fc99d9e2142bbb44dd7def908512a7bd8a20970d10f0ca36bcfd1a90f01",
+      "bytes": 174969,
+      "sha256": "f7c1295a917fc68764c7859b7305fd3090ddf86771d07ef3922ff27e1fa94fb9",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": false,
       "included_in_plan_batch_01": true,
@@ -411,7 +544,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer-state.css",
@@ -425,7 +561,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer-state.js",
@@ -439,7 +578,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer.css",
@@ -453,7 +595,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/context.css",
@@ -467,7 +612,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/context.js",
@@ -481,7 +629,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/data.js",
@@ -495,7 +646,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.css",
@@ -509,7 +663,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js",
@@ -523,7 +680,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/goals.css",
@@ -537,7 +697,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
@@ -551,7 +714,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/history.css",
@@ -565,7 +731,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/history.js",
@@ -579,12 +748,15 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/index.html",
-      "bytes": 2883399,
-      "sha256": "64c4b96d6ab1505ca6736195a4e9e4915cae3d1dd0f139bcdd4a607b18bb31ff",
+      "bytes": 2931652,
+      "sha256": "c17ddfaff72a67981ad84e0cbf0d390908a95340f48c4cd7507f1ed6c0e612af",
       "changed_from_supplied_v2": true,
       "changed_in_plan_batch_01": true,
       "included_in_plan_batch_01": true,
@@ -593,7 +765,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/lens.css",
@@ -607,7 +782,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/lens.js",
@@ -621,7 +799,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/menus.css",
@@ -635,7 +816,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/menus.js",
@@ -649,7 +833,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
@@ -663,7 +850,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
@@ -677,7 +867,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/narrow-review.css",
@@ -691,7 +884,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/narrow-review.js",
@@ -705,7 +901,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
@@ -719,7 +918,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
@@ -733,7 +935,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch1.css",
@@ -746,7 +951,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch1.js",
@@ -759,7 +967,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch2.css",
@@ -770,7 +981,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plan-demo-batch2.js",
@@ -781,7 +995,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.css",
@@ -795,12 +1012,15 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
-      "bytes": 144100,
-      "sha256": "843fe2e5117ae95c26bf2e017a1080b9b9eda43f52db8b776772ef2c5b813283",
+      "bytes": 147211,
+      "sha256": "1c7456203c3d826bec6379da6661bc4254a6384bd8a8cd4357099d77727c82a6",
       "changed_from_supplied_v2": false,
       "changed_in_plan_batch_01": true,
       "included_in_plan_batch_01": true,
@@ -809,7 +1029,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/questions.css",
@@ -823,7 +1046,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/questions.js",
@@ -837,7 +1063,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.css",
@@ -851,7 +1080,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/repair-demos.js",
@@ -865,7 +1097,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/BATCH_03_COVERAGE.json",
@@ -873,7 +1108,10 @@
       "sha256": "2fd33512ac45973b93eae690dc7769d72f1867442eba2af5d325be054e8c02e4",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/assistant-results.json",
@@ -887,7 +1125,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/manager-inventory.json",
@@ -901,7 +1142,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/delivery-rebuild/settings-results.json",
@@ -915,7 +1159,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/reports/plan-demo-batch2-coverage.json",
@@ -926,7 +1173,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.css",
@@ -934,7 +1184,10 @@
       "sha256": "29d7a57dc89ed0162ca4c1e08c9a3167578fa12bd5f2f1ca7252814e3de7c666",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.js",
@@ -942,7 +1195,10 @@
       "sha256": "c422f1391c1216632ebefc8bbd98d161abb9fdac0e57f0a983ca5f1fbcf4637c",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.css",
@@ -950,7 +1206,10 @@
       "sha256": "06364f363d188a5e3ac022d8e4111729f91dc4665077bb7c7dcd147f9506fe9d",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.js",
@@ -958,7 +1217,10 @@
       "sha256": "2a8d3873a419c9f260dc4a99576f501efed8f54d39a9d0685c3cd77494702fe1",
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.css",
@@ -972,7 +1234,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js",
@@ -986,7 +1251,10 @@
       "changed_in_plan_batch_02": true,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/shell.html",
@@ -1000,7 +1268,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
@@ -1014,7 +1285,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/threadops.css",
@@ -1028,7 +1302,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/threadops.js",
@@ -1042,7 +1319,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/todos.css",
@@ -1056,7 +1336,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
@@ -1070,7 +1353,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": true
+      "changed_in_batch_03": true,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.css",
@@ -1084,7 +1370,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
@@ -1098,7 +1387,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript.css",
@@ -1112,7 +1404,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript.js",
@@ -1126,7 +1421,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcripts.css",
@@ -1140,7 +1438,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
@@ -1154,7 +1455,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
@@ -1168,7 +1472,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
@@ -1182,7 +1489,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
@@ -1196,7 +1506,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
@@ -1210,7 +1523,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
@@ -1224,7 +1540,10 @@
       "changed_in_plan_batch_02": false,
       "included_in_batch_03": true,
       "verified_in_batch_03": true,
-      "changed_in_batch_03": false
+      "changed_in_batch_03": false,
+      "included_in_batch_04": true,
+      "verified_in_batch_04": true,
+      "evidence_status": "Included file bytes verified; semantic scope is the bounded batch report."
     },
     {
       "path": "Concepts/pm7-tools/ASSISTANT_SETTINGS_V2.md",
@@ -1237,7 +1556,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/ASSISTANT_SETTINGS_V3.md",
@@ -1250,7 +1571,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.css",
@@ -1263,7 +1586,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.js",
@@ -1276,7 +1601,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_narrow_source.py",
@@ -1289,7 +1616,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_checkpoint.json",
@@ -1302,7 +1631,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_contract.json",
@@ -1315,7 +1646,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.css",
@@ -1328,7 +1661,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.js",
@@ -1341,7 +1676,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/assistant_settings_source.py",
@@ -1354,7 +1691,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/base/TestPMConcept-assistant-settings-base.html",
@@ -1367,7 +1706,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/build_pm7.py",
@@ -1380,7 +1721,9 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     },
     {
       "path": "Concepts/pm7-tools/build_testpm_assistant_settings.py",
@@ -1393,20 +1736,21 @@
       "verified_in_plan_batch_02": false,
       "evidence_status": "Historical out-of-scope carry-forward; not supplied or reverified here.",
       "included_in_batch_03": false,
-      "verified_in_batch_03": false
+      "verified_in_batch_03": false,
+      "included_in_batch_04": false,
+      "verified_in_batch_04": false
     }
   ],
   "acceptance": {
     "bounded_functional": "PASS",
-    "recorded_frames": 1774,
-    "visual_review": "Consecutive contact sheets + selected native frames",
-    "motion_cadence": "QUALIFIED; not perfect 60 fresh frames/sec",
-    "APR_016": "OPEN",
-    "APR_018": "OPEN"
+    "recording_and_visual_scope": "See Batch 4 checkpoint and VISUAL_REVIEW.json",
+    "APR-016": "OPEN",
+    "APR-018": "OPEN",
+    "native_runtime": "NOT_PROVED"
   },
   "settings_modified": false,
   "governance_modified": false,
-  "batch_checkpoint": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_03_CHECKPOINT.json",
-  "external_manifest_rows_currentness": "Rows outside the supplied Assistant folder are historical/out-of-scope; not supplied, not reverified, and not permission to replace current Settings/onboarding.",
-  "basis_archive_sha256": "4cb03296ad37dff322a43e0a5fffc1a6bd72680cda993a96e4d3dc5f7f291011"
+  "batch_checkpoint": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_04_CHECKPOINT.json",
+  "external_manifest_rows_currentness": "Historical out-of-scope rows are preserved, not reverified. No Settings/onboarding files are included.",
+  "basis_archive_sha256": "5d96f4ce046f7cfe5ff44a7a145f5824e23cb39b9c2b2b7c7a432e4190e05486"
 }

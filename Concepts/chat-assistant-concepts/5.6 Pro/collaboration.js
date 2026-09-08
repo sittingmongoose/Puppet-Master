@@ -859,6 +859,7 @@
     }
     if (run.kind === 'brainstorm') {
       var b = run.brainstorm || {};
+      if(b.protocolVersion)return window.PM56_BRAINSTORM.phaseLabel(run);
       var qb = b.questionBank || {};
       var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
       return 'Phase: ' + (b.phase || 'intake') + ' · ' + (qb.askedIds || []).length + '/' + eff + ' questions used · ' + (b.proposals || []).length + ' proposals';
@@ -901,6 +902,7 @@
   }
 
   function brainstormInline(ctx, run) {
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderSummary(ctx,run);
     var b = run.brainstorm || {};
     var qb = b.questionBank || {};
     var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
@@ -1007,6 +1009,7 @@
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
     if(run.kind === 'review' && run.review && run.review.protocolVersion) return '';
+    if(window.PM56_BRAINSTORM?.owns(run.id))return '';
     var c = completionProjection(run);
     if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
@@ -1054,6 +1057,7 @@
       body +
       '<div class="collab-card-foot">' +
         '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
+        (window.PM56_BRAINSTORM?.owns(run.id)?'<button class="soft-button" data-action="brainstorm-open-results" data-run="'+esc(run.id)+'">Open exploration</button>':'') +
         (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
         '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
         '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
@@ -1401,6 +1405,7 @@
   var BS_PHASES = ['intake', 'blind_proposals', 'normalize', 'debate', 'evidence', 'vote', 'synthesis'];
   var BS_PHASE_LABEL = { intake: 'Intake and frontier', blind_proposals: 'Blind proposals', normalize: 'Normalize', debate: 'Debate', evidence: 'Evidence round', vote: 'Vote', synthesis: 'Synthesis' };
   function renderBrainstormFollowOn(ctx, run) {
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderActions(ctx,run);
     var b = run.brainstorm;
     var idx = BS_PHASES.indexOf(b.phase);
     var next = idx >= 0 && idx < BS_PHASES.length - 1 ? BS_PHASES[idx + 1] : null;
@@ -1731,7 +1736,7 @@
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
-      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') +
+      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -2002,6 +2007,7 @@
       effect('usageRecords', newRun.participants.length);
       RTC.runs.push(newRun);
       if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
+      if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }
@@ -2262,6 +2268,7 @@
      support percentage. Only admitted, current, completed attempts vote
      (PART-009). */
   function voteTally(run){
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.tally(run);
     var support=0, oppose=0, abstain=0, ineligible=0, i, p;
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];

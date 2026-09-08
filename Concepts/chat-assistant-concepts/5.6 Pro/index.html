@@ -12431,6 +12431,12 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 
 .review-demo-guide{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;margin-top:6px;border-top:1px solid var(--line);font-size:12px;flex-wrap:wrap}.review-demo-guide>div:first-child{flex:1;min-width:170px}.review-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.review-demo-guide strong{font-size:12px;font-weight:550;line-height:1.5;display:block}.review-demo-controls{display:flex;gap:7px;align-items:center}.review-demo-guide p{flex-basis:100%;margin:0}.collab-configure>.review-demo-guide{margin:0;padding:12px 16px}.review-document>.review-demo-guide{margin:0 0 16px}
 
+/* Shared narrow document grammar; no colored edge bands. Working styles untouched. */
+.bs-document{max-width:840px;margin:0 auto;padding:22px 24px 32px!important;min-width:0}.bs-document h1{font-size:20px;line-height:1.35;margin:10px 0;overflow-wrap:anywhere}.bs-document h3{font-size:13px}.bs-meta,.bs-summary{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.bs-summary{padding:8px 0}.bs-summary strong{color:var(--text);font-size:12px}.bs-objective{font-size:12px;line-height:1.65;color:var(--muted);margin:8px 0 12px}.bs-toolbar,.bs-actions,.bs-evidence-links{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.bs-toolbar{padding:5px 0 12px}.bs-toolbar [aria-pressed=true]{font-weight:650;color:var(--text)}.bs-actions{padding:12px 0}.bs-actions button,.bs-evidence-links button{font-size:11px;white-space:normal;text-align:left}.bs-decision{padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;gap:7px}.bs-decision>span{color:var(--muted);font-size:11px}.bs-decision>strong{font-size:15px}.bs-decision p,.bs-option p,.bs-vote p{font-size:12px;line-height:1.6;color:var(--muted);margin:6px 0}.bs-option{padding:16px 0;border-bottom:1px solid var(--line);min-width:0}.bs-option header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-size:13px;line-height:1.5}.bs-option header>span{font-size:11px;color:var(--muted)}.bs-option details{margin-top:8px;font-size:12px}.bs-option summary,.bs-detail summary{cursor:pointer;font-weight:550;font-size:12px}.bs-option dl{display:grid;grid-template-columns:64px minmax(0,1fr);gap:9px;margin:12px 0;line-height:1.6;font-size:11px}.bs-option dt{color:var(--muted)}.bs-option dd{margin:0}.bs-option small,.bs-vote small{display:block;font-size:10px;color:var(--muted);margin-top:6px}.bs-constraint{display:flex;align-items:flex-start;gap:8px;margin-top:7px;font-size:11px;line-height:1.55}.bs-constraint svg{flex:none;margin-top:2px}.bs-detail{padding:13px 0;border-bottom:1px solid var(--line);font-size:12px}.bs-detail>p{line-height:1.6;color:var(--muted)}.bs-vote{display:grid;gap:4px;padding:12px 0}.bs-vote>strong{font-size:12px}.bs-vote>span{font-size:11px;color:var(--muted)}.bs-provenance,.bs-empty{font-size:10px;color:var(--muted);line-height:1.6}.bs-source,.bs-markdown{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-size:12px;line-height:1.65;padding:14px;border:1px solid var(--line);border-radius:9px;max-width:100%}.bs-evidence-links{margin:10px 0}.bs-evidence-links button{display:inline-flex;align-items:center;gap:4px}.bs-backlink{margin:12px 18px}.collab-kind-brainstorm .collab-card-head{flex-wrap:wrap}.collab-kind-brainstorm .collab-card-title{min-width:0;flex:1 1 150px;overflow-wrap:anywhere}.collab-kind-brainstorm .collab-card-foot{flex-wrap:wrap}
+@media(max-width:800px){.bs-document{padding:16px!important}.bs-document h1{font-size:18px}.bs-meta{justify-content:flex-start}}
+
+.bs-demo-guide{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;margin-top:6px;border-top:1px solid var(--line);font-size:12px;flex-wrap:wrap}.bs-demo-guide>div:first-child{flex:1;min-width:170px}.bs-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.bs-demo-guide strong{font-size:12px;font-weight:550;line-height:1.5;display:block}.bs-demo-controls{display:flex;gap:7px;align-items:center}.collab-configure>.bs-demo-guide{margin:0;padding:12px 16px}.bs-document>.bs-demo-guide{margin:0 0 16px}.editor-pane>.bs-demo-guide{margin:0;padding:12px 18px}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -30465,7 +30471,7 @@ window.PM56_EXT = window.PM56_EXT || {
        projector landed, so the key reads the projection's currentness. */
     var pk = r.approved ? progress(r).currentness_hash : 'unadmitted';
     return '<article class="system-card plan-doc pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-'+r.version+'-'+esc(r.status)+'-'+esc(r.view)+'-'+esc(pk)+'-'+((r.attention&&r.attention.kind)||'none')+'" data-plan-id="'+esc(r.plan_id)+'" data-topology="'+esc(r.topology||'agent')+'">'+
-      cardHeader(r)+
+      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</article>';
@@ -31541,8 +31547,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var id = String(artifactId).startsWith('plan:') ? String(artifactId).slice(5) : ARTIFACT_TO_PLAN[artifactId];
     var r = id && rec(id);
     if(!r) return '';
-    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
-      cardHeader(r)+
+    return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+(window.PM56_BRAINSTORM_DEMOS?.planGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
+      cardHeader(r)+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</div>';
@@ -31554,7 +31560,31 @@ window.PM56_EXT = window.PM56_EXT || {
   return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
+  // The existing Plan owner accepts a validated BrainStorm synthesis. Its
+  // scoped ledger/units are concept records, not repository WorkNodes or canon.
+  function createFromBrainstorm(x){
+    const c=EXT.ctx(),thread=c.state.threads.find(t=>t.id===x?.threadId);
+    if(!thread||!x.runId||!x.sourceHash||!x.title||!Array.isArray(x.blocks)||!x.blocks.length||!Array.isArray(x.steps)||!x.steps.length)return {ok:false,error:'invalid_brainstorm_plan'};
+    const id='brainstorm-plan-'+x.runId,fingerprint=JSON.stringify(x),existing=rec(id);
+    if(existing)return existing.synthesisFingerprint===fingerprint?{ok:true,reused:true,planId:id}:{ok:false,error:'conflicting_plan_handoff'};
+    const origin=window.PM56_COLLAB?.run(x.runId);
+    if(!origin||origin.status!=='running'||origin.threadId!==x.threadId||origin.brainstorm?.phase!=='synthesis'||origin.brainstorm.input.sourceHash!==x.sourceHash)return {ok:false,error:'brainstorm_handoff_not_ready'};
+    if(JSON.stringify(window.PM56_BRAINSTORM.planPayload(origin))!==fingerprint)return {ok:false,error:'brainstorm_handoff_mismatch'};
+    if(currentPlan(x.threadId))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const blockSteps=steps(x.blocks),ids=new Set();
+    if(blockSteps.length!==x.steps.length)return {ok:false,error:'plan_step_coverage'};
+    for(const step of x.steps){const block=blockSteps.find(b=>b.plan_step_id===step.id);if(!block||ids.has(step.id)||!step.acceptance||step.dependsOn.some(d=>!ids.has(d))||JSON.stringify(block.depends_on)!==JSON.stringify(step.dependsOn))return {ok:false,error:'invalid_plan_steps'};ids.add(step.id);}
+    const units=x.steps.map(step=>({id:'APU-'+id+'-'+step.id,step:step.id,title:step.title,acceptance:[step.acceptance],negative:['No project mutation before an explicit Build.'],deps:step.dependsOn.map(d=>'APU-'+id+'-'+d)}));
+    const r=planRec({id,thread:x.threadId,title:x.title,strategy:'Deep: BrainStorm',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
+      ledger:{id:'apl-'+id,scope:'run',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'brainstorm',ref:x.runId,note:'Frozen recorded exploration '+x.sourceHash}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
+    r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
+    const card={id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id},at=thread.messages.findIndex(m=>m.runId===x.runId);
+    thread.messages.splice(at<0?thread.messages.length:at+1,0,card);
+    return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
+  }
+
   window.PM56_PLANS = {
+    createFromBrainstorm:createFromBrainstorm,
     get:rec, all:function(){ return P().records; },
     // Concept-only admission seam. The scheduler validates its due time and
     // receipt; the Plan owner independently rechecks exact identity and state.
@@ -33710,6 +33740,7 @@ window.PM56_EXT = window.PM56_EXT || {
     }
     if (run.kind === 'brainstorm') {
       var b = run.brainstorm || {};
+      if(b.protocolVersion)return window.PM56_BRAINSTORM.phaseLabel(run);
       var qb = b.questionBank || {};
       var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
       return 'Phase: ' + (b.phase || 'intake') + ' · ' + (qb.askedIds || []).length + '/' + eff + ' questions used · ' + (b.proposals || []).length + ' proposals';
@@ -33752,6 +33783,7 @@ window.PM56_EXT = window.PM56_EXT || {
   }
 
   function brainstormInline(ctx, run) {
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderSummary(ctx,run);
     var b = run.brainstorm || {};
     var qb = b.questionBank || {};
     var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
@@ -33858,6 +33890,7 @@ window.PM56_EXT = window.PM56_EXT || {
      `Running` label that hides partial state is exactly what this replaces. */
   function completionLine(ctx, run) {
     if(run.kind === 'review' && run.review && run.review.protocolVersion) return '';
+    if(window.PM56_BRAINSTORM?.owns(run.id))return '';
     var c = completionProjection(run);
     if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
     if (c.clean_completion && !c.review_truth && !c.vote) return '';
@@ -33905,6 +33938,7 @@ window.PM56_EXT = window.PM56_EXT || {
       body +
       '<div class="collab-card-foot">' +
         '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
+        (window.PM56_BRAINSTORM?.owns(run.id)?'<button class="soft-button" data-action="brainstorm-open-results" data-run="'+esc(run.id)+'">Open exploration</button>':'') +
         (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
         '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
         '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
@@ -34252,6 +34286,7 @@ window.PM56_EXT = window.PM56_EXT || {
   var BS_PHASES = ['intake', 'blind_proposals', 'normalize', 'debate', 'evidence', 'vote', 'synthesis'];
   var BS_PHASE_LABEL = { intake: 'Intake and frontier', blind_proposals: 'Blind proposals', normalize: 'Normalize', debate: 'Debate', evidence: 'Evidence round', vote: 'Vote', synthesis: 'Synthesis' };
   function renderBrainstormFollowOn(ctx, run) {
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderActions(ctx,run);
     var b = run.brainstorm;
     var idx = BS_PHASES.indexOf(b.phase);
     var next = idx >= 0 && idx < BS_PHASES.length - 1 ? BS_PHASES[idx + 1] : null;
@@ -34582,7 +34617,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
-      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') +
+      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
       '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
@@ -34853,6 +34888,7 @@ window.PM56_EXT = window.PM56_EXT || {
       effect('usageRecords', newRun.participants.length);
       RTC.runs.push(newRun);
       if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
+      if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }
@@ -35113,6 +35149,7 @@ window.PM56_EXT = window.PM56_EXT || {
      support percentage. Only admitted, current, completed attempts vote
      (PART-009). */
   function voteTally(run){
+    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.tally(run);
     var support=0, oppose=0, abstain=0, ineligible=0, i, p;
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];
@@ -41187,6 +41224,246 @@ window.PM56_EXT = window.PM56_EXT || {
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_REVIEW_DEMOS={start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
+})();
+
+/* BrainStorm concept protocol: validated recorded inputs on the existing
+ * CollaborativeRun. No provider execution, network research or project writes.
+ * The Plan owner creates the single resulting Deep Plan. No second Plan store. */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,C=window.PM56_COLLAB,P=window.PM56_PLANS;
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;};
+ const run=id=>C.run(id),owns=id=>!!run(id)?.brainstorm?.protocolVersion,fail=error=>({ok:false,error});
+ const views=new Map(),object=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
+ const labels={intake:'Intake',blind_proposals:'Independent proposals',normalize:'Options compared',debate:'Debating alternatives',evidence:'Checking evidence',vote:'Considering votes',synthesis:'Ready to synthesize',completed:'Deep Plan ready'};
+ function phaseLabel(r){return labels[r.brainstorm.phase]||r.brainstorm.phase;}
+ function say(r,type,body,p){return C.appendMessage(r.id,{senderKind:p?'participant':'coordinator',senderId:p?.id||null,senderName:p?.role||'BrainStorm coordinator',messageType:type,body});}
+ function core(r){return r.participants.filter(p=>p.additiveRoleKind==='none'||!p.additiveRoleKind);}
+ function current(r,a){const p=r.participants.find(p=>p.id===a.participantId);return !!(p&&p.assignmentRevision===a.assignmentRevision&&(!a.completionAttemptId||p.attempts.at(-1)?.attempt_id===a.completionAttemptId)&&(!a.completionAttemptId||p.outcome==='completed'));}
+ function gate(r,x){if(!object(x))return 'invalid_payload';if(!r?.brainstorm?.protocolVersion)return 'brainstorm_input_unavailable';if(r.status!=='running')return 'run_not_running';if(x.epoch!==r.stopEpoch)return 'stale_epoch';if(x.sourceHash!==r.brainstorm.input.sourceHash)return 'different_source_hash';if(r.definitionRevision!==r.brainstorm.definitionRevision)return 'definition_changed';return null;}
+ function evidenceValid(r,ids){return Array.isArray(ids)&&ids.length>0&&ids.every(id=>r.brainstorm.input.evidence.some(e=>e.id===id));}
+ function admit(r,d){
+  if(!d.brainstormInput)return;
+  const input=freeze({...clone(d.brainstormInput),frozenAt:new Date().toISOString()});
+  r.brainstorm={protocolVersion:1,definitionRevision:r.definitionRevision,input,phase:'intake',
+   questionBank:{baselineLimit:r.config.questionLimit,grillExtension:r.config.grillExtension,grillMeEnabled:!!d.grillMe,askedIds:[],resolvedIds:[],duplicateIds:[],researchRoutedIds:input.evidence.map(e=>e.id),importedAnswers:clone(input.answers||[])},
+   attempts:core(r).map(p=>({id:'bs-attempt-'+r.id+'-'+p.id,participantId:p.id,assignmentRevision:p.assignmentRevision,epoch:r.stopEpoch,sourceHash:input.sourceHash,status:'running',input:{sourceHash:input.sourceHash,peerProposals:[],peerIdentities:[]},proposal:null})),
+   proposals:[],debates:[],evidenceChecks:[],votes:[],hardConstraintViolations:[],dissent:[],decision:null,synthesis:null};
+  core(r).forEach(p=>{p.status='working';p.outcome=null;p.current='Independent proposal against the frozen brief';});
+  r.expectedOutputs=[{id:'deep-plan-'+r.id,delivered:false}];
+  say(r,'message','Recorded example: '+input.label+'. '+(input.answers||[]).length+' prior answers retained; no repeat questions.');
+ }
+ function submitProposal(id,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm,a=b.attempts.find(a=>a.id===x.attemptId);
+  if(!a||!current(r,a)||a.assignmentRevision!==x.assignmentRevision)return fail('stale_assignment');
+  if(a.status==='completed')return JSON.stringify(a.proposal)===JSON.stringify(x.proposal)?{ok:true,reused:true}:fail('conflicting_proposal');
+  if(!['intake','blind_proposals'].includes(b.phase))return fail('proposal_round_closed');
+  const q=x.proposal;
+  if(!object(q)||!q.id||!q.optionKey||!q.title||!q.approach||!object(q.facts)||!evidenceValid(r,q.evidenceRefs)||['assumptions','benefits','costs','risks','validation','rollback'].some(k=>!Array.isArray(q[k])||!q[k].length))return fail('incomplete_proposal');
+  if(b.input.constraints.some(c=>!(c.field in q.facts)||typeof q.facts[c.field]!==typeof c.expected))return fail('missing_constraint_fact');
+  if(b.attempts.some(other=>other!==a&&other.proposal?.id===q.id))return fail('duplicate_proposal_id');
+  a.proposal=freeze(clone(q));a.status='completed';b.phase='blind_proposals';
+  const p=core(r).find(p=>p.id===a.participantId);C.setOutcome(id,p.id,'completed',{reason:'Recorded independent proposal received'});a.completionAttemptId=p.attempts.at(-1).attempt_id;p.current='Proposal submitted independently';
+  say(r,'pass','Independent proposal submitted.',p);return {ok:true,attemptId:a.id};
+ }
+ function normalize(id,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm;
+  if(b.attempts.some(a=>a.status!=='completed'||!current(r,a)))return fail('proposals_incomplete_or_stale');
+  if(b.proposals.length)return {ok:true,reused:true};
+  const map=new Map();
+  for(const a of b.attempts){const q=a.proposal,old=map.get(q.optionKey),semantic=clone(q);delete semantic.id;
+   if(old&&old.fingerprint!==JSON.stringify(semantic))return fail('conflicting_option_definition');
+   if(old){old.originatingParticipantIds.push(a.participantId);old.originalProposalIds.push(q.id);}
+   else map.set(q.optionKey,{...clone(q),id:q.optionKey,originatingParticipantIds:[a.participantId],originalProposalIds:[q.id],fingerprint:JSON.stringify(semantic)});
+  }
+  b.proposals=freeze([...map.values()]);b.phase='normalize';say(r,'message',b.attempts.length+' independent proposals consolidated into '+b.proposals.length+' alternatives. All origins retained.');return {ok:true};
+ }
+ function debate(id,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm;
+  if(b.attempts.some(a=>!current(r,a)))return fail('stale_assignment');
+  const previous=b.debates.find(d=>d.round===x.round);
+  if(previous)return JSON.stringify(previous.messages)===JSON.stringify(x.messages)?{ok:true,reused:true}:fail('conflicting_debate_round');
+  if(!['normalize','debate'].includes(b.phase)||x.round!==b.debates.length+1||x.round>r.config.debateRounds)return fail('invalid_debate_round');
+  if(!Array.isArray(x.messages)||x.messages.length<2||x.messages.some(m=>!object(m)||!core(r).some(p=>p.id===m.participantId)||!m.body||!evidenceValid(r,m.evidenceRefs)))return fail('invalid_debate_message');
+  b.debates.push(freeze({round:x.round,messages:clone(x.messages)}));b.phase='debate';x.messages.forEach(m=>say(r,'message',m.body,core(r).find(p=>p.id===m.participantId)));return {ok:true};
+ }
+ function recordEvidence(id,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm;
+  if(b.attempts.some(a=>!current(r,a)))return fail('stale_assignment');
+  if(b.evidenceChecks.length)return JSON.stringify(b.evidenceChecks)===JSON.stringify(x.checks)?{ok:true,reused:true}:fail('conflicting_evidence');
+  if(b.phase!=='debate'||b.debates.length!==r.config.debateRounds)return fail('debate_incomplete');
+  if(!Array.isArray(x.checks)||x.checks.some(c=>!object(c))||x.checks.length!==b.proposals.length||new Set(x.checks.map(c=>c.proposalId)).size!==x.checks.length)return fail('evidence_coverage');
+  for(const q of b.proposals){const check=x.checks.find(c=>c.proposalId===q.id);if(!check||!evidenceValid(r,check.evidenceRefs)||!check.summary)return fail('invalid_evidence');}
+  b.evidenceChecks=freeze(clone(x.checks));
+  b.hardConstraintViolations=b.proposals.flatMap(q=>b.input.constraints.filter(c=>c.hard&&q.facts[c.field]!==c.expected).map(c=>({proposalId:q.id,approach:q.title,constraintId:c.id,constraint:c.text,actual:q.facts[c.field],expected:c.expected,evidenceRefs:q.evidenceRefs,detail:'Frozen option capability conflicts with the required value.'})));
+  b.phase='evidence';say(r,'response','Evidence checked for every option. '+b.hardConstraintViolations.length+' hard-constraint conflict'+(b.hardConstraintViolations.length===1?'':'s')+' retained.');return {ok:true};
+ }
+ function vote(id,participantId,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm,a=b.attempts.find(a=>a.participantId===participantId);
+  if(!a||!current(r,a)||a.status!=='completed')return fail('participant_not_current');
+  if(!['evidence','vote'].includes(b.phase))return fail('evidence_round_incomplete');
+  if(!b.proposals.some(q=>q.id===x.proposalId)||!['support','oppose','abstain'].includes(x.position)||!['high','medium','low'].includes(x.confidence)||!x.reason||!evidenceValid(r,x.evidenceRefs))return fail('invalid_vote');
+  const p=core(r).find(p=>p.id===participantId),v={id:'vote-'+id+'-'+participantId,participantId,participantRole:p.role,proposalId:x.proposalId,position:x.position,confidence:x.confidence,reason:x.reason,evidenceRefs:clone(x.evidenceRefs),sourceHash:x.sourceHash,assignmentRevision:p.assignmentRevision,attemptId:a.completionAttemptId,hardConstraintConflicts:b.hardConstraintViolations.filter(h=>h.proposalId===x.proposalId).map(h=>h.constraintId)};
+  const old=b.votes.find(v=>v.participantId===participantId);if(old)return JSON.stringify(old)===JSON.stringify(v)?{ok:true,reused:true}:fail('conflicting_vote');
+  b.votes.push(freeze(v));b.phase='vote';say(r,'vote',x.position+' · '+b.proposals.find(q=>q.id===x.proposalId).title+' — '+x.reason,p);return {ok:true};
+ }
+ function decide(id,x){
+  const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm;
+  if(b.votes.length!==b.attempts.length)return fail('votes_incomplete');
+  if(b.attempts.some(a=>!current(r,a)||!b.votes.some(v=>v.participantId===a.participantId&&v.attemptId===a.completionAttemptId&&v.assignmentRevision===a.assignmentRevision)))return fail('stale_participant_result');
+  const q=b.proposals.find(q=>q.id===x.selectedProposalId);if(!q||!x.reason||!Array.isArray(x.steps)||!x.steps.length)return fail('incomplete_synthesis');
+  if(b.hardConstraintViolations.some(h=>h.proposalId===q.id))return fail('hard_constraint_disqualified');
+  const seen=new Set();for(const s of x.steps){if(!object(s)||!s.id||seen.has(s.id)||!s.title||!s.text||!s.acceptance||!Array.isArray(s.dependsOn)||s.dependsOn.some(id=>!seen.has(id)))return fail('invalid_plan_steps');seen.add(s.id);}
+  const d={selectedProposalId:q.id,reason:x.reason,steps:clone(x.steps)};
+  if(b.decision)return JSON.stringify(b.decision)===JSON.stringify(d)?{ok:true,reused:true}:fail('conflicting_synthesis_decision');
+  b.decision=freeze(d);b.dissent=freeze(b.votes.filter(v=>(v.proposalId!==q.id&&v.position==='support')||(v.proposalId===q.id&&v.position==='oppose')).map(v=>clone(v)));b.phase='synthesis';say(r,'response','Recommended: '+q.title+'. '+x.reason);return {ok:true};
+ }
+ function planPayload(r){
+  const b=r.brainstorm,d=b.decision,q=b.proposals.find(q=>q.id===d.selectedProposalId),h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text}),ul=items=>({t:'unordered_list',items});
+  const blocks=[h('Objective'),p(b.input.objective),h('Decision'),p(q.title+' — '+d.reason),h('Constraints'),ul(b.input.constraints.map(c=>c.text)),h('Research and evidence'),...b.input.evidence.map(e=>p(e.label+' — '+(e.summary||e.provenance)+' [source: '+e.id+']')),h('Implementation'),...d.steps.map(s=>({t:'plan_step',plan_step_id:s.id,title:s.title,text:s.text,depends_on:s.dependsOn,parent_step_id:null,parallel_group_id:null})),h('Verification'),ul(d.steps.map(s=>s.acceptance)),h('Assumptions'),ul(q.assumptions),h('Risks and trade-offs'),ul([...q.risks,...q.costs]),h('Rollback'),ul(q.rollback),h('Alternatives considered'),...b.proposals.filter(p=>p.id!==q.id).map(o=>p(o.title+' — '+(b.hardConstraintViolations.filter(h=>h.proposalId===o.id).map(h=>'Disqualified: '+h.constraint).join('; ')||'Not selected: '+o.approach))),h('Dissent'),...(b.dissent.length?b.dissent.map(v=>p(v.participantRole+' ['+v.position+'; confidence '+v.confidence+']: '+v.reason+' · evidence: '+v.evidenceRefs.join(', '))):[p('No opposing position was recorded in this example.')]),h('Scope notes'),p(b.input.scopeNotes),h('Provenance'),p('Recorded BrainStorm example. Local evidence is frozen, not live external research; provider, persistence and native-runtime proof are outside this demonstration.')];
+  return {runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
+ }
+ function synthesize(id){
+  const r=run(id);if(!owns(id))return fail('brainstorm_input_unavailable');const b=r.brainstorm;
+  if(b.synthesis)return {ok:true,reused:true,planId:b.synthesis.planId};
+  const why=gate(r,{epoch:r.stopEpoch,sourceHash:b.input.sourceHash});if(why)return fail(why);
+  if(b.phase!=='synthesis'||!b.decision)return fail('synthesis_not_ready');
+  if(b.attempts.some(a=>!current(r,a)))return fail('stale_participant_result');
+  if(b.hardConstraintViolations.some(h=>h.proposalId===b.decision.selectedProposalId))return fail('hard_constraint_disqualified');
+  const result=P.createFromBrainstorm(planPayload(r));if(!result.ok)return result;
+  const q=b.proposals.find(q=>q.id===b.decision.selectedProposalId);
+  b.synthesis=freeze({planId:result.planId,selected:q.id,summary:b.decision.reason,dissentPreserved:b.dissent.length,sourceHash:b.input.sourceHash});
+  b.phase='completed';r.status='completed';r.completedAt=new Date().toISOString();r.expectedOutputs.forEach(x=>{x.delivered=true;});r.artifacts.push({id:'plan:'+result.planId,kind:'assistant_plan',plan_id:result.planId,title:q.title});
+  say(r,'response','Deep Plan ready. '+b.dissent.length+' dissenting position'+(b.dissent.length===1?'':'s')+' preserved. No build has started.');return result;
+ }
+ function tally(r){
+  const b=r.brainstorm,valid=b.votes.filter(v=>{const a=b.attempts.find(a=>a.participantId===v.participantId);return a&&current(r,a)&&a.completionAttemptId===v.attemptId;}),selected=b.decision?.selectedProposalId;
+  const byOption=b.proposals.map(q=>({proposalId:q.id,support:valid.filter(v=>v.proposalId===q.id&&v.position==='support').length,oppose:valid.filter(v=>v.proposalId===q.id&&v.position==='oppose').length,disqualified:b.hardConstraintViolations.some(h=>h.proposalId===q.id)}));
+  const chosen=byOption.find(q=>q.proposalId===selected),support=chosen?.support||0,oppose=chosen?.oppose||0;
+  return {support,oppose,abstain:valid.filter(v=>v.position==='abstain').length,other_option_support:valid.filter(v=>v.position==='support'&&v.proposalId!==selected).length,ineligible:b.votes.length-valid.length,denominator:valid.length,support_pct:selected&&valid.length?Math.round(100*support/valid.length):null,quorum:valid.length===b.attempts.length?'reached':'none',tie:false,selected_proposal_id:selected||null,by_option:byOption,decision_rule:'hard constraints and evidence; not majority rule'};
+ }
+ function renderActions(c,r){const b=r.brainstorm;return '<div class="bs-actions"><button class="text-button" data-action="brainstorm-open-results" data-run="'+c.esc(r.id)+'">'+c.icon('brain',12)+' Open exploration</button>'+(b.synthesis?'<button class="soft-button" data-action="brainstorm-open-plan" data-run="'+c.esc(r.id)+'">Open Deep Plan</button>':'<button class="soft-button" data-action="collab-brainstorm-synthesize" data-run="'+c.esc(r.id)+'"'+(b.phase==='synthesis'&&r.status==='running'?'':' disabled')+'>Synthesize Deep Plan</button>')+'</div>';}
+ function renderSummary(c,r){const b=r.brainstorm;return '<div class="bs-summary"><strong>'+c.esc(phaseLabel(r))+'</strong><span>'+b.proposals.length+' alternatives · '+b.votes.length+'/'+b.attempts.length+' votes</span></div>'+renderActions(c,r);}
+ function markdown(r){const b=r.brainstorm;return ['# '+r.title,'',b.input.objective,'','## Alternatives',...b.proposals.map(q=>'### '+q.title+'\n'+q.approach+'\n'+q.originatingParticipantIds.length+' originating participants\n'+b.hardConstraintViolations.filter(h=>h.proposalId===q.id).map(h=>'Disqualified: '+h.constraint).join('\n')),'','## Debate',...b.debates.map(d=>'### Round '+d.round+'\n'+d.messages.map(m=>core(r).find(p=>p.id===m.participantId).role+': '+m.body).join('\n')),'','## Votes',...b.votes.map(v=>v.participantRole+' — '+v.position+' '+b.proposals.find(q=>q.id===v.proposalId).title+' ('+v.confidence+'): '+v.reason),'','## Decision',b.decision?.reason||'No final decision.','','## Preserved dissent',...b.dissent.map(v=>v.participantRole+': '+v.reason+' [evidence '+v.evidenceRefs.join(', ')+']'),'','## Source',b.input.sourceHash,'Recorded example; no live provider calls.'].join('\n');}
+ function documentHtml(c,id){
+  const r=run(id);if(!owns(id))return '';const b=r.brainstorm,esc=c.esc,mode=views.get(id)||'rich';
+  const header='<div class="bs-meta"><span>BrainStorm · read-only</span><span>'+esc(phaseLabel(r))+'</span></div><h1>'+esc(b.input.label)+'</h1><p class="bs-objective">'+esc(b.input.objective)+'</p><div class="bs-toolbar"><button class="text-button" data-action="brainstorm-view" data-run="'+esc(id)+'" data-mode="rich" aria-pressed="'+(mode==='rich')+'">Rich Text</button><button class="text-button" data-action="brainstorm-view" data-run="'+esc(id)+'" data-mode="markdown" aria-pressed="'+(mode==='markdown')+'">Markdown</button></div>';
+  const decision=b.decision?'<section class="bs-decision"><span>Recommendation</span><strong>'+esc(b.proposals.find(q=>q.id===b.decision.selectedProposalId).title)+'</strong><p>'+esc(b.decision.reason)+'</p></section>':'';
+  const options=b.proposals.map(q=>{const violations=b.hardConstraintViolations.filter(h=>h.proposalId===q.id),votes=b.votes.filter(v=>v.proposalId===q.id&&v.position==='support');return '<section class="bs-option" data-proposal="'+esc(q.id)+'"><header><strong>'+esc(q.title)+'</strong><span>'+votes.length+' support'+(violations.length?' · Disqualified':'')+'</span></header><p>'+esc(q.approach)+'</p>'+violations.map(h=>'<div class="bs-constraint">'+c.icon('shield',12)+'<span>'+esc(h.constraint)+'</span></div>').join('')+'<details><summary>Trade-offs and evidence</summary><dl>'+[['Benefits',q.benefits],['Costs',q.costs],['Risks',q.risks]].map(([k,a])=>'<dt>'+k+'</dt><dd>'+a.map(esc).join('<br>')+'</dd>').join('')+'</dl><div class="bs-evidence-links">'+q.evidenceRefs.map(e=>'<button class="text-button" data-action="brainstorm-open-evidence" data-run="'+esc(id)+'" data-evidence="'+esc(e)+'">'+esc(b.input.evidence.find(x=>x.id===e).label)+'</button>').join('')+'</div><small>'+q.originatingParticipantIds.length+' original proposal'+(q.originatingParticipantIds.length===1?'':'s')+' retained</small></details></section>';}).join('');
+  const votes=b.votes.length?'<details class="bs-detail" data-bs-section="votes"><summary>Votes · '+b.votes.length+' voices</summary>'+b.votes.map(v=>'<div class="bs-vote"><strong>'+esc(v.participantRole)+'</strong><span>'+esc(v.position)+' · '+esc(b.proposals.find(q=>q.id===v.proposalId).title)+'</span><p>'+esc(v.reason)+'</p><small>Confidence '+esc(v.confidence)+'</small></div>').join('')+'</details>':'';
+  const dissent=b.dissent.length?'<details class="bs-detail" data-bs-section="dissent"><summary>Dissent retained · '+b.dissent.length+'</summary>'+b.dissent.map(v=>'<div class="bs-vote"><strong>'+esc(v.participantRole)+'</strong><p>'+esc(v.reason)+'</p><small>'+esc(v.position)+' · '+esc(v.confidence)+' confidence</small><div class="bs-evidence-links">'+v.evidenceRefs.map(e=>'<button class="text-button" data-action="brainstorm-open-evidence" data-run="'+esc(id)+'" data-evidence="'+esc(e)+'">'+esc(b.input.evidence.find(x=>x.id===e).label)+'</button>').join('')+'</div></div>').join('')+'</details>':'';
+  const debate=b.debates.length?'<details class="bs-detail" data-bs-section="debate"><summary>Debate · '+b.debates.length+' rounds</summary>'+b.debates.map(d=>'<h3>Round '+d.round+'</h3>'+d.messages.map(m=>'<div class="bs-vote"><strong>'+esc(core(r).find(p=>p.id===m.participantId).role)+'</strong><p>'+esc(m.body)+'</p></div>').join('')).join('')+'</details>':'';
+  const evidence='<details class="bs-detail" data-bs-section="evidence"><summary>Sources and prior answers</summary><div class="bs-evidence-links">'+b.input.evidence.map(e=>'<button class="text-button" data-action="brainstorm-open-evidence" data-run="'+esc(id)+'" data-evidence="'+esc(e.id)+'">'+c.icon('document',12)+' '+esc(e.label)+'</button>').join('')+'</div>'+(b.input.answers||[]).map(a=>'<p>'+esc(a.question)+' — '+esc(a.answer)+'</p>').join('')+'<small>Source checksum '+esc(b.input.sourceHash)+'</small></details>';
+  return '<article class="editor-doc bs-document" data-brainstorm-run="'+esc(id)+'">'+(window.PM56_BRAINSTORM_DEMOS?.editorGuide(id)||'')+header+(mode==='markdown'?'<pre class="bs-markdown">'+esc(markdown(r))+'</pre>':decision+(options||'<p class="bs-empty">Independent proposals appear together after the blind round.</p>')+dissent+votes+debate+evidence)+renderActions(c,r)+'<p class="bs-provenance">Recorded example · local frozen evidence · no provider calls</p></article>';
+ }
+ function evidenceHtml(c,id,eid){const r=run(id),e=r?.brainstorm?.input.evidence.find(e=>e.id===eid);if(!e)return '';return '<article class="editor-doc bs-document"><button class="text-button" data-action="brainstorm-open-results" data-run="'+c.esc(id)+'">Back to exploration</button><div class="bs-meta">Frozen example evidence · '+c.esc(r.brainstorm.input.sourceHash)+'</div><h1>'+c.esc(e.label)+'</h1><pre class="bs-source">'+c.esc(e.content)+'</pre><p class="bs-provenance">'+c.esc(e.provenance||'Supplied demo input; not an external research result.')+'</p></article>';}
+ function openResults(c,id){if(!owns(id))return;c.closeMenu();c.closeDialog();c.state.editorRevealed=true;c.openEditor('brainstorm:'+id);}
+ E.action('brainstorm-open-results',(c,b)=>{openResults(c,b.dataset.run);return true;});
+ E.action('brainstorm-view',(c,b)=>{views.set(b.dataset.run,b.dataset.mode==='markdown'?'markdown':'rich');c.renderApp();return true;});
+ E.action('brainstorm-open-evidence',(c,b)=>{if(!owns(b.dataset.run))return true;c.closeDialog();c.state.editorRevealed=true;c.openEditor('brainstorm-evidence:'+b.dataset.run+':'+b.dataset.evidence);return true;});
+ E.action('brainstorm-open-plan',(c,b)=>{const id=run(b.dataset.run)?.brainstorm?.synthesis?.planId;if(id){c.closeDialog();P.openDetails(c,id);}return true;});
+ E.chainAction('collab-brainstorm-synthesize',(c,b)=>{if(!owns(b.dataset.run))return false;const res=synthesize(b.dataset.run);if(!res.ok)c.toast('Synthesis not ready',res.error);else {c.closeDialog();P.openDetails(c,res.planId);}c.renderApp();return true;});
+ E.chainAction('collab-brainstorm-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;c.toast('Protocol advances on results','Recorded inputs must complete the current round.');return true;});
+ E.chainAction('collab-open-configure',(c,b)=>{if(!owns(b.dataset.reconfigure))return false;const r=run(b.dataset.reconfigure);if(['running','paused'].includes(r.status)){c.toast('Configuration is frozen for this run','Cancel this run before starting with a different configuration.');return true;}C.openConfigure('brainstorm');const d=C.draft();d.brainstormInput=clone(r.brainstorm.input);d.name=r.title+' (new run)';c.openDialog({type:'collab-configure'});return true;});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('brainstorm:')?'BrainStorm':c.editorId?.startsWith('brainstorm-evidence:')?'BrainStorm evidence':'');
+ E.slot('editorDocument',c=>{if(c.editorId?.startsWith('brainstorm:'))return documentHtml(c,c.editorId.slice(11));if(c.editorId?.startsWith('brainstorm-evidence:')){const [id,...e]=c.editorId.slice(20).split(':');return evidenceHtml(c,id,e.join(':'));}return '';});
+ E.chainAction('reset-all',()=>{views.clear();return false;});
+ window.PM56_BRAINSTORM={admit,owns,phaseLabel,tally,submitProposal,normalize,debate,recordEvidence,vote,decide,synthesize,renderSummary,renderActions,markdown,openResults,planPayload};
+})();
+
+/* Gallery-only BrainStorm stories. Model observations are supplied recordings;
+ * option capabilities and example query results are calculated from local inputs.
+ * Every round uses validated protocol ingress. The final Plan uses its owner. */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,C=window.PM56_COLLAB,B=window.PM56_BRAINSTORM,P=window.PM56_PLANS;
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const flows={synthesis:{label:'Explore and synthesize',summary:'Independent ideas → debate → one Deep Plan'},constraint:{label:'A constraint outweighs the vote',summary:'Popular option rejected → dissent retained → offline Plan'}};
+ const hash=x=>{let h=2166136261;for(const c of JSON.stringify(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'demo:'+((h>>>0).toString(16)).padStart(8,'0');};
+ function fixture(kind){
+  const rows=[{id:'z',label:'Zeta Alpha'},{id:'a',label:'Alpha'}],query=' alpha ';
+  const local=rows.filter(row=>row.label.toLowerCase().includes(query.trim().toLowerCase()));
+  const source='const rows = [{id:"z",label:"Zeta Alpha"},{id:"a",label:"Alpha"}];\nconst query = " alpha ";\nconst result = rows.filter(r => r.label.toLowerCase().includes(query.trim().toLowerCase()));';
+  const checks='Local filter result: '+JSON.stringify(local.map(r=>r.id))+'\nExpected ranking: ["z","a"]\nRanking preserved: '+(JSON.stringify(local.map(r=>r.id))==='["z","a"]')+'\nThis local test does not measure device latency or execute a Worker.';
+  const constraints=[{id:'offline',text:'Search must work without sending collection contents to a server.',field:'networkRequired',expected:false,hard:true},{id:'ranking',text:'Search must preserve the supplied result ranking.',field:'rankingPreserved',expected:true,hard:true}];
+  const evidence=[{id:'requirements',label:'Accepted brief',content:constraints.map(c=>c.text).join('\n')+'\nKeep typing usable during searches.\nDo not claim a speed improvement until measured.',provenance:'User requirements supplied for this fictional example.'},
+   {id:'query',label:'Local query check',content:source+'\n\n'+checks,provenance:'Result calculated by this concept from the shown local input; not a native benchmark.'},
+   {id:'capabilities',label:'Option capabilities',content:'Local filter: no network dependency; preserves input order.\nSnapshot worker: local message transport; preserves input order in the proposed algorithm. Worker execution not measured here.\nHosted index: requires collection upload and a network request by design.\nA hosted route therefore fails the offline constraint.',provenance:'Frozen candidate definitions supplied for this recorded design exercise, not a discovered service capability.'},
+   {id:'latency',label:'Unmeasured trade-offs',content:'No device benchmark was supplied. Worker startup, snapshot copies and large-list latency remain to be measured. Hosted indexing can cover undownloaded collections, but requires network access.',provenance:'Explicit uncertainty. No fabricated timings.'}];
+  const input={label:kind==='constraint'?'Offline collection search':'Responsive local search',objective:kind==='constraint'?'Search a downloaded collection offline without uploading its contents.':'Keep typing responsive while searching a locally ranked collection.',constraints,evidence,
+   answers:[{id:'answer-offline',question:'May collection contents leave this device?',answer:'No.'},{id:'answer-ranking',question:'Should matching results retain their existing ranking?',answer:'Yes.'}],
+   scopeNotes:'Compatibility: retain existing query and ranking semantics. Migration: no persisted schema change. Security: no collection upload. Operations: cancel obsolete requests and reject stale results. Rollback: retain the local filter. Cross-system impact: composer input and result rendering only. Device performance remains unmeasured.'};
+  input.sourceHash=hash(input);return input;
+ }
+ function option(key){const shared={assumptions:['A downloaded collection snapshot is available.'],validation:['Padded-query matching and result order match the local fixture.'],rollback:['Keep the existing local filter behind an explicit feature switch.'],evidenceRefs:['requirements','query','capabilities','latency']};
+  if(key==='local')return {...shared,optionKey:key,title:'Local filter',approach:'Filter the in-memory list without a worker or network call.',benefits:['Minimal coordination and straightforward rollback.'],costs:['Filtering occupies the UI thread.'],risks:['Large lists may delay input; no measured threshold exists.'],facts:{networkRequired:false,rankingPreserved:true}};
+  if(key==='hosted')return {...shared,optionKey:key,title:'Hosted search index',approach:'Upload the collection to a hosted index and query it over the network.',benefits:['Can search collections that have not been downloaded.'],costs:['Network and hosted-service dependency.'],risks:['Contradicts the no-upload/offline constraint.'],facts:{networkRequired:true,rankingPreserved:true}};
+  return {...shared,optionKey:'worker',title:'Snapshot worker search',approach:'Search a local snapshot in a worker; accept only the newest query result.',benefits:['Separates query processing from UI input handling.'],costs:['Worker setup and snapshot transfer overhead.'],risks:['Old responses need request identities; performance must be measured.'],facts:{networkRequired:false,rankingPreserved:true}};
+ }
+ function current(){if(!active)return null;const r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>r.brainstorm?.protocolVersion);if(r)active.runId=r.id;return r;}
+ function stopClock(id){const clock=clocks.get(id);if(clock){clearTimeout(clock.timer);clocks.delete(id);}}
+ function start(kind){
+  if(!flows[kind])return;const c=E.ctx(),old=current();
+  if(old&&['running','paused'].includes(old.status)){const b=document.createElement('button');b.dataset.run=old.id;E.run('collab-cancel',b,new Event('click'));}if(old)stopClock(old.id);
+  const tid='brainstorm-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));
+  Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:fixture(kind).objective+' Collection contents must stay on the device.'}]});c.state.threads.push(base);
+  Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
+  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};c.switchThread(tid);C.openConfigure('brainstorm');const d=C.draft();d.name=fixture(kind).label;d.purpose=fixture(kind).objective;d.brainstormInput=fixture(kind);c.openDialog({type:'collab-configure'});c.renderApp();
+ }
+ function expected(r,kind){
+  const b=r.brainstorm,a=b.attempts,options=a.map((p,i)=>kind==='constraint'?(i===0?'worker':'hosted'):(i===1?'local':'worker'));
+  const proposals=a.map((p,i)=>({...option(options[i]),id:'proposal-'+p.id}));
+  const votes=a.map((p,i)=>({proposalId:options[i],position:'support',confidence:options[i]==='hosted'?'medium':'high',evidenceRefs:options[i]==='worker'?['query','capabilities']:['latency','requirements'],reason:options[i]==='hosted'?(i===1?'A hosted index covers undownloaded collections; keep that limitation visible in the local-only plan.':i===2?'I prefer central indexing for shared collections, but it cannot satisfy the offline rule.':'Hosted indexing could simplify cross-device updates; it remains ineligible under the current constraint.'):options[i]==='local'?'Prefer a local filter until a device benchmark justifies worker setup.':'A local snapshot keeps collection contents on-device and can preserve result order.'}));
+  const steps=[{id:'snapshot',title:'Define the local snapshot',text:'Bind collection and query identities without uploading content.',dependsOn:[],acceptance:'The snapshot contains only local collection data and preserves input rank.'},{id:'query',title:'Implement latest-query filtering',text:'Apply the local algorithm in the worker and discard responses for obsolete queries.',dependsOn:['snapshot'],acceptance:'Padded queries return [z, a]; older query results cannot replace a newer result.'},{id:'measure',title:'Verify behavior and measure latency',text:'Compare local and worker paths on target devices before enabling the feature.',dependsOn:['query'],acceptance:'Record device timings and a rollback test; do not claim an improvement without measurement.'}];
+  return {proposals,votes,steps};
+ }
+ function play(){
+  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
+  if(r.participants.length!==r.brainstorm.attempts.length){active.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
+  const session=active,records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
+  const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
+  const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:clone(records.proposals[i])}));
+  actions.push(()=>B.normalize(r.id,x()));
+  for(let round=1;round<=r.config.debateRounds;round++)actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:round===1?'Separate input handling from query work, but preserve result order and request identity.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},{participantId:a[1].participantId,body:session.kind==='constraint'?'The hosted alternative requires uploads. A higher vote count cannot override that constraint.':'A simple local path remains the rollback. No latency benefit has been demonstrated yet.',evidenceRefs:['requirements','capabilities']}]}));
+  actions.push(()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'Network dependency conflicts with the offline constraint.':'Local query behavior is consistent with the frozen requirement; speed remains unmeasured.'}))}));
+  actions.push(()=>{for(let i=0;i<a.length;i++){const result=B.vote(r.id,a[i].participantId,{...x(),...clone(records.votes[i])});if(!result.ok)return result;}return {ok:true};});
+  actions.push(()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:session.kind==='constraint'?'Choose the local snapshot path. The hosted option has more recorded support but violates the no-upload requirement. Preserve those preferences as dissent, not permission to ignore the constraint.':'Choose the snapshot worker, retain the simple local fallback, and make device measurements an acceptance step rather than claiming an unmeasured speedup.',steps:records.steps}));
+  function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.timer=setTimeout(next,120);return;}if(r.status!=='running'){stopClock(r.id);return;}
+   try{const res=actions[clock.index++]();if(!res.ok)throw Error(res.error);session.events.push({phase:r.brainstorm.phase,at:performance.now()});}
+   catch(e){session.errors.push(String(e.message||e));stopClock(r.id);E.ctx().renderApp();return;}
+   E.ctx().renderApp();if(clock.index<actions.length)clock.timer=setTimeout(next,450);else stopClock(r.id);
+  }
+  clock.timer=setTimeout(next,800);E.ctx().renderApp();
+ }
+ function finished(){const r=current();return !!(r?.brainstorm?.synthesis&&active.resultsOpened&&active.evidenceSeen&&active.dissentSeen&&active.planOpened&&active.markdownSeen);}
+ function guide(c,inDialog=false,inEditor=false){
+  if(!active||c.state.selectedThread!==active.threadId||!!c.state.dialog!==inDialog)return '';const r=current();
+  if(inDialog&&(C.draft()?.kind!=='brainstorm'||r))return '';
+  if(!inDialog&&(innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
+  const done=finished(),b=r?.brainstorm,ended=r&&['canceled','failed'].includes(r.status);
+  let text=!r?'Configure the core roles, then Start BrainStorm.':!active.played?'Play the recorded exploration.':!b.decision?'Independent proposals → debate → evidence → votes.':!active.resultsOpened?'Open the exploration to inspect alternatives.':!active.dissentSeen?'Expand Dissent retained.':!active.evidenceSeen?'Open one cited source.':!b.synthesis?'Synthesize the recommended Deep Plan.':!active.markdownSeen?'Inspect the Plan in Markdown.':'Deep Plan ready. No build has started.';
+  if(r?.status==='paused')text='Paused. Resume through the workflow controls.';
+  if(ended)text='Recorded run ended. Replay starts a fresh configuration.';
+  if(active.errors.length)text=active.errors[0];
+  return '<div class="bs-demo-guide" data-k="bs-demo-guide"><div><small>Recorded example · no provider calls</small><strong>'+c.esc(text)+'</strong></div><div class="bs-demo-controls">'+(done||ended||active.errors.length?'<button class="soft-button" data-action="brainstorm-demo-replay">Replay</button>':r&&!active.played?'<button class="soft-button" data-action="brainstorm-demo-play">Play exploration</button>':'')+'<button class="icon-button" data-action="brainstorm-demo-close" title="Close guide">'+c.icon('close',12)+'</button></div></div>';
+ }
+ ['brainstorm-open-results','brainstorm-open-evidence','brainstorm-open-plan','collab-brainstorm-synthesize'].forEach(name=>E.chainAction(name,(c,b)=>{const r=current();if(r&&b.dataset.run===r.id){if(name==='brainstorm-open-results')active.resultsOpened=true;if(name==='brainstorm-open-evidence')active.evidenceSeen=true;if(name==='brainstorm-open-plan'||name==='collab-brainstorm-synthesize')active.planOpened=true;}return false;}));
+ E.chainAction('pd-view',(c,b)=>{const r=current();if(r?.brainstorm.synthesis?.planId===b.dataset.id&&b.dataset.value==='markdown')active.markdownSeen=true;return false;});
+ document.addEventListener('toggle',e=>{
+  if(!active||!e.target.matches?.('[data-bs-section="dissent"]')||!e.target.open)return;
+  active.dissentSeen=true;
+  // Refresh only the guide. A whole-app render would collapse the user's open
+  // disclosure and move the scroll position while they are reading dissent.
+  const html=guide(E.ctx(),false,innerWidth<=1100&&E.ctx().state.editorRevealed);
+  if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.bs-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}
+ },true);
+ E.slot('composerBelow',c=>guide(c));
+ E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided BrainStorm workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_BRAINSTORM_DEMOS={start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
 })();
 </script>
   <script>(() => {

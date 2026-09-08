@@ -1,0 +1,416 @@
+{
+  "schema_id": "pm.concept_demo_coverage_delta.v1",
+  "batch_id": "assistant-demo-b04-brainstorm",
+  "source_main_checked": "636b911c30442b628cbb5a319a02b5c5b1bb7a16",
+  "source_requirements_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "retained_source_rows": 551,
+  "global_feature_groups": 67,
+  "frozen_source_preserved": true,
+  "canonical_owner": "Plans/Collaborative_Workflows.md §8",
+  "canonical_owner_git_blob": "006df71bbac47f22c2b7dccc7fcd74af4c610d33",
+  "html_sha256": "c17ddfaff72a67981ad84e0cbf0d390908a95340f48c4cd7507f1ed6c0e612af",
+  "rows": [
+    {
+      "coverage_id": "v2:BRAIN-001",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-001",
+        "category": "BrainStorm",
+        "statement": "BrainStorm is the third Deep Plan option and outputs exactly one Deep Plan.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "2ab2ea0a60e7b5719a49e49a56c7952f9ecd8b0974df9244edf431211f4609d3",
+      "disposition": "CONCEPT_SLICE_VERIFIED",
+      "evidence_scope": "Both recorded stories create one ready Deep Plan through the existing Plan owner, keep the process card, and reuse the Plan tab. This does not certify every Deep Plan entry route.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-002",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-002",
+        "category": "BrainStorm",
+        "statement": "BrainStorm baseline maximum user-decision questions is 15.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "2dcd94cefa1d0aaca63979ea7093142a6358034aa7a7d8e913cd30b09ee41320",
+      "disposition": "SUPERSEDED_SOURCE_VALUE",
+      "evidence_scope": "Source literal 15 is preserved here. Current Collaborative_Workflows §8.4 and Assistant_Plan_Runtime own baseline 20. This batch does not restore the obsolete source value.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-003",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-003",
+        "category": "BrainStorm",
+        "statement": "Grill Me increases the effective maximum by a configurable extension; default extension is 10.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "365f201843b07cf0c3aca466e8e5c4412786bf612ce8dc8bd3d7dee863271946",
+      "disposition": "SUPERSEDED_SOURCE_VALUE",
+      "evidence_scope": "Source default extension 10 is preserved here. Current owner default is 25. Additive-role question-budget behavior is not tested in these recorded stories.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-004",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-004",
+        "category": "BrainStorm",
+        "statement": "Question allowance is shared across all participants and does not reset when Grill Me is enabled mid-flow.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "08672e6b4acb0c50d40c7beb52a940bbef9c02941e980247c6d1803d0006048f",
+      "disposition": "OPEN_NOT_EXECUTED",
+      "evidence_scope": "The core-only examples import prior answers. They do not exercise enabling Grill Me mid-flow or prove all shared-budget charge rules.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-005",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-005",
+        "category": "BrainStorm",
+        "statement": "Previously answered and semantically duplicate questions are not repeated.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "bf8b6c676585650e0c91c24605a2e6c502f2017ee1af452aa175278ead5cfd27",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Two frozen prior answers are imported and no user question is repeated. General semantic question deduplication is not implemented or certified by this fixture.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-006",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-006",
+        "category": "BrainStorm",
+        "statement": "Researchable factual questions are assigned to agents rather than asked of the user.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "a183c7085eb05164666bb57cf345e0f9e1e44e89916075a70b4b6c4ce052ad03",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Frozen research facts and an actually evaluated local filter are inspected through source links. No live external research or autonomous research routing is invoked.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-007",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-007",
+        "category": "BrainStorm",
+        "statement": "BrainStorm is read-only against the target project.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "153c76cbdc631ecb86849b4c16b22ccdac68314bd428cbe326ed93c3c6755aae",
+      "disposition": "CONCEPT_SLICE_VERIFIED",
+      "evidence_scope": "Frozen input remains unchanged; synthesis creates a ready Plan without Build or To-Dos. Only a separate explicit Plan Build test admits concept work. Native permission enforcement is not proved.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-008",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-008",
+        "category": "BrainStorm",
+        "statement": "BrainStorm may request permission-gated temporary isolated MCP/tool/package provisioning for research.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "8633afd8291118a1a0ef245f07b3c53ad0f3be26395a79b95ca7abbcb6d955f7",
+      "disposition": "OPEN_NOT_EXECUTED",
+      "evidence_scope": "No MCP, tool, or package provisioning occurs. No approval or installation receipt is fabricated.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-009",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-009",
+        "category": "BrainStorm",
+        "statement": "Persistent project/host/global installation requires ordinary explicit approval.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "2fb39c21212580710e1179d46c2a639b7396c4a603771781d9995c0270feb738",
+      "disposition": "OPEN_NOT_EXECUTED",
+      "evidence_scope": "No persistent installation is attempted; approval semantics remain a separate obligation.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-010",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-010",
+        "category": "BrainStorm",
+        "statement": "Core participants make blind independent proposals before seeing other proposals.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "e2303f3a80e48b0025ac821dda15a3e9e8488e39ff4f7f0fbc43834ef65fb6be",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Each distinct recorded core proposal carries a fresh attempt with no peer proposals or peer identities in its input. All proposal origins are preserved. Live provider session isolation remains unproved.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-011",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-011",
+        "category": "BrainStorm",
+        "statement": "Participants debate, challenge assumptions, request targeted research and may propose hybrids.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "89013c89a6b4df36cb10a1d3d993c34feab2c3f9c3b2f99e5477a4dc62dc0808",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Two ordered rounds show recorded participant challenges and trade-offs before evidence. No live research requests or general-purpose hybrid generation engine are claimed.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-012",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-012",
+        "category": "BrainStorm",
+        "statement": "Voting records support/oppose/abstain, confidence, reason, evidence and hard-constraint conflicts.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "3971febb6f0a9c68013fc98fc850392812db40d7c3e5c9b870a50f73fcf37074",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Real concept vote records retain position, confidence, reason, evidence, participant/attempt identity, and constraint conflicts. The filmed stories use support ballots; comprehensive positive oppose/abstain and live-agent coverage remain open.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-013",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-013",
+        "category": "BrainStorm",
+        "statement": "Hard user-constraint violations disqualify an approach regardless of vote count.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "7e8379b58f799658b50bb22d08ecef5d9dc11cb3b18b0f570e21a300d8fad62c",
+      "disposition": "CONCEPT_SLICE_VERIFIED",
+      "evidence_scope": "Three hosted-option votes cannot override the frozen no-upload constraint. Invalid selection is rejected; the eligible local option is selected while all ballots and the disqualified alternative remain visible. Facts are supplied candidate definitions, not remote service probes.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-014",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-014",
+        "category": "BrainStorm",
+        "statement": "Final synthesis preserves material dissent and explains rejected alternatives.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "7e3697a56d182a37f8509475b66e0b6e7b459dffe171751dec96ec4b84a16ef4",
+      "disposition": "CONCEPT_SLICE_VERIFIED",
+      "evidence_scope": "The exploration and resulting Plan preserve all material recorded dissent verbatim with participant, position, confidence, and evidence. The selection reason and rejected alternatives remain readable.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-015",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-015",
+        "category": "BrainStorm",
+        "statement": "BrainStorm card remains after linked Plan creation and opens full transcript/panel.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "2a75be72c20b38de784d8b34c0724014c395b79e6ab15909adac1918c11f0a14",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "evidence_scope": "Process card and Plan card coexist; dedicated exploration, evidence, and source-Plan navigation are exercised. This is not a complete all-participant/full-panel navigation audit.",
+      "scenarios": [
+        "B04-BRAINSTORM-SYNTHESIS",
+        "B04-BRAINSTORM-CONSTRAINT"
+      ],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v2:BRAIN-016",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "BRAIN-016",
+        "category": "BrainStorm",
+        "statement": "Wonderer and Grill Me are additive participants rather than replacements.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_row_sha256": "4c88c3470fdbf397201691c2a6461fe9435acb6c43e0ddcc4ef52a11091e2369",
+      "disposition": "OPEN_NOT_EXECUTED",
+      "evidence_scope": "The recorded example supports four core roles only. Adding specialists is explicitly rejected by playback with a recovery path, not silently dropped. General Wonderer/Grill Me participation remains outside this batch.",
+      "scenarios": [],
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v3:APR-016",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "disposition": "GLOBAL_OPEN_WITH_BOUNDED_BATCH_EVIDENCE",
+      "evidence_scope": "This batch exercises two BrainStorm examples and the real mandatory configuration/shared pickers. It does not close the complete feature/collaboration matrix or all-animation recording campaign. See checkpoint for final executed checks and visual review.",
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v3:APR-018",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "disposition": "GLOBAL_OPEN_WITH_BOUNDED_BATCH_EVIDENCE",
+      "evidence_scope": "This batch exercises two BrainStorm examples and the real mandatory configuration/shared pickers. It does not close the complete feature/collaboration matrix or all-animation recording campaign. See checkpoint for final executed checks and visual review.",
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v3:APR-021",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-021",
+        "area": "Mode entry completeness",
+        "requirement": "Review and BrainStorm must enter through their intended product mode/configuration flows, not through duplicate demonstration launchers left in the wand as workarounds.",
+        "acceptance": "Open mode, configure, confirm/cancel, held-message restoration, correct run admission, repeated submit."
+      },
+      "disposition": "GLOBAL_OPEN_WITH_BOUNDED_BATCH_EVIDENCE",
+      "evidence_scope": "This batch exercises two BrainStorm examples and the real mandatory configuration/shared pickers. It does not close the complete feature/collaboration matrix or all-animation recording campaign. See checkpoint for final executed checks and visual review.",
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v3:APR-029",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-029",
+        "area": "Shared collaborator selectors",
+        "requirement": "Crew, Crew Auto, Chat Room, BrainStorm and Review use the same model and Persona picker components/catalogs as the main Assistant controls, with provider/account identities, search, favorites, effort/Fast support where available. No native select or copied subset as a substitute.",
+        "acceptance": "Five workflows × model/persona entry; selected row only changes; visible configured account choice and capability-dependent options."
+      },
+      "disposition": "GLOBAL_OPEN_WITH_BOUNDED_BATCH_EVIDENCE",
+      "evidence_scope": "This batch exercises two BrainStorm examples and the real mandatory configuration/shared pickers. It does not close the complete feature/collaboration matrix or all-animation recording campaign. See checkpoint for final executed checks and visual review.",
+      "native_runtime_proved": false
+    },
+    {
+      "coverage_id": "v3:APR-051",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-051",
+        "area": "Shared choice controls",
+        "requirement": "All remaining collaboration configuration choice controls use the same anchored picker surface and interaction primitives as the main model picker, including non-model choice lists. Models and Personas reuse the actual main catalog/renderers and preserve destination isolation. Numeric/text inputs remain appropriate inputs, not fake model lists.",
+        "acceptance": "Inventory every live field in Crew, Crew Auto, Chat Room, BrainStorm and Review; no leftover native select in these panels; test filtering, selected state, dismissal, placement and write destination."
+      },
+      "disposition": "GLOBAL_OPEN_WITH_BOUNDED_BATCH_EVIDENCE",
+      "evidence_scope": "This batch exercises two BrainStorm examples and the real mandatory configuration/shared pickers. It does not close the complete feature/collaboration matrix or all-animation recording campaign. See checkpoint for final executed checks and visual review.",
+      "native_runtime_proved": false
+    }
+  ],
+  "global_apr_016": "OPEN",
+  "global_apr_018": "OPEN",
+  "does_not_replace_full_matrix": true
+}
