@@ -345,7 +345,7 @@
       });
     }
     if (domain === 'crew') {
-      return (sc.crew || []).map(function (a) {
+      return (sc.crew || []).concat(window.PM56_CREW?.activityMembers(ctx)||[]).map(function (a) {
         var sm = statusMeta(a.status, agentTone(a.status));
         return {
           domain: 'crew', id: a.id, title: a.name, sub: a.current || '',
@@ -991,6 +991,7 @@
     conceptMasterDetail, conceptAgentBoard, conceptLedger, conceptLiveFeed, conceptDashboard];
 
   EXT.slot('activityPanelBody', function (ctx) {
+    if(ctx.domain==='crew'&&ctx.state.activity.scope==='focus'&&window.PM56_CREW?.activityRuns(ctx).length)return window.PM56_CREW.activityBody(ctx);
     if(ctx.domain === 'todo' && window.PM56_TODOS) return '';
     if(['brainstorm','review','chat_room'].includes(ctx.domain)&&ctx.state.activity.scope==='focus')return '';
     var v = Number(ctx.state.variants && ctx.state.variants[4]) || 0;

@@ -34,6 +34,30 @@ sources unchanged. T44 through T48, including T46F, are authored transforms, not
 the generated artifact.
 Read the next section before changing anything here.
 
+## Guided Tour reload guard — 2026-09-08 (unpublished)
+
+The authored tour now rejects resume/restart when a saved concept marker exists
+but the original layout and Chat snapshots are unavailable. Invalid, stale,
+oversized, and unreadable markers also fail closed. Recovery can be dismissed
+without clearing its marker, adopting the current layout, dispatching owner work,
+or declaring Finish/Skip/Keep. Snapshot inspection is read-only; same-tab Resume
+still uses the retained original. Missing measurement baselines remain unknown.
+
+This is a safety guard, **not durable checkpoint recovery**. The existing
+`pm7:guided-tour:checkpoint:v3` session-storage marker is concept-only; canonical
+owner snapshot custody, persistence, reconstruction, and prerequisite revalidation
+remain pending. No physical storage family or production handler is added.
+
+`verify/guided_tour_checkpoint_selftest.mjs` extracts the controller functions
+from an exact build and tests them with Node VM doubles. These tests cannot
+establish real browser, native, layout, or visual correctness.
+`verify/guided_tour_reload_checkpoint.mjs` supplies the real-browser checks, but
+that campaign could not run in this session. The published
+`Concepts/TestPMConcept.html` remains the September 7, 41-check build; the new
+guard is held in the authored source and scratch candidate until browser
+verification is available. See `scratchpad/pm-tour-polish-20260906/README.md` for
+artifact-specific results and the remaining work.
+
 ## Re-baseline — 2026-08-27 (current)
 
 The base is `base/PM7-base.html` (not PMConcept6). It hashes to

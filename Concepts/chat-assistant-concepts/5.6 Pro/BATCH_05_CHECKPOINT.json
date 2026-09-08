@@ -1,0 +1,422 @@
+{
+  "batch_id": "assistant-demo-b05-crew",
+  "status": "BOUNDED_FUNCTIONAL_PASS_WITH_RECORDED_VISUAL_SCOPE",
+  "source_main_checked": "5d264c847e4e6a096523349986719a7adb09701a",
+  "published_baseline_html_git_blob": "2380131269dc1fcbd7767bcb2ddb29f25efbba95",
+  "basis_archive_sha256": "1942744acd7f3a7f9e613d14efc573da3b977894f5db79d1e8fd77d3e9ceca02",
+  "html_sha256": "96ddadb361b8c3f1ca80f859d82c91fd6ffe9f232317cf14fcc7eaadd244da73",
+  "html_normalized_sha256": "d43715bea3ce14758b90fa98c89e41b5b7dce31f293c3ccb416229bd12b04366",
+  "html_git_blob": "8b0452369ab9ea48f376796a4b14244a7946deb6",
+  "scenario_ids": [
+    "B05-CREW-DELEGATION",
+    "B05-CREW-AUTO"
+  ],
+  "new_functional_checks": 151,
+  "prior_batch_regression_checks": 505,
+  "functional_reports": {
+    "qa/results/RESULTS.json": 128,
+    "qa/SUPPLEMENTAL.json": 23,
+    "qa/verification/batch1-regression.json": 18,
+    "qa/batch2-regression/results.json": 153,
+    "qa/review-regression-results/RESULTS.json": 112,
+    "qa/supplemental/RESULTS.json": 27,
+    "qa/review-regression-results/VOTE_CURRENTNESS.json": 9,
+    "qa/brainstorm-regression/results.json": 138,
+    "qa/brainstorm-supplemental/results.json": 30,
+    "qa/attempt-currentness.json": 10,
+    "qa/handoff-build.json": 8
+  },
+  "recorded_checks": 41,
+  "recordings": [
+    {
+      "scenario": "B05-CREW-AUTO",
+      "file": "auto.mp4",
+      "video_sha256": "a61f51bf9c4c0ba9ca2769aa72206eff7110c24e9a0581e810df3a534c5e8b4d",
+      "frames": 932,
+      "duration_seconds": 15.533617,
+      "nominal_rate": "240/1",
+      "average_rate": "55920000/932017",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "max_pts_gap_seconds": 0.022050000000000125,
+      "recorded_checks": 23,
+      "render_median_ms": 16.69999999999891,
+      "render_max_ms": 33.400000000001455,
+      "render_gaps_over_25ms": 16,
+      "no_recorder_render_max_ms": 33.400000000001455,
+      "no_recorder_gaps_over_25ms": 14
+    },
+    {
+      "scenario": "B05-CREW-DELEGATION",
+      "file": "delegation.mp4",
+      "video_sha256": "8f639e77e8e8d1399fe2dd809e1a6607b321c047a3d55c3afaa9ccb983f26cd2",
+      "frames": 752,
+      "duration_seconds": 12.53355,
+      "nominal_rate": "60/1",
+      "average_rate": "15040000/250671",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "max_pts_gap_seconds": 0.019934000000001006,
+      "recorded_checks": 18,
+      "render_median_ms": 16.69999999999891,
+      "render_max_ms": 33.400000000001455,
+      "render_gaps_over_25ms": 15,
+      "no_recorder_render_max_ms": 33.400000000001455,
+      "no_recorder_gaps_over_25ms": 12
+    }
+  ],
+  "frames_reviewed_in_consecutive_sheets": 1684,
+  "contact_sheets": 36,
+  "native_frames_inspected": [
+    {
+      "scenario": "delegation",
+      "frame_index": 0,
+      "pts_seconds": 0.0,
+      "file": "native-frames/delegation-0000.png",
+      "sha256": "9b7ebebbdd990ad6fd5690ace86c7dae3813ed027bf64aaa79a9d4c720b99a89",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Configuration before confirmation",
+      "visually_reviewed": true,
+      "observation": "Three configured participant slots and shared model/Persona controls. Footer buttons have insets; long form scrolls inside the modal. No side-accent bars. Additional configuration lies below the initial fold and is not traversed in this film."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 122,
+      "pts_seconds": 2.033367,
+      "file": "native-frames/delegation-0122.png",
+      "sha256": "5bf8c9479df39b986fda85386096ea50a420b45125cc9f3e99dba7de3cf7e8a7",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Open assignment document",
+      "visually_reviewed": true,
+      "observation": "Actual left Crew work tab; three pending assignments, dependency text and 2 simultaneous/requested 3 disclosure. Right card is Running and Crew count is 1. Persistent unused chat gutter is visible."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 190,
+      "pts_seconds": 3.166717,
+      "file": "native-frames/delegation-0190.png",
+      "sha256": "be793445b72ede5d4edb53d7ae87619f18b3029770eea04838fbffe410e708cb",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Run local calculations through output contracts",
+      "visually_reviewed": true,
+      "observation": "Two independent assignments Working, integrator Pending. No dependency failure label. Alignment stable; guide leaves compositor controls available."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 469,
+      "pts_seconds": 7.8168,
+      "file": "native-frames/delegation-0469.png",
+      "sha256": "8e4b1ac0292ac47e7e1eba6c9455e5554efccc478997eb4939203cbf9dfdb1a4",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Inspect the CSV escaping contract and result",
+      "visually_reviewed": true,
+      "observation": "Completed result with quoting contract deliberately expanded. JSON cases appear in the scrollable document, not an ordinary transcript card. Text reaches bottom viewport and continues via document scrolling, not clipped inaccessible content."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 590,
+      "pts_seconds": 9.83355,
+      "file": "native-frames/delegation-0590.png",
+      "sha256": "44ede6d3efca01ef374ba6aed88f1e63b3bd988c5352267c4473a05663fadcba",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Inspect frozen inputs and assignment history",
+      "visually_reviewed": true,
+      "observation": "Three verified assignments, collection.csv and frozen-input disclosure. Original order z then a visible; CSV quotes are escaped. The source disclosure pushes later content into document scrolling."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 666,
+      "pts_seconds": 11.100217,
+      "file": "native-frames/delegation-0666.png",
+      "sha256": "0ed217eceb5b0fc0b2f3a280690c20ee8dadcd5f0d8474e05c9af8ac5058803c",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Export actual verified CSV",
+      "visually_reviewed": true,
+      "observation": "Actual CSV export; the source disclosure remains OPEN. Chromium fullscreen download notification overlaps top tab region. Application guide now offers Replay; this browser overlay is not an application toast."
+    },
+    {
+      "scenario": "delegation",
+      "frame_index": 723,
+      "pts_seconds": 12.05025,
+      "file": "native-frames/delegation-0723.png",
+      "sha256": "50bab6bdae6b208e255b931524463456d0e11f87edadc805b04e3efd8359032e",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Replay opens fresh configuration",
+      "visually_reviewed": true,
+      "observation": "Replay has opened a fresh mandatory Crew configuration. Three controls/roles preserved with inset footer. Chromium download notification remains transiently above the modal; no whole-canvas blank flash."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 0,
+      "pts_seconds": 0.0,
+      "file": "native-frames/auto-0000.png",
+      "sha256": "ebbb6a199dcadcea2709c2653ccf5bb505c4287a1b6561ac3c112fe67862effd",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Configuration before confirmation",
+      "visually_reviewed": true,
+      "observation": "Crew Auto configuration visibly says saving does not start a Crew. Same shared participant controls and inset footer; criteria are below initial fold, not filmed here."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 121,
+      "pts_seconds": 2.0167,
+      "file": "native-frames/auto-0121.png",
+      "sha256": "9df2dc129700df33bebcda7cd36de83ad401aebf72273c0afbb35214ece1aa72",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Evaluate simple request",
+      "visually_reviewed": true,
+      "observation": "Small-request evaluation says keep one agent, with no Crew or Usage created. No failed/blocked transcript card. Next guide step tests explicit single-agent selection."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 187,
+      "pts_seconds": 3.116717,
+      "file": "native-frames/auto-0187.png",
+      "sha256": "375f4e9ae15330ca3965d7f9e4ab27bd4ab8cc9e7cd0e2526b6239c351e7b914",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Evaluate single request",
+      "visually_reviewed": true,
+      "observation": "Explicit single-agent request retained; no Crew or Usage. Guide allows evaluating parallel work next. Empty document remains ordinary empty state, not an error."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 299,
+      "pts_seconds": 4.983417,
+      "file": "native-frames/auto-0299.png",
+      "sha256": "5344c6e205aaf8c4a7295c336aec81e57b59b13676a8602e9bf0faf782de0cde",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Open assignment document",
+      "visually_reviewed": true,
+      "observation": "Eligible work has one Running Crew with stable left document. Auto policy v1 attribution is visible; 2 simultaneous/requested 3 and pending dependent assignment match manual workflow."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 366,
+      "pts_seconds": 6.100117,
+      "file": "native-frames/auto-0366.png",
+      "sha256": "4a29072d7171bd5b0ff82b250a0edf26ea4bf06884e0fdecf3208803e0e22a4b",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Run local calculations through output contracts",
+      "visually_reviewed": true,
+      "observation": "Two independent assignments Working and integration Pending. The guide shows local-example boundaries. No accidental source/result text appears in the transcript."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 645,
+      "pts_seconds": 10.7502,
+      "file": "native-frames/auto-0645.png",
+      "sha256": "cce37229c543c3df2d9b8813ce8c3922feec3d3bee372a93bccfedbc61808681",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Inspect the CSV escaping contract and result",
+      "visually_reviewed": true,
+      "observation": "Completed Auto Crew; selected quoting-contract detail expands in flow in the document. Same three-slot count and completed state; source detail remains separately collapsed."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 764,
+      "pts_seconds": 12.733567,
+      "file": "native-frames/auto-0764.png",
+      "sha256": "f2ea3d1b32e113ec7f81bf57eae7f599707eecc932e93657e5198badc4c8d865",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Inspect frozen inputs and assignment history",
+      "visually_reviewed": true,
+      "observation": "Verified CSV plus open frozen source. Normalized output preserves source ID order. Document scroll is explicit; right transcript and composer remain stable."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 840,
+      "pts_seconds": 14.000267,
+      "file": "native-frames/auto-0840.png",
+      "sha256": "f1b058cd56b15b6e67d8eb17c0790386a19955bda450e00da1814215763fd0b3",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Export actual verified CSV",
+      "visually_reviewed": true,
+      "observation": "CSV export preserves OPEN frozen-input disclosure. Actual browser download banner overlaps tab area, not the composer. Guide offers Replay without replacing the completed result."
+    },
+    {
+      "scenario": "auto",
+      "frame_index": 895,
+      "pts_seconds": 14.91695,
+      "file": "native-frames/auto-0895.png",
+      "sha256": "1390672e8797cd6860c26f76555a8727208c738ecace0ff0dcf36271117b25db",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "trace_hint": "Replay opens fresh configuration",
+      "visually_reviewed": true,
+      "observation": "Replay opens Crew Auto configuration again, not automatic dispatch. Prior download banner temporarily overlays form top; same inset footer, no boundary clipping at 1280x900."
+    }
+  ],
+  "visual_findings": [
+    {
+      "id": "B05-V01",
+      "status": "CLOSED_RECAPTURE_VERIFIED",
+      "area": "Source and contract disclosure",
+      "observation": "The prior export-triggered collapse is repaired. Final native frames delegation-0666/auto-0840 and consecutive sheets show source remains expanded. Functional assertions also check retained details."
+    },
+    {
+      "id": "B05-V02",
+      "status": "BOUNDED_PASS",
+      "area": "Recorded transitions",
+      "observation": "All recorded configuration, admission, output, disclosure and Replay transitions inspected consecutively. No whole-canvas blank flash or inaccessible clipped action observed at these scales and this viewport. Not a global layout pass."
+    },
+    {
+      "id": "B05-V03",
+      "status": "OPEN_INHERITED",
+      "area": "Chat width/gutter",
+      "observation": "Large unused gap between left editor split and narrow right chat content persists, most obvious in work-document views. No broad geometry rewrite performed."
+    },
+    {
+      "id": "B05-V04",
+      "status": "OPEN_CADENCE_CAVEAT",
+      "area": "Fresh render cadence",
+      "observation": "RAF maximum 33.4ms in both final captured traces; 15/16 intervals over25ms. Matched no-recorder traces maximum33.4ms with12/14 intervals over25ms. This is not uniform60freshframes/sec and does not close older performance findings."
+    },
+    {
+      "id": "B05-V05",
+      "status": "IDENTIFIED_BROWSER_CHROME",
+      "area": "CSV download notification",
+      "observation": "Chromium fullscreen download banner overlays top strip and part of subsequent configuration. This is browser UI, not application toast. No claim of application toast debt closure."
+    },
+    {
+      "id": "B05-V06",
+      "status": "EVIDENCE_BOUNDARY",
+      "area": "Acquisition versus nominal stream rate",
+      "observation": "Both captures requested60Hz and average approximately60fps. Auto has ffprobe r_frame_rate240/1 from variable timestamp stream representation; it is NOT240fps acquisition. Preserved PTS range11.3–22.05ms. Delegation nominal60/1 and PTS range13.383–19.934ms. No interpolation or output-rate resampling."
+    },
+    {
+      "id": "B05-V07",
+      "status": "OPEN_UNCOVERED",
+      "area": "Other widths/themes and prior demos",
+      "observation": "Recorded only1280x900 default view. Supplementary900/700 checks do not equal full narrow-motion review. Shared picker choice interactions and full scroll through criteria have functional checks, not full recording coverage. Prior toast/activity-bar overlap and broad-feature motion remain open."
+    }
+  ],
+  "protected_working_sources_unchanged": [
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "onboarding_modified": false,
+  "governance_modified": false,
+  "next_batch": {
+    "id": "assistant-demo-b06-chat-room",
+    "scope": [
+      "Completed moderated or round-robin discussion",
+      "Explicit promotion with source lineage; discussion alone creates no Plan, ToDo or Goal"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "global_apr_016": "OPEN",
+  "global_apr_018": "OPEN",
+  "limits": [
+    "Local JavaScript collection/CSV calculation, not live model calls, native project writes or physically parallel agent workers.",
+    "Three fixed role/output contracts and a parent-assistant coordinator. Generic rosters, optional specialists, Build With Crew Plan/ToDo binding and other coordinators are not certified.",
+    "Crew Auto request complexity, explicit-single preference, independent-work facts and capacity are supplied example inputs; no natural-language task decomposition or real orchestrator probing is claimed.",
+    "Policy commit changes in-memory concept Settings state; it is not proof of durable project Settings, reload or cross-machine recovery.",
+    "Old seeded Crew/free-text completion paths outside the new typed examples remain outside this repair.",
+    "One recorded default-theme 1280x900 viewport plus bounded 900/700 layout tests, not all theme/width/working-style combinations.",
+    "All consecutive decoded frames were inspected in indexed contact sheets plus selected native frames; not every frame individually at native resolution.",
+    "Capture targets 60 Hz and retains actual PTS. Browser rendering gaps and inherited presentation debt remain separate open findings.",
+    "Full repository governance, full upstream PM7/Settings build and native runtime suites were not run. No Plans, Settings, onboarding or governance files are replaced."
+  ]
+}

@@ -255,7 +255,7 @@
       return t2 === 'blocked' ? 'attention' : t2;
     }
     var sc = coll(ctx);
-    if (id === 'crew') return worstTone(list(sc.crew));
+    if (id === 'crew') return worstTone(list(sc.crew).concat(window.PM56_CREW?.activityMembers(ctx)||[]));
     return worstTone(list(id === 'todo' ? sc.todos : sc.subagents));
   }
 
@@ -431,6 +431,7 @@
 
   /* ------------------------------------------------------------------ crew */
   function crewCard(ctx, def) {
+    if(window.PM56_CREW?.activityRuns(ctx).length)return window.PM56_CREW.activityHover(ctx);
     var crew = list(coll(ctx).crew);
     var shown = byRank(crew).slice(0, ROWS);
     var body = shown.length ? shown.map(function (a) {

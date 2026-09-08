@@ -880,6 +880,7 @@
   }
 
   function crewInline(ctx, run) {
+    if(window.PM56_CREW?.owns(run.id))return window.PM56_CREW.renderSummary(ctx,run);
     var c = run.crew || { assignments: [] };
     var rows = c.assignments.map(function (a) {
       var deps = a.dependsOn && a.dependsOn.length ? ' · depends on ' + a.dependsOn.join(', ') : '';
@@ -1059,7 +1060,7 @@
         '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
         (window.PM56_BRAINSTORM?.owns(run.id)?'<button class="soft-button" data-action="brainstorm-open-results" data-run="'+esc(run.id)+'">Open exploration</button>':'') +
         (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
-        '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
+        (window.PM56_CREW?.owns(run.id)?'<button class="soft-button" data-action="crew-open-work" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' '+(run.status==='completed'?'Open result':'Open assignments')+'</button>':'<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>') +
         '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
         '<button class="icon-button" data-action="collab-toggle-more" data-run="' + esc(run.id) + '" title="More">' + ctx.icon('more', 13) + '</button>' +
       '</div>' +
@@ -1669,6 +1670,14 @@
       d._previousMultiRows=d.rows.slice();
     }
   }
+  CONFIG_CHOICES.autoComplexity = [
+    {value:'high',label:'Complex requests',description:'Use a Crew only when the request is rated high complexity.'},
+    {value:'medium',label:'Moderate or complex',description:'Allow medium or high complexity when independent work is available.'}
+  ];
+  CONFIG_CHOICES.autoMinIndependent = [
+    {value:'2',label:'At least two independent tasks',description:'Only use a Crew when two tasks can make progress without waiting for one another.'},
+    {value:'3',label:'At least three independent tasks',description:'Reserve automatic delegation for a wider split of independent work.'}
+  ];
   function configChoice(ctx,d,key,title){
     const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
     return '<label>'+esc(title)+'<button type="button" class="shared-picker-button collab-choice" data-action="collab-pick-choice" data-field="'+key+'" data-menu-anchor="collab-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';
@@ -1692,7 +1701,8 @@
       return '<div class="collab-field-row">' + configChoice(ctx,d,'coordinator','Coordinator') + '' +
         '' + configChoice(ctx,d,'assignmentStrategy','Task assignment') + '' +
         '<label>Simultaneous tasks<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
-        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
+        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>' +
+        (d.autoMode ? '<h4>When to use a Crew</h4><div class="collab-field-row">'+configChoice(ctx,d,'autoComplexity','Request complexity')+configChoice(ctx,d,'autoMinIndependent','Useful parallel work')+'</div>' : '');
     }
     if (d.kind === 'brainstorm') {
       var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
@@ -1736,8 +1746,8 @@
       '' +
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
-      (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
-      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
+      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
+      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
   EXT.slot('dialog', function (ctx) {
@@ -1782,6 +1792,7 @@
     var held = d && d.heldRequest;
     RTC.draft = null;
     ctx.closeDialog();
+    if (!held) ctx.renderApp();
     if (held) {
       var CS = window.PM56_COMPOSER_STATE;
       /* Prefer the durable hold: it returns the exact text AND attachments and
@@ -2383,6 +2394,28 @@
 
   window.__PM56_COLLAB_CORRECTION = true;
 
+  function admitCrewWork(d, ctx) {
+    const valid=window.PM56_CREW?.preflight(d,ctx);
+    if(!valid?.ok)return valid||{ok:false,error:'crew_protocol_unavailable'};
+    const pre=startPreflight(d);if(!pre.ok)return pre;
+    const existing=RTC.runs.find(r=>r.idempotency_key===d.requestKey);
+    const fingerprint=window.PM56_CREW.signature(d);
+    if(existing)return existing.crew?.requestFingerprint===fingerprint?{ok:true,runId:existing.id,reused:true}:{ok:false,error:'conflicting_start'};
+    const participants=d.rows.map(row=>mkParticipant({...row,persona:row.persona,status:'waiting',current:'Waiting for its assignment'}));
+    const run=mkRun({kind:'crew',threadId:d.threadId||ctx.state.selectedThread,title:d.name,purpose:d.purpose,
+      status:'running',config:JSON.parse(JSON.stringify(d.config)),participants,
+      coordinator:{kind:d.config.coordinator,label:d.config.coordinator==='parent_assistant'?'Current assistant':'Selected coordinator'},
+      idempotency_key:d.requestKey,definitionRevision:d.policyRevision||1});
+    participants.forEach(p=>p.runId=run.id);
+    window.PM56_CREW.admit(run,d,ctx,fingerprint);
+    RTC.runs.push(run);effect('runs');effect('cards');effect('participants',participants.length);effect('events');
+    // Local calculations create no provider call or billed Usage record.
+    attachCardToThread(ctx,run);
+    run.messages.push(mkMsg(run,{senderKind:'coordinator',senderName:'Coordinator',messageType:'message',body:'Three bounded assignments admitted. Waiting dependencies are pending; output contracts determine completion.'}));
+    document.dispatchEvent(new CustomEvent('pm56:crew-example-admitted',{detail:{runId:run.id,rerun:String(d.requestKey).startsWith('crew-rerun:')}}));
+    return {ok:true,runId:run.id,reused:false};
+  }
+
   /* =====================================================================
      18. RESET + PUBLIC SURFACE
      ===================================================================== */
@@ -2427,6 +2460,8 @@
     },
     appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);r.messages.push(m);return m;},
     selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
+    admitCrewWork: admitCrewWork,
+    validateStart: startPreflight,
     normalizeReview: normalizeReview
   };
 })();

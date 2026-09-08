@@ -1,0 +1,782 @@
+{
+  "batch_id": "assistant-demo-b05-crew",
+  "source_freeze_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "source_rows_retained": 551,
+  "html_sha256": "96ddadb361b8c3f1ca80f859d82c91fd6ffe9f232317cf14fcc7eaadd244da73",
+  "source_rows_with_new_evidence": 30,
+  "rows": [
+    {
+      "source_identity": "v2:COLLAB-001",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-001",
+        "category": "Shared collaborative workflows",
+        "statement": "Crew, BrainStorm, Review and Chat Room share one participant/run/message/artifact/Usage/recovery/composer-target foundation.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "New examples reuse existing collaboration runs, participants, messages and artifacts.",
+      "remaining_scope": "No durable provider/Usage/recovery implementation is supplied.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-002",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-002",
+        "category": "Shared collaborative workflows",
+        "statement": "Every invocation opens a configuration modal populated from Settings defaults.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Every explicit sample run and Replay opens configuration; Run another Crew requires confirmation.",
+      "remaining_scope": "All four workflow invocation routes are not recertified.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-004",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-004",
+        "category": "Shared collaborative workflows",
+        "statement": "No selected model or Persona is silently substituted.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Unresolved model selection leaves configuration open and creates no run; cancel shared model picker leaves main route unchanged.",
+      "remaining_scope": "General unavailable-account, Skill and provider fallback coverage remains open.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-005",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-005",
+        "category": "Shared collaborative workflows",
+        "statement": "Each workflow produces a transcript card, expandable recent detail, full panel and Activity domain.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Typed Crew card, stable assignment/result editor tab, correct Activity count and bounded hover.",
+      "remaining_scope": "Whole expanded legacy Crew card layout is not reworked here.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-006",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-006",
+        "category": "Shared collaborative workflows",
+        "statement": "Each participant is clickable to open the exact participant transcript and evidence.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Activity member click opens the real participant transcript.",
+      "remaining_scope": "Every other workflow/participant layout remains separately tracked.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-008",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-008",
+        "category": "Shared collaborative workflows",
+        "statement": "Pause/resume/cancel preserve truthful state, transcript and artifacts.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Pause prevents delivery, Resume finishes same run, old-epoch payload stays rejected, Cancel/Reset stop stale callbacks; completed output retained on Replay.",
+      "remaining_scope": "No restart persistence or process-crash recovery is proved.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:COLLAB-009",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "COLLAB-009",
+        "category": "Shared collaborative workflows",
+        "statement": "Permissions are bounded by the parent ceiling and participants cannot self-authorize.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Changed parent mode/permission/worktree refuses current local work; Auto cannot override explicit single-agent request.",
+      "remaining_scope": "No native permission service or elevation grants are exercised.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-001",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-001",
+        "category": "Crew and Crew Auto",
+        "statement": "Crew config includes coordinator, roles, models, Personas, context, tools, permissions, dependencies, expected outputs, parallelism, synthesis and limits.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Shared model/Persona roster; explicit expected outputs, frozen context, dependencies, requested/effective parallelism in the three-role local work contract.",
+      "remaining_scope": "Arbitrary Crew rosters/coordinators, optional specialists, live tools/Skills and provider routing/limits are not proved.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-002",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-002",
+        "category": "Crew and Crew Auto",
+        "statement": "Crew executes delegated work rather than functioning as a discussion-only Chat Room.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Two independent local calculations feed dependent CSV assembly; verified structured outputs precede completion.",
+      "remaining_scope": "Local calculation is not live multi-agent or native project execution.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-003",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-003",
+        "category": "Crew and Crew Auto",
+        "statement": "Crew Auto is a checkable Multi-Agent submenu item.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "The existing checkable Multi-Agent Crew Auto control is retained and uses the same enabled/configured state.",
+      "remaining_scope": "This capture enters through Demo Studio; not all product entry routes are recorded.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-004",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-004",
+        "category": "Crew and Crew Auto",
+        "statement": "Enabling Crew Auto opens its configuration modal before the check becomes active.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Mandatory configuration, cancellation no-op, enabled flag only after successful policy commit.",
+      "remaining_scope": "Policy is in-memory concept state; actual project Settings transaction and reload are not proved.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-005",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-005",
+        "category": "Crew and Crew Auto",
+        "statement": "Crew Auto criteria cannot widen authority or override an explicit single-agent selection.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Low-complexity and explicit-single requests create no Crew/card/Usage. Member/concurrency and parent-context counterexamples refuse admission or result updates.",
+      "remaining_scope": "Input classification and ceilings are supplied typed fixture facts, not real orchestrator/permission enforcement.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-006",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-006",
+        "category": "Crew and Crew Auto",
+        "statement": "Build With Crew binds Crew to exact Plan version and To-Dos.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "NOT_COVERED",
+      "verified_scope": null,
+      "remaining_scope": "Build With Crew exact Plan/ToDo atomic binding is outside this batch; no partial acceptance is inferred.",
+      "scenario_ids": [],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v2:CREW-007",
+      "source_row": {
+        "source": "v2",
+        "requirement_id": "CREW-007",
+        "category": "Crew and Crew Auto",
+        "statement": "Crew participant rows open individual transcripts.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Real Crew hover selection opens pinned Activity with three member rows; a row opens its actual participant transcript.",
+      "remaining_scope": "All roster variants and inherited legacy Crew paths are outside scope.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-001",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-001",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Opening or editing any Crew, Crew Auto, BrainStorm, Review, Chat Room, BSD workflow, or Build-With-Crew modal creates only local WorkflowLaunchDraft state.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; FinalGUISpec",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "No durable run/session/provider effect before confirmation."
+        ],
+        "negative_constraints": [
+          "Do not create placeholder cards on modal open."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Opening/editing Crew configuration leaves run/effect counters unchanged.",
+      "remaining_scope": "Generic launch-draft schema and other workflows are not newly certified.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-002",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-002",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Before confirmed Start/Apply, there is no provider request, participant session, Usage record, durable start event, workflow artifact, project mutation, or permission grant.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Instrumentation proves zero side effects on cancel."
+        ],
+        "negative_constraints": [
+          "Do not treat capability preview as execution."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Before confirmation no Crew run/card/provider/Usage effect; Auto policy commit alone creates no run.",
+      "remaining_scope": "No real provider/session/permission backend exists in this HTML proof.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-004",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-004",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Cancel/close discards the launch draft and creates no domain event; unsent source text/config remains available where applicable.",
+        "owner_hint": "Plans/FinalGUISpec.md; ComposerBuffer",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Closing a modal is a local view action."
+        ],
+        "negative_constraints": [
+          "Do not mint a domain cancel command for a run that does not exist."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Cancel starts nothing and exposes Configure again.",
+      "remaining_scope": "All held-message/source-request cases remain outside this batch.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-005",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-005",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Failed Start retains modal values, shows typed failure, and creates no fake card or partial participant records.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; FinalGUISpec",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Retry can reuse the launch draft after currentness refresh."
+        ],
+        "negative_constraints": [
+          "Do not clear user configuration on dispatch failure."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Malformed capacity, count, parallelism and unavailable model keep modal values and create no partial run.",
+      "remaining_scope": "Full provider/backend Start-error surface is not exercised.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-008",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-008",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Crew Auto becomes checked only after configuration confirmation and successful project Settings commit; cancel preserves the prior enabled state.",
+        "owner_hint": "Plans/Settings_System.md; Collaborative_Workflows",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "The menu check reflects effective stored state."
+        ],
+        "negative_constraints": [
+          "Do not optimistically enable before commit."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Cancel leaves Auto disabled, successful explicit commit enables; disabling preserves template and prevents new admission.",
+      "remaining_scope": "Successful durable project Settings write is not established by the local settingsWrites counter.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:MODAL-017",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "MODAL-017",
+        "category": "Workflow modal transaction boundary",
+        "statement": "Repeated Start with the same command/idempotency binding returns the original run; same key with changed config is rejected.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Exactly one workflow card/run appears."
+        ],
+        "negative_constraints": [
+          "Do not deduplicate only by modal instance ID."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Same request returns original run; changed configuration or different Auto facts with same key are rejected.",
+      "remaining_scope": "Concept-level request identity, not native exactly-once dispatch or durable replay.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:PART-004",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "PART-004",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Retries create new attempt identities for the same slot; replacement creates a new assignment revision; old late results cannot count.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Epoch/currentness fencing rejects superseded attempts."
+        ],
+        "negative_constraints": [
+          "Do not overwrite failed attempt evidence."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Changed/retried participant attempt invalidates an old result and dependent completion.",
+      "remaining_scope": "Full UI retry/replacement recovery demo is not part of the two recordings.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:PART-016",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "PART-016",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Crew clean completion requires every required expected output to exist or be explicitly waived with reason.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Coordinator synthesis references delivered outputs."
+        ],
+        "negative_constraints": [
+          "Do not mark Crew complete from participant status alone."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "All three structured required outputs must validate before CSV artifact and clean completion; note/tool-success cannot bypass.",
+      "remaining_scope": "Explicit waiver and arbitrary expected-output contracts remain unproved.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:PART-019",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "PART-019",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "A collaborative run completes only when its kind-specific completion predicate, required participant dispositions, output/artifact finalization, and pending user decision state are resolved.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Provider turn completion is insufficient."
+        ],
+        "negative_constraints": [
+          "Do not use last message as lifecycle truth."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Finalization checks verified outputs/current participant attempts; repeated finalization reuses one artifact.",
+      "remaining_scope": "Other kind-specific completion predicates and durable decisions remain outside scope.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:PART-020",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "PART-020",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "Cancel fences every participant attempt and synthesis callback; later results may be retained as rejected/stale evidence but cannot alter the current run.",
+        "owner_hint": "Plans/Collaborative_Workflows.md",
+        "gui_related": false,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "No card/status mutation after cancel."
+        ],
+        "negative_constraints": [
+          "Do not accept late high-quality output because it is useful."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Canceled/reset run cannot accept later delivery; example playback cannot revive it.",
+      "remaining_scope": "Process crashes/provider transports are not exercised.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v4:PART-021",
+      "source_row": {
+        "source": "v4",
+        "requirement_id": "PART-021",
+        "category": "Collaborative participant outcomes and quorum",
+        "statement": "A model unavailable before Start blocks or requires explicit replacement in the modal; it does not create a failed runtime participant merely from configuration.",
+        "owner_hint": "Plans/Collaborative_Workflows.md; Provider control",
+        "gui_related": true,
+        "correction_status": "required",
+        "acceptance_criteria": [
+          "Availability is shown before commit where known."
+        ],
+        "negative_constraints": [
+          "Do not claim a provider attempt occurred."
+        ],
+        "implementation_surfaces": [],
+        "v2_refs": []
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Unavailable model before Start prevents admission and preserves configuration.",
+      "remaining_scope": "Provider capability adapters are not exercised.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-006",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-006",
+        "area": "Hover navigation",
+        "requirement": "Remove separate Open Activity buttons from every activity preview. Clicking the relevant preview item opens its corresponding detail/context, using existing canonical product routing where applicable.",
+        "acceptance": "Every preview item resolves to the correct item/category; no inert rows or duplicate launch buttons."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Crew preview item opens exact selected run in pinned Activity.",
+      "remaining_scope": "Other activity kinds are not all replayed in this batch.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-007",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-007",
+        "area": "Non-scrolling activity previews",
+        "requirement": "All activity hover panels are bounded previews, with no internal scrolling. Show a deliberately limited useful subset; an overflow/count row may navigate to detail, but must not masquerade as the removed Open Activity button.",
+        "acceptance": "All categories, large and empty lists, bottom and side viewport edges, wheel/trackpad behavior."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Crew preview shows at most four run rows and no internal scrolling container.",
+      "remaining_scope": "All categories and maximum-density viewports remain open.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-016",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "New delegation and Auto decision/outcome workflows have functional records plus matching recorded traces.",
+      "remaining_scope": "Global 551-row/67-group multiple-demo requirement remains OPEN; this is not two complete demos for every feature.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-018",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Two hash-bound 60-Hz acquired traces decoded in full and reviewed in consecutive indexed contact sheets with native keyframes.",
+      "remaining_scope": "All-feature campaign remains OPEN; recording cadence is separate from actual rendering and full-native-resolution every-frame inspection.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-025",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-025",
+        "area": "Safe governance boundary",
+        "requirement": "This is Plans/specification repair, not native implementation or readiness certification. Do not create WorkNodes/NodeSeeds/executable queues, close PNC-019, forge runtime evidence, or refresh protected generated governance merely to obtain green gates.",
+        "acceptance": "Changed-file allowlist; gate results classified as introduced/existing/blocked; no unrelated lock/hash repinning."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "No canonical Plans, generated governance or readiness artifacts are modified.",
+      "remaining_scope": "Repository-wide gates and runtime readiness are not recertified.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    },
+    {
+      "source_identity": "v3:APR-051",
+      "source_row": {
+        "source": "v3",
+        "requirement_id": "APR-051",
+        "area": "Shared choice controls",
+        "requirement": "All remaining collaboration configuration choice controls use the same anchored picker surface and interaction primitives as the main model picker, including non-model choice lists. Models and Personas reuse the actual main catalog/renderers and preserve destination isolation. Numeric/text inputs remain appropriate inputs, not fake model lists.",
+        "acceptance": "Inventory every live field in Crew, Crew Auto, Chat Room, BrainStorm and Review; no leftover native select in these panels; test filtering, selected state, dismissal, placement and write destination."
+      },
+      "batch_status": "BOUNDED_CONCEPT_SUBCLAUSES_VERIFIED",
+      "verified_scope": "Crew and Auto retain shared model/Persona controls; new Auto criteria reuse existing option picker.",
+      "remaining_scope": "All collaboration picker combinations remain a separate denominator.",
+      "scenario_ids": [
+        "B05-CREW-DELEGATION",
+        "B05-CREW-AUTO"
+      ],
+      "native_proof": false,
+      "full_requirement_pass": false
+    }
+  ],
+  "functional_reports": {
+    "qa/results/RESULTS.json": 128,
+    "qa/SUPPLEMENTAL.json": 23,
+    "qa/verification/batch1-regression.json": 18,
+    "qa/batch2-regression/results.json": 153,
+    "qa/review-regression-results/RESULTS.json": 112,
+    "qa/supplemental/RESULTS.json": 27,
+    "qa/review-regression-results/VOTE_CURRENTNESS.json": 9,
+    "qa/brainstorm-regression/results.json": 138,
+    "qa/brainstorm-supplemental/results.json": 30,
+    "qa/attempt-currentness.json": 10,
+    "qa/handoff-build.json": 8
+  },
+  "frame_review": {
+    "file": "recordings/VISUAL_REVIEW.json",
+    "frames": 1684,
+    "native_frames": 16
+  },
+  "APR_016": "OPEN_GLOBAL",
+  "APR_018": "OPEN_GLOBAL",
+  "scope": "Evidence delta only; original source row wording and all unselected obligations remain unchanged. No mass PASS or schema/native implementation claim."
+}

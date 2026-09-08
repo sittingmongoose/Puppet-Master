@@ -1283,7 +1283,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the compaction tiers drop file-level domains first under width pressure. Subagents stays a
      separate domain -- a Crew member is not a subagent. */
   const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
-  const COLLAB_DOMAINS={brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
+  const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
      correct with the module absent (no runs -> no domains) and correct with it loaded. */
   function collabRuns(tid){
@@ -1511,13 +1511,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        reviewer can see they are one runtime rather than three. Status wording comes from each
        run's own record; nothing here invents progress. */
     Object.keys(COLLAB_DOMAINS).forEach(id=>{
-      if(!scope.live[id]) return;
+      if(!scope.live[id] || !(scope.collab[id]||[]).length) return;
       const runs=scope.collab[id]||[];
       const running=runs.filter(r=>r.status==='running');
       const failed=runs.filter(r=>r.status==='failed'||r.degraded);
       const done=runs.filter(r=>r.status==='completed');
       const latest=runs[runs.length-1]||{};
-      out[id]={icon:id==='review'?'eye':id==='chat_room'?'users':'brain',label:COLLAB_DOMAINS[id],
+      out[id]={icon:id==='review'?'eye':['crew','chat_room'].includes(id)?'users':'brain',label:COLLAB_DOMAINS[id],
         count:String(runs.length),
         state:running.length?'live':failed.length?'changed':'changed',
         tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
