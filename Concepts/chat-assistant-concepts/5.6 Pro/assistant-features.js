@@ -269,6 +269,7 @@
     return null;
   }
   function openTeachCapture(ctx, seed){
+    if(window.PM56_TEACH) return window.PM56_TEACH.open(seed||{});
     var text=(seed&&seed.text)||'';
     var narrowOf=(seed&&seed.narrowOf)||null;
     F.teach.pending = {
@@ -370,6 +371,7 @@
       '<p class="af-note">Capturing will mark that record superseded and keep it in history. It is not silently discarded.</p></div>';
   }
   function renderTeachDialog(ctx){
+    if(window.PM56_TEACH) return window.PM56_TEACH.dialog(ctx);
     var icon=ctx.icon, e=ctx.esc;
     var p=F.teach.pending; if(!p) return '';
     var liveConflictId=(findConflict(p.text, p.scope, p.narrowOf)||{}).id||null;
@@ -442,7 +444,7 @@
 
   function checkAutoMemoryAgainstLocks(summary, threadId){
     var words=significantWords(summary);
-    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked; });
+    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked && !r.supersededBy && (!window.PM56_TEACH || window.PM56_TEACH.applies(r,{...window.PM56_TEACH.context(),threadId:threadId})); });
     for(var i=0;i<recs.length;i++){
       var rw=significantWords(recs[i].text), hits=0;
       for(var j=0;j<words.length;j++){ if(rw.indexOf(words[j])>=0) hits++; }
@@ -514,6 +516,7 @@
       return '<button class="soft-button" data-action="af-memory-open">'+icon('eye',12)+' Memory detail</button>';
     }
     if(m.type==='af-teach-receipt'){
+      if(window.PM56_TEACH && m.memoryId) return window.PM56_TEACH.receiptActions(ctx,m);
       return '<button class="soft-button" data-action="af-memory-open">'+icon('eye',12)+' View taught memory</button>';
     }
     if(m.type==='af-file-mutation'){
@@ -528,14 +531,16 @@
 
   function renderMemoryDialog(ctx){
     var icon=ctx.icon, e=ctx.esc;
-    var taught=F.teach.records.slice().reverse();
+    var taught=(window.PM56_TEACH?window.PM56_TEACH.visibleRecords(window.PM56_TEACH.context()):F.teach.records).slice().reverse();
     var auto=F.memory.auto.slice().reverse();
     var tabs='<div class="af-tabs" role="tablist">'+
       '<button class="af-tab'+(ui.memoryOpenSection==='taught'?' active':'')+'" role="tab" data-action="af-memory-section" data-value="taught">Taught by you · '+taught.filter(function(r){return !r.revoked;}).length+'</button>'+
       '<button class="af-tab'+(ui.memoryOpenSection==='auto'?' active':'')+'" role="tab" data-action="af-memory-section" data-value="auto">Automatic · '+auto.length+'</button>'+
       '</div>';
     var body='';
-    if(ui.memoryOpenSection==='taught'){
+    if(ui.memoryOpenSection==='taught' && window.PM56_TEACH){
+      body = window.PM56_TEACH.memoryRows(ctx);
+    } else if(ui.memoryOpenSection==='taught'){
       body = taught.length ? taught.map(function(r){
         return '<div class="af-mem-row'+(r.revoked?' is-revoked':'')+'">'+
           '<div class="af-mem-row-head">'+
@@ -567,7 +572,7 @@
       }).join('') : emptyState(icon('brain',20),'No automatic memory yet.')) +
       '<div class="af-mem-foot"><button class="soft-button" data-action="af-memory-simulate">'+icon('refresh',12)+' Simulate a checkpoint</button></div>';
     }
-    var note='<p class="af-note">Taught memory and automatic memory are two different owners on purpose (packet §16.1/§16.3). Automatic memory can never silently overwrite a locked taught record — a deferred event above shows exactly why when that happens.</p>';
+    var note='<p class="af-note">Taught by you and automatic memory stay separate. Locked teaching requires your explicit correction or revocation.</p>';
     return dialogShell(ctx, { icon:'brain', title:'Memory', pill:(taught.length+auto.length)+' records', body: note+tabs+'<div class="af-mem-list">'+body+'</div>', width:560 });
   }
 
@@ -1336,6 +1341,7 @@
         reconciler assembly, reset-all chain
      ===================================================================== */
   function teachCommitHook(ctx, thread, message){
+    if(window.PM56_TEACH || message.teachHandled) return;
     if(!message || message.role!=='user' || typeof message.body!=='string') return;
     if(!TEACH_TRIGGER_RX.test(message.body)) return;
     var text=message.body.replace(/^\s*\/teach\b\s*/i,'').trim();

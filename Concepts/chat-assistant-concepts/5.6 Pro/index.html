@@ -12425,6 +12425,34 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .room-demo-guide{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);padding:10px 12px;margin:6px 0 10px;display:flex;gap:10px;align-items:center;justify-content:space-between;min-width:0;}
 .room-demo-guide>div:first-child{min-width:0;flex:1;}.room-demo-guide strong{display:block;font-size:12px;font-weight:550;line-height:1.5;}.room-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px;}.room-demo-guide>div:last-child{display:flex;gap:6px;flex:none;}
 
+/* Teach uses existing native cards/section borders, not the withdrawn video layout. */
+.teach-dialog{width:min(560px,calc(100vw - 28px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;}
+.teach-dialog .dialog-body{padding:18px 20px;overflow:auto;min-height:0;}
+.teach-dialog textarea{display:block;width:100%;resize:vertical;min-height:110px;max-height:230px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);color:var(--text);font-family:inherit;font-size:13px;line-height:1.6;box-sizing:border-box;}
+.teach-scope-picker{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px;}
+.teach-scope-picker .selected,.teach-related .selected{outline:1px solid var(--accent);background:var(--surface-3);}
+.teach-source-line{display:flex;gap:12px;justify-content:space-between;color:var(--muted);font-size:11px;}
+.teach-footer{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
+.teach-help,.teach-safety,.teach-source small{color:var(--muted);font-size:11px;line-height:1.5;}
+.teach-safety{margin-top:8px;}.teach-safety summary{cursor:pointer;}
+.teach-related,.teach-revoke,.teach-preview{border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:12px 0;background:var(--surface-2);}
+.teach-related small{display:block;margin:4px 0;color:var(--muted);font-size:10px;}.teach-related button,.teach-revoke button{margin-right:8px;margin-top:6px;}
+.teach-confirm{font-size:12px;display:flex;align-items:flex-start;gap:8px;margin:12px 0;}
+.teach-error{color:var(--danger,#d86676);font-size:12px;min-height:0;margin:6px 0;}.teach-error:empty{display:none;}
+.teach-document{max-width:100%;min-width:0;padding:20px;box-sizing:border-box;}.teach-document h2{font-size:21px;margin:12px 0;}
+.teach-version{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;min-width:0;}
+.teach-version header,.teach-preview header{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;}
+.teach-version p,.teach-preview p,.teach-related p,.teach-quote{font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;}
+.teach-version small,.teach-preview small{color:var(--muted);font-size:11px;}.teach-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+.teach-version details{color:var(--muted);font-size:11px;line-height:1.6;}.teach-version summary{cursor:pointer;}.teach-version dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;}.teach-version dd{margin:0;overflow-wrap:anywhere;}
+.teach-source{padding:12px;border:1px solid var(--border);border-radius:var(--radius);margin-top:12px;}
+@media(max-width:750px){.teach-document{padding:14px;}.teach-version{padding:12px;}.teach-source-line{flex-wrap:wrap;}}
+
+.teach-receipt .event-copy{min-width:0;}.teach-receipt .soft-button{white-space:nowrap;}
+
+.teach-demo-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);margin:8px 0;min-width:0;}
+.teach-demo-guide>div{min-width:0;}.teach-demo-guide>div:last-child{display:flex;gap:8px;flex-shrink:0;}.teach-demo-guide small{display:block;font-size:10px;color:var(--muted);margin-bottom:4px;}.teach-demo-guide strong{font-size:12px;line-height:1.5;font-weight:500;}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -39304,6 +39332,7 @@ window.PM56_EXT = window.PM56_EXT || {
     return null;
   }
   function openTeachCapture(ctx, seed){
+    if(window.PM56_TEACH) return window.PM56_TEACH.open(seed||{});
     var text=(seed&&seed.text)||'';
     var narrowOf=(seed&&seed.narrowOf)||null;
     F.teach.pending = {
@@ -39405,6 +39434,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '<p class="af-note">Capturing will mark that record superseded and keep it in history. It is not silently discarded.</p></div>';
   }
   function renderTeachDialog(ctx){
+    if(window.PM56_TEACH) return window.PM56_TEACH.dialog(ctx);
     var icon=ctx.icon, e=ctx.esc;
     var p=F.teach.pending; if(!p) return '';
     var liveConflictId=(findConflict(p.text, p.scope, p.narrowOf)||{}).id||null;
@@ -39477,7 +39507,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function checkAutoMemoryAgainstLocks(summary, threadId){
     var words=significantWords(summary);
-    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked; });
+    var recs=F.teach.records.filter(function(r){ return r.locked && !r.revoked && !r.supersededBy && (!window.PM56_TEACH || window.PM56_TEACH.applies(r,{...window.PM56_TEACH.context(),threadId:threadId})); });
     for(var i=0;i<recs.length;i++){
       var rw=significantWords(recs[i].text), hits=0;
       for(var j=0;j<words.length;j++){ if(rw.indexOf(words[j])>=0) hits++; }
@@ -39549,6 +39579,7 @@ window.PM56_EXT = window.PM56_EXT || {
       return '<button class="soft-button" data-action="af-memory-open">'+icon('eye',12)+' Memory detail</button>';
     }
     if(m.type==='af-teach-receipt'){
+      if(window.PM56_TEACH && m.memoryId) return window.PM56_TEACH.receiptActions(ctx,m);
       return '<button class="soft-button" data-action="af-memory-open">'+icon('eye',12)+' View taught memory</button>';
     }
     if(m.type==='af-file-mutation'){
@@ -39563,14 +39594,16 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function renderMemoryDialog(ctx){
     var icon=ctx.icon, e=ctx.esc;
-    var taught=F.teach.records.slice().reverse();
+    var taught=(window.PM56_TEACH?window.PM56_TEACH.visibleRecords(window.PM56_TEACH.context()):F.teach.records).slice().reverse();
     var auto=F.memory.auto.slice().reverse();
     var tabs='<div class="af-tabs" role="tablist">'+
       '<button class="af-tab'+(ui.memoryOpenSection==='taught'?' active':'')+'" role="tab" data-action="af-memory-section" data-value="taught">Taught by you · '+taught.filter(function(r){return !r.revoked;}).length+'</button>'+
       '<button class="af-tab'+(ui.memoryOpenSection==='auto'?' active':'')+'" role="tab" data-action="af-memory-section" data-value="auto">Automatic · '+auto.length+'</button>'+
       '</div>';
     var body='';
-    if(ui.memoryOpenSection==='taught'){
+    if(ui.memoryOpenSection==='taught' && window.PM56_TEACH){
+      body = window.PM56_TEACH.memoryRows(ctx);
+    } else if(ui.memoryOpenSection==='taught'){
       body = taught.length ? taught.map(function(r){
         return '<div class="af-mem-row'+(r.revoked?' is-revoked':'')+'">'+
           '<div class="af-mem-row-head">'+
@@ -39602,7 +39635,7 @@ window.PM56_EXT = window.PM56_EXT || {
       }).join('') : emptyState(icon('brain',20),'No automatic memory yet.')) +
       '<div class="af-mem-foot"><button class="soft-button" data-action="af-memory-simulate">'+icon('refresh',12)+' Simulate a checkpoint</button></div>';
     }
-    var note='<p class="af-note">Taught memory and automatic memory are two different owners on purpose (packet §16.1/§16.3). Automatic memory can never silently overwrite a locked taught record — a deferred event above shows exactly why when that happens.</p>';
+    var note='<p class="af-note">Taught by you and automatic memory stay separate. Locked teaching requires your explicit correction or revocation.</p>';
     return dialogShell(ctx, { icon:'brain', title:'Memory', pill:(taught.length+auto.length)+' records', body: note+tabs+'<div class="af-mem-list">'+body+'</div>', width:560 });
   }
 
@@ -40371,6 +40404,7 @@ window.PM56_EXT = window.PM56_EXT || {
         reconciler assembly, reset-all chain
      ===================================================================== */
   function teachCommitHook(ctx, thread, message){
+    if(window.PM56_TEACH || message.teachHandled) return;
     if(!message || message.role!=='user' || typeof message.body!=='string') return;
     if(!TEACH_TRIGGER_RX.test(message.body)) return;
     var text=message.body.replace(/^\s*\/teach\b\s*/i,'').trim();
@@ -41892,6 +41926,161 @@ window.PM56_EXT = window.PM56_EXT || {
  ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Chat Room workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="room-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_ROOM_DEMOS={start,configure,fixture,play,snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
+})();
+
+/* B07 Teach: explicit user capture and immutable-content revision history.
+ * Reuses PM56_FEATURES.state().teach.records, not a second memory store.
+ * This is in-memory concept state, NOT redb persistence or live prompt dispatch.
+ * Scope boundary follows assistant-chat-design §6: thread | project | user.
+ * Legacy `global` is read as the old concept alias for `user`, never newly saved.
+ */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,F=window.PM56_FEATURES,clone=x=>JSON.parse(JSON.stringify(x));
+ const scopes={thread:'This thread',project:'This project',user:'Every project'};
+ let epoch=1,serial=0;const views=new Map(),receipts=new Map();
+ const store=()=>F.state().teach,all=()=>store().records,get=id=>all().find(r=>r.id===id);
+ const uid=p=>'teach-'+p+'-'+epoch+'-'+(++serial),now=()=>new Date().toISOString(),fail=error=>({ok:false,error});
+ const active=r=>!!r&&!r.revoked&&!r.supersededBy;
+ const scope=r=>r.scope==='global'?'user':r.scope;
+ const stamp=r=>JSON.stringify([r?.id,r?.text,r?.scope,r?.projectId,r?.userId,r?.sourceThreadId,r?.version||1,r?.revoked,r?.supersededBy,r?.locked,r?.updatedAt]);
+ function context(){const c=E.ctx();return {threadId:c.thread?.id,projectId:c.thread?.projectId||c.state.projectId||'concept:pm',userId:'concept:user',consumer:'assistant'};}
+ const messages=id=>E.ctx().state.threads.find(t=>t.id===id)?.messages||[];
+ function safeMessage(m){return !!m&&['user','assistant'].includes(m.role)&&m.type==='text'&&typeof m.body==='string'&&!m.internalOnly&&m.visibility!=='internal';}
+ function sourceValid(s){if(!s||s.kind==='manual')return true;const m=messages(s.threadId).find(m=>m.id===s.messageId);return safeMessage(m)&&m.body.slice(s.start,s.end)===s.excerpt;}
+ function sourceFor(seed,ctx){
+  const tid=seed.sourceThreadId||ctx.threadId,mid=seed.sourceMessageId;
+  if(!mid)return {kind:'manual',threadId:tid,excerpt:null};
+  const m=messages(tid).find(m=>m.id===mid);if(!safeMessage(m))return null;
+  const start=Number.isInteger(seed.start)?seed.start:0,end=Number.isInteger(seed.end)?seed.end:m.body.length;
+  if(start<0||end<=start||end>m.body.length)return null;
+  return {kind:m.role==='assistant'?'assistant_output':'user_statement',threadId:tid,messageId:mid,start,end,excerpt:m.body.slice(start,end)};
+ }
+ function open(seed={}){const c=E.ctx(),ctx=context(),old=seed.narrowOf?get(seed.narrowOf):null;
+  if(seed.narrowOf&&!active(old))return fail('teaching_not_active');
+  const source=sourceFor(seed,ctx);if(!source)return fail('source_unavailable');
+  const d={id:uid('draft'),epoch,context:ctx,text:String(seed.text??''),scope:old?scope(old):(scopes[seed.scope]?seed.scope:'thread'),source,narrowOf:old?.id||null,expectedOld:old?stamp(old):null,allowUserScope:false,conflictChoice:null,error:null};
+  store().pending=d;window.PM56_MSG_OVERFLOW?.close();c.closeMenu();c.openDialog({type:'af-teach'});c.renderApp();return {ok:true,draftId:d.id};
+ }
+ function applies(r,ctx){if(!active(r)||ctx.consumer!=='assistant')return false;const s=scope(r);
+  if(s==='user')return (r.userId||'concept:user')===ctx.userId;
+  if((r.projectId||'concept:pm')!==ctx.projectId)return false;
+  return s==='project'||(s==='thread'&&r.sourceThreadId===ctx.threadId);
+ }
+ function preview(ctx=context()){
+  const items=[],excluded=[];for(const r of visibleRecords(ctx)){
+   let reason=r.supersededBy?'superseded':r.revoked?'revoked':ctx.consumer!=='assistant'?'not_assistant':!applies(r,ctx)?'outside_scope':null;
+   if(reason)excluded.push({id:r.id,version:r.version||1,reason});else items.push({id:r.id,version:r.version||1,scope:scope(r),text:r.text});
+  }return {kind:'concept_teach_context_preview',context:clone(ctx),items,excluded,payload:items.map(r=>r.text).join('\n'),providerDispatched:false};
+ }
+ const words=s=>new Set((String(s).toLowerCase().match(/[a-z0-9]{4,}/g)||[]));
+ function related(d){const w=words(d.text);return all().filter(r=>active(r)&&r.id!==d.narrowOf&&scope(r)===d.scope&&(d.scope==='user'?(r.userId||'concept:user')===d.context.userId:(r.projectId||'concept:pm')===d.context.projectId)&& (d.scope!=='thread'||r.sourceThreadId===d.context.threadId)&&[...words(r.text)].filter(v=>w.has(v)).length>=3);}
+ const secret=s=>/(api[_-]?key|secret|token|password|bearer)\s*[:=]\s*\S{4,}|sk-[a-z0-9]{10,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/i.test(String(s));
+ function request(){const d=store().pending;return d?clone({...d,related:related(d).map(r=>({id:r.id,stamp:stamp(r)}))}):null;}
+ function commit(x){
+  const d=store().pending;if(!x)return fail('draft_missing');
+  const saved=receipts.get(x.id);if(saved)return saved.request===JSON.stringify(x)?{ok:true,id:saved.id,reused:true}:fail('conflicting_capture');
+  if(x.epoch!==epoch||!d||x.id!==d.id||E.ctx().state.dialog?.type!=='af-teach')return fail('stale_draft');
+  if(JSON.stringify(request())!==JSON.stringify(x))return fail('draft_changed');
+  if(JSON.stringify(context())!==JSON.stringify(d.context))return fail('scope_context_changed');
+  if(!scopes[d.scope])return fail('invalid_scope');
+  const text=String(d.text).trim();if(!text||text.length>4000)return fail('text_required_and_bounded');
+  if(secret(text)||secret(d.source.excerpt))return fail('credential_detected');
+  if(!sourceValid(d.source))return fail('source_changed');
+  if(d.scope==='user'&&!d.allowUserScope)return fail('confirm_nonconfidential_user_scope');
+  let old=d.narrowOf?get(d.narrowOf):null;
+  if(d.narrowOf&&(!active(old)||!applies(old,d.context)||stamp(old)!==d.expectedOld))return fail('stale_correction');
+  const near=related(d);if(near.length&&!d.narrowOf){
+   if(d.conflictChoice==='keep_both'){}else if(d.conflictChoice?.startsWith('replace:')){
+    old=get(d.conflictChoice.slice(8));if(!near.includes(old)||!active(old))return fail('conflict_changed');
+   }else return fail('resolve_related_teaching');
+  }
+  // A correction cannot silently broaden its predecessor's scope.
+  if(old&&d.scope!==scope(old)&&!(scope(old)==='project'&&d.scope==='thread'))return fail('correction_cannot_widen_scope');
+  const id=uid('record'),at=now(),r={id,memory_id:id,scope:d.scope,projectId:d.context.projectId,userId:d.context.userId,
+   sourceThreadId:d.context.threadId,source_thread_id:d.context.threadId,sourceMessageId:d.source.messageId||null,author_message_id:d.source.messageId||null,
+   text,normalized_fact:text,source:clone(d.source),version:old?(old.version||1)+1:1,rootId:old?(old.rootId||old.id):id,
+   supersedes:old?.id||null,supersedes_memory_id:old?.id||null,supersededBy:null,revoked:false,revoked_at:null,locked:true,
+   createdAt:at,captured_at:at,updatedAt:at,secretSafety:'local_pattern_screen_clear',demo:true,protocolVersion:1};
+  if(old){old.supersededBy=id;old.revoked=true;old.updatedAt=at;}all().push(r);store().pending=null;receipts.set(x.id,{request:JSON.stringify(x),id});
+  const c=E.ctx(),t=c.state.threads.find(t=>t.id===r.sourceThreadId);
+  c.appendMessage({id:uid('receipt'),role:'system',type:'af-teach-receipt',title:old?'Teaching updated':'Teaching captured',detail:(scopes[r.scope]||r.scope)+' · v'+r.version+' · locked',memoryId:id,time:at},t);
+  document.dispatchEvent(new CustomEvent('pm56:teach-committed',{detail:{id,threadId:r.sourceThreadId}}));return {ok:true,id,reused:false};
+ }
+ function correction(id){const r=get(id);if(!active(r))return fail('teaching_not_active');if(!applies(r,context()))return fail('outside_scope');return open({text:r.text,scope:scope(r),narrowOf:id});}
+ function mutationRequest(id){const r=get(id);return r?{id,epoch,expected:stamp(r)}:null;}
+ function revoke(x){const r=get(x?.id);if(!r)return fail('teaching_missing');if(x.epoch!==epoch||stamp(r)!==x.expected||!applies(r,context()))return fail('stale_teaching');if(!active(r))return fail('teaching_not_active');r.revoked=true;r.revoked_at=now();r.updatedAt=r.revoked_at;return {ok:true,id:r.id};}
+ function lock(x){const r=get(x?.id);if(!r||x.epoch!==epoch||stamp(r)!==x.expected||!active(r)||!applies(r,context()))return fail('stale_teaching');r.locked=!r.locked;r.updatedAt=now();return {ok:true,id:r.id};}
+ const errorText={credential_detected:'Remove the credential before saving.',source_changed:'The source changed. Select it again.',resolve_related_teaching:'Choose how to handle the related teaching.',stale_correction:'This teaching changed. Reopen its current version.',scope_context_changed:'The destination changed. Open a new capture.',confirm_nonconfidential_user_scope:'Confirm this is safe for other projects.',correction_cannot_widen_scope:'Create a separate teaching to broaden its scope.',draft_changed:'The draft changed. Review it before saving.',text_required_and_bounded:'Enter 1–4,000 characters.',invalid_scope:'Choose a supported scope.'};
+ const explain=x=>errorText[x]||'The record changed. Reopen it and try again.';
+ function conflictHtml(c,d){const rows=related(d);if(d.narrowOf||!rows.length)return '';return '<div class="teach-related"><strong>Related teaching</strong><small>Local word overlap — not a semantic verdict</small>'+rows.map(r=>'<p>'+c.esc(r.text)+'</p><button class="soft-button '+(d.conflictChoice==='replace:'+r.id?'selected':'')+'" data-action="teach-conflict" data-choice="replace:'+c.esc(r.id)+'">Replace this version</button>').join('')+'<button class="soft-button" data-action="teach-conflict" data-choice="keep_both">'+(d.conflictChoice==='keep_both'?'✓ ':'')+'Keep both</button></div>';}
+ function dialog(c){const d=store().pending;if(!d)return '';const isCorrection=!!d.narrowOf,e=c.esc;
+  return '<section class="dialog teach-dialog" role="dialog" aria-modal="true" aria-label="'+(isCorrection?'Correct teaching':'Teach Puppet Master')+'"><div class="drawer-head"><span class="event-icon">'+c.icon('sparkles',14)+'</span><strong>'+(isCorrection?'Correct teaching':'Teach Puppet Master')+'</strong><span class="spacer"></span><button class="icon-button" data-action="af-teach-cancel" aria-label="Close">'+c.icon('close',13)+'</button></div><div class="dialog-body"><label class="af-field-label" for="teach-body">Remember this</label><textarea id="teach-body" data-teach-input="text" rows="4" maxlength="4000">'+e(d.text)+'</textarea><label class="af-field-label">Applies to</label><div class="teach-scope-picker">'+Object.entries(scopes).map(([k,v])=>'<button class="soft-button '+(d.scope===k?'selected':'')+'" data-action="af-teach-set-scope" data-value="'+k+'" aria-pressed="'+(d.scope===k)+'">'+e(v)+'</button>').join('')+'</div>'+(d.scope==='user'?'<label class="teach-confirm"><input type="checkbox" data-teach-input="public"'+(d.allowUserScope?' checked':'')+'> This contains no project-confidential information.</label>':'')+'<div class="teach-source-line"><small>'+e(d.source.kind==='manual'?'Source: your explicit instruction':'Source: '+(d.source.kind==='assistant_output'?'selected assistant output':'your message'))+'</small><small>User-locked</small></div>'+(isCorrection?'<p class="teach-help">The previous version stays in history.</p>':'')+'<div id="teach-related">'+conflictHtml(c,d)+'</div><p id="teach-error" class="teach-error" role="status">'+e(d.error?explain(d.error):'')+'</p><details class="teach-safety"><summary>Capture details</summary><p>Local credential-pattern check only. This concept keeps teaching in this session; it does not save to a production memory store.</p>'+(d.source.excerpt?'<p class="teach-quote">'+e(d.source.excerpt)+'</p>':'')+'</details></div><footer class="teach-footer"><button class="soft-button" data-action="af-teach-cancel">Cancel</button><button class="primary-button" data-action="af-teach-capture">'+(isCorrection?'Save new version':'Capture teaching')+'</button></footer></section>';
+ }
+ function memoryRows(c){return visibleRecords(context()).slice().reverse().map(r=>'<div class="af-mem-row"><div class="af-mem-row-head"><strong>'+c.esc(status(r))+'</strong><span class="spacer"></span><small>'+c.esc(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></div><p class="af-mem-text">'+c.esc(r.text)+'</p><button class="text-button" data-action="teach-open" data-id="'+c.esc(r.id)+'">Details and history</button></div>').join('')||'<p>No teaching captured.</p>';}
+ function status(r){return r.supersededBy?'Superseded':r.revoked?'Revoked':r.locked?'Active · locked':'Active';}
+ function visibleRecords(ctx){return all().filter(r=>{const s=scope(r);if(s==='user')return (r.userId||'concept:user')===ctx.userId;if((r.projectId||'concept:pm')!==ctx.projectId)return false;return s==='project'||(s==='thread'&&r.sourceThreadId===ctx.threadId);});}
+ function history(c,tid){const ctx={...context(),threadId:tid},v=views.get(tid)||{},records=visibleRecords(ctx),chosen=get(v.id),chain=chosen?records.filter(r=>(r.rootId||r.id)===(chosen.rootId||chosen.id)):records,upcoming=preview(ctx),e=c.esc;
+  return '<article class="teach-document" data-k="teach-doc:'+e(tid)+'"><div class="room-meta"><span>Teach · session preview</span><span>'+upcoming.items.length+' eligible · '+records.length+(records.length===1?' version':' versions')+'</span></div><h2>Taught memory</h2><div class="room-controls"><button class="soft-button" data-action="af-teach-open">Teach something</button><button class="soft-button" data-action="teach-preview" data-thread="'+e(tid)+'">Preview next context</button><button class="soft-button" data-action="teach-export" data-thread="'+e(tid)+'">Export history</button>'+(chosen?'<button class="text-button" data-action="teach-open">All teaching</button>':'')+'</div>'+(v.preview?'<section class="teach-preview" data-k="teach-preview"><header><strong>Eligible for this Assistant thread</strong><small>Preview only · not dispatched</small></header>'+(upcoming.items.length?upcoming.items.map(r=>'<p data-included-teaching="'+e(r.id)+'">'+e(r.text)+' <small>v'+r.version+'</small></p>').join(''):'<p>No active teaching applies.</p>')+'</section>':'')+'<div class="teach-versions">'+chain.slice().reverse().map(r=>'<section class="teach-version" data-k="teach:'+e(r.id)+'" data-teaching="'+e(r.id)+'"><header><strong>'+e(status(r))+'</strong><small>'+e(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></header><p>'+e(r.text)+'</p><div class="teach-actions">'+(active(r)?'<button class="soft-button" data-action="teach-correct" data-id="'+e(r.id)+'">Correct</button><button class="text-button" data-action="af-teach-lock" data-value="'+e(r.id)+'">'+(r.locked?'Unlock':'Lock')+'</button><button class="text-button" data-action="af-teach-revoke" data-value="'+e(r.id)+'">Revoke</button>':'')+'<button class="text-button" data-action="teach-source" data-id="'+e(r.id)+'">Source</button></div><details><summary>Version details</summary><dl><dt>Captured</dt><dd>'+e(r.createdAt)+'</dd><dt>Replaces</dt><dd>'+e(r.supersedes?'v'+(get(r.supersedes)?.version||1):'None')+'</dd><dt>Future use</dt><dd>'+e(upcoming.items.some(x=>x.id===r.id)?'Eligible here':status(r)==='Superseded'?'Replaced by newer teaching':'Not included here')+'</dd></dl></details>'+(v.source===r.id?'<div class="teach-source"><strong>Capture source</strong><p>'+e(r.source?.excerpt||r.text)+'</p>'+(r.sourceMessageId&&messages(r.sourceThreadId).some(m=>m.id===r.sourceMessageId)?'<button class="text-button" data-action="teach-source-jump" data-id="'+e(r.id)+'">Open original message</button>':'<small>Explicit instruction; preserved with this revision.</small>')+'</div>':'')+(v.revoke?.id===r.id?'<div class="teach-revoke"><strong>Stop using this version?</strong><p>History remains. Older versions will not reactivate.</p><button class="soft-button" data-action="teach-revoke-cancel" data-thread="'+e(tid)+'">Keep active</button><button class="primary-button" data-action="teach-revoke-confirm" data-thread="'+e(tid)+'">Revoke teaching</button></div>':'')+'</section>').join('')+'</div><p class="teach-help">Teaching is not the Teacher Persona. No model request is made here.</p>'+ (window.PM56_TEACH_DEMOS?.editorGuide(tid)||'')+'</article>';
+ }
+ function show(id){const c=E.ctx(),r=get(id),tid=c.thread.id;if(r&&!visibleRecords(context()).includes(r))return fail('outside_scope');views.set(tid,{...views.get(tid),id:r?.id||null,revoke:null});c.closeDialog();c.closeMenu();c.state.editorRevealed=true;c.openEditor('teach:'+tid);return {ok:true};}
+ function receiptActions(c,m){return '<button class="soft-button" data-action="teach-open" data-id="'+c.esc(m.memoryId)+'">Open teaching</button>';}
+ function update(){const c=E.ctx(),d=store().pending;if(!d)return;const error=document.getElementById('teach-error');if(error)error.textContent=d.error?explain(d.error):'';const rel=document.getElementById('teach-related');if(rel)rel.innerHTML=conflictHtml(c,d);}
+ E.chainAction('af-teach-open',()=>{open();return true;});E.chainAction('af-teach-narrow',(c,b)=>{correction(b.dataset.value);return true;});
+ E.chainAction('af-teach-set-scope',(c,b)=>{const d=store().pending;if(d&&scopes[b.dataset.value]){d.scope=b.dataset.value;d.conflictChoice=null;d.error=null;c.renderOverlays();}return true;});
+ E.chainAction('af-teach-cancel',c=>{store().pending=null;c.closeDialog();return true;});
+ E.chainAction('af-teach-capture',c=>{const x=commit(request());if(!x.ok){if(store().pending)store().pending.error=x.error;update();}else{c.closeDialog();c.renderApp();}return true;});
+ E.action('teach-conflict',(c,b)=>{if(store().pending){store().pending.conflictChoice=b.dataset.choice;store().pending.error=null;update();}return true;});
+ E.action('teach-open',(c,b)=>{show(b.dataset.id);return true;});E.action('teach-correct',(c,b)=>{correction(b.dataset.id);return true;});
+ E.chainAction('af-teach-lock',(c,b)=>{const x=lock(mutationRequest(b.dataset.value));if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
+ E.chainAction('af-teach-revoke',(c,b)=>{show(b.dataset.value);const tid=c.thread.id;views.set(tid,{...views.get(tid),revoke:mutationRequest(b.dataset.value)});c.renderApp();return true;});
+ E.action('teach-revoke-cancel',(c,b)=>{views.set(b.dataset.thread,{...views.get(b.dataset.thread),revoke:null});c.renderApp();return true;});
+ E.action('teach-revoke-confirm',(c,b)=>{const v=views.get(b.dataset.thread),x=revoke(v?.revoke);views.set(b.dataset.thread,{...v,revoke:null});if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
+ E.action('teach-preview',(c,b)=>{views.set(b.dataset.thread,{...views.get(b.dataset.thread),preview:!views.get(b.dataset.thread)?.preview});c.renderApp();return true;});
+ E.action('teach-source',(c,b)=>{const tid=c.thread.id;views.set(tid,{...views.get(tid),source:views.get(tid)?.source===b.dataset.id?null:b.dataset.id});c.renderApp();return true;});
+ E.action('teach-source-jump',(c,b)=>{const r=get(b.dataset.id);if(r?.sourceMessageId){c.switchThread(r.sourceThreadId);c.state.editorRevealed=false;c.renderApp();requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(r.sourceMessageId)+'"]')?.scrollIntoView({block:'center'}));}return true;});
+ function exportHistory(tid){return JSON.stringify({kind:'concept_taught_memory',threadId:tid,records:visibleRecords({...context(),threadId:tid}),preview:preview({...context(),threadId:tid})},null,2);}
+ E.action('teach-export',(c,b)=>{const url=URL.createObjectURL(new Blob([exportHistory(b.dataset.thread)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='taught-memory.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);return true;});
+ E.action('teach-from-message',(c,b)=>{const tid=b.dataset.thread||c.thread.id,m=messages(tid).find(m=>m.id===b.dataset.value);if(safeMessage(m))open({text:m.body,sourceThreadId:tid,sourceMessageId:m.id});return true;});
+ document.addEventListener('input',e=>{const k=e.target.dataset?.teachInput,d=store().pending;if(!k||!d)return;if(k==='text'){d.text=e.target.value;d.conflictChoice=null;}if(k==='public')d.allowUserScope=e.target.checked;d.error=null;update();});
+ E.slot('transcriptMessage',c=>{const m=c.m;if(m?.type!=='af-teach-receipt'||!m.memoryId)return '';return '<article class="event-card teach-receipt" data-k="teach-receipt:'+c.esc(m.id)+'" data-message-id="'+c.esc(m.id)+'"><span class="event-icon">'+c.icon('sparkles',13)+'</span><div class="event-copy"><strong>'+c.esc(m.title)+'</strong><p>'+c.esc(m.detail)+'</p></div><button class="soft-button" data-action="teach-open" data-id="'+c.esc(m.memoryId)+'">Open</button></article>';});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('teach:')?'Taught memory':'');E.slot('editorDocument',c=>c.editorId?.startsWith('teach:')?history(c,c.editorId.slice(6)):'');
+ window.PM56_MSG_OVERFLOW?.register((c,m)=>safeMessage(m)?[{id:'teach-selected-message',label:'Save as taught memory…',detail:'Review and confirm before capturing',icon:'sparkles',action:'teach-from-message',value:m.id}]:null);
+ E.chainAction('close-dialog',()=>{if(E.ctx().state.dialog?.type==='af-teach')store().pending=null;return false;});
+ // Explicit Teach uses normal composer input, without fabricating an assistant answer.
+ const composer=window.PM56_RUNTIME.composer;
+ composer.preSendHooks.unshift((c,t,raw)=>{
+  const dest=composer.bufferFor(t.id).destination||composer.destination;
+  if(dest&&dest.kind!=='assistant')return false;
+  if(!/^\s*\/teach\b|^\s*(?:remember (?:this|that)|for (?:this repo|this project) always|please prefer)\b/i.test(raw))return false;
+  const message={id:uid('instruction'),role:'user',type:'text',body:raw,time:now(),teachHandled:true};
+  c.appendMessage(message,t);open({text:raw.replace(/^\s*\/teach\b\s*/i,''),scope:'thread',sourceThreadId:t.id,sourceMessageId:message.id});return {claimed:true};
+ });
+ E.chainAction('reset-all',()=>{epoch++;views.clear();receipts.clear();return false;});
+ window.PM56_TEACH={open,request,commit,correction,mutationRequest,revoke,lock,context,applies,preview,related,get,all,active,dialog,memoryRows,show,receiptActions,exportHistory,status,sourceValid,visibleRecords};
+})();
+
+/* B07 gallery: user-confirmed capture, then correction/revocation. No provider simulation. */
+(function(){
+ 'use strict';const E=window.PM56_EXT,T=window.PM56_TEACH,clone=x=>JSON.parse(JSON.stringify(x));let current=null,seq=0;
+ const rule='Before changing a generated file, edit its source and rebuild the output.';
+ const corrected='Before changing a generated file, edit its source, rebuild, and compare the generated output.';
+ const flows={capture:{label:'Capture deliberate guidance',detail:'Select a message, confirm project scope, and inspect the next-context preview.'},correct:{label:'Correct without erasing history',detail:'Teach a rule, save a replacement version, then revoke it without reviving the old one.'}};
+ function start(kind){if(!flows[kind])return;const c=E.ctx(),id='teach-demo-'+kind+'-'+(++seq),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);
+  Object.assign(t,{id,title:flows[kind].label+' · local example',goalId:null,status:'ready',pinned:false,archived:false,projectId:'concept:teach-example:'+seq,messages:[{id:id+'-request',role:'user',type:'text',body:'Help me keep generated files consistent with their source.'},{id:id+'-guidance',role:'assistant',type:'text',body:rule}]});
+  c.state.threads.push(t);Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;current={kind,threadId:id,sourceId:id+'-guidance',ids:[]};c.switchThread(id);c.renderApp();
+ }
+ document.addEventListener('pm56:teach-committed',e=>{if(current&&e.detail.threadId===current.threadId)current.ids.push(e.detail.id);});
+ function guide(c,inEditor=false){if(!current||c.thread.id!==current.threadId||c.state.dialog)return '';if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
+  const latest=T.get(current.ids.at(-1)),done=current.kind==='capture'?!!latest:!!latest?.revoked&&!latest.supersededBy;
+  let text=!latest?(current.kind==='capture'?'Open the message’s More menu → Save as taught memory.':'Send /teach with a rule, then confirm capture.'):(current.kind==='capture'?'Open teaching and preview next context.':latest.version===1?'Open teaching → Correct; save a new version.':latest.revoked?'Both versions remain in history; neither is used.':'Preview v2, then explicitly revoke it.');
+  return '<div class="teach-demo-guide" data-k="teach-guide"><div><small>Local example · no model calls</small><strong>'+c.esc(text)+'</strong></div><div>'+(done?'<button class="soft-button" data-action="teach-demo-replay">Replay</button>':'')+'<button class="icon-button" data-action="teach-demo-close" title="Close guide">'+c.icon('close',12)+'</button></div></div>';
+ }
+ E.slot('composerBelow',c=>guide(c));E.action('teach-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('teach-demo-replay',()=>{if(current)start(current.kind);return true;});E.action('teach-demo-close',()=>{current=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{current=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start'].forEach(a=>E.chainAction(a,()=>{current=null;return false;}));
+ const G=window.PM56_REPAIR_DEMOS,prev=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Teach workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="teach-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+prev(c);
+ window.PM56_TEACH_DEMOS={start,rule,corrected,snapshot:()=>current?clone(current):null,editorGuide:id=>current?.threadId===id?guide(E.ctx(),true):''};
 })();
 </script>
   <script>(() => {
