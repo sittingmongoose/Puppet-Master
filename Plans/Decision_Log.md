@@ -326,12 +326,12 @@ SourceRef: `PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DEC
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/goal_runtime_events.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/event_family_registry.json, ContractName:Plans/event_family_registry.schema.json, ContractName:Plans/newtools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
 
-### DL-035: Terminal research decisions — own engine, OS console, and nine accepted proposals
+### DL-035: Terminal research decisions — own engine, bundled console, and ten accepted proposals
 
 Approved on 2026-09-09 by Jared in conversation. The source records the calendar date but not an exact UTC instant; this entry does not invent one. The proposals are the terminal research decision packet P1–P11 produced by the September 8 discovery-to-plan pilot (`PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md`). This grouped entry records exactly eleven dispositions:
 
 - `P1 declined as proposed` — Puppet Master builds its own terminal engine and process host. The VT parser, grid and scrollback model, selection, command-block overlay, renderer adapter and PTY host are PM-owned code using operating-system APIs directly. No third-party terminal emulator, parser, or PTY-abstraction library is adopted into the engine. Leading terminals (Alacritty, WezTerm, Ghostty, kitty, foot, Windows Terminal, VS Code/xterm.js, JetBrains) remain reference subjects for research: study how they work, do not reuse their code. The R1/R2 conformance checklists retarget from candidate-core admission to acceptance criteria for PM's own engine and host.
-- `P2 declined as proposed` — Puppet Master uses the operating system's ConPTY as shipped by Windows; it does not bundle or pin console components. Version-dependent behavior is disclosed through the existing host-provenance doctor (SMPFS-132) rather than hidden behind a bundled binary.
+- `P2 accepted for planning` — Puppet Master ships a PM-managed, version-pinned Windows console component package (ConPTY/OpenConsole) with verified installation and provenance, and an explicit, disclosed fallback to the operating-system copy when the bundle is absent, untrusted or incompatible. Version-dependent behavior remains disclosed through the host-provenance doctor (SMPFS-132). Bundling does not by itself widen supported Windows versions. Correction recorded later on 2026-09-09: the first recorded disposition was `declined as proposed` (use the OS-shipped ConPTY); Jared reversed it after reviewing the plain-language decision sheet. No other disposition changed.
 - `P3 accepted for planning` — optional negotiated enhanced keyboard protocols behind a versioned capability profile.
 - `P4 accepted for planning` — richer capability-gated shell context (continuation and right-prompt boundaries, rich shell properties) in the PM-owned parser.
 - `P5 accepted for planning` — a provider snapshot adapter that classifies cumulative or rewritten output as append, complete snapshot, rolling snapshot, or final result.
@@ -346,13 +346,36 @@ Section 15 owns the engine, host, protocol and parser decisions; FinalGUI owns v
 
 The separate synthetic Usage decision packet (`USAGE-D01`–`USAGE-D13`) concerns a synthetic test fixture, not live Puppet Master, and records no PM decision.
 
-Negative constraints: no third-party emulator, parser, or PTY-abstraction crate in the engine or host; no bundled or pinned Windows console binaries; no implementation, WorkNodes, or NodeSeeds from this record; P11 grants no daemon installation, credential authority, or selection; the synthetic Usage packet adopts nothing.
+Negative constraints: no third-party emulator, parser, or PTY-abstraction crate in the engine or host; no unverified, unpinned or silently substituted Windows console components, and no undisclosed local fallback; no implementation, WorkNodes, or NodeSeeds from this record; P11 grants no daemon installation, credential authority, or selection; the synthetic Usage packet adopts nothing.
 
 These dispositions authorize planning only. They do not land any owner amendment, prove runtime behavior, or seal governance.
 
 SourceRef: `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md`; `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/evaluator/terminal-premium-decision-draft.md`; Jared, conversation of 2026-09-09.
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Contracts_V0.md
+
+### DL-036: Research decision packets in production — chat artifact plus one-at-a-time decision cards
+
+Approved on 2026-09-09 by Jared in conversation, after reviewing the plain-language terminal decision sheet used for DL-035. This entry records the product behavior for bringing research and audit decisions to the user in production Puppet Master. It authorizes planning under the named owners, not implementation.
+
+Recorded requirement, in Jared's terms:
+
+- A decision packet produced by research or audit is handed to the user in chat as an artifact containing every item.
+- Each item is then presented to the user in the chat window one at a time as a decision card built from the plain-language decision form: a plain name; the question in one sentence; why it came up; what you would get; what it costs; the options; the recommendation if there is one.
+- The user answers each card with exactly one of four responses: Approve; Deny; Deny with changes, where the user states the change; Ask a question, where the question routes to research or the agent and the item is re-presented with the answer.
+- While items are presented one at a time, the user can open the full artifact with all items at any time.
+- The cards reuse the planned question card and questionnaire mechanism (`Plans/assistant-chat-design.md` section 7.4) modified for this purpose: more information per item than a question card, and this different, fixed set of responses. One-at-a-time sequencing is the presentation rule for this flow, not a change to the general questionnaire contract.
+- Status and disposition are shown with text labels. No colored border bars or stripes as status indicators. No emoji glyphs.
+- Approved, denied, denied-with-changes and pending dispositions are recorded so agents do not ask the same question again. Approval authorizes planning that feature; execution follows the existing Approve And Build path (PWIZ-010).
+- The bootstrap and audit form of the same packet is a plain-language document; the production flow above is the product form.
+
+Assistant Chat owns the artifact surface, the decision card, its responses and the question-flow reuse; Planning Wizard owns where the flow sits in a planning run and how dispositions feed topics, amendments and Approve And Build; Contracts own the typed envelope; FinalGUI owns visual presentation; Storage owns disposition persistence; UI Command Catalog and Wiring own the commands.
+
+Negative constraints: no auto-approval, auto-denial or auto-submit on dismissal; no agent may answer a card on the user's behalf; asking a question does not consume or alter the pending decision; no colored status bars; no emoji; no implementation, WorkNodes or NodeSeeds from this record.
+
+SourceRef: Jared, conversation of 2026-09-09; `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md`; `PM-Experiments/research-audit-native-20260907/STATUS_REPORT_20260908.md` section 8.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 ## Owner / Consumer Map
 
@@ -2210,8 +2233,9 @@ canonical_text: >-
   Terminal research decision record of 2026-09-09: P1 is declined as proposed
   and Puppet Master builds its own terminal engine and process host using
   operating-system APIs directly, studying leading terminals as references
-  without reusing their code; P2 is declined as proposed and Puppet Master uses
-  the operating system's ConPTY as shipped without bundled console components;
+  without reusing their code; P2 is accepted for planning, as corrected the same
+  day, and Puppet Master ships a PM-managed, version-pinned Windows console
+  component package with verified provenance and disclosed OS fallback;
   P3 through P10 are accepted for planning; P11 is accepted for evaluation only
   with selection held until PM Server ownership compatibility is resolved.
 gui_related: true
@@ -2220,8 +2244,8 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - The grouped entry contains exactly P1 through P11 with the dispositions declined as proposed (P1, P2), accepted for planning (P3 through P10), and accepted for evaluation only (P11), and no additional decision.
-  - Section 15 receives an owner amendment stating the PM-owned engine and host direction and the OS-shipped ConPTY policy before any engine or host PlanUnit is compiled.
+  - The grouped entry contains exactly P1 through P11 with the dispositions declined as proposed (P1), accepted for planning (P2 through P10, with P2 corrected the same day), and accepted for evaluation only (P11), and no additional decision.
+  - Section 15 and Release Supply Chain receive owner amendments stating the PM-owned engine and host direction and the bundled, version-pinned console policy with disclosed OS fallback before any engine or host PlanUnit is compiled.
   - Accepted proposals are planned as PlanUnits under their owners before any implementation, and execution follows the existing Approve And Build path.
   - The synthetic Usage packet USAGE-D01 through USAGE-D13 records no Puppet Master decision.
 validation_surfaces:
@@ -2238,6 +2262,7 @@ implementation_surfaces:
   - Plans/Automated_Testing_System.md
   - Plans/Server_System.md
   - Plans/Settings_System.md
+  - Plans/Release_Supply_Chain.md
 node_compile_hint:
   mode: terminal_research_decision_record
   create_worknodes: false
@@ -2260,10 +2285,11 @@ preserved_exact_tokens:
   - P11
   - purpose-built terminal engine
   - ConPTY
+  - OpenConsole
   - SMPFS-132
 negative_constraints:
   - No third-party terminal emulator, parser, or PTY-abstraction library is adopted into the engine or process host.
-  - No bundled or pinned Windows console components are shipped.
+  - No unverified, unpinned or silently substituted Windows console components are shipped, and OS fallback is always disclosed.
   - No implementation, WorkNodes, or NodeSeeds are created by this record.
   - P11 grants no daemon installation, credential authority, or selection.
   - The synthetic Usage packet adopts nothing.
@@ -2272,6 +2298,74 @@ owner_hints:
   - Plans/Section15_MVP_Promoted_Features_Spec.md
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
+```
+
+### DL-036 - Research Decision Packet Review Flow
+
+```yaml
+plan_unit_id: DL-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Research and audit decision packets in production Puppet Master are handed to
+  the user in chat as an artifact containing every item, then each item is
+  presented one at a time as a plain-language decision card answered with
+  exactly one of Approve, Deny, Deny with changes, or Ask a question, reusing
+  the question card and questionnaire mechanism with more information per item
+  and this fixed response set; the full artifact stays openable throughout, all
+  dispositions are recorded so they are not re-asked, and status uses text
+  labels with no colored border bars and no emoji.
+gui_related: true
+gui_classification_reason: The artifact hand-off, decision cards and response controls are user-visible chat GUI behavior.
+split_recommended: false
+depends_on: [DL-035]
+unblocks: []
+acceptance_criteria:
+  - A packet is delivered as one chat artifact containing every item before any item is presented individually.
+  - Each item is presented one at a time using the plain-language decision fields and accepts exactly one of Approve, Deny, Deny with changes, or Ask a question; Ask a question returns an answer and re-presents the item without consuming the decision.
+  - The full artifact can be opened at any time during item presentation.
+  - Dispositions persist and are not re-asked; Approve authorizes planning only, and execution follows Approve And Build.
+  - Status is shown with text labels; no colored border bars or stripes and no emoji glyphs are used.
+validation_surfaces:
+  - PlanUnit YAML parse and identifier-uniqueness check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: decision_review_flow_drift
+reasoning_tier: high
+context_scope: research_decision_review
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/assistant-chat-design.md
+  - Plans/Planning_Wizard.md
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: research_decision_review_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-036-approval-2026-09-09
+  - PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md:production
+  - PM-Experiments/research-audit-native-20260907/STATUS_REPORT_20260908.md:section-8
+preserved_exact_tokens:
+  - Approve
+  - Deny
+  - Deny with changes
+  - Ask a question
+  - questionnaire
+  - Approve And Build
+negative_constraints:
+  - No auto-approval, auto-denial or auto-submit on dismissal, and no agent may answer a card on the user's behalf.
+  - Asking a question does not consume or alter the pending decision.
+  - No colored border bars or stripes as status indicators and no emoji glyphs.
+  - No implementation, WorkNodes, or NodeSeeds are created by this record.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/assistant-chat-design.md
+  - Plans/Planning_Wizard.md
+  - Plans/FinalGUISpec.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
