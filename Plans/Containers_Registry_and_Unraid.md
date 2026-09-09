@@ -6580,7 +6580,7 @@ acceptance_criteria:
   - Windows/WSL and container siblings share physical-parent budgets and cannot each advertise the full parent capacity.
   - Old-x86 and low-memory fixtures prove reduced concurrency, caches, probes, logs/artifacts, and optional-capability defaults.
   - Architecture-specific acceleration is selected only after runtime capability proof and has a compatible bounded fallback.
-  - Governor decisions preserve the shared admitted, admitted_reduced, queued, blocked, and rejected outcomes with effective limits and reevaluation evidence.
+  - Governor decisions preserve the exact shared admitted, queued, admitted_degraded, permission_blocked, resource_blocked, or cancelled decision with effective limits and reevaluation evidence. Legacy admitted_reduced, blocked, and rejected rows are read/import-only inputs that normalize once at the shared-runtime owner boundary and are never emitted or displayed by this consumer.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future host-local governor admission and physical-parent budget fixtures
@@ -6606,7 +6606,9 @@ preserved_exact_tokens:
   - "low-memory"
   - "runtime-dispatched optimized kernels"
   - "no startup probe storm"
-  - "admitted_reduced"
+  - "admitted_degraded"
+  - "permission_blocked"
+  - "resource_blocked"
 negative_constraints:
   - Do not let a coordinator, Client, container, or WSL environment bypass the target Host governor.
   - Do not advertise the same physical capacity independently to sibling Environments.

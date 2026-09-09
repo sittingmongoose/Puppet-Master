@@ -4198,8 +4198,11 @@ runtime evidence exist.
 The `catalog.project_new_local`, `catalog.project_add_existing`, and `catalog.project_open` rows use the
 Project owner request/result schemas and preserve exact identity, currentness, receipt, and caller return
 context. The `catalog.authentication_start|cancel|resume` rows retain their sole shared-runtime handlers
-and additionally prove initiating active Client/session generation, same operation/revision, exact return
-target, redacted timeout/cancel/success, and rejection of wrong-Client or stale-operation returns.
+and additionally prove the owner-selected Client/session fence, same operation/revision, exact return
+target, redacted timeout/cancel/success, and rejection of wrong-Client or stale-operation returns. The
+September 9 approved RAS-015/SIR-032 handoff lets a current authorized Client resume the Server-owned
+hosted-Tailscale operation only with a fresh authorized handoff generation and protected session; origin
+Client fields remain lineage. All other protected providers retain initiating-active-Client-only behavior.
 
 PMConcept7 is a concept consumer only. The bounded Product Onboarding modal maps standalone/container
 post-claim work to `cmd.server.bootstrap.start`, pairing-method initiation to `cmd.client.pair.start`, known
@@ -4230,7 +4233,7 @@ acceptance_criteria:
   - Exactly ten new production-intent rows exist with unique commands and keys, exact owner schemas, one specified target, selectors, disabled reasons, accessibility, tests, and reverse consumers.
   - The three Project and three Authentication rows are strengthened in place rather than duplicated.
   - Pairing start/approve/reject/cancel and Client trust revocation remain separate operations; reconnect/resume remain modes of cmd.server.connect.
-  - Protected-auth return is fenced to the initiating active Client/session and exact operation/revision with no content exposure, capture, recording, persistence, or fallback navigation.
+  - Protected-auth return uses the exact operation/revision and owner-selected Client fence: RAS-015 hosted Tailscale requires a current authorized Client/session and newly authorized handoff under SIR-032; other protected providers require the initiating active Client. No protected content inheritance, exposure, capture, recording, persistence, or unauthorized fallback navigation is allowed.
   - Product Onboarding modal close restores focus but does not cancel owner work; explicit cancellation uses the exact owner command.
   - Every row remains partial/default-disabled until its native handler and fresh runtime evidence exist, and no EventRecord is invented.
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.schema.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]

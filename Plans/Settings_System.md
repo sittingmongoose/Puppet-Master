@@ -478,6 +478,10 @@ canonical_text: >-
   typed results. Provider setup preserves origin_surface, origin_route, provider/route identity, exact topology,
   operation identity, and a bounded continuation so successful owner work returns to the originating Settings row.
   Settings exposes no Provider Uninstall action, command, menu item, or implied destructive fallback.
+  Installed-tool update choices consume Shared Integration Runtime section 4.7: separate check-now and
+  check-and-install-now actions, automatic check-only or check-and-install policy, disabled background checks,
+  and an independent routine update-notification preference. These are user-facing update choices, not
+  ownership/consent-category choices, and do not alter Puppet Master's separate app-update/restart policy.
 gui_related: true
 gui_classification_reason: Install, Repair, Verify, disabled reasons, exact target, progress, and return context are visible provider-manager behavior.
 depends_on: [SSYS-006, SSYS-008, CS-066, UCC-145, SIR-003]
@@ -487,7 +491,10 @@ acceptance_criteria:
   - Each action carries exact Host/Environment, Project, expected revision/epoch, idempotency, permission, and continuation evidence required by CS-066.
   - A missing or invalid owner selector renders the exact disabled reason and dispatches nothing.
   - Provider Uninstall is absent from rendered controls, command lookup, natural-language suggestions, and automation routes.
-validation_surfaces: [existing CS-066 and UCC-145 fixtures, future Settings provider-card availability and continuation fixtures]
+  - Installed-tool consumers use the SIR-021 update preferences and exact installation/Host/Environment policy; manual actions do not edit the saved automatic mode, and disabling background checks does not remove manual checks.
+  - Do not notify suppresses routine update-available notices only; Details/ObservableWork still show update state, failures, security warnings, and required approvals. Missing automatic-install authority shows the requested/effective difference and the owner's disabled reason.
+  - Update preferences and manual action intent do not register a command or synthesize a Settings-local updater. Deferred check/update-policy candidates remain unavailable until their central contracts close; current manager layout and styling are unchanged by this Plan correction.
+validation_surfaces: [existing CS-066 and UCC-145 fixtures, Plans/egolite_retained_requirement_contracts.schema.json#/$defs/installation_update_preferences, tests/test_pm_installation_update_preferences.py, future Settings provider-card availability and continuation fixtures]
 risk_class: provider_setup_authority_or_target_drift
 reasoning_tier: high
 context_scope: settings_provider_installation
@@ -498,6 +505,7 @@ source_lineage:
   - Plans/UI_Command_Catalog.md#UCC-145
   - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
+  - source_ref:chat:user-update-options-correction-2026-09-09
 preserved_exact_tokens: [cmd.installation.install, cmd.installation.repair, cmd.installation.verify, Host, Environment, continuation, no Uninstall]
 negative_constraints: [Do not silently acquire a provider CLI., Do not synthesize Settings-local install commands., Do not show Provider Uninstall., Do not treat installer exit zero as provider readiness.]
 owner_hints: [Plans/Settings_System.md, Plans/Shared_Integration_Runtime.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md]

@@ -456,10 +456,28 @@
               "thread",
               "reviewer"
             ],
+            "data_operations": [
+              "content",
+              "compare",
+              "push"
+            ],
+            "hosting_action_operations": [
+              "thread",
+              "reviewer"
+            ],
             "fallback_routes": [
               "git_data",
               "git_transport",
               "typed_cli_gap_adapter"
+            ],
+            "data_fallback_routes": [
+              "git_data",
+              "git_transport",
+              "typed_cli_gap_adapter"
+            ],
+            "hosting_action_routes": [
+              "typed_cli_gap_adapter",
+              "none"
             ],
             "large_content_threshold_bytes": 1048576,
             "large_content_boundary_rule": "greater_than",
@@ -497,18 +515,40 @@
                 "webhook_count_is_completeness_proof": false
               },
               "thread": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-thread-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-thread-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-thread-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-thread-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "review_thread_reply_resolve_reopen",
                 "thread_resolution_support_proven": true,
                 "unsupported_success_allowed": false
               },
               "reviewer": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-reviewer-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-reviewer-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-reviewer-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-reviewer-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "reviewer_add_remove_rerequest",
                 "reviewer_mutations": [
                   "add",
                   "remove",
@@ -521,10 +561,16 @@
             "typed_cli_contract": {
               "version_ref": "ref-ori-020-typed-cli-contract-version-ref",
               "schema_ref": "ref-ori-020-typed-cli-contract-schema-ref",
+              "route_provider": "cursor_origin",
               "version_gated": true,
               "structured_json_only": true,
               "prose_parsing_allowed": false,
-              "optional": true
+              "optional": true,
+              "documented_origin_cli_only": true,
+              "provider_binding_required": true,
+              "explicit_repository_head_base_target_required": true,
+              "current_working_branch_defaults_allowed": false,
+              "cursor_agent_auth_reuse_allowed": false
             },
             "no_complete_route_outcomes": [
               "partial",
@@ -547,8 +593,11 @@
               "benchmark_execution_proven": false
             },
             "management_sources": [
+              "pm_managed",
               "external",
-              "package_manager"
+              "package_manager",
+              "user",
+              "organization"
             ],
             "default_maintenance": "check_and_notify",
             "mutation_requires_explicit_user_action": true,
@@ -584,15 +633,31 @@
               "configure": "explicit_action_or_current_delegation",
               "remove": "explicit_action_or_current_delegation"
             },
-            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
-            "durable_delegation_ref": "ref-irt-008-durable-delegation-ref",
-            "delegation_scope_ref": "ref-irt-008-delegation-scope-ref",
-            "delegation_generation": 1,
-            "delegation_current": true,
-            "delegation_revoked": false,
             "unknown_owner_policy": "manual_only",
             "mode_discovery_update_or_baseline_grants_mutation": false,
-            "unrelated_consent_reuse_allowed": false
+            "unrelated_consent_reuse_allowed": false,
+            "management_source": "external",
+            "installation_ref": "ref-irt-008-installation",
+            "host_ref": "ref-irt-008-host",
+            "environment_ref": "ref-irt-008-environment",
+            "policy_ref": "ref-irt-008-lifecycle-policy",
+            "policy_generation": 1,
+            "authority_basis": "one_operation_consent",
+            "update_preferences": {
+              "automatic_check_policy": "check_only",
+              "routine_update_notifications": "notify",
+              "manual_actions": [
+                "check_for_updates",
+                "check_and_install_updates"
+              ],
+              "manual_actions_change_automatic_policy": false,
+              "disabled_automatic_policy_disables_manual_actions": false,
+              "suppress_required_feedback": false
+            },
+            "effective_automatic_policy": "check_only",
+            "automatic_install_disabled_reason": null,
+            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
+            "consent_current": true
           },
           {
             "requirement_id": "IRT-009",
@@ -782,7 +847,7 @@
             "owner_generation": 1,
             "profile_generation": 1,
             "issued_at": "2026-01-01T00:00:00Z",
-            "expires_at": "2026-01-01T00:00:00Z",
+            "expires_at": "2026-01-01T01:00:00Z",
             "expires_at_required": true,
             "revocation_state": "active",
             "revocation_generation": 1,
@@ -1240,7 +1305,7 @@
             "owner_generation": 1,
             "profile_generation": 1,
             "issued_at": "2026-01-01T00:00:00Z",
-            "expires_at": "2026-01-01T00:00:00Z",
+            "expires_at": "2026-01-01T01:00:00Z",
             "expires_at_required": true,
             "revocation_state": "active",
             "revocation_generation": 1,
@@ -1420,8 +1485,11 @@
               "benchmark_execution_proven": false
             },
             "management_sources": [
+              "pm_managed",
               "external",
-              "package_manager"
+              "package_manager",
+              "user",
+              "organization"
             ],
             "default_maintenance": "check_and_notify",
             "mutation_requires_explicit_user_action": true,
@@ -1457,15 +1525,31 @@
               "configure": "explicit_action_or_current_delegation",
               "remove": "explicit_action_or_current_delegation"
             },
-            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
-            "durable_delegation_ref": "ref-irt-008-durable-delegation-ref",
-            "delegation_scope_ref": "ref-irt-008-delegation-scope-ref",
-            "delegation_generation": 1,
-            "delegation_current": true,
-            "delegation_revoked": false,
             "unknown_owner_policy": "manual_only",
             "mode_discovery_update_or_baseline_grants_mutation": false,
-            "unrelated_consent_reuse_allowed": false
+            "unrelated_consent_reuse_allowed": false,
+            "management_source": "external",
+            "installation_ref": "ref-irt-008-installation",
+            "host_ref": "ref-irt-008-host",
+            "environment_ref": "ref-irt-008-environment",
+            "policy_ref": "ref-irt-008-lifecycle-policy",
+            "policy_generation": 1,
+            "authority_basis": "one_operation_consent",
+            "update_preferences": {
+              "automatic_check_policy": "check_only",
+              "routine_update_notifications": "notify",
+              "manual_actions": [
+                "check_for_updates",
+                "check_and_install_updates"
+              ],
+              "manual_actions_change_automatic_policy": false,
+              "disabled_automatic_policy_disables_manual_actions": false,
+              "suppress_required_feedback": false
+            },
+            "effective_automatic_policy": "check_only",
+            "automatic_install_disabled_reason": null,
+            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
+            "consent_current": true
           },
           {
             "requirement_id": "ORI-020",
@@ -1487,10 +1571,28 @@
               "thread",
               "reviewer"
             ],
+            "data_operations": [
+              "content",
+              "compare",
+              "push"
+            ],
+            "hosting_action_operations": [
+              "thread",
+              "reviewer"
+            ],
             "fallback_routes": [
               "git_data",
               "git_transport",
               "typed_cli_gap_adapter"
+            ],
+            "data_fallback_routes": [
+              "git_data",
+              "git_transport",
+              "typed_cli_gap_adapter"
+            ],
+            "hosting_action_routes": [
+              "typed_cli_gap_adapter",
+              "none"
             ],
             "large_content_threshold_bytes": 1048576,
             "large_content_boundary_rule": "greater_than",
@@ -1528,18 +1630,40 @@
                 "webhook_count_is_completeness_proof": false
               },
               "thread": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-thread-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-thread-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-thread-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-thread-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "review_thread_reply_resolve_reopen",
                 "thread_resolution_support_proven": true,
                 "unsupported_success_allowed": false
               },
               "reviewer": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-reviewer-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-reviewer-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-reviewer-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-reviewer-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "reviewer_add_remove_rerequest",
                 "reviewer_mutations": [
                   "add",
                   "remove",
@@ -1552,10 +1676,16 @@
             "typed_cli_contract": {
               "version_ref": "ref-ori-020-typed-cli-contract-version-ref",
               "schema_ref": "ref-ori-020-typed-cli-contract-schema-ref",
+              "route_provider": "cursor_origin",
               "version_gated": true,
               "structured_json_only": true,
               "prose_parsing_allowed": false,
-              "optional": true
+              "optional": true,
+              "documented_origin_cli_only": true,
+              "provider_binding_required": true,
+              "explicit_repository_head_base_target_required": true,
+              "current_working_branch_defaults_allowed": false,
+              "cursor_agent_auth_reuse_allowed": false
             },
             "no_complete_route_outcomes": [
               "partial",
@@ -1993,6 +2123,507 @@
             "help_grants_authority": false
           }
         ]
+      }
+    },
+    {
+      "name": "irt008_notify_only",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": true,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "external",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "none",
+        "update_preferences": {
+          "automatic_check_policy": "check_only",
+          "routine_update_notifications": "notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "check_only",
+        "automatic_install_disabled_reason": null
+      }
+    },
+    {
+      "name": "irt008_disabled_quiet",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": true,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "external",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "none",
+        "update_preferences": {
+          "automatic_check_policy": "disabled",
+          "routine_update_notifications": "do_not_notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "disabled",
+        "automatic_install_disabled_reason": null
+      }
+    },
+    {
+      "name": "irt008_one_operation_consent",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": true,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "explicit_action_or_current_delegation",
+          "package_invoke": "explicit_action_or_current_delegation",
+          "replace": "explicit_action_or_current_delegation",
+          "activate": "explicit_action_or_current_delegation",
+          "repair": "explicit_action_or_current_delegation",
+          "rollback": "explicit_action_or_current_delegation",
+          "configure": "explicit_action_or_current_delegation",
+          "remove": "explicit_action_or_current_delegation"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "external",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "one_operation_consent",
+        "update_preferences": {
+          "automatic_check_policy": "check_only",
+          "routine_update_notifications": "notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "check_only",
+        "automatic_install_disabled_reason": null,
+        "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
+        "consent_current": true
+      }
+    },
+    {
+      "name": "irt008_delegated_maintenance",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": false,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "explicit_action_or_current_delegation",
+          "package_invoke": "explicit_action_or_current_delegation",
+          "replace": "explicit_action_or_current_delegation",
+          "activate": "explicit_action_or_current_delegation",
+          "repair": "explicit_action_or_current_delegation",
+          "rollback": "explicit_action_or_current_delegation",
+          "configure": "explicit_action_or_current_delegation",
+          "remove": "explicit_action_or_current_delegation"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "external",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "durable_delegation",
+        "update_preferences": {
+          "automatic_check_policy": "check_and_install",
+          "routine_update_notifications": "notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "check_and_install",
+        "automatic_install_disabled_reason": null,
+        "durable_delegation_ref": "ref-irt-008-durable-delegation-ref",
+        "delegation_scope_ref": "ref-irt-008-delegation-scope-ref",
+        "delegation_generation": 1,
+        "delegation_current": true,
+        "delegation_revoked": false
+      }
+    },
+    {
+      "name": "irt008_pm_managed_auto",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": false,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "current_reviewed_pm_managed_policy",
+          "package_invoke": "current_reviewed_pm_managed_policy",
+          "replace": "current_reviewed_pm_managed_policy",
+          "activate": "current_reviewed_pm_managed_policy",
+          "repair": "current_reviewed_pm_managed_policy",
+          "rollback": "current_reviewed_pm_managed_policy",
+          "configure": "current_reviewed_pm_managed_policy",
+          "remove": "current_reviewed_pm_managed_policy"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "pm_managed",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "pm_managed_policy",
+        "update_preferences": {
+          "automatic_check_policy": "check_and_install",
+          "routine_update_notifications": "do_not_notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "check_and_install",
+        "automatic_install_disabled_reason": null,
+        "reviewed_maintenance_policy_ref": "ref-irt-008-reviewed-pm-policy",
+        "maintenance_policy_current": true
+      }
+    },
+    {
+      "name": "irt008_auto_requested_without_grant",
+      "definition": "irt_008",
+      "instance": {
+        "requirement_id": "IRT-008",
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-021",
+        "record_kind": "external_install_maintenance_policy",
+        "proof_boundary": {
+          "source_static_closed": true,
+          "browser_execution_proven": false,
+          "native_execution_proven": false,
+          "runtime_execution_proven": false,
+          "security_attack_proven": false,
+          "benchmark_execution_proven": false
+        },
+        "management_sources": [
+          "pm_managed",
+          "external",
+          "package_manager",
+          "user",
+          "organization"
+        ],
+        "default_maintenance": "check_and_notify",
+        "mutation_requires_explicit_user_action": true,
+        "ownership_proof_ref": "ref-irt-008-ownership-proof-ref",
+        "ownership_confidence": "proven",
+        "effect_kinds": [
+          "download",
+          "package_invoke",
+          "replace",
+          "activate",
+          "repair",
+          "rollback",
+          "configure",
+          "remove"
+        ],
+        "default_effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "effect_policy": {
+          "download": "deny",
+          "package_invoke": "deny",
+          "replace": "deny",
+          "activate": "deny",
+          "repair": "deny",
+          "rollback": "deny",
+          "configure": "deny",
+          "remove": "deny"
+        },
+        "unknown_owner_policy": "manual_only",
+        "mode_discovery_update_or_baseline_grants_mutation": false,
+        "unrelated_consent_reuse_allowed": false,
+        "management_source": "external",
+        "installation_ref": "ref-irt-008-installation",
+        "host_ref": "ref-irt-008-host",
+        "environment_ref": "ref-irt-008-environment",
+        "policy_ref": "ref-irt-008-lifecycle-policy",
+        "policy_generation": 1,
+        "authority_basis": "none",
+        "update_preferences": {
+          "automatic_check_policy": "check_and_install",
+          "routine_update_notifications": "notify",
+          "manual_actions": [
+            "check_for_updates",
+            "check_and_install_updates"
+          ],
+          "manual_actions_change_automatic_policy": false,
+          "disabled_automatic_policy_disables_manual_actions": false,
+          "suppress_required_feedback": false
+        },
+        "effective_automatic_policy": "check_only",
+        "automatic_install_disabled_reason": "approval_required"
       }
     }
   ],
@@ -2478,10 +3109,28 @@
               "thread",
               "reviewer"
             ],
+            "data_operations": [
+              "content",
+              "compare",
+              "push"
+            ],
+            "hosting_action_operations": [
+              "thread",
+              "reviewer"
+            ],
             "fallback_routes": [
               "git_data",
               "git_transport",
               "typed_cli_gap_adapter"
+            ],
+            "data_fallback_routes": [
+              "git_data",
+              "git_transport",
+              "typed_cli_gap_adapter"
+            ],
+            "hosting_action_routes": [
+              "typed_cli_gap_adapter",
+              "none"
             ],
             "large_content_threshold_bytes": 1048576,
             "large_content_boundary_rule": "greater_than",
@@ -2519,18 +3168,40 @@
                 "webhook_count_is_completeness_proof": false
               },
               "thread": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-thread-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-thread-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-thread-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-thread-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "review_thread_reply_resolve_reopen",
                 "thread_resolution_support_proven": true,
                 "unsupported_success_allowed": false
               },
               "reviewer": {
-                "route": "git_data",
+                "route": "typed_cli_gap_adapter",
                 "outcome": "complete",
                 "complete_claim_requires_typed_proof": true,
                 "typed_proof_ref": "ref-ori-020-fallback-cases-reviewer-typed-proof-ref",
+                "route_provider": "cursor_origin",
+                "provider_account_ref": "ref-ori-020-fallback-cases-reviewer-provider-account-ref",
+                "provider_repository_ref": "ref-ori-020-fallback-cases-reviewer-provider-repository-ref",
+                "operation_capability_ref": "ref-ori-020-fallback-cases-reviewer-operation-capability-ref",
+                "operation_capability_generation": 1,
+                "operation_capability_current": true,
+                "operation_capability_supported": true,
+                "provider_binding_current": true,
+                "documented_origin_cli_gap_only": true,
+                "ordinary_git_route_allowed": false,
+                "operation_group": "reviewer_add_remove_rerequest",
                 "reviewer_mutations": [
                   "add",
                   "remove",
@@ -2543,10 +3214,16 @@
             "typed_cli_contract": {
               "version_ref": "ref-ori-020-typed-cli-contract-version-ref",
               "schema_ref": "ref-ori-020-typed-cli-contract-schema-ref",
+              "route_provider": "cursor_origin",
               "version_gated": true,
               "structured_json_only": true,
               "prose_parsing_allowed": false,
-              "optional": true
+              "optional": true,
+              "documented_origin_cli_only": true,
+              "provider_binding_required": true,
+              "explicit_repository_head_base_target_required": true,
+              "current_working_branch_defaults_allowed": false,
+              "cursor_agent_auth_reuse_allowed": false
             },
             "no_complete_route_outcomes": [
               "partial",
@@ -2569,8 +3246,11 @@
               "benchmark_execution_proven": false
             },
             "management_sources": [
+              "pm_managed",
               "external",
-              "package_manager"
+              "package_manager",
+              "user",
+              "organization"
             ],
             "default_maintenance": "check_and_notify",
             "mutation_requires_explicit_user_action": true,
@@ -2606,15 +3286,31 @@
               "configure": "explicit_action_or_current_delegation",
               "remove": "explicit_action_or_current_delegation"
             },
-            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
-            "durable_delegation_ref": "ref-irt-008-durable-delegation-ref",
-            "delegation_scope_ref": "ref-irt-008-delegation-scope-ref",
-            "delegation_generation": 1,
-            "delegation_current": true,
-            "delegation_revoked": false,
             "unknown_owner_policy": "manual_only",
             "mode_discovery_update_or_baseline_grants_mutation": false,
-            "unrelated_consent_reuse_allowed": false
+            "unrelated_consent_reuse_allowed": false,
+            "management_source": "external",
+            "installation_ref": "ref-irt-008-installation",
+            "host_ref": "ref-irt-008-host",
+            "environment_ref": "ref-irt-008-environment",
+            "policy_ref": "ref-irt-008-lifecycle-policy",
+            "policy_generation": 1,
+            "authority_basis": "one_operation_consent",
+            "update_preferences": {
+              "automatic_check_policy": "check_only",
+              "routine_update_notifications": "notify",
+              "manual_actions": [
+                "check_for_updates",
+                "check_and_install_updates"
+              ],
+              "manual_actions_change_automatic_policy": false,
+              "disabled_automatic_policy_disables_manual_actions": false,
+              "suppress_required_feedback": false
+            },
+            "effective_automatic_policy": "check_only",
+            "automatic_install_disabled_reason": null,
+            "one_operation_consent_ref": "ref-irt-008-one-operation-consent-ref",
+            "consent_current": true
           },
           {
             "requirement_id": "IRT-009",
@@ -2804,7 +3500,7 @@
             "owner_generation": 1,
             "profile_generation": 1,
             "issued_at": "2026-01-01T00:00:00Z",
-            "expires_at": "2026-01-01T00:00:00Z",
+            "expires_at": "2026-01-01T01:00:00Z",
             "expires_at_required": true,
             "revocation_state": "active",
             "revocation_generation": 1,
@@ -11050,38 +11746,43 @@
     },
     {
       "name": "contracts_8_delegation_current_required",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "remove": [
-        "contracts.8.delegation_current"
-      ]
+        "delegation_current"
+      ],
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_generation_required",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "remove": [
-        "contracts.8.delegation_generation"
-      ]
+        "delegation_generation"
+      ],
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_revoked_required",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "remove": [
-        "contracts.8.delegation_revoked"
-      ]
+        "delegation_revoked"
+      ],
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_scope_ref_required",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "remove": [
-        "contracts.8.delegation_scope_ref"
-      ]
+        "delegation_scope_ref"
+      ],
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_durable_delegation_ref_required",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "remove": [
-        "contracts.8.durable_delegation_ref"
-      ]
+        "durable_delegation_ref"
+      ],
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_effect_kinds_required",
@@ -11655,87 +12356,99 @@
     },
     {
       "name": "contracts_8_durable_delegation_ref_nonempty",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.durable_delegation_ref": ""
-      }
+        "durable_delegation_ref": ""
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_durable_delegation_ref_maximum_length",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.durable_delegation_ref": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      }
+        "durable_delegation_ref": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_durable_delegation_ref_forbidden_sensitive_text",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.durable_delegation_ref": "password"
-      }
+        "durable_delegation_ref": "password"
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_durable_delegation_ref_string_type",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.durable_delegation_ref": 7
-      }
+        "durable_delegation_ref": 7
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_scope_ref_nonempty",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_scope_ref": ""
-      }
+        "delegation_scope_ref": ""
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_scope_ref_maximum_length",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_scope_ref": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      }
+        "delegation_scope_ref": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_scope_ref_forbidden_sensitive_text",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_scope_ref": "password"
-      }
+        "delegation_scope_ref": "password"
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_scope_ref_string_type",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_scope_ref": 7
-      }
+        "delegation_scope_ref": 7
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_generation_minimum",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_generation": 0
-      }
+        "delegation_generation": 0
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_generation_integer_type",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_generation": "not_an_integer"
-      }
+        "delegation_generation": "not_an_integer"
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_current_exact_invariant",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_current": false
-      }
+        "delegation_current": false
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_delegation_revoked_exact_invariant",
-      "base_valid": "aggregate_all_15",
+      "base_valid": "irt008_delegated_maintenance",
       "patch": {
-        "contracts.8.delegation_revoked": true
-      }
+        "delegation_revoked": true
+      },
+      "definition": "irt_008"
     },
     {
       "name": "contracts_8_unknown_owner_policy_exact_invariant",
@@ -16982,6 +17695,24 @@
       }
     },
     {
+      "name": "irt_011_zero_lifetime_across_offsets",
+      "base_valid": "aggregate_all_15",
+      "semantic_rule": "credential_attachment_lifetime_not_positive",
+      "patch": {
+        "contracts.11.issued_at": "2026-01-01T00:00:00-05:00",
+        "contracts.11.expires_at": "2026-01-01T05:00:00Z"
+      }
+    },
+    {
+      "name": "irt_011_reversed_lifetime_across_offsets",
+      "base_valid": "aggregate_all_15",
+      "semantic_rule": "credential_attachment_lifetime_not_positive",
+      "patch": {
+        "contracts.11.issued_at": "2026-01-01T08:00:00+02:00",
+        "contracts.11.expires_at": "2026-01-01T05:59:59Z"
+      }
+    },
+    {
       "name": "scm_005_baseline_order_is_fixed",
       "base_valid": "aggregate_all_15",
       "patch": {
@@ -17030,6 +17761,169 @@
           }
         ]
       }
+    },
+    {
+      "name": "irt008_one_time_consent_cannot_enable_background_install",
+      "base_valid": "irt008_one_operation_consent",
+      "patch": {
+        "update_preferences.automatic_check_policy": "check_and_install",
+        "effective_automatic_policy": "check_and_install",
+        "automatic_install_disabled_reason": null
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_external_cannot_use_pm_managed_policy",
+      "base_valid": "irt008_pm_managed_auto",
+      "patch": {
+        "management_source": "external"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_pm_managed_cannot_use_external_delegation",
+      "base_valid": "irt008_delegated_maintenance",
+      "patch": {
+        "management_source": "pm_managed"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_disabled_cannot_become_background_check",
+      "base_valid": "irt008_disabled_quiet",
+      "patch": {
+        "effective_automatic_policy": "check_only"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_quiet_cannot_hide_required_feedback",
+      "base_valid": "irt008_disabled_quiet",
+      "patch": {
+        "update_preferences.suppress_required_feedback": true
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_manual_action_cannot_change_saved_policy",
+      "base_valid": "irt008_one_operation_consent",
+      "patch": {
+        "update_preferences.manual_actions_change_automatic_policy": true
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_disabling_background_checks_preserves_manual_actions",
+      "base_valid": "irt008_disabled_quiet",
+      "patch": {
+        "update_preferences.disabled_automatic_policy_disables_manual_actions": true
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_one_time_authority_rejects_extra_delegation",
+      "base_valid": "irt008_one_operation_consent",
+      "patch": {
+        "durable_delegation_ref": "ref-unselected-delegation"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_delegation_rejects_extra_one_time_authority",
+      "base_valid": "irt008_delegated_maintenance",
+      "patch": {
+        "one_operation_consent_ref": "ref-unselected-consent"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_no_grant_cannot_claim_effective_automatic_install",
+      "base_valid": "irt008_auto_requested_without_grant",
+      "patch": {
+        "effective_automatic_policy": "check_and_install",
+        "automatic_install_disabled_reason": null
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_unknown_owner_is_not_automatic_authority",
+      "base_valid": "irt008_pm_managed_auto",
+      "patch": {
+        "management_source": "unknown"
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_missing_consent_current_rejected",
+      "base_valid": "irt008_one_operation_consent",
+      "remove": [
+        "consent_current"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_stale_pm_policy_rejected",
+      "base_valid": "irt008_pm_managed_auto",
+      "patch": {
+        "maintenance_policy_current": false
+      },
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_installation_ref_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "installation_ref"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_host_ref_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "host_ref"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_environment_ref_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "environment_ref"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_policy_ref_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "policy_ref"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_policy_generation_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "policy_generation"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_authority_basis_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "authority_basis"
+      ],
+      "definition": "irt_008"
+    },
+    {
+      "name": "irt008_update_preferences_required",
+      "base_valid": "irt008_notify_only",
+      "remove": [
+        "update_preferences"
+      ],
+      "definition": "irt_008"
     }
   ]
 }

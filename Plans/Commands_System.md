@@ -5004,11 +5004,15 @@ revision/generation/hash, receipt, and exact caller surface/route/focus/invocati
 Closing or navigating away from a caller does not cancel owner work.
 
 `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume` retain the
-Shared Integration Runtime `AuthenticationBroker` lifecycle. Their exact initiating Client and Client
-session generation, authentication operation/revision, protected-session reference, return target,
-continuation, timeout/cancel disposition, and redacted return fence travel through the shared request and
-result. Remote Access adapter commands may route into that same operation, but they do not create a
-Remote- or Browser-owned authentication lifecycle.
+Shared Integration Runtime `AuthenticationBroker` lifecycle. The exact authentication operation/revision,
+origin Client/session lineage, protected-session reference, return target, continuation, timeout/cancel
+disposition, and redacted return fence travel through the shared request and result. Under RAS-015 and
+the September 9 approved SIR-032 reconciliation, hosted Tailscale uses
+`server_owned_authorized_client_handoff`: a broker-verified current authorized Client/session and new
+handoff generation may resume the same Server-owned operation after original-Client loss. The
+`server_owned_handoff` is a non-secret reference binding, never a credential or a caller-selected bypass.
+Other protected providers retain the initiating-active-Client-only fence. Remote Access adapters create
+no Remote- or Browser-owned authentication lifecycle, and a replacement Client inherits no protected content.
 
 No EventRecord family is admitted by this registration. Dispatch remains receipt/projection-only until
 Event Authority admits a named family. `cmd.server.reconnect`, `cmd.server.resume`, `cmd.git.clone`,
@@ -5038,7 +5042,7 @@ acceptance_criteria:
   - Exactly the ten commands listed in this addendum receive new central registrations; the six strengthened commands retain their existing identities and do not duplicate rows.
   - Every request and result reference resolves to its packet-owner schema and every visible consumer has an exact return route and disabled reason.
   - Ordinary Git and Jujutsu clone remain distinct; reconnect/resume are modes of cmd.server.connect; QR and peer selection are typed inputs to cmd.client.pair.start.
-  - Protected authentication returns only to the exact initiating active Client/session and same operation/revision without exposing, capturing, recording, or persisting protected content.
+  - Protected authentication uses the exact same operation/revision and owner-selected Client fence; RAS-015 hosted Tailscale permits a current authorized Client/session only through a newly authorized handoff and exact return context, while other protected providers remain initiating-active-Client-only. No protected content is exposed, inherited, captured, recorded, or persisted.
   - A specified target path, static schema, fixture, PMConcept7 simulation, or browser pass does not prove a native handler or production runtime.
   - No new EventRecord family or rejected alias is admitted.
 validation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/shared_runtime_command_contract_fixtures.json, python3 scripts/pm-touch-closure-verify.py]
@@ -5054,7 +5058,7 @@ preserved_exact_tokens: [cmd.source_control.repository.clone, cmd.jujutsu.git.cl
 negative_constraints:
   - Do not interpret a handler target string as executable or native-runtime evidence.
   - Do not create generic clone, Server reconnect/resume, QR-import, peer-selection, or owner-local authentication-lifecycle commands.
-  - Do not let caller close cancel owner work or let protected authentication return to a fallback Client.
+  - Do not let caller close cancel owner work or let protected authentication return to an unauthorized fallback Client; RAS-015 replacement requires the explicit SIR-032 handoff, not inherited browser content.
   - Do not invent an EventRecord family.
 owner_hints: [Plans/Commands_System.md, Plans/Project_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
 ```

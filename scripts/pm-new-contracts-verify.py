@@ -12,6 +12,7 @@ import json
 import re
 import sys
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -55,6 +56,7 @@ EXPECTED_CONTRACT_PAIR_COUNT = 24
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
+EGOLITE_SCHEMA_REL = "Plans/egolite_retained_requirement_contracts.schema.json"
 
 # These reviewed pairs use a command-oriented fixture protocol.  Support is
 # deliberately path-bound; another pack cannot opt in by imitating field names.
@@ -933,6 +935,55 @@ def server_remote_semantic_failures(definition_name: str, value: Any) -> list[st
     return failures
 
 
+def parse_aware_datetime(value: Any) -> datetime | None:
+    """Parse an offset-bearing ISO timestamp and normalize it for comparison."""
+
+    if not isinstance(value, str):
+        return None
+    normalized = f"{value[:-1]}+00:00" if value.endswith("Z") else value
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed.astimezone(timezone.utc)
+
+
+def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
+    """Evaluate the IRT-011 lifetime law that JSON Schema cannot express."""
+
+    if not isinstance(value, dict):
+        return []
+    if definition_name == "irt_011":
+        contracts: list[Any] = [value]
+    elif definition_name == "<root>":
+        candidate_contracts = value.get("contracts")
+        contracts = candidate_contracts if isinstance(candidate_contracts, list) else []
+    else:
+        return []
+
+    failures: list[str] = []
+    for contract in contracts:
+        if not isinstance(contract, dict) or contract.get("requirement_id") != "IRT-011":
+            continue
+        issued_at = parse_aware_datetime(contract.get("issued_at"))
+        expires_at = parse_aware_datetime(contract.get("expires_at"))
+        if issued_at is None or expires_at is None:
+            failures.append("credential_attachment_timestamp_invalid_or_naive")
+        elif expires_at <= issued_at:
+            failures.append("credential_attachment_lifetime_not_positive")
+    return sorted(set(failures))
+
+
+def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel in SERVER_REMOTE_OWNER_CHECKS:
+        return server_remote_semantic_failures(definition_name, value)
+    if schema_rel == EGOLITE_SCHEMA_REL:
+        return egolite_semantic_failures(definition_name, value)
+    return []
+
+
 def owner_doc_command_ids(owner_doc: Path, command_prefix: str) -> list[str]:
     text = owner_doc.read_text(encoding="utf-8")
     try:
@@ -1163,11 +1214,10 @@ def main() -> int:
                 if errors:
                     findings.append({"code": "positive_fixture_rejected", "fixture": fixture_rel, "case": name, "definition": definition_name, "detail": errors[0].message})
                     continue
-                if schema_rel in SERVER_REMOTE_OWNER_CHECKS:
-                    semantic_failures = server_remote_semantic_failures(definition_name, value)
-                    if semantic_failures:
-                        findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
-                        continue
+                semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                if semantic_failures:
+                    findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
+                    continue
                 counts["positive_cases_valid"] += 1
                 definition = defs.get(definition_name, schema)
                 identity = primary_identity(definition_name, definition, value)
@@ -1206,8 +1256,8 @@ def main() -> int:
                 definition_name, selected = select_definition(schema, selector_case, value, require_valid=False)
                 accepted = validator_for(schema, selected, schema_registry).is_valid(value)
                 semantic_rule = case.get("semantic_rule")
-                if semantic_rule is not None and schema_rel in SERVER_REMOTE_OWNER_CHECKS:
-                    semantic_failures = server_remote_semantic_failures(definition_name, value)
+                if semantic_rule is not None:
+                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_rule": semantic_rule})
                     elif semantic_rule not in semantic_failures:

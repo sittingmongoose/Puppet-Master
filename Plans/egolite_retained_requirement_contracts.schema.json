@@ -207,36 +207,132 @@
       "unevaluatedProperties": false,
       "$comment": "The schema fixes marketing negatives, signed/current capability evidence fields, retained baseline, and no-Public-dispatch semantics. It cannot verify provider capability freshness/signature or prove a GUI/adapter does not optimistically enable or dispatch."
     },
-    "origin_fallback_case": {"type": "object", "required": ["route", "outcome", "complete_claim_requires_typed_proof", "typed_proof_ref"], "properties": {"route": {"enum": ["git_data", "git_transport", "typed_cli_gap_adapter", "none"]}, "outcome": {"enum": ["complete", "partial", "unavailable", "open_in_origin"]}, "complete_claim_requires_typed_proof": {"const": true}, "typed_proof_ref": {"$ref": "#/$defs/non_secret_ref"}}, "allOf": [{"if": {"properties": {"route": {"const": "none"}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}]},
+    "origin_fallback_case": {"type": "object", "required": ["route", "outcome", "complete_claim_requires_typed_proof", "typed_proof_ref"], "properties": {"route": {"enum": ["git_data", "git_transport", "typed_cli_gap_adapter", "none"]}, "outcome": {"enum": ["complete", "partial", "unavailable", "open_in_origin"]}, "complete_claim_requires_typed_proof": {"const": true}, "typed_proof_ref": {"$ref": "#/$defs/non_secret_ref"}}, "allOf": [{"if": {"properties": {"route": {"const": "none"}}, "required": ["route"]}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}]},
+    "origin_hosting_action_fallback_case": {
+      "allOf": [
+        {"$ref": "#/$defs/origin_fallback_case"},
+        {
+          "properties": {
+            "route": {"enum": ["typed_cli_gap_adapter", "none"]},
+            "route_provider": {"const": "cursor_origin"},
+            "provider_account_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "provider_repository_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "operation_capability_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "operation_capability_generation": {"$ref": "#/$defs/positive_generation"},
+            "operation_capability_current": {"const": true},
+            "operation_capability_supported": {"type": "boolean"},
+            "provider_binding_current": {"const": true},
+            "documented_origin_cli_gap_only": {"const": true},
+            "ordinary_git_route_allowed": {"const": false}
+          },
+          "required": ["route_provider", "provider_account_ref", "provider_repository_ref", "operation_capability_ref", "operation_capability_generation", "operation_capability_current", "operation_capability_supported", "provider_binding_current", "documented_origin_cli_gap_only", "ordinary_git_route_allowed"]
+        },
+        {
+          "if": {"properties": {"operation_capability_supported": {"const": true}}, "required": ["operation_capability_supported"]},
+          "then": {"properties": {"route": {"const": "typed_cli_gap_adapter"}}},
+          "else": {"properties": {"route": {"const": "none"}, "outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}
+        }
+      ]
+    },
     "ori_020": {
       "title": "ORI-020 complete typed API fallback", "type": "object",
       "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
         "requirement_id": {"const": "ORI-020"}, "owner_doc": {"const": "Plans/Cursor_Origin_Integration.md"}, "plan_unit_id": {"const": "ORI-009"}, "record_kind": {"const": "origin_api_fallback"},
-        "fallback_operations": {"const": ["content", "compare", "push", "thread", "reviewer"]}, "fallback_routes": {"const": ["git_data", "git_transport", "typed_cli_gap_adapter"]}, "large_content_threshold_bytes": {"const": 1048576}, "large_content_boundary_rule": {"const": "greater_than"}, "complete_commit_preserved": {"const": true}, "partial_api_never_claims_complete": {"const": true},
+        "fallback_operations": {"const": ["content", "compare", "push", "thread", "reviewer"]}, "data_operations": {"const": ["content", "compare", "push"]}, "hosting_action_operations": {"const": ["thread", "reviewer"]}, "fallback_routes": {"const": ["git_data", "git_transport", "typed_cli_gap_adapter"]}, "data_fallback_routes": {"const": ["git_data", "git_transport", "typed_cli_gap_adapter"]}, "hosting_action_routes": {"const": ["typed_cli_gap_adapter", "none"]}, "large_content_threshold_bytes": {"const": 1048576}, "large_content_boundary_rule": {"const": "greater_than"}, "complete_commit_preserved": {"const": true}, "partial_api_never_claims_complete": {"const": true},
         "fallback_cases": {"type": "object", "additionalProperties": false, "required": ["content", "compare", "push", "thread", "reviewer"], "properties": {
           "content": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"decoded_byte_count": {"type": "integer", "minimum": 0}, "exact_boundary_decoded_byte_count": {"const": 1048576}, "over_boundary_decoded_byte_count": {"type": "integer", "minimum": 1048577}, "oversized_batch_member_disposition": {"enum": ["individual_fallback", "partial", "unavailable", "open_in_origin"]}, "batch_member_truth_preserved": {"const": true}, "truncation_claimed_complete": {"const": false}}, "required": ["decoded_byte_count", "exact_boundary_decoded_byte_count", "over_boundary_decoded_byte_count", "oversized_batch_member_disposition", "batch_member_truth_preserved", "truncation_claimed_complete"]}], "unevaluatedProperties": false},
           "compare": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"comparison_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "summary_only_claimed_complete": {"const": false}}, "required": ["comparison_evidence_ref", "summary_only_claimed_complete"]}], "unevaluatedProperties": false},
           "push": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"before_revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "after_revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "enumerated_commit_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "webhook_count_is_completeness_proof": {"const": false}}, "required": ["before_revision_ref", "after_revision_ref", "enumerated_commit_proof_ref", "webhook_count_is_completeness_proof"]}], "unevaluatedProperties": false},
-          "thread": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"thread_resolution_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["thread_resolution_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"thread_resolution_support_proven": {"const": false}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false},
-          "reviewer": {"allOf": [{"$ref": "#/$defs/origin_fallback_case"}, {"properties": {"reviewer_mutations": {"const": ["add", "remove", "rerequest"]}, "reviewer_mutation_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["reviewer_mutations", "reviewer_mutation_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"reviewer_mutation_support_proven": {"const": false}}}, "then": {"properties": {"outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false}
+          "thread": {"allOf": [{"$ref": "#/$defs/origin_hosting_action_fallback_case"}, {"properties": {"operation_group": {"const": "review_thread_reply_resolve_reopen"}, "thread_resolution_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["operation_group", "thread_resolution_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"thread_resolution_support_proven": {"const": true}}, "required": ["thread_resolution_support_proven"]}, "then": {"properties": {"operation_capability_supported": {"const": true}, "route": {"const": "typed_cli_gap_adapter"}}}, "else": {"properties": {"operation_capability_supported": {"const": false}, "route": {"const": "none"}, "outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false},
+          "reviewer": {"allOf": [{"$ref": "#/$defs/origin_hosting_action_fallback_case"}, {"properties": {"operation_group": {"const": "reviewer_add_remove_rerequest"}, "reviewer_mutations": {"const": ["add", "remove", "rerequest"]}, "reviewer_mutation_support_proven": {"type": "boolean"}, "unsupported_success_allowed": {"const": false}}, "required": ["operation_group", "reviewer_mutations", "reviewer_mutation_support_proven", "unsupported_success_allowed"]}, {"if": {"properties": {"reviewer_mutation_support_proven": {"const": true}}, "required": ["reviewer_mutation_support_proven"]}, "then": {"properties": {"operation_capability_supported": {"const": true}, "route": {"const": "typed_cli_gap_adapter"}}}, "else": {"properties": {"operation_capability_supported": {"const": false}, "route": {"const": "none"}, "outcome": {"enum": ["partial", "unavailable", "open_in_origin"]}}}}], "unevaluatedProperties": false}
         }},
-        "typed_cli_contract": {"type": "object", "additionalProperties": false, "required": ["version_ref", "schema_ref", "version_gated", "structured_json_only", "prose_parsing_allowed", "optional"], "properties": {"version_ref": {"$ref": "#/$defs/non_secret_ref"}, "schema_ref": {"$ref": "#/$defs/non_secret_ref"}, "version_gated": {"const": true}, "structured_json_only": {"const": true}, "prose_parsing_allowed": {"const": false}, "optional": {"const": true}}},
+        "typed_cli_contract": {"type": "object", "additionalProperties": false, "required": ["version_ref", "schema_ref", "route_provider", "version_gated", "structured_json_only", "prose_parsing_allowed", "optional", "documented_origin_cli_only", "provider_binding_required", "explicit_repository_head_base_target_required", "current_working_branch_defaults_allowed", "cursor_agent_auth_reuse_allowed"], "properties": {"version_ref": {"$ref": "#/$defs/non_secret_ref"}, "schema_ref": {"$ref": "#/$defs/non_secret_ref"}, "route_provider": {"const": "cursor_origin"}, "version_gated": {"const": true}, "structured_json_only": {"const": true}, "prose_parsing_allowed": {"const": false}, "optional": {"const": true}, "documented_origin_cli_only": {"const": true}, "provider_binding_required": {"const": true}, "explicit_repository_head_base_target_required": {"const": true}, "current_working_branch_defaults_allowed": {"const": false}, "cursor_agent_auth_reuse_allowed": {"const": false}}},
         "no_complete_route_outcomes": {"const": ["partial", "unavailable", "open_in_origin"]}, "success_without_complete_route_allowed": {"const": false}
-      }, "required": ["fallback_operations", "fallback_routes", "large_content_threshold_bytes", "large_content_boundary_rule", "complete_commit_preserved", "partial_api_never_claims_complete", "fallback_cases", "typed_cli_contract", "no_complete_route_outcomes", "success_without_complete_route_allowed"]}],
+      }, "required": ["fallback_operations", "data_operations", "hosting_action_operations", "fallback_routes", "data_fallback_routes", "hosting_action_routes", "large_content_threshold_bytes", "large_content_boundary_rule", "complete_commit_preserved", "partial_api_never_claims_complete", "fallback_cases", "typed_cli_contract", "no_complete_route_outcomes", "success_without_complete_route_allowed"]}],
       "unevaluatedProperties": false,
-      "$comment": "Structural fields require all five cases and complete-proof ingredients. Custom validation must compare decoded bytes to the threshold, prove route completeness, enumerate exact commits, validate CLI version/schema output, and ensure unsupported operations cannot report success."
+      "$comment": "Structural fields require all five cases and complete-proof ingredients. Content, compare, and push retain Git data/transport or typed-CLI fallback; review-thread and reviewer hosting actions require a current exact Origin capability plus the provider-locked documented typed CLI route, or remain truthfully partial/unavailable/Open in Origin. Custom validation must compare decoded bytes to the threshold, prove route completeness, enumerate exact commits, validate CLI version/schema output and provider bindings, and ensure unsupported operations cannot report success."
     },
     "maintenance_effect_policy": {"type": "object", "additionalProperties": false, "required": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"], "properties": {"download": {"const": "explicit_action_or_current_delegation"}, "package_invoke": {"const": "explicit_action_or_current_delegation"}, "replace": {"const": "explicit_action_or_current_delegation"}, "activate": {"const": "explicit_action_or_current_delegation"}, "repair": {"const": "explicit_action_or_current_delegation"}, "rollback": {"const": "explicit_action_or_current_delegation"}, "configure": {"const": "explicit_action_or_current_delegation"}, "remove": {"const": "explicit_action_or_current_delegation"}}},
     "maintenance_default_deny_policy": {"type": "object", "additionalProperties": false, "required": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"], "properties": {"download": {"const": "deny"}, "package_invoke": {"const": "deny"}, "replace": {"const": "deny"}, "activate": {"const": "deny"}, "repair": {"const": "deny"}, "rollback": {"const": "deny"}, "configure": {"const": "deny"}, "remove": {"const": "deny"}}},
+    "maintenance_pm_managed_policy": {"type": "object", "additionalProperties": false, "required": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"], "properties": {"download": {"const": "current_reviewed_pm_managed_policy"}, "package_invoke": {"const": "current_reviewed_pm_managed_policy"}, "replace": {"const": "current_reviewed_pm_managed_policy"}, "activate": {"const": "current_reviewed_pm_managed_policy"}, "repair": {"const": "current_reviewed_pm_managed_policy"}, "rollback": {"const": "current_reviewed_pm_managed_policy"}, "configure": {"const": "current_reviewed_pm_managed_policy"}, "remove": {"const": "current_reviewed_pm_managed_policy"}}},
+    "installation_update_preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["automatic_check_policy", "routine_update_notifications", "manual_actions", "manual_actions_change_automatic_policy", "disabled_automatic_policy_disables_manual_actions", "suppress_required_feedback"],
+      "properties": {
+        "automatic_check_policy": {"enum": ["disabled", "check_only", "check_and_install"]},
+        "routine_update_notifications": {"enum": ["notify", "do_not_notify"]},
+        "manual_actions": {"const": ["check_for_updates", "check_and_install_updates"]},
+        "manual_actions_change_automatic_policy": {"const": false},
+        "disabled_automatic_policy_disables_manual_actions": {"const": false},
+        "suppress_required_feedback": {"const": false}
+      },
+      "$comment": "SIR section 4.7 owns these installation-scoped preferences. Manual action literals describe user intent, not new command IDs. Do not check disables background/startup update checks only. Do not notify suppresses routine update notices, never required approval, failure, or security feedback. No persistence, scheduler, command registration, or runtime execution is established here."
+    },
     "irt_008": {
-      "title": "IRT-008 external installation maintenance ownership", "type": "object",
+      "title": "IRT-008 installed-tool update preferences and maintenance ownership", "type": "object",
       "allOf": [{"$ref": "#/$defs/contract_identity"}, {"properties": {
         "requirement_id": {"const": "IRT-008"}, "owner_doc": {"const": "Plans/Shared_Integration_Runtime.md"}, "plan_unit_id": {"const": "SIR-021"}, "record_kind": {"const": "external_install_maintenance_policy"},
-        "management_sources": {"const": ["external", "package_manager"]}, "default_maintenance": {"const": "check_and_notify"}, "mutation_requires_explicit_user_action": {"const": true}, "ownership_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "ownership_confidence": {"const": "proven"}, "effect_kinds": {"const": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"]}, "default_effect_policy": {"$ref": "#/$defs/maintenance_default_deny_policy"}, "effect_policy": {"$ref": "#/$defs/maintenance_effect_policy"},
-        "one_operation_consent_ref": {"$ref": "#/$defs/non_secret_ref"}, "durable_delegation_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_scope_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_generation": {"$ref": "#/$defs/positive_generation"}, "delegation_current": {"const": true}, "delegation_revoked": {"const": false}, "unknown_owner_policy": {"const": "manual_only"}, "mode_discovery_update_or_baseline_grants_mutation": {"const": false}, "unrelated_consent_reuse_allowed": {"const": false}
-      }, "required": ["management_sources", "default_maintenance", "mutation_requires_explicit_user_action", "ownership_proof_ref", "ownership_confidence", "effect_kinds", "default_effect_policy", "effect_policy", "one_operation_consent_ref", "durable_delegation_ref", "delegation_scope_ref", "delegation_generation", "delegation_current", "delegation_revoked", "unknown_owner_policy", "mode_discovery_update_or_baseline_grants_mutation", "unrelated_consent_reuse_allowed"]}],
+        "management_sources": {"const": ["pm_managed", "external", "package_manager", "user", "organization"]},
+        "management_source": {"enum": ["pm_managed", "external", "package_manager", "user", "organization"]},
+        "installation_ref": {"$ref": "#/$defs/non_secret_ref"}, "host_ref": {"$ref": "#/$defs/non_secret_ref"}, "environment_ref": {"$ref": "#/$defs/non_secret_ref"}, "policy_ref": {"$ref": "#/$defs/non_secret_ref"}, "policy_generation": {"$ref": "#/$defs/positive_generation"},
+        "update_preferences": {"$ref": "#/$defs/installation_update_preferences"},
+        "effective_automatic_policy": {"enum": ["disabled", "check_only", "check_and_install"]},
+        "automatic_install_disabled_reason": {"enum": [null, "approval_required"]},
+        "authority_basis": {"enum": ["none", "pm_managed_policy", "one_operation_consent", "durable_delegation"]},
+        "default_maintenance": {"const": "check_and_notify"}, "mutation_requires_explicit_user_action": {"type": "boolean"}, "ownership_proof_ref": {"$ref": "#/$defs/non_secret_ref"}, "ownership_confidence": {"const": "proven"}, "effect_kinds": {"const": ["download", "package_invoke", "replace", "activate", "repair", "rollback", "configure", "remove"]}, "default_effect_policy": {"$ref": "#/$defs/maintenance_default_deny_policy"}, "effect_policy": {"oneOf": [{"$ref": "#/$defs/maintenance_default_deny_policy"}, {"$ref": "#/$defs/maintenance_effect_policy"}, {"$ref": "#/$defs/maintenance_pm_managed_policy"}]},
+        "one_operation_consent_ref": {"$ref": "#/$defs/non_secret_ref"}, "consent_current": {"const": true},
+        "durable_delegation_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_scope_ref": {"$ref": "#/$defs/non_secret_ref"}, "delegation_generation": {"$ref": "#/$defs/positive_generation"}, "delegation_current": {"const": true}, "delegation_revoked": {"const": false},
+        "reviewed_maintenance_policy_ref": {"$ref": "#/$defs/non_secret_ref"}, "maintenance_policy_current": {"const": true},
+        "unknown_owner_policy": {"const": "manual_only"}, "mode_discovery_update_or_baseline_grants_mutation": {"const": false}, "unrelated_consent_reuse_allowed": {"const": false}
+      }, "required": ["management_sources", "management_source", "installation_ref", "host_ref", "environment_ref", "policy_ref", "policy_generation", "update_preferences", "effective_automatic_policy", "automatic_install_disabled_reason", "authority_basis", "default_maintenance", "mutation_requires_explicit_user_action", "ownership_proof_ref", "ownership_confidence", "effect_kinds", "default_effect_policy", "effect_policy", "unknown_owner_policy", "mode_discovery_update_or_baseline_grants_mutation", "unrelated_consent_reuse_allowed"]},
+      {
+        "if": {"properties": {"authority_basis": {"const": "none"}}, "required": ["authority_basis"]},
+        "then": {"properties": {
+          "mutation_requires_explicit_user_action": {"const": true}, "effect_policy": {"$ref": "#/$defs/maintenance_default_deny_policy"},
+          "one_operation_consent_ref": false, "consent_current": false, "durable_delegation_ref": false, "delegation_scope_ref": false, "delegation_generation": false, "delegation_current": false, "delegation_revoked": false, "reviewed_maintenance_policy_ref": false, "maintenance_policy_current": false
+        }}
+      },
+      {
+        "if": {"properties": {"authority_basis": {"const": "one_operation_consent"}}, "required": ["authority_basis"]},
+        "then": {"required": ["one_operation_consent_ref", "consent_current"], "properties": {
+          "mutation_requires_explicit_user_action": {"const": true}, "effect_policy": {"$ref": "#/$defs/maintenance_effect_policy"},
+          "durable_delegation_ref": false, "delegation_scope_ref": false, "delegation_generation": false, "delegation_current": false, "delegation_revoked": false, "reviewed_maintenance_policy_ref": false, "maintenance_policy_current": false
+        }}
+      },
+      {
+        "if": {"properties": {"authority_basis": {"const": "durable_delegation"}}, "required": ["authority_basis"]},
+        "then": {"required": ["durable_delegation_ref", "delegation_scope_ref", "delegation_generation", "delegation_current", "delegation_revoked"], "properties": {
+          "management_source": {"enum": ["external", "package_manager", "user", "organization"]},
+          "mutation_requires_explicit_user_action": {"const": false}, "effect_policy": {"$ref": "#/$defs/maintenance_effect_policy"},
+          "one_operation_consent_ref": false, "consent_current": false, "reviewed_maintenance_policy_ref": false, "maintenance_policy_current": false
+        }}
+      },
+      {
+        "if": {"properties": {"authority_basis": {"const": "pm_managed_policy"}}, "required": ["authority_basis"]},
+        "then": {"required": ["reviewed_maintenance_policy_ref", "maintenance_policy_current"], "properties": {
+          "management_source": {"const": "pm_managed"}, "mutation_requires_explicit_user_action": {"const": false}, "effect_policy": {"$ref": "#/$defs/maintenance_pm_managed_policy"},
+          "one_operation_consent_ref": false, "consent_current": false, "durable_delegation_ref": false, "delegation_scope_ref": false, "delegation_generation": false, "delegation_current": false, "delegation_revoked": false
+        }}
+      },
+      {
+        "if": {"properties": {"update_preferences": {"properties": {"automatic_check_policy": {"const": "disabled"}}, "required": ["automatic_check_policy"]}}, "required": ["update_preferences"]},
+        "then": {"properties": {"effective_automatic_policy": {"const": "disabled"}, "automatic_install_disabled_reason": {"const": null}}}
+      },
+      {
+        "if": {"properties": {"update_preferences": {"properties": {"automatic_check_policy": {"const": "check_only"}}, "required": ["automatic_check_policy"]}}, "required": ["update_preferences"]},
+        "then": {"properties": {"effective_automatic_policy": {"const": "check_only"}, "automatic_install_disabled_reason": {"const": null}}}
+      },
+      {
+        "if": {"properties": {"update_preferences": {"properties": {"automatic_check_policy": {"const": "check_and_install"}}, "required": ["automatic_check_policy"]}}, "required": ["update_preferences"]},
+        "then": {
+          "if": {"properties": {"authority_basis": {"enum": ["pm_managed_policy", "durable_delegation"]}}, "required": ["authority_basis"]},
+          "then": {"properties": {"effective_automatic_policy": {"const": "check_and_install"}, "automatic_install_disabled_reason": {"const": null}}},
+          "else": {"properties": {"effective_automatic_policy": {"const": "check_only"}, "automatic_install_disabled_reason": {"const": "approval_required"}}}
+        }
+      }],
       "unevaluatedProperties": false,
-      "$comment": "Schema consts cannot prove real ownership, delegation currency/scope/revocation, one-operation consent identity, or absence of package-manager effects. Runtime ownership and mutation admission remain mandatory."
+      "$comment": "SIR-021 retains this requirement/record identity while separating user update preferences from mutually exclusive internal authority bases. default_maintenance names the initial external-installation default, not an override of saved disabled/quiet choices. mutation_requires_explicit_user_action describes per-operation consent: false requires an already reviewed current PM-managed policy or scoped delegation. effective_automatic_policy is policy eligibility, not execution admission. Schemas cannot prove real ownership, scope/generation matches, grant currency/revocation, persistence, scheduler behavior, package-manager effects, or runtime feedback; the existing lifecycle and permission owners must validate those before effects."
     },
     "installation_waiter": {"type": "object", "additionalProperties": false, "required": ["waiter_ref", "project_ref", "client_ref", "permission_ref", "approval_ref", "continuation_ref", "cancellation_ref", "currentness_ref", "result_ref", "cancellation_detaches_only"], "properties": {"waiter_ref": {"$ref": "#/$defs/non_secret_ref"}, "project_ref": {"$ref": "#/$defs/non_secret_ref"}, "client_ref": {"$ref": "#/$defs/non_secret_ref"}, "permission_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_ref": {"$ref": "#/$defs/non_secret_ref"}, "continuation_ref": {"$ref": "#/$defs/non_secret_ref"}, "cancellation_ref": {"$ref": "#/$defs/non_secret_ref"}, "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}, "result_ref": {"$ref": "#/$defs/non_secret_ref"}, "cancellation_detaches_only": {"const": true}}},
     "irt_009": {

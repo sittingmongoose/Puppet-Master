@@ -442,9 +442,65 @@
       ],
       "unevaluatedProperties": false
     },
+    "opaque_auth_handoff_ref": {
+      "allOf": [
+        {"$ref": "#/$defs/non_secret_ref"},
+        {"not": {"pattern": "^[A-Za-z][A-Za-z0-9+.-]*://"}}
+      ]
+    },
+    "server_owned_auth_handoff": {
+      "description": "Non-secret reference binding to the RAS-015 Server-owned hosted-Tailscale authorization operation, not a second operation or a bearer credential. The broker resolves the authoritative session and revalidates operation/revision, Server/connector, current Client/session, handoff authorization/generation, expiry, revocation, protected-session reference, and exact return/continuation context before any effect. Shape validation alone proves none of those joins.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_contract_ref", "control_server_kind", "server_id", "connector_id",
+        "authorization_session_ref", "operation_generation", "handoff_generation",
+        "authorized_client_id", "authorized_client_session_generation", "protected_action_ref",
+        "client_loss_policy", "inherited_protected_content"
+      ],
+      "properties": {
+        "owner_contract_ref": {"const": "Plans/Remote_Access_System.md#RAS-015"},
+        "control_server_kind": {"const": "hosted_tailscale"},
+        "server_id": {"$ref": "#/$defs/non_empty_string"},
+        "connector_id": {"$ref": "#/$defs/non_empty_string"},
+        "authorization_session_ref": {"$ref": "#/$defs/opaque_auth_handoff_ref"},
+        "operation_generation": {"type": "integer", "minimum": 1},
+        "handoff_generation": {"type": "integer", "minimum": 1},
+        "authorized_client_id": {"$ref": "#/$defs/non_empty_string"},
+        "authorized_client_session_generation": {"type": "integer", "minimum": 0},
+        "protected_action_ref": {"$ref": "#/$defs/opaque_auth_handoff_ref"},
+        "client_loss_policy": {"const": "operation_survives_handoff_must_be_reauthorized"},
+        "inherited_protected_content": {"const": false}
+      }
+    },
+    "authentication_handoff_policy": {
+      "description": "Current command policy. The RAS-015 exception is selected only by the broker-resolved hosted-Tailscale owner, never by trusting a caller's policy/provider label. All other protected-provider flows retain initiating-active-Client-only behavior. Predecessor Tailscale requests require owner reauthorization and may not dispatch unchanged.",
+      "type": "object",
+      "required": ["client_handoff_policy"],
+      "properties": {
+        "client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only", "server_owned_authorized_client_handoff"]},
+        "server_owned_handoff": {"oneOf": [{"$ref": "#/$defs/server_owned_auth_handoff"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {
+            "required": ["server_owned_handoff", "auth_surface"],
+            "properties": {"auth_surface": {"const": "protected_auth_browser"}, "server_owned_handoff": {"$ref": "#/$defs/server_owned_auth_handoff"}}
+          },
+          "else": {"properties": {"server_owned_handoff": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"auth_surface": {"const": "protected_auth_browser"}}, "required": ["auth_surface"]},
+          "then": {"properties": {"client_handoff_policy": {"enum": ["initiating_active_client_only", "server_owned_authorized_client_handoff"]}}},
+          "else": {"properties": {"client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only"]}}}
+        }
+      ]
+    },
     "authentication_command_request": {
       "allOf": [
         {"$ref": "#/$defs/command_request_envelope"},
+        {"$ref": "#/$defs/authentication_handoff_policy"},
         {
           "type": "object",
           "required": [
@@ -469,13 +525,16 @@
             "initiating_client_id": {"$ref": "#/$defs/nullable_non_empty_string"},
             "expected_initiating_client_session_generation": {"type": ["integer", "null"], "minimum": 0},
             "protected_auth_session_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-            "client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only"]}
+            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
           }
         },
         {"if": {"properties": {"command_id": {"const": "cmd.authentication.start"}}}, "then": {"properties": {"action": {"const": "start"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.authentication.cancel"}}}, "then": {"properties": {"action": {"const": "cancel"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}}, "then": {"properties": {"action": {"const": "resume"}}}},
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {"properties": {"expected_auth_revision": {"type": "integer", "minimum": 0}}}
+        },
         {
           "if": {"properties": {"auth_surface": {"const": "protected_auth_browser"}}, "required": ["auth_surface"]},
           "then": {
@@ -485,8 +544,7 @@
               "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
               "protected_auth_session_ref": {"$ref": "#/$defs/non_secret_ref"},
               "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
-              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"},
-              "client_handoff_policy": {"const": "initiating_active_client_only"}
+              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"}
             }
           }
         },
@@ -698,6 +756,7 @@
     "authentication_command_result": {
       "allOf": [
         {"$ref": "#/$defs/command_result_envelope"},
+        {"$ref": "#/$defs/authentication_handoff_policy"},
         {
           "type": "object",
           "required": [
@@ -720,8 +779,9 @@
             "return_fence_state": {
               "enum": [
                 "not_applicable", "pending_exact_operation_and_client", "exact_operation_and_initiating_active_client",
+                "pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff",
                 "cancelled_without_content_return", "timed_out_without_content_return", "rejected_stale_operation",
-                "rejected_initiating_client", "rejected_client_and_stale_operation"
+                "rejected_initiating_client", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"
               ]
             },
             "authentication_disposition": {"enum": ["in_progress", "verified", "cancelled", "timed_out", "failed_closed"]},
@@ -744,10 +804,17 @@
             "properties": {
               "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
               "observed_initiating_client_session_generation": {"type": "integer", "minimum": 0},
-              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
-              "return_fence_state": {"const": "exact_operation_and_initiating_active_client"}
-            }
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            },
+            "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+            "then": {"properties": {"return_fence_state": {"const": "exact_operation_and_current_authorized_client_handoff"}}},
+            "else": {"properties": {"return_fence_state": {"const": "exact_operation_and_initiating_active_client"}}}
           }
+        },
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {"properties": {"return_fence_state": {"enum": ["pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff", "cancelled_without_content_return", "timed_out_without_content_return", "rejected_stale_operation", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"]}}},
+          "else": {"properties": {"return_fence_state": {"not": {"enum": ["pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff", "rejected_authorized_client_handoff"]}}}}
         },
         {
           "if": {"properties": {"authentication_disposition": {"const": "cancelled"}}, "required": ["authentication_disposition"]},
@@ -771,7 +838,7 @@
         {
           "if": {
             "properties": {
-              "return_fence_state": {"enum": ["rejected_stale_operation", "rejected_initiating_client", "rejected_client_and_stale_operation"]}
+              "return_fence_state": {"enum": ["rejected_stale_operation", "rejected_initiating_client", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"]}
             },
             "required": ["return_fence_state"]
           },

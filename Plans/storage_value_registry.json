@@ -13367,20 +13367,17 @@
       "family_id": "runtime_resource_admission",
       "storage_kind": "redb",
       "status": "materialized",
-      "tier": "later_gui_or_feature_projection",
+      "tier": "migration_only",
       "key_shape": "runtime_resource_admission.v1:{host_id}:{admission_id}",
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.shared_runtime.runtime_resource_admission.v1",
       "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission",
       "owner_doc": "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
       "producer": [
-        "RuntimeResourceGovernor"
+        "No new writer; existing physical rows are retained for compatibility import only"
       ],
       "consumers": [
-        "all resource consumers",
-        "ObservableWork",
-        "Doctor",
-        "Usage"
+        "StorageMigrationCoordinator one-time owner-boundary normalizer"
       ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
@@ -13409,17 +13406,18 @@
         "reason_ref",
         "reevaluation_trigger_ref"
       ],
-      "replay_behavior": "Restore exact canonical bytes from a verified mandatory backup; absence or corruption stays a disclosed recovery failure.",
-      "migration": "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted.",
+      "replay_behavior": "Retain existing bytes as read-only migration input until a verified successor migration receipt exists; never expose this legacy vocabulary to a current consumer.",
+      "migration": "Existing physical rows are read-only compatibility/import inputs. StorageMigrationCoordinator validates and normalizes each row once to pm.full_thread_runtime.contracts.v1 after successor physical-family registration; ambiguous legacy admission reasons fail closed. No new writer, lazy rewrite-on-read, dual-vocabulary consumer, or runtime-proof claim is permitted.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "compatibility_read_only",
         "canonical_write_key_only": true,
-        "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ]
       },
       "restore_disposition": {
@@ -13430,7 +13428,8 @@
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ]
       },
       "recovery_disposition": {
@@ -13440,20 +13439,25 @@
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_admission",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ],
         "backup_required": true,
         "data_loss_if_unavailable": true,
         "user_disclosure_required": true
       },
-      "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
+      "retention_compaction": "Retain under the named policy and stronger holds until a verified successor migration receipt permits ordinary expiry; compaction cannot reinterpret or rewrite a legacy row in place.",
       "retention_policy_ref": "RP-RUNTIME-365D",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
-      "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
+      "legacy_canonical_crosswalk_status": "legacy_reader_import_only_to_pm.full_thread_runtime.contracts.v1; new writes forbidden; ambiguous normalization fails closed",
       "value_schema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://puppetmaster.local/schemas/storage_value/runtime_resource_admission/1.0.0/runtime_resource_admission.schema.json",
         "title": "RuntimeResourceAdmission",
+        "description": "Legacy durable admission envelope retained only for read/import compatibility. New producer writes use pm.full_thread_runtime.contracts.v1 GovernorDecisionRecord; this row normalizes once at the owner boundary and ambiguous blocked/rejected reasons fail closed.",
+        "x-write-policy": "legacy_reader_import_only",
+        "x-successor-schema-ref": "Plans/full_thread_runtime_contracts.schema.json#/$defs/GovernorDecisionRecord",
+        "x-normalization-ref": "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization/governor_outcome",
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -13595,20 +13599,17 @@
       "family_id": "observable_work_projection",
       "storage_kind": "redb_projection",
       "status": "materialized",
-      "tier": "later_gui_or_feature_projection",
+      "tier": "migration_only",
       "key_shape": "observable_work_projection.v1:{host_id}:{work_id}",
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.shared_runtime.observable_work_projection.v1",
       "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection",
       "owner_doc": "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
       "producer": [
-        "ObservableWork projector"
+        "No new writer; existing physical rows are retained for compatibility import only"
       ],
       "consumers": [
-        "Chat",
-        "Orchestrator",
-        "Doctor",
-        "Usage"
+        "StorageMigrationCoordinator one-time owner-boundary normalizer"
       ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
@@ -13649,17 +13650,18 @@
         "total_units",
         "wait_reason_ref"
       ],
-      "replay_behavior": "Quarantine invalid bytes and rebuild only from the named canonical owner records under a currentness fence; never treat this projection as authority.",
-      "migration": "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted.",
+      "replay_behavior": "Retain existing bytes as read-only migration input until a verified successor migration receipt exists; never expose this legacy vocabulary to a current consumer.",
+      "migration": "Existing physical rows are read-only compatibility/import inputs. StorageMigrationCoordinator validates and normalizes each row once to pm.full_thread_runtime.contracts.v1 after successor physical-family registration; ambiguous legacy admission reasons fail closed. No new writer, lazy rewrite-on-read, dual-vocabulary consumer, or runtime-proof claim is permitted.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "compatibility_read_only",
         "canonical_write_key_only": true,
-        "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ]
       },
       "restore_disposition": {
@@ -13670,7 +13672,8 @@
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ]
       },
       "recovery_disposition": {
@@ -13680,21 +13683,25 @@
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#8-host-local-runtime-resource-governor-and-observable-work",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/observable_work_projection",
+          "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,
         "user_disclosure_required": true
       },
-      "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
+      "retention_compaction": "Retain under the named policy and stronger holds until a verified successor migration receipt permits ordinary expiry; compaction cannot reinterpret or rewrite a legacy row in place.",
       "retention_policy_ref": "RP-RUNTIME-365D",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
-      "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
+      "legacy_canonical_crosswalk_status": "legacy_reader_import_only_to_pm.full_thread_runtime.contracts.v1; new writes forbidden; ambiguous normalization fails closed",
       "value_schema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://puppetmaster.local/schemas/storage_value/observable_work_projection/1.0.0/observable_work_projection.schema.json",
         "title": "ObservableWorkProjection",
-        "description": "Derived redb projection. It is not a canonical event source and never fabricates percent complete.",
+        "description": "Legacy derived redb projection retained only for read/import compatibility. It is not a canonical event source, never fabricates percent complete, and is normalized once into pm.full_thread_runtime.contracts.v1 ObservableWorkRecord before current consumers see it.",
+        "x-write-policy": "legacy_reader_import_only",
+        "x-successor-schema-ref": "Plans/full_thread_runtime_contracts.schema.json#/$defs/ObservableWorkRecord",
+        "x-normalization-ref": "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization/observable_work_state",
         "type": "object",
         "additionalProperties": false,
         "required": [

@@ -8911,7 +8911,7 @@
       "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Protected-auth cancel targets the same operation/revision and exact initiating active Client/session plus return target, returns a redacted cancelled disposition, and permits no fallback Client, protected content exposure, capture, recording, persistence, or caller navigation.",
+        "Protected-auth cancel targets the same operation/revision and exact owner-selected Client/session plus return target. RAS-015 hosted Tailscale requires the SIR-032 server_owned_authorized_client_handoff binding; other protected providers require the initiating active Client. Return a redacted cancelled disposition with no unauthorized fallback, protected content inheritance/exposure, capture, recording, persistence, or caller navigation.",
         "Dispatching cmd.authentication.cancel reaches only handlers::authentication::cancel with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
         "cmd.authentication.cancel is available only when the owner selector is current cancellable auth operation; disabled reasons are exactly auth_state_mismatch, already_in_state, stale_projection, permission_required.",
         "cmd.authentication.cancel reads state.commands.authentication_cancel.availability and state.commands.authentication_cancel.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
@@ -8971,7 +8971,7 @@
       "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Protected-auth resume requires the same operation/revision, exact initiating active Client/session, return target, and continuation; stale/wrong-Client/timeout return fails closed with a redacted disposition and no protected content exposure, capture, recording, persistence, or caller navigation.",
+        "Protected-auth resume requires the same operation/revision and exact owner-selected Client/session, return target, and continuation. RAS-015 hosted Tailscale survives original-Client loss but requires the SIR-032 server_owned_authorized_client_handoff with a new owner-authorized handoff generation and fresh protected session for a replacement; other protected providers remain initiating-active-Client-only. Stale, revoked, expired, wrong-owner, wrong-Client, or mismatched-return bindings fail closed without protected content inheritance/exposure, capture, recording, persistence, or caller navigation.",
         "Dispatching cmd.authentication.resume reaches only handlers::authentication::resume with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
         "cmd.authentication.resume is available only when the owner selector is same nonterminal authority binding; disabled reasons are exactly auth_state_mismatch, stale_projection, deadline_expired, topology_unavailable, permission_required, policy_denied.",
         "cmd.authentication.resume reads state.commands.authentication_resume.availability and state.commands.authentication_resume.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
@@ -9031,7 +9031,7 @@
       "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Protected-auth start binds the exact initiating active Client and Client-session generation, authentication operation, protected-session reference, return target, and continuation; wrong/fallback Client return, protected content exposure, capture, recording, persistence, and caller navigation fail closed.",
+        "Protected-auth start binds the authentication operation, origin Client/session lineage, protected-session reference, exact return target, and continuation. RAS-015 hosted Tailscale also binds the SIR-032 server_owned_authorized_client_handoff to the broker-resolved Server/connector operation and current authorized Client/session; other protected providers retain initiating-active-Client-only behavior. Caller-provided policy or owner labels confer no authority; wrong/unauthorized fallback return, inherited protected content, exposure, capture, recording, persistence, and caller navigation fail closed.",
         "Dispatching cmd.authentication.start reaches only handlers::authentication::start with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
         "cmd.authentication.start is available only when the owner selector is auth path supported; disabled reasons are exactly setup_required, auth_state_mismatch, operation_in_progress, topology_unavailable, permission_required, policy_denied.",
         "cmd.authentication.start reads state.commands.authentication_start.availability and state.commands.authentication_start.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",

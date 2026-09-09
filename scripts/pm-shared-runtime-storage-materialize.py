@@ -105,6 +105,10 @@ FAMILY_SPECS: tuple[FamilySpec, ...] = (
 )
 
 MATERIALIZED_FAMILY_IDS = tuple(spec.family_id for spec in FAMILY_SPECS)
+LEGACY_FULL_THREAD_READER_FAMILY_IDS = {
+    "runtime_resource_admission",
+    "observable_work_projection",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -170,6 +174,7 @@ def allows_null(value: dict[str, Any], definitions: dict[str, Any]) -> bool:
 
 
 def disposition_fields(spec: FamilySpec, source_refs: list[str]) -> dict[str, Any]:
+    legacy_full_thread_reader = spec.family_id in LEGACY_FULL_THREAD_READER_FAMILY_IDS
     if spec.canonical:
         restore_mode = "mandatory_backup"
         authority_class = "canonical_non_rebuildable"
@@ -184,10 +189,10 @@ def disposition_fields(spec: FamilySpec, source_refs: list[str]) -> dict[str, An
         data_loss = False
     return {
         "migration_disposition": {
-            "mode": "current_schema",
+            "mode": "compatibility_read_only" if legacy_full_thread_reader else "current_schema",
             "canonical_write_key_only": True,
-            "compatibility_keys_read_only": False,
-            "ambiguity_policy": "not_applicable",
+            "compatibility_keys_read_only": legacy_full_thread_reader,
+            "ambiguity_policy": "fail_closed" if legacy_full_thread_reader else "not_applicable",
             "source_refs": source_refs,
         },
         "restore_disposition": {
@@ -212,6 +217,7 @@ def disposition_fields(spec: FamilySpec, source_refs: list[str]) -> dict[str, An
 def family_row(spec: FamilySpec) -> dict[str, Any]:
     schema = read_json(spec.schema_path)
     value_schema = bundled_value_schema(spec)
+    legacy_full_thread_reader = spec.family_id in LEGACY_FULL_THREAD_READER_FAMILY_IDS
     properties = value_schema.get("properties", {})
     required = list(value_schema.get("required", []))
     optional = sorted(set(properties) - set(required))
@@ -223,7 +229,12 @@ def family_row(spec: FamilySpec) -> dict[str, Any]:
         "const", f"pm.storage_value.{spec.family_id}.v1"
     )
     source_refs = [spec.owner_doc, STORAGE_OWNER, str(spec.schema_path.relative_to(ROOT)) + f"#/$defs/{spec.definition_name}"]
+    if legacy_full_thread_reader:
+        source_refs.append("Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization")
     recovery_phrase = (
+        "Retain existing bytes as read-only migration input until a verified successor migration receipt exists; never expose this legacy vocabulary to a current consumer."
+        if legacy_full_thread_reader
+        else
         "Restore exact canonical bytes from a verified mandatory backup; absence or corruption stays a disclosed recovery failure."
         if spec.canonical
         else "Quarantine invalid bytes and rebuild only from the named canonical owner records under a currentness fence; never treat this projection as authority."
@@ -232,14 +243,22 @@ def family_row(spec: FamilySpec) -> dict[str, Any]:
         "family_id": spec.family_id,
         "storage_kind": spec.storage_kind,
         "status": "materialized",
-        "tier": "later_gui_or_feature_projection",
+        "tier": "migration_only" if legacy_full_thread_reader else "later_gui_or_feature_projection",
         "key_shape": spec.key_shape,
         "compatibility_key_shapes": [],
         "value_schema_id": schema_id,
         "value_schema_ref": str(spec.schema_path.relative_to(ROOT)) + f"#/$defs/{spec.definition_name}",
         "owner_doc": spec.owner_doc,
-        "producer": list(spec.producer),
-        "consumers": list(spec.consumers),
+        "producer": (
+            ["No new writer; existing physical rows are retained for compatibility import only"]
+            if legacy_full_thread_reader
+            else list(spec.producer)
+        ),
+        "consumers": (
+            ["StorageMigrationCoordinator one-time owner-boundary normalizer"]
+            if legacy_full_thread_reader
+            else list(spec.consumers)
+        ),
         "schema_version": "1.0.0",
         "encoding": "messagepack_canonical",
         "required_fields": required,
@@ -247,18 +266,24 @@ def family_row(spec: FamilySpec) -> dict[str, Any]:
         "nullable_fields": nullable,
         "replay_behavior": recovery_phrase,
         "migration": (
-            "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted."
+            "Existing physical rows are read-only compatibility/import inputs. StorageMigrationCoordinator validates and normalizes each row once to pm.full_thread_runtime.contracts.v1 after successor physical-family registration; ambiguous legacy admission reasons fail closed. No new writer, lazy rewrite-on-read, dual-vocabulary consumer, or runtime-proof claim is permitted."
+            if legacy_full_thread_reader
+            else "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted."
         ),
         **disposition_fields(spec, source_refs),
         "retention_compaction": (
-            "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection."
+            "Retain under the named policy and stronger holds until a verified successor migration receipt permits ordinary expiry; compaction cannot reinterpret or rewrite a legacy row in place."
+            if legacy_full_thread_reader
+            else "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection."
         ),
         "retention_policy_ref": spec.retention_policy_ref,
         "redaction_no_secret_rule": (
             "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content."
         ),
         "legacy_canonical_crosswalk_status": (
-            "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family."
+            "legacy_reader_import_only_to_pm.full_thread_runtime.contracts.v1; new writes forbidden; ambiguous normalization fails closed"
+            if legacy_full_thread_reader
+            else "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family."
         ),
         "value_schema": value_schema,
     }

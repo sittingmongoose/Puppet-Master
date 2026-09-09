@@ -10985,10 +10985,13 @@ surface/route/focus/invocation/continuation context. Closing the Product Onboard
 does not cancel dispatched owner work.
 
 The three existing Authentication rows continue to use the shared-runtime request/result definitions and
-sole `handlers::authentication::*` targets. Protected-auth start, cancel, and resume require the exact
-initiating Client/session generation, same authentication operation/revision, protected session and return
-target, continuation where applicable, and a redacted cancel/timeout/success disposition. No fallback
-Client, protected content, capture, recording, persistence, or caller navigation is allowed.
+sole `handlers::authentication::*` targets. Protected-auth start, cancel, and resume require the same
+authentication operation/revision, owner-selected Client/session fence, protected session and exact return
+target, continuation where applicable, and a redacted cancel/timeout/success disposition. RAS-015 hosted
+Tailscale follows SIR-032's September 9 approved `server_owned_authorized_client_handoff`: original Client
+loss preserves the Server operation, but a replacement must establish a new authorized handoff and fresh
+protected session. Other protected providers retain initiating-active-Client-only behavior. No unauthorized
+fallback Client, inherited protected content, capture, recording, persistence, or caller navigation is allowed.
 
 `cmd.server.reconnect`, `cmd.server.resume`, `cmd.git.clone`, `cmd.scm.clone`, `cmd.project.clone`,
 `cmd.project.jj_clone`, `cmd.client.pair.qr.import`, and `cmd.server.peer_candidate.select` receive no
@@ -11034,7 +11037,7 @@ preserved_exact_tokens: [cmd.source_control.repository.clone, cmd.jujutsu.git.cl
 negative_constraints:
   - Do not add rejected aliases or concept-local owner commands.
   - Do not interpret a catalog target as a native handler claim.
-  - Do not route protected authentication to a fallback Client or expose protected content.
+  - Do not route protected authentication to an unauthorized fallback Client or expose protected content; RAS-015 replacement requires the current owner-authorized SIR-032 handoff.
   - Do not omit a GUI reverse consumer or exact focus-return route.
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md]
 ```
