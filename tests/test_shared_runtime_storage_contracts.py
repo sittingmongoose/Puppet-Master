@@ -202,17 +202,32 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
             Draft202012Validator.check_schema(schema)
 
     def test_registry_has_exact_family_and_status_counts(self) -> None:
-        self.assertEqual(len(self.registry["families"]), 84)
+        self.assertEqual(len(self.registry["families"]), 88)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
                     "materialized": 66,
-                    "deferred_not_build_blocking": 17,
+                    "deferred_not_build_blocking": 21,
                     "compatibility_alias": 1,
                 }
             ),
         )
+        # The September 5 notebook/transition declarations are not storage
+        # implementations. Keep their exact identities and deferred state.
+        for family_id in (
+            "working_notebook_record",
+            "working_notebook_entry_record",
+            "notebook_checkpoint_record",
+            "context_transition_record",
+        ):
+            with self.subTest(family_id=family_id):
+                row = self.rows_by_id[family_id]
+                self.assertEqual(row["status"], "deferred_not_build_blocking")
+                self.assertEqual(
+                    row["owner_doc"],
+                    "Plans/storage-plan.md#working-notebook-and-context-transition-storage-2026-09-05",
+                )
 
     def test_closed_shared_runtime_families_are_materialized_exactly_once(self) -> None:
         for family_id in MATERIALIZED_FAMILY_IDS:

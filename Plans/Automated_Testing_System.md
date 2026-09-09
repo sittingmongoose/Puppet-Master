@@ -3710,11 +3710,11 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  The centrally invoked validate-new-contracts gate fail-closes the authored 23-pair contract manifest plus one
+  The centrally invoked validate-new-contracts gate fail-closes the authored 24-pair contract manifest plus one
   shared-integration expansion fixture pack for the
   Settings, Onboarding, Guided Tour, Doctor, retained Egolite requirement closure, Project, Named Plan, Full Thread Runtime, Server, Remote Access,
   Backup/Restore, protected AuthBrowserSession, Browser Program, test capture and motion evidence, source control,
-  forge, plugins, shared-runtime command, and Final GUI interaction owner wave. It validates every schema against
+  forge, Jujutsu, release/update, multi-account, plugins, shared-runtime command, and Final GUI interaction owner wave. It validates every schema against
   the JSON Schema Draft 2020-12 metaschema, selects an exact closed definition for every fixture record, accepts
   every positive, rejects every expected negative, rejects unknown definitions and invalid mutation recipes,
   rejects fixture-pack IDs used as runtime values, stale aggregate owner IDs, duplicate primary runtime record
@@ -3727,8 +3727,8 @@ gui_classification_reason: This unit owns a static contract-validation gate; it 
 depends_on: [ATS-001, SIR-031]
 unblocks: []
 acceptance_criteria:
-  - "python3 scripts/pm-new-contracts-verify.py validates exactly 23 authored schema/fixture pairs plus one shared-integration expansion fixture pack and reports its complete input manifest and counts."
-  - "The current closed corpus accepts 708 positive fixtures, rejects 2606 negative fixtures, accepts 264 expansion command records, 240 owner-compatibility command records, 28 local records, 28 owner-local aliases, and 33 normalizations, and passes all 12 internal negative tests."
+  - "python3 scripts/pm-new-contracts-verify.py validates exactly 24 authored schema/fixture pairs plus one shared-integration expansion fixture pack and reports its complete input manifest and counts."
+  - "The reviewed 2026-09-09 corpus accepts 923 positive fixtures, rejects 3110 negative fixtures, accepts 264 expansion command records, 240 owner-compatibility command records, 28 expansion local records, 28 owner-local records, and 36 expansion alias records, rejects 21 expansion negative records, and passes all 12 internal negative tests. These are the pinned corpus expectations, not a promise that later authored additions keep the same counts; an approved corpus change must reconcile this inventory and its regression expectation together."
   - "python3 scripts/pm-plans-verify.py run-gates invokes one named validate-new-contracts subcheck and propagates its failures."
   - "Every positive fixture resolves to exactly one explicit or discriminator-selected definition, and every negative is rejected by that same intended definition or its explicitly authored cross-record invariant."
   - "Unknown definitions, malformed negative recipes, fixture-pack IDs in runtime records, stale owner identities, duplicate runtime record identities, undocumented aggregate schema identities, and mixed local schema hosts fail closed."
@@ -3737,6 +3737,7 @@ validation_surfaces:
   - "python3 scripts/pm-new-contracts-verify.py"
   - "python3 scripts/pm-plans-verify.py validate-new-contracts"
   - "python3 scripts/pm-plans-verify.py run-gates"
+  - "python3 -m unittest tests.test_pm_egolite_retained_requirement_tests.TestInventoryContracts -v"
 risk_class: contract_fixture_drift_or_false_runtime_claim
 reasoning_tier: high
 context_scope: new_contract_owner_wave_static_validation
@@ -3757,7 +3758,7 @@ source_lineage:
   - Plans/Forge_Integrations.md
   - Plans/egolite_retained_requirement_contracts.schema.json
   - Plans/egolite_retained_requirement_contract_fixtures.json
-preserved_exact_tokens: [validate-new-contracts, 23, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
+preserved_exact_tokens: [validate-new-contracts, 24, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
 negative_constraints:
   - "Do not add schemas or fixture pairs to the gate through an ambient glob."
   - "Do not weaken a failing invariant merely to make current fixtures pass."
@@ -4254,3 +4255,187 @@ negative_constraints:
   or shipping evidence.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
+
+### ATS-048 - Exact Retained Integration Test Ownership And Oracle Boundaries
+
+```yaml
+plan_unit_id: ATS-048
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Automated Testing owns one exact static-test and runtime-test identity for each of the fifteen retained
+  Egolite integration requirements in the ERT-15 matrix below. The named product owner remains authoritative;
+  this matrix consumes its existing acceptance criteria and does not introduce a second behavior owner.
+  ERT-<requirement_id>-STATIC binds one focused unittest method to the exact closed schema definition,
+  all authored positive records for that requirement, and every negative recipe assigned to that record.
+  ERT-<requirement_id>-RUNTIME binds the separate owner execution oracle and remains NOT_RUN until
+  the required native, provider, browser, security, storage, or measured-performance evidence exists.
+  A required field, a true policy flag, a named receipt, or a fixture rejection is never proof that the
+  corresponding runtime comparison, effect, receipt, or attack test actually ran.
+gui_related: true
+gui_classification_reason: The matrix includes visible five-surface projection, focus/fidelity, Source Control, Origin, update-choice, and export behavior as well as non-GUI cases; each row carries its own classification.
+depends_on: [ATS-041, PP-083, SMPFS-154, SMPFS-155, SCS-007, ORI-009, SIR-021, PS-135, PS-136, PS-137]
+unblocks: []
+acceptance_criteria:
+  - The matrix contains exactly HBU-005, HBU-013, BRW-010, BRW-011, SCM-005, SCM-019, ORI-002, ORI-020, IRT-008, IRT-009, IRT-010, IRT-011, SEC-003, SEC-007, and SEC-008 once each, with an exact owner PlanUnit, definition, GUI classification, executable static-test selector, and distinct planned runtime-test ID.
+  - A static row passes only when all of its authored positive records validate under that exact definition and each owned negative rejects for that definition or its explicitly named semantic rule. Missing rows, duplicate IDs, wrong owners, stale definitions, unassigned recipes, changed recipe targets, vacuous positive/negative coverage, or an undiscovered test method fail the mapping check.
+  - Root membership/cardinality/schema-ID negatives are tested separately; a malformed sibling or root cannot stand in for rejection of the intended requirement. All non-target siblings must remain unchanged when an aggregate negative is projected to a focused row.
+  - IRT-011's two lifetime negatives remain structurally valid and reject through credential_attachment_lifetime_not_positive after UTC normalization. That executed static relation check does not prove current wall-clock expiry, revocation, credential custody, or broker enforcement.
+  - ORI-020, IRT-008, and IRT-011 additionally reuse the focused route, update-policy, and lifetime suites listed below; no runtime pass is inferred from those suites.
+  - Runtime acceptance records the exact owner, requested/effective identity, environment/version/currentness, input, expected and observed result, and applicable receipt/artifact/negative evidence. A missing harness, unsupported environment, unexecuted case, failed assertion, or unmeasured tolerance cannot become a pass. GUI rows also require applicable native interaction, accessibility, and visual evidence.
+  - The reviewed storage test inventory contains 88 physical-family declarations with 66 materialized, 21 deferred_not_build_blocking, and one compatibility_alias. The four Working Notebook/context-transition declarations remain deferred and do not acquire an adapter or readiness result from this count repair.
+validation_surfaces:
+  - python3 -m unittest tests.test_pm_egolite_retained_requirement_tests -v
+  - python3 -m unittest tests.test_pm_origin_retained_routes tests.test_pm_installation_update_preferences tests.test_pm_credential_attachment_lifetime -v
+  - python3 -m unittest tests.test_shared_runtime_storage_contracts -v
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unowned_test_or_false_runtime_coverage
+reasoning_tier: high
+context_scope: retained_integration_test_ownership
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, tests/test_pm_egolite_retained_requirement_tests.py, tests/test_shared_runtime_storage_contracts.py]
+node_compile_hint: {mode: static_tests_and_runtime_test_obligations_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Prompt_Pipeline.md#PP-083, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-154, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-155, Plans/Source_Control_System.md#SCS-007, Plans/Cursor_Origin_Integration.md#ORI-009, Plans/Shared_Integration_Runtime.md#SIR-021, Plans/Permissions_System.md#PS-135, Plans/Permissions_System.md#PS-136, Plans/Permissions_System.md#PS-137, source_ref:chat:user-test-plan-repair-approval-2026-09-09]
+preserved_exact_tokens: [ERT-15, STATIC, RUNTIME, NOT_RUN, static_schema_and_fixture_consistency_only, credential_attachment_lifetime_not_positive]
+negative_constraints:
+  - Do not equate a policy const, reference-shaped field, or aggregate case count with live execution of an owner's acceptance criterion.
+  - Do not substitute one requirement's negative failure for another requirement's oracle.
+  - Do not weaken expected counts or remove cases to hide an unreviewed corpus change.
+  - Do not create WorkNodes, NodeSeeds, implementation readiness, runtime receipts, or a governance seal from this matrix.
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+#### ERT-15 binding and execution rules
+
+The canonical matrix is the following bounded YAML data block. `static_test_id` is exactly
+`ERT-<requirement_id>-STATIC`; `runtime_test_id` is exactly `ERT-<requirement_id>-RUNTIME`.
+`static_method` resolves under `tests.test_pm_egolite_retained_requirement_tests.EgoliteRetainedRequirementTests`.
+The shared fixture source is `Plans/egolite_retained_requirement_contract_fixtures.json`; the shared schema is
+`Plans/egolite_retained_requirement_contracts.schema.json`. Positive selection uses exact `requirement_id`,
+including records inside `aggregate_all_15` and `aggregate_all_15_reordered`, plus every
+direct positive for the same definition. Negative ownership is determined from the exact `base_valid` record
+and its patched/removed record index, or the direct record's requirement ID, not from a guessed case-name prefix.
+The six `root_*` membership/identity cases belong to the aggregate control test. Focused execution must preserve
+non-target siblings and validate the isolated target, including when the negative corrupts its requirement ID.
+
+Every runtime row remains `NOT_RUN`. Its positive and negative clauses are required execution obligations,
+not descriptions of experiments performed in this Plans-only repair. Runtime test IDs are acceptance identities,
+not registered commands, handlers, executable work tasks, or proof that a harness exists. The product owners'
+complete acceptance criteria continue to govern where a row below summarizes them.
+
+```yaml
+matrix_id: ERT-15
+runtime_status: NOT_RUN
+rows:
+  - requirement_id: HBU-005
+    owner_ref: Plans/Prompt_Pipeline.md#PP-083
+    definition: hbu_005
+    gui_related: false
+    static_method: test_hbu_005
+    runtime_positive: "Verify the signed pinned effective-capability entry is identical across Hosts; independently measure compact/help byte and token budgets, explicit on-demand admission, base-prompt omission, and the exact help hash/bytes/omissions/permission/context receipt."
+    runtime_negative: "Reject duplicate keys, signature/hash mismatch, Host drift, budget overflow, unavailable or unsolicited help, every stale registry/API/capability/help/permission/context dimension, and receipt/materialized-help mismatch; help never grants effect authority."
+  - requirement_id: HBU-013
+    owner_ref: Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-154
+    definition: hbu_013
+    gui_related: true
+    static_method: test_hbu_013
+    runtime_positive: "Join one exact step ID/revision and underlying label/detail/state/requested-effective/receipt value across Chat, Testing, Watch, ObservableWork, and timeline; truncation keeps the full-value affordance and replay reuses the owner value."
+    runtime_negative: "Reject missing/duplicate surfaces, any per-surface override or regenerated copy, stale identity/receipt/digest/projection, unsafe secret/path/raw-ID/code copy, authority from copy, and success wording without a current owner receipt."
+  - requirement_id: BRW-010
+    owner_ref: Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-155
+    definition: brw_010
+    gui_related: true
+    static_method: test_brw_010
+    runtime_positive: "Run the same Server-owned generation-fenced Browser Program through PM background, another app, another tab, and another panel with the same workspace/page/lease/budget/permission identity and no foreground input dependency."
+    runtime_negative: "Reject focus-driven pause/cancel/transfer/stop, focus-derived authority, synthetic foreground-input dependence, and unfenced controller work; owner stop, lease loss, policy/budget denial, timeout, or terminal result still stops correctly."
+  - requirement_id: BRW-011
+    owner_ref: Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-155
+    definition: brw_011
+    gui_related: true
+    static_method: test_brw_011
+    runtime_positive: "Measure platform/CEF visibility, composition, timers, throttling, network priority, and render cadence for foreground_equivalent within a declared tolerance without focus theft, and separately measure/label real_background behavior; expose requested/effective degradation."
+    runtime_negative: "Reject swapped profiles, missing or outside-tolerance measurements, silent throttling/degradation, background evidence relabeled foreground-equivalent, focus theft, and claimed continuity across unrecorded suspend/lock/process-loss/device-disconnection boundaries."
+  - requirement_id: SCM-005
+    owner_ref: Plans/Source_Control_System.md#SCS-007
+    definition: scm_005
+    gui_related: true
+    static_method: test_scm_005
+    runtime_positive: "Verify separate Git and Jujutsu included baselines on each supported native-app/Server/container/managed-WSL/Execution-Host target with exact Host/Environment, pinned provenance, compatibility, activation/update/rollback/ownership generations; preserve explicit external selection separately."
+    runtime_negative: "Reject PATH-only readiness, missing/stale/wrong-target provenance or activation, baseline erasure by external selection, silent external preference, and any global PATH/Git/JJ configuration mutation."
+  - requirement_id: SCM-019
+    owner_ref: Plans/Source_Control_System.md#SCS-007
+    definition: scm_019
+    gui_related: true
+    static_method: test_scm_019
+    runtime_positive: "Before admission, compare stable file, migration, port, device, and deployment identities; disjoint claims admit while each collision produces its owner-approved deterministic decision, current lease/isolation proof, and conflict-plan receipt."
+    runtime_negative: "Reject a missing domain, path/focus/proximity authority, stale or mismatched claims/leases/proofs, device/exclusive-port double leases, unproved migration/deployment isolation, unknown collision admission, and terminal results without receipts."
+  - requirement_id: ORI-002
+    owner_ref: Plans/Cursor_Origin_Integration.md#ORI-009
+    definition: ori_002
+    gui_related: true
+    static_method: test_ori_002
+    runtime_positive: "Verify Preview identity and exact current signed capability-gated Internal/Private requested-effective create state; Public remains visibly unavailable and undispatched until separately proven by its exact capability."
+    runtime_negative: "Reject stale/failed/missing capability success, inferred Public support or dispatch, and self-hosted/open-source/general-feature-equivalence advertising; generic repository-create success grants no Public capability."
+  - requirement_id: ORI-020
+    owner_ref: Plans/Cursor_Origin_Integration.md#ORI-009
+    definition: ori_020
+    gui_related: true
+    static_method: test_ori_020
+    reused_tests: [tests.test_pm_origin_retained_routes]
+    runtime_positive: "Exercise exactly 1,048,576 bytes, oversized content/batch members, summary-only compare, exact-before/after incomplete-push enumeration, and all thread/reviewer mutations; data may use Git/typed routes, hosting actions require exact current Origin capabilities and provider-locked structured-JSON CLI or truthful partial/unavailable/Open in Origin."
+    runtime_negative: "Reject truncation or partial batch/history as complete, ordinary Git hosting-action success, wrong provider/account/repository/version/target/capability, unavailable fallback success, current-branch defaults, prose parsing, and Cursor Agent authentication reused as Origin proof."
+  - requirement_id: IRT-008
+    owner_ref: Plans/Shared_Integration_Runtime.md#SIR-021
+    definition: irt_008
+    gui_related: true
+    static_method: test_irt_008
+    reused_tests: [tests.test_pm_installation_update_preferences]
+    runtime_positive: "Exercise both manual update actions, all three saved automatic policies, and independent notify/quiet choices against exact installation ownership; external sources default to check-and-notify, manual mutations use one-operation consent, and automatic mutations use current PM policy or exact external delegation."
+    runtime_negative: "Reject unknown/stale/wrong-target/wrong-owner authority, one-shot consent reused for automatic updates, external mutation under PM policy, unauthorized download/package/configuration/activation/removal, saved-policy changes from manual actions, revocation re-enabling disabled checks, and quiet hiding required approval/failure/security feedback."
+  - requirement_id: IRT-009
+    owner_ref: Plans/Shared_Integration_Runtime.md#SIR-021
+    definition: irt_009
+    gui_related: true
+    static_method: test_irt_009
+    runtime_positive: "Submit identical provisioning/update effects from multiple Projects/Clients and prove one logical operation/attempt plus separately authorized current waiter continuations/results; compare every exact artifact, target, ownership/delegation, and policy fingerprint field and serialize the package-manager root."
+    runtime_negative: "Vary each fingerprint or waiter permission/approval/license/cost/currentness dimension, conflict install/update/remove, and cancel one of two waiters; reject improper coalescing, shared authority, cancellation fanout, stale results, partial/display fingerprints, or StreamCoalescer authority."
+  - requirement_id: IRT-010
+    owner_ref: Plans/Shared_Integration_Runtime.md#SIR-021
+    definition: irt_010
+    gui_related: true
+    static_method: test_irt_010
+    runtime_positive: "Replace images and pods independently while preserving verified Tool Store and product/profile/account-isolated roots on exact current durable mounts; validate integrity, migration, provenance, active/previous generations, ownership/permissions, broker refs, and reconciliation receipt before readiness."
+    runtime_negative: "Reject missing/wrong/stale mounts, corrupt/partial/fresh-empty roots, cross-profile root reuse, silent reacquisition, raw secrets, and readiness before successful owner reconciliation."
+  - requirement_id: IRT-011
+    owner_ref: Plans/Shared_Integration_Runtime.md#SIR-021
+    definition: irt_011
+    gui_related: true
+    static_method: test_irt_011
+    reused_tests: [tests.test_pm_credential_attachment_lifetime]
+    runtime_positive: "Attach authentic broker refs only under the exact provider/Host/Environment/repository/operation/capability/action scope, current owner/profile/revocation generations, positive unexpired lifetime, and live broker lease; keep attachment distinct from authentication/readiness."
+    runtime_negative: "Reject raw/copied credentials, zero/reversed or wall-clock-expired lifetime, revoked/stale/forged refs, every target/profile mismatch, scope widening, invalid broker lease, secret leakage, and attachment represented as authentication/readiness proof."
+  - requirement_id: SEC-003
+    owner_ref: Plans/Permissions_System.md#PS-135
+    definition: sec_003
+    gui_related: true
+    static_method: test_sec_003
+    runtime_positive: "Export only an explicitly permitted minimum ordinary-Browser field after redaction under field-level purpose/destination/expiry authority; verify exact name/hash/omission receipt and no original secret bytes across export, persistence, receipt, artifact, log, model context, or normal display."
+    runtime_negative: "Attack with full cookie/profile/storage exports, raw Cookie/Set-Cookie/Authorization/Proxy-Authorization/bearer/credential material, wildcard/origin/profile/state-class grants, secret echoes or unredacted output, and every protected AuthBrowserSession subject, which remains ineligible regardless of permission."
+  - requirement_id: SEC-007
+    owner_ref: Plans/Permissions_System.md#PS-136
+    definition: sec_007
+    gui_related: false
+    static_method: test_sec_007
+    runtime_positive: "Audit live bind/port/firewall/Funnel/reverse-proxy topology; admit only explicitly exposed registered current pm_api endpoints after authentication/rate/body-bound/generation/policy decisions and before hydration, body processing, Browser creation, model dispatch, expensive routing, or durable mutation."
+    runtime_negative: "Probe every internal automation/broker/SSH/CEF/CDP/debug/PTY/container/device/recorder/local-daemon/plugin/MCP endpoint class through reachable TLS/proxy/WebSocket paths; all must stay non-public, and every missing/failed admission decision must deny before side effects."
+  - requirement_id: SEC-008
+    owner_ref: Plans/Permissions_System.md#PS-137
+    definition: sec_008
+    gui_related: false
+    static_method: test_sec_008
+    runtime_positive: "Instrument actual navigation/request/redirect/WebSocket/form/upload/download/low-level effects and match every permit field to the current effect immediately before execution, with fresh authorization for changed bindings, reconnects, and follow-ups plus independent FileSafe staging/destination/transfer admission."
+    runtime_negative: "Reject URL-source-only authority, dynamically assembled forbidden destinations, private/link-local/localhost/file/metadata redirects, DNS rebinding, changed method/header/body/effect/hop/permission/policy/proxy/expiry, permit reuse on reconnect/follow-up, missing FileSafe, and any bypass path."
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-041, ContractName:Plans/egolite_retained_requirement_contracts.schema.json, ContractName:Plans/egolite_retained_requirement_contract_fixtures.json, ContractName:Plans/storage-plan.md#working-notebook-and-context-transition-storage-2026-09-05
