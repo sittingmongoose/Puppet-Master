@@ -1,0 +1,186 @@
+{
+  "batch": "assistant-demo-b09-debug",
+  "retained_source_sha256": "467d9411e1a248ab0f3ebdd6cc3c6b5227091833e7b892b7ab79b9f7f5ed02d4",
+  "original_denominator": 551,
+  "proof_groups": 67,
+  "html_sha256": "b9e6872eeae767971a5c7364eea69e36ace918649f29b651ba9298a620cf84c3",
+  "rows": [
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-007",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Debug remains a primary mode and implements target, baseline, instrumentation, reproduction, analysis, repair, verification and cleanup.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "e548be266dcfa252143fd9408bf67b70014c43d851e40911e664a4e854c74f35",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Both guided workflows visit the eight Debug phases using calculated reproduction, exact source repair, separate verification and collector cleanup. Primary Debug entry is retained.",
+      "remaining": "Arbitrary targets, native tools/adapters, persistence, provider diagnosis and other Debug strategies remain unproved.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v2",
+        "requirement_id": "FEATURE-008",
+        "category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+        "statement": "Debug exposes Investigation Context, revalidation, failure/recovery, redaction/revocation and bundle handling.",
+        "owner_hint": "Plans/assistant-chat-design.md",
+        "gui_related": true,
+        "source_precedence": "conversation_packet",
+        "status": "required",
+        "acceptance_refs": []
+      },
+      "source_record_sha256": "015802dc16f0eb76681a82c70835c1f9cfb7a7646e255ecbb8c50fc9f0b03453",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Investigation document exposes frozen baseline, current source, instrumentation, reproduction, analysis, verification, cleanup, revision-change attention, safe rebind and actual JSON export.",
+      "remaining": "Full Investigation Context schema, arbitrary evidence redaction/revocation, bundle import, reconnect/authentication, DAP, durable restoration remain unproved.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-012",
+        "area": "Working activity protection",
+        "requirement": "Do not redesign the perfected working-activity components or their animation choreography. Repair surrounding integration only when necessary and prove it does not disturb component identity, timer ownership, or motion.",
+        "acceptance": "Protected source diff, DOM identity over ticks, no duplicate timers/remounts, screenshot/motion comparison."
+      },
+      "source_record_sha256": "c03118d1792510353de7942c9b2b9fbf960d0885b6be4ad3a0373ddea82a515b",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "All ten protected working source files byte-identical; earlier working DOM/timer preservation tests rerun.",
+      "remaining": "This is not every-animation, every-family, every-theme visual acceptance.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-015",
+        "area": "Broad independent review",
+        "requirement": "Look for defects beyond the user's initial list. Do not restrict the work to a cosmetic checklist or infer correctness from an earlier report.",
+        "acceptance": "New findings ledger with reproduction, repair, regression assertion, and closure evidence."
+      },
+      "source_record_sha256": "2f4e916bc9a9dbeeb813f6e12944f336e6638e100165a8e1dedbd264cfbe82f0",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Typed issue ledger records rebind-offer race, false phase checkmarks, redundant Replay renders and truthful motion findings with exact tests.",
+      "remaining": "Broader independent audit of every retained requirement remains open.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-016",
+        "area": "Multiple meaningful demos",
+        "requirement": "Provide multiple meaningful scenarios per feature, with a feature-to-demo coverage matrix. Distinct states or workflows count; changing only a title or replaying the same fixture does not.",
+        "acceptance": "Inventory the actual feature denominator; map at least two scenarios per feature; verify observable outcomes, not only successful launch or toast."
+      },
+      "source_record_sha256": "ebd5cfd09adaa1d5b13c0a22329556ba611ca28db9bd261bf7034d4d602864c5",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Two distinct complete Debug workflows have visible action sequences, terminal verification/cleanup and recorded outcome assertions. Obsolete start/advance gallery shortcuts removed.",
+      "remaining": "Global551-row/67-group multiple-meaningful-demo requirement remains OPEN; no whole-row or native certification.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-017",
+        "area": "Selected family scope",
+        "requirement": "Test the default Independently swappable concept families plus Step Rail Simple. Preserve other options; do not expend acceptance work on all alternate variants or falsely claim them tested.",
+        "acceptance": "Record default family IDs from source/settings and the exact Step Rail Simple selection; test both working selections."
+      },
+      "source_record_sha256": "e7834903420ce4aabcccb82cdd678ea1379407877c9f8517d33e56e8b14670c5",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Default1280x900 capture;900/700 checks; retained regression exercises Orbit and Step Rail Simple with protected sources unchanged.",
+      "remaining": "Full Debug workflows are not visually certified at every theme/width/alternate family.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    },
+    {
+      "source_record": {
+        "source": "v3",
+        "requirement_id": "APR-018",
+        "area": "60 fps evidence",
+        "requirement": "Record every in-scope demo and animation at 60 fps and inspect frame by frame. Distinguish encoded sampling rate, browser render cadence, dropped/duplicated frames, automated measurements, and actual visual inspection.",
+        "acceptance": "Per-recording ID/hash, scenario, duration, frame count/PTS, timing measurements, frame-indexed review notes; no interpolation or repeated frames presented as native 60 fps."
+      },
+      "source_record_sha256": "a6a1a754f1af4b7c6234c7353a6195d1fcfccd6545eb62c8530dbfc5904f2b79",
+      "disposition": "PARTIAL_CONCEPT_EVIDENCE",
+      "observed": "Two60Hz-target videos,1749 consecutive frames inspected in37 indexed contact sheets and14 selected native frames. Acquisition timestamps and RAF are reported separately.",
+      "remaining": "OPEN: significant acquisition/render stalls; neither uninterrupted60freshframes/sec nor all-feature/all-animation campaign is certified.",
+      "scenarios": [
+        "B09-DEBUG-REPAIR",
+        "B09-DEBUG-DRIFT"
+      ],
+      "evidence": [
+        "TEST_AND_RECORDING_SUMMARY.json",
+        "final-tests/RUNS.json",
+        "recordings/FRAME_REVIEW_INDEX.json",
+        "recordings/NATIVE_FRAME_REVIEW.json",
+        "FINDINGS.json"
+      ]
+    }
+  ],
+  "global_status": "APR-016_AND_APR-018_REMAIN_OPEN"
+}

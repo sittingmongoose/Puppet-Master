@@ -1,0 +1,107 @@
+{
+  "batch_id": "assistant-demo-b09-debug",
+  "status": "COMPLETED_BOUNDED_FUNCTIONAL_BATCH_WITH_OPEN_MOTION_QUALITY",
+  "base_commit": "0fd770946ccb14c8d8a370aa3010d82f506b8597",
+  "html": {
+    "bytes": 3084607,
+    "sha256": "b9e6872eeae767971a5c7364eea69e36ace918649f29b651ba9298a620cf84c3",
+    "lf_normalized_sha256": "b43b9d34c5681c2831542fabe3cc0c950fde2f445b4e2cbf426802972b739e3a",
+    "git_blob": "926e733f88822d6edf73e85c57d898cd4965b21d"
+  },
+  "scenario_ids": [
+    "B09-DEBUG-REPAIR",
+    "B09-DEBUG-DRIFT"
+  ],
+  "new_assertions": 111,
+  "prior_assertions": 1014,
+  "recorded_assertions": 46,
+  "recorded_frames": 1749,
+  "contact_sheets_reviewed": 37,
+  "selected_native_frames_reviewed": 14,
+  "functional_scope": "Local evaluator Debug only; exact binding through verified cleanup.",
+  "motion_quality": "OPEN: RAF maxima149.9/283.3ms; acquisition gaps168.366/210.867ms; no-capture maxima100/183.3ms.",
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "governance_modified": false,
+  "protected_working_sources": [
+    {
+      "file": "motion.js",
+      "unchanged": true,
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f"
+    },
+    {
+      "file": "motion.css",
+      "unchanged": true,
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46"
+    },
+    {
+      "file": "variants-a.js",
+      "unchanged": true,
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c"
+    },
+    {
+      "file": "variants-a.css",
+      "unchanged": true,
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed"
+    },
+    {
+      "file": "variants-b.js",
+      "unchanged": true,
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc"
+    },
+    {
+      "file": "variants-b.css",
+      "unchanged": true,
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7"
+    },
+    {
+      "file": "variants-c.js",
+      "unchanged": true,
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b"
+    },
+    {
+      "file": "variants-c.css",
+      "unchanged": true,
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf"
+    },
+    {
+      "file": "orbit.js",
+      "unchanged": true,
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d"
+    },
+    {
+      "file": "orbit.css",
+      "unchanged": true,
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205"
+    }
+  ],
+  "preserved": "Batches1–8, native card/grid layout rollback, independent style/behavior corrections.",
+  "next_checkpoint": {
+    "id": "assistant-demo-b10-revert",
+    "scope": [
+      "Revert Last Agent Edit against an exact edit manifest",
+      "Preserve later user edits and report a non-destructive conflict"
+    ],
+    "status": "NOT_STARTED"
+  },
+  "open_global": [
+    "Full551-row/67-group multiple-demo coverage",
+    "All-feature/all-animation motion acceptance",
+    "Complex panel/replay performance",
+    "Arbitrary intermediate-scroll Activity pill occlusion",
+    "Native Debug targets, DAP, providers, persistence and recovery",
+    "Full legacy asynchronous memory completion hooks",
+    "Existing unrelated repository governance failures"
+  ],
+  "evidence_archive": "pm-debug-batch9-evidence.zip",
+  "limitations": [
+    "Known function only; no arbitrary code execution or production filesystem writes",
+    "Diagnosis is constrained to the observed fixture failure, not live model reasoning",
+    "Owned instrumentation is an in-memory collector, not installed project code",
+    "Defaulttheme1280x900 captures; narrower geometry checks do not prove full visual journeys",
+    "Consecutive contact-sheet inspection plus selected native frames, not every frame individually at native resolution",
+    "No full PM7/governance/native-runtime suite executed",
+    "Older Debug surfaces beyond the targeted routes are not declared complete"
+  ]
+}

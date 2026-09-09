@@ -35,7 +35,10 @@
   const tid='brainstorm-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));
   Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:fixture(kind).objective+' Collection contents must stay on the device.'}]});c.state.threads.push(base);
   Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};c.switchThread(tid);C.openConfigure('brainstorm');const d=C.draft();d.name=fixture(kind).label;d.purpose=fixture(kind).objective;d.brainstormInput=fixture(kind);c.openDialog({type:'collab-configure'});c.renderApp();
+  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
+  // Prepare the final dialog before switching: switchThread already renders
+  // the app and overlays. Do not render the old page and this modal twice.
+  c.state.dialog={type:'collab-configure'};c.switchThread(tid);
  }
  function expected(r,kind){
   const b=r.brainstorm,a=b.attempts,options=a.map((p,i)=>kind==='constraint'?(i===0?'worker':'hosted'):(i===1?'local':'worker'));

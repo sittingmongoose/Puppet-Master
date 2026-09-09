@@ -36,3 +36,7 @@ The original exhaustive multiple-demos-per-feature and every-demo 60fps/frame-by
 ## Batch 6: layout rollback and Chat Room
 
 See BATCH_06_README.md and BATCH_06_CHECKPOINT.json. Demo Studio → Guided Chat Room workflows. Batches1–5 remain; reference-derived layout is selectively withdrawn, with settings and behavior preserved.
+
+
+## Bounded Debug batch09
+Open **Demo Studio → Guided Debug workflows** for Reproduce, repair, and close or Protect a changed target. Both compute local evidence through verification and cleanup. See `BATCH_09_README.md`, `BATCH_09_CHECKPOINT.json`, and `BATCH_09_COVERAGE_DELTA.json` for the recorded scope and open motion findings.

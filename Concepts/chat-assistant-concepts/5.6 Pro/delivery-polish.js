@@ -38,7 +38,7 @@
     ['Quota wait strip','cs-quota-demo'],['Quota reset-time source','cs-quota-source'],
     ['ELI5 · two explanations','af-eli5-demo'],['Revert · eligible / ineligible / conflict','af-revert-seed'],
     ['Title · delayed result race','af-title-race-demo'],
-    ['Debug · start investigation','af-debug-start'],['Debug · advance phase','af-debug-advance'],
+    /* B09 replaces the old scripted Debug shortcuts with two checked workflows. */
     ['Capture · browser fixture','bc-open'],
     ['To-Dos · refused bulk completion','todo-attempt-bulk-complete'],
     ['To-Dos · provider proposal','todo-attempt-provider-proposal']
