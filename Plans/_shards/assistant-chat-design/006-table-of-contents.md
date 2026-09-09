@@ -1,0 +1,47 @@
+# Shard 006: Table of Contents
+
+Source: `Plans/assistant-chat-design.md`
+
+Source lines: L53-L89
+
+Source SHA256: `b6e967a9240db69b449e5d0861fd4eed988ef07e7e00f2d639f0f7abba686d24`
+
+---
+
+## Table of Contents
+
+1. [Modes Overview](#1-modes-overview)
+2. [ELI5 Mode](#2-eli5-mode)
+3. [Permissions: YOLO vs Regular](#3-permissions-yolo-vs-regular)
+4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)
+   - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)
+5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)
+   - [5.3 Git & GitHub command boundary](#53-git--github-command-boundary)
+6. [Teach](#6-teach)
+7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)
+8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)
+9. [File Manager, IDE-style editor, and @ Mention](#9-file-manager-ide-style-editor-and--mention)
+   - [9.1 LSP support in Chat (MVP)](#91-lsp-support-in-chat-mvp)
+10. [Chat History Search](#10-chat-history-search)
+11. [Threads and chat management](#11-threads-and-chat-management)
+   - [11.1 Thread State: `attention_required`](#111-thread-state-attention_required)
+   - [11.2 System Message Type: `clarification_request`](#112-system-message-type-clarification_request)
+   - [11.3 Thread State Lifecycle: `attention_required`](#113-thread-state-lifecycle-attention_required)
+12. [Context usage display](#12-context-usage-display)
+13. [Activity transparency: search, bash, and file activity](#13-activity-transparency-search-bash-and-file-activity)
+14. [Subagents & Crew](#14-subagents--crew)
+   - [14.1 Subagent visibility in thread -- implementation detail](#141-subagent-visibility-in-thread--implementation-detail)
+15. [Plan Mode + Crew Mode](#15-plan-mode--crew-mode)
+16. [Interview Phase UX (Chat Surface)](#16-interview-phase-ux-chat-surface)
+17. [Context & Truncation](#17-context--truncation)
+18. [BrainStorm Mode](#18-brainstorm-mode)
+19. [Documentation Audience (AI Overseer)](#19-documentation-audience-ai-overseer)
+20. [References](#20-references)
+21. [Dashboard Warnings and Calls to Action](#21-dashboard-warnings-and-calls-to-action)
+22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)
+23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)
+24. [Chat thread performance, virtualization, and flicker avoidance](#24-chat-thread-performance-virtualization-and-flicker-avoidance)
+25. [Context Circle Enhancements (Addendum -- 2026-02-23)](#25-context-circle-enhancements-addendum----2026-02-23)
+26. [Auditor Validation Loop Model/Provider Settings (Invariant Sweep)](#26-auditor-validation-loop-modelprovider-settings-invariant-sweep)
+
+---

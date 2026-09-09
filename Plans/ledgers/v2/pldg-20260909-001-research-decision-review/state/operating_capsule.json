@@ -1,0 +1,18 @@
+{
+  "ledger_id": "pldg-20260909-001-research-decision-review",
+  "authority": "Live non-pipeline Plans remain canonical; ledger is source lineage.",
+  "authorized_scope": "D3 DL-036 planning compile only.",
+  "constraints": [
+    "No auto-approval, auto-denial or auto-submit on dismissal.",
+    "No agent may answer for the user.",
+    "Ask a question leaves the same decision pending and cannot consume or change its disposition.",
+    "No re-asking terminally answered decisions; retain pending and resolved identities on resume.",
+    "No colored status border bars or stripes; no emoji glyphs.",
+    "Approve authorizes planning only; PWIZ-010 Approve And Build remains separate.",
+    "No implementation, WorkNodes, NodeSeeds or governance seal.",
+    "One-at-a-time applies to this decision review profile only, not general questionnaire batches.",
+    "Regenerate standard shards and plan index; restore only timestamp-only generated noise outside edited owners.",
+    "Commit own verified landing immediately; report D3 before D4."
+  ],
+  "next_action": "Finish independent review and generated checks, commit and report D3, then apply the late accepted P10 both-input supplement before D4."
+}

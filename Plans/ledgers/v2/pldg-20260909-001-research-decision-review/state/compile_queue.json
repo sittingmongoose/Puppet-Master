@@ -1,0 +1,181 @@
+{
+  "ledger_id": "pldg-20260909-001-research-decision-review",
+  "phase": "compiled_research_decision_review",
+  "last_event_id": "evt-0003",
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md",
+    "Plans/Wiring_Matrix.production.exclusions.json"
+  ],
+  "candidate_compile_owner_docs": [],
+  "governance_status": "unsealed",
+  "status": "compiled_research_decision_review",
+  "items": [
+    {
+      "queue_id": "cq-0001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0001"
+      ],
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-459"
+      ],
+      "compile_event_id": "evt-0002"
+    },
+    {
+      "queue_id": "cq-0002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "owner_doc": "Plans/Contracts_V0.md",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "CV-328"
+      ],
+      "compile_event_id": "evt-0002"
+    },
+    {
+      "queue_id": "cq-0003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "owner_doc": "Plans/storage-plan.md",
+      "target_doc": "Plans/storage-plan.md",
+      "target_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SP-258"
+      ],
+      "compile_event_id": "evt-0002"
+    },
+    {
+      "queue_id": "cq-0004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "target_doc": "Plans/Planning_Wizard.md",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "PWIZ-027"
+      ],
+      "compile_event_id": "evt-0002"
+    },
+    {
+      "queue_id": "cq-0005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0004"
+      ],
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-550"
+      ],
+      "compile_event_id": "evt-0002"
+    },
+    {
+      "queue_id": "cq-0006",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0005"
+      ],
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-161"
+      ],
+      "compile_event_id": "evt-0002",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0005"
+      ],
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "target_doc": "Plans/UI_Wiring_Rules.md",
+      "target_docs": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "UIW-022"
+      ],
+      "compile_event_id": "evt-0002",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0005"
+      ],
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-053"
+      ],
+      "compile_event_id": "evt-0002",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    }
+  ],
+  "terminal_ledger_event_id": "evt-0003",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/validation/independent_review_20260909.md",
+  "latest_audit_status": "pass"
+}

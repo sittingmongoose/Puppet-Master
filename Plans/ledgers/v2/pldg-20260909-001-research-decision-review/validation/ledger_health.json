@@ -1,0 +1,14 @@
+{
+  "ledger_id": "pldg-20260909-001-research-decision-review",
+  "status": "pass",
+  "summary": {
+    "events": 3,
+    "design_atoms": 5,
+    "decisions": 1,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 8
+  },
+  "notes": "Independent source/patch review and scoped ledger, wiring, index, shard and diff checks pass. Shard/diff checks used the exact inventoried local copy after network read timeouts; standard generator and checker code is unchanged. The full broad scan is incomplete at its outer time limit and governance remains unsealed."
+}

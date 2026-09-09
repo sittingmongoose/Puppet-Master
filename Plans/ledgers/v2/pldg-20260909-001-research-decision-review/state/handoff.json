@@ -1,0 +1,49 @@
+{
+  "ledger_id": "pldg-20260909-001-research-decision-review",
+  "phase": "compiled_research_decision_review",
+  "last_event_id": "evt-0003",
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md",
+    "Plans/Wiring_Matrix.production.exclusions.json"
+  ],
+  "candidate_compile_owner_docs": [],
+  "governance_status": "unsealed",
+  "current_phase": "compiled_research_decision_review",
+  "summary": "DL-036 is independently reviewed, compiled and verified as eight owner PlanUnits; commit/report precede the accepted terminal input-scope supplement.",
+  "source_refs": [
+    "source_shards/decision_authority_20260909.md"
+  ],
+  "cursor": {
+    "last_event_id": "evt-0003",
+    "next_action": "Finish independent review and generated checks, commit and report D3, then apply the late accepted P10 both-input supplement before D4."
+  },
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/validation/independent_review_20260909.md",
+  "latest_audit_status": "pass"
+}

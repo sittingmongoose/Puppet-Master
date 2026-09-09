@@ -2,19 +2,19 @@
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
   "title": "September terminal research corrections",
-  "status": "compiled",
-  "phase": "compiled_terminal_feature_contracts",
+  "status": "active",
+  "phase": "accepted_input_scope_followup",
   "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
-  "updated_at_utc": "2026-09-09T05:05:10.408322+00:00",
+  "updated_at_utc": "2026-09-09T05:19:14.021753+00:00",
   "record_counts": {
-    "events": 8,
-    "design_atoms": 13,
-    "decisions": 4,
+    "events": 9,
+    "design_atoms": 14,
+    "decisions": 5,
     "questions": 2,
     "blockers": 0,
     "corrections": 2
   },
-  "last_event_id": "evt-0008",
+  "last_event_id": "evt-0009",
   "source_context": "Bounded application of reviewed September terminal findings authorized by Jared on 2026-09-08; broader process validation remains outside this ledger.",
-  "notes": "D1 owner prose and D2 accepted contracts are materialized. Current/handoff/queue list every actual owner and output; canonical_plan_targets retains only historical coverage anchors. Explicit coverage gaps are deferred because governance sealing was not authorized. One P10 user-policy question remains open."
+  "notes": "D1 and D2 are committed; late user answer closes the remaining input-scope question and awaits a narrow canonical follow-up. Existing compiled outputs are preserved."
 }

@@ -22,6 +22,34 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
+    },
+    {
+      "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+      "title": "September terminal research corrections",
+      "status": "active",
+      "phase": "accepted_input_scope_followup",
+      "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
+      "last_updated_at_utc": "2026-09-09T05:19:14.021753+00:00",
+      "canonical_plan_targets": [
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Decision_Log.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Server_System.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/state/handoff.json",
+      "notes": "D1/D2 committed; late P10 both-input scope answer awaits narrow follow-up after D3 and before D4.",
+      "last_event_id": "evt-0009"
     }
   ],
   "compiled_ledgers": [
@@ -47,32 +75,35 @@
       "notes": "Three bounded workflow atoms compiled, including historical-theme schema rediscovery and residual retry consumer. Production obligations and governance failures remain explicit."
     },
     {
-      "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-      "title": "September terminal research corrections",
+      "ledger_id": "pldg-20260909-001-research-decision-review",
+      "title": "Research and audit decision review",
       "status": "compiled",
-      "phase": "compiled_terminal_feature_contracts",
-      "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
-      "last_updated_at_utc": "2026-09-09T05:05:10.408322+00:00",
+      "phase": "compiled_research_decision_review",
+      "created_at_utc": "2026-09-09T05:15:27.720217+00:00",
+      "last_updated_at_utc": "2026-09-09T05:22:24.623584+00:00",
+      "last_event_id": "evt-0003",
+      "resume_file": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/state/handoff.json",
+      "notes": "Eight DL-036 owner PlanUnits compiled; independent review and generated verification pending, no runtime implementation or seal.",
       "canonical_plan_targets": [
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md"
-      ],
-      "compiled_owner_docs": [
-        "Plans/Automated_Testing_System.md",
-        "Plans/Decision_Log.md",
+        "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "Plans/Server_System.md",
-        "Plans/Settings_System.md",
+        "Plans/Planning_Wizard.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/UI_Wiring_Rules.md",
         "Plans/Wiring_Matrix.md",
         "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
       ],
-      "resume_file": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/state/handoff.json",
-      "notes": "D2 materialized 21 PlanUnits with one explicitly pending P10 agent-input policy. Actual owners/output and deferred coverage are recorded; no governance seal.",
-      "last_event_id": "evt-0008"
+      "compiled_owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "paused_ledgers": [],
@@ -1409,5 +1440,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-09T05:05:10.408322+00:00"
+  "updated_at_utc": "2026-09-09T05:22:24.623584+00:00"
 }

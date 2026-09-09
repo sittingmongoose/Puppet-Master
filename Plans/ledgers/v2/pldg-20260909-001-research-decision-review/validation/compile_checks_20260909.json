@@ -1,0 +1,113 @@
+{
+  "recorded_at_utc": "2026-09-09T06:36:26.102149+00:00",
+  "scoped_checks": "pass",
+  "workspace_checks": [
+    "ledger",
+    "late-answer-ledger",
+    "index",
+    "wiring"
+  ],
+  "local_byte_matched_checks": {
+    "checks": [
+      {
+        "name": "shards",
+        "exit_code": 0,
+        "elapsed_seconds": 3.837628126144409,
+        "execution": "local_byte_matched_copy"
+      },
+      {
+        "name": "diff",
+        "exit_code": 0,
+        "elapsed_seconds": 33.565096855163574,
+        "execution": "local_byte_matched_copy"
+      }
+    ],
+    "canonical_reviewed_hashes_match_workspace_and_copy": true,
+    "checker_matches_repository": true,
+    "workspace_census_exact": true
+  },
+  "copy_integrity": {
+    "transfer_exit_codes": {
+      "pack": 0,
+      "unpack": 0
+    },
+    "workspace_shard_census_exact": true,
+    "workspace_shard_file_count": 2352,
+    "reviewed_canonical_and_support_hashes_match": true,
+    "unchanged_standard_checker": true
+  },
+  "landing": {
+    "canonical_owner_sha256": {
+      "Plans/Contracts_V0.md": "9f6fcbd34976838f699d26ebbedd3869dcef019318b6ac4b51076ec442fe21ea",
+      "Plans/FinalGUISpec.md": "f5b21402df46ff126d41d8e7bf1df9cd7abca50781dd488f37bd8142d3ddbdd0",
+      "Plans/Planning_Wizard.md": "075ddde45f65b24583fc7c8a13eb6833c2f8fa90a37f0744b31052f4a4c14e36",
+      "Plans/UI_Command_Catalog.md": "7aed74d84ce5b3e2da03f93850838c17c0a5a5ad53cc4cde22d052616f88308c",
+      "Plans/UI_Wiring_Rules.md": "093d6659d6368cade8f4ac4de2ee184684fe902b0d34f8b387698fb29e74d9fb",
+      "Plans/Wiring_Matrix.md": "743575229a1904be87e97f373d3008c87c49c09262317303d46cb25a421e4f01",
+      "Plans/assistant-chat-design.md": "b6e967a9240db69b449e5d0861fd4eed988ef07e7e00f2d639f0f7abba686d24",
+      "Plans/storage-plan.md": "2478a1aabda7f3fa3c39de5b3fab2e94fcf5c633c60b00645849b76098ac4ac6"
+    },
+    "supporting_plan_artifact_sha256": {
+      "Plans/Wiring_Matrix.production.exclusions.json": "26ecf11c11e48bfd2d5db8d2abbee2e56d334aa6e4898561340dc9c6e17d45df"
+    },
+    "reviewed_bytes_match": true,
+    "new_plan_units": 8,
+    "compiled_atoms": 5,
+    "fixed_decision_responses": 4,
+    "existing_lifecycle_candidate_ids_documented": 6,
+    "new_command_ids": 0,
+    "late_answer_recorded_pending_supplement": "Block user and agent input",
+    "native_acceptance": "not_run"
+  },
+  "broad_gate_summary": {
+    "run": {
+      "exit_code": -15,
+      "outer_timeout": true,
+      "elapsed_seconds": 721.0590152740479,
+      "finished_at_utc": "2026-09-09T05:36:49.334881+00:00"
+    },
+    "status": "incomplete_outer_timeout",
+    "completed_groups": [
+      {
+        "check": "json_syntax",
+        "status": "fail",
+        "elapsed_ms": 180058
+      },
+      {
+        "check": "verify_spec_lock",
+        "status": "fail",
+        "elapsed_ms": 25237
+      },
+      {
+        "check": "validate_plan_graph",
+        "status": "fail",
+        "elapsed_ms": 180159
+      },
+      {
+        "check": "validate_auto_decisions",
+        "status": "pass",
+        "elapsed_ms": 383
+      },
+      {
+        "check": "validate_evidence",
+        "status": "fail",
+        "elapsed_ms": 180121
+      }
+    ],
+    "started_but_incomplete": [
+      "lint_contractrefs"
+    ],
+    "full_aggregate_available": false,
+    "earlier_complete_scan": "../d2/final-gates.stdout",
+    "governance_seal_performed": false
+  },
+  "protected_artifact_hashes_unchanged": true,
+  "independent_review": "pass",
+  "runtime_acceptance": "not_run",
+  "governance_seal_performed": false,
+  "generation": {
+    "standard_shards_exit_code": 0,
+    "standard_index_exit_code": 0,
+    "outside_owner_timestamp_restoration": "Standard generator output; original index/manifest bytes restored only after matching source/shard metadata and timestamp-only index comparison. Redundant full baseline-body inventory stopped after restoration; complete workspace census and local standard byte/path check provide final coverage."
+  }
+}

@@ -1,7 +1,7 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "compiled_terminal_feature_contracts",
-  "last_event_id": "evt-0008",
+  "phase": "accepted_input_scope_followup",
+  "last_event_id": "evt-0009",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
@@ -36,7 +36,7 @@
   ],
   "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/terminal_features_independent_review_20260909.md",
   "latest_audit_status": "pass_canonical_and_ledger_fidelity",
-  "status": "compiled_terminal_feature_contracts",
+  "status": "accepted_input_scope_followup",
   "items": [
     {
       "queue_id": "cq-0001",
@@ -297,7 +297,7 @@
       "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
     }
   ],
-  "terminal_ledger_event_id": "evt-0008",
+  "terminal_ledger_event_id": null,
   "amended_owner_docs": [
     "Plans/Section15_MVP_Promoted_Features_Spec.md",
     "Plans/Release_Supply_Chain.md"

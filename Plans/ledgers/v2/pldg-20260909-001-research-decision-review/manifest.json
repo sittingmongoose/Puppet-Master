@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "ledger_id": "pldg-20260909-001-research-decision-review",
+  "title": "Research and audit decision review",
+  "status": "compiled",
+  "phase": "compiled_research_decision_review",
+  "created_at_utc": "2026-09-09T05:15:27.720217+00:00",
+  "updated_at_utc": "2026-09-09T05:22:24.623584+00:00",
+  "record_counts": {
+    "events": 3,
+    "design_atoms": 5,
+    "decisions": 1,
+    "questions": 0,
+    "blockers": 0,
+    "corrections": 1
+  },
+  "last_event_id": "evt-0003",
+  "source_context": "DL-036 and the authorized September 9 five-deliverable brief.",
+  "notes": "Source-lineage planning memory; live Plans remain canonical."
+}

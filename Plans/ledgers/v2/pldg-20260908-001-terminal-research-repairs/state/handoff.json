@@ -1,7 +1,7 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "compiled_terminal_feature_contracts",
-  "last_event_id": "evt-0008",
+  "phase": "accepted_input_scope_followup",
+  "last_event_id": "evt-0009",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
@@ -36,12 +36,12 @@
   ],
   "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/terminal_features_independent_review_20260909.md",
   "latest_audit_status": "pass_canonical_and_ledger_fidelity",
-  "current_phase": "compiled_terminal_feature_contracts",
+  "current_phase": "accepted_input_scope_followup",
   "cursor": {
-    "last_event_id": "evt-0008",
-    "next_action": "Finish D2 generated verification, commit and report before D3. Keep the single pending P10 agent-input question open without re-asking answered feature or persistence decisions."
+    "last_event_id": "evt-0009",
+    "next_action": "After D3 is committed/reported, compile the accepted both-input lock scope into terminal owner/consumer contracts, independently verify and commit before D4."
   },
-  "summary": "D2 materializes eight accepted terminal features and one evaluation-only Server task across 21 new PlanUnits, including answered persistence decision DL-037. Agent-input scope remains explicitly pending; governance coverage gaps remain deferred.",
+  "summary": "Both input-lock questions are answered. The late both-input answer awaits a narrow canonical supplement; earlier compilation remains landed.",
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/terminal_feature_decisions_20260909.md"
   ],
