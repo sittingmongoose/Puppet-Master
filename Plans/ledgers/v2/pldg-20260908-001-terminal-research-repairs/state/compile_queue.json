@@ -1,7 +1,7 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "accepted_input_scope_followup",
-  "last_event_id": "evt-0009",
+  "phase": "compiled_input_scope_followup",
+  "last_event_id": "evt-0010",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
@@ -34,9 +34,9 @@
     "Plans/assistant-chat-design.md",
     "Plans/storage-plan.md"
   ],
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/terminal_features_independent_review_20260909.md",
-  "latest_audit_status": "pass_canonical_and_ledger_fidelity",
-  "status": "accepted_input_scope_followup",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/input_scope_landing_review_20260909.md",
+  "latest_audit_status": "pass",
+  "status": "compiled_input_scope_followup",
   "items": [
     {
       "queue_id": "cq-0001",
@@ -295,16 +295,46 @@
       ],
       "compile_disposition": "accepted_evaluation_only",
       "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
+    },
+    {
+      "queue_id": "cq-0012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0014"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Decision_Log.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-038",
+        "SMPFS-165",
+        "F3-549",
+        "SSYS-034",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052"
+      ],
+      "compile_disposition": "accepted_input_scope_followup",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
     }
   ],
-  "terminal_ledger_event_id": null,
+  "terminal_ledger_event_id": "evt-0010",
   "amended_owner_docs": [
     "Plans/Section15_MVP_Promoted_Features_Spec.md",
     "Plans/Release_Supply_Chain.md"
   ],
   "cursor": {
-    "last_event_id": "evt-0008",
-    "next_action": "Finish D2 generated verification, commit and report before D3. Keep the single pending P10 agent-input question open without re-asking answered feature or persistence decisions."
+    "last_event_id": "evt-0010",
+    "next_action": "Complete scoped ledger and generated-plan verification, then commit/report the reviewed P10 input-scope supplement before starting D4."
   },
   "actual_plan_owner_targets": [
     "Plans/Automated_Testing_System.md",
@@ -369,7 +399,15 @@
     "UIW-021",
     "WM-052"
   ],
-  "pending_user_policy": [
-    "P10 agent-input scope (q-0001)"
+  "pending_user_policy": [],
+  "input_scope_compiled_plan_unit_ids": [
+    "DL-038",
+    "SMPFS-165",
+    "F3-549",
+    "SSYS-034",
+    "ATS-047",
+    "UCC-160",
+    "UIW-021",
+    "WM-052"
   ]
 }

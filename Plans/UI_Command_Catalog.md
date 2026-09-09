@@ -12840,7 +12840,7 @@ Catalog metadata references the Section15 operation contract and the shared type
 
 Remote setup is a deliberate per-host authorization flow. Denial, read-only/no-tic hosts, unavailable capability, transfer/verification failure and host change remain explicit; they never trigger a local shell or universal SSH override. Insertion is an input mutation with no execution authority: send no Enter, do not blindly write historical text into a TUI/PTY, and refuse with no effect when control characters, multiline text or current prompt state cannot be represented by a verified insert-only path. Do not silently sanitize source text into a different command. A repeated dispatch with the same identity cannot insert twice.
 
-Retained output opening resolves one coherent backing revision before routing and preserves command/session/cwd/worktree/remote provenance, redaction and partial labels. Unavailable bytes are never reconstructed from metadata; an unavailable subject returns a no-effect reason. Environment inspection is a redacted projection, not environment collection or mutation; changes apply to a future launch only. Explicit replacement uses the existing restart command and creates a new session. Input protection enable/disable are idempotent setters, not a toggle: duplicate enable cannot unlock, output keeps draining, unlock retains the same session, and exact-session protection survives verified reconnect/PM reopen while replacements start unlocked. Agent-input scope follows the outstanding owner policy disposition and receives no implicit bypass or enforcement promise from this catalog.
+Retained output opening resolves one coherent backing revision before routing and preserves command/session/cwd/worktree/remote provenance, redaction and partial labels. Unavailable bytes are never reconstructed from metadata; an unavailable subject returns a no-effect reason. Environment inspection is a redacted projection, not environment collection or mutation; changes apply to a future launch only. Explicit replacement uses the existing restart command and creates a new session. Input protection enable/disable are idempotent setters, not a toggle: duplicate enable cannot unlock, output keeps draining, unlock retains the same session, and exact-session protection survives verified reconnect/PM reopen while replacements start unlocked. DL-038 requires both user and agent terminal input to pass the same protection guard before a child write. A protected agent request returns an explicit blocked result using the existing closed reason vocabulary and owner detail; no silent success, bypass or implicit unlock occurs.
 
 Availability uses the existing closed reason vocabulary (`unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, `permission_required`) with detailed owner reasons carried by the typed response. A candidate lacks runtime registration regardless of otherwise eligible domain state. The existing running-pane close confirmation and distinct interrupt/terminate controls remain independently routed. No source history import, retention expansion, automatic relaunch, provider integration, new event family or mux deployment is authorized.
 
@@ -12880,8 +12880,7 @@ acceptance_criteria:
 - Environment inspection discloses unknown/redacted fields and pending next-launch changes without collecting
   more data or changing a live launch snapshot; explicit replacement creates a new session.
 - Protection setters are idempotent, output drains, unlock keeps exact session identity, verified reconnect
-  retains the same-session lock, and replacement starts unlocked. Agent-input policy must be explicit before
-  its path is enabled.
+  retains the same-session lock, and replacement starts unlocked. Protected user and agent input have no child write; agents receive an explicit blocked result. Separate interrupt/terminate controls retain existing behavior.
 - No implementation, production wiring row, handler or EventRecord producer is emitted by this planning compile.
 - Exactly the six handlerless UCC-160 candidates appear as exact, explained exclusions in Plans/Wiring_Matrix.production.exclusions.json
   only while candidate_not_registered. No wildcard or active-command exemption is added; each exact exclusion
@@ -12905,6 +12904,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-038
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0008
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0010
@@ -12912,7 +12914,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
 - No implicit command execution, source-history import, reconstructed output or retention expansion.
-- No local fallback, universal SSH override, automatic relaunch or unapproved agent-input policy.
+- No local fallback, universal SSH override, automatic relaunch or agent bypass of input protection.
 - No implementation, WorkNodes, NodeSeeds or fictional runtime registration.
 ```
 

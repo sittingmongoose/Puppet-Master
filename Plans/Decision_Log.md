@@ -339,7 +339,7 @@ Approved on 2026-09-09 by Jared in conversation. The source records the calendar
 - `P7 accepted for planning` — pane-local advisory command progress from OSC 9;4 with a deterministic collision rule.
 - `P8 accepted for planning` — insert-without-execute and open-retained-output-in-editor actions on existing command cards.
 - `P9 accepted for planning` — redacted environment provenance and pending-for-next-launch display tied to explicit session replacement.
-- `P10 accepted for planning` — explicit live-pane input protection with a visible state.
+- `P10 accepted for planning` — explicit live-pane input protection with a visible state. Later same-day supplements DL-037 and DL-038 respectively resolve same-session persistence and blocking both user and agent input.
 - `P11 accepted for evaluation only` — an optional external multiplexer transport adapter may be evaluated for persistent remote shells; selection is held until compatibility with PM Server ownership is resolved, and any adoption must respect the P1/P2 direction that PM's engine and host remain PM-owned.
 
 Section 15 owns the engine, host, protocol and parser decisions; FinalGUI owns visible terminal surfaces; UI Command Catalog and Wiring own new actions; Automated Testing owns acceptance fixtures; Server System owns remote ownership for P11; Settings owns any user-facing toggles. Acceptance authorizes planning those features as PlanUnits under their owners; implementation follows the existing Approve And Build path.
@@ -379,13 +379,25 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Pla
 
 ### DL-037: Terminal input protection — same-session persistence
 
-On 2026-09-09, while compiling DL-035 P10, Jared answered the explicit persistence question **Keep for the same session**. The presented choice retained protection for the exact live session, including reconnect and reopening PM, with a replacement session starting unlocked. This supplemental decision resolves persistence only; the separately presented question about agent-input scope is still pending and receives no implicit disposition here.
+On 2026-09-09, while compiling DL-035 P10, Jared answered the explicit persistence question **Keep for the same session**. The presented choice retained protection for the exact live session, including reconnect and reopening PM, with a replacement session starting unlocked. This supplemental decision resolved persistence only; the separately presented agent-input question was pending at that point and received no implicit disposition here. Jared later answered it explicitly in DL-038.
 
 The lock follows verified `terminal_session_id` continuity across detach, reconnect and PM reopen. Replacing a session starts unlocked; a reused pane, copied preference, historical transcript or restored layout cannot confer a lock or prove a process is still live. Output keeps draining while protected, and unlock retains the same session. Existing close confirmation, interrupt and terminate behavior remains owner-defined. This is planning authority only, with no implementation, WorkNodes, NodeSeeds or runtime acceptance.
 
 SourceRef: Jared, asynchronous question reply on 2026-09-09; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/questions.jsonl:q-0002; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0004.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-165, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-038: Terminal input protection — block user and agent input
+
+On 2026-09-09, Jared answered the pending P10 scope question **Block user and agent input**. The presented choice explicitly covered both user typing/paste and agent input, with an explicit blocked result for agents. This supplements DL-035 P10 and resolves the scope that was still pending when DL-037 recorded persistence; it does not revise that earlier chronology.
+
+While the exact live session is protected, its input owner blocks user and agent terminal input before any child write. An agent receives an explicit blocked result; no silent bypass, implicit unlock or deferred write on unlock is permitted. Output continues. Separate interrupt and terminate controls retain their existing authority and behavior; this input guard does not suspend the process or change close/kill policy. DL-037 same-verified-session persistence and replacement-starts-unlocked remain unchanged.
+
+This is accepted planning authority only; no implementation, command registration, native acceptance, WorkNodes, NodeSeeds or governance seal is created.
+
+SourceRef: Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/questions.jsonl:q-0001; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0005; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/events.jsonl:evt-0009.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-165, ContractName:Plans/FinalGUISpec.md#F3-549, ContractName:Plans/Settings_System.md#SSYS-034, ContractName:Plans/Automated_Testing_System.md#ATS-047, ContractName:Plans/UI_Command_Catalog.md#UCC-160, ContractName:Plans/UI_Wiring_Rules.md#UIW-021, ContractName:Plans/Wiring_Matrix.md#WM-052
 
 ## Owner / Consumer Map
 
@@ -2387,7 +2399,7 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: The accepted terminal input-protection persistence policy retains the lock for the exact verified
   same live session, including reconnect and reopening PM; replacement sessions start unlocked. Agent-input
-  scope is a separately pending question and is not decided by this record.
+  scope was separately pending at this decision; DL-038 records its later explicit answer.
 gui_related: true
 gui_classification_reason: Visible input-protection state and restore/reconnect behavior are affected.
 depends_on:
@@ -2399,7 +2411,7 @@ acceptance_criteria:
   liveness or inherit protection.
 - Output continues and unlock retains the exact session; existing close/interrupt/terminate owner policy is
   preserved.
-- No agent-input scope, implementation, WorkNode, NodeSeed, native acceptance or governance seal is implied.
+- This persistence decision alone implies no agent-input scope; DL-038 owns that later answer. No implementation, WorkNode, NodeSeed, native acceptance or governance seal is implied.
 validation_surfaces:
 - Owner/consumer source-to-decision review
 - python3 scripts/pm-plan-index.py validate
@@ -2421,8 +2433,61 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0004
 negative_constraints:
 - Do not inherit protection into a replacement session.
-- Do not invent the unanswered agent-input disposition.
+- Preserve the prior pending chronology; the explicit agent-input disposition is recorded separately in DL-038.
 - Do not claim historical records prove a live session.
+```
+
+### DL-038 - Terminal Input Protection User And Agent Scope
+
+```yaml
+plan_unit_id: DL-038
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: P10 input protection blocks user and agent terminal input for the protected exact live
+  session, with an explicit blocked result for agents, continued output and unchanged separate interrupt/terminate
+  behavior. DL-037 persistence remains unchanged.
+gui_related: true
+gui_classification_reason: Visible protection scope and blocked-input feedback now cover both user and
+  agent input.
+depends_on:
+- DL-035
+- DL-037
+unblocks: []
+acceptance_criteria:
+- User typing/paste and agent input produce no child write while protected; agents receive an explicit
+  blocked result rather than silent success or bypass.
+- Output continues; existing interrupt/terminate/close/kill authority remains distinct from terminal input.
+- Same verified session retains protection through reconnect/reopen, while replacement starts unlocked;
+  no historical state implies liveness.
+- No implementation, runtime acceptance, WorkNodes, NodeSeeds or governance seal is implied.
+validation_surfaces:
+- Owner/consumer source-to-decision review
+- python3 scripts/pm-plan-index.py validate
+risk_class: terminal_input_protection_scope_bypass
+reasoning_tier: standard
+context_scope: terminal_input_protection_scope_decision
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
+- Plans/Automated_Testing_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: accepted_planning_decision_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/questions.jsonl:q-0001
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0005
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/events.jsonl:evt-0009
+negative_constraints:
+- No agent bypass, implicit unlock or silent queued input replay after unlock.
+- Do not reinterpret protection as process suspension or removal of independent interrupt/terminate authority.
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

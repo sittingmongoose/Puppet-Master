@@ -1970,7 +1970,7 @@ owner_doc: Plans/Settings_System.md
 canonical_text: Terminal Settings projects the versioned requested/effective enhanced keyboard capability, explicit
   exact-host remote compatibility setup status and redacted environment provenance with pending-for-next-launch
   changes. Runtime input protection stays in Terminal and Settings explains only admitted scope, with same-verified-session
-  protection retained across reconnect/PM reopen, replacement sessions unlocked, and agent-input scope held. Existing
+  protection retained across reconnect/PM reopen, replacement sessions unlocked, and both user/agent input blocked under DL-038. Existing
   inventory, scope, secret custody, manager and command owners remain authoritative.
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
@@ -2002,7 +2002,7 @@ acceptance_criteria:
   nor restarts a session. No additional environment collection or automatic relaunch authority is created.
 - P10 live enable/disable actions remain in Terminal. Protection persists for the exact verified live session across
   reconnect/PM reopen; a replacement starts unlocked. This is session state, not a pane preference; historical records
-  cannot establish liveness. Agent-input scope remains held, and no broader protection scope is advertised.
+  cannot establish liveness. Explain that protected sessions block both user and agent terminal input with explicit blocked results for agents; output and separate interrupt/terminate controls retain existing behavior.
 - Rows and Details preserve existing project/workspace/tab scope rules, shared manager presentation and keyboard
   accessibility. Missing command/handler/wiring/runtime evidence keeps an affected action visibly unavailable with
   its actual reason; static examples do not claim integration.
@@ -2022,6 +2022,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-038
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0005
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0008

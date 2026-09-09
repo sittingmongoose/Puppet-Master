@@ -10630,7 +10630,7 @@ DL-035 accepts P3–P10 for planning under the PM-owned terminal direction estab
 | P7 | SMPFS-162 | Pane-local advisory OSC 9;4; progress owns the collision namespace once, malformed progress never falls through to notifications, and progress never settles work. |
 | P8 | SMPFS-163 | Existing-card insert-without-execute and retained-output editor actions with current target checks and whole-range backing truth. |
 | P9 | SMPFS-164 | Available redacted provenance and pending next-launch differences; explicit restart replacement only, no extra environment intake or automatic relaunch. |
-| P10 | SMPFS-165 | Idempotent visible live-pane input protection retained for the same verified live session; replacements start unlocked. Agent-input scope remains held without a hidden default. |
+| P10 | SMPFS-165 | Idempotent visible live-pane input protection retained for the same verified live session; replacements start unlocked. Both user and agent input are blocked; agents receive an explicit blocked result under DL-038. |
 
 These owner semantics feed FinalGUI's visible surfaces, Settings preferences, the catalog's exact commands, Wiring dispatch and Automated Testing acceptance. They do not introduce parallel command handlers, new transcript/storage families or provider/daemon installation authority. The only newly named user actions are the catalog-owned remote compatibility setup, insert command, open retained output, environment provenance and explicit input-protection enable/disable; P9 reuses `cmd.terminal.restart_replace`. P7 requires no new manual-clear command. P11 is evaluation-only under Server System and grants no engine/library selection here.
 
@@ -11182,9 +11182,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: A live pane has explicit idempotent input-protection enable/disable actions with visible state;
-  guarded user typing/paste is blocked while output continues, and unlocking retains the same session. Protection
-  persists only for the same verified live session; replacement sessions start unlocked. Agent-input scope
-  remains held.
+  user typing/paste and agent input are blocked while output continues, and unlocking retains the same session. Protection
+  persists only for the same verified live session; replacement sessions start unlocked. DL-038 requires an explicit blocked result for agents.
 gui_related: true
 gui_classification_reason: Visible explicit protection state and blocked-input feedback for a live pane.
 split_recommended: false
@@ -11197,22 +11196,18 @@ acceptance_criteria:
 - cmd.terminal.input_protection.enable and cmd.terminal.input_protection.disable set an explicit state for
   the exact pane/session rather than toggling. Repeating either action is idempotent; stale/replaced targets
   cannot alter another session.
-- When user-input protection is active, guarded user typing/paste cannot reach the child, output ingestion/draining
-  continues, and the visible state and blocked-input result remain accessible. It is a live input guard, not
+- When input protection is active, user typing/paste and agent input cannot reach the child; agents receive an explicit blocked result with no child write. Output ingestion/draining continues, and visible scope and blocked-input feedback remain accessible. It is a live input guard, not
   historical review-only state, process suspension or a replacement terminal session.
-- Disable restores eligible user input to the same session. Pane close continues the existing explicit close-versus-terminate
+- Disable restores eligible user and agent input under existing authority to the same session; blocked attempts are not silently queued or replayed on unlock. Pane close continues the existing explicit close-versus-terminate
   confirmation; protection does not silently terminate, disable independent emergency stop/kill authority or
   imply suspended execution.
 - Acceptance covers repeated enable/disable, typing and paste while protected, continued high-volume output,
   same-session unlock, focus/detach changes, stale session replacement and close confirmation. Reload/restore
   verifies the same live session before restoring protection; replacement and historical-only records cannot
-  inherit a live lock. Agent-input cases await the held scope decision.
+  inherit a live lock. Agent-input acceptance verifies explicit blocked results and zero child writes through direct and command-mediated input routes while output continues; separate interrupt/terminate controls retain existing behavior.
 - Keep protection across detach, reconnect and reopening PM only for the exact verified same live terminal
   session. A replacement session starts unlocked; no pane preference is copied to it, and a historical record
-  never implies live protection. Agent-input scope is not selected by this PlanUnit. Do not assume either that
-  agent writes bypass protection or that all agent/control writes are blocked; do not advertise protection
-  for unresolved routes. Runtime enablement/readiness for those semantics requires the explicit owner decision
-  and acceptance evidence.
+  never implies live protection. DL-038 blocks both user and agent terminal input through the same owner guard, without implicit unlock or agent bypass. Separate interrupt/terminate controls keep existing authority; blocking terminal input does not block those independent controls or prove runtime readiness.
 - Planning acceptance only; no implementation, WorkNodes, NodeSeeds, executable queues or runtime/visual/security/performance
   pass is produced by this compile.
 validation_surfaces:
@@ -11234,6 +11229,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-038
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 - PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md:P10
@@ -11243,8 +11241,7 @@ source_lineage:
 source_atom_ids:
 - atom-0012
 negative_constraints:
-- No assumed agent bypass/block policy; no pane-wide lock inheritance or fake live protection from historical
-  state.
+- No agent input bypass, implicit unlock or pane-wide lock inheritance; historical state cannot prove live protection.
 - No arbitrary pane trees, new group/zoom feature, process suspension or guarantee that historical review-only
   protects a live process.
 - PM owns the engine, parser and OS-API process host; no third-party emulator/parser/PTY-abstraction library

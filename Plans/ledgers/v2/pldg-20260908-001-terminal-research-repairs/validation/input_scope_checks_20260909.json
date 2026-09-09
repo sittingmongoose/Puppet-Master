@@ -1,0 +1,78 @@
+{
+  "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+  "recorded_at_utc": "2026-09-09T06:56:11.574324+00:00",
+  "independent_review": "pass",
+  "bootstrap_ledger_validate": "pass",
+  "generated_plan_validation": "pass",
+  "git_diff_check": "pass",
+  "commit": "See the descriptive scoped Git commit containing this receipt.",
+  "native_acceptance": "not_run",
+  "governance_status": "not_requested",
+  "initial_validation_errors": [
+    "ledger_health event and queue counts stale (updated to 10 and 12)",
+    "compile_queue status differed from current phase (aligned to compiled_input_scope_followup)"
+  ],
+  "scoped_checks": [
+    {
+      "name": "ledger",
+      "exit_code": 0,
+      "elapsed_seconds": 14.63986349105835
+    },
+    {
+      "name": "shards",
+      "exit_code": 0,
+      "elapsed_seconds": 4.046055793762207
+    },
+    {
+      "name": "diff",
+      "exit_code": 0,
+      "elapsed_seconds": 66.0597631931305
+    }
+  ],
+  "index_checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 57.03262209892273
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 52.22945547103882
+    }
+  ],
+  "wiring_check": {
+    "exit_code": 0,
+    "elapsed_seconds": 1.854360580444336
+  },
+  "canonical_owner_sha256": {
+    "Plans/Decision_Log.md": "bb138f4e1c94fabebbb99c3ae94c4555c20b8f939bb82a4cd1c05a919144698c",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": "559160bb3bfde9675074338b19188675dd6bed3c1fd583b4ba96ee33d88775fe",
+    "Plans/FinalGUISpec.md": "591078a9b4278418910a1b885ac9ccaefd33ebb90be2f089326015f4779b25cc",
+    "Plans/Settings_System.md": "44f98f5cc1b8e153a94cbb7f54b17d7ad5af9b1e04fcb8588ccf791aa195cbde",
+    "Plans/Automated_Testing_System.md": "99e9295576a0806699baa2862eeca645961d89d26cba8087c6426f2e5394fc42",
+    "Plans/UI_Command_Catalog.md": "e02f9d04e5aa520520fec7f17f4eb4599908cbde992aa06c07eb11d967e63195",
+    "Plans/UI_Wiring_Rules.md": "d986040d92b297ae8682fa6569fd2cc6c25faa26497c785130c4b3e475fb195d",
+    "Plans/Wiring_Matrix.md": "a5618e70307d7cea21f0bd3b1e968b4c8f36357504ff35e589d7db1be3bb3c18"
+  },
+  "generation": {
+    "standard_script_unchanged": true,
+    "source_count": 98,
+    "exit_code": 0,
+    "elapsed_seconds": 1.3944876194000244,
+    "outside_owner_timestamp_only_restoration": 182,
+    "changed_workspace_baseline_guard": true,
+    "local_execution_with_matching_canonical_sources": true,
+    "workspace_shard_census_exact": true
+  },
+  "protected_artifacts_unchanged": true,
+  "broad_gate_state": "No new broad scan for this narrow supplement; latest D3 standard run-gates remains incomplete with unresolved failures."
+}

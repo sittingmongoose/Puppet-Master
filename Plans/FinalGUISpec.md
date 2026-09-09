@@ -37293,7 +37293,7 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: A live terminal pane offers explicit idempotent enable/disable input-protection actions with a visible,
   accessible protected state while output continues. Protection is distinct from historical review, process suspension
   and session termination; unlock retains the exact live session. Protection is retained for the same verified live
-  session across reconnect and PM reopen; a replacement session starts unlocked. Agent-input scope remains held.
+  session across reconnect and PM reopen; a replacement session starts unlocked. DL-038 protection covers user and agent input, with explicit blocked results for agents.
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
   is directly specified.
@@ -37309,7 +37309,7 @@ unblocks: []
 acceptance_criteria:
 - Use cmd.terminal.input_protection.enable and cmd.terminal.input_protection.disable; do not substitute a non-idempotent
   toggle or a manual progress-clear action.
-- Repeated enable leaves protection enabled; guarded typing and paste cannot reach the child. Disable/unlock retains
+- Repeated enable leaves protection enabled; user typing/paste and agent input cannot reach the child; agents receive an explicit blocked result. Disable/unlock retains
   terminal_session_id and does not spawn or replay a command.
 - Output continues to drain and display while protected. Focus, selection, review and accessible state remain truthful;
   protection does not imply suspension or termination.
@@ -37317,8 +37317,7 @@ acceptance_criteria:
   or bypass confirmation.
 - The user-visible scope must match the admitted input-router policy. Retain protection across reconnect and PM
   reopen only for the exact verified live session. Replacement starts unlocked; no pane preference is inherited
-  and historical metadata never proves liveness. Agent-input scope remains held, with no unapproved agent-protection
-  guarantee.
+  and historical metadata never proves liveness. Disclose that both user and agent terminal input are blocked, with an explicit blocked result for agents. Separate interrupt/terminate controls retain existing behavior.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - Plans/Automated_Testing_System.md#ATS-047
@@ -37332,11 +37331,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-038
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
-- No implicit decision about agent input, arbitrary pane trees, group or zoom features is made; protection cannot
-  transfer as a pane preference to a replacement session.
+- No arbitrary pane trees, group or zoom features are introduced; protection cannot transfer as a pane preference to a replacement session or imply agent bypass.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 

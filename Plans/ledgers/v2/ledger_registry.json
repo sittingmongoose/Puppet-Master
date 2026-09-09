@@ -22,34 +22,6 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
-    },
-    {
-      "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-      "title": "September terminal research corrections",
-      "status": "active",
-      "phase": "accepted_input_scope_followup",
-      "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
-      "last_updated_at_utc": "2026-09-09T05:19:14.021753+00:00",
-      "canonical_plan_targets": [
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md"
-      ],
-      "compiled_owner_docs": [
-        "Plans/Automated_Testing_System.md",
-        "Plans/Decision_Log.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "Plans/Server_System.md",
-        "Plans/Settings_System.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md"
-      ],
-      "resume_file": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/state/handoff.json",
-      "notes": "D1/D2 committed; late P10 both-input scope answer awaits narrow follow-up after D3 and before D4.",
-      "last_event_id": "evt-0009"
     }
   ],
   "compiled_ledgers": [
@@ -103,6 +75,46 @@
         "Plans/Wiring_Matrix.md",
         "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+      "title": "September terminal research corrections",
+      "status": "compiled",
+      "phase": "compiled_input_scope_followup",
+      "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
+      "last_updated_at_utc": "2026-09-09T06:49:52.168972+00:00",
+      "canonical_plan_targets": [
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Decision_Log.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Server_System.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/state/handoff.json",
+      "notes": "Late P10 both-input answer compiled after D3; final supplement checks and commit/report pending. Earlier output coverage preserved; governance not requested.",
+      "last_event_id": "evt-0010",
+      "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/input_scope_independent_review_20260909.md",
+      "latest_audit_status": "pass_external_proposal_review",
+      "input_scope_compiled_plan_unit_ids": [
+        "DL-038",
+        "SMPFS-165",
+        "F3-549",
+        "SSYS-034",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052"
       ]
     }
   ],
@@ -1440,5 +1452,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-09T05:22:24.623584+00:00"
+  "updated_at_utc": "2026-09-09T06:49:52.168972+00:00"
 }

@@ -4210,12 +4210,11 @@ acceptance_criteria:
   diagnostics and pending changes do not mutate the live launch snapshot. Terminal and Settings show the same exact
   source/Host/Environment and effect timing. Explicit restart replacement creates a new session/invocation; reveal/attach
   does not replay. No extra collection or automatic relaunch is inferred.'
-- 'P10 input protection: repeated enable stays enabled; guarded typing/paste cannot reach the child; output continues
+- 'P10 input protection: repeated enable stays enabled; user typing/paste and agent input cannot reach the child; output continues
   draining/displaying; unlock preserves the exact session; and close obeys the existing selected confirmation policy
   without implying suspension. Visible and accessible scope agrees with the admitted router. Reconnect/PM reopen
   retains protection only for the same verified live session; replacement starts unlocked and pane preference inheritance
-  is rejected. Historical metadata cannot establish liveness. Agent-input cases remain held/blocked until separately
-  decided, not marked pass under an assumed default.'
+  is rejected. Historical metadata cannot establish liveness. Agent-input cases assert an explicit blocked result and zero child writes through every admitted input path, including command-mediated insertion. No blocked input is silently replayed on unlock. Separate interrupt/terminate controls retain their existing behavior; these fixtures are obligations, not executed passes.'
 - Cross-surface regression preserves existing native layout/style, command-palette parity, keyboard/focus/IME/accessibility,
   requested/effective state and meaningful unavailable reasons. Rendering or parser replay alone cannot certify
   native input, remote writes, provider continuity or lifecycle behavior.
@@ -4236,6 +4235,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-038
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0014
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/input_scope_answer_20260909.md
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0005
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0006

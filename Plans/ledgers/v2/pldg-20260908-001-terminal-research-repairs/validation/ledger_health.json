@@ -1,14 +1,14 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "status": "pending_input_scope_compile",
+  "status": "pass",
   "summary": {
-    "events": 9,
+    "events": 10,
     "design_atoms": 14,
     "decisions": 5,
     "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 11
+    "compile_queue_items": 12
   },
-  "notes": "D2 checks and commit remain valid for the prior source snapshot; late actual user answer is durably recorded and awaits independent canonical follow-up."
+  "notes": "Input-scope supplement independently reviewed; scoped ledger, wiring, index, shard and diff checks pass. Both lock questions are answered. Broader governance remains unsealed and no native runtime acceptance is claimed."
 }
