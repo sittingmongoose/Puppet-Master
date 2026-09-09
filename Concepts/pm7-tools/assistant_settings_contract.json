@@ -1,0 +1,247 @@
+{
+  "version": 2,
+  "status": "concept projection; new canonical rows proposed in companion Plans packet",
+  "new_settings": [
+    {
+      "id": "branching.crew.crew-auto-roster",
+      "label": "Crew Auto lineup",
+      "type": "list",
+      "default": [],
+      "desc": "Crew Auto lineup",
+      "scope": [
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "Crew Auto lineup",
+        "Assistant"
+      ],
+      "related_features": [
+        "assistant-redesign"
+      ]
+    },
+    {
+      "id": "branching.crew.chat-room-roster",
+      "label": "Chat Room lineup",
+      "type": "list",
+      "default": [],
+      "desc": "Chat Room lineup",
+      "scope": [
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "Chat Room lineup",
+        "Assistant"
+      ],
+      "related_features": [
+        "assistant-redesign"
+      ]
+    },
+    {
+      "id": "branching.crew.brainstorm-roster",
+      "label": "BrainStorm lineup",
+      "type": "list",
+      "default": [],
+      "desc": "BrainStorm lineup",
+      "scope": [
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "BrainStorm lineup",
+        "Assistant"
+      ],
+      "related_features": [
+        "assistant-redesign"
+      ]
+    },
+    {
+      "id": "planning.verification.review-roster",
+      "label": "Review lineup",
+      "type": "list",
+      "default": [],
+      "desc": "Review lineup",
+      "scope": [
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "Review lineup",
+        "Assistant"
+      ],
+      "related_features": [
+        "assistant-redesign"
+      ]
+    },
+    {
+      "id": "safety.approvals.bsd-stage-bindings",
+      "label": "Advisor workflow stages",
+      "type": "list",
+      "default": [
+        "prd_builder",
+        "planning_wizard",
+        "ledger",
+        "worknode_audit",
+        "execution"
+      ],
+      "desc": "Advisor workflow stages",
+      "scope": [
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "Advisor workflow stages",
+        "Assistant"
+      ],
+      "related_features": [
+        "assistant-redesign"
+      ]
+    }
+  ],
+  "projection_updates": {
+    "safety.approvals.bsd-trigger-sensitivity": {
+      "options": [
+        "Conservative",
+        "Balanced",
+        "Frequent"
+      ]
+    },
+    "safety.approvals.bsd-catch-up-seconds": {
+      "options": [
+        "Off",
+        "15 seconds",
+        "30 seconds",
+        "60 seconds"
+      ]
+    },
+    "safety.approvals.schedule-missed-policy": {
+      "options": [
+        "Hold",
+        "Next available",
+        "Cancel after grace"
+      ]
+    },
+    "safety.approvals.schedule-dst-policy": {
+      "options": [
+        "Preserve local wall clock"
+      ]
+    },
+    "general.interaction.working-activity-style": {
+      "label": "Working activity",
+      "desc": "Choose Orbit or the compact Step Rail Simple presentation.",
+      "options": [
+        "Orbit",
+        "Step Rail Simple"
+      ]
+    }
+  },
+  "stages": [
+    [
+      "prd_builder",
+      "PRD Builder"
+    ],
+    [
+      "planning_wizard",
+      "Planning Wizard"
+    ],
+    [
+      "ledger",
+      "Ledger / PlanUnit work"
+    ],
+    [
+      "plan_compile",
+      "Plan Compile"
+    ],
+    [
+      "worknode_create",
+      "WorkNode creation"
+    ],
+    [
+      "worknode_audit",
+      "WorkNode audit"
+    ],
+    [
+      "execution",
+      "Execution"
+    ],
+    [
+      "verification",
+      "Verification"
+    ],
+    [
+      "remediation",
+      "Remediation"
+    ],
+    [
+      "certification",
+      "Certification"
+    ]
+  ],
+  "working_styles": [
+    {
+      "id": "orbit",
+      "label": "Orbit",
+      "family": 2,
+      "variant": 1
+    },
+    {
+      "id": "step_rail_simple",
+      "label": "Step Rail Simple",
+      "family": 2,
+      "variant": 8
+    }
+  ],
+  "curated_sections": [
+    {
+      "id": "assistant-presentation",
+      "label": "Presentation",
+      "setting_ids": [
+        "general.interaction.working-activity-style"
+      ]
+    },
+    {
+      "id": "assistant-adviser",
+      "label": "Back Seat Driver",
+      "setting_ids": [
+        "safety.approvals.bsd-mode",
+        "safety.approvals.bsd-model",
+        "safety.approvals.bsd-persona",
+        "safety.approvals.bsd-trigger-sensitivity",
+        "safety.approvals.bsd-catch-up-seconds",
+        "safety.approvals.bsd-cooldown-turns",
+        "safety.approvals.bsd-retain-transcript",
+        "safety.approvals.bsd-self-compact-threshold",
+        "safety.approvals.bsd-stage-bindings"
+      ]
+    },
+    {
+      "id": "assistant-lineups",
+      "label": "Agent lineups",
+      "setting_ids": [
+        "branching.crew.crew-members",
+        "branching.crew.crew-auto-roster",
+        "branching.crew.chat-room-roster",
+        "branching.crew.brainstorm-roster",
+        "planning.verification.review-roster"
+      ]
+    },
+    {
+      "id": "assistant-schedule",
+      "label": "Scheduling defaults",
+      "setting_ids": [
+        "safety.approvals.schedule-wind-down-minutes",
+        "safety.approvals.schedule-missed-policy",
+        "safety.approvals.schedule-grace-minutes",
+        "safety.approvals.schedule-resume-next-window",
+        "safety.approvals.schedule-dst-policy"
+      ]
+    }
+  ],
+  "compatibility_aliases": {
+    "working-activity-style": "general.interaction.working-activity-style"
+  },
+  "value_aliases": {
+    "Step Rail": "Step Rail Simple"
+  }
+}

@@ -1,0 +1,116 @@
+/* ============================================================
+   GLM Onboarding — GLASS material: luminous frosted theater
+   Aurora photo depth + hairline edges + light beams.
+   ============================================================ */
+.obx[data-mat="glass"]{
+  --obx-radius:20px;
+}
+/* dark: deep indigo studio */
+.obx[data-mat="glass"][data-mode="dark"]{
+  --obx-ink:#e8eefc; --obx-ink-dim:#aab8d4; --obx-ink-faint:#8494b1;
+  --obx-paper:rgba(15,19,32,.62); --obx-paper-2:rgba(23,29,46,.66);
+  --obx-card:rgba(30,38,60,.55);
+  --obx-line:rgba(120,150,200,.20); --obx-line-strong:rgba(140,170,220,.42);
+  --obx-accent:#6db3f8; --obx-accent-soft:rgba(109,179,248,.15);
+  --obx-accent-ink:#8ec2fa; --obx-cta-ink:#08131f;
+  --obx-good:#4ed3a2; --obx-warn:#e8c06a; --obx-bad:#ef7f9b;
+  --obx-shadow-1:0 1px 2px rgba(2,6,16,.4);
+  --obx-shadow-2:0 14px 40px rgba(2,6,16,.5);
+  --obx-shadow-3:0 34px 90px rgba(2,6,16,.66);
+}
+/* light: pale sky studio */
+.obx[data-mat="glass"][data-mode="light"]{
+  --obx-ink:#1d2739; --obx-ink-dim:#3a475e; --obx-ink-faint:#4d5b74;
+  --obx-paper:rgba(247,250,255,.60); --obx-paper-2:rgba(252,253,255,.72);
+  --obx-card:rgba(255,255,255,.62);
+  --obx-line:rgba(70,100,150,.16); --obx-line-strong:rgba(70,100,150,.38);
+  --obx-accent:#2f7ddb; --obx-accent-soft:rgba(47,125,219,.13);
+  --obx-accent-ink:#174a85; --obx-cta-ink:#ffffff; --obx-cta-bg:#1e5a99;
+  --obx-good:#0f6b46; --obx-warn:#8a651d; --obx-bad:#a83f5b;
+  --obx-shadow-1:0 1px 2px rgba(30,50,90,.10);
+  --obx-shadow-2:0 14px 36px rgba(30,50,90,.16);
+  --obx-shadow-3:0 30px 80px rgba(30,50,90,.24);
+}
+/* the glass window is a frosted pane over the shell */
+.obx[data-mat="glass"] .obx-window{
+  backdrop-filter:blur(26px) saturate(1.35);
+  background:linear-gradient(165deg,var(--obx-paper),color-mix(in srgb,var(--obx-paper) 70%,transparent));
+  border-color:var(--obx-line-strong);
+  box-shadow:var(--obx-shadow-3),inset 0 1px 0 rgba(255,255,255,.16);
+}
+.obx[data-mat="glass"] .obx-window::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.10),transparent 30%);
+}
+.obx[data-mat="glass"] .obx-choice,
+.obx[data-mat="glass"] .obx-row,
+.obx[data-mat="glass"] .obx-themecard,
+.obx[data-mat="glass"] .obx-sheet,
+.obx[data-mat="glass"] .obx-reviewcard,
+.obx[data-mat="glass"] .obx-panel > .obx-set{
+  backdrop-filter:blur(10px) saturate(1.2);
+  background:color-mix(in srgb,var(--obx-card) 78%,transparent);
+}
+.obx[data-mat="glass"] .obx-cta{
+  box-shadow:0 8px 26px var(--obx-accent-soft),0 0 0 1px rgba(255,255,255,.14) inset;
+}
+.obx[data-mat="glass"] .obx-progressline i{
+  background:linear-gradient(90deg,transparent,var(--obx-accent));
+  box-shadow:0 0 12px var(--obx-accent);
+}
+.obx[data-mat="glass"] .obx-dots i.now{box-shadow:0 0 0 3px var(--obx-accent-soft),0 0 10px var(--obx-accent-soft);}
+
+/* stage: aurora photo depth (reuses the shell's own glass mesh imagery) */
+.obx[data-mat="glass"] .obx-stage{background:var(--obx-paper-2);}
+.obx[data-mat="glass"] .ob-gbgwrap{position:absolute;inset:0;overflow:hidden;}
+.obx[data-mat="glass"] .ob-gbgwrap .pm6-gbg-mesh-layer{opacity:.5;}
+.obx[data-mat="glass"] .ob-backdrop{background:radial-gradient(80% 60% at 50% 6%,var(--obx-accent-soft),transparent 72%);}
+.obx[data-mat="glass"] .ob-ground{
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--obx-ink) 10%,transparent));
+  border-top:1px solid var(--obx-line-strong);border-radius:0;
+}
+.obx[data-mat="glass"] .ob-horizon{background:var(--obx-line-strong);}
+/* luminous wireframe objects */
+.obx[data-mat="glass"] .os-where .ob-machine,
+.obx[data-mat="glass"] .os-where .ob-node-b,
+.obx[data-mat="glass"] .ob-machine2{
+  background:color-mix(in srgb,var(--obx-accent) 8%,transparent);
+  border:1px solid var(--obx-accent);
+  box-shadow:0 0 18px var(--obx-accent-soft),inset 0 0 14px var(--obx-accent-soft);
+}
+.obx[data-mat="glass"] .os-where .ob-desk{background:color-mix(in srgb,var(--obx-ink) 7%,transparent);border:1px solid var(--obx-line-strong);}
+.obx[data-mat="glass"] .os-where .ob-crate{background:color-mix(in srgb,var(--obx-accent) 14%,transparent);border:1px solid var(--obx-line-strong);}
+.obx[data-mat="glass"] .os-welcome .ob-curtain > i{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--obx-accent) 26%,transparent),color-mix(in srgb,var(--obx-accent) 10%,transparent));
+  border:1px solid var(--obx-line-strong);border-top:none;
+  backdrop-filter:blur(8px);
+}
+.obx[data-mat="glass"] .os-welcome .ob-stagefloor{background:linear-gradient(90deg,transparent,var(--obx-line-strong),transparent);border:none;height:1px;}
+.obx[data-mat="glass"] .ob-star{background:#fff;box-shadow:0 0 8px var(--obx-accent),0 0 2px #fff;}
+.obx[data-mat="glass"] .os-project .ob-playbill{
+  background:color-mix(in srgb,var(--obx-paper-2) 70%,transparent);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--obx-line-strong);box-shadow:var(--obx-shadow-2);
+}
+.obx[data-mat="glass"] .os-project .ob-pb-line{background:var(--obx-line-strong);}
+.obx[data-mat="glass"] .os-project .ob-quill{background:var(--obx-accent);box-shadow:0 0 12px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-project .ob-reel{color:var(--obx-accent);background:transparent;border:1px solid var(--obx-accent);box-shadow:0 0 14px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-keep .ob-cloud{background:color-mix(in srgb,var(--obx-paper-2) 60%,transparent);border:1px solid var(--obx-line-strong);backdrop-filter:blur(6px);}
+.obx[data-mat="glass"] .os-keep .ob-door{background:color-mix(in srgb,var(--obx-accent) 10%,transparent);border:1px solid var(--obx-accent);color:var(--obx-accent);box-shadow:0 0 14px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-keep .ob-key{background:var(--obx-accent);color:var(--obx-accent);box-shadow:0 0 10px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-keep .ob-net{opacity:.4;}
+.obx[data-mat="glass"] .os-review .ob-node{background:color-mix(in srgb,var(--obx-accent) 9%,transparent);border:1px solid var(--obx-accent);box-shadow:0 0 16px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-commit .ob-bill{background:color-mix(in srgb,var(--obx-paper-2) 72%,transparent);backdrop-filter:blur(8px);border:1px solid var(--obx-line-strong);box-shadow:var(--obx-shadow-2);}
+.obx[data-mat="glass"] .os-commit .ob-stamp{border-color:var(--obx-good);color:var(--obx-good);box-shadow:0 0 18px color-mix(in srgb,var(--obx-good) 26%,transparent);}
+.obx[data-mat="glass"] .os-commit .ob-paper{background:color-mix(in srgb,var(--obx-paper-2) 80%,#fff 20%);border:1px solid var(--obx-line-strong);}
+.obx[data-mat="glass"] .os-power .ob-rack{background:color-mix(in srgb,var(--obx-paper-2) 55%,transparent);border:1px solid var(--obx-line-strong);backdrop-filter:blur(8px);box-shadow:var(--obx-shadow-2);}
+.obx[data-mat="glass"] .os-power .ob-slot{background:color-mix(in srgb,var(--obx-ink) 6%,transparent);border:1px solid var(--obx-line);}
+.obx[data-mat="glass"] .os-power .ob-battery{background:color-mix(in srgb,var(--obx-paper-2) 70%,transparent);border:1px solid var(--obx-line-strong);box-shadow:0 0 14px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-finish .ob-swatchcard{background:color-mix(in srgb,var(--obx-paper-2) 60%,transparent);border:1px solid var(--obx-line-strong);backdrop-filter:blur(8px);box-shadow:var(--obx-shadow-1);}
+.obx[data-mat="glass"] .os-finish .ob-swatchcard.s2{border-color:var(--obx-accent);box-shadow:0 0 20px var(--obx-accent-soft);}
+.obx[data-mat="glass"] .os-finish .ob-spark{background:#fff;box-shadow:0 0 8px var(--obx-accent);}
+.obx[data-mat="glass"] .ob-motes i{background:#fff;box-shadow:0 0 6px var(--obx-accent);}
+
+/* glass theme picker swatches */
+.obx[data-mat="glass"] .obx-themecard .obx-swatch i:nth-child(1){background:linear-gradient(135deg,#dfe9fb,#b9d0f4);}
+.obx[data-mat="glass"] .obx-themecard .obx-swatch i:nth-child(2){background:linear-gradient(135deg,#37507b,#1d2c49);}
+.obx[data-mat="glass"] .obx-themecard .obx-swatch i:nth-child(3){background:linear-gradient(135deg,rgba(109,179,248,.7),rgba(23,50,90,.8));}

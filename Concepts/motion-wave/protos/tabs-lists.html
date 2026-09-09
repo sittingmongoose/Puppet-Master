@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>W4 proto — tabs / panes / lists</title>
+<style>
+  :root {
+    --motion-fast:120ms; --motion-med:240ms; --motion-slow:420ms;
+    --ease-out:cubic-bezier(.22,1,.36,1); --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --ease-settle:cubic-bezier(.22,1.68,.36,1);
+    --pm-travel:12px; --pm-stagger:34ms; --pm-row-step:26ms;
+    --surface:#14161c; --surface-2:#1b1e26; --border:#2a2e39; --text:#e7e9ee;
+    --muted:#8b90a0; --accent:#5aa9ff; --accent-soft:rgba(90,169,255,.14);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--surface); color:var(--text); font:13px/1.45 system-ui, sans-serif; padding:22px; }
+  h2 { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 8px; }
+  .wrap { max-width:560px; }
+  .ctl { display:flex; gap:8px; margin:10px 0 20px; }
+  button.tog { background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:6px 12px; cursor:pointer; }
+
+  /* ---- segmented tab bar + ink (generic scaleX approach) ---- */
+  .pm-segtab { position:relative; display:flex; border-bottom:1px solid var(--border); background:var(--surface-2); border-radius:10px 10px 0 0; overflow:hidden; }
+  .pm-segtab-item { flex:1 1 0; display:flex; align-items:center; justify-content:center; gap:6px; padding:9px 8px; cursor:pointer; color:var(--muted); background:none; border:0; }
+  .pm-segtab-item.active { color:var(--text); }
+  .pm-segtab-item svg { width:15px; height:15px; transition:transform var(--motion-med) var(--ease-settle); }
+  .pm-segtab-item.active svg { transform:translateY(-1px) scale(1.1); }
+  .pm-segtab-ink { position:absolute; left:0; bottom:0; height:2px; width:100px; background:var(--accent); border-radius:2px 2px 0 0; transform:scaleX(0); transform-origin:0 50%; pointer-events:none; box-shadow:0 0 10px rgba(90,169,255,.55); }
+  /* fm-style ink (width + translateX) */
+  .fm-ink { position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--accent); border-radius:2px 2px 0 0; pointer-events:none; box-shadow:0 0 10px rgba(90,169,255,.55); }
+
+  /* ---- panes ---- */
+  .view { background:var(--surface-2); border:1px solid var(--border); border-top:0; border-radius:0 0 10px 10px; padding:12px; min-height:120px; position:relative; }
+  [data-pane] { display:flex; flex-direction:column; gap:6px; }
+  [data-pane].pm-hidden { display:none; }
+  @keyframes shPaneInDir {
+    from { opacity:0; transform:translateX(calc(var(--pm-travel) * .55 * var(--pm-pane-dir, 1))); }
+    to   { opacity:1; transform:none; }
+  }
+  /* pane blocks: leaf children only (row-container .list excluded so rows animate instead) */
+  [data-pane]:not(.pm-hidden) > *:not(.list) { animation:shPaneInDir .3s var(--ease-out) both; animation-delay:calc(var(--pi,0) * var(--pm-row-step)); }
+  /* row cascade */
+  [data-pane]:not(.pm-hidden) .row { animation:shPaneInDir .3s var(--ease-out) both; animation-delay:calc(var(--pi,0) * var(--pm-row-step)); }
+  .row { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 10px; }
+  .lead { color:var(--muted); font-size:11px; }
+
+  /* ---- FLIP card list ---- */
+  .cards { display:flex; flex-direction:column; gap:6px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:9px 11px; will-change:transform; }
+  .card b { color:var(--accent); }
+
+  /* ---- reduced motion contract ---- */
+  html[data-motion="reduced"] * { animation:none !important; transition:none !important; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ctl">
+    <button class="tog" id="rmTog">toggle reduced-motion</button>
+  </div>
+
+  <h2>Generic ink (scaleX + WAAPI stretch) + direction panes</h2>
+  <div class="panel" id="panelA">
+    <div class="pm-segtab" id="segA">
+      <button class="pm-segtab-item active" data-tab="a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>Find</button>
+      <button class="pm-segtab-item" data-tab="a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16"/></svg>Replace</button>
+      <button class="pm-segtab-item" data-tab="a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/></svg>Filters</button>
+      <span class="pm-segtab-ink" id="inkA" aria-hidden="true"></span>
+    </div>
+    <div class="view" id="viewA">
+      <div data-pane="a1">
+        <div class="lead">Find pane — rows cascade from the tab direction.</div>
+        <div class="list" id="listA"></div>
+      </div>
+      <div data-pane="a2" class="pm-hidden"><div class="lead">Replace pane.</div><div class="row">replace row</div></div>
+      <div data-pane="a3" class="pm-hidden"><div class="lead">Filters pane.</div><div class="row">filter row</div></div>
+    </div>
+  </div>
+
+  <h2>FM-style ink (width + translateX + WAAPI stretch)</h2>
+  <div class="pm-segtab" id="segB">
+    <button class="pm-segtab-item active" data-tab="b1">Explorer</button>
+    <button class="pm-segtab-item" data-tab="b2">Changed</button>
+    <button class="pm-segtab-item" data-tab="b3">Open</button>
+    <span class="fm-ink" id="inkB" aria-hidden="true"></span>
+  </div>
+
+  <h2>FLIP reorder</h2>
+  <div class="ctl">
+    <button class="tog" data-sort="az">Sort A-Z</button>
+    <button class="tog" data-sort="za">Sort Z-A</button>
+    <button class="tog" data-sort="len">Sort length</button>
+  </div>
+  <div class="cards" id="cards"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  function reduce() { var de = document.documentElement; return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || de.getAttribute('data-motion') === 'reduced'; }
+  function cssMs(name) { var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); var n = parseFloat(v); return isNaN(n) ? 240 : (v.indexOf('ms') > -1 ? n : n * 1000); }
+  function settle() { return getComputedStyle(document.documentElement).getPropertyValue('--ease-settle').trim() || 'ease-out'; }
+
+  /* ---- generic scaleX ink ---- */
+  function scaleXInk(seg, ink) {
+    var anim = null;
+    ink.style.width = '100px';
+    function target() { var a = seg.querySelector('.pm-segtab-item.active'); if (!a || !a.offsetWidth) return null; return { l: a.offsetLeft, w: a.offsetWidth }; }
+    function snap(t) { if (anim) { try { anim.cancel(); } catch (e) {} anim = null; } if (!t) { ink.style.transform = 'scaleX(0)'; return; } ink.style.transformOrigin = '0 50%'; ink.style.transform = 'translateX(' + t.l + 'px) scaleX(' + (t.w / 100) + ')'; }
+    function move(animate) {
+      var to = target();
+      var cs = getComputedStyle(ink);
+      var m = new WebKitCSSMatrix(cs.transform);
+      var fromL = m.e, fromW = Math.abs(m.a) * 100;
+      if (!to) { snap(to); return; }
+      if (!animate || reduce() || isNaN(fromL) || fromW < 1) { snap(to); return; }
+      var dir = to.l >= fromL ? 1 : -1;
+      ink.style.transformOrigin = (dir > 0 ? '0 50%' : '100% 50%');
+      var s = function (L, W) { return dir > 0 ? { t: L, s: W / 100 } : { t: L + W - 100, s: W / 100 }; };
+      var fromR = fromL + fromW, toR = to.l + to.w;
+      var spanL = Math.min(fromL, to.l), spanW = Math.max(fromR, toR) - spanL;
+      var f = s(fromL, fromW), mid = s(spanL, spanW), t = s(to.l, to.w);
+      ink.style.transform = 'translateX(' + t.t + 'px) scaleX(' + t.s + ')'; /* rest state */
+      if (anim) { try { anim.cancel(); } catch (e) {} anim = null; }
+      anim = ink.animate([
+        { transform: 'translateX(' + f.t + 'px) scaleX(' + f.s + ')', easing: settle() },
+        { transform: 'translateX(' + mid.t + 'px) scaleX(' + mid.s + ')', offset: .45, easing: settle() },
+        { transform: 'translateX(' + t.t + 'px) scaleX(' + t.s + ')' }
+      ], { duration: cssMs('--motion-med'), easing: 'linear' });
+      anim.onfinish = function () { anim = null; };
+      anim.oncancel = function () { anim = null; };
+    }
+    if (window.ResizeObserver) new ResizeObserver(function () { move(false); }).observe(seg);
+    window.addEventListener('resize', function () { move(false); });
+    requestAnimationFrame(function () { move(false); });
+    return { move: move };
+  }
+
+  /* ---- fm width ink ---- */
+  function widthInk(seg, ink) {
+    var anim = null;
+    function target() { var a = seg.querySelector('.pm-segtab-item.active'); if (!a) return null; return { l: a.offsetLeft, w: a.offsetWidth }; }
+    function snap(t) { if (anim) { try { anim.cancel(); } catch (e) {} anim = null; } if (!t) { ink.style.width = '0px'; return; } ink.style.width = t.w + 'px'; ink.style.transform = 'translateX(' + t.l + 'px)'; }
+    function move(animate) {
+      var to = target();
+      var fromL = parseFloat((ink.style.transform || '').replace(/[^-\d.]/g, '')) || 0;
+      var fromW = parseFloat(ink.style.width) || 0;
+      if (!to) { snap(to); return; }
+      if (!animate || reduce() || fromW < 1) { snap(to); return; }
+      var fromR = fromL + fromW, toR = to.l + to.w;
+      var spanL = Math.min(fromL, to.l), spanW = Math.max(fromR, toR) - spanL;
+      snap(to);
+      if (anim) { try { anim.cancel(); } catch (e) {} anim = null; }
+      anim = ink.animate([
+        { width: fromW + 'px', transform: 'translateX(' + fromL + 'px)', easing: settle() },
+        { width: spanW + 'px', transform: 'translateX(' + spanL + 'px)', offset: .45, easing: settle() },
+        { width: to.w + 'px', transform: 'translateX(' + to.l + 'px)' }
+      ], { duration: cssMs('--motion-med'), easing: 'linear' });
+      anim.onfinish = function () { anim = null; };
+      anim.oncancel = function () { anim = null; };
+    }
+    seg.addEventListener('click', function (ev) { var it = ev.target.closest('.pm-segtab-item'); if (!it) return; seg.querySelectorAll('.pm-segtab-item').forEach(function (x) { x.classList.toggle('active', x === it); }); requestAnimationFrame(function () { move(true); }); });
+    if (window.ResizeObserver) new ResizeObserver(function () { move(false); }).observe(seg);
+    requestAnimationFrame(function () { move(false); });
+    return { move: move };
+  }
+
+  /* ---- direction-aware tabber + --pi stagger ---- */
+  function assignPi(scope) {
+    scope.querySelectorAll('[data-pane]').forEach(function (p) {
+      Array.prototype.forEach.call(p.children, function (c, i) { c.style.setProperty('--pi', String(Math.min(i, 7))); });
+      p.querySelectorAll('.row').forEach(function (r, i) { r.style.setProperty('--pi', String(Math.min(i, 7))); });
+    });
+  }
+  /* unified panel wiring mirroring the real app: tabs + panes live in one
+     .side-panel-view; wireTabber owns .active/pane swap + direction, the ink
+     reader just follows .active. */
+  function wirePanel(panel, view, inkApi) {
+    panel.addEventListener('click', function (ev) {
+      var tab = ev.target.closest('.pm-segtab-item'); if (!tab) return;
+      var tabs = Array.prototype.slice.call(panel.querySelectorAll('.pm-segtab-item'));
+      var oldI = tabs.indexOf(panel.querySelector('.pm-segtab-item.active'));
+      var newI = tabs.indexOf(tab);
+      var name = tab.getAttribute('data-tab');
+      view.style.setProperty('--pm-pane-dir', String(newI >= oldI ? 1 : -1));
+      tabs.forEach(function (t) { t.classList.toggle('active', t === tab); });
+      view.querySelectorAll('[data-pane]').forEach(function (p) { p.classList.toggle('pm-hidden', p.getAttribute('data-pane') !== name); });
+      requestAnimationFrame(function () { inkApi.move(true); });
+    });
+  }
+
+  /* ---- pmFlip ---- */
+  function pmFlip(scope, mutate, itemSel) {
+    var items = Array.prototype.slice.call(scope.querySelectorAll(itemSel));
+    var first = new Map();
+    items.forEach(function (it) { first.set(it, it.getBoundingClientRect()); });
+    mutate();
+    if (reduce()) return;
+    var dur = cssMs('--motion-med'), ez = settle();
+    items.forEach(function (it) {
+      var f = first.get(it); if (!f) return;
+      var l = it.getBoundingClientRect();
+      var dx = f.left - l.left, dy = f.top - l.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      it.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      it.style.transition = 'none';
+      void it.offsetWidth;
+      var a = it.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { duration: dur, easing: ez });
+      a.onfinish = function () { it.style.transform = ''; it.style.transition = ''; };
+      a.oncancel = function () { it.style.transform = ''; it.style.transition = ''; };
+    });
+  }
+  window.pmFlip = pmFlip;
+
+  /* ---- build demo rows ---- */
+  var listA = document.getElementById('listA');
+  for (var i = 0; i < 8; i++) { var d = document.createElement('div'); d.className = 'row'; d.textContent = 'result row ' + (i + 1); listA.appendChild(d); }
+
+  var DATA = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot'];
+  var cards = document.getElementById('cards');
+  DATA.forEach(function (n) { var c = document.createElement('div'); c.className = 'card'; c.setAttribute('data-name', n); c.innerHTML = '<b>' + n + '</b> — artifact card'; cards.appendChild(c); });
+  document.querySelectorAll('[data-sort]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      pmFlip(cards, function () {
+        var mode = b.getAttribute('data-sort');
+        var els = Array.prototype.slice.call(cards.querySelectorAll('.card'));
+        els.sort(function (x, y) {
+          var a = x.getAttribute('data-name'), c = y.getAttribute('data-name');
+          if (mode === 'za') return c.localeCompare(a);
+          if (mode === 'len') return a.length - c.length;
+          return a.localeCompare(c);
+        });
+        els.forEach(function (e) { cards.appendChild(e); });
+      }, '.card');
+    });
+  });
+
+  var inkA = scaleXInk(document.getElementById('segA'), document.getElementById('inkA'));
+  widthInk(document.getElementById('segB'), document.getElementById('inkB'));
+  assignPi(document.getElementById('viewA'));
+  wirePanel(document.getElementById('panelA'), document.getElementById('viewA'), inkA);
+
+  document.getElementById('rmTog').addEventListener('click', function () {
+    var de = document.documentElement;
+    de.setAttribute('data-motion', de.getAttribute('data-motion') === 'reduced' ? 'full' : 'reduced');
+  });
+})();
+</script>
+</body>
+</html>

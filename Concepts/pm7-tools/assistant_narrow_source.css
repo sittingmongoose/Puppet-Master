@@ -1,0 +1,15 @@
+/* B06: video-inspired flat manager layout removed. Pre-video manager cards,
+   grids, spacing and label/value alignment come from their original owners.
+   Keep separately requested concise text, no-accent and safe wrapping fixes. */
+#pm-settings-root .manager-page,#pm-settings-root .manager-body,#pm-settings-root .resource-detail,#pm-settings-root .resource-content {min-width:0;max-width:100%;}
+#pm-settings-root .pm50-explanation {font-size:11px;color:var(--text-muted);margin:6px 0 0;}
+#pm-settings-root .pm50-explanation summary {width:max-content;cursor:pointer;list-style:none;border-bottom:1px dotted currentColor;}
+#pm-settings-root .pm50-explanation summary::before {content:'›';display:inline-block;margin-right:6px;}
+#pm-settings-root .pm50-explanation[open] summary::before {content:'⌄';}
+#pm-settings-root .pm50-explanation[open] {padding:4px 0 8px;}
+#pm-settings-root .pm50-explanation .panel-subtitle {margin:8px 0;}
+#pm-settings-root .manager-page .panel-card::before,#pm-settings-root .manager-page .stat-card::before,#pm-settings-root .manager-page .alert-strip::before,#pm-settings-root .resource-row::before {display:none;}
+#pm-settings-root .resource-row.active {border-left-width:0;box-shadow:0 0 0 1px var(--k3-line) inset;}
+#pm-settings-root .setting-row {border-left-width:0;}
+#pm-settings-root .prompt-box {max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;box-sizing:border-box;border-left-width:1px;}
+#pm-settings-portals .dialog-footer {padding:16px 22px;gap:9px;flex-wrap:wrap;}
