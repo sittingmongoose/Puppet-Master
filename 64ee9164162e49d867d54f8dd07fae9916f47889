@@ -1,0 +1,6 @@
+Also contains the 2026-09-08 terminal research repairs (ledger pldg-20260908-001-terminal-research-repairs), unrelated to the commit title:
+- Retry identity: assistant-chat-design ACD-108 + prose, UI_Command_Catalog UCC-067 + rerun row, Automated_Testing_System ATS-021.
+- Output-read semantics: Section15 SMPFS-023 + anchor clarification, storage-plan SP-125, ATS-022.
+- ConPTY conformance: Section15 SMPFS-070, ATS-022.
+- Command-block value alignment: storage_value_registry v2 value under the unchanged key, storage-plan SP-100/124/128, SMPFS-022, ATS-022, new Plans/terminal_command_block_contract_fixtures.json.
+Evidence: PM-Experiments/research-audit-native-20260907/process-pilot-20260908/repairs/ (terminal-corrections.patch, workflow-initial-landing.json, schema-landing.json). Checker committed separately as scripts/pm-terminal-command-block-contracts.py.
