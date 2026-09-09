@@ -1432,6 +1432,8 @@ Terminal storage MUST preserve the `section/tab/pane/session` identity split rat
 
 The restore record carries an explicit transcript-vs-command-block boundary. Transcript chunks are bounded, append-oriented, and referenced by session and scrollback anchors; command blocks are metadata layered on those transcript ranges and may become partially backed or metadata-only when transcript retention prunes backing output. This is the canonical no-fake-liveness rule: a restored pane may be historical, review-limited, or history-unavailable, but storage MUST NOT mark it live unless liveness is revalidated by the terminal runtime.
 
+Retained transcript reads consume Section15's Terminal output read semantics (`SMPFS-023`). Storage resolves the whole requested backing range against a coherent retained view and discloses missing intervals or unavailable refs, including when command metadata and both endpoint locations survive. It must not reconstruct absent output from command text or report missing backing as known-empty output. Pruning and read races preserve authoritative command completion independently of output availability. Existing transcript chunks and references carry this contract; this clarification does not introduce another terminal store or promise unbounded retention.
+
 Storage also owns the durable join shape for `/tab/pane/session` and `/tab/pane/session/dev-session` lookups. Command `/routing` and `/open` selectors persist target identity refs such as `terminal_section_id`, `terminal_tab_id`, `terminal_pane_id`, `terminal_session_id`, and optional `dev_session_id`; route/open recovery must use those refs instead of labels, last visible titles, or legacy `cmd.dev.*`-only hidden-gap assumptions.
 
 Terminal GUI `/persistence/settings` records are separate from live PTY state. Storage persists project/workspace defaults, per-tab overrides, font and color references, transcript-retention settings, and shell profile refs; `Plans/FinalGUISpec.md` owns visible Settings > Terminal GUI grouping, `/theming/discoverability`, shortcuts, and user-facing labels, while this plan owns the durable keys and migration behavior consumed by that GUI.
@@ -1439,6 +1441,24 @@ Terminal GUI `/persistence/settings` records are separate from live PTY state. S
 Terminal terminology cross-refs remain explicit so storage does not drift back into ambiguous "terminal tab" wording. `terminal_section_id`, `terminal_tab_id`, `terminal_pane_id`, `terminal_session_id`, and `dev_session_id` are the persisted terms consumed by `Plans/Glossary.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Contracts_V0.md`; adjacent terminal-heavy tools and /IDEs research informs these records only through canonical fields, not through research-task names.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+### Terminal command-block value migration
+
+The `terminal_command_block` family retains the exact `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}` key and uses value schema `pm.storage_value.terminal_command_block.v2`, version `2.0.0`, in `Plans/storage_value_registry.json`. The complete original value schema is retained exactly under `$defs.legacy_v1`. Supported old values remain readable for at least one major release through old-store admission, coordinator conversion and backup inspection; they are not residual ordinary v1 rows after successful migration. Family census, encoding, retention, backup authority and recovery policy are unchanged.
+
+The value maps command text, cwd and start/end markers to nullable non-secret refs; `exit_code` and `finished_at_utc` are required and nullable, and `duration_ms` is nullable. Original transcript/evidence refs are preserved. Null denotes an unknown fact, distinct from a retained ref whose backing is unavailable or redacted. Observed records have `record_origin = observed`, a genuinely assigned monotonic session ordinal, an existing lifecycle token and `migration_source_ref = null`. Never infer command order or boundaries from timestamps, keys or replay position. Inline observation evidence binds project/session/block, stable source identity, source category, event kind, fact values and per-fact authoritative/approximate/null confidence. A null fact cannot claim known confidence. Capture quality is separate from current artifact availability; raw command/cwd bodies do not belong in these reference fields.
+
+Integration category describes grouping separately from completion authority. Shell/runtime evidence outranks heuristic grouping; heuristic grouping can coexist with independently authoritative command completion. A runtime category or unresolved ref alone proves no outcome. `command_completion` requires completed lifecycle in the row and completion evidence with authoritative lifecycle confidence; an active block closed by `session_end` remains indeterminate/abnormal with no invented command exit. Marker refs resolve to their owning project/session/block and a real transcript boundary target with matching project/session ownership; multiple blocks may share a session transcript. Late completion metadata must come from the same stable authoritative source even if its artifact identity changes.
+
+Observed v2 `status = null` is a compatibility-field rule, not absence of an outcome. Historical display derives from admitted lifecycle, exit facts and qualified source: completed plus authoritative zero/nonzero exit retains its corresponding outcome; completed with unknown exit does not invent success; session-end/indeterminate stays qualified; historical running does not prove current liveness. Converted legacy status remains an attributed compatibility claim, including redacted, and does not suppress independently corroborated completion. Command-text redaction does not erase safe exit/duration facts. Later loss of previously admitted evidence, markers or transcript backing preserves known completion while review becomes partial/unavailable under SMPFS-023/SP-125. Unknown, unavailable or redacted command text is not exact copy/rerun input; explicit edited execution remains governed by the existing action policy.
+
+The declared family value edge is `1.0.0 -> 2.0.0`, with ordered stable steps `terminal_command_block.value_1_to_2.convert` and `terminal_command_block.value_1_to_2.verify`. Before production writes, bind it to the actual registered store graph and application ceilings under Case L-1; this amendment allocates no production store integers. Only StorageMigrationCoordinator may convert under its aggregate exclusive lock/lease, verified protected original backup bytes and a matching persisted journal established before rewrite. Convert every affected row transactionally, verify all target rows, refs and checkpoints, stamp last, reopen without product writers and read back the existing receipt before normal operation. The committed journal source/target endpoints must equal both registered graph and receipt endpoints even when every row is already target-version. This reuses the existing storage recovery schema, receipt and validator without a new receipt contract.
+
+Deterministic conversion preserves all original optional fields that were present, normalizes absent exit/end time to null, and introduces unknown ordinal/lifecycle/source/confidence as null rather than inventing facts. `record_origin = legacy_v1` requires a typed `migration_source_ref` proof joining exact original key/value hash/schema/version/identity to the journal and protected backup before rewrite; the verified receipt links the conversion afterward. Ordinary producers cannot invoke this exception, and already-target rows cannot be reinterpreted as old input. Invalid, unsafe or ambiguous originals remain protected under existing recovery/quarantine policy and cannot disappear into a successful partial conversion. Mixed family/store versions are allowed only under the matching nonterminal journal and exclusive lock; unjournaled or committed mixed steady state blocks. A newer unsupported store remains metadata-diagnostics-only with its root untouched, not a historical viewer.
+
+`Plans/terminal_command_block_contract_fixtures.json` and `scripts/pm-terminal-command-block-contracts.py` check the registered family and existing recovery contract. The fixture's `synthetic-redb` edge `900001 -> 900002` and app version are synthetic only. Canonical JSON fixture bytes/hashes are not production MessagePack encoding. Protected custody, prior admission, lock, reopen and receipt-readback flags are mock witnesses, not proof of durable protection, authentication or process ordering. Actual graph registration/ceilings, coordinated writes, backup/ref security, crash recovery, UI action guards and native runtime acceptance remain unexecuted obligations.
+
+ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/storage_recovery_contracts.schema.json, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-022, ContractName:Plans/Automated_Testing_System.md#ATS-022
 
 ### Naming and migration rules (terminal/storage keys)
 Storage migrations are forward-only and monotonic.
@@ -8008,10 +8028,12 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
+- Terminal command-block field minima use the registered v2 value at the unchanged v1 key and the Terminal command-block value migration mapping; observed nullable facts, source evidence, confidence and status-null compatibility semantics remain explicit.
 - This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
+- python3 scripts/pm-terminal-command-block-contracts.py
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
 risk_class: storage_plan_drift
@@ -8023,6 +8045,7 @@ node_compile_hint:
   mode: canonical_field_minima_for_attempt_terminal_dev_records
   create_worknodes: false
 source_lineage:
+- Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
 preserved_exact_tokens:
 - attempt_record.v1:{project_id}:{node_id}:{attempt_number}
@@ -9454,10 +9477,12 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
+- Historical command-block display consumes the Terminal command-block value migration mapping; qualified completion survives later backing loss, unknown exit does not imply success, and restored running metadata proves no current liveness.
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
+- python3 scripts/pm-terminal-command-block-contracts.py
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
 risk_class: storage_plan_drift
@@ -9469,6 +9494,7 @@ node_compile_hint:
   mode: terminal_pane_session_and_restore_identity_split
   create_worknodes: false
 source_lineage:
+- Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
 preserved_exact_tokens:
 - terminal_panes
@@ -9500,7 +9526,7 @@ plan_unit_id: SP-125
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Terminal restore records carry an explicit transcript-vs-command-block boundary; restored panes may be historical, review-limited, or history-unavailable, and storage must not mark them live unless terminal runtime liveness is revalidated.
+canonical_text: Terminal restore records carry an explicit transcript-vs-command-block boundary; restored panes may be historical, review-limited, or history-unavailable, and storage must not mark them live unless terminal runtime liveness is revalidated. Retained reads consume SMPFS-023 whole-range backing and coherent-read semantics; missing output is not known-empty output and does not change authoritative command completion.
 gui_related: false
 gui_classification_reason: This unit preserves backend terminal transcript retention and liveness truth rules.
 split_recommended: false
@@ -9512,6 +9538,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- A retained read with surviving metadata/endpoints but a missing interior chunk is partial or unavailable, never complete; a concurrent pruning read uses a coherent view or reports degradation.
+- Pruning all output of a command with known completion preserves that completion and reports unavailable backing rather than an empty successful-output reconstruction.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -9527,6 +9555,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0002
 preserved_exact_tokens:
 - transcript-vs-command-block boundary
 - Transcript chunks
@@ -9690,10 +9719,13 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
+- Terminal command-block value edge 1.0.0 to 2.0.0 preserves the exact legacy schema and key; coordinator-only conversion requires protected original custody, a matching journal, complete target verification, final stamp, reopen and existing receipt readback before ordinary writes.
+- Real registered store graph and application ceilings are prerequisites; synthetic fixture store versions allocate no production edge, and unjournaled or committed mixed versions fail closed.
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
+- python3 scripts/pm-terminal-command-block-contracts.py
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
 risk_class: storage_plan_drift
@@ -9705,6 +9737,7 @@ node_compile_hint:
   mode: terminal_storage_key_naming_and_forward_only_migration
   create_worknodes: false
 source_lineage:
+- Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0081
 preserved_exact_tokens:
 - forward-only

@@ -1,0 +1,14 @@
+{
+  "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+  "status": "pass",
+  "summary": {
+    "events": 2,
+    "design_atoms": 2,
+    "decisions": 1,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 2
+  },
+  "notes": "Ledger validator and targeted PlanUnit lineage/diff checks pass. Standard run-gates and shard check fail on unsealed generated state and unreadable unrelated fixture files; no governance seal claimed."
+}

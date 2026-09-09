@@ -1,0 +1,23 @@
+{
+  "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+  "ledger_validator": "pass: 2 atoms, 2 compile items, 1077 PlanUnits parsed, zero errors/warnings",
+  "changed_owner_consumer_docs": [
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/storage-plan.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "changed_plan_unit_ids": [
+    "ACD-108",
+    "UCC-067",
+    "SMPFS-023",
+    "SP-125",
+    "ATS-021",
+    "ATS-022"
+  ],
+  "diff_check": "pass",
+  "semantic_review": "Retry identity aligned with existing catalog; output backing finality independent of completion; ordinary reflow preserves valid content; source refs resolve reciprocally. Acceptance criteria specify future runtime tests, not executed tests.",
+  "standard_governance": "not clean; run-gates started before repair and continued during it; JSON scan timed out, fixture reads denied, and generated hashes/migration/evidence/shards are stale. No clean baseline or seal is claimed.",
+  "governance_artifacts_regenerated": false
+}

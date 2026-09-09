@@ -1,0 +1,11 @@
+# Accepted bounded command-block value repair
+
+Root accepts atom-0002 under the existing bounded repair authorization. J8 and J13 identified the same owner/closed-value seam; durable record mapping was also an unlanded September research theme, so this is rediscovery rather than proven program-level novelty. The frozen native jobs did not finish this repair.
+
+The reviewed follow-up keeps terminal_command_block.v1 key geometry and the exact legacy schema, while introducing pm.storage_value.terminal_command_block.v2 / 2.0.0. Observed facts and confidence use explicit unknowns and typed source joins; status=null is a compatibility-field rule, not loss of a qualified completion outcome. Converted legacy claims remain attributed, with no invented liveness, order or success. Later backing loss does not rewrite known completion.
+
+Conversion follows StorageMigrationCoordinator with protected original bytes, matching journal, complete target verification, stamp-last, reopen and the existing receipt. Ordinary mixed-version operation is forbidden. Actual registered store graph and application ceilings are prerequisites to future writes; synthetic fixture versions 900001 -> 900002 allocate no production version. Existing receipt/global registry schema, family census, retention and recovery policy stay unchanged.
+
+The conditional final review was satisfied by a staged registered-family validator: 73 selected shape/semantic checks pass. Command-completion/running inconsistency, wrong committed journal endpoints, and missing or wrong-owner marker transcript targets reject; session-end, unknown exit, independently authoritative completion with heuristic grouping, and later backing loss remain supported. Mock custody/admission/lock/reopen/readback witnesses and JSON byte encoding are not production MessagePack, native migration or security proof. Exact reviewed hashes are in source_receipts.json.
+
+Compile scope: storage value family, storage owner mapping and SP-100/SP-124/SP-128, SMPFS-022 owner reference, ATS-022, one named fixture and one pure validation script. Existing Chat/FinalGUI references suffice. No product feature, engine, package, OS policy, governance seal or runtime implementation is approved.

@@ -296,11 +296,20 @@ Rules:
 - shell-integrated command metadata relies on shell hooks plus escape-sequence signals rather than transcript guessing; integration `/patterns` cover OSC 7 `/cwd`, OSC 133-style `/prompt` and `/command` boundary markers, bash `PROMPT_COMMAND` and prompt wiring, zsh `precmd` and `preexec`, fish `/preexec/postexec-style` functions, generic `/precmd-style` hooks where available, and PowerShell `/profile` and prompt integration.
 - Capability tiers record whether each `/session` has trustworthy prompt start `/end`, command start `/end`, cwd reporting, exit status reporting, shell/profile identification, and per-command metadata; weak shell-integration falls back to lower-confidence command metadata rather than invented exactness.
 - Command-block identity is transcript-oriented metadata, not rendered UI fragments: each block has `command_block_id`, owning `terminal_session_id`, monotonic ordinal, nullable `command_text`, nullable cwd, `block-start`/start_marker reference, `block-end`/end_marker reference, `started_at`, nullable `ended_at`, nullable `duration_ms`, nullable `exit_status`, lifecycle state, and integration source. Lifecycle states include `pending_prompt`, `collecting_command`, `running`, `completed`, and `indeterminate`; shell-provided markers win when available, and weak integration must not fabricate block-start, block-end, command_text, or exit_status.
+- Persisted command-block fields and qualified historical display use Storage's [Terminal command-block value migration](storage-plan.md#terminal-command-block-value-migration), including observed status-null compatibility semantics and coordinator-converted legacy claims.
 - Command-block completion is immutable except for late-arriving metadata from the same authoritative source and carries `/confidence` when completion source quality matters. If session-exit or `/terminated` occurs during an active block, PM finalizes the block as abnormal or indeterminate instead of dropping partial `/command/output/completion`; sticky-header resolution uses the nearest enclosing authoritative command block for the top visible transcript position, omits the header when no block exists, and marks approximations clearly.
 - A command block is a prompt-to-completion unit; `/nearest` command-block navigation resolves to the nearest authoritative block for the visible transcript position and must disclose lower-confidence approximations.
 - The legacy marker `session_terminated_while_running` maps to the `session-end` closure path: `session_runtime` and `shell_integration` evidence beat any `transcript_heuristic`, and weak integration must keep `block-end`, command text, and copy-output confidence explicit.
 - Retention and pruning are honest: command-history metadata is not enough by itself for review, PM preserves a bounded review transcript by default, and it does not promise infinite retention or lossless replay of arbitrary long-running PTY byte streams. The storage model separates active rendering `/input` buffer state, persisted transcript chunks for `/restore`, and lightweight command-block or session metadata keyed to transcript references; transcript persistence is append-oriented and chunked rather than one giant row or `/blob`, and `/flush` writes are batched so high-output sessions do not stall the UI thread.
 - If pruning invalidates a command block's backing output range, the block remains as partially-backed or metadata-only command metadata; raw-transcript-only actions degrade honestly with `/history-unavailable`, transcript `/search` operates only on retained raw transcript or `/scrollback`, command or `/block` navigation may continue on metadata, and a restored-pane first restores structure, then recent transcript when available, then live `/reconnect` only where emulator-state and runtime support allow it. Restoring `/tabs/panes/session` shells must not require full transcript replay or fold transcript rows into `/layout` persistence.
+
+#### Terminal output read semantics
+
+Copy output, export, chat previews, and agent output retrieval consume the same backing-validity rules. A read identifies its session, command block when known, source buffer or retained transcript, and observed boundary. It distinguishes known-empty output, complete-so-far output through an observed live boundary, final complete output through a proven closed boundary, partially backed output, and unavailable output. An empty return caused by missing backing is unavailable, not proof that the command produced no output. Availability and finality are independent of authoritative command completion: losing output does not change a known exit status into an indeterminate command outcome.
+
+Completeness requires valid backing for the entire requested output range, not only surviving endpoints. Reads use one coherent version or equivalent synchronized view; concurrent pruning, overwrite, clear, or source replacement must cause a coherent retry or an explicit partial/unavailable result, never stitched text presented as complete. Missing intervals and source uncertainty remain disclosed to copy/export/agent callers through the existing loss accounting. Retained artifacts and live-buffer text are distinguished; command metadata alone cannot reconstruct absent output.
+
+Ordinary resize and soft-wrap reflow preserve logical text selection and command anchors when content survives. Destructive overwrite, erasure, pruning, and alternate-screen replacement invalidate only affected content associations; unaffected retained ranges remain usable. A still-addressable location or matching viewport hash does not prove its old content survives. Output extraction preserves intentional whitespace, real line breaks, mid-row boundaries, no-final-newline output, and grapheme/wide-character text without including adjacent prompt or command text. Weak shell markers or concurrent writers must disclose uncertain attribution instead of claiming exact command-only output. These are behavioral requirements; endpoint representation, generation fields, and extraction type names remain implementation choices.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 
@@ -619,6 +628,7 @@ Rules:
 - subsystem boundaries and ownership MUST be explicit
 - The terminal SSOT layers are: PTY `/session/process` transport; VT `/ANSI/grid/buffer` terminal-model `/engine`; shell-integration metadata for prompt marks, command boundaries, exit status, cwd, recent command, and `/directory`; and workspace/session UI for sections, tabs, quadrants, detached windows, command palette, search, blocks, `/separators`, sticky headers, badges, and quick actions.
 - acceptance gates MUST exist for process-host correctness, renderer stability, transcript integrity, shell-integration degradation, and cross-surface reveal behavior
+- For a selected Windows process host using ConPTY, the process-host correctness gate MUST verify independent input/output channel service under concurrent pressure and owned-resource disposition after each partial startup/attachment failure. Blocking I/O on either channel must not prevent the host from servicing the other; this does not require the client to produce or consume data. Failed startup is typed `failed_to_start` against the exact session; any cleanup failure is diagnosed and abandoned state is not reused. Version-aware teardown tests distinguish close initiation, API return, observed process exit, and output-channel closure while preserving required channel servicing and final-output accounting under SMPFS-023. Partial output MUST NOT delay or invalidate known completion. Presentation-only actions retain existing host-lifetime boundaries; resource cleanup does not imply rollback of external effects. Cursor-query servicing is tested only if enabled.
 - Parser-engine gates cover `/VT` escape parsing, `/ANSI/grid/buffer` state, `/selection/scroll` anchor stability, and regression-tested replay fixtures for command blocks, alternate-screen transitions, huge output, search, and resize.
 - GPU acceleration may improve rendering, but it does not excuse a bad terminal model or transcript architecture
 - a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
@@ -2139,10 +2149,12 @@ depends_on:
 - CV-215
 unblocks: []
 acceptance_criteria:
+- Persisted value mapping and source-qualified historical display consume Plans/storage-plan.md#terminal-command-block-value-migration and the terminal_command_block family in Plans/storage_value_registry.json; grouping quality remains separate from completion authority.
 - SMPFS-022 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
+- python3 scripts/pm-terminal-command-block-contracts.py
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
 risk_class: command_block_identity_drift
@@ -2154,6 +2166,7 @@ node_compile_hint:
   mode: command_block_identity_metadata
   create_worknodes: false
 source_lineage:
+- Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0016
 preserved_exact_tokens:
 - command_block_id
@@ -2184,7 +2197,7 @@ plan_unit_id: SMPFS-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Command review surfaces, cards, navigation, and sticky headers degrade honestly when transcript retention is pruned; restored panes restore structure and recent transcript first and reconnect only when runtime support exists.
+canonical_text: Command review surfaces, cards, navigation, and sticky headers degrade honestly when transcript retention is pruned; restored panes restore structure and recent transcript first and reconnect only when runtime support exists. Terminal output read semantics distinguish empty, complete-so-far, final, partial and unavailable backing, preserve known command outcomes independently, and require coherent whole-range validity without invalidating surviving content on ordinary resize.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: true
@@ -2199,6 +2212,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - SMPFS-023 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- Copy/export/chat/agent readers distinguish known-empty, complete-so-far, final complete, partial and unavailable output; missing backing never implies empty output or changes a known command outcome.
+- Whole-range validity and a coherent observed boundary are checked even when endpoints survive; pruning or overwrite during a read yields coherent text with explicit degradation rather than false completeness.
+- Ordinary reflow preserves surviving logical selections; destructive mutations invalidate affected associations while retaining unaffected output. Exact-text fixtures cover mid-row output, no final newline, whitespace, graphemes, wide characters, alternate-screen changes and uncertain writer attribution.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -2214,6 +2230,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0016
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0002
 preserved_exact_tokens:
 - command cards
 - navigation
@@ -5022,7 +5039,7 @@ plan_unit_id: SMPFS-070
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal subsystem architecture has explicit process-host, PTY transport, VT/ANSI grid buffer engine, renderer, shell-integration metadata, and workspace/session UI layers with acceptance gates for platform behavior.
+canonical_text: Terminal subsystem architecture has explicit process-host, PTY transport, VT/ANSI grid buffer engine, renderer, shell-integration metadata, and workspace/session UI layers with acceptance gates for platform behavior. For a selected Windows host using ConPTY, the process-host gate requires independent channel service under concurrent pressure, resource disposition after partial startup/attachment failure, typed startup failure, diagnosis of any cleanup failure without abandoned-state reuse, and version-aware teardown servicing under SMPFS-023.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -5035,6 +5052,9 @@ depends_on:
 - RM-025
 unblocks: []
 acceptance_criteria:
+- For selected ConPTY hosts, blocking I/O on either channel must not prevent the host from servicing the other under concurrent pressure; the client need not produce or consume data. Every partial startup/attachment failure has an acquired-resource disposition and session-specific failed_to_start; any cleanup failure is diagnosed and abandoned state is not reused.
+- Version-aware teardown acceptance distinguishes close initiation, API return, observed process exit, and output-channel closure; required channel servicing and final-output accounting consume SMPFS-023 without delaying or invalidating known completion for partial output. Presentation-only actions preserve host lifetime, and resource cleanup does not imply rollback of external effects.
+- ATS-022 supplies separate host-failure injection and native-host acceptance; cursor-query cases apply only if enabled. These gates select no backend, FFI, DLL distribution, supported OS version, or numeric timeout.
 - SMPFS-070 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
@@ -5050,6 +5070,7 @@ node_compile_hint:
   mode: terminal_subsystem_layers_gates
   create_worknodes: false
 source_lineage:
+- Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0001
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
 preserved_exact_tokens:
 - process host
@@ -9465,6 +9486,8 @@ Required record minima:
 - `TerminalSessionRestoreDecision`: `decision_id`, `terminal_session_id`, `restore_state`, `reason_code`, `created_at_utc`.
 - `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
 - `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
+
+`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow.
 
 ### Browser Runtime Packaging Boundary
 

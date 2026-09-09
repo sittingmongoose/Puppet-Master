@@ -1,0 +1,23 @@
+{
+  "ledger_id": "pldg-20260908-002-terminal-workflow-findings",
+  "status": "fail",
+  "summary": {
+    "events": 5,
+    "design_atoms": 3,
+    "decisions": 3,
+    "questions": 1,
+    "blockers": 0,
+    "corrections": 0,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 3,
+    "plan_units_checked": 1002,
+    "scoped_registered_family_contracts": "73 passed against landed schema"
+  },
+  "errors": [
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Section15_MVP_Promoted_Features_Spec.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Section15_MVP_Promoted_Features_Spec.md']"
+  ],
+  "scope_note": "Three atoms are compiled and all scoped registered-family checks pass. Ledger validation retains only the existing Section15 Spec_Lock and plan_graph coverage omissions; canonical owners were not rerouted. Governance sealing was not requested."
+}

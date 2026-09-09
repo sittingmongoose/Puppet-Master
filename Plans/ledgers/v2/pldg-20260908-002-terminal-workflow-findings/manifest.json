@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "ledger_id": "pldg-20260908-002-terminal-workflow-findings",
+  "title": "Terminal workflow findings",
+  "status": "compiled",
+  "phase": "compiled_workflow_findings",
+  "created_at_utc": "2026-09-08T22:14:28.985195+00:00",
+  "updated_at_utc": "2026-09-08T22:56:18.519648+00:00",
+  "record_counts": {
+    "events": 5,
+    "design_atoms": 3,
+    "decisions": 3,
+    "questions": 1,
+    "blockers": 0,
+    "corrections": 0
+  },
+  "last_event_id": "evt-0005",
+  "source_context": "New v4 pilot findings and explicit follow-up adjudication; separate from historical September repairs.",
+  "notes": "Compilation is not a governance seal; unresolved product choices remain outside this ledger."
+}

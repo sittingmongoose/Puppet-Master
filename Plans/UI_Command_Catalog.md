@@ -855,7 +855,7 @@ Core rules:
 | --- | --- | --- | --- |
 | `cmd.terminal.open` | label `Open in Terminal`; `terminal_session_id`; reveal existing session context; optional `origin_surface`, `reveal-origin`, and `/linkback` refs | terminal session reveal/focus | command cards, terminal surfaces, Problems, Ports, Output, previews |
 | `cmd.terminal.show` | label `Show Terminal`; `terminal_session_id`; focus the same live session already associated with the card or route context | terminal session reveal/focus | command cards, terminal surfaces |
-| `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | new terminal launch; command replay | command cards, terminal surfaces |
+| `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | command replay with a new invocation; new terminal launch only for an explicit new-session request | command cards, terminal surfaces |
 | `cmd.terminal.detach` | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
 | `cmd.terminal.focus` | `terminal_session_id?`, `terminal_pane_id?`, `dev_session_id?`, `/last-relevant` fallback mode | terminal reveal/focus | command cards, command palette, terminal surfaces |
 | `cmd.terminal.split_pane` | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |
@@ -886,6 +886,7 @@ Rules:
 - Large payloads store full data behind refs/blobs
 - non-interactive work may promote if it becomes long-running
 - attach failure recovery differs for live process, ended process, and inline-only completed command
+- Retry identity follows the requested action: replacement execution creates a new session and invocation/card; explicit same-session rerun creates a new invocation/block/card in the bound session. Attachment recovery and movement reconciliation preserve the original invocation and never replay its command. Unavailable same-session continuity is disclosed instead of silently creating a replacement shell.
 - `Open in Terminal` and `Show Terminal` must focus the same live session
 - Reuse precedence is exact `terminal_session_id`, then explicit `/pane/session`, then workflow-bound `/thread/tool` or dev-session binding, then workspace-bound most-recent terminal context only for `Show Terminal`; commands that imply same-session continuity must not fall back to a fresh shell silently.
 - `/moving/detaching/reattaching` terminal UI is layout presentation over the same underlying session; focusing or moving a terminal must preserve `/tab/pane/session` identity unless the command explicitly asks for a new terminal.
@@ -4953,7 +4954,7 @@ plan_unit_id: UCC-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Terminal command rows preserve open, show, rerun, detach, focus, split/move/close pane, restart/replace, stable terminal session/pane/tab identities, labels, payloads, events, and UI surfaces.
+canonical_text: Terminal command rows preserve open, show, rerun, detach, focus, split/move/close pane, restart/replace, stable terminal session/pane/tab identities, labels, payloads, events, and UI surfaces. Explicit same-session rerun creates a fresh invocation in the bound session; replacement creates a new session; attachment recovery and presentation reconciliation do not replay execution.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4965,6 +4966,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-067 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- Rerun preserves terminal_session_id only when same-session execution is explicitly requested and available; replacement execution creates a new session. Both create a fresh invocation/block/card, while attachment and presentation recovery preserve the existing invocation/card.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -4980,6 +4982,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0039
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0001
 preserved_exact_tokens:
 - cmd.terminal.open
 - Open in Terminal

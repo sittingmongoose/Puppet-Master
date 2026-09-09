@@ -1,0 +1,66 @@
+{
+  "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+  "phase": "compiled_terminal_research_repairs",
+  "last_event_id": "evt-0002",
+  "governance_status": "not_requested",
+  "canonical_plan_targets": [
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/storage-plan.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/storage-plan.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "status": "compiled_terminal_research_repairs",
+  "items": [
+    {
+      "queue_id": "cq-0001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0001"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-108",
+        "UCC-067",
+        "ATS-021"
+      ]
+    },
+    {
+      "queue_id": "cq-0002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "target_doc": "Plans/storage-plan.md",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-023",
+        "SP-125",
+        "ATS-022"
+      ]
+    }
+  ],
+  "terminal_ledger_event_id": "evt-0002"
+}

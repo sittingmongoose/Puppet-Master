@@ -1,0 +1,90 @@
+{
+  "ledger_id": "pldg-20260908-002-terminal-workflow-findings",
+  "phase": "compiled_workflow_findings",
+  "last_event_id": "evt-0005",
+  "governance_status": "not_requested",
+  "canonical_plan_targets": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/storage-plan.md",
+    "Plans/storage_value_registry.json",
+    "Plans/terminal_command_block_contract_fixtures.json",
+    "scripts/pm-terminal-command-block-contracts.py"
+  ],
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "status": "compiled_workflow_findings",
+  "items": [
+    {
+      "queue_id": "cq-0001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0001"
+      ],
+      "target_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-070",
+        "ATS-022"
+      ],
+      "compile_event_id": "evt-0003"
+    },
+    {
+      "queue_id": "cq-0002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-360"
+      ],
+      "compile_event_id": "evt-0003"
+    },
+    {
+      "queue_id": "cq-0003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "target_doc": "Plans/storage-plan.md",
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SP-100",
+        "SP-124",
+        "SP-128",
+        "SMPFS-022",
+        "ATS-022"
+      ],
+      "compile_event_id": "evt-0005",
+      "companion_outputs": [
+        "Plans/storage_value_registry.json",
+        "Plans/terminal_command_block_contract_fixtures.json",
+        "scripts/pm-terminal-command-block-contracts.py"
+      ]
+    }
+  ],
+  "terminal_ledger_event_id": "evt-0005"
+}

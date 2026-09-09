@@ -1,0 +1,22 @@
+{
+  "errors": [
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Section15_MVP_Promoted_Features_Spec.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Section15_MVP_Promoted_Features_Spec.md']"
+  ],
+  "ledger_id": "pldg-20260908-002-terminal-workflow-findings",
+  "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+  "status": "fail",
+  "summary": {
+    "atoms": 3,
+    "compile_queue_items": 3,
+    "corrections": 0,
+    "decisions": 3,
+    "events": 5,
+    "plan_units_checked": 1002,
+    "questions": 1
+  },
+  "warnings": [],
+  "scoped_landing_receipt": "research-audit-native-20260907/process-pilot-20260908/repairs/schema-landing.json",
+  "scoped_contract_checks": 73,
+  "native_migration_acceptance": "NOT_RUN"
+}

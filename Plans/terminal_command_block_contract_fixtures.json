@@ -1,0 +1,468 @@
+{
+  "kind": "Synthetic one-family derivative fixture. All store numbers and app version are test-only, never production graph admission.",
+  "fixture_version": "1",
+  "graph": {
+    "fixture_only": true,
+    "store_id": "synthetic-redb",
+    "from_store": "900001",
+    "to_store": "900002",
+    "family_id": "terminal_command_block",
+    "from_family": "1.0.0",
+    "to_family": "2.0.0",
+    "schema_ids": [
+      "pm.storage_value.terminal_command_block.v1",
+      "pm.storage_value.terminal_command_block.v2"
+    ],
+    "step_ids": [
+      "terminal_command_block.value_1_to_2.convert",
+      "terminal_command_block.value_1_to_2.verify"
+    ]
+  },
+  "receipt": {
+    "schema_id": "pm.storage_value.migration_receipt.v1",
+    "schema_version": "1.0.0",
+    "receipt_id": "receipt:synthetic:block-value",
+    "migration_id": "migration:synthetic:block-value",
+    "from_version": "900001",
+    "to_version": "900002",
+    "schema_ids": [
+      "pm.storage_value.terminal_command_block.v1",
+      "pm.storage_value.terminal_command_block.v2"
+    ],
+    "store_transitions": [
+      {
+        "store_or_family_id": "synthetic-redb",
+        "from_version": "900001",
+        "to_version": "900002"
+      }
+    ],
+    "family_transitions": [
+      {
+        "store_or_family_id": "terminal_command_block",
+        "from_version": "1.0.0",
+        "to_version": "2.0.0"
+      }
+    ],
+    "preflight_result": {
+      "outcome": "ready",
+      "reason_code": null,
+      "filesystem_ref": "filesystem:synthetic",
+      "free_bytes": 300000000,
+      "required_free_bytes": 268437456,
+      "backup_bytes": 1000,
+      "staging_bytes": 1000,
+      "reserve_bytes": 268435456,
+      "checked_at_utc": "2026-09-08T12:00:00Z"
+    },
+    "backup_ref": "backup:synthetic:originals",
+    "applied_steps": [
+      {
+        "step_id": "terminal_command_block.value_1_to_2.convert",
+        "status": "applied",
+        "evidence_ref": "evidence:synthetic:convert"
+      },
+      {
+        "step_id": "terminal_command_block.value_1_to_2.verify",
+        "status": "verified",
+        "evidence_ref": "evidence:synthetic:verify"
+      }
+    ],
+    "verification_result": {
+      "status": "passed",
+      "detail_refs": [
+        "verification:synthetic:all-rows"
+      ]
+    },
+    "rollback_available": true,
+    "rollback_result": null,
+    "data_loss_risk": {
+      "class": "none",
+      "backup_boundary_ref": null,
+      "affected_family_ids": [],
+      "summary_ref": null
+    },
+    "terminal_status": "committed",
+    "started_at_utc": "2026-09-08T12:00:00Z",
+    "completed_at_utc": "2026-09-08T12:00:03Z",
+    "app_version": "synthetic-fixture-only",
+    "journal_ref": "journal:synthetic:block-value",
+    "redaction_profile": "no_secrets"
+  },
+  "rows": {
+    "strong": {
+      "schema_id": "pm.storage_value.terminal_command_block.v2",
+      "schema_version": "2.0.0",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-7",
+      "command_text_ref": "artifact:command:7",
+      "started_at_utc": "2026-09-08T12:00:00Z",
+      "finished_at_utc": "2026-09-08T12:00:01Z",
+      "exit_code": 0,
+      "status": null,
+      "redaction_profile": "redacted_refs_only",
+      "record_origin": "observed",
+      "migration_source_ref": null,
+      "ordinal": 7,
+      "cwd_ref": "artifact:cwd:7",
+      "start_marker_ref": "artifact:start:7",
+      "end_marker_ref": "artifact:end:7",
+      "duration_ms": 1000,
+      "lifecycle": "completed",
+      "integration_source": "shell_integration",
+      "integration_source_ref": "evidence:integration:7",
+      "completion_source_ref": "evidence:completion:7",
+      "confidence": {
+        "command_text": "authoritative",
+        "cwd": "authoritative",
+        "start_marker": "authoritative",
+        "end_marker": "authoritative",
+        "exit_status": "authoritative",
+        "lifecycle": "authoritative"
+      }
+    },
+    "weak": {
+      "schema_id": "pm.storage_value.terminal_command_block.v2",
+      "schema_version": "2.0.0",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-8",
+      "command_text_ref": null,
+      "started_at_utc": "2026-09-08T12:00:00Z",
+      "finished_at_utc": null,
+      "exit_code": null,
+      "status": null,
+      "redaction_profile": "redacted_refs_only",
+      "record_origin": "observed",
+      "migration_source_ref": null,
+      "ordinal": 8,
+      "cwd_ref": null,
+      "start_marker_ref": null,
+      "end_marker_ref": null,
+      "duration_ms": null,
+      "lifecycle": "indeterminate",
+      "integration_source": "transcript_heuristic",
+      "integration_source_ref": "evidence:integration:8",
+      "completion_source_ref": null,
+      "confidence": {
+        "command_text": null,
+        "cwd": null,
+        "start_marker": null,
+        "end_marker": null,
+        "exit_status": null,
+        "lifecycle": "approximate"
+      }
+    },
+    "heuristic_group_runtime_completion": {
+      "schema_id": "pm.storage_value.terminal_command_block.v2",
+      "schema_version": "2.0.0",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-9",
+      "command_text_ref": null,
+      "started_at_utc": "2026-09-08T12:00:00Z",
+      "finished_at_utc": "2026-09-08T12:00:01Z",
+      "exit_code": 0,
+      "status": null,
+      "redaction_profile": "redacted_refs_only",
+      "record_origin": "observed",
+      "migration_source_ref": null,
+      "ordinal": 9,
+      "cwd_ref": null,
+      "start_marker_ref": null,
+      "end_marker_ref": null,
+      "duration_ms": 1000,
+      "lifecycle": "completed",
+      "integration_source": "transcript_heuristic",
+      "integration_source_ref": "evidence:integration:9",
+      "completion_source_ref": "evidence:completion:9",
+      "confidence": {
+        "command_text": null,
+        "cwd": null,
+        "start_marker": null,
+        "end_marker": null,
+        "exit_status": "authoritative",
+        "lifecycle": "authoritative"
+      }
+    },
+    "session_end": {
+      "schema_id": "pm.storage_value.terminal_command_block.v2",
+      "schema_version": "2.0.0",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-10",
+      "command_text_ref": null,
+      "started_at_utc": "2026-09-08T12:00:00Z",
+      "finished_at_utc": "2026-09-08T12:00:01Z",
+      "exit_code": null,
+      "status": null,
+      "redaction_profile": "redacted_refs_only",
+      "record_origin": "observed",
+      "migration_source_ref": null,
+      "ordinal": 10,
+      "cwd_ref": null,
+      "start_marker_ref": null,
+      "end_marker_ref": null,
+      "duration_ms": null,
+      "lifecycle": "indeterminate",
+      "integration_source": "transcript_heuristic",
+      "integration_source_ref": "evidence:integration:10",
+      "completion_source_ref": "evidence:completion:10",
+      "confidence": {
+        "command_text": null,
+        "cwd": null,
+        "start_marker": null,
+        "end_marker": null,
+        "exit_status": null,
+        "lifecycle": "authoritative"
+      }
+    }
+  },
+  "evidence": {
+    "evidence:integration:7": {
+      "value": {
+        "source_identity": "source:integration:b-7",
+        "source_kind": "shell_integration",
+        "event_kind": "observation",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-7",
+        "facts": {
+          "command_text_ref": "artifact:command:7",
+          "cwd_ref": "artifact:cwd:7",
+          "start_marker_ref": "artifact:start:7",
+          "end_marker_ref": "artifact:end:7",
+          "exit_code": 0,
+          "lifecycle": "completed"
+        },
+        "confidence": {
+          "command_text": "authoritative",
+          "cwd": "authoritative",
+          "start_marker": "authoritative",
+          "end_marker": "authoritative",
+          "exit_status": "authoritative",
+          "lifecycle": "authoritative"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:completion:7": {
+      "value": {
+        "source_identity": "source:completion:b-7",
+        "source_kind": "session_runtime",
+        "event_kind": "command_completion",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-7",
+        "facts": {
+          "lifecycle": "completed",
+          "exit_code": 0,
+          "finished_at_utc": "2026-09-08T12:00:01Z",
+          "duration_ms": 1000
+        },
+        "confidence": {
+          "lifecycle": "authoritative",
+          "exit_status": "authoritative"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:integration:8": {
+      "value": {
+        "source_identity": "source:integration:b-8",
+        "source_kind": "transcript_heuristic",
+        "event_kind": "observation",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-8",
+        "facts": {
+          "command_text_ref": null,
+          "cwd_ref": null,
+          "start_marker_ref": null,
+          "end_marker_ref": null,
+          "exit_code": null,
+          "lifecycle": "indeterminate"
+        },
+        "confidence": {
+          "command_text": null,
+          "cwd": null,
+          "start_marker": null,
+          "end_marker": null,
+          "exit_status": null,
+          "lifecycle": "approximate"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:integration:9": {
+      "value": {
+        "source_identity": "source:integration:b-9",
+        "source_kind": "transcript_heuristic",
+        "event_kind": "observation",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-9",
+        "facts": {
+          "command_text_ref": null,
+          "cwd_ref": null,
+          "start_marker_ref": null,
+          "end_marker_ref": null,
+          "exit_code": null,
+          "lifecycle": "indeterminate"
+        },
+        "confidence": {
+          "command_text": null,
+          "cwd": null,
+          "start_marker": null,
+          "end_marker": null,
+          "exit_status": null,
+          "lifecycle": "approximate"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:completion:9": {
+      "value": {
+        "source_identity": "source:completion:b-9",
+        "source_kind": "session_runtime",
+        "event_kind": "command_completion",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-9",
+        "facts": {
+          "lifecycle": "completed",
+          "exit_code": 0,
+          "finished_at_utc": "2026-09-08T12:00:01Z",
+          "duration_ms": 1000
+        },
+        "confidence": {
+          "lifecycle": "authoritative",
+          "exit_status": "authoritative"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:integration:10": {
+      "value": {
+        "source_identity": "source:integration:b-10",
+        "source_kind": "transcript_heuristic",
+        "event_kind": "observation",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-10",
+        "facts": {
+          "command_text_ref": null,
+          "cwd_ref": null,
+          "start_marker_ref": null,
+          "end_marker_ref": null,
+          "exit_code": null,
+          "lifecycle": "indeterminate"
+        },
+        "confidence": {
+          "command_text": null,
+          "cwd": null,
+          "start_marker": null,
+          "end_marker": null,
+          "exit_status": null,
+          "lifecycle": "approximate"
+        }
+      },
+      "redaction_verified": true
+    },
+    "evidence:completion:10": {
+      "value": {
+        "source_identity": "source:completion:b-10",
+        "source_kind": "session_runtime",
+        "event_kind": "session_end",
+        "project_id": "p-fixture",
+        "terminal_session_id": "s-fixture",
+        "command_block_id": "b-10",
+        "facts": {
+          "lifecycle": "indeterminate",
+          "exit_code": null,
+          "finished_at_utc": "2026-09-08T12:00:01Z",
+          "duration_ms": null
+        },
+        "confidence": {
+          "lifecycle": "authoritative",
+          "exit_status": null
+        }
+      },
+      "redaction_verified": true
+    }
+  },
+  "artifacts": {
+    "artifact:command:7": {
+      "kind": "command",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-7",
+      "redaction_verified": true,
+      "state": "available"
+    },
+    "artifact:cwd:7": {
+      "kind": "cwd",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-7",
+      "redaction_verified": true,
+      "state": "available"
+    },
+    "artifact:start:7": {
+      "kind": "start_marker",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-7",
+      "redaction_verified": true,
+      "state": "available",
+      "transcript_ref": "artifact:transcript:7"
+    },
+    "artifact:end:7": {
+      "kind": "end_marker",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "command_block_id": "b-7",
+      "redaction_verified": true,
+      "state": "available",
+      "transcript_ref": "artifact:transcript:7"
+    },
+    "artifact:transcript:7": {
+      "kind": "transcript",
+      "project_id": "p-fixture",
+      "terminal_session_id": "s-fixture",
+      "redaction_verified": true,
+      "state": "available"
+    }
+  },
+  "legacy_statuses": [
+    "running",
+    "succeeded",
+    "failed",
+    "cancelled",
+    "redacted"
+  ],
+  "legacy_optional_shapes": [
+    "omitted",
+    "present"
+  ],
+  "legacy_base": {
+    "schema_id": "pm.storage_value.terminal_command_block.v1",
+    "schema_version": "1.0.0",
+    "project_id": "p-fixture",
+    "terminal_session_id": "s-fixture",
+    "command_block_id": "placeholder",
+    "command_text_ref": "artifact:legacy:command",
+    "started_at_utc": "2026-09-08T11:00:00Z",
+    "status": "succeeded",
+    "redaction_profile": "redacted_refs_only"
+  },
+  "legacy_optional_values": {
+    "finished_at_utc": "2026-09-08T11:00:01Z",
+    "exit_code": 0,
+    "transcript_ref": "artifact:legacy:transcript",
+    "evidence_refs": [
+      "evidence:legacy:capture"
+    ]
+  },
+  "limits": "Synthetic canonical JSON bytes are not production MessagePack. Protected custody, prior admission, exclusive lock, reopen and receipt-readback are mock witnesses; no production durability, authentication, redaction, ordering or native runtime proof."
+}

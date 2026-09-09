@@ -1,0 +1,5 @@
+# Authorization and retained constraints
+
+On 2026-09-08 Jared asked whether the objective was the process, PM docs, or both. The response proposed both: a reusable proven process, with a bounded revalidated application of September terminal findings as the first concrete Plans improvement. Jared then said: "ok set a goal, and get to work". This authorizes the bounded owner/consumer corrections proposed in that context. It does not approve novel features or material product choices found later.
+
+Research must discover unknowns in competitors and adjacent products before Plan comparison, retain discoveries and follow-ups without a fixed issue count, and use simple tolerant Markdown handoffs with program-owned bookkeeping and shared source acquisition. Accepted, rejected and deferred product decisions remain distinct. A landed finding requires verified owner/consumer changes, not a decision-log row alone. Preserve September evidence and historical failures; do not restart the July backlog, retired Qwen runs or a broad model matrix. This ledger covers the first two repairs only; the external process pilot remains active separately.

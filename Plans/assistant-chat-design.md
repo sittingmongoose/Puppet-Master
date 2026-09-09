@@ -1397,7 +1397,7 @@ Rules:
 - status, cwd, command summary, elapsed time, exit code / truncation indicator, and exit `/truncation-style` details
 - READ-ONLY and non-interactive
 - One card per command `/instance`
-- Retries create a new terminal and therefore a new mini terminal card
+- A retry that replaces execution creates a new terminal session and invocation card; an explicit same-session rerun preserves `terminal_session_id` and creates a new invocation/block/card. Retrying attachment or reconciling presentation does not replay execution or create a new invocation card.
 - Open in Terminal
 - terminal-handoff
 - pending
@@ -1620,7 +1620,7 @@ Rules:
 - status, cwd, command summary, elapsed time, exit code / truncation indicator, and exit `/truncation-style` details
 - READ-ONLY and non-interactive
 - One card per command `/instance`
-- Retries create a new terminal and therefore a new mini terminal card
+- A retry that replaces execution creates a new terminal session and invocation card; an explicit same-session rerun preserves `terminal_session_id` and creates a new invocation/block/card. Retrying attachment or reconciling presentation does not replay execution or create a new invocation card.
 - Shell owns interactive state; chat owns preview+audit
 - Commands requiring stdin/TTY start Terminal immediately
 - Background/watch/server actions create terminal-owned session
@@ -8708,8 +8708,10 @@ canonical_text: >-
   Interactive, long-running, stdin/TTY, watch/server, or user-promoted
   operations bind to a terminal session while chat retains bounded preview,
   audit card, and stable `Open in Terminal`; shell owns interactive state,
-  chat owns preview+audit, and retries create a new terminal and mini-terminal
-  card.
+  chat owns preview+audit. Replacement execution creates a new terminal session
+  and invocation card; explicit same-session rerun preserves terminal_session_id
+  and creates a new invocation/block/card. Attachment recovery and presentation
+  reconciliation preserve the original invocation without replaying execution.
 gui_related: true
 gui_classification_reason: Terminal handoff, preview, audit card, and Open in Terminal are visible UI behavior.
 depends_on: [ACD-102, ACD-104]
@@ -8718,7 +8720,9 @@ acceptance_criteria:
   - Interactive, long-running, stdin/TTY, watch/server, and user-promoted operations bind to terminal sessions.
   - Chat keeps bounded preview and audit card after handoff.
   - Shell owns interactive state.
-  - Retries create new terminal and mini-terminal card instances.
+  - Replacement execution creates a new terminal_session_id and invocation card; prior cards remain bound to their original invocation.
+  - An explicit same-session rerun creates a fresh invocation/block/card while preserving terminal_session_id; unavailable same-session continuity must not silently launch a replacement shell.
+  - Retrying attachment and reconciling move/detach/reveal preserve session and invocation identity, do not replay the command, and do not duplicate the invocation card.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8733,6 +8737,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0063
+  - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0001
 preserved_exact_tokens:
   - "stdin/TTY"
   - "watch/server"
