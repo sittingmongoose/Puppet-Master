@@ -1,0 +1,650 @@
+{
+  "schema": "d4.accounting_final_review.v1",
+  "created_at_utc": "2026-09-09T12:39:33.224670+00:00",
+  "status": "pass",
+  "reviewer": "label_source_adjudication",
+  "scope": "Independent bounded verification of whitelisted accounting projections, historical conditional valuation arithmetic, unique execution identity, timing reconstruction, sanitization and stated limits. No current-price verification, provider-bill reconciliation or native raw-session replay.",
+  "reviewed_accounting": {
+    "json": {
+      "path": "artifact:landing/accounting.json",
+      "sha256": "aa9daf9cdcd881018b119d41f96f351cf7af1f4e01cb5f2b257ee6d7dae32c6c"
+    },
+    "markdown": {
+      "path": "artifact:landing/accounting.md",
+      "sha256": "99af0a4e51328fb6de70a870e58a048262751664069b811b51a95432daa3eb6d"
+    }
+  },
+  "collector_exit_provenance": {
+    "reported_exit_code": 0,
+    "source": "Root-observed exec tool completion for retained-session:7165fe2e5b3ffd16, relayed explicitly by root; returned aggregates included exit_code 0.",
+    "historical_wrapper_receipt_exists": false,
+    "new_root_attestation_required": false,
+    "independent_artifact_basis": "Unedited measurements.json and native-valuations.json hashes, all eleven settled native records, zero collection_errors, and generated_at after controller exit. This review does not mislabel the tool observation as a historical process-wrapper receipt."
+  },
+  "captured_source_state": {
+    "collected_at_utc": "2026-09-09T12:19:19.692652+00:00",
+    "controller_exit_at_utc": "2026-09-09T12:17:17.808509+00:00",
+    "collected_after_controller_exit": true,
+    "collection_errors": [],
+    "unfinished_jobs": [],
+    "failed_or_other_terminal_jobs": [],
+    "interrupted_jobs": [],
+    "unique_native_execution_ids": 11,
+    "execution_ids_equal_job_and_valuation_sets": true,
+    "imported_or_duplicate_execution_count": 0,
+    "adapters": {
+      "codex_astra": 8,
+      "omp_deepseek": 3
+    }
+  },
+  "verification_counts": {
+    "source_artifact_hash_and_size_checks": 7,
+    "safe_pricing_basis_byte_copy": 1,
+    "original_job_row_hash_and_whitelist_checks": 11,
+    "original_deepseek_response_row_hash_and_source_identity_checks": 250,
+    "deepseek_response_intervals_recomputed": 250,
+    "codex_summary_token_totals_matched": 8,
+    "codex_captured_native_usage_notifications": 458,
+    "markdown_per_job_rows_checked": 11,
+    "markdown_headline_and_time_values_checked": 10,
+    "timing_and_coverage_projections_checked": 14,
+    "invocation_intervals_reconstructed": 11,
+    "merged_intervals": 10,
+    "gaps": 9
+  },
+  "historical_basis": {
+    "date": "2026-09-08",
+    "current_tariffs_verified": false,
+    "source_path": "artifact:landing/evidence/pricing-basis-2026-09-08.md",
+    "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d",
+    "astra_api_rates_per_million": {
+      "uncached_input": "10",
+      "cached_input": "1",
+      "output": "50"
+    },
+    "astra_alternative_credit_rates_per_million": {
+      "uncached_input": "250",
+      "cached_input": "25",
+      "output": "1250"
+    },
+    "deepseek_peak_allowance_rates_per_million": {
+      "disjoint_input": "0.44",
+      "output": "1.32",
+      "cache_read": "0.014"
+    },
+    "tariff_limit": "Preserved September 8 basis only. Configured default tier and computed equivalents are not account-specific billing evidence."
+  },
+  "astra_reconstruction": {
+    "native_tokens": {
+      "totalTokens": 55656092,
+      "inputTokens": 55300906,
+      "cachedInputTokens": 53168640,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 355186,
+      "reasoningOutputTokens": 91131
+    },
+    "uncached_input_tokens": 2132266,
+    "recomputed_api_equivalent_usd": "92.250600",
+    "recomputed_alternative_credits": "2306.2650",
+    "highest_observed_request_input_tokens": 248076,
+    "threshold": 272000,
+    "all_cache_write_tokens_exact_zero": true,
+    "all_configured_models_and_tiers_supported": true,
+    "all_captured_coverage_gap_lists_empty": true,
+    "all_captured_malformed_counts_zero": true,
+    "output_reasoning_rule": "The 91,131 reasoning-output tokens are already included in 355,186 output tokens; they are not added again. Inclusive input is reduced by cached input once.",
+    "prerequisite_evidence_limit": "Coverage, request maxima, exact cache categories and default-tier fields were copied literally from captured native valuations and checked against collector/valuation code; summary final token totals were directly matched. Raw notification streams were not replayed."
+  },
+  "deepseek_reconstruction": {
+    "native_tokens": {
+      "input": 261793,
+      "output": 164280,
+      "cacheRead": 22329472,
+      "cacheWrite": 0,
+      "totalTokens": 22755545
+    },
+    "response_records": 250,
+    "per_job_response_counts": {
+      "J0001-discovery": 124,
+      "J0002-implementation": 54,
+      "J0003-history": 72
+    },
+    "all_intervals_peak": true,
+    "peak_window_observed": "Weekday 06:00–10:00 UTC for every retained start/end interval; no boundary-crossing or ambiguous interval.",
+    "recomputed_go_allowance_value_usd": "0.644651128",
+    "runtime_catalog_estimate_usd": "0.322325564",
+    "catalog_rule": "Same usage, separate catalog estimate, not additional charge. Decimal summation of retained floating catalog values differs only below 1e-16 USD.",
+    "cache_write_tokens": 0,
+    "auxiliary_records_not_added": 0,
+    "input_rule": "Input, cacheRead, cacheWrite and output are disjoint; cacheRead is not subtracted again. Output includes reasoning; missing separate reasoning detail is not zero reasoning."
+  },
+  "time_reconstruction_seconds": {
+    "summed_job_durations": "16315.186",
+    "merged_invocation_union": "15777.90241",
+    "first_start_to_last_finish": "16725.718253",
+    "inter_invocation_gaps": "947.815843",
+    "overlap_counted_in_sum_only": "537.28359",
+    "controller_retained_elapsed": "18107.2401137352",
+    "controller_elapsed_display_6dp": "18107.240114",
+    "last_native_finish_to_controller_exit": "1377.27466",
+    "controller_iso_timestamp_difference": "18107.240103",
+    "retained_elapsed_minus_iso_difference": "0.0000107352",
+    "limit": "The 0.0000107352 second elapsed-versus-ISO difference is retained clock/precision variation, not a material timing error. Reported controller duration uses the retained elapsed value. Invocation windows include adapter work; none is model inference time or a causal support-time decomposition."
+  },
+  "per_job": [
+    {
+      "job_id": "J0001-discovery",
+      "phase": "discovery",
+      "adapter": "omp",
+      "record_sha256": "aaf9a942bd36757e1c02315737ea6018c494156c7255ef3a3a47233280826131",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "input": 136422,
+        "output": 77384,
+        "cacheRead": 15380096,
+        "cacheWrite": 0,
+        "totalTokens": 15593902
+      },
+      "invocation": {
+        "runtime_status": "completed",
+        "elapsed_seconds": 1392.941,
+        "finished_at": "2026-09-09T07:38:47.756596+00:00",
+        "execution_started_at": "2026-09-09T07:15:34.815596+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "response_count": 124,
+      "recomputed_go_allowance_value_usd": "0.377493904",
+      "captured_runtime_catalog_estimate_usd": 0.188746952,
+      "all_response_intervals_weekday_0600_1000_utc_peak": true,
+      "literal_response_whitelist_and_row_hashes_match_source": true,
+      "source_identity_hashes_unique_and_match": true,
+      "disjoint_category_totals_match": true,
+      "auxiliary_records_not_added": 0,
+      "malformed_raw_records": [],
+      "unavailable_reasons": [],
+      "first_response_start_utc": "2026-09-09T07:16:02+00:00",
+      "last_response_end_utc": "2026-09-09T07:38:44.299000+00:00"
+    },
+    {
+      "job_id": "J0002-implementation",
+      "phase": "implementation",
+      "adapter": "omp",
+      "record_sha256": "31460d3fa6a7f785f06067fb0f1a68cde91265dd4ef63134a17937dc9ee54444",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "input": 57295,
+        "output": 35290,
+        "cacheRead": 2639488,
+        "cacheWrite": 0,
+        "totalTokens": 2732073
+      },
+      "invocation": {
+        "runtime_status": "completed",
+        "elapsed_seconds": 537.284,
+        "finished_at": "2026-09-09T07:47:49.625022+00:00",
+        "execution_started_at": "2026-09-09T07:38:52.341022+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "response_count": 54,
+      "recomputed_go_allowance_value_usd": "0.108745432",
+      "captured_runtime_catalog_estimate_usd": 0.054372716,
+      "all_response_intervals_weekday_0600_1000_utc_peak": true,
+      "literal_response_whitelist_and_row_hashes_match_source": true,
+      "source_identity_hashes_unique_and_match": true,
+      "disjoint_category_totals_match": true,
+      "auxiliary_records_not_added": 0,
+      "malformed_raw_records": [],
+      "unavailable_reasons": [],
+      "first_response_start_utc": "2026-09-09T07:39:02.293000+00:00",
+      "last_response_end_utc": "2026-09-09T07:47:46.579000+00:00"
+    },
+    {
+      "job_id": "J0003-history",
+      "phase": "history",
+      "adapter": "omp",
+      "record_sha256": "255366c0d589322afc57a865b8d5b159bb3e197667bbb4bb9419da8585fc2898",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "input": 68076,
+        "output": 51606,
+        "cacheRead": 4309888,
+        "cacheWrite": 0,
+        "totalTokens": 4429570
+      },
+      "invocation": {
+        "runtime_status": "completed",
+        "elapsed_seconds": 686.241,
+        "finished_at": "2026-09-09T07:50:18.582432+00:00",
+        "execution_started_at": "2026-09-09T07:38:52.341432+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "response_count": 72,
+      "recomputed_go_allowance_value_usd": "0.158411792",
+      "captured_runtime_catalog_estimate_usd": 0.079205896,
+      "all_response_intervals_weekday_0600_1000_utc_peak": true,
+      "literal_response_whitelist_and_row_hashes_match_source": true,
+      "source_identity_hashes_unique_and_match": true,
+      "disjoint_category_totals_match": true,
+      "auxiliary_records_not_added": 0,
+      "malformed_raw_records": [],
+      "unavailable_reasons": [],
+      "first_response_start_utc": "2026-09-09T07:39:02.034000+00:00",
+      "last_response_end_utc": "2026-09-09T07:50:15.447000+00:00"
+    },
+    {
+      "job_id": "J0004-reconcile",
+      "phase": "reconcile",
+      "adapter": "codex",
+      "record_sha256": "608b12515cc6774b3235be4458f1472a535eb173da5ad6e7259e6b0d226ae1ef",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 4537508,
+        "inputTokens": 4503388,
+        "cachedInputTokens": 4320768,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 34120,
+        "reasoningOutputTokens": 11349
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1230.324,
+        "finished_at": "2026-09-09T08:10:55.481258+00:00",
+        "execution_started_at": "2026-09-09T07:50:25.157258+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 182620,
+      "recomputed_api_equivalent_usd": "7.852968",
+      "recomputed_alternative_credits": "196.3242",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 45,
+      "max_observed_request_input_tokens": 174983,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0005-reconcile",
+      "phase": "reconcile",
+      "adapter": "codex",
+      "record_sha256": "622cd90cfc701dd4e696fc9bd9745d3a47f11ed685ce08d5889a65ad8a1785d5",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 12068700,
+        "inputTokens": 12010404,
+        "cachedInputTokens": 11636864,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 58296,
+        "reasoningOutputTokens": 10924
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 2246.114,
+        "finished_at": "2026-09-09T08:48:43.186108+00:00",
+        "execution_started_at": "2026-09-09T08:11:17.072108+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 373540,
+      "recomputed_api_equivalent_usd": "18.287064",
+      "recomputed_alternative_credits": "457.1766",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 99,
+      "max_observed_request_input_tokens": 248076,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0006-reconcile",
+      "phase": "reconcile",
+      "adapter": "codex",
+      "record_sha256": "75af30de9d3be5d3067263af4ebbdfae6f38d03a8d6437595e268646271a1334",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 8916310,
+        "inputTokens": 8864447,
+        "cachedInputTokens": 8493568,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 51863,
+        "reasoningOutputTokens": 8982
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 2064.592,
+        "finished_at": "2026-09-09T09:23:28.481449+00:00",
+        "execution_started_at": "2026-09-09T08:49:03.889449+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 370879,
+      "recomputed_api_equivalent_usd": "14.795508",
+      "recomputed_alternative_credits": "369.8877",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 81,
+      "max_observed_request_input_tokens": 245897,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0007-reconcile",
+      "phase": "reconcile",
+      "adapter": "codex",
+      "record_sha256": "346477ba62c16ffbba9dbbd467ec479799448360509a8f41bab0fae8c5b1a5ca",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 6713118,
+        "inputTokens": 6667046,
+        "cachedInputTokens": 6295552,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 46072,
+        "reasoningOutputTokens": 15497
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1754.181,
+        "finished_at": "2026-09-09T09:52:59.466138+00:00",
+        "execution_started_at": "2026-09-09T09:23:45.285138+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 371494,
+      "recomputed_api_equivalent_usd": "12.314092",
+      "recomputed_alternative_credits": "307.8523",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 56,
+      "max_observed_request_input_tokens": 198423,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0008-compare",
+      "phase": "compare",
+      "adapter": "codex",
+      "record_sha256": "6337b5f5180f981485a3b1b28b8acd5556dc97a0adc197131aa35de95b61242c",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 3498134,
+        "inputTokens": 3467596,
+        "cachedInputTokens": 3293952,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 30538,
+        "reasoningOutputTokens": 7673
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1373.275,
+        "finished_at": "2026-09-09T10:16:44.235987+00:00",
+        "execution_started_at": "2026-09-09T09:53:50.960987+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 173644,
+      "recomputed_api_equivalent_usd": "6.557292",
+      "recomputed_alternative_credits": "163.9323",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 33,
+      "max_observed_request_input_tokens": 167810,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0009-compare",
+      "phase": "compare",
+      "adapter": "codex",
+      "record_sha256": "0d9fb4c7472e93923f7cdc02c487a4daff8edabfe7ba0ac8c9a9d97fe4626816",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 7650948,
+        "inputTokens": 7603672,
+        "cachedInputTokens": 7356928,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 47276,
+        "reasoningOutputTokens": 14254
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1764.069,
+        "finished_at": "2026-09-09T10:54:39.280052+00:00",
+        "execution_started_at": "2026-09-09T10:25:15.211052+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 246744,
+      "recomputed_api_equivalent_usd": "12.188168",
+      "recomputed_alternative_credits": "304.7042",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 50,
+      "max_observed_request_input_tokens": 237831,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0010-compare",
+      "phase": "compare",
+      "adapter": "codex",
+      "record_sha256": "74d3b9cb7c455f4b9a3a4c941285fd794188e0e1e6e40decbac787170fc7d932",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 7580950,
+        "inputTokens": 7535362,
+        "cachedInputTokens": 7300096,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 45588,
+        "reasoningOutputTokens": 11764
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1684.519,
+        "finished_at": "2026-09-09T11:27:02.747993+00:00",
+        "execution_started_at": "2026-09-09T10:58:58.228993+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 235266,
+      "recomputed_api_equivalent_usd": "11.932156",
+      "recomputed_alternative_credits": "298.3039",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 52,
+      "max_observed_request_input_tokens": 225965,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    },
+    {
+      "job_id": "J0011-compare",
+      "phase": "compare",
+      "adapter": "codex",
+      "record_sha256": "e0848555ecb6afa74d318babf52469f9204539b0cf2fc70da0ce1d6d9d284987",
+      "literal_whitelist_projection_matches_source": true,
+      "native_tokens": {
+        "totalTokens": 4690424,
+        "inputTokens": 4648991,
+        "cachedInputTokens": 4470912,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 41433,
+        "reasoningOutputTokens": 10688
+      },
+      "invocation": {
+        "runtime_status": "complete",
+        "elapsed_seconds": 1581.646,
+        "finished_at": "2026-09-09T11:54:20.533849+00:00",
+        "execution_started_at": "2026-09-09T11:27:58.887849+00:00",
+        "execution_start_basis": "finished_at minus measured elapsed_seconds"
+      },
+      "uncached_input_tokens": 178079,
+      "recomputed_api_equivalent_usd": "8.323352",
+      "recomputed_alternative_credits": "208.0838",
+      "configured_model": "gpt-6-astra",
+      "configured_service_tier": "default",
+      "usage_notification_count": 42,
+      "max_observed_request_input_tokens": 174576,
+      "short_context_threshold_tokens": 272000,
+      "cache_write_tokens": 0,
+      "usage_coverage_gaps": [],
+      "malformed_raw_lines": 0,
+      "unavailable_reasons": [],
+      "summary_total_matches": true
+    }
+  ],
+  "sanitization": {
+    "job_and_response_keys_follow_whitelists": true,
+    "native_usage_values_nonnegative_integers": true,
+    "original_record_hash_convention_verified": true,
+    "original_source_locator_hash_convention_verified": true,
+    "machine_paths_and_raw_message_or_command_bodies_absent_from_export": true,
+    "safe_basis_copy_has_no_machine_paths": true,
+    "raw_sources_retained_externally": true
+  },
+  "legacy_collector_limits": {
+    "raw_protocol_version": "v1",
+    "raw_experiment_role": "transport_prototype_warmup",
+    "raw_current_delivery": null,
+    "actual_workflow": "discovery_to_plan",
+    "wrong_codex_goal_field_preserved_and_explained": true,
+    "completion_authority": "Separate campaign-completion and native/input capture evidence; valuation availability does not establish stable delivery or semantic completion."
+  },
+  "unknown_costs_and_combination": {
+    "actual_cash_usd": null,
+    "search_root_evaluation_support_cash_usd": null,
+    "uncaptured_failed_request_cash_usd": null,
+    "rule": "Astra API-equivalent dollars and credits are alternative measures of the same usage. DeepSeek allowance and runtime catalog are not cash and are not added to produce a bill. No mixed-tariff model ranking or savings claim follows."
+  },
+  "unresolved_findings": [],
+  "write_scope": [
+    "artifact:campaign/next-goal-20260909/d4/evaluator/accounting-final-review.md",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/accounting-final-review.json"
+  ],
+  "execution_limits": "Read-only source/code/hash/JSON inspection, exact whitelist and row identity checks, Decimal arithmetic, interval merging and eight native summary-token comparisons. No new price lookup, collector execution, native raw-session/stream reread, runtime test or live campaign mutation. Only owned review pair written; all owned sessions closed.",
+  "input_files": [
+    {
+      "path": "artifact:campaign/PRICING_BASIS.md",
+      "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+    },
+    {
+      "path": "artifact:campaign/collect.py",
+      "sha256": "796bb9c1fcb0f3fdc2591d6182d6c763235e38401bbd548ad952843a6c34020f"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/accounting-method-correction.json",
+      "sha256": "c5e7b25efabee8ff623ded6fc28db9689ac091150b21bf7e13bbf0822a0918cd"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/accounting-method.md",
+      "sha256": "5d09f0fdba308a0113ced9217d3596d91766698aa55a93507f563d2270cce9cb"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/campaign-exit.json",
+      "sha256": "224a03c93838a462051cffb130c359670952ef5122d2f2fc03e6ec4d440b9ee8"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/campaign-launch.json",
+      "sha256": "393d5aabec3202492a169703c5ce0dd89b06bbac43fcbf16913437af2b5c52ec"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/campaign-completion-review.json",
+      "sha256": "b192b1688223551bede2bbd89c19a2de88969da262056a64f139766cc04034c2"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/campaign-completion-review.md",
+      "sha256": "8e4cca73898d5df08604a0660d71c831a9e6e421ae21051574aeea35b1632281"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/export_accounting.py",
+      "sha256": "7bd28601f2aad862c9c0329956e4fb7e99dc687bb583e8de19b9d698ac23fa0e"
+    },
+    {
+      "path": "artifact:landing/accounting.json",
+      "sha256": "aa9daf9cdcd881018b119d41f96f351cf7af1f4e01cb5f2b257ee6d7dae32c6c"
+    },
+    {
+      "path": "artifact:landing/accounting.md",
+      "sha256": "99af0a4e51328fb6de70a870e58a048262751664069b811b51a95432daa3eb6d"
+    },
+    {
+      "path": "artifact:landing/evidence/campaign-completion.json",
+      "sha256": "a294481d0f9a9d76aacec804193b74d66dddd037a990e150fc3b20fc21dc2f54"
+    },
+    {
+      "path": "artifact:landing/evidence/pricing-basis-2026-09-08.md",
+      "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/raw-codex/summary.json",
+      "sha256": "b4976fbd2673575d67930b041ae576c037855369eac7c7844ee6f892e683ef11"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/raw-codex/summary.json",
+      "sha256": "94fd8b4a916da88d8ea25dea42e5347abd7c834b407cde85987a490f57111cff"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/raw-codex/summary.json",
+      "sha256": "dea867f3d66ebb50d455f8a92812ce48f71048cb368b4aa7a6c47065f16424ce"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/raw-codex/summary.json",
+      "sha256": "6029673fc520a5c1babf73a44026a4e7d108278a609eb6c4e29e3a0fbcc676c8"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/raw-codex/summary.json",
+      "sha256": "d87d392b112b9ac3e4340d7f01b4166abcaa8defdcd4476ca82471c1d7025184"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/raw-codex/summary.json",
+      "sha256": "d562b959e14f9218a627974754f8b5560f9bdf69e564ac40a66ebf86a0ecffcf"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/raw-codex/summary.json",
+      "sha256": "b1d5a3444ef141598cb25346d3565fe87bfb4083f99942b55ca9c56e98fcd838"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/raw-codex/summary.json",
+      "sha256": "ee1498a757d09334e8620a6fdf0194fad9a72e7f620180b956317b89283a34d9"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/measurements.json",
+      "sha256": "d21b2ee9348726f6f03c772fceb35240cd98c11fd6d2d56200822ff452bee1c6"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/native-valuations.json",
+      "sha256": "16929dbc5eb6ad7336adfecefac96eb8051e38c8da89e7033c07117fd990d85d"
+    },
+    {
+      "path": "artifact:external/8baaaa0a088fd1235302/valuation.py",
+      "sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+    }
+  ],
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/accounting-final-review.json",
+    "source_sha256": "441393cfa54df0e2051a0b954348e3ba4691d726f74cddca6f192caf71a5fddb",
+    "source_bytes": 29566,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

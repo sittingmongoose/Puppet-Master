@@ -1,0 +1,323 @@
+{
+  "schema": "d4.comparison_export_independent_review.v1",
+  "job_id": "J0009-compare",
+  "created_at_utc": "2026-09-09T11:25:10.033296+00:00",
+  "status": "pass_for_reviewed_staging_bytes_final_union_pending",
+  "scope": "Bounded independent fidelity, custody, sanitization and local-link review against final native originals and sole root J9 completion row. Exporter inspected, not run; no broad renewed factual audit.",
+  "reviewer_independence": "Independent of export authorship and native participants; prior fact/adjudication work reused for scope boundaries.",
+  "blockers": [],
+  "requested_export_changes": [],
+  "verified_counts": {
+    "exported_files_including_receipt": 29,
+    "manifested_outputs_excluding_receipt": 28,
+    "native_report_lines": 289,
+    "recorded_report_citation_target_changes": 117,
+    "included_native_data_artifacts": 21,
+    "included_native_artifacts_byte_identical": 20,
+    "direction_map_recorded_link_insertions": 15,
+    "source_identities": 129,
+    "source_identities_from_J9": 17,
+    "source_identities_from_J5": 112,
+    "source_status_OK": 123,
+    "source_status_ERROR": 6,
+    "native_primary_catalog_sections": 95,
+    "numbered_excerpt_lines_compared": 4105,
+    "public_metadata_assets": 13,
+    "schema_evaluation_cases": 13,
+    "omitted_hash_only_artifacts": 23,
+    "omitted_full_excerpt_artifacts": 1,
+    "omitted_scripts": 3,
+    "omitted_schemas": 4,
+    "omitted_upstream_child_notes": 15,
+    "local_markdown_link_occurrences_checked": 196,
+    "distinct_public_link_or_catalog_URLs_checked": 118,
+    "exported_text_files_scanned": 29,
+    "native_original_hash_records_checked": 30,
+    "upstream_child_hash_records_checked": 15,
+    "source_receipt_raw_text_identities_checked": 129
+  },
+  "checks": [
+    {
+      "id": "J9E-01",
+      "result": "pass",
+      "subject": "Whitelist and output hashes",
+      "evidence": "Actual file enumeration has 29 regular files, no symlinks and the exact whitelist. All 28 receipt output hashes/sizes match; the receipt itself is independently hashed."
+    },
+    {
+      "id": "J9E-02",
+      "result": "pass",
+      "subject": "Native report fidelity",
+      "evidence": "Byte-level comparison including line endings preserves all 289 lines and every byte outside link targets. The actual ordered list of 117 changed target/line triples exactly matches the receipt."
+    },
+    {
+      "id": "J9E-03",
+      "result": "pass",
+      "subject": "Native data and child links",
+      "evidence": "Twenty of 21 included native artifacts are byte-identical. The direction map differs only by 15 recorded insertions converting unchanged child filenames from code spans to retained-artifact links. All thirteen metadata assets match final J9 copies, J5 raw sources and manifest hashes. The unchanged schema report contains thirteen cases; no evaluation reran here."
+    },
+    {
+      "id": "J9E-04",
+      "result": "pass",
+      "subject": "Source identity and excerpt custody",
+      "evidence": "Independently reconstructed 129 identities: 17 J9 C and 112 J5 U. Original receipt/raw/text hashes, selected preserved fields and public URLs or documented parent linkage match. All 4,105 numbered lines in 95 sections match retained source text and recorded ranges. No catalog/receipt public URL disagreement found; this is custody, not renewed factual adjudication."
+    },
+    {
+      "id": "J9E-05",
+      "result": "pass",
+      "subject": "Errors and identity-catalog disclosure",
+      "evidence": "All six original ERROR records remain ERROR with failure limitations; 123 remain OK. README and source catalog explicitly distinguish evaluator identities from native full excerpts. Referenced scripts resolve to hash-only records, with no claim they are runnable from the bundle."
+    },
+    {
+      "id": "J9E-06",
+      "result": "pass",
+      "subject": "Omitted-artifact custody",
+      "evidence": "All 23 records agree between receipt and retained index and match original hash/size: one full excerpt artifact, three scripts, four schemas and fifteen actual transported child notes. All fifteen child files are recorded. Raw caches, session/config and machine files are absent from the whitelist."
+    },
+    {
+      "id": "J9E-07",
+      "result": "pass",
+      "subject": "Links and sanitization",
+      "evidence": "All 196 independently parsed local links match the receipt and resolve within landing-draft with valid fragments. Checked 118 distinct public link/catalog URLs for HTTP(S), userinfo/query credentials and private/loopback IP targets. All 29 text files passed bounded machine-path/credential-marker scans. No unresolved mapping found."
+    },
+    {
+      "id": "J9E-08",
+      "result": "pass",
+      "subject": "Root native completion proof",
+      "evidence": "Exported native-completion.json exactly equals the sole root J9 proof row after parsing; JSON formatting is the only transformation. The original terminated-row and export hashes match the requested identities. Capture-time pending semantic acceptance is preserved. Participant completion-audit.json is byte-identical and explicitly distinguished from the root proof."
+    }
+  ],
+  "preserved_error_ids": [
+    "U-S00043",
+    "U-S00066",
+    "U-S00145",
+    "U-S00146",
+    "U-S00148",
+    "U-S00152"
+  ],
+  "reviewed_export_files": [
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/README.md",
+      "relative_export_path": "README.md",
+      "sha256": "83e4acc9b0ef9f189c38b281ea323dc4bb9a44a40c1241596e05b4269791a87c",
+      "bytes": 1373
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/acquisition-limits.md",
+      "relative_export_path": "evidence/acquisition-limits.md",
+      "sha256": "d7f8032176b85c2c3052bdf9a6276f84147c52a920940ba8110dd5245bb02018",
+      "bytes": 1770
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/catalog-count.json",
+      "relative_export_path": "evidence/catalog-count.json",
+      "sha256": "e09489fc06d65b61f5a6a9d447a96079eb85f20d8ef33f5c6c977f59091e7fba",
+      "bytes": 405
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/completion-audit.json",
+      "relative_export_path": "evidence/completion-audit.json",
+      "sha256": "ac31b0bffcedd6f8bbf1fa385b8cd72be808e7bbec6d2e41c5b9e9a56ad05b55",
+      "bytes": 3806
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/direction-map.md",
+      "relative_export_path": "evidence/direction-map.md",
+      "sha256": "6043d1d8dd7bb3d8909107b8203e0076957610774e5acb3133cc0e7b4e391279",
+      "bytes": 6347
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/matrix-cells.json",
+      "relative_export_path": "evidence/matrix-cells.json",
+      "sha256": "95b1ec28b3126bce402b9941181affd025cb4c41c9cc9d2d9598e8c500ad94ca",
+      "bytes": 34131
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00010.json",
+      "relative_export_path": "evidence/metadata/S00010.json",
+      "sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "bytes": 597
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00014.json",
+      "relative_export_path": "evidence/metadata/S00014.json",
+      "sha256": "eb17f4e8c039d2083cf2c3d8dcc7536b6df7e71658b55de517e1836eb3eb0ee5",
+      "bytes": 2968
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00016.json",
+      "relative_export_path": "evidence/metadata/S00016.json",
+      "sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "bytes": 1243
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00042.json",
+      "relative_export_path": "evidence/metadata/S00042.json",
+      "sha256": "ebe6de44c939dc9694078c1bbf335e97a3828df3a155733ed5f205705610b6d5",
+      "bytes": 607
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00046.json",
+      "relative_export_path": "evidence/metadata/S00046.json",
+      "sha256": "1e2053235c14e8a5b3e7f5c5b40eb0cae75e9264e39af2b08258c3adbc2fd7f1",
+      "bytes": 3343
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00050.json",
+      "relative_export_path": "evidence/metadata/S00050.json",
+      "sha256": "c2ffc26a18a16cc7d63b802abf99a42fd90a87711bffbeb19bd2044b296bccf1",
+      "bytes": 183
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00069.json",
+      "relative_export_path": "evidence/metadata/S00069.json",
+      "sha256": "feaa2c5bceef982b8a6576008d9df5d293343114c3961fd73911f3c8cedb8d9b",
+      "bytes": 20074
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00076.json",
+      "relative_export_path": "evidence/metadata/S00076.json",
+      "sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "bytes": 678
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00123.json",
+      "relative_export_path": "evidence/metadata/S00123.json",
+      "sha256": "30add669e46f820323c0d1d83a6637698f3c0c571e8724be10cd851ff9b3d8a0",
+      "bytes": 5219
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00127.json",
+      "relative_export_path": "evidence/metadata/S00127.json",
+      "sha256": "5c1b15dd3b7659d4ff5b8b83297c7d5135fd9e6fb44170b7d2f903845982450a",
+      "bytes": 2045
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00128.json",
+      "relative_export_path": "evidence/metadata/S00128.json",
+      "sha256": "4851597f80f7f6b8e6b6d4c610e007fc6c1c6f2cda13b27e7c8f051ca2112aca",
+      "bytes": 3600
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00129.json",
+      "relative_export_path": "evidence/metadata/S00129.json",
+      "sha256": "de0a8d495fe6b968b13e5100bde86876153d9495f9df435482fa034cadd9f1d7",
+      "bytes": 1986
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata/S00147.json",
+      "relative_export_path": "evidence/metadata/S00147.json",
+      "sha256": "68d2c3bdac9b5326d30a76822e6fd4c93a4fce21a387890a6c4b684950fb8ae8",
+      "bytes": 4081
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata-inventory.md",
+      "relative_export_path": "evidence/metadata-inventory.md",
+      "sha256": "3a61a54317e9c2ec6399e409bbecbadcf3c8bbd50535be47e22475206278470d",
+      "bytes": 24084
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/metadata-manifest.json",
+      "relative_export_path": "evidence/metadata-manifest.json",
+      "sha256": "376c5216b7de37d36de75a6bd4b79bdd4b8851b17d84a8c43f9034b1ce4d6408",
+      "bytes": 4409
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/evidence/schema-probes.json",
+      "relative_export_path": "evidence/schema-probes.json",
+      "sha256": "7f0f320ee10cb41c8ad056f2e5087de3e7718fb5aa69fab41c3ffb279e18c5e8",
+      "bytes": 24629
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/export-receipt.json",
+      "relative_export_path": "export-receipt.json",
+      "sha256": "2932769771b2f69519c52c3a68838f4d8f6a69ab0bbeb055caad42aa35884eaa",
+      "bytes": 70605
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/native-completion.json",
+      "relative_export_path": "native-completion.json",
+      "sha256": "059ffbd5bef45f6f4abfdbcf7e052b14fadb9641427394af754f8ee943e9999e",
+      "bytes": 2175
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/notes.md",
+      "relative_export_path": "notes.md",
+      "sha256": "14e2bbe23675fed7ce55dfa6dbe4e64fb8b44e602def4dfc874dbab057d5fd54",
+      "bytes": 79846
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/retained-artifacts.json",
+      "relative_export_path": "retained-artifacts.json",
+      "sha256": "52b65faaa5967309c1964c369bd4413690c605a9c80a00812dd5b2b021b771e9",
+      "bytes": 10038
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/retained-artifacts.md",
+      "relative_export_path": "retained-artifacts.md",
+      "sha256": "df56d37351ffdc19beb19a95455bcc726b19d326a5871b7098b27f0f2680cc25",
+      "bytes": 6910
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/sources.json",
+      "relative_export_path": "sources.json",
+      "sha256": "2ecd7ed92c7ba6afff2586c57f25b186cfc3b8bb56e6236bbda4101bdf10f11f",
+      "bytes": 124712
+    },
+    {
+      "path": "artifact:landing/evidence/comparisons/J0009-compare/sources.md",
+      "relative_export_path": "sources.md",
+      "sha256": "88a78f129486493ab6b62cfdd4b031cec3fbebe70d3c4b88a485e2bd5d473bfc",
+      "bytes": 53458
+    }
+  ],
+  "reviewed_exporter": {
+    "path": "artifact:campaign/next-goal-20260909/d4/evaluator/export_j9_comparison.py",
+    "sha256": "ddea0fbfcc6a8f78136723c38cd502199ebe5bb0f938c0ffa4816cf66d7a93d0",
+    "executed": false
+  },
+  "native_authority_identities": {
+    "notes_md": {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+      "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f"
+    },
+    "primary_passages_md": {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/primary-passages.md",
+      "sha256": "eccdab306e1c2bbb83791d66f950c9efaa2ee506f50e52b20fcd4af680da0e9b"
+    },
+    "completion_proof": {
+      "source": "artifact:campaign/next-goal-20260909/d4/comparison-completions.jsonl",
+      "selected_row_job_id": "J0009-compare",
+      "original_jsonl_line_sha256_including_terminator": "389ad92896fc72a587a5c2ea3cc5fc117b4f55c23cb35ae5102400dbf28a263c",
+      "original_jsonl_line_sha256_without_terminator": "3874244050299abacaf1308aeca5925b741b21528c8dfac49cff5df3c3262fa6",
+      "exported_json_sha256": "059ffbd5bef45f6f4abfdbcf7e052b14fadb9641427394af754f8ee943e9999e",
+      "parsed_equal": true,
+      "native_execution_repeated": false
+    },
+    "baseline_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+  },
+  "material_limits": [
+    "Staging custody/fidelity pass only; final comparison union, factual synthesis and final landing acceptance remain pending.",
+    "Source counts include helper operations and transported/repeated identities; 129 identities are not 129 independent findings or decoded images.",
+    "Full native excerpts, raw captures, scripts, schemas and child notes remain external. This is an identity-and-selected-data export, not a self-contained runnable reproduction bundle.",
+    "Native wording is preserved for fidelity. Existing fact/scope reviews and final synthesis remain necessary; this review does not newly endorse every native factual claim or settle product policy.",
+    "Public URLs were structurally checked against captured identities, not fetched for current availability. Marker scans are bounded checks, not a universal secret-detection guarantee.",
+    "Thirteen schema cases and thirteen metadata assets remain data/metadata evidence. No schema replay, viewer, upstream reader/model, decoder, pixel retrieval or performance acceptance ran in this review.",
+    "The root proof is matched to its captured delivery row; the preserved pending semantic status is capture-time history, not a current final campaign verdict."
+  ],
+  "writes": [
+    "evaluator/comparison-export-j9-review.md",
+    "evaluator/comparison-export-j9-review.json"
+  ],
+  "other_files_edited": false,
+  "participant_feedback_sent": false,
+  "collector_run": false,
+  "owned_sessions_closed": true,
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-export-j9-review.json",
+    "source_sha256": "7006a59d8a4180417c2932c4435e9932d1661958e5bde03f7cb349c59b35830b",
+    "source_bytes": 19262,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

@@ -1,0 +1,3352 @@
+{
+  "schema": "d4.public_source_receipts.v1",
+  "job_id": "J0009-compare",
+  "catalog_kind": "evaluator_generated_identity_catalog_not_native_excerpts",
+  "full_excerpts": "Externally retained; see retained-artifacts.md#primary-passages-md",
+  "source_receipt_count": 129,
+  "source_counts_by_origin": {
+    "J0009-compare": 17,
+    "J0005-reconcile": 112
+  },
+  "native_primary_catalog_sections": 95,
+  "native_excerpt_numbered_lines_verified": 4105,
+  "sources": [
+    {
+      "source_id": "C-S00001",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00001",
+      "command": "plan-search",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:25:53.060017+00:00",
+      "sha256": "8399abd60fdff7fdbb63e2b55adc1028346dd6558d6bfd827ac19ceef044b556",
+      "receipt_sha256": "d1296d773b0e443323450cf202f6911279a8176fdeecba6d2dcb5004be1b8073",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "69d1c06c95f19c860c8a59283067102229c027e54522d1b94d37540c6e241429"
+    },
+    {
+      "source_id": "C-S00002",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00002",
+      "command": "plan-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:25:54.725867+00:00",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "receipt_sha256": "dbc74d66a56448f039b3cad1148fab16754f45b7c5377148aa0400b6d33ba905",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "frozen_plan_reference": "Plans/Viewer.md"
+    },
+    {
+      "source_id": "C-S00003",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00003",
+      "command": "plan-search",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:13.207182+00:00",
+      "sha256": "2306ece34922444a003af7a0dfb199c2e3a6826d78865ca962be022562847f33",
+      "receipt_sha256": "b1b0d5df5a7632807e5549d3933ed156d9789d5d911eab61b660f858a94c3d20",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "81ccbf5001d556138d265e09cf3ae00b522bbd0c2dcbd79f0f584cef54383748"
+    },
+    {
+      "source_id": "C-S00004",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00004",
+      "command": "plan-search",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:14.647859+00:00",
+      "sha256": "ad1e5544e05e8d983ab6799e199943eb81b26efc449b53a7732ff6ef31ebf270",
+      "receipt_sha256": "189214d5989bbfbda4bf963ce775b72065c44b6ded2db36d164dd461e6b93788",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "0dbebef189ba8a32700f04f9a3bb0338b2e8138497642caef7a212fab08285e1"
+    },
+    {
+      "source_id": "C-S00005",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00005",
+      "command": "plan-search",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:16.069538+00:00",
+      "sha256": "c1c2a2239d23adf050385ac63eed1eaeda5b01bf476098fcef3b8ac653c7a4c4",
+      "receipt_sha256": "f26575ed8570a54ce78367c00e00366fd5c1ec32c4be79768b4c2cf5a09fc45c",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7e56edfaa19ce955d3a209d3707cb69b09cc7f1a954dba576d12fc1404364305"
+    },
+    {
+      "source_id": "C-S00006",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00006",
+      "command": "plan-search",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:17.588234+00:00",
+      "sha256": "f24aac42cd42d6d7d81caa33b3f7fc82e5e926d779fcbbdc75ecaee134818242",
+      "receipt_sha256": "f6c8202d85c03e9f697961a14fb8a004bf45af5d7f716a202920abddccd7d908",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "61f3ccd94a8cd3a38890fa6a23b8b2143ae9ccb4e896b56b8aa3ecbd5d8045bc"
+    },
+    {
+      "source_id": "C-S00007",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00007",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:52.428372+00:00",
+      "acquired_at": "2026-09-09T08:25:04.377469+00:00",
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "text_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "5b68ba09d3d765e71aa242e4a49ee68ba5b62c1aadacb9c033298b6411a949ba",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "retained_excerpt_source_line_ranges": [
+        [
+          166,
+          283
+        ],
+        [
+          293,
+          336
+        ],
+        [
+          341,
+          365
+        ],
+        [
+          402,
+          446
+        ],
+        [
+          572,
+          578
+        ],
+        [
+          600,
+          659
+        ],
+        [
+          672,
+          689
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        519,
+        878
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py"
+    },
+    {
+      "source_id": "C-S00008",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00008",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:53.021655+00:00",
+      "acquired_at": "2026-09-09T07:17:08.356292+00:00",
+      "sha256": "be58bb51cc2da4f6ede552cbfe3cf6ba23ddc29f0b47b90d34ba86a58d553ecf",
+      "text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "c1035cbabd156d7358e6570cdefe6f01455048c7fbddd5e05881455924e43259",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "retained_excerpt_source_line_ranges": [
+        [
+          67,
+          81
+        ],
+        [
+          149,
+          174
+        ],
+        [
+          254,
+          319
+        ],
+        [
+          388,
+          397
+        ],
+        [
+          426,
+          490
+        ],
+        [
+          538,
+          560
+        ],
+        [
+          740,
+          752
+        ],
+        [
+          821,
+          833
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1290,
+        1583
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/0.5/"
+    },
+    {
+      "source_id": "C-S00009",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00009",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:53.656908+00:00",
+      "acquired_at": "2026-09-09T07:29:49.164522+00:00",
+      "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d",
+      "text_sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "6da16fde2d70b1abc314db84babafc95f8ee18a87e20cc40d2f76b19fce5daba",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          30
+        ],
+        [
+          196,
+          268
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1584,
+        1701
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/image.schema"
+    },
+    {
+      "source_id": "C-S00010",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00010",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:26:54.318067+00:00",
+      "acquired_at": "2026-09-09T09:04:16.581210+00:00",
+      "sha256": "06a55a1ccdc92acf680cb4e52e6c6c4d24c769381884f406b1e7432293c2c993",
+      "text_sha256": "06a55a1ccdc92acf680cb4e52e6c6c4d24c769381884f406b1e7432293c2c993",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "05f79d08e18468fbc86cae823d81a3e73a61144805c69f54e1c6fce70e0f84c2",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "06a55a1ccdc92acf680cb4e52e6c6c4d24c769381884f406b1e7432293c2c993",
+      "retained_excerpt_source_line_ranges": [
+        [
+          80,
+          130
+        ],
+        [
+          133,
+          160
+        ],
+        [
+          180,
+          205
+        ],
+        [
+          232,
+          302
+        ],
+        [
+          444,
+          478
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        879,
+        1128
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/ome-zarr-py/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/utils.py"
+    },
+    {
+      "source_id": "C-S00011",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00011",
+      "command": "read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:27:11.428438+00:00",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "receipt_sha256": "1846f2a061deed5a77d504a8709737fc3d148d734b547ee2c01864015b2432d3",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "parent_source_id": "C-S00008",
+      "public_source": "https://ngff.openmicroscopy.org/0.5/",
+      "public_source_via_parent": true
+    },
+    {
+      "source_id": "C-S00012",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00012",
+      "command": "read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:27:12.432943+00:00",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "receipt_sha256": "c60fb9bd3035ba58cba760a3892b71269f5dd6e679777b6d85f240d0a18f9f13",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "parent_source_id": "C-S00008",
+      "public_source": "https://ngff.openmicroscopy.org/0.5/",
+      "public_source_via_parent": true
+    },
+    {
+      "source_id": "C-S00013",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00013",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:41:04.235860+00:00",
+      "acquired_at": "2026-09-09T10:41:02.757984+00:00",
+      "sha256": "594e29d9c31999846ee39c57f0f4ccddaf6d556c91e8486200b079eea87fa726",
+      "text_sha256": "49405f0ce7dcdd8d1b32d8c32752db72e4acb7152a5b851baa0fced04b8cb4f9",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "6466ba3677a2f6876ed184ca2cf8b9a5735050b71762645f4a8b0566abe20d04",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "49405f0ce7dcdd8d1b32d8c32752db72e4acb7152a5b851baa0fced04b8cb4f9",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          149
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5365,
+        5398
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/590"
+    },
+    {
+      "source_id": "C-S00014",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00014",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:41:05.814615+00:00",
+      "acquired_at": "2026-09-09T10:41:04.355381+00:00",
+      "sha256": "0950aa8d5cc0f0642681b747d335f026f85d2389b9af1f0c99e5fa1b37ea259a",
+      "text_sha256": "dbf76499eccaad14b081fbfd69afd1ba09069af6457789119f95627f1ab9f069",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "63a7c373065f820df54cb78ed46b0813e25abfc1cf9a640b89bd6f55e79e693d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "dbf76499eccaad14b081fbfd69afd1ba09069af6457789119f95627f1ab9f069",
+      "retained_excerpt_source_line_ranges": [
+        [
+          149,
+          151
+        ],
+        [
+          199,
+          204
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5399,
+        5422
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/534"
+    },
+    {
+      "source_id": "C-S00015",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00015",
+      "command": "read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:43:36.449257+00:00",
+      "sha256": "dbf76499eccaad14b081fbfd69afd1ba09069af6457789119f95627f1ab9f069",
+      "receipt_sha256": "b407ef1d58ed11c651ce75bac98a3d7418f7d6a1c217dd58b2e4078c8bef78ac",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "dbf76499eccaad14b081fbfd69afd1ba09069af6457789119f95627f1ab9f069",
+      "parent_source_id": "C-S00014",
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/534",
+      "public_source_via_parent": true
+    },
+    {
+      "source_id": "C-S00016",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00016",
+      "command": "read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:43:39.090761+00:00",
+      "sha256": "49405f0ce7dcdd8d1b32d8c32752db72e4acb7152a5b851baa0fced04b8cb4f9",
+      "receipt_sha256": "42c855e679ed27da28b6e5e2dce40ee43c2180255da5254d766f7d78f1ac04a4",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "49405f0ce7dcdd8d1b32d8c32752db72e4acb7152a5b851baa0fced04b8cb4f9",
+      "parent_source_id": "C-S00013",
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/590",
+      "public_source_via_parent": true
+    },
+    {
+      "source_id": "C-S00017",
+      "origin_job": "J0009-compare",
+      "original_source_id": "S00017",
+      "command": "plan-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T10:47:40.229992+00:00",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "receipt_sha256": "8cbd3a616f43b4ac6203bca5c905713a1542d7e1358159da59007e05c8365896",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "frozen_plan_reference": "Plans/Viewer.md"
+    },
+    {
+      "source_id": "U-S00005",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00005",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:12:23.074530+00:00",
+      "acquired_at": "2026-09-09T07:36:47.023103+00:00",
+      "sha256": "1322cbfc8314dc14bf7d225788d59990575c6bb19e8abd0cdb1091dab69af393",
+      "text_sha256": "fcd65d672c828913bf07bbc4a29e79a2594217c097357c709ce63f84e45cc107",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "2183c0eca106ea1b0924e5c98c4fcb5cd17eb1f6748ba749b92acd48a66f3488",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "fcd65d672c828913bf07bbc4a29e79a2594217c097357c709ce63f84e45cc107",
+      "retained_excerpt_source_line_ranges": [
+        [
+          56,
+          90
+        ],
+        [
+          140,
+          169
+        ],
+        [
+          180,
+          198
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2928,
+        3031
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/resources/tools/"
+    },
+    {
+      "source_id": "U-S00010",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00010",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:03.361923+00:00",
+      "acquired_at": "2026-09-09T07:31:11.501206+00:00",
+      "sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "text_sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "c1b0c930f92f05aff7c80b78c165777e191b7a697cb86d7271f2e78ada1823d2",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/0/zarr.json"
+    },
+    {
+      "source_id": "U-S00011",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00011",
+      "command": "repo-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:13.078992+00:00",
+      "sha256": "1634671130537678bf72da5d8aab1ad2e32b540e53ee25b0ab7b3320c97cec22",
+      "repository": "ome/ome-zarr-py",
+      "commit": "94eaf20aa096b4a034fc0c636e31d5d64953d6ad",
+      "path": "ome_zarr/io.py",
+      "receipt_sha256": "bffa3520102508a1ed15a0581b5a48b7803941eb13de811398d65c8447a02dbd",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1634671130537678bf72da5d8aab1ad2e32b540e53ee25b0ab7b3320c97cec22",
+      "retained_excerpt_source_line_ranges": [
+        [
+          30,
+          44
+        ],
+        [
+          69,
+          98
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3280,
+        3339
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/io.py"
+    },
+    {
+      "source_id": "U-S00013",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00013",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:06.421052+00:00",
+      "acquired_at": "2026-09-09T08:13:05.418428+00:00",
+      "sha256": "8f39c90e8c143a78be10a855251030f51e49594b68bce736c313fd104ed6fb43",
+      "text_sha256": "86ab078c18fea1ab3b5522c74088bd036be23c689f772abb01a9a29074b810d4",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "91f18afc2b8416f479cd7cdae66eae65dbb0ce9ef4d99cdf6df6d59ccc737f23",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "86ab078c18fea1ab3b5522c74088bd036be23c689f772abb01a9a29074b810d4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          170,
+          179
+        ],
+        [
+          235,
+          264
+        ],
+        [
+          333,
+          342
+        ],
+        [
+          366,
+          376
+        ],
+        [
+          400,
+          412
+        ],
+        [
+          436,
+          448
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4585,
+        4706
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/releases"
+    },
+    {
+      "source_id": "U-S00014",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00014",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:05.694367+00:00",
+      "acquired_at": "2026-09-09T07:31:22.951600+00:00",
+      "sha256": "eb17f4e8c039d2083cf2c3d8dcc7536b6df7e71658b55de517e1836eb3eb0ee5",
+      "text_sha256": "eb17f4e8c039d2083cf2c3d8dcc7536b6df7e71658b55de517e1836eb3eb0ee5",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "0fe71272c0e0f0de51328e24a93dab26061a8763565ad7c3103304e9ec86befa",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eb17f4e8c039d2083cf2c3d8dcc7536b6df7e71658b55de517e1836eb3eb0ee5",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/share/ome2024-ngff-challenge/idr0090/190129.zarr/zarr.json"
+    },
+    {
+      "source_id": "U-S00015",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00015",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:06.239297+00:00",
+      "acquired_at": "2026-09-09T07:28:59.281381+00:00",
+      "sha256": "a3040cf647f802a20cfd8d76bd510ad550088d79894fcc94a2db468d33d4a526",
+      "text_sha256": "fd6306d9a0cc4bc443291e9a00ed8c0f0ccfc701b6cd50ae20c9777c77550b48",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "a1dd76c486bc0d664fc9afbedfb895e3678d0efabcb7d72fa90ff34fd978c42a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "fd6306d9a0cc4bc443291e9a00ed8c0f0ccfc701b6cd50ae20c9777c77550b48",
+      "retained_excerpt_source_line_ranges": [
+        [
+          120,
+          137
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2003,
+        2030
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/rfc/5/"
+    },
+    {
+      "source_id": "U-S00016",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00016",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:06.963597+00:00",
+      "acquired_at": "2026-09-09T07:30:57.260723+00:00",
+      "sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "text_sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "803b36c47fbbe518959fe0c0bd1a37d4dc287048b24df4ceb36a29cb769377bb",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/zarr.json"
+    },
+    {
+      "source_id": "U-S00017",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00017",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:08.863051+00:00",
+      "acquired_at": "2026-09-09T08:13:07.865159+00:00",
+      "sha256": "fad6ceeb80cd4b05a44378cf2436efe96b5bf5a1a4aea02cc6e0b8e5a9a705d2",
+      "text_sha256": "516d00dcb0341f0f22a7695fcfdb83420f36822f051acdc450b35b64d4463742",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "48ed37286e448ee43f405089c9a058a17901ec75d0dce6f512c06b9a2782aa0d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "516d00dcb0341f0f22a7695fcfdb83420f36822f051acdc450b35b64d4463742",
+      "retained_excerpt_source_line_ranges": [
+        [
+          170,
+          179
+        ],
+        [
+          237,
+          246
+        ],
+        [
+          301,
+          310
+        ],
+        [
+          333,
+          349
+        ],
+        [
+          471,
+          493
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1190,
+        1289
+      ],
+      "public_source": "https://github.com/ome/napari-ome-zarr/releases"
+    },
+    {
+      "source_id": "U-S00018",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00018",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:32.295525+00:00",
+      "acquired_at": "2026-09-09T08:13:31.632199+00:00",
+      "sha256": "d9bf61ac0a186ecb4c8251508bdcddca76f4c9af76315ffd9065b8a2ae36fd1a",
+      "text_sha256": "b89eb08e9aa8e36355ccce06f393adfa20e4e187ad0b69506f9def3357d4e9f8",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "01b354b1b8325db864f194806cb311e4961b4eeca4447b23c9e6f5751ace1b57",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b89eb08e9aa8e36355ccce06f393adfa20e4e187ad0b69506f9def3357d4e9f8",
+      "retained_excerpt_source_line_ranges": [
+        [
+          165,
+          217
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        127,
+        189
+      ],
+      "public_source": "https://github.com/dimi-lab/qupath-extension-cloud-omezarr"
+    },
+    {
+      "source_id": "U-S00019",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00019",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:32.468516+00:00",
+      "acquired_at": "2026-09-09T08:13:31.789278+00:00",
+      "sha256": "13773666e03605936c2043e0cb8bfee74811e7a4f5aa439255efafb01572e51a",
+      "text_sha256": "1e686a6bc3345aac7d579c3af9860596acc066c2a12c465be099d08964fd5c00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "adbaa566a87dd8affc709304047be55a64a9d44b45d4fcea94d2ae7702cd1ad0",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1e686a6bc3345aac7d579c3af9860596acc066c2a12c465be099d08964fd5c00",
+      "retained_excerpt_source_line_ranges": [
+        [
+          161,
+          214
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        63,
+        126
+      ],
+      "public_source": "https://github.com/ome/ZarrReader"
+    },
+    {
+      "source_id": "U-S00020",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00020",
+      "command": "repo-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:35.774451+00:00",
+      "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+      "repository": "ome/ome-zarr-py",
+      "commit": "94eaf20aa096b4a034fc0c636e31d5d64953d6ad",
+      "path": "ome_zarr/format.py",
+      "receipt_sha256": "3453cbd002fd9162995d16bb8e601bcacdcb71052825bdcad1ebecae90841635",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+      "retained_excerpt_source_line_ranges": [
+        [
+          35,
+          46
+        ],
+        [
+          81,
+          96
+        ],
+        [
+          368,
+          387
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3340,
+        3407
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/format.py"
+    },
+    {
+      "source_id": "U-S00021",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00021",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:32.860595+00:00",
+      "acquired_at": "2026-09-09T08:13:32.132590+00:00",
+      "sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233",
+      "text_sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "52fb351f0559a7c5aed8bff6f76c25817794d0d095c87f877b93ee28a08f6f05",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233",
+      "public_source": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/plate.schema"
+    },
+    {
+      "source_id": "U-S00022",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00022",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:34.199157+00:00",
+      "acquired_at": "2026-09-09T08:13:33.473670+00:00",
+      "sha256": "578aef49db9ce8a5dd3b72d4249bd3c4d8c2baeff4cf04f022ba42a8c8348ca3",
+      "text_sha256": "1e688b2da327d07e5526bd7ff8123a19695331b2efad49f5d3527264f297589c",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "1401dd5d7b62a13901d779b60cef9af5b72ae75e4d6d9b2b34c864a70d2c2178",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1e688b2da327d07e5526bd7ff8123a19695331b2efad49f5d3527264f297589c",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          152
+        ],
+        [
+          174,
+          189
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5,
+        62
+      ],
+      "public_source": "https://github.com/qupath/qupath/pull/1638"
+    },
+    {
+      "source_id": "U-S00024",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00024",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:33.993585+00:00",
+      "acquired_at": "2026-09-09T07:20:32.427029+00:00",
+      "sha256": "f5600cf73b5452c08b9e224885960e8778b416b16d7a3a4d264009792923e05a",
+      "text_sha256": "86030bb33b6eab5ebdaeeacebbdafd21cbd30307ffad538cdbc3d756965df558",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "68329b17c5e2aac5494289881cdb2f78c1d2e7d23867495624cf065279f55bc5",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "86030bb33b6eab5ebdaeeacebbdafd21cbd30307ffad538cdbc3d756965df558",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          146
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        488,
+        518
+      ],
+      "public_source": "https://github.com/hms-dbmi/vizarr/issues/307"
+    },
+    {
+      "source_id": "U-S00025",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00025",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:34.808183+00:00",
+      "acquired_at": "2026-09-09T08:13:34.099430+00:00",
+      "sha256": "2ddbc32e9e7050dafbfaeb4ee3464ddad29880d9ea27127a636016d3f33ac125",
+      "text_sha256": "2ddbc32e9e7050dafbfaeb4ee3464ddad29880d9ea27127a636016d3f33ac125",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "06ee09ff61728148849e69e41d25d4aba1c16e423bc3510c933e4f921526cbf0",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "2ddbc32e9e7050dafbfaeb4ee3464ddad29880d9ea27127a636016d3f33ac125",
+      "retained_excerpt_source_line_ranges": [
+        [
+          22,
+          43
+        ],
+        [
+          73,
+          89
+        ],
+        [
+          99,
+          117
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3954,
+        4031
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/napari_ome_zarr/plate.py"
+    },
+    {
+      "source_id": "U-S00026",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00026",
+      "command": "repo-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:38.789592+00:00",
+      "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "repository": "ome/ome-zarr-py",
+      "commit": "94eaf20aa096b4a034fc0c636e31d5d64953d6ad",
+      "path": "ome_zarr/reader.py",
+      "receipt_sha256": "f3e0262110beac358ffc334ffe6311460ed67607eb354ce7b01895eef181b71e",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          216,
+          227
+        ],
+        [
+          270,
+          315
+        ],
+        [
+          375,
+          391
+        ],
+        [
+          394,
+          422
+        ],
+        [
+          440,
+          465
+        ],
+        [
+          483,
+          505
+        ],
+        [
+          531,
+          568
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3049,
+        3279
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/reader.py"
+    },
+    {
+      "source_id": "U-S00027",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00027",
+      "command": "repo-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:41.985602+00:00",
+      "sha256": "5234906e25dd718acf6153435f4452a64e000300fc1fa647fdad73546c0208fe",
+      "repository": "ome/ome-zarr-py",
+      "commit": "94eaf20aa096b4a034fc0c636e31d5d64953d6ad",
+      "path": "pyproject.toml",
+      "receipt_sha256": "902a70efaae0cfacbbbd1bc12b98fff49660b14285bd2789cc9860a112aa3a8d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5234906e25dd718acf6153435f4452a64e000300fc1fa647fdad73546c0208fe",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          36
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        442,
+        487
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/pyproject.toml"
+    },
+    {
+      "source_id": "U-S00029",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00029",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:13:36.447926+00:00",
+      "acquired_at": "2026-09-09T07:25:18.261521+00:00",
+      "sha256": "7cf44106bd5fc3e952a9c8634bf77272eb14325b9bf2a093f721996bdf328d30",
+      "text_sha256": "7cf44106bd5fc3e952a9c8634bf77272eb14325b9bf2a093f721996bdf328d30",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "7e20d3b8773c6b09b3e9a28670851a57f83f0ea9866d0680df49f9c6e2ef70f1",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7cf44106bd5fc3e952a9c8634bf77272eb14325b9bf2a093f721996bdf328d30",
+      "retained_excerpt_source_line_ranges": [
+        [
+          27,
+          46
+        ],
+        [
+          65,
+          90
+        ],
+        [
+          93,
+          145
+        ],
+        [
+          150,
+          172
+        ],
+        [
+          188,
+          205
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1702,
+        1879
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/ome2024-ngff-challenge/master/README.md"
+    },
+    {
+      "source_id": "U-S00030",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00030",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:14:58.845161+00:00",
+      "acquired_at": "2026-09-09T07:26:01.946565+00:00",
+      "sha256": "58b0070e4a7199e1daf8963e9f95e372bb77ec01fbc769d3ff45e450b92d6200",
+      "text_sha256": "8e1f30f0d8da071b96643303abfe27333a6e3065e3162273721fe9d2103618f9",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "13d374e8b88f0f28954a5dcc5a6bf2ed8656b81ebb13eb6df4b0309dbd582a4a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "8e1f30f0d8da071b96643303abfe27333a6e3065e3162273721fe9d2103618f9",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          74
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        190,
+        273
+      ],
+      "public_source": "https://ome.github.io/ome-ngff-tools/"
+    },
+    {
+      "source_id": "U-S00031",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00031",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:14:59.462463+00:00",
+      "acquired_at": "2026-09-09T07:35:23.114399+00:00",
+      "sha256": "fcef09297a5f4e75f02e88f97e2f99a9f8d7166bbbb06a40f285720681fe3c81",
+      "text_sha256": "fcef09297a5f4e75f02e88f97e2f99a9f8d7166bbbb06a40f285720681fe3c81",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "d76a230d5087f460678572bc3b0d82ef77d19202d93d212fbc50cedbedd38dfa",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "fcef09297a5f4e75f02e88f97e2f99a9f8d7166bbbb06a40f285720681fe3c81",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          26
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1129,
+        1164
+      ],
+      "public_source": "https://raw.githubusercontent.com/AllenInstitute/biofile-finder/main/dev-docs/01-project-layout.md"
+    },
+    {
+      "source_id": "U-S00034",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00034",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:02.150763+00:00",
+      "acquired_at": "2026-09-09T08:15:01.324098+00:00",
+      "sha256": "b62944277def3abaf338f839300081c5f6a0a7155f142e28af38c8c9770f2091",
+      "text_sha256": "9c9b9c94f4bd9375f4c785bac0caee27eab89f31116baf47f52eb852c06f1ee8",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "f436f0ad7a5cd93b5ce4df97310ad13e807724131ca0f0540a72a7789e53e704",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "9c9b9c94f4bd9375f4c785bac0caee27eab89f31116baf47f52eb852c06f1ee8",
+      "retained_excerpt_source_line_ranges": [
+        [
+          210,
+          247
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2527,
+        2574
+      ],
+      "public_source": "https://github.com/keller-mark/pluot"
+    },
+    {
+      "source_id": "U-S00036",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00036",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:02.875884+00:00",
+      "acquired_at": "2026-09-09T08:15:02.026864+00:00",
+      "sha256": "45c6432a9edcb9f8562730d11db5fb4e358a3cf538f08bb8d8b6e584c5e3e078",
+      "text_sha256": "1b4881148c809e0fe35ac62f34adf4ffd8701dc1c535c1c3afac52271c7fe322",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b72581169dbe5a89474948ebadd506218559bc4f19d9940fd9ce05a6c45f47df",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1b4881148c809e0fe35ac62f34adf4ffd8701dc1c535c1c3afac52271c7fe322",
+      "retained_excerpt_source_line_ranges": [
+        [
+          163,
+          189
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2575,
+        2611
+      ],
+      "public_source": "https://github.com/glencoesoftware/NGFF-Converter"
+    },
+    {
+      "source_id": "U-S00039",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00039",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:04.744910+00:00",
+      "acquired_at": "2026-09-09T08:15:03.917288+00:00",
+      "sha256": "87e672668d7fb2d14594494ee8675aec5643aad0b2b75c9980eca44b07a01301",
+      "text_sha256": "c74e3e5263a041e68e47af68f89d3231ef1ef5def287a2f307e081c9382c1df3",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "ea5df105ddc3af096022b9e7c78cad7ee79283a68abfe62ba0ebd1bca4d5b8fa",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c74e3e5263a041e68e47af68f89d3231ef1ef5def287a2f307e081c9382c1df3",
+      "retained_excerpt_source_line_ranges": [
+        [
+          170,
+          205
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2438,
+        2483
+      ],
+      "public_source": "https://github.com/alexcoulton/odon"
+    },
+    {
+      "source_id": "U-S00040",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00040",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:05.689918+00:00",
+      "acquired_at": "2026-09-09T08:15:04.779174+00:00",
+      "sha256": "04b6fb09d5c943d50555f83524aba6c3146cfd849f91adfe51aef27588008d9c",
+      "text_sha256": "0f9f396ee3bf5d30d72f62fba29145c7f9e10735198e61b0f07e5babdefce325",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "88e7182e970b71fb00f3202c21122c8393e348459e584975293d7a180e123352",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "0f9f396ee3bf5d30d72f62fba29145c7f9e10735198e61b0f07e5babdefce325",
+      "retained_excerpt_source_line_ranges": [
+        [
+          183,
+          215
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2484,
+        2526
+      ],
+      "public_source": "https://github.com/MPanknin/kiln-render"
+    },
+    {
+      "source_id": "U-S00041",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00041",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:04.820965+00:00",
+      "acquired_at": "2026-09-09T07:20:08.343104+00:00",
+      "sha256": "55a7ddb841e78ac5e721e1e32030537d60d2c50a4ed0892e60bd3ca866143c12",
+      "text_sha256": "67dc5810f65964bed8e6add6159f15af83326d42761e8fccd001340185592c8c",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "e826e335379713e15977b58f0652ca6731cfa32bdde0eed630c7f0f50b728081",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "67dc5810f65964bed8e6add6159f15af83326d42761e8fccd001340185592c8c",
+      "public_source": "https://idr.github.io/ome-ngff-samples/"
+    },
+    {
+      "source_id": "U-S00042",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00042",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:32.191790+00:00",
+      "acquired_at": "2026-09-09T08:15:31.475422+00:00",
+      "sha256": "ebe6de44c939dc9694078c1bbf335e97a3828df3a155733ed5f205705610b6d5",
+      "text_sha256": "ebe6de44c939dc9694078c1bbf335e97a3828df3a155733ed5f205705610b6d5",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "17da9290c05323e6ddf3d7d35e18d197132ae98c225f33f0f24307c769e6bf14",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "ebe6de44c939dc9694078c1bbf335e97a3828df3a155733ed5f205705610b6d5",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/share/ome2024-ngff-challenge/idr0090/190129.zarr/B/7/zarr.json"
+    },
+    {
+      "source_id": "U-S00043",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00043",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:15:31.805310+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "bb362e508c2037ae11acafd6007bfe794a8c2b1f6a61354ae99ce2c72f2e3422",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "67b2712690dc191547e92397e1550e8ff77d4b88c778e4bb346e9dd5e6caac3c",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00044",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00044",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:32.557007+00:00",
+      "acquired_at": "2026-09-09T08:15:31.858698+00:00",
+      "sha256": "61a4b4efb296cca3197b648d8345653b4118a36d91c0bb5b72575ed28871ff14",
+      "text_sha256": "4bc51a5cda377c96af6fca4b5cbf184d984657bf778687fd35d85b668c027918",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "1f7808fa28e66839c2b747395ceb853bea86f0d09f3aa4c629c93dbc35b2073b",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "4bc51a5cda377c96af6fca4b5cbf184d984657bf778687fd35d85b668c027918",
+      "retained_excerpt_source_line_ranges": [
+        [
+          385,
+          396
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1880,
+        1901
+      ],
+      "public_source": "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html"
+    },
+    {
+      "source_id": "U-S00045",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00045",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:33.729585+00:00",
+      "acquired_at": "2026-09-09T08:15:32.996404+00:00",
+      "sha256": "854ea92121c24daed462b6da9c3d10bf54f0b4d7042742b580d03ccf02ecf249",
+      "text_sha256": "967d476a762cf491108bddb390d8a3ba367bc75c09bacf4cd17210a692079021",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b375f1c5380ab0b7e89033e60db38fea223ff9707e938d4a7fb7b015b1c5b23b",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "967d476a762cf491108bddb390d8a3ba367bc75c09bacf4cd17210a692079021",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          152
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4377,
+        4400
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/430"
+    },
+    {
+      "source_id": "U-S00046",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00046",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:33.103670+00:00",
+      "acquired_at": "2026-09-09T07:36:06.058520+00:00",
+      "sha256": "1e2053235c14e8a5b3e7f5c5b40eb0cae75e9264e39af2b08258c3adbc2fd7f1",
+      "text_sha256": "e34fc8d4ac8845a2a6873fe2feba54cf4d19b6ecdea22dd911f42df5f8278cae",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "receipt_sha256": "466af811485d1146d1525f7922c231d1f54bf26f554a68bd92798209c7ce1e17",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "e34fc8d4ac8845a2a6873fe2feba54cf4d19b6ecdea22dd911f42df5f8278cae",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0062A/6001240.zarr/.zattrs"
+    },
+    {
+      "source_id": "U-S00047",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00047",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:34.058940+00:00",
+      "acquired_at": "2026-09-09T08:15:33.306402+00:00",
+      "sha256": "2842790b7b2dd7350810affc110b782af9c83e26dfeafc0ee8fc37e9cacd4a13",
+      "text_sha256": "98b7358a89a9239ae39da571ab669c29cf6bff99791a4d6ba8001575f4167a7d",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b8d71c5a3d5bff20e598b6976e323fa95ca50310dfb6ed1df77fc503204490d1",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "98b7358a89a9239ae39da571ab669c29cf6bff99791a4d6ba8001575f4167a7d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          144,
+          206
+        ],
+        [
+          234,
+          256
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1902,
+        2002
+      ],
+      "public_source": "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/sharding-indexed/index.html"
+    },
+    {
+      "source_id": "U-S00049",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00049",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:35.971658+00:00",
+      "acquired_at": "2026-09-09T08:15:35.242373+00:00",
+      "sha256": "8b6502c80b782e2e26109d1317a1386ee5471997b0cb3c1607bd339c57ca0e35",
+      "text_sha256": "d67c61b476419845622cb0d6a71251291948dc3f855f83696c254fe57feb51f4",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "6c05072ce71c3b818ea515d675efd18b992f87a348f55894b96a519722aff80a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "d67c61b476419845622cb0d6a71251291948dc3f855f83696c254fe57feb51f4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          131,
+          149
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4032,
+        4060
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/339"
+    },
+    {
+      "source_id": "U-S00050",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00050",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:35.783498+00:00",
+      "acquired_at": "2026-09-09T08:15:35.054558+00:00",
+      "sha256": "c2ffc26a18a16cc7d63b802abf99a42fd90a87711bffbeb19bd2044b296bccf1",
+      "text_sha256": "c2ffc26a18a16cc7d63b802abf99a42fd90a87711bffbeb19bd2044b296bccf1",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "f31614384aa2adcf0817f0f2dd369de24b60c7ce89719355c77a03cf22dfe070",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c2ffc26a18a16cc7d63b802abf99a42fd90a87711bffbeb19bd2044b296bccf1",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/zarr.json"
+    },
+    {
+      "source_id": "U-S00051",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00051",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:35.589067+00:00",
+      "acquired_at": "2026-09-09T07:32:31.206157+00:00",
+      "sha256": "f016b1b8facab0e914e17cad7fe357f9a4f91e0ebb5378991df57a71c4b28b30",
+      "text_sha256": "7db71adef912e0b009a18b36cd00016ab088f56c2d5a9a82e9b70adca2998e6e",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "8b998b477b362fd8679a565372000ca6c5a4fdd54c12f671e9c94896baa779dd",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7db71adef912e0b009a18b36cd00016ab088f56c2d5a9a82e9b70adca2998e6e",
+      "retained_excerpt_source_line_ranges": [
+        [
+          329,
+          346
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5318,
+        5345
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/0.4/"
+    },
+    {
+      "source_id": "U-S00052",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00052",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:36.984053+00:00",
+      "acquired_at": "2026-09-09T08:15:36.190856+00:00",
+      "sha256": "72c2047c63b6eb89aa4df48ae46988fc3d443f56eea8c9a33aa20160b6e3ccd9",
+      "text_sha256": "4814a2c47142a634325d6410138eaf7d6be2bf37a80bd870b07aaaab628da77c",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "484f58f8ff013b714f8f47a8457b4133173fc49d14976fc48530d213e77565ba",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "4814a2c47142a634325d6410138eaf7d6be2bf37a80bd870b07aaaab628da77c",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          151
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2031,
+        2066
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/594"
+    },
+    {
+      "source_id": "U-S00053",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00053",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:15:38.031620+00:00",
+      "acquired_at": "2026-09-09T08:15:37.120655+00:00",
+      "sha256": "15178a98070c0579c0ca3990e0328a81651bed090147d4ab21f754fa73227f60",
+      "text_sha256": "e950ada36e08145d653e7992f62fdd744b06be63f08229b218bee37cbcd57313",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "2fe4a78d891a5b83d353d4c0414441f84c02dcb47b25a1b4ce8d278ace2cc48c",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "e950ada36e08145d653e7992f62fdd744b06be63f08229b218bee37cbcd57313",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          160
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4455,
+        4486
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/593"
+    },
+    {
+      "source_id": "U-S00055",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00055",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:40.172867+00:00",
+      "acquired_at": "2026-09-09T07:27:19.172063+00:00",
+      "sha256": "c25530734d54f671951cc1358a74ddedf00382d5415b79b8a79831f09d0d1e39",
+      "text_sha256": "1e4a499575f6b30ef26e919d2d8d2d171c8a550f9e4f294dd11df1cfb9a11e8f",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b9403cd8cb4cd2c34b3f02e53ac1a7447460035d1fc139a7c9f1fe3ffb56b48c",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1e4a499575f6b30ef26e919d2d8d2d171c8a550f9e4f294dd11df1cfb9a11e8f",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          183
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4707,
+        4783
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/640"
+    },
+    {
+      "source_id": "U-S00057",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00057",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:41.082314+00:00",
+      "acquired_at": "2026-09-09T07:23:45.805189+00:00",
+      "sha256": "bb5fad251f5978b5fc3c89f4204208a24d918da9ac680c810ef36eaec3e9a717",
+      "text_sha256": "5520f3647c47c14913daff525decf72f92e28d91122d3f0ed27df4dfcd2b1577",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "f22869831fd14457aa47f7da60539c62983e6362f14b2377ccc7c9808d68ccf9",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5520f3647c47c14913daff525decf72f92e28d91122d3f0ed27df4dfcd2b1577",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          169
+        ],
+        [
+          355,
+          368
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4198,
+        4257
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/407"
+    },
+    {
+      "source_id": "U-S00058",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00058",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:42.744895+00:00",
+      "acquired_at": "2026-09-09T08:17:41.983489+00:00",
+      "sha256": "a2dfa9a846fb1866a1c8554a514b82c13c4baab22f8c5399ee2c5d57912f75e1",
+      "text_sha256": "fc49b04e16b1b24dba5351fc9e2eef866df6c8cc2584731bc7ee55d9c7025b2f",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "010a71e5f36e111b81a8ed618f6098fd127b04761871e58c224b5ad5917078cb",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "fc49b04e16b1b24dba5351fc9e2eef866df6c8cc2584731bc7ee55d9c7025b2f",
+      "retained_excerpt_source_line_ranges": [
+        [
+          141,
+          155
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4430,
+        4454
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/325"
+    },
+    {
+      "source_id": "U-S00059",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00059",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:43.371163+00:00",
+      "acquired_at": "2026-09-09T08:17:42.525892+00:00",
+      "sha256": "0285c83e5981de68e40ad2d668136075a44e2ce9cd5e4d0c5e6f5ea383de3ebc",
+      "text_sha256": "1e75a8ac211c894f9dd9df9fa8796e4ae79cbd76fab9ae97b81ef03a08e8982a",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "0c21c9a78030ac746cd779d0a61ffe62d3a2b366b33e75ae26a844e06f19b3da",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1e75a8ac211c894f9dd9df9fa8796e4ae79cbd76fab9ae97b81ef03a08e8982a",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          146
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5184,
+        5201
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/400"
+    },
+    {
+      "source_id": "U-S00060",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00060",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:43.578787+00:00",
+      "acquired_at": "2026-09-09T08:17:42.750872+00:00",
+      "sha256": "fba91bf71ac1cfa05d698f7ba02fd9e7cf0adc361c6e474a487966952b6052d3",
+      "text_sha256": "142af355470fc45dcbfaa474161d67b730f56bb03748a902c919448887349ed4",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "4051138b5d330df9ef94cdcfc5846edba7e2b499d96570e8e72839329851a503",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "142af355470fc45dcbfaa474161d67b730f56bb03748a902c919448887349ed4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          154,
+          160
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3032,
+        3048
+      ],
+      "public_source": "https://github.com/jwindhager/ome-ngff-readers-writers"
+    },
+    {
+      "source_id": "U-S00061",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00061",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:44.037113+00:00",
+      "acquired_at": "2026-09-09T08:17:43.263360+00:00",
+      "sha256": "eeb98c6b9d7ca5c0644d4e6fabd0dd808ed67b51ee625aebabd5a965bc84b8d8",
+      "text_sha256": "d8786265d3ece614a062aff923eec4af8c10a50e7a03f7a2df6e121b0e6dadea",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "0435708684cf71b65db85544c705dd02d94017e00f84be303b41f081352d2e80",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "d8786265d3ece614a062aff923eec4af8c10a50e7a03f7a2df6e121b0e6dadea",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          145
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4784,
+        4813
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/591"
+    },
+    {
+      "source_id": "U-S00062",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00062",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:44.767771+00:00",
+      "acquired_at": "2026-09-09T08:17:43.930329+00:00",
+      "sha256": "2d6930812e50208d57062ef3820493306a063daad54272ea18d9ce6b848a7e51",
+      "text_sha256": "36ce80d474779387e65ce26440b468971397e042667c2d5f8941f00ab50501eb",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "479da3a8151f3c8ad73e81b543378b4c28da006d3a7ac917627136be2bdbd4c4",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "36ce80d474779387e65ce26440b468971397e042667c2d5f8941f00ab50501eb",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          157
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4401,
+        4429
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/602"
+    },
+    {
+      "source_id": "U-S00063",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00063",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:45.376963+00:00",
+      "acquired_at": "2026-09-09T08:17:44.526932+00:00",
+      "sha256": "e453fac8f6edbe70fb2911548df85fa329e91b96227a5d8d7e1b43d481f33175",
+      "text_sha256": "a861eecbce341fd4a61bd25a9c8862a2c84ce63339883ecc62c25d8510ecd5f7",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "226a387f11dc8e146359907d49ecf5697db46b1d2d818ae2888c217d8781b36a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "a861eecbce341fd4a61bd25a9c8862a2c84ce63339883ecc62c25d8510ecd5f7",
+      "retained_excerpt_source_line_ranges": [
+        [
+          173,
+          186
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5160,
+        5183
+      ],
+      "public_source": "https://github.com/ome/ome-ngff-validator"
+    },
+    {
+      "source_id": "U-S00065",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00065",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:17:46.478593+00:00",
+      "acquired_at": "2026-09-09T08:17:45.649431+00:00",
+      "sha256": "66572408cd3adc3b7e4924bf81c14f33d6d9617d606b35a6e04468f13334027c",
+      "text_sha256": "fc0a1863208a2eec84b8da4bf70d4967e56f3e814cf32d3ec53f155ac2fec2d4",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "a21c2f792a2b63264e1f73d04de253974828e08020652baf5a09971d1120b3b2",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "fc0a1863208a2eec84b8da4bf70d4967e56f3e814cf32d3ec53f155ac2fec2d4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          212,
+          234
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2306,
+        2338
+      ],
+      "public_source": "https://github.com/allen-cell-animated/agave"
+    },
+    {
+      "source_id": "U-S00066",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00066",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:18:34.590532+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "2aba274f8468b8268c228b16aee00226cb2a3eeb5938c747ec0bdb75282e0371",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "67b2712690dc191547e92397e1550e8ff77d4b88c778e4bb346e9dd5e6caac3c",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00067",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00067",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:35.240562+00:00",
+      "acquired_at": "2026-09-09T07:18:49.295029+00:00",
+      "sha256": "12e1f7985fa801c7fb2950004190c143309ee3e47c484a564cf6e9e637c2d9e9",
+      "text_sha256": "f8d9f5a3d16702c96404f698b4cb448d36f0e602c708f1ebc4fd19ead6bd4e9d",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "feab79784ac0ed910d35de646ac5cf3237f00ff7d10f99394682f278f6d43084",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "f8d9f5a3d16702c96404f698b4cb448d36f0e602c708f1ebc4fd19ead6bd4e9d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          163
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        274,
+        321
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/404"
+    },
+    {
+      "source_id": "U-S00068",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00068",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:36.113053+00:00",
+      "acquired_at": "2026-09-09T08:18:35.210735+00:00",
+      "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+      "text_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "a5e7d73b1312057174c764bd2fbe6eedc3b18c1a190c3b1b9cbc4702b9f02321",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          35
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        397,
+        441
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/pyproject.toml"
+    },
+    {
+      "source_id": "U-S00069",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00069",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:37.236739+00:00",
+      "acquired_at": "2026-09-09T08:18:36.341625+00:00",
+      "sha256": "feaa2c5bceef982b8a6576008d9df5d293343114c3961fd73911f3c8cedb8d9b",
+      "text_sha256": "feaa2c5bceef982b8a6576008d9df5d293343114c3961fd73911f3c8cedb8d9b",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "c2e11beb360e492bbd3158c5b7315d83a66d16b025aff0bce26556f40cbeed00",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "feaa2c5bceef982b8a6576008d9df5d293343114c3961fd73911f3c8cedb8d9b",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/0/zarr.json"
+    },
+    {
+      "source_id": "U-S00070",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00070",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:37.317602+00:00",
+      "acquired_at": "2026-09-09T08:18:36.424598+00:00",
+      "sha256": "7cc8ec70ca0896643d691cd13adfedfd8bac2f43f3b7fb8b4b4e6bff7e0824da",
+      "text_sha256": "7cc8ec70ca0896643d691cd13adfedfd8bac2f43f3b7fb8b4b4e6bff7e0824da",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "03034b814a1a372a752087ca71227e59fd964ee8da0c86c2a8f6a8a39abf3e30",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7cc8ec70ca0896643d691cd13adfedfd8bac2f43f3b7fb8b4b4e6bff7e0824da",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          25
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5423,
+        5458
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome/ngff-spec/0.6rc0/schemas/image.schema"
+    },
+    {
+      "source_id": "U-S00071",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00071",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:38.716600+00:00",
+      "acquired_at": "2026-09-09T08:18:37.570265+00:00",
+      "sha256": "95ce600be59a47020daeb746e27054ccff8f46bcc0ee961855e65440129862e6",
+      "text_sha256": "e5493628be72d761849c9722aed6cfb4f11340b564d27687f6bbc5002fac51ab",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b05d058a23056aaea5a4246dcd092d6723e87492ebb6b7b76cdf66f5c788bf47",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "e5493628be72d761849c9722aed6cfb4f11340b564d27687f6bbc5002fac51ab",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          154
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        371,
+        396
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/releases/tag/v0.12.0"
+    },
+    {
+      "source_id": "U-S00072",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00072",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:38.901664+00:00",
+      "acquired_at": "2026-09-09T08:18:37.829635+00:00",
+      "sha256": "e6e274baa7e63d4a96e5d4a938510ae5fa38d17008b54a24a070959355a46af6",
+      "text_sha256": "7489046c6e136d52bf0a10cdc97e258dcd0e3b5270d7fe18579b5699635dc504",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "65522c4deb13e558487d98112742148ef4a3a1154a3dec95cd08ebb370c18b61",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7489046c6e136d52bf0a10cdc97e258dcd0e3b5270d7fe18579b5699635dc504",
+      "retained_excerpt_source_line_ranges": [
+        [
+          120,
+          132
+        ],
+        [
+          259,
+          270
+        ],
+        [
+          586,
+          595
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2168,
+        2222
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/rfc/4/"
+    },
+    {
+      "source_id": "U-S00074",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00074",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:40.163882+00:00",
+      "acquired_at": "2026-09-09T08:18:39.129270+00:00",
+      "sha256": "9dd414c21c28d2d232fa88bd93a65d3ffb562e8986d68970cab08f69967d37b5",
+      "text_sha256": "8510a55dfcb0163ffedf843f7c11b1a72f7576f1df1805f6809c159887ab0ca1",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "f9088ac92b55758e041f84b5caaa128f5851ff65ecc8d06a2e2f89b962a57793",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "8510a55dfcb0163ffedf843f7c11b1a72f7576f1df1805f6809c159887ab0ca1",
+      "retained_excerpt_source_line_ranges": [
+        [
+          318,
+          326
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5346,
+        5364
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/rfc/2/"
+    },
+    {
+      "source_id": "U-S00075",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00075",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:40.830797+00:00",
+      "acquired_at": "2026-09-09T08:18:39.784825+00:00",
+      "sha256": "44d899160f15321f924e403893ece5d02a373504b6f52f810fcfde70199ef70a",
+      "text_sha256": "ff3d9ace966dbbe385a9f8def1177b04f8db597877f274bae29b78e99db65cd7",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "7b410daaf5efedfd2fc4633c88df21e87b7241fa2cae38878911f7c00b6f42c3",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "ff3d9ace966dbbe385a9f8def1177b04f8db597877f274bae29b78e99db65cd7",
+      "retained_excerpt_source_line_ranges": [
+        [
+          120,
+          131
+        ],
+        [
+          289,
+          309
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2120,
+        2167
+      ],
+      "public_source": "https://ngff.openmicroscopy.org/rfc/9/"
+    },
+    {
+      "source_id": "U-S00076",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00076",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:41.833779+00:00",
+      "acquired_at": "2026-09-09T08:18:40.676742+00:00",
+      "sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "text_sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "8368456202bf1145e39539937efeaaa36d9d19862766f48c0d924b3886a8310b",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/0/0/zarr.json"
+    },
+    {
+      "source_id": "U-S00077",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00077",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:41.731079+00:00",
+      "acquired_at": "2026-09-09T07:20:25.690301+00:00",
+      "sha256": "4a5f096b1b91eddb381068af53d3af3cf16a9ccb4983cdfd36c7f25b762fa1f9",
+      "text_sha256": "03e533d7aa5315578854bce98c6540bc92b17472655116ca4adc2de16c23f828",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "63e866d437d74d3ce9790c5f62c97e3c94bcc03cc3b91e13f4f798f94054953a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "03e533d7aa5315578854bce98c6540bc92b17472655116ca4adc2de16c23f828",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          164
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        322,
+        370
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/pull/413"
+    },
+    {
+      "source_id": "U-S00078",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00078",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:43.667547+00:00",
+      "acquired_at": "2026-09-09T08:18:42.565919+00:00",
+      "sha256": "86397ba67bd0d0a7f2a979d013961273773cc0f2531c92793110f7df1756e807",
+      "text_sha256": "5eb78f6661f550cc87018c2feffe64c9ed1d378c0e99f8678dcd78ecb91f25ce",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "56fefa0bd85347216a1cc3ae1f3d2a2fc501a11d9a6b11307792483a4ecbf652",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5eb78f6661f550cc87018c2feffe64c9ed1d378c0e99f8678dcd78ecb91f25ce",
+      "retained_excerpt_source_line_ranges": [
+        [
+          175,
+          202
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4960,
+        4997
+      ],
+      "public_source": "https://github.com/bioio-devs/bioio-ome-zarr"
+    },
+    {
+      "source_id": "U-S00079",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00079",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:18:43.175424+00:00",
+      "acquired_at": "2026-09-09T07:35:32.986061+00:00",
+      "sha256": "1c8add0db1aacdfa155e75641aa03cd64f856bdb7b206fb7c347e19c244b2d9d",
+      "text_sha256": "1c8add0db1aacdfa155e75641aa03cd64f856bdb7b206fb7c347e19c244b2d9d",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "ca8fc89f1368f74575b1557abe41d1dcecfacf4ff537e61f440b1fce700e3206",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "1c8add0db1aacdfa155e75641aa03cd64f856bdb7b206fb7c347e19c244b2d9d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          1,
+          15
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        1165,
+        1189
+      ],
+      "public_source": "https://raw.githubusercontent.com/AllenInstitute/biofile-finder/main/dev-docs/03-using-localhost-datasource.md"
+    },
+    {
+      "source_id": "U-S00081",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00081",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:21.856191+00:00",
+      "acquired_at": "2026-09-09T08:20:21.078103+00:00",
+      "sha256": "309d94802d8eed5499d9a3f0a2d5e7c6c39722d69acec5217adfb35eff7c0e23",
+      "text_sha256": "553f82124b65111a8cb0387e4f34d2d7543fa0640f23c2155fdfbaadb0550999",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "5cd7a10b72920a5054739e26e582953a4dd2c5e0e704891df9c5cf407ed60e0d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "553f82124b65111a8cb0387e4f34d2d7543fa0640f23c2155fdfbaadb0550999",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          145
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4340,
+        4356
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/205"
+    },
+    {
+      "source_id": "U-S00082",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00082",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:21.160640+00:00",
+      "acquired_at": "2026-09-09T08:20:20.356261+00:00",
+      "sha256": "2a4d2a450469ab1ca3bf5567fd90f5f4ba2a98e9eec937d13d306c7a1dbbabb4",
+      "text_sha256": "396f2c0165283330475582d0953c2daf535870b3995ae86163d0e2a116698402",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "eb57feb170afcf2e0499ee74a4124c36f3fb348f329bae3bcbd01b431906b950",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "396f2c0165283330475582d0953c2daf535870b3995ae86163d0e2a116698402",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          149
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4298,
+        4318
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/179"
+    },
+    {
+      "source_id": "U-S00084",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00084",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:21.434112+00:00",
+      "acquired_at": "2026-09-09T08:20:20.573490+00:00",
+      "sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5",
+      "text_sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "3dc321383be7393d95c904a1aca0f42f8646d006e0f8004ed46c529248491021",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5",
+      "public_source": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/_version.schema"
+    },
+    {
+      "source_id": "U-S00085",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00085",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:22.832921+00:00",
+      "acquired_at": "2026-09-09T08:20:21.994663+00:00",
+      "sha256": "27fe704c4649e2d67c7243ca019a662fc6a620f323df8da9ae968b2629aa20d3",
+      "text_sha256": "b31360762cdb62f3cda12470f4f5d809f6733a532397f7d13f9060ca5127ca5a",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "d19382c479a963cb6891c947e8597571c91a32459e979c43da3afb624bb03be0",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b31360762cdb62f3cda12470f4f5d809f6733a532397f7d13f9060ca5127ca5a",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          145
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4258,
+        4274
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/228"
+    },
+    {
+      "source_id": "U-S00086",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00086",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:23.925295+00:00",
+      "acquired_at": "2026-09-09T08:20:23.089097+00:00",
+      "sha256": "0cc5a05cd4d082fa052866a74e604a6118a0e46637485a4117366f870b270242",
+      "text_sha256": "701380a40f7e48a8bff7833476c18facbfaf391ab621a239220a5314e079dea5",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "57c83f9b66b46ef4947a1e055832d3fbf0f3ead23e26976526d7ab0f8c00868a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "701380a40f7e48a8bff7833476c18facbfaf391ab621a239220a5314e079dea5",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          148
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4357,
+        4376
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/207"
+    },
+    {
+      "source_id": "U-S00090",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00090",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:25.102546+00:00",
+      "acquired_at": "2026-09-09T08:20:24.272842+00:00",
+      "sha256": "27d5b114fc9f6c9d47115db0a5072883abce9b7024bcaedf2bcb3f5d468e51ca",
+      "text_sha256": "e63df3f8300e7262a8cf755ff37963e6a8b09eab463bf021584ed52b2349392d",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "5efebe8ff38b7e216ced34a91c821b09ddebe5a3b485c2a4861d9d0dc2c4ec73",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "e63df3f8300e7262a8cf755ff37963e6a8b09eab463bf021584ed52b2349392d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          141,
+          151
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4319,
+        4339
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/197"
+    },
+    {
+      "source_id": "U-S00091",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00091",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:25.921606+00:00",
+      "acquired_at": "2026-09-09T08:20:25.049475+00:00",
+      "sha256": "f7be023deefd0dc034d4f9a0502e39172bc101f2280c817559fd54279a5e9e88",
+      "text_sha256": "b8904fd766921e849de8141455e279634fb11b095e91c44ff6a50dc7db91eaf8",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "d60f004bad9640b462924b98d82d84dcf7c458a041cb08b808ccf31b4692c762",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b8904fd766921e849de8141455e279634fb11b095e91c44ff6a50dc7db91eaf8",
+      "retained_excerpt_source_line_ranges": [
+        [
+          140,
+          147
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4521,
+        4538
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/513"
+    },
+    {
+      "source_id": "U-S00092",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00092",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:27.122943+00:00",
+      "acquired_at": "2026-09-09T08:20:26.247055+00:00",
+      "sha256": "9db94184581272f3522628947f389af37031d113c131adc447441631babb2463",
+      "text_sha256": "88b5b56934434aa6fdba59e9b97e561aa0bbd1f97eda07125c2958c26241ce9e",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "66609341c17b55b1966dc8109ba6916ef3abb7e0aca0aae5c4bf9ba9664d085c",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "88b5b56934434aa6fdba59e9b97e561aa0bbd1f97eda07125c2958c26241ce9e",
+      "retained_excerpt_source_line_ranges": [
+        [
+          141,
+          155
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3929,
+        3953
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/200"
+    },
+    {
+      "source_id": "U-S00093",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00093",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:20:26.461772+00:00",
+      "acquired_at": "2026-09-09T08:20:25.605227+00:00",
+      "sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5",
+      "text_sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "fb427a871805ceba4235f1323e6b09ca5d2131799197d74d38a1553db1329922",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5",
+      "public_source": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/ome.schema"
+    },
+    {
+      "source_id": "U-S00094",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00094",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:01.236536+00:00",
+      "acquired_at": "2026-09-09T08:22:59.796663+00:00",
+      "sha256": "1c97f724d711b4d29fab3e28ce63bd880d4efe0c014ef284648a8c5cb14c640c",
+      "text_sha256": "c72cda48d3b6d525db26d96a1d66486be2c30d67ffcf6ac1941b5216e47ab56e",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "bfa2ef06413d9cee87ff85fc12d114682bdf8d9beb3b7827785903ec48ef5b84",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c72cda48d3b6d525db26d96a1d66486be2c30d67ffcf6ac1941b5216e47ab56e",
+      "retained_excerpt_source_line_ranges": [
+        [
+          142,
+          158
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4539,
+        4565
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/490"
+    },
+    {
+      "source_id": "U-S00096",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00096",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:03.097525+00:00",
+      "acquired_at": "2026-09-09T08:23:01.571858+00:00",
+      "sha256": "53d326984e3ed506dfe21504995e0d9d393c6395d792784cb9c6e09633d491a1",
+      "text_sha256": "66e42579d7ff2efef26643df79301f9805b8167a34255088febdcdf75aca64c2",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "7bbee6299e3642710a6cc65ba4af8f21d0a71d35381af758cf15eedef90542f2",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "66e42579d7ff2efef26643df79301f9805b8167a34255088febdcdf75aca64c2",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          146
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4998,
+        5015
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/536"
+    },
+    {
+      "source_id": "U-S00097",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00097",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:03.227079+00:00",
+      "acquired_at": "2026-09-09T08:23:01.808274+00:00",
+      "sha256": "db1d7196d1a2c7cd9c6a4130caa67f2196366d9c50cdf568bbc5093d818a271d",
+      "text_sha256": "db1d7196d1a2c7cd9c6a4130caa67f2196366d9c50cdf568bbc5093d818a271d",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "0bd881726868a89757c2dcc0e1d3a4ff84afd1196b28d7416b9adbd73bb21814",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "db1d7196d1a2c7cd9c6a4130caa67f2196366d9c50cdf568bbc5093d818a271d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          10,
+          18
+        ],
+        [
+          226,
+          275
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2854,
+        2927
+      ],
+      "public_source": "https://raw.githubusercontent.com/BioImage-Archive/bia-zarr/main/bia_zarr/proxyimage.py"
+    },
+    {
+      "source_id": "U-S00100",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00100",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:06.928495+00:00",
+      "acquired_at": "2026-09-09T08:23:05.289555+00:00",
+      "sha256": "c441f1f84ab2e4252ee50f35823903a3c28ed66747fc33c6b48d450e2405c84c",
+      "text_sha256": "669078288acdcef4a38adfd0ecddf8ed5eb6bebdb8469788c3e7de7a2cd43e57",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "b42ccdd0fb56db9ebb98c2888199404b0c44ee40598011798d606baeeed39614",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "669078288acdcef4a38adfd0ecddf8ed5eb6bebdb8469788c3e7de7a2cd43e57",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          152
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5016,
+        5039
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/537"
+    },
+    {
+      "source_id": "U-S00101",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00101",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:07.878015+00:00",
+      "acquired_at": "2026-09-09T08:23:06.341363+00:00",
+      "sha256": "bd323c9d4a926fa481912d8d51b547b1a3a38c5861bb2415adc1c0bc361596da",
+      "text_sha256": "c56f2239789c2f25847599bc72df2551ffeda083d6be991a9e06cb47546c2a6a",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "2921baed19627e8e3931ac007345195c26ad69f5586ca9fc14b06fc61f37b5d7",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c56f2239789c2f25847599bc72df2551ffeda083d6be991a9e06cb47546c2a6a",
+      "retained_excerpt_source_line_ranges": [
+        [
+          142,
+          150
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4566,
+        4584
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/492"
+    },
+    {
+      "source_id": "U-S00102",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00102",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:08.590655+00:00",
+      "acquired_at": "2026-09-09T08:23:06.954568+00:00",
+      "sha256": "7a74a765a3b391611aea273accfb5b8aafa5efb781d325f6e47ba4194e6d1861",
+      "text_sha256": "7a74a765a3b391611aea273accfb5b8aafa5efb781d325f6e47ba4194e6d1861",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "8cf27c16ae1a03b64faae19919228de8f5197a15806359365caa8a9d0dbef897",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "7a74a765a3b391611aea273accfb5b8aafa5efb781d325f6e47ba4194e6d1861",
+      "retained_excerpt_source_line_ranges": [
+        [
+          12,
+          33
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2822,
+        2853
+      ],
+      "public_source": "https://raw.githubusercontent.com/alexcoulton/odon/main/Cargo.toml"
+    },
+    {
+      "source_id": "U-S00105",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00105",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:11.545876+00:00",
+      "acquired_at": "2026-09-09T08:23:09.996714+00:00",
+      "sha256": "bd9abf4c351b2cf1c3cb5e75968c4bc75faf6de216982bb9b3af412dbdcdf919",
+      "text_sha256": "bd9abf4c351b2cf1c3cb5e75968c4bc75faf6de216982bb9b3af412dbdcdf919",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "9c8221f69b539a17c6bc5f1dcbf5cef031197109800896cf9984d5fc63242023",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "bd9abf4c351b2cf1c3cb5e75968c4bc75faf6de216982bb9b3af412dbdcdf919",
+      "retained_excerpt_source_line_ranges": [
+        [
+          28,
+          73
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2612,
+        2667
+      ],
+      "public_source": "https://raw.githubusercontent.com/BioImage-Archive/bia-zarr/main/bia_zarr/omezarrtypes.py"
+    },
+    {
+      "source_id": "U-S00106",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00106",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:13.989355+00:00",
+      "acquired_at": "2026-09-09T08:23:12.330057+00:00",
+      "sha256": "df61f8586784c5769ad727464e144a5ea254b7db740c0a29ff704655cdfa1d6a",
+      "text_sha256": "251fef6fe1d18aec46accc20615feba4545f536314aea4c82968b38f2e05333b",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "93c527f1fd998ecee185422cc063387c9f51e4f0f2f4438375ee43a912c7338d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "251fef6fe1d18aec46accc20615feba4545f536314aea4c82968b38f2e05333b",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          145
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5040,
+        5056
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/338"
+    },
+    {
+      "source_id": "U-S00107",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00107",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:14.635572+00:00",
+      "acquired_at": "2026-09-09T08:23:13.062277+00:00",
+      "sha256": "1ae48bd6831e7b373ed414647021c89645d5eabd34a867a2e5823b702cb3233e",
+      "text_sha256": "9ec8ea3f1c45527e863c3f00659331bd1db302c5db34ecb438c939b33ba88812",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "8f2f089a17ab7cccfa67ff19aec2589163999ec83ca483621c72651a29daea2e",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "9ec8ea3f1c45527e863c3f00659331bd1db302c5db34ecb438c939b33ba88812",
+      "retained_excerpt_source_line_ranges": [
+        [
+          131,
+          174
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4086,
+        4139
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/480"
+    },
+    {
+      "source_id": "U-S00108",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00108",
+      "command": "repo-read",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:24:10.322297+00:00",
+      "sha256": "c71a6caae9d76955dc35b9993cd69a6a958579f98c5e536a6a16582c16f04841",
+      "repository": "ome/ome-zarr-py",
+      "commit": "94eaf20aa096b4a034fc0c636e31d5d64953d6ad",
+      "path": "ome_zarr/classes/image.py",
+      "receipt_sha256": "4f199b2ad62434953de8fcd3b02d2f4415c0fa309b02606584f96e30fc605381",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c71a6caae9d76955dc35b9993cd69a6a958579f98c5e536a6a16582c16f04841",
+      "retained_excerpt_source_line_ranges": [
+        [
+          39,
+          41
+        ],
+        [
+          327,
+          335
+        ],
+        [
+          395,
+          416
+        ],
+        [
+          459,
+          554
+        ],
+        [
+          559,
+          606
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3408,
+        3629
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/classes/image.py"
+    },
+    {
+      "source_id": "U-S00109",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00109",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:44.315419+00:00",
+      "acquired_at": "2026-09-09T08:23:42.375009+00:00",
+      "sha256": "4ac311b177ea10fe7325d24584eeec1e13299753192fe7ea8da809ba5523fe73",
+      "text_sha256": "3eadb3f47dc17d1bddb1d337e9f037804275bb3ce760be2aaae78815d49fd1a4",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "8e8775e272c74b8868a386b8a8ab7c5b128a56ed9f796231c8672f506b11493a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "3eadb3f47dc17d1bddb1d337e9f037804275bb3ce760be2aaae78815d49fd1a4",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          160
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2261,
+        2305
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/512"
+    },
+    {
+      "source_id": "U-S00110",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00110",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:45.321446+00:00",
+      "acquired_at": "2026-09-09T08:23:43.337784+00:00",
+      "sha256": "60742b12df4cd2d0e4c442c8a90c3910ec0848c58946bcb810b8cadf2160c11e",
+      "text_sha256": "42c956cc7c4399d703c98552248137d636e062b427eab5348f463fc91c474dee",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "5a6a411e9bebfdaeb5c37b994ca09d213c80ba9b89f97435aeb5253fd6b8bdb8",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "42c956cc7c4399d703c98552248137d636e062b427eab5348f463fc91c474dee",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          153
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5135,
+        5159
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/401"
+    },
+    {
+      "source_id": "U-S00111",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00111",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:46.643323+00:00",
+      "acquired_at": "2026-09-09T08:23:44.714261+00:00",
+      "sha256": "f1730aa9c082ca4a52940f145b8cfdbc6ebe25a828d414d10279c9a54b7a6052",
+      "text_sha256": "bf973bea696af9e3d284c154355a5cd7a214ffb2d9ead1de744d0477733fab9f",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "bf8181136390633c468ed43bd9fdbe206dca790f68b6415a9b656f168e78b286",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "bf973bea696af9e3d284c154355a5cd7a214ffb2d9ead1de744d0477733fab9f",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          153
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5057,
+        5081
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/395"
+    },
+    {
+      "source_id": "U-S00114",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00114",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:49.785323+00:00",
+      "acquired_at": "2026-09-09T08:23:47.893678+00:00",
+      "sha256": "77cc7d8bc7a51d55f67d45c4af5952146faf3b10190f474e5e93cd58ece3c09b",
+      "text_sha256": "b23b50a449623a9c3fa26c15e7bcb040107e09b9d719ead18e8245d00ebc620d",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "34442758ee87fef03ee1f4d4af1cab12bd4a862657670f678077278dfc02b458",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b23b50a449623a9c3fa26c15e7bcb040107e09b9d719ead18e8245d00ebc620d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          131,
+          149
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5106,
+        5134
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/543"
+    },
+    {
+      "source_id": "U-S00115",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00115",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:51.252451+00:00",
+      "acquired_at": "2026-09-09T08:23:49.380700+00:00",
+      "sha256": "d9082cb5732d2598c61798cfbf6a82adff828b70a4124e65ae934e3f2e96fc30",
+      "text_sha256": "80a39a5fb3befde2796a5790608163574140da1741d0cb0f43c6f80f46222efd",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "d32fff5922c3d00806fee3fad42f2626555dbb8b1a3c71b67b78a94c9ae1a83a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "80a39a5fb3befde2796a5790608163574140da1741d0cb0f43c6f80f46222efd",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          152
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5082,
+        5105
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/462"
+    },
+    {
+      "source_id": "U-S00116",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00116",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:52.084141+00:00",
+      "acquired_at": "2026-09-09T08:23:50.192380+00:00",
+      "sha256": "2442e8a40f1a469dffd2b6bd4e86157fe9133c31f8bf380e2802ac0de476bd0a",
+      "text_sha256": "5c427346169cb3bfe5da8715e67c0bfa11201f12e63482d145ae4c79d7559216",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "07fa4c3e97d7e8b9de99456a4fbad49b80061aa367cc15ce320a6c3aef645ad1",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5c427346169cb3bfe5da8715e67c0bfa11201f12e63482d145ae4c79d7559216",
+      "retained_excerpt_source_line_ranges": [
+        [
+          131,
+          146
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4172,
+        4197
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/274"
+    },
+    {
+      "source_id": "U-S00117",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00117",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:53.665381+00:00",
+      "acquired_at": "2026-09-09T08:23:51.538350+00:00",
+      "sha256": "88a5d483ec51801ec0a255b25f38ebf987e154c77c7b917ce5c59ead1e135497",
+      "text_sha256": "5a6e02b04a8d1d7b8ec089a0b3150f251afc695c7046d0eb595939a05fa525bd",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "bc80ae71ac033438f79f041e941304339e5e3c006b0da9c823720c8b09a752c8",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5a6e02b04a8d1d7b8ec089a0b3150f251afc695c7046d0eb595939a05fa525bd",
+      "retained_excerpt_source_line_ranges": [
+        [
+          131,
+          158
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2223,
+        2260
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/398"
+    },
+    {
+      "source_id": "U-S00118",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00118",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:55.632674+00:00",
+      "acquired_at": "2026-09-09T08:23:53.499397+00:00",
+      "sha256": "78c75d69d2b8a39649c9ed2f8fb9c179531eb7e4be0053304cb7f676c4bcf9a6",
+      "text_sha256": "ef07e4bb4071660feb6674597bb2be773e383c07d23122ac0e22fd2516457f01",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "3d6c4c7eda2c7c55bc213d726a30b057c991823d15a616ae42d2646dcc5a5923",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "ef07e4bb4071660feb6674597bb2be773e383c07d23122ac0e22fd2516457f01",
+      "retained_excerpt_source_line_ranges": [
+        [
+          141,
+          164
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4487,
+        4520
+      ],
+      "public_source": "https://github.com/ome/ngff/issues/321"
+    },
+    {
+      "source_id": "U-S00119",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00119",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:23:56.205889+00:00",
+      "acquired_at": "2026-09-09T08:23:54.066165+00:00",
+      "sha256": "e9fd391074de7a6c8af0e06590d4289e4b500ad9012053a645d5e35e8438f2ee",
+      "text_sha256": "c986c8536df07c251cbb3493a5a85955194212e5179c744ed8da81fda22b772d",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "0d9c6c28c95b28526ff280b6cd150eb069f336ecaf3a89cd1217d49f1f2e2c64",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c986c8536df07c251cbb3493a5a85955194212e5179c744ed8da81fda22b772d",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          158
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5288,
+        5317
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/507"
+    },
+    {
+      "source_id": "U-S00123",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00123",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:25:09.514727+00:00",
+      "acquired_at": "2026-09-09T08:25:07.493677+00:00",
+      "sha256": "30add669e46f820323c0d1d83a6637698f3c0c571e8724be10cd851ff9b3d8a0",
+      "text_sha256": "e34fc8d4ac8845a2a6873fe2feba54cf4d19b6ecdea22dd911f42df5f8278cae",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "receipt_sha256": "48ca408b1b40a43483c5665d7a04b790092d48b51015ce3ff083971eb97e97fb",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "e34fc8d4ac8845a2a6873fe2feba54cf4d19b6ecdea22dd911f42df5f8278cae",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr/.zattrs"
+    },
+    {
+      "source_id": "U-S00127",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00127",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:25:14.652907+00:00",
+      "acquired_at": "2026-09-09T08:25:12.599432+00:00",
+      "sha256": "5c1b15dd3b7659d4ff5b8b83297c7d5135fd9e6fb44170b7d2f903845982450a",
+      "text_sha256": "5c1b15dd3b7659d4ff5b8b83297c7d5135fd9e6fb44170b7d2f903845982450a",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "721cacf400613ba32e2f4d025c39ff40ee2a57f23013bddfaebdc0c72a383fb6",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5c1b15dd3b7659d4ff5b8b83297c7d5135fd9e6fb44170b7d2f903845982450a",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/share/ome2024-ngff-challenge/idr0090/190129.zarr/B/7/0/zarr.json"
+    },
+    {
+      "source_id": "U-S00128",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00128",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:25:15.688892+00:00",
+      "acquired_at": "2026-09-09T08:25:13.694492+00:00",
+      "sha256": "4851597f80f7f6b8e6b6d4c610e007fc6c1c6f2cda13b27e7c8f051ca2112aca",
+      "text_sha256": "4851597f80f7f6b8e6b6d4c610e007fc6c1c6f2cda13b27e7c8f051ca2112aca",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "b1277780ac2148125bc237cbd7f849dfd6b2174e071b17acf2804411cd73b383",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "4851597f80f7f6b8e6b6d4c610e007fc6c1c6f2cda13b27e7c8f051ca2112aca",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/share/ome2024-ngff-challenge/4496763.zarr/zarr.json"
+    },
+    {
+      "source_id": "U-S00129",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00129",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:25:17.471938+00:00",
+      "acquired_at": "2026-09-09T08:25:15.465466+00:00",
+      "sha256": "de0a8d495fe6b968b13e5100bde86876153d9495f9df435482fa034cadd9f1d7",
+      "text_sha256": "de0a8d495fe6b968b13e5100bde86876153d9495f9df435482fa034cadd9f1d7",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "e417720f3ebd66621b8fabfce26c59423db2ff8fe8334ae2fd5f346760b7d477",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "de0a8d495fe6b968b13e5100bde86876153d9495f9df435482fa034cadd9f1d7",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/share/ome2024-ngff-challenge/idr0090/190129.zarr/ro-crate-metadata.json"
+    },
+    {
+      "source_id": "U-S00131",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00131",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:26:59.747870+00:00",
+      "acquired_at": "2026-09-09T08:26:57.927729+00:00",
+      "sha256": "e8b0f155225b4a3eefd139585c63babe583dfae888c22e8f8da51db4c894afd2",
+      "text_sha256": "de01ae87ab5f7c2d38ea32741d45de7ebd20f4d4be041bc9e19e9a350f1e17e6",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "d6fc3c12a9343f3c77a384a6e3fed05b830f8703fa5919ec9d1106b72a1a48b2",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "de01ae87ab5f7c2d38ea32741d45de7ebd20f4d4be041bc9e19e9a350f1e17e6",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          147
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4906,
+        4924
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/265"
+    },
+    {
+      "source_id": "U-S00132",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00132",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:02.219018+00:00",
+      "acquired_at": "2026-09-09T08:26:59.639490+00:00",
+      "sha256": "187685fe0301ae32459c1e74a28271e2bb23f1bae06b3dfd651d79d5343087eb",
+      "text_sha256": "9fcea2db9b53be70c226d7c1507465f41bef36209027307405b3843738efbc9e",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "508a1e003fdfe640fa8c682473eab00f58f4307810737b2ed2aa61e8dc28a776",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "9fcea2db9b53be70c226d7c1507465f41bef36209027307405b3843738efbc9e",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          151
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4275,
+        4297
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/225"
+    },
+    {
+      "source_id": "U-S00133",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00133",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:03.369747+00:00",
+      "acquired_at": "2026-09-09T08:27:00.613894+00:00",
+      "sha256": "08a3d5f2a0cd41d9a34719be59380af159f524cd62f5027b7de54d2ce8bc2ebb",
+      "text_sha256": "bb99c9f172b27453614d51de60b92ab2df7f31bcb59b8e514daadd0fbdaca2ca",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "c0229f6050c9ede9c3c1cc6e3545400a8ddb0d41275ef134f7fd82f94bd91e8e",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "bb99c9f172b27453614d51de60b92ab2df7f31bcb59b8e514daadd0fbdaca2ca",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          149
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4885,
+        4905
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/343"
+    },
+    {
+      "source_id": "U-S00134",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00134",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:03.996659+00:00",
+      "acquired_at": "2026-09-09T08:27:01.564380+00:00",
+      "sha256": "40c52e8038542389e441e8bf4537adda70005f1f62c17fa2e9ce9110845739f3",
+      "text_sha256": "560800cde38844d9ec72d1677e40d6533686770eb7b4394504e9f9545e64c175",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "e58760fffe4a66da2c07281e8d0527e25e34a1874e0f43638c15fe4a5ed8f6e4",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "560800cde38844d9ec72d1677e40d6533686770eb7b4394504e9f9545e64c175",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          153
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5263,
+        5287
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/486"
+    },
+    {
+      "source_id": "U-S00137",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00137",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:07.348925+00:00",
+      "acquired_at": "2026-09-09T08:27:05.505695+00:00",
+      "sha256": "c694df0fb73b39c4691e91047e6fae1539ce8499728fc34f407cc18494ba51e1",
+      "text_sha256": "95e5f3e4e94c8d98d7a84ceef024355e5e4e38a926c177e10b5ef77d568a21d2",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "badc8f3da9e33ccc3b1ac07410b983a3629db5fa288ceed8c12d1b86c2df9a99",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "95e5f3e4e94c8d98d7a84ceef024355e5e4e38a926c177e10b5ef77d568a21d2",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          145
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4925,
+        4941
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/618"
+    },
+    {
+      "source_id": "U-S00138",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00138",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:09.732019+00:00",
+      "acquired_at": "2026-09-09T08:27:07.655054+00:00",
+      "sha256": "1483b8855504a8274f6195b75ad8805419779b182730e5dccdc1aee36b4a136e",
+      "text_sha256": "0c42ac0a96d1d57825d6554fff7b13a741f8bacb425dbdd1cd7299ede7ee50cd",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "6f9c12c8df2f92e21ac447a59842c970e54c08fbb8ee23cae170e4114cb58e7b",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "0c42ac0a96d1d57825d6554fff7b13a741f8bacb425dbdd1cd7299ede7ee50cd",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          148
+        ],
+        [
+          150,
+          174
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4814,
+        4884
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/653"
+    },
+    {
+      "source_id": "U-S00139",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00139",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:09.544495+00:00",
+      "acquired_at": "2026-09-09T08:27:07.559011+00:00",
+      "sha256": "253a92c70deabc201b1356e5ac705982c9d83864cc4427af11fc0470b64f621f",
+      "text_sha256": "b7f671b365e81a7c75c090361a339cd2a7eb84b4ba860fe4c4ac49a6f33426c2",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "f8389d0d04ff5a66c5ffe5a51dc16552f48f825bc1385c9077f2f251f932e8c1",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b7f671b365e81a7c75c090361a339cd2a7eb84b4ba860fe4c4ac49a6f33426c2",
+      "retained_excerpt_source_line_ranges": [
+        [
+          93,
+          156
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3630,
+        3703
+      ],
+      "public_source": "https://ome-zarr-models-py.readthedocs.io/en/latest/"
+    },
+    {
+      "source_id": "U-S00140",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00140",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:11.722615+00:00",
+      "acquired_at": "2026-09-09T08:27:09.653416+00:00",
+      "sha256": "c1f0e9eb09c7045796e1aac72aad1e6d89e1f373e416008d732752264d325b5f",
+      "text_sha256": "c48748385d8fd47d85c17ac41fab675e06800d51e3137b0cfd650240e67691b9",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "426ccfadc193c5d024ad4feb81a0bd5ee6cdb8d80a42bc24d069dc9b665cf960",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "c48748385d8fd47d85c17ac41fab675e06800d51e3137b0cfd650240e67691b9",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          156
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5235,
+        5262
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/248"
+    },
+    {
+      "source_id": "U-S00142",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00142",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:13.352550+00:00",
+      "acquired_at": "2026-09-09T08:27:11.466558+00:00",
+      "sha256": "bf91bff7e2d03ab2c6ce402242b7b9c3d4c893240281cab49d123dcffa75ff92",
+      "text_sha256": "af64b82c0b771200d8ab24d8626e0a460937f413171bd42d54d15fc7790e0226",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "4b3a1df1360836aee69fd027580039b61c09cf45a2d1adc76039d1354299561a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "af64b82c0b771200d8ab24d8626e0a460937f413171bd42d54d15fc7790e0226",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          146
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4942,
+        4959
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/616"
+    },
+    {
+      "source_id": "U-S00144",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00144",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:16.067649+00:00",
+      "acquired_at": "2026-09-09T08:27:14.054859+00:00",
+      "sha256": "ca3e6816c0dd9f2be9c5f4b4192e59a402f760bb41a5f535e664ee8b79ef1762",
+      "text_sha256": "ae10a4fee5862ccd1a519eb3db16de416fa6f349ef67de743c64ed8036c4b250",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "30b692a1cb6944081beb206a8359575f785e7fc5e71b28478e9fbb074ebc5c16",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "ae10a4fee5862ccd1a519eb3db16de416fa6f349ef67de743c64ed8036c4b250",
+      "retained_excerpt_source_line_ranges": [
+        [
+          139,
+          161
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        5202,
+        5234
+      ],
+      "public_source": "https://github.com/ome/ome-zarr-py/issues/240"
+    },
+    {
+      "source_id": "U-S00145",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00145",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:27:28.378267+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "32112750a9e9bf6b53da0a8c1675d607a45419d22603f0ce5b8777339ec56c0a",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eba51efc3a5349b2eb245d2e8a4c529855f6029358670c378877134e0bbe7457",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00146",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00146",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:27:29.540899+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "52ec614108177df95d64253bdf9486c95a6ff5c94eacccfeeeae727cc4d362ab",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eba51efc3a5349b2eb245d2e8a4c529855f6029358670c378877134e0bbe7457",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00147",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00147",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:27:32.251939+00:00",
+      "acquired_at": "2026-09-09T08:27:30.654990+00:00",
+      "sha256": "68d2c3bdac9b5326d30a76822e6fd4c93a4fce21a387890a6c4b684950fb8ae8",
+      "text_sha256": "68d2c3bdac9b5326d30a76822e6fd4c93a4fce21a387890a6c4b684950fb8ae8",
+      "http_status": 200,
+      "content_type": "application/json",
+      "receipt_sha256": "35a7bacc66383f438639255ec7d1f1b7f044011fbf65a7f8cc7f451ede546576",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "68d2c3bdac9b5326d30a76822e6fd4c93a4fce21a387890a6c4b684950fb8ae8",
+      "public_source": "https://livingobjects.ebi.ac.uk/idr/zarr/test-data/v0.6dev2/idr0067/9036345_tiles.zarr/zarr.json"
+    },
+    {
+      "source_id": "U-S00148",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00148",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:27:31.637477+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "ace7fbfa62b8ddbee254d2fde5d5d8a59889a2192ee6eee654037cf6749fe577",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eba51efc3a5349b2eb245d2e8a4c529855f6029358670c378877134e0bbe7457",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00152",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00152",
+      "command": "fetch",
+      "status": "ERROR",
+      "finished_at": "2026-09-09T08:27:35.406289+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt_sha256": "9ee88ac76733430c9675408d5d92c15ebc0cfb41cfaf131259a1c54971a39159",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "eba51efc3a5349b2eb245d2e8a4c529855f6029358670c378877134e0bbe7457",
+      "use_limit": "Failed acquisition only; matching raw hash does not prove successful source retrieval or invalid input."
+    },
+    {
+      "source_id": "U-S00156",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00156",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:30:36.187664+00:00",
+      "acquired_at": "2026-09-09T08:30:36.039028+00:00",
+      "sha256": "d0c536fb03b7fbd5c80faddd8e8c5e4b0203fecb3f2c94173e238d7838bf2ce4",
+      "text_sha256": "d6e4c89be9cdf18294a9b75ed875ce78f06440a2753c535c9aa84c770e20689c",
+      "http_status": 200,
+      "content_type": "text/html",
+      "receipt_sha256": "69c2ae2982dcee503caaf442643a4f31d5991eb47e19dabd26b5d2bbb5844cce",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "d6e4c89be9cdf18294a9b75ed875ce78f06440a2753c535c9aa84c770e20689c",
+      "retained_excerpt_source_line_ranges": [
+        [
+          126,
+          150
+        ],
+        [
+          171,
+          183
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2067,
+        2119
+      ],
+      "public_source": "https://github.com/ome/ngff-spec/releases/tag/0.6rc0"
+    },
+    {
+      "source_id": "U-S00159",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00159",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:53.068163+00:00",
+      "acquired_at": "2026-09-09T08:31:52.059038+00:00",
+      "sha256": "0e327552ef2d11eaa198f84e86cac2ddbdefd5fa2b10947c42c45956b1c61188",
+      "text_sha256": "0e327552ef2d11eaa198f84e86cac2ddbdefd5fa2b10947c42c45956b1c61188",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "cb4986951d6bf6dce7347749f5f390cd60952ce77064fa5a9623d5b08dba51a6",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "0e327552ef2d11eaa198f84e86cac2ddbdefd5fa2b10947c42c45956b1c61188",
+      "retained_excerpt_source_line_ranges": [
+        [
+          262,
+          283
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4140,
+        4171
+      ],
+      "public_source": "https://raw.githubusercontent.com/napari/napari/main/src/napari/layers/_scalar_field/_slice.py"
+    },
+    {
+      "source_id": "U-S00160",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00160",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:53.640387+00:00",
+      "acquired_at": "2026-09-09T08:31:52.691798+00:00",
+      "sha256": "67713d2a514d45ffa31c9fc708a8fae33e8ba4cbec9122b71efbf097a734300c",
+      "text_sha256": "67713d2a514d45ffa31c9fc708a8fae33e8ba4cbec9122b71efbf097a734300c",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "be14901d3df6041e0d45aabc4128dce6bc3055d728a75ca611d87b98d398af2d",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "67713d2a514d45ffa31c9fc708a8fae33e8ba4cbec9122b71efbf097a734300c",
+      "retained_excerpt_source_line_ranges": [
+        [
+          228,
+          321
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3704,
+        3807
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome-zarr-models/ome-zarr-models-py/6c30f107ac6a415a9e4005d1b5375c5c1da025a1/src/ome_zarr_models/v05/image.py"
+    },
+    {
+      "source_id": "U-S00161",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00161",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:54.387919+00:00",
+      "acquired_at": "2026-09-09T08:31:53.299087+00:00",
+      "sha256": "6e3e36d5228359e07efe7287d3123fc636ef004a9dd146dda429a1d0425c6b9a",
+      "text_sha256": "6e3e36d5228359e07efe7287d3123fc636ef004a9dd146dda429a1d0425c6b9a",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "a3c4b730945e53e2f8d2c091afdc900335f2005442fc4bffbf65945dc6d433e7",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "6e3e36d5228359e07efe7287d3123fc636ef004a9dd146dda429a1d0425c6b9a",
+      "retained_excerpt_source_line_ranges": [
+        [
+          78,
+          110
+        ],
+        [
+          153,
+          170
+        ],
+        [
+          190,
+          214
+        ],
+        [
+          245,
+          267
+        ],
+        [
+          469,
+          493
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2668,
+        2821
+      ],
+      "public_source": "https://raw.githubusercontent.com/alexcoulton/odon/b01faef010b14ea03c33e92a14e438061d257e39/src/data/ome.rs"
+    },
+    {
+      "source_id": "U-S00162",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00162",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:54.963230+00:00",
+      "acquired_at": "2026-09-09T08:31:53.970233+00:00",
+      "sha256": "5dd0ea98b5d6a354d8aac28c3e31d4488f13d231f714e88e8e5cbf3d91bf5ca2",
+      "text_sha256": "5dd0ea98b5d6a354d8aac28c3e31d4488f13d231f714e88e8e5cbf3d91bf5ca2",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "876f9af5266339ad7afe89ab053b0652fa719aa31c65ac5ff56d12cfbf825b05",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "5dd0ea98b5d6a354d8aac28c3e31d4488f13d231f714e88e8e5cbf3d91bf5ca2",
+      "retained_excerpt_source_line_ranges": [
+        [
+          586,
+          600
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        4061,
+        4085
+      ],
+      "public_source": "https://raw.githubusercontent.com/napari/napari/main/src/napari/layers/_scalar_field/scalar_field.py"
+    },
+    {
+      "source_id": "U-S00163",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00163",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:55.340289+00:00",
+      "acquired_at": "2026-09-09T07:53:12.026437+00:00",
+      "sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+      "text_sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "64e398508c4ddb92a1c49bc4f762d71c220ab36b79fbec480eef3b5fa81d9850",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+      "retained_excerpt_source_line_ranges": [
+        [
+          345,
+          358
+        ],
+        [
+          397,
+          416
+        ],
+        [
+          479,
+          520
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        2339,
+        2437
+      ],
+      "public_source": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/FileReaderZarr.cpp"
+    },
+    {
+      "source_id": "U-S00164",
+      "origin_job": "J0005-reconcile",
+      "original_source_id": "S00164",
+      "command": "fetch",
+      "status": "OK",
+      "finished_at": "2026-09-09T08:31:56.465041+00:00",
+      "acquired_at": "2026-09-09T08:31:55.393912+00:00",
+      "sha256": "b120771c3bf39cf87413acd610e5f230b0981f195722350eab78de02da31047c",
+      "text_sha256": "b120771c3bf39cf87413acd610e5f230b0981f195722350eab78de02da31047c",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "receipt_sha256": "5e85ce0dec521573f802723f595c4798fc7120282fcdce6124bed7e5f8b04f2c",
+      "retained_raw_hash_matches": true,
+      "retained_text_sha256": "b120771c3bf39cf87413acd610e5f230b0981f195722350eab78de02da31047c",
+      "retained_excerpt_source_line_ranges": [
+        [
+          238,
+          248
+        ],
+        [
+          348,
+          403
+        ],
+        [
+          454,
+          488
+        ]
+      ],
+      "native_primary_catalog_lines": [
+        3808,
+        3928
+      ],
+      "public_source": "https://raw.githubusercontent.com/ome-zarr-models/ome-zarr-models-py/6c30f107ac6a415a9e4005d1b5375c5c1da025a1/src/ome_zarr_models/v05/multiscales.py"
+    }
+  ]
+}

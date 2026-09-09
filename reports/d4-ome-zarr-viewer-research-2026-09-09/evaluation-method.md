@@ -1,0 +1,43 @@
+# Evaluation method and limits
+
+This records the evaluation of one completed native research/comparison campaign. Evaluator materials were withheld from participant inputs. Native completion, research coverage, reviewed fixture amendments and runtime acceptance are reported separately.
+
+One synthetic local OME-Zarr 0.5 viewer case was frozen before launch: a 126-word brief and a 214-word initial Plan. Discovery and studies received the brief; the Plan entered at comparison. Eight independent controls and the scoring rubric were frozen before the first native job. They are a partial denominator, not an exhaustive specification, feature inventory or finding limit. Niche version-specific knowledge was a weaker-prior selection hypothesis relative to Usage; no measurement of a model's internal prior knowledge was made.
+
+The single unchanged `discovery_to_plan.py` campaign uses DeepSeek V4 Flash MAX for discovery and studies and Astra XHIGH for reconciliation and comparison. Each job receives 2,400 seconds. The 180-second study window limits new admissions after discovery, with two study workers; admitted jobs may finish. The finite later stages review cohort snapshots. New or deeper leads may remain afterward. No second campaign, replacement arm or workflow-code change was used.
+
+Native completion, transport integrity, semantic quality and a verified amendment are separate observations. A completed native Goal requires a terminal Goal and ended active turn, checked against the native summary and job outcome. CLI success and parsed disposition markers alone are insufficient. Input and output hashes establish which bytes were delivered. Semantic review checks the meaning retained for each assigned parent and its actual upstream evidence; an ID mention is not a recovered finding. Only reviewed amendments included in the scoped repository commit count as findings landed.
+
+## Frozen-control scoring
+
+Score each control at 0, 0.5 or 1 using the frozen rubric. A partial mechanism mention is not a full discriminating acceptance contract. Score the union of relevant native output at each stage, retaining exact evidence locators and unresolved qualifications. Do not transfer evaluator-added tests into a native-output score. Independent evaluators can refine the separately labeled derivative after native work; its coverage is not an unaided native recovery score.
+
+Discovery scored 4/8, with a partial recovery on each control. The completed reconciliation union scored 6.5/8: version/role admission, declared pyramid paths, composed coordinates, associated labels and fill/failure/read-only semantics were full; absent-versus-singleton navigation, label-value-keyed lookup and a discriminating full-codec/endian contract were partial. The final comparison union scores 8/8 through complementary native reports. C02 receives full credit by an explicit retrospective adjudication combining metadata-bound controls/slicing and no invented absent axis (J8), singleton cases (J9), and shape/index/plane identity (J11). J10 supplies the coupled exact-ID lookup and compound-codec/version-discriminator checks. This union does not turn each comparison into an 8/8 report or change the earlier reconciliation result. Signed/large label identity, sparse allocation and the post-pin cyclic transpose-plus-sharding fix were present in reconciliation; calling those evaluator-only additions would misstate provenance.
+
+Repeated mentions, corrected hypotheses, source acquisitions, child leads, acceptance variants and proposal suboptions are not automatically additional independent findings. The amended derivative groups eight control-overlapping clarifications and three further correctness groups. That grouping is a reporting convention, not proof that eleven new native defects were discovered.
+
+## Transport and stage-loss audit
+
+Compare each job with the evidence actually supplied to it. Reconciliation batches are separate portions of the stage, not one another's upstream. J8 received the implementation/history/J4 reconciliation reports and all twelve applicable child notes. Later J5/J6/J7 findings cannot be called J8 losses merely because J8 did not independently recover them. Conversely, carrying full source bytes is delivery evidence, not proof that the final report preserved their consequences.
+
+The audit follows corrected implementation/history claims, selected additional mechanisms and child directions through their applicable final comparisons. It distinguishes retained, usefully narrowed, deferred with explanation, contradicted, and omitted. A report's explicit uncertainty can preserve a direction without establishing its answer. The [final stage review](evaluation/comparison-stage-review.md) records the exact traced sets, source locators, complementary coverage and residual limits. No material direction loss was found within those selected traces; this is not an exhaustive audit of every research sentence.
+
+## Claims and execution
+
+Primary-specification passages, pinned implementation code, issue/PR history and actual metadata have different evidential roles. A version's advertised codec support is not full-chain decoded-value proof. A closed issue is not proof of fix inclusion in the selected dependency. A schema pass is not complete OME conformance or a correct image. A repository's lack of matching issue titles does not demonstrate reliability.
+
+Native work did perform source acquisition, code inspection and JSON/CSV processing. Reconciliation J5 executed eight selected metadata-schema evaluations; comparison J9 executed thirteen, including some overlapping mechanisms. An independent evaluator reproduced both sets; the label-source adjudication performed six further shape checks. These are separate sets of real, narrow executions, not twenty-seven independent discoveries or viewer tests. No Slide Scout implementation, AGAVE/TensorStore image decoding, full sample mirroring, GUI alignment run, renderer benchmark or platform acceptance was performed. Proposed fixture checks remain unexecuted acceptance specifications.
+
+The retained challenge inventory distinguishes 17 CSV documents, 15,237 rows and 15,234 unique URLs from passing image cases. Older and newer challenge URLs can legitimately contain different metadata. The live page's changing date display does not establish a new OME 0.5 semantic release. Pinned or hashed acquired bytes identify the actual evidence.
+
+## Scope and isolation
+
+The derivative preserves local filesystem reading, source-content immutability and session-local display settings. Container breadth, stack adoption, saved display defaults, public automation, advanced controls and preload remain unapproved choices. The independent label adjudication distinguishes absent enclosing objects from a present empty source object; it does not establish a universal metadata-recovery policy. Required path, value, coordinate and error correctness must hold within the explicitly supported envelope.
+
+Private controls, prior-case reports and the later git reference set were excluded from supplied inputs. This is not hard filesystem isolation: native jobs had broader filesystem capability. Earlier studies enumerated unrelated shared-cache repository names without observed content use. J10 also read process command lines outside its supplied corpus; the recorded match list was empty, and the successful PID read set and nonmatching contents were not retained. J11 directly reused eligible upstream source/corpus captures. No named private-control, evaluator, later-reference or unrelated-case file-content access was observed in the reviewed records. This qualified conclusion does not establish exclusive-corpus access, hard confinement or every indirect read.
+
+## Accounting boundary
+
+Accounting is collected only after campaign exit and terminal outcomes for all admitted jobs. The unchanged collector's raw results are retained externally, including its legacy protocol/delivery-label mismatch. Stable completion instead comes from native outcomes and current fingerprints. Captured Astra API-equivalent dollars and Codex credits are alternative values of the same usage. DeepSeek Go allowance value is separate. The retained September 8 pricing basis is historical, not a claim about current tariffs or a provider bill. Actual cash, search, root/controller, preparation, evaluation and support costs remain unknown.
+
+Report summed job durations, the union of native invocation intervals, and the observed campaign envelope separately. Neither token valuation nor invocation time is measured model inference time. Include captured failed attempts and unknown valuation reasons; do not turn missing usage into zero cost.

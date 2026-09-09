@@ -1,0 +1,10 @@
+{
+  "schema": "d4.fixture_patch_verification.v1",
+  "baseline_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+  "amended_sha256": "aef6f3d10e0680344c7fd91a56fa0ad6d768622e70e3f27fa88d71cb2c6f232f",
+  "patch_sha256": "bb7d5fdde4a678c0f303ec4701a6bba86e85f883fd403406cdcfeb28fa269308",
+  "git_apply_check": true,
+  "reconstructed_bytes_match": true,
+  "amendment_groups": 11,
+  "executed_viewer_tests": false
+}

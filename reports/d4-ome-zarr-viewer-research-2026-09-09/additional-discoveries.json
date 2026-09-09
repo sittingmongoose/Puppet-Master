@@ -1,0 +1,87 @@
+{
+  "schema": "d4.additional_mechanism_dispositions.v1",
+  "selected_family_count": 9,
+  "exhaustive": false,
+  "additional_landing_count": null,
+  "count_limit": "Selected mechanism families overlap controls and one another; do not add nine to eleven fixture groups or to eight controls.",
+  "families": [
+    {
+      "id": "D4-N01",
+      "name": "Schema versus semantic/hierarchy diagnostics",
+      "fixture_groups": [
+        "CR09"
+      ],
+      "disposition": "correctness_plus_held_tolerance"
+    },
+    {
+      "id": "D4-N02",
+      "name": "Shard/index geometry, range I/O and memory",
+      "fixture_groups": [
+        "CR10",
+        "CR07"
+      ],
+      "disposition": "correctness_plus_open_budgets"
+    },
+    {
+      "id": "D4-N03",
+      "name": "Container/FOV/image identity",
+      "fixture_groups": [
+        "CR01"
+      ],
+      "disposition": "conditional_correctness_breadth_held"
+    },
+    {
+      "id": "D4-N04",
+      "name": "Saved display defaults versus measured extrema",
+      "fixture_groups": [
+        "CR11"
+      ],
+      "disposition": "numeric_boundary_only_display_policy_held"
+    },
+    {
+      "id": "D4-RN05",
+      "name": "Typed intensity conversion",
+      "fixture_groups": [
+        "CR11"
+      ],
+      "disposition": "correctness_display_policy_held"
+    },
+    {
+      "id": "D4-RN06",
+      "name": "Selection-aware cache and failure-state coherence",
+      "fixture_groups": [
+        "CR10"
+      ],
+      "disposition": "correctness_persistent_cache_policy_held"
+    },
+    {
+      "id": "D4-RN07",
+      "name": "Automation request/result and listener boundaries",
+      "fixture_groups": [],
+      "disposition": "no_optional_surface_adopted"
+    },
+    {
+      "id": "D4-RN08",
+      "name": "Versioned fixture provenance and negative examples",
+      "fixture_groups": [
+        "CR09"
+      ],
+      "disposition": "evidence_contract_corpus_adoption_held"
+    },
+    {
+      "id": "D4-RN09",
+      "name": "Explicit library/API entry-point boundaries",
+      "fixture_groups": [
+        "CR01",
+        "CR07",
+        "CR08",
+        "CR09"
+      ],
+      "disposition": "correctness_stack_adoption_held"
+    }
+  ],
+  "amended_fixture_sha256": "aef6f3d10e0680344c7fd91a56fa0ad6d768622e70e3f27fa88d71cb2c6f232f",
+  "provenance_sha256": "ae93a9ae7167f5a778fe7aa72f0c51e6c1d874d924e4b32f22b193f1babe634d",
+  "semantic_retention_review_sha256": "226d4ca58ac89d5a1621f4df7879a1c82ef1b65aa34e8eecbdc3e468723eadef",
+  "source_note": "Native line references are in the Markdown companion; exact native hashes/locators and actual-input traces are in comparison-stage-review.json and derivative provenance."
+}

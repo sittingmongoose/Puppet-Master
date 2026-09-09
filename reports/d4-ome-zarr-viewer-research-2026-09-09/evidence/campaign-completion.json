@@ -1,0 +1,1249 @@
+{
+  "schema": "d4.final_campaign_completion.v1",
+  "observed_at_utc": "2026-09-09T12:20:55.565501+00:00",
+  "run_name": "ome-zarr05-thin-live-20260909",
+  "workflow": "discovery_to_plan",
+  "campaign_exit": {
+    "exit_code": 0,
+    "elapsed_seconds": 18107.2401137352,
+    "finished_at_utc": "2026-09-09T12:17:17.808509+00:00"
+  },
+  "campaign_exit_sha256": "224a03c93838a462051cffb130c359670952ef5122d2f2fc03e6ec4d440b9ee8",
+  "campaign_stdout_sha256": "abbc5e9861a76521a3c52d7c9cd596a0dac93cac455f4a05263976a796420fed",
+  "campaign_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "native_completion_capture_sha256": "890addbc520212e575f0e1dc7fce4da28f7f385efbcc73db746d3c8ca6d08817",
+  "comparison_input_capture_sha256": "aea9a6c6888c2b6a580693a7956af1134de4fe3b242efb193ddf51a222c4c7c7",
+  "run_configuration_sha256": "800453e65bad888844c9edb4fab14e8422196f402bc4b1d218c2ba1c7d31206e",
+  "final_progress_sha256": "411858eb50059b67e9f1f1c18033fc386429703038de34415ed639a3fc339478",
+  "final_progress_payload_at": "2026-09-09T12:06:35.245016+00:00",
+  "snapshot_time_limit": "The stable status() dictionary creates at before evaluating remaining readiness lists; it was written after those checks and read here only after controller exit. It is not an atomic snapshot timestamp. Native run evidence was no longer being changed by admitted jobs.",
+  "checks": {
+    "all_admitted_jobs_terminal_success": true,
+    "positive_actual_comparison_job_count": 4,
+    "all_actual_comparison_native_goals_and_turns_complete": true,
+    "assigned_comparison_occurrences": 24,
+    "distinct_assigned_comparison_ids": 24,
+    "current_comparison_delivered_ids_equal_assigned_union": true,
+    "assigned_ids_pending_comparison": [],
+    "assigned_ids_pending_reconciliation": [],
+    "current_fingerprint_basis": "Unchanged stable status() uses ready() with current upstream/child fingerprints, note/outcome/delivery hashes and current reconciliation. Root verifies the resulting exact assigned/status sets after controller exit; no evaluator status() rerun or live-run mutation occurred."
+  },
+  "jobs": [
+    {
+      "job_id": "J0001-discovery",
+      "phase": "discovery",
+      "assigned_ids": [],
+      "runtime_status": "completed",
+      "elapsed_seconds": 1392.941,
+      "finished_at": "2026-09-09T07:38:47.756596+00:00",
+      "job_spec_sha256": "2849613865be1af55d470746a56b337b97a614093539f172d46c82adcbe2e22f",
+      "outcome_sha256": "cb3c95aaa6d846473d2b342557a6442a9a9f79ac53e97541732a35aac87a1ea0",
+      "notes_sha256": "5f261323c507e280f9ac430c9a71986d6a8bbd8f0c6dd8c2f6639914a395907d"
+    },
+    {
+      "job_id": "J0002-implementation",
+      "phase": "implementation",
+      "assigned_ids": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "completed",
+      "elapsed_seconds": 537.284,
+      "finished_at": "2026-09-09T07:47:49.625022+00:00",
+      "job_spec_sha256": "418826662e190ce62d69738a9cc835016c270d0683158983661b55fe1d99f735",
+      "outcome_sha256": "d8643ffd1523008f225f50453ec8e01bf1a4d6edef94fe2f60da7476a1736a19",
+      "notes_sha256": "a15014db442483d53a9b78c0f33a9580ccfc059c65b9fc8a12a5e23aafaf8b57"
+    },
+    {
+      "job_id": "J0003-history",
+      "phase": "history",
+      "assigned_ids": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "completed",
+      "elapsed_seconds": 686.241,
+      "finished_at": "2026-09-09T07:50:18.582432+00:00",
+      "job_spec_sha256": "24128e1d17a162199990de80661383dc96e29bd289510f492b8c94ed222e2640",
+      "outcome_sha256": "c235ac29ce8cef59c5b8755e99372b318a5abbbd58ff3f61c3e06bc126f0cde0",
+      "notes_sha256": "40d607bad6e65bd7be2361fb1ce13a6e14c22bed23dd2d0b830f33e63d9f18c9"
+    },
+    {
+      "job_id": "J0004-reconcile",
+      "phase": "reconcile",
+      "assigned_ids": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1230.324,
+      "finished_at": "2026-09-09T08:10:55.481258+00:00",
+      "job_spec_sha256": "af435c7461eca772490f254d701d12938f97508e8c1ffb4d88fb61a71ec748b3",
+      "outcome_sha256": "43dbf3acab6382283a9314c9109dd0a4c06b987a3e186f5264b11a5e82e2f1a5",
+      "notes_sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a"
+    },
+    {
+      "job_id": "J0005-reconcile",
+      "phase": "reconcile",
+      "assigned_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 2246.114,
+      "finished_at": "2026-09-09T08:48:43.186108+00:00",
+      "job_spec_sha256": "490deafd4557cb321f44b5c9b51d8b4aae9e97a0df9dd0f620ee331ea934a082",
+      "outcome_sha256": "f005cec4a7a5edb898d9e285bee8a157d9c5288df32f8641454c73d62f8a1cc2",
+      "notes_sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078"
+    },
+    {
+      "job_id": "J0006-reconcile",
+      "phase": "reconcile",
+      "assigned_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 2064.592,
+      "finished_at": "2026-09-09T09:23:28.481449+00:00",
+      "job_spec_sha256": "eaefb058472cd58db82492a299ce8822d18c6cc8174b79234b4db00069f450d9",
+      "outcome_sha256": "a6bfbdeb221bfe39a8657e0e0732a513cac2c1b196eec53abf6a4d38ef0efcce",
+      "notes_sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41"
+    },
+    {
+      "job_id": "J0007-reconcile",
+      "phase": "reconcile",
+      "assigned_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1754.181,
+      "finished_at": "2026-09-09T09:52:59.466138+00:00",
+      "job_spec_sha256": "838333c770d806992e24d66325061099989a42da0fad2261c39f4375b16ced5d",
+      "outcome_sha256": "b0d68f5e6e1e1d457498d449b1047c823e7b639a79de806be6cf26d982661b91",
+      "notes_sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913"
+    },
+    {
+      "job_id": "J0008-compare",
+      "phase": "compare",
+      "assigned_ids": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1373.275,
+      "finished_at": "2026-09-09T10:16:44.235987+00:00",
+      "job_spec_sha256": "58d013f128819a94efd14deb79e87f84d7a6249f82190e8e96eee6efd70bd271",
+      "outcome_sha256": "d506b1aba1e48494164dfd24ae999a05981fca7d6e0ab4133ef3a778966f0fe1",
+      "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+      "native_goal_complete": true,
+      "active_turn_ended": true,
+      "native_summary_sha256": "d87d392b112b9ac3e4340d7f01b4166abcaa8defdcd4476ca82471c1d7025184"
+    },
+    {
+      "job_id": "J0009-compare",
+      "phase": "compare",
+      "assigned_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1764.069,
+      "finished_at": "2026-09-09T10:54:39.280052+00:00",
+      "job_spec_sha256": "968734576d4e3634bd91c8da3ae633908f3e695b68a6f944f7e3a7c2b4ff1f39",
+      "outcome_sha256": "c99c930b0ffe6e09bf9ce30125eef4da988589258ac58690cc23ceffc8569a35",
+      "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+      "native_goal_complete": true,
+      "active_turn_ended": true,
+      "native_summary_sha256": "d562b959e14f9218a627974754f8b5560f9bdf69e564ac40a66ebf86a0ecffcf"
+    },
+    {
+      "job_id": "J0010-compare",
+      "phase": "compare",
+      "assigned_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1684.519,
+      "finished_at": "2026-09-09T11:27:02.747993+00:00",
+      "job_spec_sha256": "de24b08905455f26a881650256287a350b2f5b79efe39c991a7b29208a3c1f24",
+      "outcome_sha256": "174c902dacc96b8e44a39493048ca0e8777df57bf5736a0a0d3aeebd8bb01a41",
+      "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+      "native_goal_complete": true,
+      "active_turn_ended": true,
+      "native_summary_sha256": "b1d5a3444ef141598cb25346d3565fe87bfb4083f99942b55ca9c56e98fcd838"
+    },
+    {
+      "job_id": "J0011-compare",
+      "phase": "compare",
+      "assigned_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "runtime_status": "complete",
+      "elapsed_seconds": 1581.646,
+      "finished_at": "2026-09-09T11:54:20.533849+00:00",
+      "job_spec_sha256": "e52b42d9dca15babfe597f552ce83f611fd1d7eda2627f16ee8e053abd66bc3b",
+      "outcome_sha256": "62e7c50bcce6ac04abc09a241d64a3f9464e30b20c4bd6484f017187cb67a230",
+      "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+      "native_goal_complete": true,
+      "active_turn_ended": true,
+      "native_summary_sha256": "ee1498a757d09334e8620a6fdf0194fad9a72e7f620180b956317b89283a34d9"
+    }
+  ],
+  "lead_record_count": 68,
+  "final_stage_label_counts": {
+    "discovered": 44,
+    "studied": 0,
+    "reconciled": 0,
+    "comparison_delivered": 24
+  },
+  "pending_deep_leads": [
+    "L-d3fb5681dad7",
+    "L-b8b6f684e168",
+    "L-8e152cf58e36",
+    "L-53478306aa6a",
+    "L-bb5dcafa9770",
+    "L-e22a81d34a4c",
+    "L-cf0ac7e43301",
+    "L-4b3f581214b5",
+    "L-eef00830c219",
+    "L-aadd42cb09c9",
+    "L-48b8e76e269e",
+    "L-f45bf9ee551d",
+    "L-481fce077b0a",
+    "L-d450a1188b29",
+    "L-9916d9541a47",
+    "L-dce78e52fdae",
+    "L-88c0687248a2",
+    "L-580ffdee048c",
+    "L-09ceb3cfac5e",
+    "L-8ac9e423176c",
+    "L-a20d51892430",
+    "L-cdedd3e8116f",
+    "L-d43127dd465f",
+    "L-c8f9e220182f",
+    "L-3a61d7236a42",
+    "L-f392bcd4d003",
+    "L-cf7c668347bf",
+    "L-38c370904778",
+    "L-d3c226e041eb",
+    "L-d5fc6dd48020",
+    "L-f402dde94d1c",
+    "L-ad90269e197b",
+    "L-cfcf357afb12",
+    "L-fb1d89805e27",
+    "L-e107cc0aa8b2",
+    "L-ae7d83feeafe",
+    "L-c82c7c8fa320",
+    "L-4f130c3d3083",
+    "L-04064142bc11",
+    "L-65d06ade3252",
+    "L-c0e14754c79c",
+    "L-ec394b185033",
+    "L-f8f84fdbe1a7",
+    "L-dfb8a6dd4e4a",
+    "L-612ef7e6e959",
+    "L-9b0bd63a9c4c",
+    "L-6aadc45bfccc",
+    "L-0cb53150a79b",
+    "L-eafba63350f5",
+    "L-aed11391a592",
+    "L-c7319cadf94a",
+    "L-9995bed43363",
+    "L-5c141882439e",
+    "L-037ee2f8764a",
+    "L-3c8162f6699f",
+    "L-d9cf3dc4ccce",
+    "L-9e32a189918e",
+    "L-419176a013a5",
+    "L-495014a2e651",
+    "L-256703fc6126",
+    "L-f7c17e4705e6",
+    "L-4a87b7b945c5",
+    "L-10caa7e56b84",
+    "L-f9d0934f2e71"
+  ],
+  "pending_reconcile_leads": [
+    "L-a20d51892430",
+    "L-cdedd3e8116f",
+    "L-d43127dd465f",
+    "L-c8f9e220182f",
+    "L-3a61d7236a42",
+    "L-f392bcd4d003",
+    "L-cf7c668347bf",
+    "L-38c370904778",
+    "L-d3c226e041eb",
+    "L-d5fc6dd48020",
+    "L-f402dde94d1c",
+    "L-ad90269e197b",
+    "L-cfcf357afb12",
+    "L-fb1d89805e27",
+    "L-e107cc0aa8b2",
+    "L-ae7d83feeafe",
+    "L-c82c7c8fa320",
+    "L-4f130c3d3083",
+    "L-04064142bc11",
+    "L-65d06ade3252",
+    "L-c0e14754c79c",
+    "L-ec394b185033",
+    "L-f8f84fdbe1a7",
+    "L-dfb8a6dd4e4a",
+    "L-612ef7e6e959",
+    "L-9b0bd63a9c4c",
+    "L-6aadc45bfccc",
+    "L-0cb53150a79b",
+    "L-eafba63350f5",
+    "L-aed11391a592",
+    "L-c7319cadf94a",
+    "L-9995bed43363",
+    "L-5c141882439e",
+    "L-037ee2f8764a",
+    "L-3c8162f6699f",
+    "L-d9cf3dc4ccce",
+    "L-9e32a189918e",
+    "L-419176a013a5",
+    "L-495014a2e651",
+    "L-256703fc6126",
+    "L-f7c17e4705e6",
+    "L-4a87b7b945c5",
+    "L-10caa7e56b84",
+    "L-f9d0934f2e71"
+  ],
+  "pending_compare_leads": [
+    "L-a20d51892430",
+    "L-cdedd3e8116f",
+    "L-d43127dd465f",
+    "L-c8f9e220182f",
+    "L-3a61d7236a42",
+    "L-f392bcd4d003",
+    "L-cf7c668347bf",
+    "L-38c370904778",
+    "L-d3c226e041eb",
+    "L-d5fc6dd48020",
+    "L-f402dde94d1c",
+    "L-ad90269e197b",
+    "L-cfcf357afb12",
+    "L-fb1d89805e27",
+    "L-e107cc0aa8b2",
+    "L-ae7d83feeafe",
+    "L-c82c7c8fa320",
+    "L-4f130c3d3083",
+    "L-04064142bc11",
+    "L-65d06ade3252",
+    "L-c0e14754c79c",
+    "L-ec394b185033",
+    "L-f8f84fdbe1a7",
+    "L-dfb8a6dd4e4a",
+    "L-612ef7e6e959",
+    "L-9b0bd63a9c4c",
+    "L-6aadc45bfccc",
+    "L-0cb53150a79b",
+    "L-eafba63350f5",
+    "L-aed11391a592",
+    "L-c7319cadf94a",
+    "L-9995bed43363",
+    "L-5c141882439e",
+    "L-037ee2f8764a",
+    "L-3c8162f6699f",
+    "L-d9cf3dc4ccce",
+    "L-9e32a189918e",
+    "L-419176a013a5",
+    "L-495014a2e651",
+    "L-256703fc6126",
+    "L-f7c17e4705e6",
+    "L-4a87b7b945c5",
+    "L-10caa7e56b84",
+    "L-f9d0934f2e71"
+  ],
+  "pending_report_intake": [
+    {
+      "job": "J0004-reconcile",
+      "phase": "reconcile",
+      "report": "jobs/J0004-reconcile/workspace/notes.md",
+      "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+      "parent_leads": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0005-reconcile",
+      "phase": "reconcile",
+      "report": "jobs/J0005-reconcile/workspace/notes.md",
+      "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+      "parent_leads": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0006-reconcile",
+      "phase": "reconcile",
+      "report": "jobs/J0006-reconcile/workspace/notes.md",
+      "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+      "parent_leads": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0007-reconcile",
+      "phase": "reconcile",
+      "report": "jobs/J0007-reconcile/workspace/notes.md",
+      "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+      "parent_leads": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0008-compare",
+      "phase": "compare",
+      "report": "jobs/J0008-compare/workspace/notes.md",
+      "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+      "parent_leads": [
+        "L-80240e08616c"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0009-compare",
+      "phase": "compare",
+      "report": "jobs/J0009-compare/workspace/notes.md",
+      "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+      "parent_leads": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0010-compare",
+      "phase": "compare",
+      "report": "jobs/J0010-compare/workspace/notes.md",
+      "sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+      "parent_leads": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    },
+    {
+      "job": "J0011-compare",
+      "phase": "compare",
+      "report": "jobs/J0011-compare/workspace/notes.md",
+      "sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+      "parent_leads": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "runtime_status": "complete",
+      "state": "unextracted_review_report",
+      "meaning": "Report may contain additional directions; no automatic extraction or independent lead delivery is claimed."
+    }
+  ],
+  "pending_compare_origin_counts": {
+    "reconcile": 42,
+    "compare": 2
+  },
+  "pending_compare_lead_records": [
+    {
+      "id": "L-a20d51892430",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/agave-numeric-integrity-and-failure-paths.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89"
+    },
+    {
+      "id": "L-cdedd3e8116f",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/agave-python-client-local-render-server.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a"
+    },
+    {
+      "id": "L-d43127dd465f",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/biofile-finder-zarr-autoload-handoff.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "b2d696c160f2a5bd57bb2a529b9aac4555a4d96832fa24f4c285ea8d8abc4026"
+    },
+    {
+      "id": "L-c8f9e220182f",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/ngff-calibration-and-axis-semantics.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da"
+    },
+    {
+      "id": "L-3a61d7236a42",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/ngff05-discovery-conventions-series-plate-labels.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce"
+    },
+    {
+      "id": "L-f392bcd4d003",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/ome2024-ngff-challenge-corpus.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "974dd6718f3c6d487c2e8271066609d3ae91025a2f22847f2d964546bad87105"
+    },
+    {
+      "id": "L-cf7c668347bf",
+      "origin_job": "J0004-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/tensorstore-zarr3-driver-version-drift.md",
+      "parent_ids": [
+        "L-80240e08616c"
+      ],
+      "source_sha256": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27"
+    },
+    {
+      "id": "L-38c370904778",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/agave-desktop-volume-loading.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555"
+    },
+    {
+      "id": "L-d3c226e041eb",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/anatomical-orientation.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963"
+    },
+    {
+      "id": "L-d5fc6dd48020",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/bia-zarr-discovery-thumbnails.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db"
+    },
+    {
+      "id": "L-f402dde94d1c",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/calibration-and-schema-gaps.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6"
+    },
+    {
+      "id": "L-ad90269e197b",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/converter-progress-diagnostics.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99"
+    },
+    {
+      "id": "L-cfcf357afb12",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/hcs-acquisition-and-field-navigation.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d"
+    },
+    {
+      "id": "L-fb1d89805e27",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/kiln-gpu-cache-and-precision.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41"
+    },
+    {
+      "id": "L-e107cc0aa8b2",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/library-api-and-metadata-acceleration.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1"
+    },
+    {
+      "id": "L-ae7d83feeafe",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/metadata-context-and-label-discovery.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d"
+    },
+    {
+      "id": "L-c82c7c8fa320",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/odon-tiled-reader.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044"
+    },
+    {
+      "id": "L-4f130c3d3083",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/pluot-portable-2d-rendering.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9"
+    },
+    {
+      "id": "L-04064142bc11",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/preview-coordinate-systems.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653"
+    },
+    {
+      "id": "L-65d06ade3252",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/public-corpus-and-ro-crate.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846"
+    },
+    {
+      "id": "L-c0e14754c79c",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/shard-io-and-fill-semantics.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363"
+    },
+    {
+      "id": "L-ec394b185033",
+      "origin_job": "J0005-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/zipped-local-filesets.md",
+      "parent_ids": [
+        "L-d3fb5681dad7",
+        "L-b8b6f684e168",
+        "L-8e152cf58e36",
+        "L-53478306aa6a",
+        "L-bb5dcafa9770",
+        "L-e22a81d34a4c",
+        "L-cf0ac7e43301",
+        "L-4b3f581214b5",
+        "L-eef00830c219",
+        "L-aadd42cb09c9",
+        "L-48b8e76e269e",
+        "L-f45bf9ee551d"
+      ],
+      "source_sha256": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020"
+    },
+    {
+      "id": "L-f8f84fdbe1a7",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-alternative-tools.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "cf1c067823b9776a5eb29af8eeacbb9afc1625c90f8693e8ec18259ef076b6eb"
+    },
+    {
+      "id": "L-dfb8a6dd4e4a",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-calibration-and-origin.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "c3981f2ab22a753d982424a7f771bb5c700d0cd430c7c08485533aba4d4d337f"
+    },
+    {
+      "id": "L-612ef7e6e959",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-corpus-and-version-tolerance.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "994ca85f1844e2ec98b18183f06a1bdcfeadb675229e190652a6e9c2c07128f0"
+    },
+    {
+      "id": "L-9b0bd63a9c4c",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-current-napari-transforms.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "a7cb70a385db97e589136faf3d720a0d8a2f5a412ba98011fc87d5725af82224"
+    },
+    {
+      "id": "L-6aadc45bfccc",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-ecosystem-versions.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "3fe3bac19429d68e254defaa9cc70ec74410790133960961a835348ec18e628e"
+    },
+    {
+      "id": "L-0cb53150a79b",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-label-scale-and-intent.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "64df7c05f09ac986d457a45f9ce14c01b6585311ddb0bd0cb11e2cac307f5e8f"
+    },
+    {
+      "id": "L-eafba63350f5",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-local-collection-discovery.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "9d6405cffe9b95cc9e30e880c009299529fe37aa9f4801ab28e7dd1c5a33f40d"
+    },
+    {
+      "id": "L-aed11391a592",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-native-dtype-and-loading.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "3da08f3e86803b844f77d99572bff979fc5cf938b235bb2f81341406472cc2f4"
+    },
+    {
+      "id": "L-c7319cadf94a",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-python-reader-errors.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "9bdad9aa564d5d01961cfdb3d8e1d8ce0739d9b883dd1515505e943bc9e1480c"
+    },
+    {
+      "id": "L-9995bed43363",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-qupath-omero-adjacency.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "bb65248b553749ef0b1a6fc8a3bf43df7c3d81c00d2b08588e5813380d7c6570"
+    },
+    {
+      "id": "L-5c141882439e",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-roadmap-and-archives.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "627bf58ad9a0a94d7113f2feb847283626ad176fe09d73b37741067cba89c266"
+    },
+    {
+      "id": "L-037ee2f8764a",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/aggregate-validation-diagnostics.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "33a70df7cc459e89c2b51a261fe20a888297a808e18b772bb13e720aea80fd0e"
+    },
+    {
+      "id": "L-3c8162f6699f",
+      "origin_job": "J0006-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/v3-label-namespace.md",
+      "parent_ids": [
+        "L-481fce077b0a",
+        "L-d450a1188b29",
+        "L-9916d9541a47",
+        "L-15cca5b8e4f1",
+        "L-dce78e52fdae",
+        "L-88c0687248a2",
+        "L-580ffdee048c"
+      ],
+      "source_sha256": "f094f18223de837cea50a417a574b4169b935460c59e480453dc005224bc8592"
+    },
+    {
+      "id": "L-d9cf3dc4ccce",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/backend-version-and-codec-matrix.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "46534a91f9e48741c387454ac9d9fe9ecf8f6fa1bb1805209141f4544ae18786"
+    },
+    {
+      "id": "L-9e32a189918e",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/calibrated-coordinates.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "58c33e1045ec17c3176e3ba9ca325713f0093d45c91abc7a2084e45e9b522ebe"
+    },
+    {
+      "id": "L-419176a013a5",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/metadata-discovery.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "22bde2df3314bf83008e81830cd94fc74ac2635da83f58309c9de7dd063e1a13"
+    },
+    {
+      "id": "L-495014a2e651",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/pixel-types-and-display.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "14b93ce9af0e5d7cace20a16f78e7d7ce40ee34023be24a330a6caea6cc8e653"
+    },
+    {
+      "id": "L-256703fc6126",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/read-error-diagnostics.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "eaa6bf79e929bf51ccc826f7373322c9244dd3c2d489931a4ae5ac537742816d"
+    },
+    {
+      "id": "L-f7c17e4705e6",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/responsive-reading-and-cache.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "1149883ed94ba1709823223211f5618b2f00034b589328936538b603bcea8340"
+    },
+    {
+      "id": "L-4a87b7b945c5",
+      "origin_job": "J0007-reconcile",
+      "origin_phase": "reconcile",
+      "source": "leads/shard-index-and-read-amplification.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "3b63288793aaa7a52d233b3bed800edef53945909d85b23611838bb776e404bd"
+    },
+    {
+      "id": "L-10caa7e56b84",
+      "origin_job": "J0011-compare",
+      "origin_phase": "compare",
+      "source": "leads/decision-register.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "8cba2a86d0e3baa2ed87a403848369079afb29e39e8590f14a42dc50225bd826"
+    },
+    {
+      "id": "L-f9d0934f2e71",
+      "origin_job": "J0011-compare",
+      "origin_phase": "compare",
+      "source": "leads/remaining-evidence.md",
+      "parent_ids": [
+        "L-20db7e979b8e",
+        "L-09ceb3cfac5e",
+        "L-8ac9e423176c",
+        "L-eff66a7b89e1"
+      ],
+      "source_sha256": "c9c58133291938051384eccceec3098519987da9993dcc445d903c622977cf50"
+    }
+  ],
+  "residual_limits": "The finite assigned comparison cohort completed; research is not exhausted. Later lead records and unextracted review report intake remain. Stage labels are mutually exclusive latest-delivery labels: zero studied does not erase the completed implementation/history jobs. Parent comparisons received and semantically reviewed selected child evidence, but this does not create independent study/reconciliation jobs for every child lead.",
+  "semantic_acceptance_reference": "../evaluation/comparison-stage-review.md and ../evaluation/derivative-final-review.md",
+  "runtime_acceptance": false,
+  "full_governance_seal": false
+}

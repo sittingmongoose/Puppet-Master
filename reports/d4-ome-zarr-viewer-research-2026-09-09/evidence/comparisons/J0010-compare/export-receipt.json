@@ -1,0 +1,60 @@
+{
+  "schema": "d4.comparison_export.v2",
+  "status": "completed_comparison_capture_pending_campaign_acceptance",
+  "job_id": "J0010-compare",
+  "assigned_ids": [
+    "L-481fce077b0a",
+    "L-d450a1188b29",
+    "L-9916d9541a47",
+    "L-15cca5b8e4f1",
+    "L-dce78e52fdae",
+    "L-88c0687248a2",
+    "L-580ffdee048c"
+  ],
+  "original_report_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+  "exported_report_sha256": "1b05cd0f00613ed0fa95c0152382e49d2ca2e631bb6b6d2625e32097f1b7e9c9",
+  "original_line_count": 250,
+  "exported_line_count": 250,
+  "transformations": [
+    {
+      "original_link": "evidence-index.md",
+      "exported_link": "sources.md",
+      "occurrences": 1
+    },
+    {
+      "original_link": "research-evidence/sources/S00002/receipt.json",
+      "exported_link": "sources.md#source-S00002",
+      "occurrences": 1
+    },
+    {
+      "original_link": "research-evidence/sources/S00002/text.txt",
+      "exported_link": "../../../fixtures/baseline/Viewer.md",
+      "occurrences": 1
+    }
+  ],
+  "source_receipt_count": 99,
+  "exported_sources_sha256": "7bd92e83e31e3310ac7979ac3237d9d9166eb015e9489bf47f39e857b14bc67e",
+  "exporter_sha256": "87f64e4a4398b4da53dc501d9a9d158bc52fa142cc7a39200d74ecd5642cb6a4",
+  "outputs": {
+    "notes.md": {
+      "sha256": "1b05cd0f00613ed0fa95c0152382e49d2ca2e631bb6b6d2625e32097f1b7e9c9",
+      "bytes": 81680
+    },
+    "sources.json": {
+      "sha256": "7bd92e83e31e3310ac7979ac3237d9d9166eb015e9489bf47f39e857b14bc67e",
+      "bytes": 67990
+    },
+    "sources.md": {
+      "sha256": "188f5b2db1249785edd47dd0db13bf12010aca5d3a590d5c6764b137c494823f",
+      "bytes": 15858
+    },
+    "native-completion.json": {
+      "sha256": "a50a88b65fbe74f8db731a3416d8a05a5292b8f10998280d5417112b81b0b61f",
+      "bytes": 1955
+    },
+    "README.md": {
+      "sha256": "c198da93b8d0148b919d823bd71eb4d0192cc1d1389fc48a7408f0acac5f7581",
+      "bytes": 774
+    }
+  }
+}

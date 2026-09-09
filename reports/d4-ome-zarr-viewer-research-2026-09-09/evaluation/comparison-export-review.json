@@ -1,0 +1,1551 @@
+{
+  "schema": "d4.comparison-export-review.v1",
+  "verdict": "PASS",
+  "blockers": [],
+  "scope": "Known J0008-compare staging export only. No final landing, comparison-union, source/fact, semantic or campaign-completion claim.",
+  "audited_at_utc": "2026-09-09T10:50:39.552889+00:00",
+  "reviewed_files": [
+    "artifact:campaign/next-goal-20260909/d4/evaluator/export_completed_comparison.py",
+    "artifact:landing/evidence/comparisons/J0008-compare/notes.md",
+    "artifact:landing/evidence/comparisons/J0008-compare/sources.md",
+    "artifact:landing/evidence/comparisons/J0008-compare/sources.json",
+    "artifact:landing/evidence/comparisons/J0008-compare/export-receipt.json"
+  ],
+  "audit": {
+    "started_at_utc": "2026-09-09T10:50:07.540000+00:00",
+    "finished_at_utc": "2026-09-09T10:50:39.552889+00:00",
+    "blockers": [],
+    "custody": {
+      "exporter": {
+        "path": "artifact:campaign/next-goal-20260909/d4/evaluator/export_completed_comparison.py",
+        "bytes": 7508,
+        "sha256": "1a4e881a9bb371ff6eca855ca03c90add715d1e58811c056f753364cf6f059d8"
+      },
+      "job_spec": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/job.json",
+        "bytes": 16626,
+        "sha256": "58d013f128819a94efd14deb79e87f84d7a6249f82190e8e96eee6efd70bd271"
+      },
+      "outcome": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/outcome.json",
+        "bytes": 296,
+        "sha256": "d506b1aba1e48494164dfd24ae999a05981fca7d6e0ab4133ef3a778966f0fe1"
+      },
+      "delivery": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/delivery.json",
+        "bytes": 131,
+        "sha256": "e571721a73a5e1c32af8cc2ba004bdecd411603094047562677c1bc408d618e6"
+      },
+      "attached": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/attached.json",
+        "bytes": 56,
+        "sha256": "1f0c48f7c0215a0cb0ac46cb189d1ee502d69dc076afedb748fc18b015320657"
+      },
+      "native_summary": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/raw-codex/summary.json",
+        "bytes": 17133,
+        "sha256": "d87d392b112b9ac3e4340d7f01b4166abcaa8defdcd4476ca82471c1d7025184"
+      },
+      "native_notes": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "bytes": 54742,
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b"
+      },
+      "native_evidence_index": {
+        "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/evidence-index.md",
+        "bytes": 31011,
+        "sha256": "69830a00ccef8ce809bb139b90db8cca97274152c07abbb09b056f2484badea6"
+      },
+      "baseline": {
+        "path": "artifact:campaign/next-goal-20260909/d4/landing-draft/fixtures/baseline/Viewer.md",
+        "bytes": 1498,
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+      },
+      "export_notes.md": {
+        "path": "artifact:campaign/next-goal-20260909/d4/landing-draft/evidence/comparisons/J0008-compare/notes.md",
+        "bytes": 54723,
+        "sha256": "f8237bfbe25ff2f9a1b29a2ceb628ca79acfdadbc1c26a5d45e8eb7a9787fbbf"
+      },
+      "export_sources.md": {
+        "path": "artifact:campaign/next-goal-20260909/d4/landing-draft/evidence/comparisons/J0008-compare/sources.md",
+        "bytes": 8551,
+        "sha256": "49c08f1dcadab74e10ea782e3fca2e1f3dfc15191e1e947461101abb2cf25507"
+      },
+      "export_sources.json": {
+        "path": "artifact:campaign/next-goal-20260909/d4/landing-draft/evidence/comparisons/J0008-compare/sources.json",
+        "bytes": 43853,
+        "sha256": "35b81b8310f77ea7cdf3556724e4db25977a449e4a0f2c2fce5ec47ea1b0431c"
+      },
+      "export_export-receipt.json": {
+        "path": "artifact:campaign/next-goal-20260909/d4/landing-draft/evidence/comparisons/J0008-compare/export-receipt.json",
+        "bytes": 803,
+        "sha256": "447857e66cf9b69e3036f95ace53b36c3c5f289715b6942e284054787a75a88e"
+      }
+    },
+    "wording": {
+      "byte_exact_after_only_declared_replacements": true,
+      "declared_transformations_exact": true,
+      "occurrences": [
+        {
+          "original_link": "evidence-index.md",
+          "exported_link": "sources.md",
+          "occurrences": 2
+        },
+        {
+          "original_link": "research-evidence/sources/S00001/text.txt",
+          "exported_link": "../../../fixtures/baseline/Viewer.md",
+          "occurrences": 1
+        }
+      ],
+      "original_line_count": 250,
+      "exported_line_count": 250,
+      "crlf_in_original": false
+    },
+    "report_guards": {
+      "original_matches_outcome_delivery_export": true,
+      "export_matches_receipt": true,
+      "sources_json_matches_receipt": true,
+      "phase_is_compare": true,
+      "assigned_ids_match": true,
+      "attachment_record_present": true,
+      "staging_status": true
+    },
+    "native_metadata_checks": {
+      "outcome_status": "complete",
+      "summary_status": "complete",
+      "goal_status": "complete",
+      "started_turn_ids": [
+        "01a08596-9484-7192-a526-216e57240d1d"
+      ],
+      "completed_turn_ids": [
+        "01a08596-9484-7192-a526-216e57240d1d"
+      ],
+      "nonempty_identical_turn_ids": true,
+      "completed_turns_error_free": true,
+      "configured_cwd_matches_job": true,
+      "goal_thread_ids_match": true,
+      "process_exit_code": 0,
+      "objective_matches_assignment_after_trim": true
+    },
+    "input_checks": [
+      {
+        "file": ".research.json",
+        "recorded_sha256": "cfd2f7ba0578b8af58c6168f2fdfe2b056129586ffaaf94b48f00578ec0e2da5",
+        "actual_sha256": "cfd2f7ba0578b8af58c6168f2fdfe2b056129586ffaaf94b48f00578ec0e2da5",
+        "matches": true
+      },
+      {
+        "file": "assignment.md",
+        "recorded_sha256": "2c6f7707922adff399362fa1974d081d2eb16007098815cd847df5bcc9578b17",
+        "actual_sha256": "2c6f7707922adff399362fa1974d081d2eb16007098815cd847df5bcc9578b17",
+        "matches": true
+      },
+      {
+        "file": "brief.md",
+        "recorded_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "actual_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "matches": true
+      },
+      {
+        "file": "handoff.md",
+        "recorded_sha256": "50380dc37467f98828d4a06487db98e7680a6c7e5643e7ef29de571640462502",
+        "actual_sha256": "50380dc37467f98828d4a06487db98e7680a6c7e5643e7ef29de571640462502",
+        "matches": true
+      },
+      {
+        "file": "navigation.md",
+        "recorded_sha256": "2b29808543c53e1638540900940c82a7a6e19806488db2435869bc795686da21",
+        "actual_sha256": "2b29808543c53e1638540900940c82a7a6e19806488db2435869bc795686da21",
+        "matches": true
+      },
+      {
+        "file": "research.py",
+        "recorded_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+        "actual_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+        "matches": true
+      },
+      {
+        "file": "sources.md",
+        "recorded_sha256": "2bb376ddb16ee7be84cfa1bb32251ec24bee2b5cfe9abd6b2275e927b574d152",
+        "actual_sha256": "2bb376ddb16ee7be84cfa1bb32251ec24bee2b5cfe9abd6b2275e927b574d152",
+        "matches": true
+      },
+      {
+        "file": "tool-help.md",
+        "recorded_sha256": "7adceb028e2e9fe220a1cd9480693d55b2fea84e730873d536d0c1005a0fc28e",
+        "actual_sha256": "7adceb028e2e9fe220a1cd9480693d55b2fea84e730873d536d0c1005a0fc28e",
+        "matches": true
+      }
+    ],
+    "source_checks": [
+      {
+        "source_id": "S00001",
+        "receipt_sha256": "484ec223396bd311e69cefff3970ce5503f0ac513ff66b3dd2e9eb58e1865a26",
+        "raw_present": true,
+        "raw_bytes": 1498,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00002",
+        "receipt_sha256": "7b227ce4af033adefcfe626c38e75f90a89c2adb109ff0ce1a1f0fef06653cd6",
+        "raw_present": true,
+        "raw_bytes": 1002,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00003",
+        "receipt_sha256": "8af5132681d137472f0171b72b12705aa0d76fda1e4122a602af2cc6b253f767",
+        "raw_present": true,
+        "raw_bytes": 534,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00004",
+        "receipt_sha256": "5aec7e53324e29459b0128c88076cdd0cc89a99a235368f027c3d7aa59601183",
+        "raw_present": true,
+        "raw_bytes": 378,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00005",
+        "receipt_sha256": "80de897934f835902805843aebedfffd2f264a6fc66542a98b8292ac182ab82e",
+        "raw_present": true,
+        "raw_bytes": 158593,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00006",
+        "receipt_sha256": "6eb172377a58b310381def6295160015873c4aadc91e7e213a0207b11dcee567",
+        "raw_present": true,
+        "raw_bytes": 12570,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00007",
+        "receipt_sha256": "6961f4edebc3798d33fe14257d3499aa4237beaeea0dc4686110c555b48a36d0",
+        "raw_present": true,
+        "raw_bytes": 36980,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00008",
+        "receipt_sha256": "9b854302ec345ab469e4e6d3ae386f9df05ad1c93277aeeff7cf2dbdac4be267",
+        "raw_present": true,
+        "raw_bytes": 21106,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00009",
+        "receipt_sha256": "5ea3c93ff20b6c7805661af93d33af91d4d492fa4d9978f7916c5d352bbf6c92",
+        "raw_present": true,
+        "raw_bytes": 1901,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00010",
+        "receipt_sha256": "1e4dbc6652db3216e5c16f5be99464081c056502976a2820871604d8ae928baa",
+        "raw_present": true,
+        "raw_bytes": 1830,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00011",
+        "receipt_sha256": "5b0ef8539eef98f4ad2d6f337ac4f0526a19ba249b0db42ee71808ef9ab5e602",
+        "raw_present": true,
+        "raw_bytes": 17310,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00012",
+        "receipt_sha256": "056e32dd71a2db06e5032047e9b905a07b1f2120fd6617f0840c4e99ae6df340",
+        "raw_present": true,
+        "raw_bytes": 43202,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00013",
+        "receipt_sha256": "de289c42f3378afa85bd20a05bf214a612555054a0e0975b419062d8d92361dc",
+        "raw_present": true,
+        "raw_bytes": 11109,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00014",
+        "receipt_sha256": "43a3e22a1329ad869234a1a6c4af3b688e3a8815cb2c8bf88f45427ac49aa5e2",
+        "raw_present": true,
+        "raw_bytes": 36526,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00015",
+        "receipt_sha256": "884f17d5cedb73bc075c1cd3c01477b0d5a301a355c4c9494d31ea994cd2c5f7",
+        "raw_present": true,
+        "raw_bytes": 10791,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00016",
+        "receipt_sha256": "329a8ad8403806c59d3e91f87bcf9ef2ca7c51a42c02774dff180d0800e2bdcd",
+        "raw_present": true,
+        "raw_bytes": 43202,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00017",
+        "receipt_sha256": "3df9f41034756c535da26510183f147e48d325f86dae21d393833ef52664d938",
+        "raw_present": true,
+        "raw_bytes": 7141,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00018",
+        "receipt_sha256": "b5405e11a104b011ce4f88c0aec67566e2e278bb47156717567394082d1c211b",
+        "raw_present": true,
+        "raw_bytes": 8982,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00019",
+        "receipt_sha256": "ae134d2e762d702b40f739913b8ae9913d44d3c157b5d2bdb20756a1b12db892",
+        "raw_present": true,
+        "raw_bytes": 2787,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00020",
+        "receipt_sha256": "68c46c71f4b9d9cdac3813625aee12d9263be71c02df7cb5249e3acdd75fba86",
+        "raw_present": true,
+        "raw_bytes": 598,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00021",
+        "receipt_sha256": "7bb10424fd3d72825412d5a0b683df486d2379fe4cabbf0a730cd7a5bcdac5fd",
+        "raw_present": true,
+        "raw_bytes": 6589,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00022",
+        "receipt_sha256": "14f10a29e39f58da8038ad737053907bc28a2e4727b255058319e8e498acf77c",
+        "raw_present": true,
+        "raw_bytes": 52774,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00023",
+        "receipt_sha256": "581e695935ea5d9fff661a99eda7c41af92c18acc73e722ca72990e95744603c",
+        "raw_present": true,
+        "raw_bytes": 4095,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00024",
+        "receipt_sha256": "cbeb7f59adb1c6db3bac1987c06ded8b0c90a4601f6a2d4008554b97511268ce",
+        "raw_present": true,
+        "raw_bytes": 35038,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00025",
+        "receipt_sha256": "b856080cdfe1742103314f717597c3982b56c3e959e9ab579201fc01de8ac823",
+        "raw_present": true,
+        "raw_bytes": 59921,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00026",
+        "receipt_sha256": "f36eb91d38e70f87102baf7021210d19812cc92f9a1b7e9d05d2d4cecce9af7f",
+        "raw_present": true,
+        "raw_bytes": 36980,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00027",
+        "receipt_sha256": "cdf80d9614a4d9a69d9ed4bdd8146850350cc06da91a7d0805fb1a7a867b4ab5",
+        "raw_present": true,
+        "raw_bytes": 3872,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00028",
+        "receipt_sha256": "45ac087011b9a1abbf4ff1ac17c7e530320993f66393550dbbc59cedffeb81da",
+        "raw_present": true,
+        "raw_bytes": 409,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00029",
+        "receipt_sha256": "8d41470a41142478af802358524353ff5c8fc20949b836cc8f48da162aa47a06",
+        "raw_present": true,
+        "raw_bytes": 9693,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00030",
+        "receipt_sha256": "bd0e119343f89f8a828d4831753c77d748f77a343e468c18edfb7db3193c159a",
+        "raw_present": true,
+        "raw_bytes": 2904,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00031",
+        "receipt_sha256": "295d4aa3305b3feb200a728b89ba99130116f69c4f99dca56c46490b82616d59",
+        "raw_present": true,
+        "raw_bytes": 2440,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00032",
+        "receipt_sha256": "53b8dc189a46a0eeca03bac8009465d73466321dc304265927b9a7d2d2ae85ba",
+        "raw_present": true,
+        "raw_bytes": 35038,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00033",
+        "receipt_sha256": "d573cea7e12aa24141049ec7ba8b20f1ea39e2a8dc470e9153679582fb19fd08",
+        "raw_present": true,
+        "raw_bytes": 35038,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00034",
+        "receipt_sha256": "ea248adcd407f004d7ea100dc4e42841d4167259e98b8cebc93341dc8353b015",
+        "raw_present": true,
+        "raw_bytes": 59921,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00035",
+        "receipt_sha256": "ea539f69c7975bedd64de2e1959910a44f986566e77355ea9035e9e7d8134823",
+        "raw_present": true,
+        "raw_bytes": 10859,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00036",
+        "receipt_sha256": "7ee07ed5f2c0e2eb8f9a556d1710f29dd3934ab3506bf27f6ba2ed3ac3ac1207",
+        "raw_present": true,
+        "raw_bytes": 3722,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00037",
+        "receipt_sha256": "fec8601a3328cfa3d46a8b24dd53b01a98be073b3ae3b9d5da7ae9af40247e6f",
+        "raw_present": true,
+        "raw_bytes": 1622,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00038",
+        "receipt_sha256": "25656a75c9259c82f55ea48cd123deb581c557ef756cc386ad617e23694f814c",
+        "raw_present": true,
+        "raw_bytes": 73602,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00039",
+        "receipt_sha256": "faf3eeebaa3b603bf923ea083b1050b663b7ad83ef909c7a9579b18a3bb27e6c",
+        "raw_present": true,
+        "raw_bytes": 37087,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00040",
+        "receipt_sha256": "ccda23694f2370d8a8721dd7ac97b17023e72b5b5697d493fbca182fbb6f8b8b",
+        "raw_present": true,
+        "raw_bytes": 37087,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00041",
+        "receipt_sha256": "2d2d3325b2a0b3864c3a2f5e74e7a3be6c9a9fd774cd7dff2d372cc6403e2a1d",
+        "raw_present": true,
+        "raw_bytes": 85789,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00042",
+        "receipt_sha256": "2e0771b0de0a9490475c0bd44e7e20fde6123c78e19878f3ddd19d10cd8ac5f6",
+        "raw_present": true,
+        "raw_bytes": 633,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00043",
+        "receipt_sha256": "7a53606ae439ea080436a07e721509ba16522a5c86a4ac5597c3b634cdc9de93",
+        "raw_present": true,
+        "raw_bytes": 614,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00044",
+        "receipt_sha256": "39bfe0e8f2fcb7b03335e170db81b10959868b5e3226ed58dae993f396265080",
+        "raw_present": true,
+        "raw_bytes": 0,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "ERROR"
+      },
+      {
+        "source_id": "S00045",
+        "receipt_sha256": "1f037820393d47c22cc82f7d7d120a739d4b4f598b968b6e1e377ebd458d2ba8",
+        "raw_present": true,
+        "raw_bytes": 347,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00046",
+        "receipt_sha256": "1ed7a6648a57bcfc3602610f6a49b014d356b2010969a691b757c723ee63eb8b",
+        "raw_present": true,
+        "raw_bytes": 9539,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00047",
+        "receipt_sha256": "76d4535bab2210d8b4bfdfc0c5fd2c524aed23ae6bc6f9d53fe6deed9d746fe8",
+        "raw_present": true,
+        "raw_bytes": 2081,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00048",
+        "receipt_sha256": "a1b9c9fb618e963a997d024e6189337224618c2808e0025086eeefc6feb1e499",
+        "raw_present": true,
+        "raw_bytes": 2504,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00049",
+        "receipt_sha256": "73946a421a4d1647393a0454e0047b824edc94035252c3839c09eeb8df311ff8",
+        "raw_present": true,
+        "raw_bytes": 8927,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00050",
+        "receipt_sha256": "44c877d6016e7693e8f078e37edc033720af889ee2c200f823b57a412f5ddfb3",
+        "raw_present": true,
+        "raw_bytes": 1517,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00051",
+        "receipt_sha256": "4f310ff855e0850be0cd4604fa9fc7b2f496bbc3634a18014024b7e17229aa87",
+        "raw_present": true,
+        "raw_bytes": 0,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "ERROR"
+      },
+      {
+        "source_id": "S00052",
+        "receipt_sha256": "15f9cd90de60e2fd54447991f0fe42e299316ee7cfbc4ba1cdb58e121ff85e90",
+        "raw_present": true,
+        "raw_bytes": 12322,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00053",
+        "receipt_sha256": "b807287d1cc9dad9b2f90b11c11bb4da643fd8a7913ea05f70459aefbe1cc921",
+        "raw_present": true,
+        "raw_bytes": 9633,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00054",
+        "receipt_sha256": "ef2c509b3e82f2e7d0f58b277b118b7e84d46f8598a4c9bc45a669433f58c2ef",
+        "raw_present": true,
+        "raw_bytes": 12228,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00055",
+        "receipt_sha256": "9949888ccfd2bb4b4ecf8798406d860c44d9c1a8765ef02be6fb4a149ba21faf",
+        "raw_present": true,
+        "raw_bytes": 20084,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00056",
+        "receipt_sha256": "0a3fc502e8e5859ab34ab94dfb0d9b8024548eeb7aee92a26fee0f3dea3c9f5e",
+        "raw_present": true,
+        "raw_bytes": 179569,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00057",
+        "receipt_sha256": "febc8187775a3354ba53c0a31647b7f53a22c6038a722a06065127daf6aa3904",
+        "raw_present": true,
+        "raw_bytes": 0,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "ERROR"
+      },
+      {
+        "source_id": "S00058",
+        "receipt_sha256": "56d0eb9e16f23b88c4c06fbc5eef76082f1ebe839e7f0e1a8fa7288271db7a6a",
+        "raw_present": true,
+        "raw_bytes": 2867,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00059",
+        "receipt_sha256": "ca072dd519360cf138530b77b38d7ac90164366a573b5c24142c5e0ff355b649",
+        "raw_present": true,
+        "raw_bytes": 2731,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00060",
+        "receipt_sha256": "059ac3a010f5707eb789e52896c20fe569fd2f1742973cb63a5078e229e0869c",
+        "raw_present": true,
+        "raw_bytes": 3080,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00061",
+        "receipt_sha256": "0d94e4943f7f9996154a8f0ef5f1d6fe5ca6013ea52560cb7c528c0466fdf0fa",
+        "raw_present": true,
+        "raw_bytes": 1227,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00062",
+        "receipt_sha256": "5e6a2e21ddea263bc7e4e27425b0fc6feda77807ccd700eba4f6efd4b4498df7",
+        "raw_present": true,
+        "raw_bytes": 59746,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00063",
+        "receipt_sha256": "c0c29d0902ba524849147ac87094537cf2ccc34e22628c859478e7b4ad3b670c",
+        "raw_present": true,
+        "raw_bytes": 16878,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": true,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00064",
+        "receipt_sha256": "eddbfaaefe6fca763ec23b29b6da733a06f788da6b0ea6458dc6613dc3794e52",
+        "raw_present": true,
+        "raw_bytes": 1603,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00065",
+        "receipt_sha256": "7c11b6e5c3e0af8a2cb3f43137f18fddc971b839f1e5e973781e013f2864da2d",
+        "raw_present": true,
+        "raw_bytes": 11960,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00066",
+        "receipt_sha256": "a67a67bf87edb8d151f30f874f85d70f73b5343967f2509cd6f2f54003c52e33",
+        "raw_present": true,
+        "raw_bytes": 59746,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00067",
+        "receipt_sha256": "aaf6321441c53d2b2000f7947a60ba86f19bdb5f01354cf07b6c8fc57ba5d404",
+        "raw_present": true,
+        "raw_bytes": 36526,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      },
+      {
+        "source_id": "S00068",
+        "receipt_sha256": "26cb0b4a98ba478137bd72f29e4d7015c66ac5d23530e2d12468863e209f9bec",
+        "raw_present": true,
+        "raw_bytes": 1498,
+        "raw_matches_receipt": true,
+        "text_present": true,
+        "text_hash_expectation_present": false,
+        "text_matches_expected_if_declared": true,
+        "export_row_exact": true,
+        "allowed_keys_only": true,
+        "status": "OK"
+      }
+    ],
+    "source_status_counts": {
+      "plan-read_OK": 2,
+      "plan-search_OK": 3,
+      "fetch_OK": 31,
+      "repo_OK": 1,
+      "read_OK": 9,
+      "repo-read_OK": 16,
+      "repo-search_OK": 3,
+      "fetch_ERROR": 2,
+      "repo-read_ERROR": 1
+    },
+    "source_fields": [
+      "acquired_at",
+      "command",
+      "commit",
+      "finished_at",
+      "frozen_plan_reference",
+      "public_source",
+      "receipt_sha256",
+      "repository_path",
+      "retained_raw_hash_matches",
+      "retained_text_sha256",
+      "sha256",
+      "source_id",
+      "status",
+      "text_sha256",
+      "use_limit"
+    ],
+    "baseline_matches_frozen_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "links": {
+      "parser": "markdown_it CommonMark token parser",
+      "count": 69,
+      "local": [
+        {
+          "file": "notes.md",
+          "target": "sources.md",
+          "resolved_relative_to_staging": "evidence/comparisons/J0008-compare/sources.md",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "notes.md",
+          "target": "sources.md",
+          "resolved_relative_to_staging": "evidence/comparisons/J0008-compare/sources.md",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "notes.md",
+          "target": "../../../fixtures/baseline/Viewer.md",
+          "resolved_relative_to_staging": "fixtures/baseline/Viewer.md",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "sources.md",
+          "target": "../../../fixtures/baseline/Viewer.md",
+          "resolved_relative_to_staging": "fixtures/baseline/Viewer.md",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "sources.md",
+          "target": "../../../fixtures/baseline/Viewer.md",
+          "resolved_relative_to_staging": "fixtures/baseline/Viewer.md",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "sources.md",
+          "target": "sources.json",
+          "resolved_relative_to_staging": "evidence/comparisons/J0008-compare/sources.json",
+          "exists": true,
+          "fragment": ""
+        },
+        {
+          "file": "sources.md",
+          "target": "export-receipt.json",
+          "resolved_relative_to_staging": "evidence/comparisons/J0008-compare/export-receipt.json",
+          "exists": true,
+          "fragment": ""
+        }
+      ],
+      "unsupported_syntax_candidates": [],
+      "public_url_checks": [
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/issues/258",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/issues/258/comments",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/issues/323",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/issues/395",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/issues/84",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/pulls/212",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/pulls/220",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenCell/agave/releases/tags/v1.8.0",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenInstitute/biofile-finder/issues/503/comments",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/AllenInstitute/biofile-finder/pulls/508/files",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/google/tensorstore/git/commits/40e73764e7f4b03dea645aa88b933d1ac19c41cd",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/google/tensorstore/git/ref/tags/v0.1.78",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/google/tensorstore/issues/240/comments",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/google/tensorstore/issues/280/comments",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://api.github.com/repos/google/tensorstore/issues/288",
+          "host": "api.github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/README.md",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/TimelineDockWidget.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/agaveGui.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/loadDialog.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/main.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/streamserver.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_pyclient/agave_pyclient/agave.py",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_pyclient/agave_pyclient/agave_client.py",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/docs/agave.rst",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/command.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/command.cpp#L655",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/CMakeLists.txt",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/ConvertChannelData.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/FileReader.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/FileReaderZarr.cpp",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/issues/258",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/pull/220",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenCell/agave/releases/tag/v1.8.0",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/AllenInstitute/biofile-finder/pull/508/files",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/google/tensorstore/blob/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/driver/zarr3/index.rst",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://github.com/google/tensorstore/blob/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/tensorstore.h#L638",
+          "host": "github.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://ngff.openmicroscopy.org/0.5/",
+          "host": "ngff.openmicroscopy.org",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/driver/zarr/index.rst",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/driver/zarr/schema.yml",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/driver/zarr3/index.rst",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/index_space/alignment.h",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/read_write_options.h",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/tensorstore.h",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/util/future.h",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google/tensorstore/40e73764e7f4b03dea645aa88b933d1ac19c41cd/tensorstore/util/result.h",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr_samples.csv",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/ngff_samples.csv",
+          "host": "raw.githubusercontent.com",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240.zarr/0/zarr.json",
+          "host": "uk1s3.embassy.ebi.ac.uk",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240.zarr/zarr.json",
+          "host": "uk1s3.embassy.ebi.ac.uk",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html",
+          "host": "zarr-specs.readthedocs.io",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://zarr-specs.readthedocs.io/en/latest/v3/core/v3.0.html",
+          "host": "zarr-specs.readthedocs.io",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        },
+        {
+          "url": "https://zarr.readthedocs.io/en/stable/user-guide/consolidated_metadata/",
+          "host": "zarr.readthedocs.io",
+          "credential_query_keys": [],
+          "unsafe_shape": false
+        }
+      ]
+    },
+    "staged_files": [
+      "sources.md",
+      "notes.md",
+      "sources.json",
+      "export-receipt.json"
+    ],
+    "leak_marker_hits": [],
+    "failed_source_ids": [
+      "S00044",
+      "S00051",
+      "S00057"
+    ],
+    "evidence_boundary_exact": true,
+    "table_statuses_match": true,
+    "unchanged_across_check": {
+      "exporter": true,
+      "job_spec": true,
+      "outcome": true,
+      "delivery": true,
+      "attached": true,
+      "native_summary": true,
+      "native_notes": true,
+      "native_evidence_index": true,
+      "baseline": true,
+      "export_notes.md": true,
+      "export_sources.md": true,
+      "export_sources.json": true,
+      "export_export-receipt.json": true
+    }
+  },
+  "guard_parser_limitations": [
+    {
+      "area": "Markdown target parser",
+      "limitation": "Exporter recognizes a restricted inline-link pattern rather than arbitrary Markdown/HTML syntax.",
+      "known_j8_disposition": "Non-blocking. Independent CommonMark token parsing found all local links valid; supplemental HTML-link-attribute scan found none; byte-exact replacement check proves no other report changes."
+    },
+    {
+      "area": "Public URL and host-path guard",
+      "limitation": "HTTP(S) shape, user-info/query checks and three filesystem-prefix exclusions are not a complete public-network or arbitrary-host-path policy.",
+      "known_j8_disposition": "Non-blocking. Known exported URLs use the enumerated public service hosts with no credential-bearing query keys/user-info; independent broader host-path/session-marker scans found none. Remote URL availability was not tested."
+    },
+    {
+      "area": "Missing source files and normalized text",
+      "limitation": "Exporter permits absent raw files with retained_raw_hash_matches=false; only normalized hashes already declared by receipts are compared to prior values. A newly computed retained text hash is an identity, not independent validation of extraction.",
+      "known_j8_disposition": "Non-blocking. All 68 raw files exist and match receipt hashes; all 68 exported rows match their receipt-derived allowed fields; all 31 declared normalized hashes match, and retained text hashes match current files."
+    },
+    {
+      "area": "Native summary and attachment checks",
+      "limitation": "Exporter compares turn counts/statuses and attachment-file existence; it does not independently reconstruct native execution or compare turn identities.",
+      "known_j8_disposition": "Non-blocking. This review additionally confirmed the single started/completed turn ID matches, Goal/thread IDs and configured workspace agree, objective matches assignment after trimming, process exit is zero, and report/assignment identities agree with retained metadata. This is custody review, not a new semantic/completion adjudication."
+    },
+    {
+      "area": "Baseline and exported sources.md guard coverage",
+      "limitation": "Exporter records notes.md and sources.json hashes; it does not itself bind sources.md or check the staged baseline target's bytes.",
+      "known_j8_disposition": "Non-blocking. This review hashed all four staged files, checked every sources.md status and local link, and independently matched the staged baseline to the frozen Plan and both Plan-read source identities. Future changes are outside these hashes."
+    }
+  ],
+  "supplemental_scans": {
+    "other_host_paths_windows_home_codex_sessions": [],
+    "html_link_or_image_attributes": []
+  },
+  "no_exporter_execution": true,
+  "no_collector_execution": true,
+  "no_private_controls_or_d5_access": true,
+  "no_live_campaign_or_input_changes": true,
+  "closure": {
+    "owned_files": [
+      "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-export-review.md",
+      "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-export-review.json"
+    ],
+    "command_sessions": "All exited, including verification retained-session:48af804743838fd0; no persistent sessions remain."
+  },
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-export-review.json",
+    "source_sha256": "f262a79ca443fcc54a51940cc2ca9a2710b6d84285f1eb8a06357babd2350894",
+    "source_bytes": 58359,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

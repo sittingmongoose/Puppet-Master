@@ -1,0 +1,374 @@
+{
+  "status": "selected_fact_scope_review_complete_final_union_pending_J10_and_later",
+  "native_notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+  "coverage": [
+    {
+      "lead": "L-d3fb5681dad7",
+      "notes_lines": [
+        11,
+        20
+      ],
+      "native_disposition": "already covered",
+      "review": "Scope lesson correctly remains covered; historical matrix missing HCS is unconfirmed, not failure. Reuse J5 matrix/QuPath corrections; no contemporary decoder certification."
+    },
+    {
+      "lead": "L-b8b6f684e168",
+      "notes_lines": [
+        22,
+        35
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Versioned recognition/decoding/calibration outcomes and truthful unsupported cases support G01/G07/G09. Packaging/library minimums are versioned software claims, not NGFF obligations; no new stack adopted."
+    },
+    {
+      "lead": "L-8e152cf58e36",
+      "notes_lines": [
+        37,
+        56
+      ],
+      "native_disposition": "product proposal requiring approval",
+      "review": "Preview versions, read-only archives and anatomical display are three independent unapproved capabilities. Preserve MUST/recommendation distinctions and known hosting failures; no forecast or general preview compatibility."
+    },
+    {
+      "lead": "L-53478306aa6a",
+      "notes_lines": [
+        58,
+        71
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Source-writing finder and incomplete preview inventory remain verified mechanisms (G01/G08/G10). Positive plate/series breadth requires conditional normalization; multi-fileset scanner/manifest/persistence stays optional."
+    },
+    {
+      "lead": "L-bb5dcafa9770",
+      "notes_lines": [
+        73,
+        95
+      ],
+      "native_disposition": "product proposal requiring approval",
+      "review": "Architecture/renderer proposal does not adopt 3D/GPU/API features. Its shared bounded-work/view-token refinement supports G10; no benchmark result is asserted."
+    },
+    {
+      "lead": "L-e22a81d34a4c",
+      "notes_lines": [
+        97,
+        118
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Metadata corpus identity/provenance and expected outcomes support G09. Mixed real sample coverage differs from other hosts; positive container cases conditional. RO-Crate enrichment is separately optional."
+    },
+    {
+      "lead": "L-cf0ac7e43301",
+      "notes_lines": [
+        120,
+        140
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Pinned first-transform/series/optional-label mechanisms reuse J5 evidence and support G01–G05. Actual public API code is not conformance. Display defaults/property UI remain optional; line 140 supplies a proposal, not approved mandatory styling."
+    },
+    {
+      "lead": "L-4b3f581214b5",
+      "notes_lines": [
+        142,
+        175
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Separable read-adapter stages and new path-vector conversion limitation support G01/G04/G07/G09. All-FOV/acquisition positive scope is not automatically admitted. Libraries, cache and navigator remain unapproved choices."
+    },
+    {
+      "lead": "L-eef00830c219",
+      "notes_lines": [
+        177,
+        194
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Mixed sharded intensity/unsharded int8 label metadata is corroborated; no decoded pixels. Shard/index/fill/large-ID requirements support G06–G08/G10 within admitted codecs. Cannot infer acquisition completeness from fill semantics."
+    },
+    {
+      "lead": "L-aadd42cb09c9",
+      "notes_lines": [
+        196,
+        213
+      ],
+      "native_disposition": "concrete repair",
+      "review": "Transform oracle [141,2513] is arithmetically correct. Labels/default wording needs existing adjudication; applicable OMERO use at line 209 must not override explicit unapproved display policy. Plate breadth conditional."
+    },
+    {
+      "lead": "L-48b8e76e269e",
+      "notes_lines": [
+        215,
+        249
+      ],
+      "native_disposition": "concrete repair",
+      "review": "New explicit owner+multiscales-entry identity/refined cache context merits narrow G01/G10 clarification. Entry chooser remains optional; direct-array entry/separate label linking/legacy are unapproved."
+    },
+    {
+      "lead": "L-f45bf9ee551d",
+      "notes_lines": [
+        251,
+        289
+      ],
+      "native_disposition": "concrete repair",
+      "review": "All thirteen metadata-only schema probes independently reproduced, including wrong-target and path-vector rejection. G09 strengthened; no schema result certifies decoder/display. Tolerance choices remain class-specific and unapproved."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "J9-F01",
+      "kind": "narrow_derivative_refinement",
+      "notes_lines": [
+        224,
+        237,
+        239,
+        245
+      ],
+      "affected_groups": [
+        "G01",
+        "G03",
+        "G04",
+        "G05",
+        "G10"
+      ],
+      "finding": "A group and underlying array path do not uniquely select the multiscales coordinate context. J9 explicitly carries owner plus selected entry through artifact:campaign/cache/details/navigation, and exposes a shared-array/different-transform oracle.",
+      "remedy": "When a group contains multiple entries, record which entry defines the admitted displayed view and include that context in view/cache identity. Do not reuse calibrated or overlay state solely by array path. Keep an entry-chooser UI and exhaustive multi-entry display unapproved.",
+      "provenance": "Actual J9 participant comparison L-48b8e76e269e; evaluator proposes narrow insertion into existing groups. Primary U-S00092 metadata-ownership issue and U-S00081 multiple-entry issue plus final group-relative metadata rules; no runtime bug reproduced."
+    },
+    {
+      "id": "J9-F02",
+      "kind": "hold_unconditional_scope",
+      "notes_lines": [
+        67,
+        69,
+        116,
+        138,
+        153,
+        155,
+        159,
+        213
+      ],
+      "affected_groups": [
+        "G01",
+        "G09"
+      ],
+      "finding": "Several concrete-repair blocks require all plate/FOV/acquisition/series coverage as positive acceptance. Format routing correctness does not itself settle admitted container breadth.",
+      "remedy": "Retain current draft lines 17/19 conditionals. Apply per-field/series identity checks to supported container organizations; preserve rejected/unsupported diagnostics and hold unconditional positive breadth. Do not count this as a separate native failure for every repeated block.",
+      "provenance": "J9 native proposal broader than frozen explicit capability boundary; evaluator scope normalization, not new format fact."
+    },
+    {
+      "id": "J9-F03",
+      "kind": "hold_optional_policy",
+      "notes_lines": [
+        140,
+        207,
+        209,
+        285
+      ],
+      "affected_groups": [
+        "G05",
+        "G06",
+        "G09",
+        "G11"
+      ],
+      "finding": "Line 209 asks to preserve/use valid OMERO defaults although line 140 makes initial/default policy an unapproved proposal. Source/default references also lack separate absent-source versus source:{} treatment.",
+      "remedy": "Keep metadata preservation and exact admitted categorical lookup; hold default-window/visibility/initial-index/fallback policy. Reuse label-source adjudication for absent enclosing objects, present empty source default, literal references and recovery. Do not blanket-reject omitted image-label or apply a synthetic ../../ object universally.",
+      "provenance": "Participant defaults and omissions retained; exact omission separation is independent evaluator adjudication, not proven J9 factual error."
+    },
+    {
+      "id": "J9-F04",
+      "kind": "source_custody_wording",
+      "notes_lines": [
+        256,
+        264,
+        267
+      ],
+      "affected_groups": [
+        "G09"
+      ],
+      "finding": "Repeated tagged-schema wording is stronger than the recorded refs: raw.githubusercontent.com/ome/ngff/v0.5/... uses a named v0.5 ref, independently adjudicated as a branch. Captured hashes provide the actual immutable identity.",
+      "remedy": "Refer to captured v0.5-branch schema bytes/hashes and resolved commit where established, not an unverified immutable tag. Results of the probes are unchanged.",
+      "provenance": "Custody terminology refinement using actual J9 schema records and existing label adjudication."
+    }
+  ],
+  "execution_scope": {
+    "participant": "13 local schema/data probes with jsonschema 4.19.2, metadata copies/parsing/hash/citation audits; no reader/model/viewer execution or pixels decoded.",
+    "independent_review": "Replayed all 13 recorded inputs against four unchanged local schemas with a local referencing Registry; every schema_accepts result matched. Verified 13 metadata files byte-identical to U/J5 raw sources and manifest hashes. Checked 522 numbered excerpt lines across C-S00007 (317), C-S00009 (103), U-S00164 (102) against actual source text and raw receipt hashes. Inspected capture.py/schema-probes.py but did not execute those mutating participant scripts.",
+    "jsonschema_version": "4.19.2",
+    "runtime_certification": false
+  },
+  "inputs": [
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+      "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/capture.py",
+      "sha256": "fc1a001e1bae96f0e489e5691cbcab680faca8438a21923f5cc4ea6a4b8ca054"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/primary-passages.md",
+      "sha256": "eccdab306e1c2bbb83791d66f950c9efaa2ee506f50e52b20fcd4af680da0e9b"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schema-probes.py",
+      "sha256": "d4ff990fc433281f58cd8b2bb00810508b697ad8c19760816f93884051e8d4e2"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schema-probes.json",
+      "sha256": "7f0f320ee10cb41c8ad056f2e5087de3e7718fb5aa69fab41c3ffb279e18c5e8"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata-manifest.json",
+      "sha256": "376c5216b7de37d36de75a6bd4b79bdd4b8851b17d84a8c43f9034b1ce4d6408"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/completion-audit.json",
+      "sha256": "ac31b0bffcedd6f8bbf1fa385b8cd72be808e7bbec6d2e41c5b9e9a56ad05b55"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00002/raw",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00017/raw",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/source-fixture/product-brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/source-fixture/Plans/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/label-source-adjudication.md",
+      "sha256": "891c491eabebff09eb2b941a084532230ba3a55db6e39b59e6b6b90133b80344"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch2-fact-check.md",
+      "sha256": "8006d46f1f6f7826c86890417d31f8a51725dc0c9d58da05f07cce1f772ce5aa"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch4-fact-check.md",
+      "sha256": "39342564aae9e45676c1a8d3cfb70a202c9cec50cef8a2ed1ece936cd5a5c289"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/derivative-draft-review.json",
+      "sha256": "14d4998b32083b90959cf965983db80403c1de5e711ba1851e828d3a781952f1"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schemas/ome.schema",
+      "sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schemas/_version.schema",
+      "sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schemas/image.schema",
+      "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/schemas/plate.schema",
+      "sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00007/raw",
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00007/receipt.json",
+      "sha256": "5b68ba09d3d765e71aa242e4a49ee68ba5b62c1aadacb9c033298b6411a949ba"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00007/text.txt",
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00009/raw",
+      "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00009/receipt.json",
+      "sha256": "6da16fde2d70b1abc314db84babafc95f8ee18a87e20cc40d2f76b19fce5daba"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/research-evidence/sources/S00009/text.txt",
+      "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/research-evidence/sources/S00164/raw",
+      "sha256": "b120771c3bf39cf87413acd610e5f230b0981f195722350eab78de02da31047c"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/research-evidence/sources/S00164/receipt.json",
+      "sha256": "5e85ce0dec521573f802723f595c4798fc7120282fcdce6124bed7e5f8b04f2c"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/research-evidence/sources/S00164/text.txt",
+      "sha256": "b120771c3bf39cf87413acd610e5f230b0981f195722350eab78de02da31047c"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00016.json",
+      "sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00010.json",
+      "sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00050.json",
+      "sha256": "c2ffc26a18a16cc7d63b802abf99a42fd90a87711bffbeb19bd2044b296bccf1"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00069.json",
+      "sha256": "feaa2c5bceef982b8a6576008d9df5d293343114c3961fd73911f3c8cedb8d9b"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00076.json",
+      "sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00014.json",
+      "sha256": "eb17f4e8c039d2083cf2c3d8dcc7536b6df7e71658b55de517e1836eb3eb0ee5"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00042.json",
+      "sha256": "ebe6de44c939dc9694078c1bbf335e97a3828df3a155733ed5f205705610b6d5"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00127.json",
+      "sha256": "5c1b15dd3b7659d4ff5b8b83297c7d5135fd9e6fb44170b7d2f903845982450a"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00128.json",
+      "sha256": "4851597f80f7f6b8e6b6d4c610e007fc6c1c6f2cda13b27e7c8f051ca2112aca"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00129.json",
+      "sha256": "de0a8d495fe6b968b13e5100bde86876153d9495f9df435482fa034cadd9f1d7"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00046.json",
+      "sha256": "1e2053235c14e8a5b3e7f5c5b40eb0cae75e9264e39af2b08258c3adbc2fd7f1"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00123.json",
+      "sha256": "30add669e46f820323c0d1d83a6637698f3c0c571e8724be10cd851ff9b3d8a0"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/evidence/metadata/S00147.json",
+      "sha256": "68d2c3bdac9b5326d30a76822e6fd4c93a4fce21a387890a6c4b684950fb8ae8"
+    }
+  ],
+  "broad_reaudit": false,
+  "derivative_changed": false,
+  "owned_sessions_closed": true,
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch2-fact-scope-review.json",
+    "source_sha256": "2741415c4739f576a6309f04e75be3f4a78905f1fb2618f15505a9d4cf63473d",
+    "source_bytes": 21134,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "d4-decision-packet-final-review-v1",
+  "status": "PASS",
+  "scope": "Independent synthetic decision scope, form, deduplication, native evidence and final technical projection review; not product approval, runtime validation or Puppet Master reconsideration.",
+  "reviewed_inputs": {
+    "DECISIONS.md": "d5f9af8a2680c76a7bda46c0eddf9361579640338ef3f2f10212149b38cdb859",
+    "decision-provenance.json": "8d7552e5c98de3b769267dd93b56088ee183839a1009a4ee7f7b053864c9af51",
+    "retained_raw_decision_provenance": "afce8327b106ab03158ac5206d0a2b29e76d136d785c0bc391abfe3d3602c024",
+    "external_decision_provenance_export_receipt": "055aa4fcd6e394ad9463bf9680d4f3a47d3ab57c42394e2868d93fe8ec591b39"
+  },
+  "checks": {
+    "plain_cards_with_exact_markdown_json_field_agreement": 60,
+    "blank_answers": 60,
+    "options_per_card": "2 or 3",
+    "technical_card_ids_only_in_footnotes_or_companion": true,
+    "prior_cards_exhaustively_mapped": 58,
+    "prior_to_final_mapping_edges": 69,
+    "j11_register_rows_mapped_or_deferred": 14,
+    "card_native_locator_occurrences_verified": 245,
+    "all_technical_locator_occurrences_verified": 288,
+    "unique_original_file_line_pairs": 128,
+    "source_input_hashes_verified": 8,
+    "commonmark_local_link_occurrences": 125,
+    "unique_human_form_evidence_targets": 5,
+    "deferred_topics": 11,
+    "excluded_groups": 4,
+    "host_path_projection_identities": 12,
+    "bundled_reference_artifacts_verified": 8,
+    "bundled_line_reference_occurrences_verified": 288,
+    "semantic_roundtrip_to_retained_raw_except_declared_verification_correction": true,
+    "final_json_host_path_scan": true
+  },
+  "closed_findings": [
+    {
+      "issue": "Prior counter omitted 78 inherited locators using file_sha256 and reported210.",
+      "resolution": "Both digest schemas verified independently; final companion records245 card occurrences,288 total occurrences and128 distinct source file/line pairs, with the historical counter limitation declared.",
+      "card_content_changed": false
+    }
+  ],
+  "material_scope_findings": [],
+  "deduplication_review": {
+    "containers": "Three explicit admission/search normalization questions preserve refusal options; plate/well overviews and folder browsing remain separate.",
+    "support": "Image dtype, integer-label dtype and whole encoding-chain breadth are separate from mandatory correctness for admitted data.",
+    "architecture": "Staged backend/model/renderer evaluation retains packaging and independent-value evidence; it selects no production stack, language, toolkit, pin or platform.",
+    "display": "Appearance, active flags, starting T/Z, absent-window fallback, malformed-present tolerance, session retention and absolute/percentile navigation are separate.",
+    "labels": "Initial visibility, supplied colors, fallback palette, zero convention, property table and original-value inspector remain separate; correctness of IDs/association is not optional.",
+    "geometry": "Named custom-axis selection, explicit session mapping, pixel inspection with uncertain geometry, coordinate normalization and specific historical exceptions are distinct.",
+    "resources": "Catalog, consolidated metadata, reusable metadata cache, playback, neighbor prefetch, selected preload, whole-series preload and disk pixel persistence have separate lifetimes and costs.",
+    "audit_and_corpus": "Standalone audit and payload breadth are conditional separate questions; offline corpus choice does not claim acquisition or decoder acceptance.",
+    "interfaces": "Internal test hooks, a separately designed local scripting capability, command entry and OS registration remain separate. No default listener, remote service or export is approved."
+  },
+  "j11_maturity_adjudications": [
+    {
+      "card": "D4-DEC30",
+      "native_status": "deferred in decision-register.md line15",
+      "finding": "Reviewable minimal raw-value inspection is supported by explicit benefit, exact-value/source dependencies, precision/interpretation costs and an unmodified-sample acceptance check. Native status remains visible; producing an unanswered question does not approve implementation."
+    },
+    {
+      "card": "D4-DEC24",
+      "native_status": "developed minimal proposal at notes.md line207 and register line9",
+      "finding": "Explicit stable-absolute versus percentile-recalculation mode has a two-timepoint check. Histogram/LUT editors and on-canvas time overlay remain deferred."
+    },
+    {
+      "card": "D4-DEC49",
+      "native_status": "optional proposal at notes.md line206 and register line13",
+      "finding": "Playback benefit, request/cancellation and resource dependencies, amplification/staleness costs support a minimal evaluation question. No frame-rate promise or prefetch/preload/persistence commitment follows."
+    }
+  ],
+  "boundaries": {
+    "local_read_only": true,
+    "display_settings_session_local": true,
+    "no_source_editing_repair_or_image_data_export": true,
+    "no_remote_storage_service_or_clinical_interpretation": true,
+    "no_pm_decisions_reasked": true,
+    "no_answers_or_approvals_inferred": true,
+    "native_and_export_hash_domains_separate": true
+  },
+  "limitations": [
+    "No new source acquisition, upstream execution, pixel decoding, performance tests or private-control reevaluation.",
+    "This reviews synthetic question readiness; recommendations and options are not accepted requirements.",
+    "Raw path mapping receipt is retained externally; final companion carries stable identities and separate available bundle references."
+  ],
+  "owned_writes": [
+    "decision-packet-final-review.md",
+    "decision-packet-final-review.json"
+  ],
+  "closure": "All verification commands exited; no persistent sessions remain. No packet, provenance, fixture, prior export, Plans, governance or D5 artifact edited.",
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/decision-packet-final-review.json",
+    "source_sha256": "aa7979701febde43bc479e355630e859f6eab3036f970c9b8893673f657721ae",
+    "source_bytes": 5871,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

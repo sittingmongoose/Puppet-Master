@@ -1,0 +1,143 @@
+{
+  "schema": "synthetic_research_partial_controls.v1",
+  "created_at_utc": "2026-09-09T07:13:50.422123+00:00",
+  "fixture": "Slide Scout local OME-Zarr 0.5 viewer",
+  "visibility": "evaluator_only_do_not_include_in_researcher_inputs",
+  "status": "frozen_evaluator_prelaunch",
+  "partial_denominator": true,
+  "denominator_units": 8,
+  "exhaustive": false,
+  "finding_cap": false,
+  "controls": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "basis": "Format correctness",
+      "source_rule": "OME-Zarr 0.5 uses Zarr v3 and attributes.ome metadata with a hierarchy-consistent version.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "Open equivalent-looking v3/0.5 and legacy-layout containers, then a hierarchy with inconsistent declared versions.",
+      "full": "Identify the version/namespace distinction and require explicit compatibility validation or a truthful unsupported result; no implicit legacy reinterpretation.",
+      "half": "Mentions version validation or metadata layout, but does not connect the two to admission.",
+      "missed": "Assumes legacy metadata is 0.5-compatible, silently mixes versions, or offers only generic error handling.",
+      "source_sections": [
+        "\u00a71 Storage format",
+        "\u00a72 OME-Zarr Metadata"
+      ]
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "basis": "Format correctness; capability limits may be explicit",
+      "source_rule": "Axes match array rank/order; unique names match dimension_names. Optional dimensions and arbitrary axis names defeat fixed-position assumptions.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "Compare a two-dimensional image with a time/channel/three-space image using descriptive axis names; introduce a mismatched dimension_names case.",
+      "full": "Tie navigation/slicing to validated axis identity, distinguishing absent dimensions from length-one dimensions; reject mismatches without inventing sliders or coordinates.",
+      "half": "Recognizes variable dimensionality or axis order but leaves mapping/validation unspecified.",
+      "missed": "Hard-codes five dimensions or infers semantic axes solely from shape or conventional names.",
+      "source_sections": [
+        "\u00a72.1 axes",
+        "\u00a72.4 multiscales"
+      ]
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "basis": "Format correctness; selection UI/performance policy remains a product choice",
+      "source_rule": "datasets paths are group-relative and ordered highest-resolution first; names are arbitrary. Each listed level has its own transform.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "Use levels named detailed/medium/tiny, with non-power-of-two and anisotropic reductions, plus a missing declared level.",
+      "full": "Use the declared level list and level-specific geometry; no lexicographic/numeric-folder ordering or fixed reduction assumption, with explicit missing-level handling.",
+      "half": "Uses multiscales metadata but omits ordering/path or nonuniform reduction consequences.",
+      "missed": "Treats folder numbering or a fixed factor-of-two formula as authoritative.",
+      "source_sections": [
+        "\u00a72.4 multiscales"
+      ]
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "basis": "Format correctness within promised calibrated viewing",
+      "source_rule": "Apply dataset transforms in order, then multiscale transforms; scale precedes translation. Units are recommended metadata, not permission to invent calibration.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "For an original two-axis example, pixel (7,11), dataset scale (2,3), translation (10,20), then group scale (4,5), translation (100,200), expect (196,465) in declared axis units. Repeat without a unit declaration.",
+      "full": "Explain transform composition and unit/unknown-calibration treatment, with a concrete check that would expose reversed composition or omitted offsets.",
+      "half": "Requests calibrated coordinates but covers only voxel scale or only translation/unit display.",
+      "missed": "Uses array indices or scale alone as universally correct physical coordinates; invents units.",
+      "source_sections": [
+        "\u00a72.3 coordinateTransformations",
+        "\u00a72.4 multiscales",
+        "\u00a72.1 axes"
+      ]
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "basis": "Format correctness for supported overlays; rendering breadth remains optional",
+      "source_rule": "Label images are discovered through labels paths, have multiscales, and match the source level count. Source-image references are relative.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "Place the label image below an intermediate group, with an explicit source reference; offer two source images with different origins.",
+      "full": "Resolve declared association and level/coordinate relationship before overlaying; do not attach by folder basename or array dimensions alone. Unsupported geometry stays explicit.",
+      "half": "Mentions label alignment or labels metadata but misses source association or hierarchy/level validation.",
+      "missed": "Overlays whichever sibling array looks plausible, ignores source identity, or assumes equal shapes guarantee registration.",
+      "source_sections": [
+        "\u00a72.6 labels"
+      ]
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "basis": "Format correctness for supported labels; palette behavior is a reader recommendation/product decision",
+      "source_rule": "Labels use integer values; color/property entries key by label-value, not position. Specified colors are recommended for readers, not universal required styling.",
+      "sources": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "synthetic_probe": "Use sparse IDs 7 and 1001 plus a uint64 ID above exact binary64 integer range; scramble metadata entry order. Compare interpolation at boundaries.",
+      "full": "Preserve categorical identity through decoding/lookup/resampling, or declare an exact supported range and refuse unsupported data. Do not turn palette preference into a format mandate.",
+      "half": "Recognizes categorical/label-value semantics but leaves precision or rendering-induced new IDs unaddressed.",
+      "missed": "Treats labels as continuous intensity, palette-array indices or lossy generic numbers without disclosure.",
+      "source_sections": [
+        "\u00a72.6 labels"
+      ]
+    },
+    {
+      "id": "OME05-C07",
+      "title": "Metadata-driven chunk decoding",
+      "basis": "Format correctness for admitted codec/data-type combinations; exhaustive codec support is optional",
+      "source_rule": "Decode the declared codec chain in reverse. Bytes encoding carries endian semantics; transpose changes encoded layout. Unsupported combinations cannot be guessed.",
+      "sources": [
+        "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html#decoding-procedure",
+        "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/bytes/index.html#configuration-parameters",
+        "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/transpose/index.html#format-and-algorithm"
+      ],
+      "synthetic_probe": "Encode a non-square asymmetric uint16 tile using transpose plus big-endian bytes, then a declared unsupported codec combination.",
+      "full": "Identify pipeline/layout/endian correctness and require an explicit support boundary or evidence for the chosen reader; unsupported data must not be displayed as decoded pixels.",
+      "half": "Says use a Zarr library or lists compression support without checking actual v3 pipeline/layout behavior.",
+      "missed": "Assumes one compressor, little-endian or row-major raw bytes for all inputs; silently skips a codec."
+    },
+    {
+      "id": "OME05-C08",
+      "title": "Absent data versus failed reads",
+      "basis": "Format correctness plus the brief\u2019s truthful-failure/read-only boundary",
+      "source_rule": "fill_value describes uninitialized array regions; store absence is not a successful read of arbitrary bytes. Readable and writable capabilities are distinct.",
+      "sources": [
+        "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html#fill-value",
+        "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html#abstract-store-interface",
+        "https://zarr-specs.readthedocs.io/en/latest/v3/stores/filesystem/index.html#store-api-implementation"
+      ],
+      "synthetic_probe": "Compare an absent chunk with nonzero fill, an unreadable existing file, a malformed payload, and a navigation cancellation. Verify source contents remain unchanged.",
+      "full": "Distinguish valid absent/fill data from read/decode/cancellation failures; show the actual state and never repair/write source data to fabricate successful viewing.",
+      "half": "Mentions fill values or error distinction, but not both; read-only is asserted without considering reader-side writes.",
+      "missed": "Zero-fills every failure or mutates the dataset while opening/repairing it."
+    }
+  ]
+}

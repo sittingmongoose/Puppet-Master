@@ -1,0 +1,195 @@
+{
+  "scope": "Reparsed retained primary CSV bytes; catalog counts only, not availability, conformance or decode outcomes",
+  "csv_count": 17,
+  "total_rows": 15237,
+  "unique_urls": 15234,
+  "inventories": [
+    {
+      "source": "J0007-reconcile/S00012",
+      "local_source": "retained-evidence/J0007-reconcile/S00012",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/ebi-ngff-challenge-samples.csv",
+      "rows": 10,
+      "sha256": "67271bf46c06c8244f2a98c3e8ed0e530086152b79a2886a81ccc83d7329df75",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:25:29.845758+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00013",
+      "local_source": "retained-evidence/J0007-reconcile/S00013",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/webknossos_samples.csv",
+      "rows": 80,
+      "sha256": "2ac2adadbd16d9fe800132a1921a9dc6e7294ebf23bb39eb1ddac38fe1961207",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:25:32.597049+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00014",
+      "local_source": "retained-evidence/J0007-reconcile/S00014",
+      "url": "https://raw.githubusercontent.com/TheJacksonLaboratory/jax-ngff-challenge-2024/refs/heads/main/KOMP_adult_lacZ.csv",
+      "rows": 6365,
+      "sha256": "d5793480b8945b417d5bd791830a2a7667fd902059ab03b550e3b24b602183e2",
+      "licenses": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "acquired_at": "2026-09-09T09:25:51.286156+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00015",
+      "local_source": "retained-evidence/J0007-reconcile/S00015",
+      "url": "https://raw.githubusercontent.com/TheJacksonLaboratory/jax-ngff-challenge-2024/refs/heads/main/KOMP_histopathology.csv",
+      "rows": 6897,
+      "sha256": "6b48081b1c77c1fd6f733e609c5e8f8772743195924c8dbdf2b01aa0615fd8cb",
+      "licenses": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "acquired_at": "2026-09-09T09:25:53.770489+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00031",
+      "local_source": "retained-evidence/J0007-reconcile/S00031",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0090_samples.csv",
+      "rows": 22,
+      "sha256": "a5075b5614a0403a49ab25fa6bf46b5659adb9b7e0c3c7e13c1e7902796015d7",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:27.038686+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00034",
+      "local_source": "retained-evidence/J0007-reconcile/S00034",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0004_samples.csv",
+      "rows": 46,
+      "sha256": "1c367c03e3c73c882bc649fda64ae61bb84bbcab60a677a9c1772da7f5407e04",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:30.339637+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00037",
+      "local_source": "retained-evidence/J0007-reconcile/S00037",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0010_samples.csv",
+      "rows": 147,
+      "sha256": "cdce114d141085d1666f124c82d230c07b1ca06715ac763e7ad55939dfc37425",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:33.428937+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00040",
+      "local_source": "retained-evidence/J0007-reconcile/S00040",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0011_samples.csv",
+      "rows": 182,
+      "sha256": "e4d0f480ace8ff8d50910978a6250782b09b99a5e2f68f8c7c55db24e28f6f5f",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:37.072622+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00043",
+      "local_source": "retained-evidence/J0007-reconcile/S00043",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0012_samples.csv",
+      "rows": 68,
+      "sha256": "f46c37efadade30e8f778c20848b9909bbaf661cecfe85de73a2eca57b4af7a7",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:40.669049+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00046",
+      "local_source": "retained-evidence/J0007-reconcile/S00046",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0015_samples.csv",
+      "rows": 83,
+      "sha256": "7a9db76ad2ebf064892c9c0bb11dfb0b77cedb4c89c7e207adcfb981163d3e7b",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:44.468096+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00049",
+      "local_source": "retained-evidence/J0007-reconcile/S00049",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0026_samples.csv",
+      "rows": 111,
+      "sha256": "c89bca13946356b1baf65d0d2b2baf96c79bd660d07bcc577f562783343cd245",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:48.447081+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00051",
+      "local_source": "retained-evidence/J0007-reconcile/S00051",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0033_samples.csv",
+      "rows": 12,
+      "sha256": "b60848d4d7f978867f39450cf925746eb4fdb114111867603c1b6cfa14146841",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:51.625966+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00053",
+      "local_source": "retained-evidence/J0007-reconcile/S00053",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0035_samples.csv",
+      "rows": 55,
+      "sha256": "33c0c8341254da4f7aa0b383bbd1c9f27a6b3029eeb3c621b7051911572d1940",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:53.779601+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00056",
+      "local_source": "retained-evidence/J0007-reconcile/S00056",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0036_samples.csv",
+      "rows": 20,
+      "sha256": "9febb4e03da1d88c4ac0420290825acdce947d9fb0b74d8d9d9b0e270b4ef2ef",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:56.514690+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00058",
+      "local_source": "retained-evidence/J0007-reconcile/S00058",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0051_samples.csv",
+      "rows": 5,
+      "sha256": "41717e9ce267931bd47ccffafe2388c1d2a22fb5869a178ad35c7d09bdc712be",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:27:59.070741+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00060",
+      "local_source": "retained-evidence/J0007-reconcile/S00060",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0157_samples.csv",
+      "rows": 1127,
+      "sha256": "67e21fe75d2ba165bb283c1e6354edfe675ae6b53e0993555a809bfb40a4843f",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:28:02.155141+00:00"
+    },
+    {
+      "source": "J0007-reconcile/S00076",
+      "local_source": "retained-evidence/J0007-reconcile/S00076",
+      "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/3423248c0d527332e4226caa789160ad45efe5d1/samples/other_samples.csv",
+      "rows": 7,
+      "sha256": "f2b32215effa944988048121d4ae14b04988a7f177f0d179baccce2cd80f7552",
+      "licenses": [
+        ""
+      ],
+      "acquired_at": "2026-09-09T09:29:41.816172+00:00"
+    }
+  ]
+}

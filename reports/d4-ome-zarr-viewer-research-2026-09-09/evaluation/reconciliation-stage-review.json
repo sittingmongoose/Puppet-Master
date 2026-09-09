@@ -1,0 +1,671 @@
+{
+  "schema": "d4_reconciliation_stage_review.v1",
+  "created_at_utc": "2026-09-09T10:00:52.832743+00:00",
+  "visibility": "private_evaluator",
+  "scope": "UNION of completed participant J0004-J0007 notes and retained child prose only. Final comparison J0008 not read/scored.",
+  "frozen_hashes": {
+    "artifact:campaign/next-goal-20260909/d4/evaluator/partial-controls.json": "e6c13991937076d5e0dc0cfb0aec900c5353a6dd56e8a8eb6a12590daebfa25d",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/rubric.md": "b81b7ecd9ffdbefbc2192d4a643910623d5a61c4e385aa8c3d3ae43ea52cb80b"
+  },
+  "participant_final_hashes": {
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/biofile-finder-zarr-autoload-handoff.md": "b2d696c160f2a5bd57bb2a529b9aac4555a4d96832fa24f4c285ea8d8abc4026",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ome2024-ngff-challenge-corpus.md": "974dd6718f3c6d487c2e8271066609d3ae91025a2f22847f2d964546bad87105",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/tensorstore-zarr3-driver-version-drift.md": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/agave-desktop-volume-loading.md": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/anatomical-orientation.md": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/bia-zarr-discovery-thumbnails.md": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/converter-progress-diagnostics.md": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/kiln-gpu-cache-and-precision.md": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/library-api-and-metadata-acceleration.md": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/odon-tiled-reader.md": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/pluot-portable-2d-rendering.md": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/preview-coordinate-systems.md": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/public-corpus-and-ro-crate.md": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/zipped-local-filesets.md": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-alternative-tools.md": "cf1c067823b9776a5eb29af8eeacbb9afc1625c90f8693e8ec18259ef076b6eb",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-calibration-and-origin.md": "c3981f2ab22a753d982424a7f771bb5c700d0cd430c7c08485533aba4d4d337f",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-corpus-and-version-tolerance.md": "994ca85f1844e2ec98b18183f06a1bdcfeadb675229e190652a6e9c2c07128f0",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-current-napari-transforms.md": "a7cb70a385db97e589136faf3d720a0d8a2f5a412ba98011fc87d5725af82224",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-ecosystem-versions.md": "3fe3bac19429d68e254defaa9cc70ec74410790133960961a835348ec18e628e",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-label-scale-and-intent.md": "64df7c05f09ac986d457a45f9ce14c01b6585311ddb0bd0cb11e2cac307f5e8f",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-local-collection-discovery.md": "9d6405cffe9b95cc9e30e880c009299529fe37aa9f4801ab28e7dd1c5a33f40d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-native-dtype-and-loading.md": "3da08f3e86803b844f77d99572bff979fc5cf938b235bb2f81341406472cc2f4",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-python-reader-errors.md": "9bdad9aa564d5d01961cfdb3d8e1d8ce0739d9b883dd1515505e943bc9e1480c",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-qupath-omero-adjacency.md": "bb65248b553749ef0b1a6fc8a3bf43df7c3d81c00d2b08588e5813380d7c6570",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-roadmap-and-archives.md": "627bf58ad9a0a94d7113f2feb847283626ad176fe09d73b37741067cba89c266",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-validation-diagnostics.md": "33a70df7cc459e89c2b51a261fe20a888297a808e18b772bb13e720aea80fd0e",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/v3-label-namespace.md": "f094f18223de837cea50a417a574b4169b935460c59e480453dc005224bc8592",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/backend-version-and-codec-matrix.md": "46534a91f9e48741c387454ac9d9fe9ecf8f6fa1bb1805209141f4544ae18786",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/calibrated-coordinates.md": "58c33e1045ec17c3176e3ba9ca325713f0093d45c91abc7a2084e45e9b522ebe",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/metadata-discovery.md": "22bde2df3314bf83008e81830cd94fc74ac2635da83f58309c9de7dd063e1a13",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/pixel-types-and-display.md": "14b93ce9af0e5d7cace20a16f78e7d7ce40ee34023be24a330a6caea6cc8e653",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/read-error-diagnostics.md": "eaa6bf79e929bf51ccc826f7373322c9244dd3c2d489931a4ae5ac537742816d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/responsive-reading-and-cache.md": "1149883ed94ba1709823223211f5618b2f00034b589328936538b603bcea8340",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/shard-index-and-read-amplification.md": "3b63288793aaa7a52d233b3bed800edef53945909d85b23611838bb776e404bd"
+  },
+  "reused_factchecks": {
+    "artifact:campaign/next-goal-20260909/d4/evaluator/implementation-fact-check.md": "617f0889ddd180f233f3c37a66cdebf5e03cd17b6bc5afd66647d447f82eb733",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/history-fact-check.md": "fd7aff29f9cbf3cc6e1219fa3a1edeaaefb38c632ef376414dac4b0e6441f150",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch2-fact-check.md": "8006d46f1f6f7826c86890417d31f8a51725dc0c9d58da05f07cce1f772ce5aa",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch3-fact-check.md": "952a57eeec7aeef2ee2de93c195edc23c25959b9af817ba817b9a4e8021e118e"
+  },
+  "score": {
+    "points": 6.5,
+    "denominator": 8,
+    "partial_denominator": true,
+    "full": 5,
+    "half": 3,
+    "missed": 0,
+    "discovery_baseline_points": 4.0,
+    "interpretation": "Research-level partial-control closure, not runtime conformance, accepted Plan repairs, exhaustive recall or comparison-stage survival."
+  },
+  "controls": [
+    {
+      "control": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "score": 1,
+      "rating": "full",
+      "frozen_full_criterion": "Identify the version/namespace distinction and require explicit compatibility validation or a truthful unsupported result; no implicit legacy reinterpretation.",
+      "participant_evidence": [
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 162,
+          "match": "consistent `ome.version`",
+          "line_sha256": "b97823acc350577caa4ace95699184a9fe27491686fa0f13e0bc474bc2492ffb"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 120,
+          "match": "New image/model API:",
+          "line_sha256": "4fb47765eefd3db7079e4328ed2cd02fe55ee34b511867fa6bcb2b4a1732d7c0"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-corpus-and-version-tolerance.md",
+          "sha256": "994ca85f1844e2ec98b18183f06a1bdcfeadb675229e190652a6e9c2c07128f0",
+          "line": 6,
+          "match": "legacy identification and explanatory rejection",
+          "line_sha256": "c360b95cf5a3ebf783c07a8c7b88daff2f1bdc96b59b17d0136b688e091d2e47"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+          "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+          "line": 15,
+          "match": "generic v3 presence alone",
+          "line_sha256": "f72a5bd4974416e453b85f9e0149f38e835008e17e9568f8a4039f8e22c1dd1c"
+        }
+      ],
+      "reason": "Full: version/namespace recognition is connected to explicit admission/validation and truthful legacy rejection. Model/caller differences and hierarchy consistency are stated; storage presence is not accepted as OME conformance. Malformed/mixed-version and name fixtures are proposed, with compatibility policy kept explicit.",
+      "limit": "No runtime admission test. Temporary dual-storage migration is distinguished from arbitrary inconsistent OME versions.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "score": 0.5,
+      "rating": "half",
+      "frozen_full_criterion": "Tie navigation/slicing to validated axis identity, distinguishing absent dimensions from length-one dimensions; reject mismatches without inventing sliders or coordinates.",
+      "participant_evidence": [
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 163,
+          "match": "Axis names are arbitrary and unique",
+          "line_sha256": "3947540007e68b91efec8c4c0536394939b90d02bbee78e7d6cfc6a27d190158"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 206,
+          "match": "required/matching dimension_names",
+          "line_sha256": "b9a2968e9a93305da60af2ac949004bdf10ce6c81bde0402290d59e88d800d39"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 132,
+          "match": "Exact rank equality is not a Read requirement",
+          "line_sha256": "3a30276207114136818c58b025151d3e46cf5a28be97307ae3814161ec5c093d"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+          "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+          "line": 26,
+          "match": "defaults absent dimensions to one",
+          "line_sha256": "ccf4a50cf0ee28c0321a5f7511ad650cf3f8506995811e98e3a490d82e197961"
+        }
+      ],
+      "reason": "Half: axes/rank/name checks and correct conventional lower-rank broadcasting are materially developed. The text does not close the promised navigator/slicer behavior for absent versus length-one dimensions, including a discriminating UI/slicing acceptance check that avoids invented controls or coordinates. Backend singleton padding alone is not that product contract.",
+      "limit": "No fixed-5D falsehood remains. This is incomplete closure, not a claim valid low-rank input fails.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "score": 1,
+      "rating": "full",
+      "frozen_full_criterion": "Use the declared level list and level-specific geometry; no lexicographic/numeric-folder ordering or fixed reduction assumption, with explicit missing-level handling.",
+      "participant_evidence": [
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 164,
+          "match": "resolution paths are relative",
+          "line_sha256": "1003a219fdf3c23fc4aea995000ce50d1828969c3af1ea50c5f80fe1474bdf5a"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 108,
+          "match": "shape-derived pyramid scaling",
+          "line_sha256": "98f3092f777395698f68543dfba706682952c8cea485796f98b81787b5aba310"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 99,
+          "match": "wire load surface is narrower",
+          "line_sha256": "8b63f25e07a6c2fe3e1c82de80c5638117d446c3ebd46c5a4216a6aee8f10adc"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+          "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+          "line": 7,
+          "match": "referenced path existence",
+          "line_sha256": "30128445eaae5b0f526ff2256f564e8714d113b85366f085da7c80f84b43f0a2"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/read-error-diagnostics.md",
+          "sha256": "eaa6bf79e929bf51ccc826f7373322c9244dd3c2d489931a4ae5ac537742816d",
+          "line": 10,
+          "match": "graceful fallback for one bad level",
+          "line_sha256": "0c75c6c45caacc01a48da23a9ea6726122b789fe0cf7abff4cd6c04e8adaf14e"
+        }
+      ],
+      "reason": "Full: declared group-relative level paths, highest-first order and per-level geometry are authoritative. Non-numeric paths and shape-derived/fixed reduction hazards are concrete. Referenced-path validation and bad-level fallback/diagnostics make missing-level handling explicit without fabricating a usable pyramid. These are discriminating proposed checks; exact private names/factors are unnecessary.",
+      "limit": "No runtime missing-level/pyramid rendering result; proposed fallback still needs implementation policy.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "score": 1,
+      "rating": "full",
+      "frozen_full_criterion": "Explain transform composition and unit/unknown-calibration treatment, with a concrete check that would expose reversed composition or omitted offsets.",
+      "participant_evidence": [
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-calibration-and-origin.md",
+          "sha256": "c3981f2ab22a753d982424a7f771bb5c700d0cd430c7c08485533aba4d4d337f",
+          "line": 8,
+          "match": "p = s_m",
+          "line_sha256": "091b58c1bdc27864237da12d303698c3f88ae6a4f1b39c3f259d03ee9760b19d"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-calibration-and-origin.md",
+          "sha256": "c3981f2ab22a753d982424a7f771bb5c700d0cd430c7c08485533aba4d4d337f",
+          "line": 13,
+          "match": "effective XY scale is 0.21667",
+          "line_sha256": "3d9a54ff54bc27d4aeeb7b6da6f17e5ca4d1f2d51ff3b0ab1001f7f464cea071"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+          "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+          "line": 7,
+          "match": "Unknown physical units",
+          "line_sha256": "30128445eaae5b0f526ff2256f564e8714d113b85366f085da7c80f84b43f0a2"
+        },
+        {
+          "job": "J0004-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 49,
+          "match": "centisecond → cs",
+          "line_sha256": "c30b7db94a75f8c44f5c3a6c337e6a1c1268e4c85af1b5504b3f306965d0e611"
+        }
+      ],
+      "reason": "Full: correct dataset-then-group composition, translations scaled at the proper stage, level-specific numerical scale/origin examples and unit/unknown-calibration treatment appear in participant text. The real fixtures and explicit arithmetic expose omitted offsets or reversed composition; no exact evaluator coordinates required.",
+      "limit": "Arithmetic/source checks are not executed viewer alignment. Valid normalization with original metadata/warnings is separate from claiming translation-first is conforming.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "score": 1,
+      "rating": "full",
+      "frozen_full_criterion": "Resolve declared association and level/coordinate relationship before overlaying; do not attach by folder basename or array dimensions alone. Unsupported geometry stays explicit.",
+      "participant_evidence": [
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "Registration is in the **labels container",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 186,
+          "match": "Equal level counts do not guarantee",
+          "line_sha256": "a9427747015cf16e31e6f3ea9f8f29ae8b5e0a514c903f1c59030c7857409003"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md",
+          "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+          "line": 7,
+          "match": "multiscales entry",
+          "line_sha256": "8e26b42be289dff02df20f63321972540b99adedeaa4f2c76091cb2bd1c77956"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 150,
+          "match": "singleton label channel",
+          "line_sha256": "0d6a6e00ac8478b1dbc17b4c731aaf559608877435a827ecc5c1d0c763ff72bc"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+          "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+          "line": 63,
+          "match": "Four versus three levels conflicts",
+          "line_sha256": "fc9ec68734d3205b15fc8b3365b909df691ffd27158055a004d9f6d966fff389"
+        }
+      ],
+      "reason": "Full: declared relative labels/source association, metadata-owning entry, level count and actual transforms must be resolved before overlays. Equal shapes/counts and filename suffixes are explicitly insufficient. Nested/source-ambiguous/optional-metadata and mismatched-level specimens supply discriminating checks with explicit conformance or unsupported outcomes.",
+      "limit": "J7 older challenge mismatch is a different URL from J5/J6 newer matching-level specimen; not contradictory data.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C06",
+      "title": "Categorical label identity",
+      "score": 0.5,
+      "rating": "half",
+      "frozen_full_criterion": "Preserve categorical identity through decoding/lookup/resampling, or declare an exact supported range and refuse unsupported data. Do not turn palette preference into a format mandate.",
+      "participant_evidence": [
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-label-scale-and-intent.md",
+          "sha256": "64df7c05f09ac986d457a45f9ce14c01b6585311ddb0bd0cb11e2cac307f5e8f",
+          "line": 12,
+          "match": "preserve exact signed/64-bit label identity",
+          "line_sha256": "d0b8e801b85c45a6965fecd3cb7c45f5a1d590ca9c19e6e7acf2de571556f599"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/pixel-types-and-display.md",
+          "sha256": "14b93ce9af0e5d7cace20a16f78e7d7ce40ee34023be24a330a6caea6cc8e653",
+          "line": 10,
+          "match": "use nearest-neighbor label rendering",
+          "line_sha256": "325a95c658e79fbb6abdee71624c661210be69a5591d3a4556ec05ef7597ab0c"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "Colors SHOULD guide display",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945"
+        }
+      ],
+      "reason": "Half: signed/large integer identity, avoiding float loss, sparse-ID allocation, display separation and nearest-neighbor behavior are explicit, with palette recommendations not mandates. However, lookup by label-value rather than color/property entry position is not explicitly preserved anywhere in final participant prose, nor an equivalent scrambled/sparse metadata-lookup check or exact restricted support contract. Do not infer it from retained primary source bytes.",
+      "limit": "This submechanism was explicit in discovery leads. Its omission does not erase improved precision/resampling treatment; no positional-lookup defect is claimed in unimplemented code.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C07",
+      "title": "Metadata-driven chunk decoding",
+      "score": 0.5,
+      "rating": "half",
+      "frozen_full_criterion": "Identify pipeline/layout/endian correctness and require an explicit support boundary or evidence for the chosen reader; unsupported data must not be displayed as decoded pixels.",
+      "participant_evidence": [
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 131,
+          "match": "Concrete drift matters even with identical codec names",
+          "line_sha256": "a4d5ef494f9b7e4a70620f4348d24f0e8921dadc3648498c93d6088648f765df"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 209,
+          "match": "valid big-endian codecs",
+          "line_sha256": "fa040c728f84955af426e75c5effd278e3ef2a0875cdd0b5e51bc0b6861f2b3a"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 58,
+          "match": "diagnose unsupported chains",
+          "line_sha256": "a80c2876345cd6a845219ff5e7cda2b70512fdb084171398ba010c3cfe841ca1"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+          "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+          "line": 30,
+          "match": "implemented chain candidates",
+          "line_sha256": "9ce4d21b274fcc96f24ee739a6470ab2d6936a23aa04f384612233fcfe120476"
+        }
+      ],
+      "reason": "Half: actual transpose/sharding permutation behavior and post-pin fix show far more than a codec list; unsupported chains and metadata-versus-decoded success are qualified. Yet the final prose does not state reverse-order decoding and does not supply an endian-discriminating decoding/layout acceptance check or equivalent complete admitted-byte pipeline boundary. Little-endian sample metadata plus big-endian compatibility mentions do not close that mechanism.",
+      "limit": "No exact private tile required; an equivalent source-backed check would suffice. The inspected upstream permutation test was not executed by participant/evaluator.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    },
+    {
+      "control": "OME05-C08",
+      "title": "Absent data versus failed reads",
+      "score": 1,
+      "rating": "full",
+      "frozen_full_criterion": "Distinguish valid absent/fill data from read/decode/cancellation failures; show the actual state and never repair/write source data to fabricate successful viewing.",
+      "participant_evidence": [
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 7,
+          "match": "Distinguish uninitialized/absent chunks",
+          "line_sha256": "e6ec7e00bd86649010420cef926bd337e80ac7d1fc6a7dbe203fa8fec96d1fe8"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 56,
+          "match": "Read-only-boundary correction:",
+          "line_sha256": "55b8c27efaefae8ef5df4efeb59efe5fbe50fee726d7e3f0495b4271044e4cb1"
+        },
+        {
+          "job": "J0005-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 60,
+          "match": "storing any derived catalog/cache elsewhere",
+          "line_sha256": "24dac05b951cc49b74a7a81bf6fbab8b1f70cd27c98b3afccab2562fdb93e857"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 134,
+          "match": "A failed/partial destination must not be presented",
+          "line_sha256": "69089d3d2cf4dd33864a5c43d4aee7db568b22102d1682b038b00b5eecda1d7b"
+        },
+        {
+          "job": "J0006-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "line": 135,
+          "match": "Asynchrony/progress and cancellation",
+          "line_sha256": "5a55cdf5bda9565571014b858ee4e0e99a61f4f9e3dc525becd8d90eeee0ae63"
+        },
+        {
+          "job": "J0007-reconcile",
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/leads/responsive-reading-and-cache.md",
+          "sha256": "1149883ed94ba1709823223211f5618b2f00034b589328936538b603bcea8340",
+          "line": 12,
+          "match": "stale requests must not replace",
+          "line_sha256": "5ddda18709dd0ee76bc5908aa90899dc40c51414e06f5e98de602dd97f8832f0"
+        }
+      ],
+      "reason": "Full: declared fill is separated from I/O/decode errors, missing arrays, viewer placeholders and incomplete/cancelled destinations. Truthful state and stale-selection handling are explicit. The concrete source-directory CSV write trap and derived-cache placement close the read-only boundary rather than relying on a generic assertion. Discriminating bad/missing/corrupt/cancelled checks are proposed.",
+      "limit": "No nonzero-fill, cancellation-latency or filesystem-immutability runtime test executed; research closure is not runtime repair.",
+      "accepted_plan_repair": false,
+      "runtime_conformance": false
+    }
+  ],
+  "deduplicated_useful_additional_candidates": [
+    {
+      "id": "D4-N01",
+      "mechanism": "Schema versus semantic/hierarchy diagnostics",
+      "participant_locator": {
+        "job": "J0005-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 203,
+        "match": "Direct independent evaluations",
+        "line_sha256": "12066ada906ec68b114583e4d9dd630f6d6b0dee8c1601d83225ea1311b8fad7"
+      },
+      "assessment": "Retained/strengthened original novel candidate. Eight narrow schema evaluations actually executed; field/axis/transform counterexamples are subcases, not eight independent accepted discoveries.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-N02",
+      "mechanism": "Shard/index geometry, range I/O and memory costs",
+      "participant_locator": {
+        "job": "J0006-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+        "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+        "line": 52,
+        "match": "four inner chunks",
+        "line_sha256": "a2f2bbe76d7b8689a18b82878f01b5fc1d9dd1cc6c8c8941e0dc71b58bcd9802"
+      },
+      "assessment": "Retained/strengthened original performance candidate. Four-tile/644-byte arithmetic and source range reads replace one-decode/whole-file errors; workload benchmarks remain proposed.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-N03",
+      "mechanism": "Container/FOV/image identity and truthful inventory",
+      "participant_locator": {
+        "job": "J0005-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md",
+        "sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+        "line": 9,
+        "match": "Alternative: expose",
+        "line_sha256": "67e04259c4f2b24b3eb95351dcd7dd175dfe944974a15719713f2decc1f118f6"
+      },
+      "assessment": "Retained/qualified original navigation candidate. Representative preview differs from exhaustive inventory or physical stitching; product breadth remains a choice.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-N04",
+      "mechanism": "Saved display defaults versus measured extrema",
+      "participant_locator": {
+        "job": "J0006-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+        "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+        "line": 119,
+        "match": "Saved display defaults exist and differ from dtype extrema",
+        "line_sha256": "009c9a91e218fed7418fb63a16d4fd3b748b9b9a4e1cba00798a8263d02f913e"
+      },
+      "assessment": "Retained/qualified original display candidate. No mandatory full-image min/max scan; metadata windows and raw values remain distinct.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-RN05",
+      "mechanism": "Typed intensity conversion",
+      "participant_locator": {
+        "job": "J0007-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+        "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+        "line": 27,
+        "match": "Concrete int32 conversion defect",
+        "line_sha256": "3bcfaf967addb58474dc9a4e9f759e69aa2d15743191a418d8d01c34c440ce8a"
+      },
+      "assessment": "Independent numeric-image mechanism: accepted int32 bits are reinterpreted as floats and display quantization loses intensities. Constant/nonfinite cases stay proposed. Do not double-count label-precision control C06.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-RN06",
+      "mechanism": "Selection-aware cache and failure-state coherence",
+      "participant_locator": {
+        "job": "J0006-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-native-dtype-and-loading.md",
+        "sha256": "3da08f3e86803b844f77d99572bff979fc5cf938b235bb2f81341406472cc2f4",
+        "line": 15,
+        "match": "Cache identity needs selection context",
+        "line_sha256": "a272b8612cfbdd9f3e32bb8ba46660957e8eed938158d134966d49690a094c7b"
+      },
+      "assessment": "Conditional path-only cache identity and rollback/stale-frame checks add state correctness beyond generic memory performance. Normal GUI caller applicability remains qualified.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-RN07",
+      "mechanism": "Automation request/result and listener boundaries",
+      "participant_locator": {
+        "job": "J0006-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+        "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+        "line": 98,
+        "match": "Error reporting is incomplete",
+        "line_sha256": "7516fa754fd40cb64f45ff8e60df8f95f0c868745501e1b55f50d8e7df96a6d8"
+      },
+      "assessment": "Binary commands, incomplete replies, correlation/timeouts, arbitrary level paths and Any binding form an optional testability/integration direction. Remote server adoption remains outside local product scope; shared path/error pieces do not inflate control coverage.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-RN08",
+      "mechanism": "Versioned fixture provenance and negative examples",
+      "participant_locator": {
+        "job": "J0007-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0007-reconcile/workspace/notes.md",
+        "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+        "line": 54,
+        "match": "not checked-store or passing-test counts",
+        "line_sha256": "2cc97143ab0601c80b59968fddbfb7e076dc3f2587ca2c49c8da4bd27766d778"
+      },
+      "assessment": "Catalog enumeration/metadata inventory provides source/node/hash/time/expected-outcome discipline. Different corpus paths and known invalid/unsupported samples must not be called successful regression tests.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    },
+    {
+      "id": "D4-RN09",
+      "mechanism": "Explicit library/API entry-point boundaries",
+      "participant_locator": {
+        "job": "J0005-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 120,
+        "match": "New image/model API:",
+        "line_sha256": "4fb47765eefd3db7079e4328ed2cd02fe55ee34b511867fa6bcb2b4a1732d7c0"
+      },
+      "assessment": "Current image models versus legacy traversal/writer APIs differ in validation, output defaults and scope. Entry-point selection is an adoption question; output-writing capabilities are not added product requirements.",
+      "disposition": "useful research candidate; no Plan adoption/runtime acceptance",
+      "deduplication": "One mechanism group; repeated containers/citations/subcases are not additional findings."
+    }
+  ],
+  "execution_evidence": {
+    "J5_schema_evaluations": {
+      "status": "actually executed by participant and independently reproduced by factual evaluator",
+      "count": 8,
+      "scope": "Six isolated unmodified schema definitions; two attributes-schema checks. Not complete images, array payloads or full filesets.",
+      "artifacts": {
+        "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/evidence-derived/schema-probes.json": "8ed6160fee774d05362a27127319a9693cd1ef56b07c1d551c8f72929fb82c17",
+        "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/evidence-derived/plate-series-schema-probes.json": "8784558c7b332e87bbaa985e62e3376f3f83662b0d264950dfc7ab5299a42c88"
+      }
+    },
+    "metadata_csv_inspection": "Real source/metadata retrieval, CSV counting and arithmetic occurred; these are not pixel-decoder tests. J7 novel inventory claims have separate factual reviewer.",
+    "viewer_decoder_runtime": "None claimed or credited. No AGAVE build/run, image payload decode, numeric reference-pixel comparison or performance benchmark.",
+    "proposed_checks": "Axis/navigation, transformation/overlay, categorical lookup/precision, codecs/endian, fill/failure/cancellation and source-preservation fixtures are proposed unless explicitly identified as schema execution.",
+    "upstream_test_source": "J6 inspected an added transpose/sharding test; source inspection is not test execution."
+  },
+  "residual_precision": [
+    {
+      "id": "RS01",
+      "kind": "material surviving error",
+      "participant_locator": {
+        "job": "J0006-reconcile",
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-qupath-omero-adjacency.md",
+        "sha256": "bb65248b553749ef0b1a6fc8a3bf43df7c3d81c00d2b08588e5813380d7c6570",
+        "line": 10,
+        "match": "HCS unsupported",
+        "line_sha256": "265852b3d79cc0e16f28b7888b5dc113b3ebe524b3ec85b5c3f62437fe3d67aa"
+      },
+      "assessment": "J6 promotes raw supported:no to unsupported. Independent B3-1 adjudicates published category as missing/not-tested/not-confirmed; J5 carries correct qualification. Both remain in participant union, so report conflict rather than silently choosing the better text. Does not itself alter these eight mechanism scores."
+    },
+    {
+      "id": "RS02",
+      "kind": "weaker cross-report qualification",
+      "assessment": "J6 abbreviated ome-zarr release list omits J5 writer/output-specific #534/#590/#652 scoping. It does not explicitly assert opposite read fixes; combined use must retain J5 precise API attribution."
+    },
+    {
+      "id": "RS03",
+      "kind": "remaining control gaps",
+      "assessment": "C02 navigator absent/singleton closure, C06 key-based label lookup and C07 reverse/endian pipeline check remain incomplete. Literal primary source retention does not fill missing participant reasoning."
+    },
+    {
+      "id": "RS04",
+      "kind": "apparent conflict resolved by provenance",
+      "assessment": "J7 old challenge 0.0.5 labels/image level mismatch and J5/J6 newer matching-level sample use different full URLs. Their counts/sharding can differ without contradiction."
+    },
+    {
+      "id": "RS05",
+      "kind": "independent evidence coverage",
+      "assessment": "J7 #294 fix attribution unverified here does not erase J6 verified post-pin Read/Write/GetStorageStatistics fix. Parallel batches were not one another’s upstream. Likewise model/core-API details less developed in J6 do not refute J5."
+    }
+  ],
+  "text_presence_audit": {
+    "corpus": "All final notes and child prose of J4-J7; not source-index, raw source or evaluator reports",
+    "literal_hits": {
+      "label-value": [],
+      "reverse decoding": [],
+      "decoding in reverse": []
+    },
+    "interpretation": "Targeted search corroborates full prose review; semantic equivalents were considered. No explicit label-value positional distinction or reverse-decoding/endian acceptance contract located."
+  },
+  "constraints": [
+    "Only four authorized new batch4/stage review artifacts written. Other evaluator/source/Plans/workflow/campaign files preserved.",
+    "No feedback to native jobs, no J8 comparison result, no collector or D5.",
+    "Unchanged frozen rubric; exact private numerical probes not required.",
+    "Additional candidates are deduplicated selected mechanisms, not an exhaustive finding or precision denominator.",
+    "All owned process sessions closed."
+  ],
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/reconciliation-stage-review.json",
+    "source_sha256": "4cd7554f8d3a1dd3b91628a221af6427147139db9d326e60634abc7d58070ee8",
+    "source_bytes": 53608,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

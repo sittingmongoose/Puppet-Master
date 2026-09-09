@@ -1,0 +1,191 @@
+{
+  "schema": "d4.externally_retained_artifacts.v1",
+  "job_id": "J0009-compare",
+  "artifacts": [
+    {
+      "artifact": "evidence/primary-passages.md",
+      "anchor": "primary-passages-md",
+      "original_sha256": "eccdab306e1c2bbb83791d66f950c9efaa2ee506f50e52b20fcd4af680da0e9b",
+      "original_bytes": 279092,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Full primary excerpts"
+    },
+    {
+      "artifact": "evidence/capture.py",
+      "anchor": "capture-py",
+      "original_sha256": "fc1a001e1bae96f0e489e5691cbcab680faca8438a21923f5cc4ea6a4b8ca054",
+      "original_bytes": 2180,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Local data-only provenance/verification script; not an exported executable"
+    },
+    {
+      "artifact": "evidence/schema-probes.py",
+      "anchor": "schema-probes-py",
+      "original_sha256": "d4ff990fc433281f58cd8b2bb00810508b697ad8c19760816f93884051e8d4e2",
+      "original_bytes": 5275,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Local data-only provenance/verification script; not an exported executable"
+    },
+    {
+      "artifact": "evidence/audit.py",
+      "anchor": "audit-py",
+      "original_sha256": "f142239b583a8866ff4e52128cd2f428cbadae9bceefe111f94bd5b823991d9d",
+      "original_bytes": 5316,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Local data-only provenance/verification script; not an exported executable"
+    },
+    {
+      "artifact": "evidence/schemas/_version.schema",
+      "anchor": "_version-schema",
+      "original_sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5",
+      "original_bytes": 280,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Captured public JSON Schema; identity and public source recorded in sources.json/schema-probes.json"
+    },
+    {
+      "artifact": "evidence/schemas/image.schema",
+      "anchor": "image-schema",
+      "original_sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d",
+      "original_bytes": 6114,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Captured public JSON Schema; identity and public source recorded in sources.json/schema-probes.json"
+    },
+    {
+      "artifact": "evidence/schemas/ome.schema",
+      "anchor": "ome-schema",
+      "original_sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5",
+      "original_bytes": 909,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Captured public JSON Schema; identity and public source recorded in sources.json/schema-probes.json"
+    },
+    {
+      "artifact": "evidence/schemas/plate.schema",
+      "anchor": "plate-schema",
+      "original_sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233",
+      "original_bytes": 4980,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Captured public JSON Schema; identity and public source recorded in sources.json/schema-probes.json"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/agave-desktop-volume-loading.md",
+      "anchor": "j5-agave-desktop-volume-loading-md",
+      "original_sha256": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+      "original_bytes": 1080,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/anatomical-orientation.md",
+      "anchor": "j5-anatomical-orientation-md",
+      "original_sha256": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+      "original_bytes": 1184,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/bia-zarr-discovery-thumbnails.md",
+      "anchor": "j5-bia-zarr-discovery-thumbnails-md",
+      "original_sha256": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+      "original_bytes": 1040,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/calibration-and-schema-gaps.md",
+      "anchor": "j5-calibration-and-schema-gaps-md",
+      "original_sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+      "original_bytes": 1702,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/converter-progress-diagnostics.md",
+      "anchor": "j5-converter-progress-diagnostics-md",
+      "original_sha256": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+      "original_bytes": 913,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/hcs-acquisition-and-field-navigation.md",
+      "anchor": "j5-hcs-acquisition-and-field-navigation-md",
+      "original_sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+      "original_bytes": 1447,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/kiln-gpu-cache-and-precision.md",
+      "anchor": "j5-kiln-gpu-cache-and-precision-md",
+      "original_sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+      "original_bytes": 910,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/library-api-and-metadata-acceleration.md",
+      "anchor": "j5-library-api-and-metadata-acceleration-md",
+      "original_sha256": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+      "original_bytes": 1640,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/metadata-context-and-label-discovery.md",
+      "anchor": "j5-metadata-context-and-label-discovery-md",
+      "original_sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+      "original_bytes": 1415,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/odon-tiled-reader.md",
+      "anchor": "j5-odon-tiled-reader-md",
+      "original_sha256": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+      "original_bytes": 1112,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/pluot-portable-2d-rendering.md",
+      "anchor": "j5-pluot-portable-2d-rendering-md",
+      "original_sha256": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+      "original_bytes": 795,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/preview-coordinate-systems.md",
+      "anchor": "j5-preview-coordinate-systems-md",
+      "original_sha256": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+      "original_bytes": 2076,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/public-corpus-and-ro-crate.md",
+      "anchor": "j5-public-corpus-and-ro-crate-md",
+      "original_sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+      "original_bytes": 1399,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/shard-io-and-fill-semantics.md",
+      "anchor": "j5-shard-io-and-fill-semantics-md",
+      "original_sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+      "original_bytes": 1539,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    },
+    {
+      "artifact": "J0005-reconcile/leads/zipped-local-filesets.md",
+      "anchor": "j5-zipped-local-filesets-md",
+      "original_sha256": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020",
+      "original_bytes": 1530,
+      "export_status": "externally_retained_not_copied",
+      "scope": "Actual transported upstream child direction; not an additional assigned J9 parent or independently accepted finding"
+    }
+  ],
+  "source_caches": "Raw source caches, native sessions, configs and machine state intentionally not exported. Source identities in sources.json."
+}

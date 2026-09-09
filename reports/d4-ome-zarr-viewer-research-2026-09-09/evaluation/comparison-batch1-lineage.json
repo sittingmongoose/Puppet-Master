@@ -1,0 +1,1120 @@
+{
+  "schema": "d4_comparison_batch1_lineage.v1",
+  "created_at_utc": "2026-09-09T10:24:51.134143+00:00",
+  "visibility": "private_evaluator_only",
+  "job": "J0008-compare",
+  "assigned_leads": [
+    "L-80240e08616c"
+  ],
+  "native_status": "complete reported by root; final output hash verified; native receipt audit owned by root",
+  "scope": "Only actual J0002/J0003/J0004 reports and 12 child notes; no J0005/J0006/J0007 findings treated as upstream. Eighteen heterogeneous trace keys are applicability mappings, not denominators.",
+  "input_hashes": {
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/job.json": "58d013f128819a94efd14deb79e87f84d7a6249f82190e8e96eee6efd70bd271",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/notes.md": "a15014db442483d53a9b78c0f33a9580ccfc059c65b9fc8a12a5e23aafaf8b57",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0003-history/workspace/notes.md": "40d607bad6e65bd7be2361fb1ce13a6e14c22bed23dd2d0b830f33e63d9f18c9",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/agave-python-client-local-render-server.md": "1b3d6cc4ca9b922723754ddc7625dfcb9a1eceab7fe19857640ba9ab2ab4a735",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md": "9fd7b8360f0c8ddf0a5452112f1fbe89d1e61bd16bc10f487967347d75414664",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/tensorstore-zarr3-driver-version-drift.md": "4bbd45925d3b8ab1f7a9b4069f379060b3dd4099b5b8ddd619038316306ba991",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0003-history/workspace/leads/biofile-finder-zarr-autoload-handoff.md": "57f936d28387af8fc07cc79adddf9f4402ca67a3943e72ff8bee9fbaff931752",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0003-history/workspace/leads/ome2024-ngff-challenge-corpus.md": "0a314d35689cb3ed72691c309252f9706f22064924ace5446a3f9613c5dca165",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/biofile-finder-zarr-autoload-handoff.md": "b2d696c160f2a5bd57bb2a529b9aac4555a4d96832fa24f4c285ea8d8abc4026",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ome2024-ngff-challenge-corpus.md": "974dd6718f3c6d487c2e8271066609d3ae91025a2f22847f2d964546bad87105",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/tensorstore-zarr3-driver-version-drift.md": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27"
+  },
+  "delivery_boundary": {
+    "full_parent_reports": 3,
+    "child_notes": 12,
+    "unique_child_directions": 7,
+    "contents_hash_matched_to_job_manifest": true,
+    "embedded_handoff_exactness": "Root independently verified full 82,754-character report/child input; this review verifies referenced source hashes, not native receipt plumbing."
+  },
+  "correction_lineage": [
+    {
+      "trace_key": "D4-AGAVE-F1",
+      "mechanism": "Translation order",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 45,
+        "match": "Calibration: wrong example, real broader gap.",
+        "line_sha256": "1e960b924fb74df768283bc2faa567eb599a4190a56aa96e20bba2ac9c361545"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 192,
+        "match": "Translation-first is a valid",
+        "line_sha256": "f6f16c55a4f826aec3a7bd0fce73a4d5d3154666f1e68d719fcc8f89f906f031"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F2",
+      "mechanism": "Rank mismatch",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 39,
+        "match": "Rank hypothesis corrected.",
+        "line_sha256": "ed55741064173724b6a31739954c8d7a799a60aa6e981a62808d183ae4b8a031"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 191,
+        "match": "Rank-5 target necessarily",
+        "line_sha256": "fef3ead4c1bf0c5fe4f390b203b81ffa701010007293997b2ab6b0925fd2c348"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F3",
+      "mechanism": "Read-error termination",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 79,
+        "match": "Error-path correction:",
+        "line_sha256": "0b4467242353696e2ba097e3eb1beed0070de8f7601784a7a00d28e472fe3b30"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 197,
+        "match": "All data failures become",
+        "line_sha256": "48a1a003b83bff544b50fbc27a708345cadad797e725bc55f212243a4d5c879a"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F4",
+      "mechanism": "Chronology",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 20,
+        "match": "not “a full year.”",
+        "line_sha256": "ee722060f6fb2c2c82feb6339b34c2ee3d2146a6906a5e1c95f35b721ec6b79c"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 188,
+        "match": "TensorStore is an AGAVE git submodule",
+        "line_sha256": "3ff902b413857659cc3e89705b16e76cdfb8cd32c6ba3a80fddfc5cb195c0a14"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F5",
+      "mechanism": "Codec breadth",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 87,
+        "match": "replace “the full standard codec set”",
+        "line_sha256": "7b8f3ee0b00b0c805eef9ebcf497e0ea41f0c4d0c503bb398403470b304959b9"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 200,
+        "match": "All v3 codecs/consolidation",
+        "line_sha256": "8a23db2e615167f29d1fab44cc86080e25e9bdf362ef4f46d5bf16dab0923f70"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F6",
+      "mechanism": "Released reader",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 29,
+        "match": "a “very barebones first try”",
+        "line_sha256": "aedcd3ee06541409ce3dd364013d6ce5793a3a518a4586e4ad002b3365575027"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 189,
+        "match": "Shipped 0.5 support proves",
+        "line_sha256": "1e2b0820487da48f0813809161005ca95e2a6d0e406151dd3dec13346015dcb7"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-F7",
+      "mechanism": "Int32 conversion",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 53,
+        "match": "The int32 concern",
+        "line_sha256": "d36aac6692521cfbb0b15904f20fe4622add340dba434849d70c1cb5b6957bef"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 198,
+        "match": "int32 and float32 are handled",
+        "line_sha256": "40d86b5d88cb2abb3f3c90678df2b26f2570ff4293bb914ef6ba695ce8a9ff1a"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-H1",
+      "mechanism": "BFF handoff",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 119,
+        "match": "fix **supported-app classification for subpaths",
+        "line_sha256": "7d27b410c6f85de1b40b275de0f93095f0e83ec57942638d0d88fe37d4c501c7"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 201,
+        "match": "BFF fix requires stripping",
+        "line_sha256": "69d4085236acafe46231f8fb4af00c9680b40c6ac758ed46635e3ab9537c7ddd"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-H2",
+      "mechanism": "Timestamp source",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 49,
+        "match": "inherited omero-timestamp attribution is wrong",
+        "line_sha256": "c30b7db94a75f8c44f5c3a6c337e6a1c1268e4c85af1b5504b3f306965d0e611"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 193,
+        "match": "Time timestamps come from",
+        "line_sha256": "f5c495efb2bf5a8ae3904f6a1611f14c129564ed399f1e8af820c3486bed630c"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-H3",
+      "mechanism": "Evidence strength",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 83,
+        "match": "bounded negative tracker evidence",
+        "line_sha256": "6aaf5dd99df5a9434ed7a509649a5491d8d2c4eaa67dfceeb7eedfddc10856b7"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 206,
+        "match": "No issue title mentions",
+        "line_sha256": "a9238f75b8fb39a8d444002134f7aa3410c08b4f69214edfa1cea1222ab865f4"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    },
+    {
+      "trace_key": "D4-AGAVE-H4",
+      "mechanism": "Root diagnostic",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+        "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "line": 35,
+        "match": "Missing namespace and missing multiscales are different failures",
+        "line_sha256": "e9c65d4e5f8eaa46f0300d2436ef320a958738a8b01848c32fe966a545edc8d8"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 195,
+        "match": "A plate root always fails",
+        "line_sha256": "1f7ab5958cdfe24e32d11896ba473c8fb06757a217284830dd8209be4b7bba57"
+      },
+      "disposition": "retained_corrected_or_qualified",
+      "assessment": "Comparison explicitly retains the reconciled correction; source-level evidence is not presented as observed application behavior."
+    }
+  ],
+  "selected_j4_mechanism_lineage": [
+    {
+      "trace_key": "D4-AGAVE-A01",
+      "mechanism": "Centisecond clock conversion",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md",
+        "sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+        "line": 15,
+        "match": "factor-of-100 discrepancy",
+        "line_sha256": "e4d44ad030128d70dba3eff5250bccbf64d482398741d8242926b765606049ea"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 62,
+        "match": "Time scale 2 centiseconds",
+        "line_sha256": "a263caeb67621c30925b2835dc43e66f0e595a17869d468fc2534f98cf147320"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A02",
+      "mechanism": "Heterogeneous spatial units",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md",
+        "sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+        "line": 13,
+        "match": "heterogeneous per-axis spatial units",
+        "line_sha256": "1d258cb702eafe0e2e212cefe23c32214a033c614d49d7d62d44aae95f4dcb5e"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 62,
+        "match": "An axis in nanometers",
+        "line_sha256": "a263caeb67621c30925b2835dc43e66f0e595a17869d468fc2534f98cf147320"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A03",
+      "mechanism": "Automation failure response and waiting",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md",
+        "sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+        "line": 12,
+        "match": "application timeout",
+        "line_sha256": "e68e486a70f84d2aa8867f09e15a8cc15e0bccb2be25e42ed0bce32b31312c32"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 164,
+        "match": "client has no application timeout",
+        "line_sha256": "a7d6a15316c37caa6082da8f6e13c07e9e3c8b908693fbe2d52f8ee195bb99a0"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A04",
+      "mechanism": "Automation level versus metadata path",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md",
+        "sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+        "line": 13,
+        "match": "std::to_string(level)",
+        "line_sha256": "f7ed56b5dd9c135e41640f930e894f698301a8bf3ae6980e18103c78c9b0cbd4"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 166,
+        "match": "server `std::to_string(level)`",
+        "line_sha256": "cec8eb06a15cd1e770c0c44db6e91afd3b59cae0cb03b195caf4c49615876e15"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A05",
+      "mechanism": "Automation reply geometry provenance",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md",
+        "sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+        "line": 14,
+        "match": "last pyramid level",
+        "line_sha256": "bc174727b2a3bdbb4465f707d567f4c6b8483d56d5b5af032ccdba574115e98e"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 166,
+        "match": "returned nested dimensions",
+        "line_sha256": "cec8eb06a15cd1e770c0c44db6e91afd3b59cae0cb03b195caf4c49615876e15"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A06",
+      "mechanism": "Local default versus listener boundary",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md",
+        "sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+        "line": 16,
+        "match": "listens on `QHostAddress::Any`",
+        "line_sha256": "7a999875157ed1f14ab9aed307a1eae2d33c4117a378ef32d74d876853e40344"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 164,
+        "match": "server listens on Any",
+        "line_sha256": "a7d6a15316c37caa6082da8f6e13c07e9e3c8b908693fbe2d52f8ee195bb99a0"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A07",
+      "mechanism": "Constant float denominator",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md",
+        "sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+        "line": 9,
+        "match": "unguarded zero denominator",
+        "line_sha256": "8075cb8f95e54db56f363f4132e8ef6f29ad9916c066366fe59dacdda7049e09"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 198,
+        "match": "Constant/nonfinite outcomes remain untested",
+        "line_sha256": "40d86b5d88cb2abb3f3c90678df2b26f2570ff4293bb914ef6ba695ce8a9ff1a"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    },
+    {
+      "trace_key": "D4-AGAVE-A08",
+      "mechanism": "Optional channel label conversion",
+      "actual_input_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md",
+        "sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+        "line": 13,
+        "match": "without checking it",
+        "line_sha256": "b7d2a5ec6c31407710567e8dc2b58e97cfef13d4deaf0c550006d6d4750768ae"
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 146,
+        "match": "Use stable indexed channel labels",
+        "line_sha256": "d98c42583c382e9178a389bd342728d727bbf5a388ddd7340a402b0275f7c727"
+      },
+      "disposition": "retained_with_concrete_repair_or_held_proposal",
+      "novelty": "Selected J0004 addition relative to J0002/J0003, not newly counted as a J0008 finding."
+    }
+  ],
+  "child_direction_lineage": [
+    {
+      "child_ids": [
+        "L-dce78e52fdae"
+      ],
+      "origin_job": "J0002-implementation",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/agave-python-client-local-render-server.md",
+      "source_sha256": "1b3d6cc4ca9b922723754ddc7625dfcb9a1eceab7fe19857640ba9ab2ab4a735",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 218,
+        "match": "Python/server automation:",
+        "line_sha256": "2f55dae2cb885ffdd25210243fd45af2d477b8cd7717e095ab2b38f5b5c2d3b9"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-88c0687248a2"
+      ],
+      "origin_job": "J0002-implementation",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+      "source_sha256": "9fd7b8360f0c8ddf0a5452112f1fbe89d1e61bd16bc10f487967347d75414664",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 214,
+        "match": "Discovery/display:",
+        "line_sha256": "7443eb2d3a4c64f6ef65ebd0469aa79b90febbfe2d192b8344b82eb8c9a8e402"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-580ffdee048c"
+      ],
+      "origin_job": "J0002-implementation",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/tensorstore-zarr3-driver-version-drift.md",
+      "source_sha256": "4bbd45925d3b8ab1f7a9b4069f379060b3dd4099b5b8ddd619038316306ba991",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 217,
+        "match": "TensorStore pin/driver drift:",
+        "line_sha256": "96ff61053870eeec3e00e7216a69f1789e5fb6d3aa3395fc65bcbde40dd77bff"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-09ceb3cfac5e"
+      ],
+      "origin_job": "J0003-history",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0003-history/workspace/leads/biofile-finder-zarr-autoload-handoff.md",
+      "source_sha256": "57f936d28387af8fc07cc79adddf9f4402ca67a3943e72ff8bee9fbaff931752",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 219,
+        "match": "BFF autoload:",
+        "line_sha256": "942598413605ad0b32b60681990dd44d8a93503aa5a3cd9eb2a8d103d808f937"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-8ac9e423176c"
+      ],
+      "origin_job": "J0003-history",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0003-history/workspace/leads/ome2024-ngff-challenge-corpus.md",
+      "source_sha256": "0a314d35689cb3ed72691c309252f9706f22064924ace5446a3f9613c5dca165",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 220,
+        "match": "Challenge corpus:",
+        "line_sha256": "39e5c19376fcc4811dc1b0271b8893d652079e5233d26191129d1d152c264475"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-a20d51892430"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md",
+      "source_sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 216,
+        "match": "Numeric/failure integrity:",
+        "line_sha256": "670f93c1172777d45f86f70b609f42b15e3870018b5bdd481f7abc5104b2861a"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-cdedd3e8116f"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-python-client-local-render-server.md",
+      "source_sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 218,
+        "match": "Python/server automation:",
+        "line_sha256": "2f55dae2cb885ffdd25210243fd45af2d477b8cd7717e095ab2b38f5b5c2d3b9"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-d43127dd465f"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/biofile-finder-zarr-autoload-handoff.md",
+      "source_sha256": "b2d696c160f2a5bd57bb2a529b9aac4555a4d96832fa24f4c285ea8d8abc4026",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 219,
+        "match": "BFF autoload:",
+        "line_sha256": "942598413605ad0b32b60681990dd44d8a93503aa5a3cd9eb2a8d103d808f937"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-c8f9e220182f"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md",
+      "source_sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 215,
+        "match": "Calibration: L-",
+        "line_sha256": "d3768f8bab9974f5c1913523a0b729a0db88aaae0bbb66e4a9742e3d428a8b33"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-3a61d7236a42"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+      "source_sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 214,
+        "match": "Discovery/display:",
+        "line_sha256": "7443eb2d3a4c64f6ef65ebd0469aa79b90febbfe2d192b8344b82eb8c9a8e402"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-f392bcd4d003"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ome2024-ngff-challenge-corpus.md",
+      "source_sha256": "974dd6718f3c6d487c2e8271066609d3ae91025a2f22847f2d964546bad87105",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 220,
+        "match": "Challenge corpus:",
+        "line_sha256": "39e5c19376fcc4811dc1b0271b8893d652079e5233d26191129d1d152c264475"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    },
+    {
+      "child_ids": [
+        "L-cf7c668347bf"
+      ],
+      "origin_job": "J0004-reconcile",
+      "source_file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/tensorstore-zarr3-driver-version-drift.md",
+      "source_sha256": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27",
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 217,
+        "match": "TensorStore pin/driver drift:",
+        "line_sha256": "96ff61053870eeec3e00e7216a69f1789e5fb6d3aa3395fc65bcbde40dd77bff"
+      },
+      "disposition": "direction_retained; optional scope held and unknowns explicit"
+    }
+  ],
+  "discovery_trace_applicability": [
+    {
+      "trace_key": "OME05-C01",
+      "mechanism": "Versioned metadata admission",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 35,
+          "match": "attributes.ome",
+          "line_sha256": "e9c65d4e5f8eaa46f0300d2436ef320a958738a8b01848c32fe966a545edc8d8"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 34,
+        "match": "Validate Zarr node kind/format independently",
+        "line_sha256": "68100b96d1e91e0fe33573848ec7ba023b13299a701dd8fe8c2e31eef467ccb8"
+      },
+      "disposition": "relevant_subset_extended",
+      "assessment": "Comparison distinguishes node/OME versions and generic hierarchy states; no legacy-support obligation is imported."
+    },
+    {
+      "trace_key": "OME05-C02",
+      "mechanism": "Axis-to-array identity",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "sha256": "9fd7b8360f0c8ddf0a5452112f1fbe89d1e61bd16bc10f487967347d75414664",
+          "line": 9,
+          "match": "dimension_names",
+          "line_sha256": "de9856a291add44d10184b79891f0d51933f78d8679afd558a88356085c221e6"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 54,
+        "match": "Derive dimensions, control indices and slicing",
+        "line_sha256": "49794f7a669ace7ee7490cbc049cc67e4edfe8415ce50d11561c4c9632a3e93a"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Validates metadata identity and reference slicing; absent controls/internal singleton handling and explicit mismatch-invalid check improve closure."
+    },
+    {
+      "trace_key": "OME05-C03",
+      "mechanism": "Declared pyramid selection",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0002-implementation/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "sha256": "9fd7b8360f0c8ddf0a5452112f1fbe89d1e61bd16bc10f487967347d75414664",
+          "line": 9,
+          "match": "datasets ordered",
+          "line_sha256": "de9856a291add44d10184b79891f0d51933f78d8679afd558a88356085c221e6"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 34,
+        "match": "Resolve every `datasets[].path`",
+        "line_sha256": "68100b96d1e91e0fe33573848ec7ba023b13299a701dd8fe8c2e31eef467ccb8"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Metadata-relative ordered paths, nonnumeric fixtures and independent label paths survive. Non-2x/Z-specific discrimination from other discovery reports was not an actual incoming mechanism here."
+    },
+    {
+      "trace_key": "OME05-C04",
+      "mechanism": "Composed coordinate calibration",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff-calibration-and-axis-semantics.md",
+          "sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+          "line": 7,
+          "match": "transforms",
+          "line_sha256": "b82622f4d898cf9fdb7482d1b41ed831b24e1c46c1606520e7ec7e2e5c8114c4"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 61,
+        "match": "An X-axis example with",
+        "line_sha256": "5410ac17ec998340804a0abd4ab040335c9d1e85358728e0f527165857c110b5"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Composition now has a concrete 49-unit oracle across levels plus heterogeneous units and unknown-calibration feedback."
+    },
+    {
+      "trace_key": "OME05-C05",
+      "mechanism": "Associated label discovery and registration",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+          "line": 1,
+          "match": "labels",
+          "line_sha256": "6a5c73fd5151acf8693fc5d628aba83ff19f045c836ac2f97c87c931a034c977"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 74,
+        "match": "Use nesting and any valid",
+        "line_sha256": "17a8ca7c6edb74949e9f4eb4c2a62e801561665326370925d6954419072b9ce9"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Nested registration, source validation, levels and aligned coordinates enter repair checks. Deeply nested labels with entirely absent image-label/source versus source={} and default ../../ remain under primary-source adjudication; no unqualified full credit or proven-error claim on that case."
+    },
+    {
+      "trace_key": "OME05-C06",
+      "mechanism": "Categorical label identity",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/agave-numeric-integrity-and-failure-paths.md",
+          "sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+          "line": 7,
+          "match": "int32",
+          "line_sha256": "b624b20b660f79e00d681734e86daa80492cd1b6eb29d560b1e338ffec2ec6a0"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 74,
+        "match": "Preserve raw integer label IDs",
+        "line_sha256": "17a8ca7c6edb74949e9f4eb4c2a62e801561665326370925d6954419072b9ce9"
+      },
+      "disposition": "relevant_subset_extended",
+      "assessment": "Integer conversion concerns extend to discrete IDs, exact lookup/color assignment, >2^53 boundary and zoom sampling. No literal label-value/property-key fixture appears; do not call absent sibling input an observed loss."
+    },
+    {
+      "trace_key": "OME05-C07",
+      "mechanism": "Metadata-driven chunk decoding",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/tensorstore-zarr3-driver-version-drift.md",
+          "sha256": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27",
+          "line": 7,
+          "match": "support bytes",
+          "line_sha256": "0eceb873be08005cb88ee183524e627ccd93753a1717c998384f424ada8091a7"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 113,
+        "match": "Exercise sharded and unsharded",
+        "line_sha256": "b6f11cfd29a2147356a9d03cce775bd86903fad98867e1692f621b4935f01a4e"
+      },
+      "disposition": "retained_with_open_precision",
+      "assessment": "Named codecs and sample chains survive with backend/version/pixel matrix. No reverse decode pipeline, endian or transpose-permutation acceptance discriminator; prior incoming material had named codecs and historical #294 only, not the later J0006 fix proof."
+    },
+    {
+      "trace_key": "OME05-C08",
+      "mechanism": "Absent data versus failed reads",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/tensorstore-zarr3-driver-version-drift.md",
+          "sha256": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27",
+          "line": 21,
+          "match": "test codecs and fill values",
+          "line_sha256": "75837272ce10b622cc5db2e7edfadf42fd86f7c2f0584742fec724099df48a88"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 103,
+        "match": "Include a positive sparse/fill-value case",
+        "line_sha256": "6b718115c2e8292adf9d56e5e52a3ed4de4c62d504e331411e1f0f8bce7696c6"
+      },
+      "disposition": "relevant_subset_extended",
+      "assessment": "Comparison explicitly distinguishes declared fill from I/O failure, partial data and cancellation, and adds a source-tree hash check. Incoming child asked for fill tests; the separate silent-zero discovery analysis was not delivered."
+    },
+    {
+      "trace_key": "D4-N01",
+      "mechanism": "Schema validity and reader/display support are different diagnostic outcomes.",
+      "actual_input_locators": [],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 99,
+        "match": "distinguishes unsupported from corrupt/unavailable",
+        "line_sha256": "61400afedbaf571b46a98e1ff86bbc5df3be6e5072b90025e76a379488d81045"
+      },
+      "disposition": "related_new_elaboration_not_full_inherited_claim",
+      "assessment": "Comparison makes diagnostic categories explicit; actual reports do not contain the independent schema-versus-reader/display diagnostic demonstration from other branches."
+    },
+    {
+      "trace_key": "D4-N02",
+      "mechanism": "Shard index and chunk geometry influence local plane-read cost and bounded memory.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 89,
+          "match": "shape [2,236,275,271]",
+          "line_sha256": "bb546b45c4ffc5c3deefa36ba3a2cdd70927ee947448c9717ffba22f575ec58e"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 115,
+        "match": "shard spans the full first-array shape",
+        "line_sha256": "d681a0a907bedca35f1df85728ad1ea33e2694ef6c49a309c457bbb38f57e6fe"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Full-shard versus inner-chunk geometry becomes a range/read/allocation investigation, explicitly unmeasured."
+    },
+    {
+      "trace_key": "D4-N03",
+      "mechanism": "Multiple-image containers need explicit discovery/presentation or declared limited support.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+          "line": 10,
+          "match": "series",
+          "line_sha256": "226beb7832d01cd1af53a57d86eb26ad4a67740fe66136489d99ba25ff36167e"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 34,
+        "match": "For other local hierarchies",
+        "line_sha256": "68100b96d1e91e0fe33573848ec7ba023b13299a701dd8fe8c2e31eef467ccb8"
+      },
+      "disposition": "retained_and_strengthened",
+      "assessment": "Collection/plate traversal and bounded generic discovery get positive, sparse, broken-sibling and incomplete-discovery checks."
+    },
+    {
+      "trace_key": "D4-N04",
+      "mechanism": "OMERO channel windows/defaults can inform display initialization.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 89,
+          "match": "channel display metadata",
+          "line_sha256": "bb546b45c4ffc5c3deefa36ba3a2cdd70927ee947448c9717ffba22f575ec58e"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 142,
+        "match": "P2 — Initialize channel display",
+        "line_sha256": "a21a84aece39aa9cd9c4dafe31a6837351ef0b641273a249af78114a1c711555"
+      },
+      "disposition": "retained_as_held_product_proposal",
+      "assessment": "Default windows/colors/indices, optional labels, deterministic fallback and session override policy stay explicitly unapproved."
+    },
+    {
+      "trace_key": "D4-P01",
+      "mechanism": "Legacy support, all-image/HCS traversal and never-reimplement library selection are asserted as obligations. The thin 0.5 fixture does not authorize those universal obligations. Catalog counts show available examples, not representative demand.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 91,
+          "match": "filters are not supported",
+          "line_sha256": "a513c329ea645fe056673151f92fb157fed286c2f91001f8b584076357547de6"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 217,
+        "match": "Broad v2/0.4 compatibility",
+        "line_sha256": "96ff61053870eeec3e00e7216a69f1789e5fb6d3aa3395fc65bcbde40dd77bff"
+      },
+      "disposition": "related_scope_correction",
+      "assessment": "Version scope and stack choices are held; generic hierarchy listing is proposed to implement existing image listing, not claimed as a universal NGFF traversal mandate. No use of corpus counts as demand."
+    },
+    {
+      "trace_key": "D4-P02",
+      "mechanism": "Final synopsis puts labels path registration in image ome attrs; correct leads locate it in the labels container. The spec lead says equal scale counts SHOULD where the current 0.5 specification requires equality.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+          "line": 1,
+          "match": "labels",
+          "line_sha256": "6a5c73fd5151acf8693fc5d628aba83ff19f045c836ac2f97c87c931a034c977"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 79,
+        "match": "same-level-count requirement is validated",
+        "line_sha256": "192500226ae40b9461f008211fab59a9918aaacaf190b7b085f9dab8a9d70181"
+      },
+      "disposition": "corrected_semantics_retained",
+      "assessment": "Correct labels placement and level equality are preserved. Incorrect original discovery synopsis was not the comparison input."
+    },
+    {
+      "trace_key": "D4-P03",
+      "mechanism": "The lead calls repeated tiles a zarr-v3 decode/render bug in the web stack. The reporter later said the issue was likely unrelated to VIV/Vizarr. Final notes still call it a rendering bug without this qualification. An open issue and screenshot are not a root-cause finding.",
+      "actual_input_locators": [],
+      "comparison_locator": null,
+      "disposition": "outside_actual_input",
+      "assessment": "No repeated-tile/VIV/Vizarr causal claim was delivered in these reports/children; absence is not loss."
+    },
+    {
+      "trace_key": "D4-P04",
+      "mechanism": "Generic current zarr>=3, py>=3.10 advice is insufficient and stale for current branches: zarr-python and ome-zarr-py currently declare Python >=3.12. Historical Python requirements require exact package versions.",
+      "actual_input_locators": [],
+      "comparison_locator": null,
+      "disposition": "outside_actual_input",
+      "assessment": "No Python >=3.12 package-floor correction was delivered; absence is not loss."
+    },
+    {
+      "trace_key": "D4-P05",
+      "mechanism": "Roadmap says #404 and #413 merged, but #404 was closed unmerged. Ecosystem base text attributes napari pin resolution to #123; appended correction correctly distinguishes the earlier dependency bump from later direct-zarr migration.",
+      "actual_input_locators": [],
+      "comparison_locator": null,
+      "disposition": "outside_actual_input",
+      "assessment": "No #404/#413 or napari migration correction was delivered; absence is not loss."
+    },
+    {
+      "trace_key": "D4-P06",
+      "mechanism": "Missing-chunks-to-zeros has an explicit question mark; plane reads are oversimplified as one chunk decode per plane; two metadata examples cannot prove writer-wide sharding defaults. None is a measured runtime finding.",
+      "actual_input_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0004-reconcile/workspace/notes.md",
+          "sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "line": 89,
+          "match": "not independently decoded pixels",
+          "line_sha256": "bb546b45c4ffc5c3deefa36ba3a2cdd70927ee947448c9717ffba22f575ec58e"
+        }
+      ],
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 203,
+        "match": "No corpus pixels were decoded",
+        "line_sha256": "48fb532a97f25e3941bde23b75268ec8cbd080efb3e2f326c0b84b42b2976136"
+      },
+      "disposition": "relevant_subset_retained",
+      "assessment": "Sample/corpus evidence remains metadata-only and bounded. The specific discovery missing-chunks-to-zero question and one-chunk-per-plane claim were not delivered; new fill and geometry checks are direct comparison elaboration."
+    }
+  ],
+  "proposal_groups": [
+    {
+      "group": "R1",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 26,
+        "match": "R1 —",
+        "line_sha256": "8e78915805a97f2708dc8a94abc986c2923918c54bde86e963ce354e0b6635aa"
+      },
+      "classification": "concrete_repair_proposal",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "R2",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 46,
+        "match": "R2 —",
+        "line_sha256": "64b070d15bac8e5ebc4bc96b1c7d40805f006d783162720032c2da825dc823ee"
+      },
+      "classification": "concrete_repair_proposal",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "R3",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 66,
+        "match": "R3 —",
+        "line_sha256": "2293efedb55bfd9b1d8f451ac5fa70e59820ed89d7dd4f77c1d2b6b4f71a1a03"
+      },
+      "classification": "concrete_repair_proposal",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "R4",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 83,
+        "match": "R4 —",
+        "line_sha256": "cd129395a4f391dcb40a9840bf714f005de87dafce49ba29acee60457bd2de0b"
+      },
+      "classification": "concrete_repair_proposal",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "R5",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 105,
+        "match": "R5 —",
+        "line_sha256": "d897a47c799d1365a950b9d5aff920e74b837c8ced626b20c3999b351512e13d"
+      },
+      "classification": "concrete_repair_proposal",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "P1",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 128,
+        "match": "P1 —",
+        "line_sha256": "ba5eb948b899c98da5341fbf53b06b11cdcc2236036c27d0f8170e686df156dc"
+      },
+      "classification": "product_proposal_requiring_approval",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "P2",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 142,
+        "match": "P2 —",
+        "line_sha256": "a21a84aece39aa9cd9c4dafe31a6837351ef0b641273a249af78114a1c711555"
+      },
+      "classification": "product_proposal_requiring_approval",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "P3",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 156,
+        "match": "P3 —",
+        "line_sha256": "2c6f3037dbc52002548518851b77479c7af417f36cf284ac8b3b91baf4856663"
+      },
+      "classification": "product_proposal_requiring_approval",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    },
+    {
+      "group": "P4",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0008-compare/workspace/notes.md",
+        "sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "line": 170,
+        "match": "P4 —",
+        "line_sha256": "2ea31d5490f07314db3cea31d36cd8761b25fcd9aa42b4b8622d081002753f5d"
+      },
+      "classification": "product_proposal_requiring_approval",
+      "approval": "none_inferred",
+      "counting_note": "One prose group; P4 has A/B alternatives. Not an independent finding count."
+    }
+  ],
+  "counts": {
+    "concrete_repair_groups": 5,
+    "held_proposal_groups": 4,
+    "total_prose_groups": 9,
+    "independent_findings_count": null,
+    "selected_correction_groups_retained": 11,
+    "selected_j4_mechanisms_retained": 8
+  },
+  "aggregate_eight_control_score": null,
+  "comparison_union_score": null,
+  "omission_audit": {
+    "selected_11_corrections_and_8_new_mechanisms": "No material selected-input loss established. All seven child directions survive.",
+    "precision_limits": [
+      "Root is adjudicating nested-label default-source semantics (entirely absent image-label/source versus source={} with omitted image). R3 nesting fallback is not given unqualified full credit or called a proven error here.",
+      "R1/R5 choose collection/plate and bounded generic-walker breadth as concrete repair. Root is separately reviewing product-choice versus required format-correctness scope; no approval is inferred.",
+      "No literal label-value/property-key fixture; exact categorical lookup strengthened but whole-stage full credit not assigned here.",
+      "No explicit reverse-codec/endian/transpose acceptance discriminator. The later sibling transpose fix evidence was not delivered to J0008.",
+      "One sample metadata re-fetch succeeds; other_samples re-fetch failed integrity. Seven-dataset inherited count remains retained but independently unverified, not discarded as false."
+    ],
+    "not_claimed": [
+      "No runtime success, decoded fixture, implemented feature, Plan edit, product approval or whole-comparison score.",
+      "No exhaustive independent re-verification of every source receipt or inherited issue-history claim."
+    ]
+  },
+  "evidence_origin": "Survival assessed in direct comparison prose. Stronger contracts/fixtures in output are direct worker elaboration from its allowed primary-source work or restated original parent content; no evaluator assistance was sent to native work. Evaluator reports here only select and map observations.",
+  "outcome": "Selected corrected facts and useful mechanisms survive; concrete owner/consumer repairs are reviewable and optional scope is visibly held. No material new false statement established by this bounded lineage review.",
+  "constraints": [
+    "Only comparison-batch1-lineage.md/json written in evaluator area.",
+    "No native-worker feedback, Plans, workflow, collector, frozen input, locks or D5 changes."
+  ],
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch1-lineage.json",
+    "source_sha256": "9789abe65bc30d9015bb72acc22bc66a179141483568ff280d86695f41536a8a",
+    "source_bytes": 70264,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "all_job_input_hashes_match": true,
+  "assigned_ids": [
+    "L-d3fb5681dad7",
+    "L-b8b6f684e168",
+    "L-8e152cf58e36",
+    "L-53478306aa6a",
+    "L-bb5dcafa9770",
+    "L-e22a81d34a4c",
+    "L-cf0ac7e43301",
+    "L-4b3f581214b5",
+    "L-eef00830c219",
+    "L-aadd42cb09c9",
+    "L-48b8e76e269e",
+    "L-f45bf9ee551d"
+  ],
+  "attached_receipt_present": true,
+  "attached_sha256": "070b56f65cb413c17e64ac452c106ab0c3daed1a028b75b1d20f78d281019825",
+  "configured_effort": "xhigh",
+  "configured_model": "gpt-6-astra",
+  "configured_service_tier": "default",
+  "delivery_ids": [
+    "L-48b8e76e269e",
+    "L-4b3f581214b5",
+    "L-53478306aa6a",
+    "L-8e152cf58e36",
+    "L-aadd42cb09c9",
+    "L-b8b6f684e168",
+    "L-bb5dcafa9770",
+    "L-cf0ac7e43301",
+    "L-d3fb5681dad7",
+    "L-e22a81d34a4c",
+    "L-eef00830c219",
+    "L-f45bf9ee551d"
+  ],
+  "delivery_sha256": "a0f3f53db72070ab192e492efe8cf8e9d6e2b8cd3eaa8f5fe59a9032e8207b68",
+  "job_id": "J0009-compare",
+  "job_spec_sha256": "968734576d4e3634bd91c8da3ae633908f3e695b68a6f944f7e3a7c2b4ff1f39",
+  "native_goal_status": "complete",
+  "native_status": "complete",
+  "native_summary_sha256": "d562b959e14f9218a627974754f8b5560f9bdf69e564ac40a66ebf86a0ecffcf",
+  "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+  "observed_at": "2026-09-09T10:56:58.060016+00:00",
+  "outcome": {
+    "elapsed_seconds": 1764.069,
+    "error": null,
+    "finished_at": "2026-09-09T10:54:39.280052+00:00",
+    "notes_present": true,
+    "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+    "runtime_status": "complete",
+    "semantic_quality": "not judged by scheduler"
+  },
+  "outcome_delivery_notes_hashes_match": true,
+  "outcome_sha256": "c99c930b0ffe6e09bf9ce30125eef4da988589258ac58690cc23ceffc8569a35",
+  "phase": "compare",
+  "process_exit_code": 0,
+  "schema": "d4.native_review_completion.v1",
+  "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+  "timeout_seconds": 2400,
+  "turns_completed": [
+    {
+      "error": null,
+      "status": "completed"
+    }
+  ],
+  "turns_started": 1
+}

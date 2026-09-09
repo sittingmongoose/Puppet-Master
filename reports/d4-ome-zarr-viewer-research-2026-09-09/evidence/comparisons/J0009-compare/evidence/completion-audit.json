@@ -1,0 +1,117 @@
+{
+  "scope": "Comparison completion only; no claim of implemented viewer behavior, upstream-code execution, runtime decoding, performance or user approval.",
+  "assigned_leads": [
+    {
+      "lead": "L-d3fb5681dad7",
+      "disposition": "already covered",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 323
+    },
+    {
+      "lead": "L-b8b6f684e168",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 490
+    },
+    {
+      "lead": "L-8e152cf58e36",
+      "disposition": "product proposal requiring approval",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 738
+    },
+    {
+      "lead": "L-53478306aa6a",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 558
+    },
+    {
+      "lead": "L-bb5dcafa9770",
+      "disposition": "product proposal requiring approval",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 911
+    },
+    {
+      "lead": "L-e22a81d34a4c",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 728
+    },
+    {
+      "lead": "L-cf0ac7e43301",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 831
+    },
+    {
+      "lead": "L-4b3f581214b5",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 1161
+    },
+    {
+      "lead": "L-eef00830c219",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 747
+    },
+    {
+      "lead": "L-aadd42cb09c9",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 768
+    },
+    {
+      "lead": "L-48b8e76e269e",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 1203
+    },
+    {
+      "lead": "L-f45bf9ee551d",
+      "disposition": "concrete repair",
+      "owner_and_consumer_citations_present": true,
+      "evidence_citations_present": true,
+      "word_count": 1279
+    }
+  ],
+  "counts": {
+    "already covered": 1,
+    "concrete repair": 9,
+    "product proposal requiring approval": 2
+  },
+  "plan_unchanged": {
+    "initial_receipt": "C-S00002",
+    "final_receipt": "C-S00017",
+    "path": "Plans/Viewer.md",
+    "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "bytes": 1498
+  },
+  "primary_sources_with_checked_excerpts": 95,
+  "primary_excerpt_lines_verified": 4105,
+  "hash_verified_metadata_records": 13,
+  "data_only_schema_probes": 13,
+  "local_links_and_anchors": "all valid",
+  "retained_child_directions": 15,
+  "new_retained_direction": "binary transform-vector schema/API compatibility, explicitly uncertain and unexecuted",
+  "manual_scope_review": {
+    "handoff_and_tool_help_read": true,
+    "selected_corpus_only": true,
+    "all_repairs_have_behavior_and_acceptance_checks": true,
+    "proposals_have_benefits_dependencies_tradeoffs_and_no_assumed_approval": true,
+    "primary_conflicts_reconciled_and_runtime_uncertainties_preserved": true,
+    "plans_not_edited": true
+  },
+  "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f"
+}

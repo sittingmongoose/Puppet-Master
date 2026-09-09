@@ -1,0 +1,1922 @@
+{
+  "schema": "d4.derivative_provenance.v2",
+  "created_at_utc": "2026-09-09T12:02:51.988787+00:00",
+  "status": "final_native_union_compiled_for_independent_derivative_review",
+  "frozen_baseline_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+  "amended_fixture_sha256": "aef6f3d10e0680344c7fd91a56fa0ad6d768622e70e3f27fa88d71cb2c6f232f",
+  "groups": [
+    {
+      "id": "CR01",
+      "heading": "Version, node role and image identity",
+      "fixture_lines": [
+        13,
+        20
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C01"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-4b3f581214b5",
+          "notes_lines": [
+            117,
+            120
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-88c0687248a2",
+          "notes_lines": [
+            109,
+            110
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/classes/image.py#L482",
+        "https://github.com/ome/ngff/issues/200",
+        "https://github.com/ome/ngff/issues/205"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            34,
+            36,
+            40,
+            42
+          ],
+          "exact_line_locators": [
+            {
+              "line": 34,
+              "line_sha256": "68100b96d1e91e0fe33573848ec7ba023b13299a701dd8fe8c2e31eef467ccb8"
+            },
+            {
+              "line": 36,
+              "line_sha256": "3e078c73561117275c7c68cbd3c8553af0804b01b015c3b16614445d5c47d675"
+            },
+            {
+              "line": 40,
+              "line_sha256": "5dee3440dd01bf171118d37a3b986fd0cd82f29759002be4db469fb13c987661"
+            },
+            {
+              "line": 42,
+              "line_sha256": "1ddd1cae9c6f7dff69469a7d6ee3b314f79236b3dba534829bd3b553a1abd264"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            31,
+            67,
+            237,
+            239,
+            245
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 31,
+              "line_sha256": "0a1f1afdeb42b544b337b695094c58323440458f9eac3e02740c61fb6748f28a"
+            },
+            {
+              "line": 67,
+              "line_sha256": "3d9c26b898a08a248dabdd928c48715f477339d814ae8dd0656d7e307f6f2df5"
+            },
+            {
+              "line": 237,
+              "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6"
+            },
+            {
+              "line": 239,
+              "line_sha256": "899804a482c834924ce0c85f820d84ec792c512db6b7c45bc9c929eee88d0dd4"
+            },
+            {
+              "line": 245,
+              "line_sha256": "28028046b9bfdb7dc356fd8b3a5210568e0fb062ae3d5882cb4b7fb08b6fc0eb"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            88,
+            90,
+            92,
+            199,
+            205
+          ],
+          "exact_line_locators": [
+            {
+              "line": 88,
+              "line_sha256": "8aa615a875bb36e79945a3744f624e0ec9a44079c94e5970d9ae857a138862d3"
+            },
+            {
+              "line": 90,
+              "line_sha256": "3ebc8c445696af027bb4d1d42546585a47920fdd82af17dad9ec7b7ecc3374dd"
+            },
+            {
+              "line": 92,
+              "line_sha256": "9f62616399553909254b6ceb9593d0bd156c6b0ca1b1fd4bd9a8c2f25e115aa7"
+            },
+            {
+              "line": 199,
+              "line_sha256": "656e210da7c034bd918fe965c8372a09ecff3f792a421effd74246b77977da7a"
+            },
+            {
+              "line": 205,
+              "line_sha256": "7e01f3ab554f4ec544b51cb449cdc22ff7fceeb7142d08b326c35d00823f6b3f"
+            }
+          ],
+          "contribution": "J10 independently states version/role admission and contextual image identity. Container breadth and its proposed writer codec profile remain held; no mandatory HCS/bf2raw admission is copied."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            18,
+            20
+          ],
+          "exact_line_locators": [
+            {
+              "line": 18,
+              "line_sha256": "81fe5ff97916dc73e708b9e7ad50cf7c9f5a9e5fff09e23ac0fa42e1de9a2903"
+            },
+            {
+              "line": 20,
+              "line_sha256": "0ccd94e51dc89ee1a1d9e9902cfe33f48bf5f5875ba29914b3b1da7f13871886"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "Native reports support version/role admission and contextual image identity. J9 supplies owner-plus-selected-entry identity and shared arrays with differing transforms. J11 preserves discovery/item identity. Container admission breadth and an entry chooser remain held.",
+      "evaluator_authorship_and_scope_review": "Evaluator narrows mandatory plate/bf2raw/recursive-root claims to an explicitly admitted support envelope and withholds chooser/exhaustive multi-entry policy."
+    },
+    {
+      "id": "CR02",
+      "heading": "Axis identity and selection",
+      "fixture_lines": [
+        21,
+        26
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C02"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-aadd42cb09c9",
+          "notes_lines": [
+            162,
+            163
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-580ffdee048c",
+          "notes_lines": [
+            132,
+            133
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/google/tensorstore/blob/v0.1.78/tensorstore/index_space/alignment.h#L79"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            54,
+            56,
+            60,
+            64
+          ],
+          "exact_line_locators": [
+            {
+              "line": 54,
+              "line_sha256": "49794f7a669ace7ee7490cbc049cc67e4edfe8415ce50d11561c4c9632a3e93a"
+            },
+            {
+              "line": 56,
+              "line_sha256": "933a3fa76559b41f2737d18e8c47c3140339abf5606ed9d73b58877d9eb42b76"
+            },
+            {
+              "line": 60,
+              "line_sha256": "bd4c9dd5755a9da4e30928f521f5407de9eaaf0fdc8a75453efb98fbc503b495"
+            },
+            {
+              "line": 64,
+              "line_sha256": "2d2eb2d64c6bd482380d9dd7279f70b374bfcf4dce075f4fd16ffd083ddb1cff"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            201,
+            203,
+            211,
+            239
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 201,
+              "line_sha256": "f06daa2c033086b0400584d67ef767e558bf005adbbc037550258da25511026b"
+            },
+            {
+              "line": 203,
+              "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631"
+            },
+            {
+              "line": 211,
+              "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555"
+            },
+            {
+              "line": 239,
+              "line_sha256": "899804a482c834924ce0c85f820d84ec792c512db6b7c45bc9c929eee88d0dd4"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            112,
+            228,
+            242
+          ],
+          "exact_line_locators": [
+            {
+              "line": 112,
+              "line_sha256": "330b0ee825e86cec06bcdf34851e620e1876b450c718c2bf40f2e4242327b7ab"
+            },
+            {
+              "line": 228,
+              "line_sha256": "465eb3c8bd9e872411715c791274c2e59dbf7c908a06afc62649100db28ccb43"
+            },
+            {
+              "line": 242,
+              "line_sha256": "e46535dd18260df7c01ea467b9a75ab11c06d60aa5f7591e18ec85dc9fa8c375"
+            }
+          ],
+          "contribution": "J10 independently provides metadata-axis/rank, absent-T/C and singleton tests. The specific absent-versus-singleton navigation/control gap remained evaluator completion in that single-report assessment; the retrospective final native union is adjudicated in this group."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            26,
+            28,
+            30,
+            32
+          ],
+          "exact_line_locators": [
+            {
+              "line": 26,
+              "line_sha256": "ac1b9965033bfec2b32135e199bf8d56bd033bf664a25c24c6ac6e8d1baa58a6"
+            },
+            {
+              "line": 28,
+              "line_sha256": "efa642b12f960d65fd57324317ae1fd21b18bcc5fe8fac16d5efdd99cc8bd7a8"
+            },
+            {
+              "line": 30,
+              "line_sha256": "86aedf81327df18efb06aec6ffadc112319d3bf6b484c07740f93b2b6666ab94"
+            },
+            {
+              "line": 32,
+              "line_sha256": "01b41ac4fc895583ddaf692abb6d957c6a54fc5f926fde85c5317de9f48df7ee"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "The final native union binds controls/slices to metadata and rejects invented absent axes (J8:54/60), tests singleton channel/time cases (J9:211), and preserves shape/index/plane identity without absent-axis shifting (J11:28/30/32). Full C02 is a retrospective union inference, not a claim that each report independently closed it.",
+      "evaluator_authorship_and_scope_review": "Evaluator consolidates the native union into an explicit absent-versus-present-length-one acceptance sentence. The exact sentence is evaluator-authored; the equivalent mechanism earns native union credit."
+    },
+    {
+      "id": "CR03",
+      "heading": "Pyramid paths and geometry",
+      "fixture_lines": [
+        27,
+        32
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C03"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-cf0ac7e43301",
+          "notes_lines": [
+            102,
+            108
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-dce78e52fdae",
+          "notes_lines": [
+            99
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/napari-ome-zarr/blob/v0.10.0/napari_ome_zarr/ome_zarr_reader.py#L266",
+        "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/command.cpp#L662"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            34,
+            61
+          ],
+          "exact_line_locators": [
+            {
+              "line": 34,
+              "line_sha256": "68100b96d1e91e0fe33573848ec7ba023b13299a701dd8fe8c2e31eef467ccb8"
+            },
+            {
+              "line": 61,
+              "line_sha256": "5410ac17ec998340804a0abd4ab040335c9d1e85358728e0f527165857c110b5"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            203,
+            211
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 203,
+              "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631"
+            },
+            {
+              "line": 211,
+              "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            20,
+            25,
+            26,
+            44,
+            48,
+            208,
+            211
+          ],
+          "exact_line_locators": [
+            {
+              "line": 20,
+              "line_sha256": "c04dee7b02a5f1d8c5076e6fcb1243693d556c1f1393c4af7d33a7c5d3c8d726"
+            },
+            {
+              "line": 25,
+              "line_sha256": "41a8a49b5ed34af8d812cdd5011adf84f16abb13073706b8a661f1397a947be7"
+            },
+            {
+              "line": 26,
+              "line_sha256": "eaffa2e8fa704d2e5962fa459ae5ef3c04777e75cfee6f0b2ad9ff8763af05bb"
+            },
+            {
+              "line": 44,
+              "line_sha256": "de8a67ca77f5be31472f478b6c6ba612af6bdc131ce1cac8bd72a4c1d8b41f3e"
+            },
+            {
+              "line": 48,
+              "line_sha256": "96f972426952ed1049ac671a016f57cf2881f44c22f20bb9fae60490608ba171"
+            },
+            {
+              "line": 208,
+              "line_sha256": "240d2a97476d2c586d79cb3813ccb788dc1cf728d133592ece52c8d9f345a14f"
+            },
+            {
+              "line": 211,
+              "line_sha256": "6a597a465aeeda024869232773b457628c2840b51cd5e75be84a078cb1c20cdd"
+            }
+          ],
+          "contribution": "J10 independently tests nonnumeric/nested paths, irregular levels, missing links and physical-view continuity; no extra picker or container breadth is adopted."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            18,
+            20,
+            28,
+            54,
+            56,
+            131
+          ],
+          "exact_line_locators": [
+            {
+              "line": 18,
+              "line_sha256": "81fe5ff97916dc73e708b9e7ad50cf7c9f5a9e5fff09e23ac0fa42e1de9a2903"
+            },
+            {
+              "line": 20,
+              "line_sha256": "0ccd94e51dc89ee1a1d9e9902cfe33f48bf5f5875ba29914b3b1da7f13871886"
+            },
+            {
+              "line": 28,
+              "line_sha256": "efa642b12f960d65fd57324317ae1fd21b18bcc5fe8fac16d5efdd99cc8bd7a8"
+            },
+            {
+              "line": 54,
+              "line_sha256": "d8d3ed5a7e0c05496d79741ff580bd24d8ac33a3e5661962f9cbe48f842f2844"
+            },
+            {
+              "line": 56,
+              "line_sha256": "a5fc2df8189e10ed97b23db2d45789768f59a9d0be48563967c36542b5294b2a"
+            },
+            {
+              "line": 131,
+              "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "Native reports supply declared arbitrary/nested level paths, irregular per-level geometry, missing-level checks and physical-view continuity. These do not select a manual level picker.",
+      "evaluator_authorship_and_scope_review": "Evaluator consolidates repeated path/calibration checks and keeps additional level controls out."
+    },
+    {
+      "id": "CR04",
+      "heading": "Coordinates and per-axis units",
+      "fixture_lines": [
+        33,
+        38
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C04"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0004-reconcile",
+          "lead": "L-80240e08616c",
+          "notes_lines": [
+            49
+          ]
+        },
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-aadd42cb09c9",
+          "notes_lines": [
+            163,
+            164,
+            170
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/napari-ome-zarr/blob/v0.10.0/napari_ome_zarr/ome_zarr_reader.py#L266",
+        "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp#L286"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            54,
+            56,
+            61,
+            62,
+            63,
+            64
+          ],
+          "exact_line_locators": [
+            {
+              "line": 54,
+              "line_sha256": "49794f7a669ace7ee7490cbc049cc67e4edfe8415ce50d11561c4c9632a3e93a"
+            },
+            {
+              "line": 56,
+              "line_sha256": "933a3fa76559b41f2737d18e8c47c3140339abf5606ed9d73b58877d9eb42b76"
+            },
+            {
+              "line": 61,
+              "line_sha256": "5410ac17ec998340804a0abd4ab040335c9d1e85358728e0f527165857c110b5"
+            },
+            {
+              "line": 62,
+              "line_sha256": "a263caeb67621c30925b2835dc43e66f0e595a17869d468fc2534f98cf147320"
+            },
+            {
+              "line": 63,
+              "line_sha256": "c9354e8dbae0681b0d94410b0cf7b1301b1d9dc64b37d6ff7ed75b49231e6bb3"
+            },
+            {
+              "line": 64,
+              "line_sha256": "2d2eb2d64c6bd482380d9dd7279f70b374bfcf4dce075f4fd16ffd083ddb1cff"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            203,
+            205,
+            211
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 203,
+              "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631"
+            },
+            {
+              "line": 205,
+              "line_sha256": "4a9d708edc48bd00040e09a3adc0baae3c7da15ad182c6493a47a0b1aafa2630"
+            },
+            {
+              "line": 211,
+              "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            20,
+            24,
+            25,
+            26,
+            112,
+            116
+          ],
+          "exact_line_locators": [
+            {
+              "line": 20,
+              "line_sha256": "c04dee7b02a5f1d8c5076e6fcb1243693d556c1f1393c4af7d33a7c5d3c8d726"
+            },
+            {
+              "line": 24,
+              "line_sha256": "20498a7136382ce351847b703815a4f48074b1734efbd63b6f4d0ae5824153ae"
+            },
+            {
+              "line": 25,
+              "line_sha256": "41a8a49b5ed34af8d812cdd5011adf84f16abb13073706b8a661f1397a947be7"
+            },
+            {
+              "line": 26,
+              "line_sha256": "eaffa2e8fa704d2e5962fa459ae5ef3c04777e75cfee6f0b2ad9ff8763af05bb"
+            },
+            {
+              "line": 112,
+              "line_sha256": "330b0ee825e86cec06bcdf34851e620e1876b450c718c2bf40f2e4242327b7ab"
+            },
+            {
+              "line": 116,
+              "line_sha256": "310eb17e26a19ac8dad4fb4435c601650144f4563611b3c6bbb4e08dbaa02794"
+            }
+          ],
+          "contribution": "J10 independently provides the distinct numeric composition result 62 and changing geometry/unit checks. J8 remains the author of the numerical 49 and centisecond examples used in this derivative."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            26,
+            28,
+            30,
+            199
+          ],
+          "exact_line_locators": [
+            {
+              "line": 26,
+              "line_sha256": "ac1b9965033bfec2b32135e199bf8d56bd033bf664a25c24c6ac6e8d1baa58a6"
+            },
+            {
+              "line": 28,
+              "line_sha256": "efa642b12f960d65fd57324317ae1fd21b18bcc5fe8fac16d5efdd99cc8bd7a8"
+            },
+            {
+              "line": 30,
+              "line_sha256": "86aedf81327df18efb06aec6ffadc112319d3bf6b484c07740f93b2b6666ab94"
+            },
+            {
+              "line": 199,
+              "line_sha256": "8a3a7e5eec676aca5060527a2f373498bca607c4b32920be9f49cf7788d6c089"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "J8 supplies the numerical 49 and centisecond examples used here. J10 supplies an independent composition example. J11:199 supplies the negative-time -5/-3 acceptance and source-supported presentation-clamp concern; no end-to-end timestamp bug was reproduced.",
+      "evaluator_authorship_and_scope_review": "Evaluator combines native numerical cases, units and support qualifications; negative-time and 49/centisecond examples remain participant-authored."
+    },
+    {
+      "id": "CR05",
+      "heading": "Associated labels and source resolution",
+      "fixture_lines": [
+        39,
+        46
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C05"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-cf0ac7e43301",
+          "notes_lines": [
+            103
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-88c0687248a2",
+          "notes_lines": [
+            112,
+            117
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/napari-ome-zarr/blob/v0.10.0/napari_ome_zarr/ome_zarr_reader.py#L566"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            70,
+            74,
+            78,
+            79,
+            81
+          ],
+          "exact_line_locators": [
+            {
+              "line": 70,
+              "line_sha256": "bf199efcf826ca507c200cec79029307981deebd31d2264740f22a17002c8472"
+            },
+            {
+              "line": 74,
+              "line_sha256": "17a8ca7c6edb74949e9f4eb4c2a62e801561665326370925d6954419072b9ce9"
+            },
+            {
+              "line": 78,
+              "line_sha256": "21a19f0946d415bf357a574b29836b677d43217e69bb0e9b1d50e66d72e056bc"
+            },
+            {
+              "line": 79,
+              "line_sha256": "192500226ae40b9461f008211fab59a9918aaacaf190b7b085f9dab8a9d70181"
+            },
+            {
+              "line": 81,
+              "line_sha256": "d56c4f770fc116c59eadd32fe9dbadfa2e56d55fba87061911627277850ac7a0"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            134,
+            138,
+            207,
+            237,
+            239
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 134,
+              "line_sha256": "8fb2ba5ed0611661d7f00b56308effb2662f8214a6f231a4616671bd625a94e7"
+            },
+            {
+              "line": 138,
+              "line_sha256": "aeafbab4d5bcd05f4b244f01e723623660d696191a3cba27770664bd3979c403"
+            },
+            {
+              "line": 207,
+              "line_sha256": "bf9318fa95dd95679531953970af30199c88fceb0c8203ec9928c857dd52a4e5"
+            },
+            {
+              "line": 237,
+              "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6"
+            },
+            {
+              "line": 239,
+              "line_sha256": "899804a482c834924ce0c85f820d84ec792c512db6b7c45bc9c929eee88d0dd4"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            122,
+            208,
+            209,
+            211
+          ],
+          "exact_line_locators": [
+            {
+              "line": 122,
+              "line_sha256": "4200e436d20490909c42f4461b030a343d276b5412ecbecc6d065559f37f964c"
+            },
+            {
+              "line": 208,
+              "line_sha256": "240d2a97476d2c586d79cb3813ccb788dc1cf728d133592ece52c8d9f345a14f"
+            },
+            {
+              "line": 209,
+              "line_sha256": "534a8d0d80382b257d33b876265514afeecb93dcc6aee05239d1ab8a78a36542"
+            },
+            {
+              "line": 211,
+              "line_sha256": "6a597a465aeeda024869232773b457628c2840b51cd5e75be84a078cb1c20cdd"
+            }
+          ],
+          "contribution": "J10 independently discusses nested/default ambiguity and associated-label checks, but does not distinguish every absent-enclosing-object versus source:{} case. The source-object policy adjudication remains explicitly evaluator assistance."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            18,
+            38,
+            40,
+            42,
+            131
+          ],
+          "exact_line_locators": [
+            {
+              "line": 18,
+              "line_sha256": "81fe5ff97916dc73e708b9e7ad50cf7c9f5a9e5fff09e23ac0fa42e1de9a2903"
+            },
+            {
+              "line": 38,
+              "line_sha256": "6ebc091c976a3d0a2ca9362628c9f1ef49fbaf4a8fc77cf6ba521c0ce6da3b05"
+            },
+            {
+              "line": 40,
+              "line_sha256": "f4559e2826d906c465572d41ff1e7f044db73908fc1b9f781a303104ccd6e288"
+            },
+            {
+              "line": 42,
+              "line_sha256": "80d7da73f78b11dc01c37317ea2bdabf8bb7d92a127d8fcbc98845553e818eb9"
+            },
+            {
+              "line": 131,
+              "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "Native reports support declared registry/source association, nested labels, level/transform validation and truthful unavailable overlays. Explicit source-object default semantics still need the independently adjudicated absence-versus-empty-object distinction.",
+      "evaluator_authorship_and_scope_review": "Independent source adjudication distinguishes missing image-label/source from present source:{} and its ../../ default. Evaluator requires literal paths, diagnostic handling of unresolved association and separately adopted recovery policy; no silent path repair."
+    },
+    {
+      "id": "CR06",
+      "heading": "Exact categorical identity",
+      "fixture_lines": [
+        47,
+        52
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C06"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-eef00830c219",
+          "notes_lines": [
+            150
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-15cca5b8e4f1",
+          "notes_lines": [
+            74
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-15cca5b8e4f1",
+          "child_notes_path": "workspace/leads/aggregate-label-scale-and-intent.md",
+          "child_notes_lines": [
+            6,
+            10,
+            12
+          ],
+          "evidence_status": "transported participant output; source observations and proposed checks, not measured runtime results"
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/0/0/zarr.json"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            74,
+            80,
+            81
+          ],
+          "exact_line_locators": [
+            {
+              "line": 74,
+              "line_sha256": "17a8ca7c6edb74949e9f4eb4c2a62e801561665326370925d6954419072b9ce9"
+            },
+            {
+              "line": 80,
+              "line_sha256": "a9888d2a48cba995bfddd3195effb6f3fa4d1b950b5ba1d80720131756292544"
+            },
+            {
+              "line": 81,
+              "line_sha256": "d56c4f770fc116c59eadd32fe9dbadfa2e56d55fba87061911627277850ac7a0"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            140,
+            190,
+            192
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 140,
+              "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893"
+            },
+            {
+              "line": 190,
+              "line_sha256": "4050f4e5fccb306f1af19953cba746803412b5e8d056ce0d3ee65e1de4a1ecde"
+            },
+            {
+              "line": 192,
+              "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            104,
+            106,
+            108
+          ],
+          "exact_line_locators": [
+            {
+              "line": 104,
+              "line_sha256": "07374c871b95e005d0d550903b4460be0a8269812920f9178a7ee9b2cde8f2cc"
+            },
+            {
+              "line": 106,
+              "line_sha256": "e80ea1643228fcb3bf458e6b8706d48bfb06ddf94012ea9b3dbf8bf88d8c1091"
+            },
+            {
+              "line": 108,
+              "line_sha256": "f8179373e1bf8aa3a630afcabf1963c58fcdc983a4684e64151001a2cc2eb4ae"
+            }
+          ],
+          "contribution": "J10 independently connects exact signed/64-bit IDs to sparse color lookup and metadata identity, adjacent-above-2^53 checks and categorical sampling. Equivalent complete mechanism reasoning can receive native credit without reproducing the evaluator shuffled-entry example; the exact shuffled-entry wording in this derivative remains evaluator-authored."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            38,
+            40,
+            42
+          ],
+          "exact_line_locators": [
+            {
+              "line": 38,
+              "line_sha256": "6ebc091c976a3d0a2ca9362628c9f1ef49fbaf4a8fc77cf6ba521c0ce6da3b05"
+            },
+            {
+              "line": 40,
+              "line_sha256": "f4559e2826d906c465572d41ff1e7f044db73908fc1b9f781a303104ccd6e288"
+            },
+            {
+              "line": 42,
+              "line_sha256": "80d7da73f78b11dc01c37317ea2bdabf8bb7d92a127d8fcbc98845553e818eb9"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "J6 supplies sparse-allocation/discrete-sampling mechanisms. J8/J9 preserve high/signed categorical IDs. J10 couples exact signed/uint64 IDs with sparse color/metadata lookup, adjacent IDs above 2^53 and categorical sampling; J11 preserves label-value identity. This earns native mechanism credit without requiring the evaluator exact shuffled-entry probe.",
+      "evaluator_authorship_and_scope_review": "Exact shuffled label-value/color-entry test wording is evaluator-authored. Native equivalent exact-ID lookup/sampling and sparse-allocation mechanisms retain full attribution."
+    },
+    {
+      "id": "CR07",
+      "heading": "Decoder and dependency compatibility",
+      "fixture_lines": [
+        53,
+        58
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C07"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-580ffdee048c",
+          "notes_lines": [
+            130,
+            131
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html",
+        "https://github.com/google/tensorstore/commit/0ad6ce118cce4af052a8ab246da577554c0a72e0"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            113,
+            119,
+            120,
+            121,
+            132,
+            200
+          ],
+          "exact_line_locators": [
+            {
+              "line": 113,
+              "line_sha256": "b6f11cfd29a2147356a9d03cce775bd86903fad98867e1692f621b4935f01a4e"
+            },
+            {
+              "line": 119,
+              "line_sha256": "d8d95528bb7c140299b0dbeb6552ccf7850e306e0f704378ca4b68271a851d95"
+            },
+            {
+              "line": 120,
+              "line_sha256": "a0ddadbe4cdb17a8293159bb7039988c5bf9751bb214135655ab2713cd7bc665"
+            },
+            {
+              "line": 121,
+              "line_sha256": "fcaed747e9eedaca06f600c630f32533a4ea439ed8fc01a51f7bb9182912e91f"
+            },
+            {
+              "line": 132,
+              "line_sha256": "5365dbb59d32e99d762932b4966181bdd4f4dd27d3df3e861b33a9e021bf0e1c"
+            },
+            {
+              "line": 200,
+              "line_sha256": "8a23db2e615167f29d1fab44cc86080e25e9bdf362ef4f46d5bf16dab0923f70"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            149,
+            186,
+            192,
+            205
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 149,
+              "line_sha256": "a0ac743ae2637827f68901d12a2ba46bb16cb39ed93c0a6ca42b8c341082a31e"
+            },
+            {
+              "line": 186,
+              "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446"
+            },
+            {
+              "line": 192,
+              "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985"
+            },
+            {
+              "line": 205,
+              "line_sha256": "4a9d708edc48bd00040e09a3adc0baae3c7da15ad182c6493a47a0b1aafa2630"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            46,
+            48,
+            224,
+            226,
+            242
+          ],
+          "exact_line_locators": [
+            {
+              "line": 46,
+              "line_sha256": "9cb63085f2027f2a3f95a30b5bd941cd2fdee3abc5ad922406a3ecbcd1410526"
+            },
+            {
+              "line": 48,
+              "line_sha256": "96f972426952ed1049ac671a016f57cf2881f44c22f20bb9fae60490608ba171"
+            },
+            {
+              "line": 224,
+              "line_sha256": "60866aea326e72442f8ca896929486a9db90c9fbbc1133eee07a2676e762821e"
+            },
+            {
+              "line": 226,
+              "line_sha256": "ae328f95768dda997de9b28ba37bdb2df2edb74c4b378745f65118135b47b6ba"
+            },
+            {
+              "line": 242,
+              "line_sha256": "e46535dd18260df7c01ea467b9a75ab11c06d60aa5f7591e18ec85dc9fa8c375"
+            }
+          ],
+          "contribution": "J10 independently proposes known-value full-chain acceptance and the non-self-inverse cyclic-transpose-plus-sharding version discriminator. J9 retains native known-value big-endian acceptance credit. The derivative explicitly states reverse decoding and combines these cases; that exact synthesis is evaluator-authored, not a reason to deny equivalent native mechanism coverage."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            70,
+            72,
+            76,
+            78,
+            131
+          ],
+          "exact_line_locators": [
+            {
+              "line": 70,
+              "line_sha256": "c3e36dc8b0eaf728ac02737373da485c9946bf4f5c1692f0fba7c523ccd15097"
+            },
+            {
+              "line": 72,
+              "line_sha256": "fc904181404270ccd93e9220caabdec286b8bfd851e41c6f894eaf1b170869de"
+            },
+            {
+              "line": 76,
+              "line_sha256": "fabc7b0b204f243d1ea363385266acb5d7cb8a6e7d003aedc3ce38a17ec116e1"
+            },
+            {
+              "line": 78,
+              "line_sha256": "4993a966d55143ae6fdbba9a01b33f5d59eaaa0f328ac81263d11494098893bc"
+            },
+            {
+              "line": 131,
+              "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "J6/J10 supply the post-pin non-self-inverse cyclic transpose-plus-sharding read-fix discriminator. J9:192 supplies native known-value big-endian checks. J10 supplies known-value full-chain acceptance/support boundaries. J11 preserves selected-version/source-versus-runtime limits; its issue-only caveat does not supersede the stronger earlier fix evidence.",
+      "evaluator_authorship_and_scope_review": "Evaluator explicitly writes reverse decoding order and combines native endian/compound-chain/cyclic-transpose cases. Exact combined wording is evaluator-authored; equivalent native mechanism coverage is full."
+    },
+    {
+      "id": "CR08",
+      "heading": "Fill, failed reads and source immutability",
+      "fixture_lines": [
+        59,
+        64
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [
+        "OME05-C08"
+      ],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-53478306aa6a",
+          "notes_lines": [
+            56
+          ]
+        },
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-f45bf9ee551d",
+          "notes_lines": [
+            207,
+            209
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-580ffdee048c",
+          "notes_lines": [
+            134
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html",
+        "https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/utils.py#L265",
+        "https://github.com/google/tensorstore/blob/v0.1.78/tensorstore/tensorstore.h#L638"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            91,
+            99,
+            100,
+            101,
+            103
+          ],
+          "exact_line_locators": [
+            {
+              "line": 91,
+              "line_sha256": "2df0561b027e267e6e1c9dbc5681fe7d5a6dbd6c4a5664d10d27383b0c2b0eb1"
+            },
+            {
+              "line": 99,
+              "line_sha256": "61400afedbaf571b46a98e1ff86bbc5df3be6e5072b90025e76a379488d81045"
+            },
+            {
+              "line": 100,
+              "line_sha256": "512b55fb14fbb64a5ea7f32096e0c4d67cf12a8d68b1227aa0ac956f7383027e"
+            },
+            {
+              "line": 101,
+              "line_sha256": "da8c22825a92a2edf021f97860598bfdce37d8fa463bb029f2e0cae0292e1dfa"
+            },
+            {
+              "line": 103,
+              "line_sha256": "6b718115c2e8292adf9d56e5e52a3ed4de4c62d504e331411e1f0f8bce7696c6"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            67,
+            69,
+            188,
+            192
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 67,
+              "line_sha256": "3d9c26b898a08a248dabdd928c48715f477339d814ae8dd0656d7e307f6f2df5"
+            },
+            {
+              "line": 69,
+              "line_sha256": "2eda201b687303a79967bf38b5d746bc6f19ef021fd0ee0351f6b8c9a38914cf"
+            },
+            {
+              "line": 188,
+              "line_sha256": "9ea432651bf737862294fe8a51865f8bc6ffdf5cdb1f4cb76196d6588f320687"
+            },
+            {
+              "line": 192,
+              "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            67,
+            74,
+            75,
+            92,
+            242
+          ],
+          "exact_line_locators": [
+            {
+              "line": 67,
+              "line_sha256": "de3f65422e6504b43c32071ee3fecca58afd4957071b6ad69935f5d4ec9988bd"
+            },
+            {
+              "line": 74,
+              "line_sha256": "9a5dc6935da79e11b36bcfca4d9a7cd3b07e81cd39b68507aef57aafa286f666"
+            },
+            {
+              "line": 75,
+              "line_sha256": "e3151a27a15542c8136241dfe05f69e019d7a8f34f3b5b006f35e6d4e48065fe"
+            },
+            {
+              "line": 92,
+              "line_sha256": "9f62616399553909254b6ceb9593d0bd156c6b0ca1b1fd4bd9a8c2f25e115aa7"
+            },
+            {
+              "line": 242,
+              "line_sha256": "e46535dd18260df7c01ea467b9a75ab11c06d60aa5f7591e18ec85dc9fa8c375"
+            }
+          ],
+          "contribution": "J10 independently supplies failure/partial/cancellation/tree-immutability checks. J9 notes line192 independently supplies known-value nonzero-fill and big-endian fixtures; this native authorship is preserved. The consolidated failure list and filesystem-access-time boundary remain evaluator wording."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            62,
+            64,
+            66,
+            129
+          ],
+          "exact_line_locators": [
+            {
+              "line": 62,
+              "line_sha256": "0cc098fc63afd853e19bcc73b804252607ffa16697ac09e2ea7058870eb766bf"
+            },
+            {
+              "line": 64,
+              "line_sha256": "4006d2f986f402b117062ea674af11c76fe9cdb7f99b02e50b38c852a1a94222"
+            },
+            {
+              "line": 66,
+              "line_sha256": "0e3d7cf9b7a277fd7ec5c0fa4d55fad0363a6d02f35ff1aa47ec3d3b9e8ff554"
+            },
+            {
+              "line": 129,
+              "line_sha256": "172e8a16f076aa4b6a2ac04b141686ee9148eebdaa9b13057571a2a8ad740fe3"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "Native reports distinguish absent fill from decode/read/cancel/partial failures and source-tree mutation. J9:192 supplies native nonzero-fill acceptance, and J9 separately limits inference about intentional omission/acquisition completeness. J11 preserves partial-buffer/error-state guarantees.",
+      "evaluator_authorship_and_scope_review": "Evaluator combines failure variants and distinguishes source-content immutability from filesystem access-time changes. Native nonzero-fill and omission limits retain attribution."
+    },
+    {
+      "id": "CR09",
+      "heading": "Honest validation and evidence",
+      "fixture_lines": [
+        65,
+        70
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [],
+      "reconciliation_provenance": [
+        {
+          "job": "J0005-reconcile",
+          "lead": "L-f45bf9ee551d",
+          "notes_lines": [
+            202,
+            203,
+            205,
+            206,
+            207
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/ngff/blob/v0.5/schemas/image.schema#L196",
+        "https://github.com/ome-zarr-models/ome-zarr-models-py/blob/6c30f107ac6a415a9e4005d1b5375c5c1da025a1/src/ome_zarr_models/v05/multiscales.py#L348"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            113,
+            119,
+            120,
+            121,
+            122
+          ],
+          "exact_line_locators": [
+            {
+              "line": 113,
+              "line_sha256": "b6f11cfd29a2147356a9d03cce775bd86903fad98867e1692f621b4935f01a4e"
+            },
+            {
+              "line": 119,
+              "line_sha256": "d8d95528bb7c140299b0dbeb6552ccf7850e306e0f704378ca4b68271a851d95"
+            },
+            {
+              "line": 120,
+              "line_sha256": "a0ddadbe4cdb17a8293159bb7039988c5bf9751bb214135655ab2713cd7bc665"
+            },
+            {
+              "line": 121,
+              "line_sha256": "fcaed747e9eedaca06f600c630f32533a4ea439ed8fc01a51f7bb9182912e91f"
+            },
+            {
+              "line": 122,
+              "line_sha256": "383a9006ac13129d99192eb5158dadc11a80530fa12e6d7513d38e10c3ed8fa3"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            104,
+            116,
+            256,
+            267,
+            269,
+            271,
+            273,
+            277,
+            279,
+            283,
+            285,
+            287
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 104,
+              "line_sha256": "665fb060e9a8a6358c11315e743ef53c5ad195971d2be549890df660dadfe849"
+            },
+            {
+              "line": 116,
+              "line_sha256": "cc9e4de828f7147732360908cfe1d50e6c983aa46b70c82d1a4095c365ebaf9c"
+            },
+            {
+              "line": 256,
+              "line_sha256": "70ec2d70b81d88b2e7647d170d47744226a706058740f786e801c5f86a04c8b7"
+            },
+            {
+              "line": 267,
+              "line_sha256": "92d13a83d28b11380f0b567a94311a523b363c82a2dc4b70811bae5e9bd1b468"
+            },
+            {
+              "line": 269,
+              "line_sha256": "8f02bc84faa0c6dd549972049379f9b043eb86846132e73e5b8dfd5e969a9e6d"
+            },
+            {
+              "line": 271,
+              "line_sha256": "c7321538c09fe0c5d52aaec89adcfb2f8129797651ff05b9e44db8e81906dd7d"
+            },
+            {
+              "line": 273,
+              "line_sha256": "ffa4eced48e99c88b1bb463745fc7b2c85add02523c028600b4ea802fffaaad7"
+            },
+            {
+              "line": 277,
+              "line_sha256": "c7a1e7bf2e47db12e152dc3351c3b2073db2fd341f1adef9b7695fb918769848"
+            },
+            {
+              "line": 279,
+              "line_sha256": "2208e1aaca49757fb1eeeb323e5fbee8702bf707fe6926392a5d1e21c15f0e0a"
+            },
+            {
+              "line": 283,
+              "line_sha256": "2adc4d9bc6224fb1f463b0017fcde13cf41069a20993a4b521a2d6f9c1796e75"
+            },
+            {
+              "line": 285,
+              "line_sha256": "118f8387526dbb7da3d72c4c995e4eeff5ca6d878530bb9145a7fb84bd8ffd9b"
+            },
+            {
+              "line": 287,
+              "line_sha256": "d9e45439026330931fe3b4d274d78d2376a23cdae38de47ed81d4c0e64e22875"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            86,
+            88,
+            90,
+            94,
+            215
+          ],
+          "exact_line_locators": [
+            {
+              "line": 86,
+              "line_sha256": "d7f1e305fb7a12b8b11de6cc63165847b6324bcbdef5cae47b83fa08fc9497e4"
+            },
+            {
+              "line": 88,
+              "line_sha256": "8aa615a875bb36e79945a3744f624e0ec9a44079c94e5970d9ae857a138862d3"
+            },
+            {
+              "line": 90,
+              "line_sha256": "3ebc8c445696af027bb4d1d42546585a47920fdd82af17dad9ec7b7ecc3374dd"
+            },
+            {
+              "line": 94,
+              "line_sha256": "288ba6546abb1ed040acd5907276186de4695c1a926cb611dacbd9a64e3fc1a9"
+            },
+            {
+              "line": 215,
+              "line_sha256": "50f7d75cbde96439cf36c8d2237c1307b71a4237f31bab11d3411af973b578a8"
+            }
+          ],
+          "contribution": "J10 independently inspects schema/semantic/decoder distinctions and authority conflicts; it did not execute schema evaluations. J5 and J9 narrow schema executions retain their own native provenance."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            127,
+            129,
+            131,
+            133,
+            135
+          ],
+          "exact_line_locators": [
+            {
+              "line": 127,
+              "line_sha256": "d5a7a40987d4d04791926ec73df3b3c34451660e2b82274a3470ac0447317335"
+            },
+            {
+              "line": 129,
+              "line_sha256": "172e8a16f076aa4b6a2ac04b141686ee9148eebdaa9b13057571a2a8ad740fe3"
+            },
+            {
+              "line": 131,
+              "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc"
+            },
+            {
+              "line": 133,
+              "line_sha256": "77eb6fdb88d9a4f33e2bcffd795a3443124d4626e59409bc9575fbf6f0a5d80a"
+            },
+            {
+              "line": 135,
+              "line_sha256": "e8f76d9cb7499d8c506d71c7e11c6e0d230168bcf17bf35b0c3d060f1810b509"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "Native reports separate schema shape, semantics, decoder and display proof and supply fixture-manifest/oracle requirements. J5 executed eight selected schema evaluations; J9 executed thirteen. J11 actually reprocessed 17 retained CSVs into 15237 rows/15234 distinct URLs, while keeping this separate from passing fixtures.",
+      "evaluator_authorship_and_scope_review": "Evaluator consolidates authority-conflict rules and independently replays selected metadata-schema cases, including six additional label-source shape checks. These are narrow metadata executions, not viewer tests."
+    },
+    {
+      "id": "CR10",
+      "heading": "Bounded work and current-view state",
+      "fixture_lines": [
+        71,
+        76
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [],
+      "reconciliation_provenance": [
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-9916d9541a47",
+          "notes_lines": [
+            49,
+            50,
+            51,
+            52
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-580ffdee048c",
+          "notes_lines": [
+            135,
+            137
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-15cca5b8e4f1",
+          "child_notes_path": "workspace/leads/aggregate-native-dtype-and-loading.md",
+          "child_notes_lines": [
+            13,
+            14,
+            15
+          ],
+          "evidence_status": "transported participant output; source observations and proposed checks, not measured runtime results"
+        }
+      ],
+      "primary_sources": [
+        "https://github.com/google/tensorstore/blob/v0.1.78/tensorstore/util/future.h#L229",
+        "https://github.com/google/tensorstore/blob/v0.1.78/tensorstore/kvstore/file/file_key_value_store.cc#L396",
+        "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/TimelineDockWidget.cpp#L93",
+        "https://github.com/allen-cell-animated/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/TimelineDockWidget.cpp#L73-L113",
+        "https://github.com/allen-cell-animated/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/FileReader.cpp#L68-L95"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            91,
+            93,
+            97,
+            98,
+            99,
+            100,
+            101
+          ],
+          "exact_line_locators": [
+            {
+              "line": 91,
+              "line_sha256": "2df0561b027e267e6e1c9dbc5681fe7d5a6dbd6c4a5664d10d27383b0c2b0eb1"
+            },
+            {
+              "line": 93,
+              "line_sha256": "fb5ce5a92fb43f365d6deed8f55df4aef9649590ade9509c0162dbcbdb14708c"
+            },
+            {
+              "line": 97,
+              "line_sha256": "4308fad3fc37734d10489796908c8579efb12ddac75e1ada5d1665f118814a60"
+            },
+            {
+              "line": 98,
+              "line_sha256": "bf93285607ca88ad5b4b93e7216566e941c69689bd20b0992cb5a44ee89ea4b6"
+            },
+            {
+              "line": 99,
+              "line_sha256": "61400afedbaf571b46a98e1ff86bbc5df3be6e5072b90025e76a379488d81045"
+            },
+            {
+              "line": 100,
+              "line_sha256": "512b55fb14fbb64a5ea7f32096e0c4d67cf12a8d68b1227aa0ac956f7383027e"
+            },
+            {
+              "line": 101,
+              "line_sha256": "da8c22825a92a2edf021f97860598bfdce37d8fa463bb029f2e0cae0292e1dfa"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            91,
+            93,
+            192,
+            237,
+            239
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 91,
+              "line_sha256": "2f3f14bdff9b1187bc387756a77b5732d10596a2fc9f06e79d0228ffafb433b0"
+            },
+            {
+              "line": 93,
+              "line_sha256": "08277814bb24c5b3c4ef6af8091c55efac9de6a79bfbb11ec78e42e814b8f7d8"
+            },
+            {
+              "line": 192,
+              "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985"
+            },
+            {
+              "line": 237,
+              "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6"
+            },
+            {
+              "line": 239,
+              "line_sha256": "899804a482c834924ce0c85f820d84ec792c512db6b7c45bc9c929eee88d0dd4"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            65,
+            67,
+            71,
+            72,
+            75,
+            77,
+            126,
+            128
+          ],
+          "exact_line_locators": [
+            {
+              "line": 65,
+              "line_sha256": "d1ad544fa7ca4a73413cf4036149f999f103f4ab8bc3a0fdb9e0fefc5fa2cf35"
+            },
+            {
+              "line": 67,
+              "line_sha256": "de3f65422e6504b43c32071ee3fecca58afd4957071b6ad69935f5d4ec9988bd"
+            },
+            {
+              "line": 71,
+              "line_sha256": "81668f849654f3868d51568c560a0e9f497b4040bc712433b8fddcbd7b511a22"
+            },
+            {
+              "line": 72,
+              "line_sha256": "c922c61921d23c31362605ca78695551bf6f0cf071d1e4bc5a161efac7b77bfe"
+            },
+            {
+              "line": 75,
+              "line_sha256": "e3151a27a15542c8136241dfe05f69e019d7a8f34f3b5b006f35e6d4e48065fe"
+            },
+            {
+              "line": 77,
+              "line_sha256": "cad89b8192d66972076a826efc7fc40601136e8cc18f161225aec818eb74f69e"
+            },
+            {
+              "line": 126,
+              "line_sha256": "1ed2775c98771fc7b33ca552ae091cf6b12826227c708fed44d221ca628aa821"
+            },
+            {
+              "line": 128,
+              "line_sha256": "2eff29d5ccb920330ef390b5a3b489a3e36a1236861969efebabd44d3ff0cf1f"
+            }
+          ],
+          "contribution": "J10 independently supplies explicit generation identity, delayed results, stale pixel/label/coordinate/selection checks, full cache identity and checked total-memory acceptance. Earlier J8 A/B and J6 failed-selection mechanisms retain their authorship; no numeric budget or persistent-cache policy is selected."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            50,
+            52,
+            54,
+            56,
+            82,
+            84,
+            86,
+            195,
+            197
+          ],
+          "exact_line_locators": [
+            {
+              "line": 50,
+              "line_sha256": "1ad2c6aa779834d9c87a3be20181c6daa271cdcbf0e2ec1d6b585cd52c3c12ee"
+            },
+            {
+              "line": 52,
+              "line_sha256": "0467a8e356c79fa64985097b2e1f27864b07de251dd1c4ac4094fdb0f72cdb93"
+            },
+            {
+              "line": 54,
+              "line_sha256": "d8d3ed5a7e0c05496d79741ff580bd24d8ac33a3e5661962f9cbe48f842f2844"
+            },
+            {
+              "line": 56,
+              "line_sha256": "a5fc2df8189e10ed97b23db2d45789768f59a9d0be48563967c36542b5294b2a"
+            },
+            {
+              "line": 82,
+              "line_sha256": "a6a1d6197244b38d8a67d0ecb5be482efad40089c025d98bb2d7a3e9b7e0d7f4"
+            },
+            {
+              "line": 84,
+              "line_sha256": "18cdf899c5eb303ac6664f438c9be13224de46db4204f0defbd5e9940a97b3e1"
+            },
+            {
+              "line": 86,
+              "line_sha256": "99a3de04218e9974806ae864804a6ce4319c346835d4e46ac1142c2a02b1de62"
+            },
+            {
+              "line": 195,
+              "line_sha256": "912de05ce1f8dc7946abd9125aa54cc40fd79e6c51c4afcbec8922e41f9a6a1d"
+            },
+            {
+              "line": 197,
+              "line_sha256": "327cfa2e0f96c2f934e5173d9de3bd1e26c3ad344ac8a16ce4ca1fb5fda4552b"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "J8 supplies the delayed A/completed B oracle; J6 supplies failed-selection/cache-state directions; J9 supplies owner/entry view identity; J10 supplies complete request identity and resource checks. J11:195/197 supplies checked shape/stride/byte/index-offset and above-4GiB logical-region acceptance, quiescent resource lifetime and failed-selection coherence. No numerical budget or measured memory/latency pass is asserted.",
+      "evaluator_authorship_and_scope_review": "Evaluator combines native request/publication/resource checks into one contract, with budgets and persistent-cache policy still open. The narrow checked-size and resource-lifetime refinements are not new capabilities."
+    },
+    {
+      "id": "CR11",
+      "heading": "Intensity and optional display metadata",
+      "fixture_lines": [
+        77,
+        81
+      ],
+      "classification": "correctness_amendment_within_original_brief",
+      "control_overlap": [],
+      "reconciliation_provenance": [
+        {
+          "job": "J0004-reconcile",
+          "lead": "L-80240e08616c",
+          "notes_lines": [
+            53,
+            63
+          ]
+        },
+        {
+          "job": "J0006-reconcile",
+          "lead": "L-88c0687248a2",
+          "notes_lines": [
+            113,
+            119
+          ]
+        }
+      ],
+      "primary_sources": [
+        "https://github.com/AllenCell/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/ConvertChannelData.cpp#L17",
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "comparison_provenance": [
+        {
+          "job": "J0008-compare",
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "notes_lines": [
+            120,
+            146,
+            150,
+            198,
+            216
+          ],
+          "exact_line_locators": [
+            {
+              "line": 120,
+              "line_sha256": "a0ddadbe4cdb17a8293159bb7039988c5bf9751bb214135655ab2713cd7bc665"
+            },
+            {
+              "line": 146,
+              "line_sha256": "d98c42583c382e9178a389bd342728d727bbf5a388ddd7340a402b0275f7c727"
+            },
+            {
+              "line": 150,
+              "line_sha256": "8af33e8765ae37ba5fc7423cf43d4350a78a0ec6ca3cbbe53103b5de4cbdfbf5"
+            },
+            {
+              "line": 198,
+              "line_sha256": "40d86b5d88cb2abb3f3c90678df2b26f2570ff4293bb914ef6ba695ce8a9ff1a"
+            },
+            {
+              "line": 216,
+              "line_sha256": "670f93c1172777d45f86f70b609f42b15e3870018b5bdd481f7abc5104b2861a"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0009-compare",
+          "notes_lines": [
+            85,
+            140,
+            209,
+            283
+          ],
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "exact_line_locators": [
+            {
+              "line": 85,
+              "line_sha256": "a5b3a77b0231bae1e29f65bd515803cf78cf370ce2d51797a9da733cccca9df2"
+            },
+            {
+              "line": 140,
+              "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893"
+            },
+            {
+              "line": 209,
+              "line_sha256": "48e60b15a22326a70b0da3db6e162316b41e7fab4fee2bb6903445e091ec7c20"
+            },
+            {
+              "line": 283,
+              "line_sha256": "2adc4d9bc6224fb1f463b0017fcde13cf41069a20993a4b521a2d6f9c1796e75"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 report lines without line terminators; exported report keeps line numbers but declared citation targets can change line hashes.",
+          "scope_limit": "References include supporting evidence and adjacent held proposals; approved derivative behavior is limited by group attribution and stated support envelope."
+        },
+        {
+          "job": "J0010-compare",
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "notes_lines": [
+            50,
+            100,
+            102,
+            108
+          ],
+          "exact_line_locators": [
+            {
+              "line": 50,
+              "line_sha256": "b025242cd53de4570d14c3aac12c1b08e964aedda75a44156b5b1a3fe28240d7"
+            },
+            {
+              "line": 100,
+              "line_sha256": "73fedf97fdce053dce45c108cbad96bfab33b4055e583b4ca154923a82f49af4"
+            },
+            {
+              "line": 102,
+              "line_sha256": "1135c546f7d565d566bcef6d6f5ad8a179c73e7de5c2bf8cc53901edc734f35a"
+            },
+            {
+              "line": 108,
+              "line_sha256": "f8179373e1bf8aa3a630afcabf1963c58fcdc983a4684e64151001a2cc2eb4ae"
+            }
+          ],
+          "contribution": "J10 independently provides dtype-versus-bit-width conversion and constant/nonfinite cases. It proposes display/transfer behavior, which remains unapproved; earlier J8 optional-label conversion evidence is preserved."
+        },
+        {
+          "job": "J0011-compare",
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "notes_lines": [
+            38,
+            40,
+            42,
+            46
+          ],
+          "exact_line_locators": [
+            {
+              "line": 38,
+              "line_sha256": "6ebc091c976a3d0a2ca9362628c9f1ef49fbaf4a8fc77cf6ba521c0ce6da3b05"
+            },
+            {
+              "line": 40,
+              "line_sha256": "f4559e2826d906c465572d41ff1e7f044db73908fc1b9f781a303104ccd6e288"
+            },
+            {
+              "line": 42,
+              "line_sha256": "80d7da73f78b11dc01c37317ea2bdabf8bb7d92a127d8fcbc98845553e818eb9"
+            },
+            {
+              "line": 46,
+              "line_sha256": "0abe07b51a4e929cee69218a47c879cd5a199ff0523ad317587b1a5bad28cca5"
+            }
+          ],
+          "locator_basis": "Original native UTF-8 lines without terminators; export keeps line numbers but declared citation links may alter line hashes.",
+          "scope_limit": "Only the stated contribution is used; adjacent held proposals are not approved."
+        }
+      ],
+      "native_contribution": "J8 and reconciled source evidence supply signed-int32 reinterpretation, missing optional channel labels and constant/nonfinite risks; J10/J11 preserve dtype interpretation and display/sample separation. Proposed display defaults are held.",
+      "evaluator_authorship_and_scope_review": "Evaluator combines numeric/optional-metadata acceptance and withholds display-policy choices."
+    }
+  ],
+  "count_policy": "Eleven consolidated correctness amendment groups: eight overlap the frozen partial controls, three consolidate further correctness mechanisms. This is not eleven independently discovered implementation defects; variants, repeated stages and optional proposals do not increase this count. Actual landing requires the verified scoped repository commit.",
+  "prior_draft_sha256": "ebe7ec23a8054d67d04179064ff7054a9a9f8fefe372b413f21436c34322f898",
+  "scope": "Synthetic Slide Scout fixture only; no Puppet Master feature, dependency choice, implementation or runtime acceptance. All optional product choices remain unanswered.",
+  "source_limits": "Primary links identify evidence; acquired hashes and source catalogs bind inspected bytes. v0.5 schema references are captured branch content, not asserted immutable tags.",
+  "native_union_scoring": "Eight of eight partial controls on complementary comparison reports, including an explicitly adjudicated C02 union. Earlier per-stage/per-job limitations remain in stage review; exact evaluator wording is not credited as native text."
+}

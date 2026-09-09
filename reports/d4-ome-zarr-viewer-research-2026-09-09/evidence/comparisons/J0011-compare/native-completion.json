@@ -1,0 +1,51 @@
+{
+  "all_job_input_hashes_match": true,
+  "assigned_ids": [
+    "L-20db7e979b8e",
+    "L-09ceb3cfac5e",
+    "L-8ac9e423176c",
+    "L-eff66a7b89e1"
+  ],
+  "attached_receipt_present": true,
+  "attached_sha256": "eff29ee2995d43092727eb15b0dbd6454f17902fa3c9461a452f0c78715bbe53",
+  "configured_effort": "xhigh",
+  "configured_model": "gpt-6-astra",
+  "configured_service_tier": "default",
+  "delivery_ids": [
+    "L-09ceb3cfac5e",
+    "L-20db7e979b8e",
+    "L-8ac9e423176c",
+    "L-eff66a7b89e1"
+  ],
+  "delivery_sha256": "4526b3356957aba74ea5529cbdbb2205e67108607ae76af75da90cb15bdde712",
+  "job_id": "J0011-compare",
+  "job_spec_sha256": "e52b42d9dca15babfe597f552ce83f611fd1d7eda2627f16ee8e053abd66bc3b",
+  "native_goal_status": "complete",
+  "native_status": "complete",
+  "native_summary_sha256": "ee1498a757d09334e8620a6fdf0194fad9a72e7f620180b956317b89283a34d9",
+  "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+  "observed_at": "2026-09-09T11:54:32.975342+00:00",
+  "outcome": {
+    "elapsed_seconds": 1581.646,
+    "error": null,
+    "finished_at": "2026-09-09T11:54:20.533849+00:00",
+    "notes_present": true,
+    "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+    "runtime_status": "complete",
+    "semantic_quality": "not judged by scheduler"
+  },
+  "outcome_delivery_notes_hashes_match": true,
+  "outcome_sha256": "62e7c50bcce6ac04abc09a241d64a3f9464e30b20c4bd6484f017187cb67a230",
+  "phase": "compare",
+  "process_exit_code": 0,
+  "schema": "d4.native_review_completion.v1",
+  "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+  "timeout_seconds": 2400,
+  "turns_completed": [
+    {
+      "error": null,
+      "status": "completed"
+    }
+  ],
+  "turns_started": 1
+}

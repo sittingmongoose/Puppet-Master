@@ -1,0 +1,897 @@
+{
+  "schema": "d4.sanitized_root_record_capture.v1",
+  "prepared_at_utc": "2026-09-09T12:04:10.045264+00:00",
+  "artifact_status": "finalized_native_record_capture_pending_campaign_acceptance",
+  "whole_campaign_acceptance": "pending_root_owned_evaluation",
+  "controller_status": "not_asserted_by_this_capture",
+  "residual_coverage": "not_asserted_by_this_capture",
+  "native_completion_is_semantic_acceptance": false,
+  "capture_basis": "Current already root-verified records; no live status, collector, recovery or raw-session inspection.",
+  "unsettled_jobs_in_included_root_records": [],
+  "artifact_kind": "comparison_inputs",
+  "input_receipts_in_capture": 4,
+  "comparison_jobs_with_terminal_root_record": 4,
+  "records": [
+    {
+      "job_id": "J0008-compare",
+      "source_identity": {
+        "source_record_name": "comparison-input-verifications.jsonl",
+        "record_line": 1,
+        "source_file_sha256_at_capture": "d022e1e52f3612c061f6371dcc8f30aed18966beacc27919bd40f0e9414155ae",
+        "source_file_bytes_at_capture": 25992,
+        "record_sha256_exact_bytes": "3799e36552591f409b28edbd1d42ad7dfceba5eae6c6873f2b6bd4f0d3b4c4f5",
+        "record_bytes": 5842,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "schema": "d4.comparison_input_verification.v1",
+        "job_id": "J0008-compare",
+        "observed_at": "2026-09-09T09:56:41.822242+00:00",
+        "all_initial_input_hashes_match": true,
+        "assigned_ids": [
+          "L-80240e08616c"
+        ],
+        "handoff_chars": 82754,
+        "handoff_sha256": "50380dc37467f98828d4a06487db98e7680a6c7e5643e7ef29de571640462502",
+        "initial_inputs_verified": 8,
+        "native_or_semantic_completion": "Not established by this input check; job is active.",
+        "plan_manifest_sha256": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+        "plan_source_paths": [
+          "Plans/Viewer.md"
+        ],
+        "recomputed_children_match": true,
+        "recomputed_handoff_text_matches_at_observation": true,
+        "recomputed_upstream_matches": true,
+        "recorded_batching": {
+          "additional_assignment_chars": 0,
+          "first_shared_evidence_chars": 80076,
+          "first_singleton_chars": 82754,
+          "mode": "oversized_singleton",
+          "normal_allowance_chars": 30000,
+          "rendered_handoff_chars": 82754,
+          "shared_context_sha256": "8bb1f0f8c9c47b2a14f63bdfb0f01dfeb1e780943486fd43bacffa583a532c71"
+        }
+      },
+      "transported_full_reports": [
+        {
+          "full_text_in_handoff": true,
+          "matches_outcome_hash": true,
+          "native_status": "completed",
+          "notes_sha256": "a15014db442483d53a9b78c0f33a9580ccfc059c65b9fc8a12a5e23aafaf8b57",
+          "origin_job": "J0002-implementation"
+        },
+        {
+          "full_text_in_handoff": true,
+          "matches_outcome_hash": true,
+          "native_status": "completed",
+          "notes_sha256": "40d607bad6e65bd7be2361fb1ce13a6e14c22bed23dd2d0b830f33e63d9f18c9",
+          "origin_job": "J0003-history"
+        },
+        {
+          "full_text_in_handoff": true,
+          "matches_outcome_hash": true,
+          "native_status": "complete",
+          "notes_sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "origin_job": "J0004-reconcile"
+        }
+      ],
+      "applicable_parent_sets": [
+        [
+          "L-80240e08616c"
+        ]
+      ],
+      "transported_children": [
+        {
+          "child_ids": [
+            "L-dce78e52fdae"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0002-implementation",
+          "retained_bytes_match": true,
+          "sha256": "1b3d6cc4ca9b922723754ddc7625dfcb9a1eceab7fe19857640ba9ab2ab4a735",
+          "source": "leads/agave-python-client-local-render-server.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-88c0687248a2"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0002-implementation",
+          "retained_bytes_match": true,
+          "sha256": "9fd7b8360f0c8ddf0a5452112f1fbe89d1e61bd16bc10f487967347d75414664",
+          "source": "leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-580ffdee048c"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0002-implementation",
+          "retained_bytes_match": true,
+          "sha256": "4bbd45925d3b8ab1f7a9b4069f379060b3dd4099b5b8ddd619038316306ba991",
+          "source": "leads/tensorstore-zarr3-driver-version-drift.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-09ceb3cfac5e"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0003-history",
+          "retained_bytes_match": true,
+          "sha256": "57f936d28387af8fc07cc79adddf9f4402ca67a3943e72ff8bee9fbaff931752",
+          "source": "leads/biofile-finder-zarr-autoload-handoff.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-8ac9e423176c"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0003-history",
+          "retained_bytes_match": true,
+          "sha256": "0a314d35689cb3ed72691c309252f9706f22064924ace5446a3f9613c5dca165",
+          "source": "leads/ome2024-ngff-challenge-corpus.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-a20d51892430"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "e7e0519e177787af92761ad3c089e5989cc9bff6365c6cfbd45e7f4c1b406f89",
+          "source": "leads/agave-numeric-integrity-and-failure-paths.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-cdedd3e8116f"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "d8799e3bffbd7b8f3810e2727def7f23de6845dc907e033d572eaf450caf9c3a",
+          "source": "leads/agave-python-client-local-render-server.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-d43127dd465f"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "b2d696c160f2a5bd57bb2a529b9aac4555a4d96832fa24f4c285ea8d8abc4026",
+          "source": "leads/biofile-finder-zarr-autoload-handoff.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-c8f9e220182f"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f85cfcd8fd205b621de87f0dd41cc00996d5b6ca82a13bc9adb0a3f7dfa6d4da",
+          "source": "leads/ngff-calibration-and-axis-semantics.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-3a61d7236a42"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "12a643bddb9234f61b42a5019377a089e75cca24739546c3554c88fb75cb1fce",
+          "source": "leads/ngff05-discovery-conventions-series-plate-labels.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-f392bcd4d003"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "974dd6718f3c6d487c2e8271066609d3ae91025a2f22847f2d964546bad87105",
+          "source": "leads/ome2024-ngff-challenge-corpus.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-cf7c668347bf"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0004-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "d0a2cf776f50b779989821f91a03d62948f58363768559802cb79fd636a24a27",
+          "source": "leads/tensorstore-zarr3-driver-version-drift.md",
+          "applicable_parent_set_index": 0
+        }
+      ],
+      "counts_in_this_receipt": {
+        "full_reports": 3,
+        "children": 12
+      },
+      "size_units": "handoff_chars and batching *_chars are characters, not bytes. Source record sizes are exact bytes.",
+      "completion_at_preparation": "terminal_root_record_present_separately",
+      "input_receipt_scope": "Input transport at its original observation time only; historical active wording remains literal and is not a present terminal verdict.",
+      "assigned_set_matches_terminal_root_record": true
+    },
+    {
+      "job_id": "J0009-compare",
+      "source_identity": {
+        "source_record_name": "comparison-input-verifications.jsonl",
+        "record_line": 2,
+        "source_file_sha256_at_capture": "d022e1e52f3612c061f6371dcc8f30aed18966beacc27919bd40f0e9414155ae",
+        "source_file_bytes_at_capture": 25992,
+        "record_sha256_exact_bytes": "5a3c0e0cd77703d60332729f0b1f316b2da6c4c300ed6a9e519bbbfa968dd86f",
+        "record_bytes": 9477,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "schema": "d4.comparison_input_verification.v1",
+        "job_id": "J0009-compare",
+        "observed_at": "2026-09-09T10:29:47.408377+00:00",
+        "all_initial_input_hashes_match": true,
+        "assigned_ids": [
+          "L-d3fb5681dad7",
+          "L-b8b6f684e168",
+          "L-8e152cf58e36",
+          "L-53478306aa6a",
+          "L-bb5dcafa9770",
+          "L-e22a81d34a4c",
+          "L-cf0ac7e43301",
+          "L-4b3f581214b5",
+          "L-eef00830c219",
+          "L-aadd42cb09c9",
+          "L-48b8e76e269e",
+          "L-f45bf9ee551d"
+        ],
+        "handoff_chars": 124384,
+        "handoff_sha256": "f6eedd6c12e156b6e5d61b2062ee7046f0d6d76f132eb10dd0d6cd2e0a908860",
+        "initial_inputs_verified": 8,
+        "native_or_semantic_completion": "Not established by this input check; job is active.",
+        "plan_manifest_sha256": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+        "plan_source_paths": [
+          "Plans/Viewer.md"
+        ],
+        "recomputed_children_match": true,
+        "recomputed_handoff_text_matches_at_observation": true,
+        "recomputed_upstream_matches": true,
+        "recorded_batching": {
+          "additional_assignment_chars": 29746,
+          "first_shared_evidence_chars": 92699,
+          "first_singleton_chars": 94638,
+          "mode": "oversized_shared_context",
+          "normal_allowance_chars": 30000,
+          "rendered_handoff_chars": 124384,
+          "shared_context_sha256": "d9291e91f201d2429fd96b12585ed8cfd0285c92a41e908e27a83edd98e15122"
+        }
+      },
+      "transported_full_reports": [
+        {
+          "full_text_in_handoff": true,
+          "matches_outcome_hash": true,
+          "native_status": "complete",
+          "notes_sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "origin_job": "J0005-reconcile"
+        }
+      ],
+      "applicable_parent_sets": [
+        [
+          "L-48b8e76e269e",
+          "L-4b3f581214b5",
+          "L-53478306aa6a",
+          "L-8e152cf58e36",
+          "L-aadd42cb09c9",
+          "L-b8b6f684e168",
+          "L-bb5dcafa9770",
+          "L-cf0ac7e43301",
+          "L-d3fb5681dad7",
+          "L-e22a81d34a4c",
+          "L-eef00830c219",
+          "L-f45bf9ee551d"
+        ]
+      ],
+      "transported_children": [
+        {
+          "child_ids": [
+            "L-38c370904778"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+          "source": "leads/agave-desktop-volume-loading.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-d3c226e041eb"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+          "source": "leads/anatomical-orientation.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-d5fc6dd48020"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+          "source": "leads/bia-zarr-discovery-thumbnails.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-f402dde94d1c"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+          "source": "leads/calibration-and-schema-gaps.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-ad90269e197b"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+          "source": "leads/converter-progress-diagnostics.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-cfcf357afb12"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+          "source": "leads/hcs-acquisition-and-field-navigation.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-fb1d89805e27"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+          "source": "leads/kiln-gpu-cache-and-precision.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-e107cc0aa8b2"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+          "source": "leads/library-api-and-metadata-acceleration.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-ae7d83feeafe"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+          "source": "leads/metadata-context-and-label-discovery.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-c82c7c8fa320"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+          "source": "leads/odon-tiled-reader.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-4f130c3d3083"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+          "source": "leads/pluot-portable-2d-rendering.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-04064142bc11"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+          "source": "leads/preview-coordinate-systems.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-65d06ade3252"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+          "source": "leads/public-corpus-and-ro-crate.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-c0e14754c79c"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "source": "leads/shard-io-and-fill-semantics.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-ec394b185033"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0005-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020",
+          "source": "leads/zipped-local-filesets.md",
+          "applicable_parent_set_index": 0
+        }
+      ],
+      "counts_in_this_receipt": {
+        "full_reports": 1,
+        "children": 15
+      },
+      "size_units": "handoff_chars and batching *_chars are characters, not bytes. Source record sizes are exact bytes.",
+      "completion_at_preparation": "terminal_root_record_present_separately",
+      "input_receipt_scope": "Input transport at its original observation time only; historical active wording remains literal and is not a present terminal verdict.",
+      "assigned_set_matches_terminal_root_record": true
+    },
+    {
+      "job_id": "J0010-compare",
+      "source_identity": {
+        "source_record_name": "comparison-input-verifications.jsonl",
+        "record_line": 3,
+        "source_file_sha256_at_capture": "d022e1e52f3612c061f6371dcc8f30aed18966beacc27919bd40f0e9414155ae",
+        "source_file_bytes_at_capture": 25992,
+        "record_sha256_exact_bytes": "7d2347d43943b9591fd53be63290dee66ac42de6d78bf19df781a9e313cc5b29",
+        "record_bytes": 6917,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "schema": "d4.comparison_input_verification.v1",
+        "job_id": "J0010-compare",
+        "observed_at_utc": "2026-09-09T11:01:52.167801+00:00",
+        "all_initial_input_hashes_match": true,
+        "assigned_ids": [
+          "L-481fce077b0a",
+          "L-d450a1188b29",
+          "L-9916d9541a47",
+          "L-15cca5b8e4f1",
+          "L-dce78e52fdae",
+          "L-88c0687248a2",
+          "L-580ffdee048c"
+        ],
+        "handoff_chars": 116202,
+        "handoff_sha256": "082f090235e2e96f4768a450ed6889897a93c6147a16cf007ba31f6166650f27",
+        "recomputed_children_match": true,
+        "recomputed_handoff_matches": true,
+        "recomputed_upstream_matches": true,
+        "batching": {
+          "additional_assignment_chars": 22623,
+          "first_shared_evidence_chars": 89044,
+          "first_singleton_chars": 93579,
+          "mode": "oversized_shared_context",
+          "normal_allowance_chars": 30000,
+          "rendered_handoff_chars": 116202,
+          "shared_context_sha256": "36266c3906977d67991393afbd3497dd7acf26a418271d98fb2e6f844f1d6643"
+        },
+        "semantic_acceptance": "Not judged by input delivery verification."
+      },
+      "transported_full_reports": [
+        {
+          "full_text_in_handoff": true,
+          "origin_job": "J0006-reconcile",
+          "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41"
+        }
+      ],
+      "applicable_parent_sets": [
+        [
+          "L-15cca5b8e4f1",
+          "L-481fce077b0a",
+          "L-580ffdee048c",
+          "L-88c0687248a2",
+          "L-9916d9541a47",
+          "L-d450a1188b29",
+          "L-dce78e52fdae"
+        ]
+      ],
+      "transported_children": [
+        {
+          "child_ids": [
+            "L-f8f84fdbe1a7"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "cf1c067823b9776a5eb29af8eeacbb9afc1625c90f8693e8ec18259ef076b6eb",
+          "source": "leads/aggregate-alternative-tools.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-dfb8a6dd4e4a"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "c3981f2ab22a753d982424a7f771bb5c700d0cd430c7c08485533aba4d4d337f",
+          "source": "leads/aggregate-calibration-and-origin.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-612ef7e6e959"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "994ca85f1844e2ec98b18183f06a1bdcfeadb675229e190652a6e9c2c07128f0",
+          "source": "leads/aggregate-corpus-and-version-tolerance.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-9b0bd63a9c4c"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "a7cb70a385db97e589136faf3d720a0d8a2f5a412ba98011fc87d5725af82224",
+          "source": "leads/aggregate-current-napari-transforms.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-6aadc45bfccc"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "3fe3bac19429d68e254defaa9cc70ec74410790133960961a835348ec18e628e",
+          "source": "leads/aggregate-ecosystem-versions.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-0cb53150a79b"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "64df7c05f09ac986d457a45f9ce14c01b6585311ddb0bd0cb11e2cac307f5e8f",
+          "source": "leads/aggregate-label-scale-and-intent.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-eafba63350f5"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "9d6405cffe9b95cc9e30e880c009299529fe37aa9f4801ab28e7dd1c5a33f40d",
+          "source": "leads/aggregate-local-collection-discovery.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-aed11391a592"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "3da08f3e86803b844f77d99572bff979fc5cf938b235bb2f81341406472cc2f4",
+          "source": "leads/aggregate-native-dtype-and-loading.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-c7319cadf94a"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "9bdad9aa564d5d01961cfdb3d8e1d8ce0739d9b883dd1515505e943bc9e1480c",
+          "source": "leads/aggregate-python-reader-errors.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-9995bed43363"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "bb65248b553749ef0b1a6fc8a3bf43df7c3d81c00d2b08588e5813380d7c6570",
+          "source": "leads/aggregate-qupath-omero-adjacency.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-5c141882439e"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "627bf58ad9a0a94d7113f2feb847283626ad176fe09d73b37741067cba89c266",
+          "source": "leads/aggregate-roadmap-and-archives.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-037ee2f8764a"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "33a70df7cc459e89c2b51a261fe20a888297a808e18b772bb13e720aea80fd0e",
+          "source": "leads/aggregate-validation-diagnostics.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-3c8162f6699f"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0006-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "f094f18223de837cea50a417a574b4169b935460c59e480453dc005224bc8592",
+          "source": "leads/v3-label-namespace.md",
+          "applicable_parent_set_index": 0
+        }
+      ],
+      "counts_in_this_receipt": {
+        "full_reports": 1,
+        "children": 13
+      },
+      "size_units": "handoff_chars and batching *_chars are characters, not bytes. Source record sizes are exact bytes.",
+      "completion_at_preparation": "terminal_root_record_present_separately",
+      "input_receipt_scope": "Input transport at its original observation time only; historical active wording remains literal and is not a present terminal verdict.",
+      "assigned_set_matches_terminal_root_record": true
+    },
+    {
+      "job_id": "J0011-compare",
+      "source_identity": {
+        "source_record_name": "comparison-input-verifications.jsonl",
+        "record_line": 4,
+        "source_file_sha256_at_capture": "d022e1e52f3612c061f6371dcc8f30aed18966beacc27919bd40f0e9414155ae",
+        "source_file_bytes_at_capture": 25992,
+        "record_sha256_exact_bytes": "9c63b66657f268f5fdc7e63a2a7c3e8eb43f9acd3149546d0e3dbd741d823641",
+        "record_bytes": 3756,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "schema": "d4.comparison_input_verification.v1",
+        "job_id": "J0011-compare",
+        "observed_at_utc": "2026-09-09T11:31:37.895139+00:00",
+        "all_initial_input_hashes_match": true,
+        "assigned_ids": [
+          "L-20db7e979b8e",
+          "L-09ceb3cfac5e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ],
+        "handoff_chars": 80241,
+        "handoff_sha256": "7b03f1924255ced0380430291f007316af21d587b5c8a0fb572183e339b3d05b",
+        "recomputed_children_match": true,
+        "recomputed_handoff_matches": true,
+        "recomputed_upstream_matches": true,
+        "batching": {
+          "additional_assignment_chars": 18197,
+          "first_shared_evidence_chars": 53576,
+          "first_singleton_chars": 62044,
+          "mode": "oversized_shared_context",
+          "normal_allowance_chars": 30000,
+          "rendered_handoff_chars": 80241,
+          "shared_context_sha256": "72ca410009e1866d75a93d702dd4d516f3a6b7d95fb73e3b69fb482f748b3ac3"
+        },
+        "semantic_acceptance": "Not judged by input delivery verification."
+      },
+      "transported_full_reports": [
+        {
+          "full_text_in_handoff": true,
+          "origin_job": "J0007-reconcile",
+          "sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913"
+        }
+      ],
+      "applicable_parent_sets": [
+        [
+          "L-09ceb3cfac5e",
+          "L-20db7e979b8e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ]
+      ],
+      "transported_children": [
+        {
+          "child_ids": [
+            "L-d9cf3dc4ccce"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "46534a91f9e48741c387454ac9d9fe9ecf8f6fa1bb1805209141f4544ae18786",
+          "source": "leads/backend-version-and-codec-matrix.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-9e32a189918e"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "58c33e1045ec17c3176e3ba9ca325713f0093d45c91abc7a2084e45e9b522ebe",
+          "source": "leads/calibrated-coordinates.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-419176a013a5"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "22bde2df3314bf83008e81830cd94fc74ac2635da83f58309c9de7dd063e1a13",
+          "source": "leads/metadata-discovery.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-495014a2e651"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "14b93ce9af0e5d7cace20a16f78e7d7ce40ee34023be24a330a6caea6cc8e653",
+          "source": "leads/pixel-types-and-display.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-256703fc6126"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "eaa6bf79e929bf51ccc826f7373322c9244dd3c2d489931a4ae5ac537742816d",
+          "source": "leads/read-error-diagnostics.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-f7c17e4705e6"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "1149883ed94ba1709823223211f5618b2f00034b589328936538b603bcea8340",
+          "source": "leads/responsive-reading-and-cache.md",
+          "applicable_parent_set_index": 0
+        },
+        {
+          "child_ids": [
+            "L-4a87b7b945c5"
+          ],
+          "full_text_in_handoff": true,
+          "matches_registered_hash": true,
+          "origin_job": "J0007-reconcile",
+          "retained_bytes_match": true,
+          "sha256": "3b63288793aaa7a52d233b3bed800edef53945909d85b23611838bb776e404bd",
+          "source": "leads/shard-index-and-read-amplification.md",
+          "applicable_parent_set_index": 0
+        }
+      ],
+      "counts_in_this_receipt": {
+        "full_reports": 1,
+        "children": 7
+      },
+      "size_units": "handoff_chars and batching *_chars are characters, not bytes. Source record sizes are exact bytes.",
+      "completion_at_preparation": "terminal_root_record_present_separately",
+      "input_receipt_scope": "Input transport at its original observation time only; historical active wording remains literal and is not a present terminal verdict.",
+      "assigned_set_matches_terminal_root_record": true
+    }
+  ],
+  "assignment_set_counts": {
+    "input_receipts": 4,
+    "assigned_occurrences": 24,
+    "distinct_assigned_ids": 24,
+    "all_four_match_terminal_assignments": true,
+    "meaning": "Actual input-receipt assignments only, not semantic or final-cohort coverage."
+  },
+  "interpretation": [
+    "All four original input observations and proof values remain exact, including historical job-active wording. Each comparison now has a separate root-verified terminal record.",
+    "Full-report and child transport proofs retain all recorded hash/status fields. Interned applicable-parent lists reconstruct exact original ordered lists.",
+    "Handoff/batching *_chars values remain characters. Source file/record sizes are bytes; no unrecorded payload size is inferred."
+  ],
+  "remaining_root_owned_finalization": [
+    "Root independently finalizes semantic union, decisions, residual coverage and derivative/export review.",
+    "Root separately determines controller/campaign terminal status; this capture does not infer it from eleven completed jobs.",
+    "If root evidence records change, regenerate hashes/projections and repeat exact reconstruction and sanitization checks."
+  ]
+}

@@ -1,0 +1,3046 @@
+{
+  "schema": "d4_comparison_batch2_lineage.v1",
+  "created_at_utc": "2026-09-09T11:05:52.493537+00:00",
+  "visibility": "private_evaluator_only",
+  "job": "J0009-compare",
+  "native_status": "complete reported by root, final SHA matched; Goal/turn/delivery proof owned by root",
+  "scope": "Independent complete final-prose review of all 12 authoritative assigned IDs, actual J5 report and 15 child directions. Prior J5 fact/lineage audits reused; J4/J6/J7 not upstream.",
+  "inputs": {
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/job.json": "968734576d4e3634bd91c8da3ae633908f3e695b68a6f944f7e3a7c2b4ff1f39",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/agave-desktop-volume-loading.md": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/anatomical-orientation.md": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/bia-zarr-discovery-thumbnails.md": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/converter-progress-diagnostics.md": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/kiln-gpu-cache-and-precision.md": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/library-api-and-metadata-acceleration.md": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/odon-tiled-reader.md": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/pluot-portable-2d-rendering.md": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/preview-coordinate-systems.md": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/public-corpus-and-ro-crate.md": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+    "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/zipped-local-filesets.md": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020"
+  },
+  "reused_evaluator_inputs": {
+    "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch2-lineage.json": "753c0a34bf7bbf136fc97083537321a91255fdac2e96d957072cf725cd121443",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch2-fact-check.md": "8006d46f1f6f7826c86890417d31f8a51725dc0c9d58da05f07cce1f772ce5aa",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/partial-controls.json": "e6c13991937076d5e0dc0cfb0aec900c5353a6dd56e8a8eb6a12590daebfa25d",
+    "artifact:campaign/next-goal-20260909/d4/evaluator/rubric.md": "b81b7ecd9ffdbefbc2192d4a643910623d5a61c4e385aa8c3d3ae43ea52cb80b"
+  },
+  "assigned_parents": [
+    {
+      "lead_id": "L-d3fb5681dad7",
+      "title": "desktop viewer adjacency",
+      "disposition": "already covered",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 11,
+        "match": "## L-d3fb5681dad7",
+        "line_sha256": "5fb8ee1ca9250e77e4cad085dc296aa391b24d32680344c80c7720c52af66b85",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 12,
+        "match": "Disposition:",
+        "line_sha256": "9cae5e96098c9c4dcfaa12abec01e9829f9eaacefbd57e83debe1240c3c2ab31",
+        "assigned_parent": "L-d3fb5681dad7"
+      }
+    },
+    {
+      "lead_id": "L-b8b6f684e168",
+      "title": "version-specific reader readiness",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 22,
+        "match": "## L-b8b6f684e168",
+        "line_sha256": "0cab69f7afe2d15f70f6d323bac438896f225a9e85f5f6ae876aba422f393dd9",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 23,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-b8b6f684e168"
+      }
+    },
+    {
+      "lead_id": "L-8e152cf58e36",
+      "title": "format roadmap and optional capabilities",
+      "disposition": "product proposal requiring approval",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 37,
+        "match": "## L-8e152cf58e36",
+        "line_sha256": "2c75628992683ad3b93df7fbf15463d5bd37eca2d0895e95ce9848653a36e4f0",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 38,
+        "match": "Disposition:",
+        "line_sha256": "1b3af70ad990b73f652e4e43752b3e00610090f1f925c4e6bb7104ac90440272",
+        "assigned_parent": "L-8e152cf58e36"
+      }
+    },
+    {
+      "lead_id": "L-53478306aa6a",
+      "title": "local browsing and discovery",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 58,
+        "match": "## L-53478306aa6a",
+        "line_sha256": "73f9b81cabbbda3a4752692c8c111048773c9d448a52c90b251d0dfa3c13daa3",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 59,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-53478306aa6a"
+      }
+    },
+    {
+      "lead_id": "L-bb5dcafa9770",
+      "title": "tool and renderer alternatives",
+      "disposition": "product proposal requiring approval",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 73,
+        "match": "## L-bb5dcafa9770",
+        "line_sha256": "f2f7f0c721242db697390f496ec4cfc19472ff3b30699236dd971dbd70e52029",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 74,
+        "match": "Disposition:",
+        "line_sha256": "1b3af70ad990b73f652e4e43752b3e00610090f1f925c4e6bb7104ac90440272",
+        "assigned_parent": "L-bb5dcafa9770"
+      }
+    },
+    {
+      "lead_id": "L-e22a81d34a4c",
+      "title": "public corpus and conversion patterns",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 97,
+        "match": "## L-e22a81d34a4c",
+        "line_sha256": "9535937b9a75e8bdaf02976b6416469a2792230970a50d940b5df02681369cb8",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 98,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-e22a81d34a4c"
+      }
+    },
+    {
+      "lead_id": "L-cf0ac7e43301",
+      "title": "napari reader architecture",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 120,
+        "match": "## L-cf0ac7e43301",
+        "line_sha256": "95ac6e236a4c5ff04a707bfc8e35ce06fdf6271de1e9afbc8d99f4559184ba75",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 121,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-cf0ac7e43301"
+      }
+    },
+    {
+      "lead_id": "L-4b3f581214b5",
+      "title": "library APIs and container traversal",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 142,
+        "match": "## L-4b3f581214b5",
+        "line_sha256": "6392c9840b91d13291b109ccbd6e0b8a6fb4178d2d81e57fa82510de0bbe8da0",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 143,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-4b3f581214b5"
+      }
+    },
+    {
+      "lead_id": "L-eef00830c219",
+      "title": "real filesets, shards and labels",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 177,
+        "match": "## L-eef00830c219",
+        "line_sha256": "42c0e35e27218fcfa34337e834d546b99e7b58872d7b4c7883aec6d589836dcd",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 178,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-eef00830c219"
+      }
+    },
+    {
+      "lead_id": "L-aadd42cb09c9",
+      "title": "OME-Zarr 0.5 read obligations",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 196,
+        "match": "## L-aadd42cb09c9",
+        "line_sha256": "bbc5d41966516ba527a84b88ce9c10fdef8716b04d06513759a89ef4479727d2",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 197,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-aadd42cb09c9"
+      }
+    },
+    {
+      "lead_id": "L-48b8e76e269e",
+      "title": "specification issues and metadata context",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 215,
+        "match": "## L-48b8e76e269e",
+        "line_sha256": "f75d7bbd7fe2e76a639203172ebcb28e43e1555cd70923f51d92cbbce4bb90e0",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 216,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-48b8e76e269e"
+      }
+    },
+    {
+      "lead_id": "L-f45bf9ee551d",
+      "title": "validation and explanatory diagnostics",
+      "disposition": "concrete repair",
+      "locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 251,
+        "match": "## L-f45bf9ee551d",
+        "line_sha256": "cd3c53066a4deba648ecbcdd48a441ee197a6b7c21035e615796be5d16212ed7",
+        "assigned_parent": null
+      },
+      "native_disposition_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 252,
+        "match": "Disposition:",
+        "line_sha256": "ddf6d5ea5d81ce07dc32a68ab2b8346f3cd8e912809bf293891b4e61aaecad73",
+        "assigned_parent": "L-f45bf9ee551d"
+      }
+    }
+  ],
+  "actual_upstream_summary": {
+    "unique_reports": 1,
+    "report_job": "J0005-reconcile",
+    "unique_children": 15,
+    "input_hashes_match_job_manifest": true,
+    "embedded_handoff_delivery_exactness": "Root owns delivery proof; this review checks actual referenced source files and semantic content."
+  },
+  "trace_items": [
+    {
+      "trace_key": "OME05-C01",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 162,
+          "match": "consistent `ome.version`",
+          "line_sha256": "b97823acc350577caa4ace95699184a9fe27491686fa0f13e0bc474bc2492ffb",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 117,
+          "match": "Storage/version boundary:",
+          "line_sha256": "9c1f6584420cd761664d8d34cc711207cac50b7eb2ffdf716400923921550c29",
+          "assigned_parent": "L-4b3f581214b5"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 209,
+          "match": "mere coexistence",
+          "line_sha256": "fa040c728f84955af426e75c5effd278e3ef2a0875cdd0b5e51bc0b6861f2b3a",
+          "assigned_parent": "L-f45bf9ee551d"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "Zarr v3 is the mandated",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 283,
+          "match": "mere coexistence is not grounds",
+          "line_sha256": "2adc4d9bc6224fb1f463b0017fcde13cf41069a20993a4b521a2d6f9c1796e75",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 159,
+          "match": "unknown version cannot silently",
+          "line_sha256": "ae205de621640b1a05de39bf0e42dde494ba6eccb76f347450710c44c33ced3d",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Version namespace, root recognition, migration coexistence and explicit legacy refusal/support boundary survive. Tolerance remains unapproved."
+    },
+    {
+      "trace_key": "OME05-C02",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 163,
+          "match": "Axis names are arbitrary and unique",
+          "line_sha256": "3947540007e68b91efec8c4c0536394939b90d02bbee78e7d6cfc6a27d190158",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 206,
+          "match": "required/matching dimension_names",
+          "line_sha256": "b9a2968e9a93305da60af2ac949004bdf10ce6c81bde0402290d59e88d800d39",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 150,
+          "match": "singleton label channel",
+          "line_sha256": "0d6a6e00ac8478b1dbc17b4c731aaf559608877435a827ecc5c1d0c763ff72bc",
+          "assigned_parent": "L-eef00830c219"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 203,
+          "match": "Validate dimensionality, axis identity",
+          "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 211,
+          "match": "dimension-name mismatch",
+          "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 211,
+          "match": "singleton channel/time",
+          "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_incomplete",
+      "assessment": "Validates names/rank/order and preserves calibrated channel splitting; absent-versus-length-one navigation/control behavior is not explicitly distinguished. This was already unclosed in J5."
+    },
+    {
+      "trace_key": "OME05-C03",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 164,
+          "match": "resolution paths are relative",
+          "line_sha256": "1003a219fdf3c23fc4aea995000ce50d1828969c3af1ea50c5f80fe1474bdf5a",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 108,
+          "match": "shape-derived pyramid scaling",
+          "line_sha256": "98f3092f777395698f68543dfba706682952c8cea485796f98b81787b5aba310",
+          "assigned_parent": "L-cf0ac7e43301"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 203,
+          "match": "Resolve each declared dataset path",
+          "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 211,
+          "match": "independently specified second level",
+          "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 192,
+          "match": "inaccessible declared array",
+          "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Declared relative paths/order, independent per-level geometry, non-2x/Z reductions and unavailable-array handling become actionable checks."
+    },
+    {
+      "trace_key": "OME05-C04",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 164,
+          "match": "Optional multiscale-level transforms follow",
+          "line_sha256": "1003a219fdf3c23fc4aea995000ce50d1828969c3af1ea50c5f80fe1474bdf5a",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 170,
+          "match": "Legacy parity and real transform fixture:",
+          "line_sha256": "e82cd6233e41885650c7500d4bf189269b282d9e8c4b168600f7e124edb4cb87",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 102,
+          "match": "valid `[scale, translation]` sequence",
+          "line_sha256": "90699e181c60ba3d7786909f71732fe8ee5b25d39e103553561be17bf6757820",
+          "assigned_parent": "L-cf0ac7e43301"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+          "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+          "line": 7,
+          "match": "Unknown physical units",
+          "line_sha256": "30128445eaae5b0f526ff2256f564e8714d113b85366f085da7c80f84b43f0a2",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 211,
+          "match": "index `[4,6]` must map",
+          "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 203,
+          "match": "Unitless or unknown-unit values",
+          "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Correct composition has an explicit [141,2513] oracle and independent level mapping; unknown units preserve provenance."
+    },
+    {
+      "trace_key": "OME05-C05",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "same number of resolution levels",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "Registration is in the **labels container",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 150,
+          "match": "singleton label channel",
+          "line_sha256": "0d6a6e00ac8478b1dbc17b4c731aaf559608877435a827ecc5c1d0c763ff72bc",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md",
+          "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+          "line": 7,
+          "match": "multiscales entry",
+          "line_sha256": "8e26b42be289dff02df20f63321972540b99adedeaa4f2c76091cb2bd1c77956",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 207,
+          "match": "Labels are discovered through",
+          "line_sha256": "bf9318fa95dd95679531953970af30199c88fceb0c8203ec9928c857dd52a4e5",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 237,
+          "match": "Do not claim an aligned overlay",
+          "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 237,
+          "match": "multi-entry source makes association ambiguous",
+          "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Registered paths, relative source, equal level counts, actual transforms and ambiguous source-entry handling survive. No guessed aligned overlay; whole absent-source/default policy is not adjudicated here."
+    },
+    {
+      "trace_key": "OME05-C06",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "Colors SHOULD guide display",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "label value 0 a visible color",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/public-corpus-and-ro-crate.md",
+          "sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+          "line": 9,
+          "match": "uint32/uint64 labels",
+          "line_sha256": "bcc8996df2f37f63ffc87ae3415bcf4f047b079da36a1a7a76430bacd4b84f7a",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/kiln-gpu-cache-and-precision.md",
+          "sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+          "line": 7,
+          "match": "source-value path",
+          "line_sha256": "c24f0349d7b4d8b47942f31f85d7fa8c74a40f5b845ec9a1afc959323814027f",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 190,
+          "match": "Categorical nearest-neighbor sampling",
+          "line_sha256": "4050f4e5fccb306f1af19953cba746803412b5e8d056ce0d3ee65e1de4a1ecde",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 192,
+          "match": "uint32/uint64 label values",
+          "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 140,
+          "match": "palette keyed by exact label ID",
+          "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened_but_lookup_gap_persists",
+      "assessment": "Native text adds exact categorical sampling and precision checks plus ID-keyed fallback palette. It does not explicitly restore supplied color/property lookup by label-value versus metadata-list position or a shuffled-entry discriminator; J5 had already omitted that mechanism."
+    },
+    {
+      "trace_key": "OME05-C07",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 149,
+          "match": "little-endian bytes + Blosc",
+          "line_sha256": "616509273026018f86cc470bbe01da3312a81b6c87380212f76d96c14fbbb304",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 150,
+          "match": "distinct image/label dtype and codec paths",
+          "line_sha256": "0d6a6e00ac8478b1dbc17b4c731aaf559608877435a827ecc5c1d0c763ff72bc",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 209,
+          "match": "valid big-endian codecs",
+          "line_sha256": "fa040c728f84955af426e75c5effd278e3ef2a0875cdd0b5e51bc0b6861f2b3a",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 5,
+          "match": "index-first and index-last",
+          "line_sha256": "175b83bf3f5fe60c24230d9284ec821085b218af53a0c84550add9de5f8d29f3",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "dtype, endianness, codec pipeline",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 192,
+          "match": "big-endian bytes",
+          "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "supported codec necessarily requires",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened_but_layout_gap_persists",
+      "assessment": "Per-array chains, endian cases, index/data codecs and unsupported boundaries are explicit. Reverse decoding and transpose/layout discrimination remain unstated in final prose; not a new J9 loss."
+    },
+    {
+      "trace_key": "OME05-C08",
+      "kind": "partial_control",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 56,
+          "match": "Read-only-boundary correction:",
+          "line_sha256": "55b8c27efaefae8ef5df4efeb59efe5fbe50fee726d7e3f0495b4271044e4cb1",
+          "assigned_parent": "L-53478306aa6a"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 119,
+          "match": "These zeros differ from Zarr",
+          "line_sha256": "aee660669f07d3d76f37af70a075a34fb1197abb6e4ef6ad722cb5aaf5856398",
+          "assigned_parent": "L-4b3f581214b5"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 207,
+          "match": "warnings and original metadata",
+          "line_sha256": "4e581771115a8e77bd1efd503658475d3417b57f360959af8d1a34f6a0f50873",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 209,
+          "match": "Zarr missing chunks yield",
+          "line_sha256": "fa040c728f84955af426e75c5effd278e3ef2a0875cdd0b5e51bc0b6861f2b3a",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 7,
+          "match": "Distinguish uninitialized/absent chunks",
+          "line_sha256": "e6ec7e00bd86649010420cef926bd337e80ac7d1fc6a7dbe203fa8fec96d1fe8",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 188,
+          "match": "declared fill value",
+          "line_sha256": "9ea432651bf737862294fe8a51865f8bc6ffdf5cdb1f4cb76196d6588f320687",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 91,
+          "match": "view-generation token",
+          "line_sha256": "2f3f14bdff9b1187bc387756a77b5732d10596a2fc9f06e79d0228ffafb433b0",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 69,
+          "match": "content hashes and directory entries",
+          "line_sha256": "2eda201b687303a79967bf38b5d746bc6f19ef021fd0ee0351f6b8c9a38914cf",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Declared absence/fill versus errors, cancellation/stale results and source mutation are concrete. Missing storage does not prove acquisition completeness."
+    },
+    {
+      "trace_key": "D4-N01",
+      "kind": "independent_useful_candidate",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 209,
+          "match": "Corrected diagnostic direction:",
+          "line_sha256": "fa040c728f84955af426e75c5effd278e3ef2a0875cdd0b5e51bc0b6861f2b3a",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 202,
+          "match": "attributes object",
+          "line_sha256": "087efb614c9d24d7052623f9eb4305c4457bc6159a320227e0c962bb3d84744a",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+          "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+          "line": 7,
+          "match": "schema acquisition failures",
+          "line_sha256": "30128445eaae5b0f526ff2256f564e8714d113b85366f085da7c80f84b43f0a2",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 273,
+          "match": "Validate and report at distinct stages",
+          "line_sha256": "ffa4eced48e99c88b1bb463745fc7b2c85add02523c028600b4ea802fffaaad7",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 256,
+          "match": "Thirteen data-only probes",
+          "line_sha256": "70ec2d70b81d88b2e7647d170d47744226a706058740f786e801c5f86a04c8b7",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Separate acquisition, structure, semantic, decoder/display and visible diagnostics survive. Native schema execution grows from J5 isolated-definition probes to 13 reported data-only cases; not pixel/runtime proof."
+    },
+    {
+      "trace_key": "D4-N02",
+      "kind": "independent_useful_candidate",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 149,
+          "match": "outer grid describes shards",
+          "line_sha256": "616509273026018f86cc470bbe01da3312a81b6c87380212f76d96c14fbbb304",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 18,
+          "match": "local-only access removes",
+          "line_sha256": "48ca62ea85321328ff266379483b02823e56bebb1e349b64f57850ebafa4549d",
+          "assigned_parent": "L-d3fb5681dad7"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 7,
+          "match": "cold/warm local viewport reads",
+          "line_sha256": "e6ec7e00bd86649010420cef926bd337e80ac7d1fc6a7dbe203fa8fec96d1fe8",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 182,
+          "match": "outer shard shape",
+          "line_sha256": "ca654636136e2d5c8b4d9a29157e5f36733b0a0212e5e6321fcf320bf0f5fcbd",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "index location from metadata",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 93,
+          "match": "allocations plateau",
+          "line_sha256": "08277814bb24c5b3c4ef6af8091c55efac9de6a79bfbb11ec78e42e814b8f7d8",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_strengthened",
+      "assessment": "Shard/chunk/index/edge geometry and total CPU/GPU/staging/cache budgets gain measurable acceptance; no benchmark result inferred."
+    },
+    {
+      "trace_key": "D4-N03",
+      "kind": "independent_useful_candidate",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 165,
+          "match": "Readers SHOULD expose the existence",
+          "line_sha256": "f7006a815d6f2aecfc9c6ff6911bb17ecb862703b0298f12d8c78818b66e1267",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 172,
+          "match": "multiscales chooser",
+          "line_sha256": "07549ac8a40d49f39ae8d739c2c8bc54da0869e88bfd39b21d3e6ba7f743b6ca",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md",
+          "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+          "line": 9,
+          "match": "representative thumbnail",
+          "line_sha256": "98601b02e693e93fecc012511013a7172f30f4aaa38617a051223cd695e80f8e",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md",
+          "sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+          "line": 9,
+          "match": "Alternative: expose",
+          "line_sha256": "67e04259c4f2b24b3eb95351dcd7dd175dfe944974a15719713f2decc1f118f6",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 153,
+          "match": "Container/FOV repair",
+          "line_sha256": "beee90041b6f8cfcb4ff0de7d985f022df1b7163163fd77b235fd000515392fc",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 159,
+          "match": "every declared field",
+          "line_sha256": "ae205de621640b1a05de39bf0e42dde494ba6eccb76f347450710c44c33ced3d",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 67,
+          "match": "one thumbnail as the complete inventory",
+          "line_sha256": "3d9c26b898a08a248dabdd928c48715f477339d814ae8dd0656d7e307f6f2df5",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_with_scope_choice",
+      "assessment": "Source identity, varied fields/acquisitions and honest inventory survive. J9 chooses every declared FOV as repair and holds multi-fileset catalogs/plate-map/stitching; root must adjudicate admitted-container breadth."
+    },
+    {
+      "trace_key": "D4-N04",
+      "kind": "independent_useful_candidate",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 168,
+          "match": "OMERO is optional, but when present",
+          "line_sha256": "698006c4b2008000adfd0857c7aef3b89f1a8b35ddd71db44904093f7e22edae",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 104,
+          "match": "only `defaultT/defaultZ`",
+          "line_sha256": "f77cf20186284a0d1a15d7868cbaa909c8ee1575fb5993c75a90962097adec2f",
+          "assigned_parent": "L-cf0ac7e43301"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 155,
+          "match": "Default windows without OMERO",
+          "line_sha256": "8238839fab5c4672e9a5c87b31957d2fa4f5ddb173d68fcc90d7b9987c7074aa",
+          "assigned_parent": "L-eef00830c219"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 140,
+          "match": "Display-policy proposal requiring approval",
+          "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 209,
+          "match": "OMERO metadata is optional",
+          "line_sha256": "48e60b15a22326a70b0da3db6e162316b41e7fab4fee2bb6903445e091ec7c20",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_as_held_choice",
+      "assessment": "Producer display defaults, missing-data fallbacks, zero-color policy and initial indices remain explicit unapproved choices."
+    },
+    {
+      "trace_key": "D4-P01",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 153,
+          "match": "a requirement to implement all legacy formats",
+          "line_sha256": "ea5cfc724c1e10a62e9b000fa18561fad3e0fdb1b19287dc1f30edfc7dee939d",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 28,
+          "match": "not an NGFF mandate to use one particular library",
+          "line_sha256": "ca1e7699f097c12a993d54c87aafc421c8450a398e372cac8678e3c6401da93f",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 172,
+          "match": "Legacy-version support, a multiscales chooser",
+          "line_sha256": "07549ac8a40d49f39ae8d739c2c8bc54da0869e88bfd39b21d3e6ba7f743b6ca",
+          "assigned_parent": "L-aadd42cb09c9"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 35,
+          "match": "Material choice needing approval",
+          "line_sha256": "2209a50bc1d4e04976119da05d41a6795c8ca58d8da38757968665f44e866030",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 246,
+          "match": "Explicit legacy-version reading",
+          "line_sha256": "a6710e7dff909ceddcd530a7d4d225d2500ae606817847135818766a302c81e1",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 35,
+          "match": "No stack is selected",
+          "line_sha256": "2209a50bc1d4e04976119da05d41a6795c8ca58d8da38757968665f44e866030",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "retained_scope_qualified",
+      "assessment": "Legacy, library/renderer and additional capability choices are held. Container breadth still needs scope adjudication rather than automatic approval from format semantics."
+    },
+    {
+      "trace_key": "D4-P02",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "same number of resolution levels",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 166,
+          "match": "Registration is in the **labels container",
+          "line_sha256": "38d53c6f56a321b22d6813782620a2e0d3b82dff6416637b6e86a07f8f5b1945",
+          "assigned_parent": "L-aadd42cb09c9"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 207,
+          "match": "same number of levels",
+          "line_sha256": "bf9318fa95dd95679531953970af30199c88fceb0c8203ec9928c857dd52a4e5",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 207,
+          "match": "container's `ome.labels`",
+          "line_sha256": "bf9318fa95dd95679531953970af30199c88fceb0c8203ec9928c857dd52a4e5",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "corrections_retained",
+      "assessment": "Nested registration and required same-level count retained; equality alone is explicitly insufficient for alignment."
+    },
+    {
+      "trace_key": "D4-P03",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 29,
+          "match": "Causal correction:",
+          "line_sha256": "488260aa841dc0d19b25475d14c62857114b477c424cd789b8f29e81f6f1d265",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 32,
+          "match": "unresolved reproduction/root cause",
+          "line_sha256": "45f8effe6f5684c85d10437e62412828ec7e50fc0e1c0c6486b8259c201d973a",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 9,
+          "match": "do not establish whether the converter",
+          "line_sha256": "47418f0d26c46697a843a0f84d72ae46eea160c044cb277580f3f1fad10b2137",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 29,
+          "match": "does not diagnose sharding",
+          "line_sha256": "a8caccefdaa3434381d59e0d7862dec2c883875d7b3b650b9bcd31ad113c0d37",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 114,
+          "match": "Paired challenge-resave regression",
+          "line_sha256": "5100e9684757f044f9c56695614c1a5d9ba6089b9f5c55b8d7ee017de4d08f16",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "causal_correction_retained",
+      "assessment": "Vizarr repeated tiles remain a paired regression candidate with unresolved converter/layout/codec/cache/renderer cause."
+    },
+    {
+      "trace_key": "D4-P04",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 28,
+          "match": "Python minimums must be pinned per release",
+          "line_sha256": "ca1e7699f097c12a993d54c87aafc421c8450a398e372cac8678e3c6401da93f",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 121,
+          "match": "Current Python minimum is **3.12**",
+          "line_sha256": "290f9381a62990b8f2adf7899ede0881180b14a90aeb163c6577dac706eefb8a",
+          "assigned_parent": "L-4b3f581214b5"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "Python>=3.11 / zarr>=3.1.5",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "Python>=3.12 / zarr>=3.0.0",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "NGFF does not mandate the Python library",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "version_corrections_retained",
+      "assessment": "Pinned napari versus ome-zarr floors and storage-format/library distinction replace blanket stale minima."
+    },
+    {
+      "trace_key": "D4-P05",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 25,
+          "match": "#404 is **closed, not merged**",
+          "line_sha256": "ae3f53d5f065c6bcd28076e8d91f255dda39ccf884ed6f3330a6ddc6161efb47",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 27,
+          "match": "v0.8.1 explicitly removes",
+          "line_sha256": "fdeed48cc07f47191234bea4556175d60a607324e72eb3801dd97e5e65acc834",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 41,
+          "match": "“#404+#413 merged” is false",
+          "line_sha256": "f3ea01ea8a8c0b4770d5e4c1eabbfd4edb5a756900a39fa52e3b1fbdb532d59c",
+          "assigned_parent": "L-8e152cf58e36"
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "closed without merging as a standalone PR",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 27,
+          "match": "0.8.1's actual dependency-file removal",
+          "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "chronology_corrections_retained",
+      "assessment": "404/413 and napari dependency/code/package chronology retain precise qualifications."
+    },
+    {
+      "trace_key": "D4-P06",
+      "kind": "precision_or_scope_finding",
+      "actual_upstream_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 150,
+          "match": "It refutes the assertion that these writers universally emit sharded",
+          "line_sha256": "0d6a6e00ac8478b1dbc17b4c731aaf559608877435a827ecc5c1d0c763ff72bc",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+          "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "line": 155,
+          "match": "Missing storage is not automatically zero",
+          "line_sha256": "8238839fab5c4672e9a5c87b31957d2fa4f5ddb173d68fcc90d7b9987c7074aa",
+          "assigned_parent": "L-eef00830c219"
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+          "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+          "line": 7,
+          "match": "declared fill",
+          "line_sha256": "e6ec7e00bd86649010420cef926bd337e80ac7d1fc6a7dbe203fa8fec96d1fe8",
+          "assigned_parent": null
+        }
+      ],
+      "comparison_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 182,
+          "match": "writer universally emits sharded arrays",
+          "line_sha256": "ca654636136e2d5c8b4d9a29157e5f36733b0a0212e5e6321fcf320bf0f5fcbd",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 29,
+          "match": "does not diagnose sharding",
+          "line_sha256": "a8caccefdaa3434381d59e0d7862dec2c883875d7b3b650b9bcd31ad113c0d37",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 192,
+          "match": "never painted as successful zeros",
+          "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+          "assigned_parent": null
+        }
+      ],
+      "disposition": "prior_correction_retained",
+      "assessment": "Actual label int8/unsharded versus intensity shard chain disproves writer-wide sharding inference; provisional zeros/decode-cause claims remain qualified."
+    }
+  ],
+  "child_direction_lineage": [
+    {
+      "child_ids": [
+        "L-38c370904778"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/agave-desktop-volume-loading.md",
+      "sha256": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/agave-desktop-volume-loading.md",
+        "sha256": "30288d245422c9f2ad84934bffd319fabbfdb6b228365811b253e6fd30041555",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "8cd3b1a16f79e91f25f76d3e608bb6decda98ad1cd76db23ba466bd3cfa95cb7",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 82,
+        "match": "AGAVE desktop volume reader",
+        "line_sha256": "b973423d74c5ce1e897b28efbdf2d225f74f1015cb09414547a60e4af0464b0f",
+        "assigned_parent": null
+      },
+      "assessment": "retained; total memory and transform limits, prototype/runtime checks held"
+    },
+    {
+      "child_ids": [
+        "L-d3c226e041eb"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/anatomical-orientation.md",
+      "sha256": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/anatomical-orientation.md",
+        "sha256": "b33072350e6defb40750a7a6b8009d2c979099e5a73ff4a67f90a7a48372b963",
+        "line": 1,
+        "match": "Direction",
+        "line_sha256": "3b3a3e3dbceaf7f30db04996f2c61989224ac318800c39ae2a723e428b521edd",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 54,
+        "match": "Anatomical direction display",
+        "line_sha256": "bfa7486c6cafc299d2008812d2b0741066283ec0b704e156469ebe94a950a447",
+        "assigned_parent": null
+      },
+      "assessment": "retained as unapproved orientation-display choice, no automatic flipping"
+    },
+    {
+      "child_ids": [
+        "L-d5fc6dd48020"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/bia-zarr-discovery-thumbnails.md",
+      "sha256": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/bia-zarr-discovery-thumbnails.md",
+        "sha256": "bfed3a6dad120c40d5ba995622120554f40973c72c55260649678a52a6fe18db",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "8bd08a9947d989cb77d9a6cff5484c9ea42eff6a73bcba442cd404b7130677df",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 84,
+        "match": "bia-zarr type detection",
+        "line_sha256": "5f3d38514451b72657edff13ae5fb0138fa56dede54601163aa34a09dcd42489",
+        "assigned_parent": null
+      },
+      "assessment": "retained with v2/v3, first-field, ratios and unknown-unit restrictions"
+    },
+    {
+      "child_ids": [
+        "L-f402dde94d1c"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+      "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/calibration-and-schema-gaps.md",
+        "sha256": "4e56621b37150b1d4b422f00b9d73357e4dc31eb8363f56edd7506da45ed32e6",
+        "line": 7,
+        "match": "Direction",
+        "line_sha256": "30128445eaae5b0f526ff2256f564e8714d113b85366f085da7c80f84b43f0a2",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 256,
+        "match": "Thirteen data-only probes",
+        "line_sha256": "70ec2d70b81d88b2e7647d170d47744226a706058740f786e801c5f86a04c8b7",
+        "assigned_parent": null
+      },
+      "assessment": "retained and expanded; semantic checks and schema/prose/API limits"
+    },
+    {
+      "child_ids": [
+        "L-ad90269e197b"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/converter-progress-diagnostics.md",
+      "sha256": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/converter-progress-diagnostics.md",
+        "sha256": "019965b26c12a00bf33695424ef75b604c5b24189d476f65878386f927049b99",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "8d6b5a06ba52207b5b20b1cd97761a16441b6d7a1d74b583be8a4ae94c365406",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 87,
+        "match": "NGFF-Converter progress/failure UI",
+        "line_sha256": "37c461bd24ffecc981fb06110a6f6a7a16ad63c518731568254d122ebacaa4f1",
+        "assigned_parent": null
+      },
+      "assessment": "retained as per-item status/error lesson; conversion and serial queue not imported"
+    },
+    {
+      "child_ids": [
+        "L-cfcf357afb12"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md",
+      "sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/hcs-acquisition-and-field-navigation.md",
+        "sha256": "8bffac93c0000ee49eecd78379e067269809d8f8a14bab2073492a96f8be364d",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "27f5227704e2dfe27144bb513ca0ef8c19e736be4d382b6fb0ad38f81f3f6ea9",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 153,
+        "match": "Container/FOV repair",
+        "line_sha256": "beee90041b6f8cfcb4ff0de7d985f022df1b7163163fd77b235fd000515392fc",
+        "assigned_parent": null
+      },
+      "assessment": "retained; full FOV/acquisition identity, first-field assumptions and synthetic overview corrected"
+    },
+    {
+      "child_ids": [
+        "L-fb1d89805e27"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/kiln-gpu-cache-and-precision.md",
+      "sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/kiln-gpu-cache-and-precision.md",
+        "sha256": "f16a0fa773f8c3c49226faffc829361cc13d8550e6727d6b09386ecbe72f4e41",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "4e1fa02e639edded44f06180d8d801d4082d9dbc9c7af37ca047f1b4e53282e2",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 85,
+        "match": "Kiln GPU cache",
+        "line_sha256": "a5b3a77b0231bae1e29f65bd515803cf78cf370ce2d51797a9da733cccca9df2",
+        "assigned_parent": null
+      },
+      "assessment": "retained; beta channel cap, half-float precision, total memory unknown"
+    },
+    {
+      "child_ids": [
+        "L-e107cc0aa8b2"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/library-api-and-metadata-acceleration.md",
+      "sha256": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/library-api-and-metadata-acceleration.md",
+        "sha256": "f3e3ccef2a885cf4290672cf1febd72b9cf65b3a36e13394a733487b3f4f65c1",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "c8a4379ba62673d614910b2f820491271a85bde546c2f01149a6bd6f2bb51d45",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 175,
+        "match": "Material proposals needing review",
+        "line_sha256": "2b2ace33c63140bdd8aafd7fe5478ea208d359a964efe5a71b5d57799ffa470a",
+        "assigned_parent": null
+      },
+      "assessment": "retained; API alternatives and cache freshness/fallback/limits held"
+    },
+    {
+      "child_ids": [
+        "L-ae7d83feeafe"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md",
+      "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/metadata-context-and-label-discovery.md",
+        "sha256": "318079a1544d290d56d032279282668a95615ea916414f5d4d3cca816904f24d",
+        "line": 7,
+        "match": "Direction",
+        "line_sha256": "8e26b42be289dff02df20f63321972540b99adedeaa4f2c76091cb2bd1c77956",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 237,
+        "match": "Identify a displayed image by fileset",
+        "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+        "assigned_parent": null
+      },
+      "assessment": "retained; owner/entry/source context plus direct-array/label-link proposals held"
+    },
+    {
+      "child_ids": [
+        "L-c82c7c8fa320"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/odon-tiled-reader.md",
+      "sha256": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/odon-tiled-reader.md",
+        "sha256": "092426461852a1d5c02ad9561392b46d64d1d654a2b0161bb994cb5264717044",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "fffc3f2d3c5baf02079a98c78f16440ed78dfc0b7b5e316b5fbf827d019b3ef4",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 83,
+        "match": "Odon native tiled reader",
+        "line_sha256": "f8bf1df78d009bfb23d0825831d80811902692228c8eba51f3d61758056de838",
+        "assigned_parent": null
+      },
+      "assessment": "retained; OpenGL correction, subset reads, conventional axes and missing global transforms"
+    },
+    {
+      "child_ids": [
+        "L-4f130c3d3083"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/pluot-portable-2d-rendering.md",
+      "sha256": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/pluot-portable-2d-rendering.md",
+        "sha256": "117fe09d53e7c91e2af751ed49c3e68db0e37251980073b0ac65bc6043ed11a9",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "3ca8acd3ebe5a507dec7a906067f626a2521e30da887b5f48e24de28826c548e",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 86,
+        "match": "Pluot portable 2D rendering",
+        "line_sha256": "4b9e4f46bf2b0e8fee2f39e862e0147e788f333075832ab6ccc9bed75c8128db",
+        "assigned_parent": null
+      },
+      "assessment": "retained; experimental 2D before 3D, no mature-volume claim"
+    },
+    {
+      "child_ids": [
+        "L-04064142bc11"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/preview-coordinate-systems.md",
+      "sha256": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/preview-coordinate-systems.md",
+        "sha256": "f671d08aa6139d4490501b1e1f0e20bb1ae407fa12971aa74c62be3af2909653",
+        "line": 7,
+        "match": "Direction",
+        "line_sha256": "d18580596d396dd9fc2ff61bd5855d13202d06891962f292cc8e68b6b7a1674c",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 52,
+        "match": "Version-pinned preview inspection/display",
+        "line_sha256": "fb7f63e642e4557bbe7af8dfad74208aadf4ec9e6ec02da30757653eb271dad5",
+        "assigned_parent": null
+      },
+      "assessment": "retained; exact previews and graph/capability boundary, no executed display"
+    },
+    {
+      "child_ids": [
+        "L-65d06ade3252"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/public-corpus-and-ro-crate.md",
+      "sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/public-corpus-and-ro-crate.md",
+        "sha256": "f5df0d3eb95e1aa756f1bbf9ab3e814f8960420460faa9926d0bb97f86619846",
+        "line": 7,
+        "match": "Direction",
+        "line_sha256": "fe4e3cd6e835a9c6670d3a0eb73a6fbfea474416a11b9225b34281e65ce5e843",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 118,
+        "match": "Unapproved RO-Crate discovery proposal",
+        "line_sha256": "45e8c9291cc4d9ed3282e0136a223612aaf717a9d27f33cdc3cf03bdc14c47af",
+        "assigned_parent": null
+      },
+      "assessment": "retained; verified specimen/metadata-only limits and optional enrichment"
+    },
+    {
+      "child_ids": [
+        "L-c0e14754c79c"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+      "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/shard-io-and-fill-semantics.md",
+        "sha256": "87bad4efaf852c6bb452da8dddfc523ba67ccaad91bd713742836be990aa9363",
+        "line": 7,
+        "match": "Direction",
+        "line_sha256": "e6ec7e00bd86649010420cef926bd337e80ac7d1fc6a7dbe203fa8fec96d1fe8",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 188,
+        "match": "Sharding semantics",
+        "line_sha256": "9ea432651bf737862294fe8a51865f8bc6ffdf5cdb1f4cb76196d6588f320687",
+        "assigned_parent": null
+      },
+      "assessment": "retained; indexes, fill/error distinctions, independent-pixel reference needed"
+    },
+    {
+      "child_ids": [
+        "L-ec394b185033"
+      ],
+      "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/zipped-local-filesets.md",
+      "sha256": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020",
+      "upstream_direction_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/leads/zipped-local-filesets.md",
+        "sha256": "f07e8371a8fb9033df1eee3489b6165fb1e9435aeb72d51f81bc8857fffb7020",
+        "line": 3,
+        "match": "Direction",
+        "line_sha256": "ef4e79bbc611eb6c6e74b2d7cb68e983506733f5ec654be6c825f7b1fe562ef0",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 53,
+        "match": "Read-only local ZIP/",
+        "line_sha256": "bee674940505b0699a44891ae2ef82ab590bebd8a151df214b1c4dbf4a1e48a8",
+        "assigned_parent": null
+      },
+      "assessment": "retained; MUST versus recommendations, bounded reads and warning/failure cases"
+    }
+  ],
+  "selected_correction_lineage": [
+    {
+      "trace_key": "J5-FC-R1",
+      "mechanism": "Eight schema results and correct validation scope",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 203,
+        "match": "Direct independent evaluations",
+        "line_sha256": "12066ada906ec68b114583e4d9dd630f6d6b0dee8c1601d83225ea1311b8fad7",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 256,
+        "match": "Thirteen data-only probes",
+        "line_sha256": "70ec2d70b81d88b2e7647d170d47744226a706058740f786e801c5f86a04c8b7",
+        "assigned_parent": null
+      },
+      "assessment": "Prior J5 eight isolated-definition/attributes outcomes survive; J9 reports thirteen full-target/control/data cases. New J9 executions not independently rerun in this lineage review."
+    },
+    {
+      "trace_key": "J5-FC-R2",
+      "mechanism": "Model warn/repair and cross-array checks",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 42,
+        "match": "warn",
+        "line_sha256": "a630e889896ba990824d12d3b59557e969d33e512206cffc8de887983095c8f1",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 271,
+        "match": "reversed inline translation/scale",
+        "line_sha256": "c7321538c09fe0c5d52aaec89adcfb2f8129797651ff05b9e44db8e81906dd7d",
+        "assigned_parent": null
+      },
+      "assessment": "Warn/swap/scale semantics, full metadata retention and model limits survive; no model runtime claim."
+    },
+    {
+      "trace_key": "J5-FC-R3",
+      "mechanism": "Released napari first-transform/XML/optional-label gaps",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 102,
+        "match": "Lines 266–283",
+        "line_sha256": "90699e181c60ba3d7786909f71732fe8ee5b25d39e103553561be17bf6757820",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 127,
+        "match": "Lines 266–283",
+        "line_sha256": "2257a83e2b0ea3edc95df96b0426f379fa6a6e83b0119d9e4270c3575e1a622d",
+        "assigned_parent": null
+      },
+      "assessment": "Static gaps survive with installed-version/runtime qualification."
+    },
+    {
+      "trace_key": "J5-FC-R4",
+      "mechanism": "Image API writer 0.6 default / finder writes",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 121,
+        "match": "to_ome_zarr",
+        "line_sha256": "290f9381a62990b8f2adf7899ede0881180b14a90aeb163c6577dac706eefb8a",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 149,
+        "match": "defaults to **0.6**",
+        "line_sha256": "a0ac743ae2637827f68901d12a2ba46bb16cb39ed93c0a6ca42b8c341082a31e",
+        "assigned_parent": null
+      },
+      "assessment": "Reader/writer boundary retained and APIs distinguished; no source writes authorized."
+    },
+    {
+      "trace_key": "J5-FC-R4B",
+      "mechanism": "Finder source CSV write",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 56,
+        "match": "biofile_finder.csv",
+        "line_sha256": "55b8c27efaefae8ef5df4efeb59efe5fbe50fee726d7e3f0495b4271044e4cb1",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 65,
+        "match": "mode `w`",
+        "line_sha256": "557e1187365743bfe088094fea5a28b5a9b8c7783091f7f69a2efde3b04943b4",
+        "assigned_parent": null
+      },
+      "assessment": "Read-only boundary strengthened into content/directory-entry checks."
+    },
+    {
+      "trace_key": "J5-MATRIX",
+      "mechanism": "Missing/unconfirmed matrix cell versus failure",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 16,
+        "match": "not tested/not confirmed",
+        "line_sha256": "76adce83bf76469901623b48e6866e696ccb11a24dfb19ab9a56361e0fe85027",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 18,
+        "match": "HCS cell is unconfirmed",
+        "line_sha256": "824a041d86a548aa27c4636ac8b0c54b91d6d800fbc611ee67a037b7f4f43e61",
+        "assigned_parent": null
+      },
+      "assessment": "Correct J5 missing-cell interpretation survives; unrelated J6 error was never J9 input."
+    },
+    {
+      "trace_key": "J5-RENDERERS",
+      "mechanism": "Odon OpenGL and Pluot experimental 2D",
+      "actual_upstream_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0005-reconcile/workspace/notes.md",
+        "sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "line": 70,
+        "match": "egui/glow",
+        "line_sha256": "7fe366dede300f756eec32c6d344c29762d3bd76073e5cb45ce45b93a8a836cc",
+        "assigned_parent": null
+      },
+      "comparison_locator": {
+        "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+        "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "line": 83,
+        "match": "captured stack uses glow/OpenGL",
+        "line_sha256": "f8bf1df78d009bfb23d0825831d80811902692228c8eba51f3d61758056de838",
+        "assigned_parent": null
+      },
+      "assessment": "Native renderer distinctions and capability limits survive without performance certification."
+    }
+  ],
+  "interim_per_job_partial_control_score": {
+    "job": "J0009-compare",
+    "scope": "Final native notes prose only, proposed semantic repairs; no final whole-stage or derivative score",
+    "points": 6.5,
+    "denominator": 8,
+    "controls": [
+      {
+        "id": "OME05-C01",
+        "title": "Versioned metadata admission",
+        "rating": "full",
+        "points": 1,
+        "criterion": "Identify the version/namespace distinction and require explicit compatibility validation or a truthful unsupported result; no implicit legacy reinterpretation.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 27,
+            "match": "Zarr v3 is the mandated",
+            "line_sha256": "ea627a15458a37b2d3a4a74636a221f0b625a3e01261f5dc0744059827e96fc1",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 283,
+            "match": "mere coexistence is not grounds",
+            "line_sha256": "2adc4d9bc6224fb1f463b0017fcde13cf41069a20993a4b521a2d6f9c1796e75",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 159,
+            "match": "unknown version cannot silently",
+            "line_sha256": "ae205de621640b1a05de39bf0e42dde494ba6eccb76f347450710c44c33ced3d",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Version namespace, root recognition, migration coexistence and explicit legacy refusal/support boundary survive. Tolerance remains unapproved."
+      },
+      {
+        "id": "OME05-C02",
+        "title": "Axis-to-array identity",
+        "rating": "half",
+        "points": 0.5,
+        "criterion": "Tie navigation/slicing to validated axis identity, distinguishing absent dimensions from length-one dimensions; reject mismatches without inventing sliders or coordinates.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 203,
+            "match": "Validate dimensionality, axis identity",
+            "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 211,
+            "match": "dimension-name mismatch",
+            "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 211,
+            "match": "singleton channel/time",
+            "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Validates names/rank/order and preserves calibrated channel splitting; absent-versus-length-one navigation/control behavior is not explicitly distinguished. This was already unclosed in J5."
+      },
+      {
+        "id": "OME05-C03",
+        "title": "Declared pyramid selection",
+        "rating": "full",
+        "points": 1,
+        "criterion": "Use the declared level list and level-specific geometry; no lexicographic/numeric-folder ordering or fixed reduction assumption, with explicit missing-level handling.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 203,
+            "match": "Resolve each declared dataset path",
+            "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 211,
+            "match": "independently specified second level",
+            "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 192,
+            "match": "inaccessible declared array",
+            "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Declared relative paths/order, independent per-level geometry, non-2x/Z reductions and unavailable-array handling become actionable checks."
+      },
+      {
+        "id": "OME05-C04",
+        "title": "Composed coordinate calibration",
+        "rating": "full",
+        "points": 1,
+        "criterion": "Explain transform composition and unit/unknown-calibration treatment, with a concrete check that would expose reversed composition or omitted offsets.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 211,
+            "match": "index `[4,6]` must map",
+            "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 203,
+            "match": "Unitless or unknown-unit values",
+            "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Correct composition has an explicit [141,2513] oracle and independent level mapping; unknown units preserve provenance."
+      },
+      {
+        "id": "OME05-C05",
+        "title": "Associated label discovery and registration",
+        "rating": "full",
+        "points": 1,
+        "criterion": "Resolve declared association and level/coordinate relationship before overlaying; do not attach by folder basename or array dimensions alone. Unsupported geometry stays explicit.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 207,
+            "match": "Labels are discovered through",
+            "line_sha256": "bf9318fa95dd95679531953970af30199c88fceb0c8203ec9928c857dd52a4e5",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 237,
+            "match": "Do not claim an aligned overlay",
+            "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 237,
+            "match": "multi-entry source makes association ambiguous",
+            "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Registered paths, relative source, equal level counts, actual transforms and ambiguous source-entry handling survive. No guessed aligned overlay; whole absent-source/default policy is not adjudicated here."
+      },
+      {
+        "id": "OME05-C06",
+        "title": "Categorical label identity",
+        "rating": "half",
+        "points": 0.5,
+        "criterion": "Preserve categorical identity through decoding/lookup/resampling, or declare an exact supported range and refuse unsupported data. Do not turn palette preference into a format mandate.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 190,
+            "match": "Categorical nearest-neighbor sampling",
+            "line_sha256": "4050f4e5fccb306f1af19953cba746803412b5e8d056ce0d3ee65e1de4a1ecde",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 192,
+            "match": "uint32/uint64 label values",
+            "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 140,
+            "match": "palette keyed by exact label ID",
+            "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Native text adds exact categorical sampling and precision checks plus ID-keyed fallback palette. It does not explicitly restore supplied color/property lookup by label-value versus metadata-list position or a shuffled-entry discriminator; J5 had already omitted that mechanism."
+      },
+      {
+        "id": "OME05-C07",
+        "title": "Metadata-driven chunk decoding",
+        "rating": "half",
+        "points": 0.5,
+        "criterion": "Identify pipeline/layout/endian correctness and require an explicit support boundary or evidence for the chosen reader; unsupported data must not be displayed as decoded pixels.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 186,
+            "match": "dtype, endianness, codec pipeline",
+            "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 192,
+            "match": "big-endian bytes",
+            "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 186,
+            "match": "supported codec necessarily requires",
+            "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Per-array chains, endian cases, index/data codecs and unsupported boundaries are explicit. Reverse decoding and transpose/layout discrimination remain unstated in final prose; not a new J9 loss."
+      },
+      {
+        "id": "OME05-C08",
+        "title": "Absent data versus failed reads",
+        "rating": "full",
+        "points": 1,
+        "criterion": "Distinguish valid absent/fill data from read/decode/cancellation failures; show the actual state and never repair/write source data to fabricate successful viewing.",
+        "comparison_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 188,
+            "match": "declared fill value",
+            "line_sha256": "9ea432651bf737862294fe8a51865f8bc6ffdf5cdb1f4cb76196d6588f320687",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 91,
+            "match": "view-generation token",
+            "line_sha256": "2f3f14bdff9b1187bc387756a77b5732d10596a2fc9f06e79d0228ffafb433b0",
+            "assigned_parent": null
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 69,
+            "match": "content hashes and directory entries",
+            "line_sha256": "2eda201b687303a79967bf38b5d746bc6f19ef021fd0ee0351f6b8c9a38914cf",
+            "assigned_parent": null
+          }
+        ],
+        "assessment": "Declared absence/fill versus errors, cancellation/stale results and source mutation are concrete. Missing storage does not prove acquisition completeness."
+      }
+    ]
+  },
+  "interim_union_score": null,
+  "final_stage_score": null,
+  "native_group_inventory": {
+    "top_level_dispositions": {
+      "already covered": 1,
+      "concrete repair": 9,
+      "product proposal requiring approval": 2
+    },
+    "explicit_repair_heading_blocks": [
+      {
+        "inventory_id": "J9-RB01",
+        "assigned_parent": "L-b8b6f684e168",
+        "name": "Versioned interoperability contract",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 31,
+          "match": "Concrete replacement behavior for line 9",
+          "line_sha256": "0a1f1afdeb42b544b337b695094c58323440458f9eac3e02740c61fb6748f28a",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB02",
+        "assigned_parent": "L-53478306aa6a",
+        "name": "Selected-fileset discovery/read-only inventory",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 67,
+          "match": "Concrete replacement behavior for lines 5",
+          "line_sha256": "3d9c26b898a08a248dabdd928c48715f477339d814ae8dd0656d7e307f6f2df5",
+          "assigned_parent": "L-53478306aa6a"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB03",
+        "assigned_parent": "L-bb5dcafa9770",
+        "name": "Background work and bounded stale-result handling",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 91,
+          "match": "Concrete repair shared",
+          "line_sha256": "2f3f14bdff9b1187bc387756a77b5732d10596a2fc9f06e79d0228ffafb433b0",
+          "assigned_parent": "L-bb5dcafa9770"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB04",
+        "assigned_parent": "L-e22a81d34a4c",
+        "name": "Traceable metadata/pixel-region corpus",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 104,
+          "match": "Concrete replacement for line 11",
+          "line_sha256": "665fb060e9a8a6358c11315e743ef53c5ad195971d2be549890df660dadfe849",
+          "assigned_parent": "L-e22a81d34a4c"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB05",
+        "assigned_parent": "L-cf0ac7e43301",
+        "name": "Normalized image/label metadata adapter",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 134,
+          "match": "Concrete replacement behavior.",
+          "line_sha256": "8fb2ba5ed0611661d7f00b56308effb2662f8214a6f231a4616671bd625a94e7",
+          "assigned_parent": "L-cf0ac7e43301"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB06",
+        "assigned_parent": "L-4b3f581214b5",
+        "name": "Container/FOV identity and inventory",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 153,
+          "match": "Container/FOV repair",
+          "line_sha256": "beee90041b6f8cfcb4ff0de7d985f022df1b7163163fd77b235fd000515392fc",
+          "assigned_parent": "L-4b3f581214b5"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB07",
+        "assigned_parent": "L-4b3f581214b5",
+        "name": "Separately tested read-only adapter stages",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 157,
+          "match": "Read-adapter replacement",
+          "line_sha256": "ae6d5d2540fa711a9f978c7fb63c3d3cb7aabc2c51a67d2cd6a8142229313a64",
+          "assigned_parent": "L-4b3f581214b5"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB08",
+        "assigned_parent": "L-eef00830c219",
+        "name": "Per-array decoding, shards/fill and categorical labels",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "Concrete replacement behavior for lines 5/7/9",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": "L-eef00830c219"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB09",
+        "assigned_parent": "L-aadd42cb09c9",
+        "name": "Declared levels and composed coordinates",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 203,
+          "match": "Concrete replacement behavior for line 5",
+          "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+          "assigned_parent": "L-aadd42cb09c9"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB10",
+        "assigned_parent": "L-48b8e76e269e",
+        "name": "Metadata owner/entry/source identity",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 237,
+          "match": "Concrete replacement behavior.",
+          "line_sha256": "77a7ffe55bc4460a7881c8e5776c5ac9f2af69ff6a4751abdb3dd96ef513a2b6",
+          "assigned_parent": "L-48b8e76e269e"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      },
+      {
+        "inventory_id": "J9-RB11",
+        "assigned_parent": "L-f45bf9ee551d",
+        "name": "Layered explanatory validation",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 273,
+          "match": "Concrete replacement behavior for lines 7",
+          "line_sha256": "ffa4eced48e99c88b1bb463745fc7b2c85add02523c028600b4ea802fffaaad7",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        "status": "proposed repair text; no Plan landing or acceptance approval"
+      }
+    ],
+    "proposal_blocks_expanding_table_rows": [
+      {
+        "inventory_id": "J9-PB01",
+        "assigned_parent": "L-b8b6f684e168",
+        "name": "Architecture reuse/stack selection",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 35,
+          "match": "Material choice needing approval",
+          "line_sha256": "2209a50bc1d4e04976119da05d41a6795c8ca58d8da38757968665f44e866030",
+          "assigned_parent": "L-b8b6f684e168"
+        },
+        "decision_families": [
+          "architecture"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB02",
+        "assigned_parent": "L-8e152cf58e36",
+        "name": "Preview metadata/display",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 52,
+          "match": "Version-pinned preview inspection/display",
+          "line_sha256": "fb7f63e642e4557bbe7af8dfad74208aadf4ec9e6ec02da30757653eb271dad5",
+          "assigned_parent": "L-8e152cf58e36"
+        },
+        "decision_families": [
+          "preview"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB03",
+        "assigned_parent": "L-8e152cf58e36",
+        "name": "Archived hierarchy opening",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 53,
+          "match": "Read-only local ZIP/",
+          "line_sha256": "bee674940505b0699a44891ae2ef82ab590bebd8a151df214b1c4dbf4a1e48a8",
+          "assigned_parent": "L-8e152cf58e36"
+        },
+        "decision_families": [
+          "archive"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB04",
+        "assigned_parent": "L-8e152cf58e36",
+        "name": "Anatomical details/widget",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 54,
+          "match": "Anatomical direction display",
+          "line_sha256": "bfa7486c6cafc299d2008812d2b0741066283ec0b704e156469ebe94a950a447",
+          "assigned_parent": "L-8e152cf58e36"
+        },
+        "decision_families": [
+          "anatomy"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB05",
+        "assigned_parent": "L-53478306aa6a",
+        "name": "Multi-fileset catalog, optional persistence/manifest",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 71,
+          "match": "Unapproved collection-browser proposal",
+          "line_sha256": "1e23d8f8e2722efb44168b654df25144fa64412fce9b5bad29adaec09e0944ac",
+          "assigned_parent": "L-53478306aa6a"
+        },
+        "decision_families": [
+          "catalog"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB06",
+        "assigned_parent": "L-bb5dcafa9770",
+        "name": "Demand-driven 2D architecture evaluation",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 89,
+          "match": "Unapproved architecture proposal",
+          "line_sha256": "863105c17b2114c0e69129d88f2e41cc26fbd05b1e607efaf2325d2ed8f50cbb",
+          "assigned_parent": "L-bb5dcafa9770"
+        },
+        "decision_families": [
+          "architecture"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB07",
+        "assigned_parent": "L-e22a81d34a4c",
+        "name": "Dataset metadata enrichment",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 118,
+          "match": "Unapproved RO-Crate discovery proposal",
+          "line_sha256": "45e8c9291cc4d9ed3282e0136a223612aaf717a9d27f33cdc3cf03bdc14c47af",
+          "assigned_parent": "L-e22a81d34a4c"
+        },
+        "decision_families": [
+          "rocrate"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB08",
+        "assigned_parent": "L-cf0ac7e43301",
+        "name": "Display defaults and fallback policies",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 140,
+          "match": "Display-policy proposal requiring approval",
+          "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+          "assigned_parent": "L-cf0ac7e43301"
+        },
+        "decision_families": [
+          "display"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB09",
+        "assigned_parent": "L-4b3f581214b5",
+        "name": "API adoption and metadata caching",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 175,
+          "match": "Material proposals needing review",
+          "line_sha256": "2b2ace33c63140bdd8aafd7fe5478ea208d359a964efe5a71b5d57799ffa470a",
+          "assigned_parent": "L-4b3f581214b5"
+        },
+        "decision_families": [
+          "architecture",
+          "cache"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB10",
+        "assigned_parent": "L-48b8e76e269e",
+        "name": "Coordinate-context chooser",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 245,
+          "match": "| Multiscales-entry chooser",
+          "line_sha256": "28028046b9bfdb7dc356fd8b3a5210568e0fb062ae3d5882cb4b7fb08b6fc0eb",
+          "assigned_parent": "L-48b8e76e269e"
+        },
+        "decision_families": [
+          "entry"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB11",
+        "assigned_parent": "L-48b8e76e269e",
+        "name": "Explicit legacy reader",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 246,
+          "match": "| Explicit legacy-version reading",
+          "line_sha256": "a6710e7dff909ceddcd530a7d4d225d2500ae606817847135818766a302c81e1",
+          "assigned_parent": "L-48b8e76e269e"
+        },
+        "decision_families": [
+          "legacy"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB12",
+        "assigned_parent": "L-48b8e76e269e",
+        "name": "Direct array opening and external-label association",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 247,
+          "match": "| Direct-array entry and separately stored",
+          "line_sha256": "ee420123ef0e9c89bb908c9ded1425e1ad4534e46de2cece4eebb72713c84b2a",
+          "assigned_parent": "L-48b8e76e269e"
+        },
+        "decision_families": [
+          "array",
+          "label_link"
+        ],
+        "status": "unapproved native prose/table group"
+      },
+      {
+        "inventory_id": "J9-PB13",
+        "assigned_parent": "L-f45bf9ee551d",
+        "name": "Class-specific compatibility/normalization policy",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 285,
+          "match": "Tolerance policy proposal requiring approval",
+          "line_sha256": "118f8387526dbb7da3d72c4c995e4eeff5ca6d878530bb9145a7fb84bd8ffd9b",
+          "assigned_parent": "L-f45bf9ee551d"
+        },
+        "decision_families": [
+          "tolerance"
+        ],
+        "status": "unapproved native prose/table group"
+      }
+    ],
+    "proposal_bearing_sections": 9,
+    "distinct_primary_decision_families": [
+      {
+        "family": "architecture",
+        "question_intent": "Which reader/model/decoder/2D-renderer combination should be evaluated, and what evidence is required before production selection?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Evaluation and production adoption remain separate stages; native reuse/native tiles/wgpu/current image models are alternatives, not independent findings."
+        ],
+        "native_groups": [
+          "J9-PB01",
+          "J9-PB06",
+          "J9-PB09"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 35,
+            "match": "Material choice needing approval",
+            "line_sha256": "2209a50bc1d4e04976119da05d41a6795c8ca58d8da38757968665f44e866030",
+            "assigned_parent": "L-b8b6f684e168"
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 89,
+            "match": "Unapproved architecture proposal",
+            "line_sha256": "863105c17b2114c0e69129d88f2e41cc26fbd05b1e607efaf2325d2ed8f50cbb",
+            "assigned_parent": "L-bb5dcafa9770"
+          },
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 175,
+            "match": "Material proposals needing review",
+            "line_sha256": "2b2ace33c63140bdd8aafd7fe5478ea208d359a964efe5a71b5d57799ffa470a",
+            "assigned_parent": "L-4b3f581214b5"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "preview",
+        "question_intent": "Should exact preview revisions gain metadata inspection only or supported calibrated graph display?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Choose supported revisions and graph/output-space capability explicitly."
+        ],
+        "native_groups": [
+          "J9-PB02"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 52,
+            "match": "Version-pinned preview inspection/display",
+            "line_sha256": "fb7f63e642e4557bbe7af8dfad74208aadf4ec9e6ec02da30757653eb271dad5",
+            "assigned_parent": "L-8e152cf58e36"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "archive",
+        "question_intent": "Should the viewer open a local ZIP/.ozx hierarchy directly?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Choose archive resource policy and supported packaging; directory-only is an alternative."
+        ],
+        "native_groups": [
+          "J9-PB03"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 53,
+            "match": "Read-only local ZIP/",
+            "line_sha256": "bee674940505b0699a44891ae2ef82ab590bebd8a151df214b1c4dbf4a1e48a8",
+            "assigned_parent": "L-8e152cf58e36"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "anatomy",
+        "question_intent": "Should stored anatomical direction and provenance appear in details or an optional widget?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Reorientation is a further, undeveloped choice."
+        ],
+        "native_groups": [
+          "J9-PB04"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 54,
+            "match": "Anatomical direction display",
+            "line_sha256": "bfa7486c6cafc299d2008812d2b0741066283ec0b704e156469ebe94a950a447",
+            "assigned_parent": "L-8e152cf58e36"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "catalog",
+        "question_intent": "Should the viewer scan multiple independent filesets into a folder table with filters and bounded thumbnails?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Should that catalog persist?",
+          "Should a manifest be accepted instead of scanning?"
+        ],
+        "native_groups": [
+          "J9-PB05"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 71,
+            "match": "Unapproved collection-browser proposal",
+            "line_sha256": "1e23d8f8e2722efb44168b654df25144fa64412fce9b5bad29adaec09e0944ac",
+            "assigned_parent": "L-53478306aa6a"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "rocrate",
+        "question_intent": "Should local RO-Crate enrich dataset details/search and attribution?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Missing or bad enrichment cannot gate OME recognition or change calibration."
+        ],
+        "native_groups": [
+          "J9-PB07"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 118,
+            "match": "Unapproved RO-Crate discovery proposal",
+            "line_sha256": "45e8c9291cc4d9ed3282e0136a223612aaf717a9d27f33cdc3cf03bdc14c47af",
+            "assigned_parent": "L-e22a81d34a4c"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "display",
+        "question_intent": "Should valid producer display settings initialize the view, and which missing/invalid-display policies should apply?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Choose dtype-based versus bounded sampled intensity windows.",
+          "Choose exact-ID categorical fallback colors and zero visibility.",
+          "Choose initial/default-index handling and defaults provenance."
+        ],
+        "native_groups": [
+          "J9-PB08"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 140,
+            "match": "Display-policy proposal requiring approval",
+            "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+            "assigned_parent": "L-cf0ac7e43301"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "cache",
+        "question_intent": "Should consolidated/session metadata caching accelerate discovery?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Choose freshness/bypass behavior, source-independent storage and persistence/resource scope."
+        ],
+        "native_groups": [
+          "J9-PB09"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 175,
+            "match": "Material proposals needing review",
+            "line_sha256": "2b2ace33c63140bdd8aafd7fe5478ea208d359a964efe5a71b5d57799ffa470a",
+            "assigned_parent": "L-4b3f581214b5"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "entry",
+        "question_intent": "Should users choose among multiscales entries within an image group?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "The displayed entry/context must still be reported without a chooser."
+        ],
+        "native_groups": [
+          "J9-PB10"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 245,
+            "match": "| Multiscales-entry chooser",
+            "line_sha256": "28028046b9bfdb7dc356fd8b3a5210568e0fb062ae3d5882cb4b7fb08b6fc0eb",
+            "assigned_parent": "L-48b8e76e269e"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "legacy",
+        "question_intent": "Should separately reviewed 0.4 reading be added?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "0.1–0.3 support would be later scope, not bundled approval."
+        ],
+        "native_groups": [
+          "J9-PB11"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 246,
+            "match": "| Explicit legacy-version reading",
+            "line_sha256": "a6710e7dff909ceddcd530a7d4d225d2500ae606817847135818766a302c81e1",
+            "assigned_parent": "L-48b8e76e269e"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "array",
+        "question_intent": "Should users open a direct subarray after resolving its owning context?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Zero/multiple-owner cases need explicit handling and possibly user selection."
+        ],
+        "native_groups": [
+          "J9-PB12"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 247,
+            "match": "| Direct-array entry and separately stored",
+            "line_sha256": "ee420123ef0e9c89bb908c9ded1425e1ad4534e46de2cece4eebb72713c84b2a",
+            "assigned_parent": "L-48b8e76e269e"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "label_link",
+        "question_intent": "Should users associate an existing separate local label fileset with an image?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Require verified source/coordinate relationship without writing either fileset."
+        ],
+        "native_groups": [
+          "J9-PB12"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 247,
+            "match": "| Direct-array entry and separately stored",
+            "line_sha256": "ee420123ef0e9c89bb908c9ded1425e1ad4534e46de2cece4eebb72713c84b2a",
+            "assigned_parent": "L-48b8e76e269e"
+          }
+        ],
+        "approval": null
+      },
+      {
+        "family": "tolerance",
+        "question_intent": "Which known discrepancies should cause refusal, warning-based opening or explicitly surfaced normalization?",
+        "bundled_subchoices_or_stage_boundaries": [
+          "Choose plate nested-version conflict policy.",
+          "Choose malformed optional OMERO handling with the display policy.",
+          "Choose whether any coordinate normalization may enable calibrated display/overlays."
+        ],
+        "native_groups": [
+          "J9-PB13"
+        ],
+        "source_locators": [
+          {
+            "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+            "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+            "line": 285,
+            "match": "Tolerance policy proposal requiring approval",
+            "line_sha256": "118f8387526dbb7da3d72c4c995e4eeff5ca6d878530bb9145a7fb84bd8ffd9b",
+            "assigned_parent": "L-f45bf9ee551d"
+          }
+        ],
+        "approval": null
+      }
+    ],
+    "boundary_only_capability_mentions": [
+      {
+        "mentioned_choice_group": "3D volume mode / ROI tooling / mosaic navigation / viewer handoff / cross-language API",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 89,
+          "match": "A 3D volume mode",
+          "line_sha256": "863105c17b2114c0e69129d88f2e41cc26fbd05b1e607efaf2325d2ed8f50cbb",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      },
+      {
+        "mentioned_choice_group": "Property-table inspector / overlay legend",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 140,
+          "match": "A property-table inspector",
+          "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      },
+      {
+        "mentioned_choice_group": "Physical stitching / acquisition comparison overlays / plate-map visualization",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 155,
+          "match": "Physical stitching, acquisition comparison",
+          "line_sha256": "b766f83e38c1a72cd7459b9df549bfa7cbe7fa11a6b1173939197dcea37f99f7",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      },
+      {
+        "mentioned_choice_group": "Explicit anatomical reorientation",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 54,
+          "match": "explicit user-controlled reorientation",
+          "line_sha256": "bfa7486c6cafc299d2008812d2b0741066283ec0b704e156469ebe94a950a447",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      },
+      {
+        "mentioned_choice_group": "Raw pixel-value inspector",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 194,
+          "match": "A raw pixel-value inspector",
+          "line_sha256": "58fcce868b646de6ddba75c2080befeb63c7c1e9b3c6f2913d0d618b8f2f5758",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      },
+      {
+        "mentioned_choice_group": "Dedicated validator report / persistent diagnostics export / external-validator handoff",
+        "locator": {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 289,
+          "match": "A dedicated validator report",
+          "line_sha256": "84861a2d659565a3489184487766dc6706522e1280176a675fba02ac6b198686",
+          "assigned_parent": null
+        },
+        "status": "boundary-only mention; not a developed proposal group or counted as findings"
+      }
+    ],
+    "counting_rules": "12 assigned container dispositions are not findings. 11 explicit repair-heading blocks overlap semantically. 13 visible proposal prose/table groups occur in 9 parent sections. Deduplicating architecture and splitting direct-array/label-link and API/cache yields 13 primary decision families, some with bundled policy subchoices. These are not 13 independent findings, approvals or finalized user cards; subordinate test cases and alternatives add no findings."
+  },
+  "derivative_provenance_observations": [
+    {
+      "mechanism": "Absent versus singleton navigation",
+      "direct_native_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 203,
+          "match": "Validate dimensionality, axis identity",
+          "line_sha256": "eb5c86512fc7f308fa18788de16d22f6fd56637a143d4c3a0fdd59f8335aa631",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 211,
+          "match": "singleton channel/time",
+          "line_sha256": "94f4077db8caa6f15c157cf65c526070b6759067d06a300d3a137206c38b8555",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 134,
+          "match": "Strip or fix channel/time axes",
+          "line_sha256": "8fb2ba5ed0611661d7f00b56308effb2662f8214a6f231a4616671bd625a94e7",
+          "assigned_parent": null
+        }
+      ],
+      "native_extent": "Axis validation, channel splitting and singleton label correspondence are explicit.",
+      "remaining_evaluator_discriminator": "Absent time/channel/third-space versus present length-one dimensions tied to control/slicing behavior is still not explicit.",
+      "derivative_relabeling": "Do not relabel the complete absent/singleton discriminator as independently supplied by J9."
+    },
+    {
+      "mechanism": "Shuffled label-value color/property lookup",
+      "direct_native_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 140,
+          "match": "palette keyed by exact label ID",
+          "line_sha256": "452094512632e52c4bd8e49f41ddd71cd93ca9106e9f140f6964e44a088c9893",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 190,
+          "match": "Categorical nearest-neighbor sampling",
+          "line_sha256": "4050f4e5fccb306f1af19953cba746803412b5e8d056ce0d3ee65e1de4a1ecde",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 136,
+          "match": "Preserve valid colors/properties",
+          "line_sha256": "c624f4eb92c1457e1e3c1142221f70d4153b801787a9568bcda0a95a7be3c8d1",
+          "assigned_parent": null
+        }
+      ],
+      "native_extent": "Exact-ID fallback palette, precision and categorical resampling are direct native output, not just source bytes.",
+      "remaining_evaluator_discriminator": "Provided color/property records keyed by label-value rather than list position, with order-scrambling validation, remain unstated.",
+      "derivative_relabeling": "Credit native exact-ID/sampling constituents; keep shuffled metadata lookup assistance distinct."
+    },
+    {
+      "mechanism": "Reverse codec/endian/layout correctness",
+      "direct_native_locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "dtype, endianness, codec pipeline",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 192,
+          "match": "big-endian bytes",
+          "line_sha256": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 186,
+          "match": "supported codec necessarily requires",
+          "line_sha256": "0e858f01148bd68eee4a203a616c127a36725ba8e9b0525f0d615b19945b0446",
+          "assigned_parent": null
+        }
+      ],
+      "native_extent": "Per-array pipeline/endian metadata, big-endian fixtures, real chains and explicit support/resource boundaries are direct native output.",
+      "remaining_evaluator_discriminator": "Reverse decoding order and transpose/non-square asymmetric layout check remain absent from final prose.",
+      "derivative_relabeling": "Credit native endian/chain/support constituents; do not relabel complete reverse/transpose discriminator as independently supplied."
+    }
+  ],
+  "selected_additions_in_native_j9": [
+    {
+      "name": "Binary transform-vector schema/model representation gap",
+      "locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 149,
+          "match": "NotImplementedError",
+          "line_sha256": "a0ac743ae2637827f68901d12a2ba46bb16cb39ed93c0a6ca42b8c341082a31e",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 267,
+          "match": "| Scale represented by binary",
+          "line_sha256": "92d13a83d28b11380f0b567a94311a523b363c82a2dc4b70811bae5e9bd1b468",
+          "assigned_parent": null
+        }
+      ],
+      "scope": "Source-supported candidate/new comparison direction; no vector decode. J5 model receipt bytes were available, but this explicit PathScale/PathTranslation finding is new comparison prose."
+    },
+    {
+      "name": "Thirteen scoped schema probes with positive/negative/target controls",
+      "locators": [
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 256,
+          "match": "Thirteen data-only probes",
+          "line_sha256": "70ec2d70b81d88b2e7647d170d47744226a706058740f786e801c5f86a04c8b7",
+          "assigned_parent": null
+        },
+        {
+          "file": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+          "sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "line": 266,
+          "match": "| Full `zarr.json`",
+          "line_sha256": "b66ce19cbe61ada0a884c537be20fc84dd3f623ccd162b8ee8d5fcf6c0b9e91a",
+          "assigned_parent": null
+        }
+      ],
+      "scope": "Native reported data-only execution, broader than J5 eight-definition probes; not independently rerun here and not runtime viewer conformance."
+    }
+  ],
+  "omission_and_scope_audit": {
+    "material_selected_input_loss": "No new material loss established across the 18 selected traces, 15 child directions and selected J5 factual corrections. Scope choices are held rather than dropped.",
+    "persistent_gaps": [
+      "J5 already lacked explicit label-value-keyed supplied metadata lookup; J9 strengthens precision and sampling without restoring that exact mechanism.",
+      "Absent/singleton navigation and reverse-codec/transpose acceptance remained unclosed earlier; their continued absence is not new J9 loss."
+    ],
+    "scope_holds": [
+      "J9 calls all declared FOV/container inventory a repair; admitted-container breadth versus product choice remains for root adjudication.",
+      "Label default-source/wholly absent source semantics are not independently resolved here; J9 explicitly preserves ambiguity and refuses guessed alignment.",
+      "Malformed OMERO and coordinate normalization remain class-specific held tolerance policies; do not infer blanket leniency or product approval."
+    ],
+    "factcheck_limits": [
+      "No duplicate broad primary-source audit or upstream application execution performed.",
+      "13 schema probes are native reported execution; existing independent J5 verification covers its earlier 8 probes only.",
+      "No exhaustive independent certification of all final source statements, archival/RFC status or output receipt inventories."
+    ]
+  },
+  "constraints": [
+    "Only comparison-batch2-lineage.md/json written in evaluator area.",
+    "No native feedback, participant submission, score-control changes, derivative, campaign, collector, Plans or D5 changes."
+  ],
+  "outcome": "Strong direct-text retention and more actionable owner/consumer checks. Interim J9 partial-control coverage is 6.5/8; C2/C6/C7 retain specific residual precision gaps. All optional choices remain unapproved.",
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch2-lineage.json",
+    "source_sha256": "912127037b9ee54895958ed1ffa51c11838a14b52a106c97bbc2dd8b1e90f772",
+    "source_bytes": 174185,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

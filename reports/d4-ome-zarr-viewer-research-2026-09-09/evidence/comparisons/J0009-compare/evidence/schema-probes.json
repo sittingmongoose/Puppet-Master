@@ -1,0 +1,931 @@
+{
+  "scope": "Unmodified captured schema evaluation of metadata only; no upstream reader/model/viewer code run; no network resolution or pixel decoding.",
+  "jsonschema_version": "4.19.2",
+  "schemas": [
+    {
+      "name": "image",
+      "receipt": "C-S00009",
+      "url": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/image.schema",
+      "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d",
+      "id": "https://ngff.openmicroscopy.org/0.5/schemas/image.schema"
+    },
+    {
+      "name": "plate",
+      "receipt": "U-S00021",
+      "url": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/plate.schema",
+      "sha256": "a8a89bfd90a5c3c9f72eb94a9f3b6fa91939ba3230d0f2fef7a58fba7b075233",
+      "id": "https://ngff.openmicroscopy.org/0.5/schemas/plate.schema"
+    },
+    {
+      "name": "ome",
+      "receipt": "U-S00093",
+      "url": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/ome.schema",
+      "sha256": "9b9b3259256e928a2d2994f58fee47377eddbe8c0e421e50dfd2cca391e711c5",
+      "id": "https://ngff.openmicroscopy.org/0.5/schemas/ome.schema"
+    },
+    {
+      "name": "_version",
+      "receipt": "U-S00084",
+      "url": "https://raw.githubusercontent.com/ome/ngff/v0.5/schemas/_version.schema",
+      "sha256": "26c03746999987ae695a4d0efb2ae56503dd69b7b80320732f2a04a540ef91d5",
+      "id": "https://ngff.openmicroscopy.org/0.5/schemas/_version.schema"
+    }
+  ],
+  "cases": [
+    {
+      "case": "valid_image_control",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "Metadata-only positive control; referenced array existence is not tested.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "translation_before_scale",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "0.5 prose requires scale before optional translation.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "translation",
+                      "translation": [
+                        5,
+                        7
+                      ]
+                    },
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "two_translations",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "0.5 prose permits at most one translation.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3
+                      ]
+                    },
+                    {
+                      "type": "translation",
+                      "translation": [
+                        5,
+                        7
+                      ]
+                    },
+                    {
+                      "type": "translation",
+                      "translation": [
+                        8,
+                        9
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "duplicate_axis_names_different_units",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "0.5 prose requires unique axis names; different dictionaries evade uniqueItems.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "nanometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "time_after_space",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "0.5 prose requires time before other axes.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "t",
+                  "type": "time",
+                  "unit": "second"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3,
+                        1
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "transform_length_mismatch",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "0.5 prose requires transform vector length to match axes.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3,
+                        4
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "omero_channel_missing_color_window",
+      "schema": "image",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "OMERO is optional, but prose requires each present channel color and window.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "scale": [
+                        2,
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "omero": {
+            "channels": [
+              {}
+            ]
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "missing_scale_negative_control",
+      "schema": "image",
+      "schema_accepts": false,
+      "expected_schema_accepts": false,
+      "prose_or_scope_note": "Schema enforces presence of one scale in this ordinary vector representation.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "translation",
+                      "translation": [
+                        5,
+                        7
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "path": [
+            "ome",
+            "multiscales",
+            0,
+            "datasets",
+            0,
+            "coordinateTransformations"
+          ],
+          "message": "[{'type': 'translation', 'translation': [5, 7]}] does not contain items matching the given schema"
+        }
+      ]
+    },
+    {
+      "case": "identity_only_negative_control",
+      "schema": "image",
+      "schema_accepts": false,
+      "expected_schema_accepts": false,
+      "prose_or_scope_note": "Dataset CTs are restricted to scale/translation by 0.5 section 2.4.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "identity"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "path": [
+            "ome",
+            "multiscales",
+            0,
+            "datasets",
+            0,
+            "coordinateTransformations"
+          ],
+          "message": "[{'type': 'identity'}] does not contain items matching the given schema"
+        },
+        {
+          "path": [
+            "ome",
+            "multiscales",
+            0,
+            "datasets",
+            0,
+            "coordinateTransformations",
+            0
+          ],
+          "message": "{'type': 'identity'} is not valid under any of the given schemas"
+        }
+      ]
+    },
+    {
+      "case": "path_scale_schema_boundary",
+      "schema": "image",
+      "schema_accepts": false,
+      "expected_schema_accepts": false,
+      "prose_or_scope_note": "General CT table permits binary path vectors; tagged image schema accepts only inline vector forms. Preserve as a representation/scope reconciliation question, not a proven decoder test.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "multiscales": [
+            {
+              "axes": [
+                {
+                  "name": "y",
+                  "type": "space",
+                  "unit": "micrometer"
+                },
+                {
+                  "name": "x",
+                  "type": "space",
+                  "unit": "micrometer"
+                }
+              ],
+              "datasets": [
+                {
+                  "path": "nested/levelA",
+                  "coordinateTransformations": [
+                    {
+                      "type": "scale",
+                      "path": "transforms/scale"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "path": [
+            "ome",
+            "multiscales",
+            0,
+            "datasets",
+            0,
+            "coordinateTransformations",
+            0
+          ],
+          "message": "{'type': 'scale', 'path': 'transforms/scale'} is not valid under any of the given schemas"
+        }
+      ]
+    },
+    {
+      "case": "full_zarr_json_wrong_validation_target",
+      "schema": "image",
+      "schema_accepts": false,
+      "expected_schema_accepts": false,
+      "prose_or_scope_note": "The image schema targets attributes, not a full zarr.json document.",
+      "input": {
+        "zarr_format": 3,
+        "node_type": "group",
+        "attributes": {
+          "ome": {
+            "version": "0.5",
+            "multiscales": [
+              {
+                "axes": [
+                  {
+                    "name": "y",
+                    "type": "space",
+                    "unit": "micrometer"
+                  },
+                  {
+                    "name": "x",
+                    "type": "space",
+                    "unit": "micrometer"
+                  }
+                ],
+                "datasets": [
+                  {
+                    "path": "nested/levelA",
+                    "coordinateTransformations": [
+                      {
+                        "type": "scale",
+                        "scale": [
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "errors": [
+        {
+          "path": [],
+          "message": "'ome' is a required property"
+        }
+      ]
+    },
+    {
+      "case": "real_plate_only_ome_version",
+      "schema": "plate",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "plate.version absent; prose MUST conflicts with tagged schema and real metadata.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "_creator": {
+            "name": "ome2024-ngff-challenge",
+            "version": "1.0.0",
+            "notes": null
+          },
+          "plate": {
+            "columns": [
+              {
+                "name": "1"
+              },
+              {
+                "name": "2"
+              },
+              {
+                "name": "3"
+              },
+              {
+                "name": "4"
+              },
+              {
+                "name": "5"
+              },
+              {
+                "name": "6"
+              },
+              {
+                "name": "7"
+              },
+              {
+                "name": "8"
+              },
+              {
+                "name": "9"
+              },
+              {
+                "name": "10"
+              },
+              {
+                "name": "11"
+              }
+            ],
+            "field_count": 32,
+            "name": "190129",
+            "rows": [
+              {
+                "name": "A"
+              },
+              {
+                "name": "B"
+              },
+              {
+                "name": "C"
+              },
+              {
+                "name": "D"
+              },
+              {
+                "name": "E"
+              },
+              {
+                "name": "F"
+              }
+            ],
+            "wells": [
+              {
+                "columnIndex": 6,
+                "path": "B/7",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 8,
+                "path": "D/9",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 2,
+                "path": "E/3",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 4,
+                "path": "F/5",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 10,
+                "path": "B/11",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 10,
+                "path": "F/11",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 6,
+                "path": "C/7",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 2,
+                "path": "B/3",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 6,
+                "path": "F/7",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 2,
+                "path": "D/3",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 3,
+                "path": "B/4",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 3,
+                "path": "C/4",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 9,
+                "path": "C/10",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 7,
+                "path": "C/8",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 4,
+                "path": "D/5",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 10,
+                "path": "E/11",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 4,
+                "path": "C/5",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 8,
+                "path": "F/9",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 1,
+                "path": "D/2",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 1,
+                "path": "C/2",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 2,
+                "path": "F/3",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 4,
+                "path": "B/5",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 1,
+                "path": "B/2",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 8,
+                "path": "C/9",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 7,
+                "path": "D/8",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 2,
+                "path": "C/3",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 6,
+                "path": "E/7",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 5,
+                "path": "B/6",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 5,
+                "path": "F/6",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 8,
+                "path": "B/9",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 7,
+                "path": "E/8",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 9,
+                "path": "F/10",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 5,
+                "path": "E/6",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 6,
+                "path": "D/7",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 9,
+                "path": "E/10",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 4,
+                "path": "E/5",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 1,
+                "path": "E/2",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 3,
+                "path": "F/4",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 7,
+                "path": "F/8",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 8,
+                "path": "E/9",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 5,
+                "path": "D/6",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 7,
+                "path": "B/8",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 9,
+                "path": "B/10",
+                "rowIndex": 1
+              },
+              {
+                "columnIndex": 3,
+                "path": "D/4",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 5,
+                "path": "C/6",
+                "rowIndex": 2
+              },
+              {
+                "columnIndex": 3,
+                "path": "E/4",
+                "rowIndex": 4
+              },
+              {
+                "columnIndex": 9,
+                "path": "D/10",
+                "rowIndex": 3
+              },
+              {
+                "columnIndex": 1,
+                "path": "F/2",
+                "rowIndex": 5
+              },
+              {
+                "columnIndex": 10,
+                "path": "C/11",
+                "rowIndex": 2
+              }
+            ]
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "empty_series",
+      "schema": "ome",
+      "schema_accepts": true,
+      "expected_schema_accepts": true,
+      "prose_or_scope_note": "minContains has no contains here. This does not independently settle the normative validity of a zero-image collection.",
+      "input": {
+        "ome": {
+          "version": "0.5",
+          "series": []
+        }
+      },
+      "errors": []
+    }
+  ]
+}

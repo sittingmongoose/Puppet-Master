@@ -1,0 +1,1382 @@
+{
+  "source_url": "https://ome.github.io/ome-ngff-tools/",
+  "upstream_receipt": "U-S00030",
+  "raw_sha256": "58b0070e4a7199e1daf8963e9f95e372bb77ec01fbc769d3ff45e450b92d6200",
+  "selected_table_rows": [
+    [
+      {
+        "text": "feature",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": []
+      },
+      {
+        "text": "sample data",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "avivator",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "vizarr",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "Vol-E",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "vtk-itk-viewer",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "neuroglancer",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "WEBKNOSSOS",
+        "attrs": {
+          "class": "wider"
+        },
+        "inner": []
+      },
+      {
+        "text": "napari",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "BigDataViewer",
+        "attrs": {
+          "class": "wider"
+        },
+        "inner": []
+      },
+      {
+        "text": "MoBIE",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "OMERO",
+        "attrs": {},
+        "inner": []
+      },
+      {
+        "text": "Microscopy Nodes",
+        "attrs": {},
+        "inner": []
+      }
+    ],
+    [
+      {
+        "text": "HCS plate",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Does the viewer display an OME-NGFF plate?"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "idr0001",
+        "attrs": {
+          "class": "sample"
+        },
+        "inner": [
+          [
+            "button",
+            {
+              "class": "no_border",
+              "title": "Copy S3 URL to clipboard",
+              "onclick": "copyTextToClipboard('https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr')"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/copy.png",
+              "width": "24px",
+              "height": "24px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://ome.github.io/ome-ngff-validator/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr",
+              "target": "_blank",
+              "title": "Open in ome-ngff-validator"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/ome_logo-16x16.png",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://avivator.gehlenborglab.org/?image_url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://hms-dbmi.github.io/vizarr/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Only the lowest resolution of a Plate is shown. Clicking a Well loads it in a new window"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://volumeviewer.allencell.org/viewer?url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://kitware.github.io/itk-vtk-viewer/app/?rotate=false&fileToLoad=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://neuroglancer-demo.appspot.com/#!{\"layers\":[{\"source\":\"zarr://https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0001A/2551.zarr\",\"name\":\"OME-NGFF\"}]}",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Plate appears to load and display OK, but crashes on zooming in."
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": []
+      }
+    ],
+    [
+      {
+        "text": "bioformats2raw.layout",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Does the viewer handled a Fileset of images contained within a bioformats2raw.layout wrapper?"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "sample_files.zarr",
+        "attrs": {
+          "class": "sample"
+        },
+        "inner": [
+          [
+            "button",
+            {
+              "class": "no_border",
+              "title": "Copy S3 URL to clipboard",
+              "onclick": "copyTextToClipboard('https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr')"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/copy.png",
+              "width": "24px",
+              "height": "24px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://ome.github.io/ome-ngff-validator/?source=https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr",
+              "target": "_blank",
+              "title": "Open in ome-ngff-validator"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/ome_logo-16x16.png",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://avivator.gehlenborglab.org/?image_url=https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://hms-dbmi.github.io/vizarr/?source=https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "User is redirected to ome-ngff-validator which shows links to open each image in vizarr"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://volumeviewer.allencell.org/viewer?url=https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://kitware.github.io/itk-vtk-viewer/app/?rotate=false&fileToLoad=https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://neuroglancer-demo.appspot.com/#!{\"layers\":[{\"source\":\"zarr://https://minio-dev.openmicroscopy.org/idr/Testing/sample_files.zarr\",\"name\":\"OME-NGFF\"}]}",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Error: Neither .zarray metadata nor OME multiscale metadata found"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://github.com/ome/napari-ome-zarr/issues/71",
+              "target": "_blank"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "https://github.githubassets.com/favicons/favicon.svg",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "In the 'Open' dialog, choose `Detect Datasets`. One or more single resolution zarr arrays can be opened, but not as a 'multiscale' image."
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": []
+      }
+    ],
+    [
+      {
+        "text": "translation within coordinateTransformations on datasets (v0.4)",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Does the viewer read the 'translation' transformation for each item in `datasets` list?"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "13457537.zarr translate onto 13457227.zarr",
+        "attrs": {
+          "class": "sample"
+        },
+        "inner": [
+          [
+            "button",
+            {
+              "class": "no_border",
+              "title": "Copy S3 URL to clipboard",
+              "onclick": "copyTextToClipboard('https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr')"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/copy.png",
+              "width": "24px",
+              "height": "24px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://ome.github.io/ome-ngff-validator/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr",
+              "target": "_blank",
+              "title": "Open in ome-ngff-validator"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/ome_logo-16x16.png",
+              "width": "20px",
+              "height": "20px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457227.zarr"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://avivator.gehlenborglab.org/?image_url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://hms-dbmi.github.io/vizarr/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://github.com/hms-dbmi/vizarr/issues/271",
+              "target": "_blank"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "https://github.githubassets.com/favicons/favicon.svg",
+              "width": "20px",
+              "height": "20px"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "3D translation causes image to disappear"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://volumeviewer.allencell.org/viewer?url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://kitware.github.io/itk-vtk-viewer/app/?rotate=false&fileToLoad=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://neuroglancer-demo.appspot.com/#!{\"layers\":[{\"source\":\"zarr://https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr\",\"name\":\"OME-NGFF\"}]}",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "fails"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://github.com/scalableminds/webknossos/issues/6600",
+              "target": "_blank"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "https://github.githubassets.com/favicons/favicon.svg",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      }
+    ],
+    [
+      {
+        "text": "scale within coordinateTransformations on multiscales (v0.4)",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Does the viewer read the 'scale' transformation for each item in `multiscales` list?"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "13457539.zarr",
+        "attrs": {
+          "class": "sample"
+        },
+        "inner": [
+          [
+            "button",
+            {
+              "class": "no_border",
+              "title": "Copy S3 URL to clipboard",
+              "onclick": "copyTextToClipboard('https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr')"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/copy.png",
+              "width": "24px",
+              "height": "24px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://ome.github.io/ome-ngff-validator/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "Open in ome-ngff-validator"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/ome_logo-16x16.png",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://avivator.gehlenborglab.org/?image_url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Avivator doesn't display a scalebar or support scaling info."
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://hms-dbmi.github.io/vizarr/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://volumeviewer.allencell.org/viewer?url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://kitware.github.io/itk-vtk-viewer/app/?rotate=false&fileToLoad=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://neuroglancer-demo.appspot.com/#!{\"layers\":[{\"source\":\"zarr://https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr\",\"name\":\"OME-NGFF\"}]}",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://github.com/ome/napari-ome-zarr/issues/73",
+              "target": "_blank"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "https://github.githubassets.com/favicons/favicon.svg",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "supported"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      }
+    ],
+    [
+      {
+        "text": "translation within coordinateTransformations on multiscales (v0.4)",
+        "attrs": {
+          "class": "feature"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Does the viewer read the 'translation' transformation for each item in `multiscales` list?"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "13457539.zarr translate onto 13457227.zarr",
+        "attrs": {
+          "class": "sample"
+        },
+        "inner": [
+          [
+            "button",
+            {
+              "class": "no_border",
+              "title": "Copy S3 URL to clipboard",
+              "onclick": "copyTextToClipboard('https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr')"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/copy.png",
+              "width": "24px",
+              "height": "24px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://ome.github.io/ome-ngff-validator/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "Open in ome-ngff-validator"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/ome_logo-16x16.png",
+              "width": "20px",
+              "height": "20px"
+            }
+          ],
+          [
+            "a",
+            {
+              "href": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457227.zarr"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://avivator.gehlenborglab.org/?image_url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://hms-dbmi.github.io/vizarr/?source=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://volumeviewer.allencell.org/viewer?url=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://kitware.github.io/itk-vtk-viewer/app/?rotate=false&fileToLoad=https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "missing"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://neuroglancer-demo.appspot.com/#!{\"layers\":[{\"source\":\"zarr://https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457539.zarr\",\"name\":\"OME-NGFF\"}]}",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Can't make out the parent Image 13457227.zarr or overlaid Image 13457539.zarr"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://webknossos.org/datasets/308ffc5547d41748/idr0101_overlays/view?token=dBVGYI9oRvcDfPmDBm74ag#367,444,7,0,2.177",
+              "target": "_blank",
+              "title": "View the sample file in this viewer in a new tab"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "assets/img/icon_eye.svg"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "a",
+            {
+              "href": "https://github.com/ome/napari-ome-zarr/issues/73",
+              "target": "_blank"
+            }
+          ],
+          [
+            "img",
+            {
+              "src": "https://github.githubassets.com/favicons/favicon.svg",
+              "width": "20px",
+              "height": "20px"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": [
+          [
+            "img",
+            {
+              "src": "assets/img/icon_info.svg",
+              "width": "20px",
+              "height": "20px",
+              "title": "Not possible to assess translation. Can't overlay multiple images"
+            }
+          ]
+        ]
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      },
+      {
+        "text": "",
+        "attrs": {
+          "class": "ignored"
+        },
+        "inner": []
+      }
+    ]
+  ]
+}

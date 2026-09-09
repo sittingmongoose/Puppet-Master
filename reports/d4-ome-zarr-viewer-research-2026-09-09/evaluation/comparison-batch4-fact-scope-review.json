@@ -1,0 +1,1154 @@
+{
+  "schema": "d4.comparison_batch4_fact_scope_review.v1",
+  "date": "2026-09-09",
+  "status": "selected_claims_corroborated_with_existing_scope_holds",
+  "native_notes": {
+    "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/notes.md",
+    "sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+    "lines": 213
+  },
+  "review_scope": "Selected consequential finalJ11 claims only. Source/metadata/PR-text inspection, hashes, arithmetic and reparse of17already retained CSVs; no new corpus acquisition, viewer/decoder/upstream/schema execution, workflow/status/collector changes or fixture edits.",
+  "findings": [
+    {
+      "id": "B11-1",
+      "title": "Signed physical time is a supported narrow CR04 refinement",
+      "status": "corroborated_source_plus_arithmetic",
+      "note_lines": [
+        28,
+        30,
+        199
+      ],
+      "conclusion": "TimeStampTool formatTimeHhMmSs clamps seconds<0 to0 at S00088:14–16; formatTimeWithUnits clamps value<0 to0 at58–60. draw obtains timeline physical time/units at93–101; MultiscaleDims derives time scale/units atS00044:285–287. The full NGFF transform mapping permits negative translation, so scale2seconds/translation−5seconds gives−5 atindex0 and−3 atindex1. These are correct scalar arithmetic and a source-level formatter condition, not an observed AGAVE or Slide Scout negative-time rendering defect. The existing parser/Timeline path was not shown to supply those negative values end-to-end.",
+      "derivative_recommendation": "CR04 may explicitly preserve signed calibrated time in existing details, with nativeJ11 −5/−3 acceptance. Keep missing units unspecified and the canvas clock overlay optional. This refines existing transform/unit correctness rather than adding a timestamp UI or independent finding family.",
+      "source_ids": [
+        "J11-S00003",
+        "J11-S00044",
+        "J11-S00088"
+      ],
+      "note_anchors": [
+        {
+          "line": 28,
+          "line_sha256": "efa642b12f960d65fd57324317ae1fd21b18bcc5fe8fac16d5efdd99cc8bd7a8",
+          "text": "**Concrete replacement behavior.** Bind controls and slices to validated metadata dimension indices, preserving names, types, shape and units per axis. Absent T/C/Z dimensions must not shift another axis's meaning. Preserve the actual displayed-plane mapping in the details panel; never silently relabel arbitrary axes as conventional letters. For data index vector `p`, compose dataset and multiscales transforms in their specified order: with scales/translations at both levels, `q = S_m(S_d p + T_d) + T_m`. A cropped read uses the index in the original array, including the crop origin. Compute coordinates and overlay registration through this same mapping at every pyramid level. Retain physical units independently for each axis; convert only recognized compatible units. Missing units mean calibration is unspecified, not micrometers or seconds. Malformed transform lengths/order or mismatched dimension names require an explicit diagnostic, not silent zero origins or reordered transforms. Custom axis semantics that cannot be interpreted remain an identified capability limit; arbitrary spelling of valid supported axis types is not itself an error."
+        },
+        {
+          "line": 30,
+          "line_sha256": "86aedf81327df18efb06aec6ffadc112319d3bf6b484c07740f93b2b6666ab94",
+          "text": "**Acceptance checks.** Use index `(2,3)`, dataset scale `(2,4)`, translation `(10,-6)`, image scale `(3,0.5)` and translation `(1,8)`; displayed metadata-space coordinate must be `(43,11)`. The same physical position reached at another resolution or through a crop must agree. Check mixed spatial units, nonzero time translation, `kilosecond`, missing units, arbitrary axis names, legal different spatial ordering, and matching/mismatching `dimension_names`. Use conventional YX, TYX, CYX, TCYX, ZYX, TZYX, CZYX and TCZYX fixtures and compare actual selected values/coordinates, not shape alone. Reject translation-first as a negative conformance fixture. General custom-axis/orientation UI is a separate optional product choice, not implied by these checks."
+        },
+        {
+          "line": 199,
+          "line_sha256": "8a3a7e5eec676aca5060527a2f373498bca607c4b32920be9f49cf7788d6c089",
+          "text": "**Physical time provenance and signed coordinates.** Owner `Viewer.md:5` calibrated details and time selection; consumer line-11 calibrated coordinates. The timestamp is not derived from omero in the inspected path: `MultiscaleDims` derives time scale/units (S00044:285–287), and `TimeStampTool` reads timeline physical time/units (S00088:93–101). Its formatters clamp negative time to zero (S00088:14–16,58–60). This is a newly preserved source-level display direction, not a reproduced timestamp defect. Replacement behavior for Slide Scout's existing details panel: show time coordinates from the full D2 mapping and preserve valid negative offsets and axis units; do not inherit presentation clamps, wall-clock assumptions or missing-unit defaults. Acceptance: scale 2 seconds, translation −5 seconds gives −5 at index 0 and −3 at index 1; omitted units display an index/unspecified unit rather than a fabricated clock. An on-canvas clock overlay remains an optional feature."
+        }
+      ]
+    },
+    {
+      "id": "B11-2",
+      "title": "Checked size arithmetic is a supported narrow CR10 refinement",
+      "status": "corroborated_native_proposal_with_source_limits",
+      "note_lines": [
+        58,
+        62,
+        195,
+        197
+      ],
+      "conclusion": "J11 itself proposes checked shape/stride/byte-count/index-offset arithmetic, preallocation/upload bounds, >4GiB logical extents with small requested regions, and post-quiescence resource bounds without premature frees. S00076 is the merged#281 PR record (2025-08-19); its author describes load/GPU-upload overflow fixes and chunked uploads above4GB. This captured artifact is PR narrative/status, not a reviewed patch or executed fix test. S00108 is a separate open memory-growth report. Neither proves all contemporary AGAVE arithmetic or ownership paths are correct. J11 correctly rejects the PR narrative’s universal size_t-is64-bit assumption.",
+      "derivative_recommendation": "CR10 may explicitly cover strides/offsets and logical extents beyond2^32 bytes with bounded selected regions, building on J6/J10 checked-product/memory work. Treat overflow diagnostic and representable-but-too-large resource diagnostic separately. No >4GiB actual allocation, numerical memory budget, platform capability or new feature is required. The threshold/stride/offset wording and sparse-controlled-test direction are nativeJ11 acceptance, not evaluator invention.",
+      "source_ids": [
+        "J11-S00076",
+        "J11-S00108"
+      ],
+      "note_anchors": [
+        {
+          "line": 58,
+          "line_sha256": "9667ed1352500ba556f668a8fd7df6cbf9d2f34ccf1051060f22522d696f6336",
+          "text": "### D5 — Recoverable, correctly classified read failures"
+        },
+        {
+          "line": 62,
+          "line_sha256": "0cc098fc63afd853e19bcc73b804252607ffa16697ac09e2ea7058870eb766bf",
+          "text": "**Evidence.** AGAVE checks many metadata/open results (S00006:102–127,389–391,495–499), but transform/read `.value()` calls are unchecked (564–596). Pinned TensorStore `Future::value()` delegates to `result().value()` (S00051:861–889), whose non-OK contract terminates the process (S00052:434–462). This is a supported failing-path consequence, not a claim that every AGAVE open failure crashes. `Read` may partially write its target on error (S00037:643–645). Zarr core fill semantics and the sharding missing-inner-chunk sentinel distinguish intentionally unstored fill data from I/O/corruption (S00041:385–392; S00047:190–195)."
+        },
+        {
+          "line": 195,
+          "line_sha256": "912de05ce1f8dc7946abd9125aa54cc40fd79e6c51c4afcbec8922e41f9a6a1d",
+          "text": "**Size arithmetic and memory lifecycle.** Owner `Viewer.md:7` large-data responsiveness/recovery; consumers `Viewer.md:5` level selection and `:11` large-input/no-crash acceptance. #281 and #276 distinguish arithmetic overflow from unbounded retained allocations (S00076/S00108). Replacement behavior: use checked shape/stride/byte-count/index-offset arithmetic, validate bounds before allocation or GPU upload, and release previous/stale image resources once actual consumers finish, within the documented cache policy. Do not assume `size_t` is universally 64 bits or that chunking uploads alone fixes ownership. Acceptance: huge dimensions whose products overflow supported indexing fail with a useful size/resource diagnostic before allocation; >4 GiB logical extents with small requested regions do not wrap sizes; repeated open/switch/cancel cycles plateau at the configured artifact:campaign/cache/in-flight resource bounds after quiescence, without freeing buffers still in use. Real >4 GiB allocations need only be exercised on declared capable test hardware; arithmetic/region tests can use sparse controlled inputs."
+        },
+        {
+          "line": 197,
+          "line_sha256": "327cfa2e0f96c2f934e5173d9de3bd1e26c3ad344ac8a16ce4ca1fb5fda4552b",
+          "text": "**Keep canvas, controls and coordinates consistent on failed time changes.** Owner `Viewer.md:5` time/plane/details controls; consumers recovery `:7` and navigation/coordinate acceptance `:11`. AGAVE's timeline explicitly leaves a TODO to reset the GUI when a newly requested time fails (S00043:93–99). Replacement behavior: distinguish requested and successfully displayed selections; either retain the prior frame with its prior labels/coordinates and an explicit failed-selection state, or display the requested view as unavailable. Never show time B controls/coordinates as if old time A pixels were B. Acceptance: fail B after A displayed, then request C; verify controls, image, coordinates and error refer to the correct states and that A/B late completions cannot overwrite C. This extends D4/D5's publication invariant rather than adding a playback feature."
+        }
+      ]
+    },
+    {
+      "id": "B11-3",
+      "title": "Catalog counts are actual retained-CSV parsing, not pixel coverage",
+      "status": "corroborated_local_csv_reparse",
+      "note_lines": [
+        108,
+        110,
+        119,
+        125,
+        127,
+        129,
+        131,
+        133,
+        135
+      ],
+      "conclusion": "Independently reparsed only the same17 retained primary CSV byte streams and verified raw hashes, receipt hashes and per-file license sets:15237rows/15234distinctURLs. Rows sumIDR1885+BIA10+JAX6365+6897+Webknossos80. These are retained catalog counts, not available objects, mirrored bytes, conformance or decoded fixtures. J11 records a real local parsing task; its no-upstream-execution statement does not erase that narrower execution. The441756-byte BIA size remains catalog-advertised, not a verified complete mirror size.",
+      "source_ids": [],
+      "artifact": "corpus-inventory.json",
+      "note_anchors": [
+        {
+          "line": 108,
+          "line_sha256": "9dd87c40faeab6b08e78eaf670c4c633336afd4089103849bdf3afa60c1f3f3e",
+          "text": "**Catalog evidence and limits.** The referenced [top CSV](https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/ngff_samples.csv) is an index of five entries: IDR, BioImage Archive, two JAX catalogs and Webknossos (S00019). The IDR index lists thirteen leaf CSVs (S00067). I independently reparsed the 17 retained primary leaf CSV byte streams, checked each raw SHA256 against its receipt and inventory, and recomputed **15,237 rows / 15,234 distinct URLs**. Per-file source URLs, copied receipts, hashes, counts and licenses are in [corpus-inventory.json](corpus-inventory.json). IDR contributes 1,885 rows, BIA 10, JAX 6,365 + 6,897, Webknossos 80. These are catalog counts, never availability, conformance or pass counts."
+        },
+        {
+          "line": 110,
+          "line_sha256": "45f43ac1885912df4ea102e134722c27c8e068701c839d48eaaacbb0839219e4",
+          "text": "The challenge README describes a **development** specification and conversion of v2 arrays into v3, optionally sharded, with metadata migrated to `attributes.ome` (S00020:27–42). This does not promise v2 controls or final-0.5 conformity. [AGAVE PR #220](https://github.com/AllenCell/agave/pull/220) reports “seems to load basically all” without a pass/fail list (S00048). Its merge used TensorStore v0.1.71, not today's AGAVE pin (S00049/S00058). JAX 3722 array metadata records conversion start `1743047076.3844037`, March 27, 2025 (S00026), after #220's March 22 merge. Current remote objects therefore cannot be equated with the exact author-tested bytes. The “without generating synthetic data” conclusion is rejected: real samples are valuable seeds but leave substantial controlled edge-case gaps."
+        },
+        {
+          "line": 119,
+          "line_sha256": "14071615c9b18c227a64c121421201e9de60a34f70484ed40b8b21b57e22106e",
+          "text": "| BIA `4ffaeed2-fa70-4907-820f-8a96ef683095.zarr` | S00017/S00069: two levels; inspected level 1 TCZYX uint8 `[1,2,1,256,256]`; 256² inner chunks; channel colors/windows and y/x micrometers; retained BIA CSV lists 441,756 bytes | Small candidate for offline mirroring and channel/level/edge-shard checks; advertised size is a catalog value, not verified complete mirror size. Dataset RO-Crate explicitly supplies CC BY 4.0 (S00032). |"
+        },
+        {
+          "line": 125,
+          "line_sha256": "4b892952bc3a87d41bf930d5f256515e60ecde1d4cc9546efcf2cd8c8b4c38ca",
+          "text": "The six directly inspected array metadata files in that table use regular Zarr3 grids, `sharding_indexed`, inner `bytes` then blosc(zstd), and index `bytes` plus crc32c (S00024/S00029/S00069/S00026/S00071/S00031). They vary rank, dtype, shape, shuffle and chunk/shard layout; they do **not** demonstrate diverse independent codec families or every permitted extension."
+        },
+        {
+          "line": 127,
+          "line_sha256": "d5a7a40987d4d04791926ec73df3b3c34451660e2b82274a3470ac0447317335",
+          "text": "**Concrete replacement for acceptance at line 11.** Maintain a fixture manifest with origin/catalog revision or hash, converter/version when known, acquisition time, dataset attribution/license, selected image/level paths, metadata and chunk-byte hashes, rank/axes/dtype/shape, transforms/units, chunk grid/key/codec chain/index location, and an explicit expected outcome. Separate (a) supported valid files expected to render with independently checked values, (b) valid but unsupported configurations expected to explain the limitation, (c) malformed/historical conformance cases expected to diagnose the defect, and (d) unavailable sources that supply no decode result. Run correctness acceptance on stable local fixtures without requiring external servers; copying a subset must record its derivation and preserve a valid declared scope. Never alter downloaded originals in place to make the corpus pass."
+        },
+        {
+          "line": 129,
+          "line_sha256": "172e8a16f076aa4b6a2ac04b141686ee9148eebdaa9b13057571a2a8ad740fe3",
+          "text": "**Acceptance checks for the test corpus itself.** A fresh offline run must resolve every required local fixture and verify hashes/manifest identity. Verify expected image choices, selected sample values at levels/times/planes/channels, independent coordinate calculations, label ID/color/alignment, cancellation/stale-result recovery, and source immutability. Known invalid metadata must produce the declared diagnostic rather than redefine final NGFF conformance. A removed required fixture or missing expected-value oracle is an incomplete test, not a pass. An optional remote acquisition failure may be reported separately but must not quietly skip required offline acceptance."
+        },
+        {
+          "line": 131,
+          "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc",
+          "text": "**Uncovered cases to preserve as fixture leads.** Add controlled unsharded v3, all eight conventional rank/type combinations, arbitrary valid names and spatial order, full transform composition/nonzero offsets, mixed/missing units, signed/large integer and float edge values, unsupported dtype, multiple images/multiscales alternatives, valid aligned integer labels, different chunk-key encodings, standalone gzip/zstd/transpose chains, start/end shard indexes, sparse fill versus corruption, missing references, cancellation races, and large dimensions with bounded memory. Exact types/codecs classified positive depend on the approved support matrix; testing an unsupported result does not establish support. Native 0.4/v2 remains outside the selected Plan: preserve a version-rejection fixture; adding positive legacy reading needs explicit review."
+        },
+        {
+          "line": 133,
+          "line_sha256": "77eb6fdb88d9a4f33e2bcffd795a3443124d4626e59409bc9575fbf6f0a5d80a",
+          "text": "**Offline corpus adoption — product proposal requiring approval.** Recommended starting proposal: a small versioned local mirror using the BIA two-level image (explicit CC BY 4.0), a reviewed bounded IDR/JAX selection for hierarchy/time/label/shard behavior with per-dataset terms, and clearly derived synthetic cases for remaining obligations. Benefit: reproducible regressions that exercise real converters without requiring large network downloads at test time. Dependencies: selected-byte availability, attribution/terms, acquisition/storage budget and independent pixel oracle. Tradeoffs: repository/CI size, maintenance, historical nonconformities and coverage bias versus realism; a metadata-only fixture is cheaper but cannot test decoding. Do not mirror all 15,234 URLs or call this an exhaustive suite. JAX catalog rows all carry CC BY 4.0; a repository code license or one dataset license does not establish blanket rights for every linked provider."
+        },
+        {
+          "line": 135,
+          "line_sha256": "e8f76d9cb7499d8c506d71c7e11c6e0d230168bcf17bf35b0c3d060f1810b509",
+          "text": "**Preserved uncertainty.** No upstream code, AGAVE/TensorStore decode, full-store mirror or pixel-oracle test was executed. Exact historical AGAVE exceptions, current availability of every object, codec correctness and performance remain unverified. Two new helper acquisitions (S00018 and S00066) failed its shared-cache integrity check; they are not evidence of remote unavailability. Catalog counts instead use copied, hash-verified retained primary receipts/bytes, including the pinned `3423248c0d527332e4226caa789160ad45efe5d1` `other_samples.csv`. New production fixtures still need fresh documented acquisition and decoding. These limits do not prevent completing the Plans comparison; they prevent claiming an implemented regression suite."
+        }
+      ]
+    },
+    {
+      "id": "B11-4",
+      "title": "Shared-cache failures must remain distinct from remote availability",
+      "status": "corroborated_error_custody",
+      "note_lines": [
+        120,
+        123,
+        135
+      ],
+      "conclusion": "S00018 andS00066 receipts both have ERROR:ValueError Shared source cache integrity mismatch, raw_bytes0 and the empty SHA256. Their request identities target pinned other_samples.csv and BIA CSV respectively. They provide no HTTP unavailable verdict. Successful retainedJ7 primary bytes support catalog parsing independently, including pinned3423248c0d527332e4226caa789160ad45efe5d1 other_samples.csv (7rows). Separately retained404/400/timeout attempts remain their own attempt evidence, not provider-wide failure. No new endpoint availability check was made.",
+      "source_ids": [
+        "J11-S00018",
+        "J11-S00066"
+      ],
+      "note_anchors": [
+        {
+          "line": 120,
+          "line_sha256": "cbd8e5fd66acaf2636d4e7387eb3eb9468f377eca1ce9e02c9ab685490c680b6",
+          "text": "| JAX `3722.zarr` | S00021/S00068/S00026: bf2raw root, image `0`, seven levels; TCZYX uint8 `[1,3,1,46080,113280]`; 32768² shards and 1024² inner chunks contain all three channels | Candidate hierarchy/large-view/read-amplification case. A single discovered child in this inspected sample is not proof of multiple scenes. The retained primary attempt returned 404 for `OME/zarr.json` ([J0007 S00111](retained-evidence/J0007-reconcile/S00111/receipt.json)); use an explicit controlled fallback fixture as well. |"
+        },
+        {
+          "line": 123,
+          "line_sha256": "164ef918b1fa21633fabd10dbbbe30628ee68ab3934945169eecd4ccf62ff440",
+          "text": "| Webknossos entries | Retained primary attempts record [HTTP 400](retained-evidence/J0007-reconcile/S00081/receipt.json) and [timeout](retained-evidence/J0007-reconcile/S00082/receipt.json); its leaf CSV with 80 entries was hash-checked/reparsed | Availability and layout/decode coverage remain uncertain. Neither attempt establishes provider-wide failure; this comparison did not repeat endpoint or pixel availability tests. |"
+        },
+        {
+          "line": 135,
+          "line_sha256": "e8f76d9cb7499d8c506d71c7e11c6e0d230168bcf17bf35b0c3d060f1810b509",
+          "text": "**Preserved uncertainty.** No upstream code, AGAVE/TensorStore decode, full-store mirror or pixel-oracle test was executed. Exact historical AGAVE exceptions, current availability of every object, codec correctness and performance remain unverified. Two new helper acquisitions (S00018 and S00066) failed its shared-cache integrity check; they are not evidence of remote unavailability. Catalog counts instead use copied, hash-verified retained primary receipts/bytes, including the pinned `3423248c0d527332e4226caa789160ad45efe5d1` `other_samples.csv`. New production fixtures still need fresh documented acquisition and decoding. These limits do not prevent completing the Plans comparison; they prevent claiming an implemented regression suite."
+        }
+      ]
+    },
+    {
+      "id": "B11-5",
+      "title": "Historical dependency pins and stronger prior fix evidence remain distinct",
+      "status": "corroborated_with_union_preservation",
+      "note_lines": [
+        74,
+        76,
+        110,
+        163,
+        187
+      ],
+      "conclusion": "S00049/S00050 show v0.1.71 at#220 merge/v1.8.0; S00058 shows current inspected AGAVE9e7b47f… FetchContent v0.1.78 with tarball hash. S00125 resolves that tag to40e73764e7f4b03dea645aa88b933d1ac19c41cd; S00085 gives2025-10-06 commit date and gcs_grpc retry fix. This is neither an immutable overall application-support promise nor a submodule pin, latest-version recommendation or runtime decode. J11#294 row narrowly describes its issue body/zero-comments evidence; it must not erase priorJ6/J10 inspected0ad6ce118cce4af052a8ab246da577554c0a72e0 Read/Write/GetStorageStatistics correction and cyclic3D source test. The combined-codec fixture remains justified by that stronger retained evidence.",
+      "source_ids": [
+        "J11-S00049",
+        "J11-S00050",
+        "J11-S00058",
+        "J11-S00085",
+        "J11-S00101",
+        "J11-S00125"
+      ],
+      "reused_review": "comparison-batch3-fact-scope-review.json",
+      "note_anchors": [
+        {
+          "line": 74,
+          "line_sha256": "4f4de902ae9a71c8c6b3aff65a19202f3ea54cfe40af7f937843539092674fb9",
+          "text": "**Reviewable backend proposal.** Evaluate TensorStore behind a local-reader boundary as one candidate; do not adopt AGAVE's pin, Qt stack or volume renderer automatically. Benefit: an existing C++ implementation of Zarr3, sharding, codec composition and asynchronous read APIs. Dependencies: approved language/platform choice, reproducible dependency pin/hash, packaging/compiler feasibility, error/cancellation integration and the corpus below. Tradeoffs: build size/time and dependency maintenance; source/API support may exceed actual tested combinations; unknown extensions still need explicit outcomes. Compare a newer reviewed TensorStore revision with v0.1.78 as a reference and with the project's eventual alternative decoder on the same local fixtures. A limited read-only spike producing correctness, memory, latency and build results is the decision artifact. No implementation or dependency change is approved by this report."
+        },
+        {
+          "line": 76,
+          "line_sha256": "fabc7b0b204f243d1ea363385266acb5d7cb8a6e7d003aedc3ce38a17ec116e1",
+          "text": "**Evidence.** Current AGAVE CMake FetchContent pins v0.1.78 with a SHA256 (S00058:32–44), while the #220 merge and v1.8.0 pin v0.1.71 (S00049/S00050:35–38). Its March 2025 “basically all” statement (S00048) therefore cannot establish v0.1.78's exact tested corpus. Pinned TensorStore schema documents regular grids, bytes, transpose, sharding_indexed, crc32c, gzip, blosc and zstd (S00040). These are supported chain candidates, not successful runtime decodes here. Optional consolidated metadata exists in Zarr v3 (S00041:550 onward); the older contrary claim is rejected. The pinned v2 schema/binding documents `metadata_key` (default `.zarray`), not the handoff's asserted `consolidated` option (S00133:105–114; S00134:143–154); that claimed switch is not adopted as an implementation requirement. Whether to consume consolidation as an optimization is deferred until the chosen backend and fixtures justify it."
+        },
+        {
+          "line": 110,
+          "line_sha256": "45f43ac1885912df4ea102e134722c27c8e068701c839d48eaaacbb0839219e4",
+          "text": "The challenge README describes a **development** specification and conversion of v2 arrays into v3, optionally sharded, with metadata migrated to `attributes.ome` (S00020:27–42). This does not promise v2 controls or final-0.5 conformity. [AGAVE PR #220](https://github.com/AllenCell/agave/pull/220) reports “seems to load basically all” without a pass/fail list (S00048). Its merge used TensorStore v0.1.71, not today's AGAVE pin (S00049/S00058). JAX 3722 array metadata records conversion start `1743047076.3844037`, March 27, 2025 (S00026), after #220's March 22 merge. Current remote objects therefore cannot be equated with the exact author-tested bytes. The “without generating synthetic data” conclusion is rejected: real samples are valuable seeds but leave substantial controlled edge-case gaps."
+        },
+        {
+          "line": 163,
+          "line_sha256": "f2406e57b0b2b3c90a5df43030b3a6e48bd45f4540ab66a5a7dd4fe7d10a322f",
+          "text": "| Dependency pin over time | #220 merge and v1.8.0 CMake pin v0.1.71 (S00049/S00050); current pinned AGAVE source uses v0.1.78 FetchContent plus hash (S00058), not a TensorStore submodule (`.gitmodules` lists only libCZI, S00131). Tag v0.1.78 maps to `40e73764e7f4b03dea645aa88b933d1ac19c41cd` (S00125), dated October 6, 2025 (S00085), about 6.5 months after #220, not a year. Pinning stabilizes a snapshot; it does not eliminate dependency upgrades. |"
+        },
+        {
+          "line": 187,
+          "line_sha256": "60dbf80b2f8f13f99f270df1a0c54bf5d4e4fcb5524a93306f050876e69f0690",
+          "text": "| #294 transpose then sharding | Report explicitly concerns **writing**, with no comments/fix attribution (S00101). Preserve codec-composition read fixtures; do not claim the same read-side bug. |"
+        }
+      ]
+    },
+    {
+      "id": "B11-6",
+      "title": "Keep specimen identity, source defaults and container breadth bounded",
+      "status": "scope_holds_preserved",
+      "note_lines": [
+        18,
+        20,
+        40,
+        42,
+        117,
+        131,
+        211
+      ],
+      "conclusion": "J11 uk1s3/ome2024-ngff-challenge/0.0.5 specimen has source3levels,label4levels,explicit source../.. and labels-container missingome.version (S25/27/28/29). It is distinct from earlier livingobjects/idr/zarr/v0.5 specimen with3matching levels and different storage chains. The explicit direct-label source is valid path evidence, not evidence about wholly absent image-label/source or source:{} propagation. Preserve earlier omission adjudication: default present source.image carefully; no universal synthesis of absent enclosing objects or silent recovery from conflicting source. J11D1 mandatory plate/well/series traversal and expose-all-multiscales wording still needs admitted-container/entry-policy normalization. Correct identity/routing does not by itself approve all HCS/acquisition breadth or a new chooser.",
+      "derivative_recommendation": "Retain conditional supported-container routing, explicit unsupported feedback and optional chooser/presentation policy. Keep label mismatch/conformance caveats without declaring int8 invalid or repairing stored originals. Source-label default behavior remains the existing adjudicated split.",
+      "source_ids": [
+        "J11-S00003",
+        "J11-S00025",
+        "J11-S00027",
+        "J11-S00028",
+        "J11-S00029"
+      ],
+      "reused_review": "label-source-adjudication.md",
+      "note_anchors": [
+        {
+          "line": 18,
+          "line_sha256": "81fe5ff97916dc73e708b9e7ad50cf7c9f5a9e5fff09e23ac0fa42e1de9a2903",
+          "text": "**Concrete replacement behavior for the line-5 open/discovery contract.** Inspect local `zarr.json` as node metadata; validate Zarr format/node type separately from the OME namespace and metadata version. A generic Zarr v3 node is not automatically OME-Zarr 0.5. Keep the chosen fileset and selected image-group path distinct. For a direct image, expose its multiscales alternatives and named/relative resolution paths. For a collection, follow plate/well image references when plate metadata is present; otherwise use declared `OME/series` or the specified numbered-image fallback for a bf2raw collection. Resolve each dataset path relative to its image group. Discover label images through the associated labels list, including intermediate groups; do not list the labels container as a pixel image. Preserve image identity and enough relative path/well/field context to distinguish otherwise identical names. Discovery must remain bounded/cancellable; a broken reference must identify the item and leave other discovered images selectable."
+        },
+        {
+          "line": 20,
+          "line_sha256": "0ccd94e51dc89ee1a1d9e9902cfe33f48bf5f5875ba29914b3b1da7f13871886",
+          "text": "**Acceptance checks.** A local image root, two-image bf2raw collection with explicit series, numbered fallback, and plate with multiple wells/fields produce the expected choices and stable identities. A plate plus bf2raw metadata follows the plate hierarchy. Distinguish multiple multiscales entries from their resolution levels and separate image groups. Use arbitrary nonnumeric dataset paths, nested labels paths, duplicate display names, an unavailable referenced image, and a generic v3 group with no OME image metadata. Assert no silent first-image-only result, no attempted volume read of the collection root, and no metadata/data writes. The locator checks under L-09ceb3cfac5e also apply."
+        },
+        {
+          "line": 40,
+          "line_sha256": "f4559e2826d906c465572d41ff1e7f044db73908fc1b9f781a303104ccd6e288",
+          "text": "**Concrete replacement behavior.** For every supported dtype, decode according to complete dtype and byte-order metadata, not bit width alone. Preserve signedness and value identity through the data pipeline; keep display mapping separate from scientific samples and label IDs. Preserve large integer labels through lookup without converting IDs through a lossy floating-point representation. Render labels categorically (nearest-neighbor sampling or an equivalent method that cannot invent intermediate IDs), register through image/label transforms and source associations, and respect compatible singleton dimensions. Validate label/image level-count and shape compatibility; do not silently line up different pyramids by list index. An unsupported dtype or invalid label association is an item-specific diagnostic while the source image remains usable. Define safe finite display normalization for supported constant/non-finite float input; no division-by-zero path or invented calibrated intensity claim. A raw pixel-value inspector is not required by the existing details-panel promise."
+        },
+        {
+          "line": 42,
+          "line_sha256": "80d7da73f78b11dc01c37317ea2bdabf8bb7d92a127d8fcbc98845553e818eb9",
+          "text": "**Acceptance checks.** For each declared supported type, compare decoded known samples against an independent expected-value oracle. Include negative int32 values (never float-reinterpreted), uint16 above 255, float32 constant/negative/non-finite cases, and signed integer labels. Exercise distinguishable label IDs above the exact range of the renderer's float type if those integer types are supported; otherwise verify the declared unsupported result. Check zero labels with explicit nontransparent RGBA (the spec does not universally reserve zero as transparent), nested source paths, singleton C, label edges under zoom, and mismatched level counts. Verify original file hashes and that channel/window adjustments change only session display state."
+        },
+        {
+          "line": 117,
+          "line_sha256": "2425e9f04607c9942f4a3183816c4707c7bf0f64213fa082ea7dc32b4c083b57",
+          "text": "| IDR `0.0.5/6001240_labels.zarr` | S00025/S00027/S00028/S00029: source image has three levels; labels list `0`; label has four levels, CZYX int8 `[1,236,275,271]`, source `../..`, RGBA/properties; labels container omits `ome.version` | Known final-spec caveats: four versus three violates §2.6 same-level-count MUST, and version omission requires a diagnostic/compatibility decision. Preserve original as negative/conformance-caveat evidence. It must not silently become a passing overlay-conformance fixture. Int8 is valid for labels independently of these metadata defects. |"
+        },
+        {
+          "line": 131,
+          "line_sha256": "4f2ea47e7449d1f004435c2ce0151a040f0f7d4e171a305249a2b311fcb924cc",
+          "text": "**Uncovered cases to preserve as fixture leads.** Add controlled unsharded v3, all eight conventional rank/type combinations, arbitrary valid names and spatial order, full transform composition/nonzero offsets, mixed/missing units, signed/large integer and float edge values, unsupported dtype, multiple images/multiscales alternatives, valid aligned integer labels, different chunk-key encodings, standalone gzip/zstd/transpose chains, start/end shard indexes, sparse fill versus corruption, missing references, cancellation races, and large dimensions with bounded memory. Exact types/codecs classified positive depend on the approved support matrix; testing an unsupported result does not establish support. Native 0.4/v2 remains outside the selected Plan: preserve a version-rejection fixture; adding positive legacy reading needs explicit review."
+        },
+        {
+          "line": 211,
+          "line_sha256": "dce4ae530521538b352b9d9d55366d0a23d5e8f83b92f64b60f6b636fa0cbc35",
+          "text": "**Remaining technical uncertainty/deferred work.** AGAVE end-to-end rendering/value correctness, exact challenge exceptions, cancellation latency, cache hit rates/memory on actual hardware, current-versus-newer TensorStore behavior and Python-client integration remain unverified. These have explicit next evidence in [leads/remaining-evidence.md](leads/remaining-evidence.md). No exhaustive negative tracker search, closed-issue count or child “complete” marker is used as proof of runtime correctness. These deferred investigations do not replace any assigned parent or leave its Plans comparison without a disposition."
+        }
+      ]
+    }
+  ],
+  "selected_primary_sources": [
+    {
+      "id": "J11-S00002",
+      "raw_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "text_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "receipt_sha256": "32e0fc24e1ab4924fe2663a5d0b2f0703e04e4d408b7e80ba79bfd7fb5cf0378",
+      "status": "OK",
+      "url": null,
+      "text_lines": [
+        [
+          1,
+          11
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00002/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00002/text.txt",
+      "receipt": {
+        "source_id": "S00002",
+        "finished_at": "2026-09-09T11:28:40.156473+00:00",
+        "raw_bytes": 1498,
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "command": "plan-read",
+        "plan_path": "Plans/Viewer.md",
+        "inputs_root": "artifact:campaign/cases/ome-zarr05-thin/plans",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00003",
+      "raw_sha256": "be58bb51cc2da4f6ede552cbfe3cf6ba23ddc29f0b47b90d34ba86a58d553ecf",
+      "text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "receipt_sha256": "dfaf39aaaf49950a0be8980e22ef5837c185d780d73e8e88faca98676b48a2db",
+      "status": "OK",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "text_lines": [
+        [
+          280,
+          315
+        ],
+        [
+          431,
+          474
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00003/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00003/text.txt",
+      "receipt": {
+        "source_id": "S00003",
+        "finished_at": "2026-09-09T11:28:57.066880+00:00",
+        "raw_bytes": 158593,
+        "sha256": "be58bb51cc2da4f6ede552cbfe3cf6ba23ddc29f0b47b90d34ba86a58d553ecf",
+        "command": "fetch",
+        "url": "https://ngff.openmicroscopy.org/0.5/",
+        "final_url": "https://ngff.openmicroscopy.org/0.5/",
+        "http_status": 200,
+        "content_type": "text/html",
+        "acquired_at": "2026-09-09T07:17:08.356292+00:00",
+        "text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "ca4816cf9bae17926216a1d9835ea2b3e4bd26789df951d72e50d8241311770a",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00018",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text_sha256": "4651319623332db252df125f16d14bcf1cb5331d993142910ebd7ed4dbd6d2a0",
+      "receipt_sha256": "69be8a309be905c5a572a3ccbb47904495fbabd16dee8acc6db35ed8a625bc15",
+      "status": "ERROR",
+      "url": null,
+      "text_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00018/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00018/text.txt",
+      "receipt": {
+        "source_id": "S00018",
+        "finished_at": "2026-09-09T11:30:48.283666+00:00",
+        "raw_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "command": "fetch",
+        "status": "ERROR",
+        "error": "ValueError: Shared source cache integrity mismatch"
+      }
+    },
+    {
+      "id": "J11-S00025",
+      "raw_sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "text_sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+      "receipt_sha256": "930181759c9c9883737c5ecf1bb8b0dd07a1db81e80bc4388ac83bb752b2f206",
+      "status": "OK",
+      "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/zarr.json",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00025/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00025/text.txt",
+      "receipt": {
+        "source_id": "S00025",
+        "finished_at": "2026-09-09T11:30:54.779058+00:00",
+        "raw_bytes": 1243,
+        "sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+        "command": "fetch",
+        "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/zarr.json",
+        "final_url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:32:30.944387+00:00",
+        "text_sha256": "a8109467e29e1d40ddc5425707eb4107f0b91405fc979636407aa795c1bdce6d",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "089cf5674a1f07865877f8b12f51fa146db14f55631cb2253cbe0e9fab1faf6a",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00027",
+      "raw_sha256": "9f8ccec2417d26c9e1d9e5fd0f45748e896af52aea12a66f84b26e8c9319de80",
+      "text_sha256": "9f8ccec2417d26c9e1d9e5fd0f45748e896af52aea12a66f84b26e8c9319de80",
+      "receipt_sha256": "d89e9106173617948ee667a8430659b5a1108be2e3dac693229f06f651dc3a90",
+      "status": "OK",
+      "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/zarr.json",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00027/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00027/text.txt",
+      "receipt": {
+        "source_id": "S00027",
+        "finished_at": "2026-09-09T11:30:56.963138+00:00",
+        "raw_bytes": 82,
+        "sha256": "9f8ccec2417d26c9e1d9e5fd0f45748e896af52aea12a66f84b26e8c9319de80",
+        "command": "fetch",
+        "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/zarr.json",
+        "final_url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:32:36.169338+00:00",
+        "text_sha256": "9f8ccec2417d26c9e1d9e5fd0f45748e896af52aea12a66f84b26e8c9319de80",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "57aca4c6d49b34c11886fc64e49dff388e8dbea23903a53b26ab64120b1bdf4e",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00028",
+      "raw_sha256": "9f6b82585117b076c7b9955afd66ff163585bb38f5b4cecadc7576f4024733f8",
+      "text_sha256": "9f6b82585117b076c7b9955afd66ff163585bb38f5b4cecadc7576f4024733f8",
+      "receipt_sha256": "16ba790796f522fa72116552a9bff755e7665c6bfc3161b845613f476e9da6c6",
+      "status": "OK",
+      "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/zarr.json",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00028/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00028/text.txt",
+      "receipt": {
+        "source_id": "S00028",
+        "finished_at": "2026-09-09T11:30:57.905399+00:00",
+        "raw_bytes": 8396,
+        "sha256": "9f6b82585117b076c7b9955afd66ff163585bb38f5b4cecadc7576f4024733f8",
+        "command": "fetch",
+        "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/zarr.json",
+        "final_url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:36:21.612176+00:00",
+        "text_sha256": "9f6b82585117b076c7b9955afd66ff163585bb38f5b4cecadc7576f4024733f8",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "c6ea010bbad6685e3f6007b89034fa730b611ef9fbb5457be3531ea012481d0c",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00029",
+      "raw_sha256": "fe7d498b538a988733e15aa65bb87f29d79c2b8a4a9f862277f2409fefedad5e",
+      "text_sha256": "fe7d498b538a988733e15aa65bb87f29d79c2b8a4a9f862277f2409fefedad5e",
+      "receipt_sha256": "1163167f65420a863ac6badf5721a348adfd609ccb4f5f5e0d6587720a07b4d3",
+      "status": "OK",
+      "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/0/zarr.json",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00029/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00029/text.txt",
+      "receipt": {
+        "source_id": "S00029",
+        "finished_at": "2026-09-09T11:30:58.831420+00:00",
+        "raw_bytes": 562,
+        "sha256": "fe7d498b538a988733e15aa65bb87f29d79c2b8a4a9f862277f2409fefedad5e",
+        "command": "fetch",
+        "url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/0/zarr.json",
+        "final_url": "https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240_labels.zarr/labels/0/0/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:36:26.862948+00:00",
+        "text_sha256": "fe7d498b538a988733e15aa65bb87f29d79c2b8a4a9f862277f2409fefedad5e",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "c04f9464f9752371afe6a19784bf1217cd4bbb0822c010b53414b11f3690b76e",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00044",
+      "raw_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+      "text_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+      "receipt_sha256": "6df4ac4bf61c28f1062337e8ccc05abc71a709d7292b82373a5b90fcaabc63e8",
+      "status": "OK",
+      "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+      "text_lines": [
+        [
+          246,
+          268
+        ],
+        [
+          271,
+          287
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00044/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00044/text.txt",
+      "receipt": {
+        "source_id": "S00044",
+        "finished_at": "2026-09-09T11:31:14.161567+00:00",
+        "raw_bytes": 10791,
+        "sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+        "final_url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T09:27:32.729090+00:00",
+        "text_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "30c95488cb32b5a965e31b136d8ab6bd93de9ce4647e67cf7dae2f604b8dd138",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00049",
+      "raw_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+      "text_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+      "receipt_sha256": "f9a46269d8dcf9df4e63ea91cf52f1d1ed1ae35a7c37df5a08514365c4b1e5f4",
+      "status": "OK",
+      "url": "https://raw.githubusercontent.com/AllenCell/agave/8a863e61aa7682791b40de184449c250649b90ae/renderlib/io/CMakeLists.txt",
+      "text_lines": [
+        [
+          35,
+          38
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00049/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00049/text.txt",
+      "receipt": {
+        "source_id": "S00049",
+        "finished_at": "2026-09-09T11:31:20.396383+00:00",
+        "raw_bytes": 1543,
+        "sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/AllenCell/agave/8a863e61aa7682791b40de184449c250649b90ae/renderlib/io/CMakeLists.txt",
+        "final_url": "https://raw.githubusercontent.com/AllenCell/agave/8a863e61aa7682791b40de184449c250649b90ae/renderlib/io/CMakeLists.txt",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T09:39:21.928704+00:00",
+        "text_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "437b04ba516e8219492ed4020e3a0e0cf400db3f4b9ba5bcb1148a2b1f546782",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00050",
+      "raw_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+      "text_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+      "receipt_sha256": "1776b9fc03e853f7e5f34e8cdd1d937b07aec36343839483f4312f1d29f7b19e",
+      "status": "OK",
+      "url": "https://raw.githubusercontent.com/AllenCell/agave/v1.8.0/renderlib/io/CMakeLists.txt",
+      "text_lines": [
+        [
+          35,
+          38
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00050/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00050/text.txt",
+      "receipt": {
+        "source_id": "S00050",
+        "finished_at": "2026-09-09T11:31:21.308598+00:00",
+        "raw_bytes": 1543,
+        "sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/AllenCell/agave/v1.8.0/renderlib/io/CMakeLists.txt",
+        "final_url": "https://raw.githubusercontent.com/AllenCell/agave/v1.8.0/renderlib/io/CMakeLists.txt",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T09:39:27.313531+00:00",
+        "text_sha256": "6eee8df882f0ce9d52a50faa67044d0e6d052e5700e23c54743aca0c2e45dcb8",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "4a935e8653dd21f7ed51938ce5cf7ef9072e0b65d0be92b5651173a822040460",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00058",
+      "raw_sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+      "text_sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+      "receipt_sha256": "fb6f2623e95bee97327c01d6b932d4acfdf85db3fd8717271b3643cb03a53036",
+      "status": "OK",
+      "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/CMakeLists.txt",
+      "text_lines": [
+        [
+          32,
+          44
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00058/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00058/text.txt",
+      "receipt": {
+        "source_id": "S00058",
+        "finished_at": "2026-09-09T11:32:20.677885+00:00",
+        "raw_bytes": 1830,
+        "sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/CMakeLists.txt",
+        "final_url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/io/CMakeLists.txt",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T07:53:13.343108+00:00",
+        "text_sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "e0a8818903b53e9b74a846c851ec607cf0ca8002e7bb79c43e2a6285fe8c075e",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00066",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text_sha256": "4651319623332db252df125f16d14bcf1cb5331d993142910ebd7ed4dbd6d2a0",
+      "receipt_sha256": "9fdefc15aced087c5fb0cadfec7ce300b7f63dd12975aba13c1d5ad183b247cd",
+      "status": "ERROR",
+      "url": null,
+      "text_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00066/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00066/text.txt",
+      "receipt": {
+        "source_id": "S00066",
+        "finished_at": "2026-09-09T11:33:15.635996+00:00",
+        "raw_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "command": "fetch",
+        "status": "ERROR",
+        "error": "ValueError: Shared source cache integrity mismatch"
+      }
+    },
+    {
+      "id": "J11-S00076",
+      "raw_sha256": "1fe82aa3ed741f60b6945c19b2bd52b81c039c2ac059cd8b9096198cca60f8eb",
+      "text_sha256": "1fe82aa3ed741f60b6945c19b2bd52b81c039c2ac059cd8b9096198cca60f8eb",
+      "receipt_sha256": "365f370fb566e9536fe3aaebe7c3be633d6a6b9407a0b4b08894d17346a7cbe2",
+      "status": "OK",
+      "url": "https://api.github.com/repos/AllenCell/agave/pulls/281",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00076/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00076/text.txt",
+      "receipt": {
+        "source_id": "S00076",
+        "finished_at": "2026-09-09T11:33:26.517310+00:00",
+        "raw_bytes": 16768,
+        "sha256": "1fe82aa3ed741f60b6945c19b2bd52b81c039c2ac059cd8b9096198cca60f8eb",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/AllenCell/agave/pulls/281",
+        "final_url": "https://api.github.com/repos/AllenCell/agave/pulls/281",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T07:49:16.709507+00:00",
+        "text_sha256": "1fe82aa3ed741f60b6945c19b2bd52b81c039c2ac059cd8b9096198cca60f8eb",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "b973800c602dcc3d5e9691b390eb9d54a633430ecab7a34ee7e26fc2a290eadf",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00085",
+      "raw_sha256": "8bc6e4045f532fa0d5f8f4185f8dd528e8c15683de89c656f5f5e33126c7b8b0",
+      "text_sha256": "8bc6e4045f532fa0d5f8f4185f8dd528e8c15683de89c656f5f5e33126c7b8b0",
+      "receipt_sha256": "a722a3a55d4a6f2a061b4f8792c472e31c0130aaac764bb6f2c727651a1e52d1",
+      "status": "OK",
+      "url": "https://api.github.com/repos/google/tensorstore/git/commits/40e73764e7f4b03dea645aa88b933d1ac19c41cd",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00085/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00085/text.txt",
+      "receipt": {
+        "source_id": "S00085",
+        "finished_at": "2026-09-09T11:33:35.922944+00:00",
+        "raw_bytes": 1227,
+        "sha256": "8bc6e4045f532fa0d5f8f4185f8dd528e8c15683de89c656f5f5e33126c7b8b0",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/google/tensorstore/git/commits/40e73764e7f4b03dea645aa88b933d1ac19c41cd",
+        "final_url": "https://api.github.com/repos/google/tensorstore/git/commits/40e73764e7f4b03dea645aa88b933d1ac19c41cd",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:29:28.443206+00:00",
+        "text_sha256": "8bc6e4045f532fa0d5f8f4185f8dd528e8c15683de89c656f5f5e33126c7b8b0",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "22270d8e7282ba7a24a03380fc3ba46299dd7ba7eeb294e8119bc1aea1ac98c4",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00088",
+      "raw_sha256": "5220fe5e76b1b3b1ffd8420ef8f3126e76aa88ac677bd510f5f42d0fecd6b81f",
+      "text_sha256": "5220fe5e76b1b3b1ffd8420ef8f3126e76aa88ac677bd510f5f42d0fecd6b81f",
+      "receipt_sha256": "68e031ae3d2bd3c9354a750e0fb541803d01bac416280eedad1dfd223930b429",
+      "status": "OK",
+      "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/TimeStampTool.cpp",
+      "text_lines": [
+        [
+          11,
+          16
+        ],
+        [
+          55,
+          60
+        ],
+        [
+          93,
+          101
+        ]
+      ],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00088/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00088/text.txt",
+      "receipt": {
+        "source_id": "S00088",
+        "finished_at": "2026-09-09T11:33:39.612728+00:00",
+        "raw_bytes": 4057,
+        "sha256": "5220fe5e76b1b3b1ffd8420ef8f3126e76aa88ac677bd510f5f42d0fecd6b81f",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/TimeStampTool.cpp",
+        "final_url": "https://raw.githubusercontent.com/AllenCell/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/TimeStampTool.cpp",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T08:02:45.087134+00:00",
+        "text_sha256": "5220fe5e76b1b3b1ffd8420ef8f3126e76aa88ac677bd510f5f42d0fecd6b81f",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "403a8d9694fe41a87875e23f06f5c9b0f3db90f44c2490d8e47b1944138a5299",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00101",
+      "raw_sha256": "c36f6a2009987c3fad109d69419dc00ee7ea99229005a4facf7f49a990c7472a",
+      "text_sha256": "c36f6a2009987c3fad109d69419dc00ee7ea99229005a4facf7f49a990c7472a",
+      "receipt_sha256": "576a8a6fc2a208164d8252dedd4a1fe3b7f8e85f7804755fedb54fad16832343",
+      "status": "OK",
+      "url": "https://api.github.com/repos/google/tensorstore/issues/294",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00101/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00101/text.txt",
+      "receipt": {
+        "source_id": "S00101",
+        "finished_at": "2026-09-09T11:40:39.187620+00:00",
+        "raw_bytes": 8596,
+        "sha256": "c36f6a2009987c3fad109d69419dc00ee7ea99229005a4facf7f49a990c7472a",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/google/tensorstore/issues/294",
+        "final_url": "https://api.github.com/repos/google/tensorstore/issues/294",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T07:58:26.948003+00:00",
+        "text_sha256": "c36f6a2009987c3fad109d69419dc00ee7ea99229005a4facf7f49a990c7472a",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "5f6cd7c86754dfb7a4691e09a2399aa62140e27d5689f584f03552c91088c640",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00108",
+      "raw_sha256": "f3046a283b896469e5282cca4e741a86a3b2af5863a2642682c9e3fa25c3fe1f",
+      "text_sha256": "f3046a283b896469e5282cca4e741a86a3b2af5863a2642682c9e3fa25c3fe1f",
+      "receipt_sha256": "3cd92c31a6468bab1d408ea3671d635c496f78b47691415c7fd552fd2cdbfab6",
+      "status": "OK",
+      "url": "https://api.github.com/repos/AllenCell/agave/issues/276",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00108/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00108/text.txt",
+      "receipt": {
+        "source_id": "S00108",
+        "finished_at": "2026-09-09T11:40:44.354910+00:00",
+        "raw_bytes": 2779,
+        "sha256": "f3046a283b896469e5282cca4e741a86a3b2af5863a2642682c9e3fa25c3fe1f",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/AllenCell/agave/issues/276",
+        "final_url": "https://api.github.com/repos/AllenCell/agave/issues/276",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T07:47:52.357007+00:00",
+        "text_sha256": "f3046a283b896469e5282cca4e741a86a3b2af5863a2642682c9e3fa25c3fe1f",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "905ef01a83c4ea1931472e003a27f5b85a08b02df68d9cd5d1e515b5cec05bf3",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J11-S00125",
+      "raw_sha256": "6f54707c940a3c7e325edc041e4bf823e3341cd08db33da004d398296eee2877",
+      "text_sha256": "6f54707c940a3c7e325edc041e4bf823e3341cd08db33da004d398296eee2877",
+      "receipt_sha256": "34737da3450ab5a980b642d260acb356d421216bcba747d4d5f2350ea38585fb",
+      "status": "OK",
+      "url": "https://api.github.com/repos/google/tensorstore/git/ref/tags/v0.1.78",
+      "text_lines": [],
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00125/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0011-compare/workspace/research-evidence/sources/S00125/text.txt",
+      "receipt": {
+        "source_id": "S00125",
+        "finished_at": "2026-09-09T11:41:41.915654+00:00",
+        "raw_bytes": 347,
+        "sha256": "6f54707c940a3c7e325edc041e4bf823e3341cd08db33da004d398296eee2877",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/google/tensorstore/git/ref/tags/v0.1.78",
+        "final_url": "https://api.github.com/repos/google/tensorstore/git/ref/tags/v0.1.78",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T09:27:22.356364+00:00",
+        "text_sha256": "6f54707c940a3c7e325edc041e4bf823e3341cd08db33da004d398296eee2877",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "dfbf22d1d8862ef2d99c3d13e580c7f7de6920e1980554a6f6dd3dcca280ad18",
+        "status": "OK"
+      }
+    }
+  ],
+  "csv_reparse": {
+    "inventory_sha256": "ce180c2ff44fde9f92066ae26d847d3a561010f71fb918a5a1c10e4c36a6fd9b",
+    "files": 17,
+    "rows": 15237,
+    "unique_urls": 15234,
+    "source_checks": [
+      {
+        "source": "J0007-reconcile/S00012",
+        "local_source": "retained-evidence/J0007-reconcile/S00012",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/ebi-ngff-challenge-samples.csv",
+        "rows": 10,
+        "sha256": "67271bf46c06c8244f2a98c3e8ed0e530086152b79a2886a81ccc83d7329df75",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:25:29.845758+00:00",
+        "receipt_sha256": "8c80e48a56ca8f79f8298fa76707244b656e94d64113e8c5f14e4055d4e1ddf3",
+        "raw_hash_matches": true,
+        "reparsed_rows": 10,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00013",
+        "local_source": "retained-evidence/J0007-reconcile/S00013",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/webknossos_samples.csv",
+        "rows": 80,
+        "sha256": "2ac2adadbd16d9fe800132a1921a9dc6e7294ebf23bb39eb1ddac38fe1961207",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:25:32.597049+00:00",
+        "receipt_sha256": "9f52b5d9a832146a53fb4a50e183c99ce582d96f89a4ff11ea7c2b2c2e057c51",
+        "raw_hash_matches": true,
+        "reparsed_rows": 80,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00014",
+        "local_source": "retained-evidence/J0007-reconcile/S00014",
+        "url": "https://raw.githubusercontent.com/TheJacksonLaboratory/jax-ngff-challenge-2024/refs/heads/main/KOMP_adult_lacZ.csv",
+        "rows": 6365,
+        "sha256": "d5793480b8945b417d5bd791830a2a7667fd902059ab03b550e3b24b602183e2",
+        "licenses": [
+          "https://creativecommons.org/licenses/by/4.0/"
+        ],
+        "acquired_at": "2026-09-09T09:25:51.286156+00:00",
+        "receipt_sha256": "2fd98234031592f939fa8316f200d6e248b9c43f2ee68a14a0be6158ad708ba2",
+        "raw_hash_matches": true,
+        "reparsed_rows": 6365,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00015",
+        "local_source": "retained-evidence/J0007-reconcile/S00015",
+        "url": "https://raw.githubusercontent.com/TheJacksonLaboratory/jax-ngff-challenge-2024/refs/heads/main/KOMP_histopathology.csv",
+        "rows": 6897,
+        "sha256": "6b48081b1c77c1fd6f733e609c5e8f8772743195924c8dbdf2b01aa0615fd8cb",
+        "licenses": [
+          "https://creativecommons.org/licenses/by/4.0/"
+        ],
+        "acquired_at": "2026-09-09T09:25:53.770489+00:00",
+        "receipt_sha256": "bb855c55fd48600e27ac0e7a26821f1bc4f0fe3d7c42e52d33ff6f12697fbcec",
+        "raw_hash_matches": true,
+        "reparsed_rows": 6897,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00031",
+        "local_source": "retained-evidence/J0007-reconcile/S00031",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0090_samples.csv",
+        "rows": 22,
+        "sha256": "a5075b5614a0403a49ab25fa6bf46b5659adb9b7e0c3c7e13c1e7902796015d7",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:27.038686+00:00",
+        "receipt_sha256": "12d47283b810c7049deb3e7cdf81c9a6df7be891ba43a12e8fd4c48583b121a2",
+        "raw_hash_matches": true,
+        "reparsed_rows": 22,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00034",
+        "local_source": "retained-evidence/J0007-reconcile/S00034",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0004_samples.csv",
+        "rows": 46,
+        "sha256": "1c367c03e3c73c882bc649fda64ae61bb84bbcab60a677a9c1772da7f5407e04",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:30.339637+00:00",
+        "receipt_sha256": "e0d311c8644bb2e50e12ce076065a9181a120cd27b5b15ea6a83e98023484f53",
+        "raw_hash_matches": true,
+        "reparsed_rows": 46,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00037",
+        "local_source": "retained-evidence/J0007-reconcile/S00037",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0010_samples.csv",
+        "rows": 147,
+        "sha256": "cdce114d141085d1666f124c82d230c07b1ca06715ac763e7ad55939dfc37425",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:33.428937+00:00",
+        "receipt_sha256": "6c47db8fc22f352aafe739cf93957c82526c376ccf3b50f4961dfcd3a4d54fb1",
+        "raw_hash_matches": true,
+        "reparsed_rows": 147,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00040",
+        "local_source": "retained-evidence/J0007-reconcile/S00040",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0011_samples.csv",
+        "rows": 182,
+        "sha256": "e4d0f480ace8ff8d50910978a6250782b09b99a5e2f68f8c7c55db24e28f6f5f",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:37.072622+00:00",
+        "receipt_sha256": "8fe5ff3150f890a1fb27168d4a3b761f7c3d6426355a899b109d566063b07bf6",
+        "raw_hash_matches": true,
+        "reparsed_rows": 182,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00043",
+        "local_source": "retained-evidence/J0007-reconcile/S00043",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0012_samples.csv",
+        "rows": 68,
+        "sha256": "f46c37efadade30e8f778c20848b9909bbaf661cecfe85de73a2eca57b4af7a7",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:40.669049+00:00",
+        "receipt_sha256": "a4b48819e7c3d6241201a0e8bf15c5a9fa22ac654a9bc6ec03cf3e51e2c560a0",
+        "raw_hash_matches": true,
+        "reparsed_rows": 68,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00046",
+        "local_source": "retained-evidence/J0007-reconcile/S00046",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0015_samples.csv",
+        "rows": 83,
+        "sha256": "7a9db76ad2ebf064892c9c0bb11dfb0b77cedb4c89c7e207adcfb981163d3e7b",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:44.468096+00:00",
+        "receipt_sha256": "c92a1ee2cdd08017b58281369e439f40e9b097a9af8fa27ab7ac06e301f65676",
+        "raw_hash_matches": true,
+        "reparsed_rows": 83,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00049",
+        "local_source": "retained-evidence/J0007-reconcile/S00049",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0026_samples.csv",
+        "rows": 111,
+        "sha256": "c89bca13946356b1baf65d0d2b2baf96c79bd660d07bcc577f562783343cd245",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:48.447081+00:00",
+        "receipt_sha256": "bd69d79b5eb14565e67a6d7ad03a7bbad1cedfb735b2bd3d8f6a842bf8a47cad",
+        "raw_hash_matches": true,
+        "reparsed_rows": 111,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00051",
+        "local_source": "retained-evidence/J0007-reconcile/S00051",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0033_samples.csv",
+        "rows": 12,
+        "sha256": "b60848d4d7f978867f39450cf925746eb4fdb114111867603c1b6cfa14146841",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:51.625966+00:00",
+        "receipt_sha256": "7f6eb9278a56e4cb9d7560e06219c49a75ce9082e0d3af2f0a8505a8a988e2c6",
+        "raw_hash_matches": true,
+        "reparsed_rows": 12,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00053",
+        "local_source": "retained-evidence/J0007-reconcile/S00053",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0035_samples.csv",
+        "rows": 55,
+        "sha256": "33c0c8341254da4f7aa0b383bbd1c9f27a6b3029eeb3c621b7051911572d1940",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:53.779601+00:00",
+        "receipt_sha256": "ca8b1733f83f55748c6e9ff4df6b90b3a1b89fa0b9cf1b94ad09122c22b34599",
+        "raw_hash_matches": true,
+        "reparsed_rows": 55,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00056",
+        "local_source": "retained-evidence/J0007-reconcile/S00056",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0036_samples.csv",
+        "rows": 20,
+        "sha256": "9febb4e03da1d88c4ac0420290825acdce947d9fb0b74d8d9d9b0e270b4ef2ef",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:56.514690+00:00",
+        "receipt_sha256": "c39157f3fc97f6d735281507289c2da898c4636793101a48e3f28552af2d24e4",
+        "raw_hash_matches": true,
+        "reparsed_rows": 20,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00058",
+        "local_source": "retained-evidence/J0007-reconcile/S00058",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0051_samples.csv",
+        "rows": 5,
+        "sha256": "41717e9ce267931bd47ccffafe2388c1d2a22fb5869a178ad35c7d09bdc712be",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:27:59.070741+00:00",
+        "receipt_sha256": "c90d0a2c21117ed794811afca86a7faecf9f7a2d2b40c48f22464096aaa4774b",
+        "raw_hash_matches": true,
+        "reparsed_rows": 5,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00060",
+        "local_source": "retained-evidence/J0007-reconcile/S00060",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/samples_viewer/samples/idr0157_samples.csv",
+        "rows": 1127,
+        "sha256": "67e21fe75d2ba165bb283c1e6354edfe675ae6b53e0993555a809bfb40a4843f",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:28:02.155141+00:00",
+        "receipt_sha256": "72220d4d592fdaec084161815a662d2fee66188e4e5eb038d4c23858c15d814f",
+        "raw_hash_matches": true,
+        "reparsed_rows": 1127,
+        "licenses_match": true
+      },
+      {
+        "source": "J0007-reconcile/S00076",
+        "local_source": "retained-evidence/J0007-reconcile/S00076",
+        "url": "https://raw.githubusercontent.com/will-moore/ome2024-ngff-challenge/3423248c0d527332e4226caa789160ad45efe5d1/samples/other_samples.csv",
+        "rows": 7,
+        "sha256": "f2b32215effa944988048121d4ae14b04988a7f177f0d179baccce2cd80f7552",
+        "licenses": [
+          ""
+        ],
+        "acquired_at": "2026-09-09T09:29:41.816172+00:00",
+        "receipt_sha256": "54a17eea27466e3a0beaa6e8911d4de52f57349d012e76e732af6306d65bc8ca",
+        "raw_hash_matches": true,
+        "reparsed_rows": 7,
+        "licenses_match": true
+      }
+    ],
+    "new_remote_acquisition": false,
+    "pixel_execution": false
+  },
+  "arithmetic_checks": {
+    "native_negative_time_example": {
+      "scale_seconds": 2,
+      "translation_seconds": -5,
+      "indices": [
+        0,
+        1
+      ],
+      "expected_seconds": [
+        -5,
+        -3
+      ]
+    },
+    "native_2d_composition_expected": [
+      43,
+      11
+    ],
+    "meaning": "Arithmetic recomputation only; no application runtime fixture."
+  },
+  "reuse": [
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch3-fact-scope-review.json",
+      "sha256": "4361129f953d442b66225b0d72381bf6bc68723db0dd514aeaead1cba9228097"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/label-source-adjudication.md",
+      "sha256": "891c491eabebff09eb2b941a084532230ba3a55db6e39b59e6b6b90133b80344"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch4-fact-check.md",
+      "sha256": "39342564aae9e45676c1a8d3cfb70a202c9cec50cef8a2ed1ece936cd5a5c289"
+    }
+  ],
+  "actionable_derivative_changes": [
+    "Consider CR04 signed calibrated-time assertion and native −5/−3 regression example.",
+    "Consider CR10 checked stride/offset/logical-byte arithmetic and sparse >4GiB extent acceptance, retaining capability/resource bounds."
+  ],
+  "non_changes": [
+    "Do not turn these refinements into new UI/features or measured runtime passes.",
+    "Do not discard J6/J10 cyclic transpose+sharding read-fix evidence based on J11 issue-only wording.",
+    "Do not infer all-container acceptance or source-default propagation through missing enclosing objects."
+  ],
+  "closure": "Only evaluator/comparison-batch4-fact-scope-review.md/.json written. No native/source/fixture/Plans/campaign/D5/export changes. All owned command sessions closed after completion.",
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch4-fact-scope-review.json",
+    "source_sha256": "0f7c9ef92bd6dc17ea321f993a7cdf3fd1c4901540fe812896d76530ca8fbe65",
+    "source_bytes": 81491,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

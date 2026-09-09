@@ -1,0 +1,24 @@
+{
+  "schema": "d4.comparison_export.v1",
+  "status": "evaluator_staging_not_landed",
+  "job_id": "J0008-compare",
+  "assigned_ids": [
+    "L-80240e08616c"
+  ],
+  "original_report_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+  "exported_report_sha256": "f8237bfbe25ff2f9a1b29a2ceb628ca79acfdadbc1c26a5d45e8eb7a9787fbbf",
+  "original_line_count": 250,
+  "exported_line_count": 250,
+  "transformations": [
+    {
+      "original_link": "evidence-index.md",
+      "exported_link": "sources.md"
+    },
+    {
+      "original_link": "research-evidence/sources/S00001/text.txt",
+      "exported_link": "../../../fixtures/baseline/Viewer.md"
+    }
+  ],
+  "source_receipt_count": 68,
+  "exported_sources_sha256": "35b81b8310f77ea7cdf3556724e4db25977a449e4a0f2c2fce5ec47ea1b0431c"
+}

@@ -1,0 +1,1079 @@
+{
+  "review": "J0010 consequential fact and scope review",
+  "date": "2026-09-09",
+  "status": "qualified_review_one_carried_factual_correction_scope_holds_and_label_narrowing",
+  "native_notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+  "native_notes_lines": 250,
+  "scope": "Selected consequential claims and CR01–11 attribution; not exhaustive factual/lineage audit; no new research,renderer,decoder,pixel,upstream-test or schema execution. Earlier evaluator results reused explicitly.",
+  "inputs": [
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/notes.md",
+      "sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/notes.md",
+      "sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-native-dtype-and-loading.md",
+      "sha256": "3da08f3e86803b844f77d99572bff979fc5cf938b235bb2f81341406472cc2f4"
+    },
+    {
+      "path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0006-reconcile/workspace/leads/aggregate-label-scale-and-intent.md",
+      "sha256": "64df7c05f09ac986d457a45f9ce14c01b6585311ddb0bd0cb11e2cac307f5e8f"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/candidate-fixture-repairs.json",
+      "sha256": "1354d69c784292ca24b260e7cd339f91edf1705e38f55cc861e3eb0ac4d5c2db"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/derivative-draft-review.md",
+      "sha256": "e1ecc2d2fd4ac9dffa4cfb8e0e6a5f1f39c176a735190291aa481ce0eb258bf6"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/label-source-adjudication.md",
+      "sha256": "891c491eabebff09eb2b941a084532230ba3a55db6e39b59e6b6b90133b80344"
+    },
+    {
+      "path": "artifact:campaign/next-goal-20260909/d4/evaluator/reconcile-batch3-fact-check.md",
+      "sha256": "952a57eeec7aeef2ee2de93c195edc23c25959b9af817ba817b9a4e8021e118e"
+    }
+  ],
+  "findings": [
+    {
+      "id": "B10-1",
+      "status": "correction_required",
+      "notes_lines": [
+        18,
+        154
+      ],
+      "title": "Historical OMERO HCS is unconfirmed, not tested non-support",
+      "conclusion": "J10 carries the J6 child overstatement at line154. S00008:234–235 has supported:no with opens absent; S00009:128 selects missing, whose legend at86 is not tested/not confirmed. bf2raw affirmative support atS00008:271–272 remains valid. Line18 should say affirmative HCS entries, not exhaustively proven actual support. No current OMERO HCS behavior established.",
+      "sources": [
+        "J10-S00008",
+        "J10-S00009"
+      ]
+    },
+    {
+      "id": "B10-2",
+      "status": "scope_hold",
+      "notes_lines": [
+        44,
+        46,
+        48,
+        134,
+        205,
+        206,
+        207,
+        208,
+        209,
+        211
+      ],
+      "title": "Admitted container and codec profiles require explicit review",
+      "conclusion": "Metadata-driven discovery, truthful incompleteness and codec diagnosis repair existing outcomes. The frozen Plan does not name universal HCS/all-field/all-acquisition/bf2raw traversal or the whole proposed writer codec set. Preserve these as admitted-scope/compatibility-profile decisions. Within an admitted container honor declared links, plate precedence and scoped numbered fallback. A supported image group must still be selectable when its enclosing unsupported container is explained. Codec line46 already says proposed, bounded and reviewable: retain that status; no all-codec mandate or measured prevalence.",
+      "sources": [
+        "J10-S00002",
+        "J10-S00004",
+        "J10-S00012"
+      ]
+    },
+    {
+      "id": "B10-3",
+      "status": "corroborated_source_and_arithmetic_only",
+      "notes_lines": [
+        57,
+        59,
+        63,
+        73
+      ],
+      "title": "Distinct intensity/label arrays and four tiles / 644 bytes",
+      "conclusion": "S00017 is CZYX uint16 outer[1,10,512,512],inner[1,1,256,256],bytes little+Blosc zstd shuffle and bytes+crc32c index. S00019 is unsharded int8 with[1,59,69,136],bytes+zstd. Full one-channel plane intersects4 inner XY tiles;40slots times16bytes plus4CRC=644. Full index shape persists even at edge shards. Physical read calls/bytes/decode counts are not implied; J10 correctly calls this a baseline.",
+      "sources": [
+        "J10-S00017",
+        "J10-S00019",
+        "J10-S00024"
+      ]
+    },
+    {
+      "id": "B10-4",
+      "status": "corroborated_source_only",
+      "notes_lines": [
+        100,
+        102,
+        106,
+        224,
+        226,
+        228,
+        233,
+        234,
+        235,
+        242
+      ],
+      "title": "Dtype mismatch, versioned cyclic transpose fix and cooperative cancellation",
+      "conclusion": "AGAVE int32 Read reaches bit-width-only float reinterpretation, while VolumeDimensions distinguishes sampleFormat; constant/nonfinite normalization guard is not evident. Its four-type branch does not admit actual int8 labels. v0.1.78 pin/tarball hash match. Commit0ad6ce118cce4af052a8ab246da577554c0a72e0 dated2026-08-03 changes Read,Write,GetStorageStatistics permutation and adds order[1,2,0] ShardedTranspose3D test. No transpose in S00017: no demonstrated failure of that specimen. Read permits partial destinations; unchecked value() conditionally terminates; Future cancellation is limited/cooperative. Rank2–5 broadcast source reasoning is valid for stated canonical selections, not arbitrary-axis runtime proof. Range support and coalescing do not promise exact calls or latency. No decoder/test executed or fixed release certified.",
+      "sources": [
+        "J10-S00028",
+        "J10-S00029",
+        "J10-S00030",
+        "J10-S00031",
+        "J10-S00032",
+        "J10-S00033",
+        "J10-S00041",
+        "J10-S00044",
+        "J10-S00047",
+        "J10-S00084",
+        "J10-S00085"
+      ]
+    },
+    {
+      "id": "B10-5",
+      "status": "narrow_before_derivative",
+      "notes_lines": [
+        122,
+        201,
+        208,
+        209,
+        211
+      ],
+      "title": "Source omission and default need separate cases",
+      "conclusion": "J10 preserves optional image-label and registration and explicitly notes nested default ambiguity. It does not settle absent image-label vs absent source vs present source:{}; its line208 generic honor-default wording must not synthesize missing enclosing objects universally. At/A/labels/original/0, default../../ reaches/A/labels; explicit../../.. reaches/A. Retain supplied-object state, diagnose conflicting/invalid effective source and separately identify any registry recovery policy. Earlier evaluator six schema probes/model-source adjudication remains separate evidence, not J10 execution.",
+      "sources": [
+        "J10-S00004"
+      ],
+      "reused_review": "label-source-adjudication.md"
+    }
+  ],
+  "acceptance_provenance": [
+    {
+      "candidate": "CR01",
+      "j10_notes_lines": [
+        88,
+        90,
+        92,
+        199,
+        205
+      ],
+      "attribution": "J10 authors role/version admission and generic/legacy/future/malformed fixtures. The earlier combined register wording and control equivalence cases remain evaluator synthesis."
+    },
+    {
+      "candidate": "CR02",
+      "j10_notes_lines": [
+        112,
+        228,
+        242
+      ],
+      "attribution": "J10 authors rank2–5, names/dimension_names, absentT/C variants and singleton tests. Exact absent-versus-singleton GUI-control discrimination remains control/evaluator assisted; no runtime low-rank failure."
+    },
+    {
+      "candidate": "CR03",
+      "j10_notes_lines": [
+        20,
+        25,
+        26,
+        44,
+        48,
+        208,
+        211
+      ],
+      "attribution": "J10 authors declared nonnumeric/nested paths, irregular levels, missing links and physical-view preservation. Full earlier combined oracle is evaluator synthesis; no picker mandated."
+    },
+    {
+      "candidate": "CR04",
+      "j10_notes_lines": [
+        20,
+        24,
+        25,
+        26,
+        112,
+        116
+      ],
+      "attribution": "J10 authors numeric composition 5*(2*4+3)+7=62, changing geometry, mixed/absent units. Exact centisecond example comes from other native comparisons; do not assign that whole example to J10."
+    },
+    {
+      "candidate": "CR05",
+      "j10_notes_lines": [
+        122,
+        208,
+        209,
+        211
+      ],
+      "attribution": "J10 authors nested labels, optional omissions, C=1/sourceC=2 and invalid source/level/geometry checks. Absent enclosing objects versus source:{} policy and exact competing-image recovery oracle remain evaluator adjudication."
+    },
+    {
+      "candidate": "CR06",
+      "j10_notes_lines": [
+        104,
+        106,
+        108
+      ],
+      "attribution": "J6 child already authors signed64 exactness,sparse allocation and categorical direction; J10 explicitly authors negative/zero/adjacent>2^53 IDs,lookup/color/metadata identity,RGBA128/255 and sampling checks. Shuffled label-value entry order detecting positional lookup and exact refusal oracle remain frozenC06/evaluator assistance; generic lookup wording is not that exact test."
+    },
+    {
+      "candidate": "CR07",
+      "j10_notes_lines": [
+        46,
+        48,
+        224,
+        226,
+        242
+      ],
+      "attribution": "J10 authors full-chain known values and cyclic3D transpose+sharding old/fixed discrimination; J6 already has post-pin evidence. For J10 alone, the exact combined reverse-decoding-order/asymmetric big-endian derivative oracle remains frozenC07/evaluator-assisted wording: J10 mentions little-endian writer/storage and uncertain endian prevalence, not that exact test. This J10-only limit does not apply to the final native union: J9 independently authors known-value big-endian acceptance, as already recorded in the provenance register, and retains that native credit. Equivalent compound-chain/cyclic-sharding checks can satisfy native rubric coverage without reproducing the evaluator’s exact test text. No score change is made."
+    },
+    {
+      "candidate": "CR08",
+      "j10_notes_lines": [
+        67,
+        74,
+        75,
+        92,
+        242
+      ],
+      "attribution": "J10 authors absent versus explicit-fill chunks, CRC/truncation/permission errors, partial/cancelled buffers and tree hashes. For J10 alone, the earlier exact nonzero-fill oracle and combined derivative wording retain evaluator assistance; no runtime pass is claimed. This limit does not apply to the native union: J9 notes line192 explicitly proposes small known-value fixtures for nonzero fill and big-endian bytes and retains native authorship credit. Exact combined derivative wording can still be evaluator-authored without removing equivalent native acceptance credit. No score change is made."
+    },
+    {
+      "candidate": "CR09",
+      "j10_notes_lines": [
+        86,
+        88,
+        90,
+        94,
+        215
+      ],
+      "attribution": "J10 authors schema-pass semantic counterexamples,missing schema versus invalid data,plate-version conflict and optional tolerance. This is source inspection, not its own schema execution; earlier model-repair acceptance has other participant/evaluator provenance."
+    },
+    {
+      "candidate": "CR10",
+      "j10_notes_lines": [
+        65,
+        67,
+        71,
+        72,
+        75,
+        77,
+        126,
+        128
+      ],
+      "attribution": "J6 child already authors failed-time reset/old-image-new-slider and memory/cache directions. J10 now explicitly authors generation identity,rapid delayed success/failure,stale pixels/labels/coordinates/selection,full cache identity and checked memory acceptance. Previously evaluator-synthesized wording remains historically marked, but these clauses now have independent native J10 authorship. No budget/runtime guarantee."
+    },
+    {
+      "candidate": "CR11",
+      "j10_notes_lines": [
+        50,
+        100,
+        102,
+        108
+      ],
+      "attribution": "J10 authors int32/float distinction,constant/nonfinite normalization and optional OMERO-field fallback/validation; J6 child already identifies numeric guards. Exact absent channel-label conversion oracle is not newly demonstrated by J10. Transfer/label palette policy remains proposed."
+    }
+  ],
+  "selected_primary_sources": [
+    {
+      "id": "J10-S00002",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00002/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00002/text.txt",
+      "raw_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "text_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "text_lines": [
+        [
+          1,
+          11
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00002",
+        "finished_at": "2026-09-09T10:59:41.114793+00:00",
+        "raw_bytes": 1498,
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "command": "plan-read",
+        "plan_path": "Plans/Viewer.md",
+        "inputs_root": "artifact:campaign/cases/ome-zarr05-thin/plans",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00004",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00004/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00004/text.txt",
+      "raw_sha256": "be58bb51cc2da4f6ede552cbfe3cf6ba23ddc29f0b47b90d34ba86a58d553ecf",
+      "text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "text_lines": [
+        [
+          182,
+          275
+        ],
+        [
+          431,
+          474
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00004",
+        "finished_at": "2026-09-09T10:59:54.845352+00:00",
+        "raw_bytes": 158593,
+        "sha256": "be58bb51cc2da4f6ede552cbfe3cf6ba23ddc29f0b47b90d34ba86a58d553ecf",
+        "command": "fetch",
+        "url": "https://ngff.openmicroscopy.org/0.5/",
+        "final_url": "https://ngff.openmicroscopy.org/0.5/",
+        "http_status": 200,
+        "content_type": "text/html",
+        "acquired_at": "2026-09-09T07:17:08.356292+00:00",
+        "text_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "ca4816cf9bae17926216a1d9835ea2b3e4bd26789df951d72e50d8241311770a",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00008",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00008/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00008/text.txt",
+      "raw_sha256": "a6e9d6c43f5dac0897356c9c1d64e7c7641434863e6bedd91c876920bd9172bb",
+      "text_sha256": "a6e9d6c43f5dac0897356c9c1d64e7c7641434863e6bedd91c876920bd9172bb",
+      "text_lines": [
+        [
+          207,
+          239
+        ],
+        [
+          271,
+          272
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00008",
+        "finished_at": "2026-09-09T11:00:59.753932+00:00",
+        "raw_bytes": 15141,
+        "sha256": "a6e9d6c43f5dac0897356c9c1d64e7c7641434863e6bedd91c876920bd9172bb",
+        "command": "repo-read",
+        "repository": "ome/ome-ngff-tools",
+        "commit": "fd66b1f7562570620cb87229245198f581179727",
+        "path": "docs/_data/features.yml",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00009",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00009/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00009/text.txt",
+      "raw_sha256": "bb4956ac5db4ccfaabdc7f4d8ee7319f325f7e20247344c9b2f9227ea5126cc5",
+      "text_sha256": "bb4956ac5db4ccfaabdc7f4d8ee7319f325f7e20247344c9b2f9227ea5126cc5",
+      "text_lines": [
+        [
+          83,
+          86
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00009",
+        "finished_at": "2026-09-09T11:01:01.507069+00:00",
+        "raw_bytes": 8242,
+        "sha256": "bb4956ac5db4ccfaabdc7f4d8ee7319f325f7e20247344c9b2f9227ea5126cc5",
+        "command": "repo-read",
+        "repository": "ome/ome-ngff-tools",
+        "commit": "fd66b1f7562570620cb87229245198f581179727",
+        "path": "docs/index.md",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00012",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00012/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00012/text.txt",
+      "raw_sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+      "text_sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+      "text_lines": [
+        [
+          155,
+          200
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00012",
+        "finished_at": "2026-09-09T11:01:34.704047+00:00",
+        "raw_bytes": 27462,
+        "sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+        "command": "repo-read",
+        "repository": "glencoesoftware/bioformats2raw",
+        "commit": "51a5d48af82ea4fbc480f7ab2a83dc6a6def5c8e",
+        "path": "README.md",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00017",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00017/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00017/text.txt",
+      "raw_sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "text_sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+      "text_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00017",
+        "finished_at": "2026-09-09T11:01:54.250359+00:00",
+        "raw_bytes": 597,
+        "sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+        "command": "fetch",
+        "url": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/0/zarr.json",
+        "final_url": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/0/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T07:31:11.501206+00:00",
+        "text_sha256": "6e5ee3968ee682d71b057fddd7a711a585ae2670f4e516b8d7c495e6aa42e88a",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "49ecb3648ceaccbf20f64a2c66857442b1c3c639f45feacbebe301e02e0db3df",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00019",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00019/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00019/text.txt",
+      "raw_sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "text_sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+      "text_lines": [
+        [
+          1,
+          49
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00019",
+        "finished_at": "2026-09-09T11:01:55.601905+00:00",
+        "raw_bytes": 678,
+        "sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+        "command": "fetch",
+        "url": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/0/0/zarr.json",
+        "final_url": "https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_labels.zarr/labels/0/0/zarr.json",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T08:18:40.676742+00:00",
+        "text_sha256": "6418df19cb52575942f3dfca801a0e16f894a869dd0bfab2b0142d5ba12368bb",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "8cf4978dd155fd2aa1e5a49c814ce51cb2f5ef624084a9d4217592e71a8b5f99",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00024",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00024/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00024/text.txt",
+      "raw_sha256": "127cd3151d8105986c7aab46a5f2748f8379f62035231626444674c2bb253de9",
+      "text_sha256": "98b7358a89a9239ae39da571ab669c29cf6bff99791a4d6ba8001575f4167a7d",
+      "text_lines": [
+        [
+          181,
+          206
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00024",
+        "finished_at": "2026-09-09T11:02:25.408541+00:00",
+        "raw_bytes": 48946,
+        "sha256": "127cd3151d8105986c7aab46a5f2748f8379f62035231626444674c2bb253de9",
+        "command": "fetch",
+        "url": "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/sharding-indexed/",
+        "final_url": "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/sharding-indexed/",
+        "http_status": 200,
+        "content_type": "text/html",
+        "acquired_at": "2026-09-09T11:02:24.560054+00:00",
+        "text_sha256": "98b7358a89a9239ae39da571ab669c29cf6bff99791a4d6ba8001575f4167a7d",
+        "shared_cache_hit": false,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "cd0b3b24166860f8274395a203c603ad1eea5a21a79f8f70543b3cb574d723d7",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00028",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00028/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00028/text.txt",
+      "raw_sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+      "text_sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+      "text_lines": [
+        [
+          583,
+          606
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00028",
+        "finished_at": "2026-09-09T11:02:59.281989+00:00",
+        "raw_bytes": 21106,
+        "sha256": "411e4f466692c37f89c9111b8fdc0662f0a3072e42a03b08dabd8bc7ced26feb",
+        "command": "repo-read",
+        "repository": "allen-cell-animated/agave",
+        "commit": "9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3",
+        "path": "renderlib/io/FileReaderZarr.cpp",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00029",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00029/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00029/text.txt",
+      "raw_sha256": "0fe1b9aeefe2040c8b7fdbb9d90e2c29366074fadc042c7385bf8f1c36c2f089",
+      "text_sha256": "0fe1b9aeefe2040c8b7fdbb9d90e2c29366074fadc042c7385bf8f1c36c2f089",
+      "text_lines": [
+        [
+          638,
+          673
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00029",
+        "finished_at": "2026-09-09T11:02:55.556531+00:00",
+        "raw_bytes": 43202,
+        "sha256": "0fe1b9aeefe2040c8b7fdbb9d90e2c29366074fadc042c7385bf8f1c36c2f089",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/tensorstore.h",
+        "final_url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/tensorstore.h",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T07:51:38.472026+00:00",
+        "text_sha256": "0fe1b9aeefe2040c8b7fdbb9d90e2c29366074fadc042c7385bf8f1c36c2f089",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "22a7eda9f0247da291f789328768571ff202904e7ec37bf477a5e47bf8a24456",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00030",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00030/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00030/text.txt",
+      "raw_sha256": "8a23f20eeaa0d37ce799d7a2fa248f6508f1efd59dfa2441765297b99202cba1",
+      "text_sha256": "8a23f20eeaa0d37ce799d7a2fa248f6508f1efd59dfa2441765297b99202cba1",
+      "text_lines": [
+        [
+          79,
+          124
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00030",
+        "finished_at": "2026-09-09T11:02:56.284263+00:00",
+        "raw_bytes": 8982,
+        "sha256": "8a23f20eeaa0d37ce799d7a2fa248f6508f1efd59dfa2441765297b99202cba1",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/index_space/alignment.h",
+        "final_url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/index_space/alignment.h",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T07:52:24.052253+00:00",
+        "text_sha256": "8a23f20eeaa0d37ce799d7a2fa248f6508f1efd59dfa2441765297b99202cba1",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "b8ca372c8e8b04613f5c23875f5dd8a4b87de1c198973a1ace79ebe056989fac",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00031",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00031/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00031/text.txt",
+      "raw_sha256": "7983e63b4abdc0f8257b401d454ad59865e03e4a483c7d3cbd3154732d909831",
+      "text_sha256": "7983e63b4abdc0f8257b401d454ad59865e03e4a483c7d3cbd3154732d909831",
+      "text_lines": [
+        [
+          434,
+          457
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00031",
+        "finished_at": "2026-09-09T11:02:56.926607+00:00",
+        "raw_bytes": 35038,
+        "sha256": "7983e63b4abdc0f8257b401d454ad59865e03e4a483c7d3cbd3154732d909831",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/util/result.h",
+        "final_url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/util/result.h",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T07:55:33.927638+00:00",
+        "text_sha256": "7983e63b4abdc0f8257b401d454ad59865e03e4a483c7d3cbd3154732d909831",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "2b918f652721c3d66f4f63ae360bfafda12383d3f2108b5df6a41b146c0fdbe7",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00032",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00032/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00032/text.txt",
+      "raw_sha256": "76efaa2121df1da817b283945f3f195af7fc730bf5c8c2258625aceccfc7c802",
+      "text_sha256": "76efaa2121df1da817b283945f3f195af7fc730bf5c8c2258625aceccfc7c802",
+      "text_lines": [
+        [
+          229,
+          238
+        ],
+        [
+          326,
+          340
+        ],
+        [
+          582,
+          587
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00032",
+        "finished_at": "2026-09-09T11:02:57.691216+00:00",
+        "raw_bytes": 59921,
+        "sha256": "76efaa2121df1da817b283945f3f195af7fc730bf5c8c2258625aceccfc7c802",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/util/future.h",
+        "final_url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/util/future.h",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T07:58:15.769653+00:00",
+        "text_sha256": "76efaa2121df1da817b283945f3f195af7fc730bf5c8c2258625aceccfc7c802",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "e3bffc431c95ad13f038a69186d7941c775f9094de1d84910da59a883321873c",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00033",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00033/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00033/text.txt",
+      "raw_sha256": "fb41dbdd88d601bf23d57abf5832f4112a0e9685c106fcaaa879cecb74fc2627",
+      "text_sha256": "fb41dbdd88d601bf23d57abf5832f4112a0e9685c106fcaaa879cecb74fc2627",
+      "text_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00033",
+        "finished_at": "2026-09-09T11:02:58.648600+00:00",
+        "raw_bytes": 9572,
+        "sha256": "fb41dbdd88d601bf23d57abf5832f4112a0e9685c106fcaaa879cecb74fc2627",
+        "command": "fetch",
+        "url": "https://api.github.com/repos/google/tensorstore/commits/0ad6ce118cce4af052a8ab246da577554c0a72e0",
+        "final_url": "https://api.github.com/repos/google/tensorstore/commits/0ad6ce118cce4af052a8ab246da577554c0a72e0",
+        "http_status": 200,
+        "content_type": "application/json",
+        "acquired_at": "2026-09-09T11:02:57.568377+00:00",
+        "text_sha256": "fb41dbdd88d601bf23d57abf5832f4112a0e9685c106fcaaa879cecb74fc2627",
+        "shared_cache_hit": false,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "78bdca7129ab3e90fbf34aa8bc00e68ba1cd306f2dad74d56b1ac8312ac71c4c",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00041",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00041/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00041/text.txt",
+      "raw_sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+      "text_sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+      "text_lines": [
+        [
+          32,
+          44
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00041",
+        "finished_at": "2026-09-09T11:06:03.745717+00:00",
+        "raw_bytes": 1830,
+        "sha256": "477c433b965ebffa1aa64471853ebeff63b4b93d0001f8f503a9b2b9e879ffe8",
+        "command": "repo-read",
+        "repository": "allen-cell-animated/agave",
+        "commit": "9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3",
+        "path": "renderlib/io/CMakeLists.txt",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00044",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00044/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00044/text.txt",
+      "raw_sha256": "6c6e5163e58954c1be4e34f32e411d2e4872faf48996aab8f5264b12a83ccbb3",
+      "text_sha256": "6c6e5163e58954c1be4e34f32e411d2e4872faf48996aab8f5264b12a83ccbb3",
+      "text_lines": [
+        [
+          396,
+          405
+        ],
+        [
+          450,
+          477
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00044",
+        "finished_at": "2026-09-09T11:05:18.800269+00:00",
+        "raw_bytes": 36911,
+        "sha256": "6c6e5163e58954c1be4e34f32e411d2e4872faf48996aab8f5264b12a83ccbb3",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/kvstore/file/file_key_value_store.cc",
+        "final_url": "https://raw.githubusercontent.com/google/tensorstore/v0.1.78/tensorstore/kvstore/file/file_key_value_store.cc",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T08:56:49.308314+00:00",
+        "text_sha256": "6c6e5163e58954c1be4e34f32e411d2e4872faf48996aab8f5264b12a83ccbb3",
+        "shared_cache_hit": true,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "a3346068704b10f4a33483299f839720c174d39b023c65f88748615c98785a65",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00047",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00047/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00047/text.txt",
+      "raw_sha256": "88564319a92cf357572b77798a611a9c116d81d3b2a7a332dfb84da9f3e0d8da",
+      "text_sha256": "88564319a92cf357572b77798a611a9c116d81d3b2a7a332dfb84da9f3e0d8da",
+      "text_lines": [
+        [
+          19,
+          49
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00047",
+        "finished_at": "2026-09-09T11:06:11.349534+00:00",
+        "raw_bytes": 1901,
+        "sha256": "88564319a92cf357572b77798a611a9c116d81d3b2a7a332dfb84da9f3e0d8da",
+        "command": "repo-read",
+        "repository": "allen-cell-animated/agave",
+        "commit": "9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3",
+        "path": "renderlib/io/ConvertChannelData.cpp",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00084",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00084/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00084/text.txt",
+      "raw_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+      "text_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+      "text_lines": [
+        [
+          288,
+          299
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00084",
+        "finished_at": "2026-09-09T11:14:12.015046+00:00",
+        "raw_bytes": 10791,
+        "sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/allen-cell-animated/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+        "final_url": "https://raw.githubusercontent.com/allen-cell-animated/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/renderlib/VolumeDimensions.cpp",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T11:14:11.285972+00:00",
+        "text_sha256": "06def7640bea115876553b4ddbdabd8e6eb91c79370f0123124be22002564530",
+        "shared_cache_hit": false,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "72bd2a48d495320c712026a4b046f99646cb3ed930992e6317a3b4c46f8ef1bb",
+        "status": "OK"
+      }
+    },
+    {
+      "id": "J10-S00085",
+      "raw_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00085/raw",
+      "text_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0010-compare/workspace/research-evidence/sources/S00085/text.txt",
+      "raw_sha256": "b86298b7c8da81a2e490592675d52394bd9b3d1d6c0bde1d1f6d7d2c28231433",
+      "text_sha256": "b86298b7c8da81a2e490592675d52394bd9b3d1d6c0bde1d1f6d7d2c28231433",
+      "text_lines": [
+        [
+          93,
+          113
+        ]
+      ],
+      "receipt": {
+        "source_id": "S00085",
+        "finished_at": "2026-09-09T11:14:12.507918+00:00",
+        "raw_bytes": 4095,
+        "sha256": "b86298b7c8da81a2e490592675d52394bd9b3d1d6c0bde1d1f6d7d2c28231433",
+        "command": "fetch",
+        "url": "https://raw.githubusercontent.com/allen-cell-animated/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/TimelineDockWidget.cpp",
+        "final_url": "https://raw.githubusercontent.com/allen-cell-animated/agave/9e7b47f7e64f56a5f7cffb317e72486aeb7ebfe3/agave_app/TimelineDockWidget.cpp",
+        "http_status": 200,
+        "content_type": "text/plain",
+        "acquired_at": "2026-09-09T11:14:11.706009+00:00",
+        "text_sha256": "b86298b7c8da81a2e490592675d52394bd9b3d1d6c0bde1d1f6d7d2c28231433",
+        "shared_cache_hit": false,
+        "cache_policy": "first successful acquisition pinned for this pilot; timestamp retained",
+        "shared_cache_key": "ccbee238974177c35138e6d8b93837a474292944257e6464984b5e6e920fb074",
+        "status": "OK"
+      }
+    }
+  ],
+  "arithmetic": {
+    "outer": [
+      1,
+      10,
+      512,
+      512
+    ],
+    "inner": [
+      1,
+      1,
+      256,
+      256
+    ],
+    "index_slots": 40,
+    "index_bytes": 644,
+    "full_one_channel_plane_inner_tiles": 4,
+    "runtime_observed": false
+  },
+  "closure": "Only comparison-batch3-fact-scope-review.md/.json written. All owned command invocations exited; no persistent session opened. Campaign, Plans, D5, fixture and exports unchanged.",
+  "locator_verification": {
+    "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+    "scope": "All explicit J10 note locators, no broad rereview",
+    "verified_note_lines": [
+      {
+        "line": 18,
+        "prefix": "The retained reconciliation is supported where the older parent overstates this evidence: Z-downsamp"
+      },
+      {
+        "line": 20,
+        "prefix": "**Concrete replacement behavior for :5, with acceptance added to :11.** Interpret every selected lev"
+      },
+      {
+        "line": 24,
+        "prefix": "- A numeric 0.5 fixture with dataset scale 2/translation 3 and multiscales scale 5/translation 7 map"
+      },
+      {
+        "line": 25,
+        "prefix": "- Use non-2× XY scales, changing Z depth and anisotropic Z calibration across levels. Pan/zoom and p"
+      },
+      {
+        "line": 26,
+        "prefix": "- Use differently translated but physically aligned image/label grids, with independent per-level sh"
+      },
+      {
+        "line": 44,
+        "prefix": "**Concrete replacement behavior for :9/:5 and acceptance for :11.** Maintain a checked compatibility"
+      },
+      {
+        "line": 46,
+        "prefix": "The minimum **proposed** real-producer coverage includes v3 uncompressed bytes, Blosc (its lz4/zstd "
+      },
+      {
+        "line": 48,
+        "prefix": "Acceptance: open version-pinned 0.5 outputs with default and metadata-described custom series/level "
+      },
+      {
+        "line": 50,
+        "prefix": "**Saved-display proposal requiring approval.** Recommend using valid saved `omero.channels` label/co"
+      },
+      {
+        "line": 57,
+        "prefix": "**Primary storage evidence.** The [sharding specification](https://zarr-specs.readthedocs.io/en/late"
+      },
+      {
+        "line": 59,
+        "prefix": "The actual [6001240 intensity array](https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0062A/6001240_"
+      },
+      {
+        "line": 63,
+        "prefix": "Reject the parent's unconditional “LocalStore reads whole chunk files,” “one decode per plane,” “v3 "
+      },
+      {
+        "line": 65,
+        "prefix": "**Concrete replacement behavior for :7.** Represent each request by fileset/image/multiscales entry/"
+      },
+      {
+        "line": 67,
+        "prefix": "On view changes cancel work no longer needed, stop scheduling its further reads and use backend canc"
+      },
+      {
+        "line": 71,
+        "prefix": "- On a local large multiresolution fileset, instrument metadata-open time, first useful low-resoluti"
+      },
+      {
+        "line": 72,
+        "prefix": "- Inject delayed reads, then rapidly change image, time, plane, channel visibility and zoom. Only th"
+      },
+      {
+        "line": 73,
+        "prefix": "- On the S00017 geometry, trace a one-channel plane and a small ROI, plus shard-boundary and missing"
+      },
+      {
+        "line": 74,
+        "prefix": "- Compare absent chunks with explicit fill-value chunks, then corrupt index CRC/data CRC (where conf"
+      },
+      {
+        "line": 75,
+        "prefix": "- Exercise allocations larger than the configured budget and long navigation sequences for bounded r"
+      },
+      {
+        "line": 77,
+        "prefix": "**Remaining material choices.** Exact supported hardware, latency percentiles/targets, memory allowa"
+      },
+      {
+        "line": 86,
+        "prefix": "The primary [0.5 image schema](https://ngff.openmicroscopy.org/0.5/schemas/image.schema) (S00037, ra"
+      },
+      {
+        "line": 88,
+        "prefix": "**Replacement for :5/:7 and checks for :11:** identify Zarr/OME version and role first, check the ma"
+      },
+      {
+        "line": 90,
+        "prefix": "Acceptance cases: schema-valid-looking metadata with duplicate axis names, wrong dimension_names, tr"
+      },
+      {
+        "line": 92,
+        "prefix": "The [ome-zarr-py reader](https://github.com/ome/ome-zarr-py/blob/94eaf20aa096b4a034fc0c636e31d5d6495"
+      },
+      {
+        "line": 94,
+        "prefix": "**Validation-policy proposal requiring approval:** open usable images with per-item diagnostics, whi"
+      },
+      {
+        "line": 100,
+        "prefix": "Primary [AGAVE FileReaderZarr](https://github.com/allen-cell-animated/agave/blob/9e7b47f7e64f56a5f7c"
+      },
+      {
+        "line": 102,
+        "prefix": "**Replacement behavior for :5/:9:** dispatch conversions by actual dtype and signedness, not bit wid"
+      },
+      {
+        "line": 104,
+        "prefix": "The [0.5 label specification](https://ngff.openmicroscopy.org/0.5/#labels-md) (S00004, 431–474) perm"
+      },
+      {
+        "line": 106,
+        "prefix": "**Label repair and acceptance:** retain exact signed/64-bit IDs through decode, color lookup and met"
+      },
+      {
+        "line": 108,
+        "prefix": "**Display/property proposals requiring approval:** recommend labels available but initially hidden, "
+      },
+      {
+        "line": 112,
+        "prefix": "Use the full transform repair under L-481fce077b0a. Additionally, :5's dimension/time/plane consumer"
+      },
+      {
+        "line": 116,
+        "prefix": "The real [13457537 metadata](https://livingobjects.ebi.ac.uk/idr/zarr/v0.4/idr0101A/13457537.zarr/.z"
+      },
+      {
+        "line": 122,
+        "prefix": "**Additional uncertainty discovered during comparison:** §2.3 permits path-backed binary scale/trans"
+      },
+      {
+        "line": 126,
+        "prefix": "[AGAVE's GUI](https://github.com/allen-cell-animated/agave/blob/9e7b47f7e64f56a5f7cffb317e72486aeb7e"
+      },
+      {
+        "line": 128,
+        "prefix": "**Replacement under :5/:7:** key reusable decoded content by the full image/multiscales/array/axis-s"
+      },
+      {
+        "line": 134,
+        "prefix": "**Repair of :11's “representative” acceptance:** maintain a fixture manifest identifying source URL/"
+      },
+      {
+        "line": 154,
+        "prefix": "[QuPath PR #1638](https://github.com/qupath/qupath/pull/1638) (S00039 raw API) is **merged=true, mer"
+      },
+      {
+        "line": 199,
+        "prefix": "**Primary evidence and corrected authority.** [0.5 specification](https://ngff.openmicroscopy.org/0."
+      },
+      {
+        "line": 201,
+        "prefix": "The parent prose's root-level series, image-level labels list, sibling-outside-image labels director"
+      },
+      {
+        "line": 205,
+        "prefix": "1. Inspect the selected local directory's node type, storage version and namespaced OME version/role"
+      },
+      {
+        "line": 206,
+        "prefix": "2. For bf2raw layout, plate metadata takes precedence. Otherwise resolve `OME/zarr.json.attributes.o"
+      },
+      {
+        "line": 207,
+        "prefix": "3. For plates, follow actual `plate.wells` paths and verify rowIndex/columnIndex/path agreement. For"
+      },
+      {
+        "line": 208,
+        "prefix": "4. For an image, follow the ordered `multiscales[*].datasets[*].path` values as array paths and reta"
+      },
+      {
+        "line": 209,
+        "prefix": "5. Check source/label axis correspondence, integer dtype, per-level calibration and required level c"
+      },
+      {
+        "line": 211,
+        "prefix": "**Consumer acceptance for :11.** Fixtures must cover a plain extensionless 0.5 image; a mapped nonnu"
+      },
+      {
+        "line": 215,
+        "prefix": "**Unresolved standard conflict.** The real [190129 plate](https://livingobjects.ebi.ac.uk/idr/share/"
+      },
+      {
+        "line": 224,
+        "prefix": "**Versioned primary evidence.** [AGAVE renderlib/io/CMakeLists.txt](https://github.com/allen-cell-an"
+      },
+      {
+        "line": 226,
+        "prefix": "A concrete post-pin change is [0ad6ce118cce4af052a8ab246da577554c0a72e0](https://github.com/google/t"
+      },
+      {
+        "line": 228,
+        "prefix": "**Rank hypothesis corrected.** The pinned [Read contract](https://github.com/google/tensorstore/blob"
+      },
+      {
+        "line": 233,
+        "prefix": "- Read yields a future/status and may leave the destination partially written on failure (S00029, 64"
+      },
+      {
+        "line": 234,
+        "prefix": "- Read supports progress callbacks and batching (S00029, 650–656). Cancellation is cooperative when "
+      },
+      {
+        "line": 235,
+        "prefix": "- Tagged [file_key_value_store.cc](https://github.com/google/tensorstore/blob/v0.1.78/tensorstore/kv"
+      },
+      {
+        "line": 242,
+        "prefix": "**Acceptance before selection.** Check both sharded uint16 intensity and unsharded int8 labels, incl"
+      }
+    ],
+    "correction": "Locator correction: verified every explicitly cited J10 note line against the unchanged final notes hash. HCS is line 154; corrected nearby hierarchy, rank, failure/range and state-acceptance locators to their actual body paragraphs. These edits change locators and clarify J10-only attribution; they do not alter scores, fixtures or the native-union credit for J9 known-value big-endian acceptance."
+  },
+  "j9_union_credit_clarification": {
+    "notes_path": "artifact:campaign/runs/ome-zarr05-thin-live-20260909/jobs/J0009-compare/workspace/notes.md",
+    "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+    "line": 192,
+    "line_sha256_without_newline": "86ec3b47b46e69200ad9f3308ff6ac4f68a26d4c21f39feb1be9f48c83aba985",
+    "native_acceptance_credit": [
+      "nonzero-fill known-value fixtures",
+      "big-endian known-value fixtures"
+    ],
+    "does_not_change_scores": true
+  },
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/comparison-batch3-fact-scope-review.json",
+    "source_sha256": "4361129f953d442b66225b0d72381bf6bc68723db0dd514aeaead1cba9228097",
+    "source_bytes": 51598,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

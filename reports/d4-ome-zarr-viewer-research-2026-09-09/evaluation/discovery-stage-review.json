@@ -1,0 +1,267 @@
+{
+  "schema": "d4_discovery_stage_review.v1",
+  "created_at_utc": "2026-09-09T07:46:13.704187+00:00",
+  "visibility": "private_evaluator_only",
+  "job": "J0001-discovery",
+  "stage_status": "completed_reported_by_parent",
+  "review_scope": "Final discovery artifacts only; no implementation/history Plan landing assessed.",
+  "notes_sha256": "5f261323c507e280f9ac430c9a71986d6a8bbd8f0c6dd8c2f6639914a395907d",
+  "frozen_inputs": {
+    "partial-controls.json": "e6c13991937076d5e0dc0cfb0aec900c5353a6dd56e8a8eb6a12590daebfa25d",
+    "rubric.md": "b81b7ecd9ffdbefbc2192d4a643910623d5a61c4e385aa8c3d3ae43ea52cb80b"
+  },
+  "score": {
+    "partial_denominator": true,
+    "full": 0,
+    "half": 8,
+    "missed": 0,
+    "points": 4.0,
+    "denominator": 8,
+    "interpretation": "Partial-control coverage, not complete quality, runtime correctness or accepted repair rate."
+  },
+  "controls": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/validation-diagnostics.md",
+        "leads/real-v05-fileset-anatomy.md"
+      ],
+      "rationale": "Correct namespace, v3, version consistency and wrong-version-mixing diagnosis are present. Explicit validated legacy admission is missing; final notes promote legacy support to a mandatory obligation. Useful version facts earn half, not a completed compatibility policy.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/reader-napari-ome-zarr-v3.md",
+        "leads/real-v05-fileset-anatomy.md"
+      ],
+      "rationale": "Variable dimensions, axes types, dimension_names mismatch and channel/axis mapping are identified. No discriminating absent-versus-length-one navigation check or explicit mismatch rejection; arbitrary names and unsupported custom axes are not closed into a slicing contract.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/viewer-feature-matrix-gaps.md",
+        "leads/zarr-v3-read-performance.md"
+      ],
+      "rationale": "Declared highest-first paths, per-level geometry and non-2x/Z-downsampled hazards are useful. Group-relative arbitrary level resolution and missing-level handling are not specified together. Final notes put non-2x/Z anchoring under product choices without a truthful admission boundary; corpus examples are candidates, not acceptance results.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/reader-napari-ome-zarr-v3.md",
+        "leads/viewer-feature-matrix-gaps.md",
+        "leads/validation-diagnostics.md"
+      ],
+      "rationale": "Dataset scale then translation, followed by group transforms, is correctly stated; relative-scale fallback and missing-unit warnings are present. Listed translation-overlay samples are useful. No concrete expected-coordinate or equivalent acceptance comparison establishes composition order and unknown-unit behavior together; upstream Affine behavior remains an investigation. This is substantial but incomplete under the frozen full-credit check.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/reader-ome-zarr-py-architecture.md",
+        "leads/reader-napari-ome-zarr-v3.md",
+        "leads/real-v05-fileset-anatomy.md"
+      ],
+      "rationale": "Declared labels container, source.image default, intermediate hierarchy and transform propagation are identified. Final notes relocate labels registration to image attributes, conflicting with correct leads; the spec lead weakens equal level count to SHOULD. No source-identity/coordinate validation check resolves association before overlay. Correct mechanisms receive half despite these unresolved contradictions.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/spec-05-format-obligations.md",
+        "leads/reader-napari-ome-zarr-v3.md"
+      ],
+      "rationale": "Integer types and label-value keyed color/property mappings are correct; the spec lead correctly preserves recommended color use. No exact integer range, uint64 precision boundary or categorical resampling rule/check. Large-label rendering remains deferred.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C07",
+      "title": "Metadata-driven chunk decoding",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/zarr-v3-read-performance.md",
+        "leads/real-v05-fileset-anatomy.md",
+        "leads/validation-diagnostics.md"
+      ],
+      "rationale": "Real nested sharding/index/data codec metadata, little-endian sample and possible BE support gaps are identified. Library reuse is suggested. No reverse pipeline/transpose/layout discrimination or evidence-backed admitted codec boundary. The frozen half criterion explicitly covers library/compression lists without these checks.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    },
+    {
+      "id": "OME05-C08",
+      "title": "Absent data versus failed reads",
+      "score": 0.5,
+      "rating": "half",
+      "lead_refs": [
+        "leads/reader-ome-zarr-py-architecture.md",
+        "leads/real-v05-fileset-anatomy.md",
+        "leads/validation-diagnostics.md"
+      ],
+      "rationale": "Silent zero masking and swallowed parse errors are recognized; fill_value is observed and its meaning left for investigation. The question-mark missing-chunks-to-zeros proposal is provisional, not a proven correction. No nonzero fill versus IO/decode/cancellation distinction or source-write check. Half credits the useful error distinction only.",
+      "proposed_disposition": "Retain useful mechanism; close listed gap before full/accepted-repair credit.",
+      "source_authority": "Primary specifications and researcher-cited code/metadata; no runtime conformance asserted.",
+      "derivative_plan_landing": "not assessed in discovery-only review"
+    }
+  ],
+  "novel_useful_candidates": [
+    {
+      "id": "D4-N01",
+      "mechanism": "Schema validity and reader/display support are different diagnostic outcomes.",
+      "leads": [
+        "validation-diagnostics"
+      ],
+      "disposition": "Useful independent candidate: preserve malformed versus unsupported distinction; revise the draft tier list before adoption (missing translation is optional, and unsupported decoding cannot become a caveat on displayed pixels).",
+      "authority": "Versioned primary schemas/spec plus tool references; not runtime validation."
+    },
+    {
+      "id": "D4-N02",
+      "mechanism": "Shard index and chunk geometry influence local plane-read cost and bounded memory.",
+      "leads": [
+        "zarr-v3-read-performance",
+        "real-v05-fileset-anatomy"
+      ],
+      "disposition": "Useful independent performance research candidate; measure representative local files before accepting latency claims. Sampled shard anatomy does not establish writer-wide defaults.",
+      "authority": "Primary metadata and project performance documentation; issue reports are hypotheses."
+    },
+    {
+      "id": "D4-N03",
+      "mechanism": "Multiple-image containers need explicit discovery/presentation or declared limited support.",
+      "leads": [
+        "spec-05-format-obligations",
+        "writers-bf2raw-layouts",
+        "viewer-feature-matrix-gaps"
+      ],
+      "disposition": "Useful scope decision, not an automatically accepted requirement to support every plate/collection. Distinguish multiple multiscales entries from series/HCS containers.",
+      "authority": "Primary specification; historical tested matrix explicitly pre-v3."
+    },
+    {
+      "id": "D4-N04",
+      "mechanism": "OMERO channel windows/defaults can inform display initialization.",
+      "leads": [
+        "spec-05-format-obligations",
+        "reader-napari-ome-zarr-v3"
+      ],
+      "disposition": "Useful independent rendering-policy candidate; choose fallback and validation behavior, do not turn optional metadata into mandatory feature breadth.",
+      "authority": "Primary specification plus reported reader code observation."
+    }
+  ],
+  "precision_scope_findings": [
+    {
+      "id": "D4-P01",
+      "severity": "material scope overstatement",
+      "evidence": "notes.md Established obligations; real-v05-fileset-anatomy catalog inference",
+      "finding": "Legacy support, all-image/HCS traversal and never-reimplement library selection are asserted as obligations. The thin 0.5 fixture does not authorize those universal obligations. Catalog counts show available examples, not representative demand.",
+      "disposition": "Keep compatibility, container breadth and library choice as explicit decisions with valid unsupported outcomes."
+    },
+    {
+      "id": "D4-P02",
+      "severity": "material normative error/contradiction",
+      "evidence": "notes.md Coverage 1; spec-05-format-obligations labels bullet; reader leads",
+      "finding": "Final synopsis puts labels path registration in image ome attrs; correct leads locate it in the labels container. The spec lead says equal scale counts SHOULD where the current 0.5 specification requires equality.",
+      "primary": [
+        "https://ngff.openmicroscopy.org/0.5/"
+      ],
+      "disposition": "Correct location and normative strength before derivative Plan adoption."
+    },
+    {
+      "id": "D4-P03",
+      "severity": "material unsupported causal claim",
+      "evidence": "ecosystem-v05-readiness vizarr #307 bullet; notes.md Coverage 3",
+      "finding": "The lead calls repeated tiles a zarr-v3 decode/render bug in the web stack. The reporter later said the issue was likely unrelated to VIV/Vizarr. Final notes still call it a rendering bug without this qualification. An open issue and screenshot are not a root-cause finding.",
+      "primary": [
+        "https://github.com/hms-dbmi/vizarr/issues/307",
+        "https://github.com/hms-dbmi/vizarr/issues/307#issuecomment-3385724183"
+      ],
+      "disposition": "Retain only a reported symptom/test candidate; do not claim proven viewer causation."
+    },
+    {
+      "id": "D4-P04",
+      "severity": "stale/overbroad environment requirement",
+      "evidence": "notes.md Coverage 3; ecosystem-v05-readiness Reading; reader-ome-zarr-py-architecture PyPI bullet",
+      "finding": "Generic current zarr>=3, py>=3.10 advice is insufficient and stale for current branches: zarr-python and ome-zarr-py currently declare Python >=3.12. Historical Python requirements require exact package versions.",
+      "primary": [
+        "https://raw.githubusercontent.com/zarr-developers/zarr-python/main/pyproject.toml",
+        "https://raw.githubusercontent.com/ome/ome-zarr-py/master/pyproject.toml"
+      ],
+      "disposition": "Pin a chosen package/version and its published requirements; no Python architecture is yet adopted."
+    },
+    {
+      "id": "D4-P05",
+      "severity": "residual historical contradiction",
+      "evidence": "format-roadmap-rfcs-06 release bullet; ecosystem-v05-readiness correction appendix",
+      "finding": "Roadmap says #404 and #413 merged, but #404 was closed unmerged. Ecosystem base text attributes napari pin resolution to #123; appended correction correctly distinguishes the earlier dependency bump from later direct-zarr migration.",
+      "primary": [
+        "https://github.com/ome/ome-zarr-py/pull/404",
+        "https://github.com/ome/ome-zarr-py/pull/413"
+      ],
+      "disposition": "Rewrite obsolete statements instead of retaining conflicting base prose and appendices; the corrected napari timeline is useful, not a new failure."
+    },
+    {
+      "id": "D4-P06",
+      "severity": "provisional claims requiring validation",
+      "evidence": "validation-diagnostics tier list; zarr-v3-read-performance plane-read bullet; real-v05-fileset-anatomy Confirms sentence",
+      "finding": "Missing-chunks-to-zeros has an explicit question mark; plane reads are oversimplified as one chunk decode per plane; two metadata examples cannot prove writer-wide sharding defaults. None is a measured runtime finding.",
+      "disposition": "Treat as hypotheses. Chunk count follows geometry; distinguish valid fill from failure before adopting diagnostics."
+    }
+  ],
+  "limitations": [
+    "Sixteen lead documents are research containers, not sixteen accepted independent findings. No exhaustive atomic precision denominator was constructed.",
+    "The four novel candidates are selected independently useful mechanisms, not an exhaustive count or accepted repairs.",
+    "No measured prior-knowledge score, no injected-bug recovery claim, no causality inference from researcher volume.",
+    "No native delivery/budget audit performed here; parent owns that check. No participant feedback or live job mutations.",
+    "Current primary pages were read on review date; their mutable branch status is not a pinned runtime dependency."
+  ],
+  "primary_verification": {
+    "ome_spec": "https://ngff.openmicroscopy.org/0.5/",
+    "vizarr_comment_read_via": "GitHub REST issue comments; browser did not render comments",
+    "runtime_tests": false,
+    "process_sessions_left_open": false
+  },
+  "_review_export": {
+    "source_artifact_id": "artifact:campaign/next-goal-20260909/d4/evaluator/discovery-stage-review.json",
+    "source_sha256": "e98968c44273512f874265a6300afaabd3f2dbbb474e850fea259dd91331ce7d",
+    "source_bytes": 15826,
+    "capture_kind": "evaluator review with declared transport transformations",
+    "artifact_identity_policy": "artifact: identifiers are nonclickable identities; payload inclusion is not implied. Original reviewer hashes and line locators refer to original artifacts. See reviewer-export-receipt.json.",
+    "native_commands_included": false
+  }
+}

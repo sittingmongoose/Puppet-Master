@@ -1,0 +1,57 @@
+{
+  "all_job_input_hashes_match": true,
+  "assigned_ids": [
+    "L-481fce077b0a",
+    "L-d450a1188b29",
+    "L-9916d9541a47",
+    "L-15cca5b8e4f1",
+    "L-dce78e52fdae",
+    "L-88c0687248a2",
+    "L-580ffdee048c"
+  ],
+  "attached_receipt_present": true,
+  "attached_sha256": "395fce7fac131f3a2c7966de3cecd13ce371b87242bbb44c9d8c295740045389",
+  "configured_effort": "xhigh",
+  "configured_model": "gpt-6-astra",
+  "configured_service_tier": "default",
+  "delivery_ids": [
+    "L-15cca5b8e4f1",
+    "L-481fce077b0a",
+    "L-580ffdee048c",
+    "L-88c0687248a2",
+    "L-9916d9541a47",
+    "L-d450a1188b29",
+    "L-dce78e52fdae"
+  ],
+  "delivery_sha256": "ed6ae2f74edadeb1e9b077ea7b3ab8b94f15e380533a9ce4c032f08a606238d9",
+  "job_id": "J0010-compare",
+  "job_spec_sha256": "de24b08905455f26a881650256287a350b2f5b79efe39c991a7b29208a3c1f24",
+  "native_goal_status": "complete",
+  "native_status": "complete",
+  "native_summary_sha256": "b1d5a3444ef141598cb25346d3565fe87bfb4083f99942b55ca9c56e98fcd838",
+  "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+  "observed_at": "2026-09-09T11:29:04.035352+00:00",
+  "outcome": {
+    "elapsed_seconds": 1684.519,
+    "error": null,
+    "finished_at": "2026-09-09T11:27:02.747993+00:00",
+    "notes_present": true,
+    "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+    "runtime_status": "complete",
+    "semantic_quality": "not judged by scheduler"
+  },
+  "outcome_delivery_notes_hashes_match": true,
+  "outcome_sha256": "174c902dacc96b8e44a39493048ca0e8777df57bf5736a0a0d3aeebd8bb01a41",
+  "phase": "compare",
+  "process_exit_code": 0,
+  "schema": "d4.native_review_completion.v1",
+  "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+  "timeout_seconds": 2400,
+  "turns_completed": [
+    {
+      "error": null,
+      "status": "completed"
+    }
+  ],
+  "turns_started": 1
+}

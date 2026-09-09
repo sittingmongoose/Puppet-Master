@@ -1,0 +1,180 @@
+{
+  "attributes": {
+    "ome": {
+      "coordinateTransformations": [
+        {
+          "input": "9036345_cropped_300_300_300_300_rot20.zarr",
+          "output": "stitched",
+          "type": "sequence",
+          "transformations": [
+            {
+              "name": "affine_identity",
+              "type": "affine",
+              "affine": [
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "name": "translate_tile_to_stitched_position",
+              "type": "translation",
+              "translation": [
+                0,
+                0,
+                48.586505195354995,
+                48.586505195354995
+              ]
+            }
+          ]
+        },
+        {
+          "input": "9036345_cropped_200_200_200_200_rot30.zarr",
+          "output": "stitched",
+          "type": "sequence",
+          "transformations": [
+            {
+              "name": "affine_identity",
+              "type": "affine",
+              "affine": [
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "name": "translate_tile_to_stitched_position",
+              "type": "translation",
+              "translation": [
+                0,
+                0,
+                32.391003463569994,
+                32.391003463569994
+              ]
+            }
+          ]
+        },
+        {
+          "input": "9036345_full.zarr",
+          "output": "stitched",
+          "type": "sequence",
+          "transformations": [
+            {
+              "name": "affine_identity",
+              "type": "affine",
+              "affine": [
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "version": "0.6dev2",
+      "coordinateSystems": [
+        {
+          "name": "stitched",
+          "axes": [
+            {
+              "name": "t",
+              "type": "time"
+            },
+            {
+              "name": "c",
+              "type": "channel"
+            },
+            {
+              "name": "y",
+              "type": "space",
+              "unit": "micrometer"
+            },
+            {
+              "name": "x",
+              "type": "space",
+              "unit": "micrometer"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "zarr_format": 3,
+  "consolidated_metadata": null,
+  "node_type": "group"
+}

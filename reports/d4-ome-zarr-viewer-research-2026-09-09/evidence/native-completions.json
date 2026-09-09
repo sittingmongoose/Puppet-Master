@@ -1,0 +1,869 @@
+{
+  "schema": "d4.sanitized_root_record_capture.v1",
+  "prepared_at_utc": "2026-09-09T12:04:10.045264+00:00",
+  "artifact_status": "finalized_native_record_capture_pending_campaign_acceptance",
+  "whole_campaign_acceptance": "pending_root_owned_evaluation",
+  "controller_status": "not_asserted_by_this_capture",
+  "residual_coverage": "not_asserted_by_this_capture",
+  "native_completion_is_semantic_acceptance": false,
+  "capture_basis": "Current already root-verified records; no live status, collector, recovery or raw-session inspection.",
+  "unsettled_jobs_in_included_root_records": [],
+  "artifact_kind": "native_completions",
+  "terminal_jobs_in_capture": 11,
+  "phase_counts_in_capture": {
+    "discovery": 1,
+    "implementation": 1,
+    "history": 1,
+    "reconcile": 4,
+    "compare": 4
+  },
+  "records": [
+    {
+      "job_id": "J0001-discovery",
+      "source_identity": {
+        "source_record_name": "discovery-completion.json",
+        "record_line": null,
+        "source_file_sha256_at_capture": "0b8ea18c0948a9998fd6be5ad0fde47046f2ad8e8b36d84b95723e08fb0aa012",
+        "source_file_bytes_at_capture": 2831,
+        "record_sha256_exact_bytes": "0b8ea18c0948a9998fd6be5ad0fde47046f2ad8e8b36d84b95723e08fb0aa012",
+        "record_bytes": 2831,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "verified_at_utc": "2026-09-09T07:42:53.543419+00:00",
+        "job": "J0001-discovery",
+        "outcome": {
+          "runtime_status": "completed",
+          "error": null,
+          "elapsed_seconds": 1392.941,
+          "finished_at": "2026-09-09T07:38:47.756596+00:00",
+          "notes_present": true,
+          "notes_sha256": "5f261323c507e280f9ac430c9a71986d6a8bbd8f0c6dd8c2f6639914a395907d",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "notes_hash_matches": true,
+        "native_run_status": "completed",
+        "native_goal_status": "complete",
+        "native_goal_completed": true,
+        "concrete_note_count": 16,
+        "note_sha256": {
+          "desktop-agave-tensorstore.md": "a267a44d5bbe925518828d6d8188f2b8f781799361030ee3c17c9cef546e5806",
+          "desktop-qupath-omero-zarr.md": "7fbf4e3db4656ec88d148010961309a7cee76b165f2ded35a9509975f1f0e6fc",
+          "ecosystem-v05-readiness.md": "653fe66857c3b05f2604da176410c799ad1c6984f2e3a5cb0b89f1d694e89d75",
+          "format-roadmap-rfcs-06.md": "5bfb268c212c02ef6387e7539c32ce4fb068809abb230e4d365161e864429b36",
+          "local-biofile-finder.md": "e98dc9de0c76f53bcd2b47b6f24c050ee2c5f4d02aac6d6d796c7923e71c030c",
+          "official-tools-directory.md": "3d37fed2b844ee14fe058586af3bd7f42a4a989103bac06939ea0f8a068ea8f6",
+          "public-v05-corpus-challenge.md": "2d059be1829541f3d13bce1bda0410641a1bf9505c0b6ad5055dffe9b1b78fa6",
+          "reader-napari-ome-zarr-v3.md": "c29b06507247d7930d855ce0b14ab7844910e831b465cfee4fbd1489dcb5449a",
+          "reader-ome-zarr-py-architecture.md": "ec2668a4de2fa6f22a083138b7f6c464c2bdb95259c948568752240f5f124d81",
+          "real-v05-fileset-anatomy.md": "4e6a503e9d1c520d8e8895d5da64b98aac51e17997c5ffe93308ecbd5aafdfc5",
+          "spec-05-format-obligations.md": "4d686d2bf76c239b611cd907dc533d09810389c7b65fba5f0c44a2eb9d49d15f",
+          "spec-open-problems-2026.md": "ff596f0b028b22c2f928bfae9d658bab4ca97dd83753d5f4bf2b7507c13fc158",
+          "validation-diagnostics.md": "18cb23feb5e52633ae76ed0349968beb6b08b62fa566dcdee738bf4b442105fd",
+          "viewer-feature-matrix-gaps.md": "f8621e439b8fc08e6b709535cf37abc0f297db42fa687bb2d5d521d2ed3846a0",
+          "writers-bf2raw-layouts.md": "b0860a90142e5a2b9d5bd434478df195239d40e4310f2052f0d0b129a56f6d09",
+          "zarr-v3-read-performance.md": "b74db428318117261606f4eec65f4debeb9680a0869adf6453c49d3f344232bc"
+        },
+        "initial_registered_record_count": 17,
+        "deep_study_parent": "L-80240e08616c",
+        "semantic_acceptance": "pending_independent_review",
+        "native_goal_cleanup_observed": true,
+        "actual_models": [
+          "opencode-go/deepseek-v4-flash"
+        ],
+        "thinking_changes": [
+          {
+            "thinkingLevel": "max",
+            "configured": null
+          }
+        ],
+        "model_selections": [
+          {
+            "model": "opencode-go/deepseek-v4-flash",
+            "role": null,
+            "resolvedModelIsFallback": false
+          }
+        ],
+        "tool_calls_seen": 161,
+        "tool_errors": 10,
+        "native_parse_errors": 0,
+        "exit_code": 0
+      },
+      "field_availability": {
+        "turns": "not_recorded_in_this_root_record",
+        "model": "observed_actual_models",
+        "effort": "observed_thinking_changes",
+        "service_tier": "not_recorded_in_this_root_record"
+      }
+    },
+    {
+      "job_id": "J0002-implementation",
+      "source_identity": {
+        "source_record_name": "implementation-completion.json",
+        "record_line": null,
+        "source_file_sha256_at_capture": "2220e8656647859f904e8ce29c603f563b0537ec7498935b68a20db275ed10f6",
+        "source_file_bytes_at_capture": 1296,
+        "record_sha256_exact_bytes": "2220e8656647859f904e8ce29c603f563b0537ec7498935b68a20db275ed10f6",
+        "record_bytes": 1296,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "observed_at": "2026-09-09T07:49:33.643018+00:00",
+        "job_id": "J0002-implementation",
+        "assigned_ids": [
+          "L-80240e08616c"
+        ],
+        "outcome": {
+          "runtime_status": "completed",
+          "error": null,
+          "elapsed_seconds": 537.284,
+          "finished_at": "2026-09-09T07:47:49.625022+00:00",
+          "notes_present": true,
+          "notes_sha256": "a15014db442483d53a9b78c0f33a9580ccfc059c65b9fc8a12a5e23aafaf8b57",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "native_status": "completed",
+        "native_goal_status": "complete",
+        "goal_completed": true,
+        "native_goal_cleanup_observed": true,
+        "final_answer_after_goal_receipt": true,
+        "actual_models": [
+          "opencode-go/deepseek-v4-flash"
+        ],
+        "model_selections": [
+          {
+            "model": "opencode-go/deepseek-v4-flash",
+            "role": null,
+            "resolvedModelIsFallback": false
+          }
+        ],
+        "thinking_changes": [
+          {
+            "thinkingLevel": "max",
+            "configured": null
+          }
+        ],
+        "tool_calls_seen": 77,
+        "tool_errors": 6,
+        "native_parse_errors": 0,
+        "exit_code": 0,
+        "notes_sha256": "a15014db442483d53a9b78c0f33a9580ccfc059c65b9fc8a12a5e23aafaf8b57",
+        "notes_hash_matches_outcome": true,
+        "semantic_acceptance": "Pending independent final comparison and derivative review; native completion is not semantic acceptance."
+      },
+      "field_availability": {
+        "turns": "not_recorded_in_this_root_record",
+        "model": "observed_actual_models",
+        "effort": "observed_thinking_changes",
+        "service_tier": "not_recorded_in_this_root_record"
+      }
+    },
+    {
+      "job_id": "J0003-history",
+      "source_identity": {
+        "source_record_name": "history-completion.json",
+        "record_line": null,
+        "source_file_sha256_at_capture": "05481b22ffdf1acc9a41a625b42d4f4f4f4304f9162bb5a2083b10b4ff8e978a",
+        "source_file_bytes_at_capture": 1290,
+        "record_sha256_exact_bytes": "05481b22ffdf1acc9a41a625b42d4f4f4f4304f9162bb5a2083b10b4ff8e978a",
+        "record_bytes": 1290,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "observed_at": "2026-09-09T07:52:38.082852+00:00",
+        "job_id": "J0003-history",
+        "assigned_ids": [
+          "L-80240e08616c"
+        ],
+        "outcome": {
+          "runtime_status": "completed",
+          "error": null,
+          "elapsed_seconds": 686.241,
+          "finished_at": "2026-09-09T07:50:18.582432+00:00",
+          "notes_present": true,
+          "notes_sha256": "40d607bad6e65bd7be2361fb1ce13a6e14c22bed23dd2d0b830f33e63d9f18c9",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "native_status": "completed",
+        "native_goal_status": "complete",
+        "goal_completed": true,
+        "native_goal_cleanup_observed": true,
+        "final_answer_after_goal_receipt": true,
+        "actual_models": [
+          "opencode-go/deepseek-v4-flash"
+        ],
+        "model_selections": [
+          {
+            "model": "opencode-go/deepseek-v4-flash",
+            "role": null,
+            "resolvedModelIsFallback": false
+          }
+        ],
+        "thinking_changes": [
+          {
+            "thinkingLevel": "max",
+            "configured": null
+          }
+        ],
+        "tool_calls_seen": 114,
+        "tool_errors": 6,
+        "native_parse_errors": 0,
+        "exit_code": 0,
+        "notes_sha256": "40d607bad6e65bd7be2361fb1ce13a6e14c22bed23dd2d0b830f33e63d9f18c9",
+        "notes_hash_matches_outcome": true,
+        "semantic_acceptance": "Pending independent final comparison and derivative review; native completion is not semantic acceptance."
+      },
+      "field_availability": {
+        "turns": "not_recorded_in_this_root_record",
+        "model": "observed_actual_models",
+        "effort": "observed_thinking_changes",
+        "service_tier": "not_recorded_in_this_root_record"
+      }
+    },
+    {
+      "job_id": "J0004-reconcile",
+      "source_identity": {
+        "source_record_name": "reconcile-completions.jsonl",
+        "record_line": 1,
+        "source_file_sha256_at_capture": "157dfac021fe6ccc33d3189bc242a1820344908f56149ebf2e11932e129112e2",
+        "source_file_bytes_at_capture": 5704,
+        "record_sha256_exact_bytes": "abda1426c27b21b81b367df6acf7b6f80d1cef4843fec3d5ec13e469b154e81c",
+        "record_bytes": 1246,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-80240e08616c"
+        ],
+        "attached_receipt_present": true,
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-80240e08616c"
+        ],
+        "job_id": "J0004-reconcile",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "b4976fbd2673575d67930b041ae576c037855369eac7c7844ee6f892e683ef11",
+        "notes_sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+        "observed_at": "2026-09-09T08:12:25.556556+00:00",
+        "outcome": {
+          "elapsed_seconds": 1230.324,
+          "error": null,
+          "finished_at": "2026-09-09T08:10:55.481258+00:00",
+          "notes_present": true,
+          "notes_sha256": "14b1b991fead4a489a90451e3a9e791090cdc26f45e61569b27a6070cf21a44a",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "phase": "reconcile",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review and final Plan comparison; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0005-reconcile",
+      "source_identity": {
+        "source_record_name": "reconcile-completions.jsonl",
+        "record_line": 2,
+        "source_file_sha256_at_capture": "157dfac021fe6ccc33d3189bc242a1820344908f56149ebf2e11932e129112e2",
+        "source_file_bytes_at_capture": 5704,
+        "record_sha256_exact_bytes": "7693580fa0ba5df19add0a8af63658aa2141d692b7ae13f015524dd64b302339",
+        "record_bytes": 1642,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-d3fb5681dad7",
+          "L-b8b6f684e168",
+          "L-8e152cf58e36",
+          "L-53478306aa6a",
+          "L-bb5dcafa9770",
+          "L-e22a81d34a4c",
+          "L-cf0ac7e43301",
+          "L-4b3f581214b5",
+          "L-eef00830c219",
+          "L-aadd42cb09c9",
+          "L-48b8e76e269e",
+          "L-f45bf9ee551d"
+        ],
+        "attached_receipt_present": true,
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-48b8e76e269e",
+          "L-4b3f581214b5",
+          "L-53478306aa6a",
+          "L-8e152cf58e36",
+          "L-aadd42cb09c9",
+          "L-b8b6f684e168",
+          "L-bb5dcafa9770",
+          "L-cf0ac7e43301",
+          "L-d3fb5681dad7",
+          "L-e22a81d34a4c",
+          "L-eef00830c219",
+          "L-f45bf9ee551d"
+        ],
+        "job_id": "J0005-reconcile",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "94fd8b4a916da88d8ea25dea42e5347abd7c834b407cde85987a490f57111cff",
+        "notes_sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+        "observed_at": "2026-09-09T08:50:27.640325+00:00",
+        "outcome": {
+          "elapsed_seconds": 2246.114,
+          "error": null,
+          "finished_at": "2026-09-09T08:48:43.186108+00:00",
+          "notes_present": true,
+          "notes_sha256": "bfb55c95bab07a3a2ceb05ba7cf40c7d93170bbd2b48a9e7e0facb95c73dd078",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "phase": "reconcile",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review and final Plan comparison; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0006-reconcile",
+      "source_identity": {
+        "source_record_name": "reconcile-completions.jsonl",
+        "record_line": 3,
+        "source_file_sha256_at_capture": "157dfac021fe6ccc33d3189bc242a1820344908f56149ebf2e11932e129112e2",
+        "source_file_bytes_at_capture": 5704,
+        "record_sha256_exact_bytes": "fea03d1c1eac0538866e05aa2f656b5817a5d0ec58c6762e34bd86d078b6f439",
+        "record_bytes": 1462,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-481fce077b0a",
+          "L-d450a1188b29",
+          "L-9916d9541a47",
+          "L-15cca5b8e4f1",
+          "L-dce78e52fdae",
+          "L-88c0687248a2",
+          "L-580ffdee048c"
+        ],
+        "attached_receipt_present": true,
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-15cca5b8e4f1",
+          "L-481fce077b0a",
+          "L-580ffdee048c",
+          "L-88c0687248a2",
+          "L-9916d9541a47",
+          "L-d450a1188b29",
+          "L-dce78e52fdae"
+        ],
+        "job_id": "J0006-reconcile",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "dea867f3d66ebb50d455f8a92812ce48f71048cb368b4aa7a6c47065f16424ce",
+        "notes_sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+        "observed_at": "2026-09-09T09:25:34.436157+00:00",
+        "outcome": {
+          "elapsed_seconds": 2064.592,
+          "error": null,
+          "finished_at": "2026-09-09T09:23:28.481449+00:00",
+          "notes_present": true,
+          "notes_sha256": "78ce52a3b03fee2d7ae3000243d5c81c8db4097569244e2409e1f615649dbf41",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "phase": "reconcile",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review and final Plan comparison; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0007-reconcile",
+      "source_identity": {
+        "source_record_name": "reconcile-completions.jsonl",
+        "record_line": 4,
+        "source_file_sha256_at_capture": "157dfac021fe6ccc33d3189bc242a1820344908f56149ebf2e11932e129112e2",
+        "source_file_bytes_at_capture": 5704,
+        "record_sha256_exact_bytes": "ceef745bdd48aa04143a9a6849af39c485b6b4f8f25d0d53333eedc0b1582a89",
+        "record_bytes": 1354,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-20db7e979b8e",
+          "L-09ceb3cfac5e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ],
+        "attached_receipt_present": true,
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-09ceb3cfac5e",
+          "L-20db7e979b8e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ],
+        "job_id": "J0007-reconcile",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "6029673fc520a5c1babf73a44026a4e7d108278a609eb6c4e29e3a0fbcc676c8",
+        "notes_sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+        "observed_at": "2026-09-09T09:55:26.577922+00:00",
+        "outcome": {
+          "elapsed_seconds": 1754.181,
+          "error": null,
+          "finished_at": "2026-09-09T09:52:59.466138+00:00",
+          "notes_present": true,
+          "notes_sha256": "c49bcda907a9e737729312856bae758f3adfaf0ddfa009fdaa9a2ee9655a0913",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "phase": "reconcile",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review and final Plan comparison; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0008-compare",
+      "source_identity": {
+        "source_record_name": "comparison-completions.jsonl",
+        "record_line": 1,
+        "source_file_sha256_at_capture": "bed7195389b55fd548a9073407cc00e9e8ce25df719ea70c4bf7239fc7b1353e",
+        "source_file_bytes_at_capture": 6625,
+        "record_sha256_exact_bytes": "fcc1ed0cb9bff9c1476e4533c99173d414749079f48512124f57f3dfd09e8eaf",
+        "record_bytes": 1216,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-80240e08616c"
+        ],
+        "attached_receipt_present": true,
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-80240e08616c"
+        ],
+        "job_id": "J0008-compare",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "d87d392b112b9ac3e4340d7f01b4166abcaa8defdcd4476ca82471c1d7025184",
+        "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+        "observed_at": "2026-09-09T10:20:11.842522+00:00",
+        "outcome": {
+          "elapsed_seconds": 1373.275,
+          "error": null,
+          "finished_at": "2026-09-09T10:16:44.235987+00:00",
+          "notes_present": true,
+          "notes_sha256": "576b86ea608a1c16366b4d88d336e91d456896832f6f7d03ab88c5b5bf69833b",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "phase": "compare",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0009-compare",
+      "source_identity": {
+        "source_record_name": "comparison-completions.jsonl",
+        "record_line": 2,
+        "source_file_sha256_at_capture": "bed7195389b55fd548a9073407cc00e9e8ce25df719ea70c4bf7239fc7b1353e",
+        "source_file_bytes_at_capture": 6625,
+        "record_sha256_exact_bytes": "389ad92896fc72a587a5c2ea3cc5fc117b4f55c23cb35ae5102400dbf28a263c",
+        "record_bytes": 1959,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-d3fb5681dad7",
+          "L-b8b6f684e168",
+          "L-8e152cf58e36",
+          "L-53478306aa6a",
+          "L-bb5dcafa9770",
+          "L-e22a81d34a4c",
+          "L-cf0ac7e43301",
+          "L-4b3f581214b5",
+          "L-eef00830c219",
+          "L-aadd42cb09c9",
+          "L-48b8e76e269e",
+          "L-f45bf9ee551d"
+        ],
+        "attached_receipt_present": true,
+        "attached_sha256": "070b56f65cb413c17e64ac452c106ab0c3daed1a028b75b1d20f78d281019825",
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-48b8e76e269e",
+          "L-4b3f581214b5",
+          "L-53478306aa6a",
+          "L-8e152cf58e36",
+          "L-aadd42cb09c9",
+          "L-b8b6f684e168",
+          "L-bb5dcafa9770",
+          "L-cf0ac7e43301",
+          "L-d3fb5681dad7",
+          "L-e22a81d34a4c",
+          "L-eef00830c219",
+          "L-f45bf9ee551d"
+        ],
+        "delivery_sha256": "a0f3f53db72070ab192e492efe8cf8e9d6e2b8cd3eaa8f5fe59a9032e8207b68",
+        "job_id": "J0009-compare",
+        "job_spec_sha256": "968734576d4e3634bd91c8da3ae633908f3e695b68a6f944f7e3a7c2b4ff1f39",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "d562b959e14f9218a627974754f8b5560f9bdf69e564ac40a66ebf86a0ecffcf",
+        "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+        "observed_at": "2026-09-09T10:56:58.060016+00:00",
+        "outcome": {
+          "elapsed_seconds": 1764.069,
+          "error": null,
+          "finished_at": "2026-09-09T10:54:39.280052+00:00",
+          "notes_present": true,
+          "notes_sha256": "8ecb5421e389a60a905e9c2d3da90717063549d3fd8d1cf32dc3171007cc065f",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "outcome_sha256": "c99c930b0ffe6e09bf9ce30125eef4da988589258ac58690cc23ceffc8569a35",
+        "phase": "compare",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0010-compare",
+      "source_identity": {
+        "source_record_name": "comparison-completions.jsonl",
+        "record_line": 3,
+        "source_file_sha256_at_capture": "bed7195389b55fd548a9073407cc00e9e8ce25df719ea70c4bf7239fc7b1353e",
+        "source_file_bytes_at_capture": 6625,
+        "record_sha256_exact_bytes": "de1cf08e323138f5da52b93bb2fed250ad38036f240cb0a0b17b79aedd7e450c",
+        "record_bytes": 1779,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-481fce077b0a",
+          "L-d450a1188b29",
+          "L-9916d9541a47",
+          "L-15cca5b8e4f1",
+          "L-dce78e52fdae",
+          "L-88c0687248a2",
+          "L-580ffdee048c"
+        ],
+        "attached_receipt_present": true,
+        "attached_sha256": "395fce7fac131f3a2c7966de3cecd13ce371b87242bbb44c9d8c295740045389",
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-15cca5b8e4f1",
+          "L-481fce077b0a",
+          "L-580ffdee048c",
+          "L-88c0687248a2",
+          "L-9916d9541a47",
+          "L-d450a1188b29",
+          "L-dce78e52fdae"
+        ],
+        "delivery_sha256": "ed6ae2f74edadeb1e9b077ea7b3ab8b94f15e380533a9ce4c032f08a606238d9",
+        "job_id": "J0010-compare",
+        "job_spec_sha256": "de24b08905455f26a881650256287a350b2f5b79efe39c991a7b29208a3c1f24",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "b1d5a3444ef141598cb25346d3565fe87bfb4083f99942b55ca9c56e98fcd838",
+        "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+        "observed_at": "2026-09-09T11:29:04.035352+00:00",
+        "outcome": {
+          "elapsed_seconds": 1684.519,
+          "error": null,
+          "finished_at": "2026-09-09T11:27:02.747993+00:00",
+          "notes_present": true,
+          "notes_sha256": "c7b752b79ceb7c3d00b7b9aacddd149810d957a44f456121990260e7813c318d",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "outcome_sha256": "174c902dacc96b8e44a39493048ca0e8777df57bf5736a0a0d3aeebd8bb01a41",
+        "phase": "compare",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    },
+    {
+      "job_id": "J0011-compare",
+      "source_identity": {
+        "source_record_name": "comparison-completions.jsonl",
+        "record_line": 4,
+        "source_file_sha256_at_capture": "bed7195389b55fd548a9073407cc00e9e8ce25df719ea70c4bf7239fc7b1353e",
+        "source_file_bytes_at_capture": 6625,
+        "record_sha256_exact_bytes": "3ca9e1e135d0504c300131a9de40c1f4b0f8d853d985be796250c2b6eb2d7604",
+        "record_bytes": 1671,
+        "hash_convention": "JSONL includes retained line terminator; JSON uses complete file bytes."
+      },
+      "root_verified_fields": {
+        "all_job_input_hashes_match": true,
+        "assigned_ids": [
+          "L-20db7e979b8e",
+          "L-09ceb3cfac5e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ],
+        "attached_receipt_present": true,
+        "attached_sha256": "eff29ee2995d43092727eb15b0dbd6454f17902fa3c9461a452f0c78715bbe53",
+        "configured_effort": "xhigh",
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "delivery_ids": [
+          "L-09ceb3cfac5e",
+          "L-20db7e979b8e",
+          "L-8ac9e423176c",
+          "L-eff66a7b89e1"
+        ],
+        "delivery_sha256": "4526b3356957aba74ea5529cbdbb2205e67108607ae76af75da90cb15bdde712",
+        "job_id": "J0011-compare",
+        "job_spec_sha256": "e52b42d9dca15babfe597f552ce83f611fd1d7eda2627f16ee8e053abd66bc3b",
+        "native_goal_status": "complete",
+        "native_status": "complete",
+        "native_summary_sha256": "ee1498a757d09334e8620a6fdf0194fad9a72e7f620180b956317b89283a34d9",
+        "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+        "observed_at": "2026-09-09T11:54:32.975342+00:00",
+        "outcome": {
+          "elapsed_seconds": 1581.646,
+          "error": null,
+          "finished_at": "2026-09-09T11:54:20.533849+00:00",
+          "notes_present": true,
+          "notes_sha256": "abb59a5fd76aa0fc31550a3decc3d1c0c9fe4b88dc18b70b714da3b35b04c7a1",
+          "runtime_status": "complete",
+          "semantic_quality": "not judged by scheduler"
+        },
+        "outcome_delivery_notes_hashes_match": true,
+        "outcome_sha256": "62e7c50bcce6ac04abc09a241d64a3f9464e30b20c4bd6484f017187cb67a230",
+        "phase": "compare",
+        "process_exit_code": 0,
+        "schema": "d4.native_review_completion.v1",
+        "semantic_acceptance": "Pending independent semantic review; native completion and markers are delivery evidence only.",
+        "timeout_seconds": 2400,
+        "turns_completed": [
+          {
+            "error": null,
+            "status": "completed"
+          }
+        ],
+        "turns_started": 1
+      },
+      "field_availability": {
+        "turns": "recorded",
+        "model": "configured",
+        "effort": "configured_effort",
+        "service_tier": "recorded"
+      }
+    }
+  ],
+  "assignment_set_counts": {
+    "native_review_terminal_jobs": 8,
+    "comparison_terminal_jobs": 4,
+    "reconcile_terminal_jobs": 4,
+    "review_assignment_occurrences": 48,
+    "distinct_review_assigned_ids": 24,
+    "reconcile_assignment_occurrences": 24,
+    "comparison_assignment_occurrences": 24,
+    "distinct_comparison_assigned_ids": 24,
+    "comparison_and_reconcile_assigned_unions_equal": true,
+    "per_job": [
+      {
+        "job_id": "J0004-reconcile",
+        "phase": "reconcile",
+        "assigned_count": 1,
+        "delivery_count": 1,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0005-reconcile",
+        "phase": "reconcile",
+        "assigned_count": 12,
+        "delivery_count": 12,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0006-reconcile",
+        "phase": "reconcile",
+        "assigned_count": 7,
+        "delivery_count": 7,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0007-reconcile",
+        "phase": "reconcile",
+        "assigned_count": 4,
+        "delivery_count": 4,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0008-compare",
+        "phase": "compare",
+        "assigned_count": 1,
+        "delivery_count": 1,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0009-compare",
+        "phase": "compare",
+        "assigned_count": 12,
+        "delivery_count": 12,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0010-compare",
+        "phase": "compare",
+        "assigned_count": 7,
+        "delivery_count": 7,
+        "assigned_and_delivery_sets_equal": true
+      },
+      {
+        "job_id": "J0011-compare",
+        "phase": "compare",
+        "assigned_count": 4,
+        "delivery_count": 4,
+        "assigned_and_delivery_sets_equal": true
+      }
+    ],
+    "meaning": "Counts describe the eight recorded native review assignments and four completed comparison records only; they are not semantic coverage scores or a controller/cohort verdict. Discovery and its two initial studies remain separate evidence."
+  },
+  "interpretation": [
+    "Original complete/completed spellings and per-record semantic-acceptance text remain literal.",
+    "J1\u2013J3 observed OMP models/thinking levels are not relabeled configured model/effort. Explicit turn counts and service tiers are absent in those root records and remain unavailable.",
+    "J4\u2013J11 configured model/effort/tier, actual ended-turn statuses, Goal statuses, exit codes, timings and recorded hashes are preserved exactly.",
+    "Source record hashes bind current retained root evidence; native-summary hashes are identities only, not embedded raw summaries."
+  ],
+  "remaining_root_owned_finalization": [
+    "Root independently finalizes semantic union, decisions, residual coverage and derivative/export review.",
+    "Root separately determines controller/campaign terminal status; this capture does not infer it from eleven completed jobs.",
+    "If root evidence records change, regenerate hashes/projections and repeat exact reconstruction and sanitization checks."
+  ]
+}
