@@ -2,19 +2,19 @@
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
   "title": "September terminal research corrections",
-  "status": "compiled",
-  "phase": "compiled_terminal_research_repairs",
+  "status": "active",
+  "phase": "owner_amendments_landed",
   "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
-  "updated_at_utc": "2026-09-08T19:58:46.806991+00:00",
+  "updated_at_utc": "2026-09-09T04:21:09.213323+00:00",
   "record_counts": {
-    "events": 2,
-    "design_atoms": 2,
-    "decisions": 1,
+    "events": 4,
+    "design_atoms": 4,
+    "decisions": 2,
     "questions": 0,
     "blockers": 0,
-    "corrections": 0
+    "corrections": 1
   },
-  "last_event_id": "evt-0002",
+  "last_event_id": "evt-0004",
   "source_context": "Bounded application of reviewed September terminal findings authorized by Jared on 2026-09-08; broader process validation remains outside this ledger.",
-  "notes": "Canonical plan targets are governance-covered queue targets; compiled_owner_docs lists every actual owner/consumer edited. No governance seal authorized."
+  "notes": "Same repair ledger resumed for September 9 owner amendments. Existing compile queue preserves historical PlanUnit work; accepted owner-prose materialization is recorded separately, without inventing new PlanUnits."
 }

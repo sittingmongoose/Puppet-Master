@@ -1,7 +1,7 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "compiled_terminal_research_repairs",
-  "last_event_id": "evt-0002",
+  "phase": "owner_amendments_landed",
+  "last_event_id": "evt-0004",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
@@ -21,16 +21,19 @@
     "Plans/storage-plan.md",
     "Plans/Automated_Testing_System.md"
   ],
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
-  "current_phase": "compiled_terminal_research_repairs",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/owner_amendments_independent_review_20260909.md",
+  "latest_audit_status": "pass",
+  "current_phase": "owner_amendments_landed",
   "cursor": {
-    "last_event_id": "evt-0002",
-    "next_action": "Validate owner/consumer edits and continue the separate discovery-process pilot."
+    "last_event_id": "evt-0004",
+    "next_action": "Commit and report verified deliverable 1, then begin authorized P3–P10 PlanUnits and P11 evaluation in deliverable 2."
   },
-  "summary": "Two bounded corrections: retry identity and terminal output read honesty. Other September recommendations are outside this compile, not declared resolved.",
+  "summary": "DL-035 P1/P2 owner amendments landed and independently reviewed before any new engine/host PlanUnit compilation. Historical September 8 repairs retained. Runtime acceptance and governance sealing remain unexecuted.",
   "source_refs": [
-    "source_shards/september_findings.md",
-    "source_shards/authorization.md"
+    "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/decision_authority_20260909.md"
+  ],
+  "amended_owner_docs": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Release_Supply_Chain.md"
   ]
 }

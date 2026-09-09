@@ -1,7 +1,7 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "compiled_terminal_research_repairs",
-  "last_event_id": "evt-0002",
+  "phase": "owner_amendments_landed",
+  "last_event_id": "evt-0004",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
@@ -21,9 +21,9 @@
     "Plans/storage-plan.md",
     "Plans/Automated_Testing_System.md"
   ],
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
-  "status": "compiled_terminal_research_repairs",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/owner_amendments_independent_review_20260909.md",
+  "latest_audit_status": "pass",
+  "status": "owner_amendments_landed",
   "items": [
     {
       "queue_id": "cq-0001",
@@ -62,5 +62,13 @@
       ]
     }
   ],
-  "terminal_ledger_event_id": "evt-0002"
+  "terminal_ledger_event_id": "evt-0002",
+  "amended_owner_docs": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Release_Supply_Chain.md"
+  ],
+  "cursor": {
+    "last_event_id": "evt-0004",
+    "next_action": "Commit and report verified deliverable 1, then begin authorized P3–P10 PlanUnits and P11 evaluation in deliverable 2."
+  }
 }

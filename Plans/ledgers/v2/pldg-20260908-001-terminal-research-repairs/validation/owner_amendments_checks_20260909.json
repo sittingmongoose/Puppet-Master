@@ -1,0 +1,93 @@
+{
+  "deliverable": 1,
+  "authority": "Plans/Decision_Log.md#DL-035",
+  "owner_sha256": {
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": "2b3bb13d9e954b51e8aa1fc2d47e2d429b9b39f3c5f9708de15ae0c366237f69",
+    "Plans/Release_Supply_Chain.md": "d6f13a13d260f4e1e22d0b082f19c8a68f029add87b554329882175f158994ef"
+  },
+  "findings_landed": {
+    "owner_amendments": 2,
+    "retargeted_acceptance_checklists": [
+      "R1",
+      "R2"
+    ],
+    "new_plan_units": 0
+  },
+  "independent_review": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/owner_amendments_independent_review_20260909.md",
+  "native_acceptance": "not_run",
+  "standard_shards_index": "pass",
+  "governance_seal": "not_requested",
+  "protected_artifact_hashes_unchanged": true,
+  "cost": {
+    "new_external_research_jobs": 0,
+    "controller_and_support_cost": "unmetered",
+    "actual_cash": "unknown"
+  },
+  "verified_at_utc": "2026-09-09T04:26:50.219682+00:00",
+  "targeted_validation": {
+    "ledger": "pass",
+    "shards": "pass",
+    "index": "pass",
+    "diff": "pass"
+  },
+  "standard_gate_state": {
+    "status": "incomplete_timeout",
+    "allowance_seconds": 240,
+    "completed_checks": [
+      {
+        "check": "json_syntax",
+        "status": "fail"
+      },
+      {
+        "check": "verify_spec_lock",
+        "status": "fail"
+      },
+      {
+        "check": "validate_plan_graph",
+        "status": "fail"
+      },
+      {
+        "check": "validate_auto_decisions",
+        "status": "pass"
+      },
+      {
+        "check": "validate_evidence",
+        "status": "fail"
+      },
+      {
+        "check": "lint_contractrefs",
+        "status": "fail"
+      },
+      {
+        "check": "lint_banned_phrases",
+        "status": "pass"
+      },
+      {
+        "check": "lint_path_refs",
+        "status": "pass"
+      },
+      {
+        "check": "check_project_artifact_requirements",
+        "status": "pass"
+      },
+      {
+        "check": "validate_plans_to_code_handoff_schema",
+        "status": "pass"
+      },
+      {
+        "check": "validate_prd_planning_runtime_contracts",
+        "status": "pass"
+      }
+    ],
+    "aggregate_result": "not_produced",
+    "uncompleted_checks": "not_evaluated"
+  },
+  "index_state": {
+    "plan_unit_count": 6400,
+    "acceptance_unit_count": 24292,
+    "coverage": "pass",
+    "node_readiness": "blocked_runtime_certification_incomplete"
+  },
+  "generated_timestamp_noise_restored": 193,
+  "generated_changed_files": 48
+}

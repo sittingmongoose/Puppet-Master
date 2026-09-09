@@ -22,16 +22,14 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
-    }
-  ],
-  "compiled_ledgers": [
+    },
     {
       "ledger_id": "pldg-20260908-001-terminal-research-repairs",
       "title": "September terminal research corrections",
-      "status": "compiled",
-      "phase": "compiled_terminal_research_repairs",
+      "status": "active",
+      "phase": "owner_amendments_landed",
       "created_at_utc": "2026-09-08T19:58:46.806991+00:00",
-      "last_updated_at_utc": "2026-09-08T19:58:46.806991+00:00",
+      "last_updated_at_utc": "2026-09-09T04:21:09.213323+00:00",
       "canonical_plan_targets": [
         "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
@@ -44,8 +42,10 @@
         "Plans/Automated_Testing_System.md"
       ],
       "resume_file": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/state/handoff.json",
-      "notes": "Two finding groups only; process pilot and remaining findings continue separately; governance not requested."
-    },
+      "notes": "DL-035 P1/P2 prerequisite owner prose independently reviewed and landed; no new PlanUnits; immediate scoped commit after final checks."
+    }
+  ],
+  "compiled_ledgers": [
     {
       "ledger_id": "pldg-20260908-002-terminal-workflow-findings",
       "title": "Terminal workflow findings",
@@ -1402,5 +1402,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-08T22:56:18.519648+00:00"
+  "updated_at_utc": "2026-09-09T04:21:09.213323+00:00"
 }
