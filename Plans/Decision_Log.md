@@ -326,6 +326,34 @@ SourceRef: `PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DEC
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/goal_runtime_events.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/event_family_registry.json, ContractName:Plans/event_family_registry.schema.json, ContractName:Plans/newtools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
 
+### DL-035: Terminal research decisions — own engine, OS console, and nine accepted proposals
+
+Approved on 2026-09-09 by Jared in conversation. The source records the calendar date but not an exact UTC instant; this entry does not invent one. The proposals are the terminal research decision packet P1–P11 produced by the September 8 discovery-to-plan pilot (`PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md`). This grouped entry records exactly eleven dispositions:
+
+- `P1 declined as proposed` — Puppet Master builds its own terminal engine and process host. The VT parser, grid and scrollback model, selection, command-block overlay, renderer adapter and PTY host are PM-owned code using operating-system APIs directly. No third-party terminal emulator, parser, or PTY-abstraction library is adopted into the engine. Leading terminals (Alacritty, WezTerm, Ghostty, kitty, foot, Windows Terminal, VS Code/xterm.js, JetBrains) remain reference subjects for research: study how they work, do not reuse their code. The R1/R2 conformance checklists retarget from candidate-core admission to acceptance criteria for PM's own engine and host.
+- `P2 declined as proposed` — Puppet Master uses the operating system's ConPTY as shipped by Windows; it does not bundle or pin console components. Version-dependent behavior is disclosed through the existing host-provenance doctor (SMPFS-132) rather than hidden behind a bundled binary.
+- `P3 accepted for planning` — optional negotiated enhanced keyboard protocols behind a versioned capability profile.
+- `P4 accepted for planning` — richer capability-gated shell context (continuation and right-prompt boundaries, rich shell properties) in the PM-owned parser.
+- `P5 accepted for planning` — a provider snapshot adapter that classifies cumulative or rewritten output as append, complete snapshot, rolling snapshot, or final result.
+- `P6 accepted for planning` — explicit, per-host, opt-in remote terminal compatibility setup (verified terminfo installation or a disclosed conservative profile).
+- `P7 accepted for planning` — pane-local advisory command progress from OSC 9;4 with a deterministic collision rule.
+- `P8 accepted for planning` — insert-without-execute and open-retained-output-in-editor actions on existing command cards.
+- `P9 accepted for planning` — redacted environment provenance and pending-for-next-launch display tied to explicit session replacement.
+- `P10 accepted for planning` — explicit live-pane input protection with a visible state.
+- `P11 accepted for evaluation only` — an optional external multiplexer transport adapter may be evaluated for persistent remote shells; selection is held until compatibility with PM Server ownership is resolved, and any adoption must respect the P1/P2 direction that PM's engine and host remain PM-owned.
+
+Section 15 owns the engine, host, protocol and parser decisions; FinalGUI owns visible terminal surfaces; UI Command Catalog and Wiring own new actions; Automated Testing owns acceptance fixtures; Server System owns remote ownership for P11; Settings owns any user-facing toggles. Acceptance authorizes planning those features as PlanUnits under their owners; implementation follows the existing Approve And Build path.
+
+The separate synthetic Usage decision packet (`USAGE-D01`–`USAGE-D13`) concerns a synthetic test fixture, not live Puppet Master, and records no PM decision.
+
+Negative constraints: no third-party emulator, parser, or PTY-abstraction crate in the engine or host; no bundled or pinned Windows console binaries; no implementation, WorkNodes, or NodeSeeds from this record; P11 grants no daemon installation, credential authority, or selection; the synthetic Usage packet adopts nothing.
+
+These dispositions authorize planning only. They do not land any owner amendment, prove runtime behavior, or seal governance.
+
+SourceRef: `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md`; `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/evaluator/terminal-premium-decision-draft.md`; Jared, conversation of 2026-09-09.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Contracts_V0.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -2169,6 +2197,81 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
+```
+
+### DL-035 - Terminal Research Decisions Own Engine And Accepted Proposals
+
+```yaml
+plan_unit_id: DL-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Terminal research decision record of 2026-09-09: P1 is declined as proposed
+  and Puppet Master builds its own terminal engine and process host using
+  operating-system APIs directly, studying leading terminals as references
+  without reusing their code; P2 is declined as proposed and Puppet Master uses
+  the operating system's ConPTY as shipped without bundled console components;
+  P3 through P10 are accepted for planning; P11 is accepted for evaluation only
+  with selection held until PM Server ownership compatibility is resolved.
+gui_related: true
+gui_classification_reason: P7 through P10 add visible terminal surfaces and actions; the engine and host choices are non-GUI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly P1 through P11 with the dispositions declined as proposed (P1, P2), accepted for planning (P3 through P10), and accepted for evaluation only (P11), and no additional decision.
+  - Section 15 receives an owner amendment stating the PM-owned engine and host direction and the OS-shipped ConPTY policy before any engine or host PlanUnit is compiled.
+  - Accepted proposals are planned as PlanUnits under their owners before any implementation, and execution follows the existing Approve And Build path.
+  - The synthetic Usage packet USAGE-D01 through USAGE-D13 records no Puppet Master decision.
+validation_surfaces:
+  - PlanUnit YAML parse and identifier-uniqueness check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminal_research_decision_drift
+reasoning_tier: high
+context_scope: terminal_research_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Server_System.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: terminal_research_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md:P1-P11
+  - PM-Experiments/research-audit-native-20260907/process-pilot-20260908/evaluator/terminal-premium-decision-draft.md:P6-P11
+  - Plans/Decision_Log.md:DL-035-approval-2026-09-09
+preserved_exact_tokens:
+  - P1
+  - P2
+  - P3
+  - P4
+  - P5
+  - P6
+  - P7
+  - P8
+  - P9
+  - P10
+  - P11
+  - purpose-built terminal engine
+  - ConPTY
+  - SMPFS-132
+negative_constraints:
+  - No third-party terminal emulator, parser, or PTY-abstraction library is adopted into the engine or process host.
+  - No bundled or pinned Windows console components are shipped.
+  - No implementation, WorkNodes, or NodeSeeds are created by this record.
+  - P11 grants no daemon installation, credential authority, or selection.
+  - The synthetic Usage packet adopts nothing.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
