@@ -1952,3 +1952,83 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/FinalGUISpec.md
 
+
+
+## DL-035 terminal settings owner projections - 2026-09-09
+
+Terminal durable preferences remain under the existing Terminal settings coverage; live-session actions stay in the Terminal runtime surface. DL-035 P3/P6/P9/P10 add owner-derived capability, remote-setup and environment explanations plus input-protection scope disclosure. They use the existing row/Details grammar, exact Host/Environment identity, shared manager kit and registered command routes rather than a parallel terminal manager. Same-verified-session input protection survives reconnect/PM reopen and replacement starts unlocked; this is session state, not a pane preference. This planning unit does not create settings inventory keys or infer unresolved defaults; any later durable setting must use central inventory and scope admission before exposure.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/FinalGUISpec.md#F3-120, ContractName:Plans/FinalGUISpec.md#F3-121, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md#UCC-160, ContractName:Plans/Automated_Testing_System.md#ATS-047
+
+### SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection
+
+```yaml
+plan_unit_id: SSYS-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: Terminal Settings projects the versioned requested/effective enhanced keyboard capability, explicit
+  exact-host remote compatibility setup status and redacted environment provenance with pending-for-next-launch
+  changes. Runtime input protection stays in Terminal and Settings explains only admitted scope, with same-verified-session
+  protection retained across reconnect/PM reopen, replacement sessions unlocked, and agent-input scope held. Existing
+  inventory, scope, secret custody, manager and command owners remain authoritative.
+gui_related: true
+gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
+  is directly specified.
+split_recommended: false
+depends_on:
+- SSYS-006
+- SSYS-008
+- SSYS-012
+- SSYS-033
+- F3-120
+- SMPFS-158
+- SMPFS-161
+- SMPFS-164
+- SMPFS-165
+- UCC-160
+unblocks: []
+acceptance_criteria:
+- P3 exposes supported versioned profile options only from the terminal owner, separates requested from effective
+  capability and identifies unsupported pinned toolkit/platform/transport paths. No untested enhancement, image
+  support or new default is silently enabled.
+- P6 routes cmd.terminal.remote_compatibility_setup with the exact authenticated Host/Environment and current authorization.
+  An action is not a generic boolean permission to write to all hosts; denied/read-only/no-tic/failed-transfer states
+  stay explicit and ordinary SSH is preserved when declined.
+- P9 routes cmd.terminal.environment_provenance to owner-provided redacted summaries. Unknown source remains unknown;
+  default diagnostics exclude secrets. Current launch snapshot and pending-for-next-launch changes are distinct,
+  with effect timing visible in row/Details.
+- P9 replacement uses cmd.terminal.restart_replace explicitly; saving settings neither mutates a live environment
+  nor restarts a session. No additional environment collection or automatic relaunch authority is created.
+- P10 live enable/disable actions remain in Terminal. Protection persists for the exact verified live session across
+  reconnect/PM reopen; a replacement starts unlocked. This is session state, not a pane preference; historical records
+  cannot establish liveness. Agent-input scope remains held, and no broader protection scope is advertised.
+- Rows and Details preserve existing project/workspace/tab scope rules, shared manager presentation and keyboard
+  accessibility. Missing command/handler/wiring/runtime evidence keeps an affected action visibly unavailable with
+  its actual reason; static examples do not claim integration.
+- No new settings_inventory entry or manager is registered by this unit. Any later durable toggle requires its own
+  admitted exact key, scope, default and persistence policy; this boundary does not defer approved runtime actions
+  or diagnostic projections.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md#ATS-047
+risk_class: terminal_research_consumer_or_acceptance_drift
+reasoning_tier: high
+context_scope: dl035_terminal_research_consumers
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: accepted_planning_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-035
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0005
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0008
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0011
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
+negative_constraints:
+- Do not treat P3 optional protocol support as an image-protocol decision or bypass effective-capability checks.
+- Do not move live-pane actions into persistent Settings or silently choose held policies.
+- No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+```

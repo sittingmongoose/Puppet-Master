@@ -377,6 +377,16 @@ SourceRef: Jared, conversation of 2026-09-09; `PM-Experiments/research-audit-nat
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
+### DL-037: Terminal input protection — same-session persistence
+
+On 2026-09-09, while compiling DL-035 P10, Jared answered the explicit persistence question **Keep for the same session**. The presented choice retained protection for the exact live session, including reconnect and reopening PM, with a replacement session starting unlocked. This supplemental decision resolves persistence only; the separately presented question about agent-input scope is still pending and receives no implicit disposition here.
+
+The lock follows verified `terminal_session_id` continuity across detach, reconnect and PM reopen. Replacing a session starts unlocked; a reused pane, copied preference, historical transcript or restored layout cannot confer a lock or prove a process is still live. Output keeps draining while protected, and unlock retains the same session. Existing close confirmation, interrupt and terminate behavior remains owner-defined. This is planning authority only, with no implementation, WorkNodes, NodeSeeds or runtime acceptance.
+
+SourceRef: Jared, asynchronous question reply on 2026-09-09; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/questions.jsonl:q-0002; Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0004.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-165, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/UI_Command_Catalog.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -2366,6 +2376,53 @@ owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Planning_Wizard.md
   - Plans/FinalGUISpec.md
+```
+
+### DL-037 - Terminal Input Protection Persistence
+
+```yaml
+plan_unit_id: DL-037
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: The accepted terminal input-protection persistence policy retains the lock for the exact verified
+  same live session, including reconnect and reopening PM; replacement sessions start unlocked. Agent-input
+  scope is a separately pending question and is not decided by this record.
+gui_related: true
+gui_classification_reason: Visible input-protection state and restore/reconnect behavior are affected.
+depends_on:
+- DL-035
+unblocks: []
+acceptance_criteria:
+- Same-session reconnect and PM reopen retain protection only with verified exact live-session identity.
+- Replacement starts unlocked; pane reuse, layout restore and historical transcript metadata do not establish
+  liveness or inherit protection.
+- Output continues and unlock retains the exact session; existing close/interrupt/terminate owner policy is
+  preserved.
+- No agent-input scope, implementation, WorkNode, NodeSeed, native acceptance or governance seal is implied.
+validation_surfaces:
+- Owner/consumer source-to-decision review
+- python3 scripts/pm-plan-index.py validate
+risk_class: terminal_lock_persistence_identity_confusion
+reasoning_tier: standard
+context_scope: terminal_input_protection_persistence_decision
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: accepted_planning_decision_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/questions.jsonl:q-0002
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl:dec-0004
+negative_constraints:
+- Do not inherit protection into a replacement session.
+- Do not invent the unanswered agent-input disposition.
+- Do not claim historical records prove a live session.
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

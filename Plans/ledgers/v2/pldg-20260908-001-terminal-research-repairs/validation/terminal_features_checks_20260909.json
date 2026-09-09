@@ -1,0 +1,211 @@
+{
+  "recorded_at_utc": "2026-09-09T05:10:33.638709+00:00",
+  "phase": "deliverable_2_planning_compile",
+  "scoped_checks": "pass",
+  "checks": [
+    {
+      "name": "ledger",
+      "exit_code": 0,
+      "elapsed_seconds": 8.151632308959961
+    },
+    {
+      "name": "shards",
+      "exit_code": 0,
+      "elapsed_seconds": 10.965896606445312
+    },
+    {
+      "name": "index",
+      "exit_code": 0,
+      "elapsed_seconds": 25.523995399475098
+    },
+    {
+      "name": "diff",
+      "exit_code": 0,
+      "elapsed_seconds": 1.3792409896850586
+    },
+    {
+      "name": "wiring",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4707019329071045
+    }
+  ],
+  "independent_review": "pass",
+  "review_sha256": "5fa79132b0988538367af25d711aa9804cd830004781f8f2338346e11ccb9fb2",
+  "landing": {
+    "canonical_owner_sha256": {
+      "Plans/Section15_MVP_Promoted_Features_Spec.md": "7250d986422931f2b4e32230bbd652911a38b56120ce96766ead21d3553122e0",
+      "Plans/FinalGUISpec.md": "163f59e6716166790accad75b59e880c0932792df331d142bee0ec8bae42c253",
+      "Plans/Settings_System.md": "b5700e07b47d6a7f3f8ec8cd72ea5795b3cea952a9b665edba383da877cd4cc4",
+      "Plans/Automated_Testing_System.md": "d0ae60188cd3a5f898f77268b57da589bfbf5766c2d9930804cb5610af756664",
+      "Plans/UI_Command_Catalog.md": "44bfbc2f88392a43fa83f1164477c1912f33d04e11e7c901e2817796cae38eb8",
+      "Plans/UI_Wiring_Rules.md": "35dc95e70c8a3b7d86cf02fb52c65d67a065eaf833e656df940d4c8781cae661",
+      "Plans/Wiring_Matrix.md": "54ce0ff4c4ff2f2695832d8a966358202e65d44c385045dac7c7381a82a2bd8a",
+      "Plans/Server_System.md": "53e1316385dac62e624ec36d358911c42c2e79de21b116596d2a87130f93d429",
+      "Plans/Decision_Log.md": "f2c3172403a8527d79557af92602a89f0d13a1cfeda3f58e5460c1824060fce5"
+    },
+    "reviewed_bytes_match": true,
+    "new_plan_units": 21,
+    "accepted_feature_proposals": 8,
+    "evaluation_only_proposals": 1,
+    "new_action_candidates": 6,
+    "pending_policy_questions": 1,
+    "native_acceptance": "not_run",
+    "supporting_plan_artifact_sha256": {
+      "Plans/Wiring_Matrix.production.exclusions.json": "face26643f45358e3fca99ade0d36bdb0bdf4cd0b65c75df34265501b2bdec72"
+    }
+  },
+  "gate_summary": {
+    "full_scan_status": "fail",
+    "full_scan_failure_groups": [
+      {
+        "check": "json_syntax",
+        "failure_count": 44
+      },
+      {
+        "check": "verify_spec_lock",
+        "failure_count": 13
+      },
+      {
+        "check": "validate_plan_graph",
+        "failure_count": 50
+      },
+      {
+        "check": "validate_evidence",
+        "failure_count": 50
+      },
+      {
+        "check": "lint_contractrefs",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_new_contracts",
+        "failure_count": 5
+      },
+      {
+        "check": "validate_implementation_readiness",
+        "failure_count": 25
+      },
+      {
+        "check": "validate_plan_migration",
+        "failure_count": 50
+      },
+      {
+        "check": "validate_pm7_gui_fixtures",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_usage_contract_drift",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_web_capability_contracts",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_wiring_matrix",
+        "failure_count": 6
+      },
+      {
+        "check": "validate_touch_closure",
+        "failure_count": 6
+      },
+      {
+        "check": "validate_audit_closure",
+        "failure_count": 50
+      }
+    ],
+    "repaired_after_full_scan": [
+      "validate_wiring_matrix"
+    ],
+    "unresolved_groups_from_full_scan": [
+      {
+        "check": "json_syntax",
+        "failure_count": 44
+      },
+      {
+        "check": "verify_spec_lock",
+        "failure_count": 13
+      },
+      {
+        "check": "validate_plan_graph",
+        "failure_count": 50
+      },
+      {
+        "check": "validate_evidence",
+        "failure_count": 50
+      },
+      {
+        "check": "lint_contractrefs",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_new_contracts",
+        "failure_count": 5
+      },
+      {
+        "check": "validate_implementation_readiness",
+        "failure_count": 25
+      },
+      {
+        "check": "validate_plan_migration",
+        "failure_count": 50
+      },
+      {
+        "check": "validate_pm7_gui_fixtures",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_usage_contract_drift",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_web_capability_contracts",
+        "failure_count": 1
+      },
+      {
+        "check": "validate_touch_closure",
+        "failure_count": 6
+      },
+      {
+        "check": "validate_audit_closure",
+        "failure_count": 50
+      }
+    ],
+    "targeted_wiring": {
+      "name": "wiring",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4707019329071045
+    },
+    "seal_performed": false
+  },
+  "protected_artifact_hashes_unchanged": true,
+  "generated_scope_limits": [
+    {
+      "owner_doc": "Plans/Decision_Log.md",
+      "shard_configured": true,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "shard_configured": true,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Server_System.md",
+      "shard_configured": false,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Settings_System.md",
+      "shard_configured": false,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    }
+  ],
+  "runtime_acceptance": "not_run",
+  "implementation": "not_created",
+  "evidence_directory": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/next-goal-20260909/d2"
+}

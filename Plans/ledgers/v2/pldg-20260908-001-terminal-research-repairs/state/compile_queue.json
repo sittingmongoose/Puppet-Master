@@ -1,29 +1,42 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "phase": "owner_amendments_landed",
-  "last_event_id": "evt-0004",
+  "phase": "compiled_terminal_feature_contracts",
+  "last_event_id": "evt-0008",
   "governance_status": "not_requested",
   "canonical_plan_targets": [
     "Plans/assistant-chat-design.md",
     "Plans/storage-plan.md"
   ],
   "compiled_owner_docs": [
-    "Plans/assistant-chat-design.md",
-    "Plans/UI_Command_Catalog.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
     "Plans/Section15_MVP_Promoted_Features_Spec.md",
-    "Plans/storage-plan.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Server_System.md",
+    "Plans/Settings_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
   ],
   "compiled_plan_outputs": [
-    "Plans/assistant-chat-design.md",
-    "Plans/UI_Command_Catalog.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
     "Plans/Section15_MVP_Promoted_Features_Spec.md",
-    "Plans/storage-plan.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Server_System.md",
+    "Plans/Settings_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Wiring_Matrix.production.exclusions.json",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
   ],
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/owner_amendments_independent_review_20260909.md",
-  "latest_audit_status": "pass",
-  "status": "owner_amendments_landed",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/validation/terminal_features_independent_review_20260909.md",
+  "latest_audit_status": "pass_canonical_and_ledger_fidelity",
+  "status": "compiled_terminal_feature_contracts",
   "items": [
     {
       "queue_id": "cq-0001",
@@ -60,15 +73,303 @@
         "SP-125",
         "ATS-022"
       ]
+    },
+    {
+      "queue_id": "cq-0003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0005"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-158",
+        "F3-544",
+        "SSYS-034",
+        "ATS-047"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
+    },
+    {
+      "queue_id": "cq-0004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0006"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-159",
+        "F3-544",
+        "ATS-047"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
+    },
+    {
+      "queue_id": "cq-0005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0007"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-160",
+        "F3-544",
+        "ATS-047"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
+    },
+    {
+      "queue_id": "cq-0006",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0008"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-161",
+        "F3-545",
+        "SSYS-034",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile.",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0009"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-162",
+        "F3-546",
+        "ATS-047"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
+    },
+    {
+      "queue_id": "cq-0008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0010"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-163",
+        "F3-547",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile.",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0011"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-164",
+        "F3-548",
+        "SSYS-034",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile.",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0012"
+      ],
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Decision_Log.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SMPFS-165",
+        "F3-549",
+        "SSYS-034",
+        "ATS-047",
+        "UCC-160",
+        "UIW-021",
+        "WM-052",
+        "DL-037"
+      ],
+      "compile_disposition": "accepted_feature_planning",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile.",
+      "supporting_plan_artifacts": [
+        "Plans/Wiring_Matrix.production.exclusions.json"
+      ]
+    },
+    {
+      "queue_id": "cq-0011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-0013"
+      ],
+      "owner_doc": "Plans/Server_System.md",
+      "target_docs": [
+        "Plans/Server_System.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "SRV-015"
+      ],
+      "compile_disposition": "accepted_evaluation_only",
+      "governance_coverage_disposition": "Actual owner and all targets are explicit; optional legacy target_doc coverage anchor omitted for this unsealed accepted planning compile."
     }
   ],
-  "terminal_ledger_event_id": "evt-0002",
+  "terminal_ledger_event_id": "evt-0008",
   "amended_owner_docs": [
     "Plans/Section15_MVP_Promoted_Features_Spec.md",
     "Plans/Release_Supply_Chain.md"
   ],
   "cursor": {
-    "last_event_id": "evt-0004",
-    "next_action": "Commit and report verified deliverable 1, then begin authorized P3–P10 PlanUnits and P11 evaluation in deliverable 2."
-  }
+    "last_event_id": "evt-0008",
+    "next_action": "Finish D2 generated verification, commit and report before D3. Keep the single pending P10 agent-input question open without re-asking answered feature or persistence decisions."
+  },
+  "actual_plan_owner_targets": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Server_System.md",
+    "Plans/Settings_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md"
+  ],
+  "canonical_plan_targets_scope": "Retained legacy governance-covered queue anchors only; not the complete owner/output denominator. See actual_plan_owner_targets and deferred_governance_coverage.",
+  "deferred_governance_coverage": [
+    {
+      "owner_doc": "Plans/Decision_Log.md",
+      "shard_configured": true,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "shard_configured": true,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Server_System.md",
+      "shard_configured": false,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    },
+    {
+      "owner_doc": "Plans/Settings_System.md",
+      "shard_configured": false,
+      "spec_lock_covered": false,
+      "disposition": "deferred_until_explicit_governance_seal"
+    }
+  ],
+  "d2_compiled_plan_unit_ids": [
+    "ATS-047",
+    "DL-037",
+    "F3-544",
+    "F3-545",
+    "F3-546",
+    "F3-547",
+    "F3-548",
+    "F3-549",
+    "SMPFS-158",
+    "SMPFS-159",
+    "SMPFS-160",
+    "SMPFS-161",
+    "SMPFS-162",
+    "SMPFS-163",
+    "SMPFS-164",
+    "SMPFS-165",
+    "SRV-015",
+    "SSYS-034",
+    "UCC-160",
+    "UIW-021",
+    "WM-052"
+  ],
+  "pending_user_policy": [
+    "P10 agent-input scope (q-0001)"
+  ]
 }

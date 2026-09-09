@@ -1,14 +1,15 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
   "authority": "Live non-pipeline Plans remain canonical; this ledger is source lineage.",
-  "authorized_scope": "Deliverable 1: DL-035 P1/P2 owner prose, independent review, standard shard/index regeneration and scoped descriptive commit.",
+  "authorized_scope": "D2: accepted DL-035 P3–P10 PlanUnits, P11 evaluation-only; D1 owner prerequisites already committed and reported.",
   "constraints": [
-    "Live non-pipeline Plans remain canonical; ledger is source lineage.",
-    "Use accepted DL-035 dispositions including corrected P2; do not re-ask.",
-    "Land owner prose before compiling new engine/host PlanUnits.",
-    "No implementation, WorkNodes, NodeSeeds, Spec Lock/evidence/readiness reseal.",
-    "Regenerate only through standard scripts; revert timestamp-only noise outside edited documents; preserve concurrent work.",
-    "One deliverable at a time; commit and report this landing before starting deliverable 2."
+    "Canonical owners retain authority; ledger is source lineage.",
+    "P3–P10 feature approval already answered; do not re-ask.",
+    "P10 persistence follows the answered exact-session policy; agent-input scope remains held until the user answers.",
+    "P11 selection remains held for Server compatibility; no daemon installation or new credentials.",
+    "No implementation, WorkNodes, NodeSeeds or governance seal.",
+    "Regenerate standard shards/index after canonical edits; restore timestamp-only outside-owner noise; commit own reviewed landing immediately.",
+    "One deliverable/campaign at a time; D3 only after D2 commit/report."
   ],
-  "next_action": "Commit and report verified deliverable 1, then begin authorized P3–P10 PlanUnits and P11 evaluation in deliverable 2."
+  "next_action": "Finish D2 generated verification, commit and report before D3. Keep the single pending P10 agent-input question open without re-asking answered feature or persistence decisions."
 }

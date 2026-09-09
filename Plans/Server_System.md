@@ -810,3 +810,75 @@ owner_hints: [Plans/Server_System.md]
 ```
 
 ContractRef: ContractName:Plans/Server_System.md, ContractName:Plans/Project_Sync_and_Backbone.md
+
+## External Multiplexer Transport Evaluation — DL-035 (2026-09-09)
+
+DL-035 P11 authorizes evaluation only of an optional external multiplexer transport, such as a WezTerm-compatible remote daemon, for persistent remote shells within the existing PM session/process-host service. Selection is held until compatibility with PM Server ownership is resolved and a later explicit adoption decision is recorded. Evaluation compares plain SSH and PM-owned Server transport as alternatives; it is not an implementation task, installation request or approval of a protocol/library dependency.
+
+The evaluation must produce an owner compatibility map and evidence-backed decision packet covering PM Server/Execution Host/Client responsibility, exact authenticated host/environment/session/cursor identity, spawn/attach/read/resize/input/exit/teardown ownership, and reconnect after Client disconnection or Server/transport interruption. PM remains owner of its engine and direct-OS-API process host under the landed DL-035 P1/P2 policy; a remote integration may not import emulator, parser or PTY-abstraction code, silently delegate PM writer authority, or create a writable Client replica. Shared Integration Runtime and Remote Access retain lifecycle/transport primitives; external endpoint labels, daemon process IDs and credentials do not become PM identity or trust.
+
+Acceptance for an eventual candidate evaluation includes actionable daemon/protocol version mismatch, verified reconnect without duplicate shells, no silent local fallback, supported-host lifetime ownership, and separate WSL2 cases. Pin the evidence to the evaluated protocol/daemon versions and tested host path; unsupported or missing runners remain not-run with residual risk. Demonstrate how remote daemon lifetime and its state would coexist with the existing PM-owned host/Server model before claiming compatibility. Conflicting ownership is a reported incompatibility, not permission to revise Server canon.
+
+The output is a plain-language comparison and recommendation with technical source/identity evidence, remaining incompatibilities and explicit selection status held. This PlanUnit schedules no native job, adopts no adapter or daemon, installs nothing, grants no new credential authority and enables no predictive echo. No current source report proves runtime acceptance or resolves the ownership question.
+
+### SRV-015 - External Multiplexer Ownership Evaluation
+
+```yaml
+plan_unit_id: SRV-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: Evaluate an optional external multiplexer transport for persistent remote shells within PM
+  existing session/process-host service, while holding selection for PM Server ownership compatibility and
+  a later explicit adoption decision. PM-owned engine/host, one Server writer, exact identity and existing
+  transport/security owners remain authoritative.
+gui_related: false
+gui_classification_reason: Not itself GUI; backend/orchestration ownership evaluation grants no product control
+  or runtime.
+depends_on:
+- SRV-001
+- SRV-002
+- SRV-006
+- SRV-007
+- SMPFS-070
+unblocks: []
+acceptance_criteria:
+- Produce a bounded comparison against plain SSH and PM-owned Server transport, with benefits, daemon/version/credential/maintenance
+  costs, exact evidence and explicit held selection.
+- Map Server, Execution Host, Client and external daemon ownership for spawn/attach/read/resize/input/exit/teardown
+  and continuity; incompatibility is reported without silently changing owner contracts or creating a writable
+  Client.
+- Eventual evaluation covers actionable version mismatch, verified reconnect without duplicate shells, no local
+  fallback, supported-host lifetime ownership and separate WSL2 cases.
+- Every conclusion identifies exact authenticated host/environment/session/cursor joins, tested protocol/daemon
+  versions and missing-runner risk; source study or static prose is not runtime acceptance.
+- No engine/parser/PTY-abstraction dependency or reference-code reuse is adopted, PM-owned engine/host remain
+  in force, and no daemon install, new credential authority or predictive echo is authorized.
+- Compatibility evidence alone cannot select an adapter; any adoption returns in the approved plain-language
+  decision form for an explicit later disposition.
+validation_surfaces:
+- Independent ownership/evidence review of the bounded evaluation report
+- Future version-mismatch/reconnect/duplicate-shell/lifetime/WSL2 evaluation fixtures
+- python3 scripts/pm-plan-index.py validate
+risk_class: external_mux_server_ownership_conflict
+reasoning_tier: high
+context_scope: terminal_external_mux_evaluation
+implementation_surfaces:
+- Plans/Server_System.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Remote_Access_System.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: evaluation_only_selection_held
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-035
+- Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0013
+negative_constraints:
+- Evaluation only; selection held for Server compatibility and explicit later approval.
+- No daemon installation, new credentials, reference-code reuse, writable Client replica or silent local fallback.
+- No implementation, WorkNodes, NodeSeeds or native/runtime proof.
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Server_System.md, ContractName:Plans/Automated_Testing_System.md

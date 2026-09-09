@@ -2,13 +2,13 @@
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
   "status": "pass",
   "summary": {
-    "events": 4,
-    "design_atoms": 4,
-    "decisions": 2,
-    "open_questions": 0,
+    "events": 8,
+    "design_atoms": 13,
+    "decisions": 4,
+    "open_questions": 1,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 2
+    "compile_queue_items": 11
   },
-  "notes": "Ledger, generated shards, PlanUnit index and scoped whitespace checks pass; independent owner review passes. Full run-gates is incomplete at the 240-second bound with failed subchecks; no aggregate gate pass, runtime acceptance or governance seal claimed."
+  "notes": "D2 independent planning/source-lineage review and scoped ledger, shard, index, wiring and diff checks pass. The completed full scan had 14 failed groups; the six newly exposed candidate-wiring misses are repaired and targeted wiring now passes. Thirteen other groups remain unresolved at that scan. No seal, runtime acceptance or missing governance-coverage repair is claimed. Agent-input scope remains unanswered; exact-live-session persistence is decided in DL-037."
 }

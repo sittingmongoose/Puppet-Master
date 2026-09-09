@@ -1,10 +1,29 @@
 {
   "ledger_id": "pldg-20260908-001-terminal-research-repairs",
-  "open_questions": [],
+  "open_questions": [
+    {
+      "question_id": "q-0001",
+      "title": "Who should a terminal pane input lock block?",
+      "options": [
+        "Block user and agent input",
+        "Block only user input"
+      ],
+      "recommendation": "Block user and agent input; separate interrupt/terminate controls keep existing behavior.",
+      "ledger_id": "pldg-20260908-001-terminal-research-repairs",
+      "status": "open",
+      "source_refs": [
+        "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/source_shards/terminal_feature_decisions_20260909.md"
+      ],
+      "related_atom_ids": [
+        "atom-0012"
+      ],
+      "presentation": "Plain-language form presented asynchronously; awaiting explicit user answer."
+    }
+  ],
   "deferred_questions": [],
   "open_blockers": [],
   "outside_compile_scope": [
-    "Deliverables 2–5 until deliverable 1 is verified, committed and reported.",
+    "D3–D5 until D2 is committed and reported.",
     "Implementation, WorkNodes, NodeSeeds and governance sealing."
   ]
 }
