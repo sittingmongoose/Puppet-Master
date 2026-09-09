@@ -1,0 +1,431 @@
+{
+  "schema": "d5.bounded_historical_adjudication.v1",
+  "adjudication_id": "D5-ADJ-SMPFS-017",
+  "reviewer": "/root/d5_action_adjudication",
+  "review_status": "finalized",
+  "scope": {
+    "primary_unit": "SMPFS-017",
+    "unit_range": {
+      "path": "d5/source/july04-Section15.md",
+      "start_line": 1688,
+      "end_line": 1743
+    },
+    "purpose": "Resolve explicit only in terminal-runtime creation rule against preserved fresh-shell routes.",
+    "source_role": "evaluator_only_researcher_withheld",
+    "source_opened_after_d4_completion": true,
+    "new_research_or_web_acquisition": false,
+    "current_plans_not_used_as_comparison_evidence": true,
+    "other_units_not_adjudicated": true,
+    "prior_091_artifacts_unchanged": true
+  },
+  "source_identity": {
+    "freeze_path": "d5/source-freeze.json",
+    "baseline_commit": "f46b0de9b241ec5eeb7a8ee8855c5f90e6b47f17",
+    "comparison_commit": "75cc6d64a16cd9678a7e6e7fe910257055ec3316",
+    "baseline_sha256": "8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf",
+    "comparison_sha256": "e09970932e63fb5b7698366d909c24ed399a794e0c7ba5e23368b01a02774e8a",
+    "both_hashes_verified_against_freeze": true,
+    "identical_original_body_ranges": [
+      {
+        "baseline": {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 195,
+          "end_line": 240
+        },
+        "comparison": {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 195,
+          "end_line": 240
+        }
+      },
+      {
+        "baseline": {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 307,
+          "end_line": 335
+        },
+        "comparison": {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 307,
+          "end_line": 335
+        }
+      }
+    ]
+  },
+  "ruling": {
+    "classification": "product_decision",
+    "unit_disposition": "mixed_restatement_and_added_restrictive_policy",
+    "confidence": "medium_high_on_added_exclusivity_medium_on_operational_impact",
+    "added_obligation_count": 1,
+    "necessary_correction_count": 0,
+    "optional_capability_count": 0,
+    "product_decision_count": 1,
+    "decision": "Count the explicit exclusive creation-action policy in July 1695 as one added product decision, while preserving the existing-first reveal and historical-display clauses as restatements. Record its conflict with the retained fresh-shell routes. Do not count each route as another addition or infer extra user confirmation.",
+    "logical_difference": "June 228: explicit new/split/restart implies new runtime identity. July 1695 adds the reverse restriction: new runtime identity implies an explicit new/split/restart action.",
+    "why_retained_context_is_insufficient": "The original body and source-preserving acceptance make intent uncertain, but the added exclusive only is direct normative text. No bounded source explicitly scopes it to ordinary presentation-only reveal of an existing session or declares every routed creation to be an explicit new action."
+  },
+  "plausible_readings": [
+    {
+      "reading": "added_exclusive_creation_policy",
+      "adopted": true,
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 1691,
+          "end_line": 1695
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 218,
+          "end_line": 218
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 225,
+          "end_line": 235
+        }
+      ],
+      "case": "Only makes new/split/restart exhaustive instead of merely identifying three sufficient creation routes. TTY-required routing and dev-artifact creation share the reveal domain, so title/context alone does not exclude them from the new restriction."
+    },
+    {
+      "reading": "contextual_existing_first_restatement",
+      "adopted": false,
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 218,
+          "end_line": 218
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 225,
+          "end_line": 235
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 804,
+          "end_line": 804
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 1707,
+          "end_line": 1710
+        }
+      ],
+      "case": "The sentence opens with existing sessions first, the document keeps the original routes verbatim, and standardization/acceptance require preservation. Only might summarize the ordinary presentation-only branch; a TTY/dev route could conceivably dispatch an explicit internal new action.",
+      "limitation": "Neither the ordinary-branch restriction nor the proposed internal alias is stated. The no-terminal dev-artifact branch is itself an Open in Terminal route, and TTY-required routing is an express exception to reveal preserving identity. Making all exceptions fit only requires added scoping or an unproved dispatch interpretation."
+    }
+  ],
+  "field_adjudication": [
+    {
+      "field": "canonical_text/status",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1691,
+        "end_line": 1695
+      },
+      "effect": "Accepted normative requirement. First two clauses preserve baseline; final only clause adds an exclusive allowed-action constraint."
+    },
+    {
+      "field": "acceptance_criteria",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1707,
+        "end_line": 1710
+      },
+      "effect": "Addressability, preservation of source constraints/compatibility/lineage and no executable work. Preservation is real counterevidence to intended policy change, but cannot silently delete an expressly added exclusive constraint."
+    },
+    {
+      "field": "source_lineage",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1722,
+        "end_line": 1723
+      },
+      "effect": "Migration span S0014 provides lineage to cross-surface reveal material. The external span map was not opened and supplies no demonstrated internal action alias."
+    },
+    {
+      "field": "preserved_exact_tokens",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1724,
+        "end_line": 1731
+      },
+      "effect": "Existing/historical sessions, action names and terminal_session_id preserve identities. Tokens do not establish exhaustiveness or negate the added only."
+    },
+    {
+      "field": "negative_constraints",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1732,
+        "end_line": 1733
+      },
+      "effect": "Preserves adjacent-surface ownership restriction from June 230. Ownership of creation by the terminal subsystem is not equivalent to allowing only three explicit creation-action classes."
+    },
+    {
+      "field": "compatibility/stale/links/owners",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1734,
+        "end_line": 1742
+      },
+      "effect": "Empty compatibility and stale fields supply no exception handling or explicit retirement. ContractRefs and owners provide routing/ownership context; linked documents were not acquired and do not prove a dispatch alias."
+    },
+    {
+      "field": "title/context/hint",
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 1688,
+          "end_line": 1688
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 1714,
+          "end_line": 1721
+        }
+      ],
+      "effect": "Terminal reveal scope supports the narrower reading, but both contested creation paths are in that same reveal domain."
+    },
+    {
+      "field": "retained_body/standardization",
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 218,
+          "end_line": 218
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 225,
+          "end_line": 235
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 804,
+          "end_line": 804
+        }
+      ],
+      "effect": "The baseline routes remain canonical body text. The July result contains a policy conflict unless the exclusive summary is qualified or an alias/scope is established; this review does not choose an unrecorded alias."
+    }
+  ],
+  "preserved_behavior_clauses": [
+    {
+      "clause": "Reveal an existing bound session first, including its hidden container.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 225,
+        "end_line": 226
+      },
+      "comparison": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1695,
+        "end_line": 1695
+      },
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false
+    },
+    {
+      "clause": "Historical-only state shows transcript/recovery rather than a fictitious live shell.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 227,
+        "end_line": 227
+      },
+      "comparison": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1695,
+        "end_line": 1695
+      },
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false
+    },
+    {
+      "clause": "Explicit New Terminal, split and restart create new runtime identity.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 228,
+        "end_line": 228
+      },
+      "comparison": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1695,
+        "end_line": 1695
+      },
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "note": "Their sufficiency is baseline; only their asserted exclusivity is counted as new."
+    },
+    {
+      "clause": "Adjacent surfaces cannot redefine terminal ownership/runtime identity.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 230,
+        "end_line": 230
+      },
+      "comparison": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1733,
+        "end_line": 1733
+      },
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false
+    }
+  ],
+  "exact_semantic_added_obligations": [
+    {
+      "obligation_id": "SMPFS-017-O01",
+      "classification": "product_decision",
+      "count_as_added_obligation": true,
+      "exact_july_text": "only explicit new/split/restart actions mint a new terminal runtime identity",
+      "semantic_obligation": "Restrict minting a terminal runtime identity to explicit new, split or restart actions; other creation routes cannot independently mint identity under the literal rule.",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1695,
+        "end_line": 1695
+      },
+      "baseline_difference": "June 228 states that explicit New Terminal/split/restart actions create identity, not that they are the exhaustive set of actions permitted to create identity. June 218 and 235 retain other fresh-shell paths under stated conditions.",
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 218,
+          "end_line": 218
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 225,
+          "end_line": 235
+        }
+      ],
+      "classification_reason": "This chooses the allowed action routes for creating runtime identity. It is a restrictive product policy with possible routing consequences, not a separable new capability. The frozen baseline does not require this exclusivity and affirmatively preserves other creation paths; no baseline correctness argument makes the new restriction necessary.",
+      "scope_and_conditionality": "Applies when a new terminal runtime identity is minted. The text does not specify whether explicit means a user gesture, an agent action or internal dispatch. It does not explicitly prescribe a second confirmation, error UI or deletion of an existing route; do not invent those consequences.",
+      "deduplication": "Count the single shared exclusive creation-action policy once. TTY-required routing, no-terminal dev-artifact creation and any distinct replacement-policy route are impact evidence for this same guard, not independently additive bans.",
+      "implementation_verified": false
+    }
+  ],
+  "affected_baseline_routes": [
+    {
+      "impact_id": "SMPFS-017-I01",
+      "obligation_id": "SMPFS-017-O01",
+      "baseline_condition": "Reveal/detach/reattach/move ordinarily preserve a bound session, unless TTY-required routing requires a fresh interactive shell.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 218,
+        "end_line": 218
+      },
+      "preserved_july_body": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 218,
+        "end_line": 218
+      },
+      "baseline_status": "explicit_exception_permitting_required_fresh_shell_routing",
+      "literal_policy_impact": "The exception is not an explicit new/split/restart action as written; the new allowlist would prevent it independently minting identity unless the system adds or proves such dispatch.",
+      "count_as_separate_added_obligation": false
+    },
+    {
+      "impact_id": "SMPFS-017-I02",
+      "obligation_id": "SMPFS-017-O01",
+      "baseline_condition": "Open in Terminal from a dev-session-linked artifact: after exact/primary session preference, the dev session has no terminal and now needs PTY-backed interaction.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 235,
+        "end_line": 235
+      },
+      "preserved_july_body": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 235,
+        "end_line": 235
+      },
+      "baseline_status": "conditional_required_creation_of_new_bound_session",
+      "literal_policy_impact": "June says PM creates the new bound session. July only would block independent creation from that Open in Terminal route or require it to count as explicit new/split/restart. No frozen text proves that alias or adds a separate user New Terminal action.",
+      "count_as_separate_added_obligation": false
+    },
+    {
+      "impact_id": "SMPFS-017-I03",
+      "obligation_id": "SMPFS-017-O01",
+      "baseline_condition": "An explicit termination_policy, replacement, restart or New Terminal action asks for a new runtime identity.",
+      "baseline": {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 220,
+        "end_line": 220
+      },
+      "preserved_july_body": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 220,
+        "end_line": 220
+      },
+      "baseline_status": "conditional_replacement_or_policy_route_with_possible_overlap",
+      "literal_policy_impact": "Restart/New Terminal clearly overlap the listed routes; distinct replacement/termination-policy paths might also be constrained, but the bounded text does not establish whether they are separate from new/restart.",
+      "count_as_separate_added_obligation": false,
+      "uncertainty": "Corroborating breadth evidence only; not a third proven independent restriction."
+    }
+  ],
+  "bounded_semantic_counterexample": {
+    "trigger": "Open in Terminal on a dev-session-linked artifact with no exact/primary terminal and a present PTY interaction need.",
+    "baseline_result": "Create a new terminal_session_id bound to that dev_session_id (June 235).",
+    "new_exclusive_rule": "Creation must arise from explicit new/split/restart (July 1695).",
+    "missing_reconciliation": "No local field/body text states that this Open in Terminal branch already is an explicit new action.",
+    "evidence": [
+      {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 235,
+        "end_line": 235
+      },
+      {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 1695,
+        "end_line": 1695
+      }
+    ],
+    "test_kind": "textual_semantic_counterexample_not_runtime_test"
+  },
+  "baseline_preservation_vs_correctness": {
+    "new_policy_is_not_necessary_correction": true,
+    "reason": "The baseline already constrains ordinary reveal and presentation operations while affirmatively allowing/requiring fresh-shell exceptions. Closing all creation paths to three actions is not required to preserve those promises.",
+    "baseline_preserving_reconciliation": "A correction that restores coherence would qualify/remove the exclusive assertion or explicitly retain the existing TTY/dev-session routes. It would not need to invent a fresh product feature. This review identifies that preservation need but does not edit Plans or prescribe a new dispatch architecture.",
+    "count_treatment": "Do not classify the added restrictive policy itself as necessary_correction merely because the conflicting July prose now needs reconciliation."
+  },
+  "constraints_and_uncertainty": {
+    "no_inferred_historical_or_present_user_approval": true,
+    "no_inferred_extra_user_confirmation": true,
+    "dispatch_uncertainty": "Explicit is not defined here as a user action versus internal action dispatch. A pre-existing internal new dispatcher could make the routes compatible, but no such equivalence is established in the bounded frozen evidence. This limits certainty about operational breakage, not the visible added exclusive constraint.",
+    "intent_uncertainty": "Source-preserving standardization may have intended a restatement. Textual semantic change and author intent are separate findings.",
+    "no_runtime_or_current_product_claim": true
+  },
+  "independent_review_coordination": {
+    "reviewer_a": "/root/schema_compile",
+    "reviewer_b": "/root/d5_compare_b",
+    "a_initial_view": "Uncertain; both restrictive and context-preserving readings supplied.",
+    "b_counterevidence_response": "No exact evidence establishing a routed-creation alias; agrees the explicit only differs from taxonomy covering and fits one restrictive product decision with two impacts.",
+    "a_final_counterevidence_response": "Reviewer A reported no exact scope or alias equating TTY-required/dev-linked Open in Terminal with explicit new/split/restart, agreed the exclusivity differs from 091 taxonomy compression, and accepted the final ruling."
+  },
+  "scope_compliance": {
+    "owned_artifacts_only": [
+      "d5/reviews/adjudication-017.json",
+      "d5/reviews/adjudication-017.md"
+    ],
+    "no_plans_ledger_governance_implementation_changes": true,
+    "no_researcher_input_changes": true,
+    "no_staging_or_commit": true,
+    "prior_091_immutable": true
+  },
+  "verification": {
+    "valid_json": true,
+    "unique_added_obligation_count": 1,
+    "product_decision_count": 1,
+    "no_duplicate_impact_counts": true,
+    "evidence_ranges_checked": 44,
+    "all_evidence_ranges_in_bounds": true,
+    "source_hashes_match_freeze": true
+  }
+}

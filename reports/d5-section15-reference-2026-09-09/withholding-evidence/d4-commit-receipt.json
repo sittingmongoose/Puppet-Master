@@ -1,0 +1,14 @@
+{
+  "schema": "d4.committed_landing_verification.v1",
+  "verified_at_utc": "2026-09-09T13:12:42.655610+00:00",
+  "status": "pass",
+  "commit": "423549b29e65fc7bb00268440c5a0a7554a3a3b0",
+  "repository_path": "reports/d4-ome-zarr-viewer-research-2026-09-09",
+  "changed_path_count": 119,
+  "committed_blob_count": 119,
+  "all_committed_bytes_equal_verified_bundle": true,
+  "report_verification_sha256": "67a37e63907d0a4bc3111b95d9cd8dc19e85974419d31112683d46b1d0fda002",
+  "copy_verification_sha256": "62bccb361b392079702f0284a11504c4c4831361c73d849cf483bdde0b019cd2",
+  "no_paths_outside_report": true,
+  "verification_method": "Exact diff-tree path set and mode; one cat-file batch compares every committed blob size and SHA-256 with the previously verified complete bundle. No working-tree refresh, governance gate or viewer runtime test."
+}

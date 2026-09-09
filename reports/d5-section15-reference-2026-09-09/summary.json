@@ -1,0 +1,39 @@
+{
+  "schema": "d5.section15_reference_summary.v1",
+  "counts": {
+    "baseline_lines": 989,
+    "target_lines": 9212,
+    "baseline_distinct_units": 1,
+    "target_distinct_units": 137,
+    "baseline_heading_plus_id_occurrences": 2,
+    "target_heading_plus_id_occurrences": 274,
+    "target_status": {
+      "accepted": 136,
+      "retired": 1
+    },
+    "coverage_records_including_changed_body": 138,
+    "unit_dispositions": {
+      "restatement_or_format": 121,
+      "contains_added_obligations": 16
+    },
+    "yaml_top_level_fields_reviewed": 3376,
+    "added_clause_occurrences_before_dedup": 77,
+    "occurrence_classes": {
+      "product_decision": 53,
+      "optional_capability": 21,
+      "necessary_correction": 3
+    },
+    "semantic_obligations_after_dedup": 74,
+    "obligation_classes": {
+      "product_decision": 51,
+      "optional_capability": 21,
+      "necessary_correction": 2
+    },
+    "merged_equivalence_groups": 3,
+    "unresolved_classification_candidates": 0
+  },
+  "reference_role": "evaluator_only_researcher_withheld",
+  "current_product_approval_inferred": false,
+  "runtime_implementation_verified": false,
+  "method": "METHOD.md"
+}

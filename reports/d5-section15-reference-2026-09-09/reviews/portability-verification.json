@@ -1,0 +1,17 @@
+{
+  "schema": "d5.portable_metadata_review.v1",
+  "verified_at_utc": "2026-09-09T13:47:30.857508+00:00",
+  "status": "pass",
+  "reviewed_scope": "All existing bundle JSON, JSONL and Markdown outside source/; also includes exact mechanical source excerpts.",
+  "machine_specific_locator_patterns_checked": [
+    "/mnt/",
+    "/home/",
+    "/Users/",
+    "Windows drive-letter backslash paths"
+  ],
+  "matches": [],
+  "source_freeze_metadata": "Relative captured_path values; Git commits, blob IDs, SHA256, byte and line counts retained.",
+  "historical_source_bytes": "Unchanged; this portability check is not permission to rewrite historical sources.",
+  "reviewer_locator_convention": "d5/source and d5/reviews are historical relative evaluator prefixes, mapped in README; /root agent identifiers are logical collaboration identities, not filesystem locators.",
+  "original_capture": "Original external source-freeze.json retained unchanged; portable copy is byte-identical because it contains no machine-specific source locators."
+}

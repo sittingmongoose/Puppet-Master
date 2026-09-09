@@ -1,0 +1,95 @@
+{
+  "schema": "d5.bounded_integration_review.v1",
+  "reviewer": "d5_compare_b",
+  "reviewed_at_utc": "2026-09-09T13:49:00.926541+00:00",
+  "status": "pass",
+  "scope": "Bounded final integration of landing-draft: report/registry agreement, exact deduplication, settled adjudications, source evidence and links, withholding limits. No repeat broad semantic audit.",
+  "reviewed_snapshot": {
+    "total_bundle_file_count": 31,
+    "validation_sha256": "f645da32108705ae224d510b4a66fe671e45efd1de039e64db12dff41975063b",
+    "payload_hashes_verified_against_manifest": true,
+    "manifest_excludes_itself": true,
+    "receipt_inclusion_requires_manifest_refresh": true
+  },
+  "verified_counts": {
+    "planunits": 137,
+    "body_records": 1,
+    "no_addition_units": 121,
+    "units_with_additions": 16,
+    "actual_yaml_fields": 3376,
+    "source_clause_occurrences": 77,
+    "deduplicated_obligations": 74,
+    "necessary_correction": 2,
+    "optional_capability": 21,
+    "product_decision": 51,
+    "merged_groups": 3,
+    "unresolved_candidates": 0,
+    "nonaddition_census_unit_rows": 137
+  },
+  "checks": {
+    "exact_source_freeze_hashes": true,
+    "full_unique_unit_and_body_coverage": true,
+    "all_actual_yaml_fields_inventory": true,
+    "all_cited_clause_ranges_within_named_fields": true,
+    "all_verbatim_source_quotes_in_cited_ranges": true,
+    "baseline_line_bounds_valid": true,
+    "occurrences_conserved_in_obligation_registry": true,
+    "exact_three_reviewed_dedup_groups_only": true,
+    "readme_summary_registry_counts_agree": true,
+    "017_exclusive_creation_is_one_product_decision": true,
+    "091_is_restatement_with_no_counted_candidates": true,
+    "136_ime_placement_is_product_decision_and_file_flavor_separate": true,
+    "readme_local_links_resolve": true,
+    "bounded_withholding_hash_and_ordering_receipts_consistent": true,
+    "withholding_not_overclaimed_as_os_access_control": true,
+    "unmetered_accounting_not_zero_cost": true,
+    "manifest_payload_bytes_and_hashes_match": true
+  },
+  "dedup_groups": [
+    [
+      "SMPFS-012-A01",
+      "BODY-L0156-A01"
+    ],
+    [
+      "SMPFS-130-A01",
+      "SMPFS-133-A01"
+    ],
+    [
+      "SMPFS-127-A02",
+      "SMPFS-136-A02"
+    ]
+  ],
+  "conclusions": [
+    "README conclusions and stated limits accurately summarize the reviewed classifications.",
+    "Counts distinguish clause occurrences from semantic equivalence and do not claim74 independent features or proven defects.",
+    "Non-addition census covers137 units; unchanged body context is retained in the separate body classification record, so no body census omission is inferred.",
+    "Other family similarities remain distinct: protocol test scope versus runtime support/disclosure, command-boundary exposure versus latest-command-region query, and URL priority versus added file-flavor priority.",
+    "Withholding proof is limited to declared input hashes/manifest references and recorded ordering; no OS-level access prohibition or complete access history is inferred."
+  ],
+  "corrections_required": [],
+  "checked_artifact_hashes": {
+    "README.md": "b23ace480ea396c0c03d32090af866cf3814ecc67fc708195ecd1af05f4bd378",
+    "METHOD.md": "b48c2e8644e025217d1e59c712977bf51b69d2134e3dd4d7df5ed886719b44b2",
+    "summary.json": "d42680fb127e0d7e7b998f2c28937047cf2cfd47bee59fc5880a65d8811e8ad7",
+    "validation.json": "f645da32108705ae224d510b4a66fe671e45efd1de039e64db12dff41975063b",
+    "artifact-manifest.json": "795a856976146d322c07e6cffe76147cc0c52ffef55ed098a2611322a7cb6fcb",
+    "unit-classifications.jsonl": "79ed0a937e3107b9652ac8fbaa56dbad71ca27db82b33bf47e84005829a7e51d",
+    "obligations.jsonl": "0b3c92a710ec40093c1a6914c5ea77650362eaac588705963f11fdc427e78c7b",
+    "non-addition-census.jsonl": "30ecc4f99d1bbc83f6678e4400bdf023bd18ee6c0040a1bb55e8d5590d423c53",
+    "deduplication.json": "427dc8151daa771ba512fc5cb62c14e7ad9795d4adf1428e30a33b850a9e4625",
+    "source-freeze.json": "4e92bf23d87c333257aaf3187dadd3ef51982aea4cb58cc81a895ace9014379d",
+    "reviews/withholding-verification.json": "d8ada645cb428fc28148596efb9a8f30e8975be78a4259be4fe7a76caf0ca7d3",
+    "reviews/adjudication-017.json": "bbc193ad96fd4864006fd2e5b779a5fd264dadf7c36abdb68c8db6845e2ac89e",
+    "reviews/adjudication-091.json": "49d74bdc7c015591b31c79fccc550f742059a991143cd2093f0886b0ba4aa9ca",
+    "reviews/cross-review-b-addendum.json": "1cbd5eadebbeefa70dc3d3469576b2421c291d0fbd3dbf9323aebd5de254a2d9",
+    "withholding-evidence/d4-input-manifest.json": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+    "withholding-evidence/d4-commit-receipt.json": "55be40a84ed4518606d06768122830b181479ba3ab3129addb888bf80bc47c1d",
+    "withholding-evidence/d4-protocol-and-inputs.json": "b7ad0539da244f9bc0bd5798c2684101e453a097a4572cdea0319fb8382beacf",
+    "accounting.json": "71ec9969767dd3d225d8c6ba160cad237404b268ec611b4dc58d9275923b54ce"
+  },
+  "limits": [
+    "No new product-scope research or current-owner approval inference.",
+    "No native tests, new campaign, web acquisition, repository landing, staging or commit performed.",
+    "This receipt binds the reviewed31-file snapshot. Assembler must refresh final manifest/validation after receipt inclusion or metadata-only edits; no substantive conclusions are changed by adding this receipt."
+  ]
+}

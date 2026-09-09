@@ -1,0 +1,23 @@
+{
+  "schema": "private_evaluator_freeze.v1",
+  "created_at_utc": "2026-09-09T07:13:50.422123+00:00",
+  "case_scope_review": "pass_thin_synthetic_no_control_leakage",
+  "researcher_input_paths_read": [
+    "source-fixture/product-brief.md",
+    "source-fixture/Plans/Viewer.md"
+  ],
+  "researcher_inputs": {
+    "source-fixture/product-brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "source-fixture/Plans/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+  },
+  "evaluator_files": {
+    "partial-controls.json": "e6c13991937076d5e0dc0cfb0aec900c5353a6dd56e8a8eb6a12590daebfa25d",
+    "rubric.md": "b81b7ecd9ffdbefbc2192d4a643910623d5a61c4e385aa8c3d3ae43ea52cb80b"
+  },
+  "tool_sessions_open": false,
+  "campaign_launched": false,
+  "source_citation_policy": "Primary specifications only; paraphrase, no long quotations. Source display dates do not establish semantic novelty.",
+  "status": "frozen_evaluator_prelaunch",
+  "frozen_at_utc": "2026-09-09T07:14:42.801196+00:00",
+  "source_access_note": "Primary content inspected through browser search tool; optional direct-HTML fragment extraction returned HTTP 403, so OME citations use the verified document URL plus section names instead of guessed fragment IDs."
+}

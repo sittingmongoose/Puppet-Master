@@ -1,0 +1,53 @@
+{
+  "schema": "d5.independent_cross_review.v1",
+  "reviewer": "schema_compile",
+  "reviewed_at_utc": "2026-09-09T13:39:52.016358+00:00",
+  "status": "pass_after_136_resolution",
+  "scope": [
+    "SMPFS-062\u2013123",
+    "SMPFS-001 retired bridge",
+    "SMPFS-124\u2013137",
+    "BODY-L0156"
+  ],
+  "baseline": "Entire frozen June11 document; no current Plans or unseen owner-doc authority.",
+  "method": "Independently inspected canonical text and all distinct normative negative/compatibility/stale/token/addendum fields; compared acceptance clauses and source preservation. Checked metadata inventory separately. Reviewed original reviewer evidence and challenged necessity using a compliant-alternative test.",
+  "conclusions": [
+    "062\u2013123 are contextual restatements, including091 after separate XHIGH adjudication. Conditions on reload support, browser profiles, output examples and restore retention remain material.",
+    "001 retirement/splitting and migration/index/validation packaging are not added product requirements.",
+    "Body156 seven-tab policy duplicates012 and counts once.",
+    "129 bare-parameter noncrash and130/133 supported-control-stream continuity are narrow correctness needs; named protocol support, exhaustive byte fuzzing and parser architecture are distinct choices.",
+    "136 candidate cursor following is product_decision: a functional fixed candidate panel can satisfy the baseline. Reviewer accepted this change.",
+    "127/136 share URL paste priority;136 file-flavor extension stays separate. Other duplicate hints identify families, not automatic equivalence.",
+    "Source_quote now provides verbatim source evidence beside normalized obligation text; no meaning changed by that evidence-only addition."
+  ],
+  "dedup_groups": [
+    {
+      "members": [
+        "SMPFS-012-A01",
+        "BODY-L0156-A01"
+      ],
+      "reason": "One seven-tab Orchestrator shell/owner-consumption commitment."
+    },
+    {
+      "members": [
+        "SMPFS-130-A01",
+        "SMPFS-133-A01"
+      ],
+      "reason": "One supported-terminal-control-sequence state continuity invariant across arbitrary PTY read chunks."
+    },
+    {
+      "members": [
+        "SMPFS-127-A02",
+        "SMPFS-136-A02"
+      ],
+      "reason": "One plain-text-over-URL paste preference with explicit user exception;136-A04 preserves added file-flavor breadth."
+    }
+  ],
+  "no_remaining_material_dispute": true,
+  "reviewed_files": {
+    "atomization-b.jsonl": "119925cb8b440592cb93e610dfc2320ca5f1790c115e8c939736361a5343dce9",
+    "atomization-b.md": "6fae60279ebad9b2e10e173a95bc10b870117d96a9cd1cb59cfe2b5baa11667a",
+    "addendum.jsonl": "8e6e2e70ab0f925163616e56084f6126d99a506d26bae2c28166e224f4a2a7b0",
+    "addendum.md": "a6c011f1fa4dbbc25276b0687d1f8c0c6855fce591b9109419167f71df2e5ccd"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema": "d4.protocol_and_frozen_input_receipt.v1",
+  "checked_at_utc": "2026-09-09T12:09:34.421490+00:00",
+  "case": "ome-zarr05-thin",
+  "run_name": "ome-zarr05-thin-live-20260909",
+  "workflow": "discovery_to_plan",
+  "profile": "hybrid",
+  "researcher": {
+    "adapter": "omp",
+    "model": "opencode-go/deepseek-v4-flash",
+    "effort": "max"
+  },
+  "reviewer": {
+    "adapter": "codex",
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "job_timeout_seconds": 2400,
+  "study_admission_seconds": 180,
+  "study_workers": 2,
+  "native_comparison_jobs": [
+    "J0008-compare",
+    "J0009-compare",
+    "J0010-compare",
+    "J0011-compare"
+  ],
+  "protocol_sha256": "c3686f77b0e3e086c3092dcdb5bb77f767d025fb0b5cc151c3d495deb0ed4153",
+  "workflow_source_verification": {
+    "discovery_to_plan.py": {
+      "frozen_sha256": "cb08a2bc02ef82ffdef0aa8f372aad7bb566a893e6062ed14ee237c7d6835d04",
+      "current_sha256": "cb08a2bc02ef82ffdef0aa8f372aad7bb566a893e6062ed14ee237c7d6835d04",
+      "unchanged": true
+    },
+    "child_transport.py": {
+      "frozen_sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597",
+      "current_sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597",
+      "unchanged": true
+    },
+    "research_shared_v3.py": {
+      "frozen_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+      "current_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+      "unchanged": true
+    },
+    "research_base.py": {
+      "frozen_sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a",
+      "current_sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a",
+      "unchanged": true
+    }
+  },
+  "frozen_brief_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+  "frozen_plan_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+  "input_manifest_sha256": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+  "manifest_bytes_still_match": true,
+  "navigation_sha256": "2b29808543c53e1638540900940c82a7a6e19806488db2435869bc795686da21",
+  "evaluator_controls": {
+    "partial-controls.json": "e6c13991937076d5e0dc0cfb0aec900c5353a6dd56e8a8eb6a12590daebfa25d",
+    "rubric.md": "b81b7ecd9ffdbefbc2192d4a643910623d5a61c4e385aa8c3d3ae43ea52cb80b"
+  },
+  "original_freeze_sha256": "36016ae065f7e89de534092d4dbe37146cf87f42b8b6f101501768de7bc899df",
+  "evaluator_frozen_at_utc": "2026-09-09T07:14:42.801196+00:00",
+  "campaign_launch": {
+    "started_at_utc": "2026-09-09T07:15:30.568406+00:00",
+    "command": [
+      "python3",
+      "discovery_to_plan.py",
+      "campaign",
+      "ome-zarr05-thin-live-20260909",
+      "--research-seconds",
+      "180",
+      "--workers",
+      "2"
+    ],
+    "protocol": "PROTOCOL.md",
+    "evaluator_frozen_before_launch": true,
+    "run_name": "ome-zarr05-thin-live-20260909"
+  },
+  "workflow_changes": [],
+  "scope": "One synthetic case/campaign. Broader filesystem capability existed; actual-access qualifications are separate. No D5 git reference was researched during this run.",
+  "freeze_locator_note": "source-fixture paths inside the original freeze are prelaunch evaluator locators. Their byte-exact copies are fixtures/product-brief.md and fixtures/baseline/Viewer.md in this bundle."
+}

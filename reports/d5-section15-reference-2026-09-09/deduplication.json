@@ -1,0 +1,601 @@
+{
+  "schema": "d5.explicit_semantic_deduplication.v1",
+  "rule": "Only the three reviewed equivalence groups merge occurrences; all remaining family similarities remain separate obligations. Counts depend on the documented clause partition, not feature or defect totals.",
+  "groups": [
+    {
+      "obligation_id": "D5-O001",
+      "local_ids": [
+        "SMPFS-012-A01",
+        "BODY-L0156-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "One seven-tab Orchestrator shell/owner-consumption commitment."
+    },
+    {
+      "obligation_id": "D5-O002",
+      "local_ids": [
+        "SMPFS-017-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O003",
+      "local_ids": [
+        "SMPFS-124-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O004",
+      "local_ids": [
+        "SMPFS-124-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O005",
+      "local_ids": [
+        "SMPFS-124-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O006",
+      "local_ids": [
+        "SMPFS-124-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O007",
+      "local_ids": [
+        "SMPFS-124-A05"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O008",
+      "local_ids": [
+        "SMPFS-124-A06"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O009",
+      "local_ids": [
+        "SMPFS-124-A07"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O010",
+      "local_ids": [
+        "SMPFS-124-A08"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O011",
+      "local_ids": [
+        "SMPFS-124-A09"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O012",
+      "local_ids": [
+        "SMPFS-124-A10"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O013",
+      "local_ids": [
+        "SMPFS-125-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O014",
+      "local_ids": [
+        "SMPFS-125-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O015",
+      "local_ids": [
+        "SMPFS-125-A03"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O016",
+      "local_ids": [
+        "SMPFS-125-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O017",
+      "local_ids": [
+        "SMPFS-125-A05"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O018",
+      "local_ids": [
+        "SMPFS-126-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O019",
+      "local_ids": [
+        "SMPFS-126-A02"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O020",
+      "local_ids": [
+        "SMPFS-126-A03"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O021",
+      "local_ids": [
+        "SMPFS-126-A04"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O022",
+      "local_ids": [
+        "SMPFS-126-A05"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O023",
+      "local_ids": [
+        "SMPFS-126-A06"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O024",
+      "local_ids": [
+        "SMPFS-127-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O025",
+      "local_ids": [
+        "SMPFS-127-A02",
+        "SMPFS-136-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "One plain-text-over-URL paste preference with explicit user exception;136-A04 preserves added file-flavor breadth."
+    },
+    {
+      "obligation_id": "D5-O026",
+      "local_ids": [
+        "SMPFS-127-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O027",
+      "local_ids": [
+        "SMPFS-127-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O028",
+      "local_ids": [
+        "SMPFS-127-A05"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O029",
+      "local_ids": [
+        "SMPFS-127-A06"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O030",
+      "local_ids": [
+        "SMPFS-127-A07"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O031",
+      "local_ids": [
+        "SMPFS-128-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O032",
+      "local_ids": [
+        "SMPFS-128-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O033",
+      "local_ids": [
+        "SMPFS-129-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O034",
+      "local_ids": [
+        "SMPFS-129-A02"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O035",
+      "local_ids": [
+        "SMPFS-129-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O036",
+      "local_ids": [
+        "SMPFS-129-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O037",
+      "local_ids": [
+        "SMPFS-129-A05"
+      ],
+      "classification": "necessary_correction",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O038",
+      "local_ids": [
+        "SMPFS-130-A01",
+        "SMPFS-133-A01"
+      ],
+      "classification": "necessary_correction",
+      "reason": "One supported-terminal-control-sequence state continuity invariant across arbitrary PTY read chunks."
+    },
+    {
+      "obligation_id": "D5-O039",
+      "local_ids": [
+        "SMPFS-130-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O040",
+      "local_ids": [
+        "SMPFS-130-A03"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O041",
+      "local_ids": [
+        "SMPFS-131-A01"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O042",
+      "local_ids": [
+        "SMPFS-131-A02"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O043",
+      "local_ids": [
+        "SMPFS-131-A03"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O044",
+      "local_ids": [
+        "SMPFS-131-A04"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O045",
+      "local_ids": [
+        "SMPFS-131-A05"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O046",
+      "local_ids": [
+        "SMPFS-131-A06"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O047",
+      "local_ids": [
+        "SMPFS-132-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O048",
+      "local_ids": [
+        "SMPFS-132-A02"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O049",
+      "local_ids": [
+        "SMPFS-132-A03"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O050",
+      "local_ids": [
+        "SMPFS-132-A04"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O051",
+      "local_ids": [
+        "SMPFS-132-A05"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O052",
+      "local_ids": [
+        "SMPFS-132-A06"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O053",
+      "local_ids": [
+        "SMPFS-132-A07"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O054",
+      "local_ids": [
+        "SMPFS-133-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O055",
+      "local_ids": [
+        "SMPFS-134-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O056",
+      "local_ids": [
+        "SMPFS-134-A02"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O057",
+      "local_ids": [
+        "SMPFS-134-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O058",
+      "local_ids": [
+        "SMPFS-134-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O059",
+      "local_ids": [
+        "SMPFS-134-A05"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O060",
+      "local_ids": [
+        "SMPFS-134-A06"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O061",
+      "local_ids": [
+        "SMPFS-134-A07"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O062",
+      "local_ids": [
+        "SMPFS-134-A08"
+      ],
+      "classification": "optional_capability",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O063",
+      "local_ids": [
+        "SMPFS-134-A09"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O064",
+      "local_ids": [
+        "SMPFS-135-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O065",
+      "local_ids": [
+        "SMPFS-135-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O066",
+      "local_ids": [
+        "SMPFS-135-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O067",
+      "local_ids": [
+        "SMPFS-135-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O068",
+      "local_ids": [
+        "SMPFS-135-A05"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O069",
+      "local_ids": [
+        "SMPFS-135-A06"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O070",
+      "local_ids": [
+        "SMPFS-136-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O071",
+      "local_ids": [
+        "SMPFS-136-A03"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O072",
+      "local_ids": [
+        "SMPFS-136-A04"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O073",
+      "local_ids": [
+        "SMPFS-137-A01"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    },
+    {
+      "obligation_id": "D5-O074",
+      "local_ids": [
+        "SMPFS-137-A02"
+      ],
+      "classification": "product_decision",
+      "reason": "Single source occurrence; family hints alone do not establish semantic equivalence."
+    }
+  ]
+}

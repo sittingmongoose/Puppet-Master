@@ -1,0 +1,36 @@
+{
+  "schema": "d5.researcher_withholding_verification.v1",
+  "verified_at_utc": "2026-09-09T13:41:55.048733+00:00",
+  "status": "pass_bounded_input_manifest_verification",
+  "predecessor_commit": "423549b29e65fc7bb00268440c5a0a7554a3a3b0",
+  "d4_committed_verified_at_utc": "2026-09-09T13:12:42.655610+00:00",
+  "d5_source_capture_at_utc": "2026-09-09T13:14:18.191151+00:00",
+  "d4_reported_before_capture": true,
+  "reporting_evidence": "Root boundary declaration in source-freeze.json; committed-byte verification independently precedes capture.",
+  "input_manifest_sha256": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+  "input_manifest_bytes_match_committed_d4_receipt": true,
+  "frozen_plan_files": [
+    {
+      "path": "Plans/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "matches_manifest": true
+    }
+  ],
+  "scanned_frozen_input_files": {
+    "plans/manifest.json": "e408e58eb2977162c1f6149a8f335ef1bf4f59163283e6f3304087326d99d843",
+    "brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "navigation.md": "2b29808543c53e1638540900940c82a7a6e19806488db2435869bc795686da21",
+    "plans/Plans/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+  },
+  "d5_source_path_and_hash_reference_hits": {
+    "plans/manifest.json": [],
+    "brief.md": [],
+    "navigation.md": [],
+    "plans/Plans/Viewer.md": []
+  },
+  "scope_limit": "Verifies frozen declared researcher inputs, their bytes and recorded ordering. This is not an OS-level proof of inaccessible filesystem paths or a complete historical access trace. Existing D4 isolation qualifications remain in force.",
+  "new_research_jobs": 0,
+  "researcher_input_mutations": false,
+  "new_research_input_created": false,
+  "runtime_recursive_scan_performed": false
+}

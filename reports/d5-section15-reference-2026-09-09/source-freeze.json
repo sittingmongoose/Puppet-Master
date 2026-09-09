@@ -1,0 +1,34 @@
+{
+  "schema": "d5.section15_reference_source_freeze.v1",
+  "captured_at_utc": "2026-09-09T13:14:18.191151+00:00",
+  "role": "evaluator_only_researcher_withheld",
+  "predecessor_deliverable_commit": "423549b29e65fc7bb00268440c5a0a7554a3a3b0",
+  "d4_completed_committed_verified_reported_before_capture": true,
+  "no_researcher_input_or_workflow_mutation": true,
+  "sources": [
+    {
+      "name": "june11",
+      "commit": "f46b0de9b241ec5eeb7a8ee8855c5f90e6b47f17",
+      "repository_source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "git_blob_id": "839ed2b0989f74d668ad4aed0ef2c12733ed77b9",
+      "sha256": "8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf",
+      "bytes": 117646,
+      "line_count": 989,
+      "requested_line_count": 989,
+      "requested_planunit_count": 2,
+      "captured_path": "source/june11-Section15.md"
+    },
+    {
+      "name": "july04",
+      "commit": "75cc6d64a16cd9678a7e6e7fe910257055ec3316",
+      "repository_source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "git_blob_id": "2b352089a705fe469d4ebf9ae5ba50d5418ce22a",
+      "sha256": "e09970932e63fb5b7698366d909c24ed399a794e0c7ba5e23368b01a02774e8a",
+      "bytes": 494802,
+      "line_count": 9212,
+      "requested_line_count": 9212,
+      "requested_planunit_count": 274,
+      "captured_path": "source/july04-Section15.md"
+    }
+  ]
+}

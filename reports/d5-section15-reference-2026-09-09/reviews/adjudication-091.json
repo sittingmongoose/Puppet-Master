@@ -1,0 +1,882 @@
+{
+  "schema": "d5.bounded_historical_adjudication.v1",
+  "adjudication_id": "D5-ADJ-SMPFS-091",
+  "reviewer": "/root/d5_action_adjudication",
+  "scope": {
+    "primary_unit": "SMPFS-091",
+    "unit_range": {
+      "path": "d5/source/july04-Section15.md",
+      "start_line": 5996,
+      "end_line": 6068
+    },
+    "purpose": "Resolve whether named-action taxonomy compression creates new historical product obligations.",
+    "source_role": "evaluator_only_researcher_withheld",
+    "sources_opened_after_d4_completion": true,
+    "new_research_or_web_acquisition": false,
+    "current_plans_not_used_as_comparison_evidence": true,
+    "secondary_units": "SMPFS-080, SMPFS-087 and SMPFS-073 were not reopened for adjudication because reviewer B confirmed they are contextual restatements, not genuinely disputed cases."
+  },
+  "source_identity": {
+    "freeze_path": "d5/source-freeze.json",
+    "baseline_commit": "f46b0de9b241ec5eeb7a8ee8855c5f90e6b47f17",
+    "comparison_commit": "75cc6d64a16cd9678a7e6e7fe910257055ec3316",
+    "baseline_sha256": "8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf",
+    "comparison_sha256": "e09970932e63fb5b7698366d909c24ed399a794e0c7ba5e23368b01a02774e8a",
+    "both_hashes_verified_against_freeze": true,
+    "baseline_lines": 989,
+    "comparison_lines": 9212,
+    "distinct_planunit_ids": {
+      "baseline": 1,
+      "comparison": 137
+    },
+    "heading_plus_yaml_occurrence_count_is_not_distinct_ids": {
+      "baseline": 2,
+      "comparison": 274
+    },
+    "identical_bounded_original_body_ranges": [
+      {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 85,
+        "end_line": 116
+      },
+      {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 661,
+        "end_line": 708
+      }
+    ],
+    "identity_check": "The two listed original-body spans are identical at the same line ranges in July."
+  },
+  "ruling": {
+    "classification": "restatement_or_format",
+    "confidence": "medium_high",
+    "confidence_reason": "Retained explicit qualifications, source-preserving standardization language and unit preservation acceptance support a coherent whole-document reading. The unqualified canonical_text is still capable of a stronger detached reading.",
+    "added_obligation_count": 0,
+    "necessary_correction_count": 0,
+    "optional_capability_count": 0,
+    "product_decision_count": 0,
+    "count_as_reviewed_restatement_unit": 1,
+    "mapping_rows_are_not_added_atoms": true,
+    "decision": "SMPFS-091 records the named-action taxonomy and preserves the June distinction between existing named actions and candidate/backlog families. Do not count its twelve category labels as twelve added implementation obligations."
+  },
+  "plausible_readings": [
+    {
+      "reading": "mandatory_promotion",
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 5999,
+          "end_line": 6003
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 6062,
+          "end_line": 6063
+        }
+      ],
+      "case": "An accepted requirement whose canonical_text says the control plane is covering all twelve families can be read, in isolation, as an unconditional capability-coverage promise. The sentence omits backlog, Borrow-worthy and may borrow, and the compatibility-only/stale fields are empty. Canonical text can itself impose a requirement even without behavior-specific acceptance.",
+      "limitation": "No source in this bounded unit explicitly withdraws the retained qualifiers or declares the original body superseded. Empty compatibility fields do not override qualifications present in the canonical document. Several categories also overlap existing baseline obligations, so twelve labels would not prove twelve wholly new obligations."
+    },
+    {
+      "reading": "source_preserving_taxonomy",
+      "evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 804,
+          "end_line": 804
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 5996,
+          "end_line": 5996
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 6015,
+          "end_line": 6018
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 6022,
+          "end_line": 6031
+        }
+      ],
+      "case": "The preserved body still calls the action families backlog/Borrow-worthy and the taxonomy a reference shape PM may borrow. The conversion calls itself source-preserving and the unit requires preservation of source constraints, compatibility, owner boundaries and lineage. Named Browser Action Taxonomy, browser_action_taxonomy_drift and named_browser_action_taxonomy describe taxonomy scope rather than a newly specified behavior catalog. Existing canonical named-action examples remain binding within their existing scope.",
+      "adopted": true
+    }
+  ],
+  "field_adjudication": [
+    {
+      "field": "unit_type/status/canonical_text",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 5999,
+        "end_line": 6003
+      },
+      "effect": "Normative packaging and an ambiguous compressed assertion; not ignored. Read with the retained source qualifications rather than treating omitted qualifications as silently rescinded."
+    },
+    {
+      "field": "acceptance_criteria",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6015,
+        "end_line": 6018
+      },
+      "effect": "Addressability and preservation acceptance, plus a no-executable-work constraint. No new action-specific acceptance. Absence of behavior-specific acceptance alone does not neutralize normative prose; its affirmative preservation requirement is supporting evidence."
+    },
+    {
+      "field": "negative_constraints",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6052,
+        "end_line": 6059
+      },
+      "effect": "Preserves original boundary rules for web/read separation, prompt artifacts, reference Playwright material, opt-in test/debug, named actions, and effective-capability disclosure. It does not say every listed action category must ship, and it does not cancel research-session exclusions preserved elsewhere."
+    },
+    {
+      "field": "compatibility_only_notes/stale_retired_dispositions",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6062,
+        "end_line": 6063
+      },
+      "effect": "Both are empty. They do not contain the backlog qualifier, but emptiness supplies no explicit supersession of the qualifications still present in the document body."
+    },
+    {
+      "field": "source_lineage/preserved_contractrefs/owner_hints",
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 6030,
+          "end_line": 6031
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 6060,
+          "end_line": 6067
+        }
+      ],
+      "effect": "Points to migration span S0047 and existing Contracts/Tools boundaries. The migration map and linked owner documents were not opened; links supply lineage/ownership context, not independent capability requirements or present approval."
+    },
+    {
+      "field": "preserved_exact_tokens",
+      "evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6032,
+        "end_line": 6051
+      },
+      "effect": "Repeated action names are coverage/identity metadata, not extra obligations."
+    },
+    {
+      "field": "original_body_and_standardization",
+      "evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 661,
+          "end_line": 708
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 804,
+          "end_line": 804
+        }
+      ],
+      "effect": "The retained source sections remain the document body. Source-preserving standardization preserves owner boundaries and behavior described by those sections; no local provision says the PlanUnit summary replaces their qualifying scope."
+    }
+  ],
+  "subject_mappings": [
+    {
+      "mapping_id": "SMPFS-091-M01",
+      "subject_key": "tab_lifecycle",
+      "subject": "Tab lifecycle",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 699,
+          "end_line": 699
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 699,
+          "end_line": 699
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "The borrow-worthy list already names list/create/select/close; line 700 also calls these examples of the canonical named-action surface, and line 699 already constrains tab-cap behavior.",
+      "adjudicated_semantic_disposition": "No new tab action or tab-cap obligation; neither full tab lifecycle nor its named taxonomy is wholly novel.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M02",
+      "subject_key": "richer_interactions",
+      "subject": "Richer interactions",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 88,
+          "end_line": 88
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 88,
+          "end_line": 88
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "baseline_scope": "Line 679 names hover, drag, select option, fill form, press key, navigate back and resize. Lines 88\u201390 already authorize several corresponding research-session actions, while line 92 excludes hover/drag there.",
+      "adjudicated_semantic_disposition": "The umbrella label adds no separately specified gesture, guarantee, session admission or API; retain distinctions between existing actions and backlog candidates.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M03",
+      "subject_key": "wait_primitives",
+      "subject": "Wait primitives",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 679 lists time/text/text-disappearance waits; line 700 already uses these as canonical named-action examples. Research-session wait_for already appears at line 89.",
+      "adjudicated_semantic_disposition": "No novel wait type or guarantee is stated.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M04",
+      "subject_key": "dialogs",
+      "subject": "Dialogs",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "baseline_scope": "Dialog handling is an explicitly borrow-worthy action family at line 679 and excluded from research_session at line 92.",
+      "adjudicated_semantic_disposition": "Retain the candidate family; do not infer implementation or admission to research_session.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M05",
+      "subject_key": "file_uploads",
+      "subject": "File uploads",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "baseline_scope": "File upload handling is an explicitly borrow-worthy family at line 679 and excluded from research_session at line 92.",
+      "adjudicated_semantic_disposition": "Retain the candidate family; no upload workflow, authority or support guarantee is newly specified.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M06",
+      "subject_key": "storage_controls",
+      "subject": "Storage controls",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 684,
+          "end_line": 684
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 696,
+          "end_line": 696
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 697,
+          "end_line": 697
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 698,
+          "end_line": 698
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 684,
+          "end_line": 684
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 696,
+          "end_line": 696
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 697,
+          "end_line": 697
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 698,
+          "end_line": 698
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 679 lists cookie/localStorage/sessionStorage inspection/control and storage-state import/export; line 700 says storage controls may be borrowed. Lines 684 and 697\u2013698 already require storage/profile isolation and persistence, which do not themselves guarantee every inspection/control action. Line 696 preserves option-model references as inputs.",
+      "adjudicated_semantic_disposition": "Preserve optional control-taxonomy breadth and mandatory existing profile/state semantics separately; no new import/export or mutation guarantee.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M07",
+      "subject_key": "network_routing_mocking",
+      "subject": "Network routing/mocking",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 88,
+          "end_line": 88
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 88,
+          "end_line": 88
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 679 names network state and request routing/mocking; line 700 treats network controls as a possible borrowed taxonomy. The existing network action at line 88 is not equivalent to network simulation, which line 92 excludes from research_session.",
+      "adjudicated_semantic_disposition": "No new routing/mocking capability or session-class expansion is established.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M08",
+      "subject_key": "trace_video_capture",
+      "subject": "Trace/video capture",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 683,
+          "end_line": 683
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 683,
+          "end_line": 683
+        }
+      ],
+      "baseline_scope": "Line 679 names trace/video capture for agent runs as borrow-worthy. Line 683 already routes browser traces through the shared artifact pipeline, so all trace-related behavior is not new; line 92 excludes trace/video from research_session.",
+      "adjudicated_semantic_disposition": "Retain the candidate capture family and existing artifact constraints; do not count an already required trace pipeline as added or infer new video guarantees.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M09",
+      "subject_key": "page_pdf_export",
+      "subject": "Page/PDF export",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 96,
+          "end_line": 96
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 96,
+          "end_line": 96
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 679 names page/PDF export and line 700 says PDF-export taxonomy may be borrowed. Line 96 already governs PDF capture-format permission for webfetch, without necessarily promising general page-export actions.",
+      "adjudicated_semantic_disposition": "No new general page/PDF export action or unconditional support breadth is specified.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M10",
+      "subject_key": "test_verification",
+      "subject": "Test verification",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 681,
+          "end_line": 681
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 681,
+          "end_line": 681
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 679 names test-oriented verification and line 700 names testing/verification as possible borrowed taxonomy. Line 681 preserves an opt-in advanced test/debug possibility; line 92 excludes verify actions from research_session.",
+      "adjudicated_semantic_disposition": "No new verifier behavior, default tier or all-session availability is established.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M11",
+      "subject_key": "coordinate_fallback",
+      "subject": "Coordinate fallback",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 700,
+          "end_line": 700
+        }
+      ],
+      "baseline_scope": "Line 700 explicitly includes coordinate fallback actions only within the taxonomy PM may borrow as a reference shape.",
+      "adjudicated_semantic_disposition": "The July label preserves that candidate category; it specifies no new fallback trigger, behavior or guarantee.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    },
+    {
+      "mapping_id": "SMPFS-091-M12",
+      "subject_key": "locator_generation",
+      "subject": "Locator generation",
+      "july_canonical_evidence": {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 6003,
+        "end_line": 6003
+      },
+      "baseline_evidence": [
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/june11-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "preserved_july_body_evidence": [
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "path": "d5/source/july04-Section15.md",
+          "start_line": 679,
+          "end_line": 679
+        }
+      ],
+      "baseline_scope": "Line 679 includes locator generation in the borrow-worthy list; line 92 excludes locator-generation/testing tooling from research_session.",
+      "adjudicated_semantic_disposition": "Retain the candidate category; no generated-locator feature or research-session expansion is established.",
+      "classification": "restatement_or_format",
+      "count_as_added_obligation": false,
+      "duplicate_hint": "One taxonomy subject mapping only. All mentions in June/July 679/700 and repeated exact-token/negative fields refer to this same subject; do not count them again."
+    }
+  ],
+  "exact_semantic_added_obligations": [],
+  "conditional_alternative_warning": {
+    "not_counted": true,
+    "text": "If covering were intentionally meant to mandate all listed capabilities, separable missing action behaviors would require optional_capability analysis and independently chosen guarantees/default tiers/session support breadth would require product_decision analysis. None becomes necessary_correction merely because it is useful, hardened, prioritized, or named in a backlog. A twelve-label count would still be unsound: existing tab/wait/action/trace/PDF contracts overlap some labels, and composite labels could contain multiple distinct behaviors. No such promotion is established by the adopted contextual reading."
+  },
+  "constraints_and_uncertainty": {
+    "research_session_exclusions_preserved": [
+      {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 92,
+        "end_line": 92
+      },
+      {
+        "path": "d5/source/june11-Section15.md",
+        "start_line": 116,
+        "end_line": 116
+      },
+      {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 92,
+        "end_line": 92
+      },
+      {
+        "path": "d5/source/july04-Section15.md",
+        "start_line": 116,
+        "end_line": 116
+      }
+    ],
+    "no_inferred_historical_or_present_user_approval": true,
+    "irreducible_uncertainty": "Author intent behind the missing qualifiers in July canonical_text cannot be proved from these snapshots. A consumer reading only that field could interpret capability promotion. Record this as standalone wording ambiguity, not an established feature addition and not a license to implement optional families.",
+    "audit_completion_effect": "No unresolved added-obligation atom is carried into the count for SMPFS-091. The ambiguity remains disclosed in this adjudication."
+  },
+  "independent_review_coordination": {
+    "reviewer_b": "/root/d5_compare_b",
+    "b_initial_view": "Twelve contingent optional-capability candidates, not settled additions; both readings plausible. Secondary 080/087/073 not genuinely disputed.",
+    "material_counterevidence_requested": true,
+    "counterevidence_response": "Reviewer B reported no material counterevidence beyond the recorded standalone covering/accepted ambiguity and accepted the zero-addition contextual-restatement ruling."
+  },
+  "scope_compliance": {
+    "owned_artifacts_only": [
+      "d5/reviews/adjudication-091.json",
+      "d5/reviews/adjudication-091.md"
+    ],
+    "no_plans_ledger_governance_implementation_changes": true,
+    "no_staging_or_commit": true,
+    "no_researcher_input_changes": true
+  },
+  "review_status": "finalized",
+  "verification": {
+    "valid_json": true,
+    "unique_subject_mapping_count": 12,
+    "all_evidence_ranges_in_bounds": true,
+    "source_hashes_match_freeze": true,
+    "settled_added_obligations": 0
+  }
+}

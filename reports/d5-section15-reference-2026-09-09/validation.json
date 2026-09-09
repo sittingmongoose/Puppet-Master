@@ -1,0 +1,62 @@
+{
+  "schema": "d5.reference_bundle_validation.v1",
+  "verified_at_utc": "2026-09-09T13:49:44.908580+00:00",
+  "status": "pass",
+  "checks": {
+    "frozen_sources": {
+      "june11": true,
+      "july04": true
+    },
+    "all_137_units_once": true,
+    "body_change_reviewed_once": true,
+    "all_actual_top_level_fields_accounted": true,
+    "all_source_quotes_within_cited_inclusive_ranges": true,
+    "all_baseline_ranges_valid": true,
+    "all_clause_ids_unique": true,
+    "all_classifications_resolved": true,
+    "three_explicit_dedup_groups_only": true,
+    "source_occurrence_count_matches_registry": true,
+    "readable_and_machine_totals_share_verified_registry": true,
+    "no_blanket_acceptance_neutrality": true,
+    "withholding_verification_passed": true,
+    "readme_local_links_resolve": true,
+    "independent_final_integration_review_present": true,
+    "integration_review_followup": "Only the predeclared gate wording, validation mutation field, portability receipt, integration receipt and added evidence links changed after the reviewed candidate; semantic registries remain unchanged.",
+    "all_json_jsonl_parse": true
+  },
+  "counts": {
+    "baseline_lines": 989,
+    "target_lines": 9212,
+    "baseline_distinct_units": 1,
+    "target_distinct_units": 137,
+    "baseline_heading_plus_id_occurrences": 2,
+    "target_heading_plus_id_occurrences": 274,
+    "target_status": {
+      "accepted": 136,
+      "retired": 1
+    },
+    "coverage_records_including_changed_body": 138,
+    "unit_dispositions": {
+      "restatement_or_format": 121,
+      "contains_added_obligations": 16
+    },
+    "yaml_top_level_fields_reviewed": 3376,
+    "added_clause_occurrences_before_dedup": 77,
+    "occurrence_classes": {
+      "product_decision": 53,
+      "optional_capability": 21,
+      "necessary_correction": 3
+    },
+    "semantic_obligations_after_dedup": 74,
+    "obligation_classes": {
+      "product_decision": 51,
+      "optional_capability": 21,
+      "necessary_correction": 2
+    },
+    "merged_equivalence_groups": 3,
+    "unresolved_classification_candidates": 0
+  },
+  "validation_scope": "Frozen bytes, complete coverage, exact quoted spans, JSON registry integrity, explicit deduplication, report agreement and local report links. Semantic judgments independently cross-reviewed; no runtime, current Plans or governance gates asserted.",
+  "repository_mutations_performed_during_validation": false,
+  "manifest_note": "artifact-manifest.json lists every bundle payload file except itself; validation is included in payload hashes."
+}
