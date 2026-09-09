@@ -1,0 +1,73 @@
+{
+  "batch_id": "assistant-demo-b10-revert",
+  "source_matrix": "pm-assistant-demo-matrix.csv",
+  "source_matrix_sha256": "7948e105c5468dbcdf902d4aa3246791cf17ba6877acb3835c162a601510643e",
+  "source_rows": [
+    {
+      "coverage_id": "v2:FEATURE-009",
+      "feature_id": "revert",
+      "feature_name": "Revert agent edit",
+      "source_category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+      "source_statement": "Revert Last Agent Edit dispatches the existing whole-turn cmd.chat.revert and is distinct from Rewind.",
+      "source_record_sha256": "1e0f4ba401b3c04a087db9fb32d1c3ada3b46c9423670ca864359289cb244a11",
+      "owner_hint": "Plans/assistant-chat-design.md",
+      "scenario_a_required": "Preview and apply an eligible whole-turn revert",
+      "scenario_b_required": "Refuse a conflicting or ineligible revert",
+      "candidate_gallery_ids": "[\"gallery-031\"]",
+      "executed_subcheck_ids": "[]",
+      "coverage_status": "OUTCOME_GAP",
+      "two_meaningful_demos_verified": "False",
+      "additional_native_proof": "False",
+      "supersession": "retained; no semantic closure inferred from this census",
+      "unmet_acceptance": "All source clauses must be checked in two meaningful user-visible workflows.",
+      "evidence_limit": "Gallery launch is not outcome proof. API/registered-handler checks are separate concept subchecks; neither proves native persistence, authority, or full motion."
+    }
+  ],
+  "html_sha256": "1a92a6740719f85a03981147b5a73974875b276926447184dc77b8b748127512",
+  "scenario_ids": [
+    "B10-REVERT-WHOLE",
+    "B10-REVERT-CONFLICT"
+  ],
+  "coverage_status": "BOUNDED_CONCEPT_WORKFLOWS_VERIFIED",
+  "two_meaningful_demos_verified": true,
+  "production_command_dispatch_verified": false,
+  "native_filesystem_verified": false,
+  "global_completion_claim": false,
+  "evidence": {
+    "functional": [
+      "revert-tests/RESULTS.json",
+      "revert-supplemental/RESULTS.json"
+    ],
+    "recordings": [
+      "recordings/whole-result.json",
+      "recordings/conflict-result.json"
+    ],
+    "visual_review": "recordings/FINAL_REVIEW.json"
+  },
+  "next_checkpoint": {
+    "id": "assistant-demo-b11-eli5",
+    "status": "NOT_STARTED",
+    "source_rows": [
+      "v2:FEATURE-005",
+      "v2:FEATURE-006"
+    ],
+    "scope": [
+      "Change a per-thread explanation preference independently of the application/project default.",
+      "Reset to the default without changing code, Plans, artifacts, evidence or identifiers."
+    ],
+    "constraints": [
+      "Assistant-only concept work; do not redesign Settings or alter canonical Plans.",
+      "Two meaningful user-visible workflows; separately verify scope, inheritance and no work-product mutation.",
+      "Preserve Batches1–10 and protected animation/layout sources."
+    ]
+  },
+  "remaining": [
+    "Full551-row/67-feature-group multiple-demo coverage and complete all-feature motion acceptance.",
+    "General complex panel/replay performance; this bounded run is not an earlier-batch speed benchmark.",
+    "Arbitrary intermediate-scroll Activity-pill occlusion.",
+    "Native FileSafe, real disk transactionality, providers, binary/symlink/mode/rename behavior, persistent reload and crash recovery.",
+    "Full earlier Debug native targets/DAP and automatic-memory asynchronous completion hooks.",
+    "Direct standalone file/HTTP navigation could not be validated in this policy-restricted browser; both requests were blocked before application load.",
+    "Canonical Plans, Settings/onboarding and repository governance acceptance are not evaluated by this package."
+  ]
+}

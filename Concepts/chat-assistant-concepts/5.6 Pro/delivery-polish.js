@@ -15,7 +15,7 @@
     var a=el.dataset.action||'',sub=el.dataset.submenu||'';
     if(a.indexOf('sched-')===0)return 'schedule';
     if(a==='af-memory-open'||a==='af-teach-open')return 'memory';
-    if(a.indexOf('collab-')===0||el.matches('label'))return 'work';
+    if(a==='af-revert-preview'||a.indexOf('collab-')===0||el.matches('label'))return 'work';
     if(a==='af-settings-open'||sub==='thought-menu')return 'preferences';
     return 'assist';
   }
@@ -36,7 +36,8 @@
   }
   var galleryRows=[
     ['Quota wait strip','cs-quota-demo'],['Quota reset-time source','cs-quota-source'],
-    ['ELI5 · two explanations','af-eli5-demo'],['Revert · eligible / ineligible / conflict','af-revert-seed'],
+    ['ELI5 · two explanations','af-eli5-demo'],
+    /* B10 replaces the scripted Revert seed with two exact-manifest workflows. */
     ['Title · delayed result race','af-title-race-demo'],
     /* B09 replaces the old scripted Debug shortcuts with two checked workflows. */
     ['Capture · browser fixture','bc-open'],

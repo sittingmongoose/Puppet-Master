@@ -1,3 +1,5 @@
+/* B10: Revert entry projections delegate to revert-protocol.js. Its private
+ * manifests and command adapter supersede the legacy scripted handlers below. */
 /* assistant-features.js — feature module.  OWNER: Assistant redesign wave (2026-09-03) —
  * assistant-features agent.  Packet 01_IMPLEMENTATION_SPEC §2.1 (thread identity and
  * title), §2.4 (spellcheck — VERIFIED here, owned by composer-state.js), §16 (Teach,
@@ -467,6 +469,7 @@
       return '<button class="soft-button" data-action="af-memory-open">'+icon('eye',12)+' View taught memory</button>';
     }
     if(m.type==='af-file-mutation'){
+      if(window.PM56_REVERT) return window.PM56_REVERT.actions(ctx,m.turnMessageId);
       var rec=F.revert.manifests[m.turnMessageId];
       if(!rec) return '';
       return rec.eligible
@@ -763,6 +766,7 @@
   }
 
   function revertWandRow(ctx){
+    if(window.PM56_REVERT) return window.PM56_REVERT.wand(ctx);
     var icon=ctx.icon;
     return '<button class="menu-item af-wand-row" data-action="af-revert-seed">'+
       '<span class="menu-icon">'+icon('changes',13)+'</span>'+
@@ -1361,6 +1365,7 @@
   if(window.PM56_MSG_OVERFLOW && window.PM56_MSG_OVERFLOW.register){
     window.PM56_MSG_OVERFLOW.register(function(ctx, m){
       if(m.role!=='assistant') return null;
+      if(window.PM56_REVERT) return window.PM56_REVERT.overflow(ctx,m);
       var rec=F.revert.manifests[m.id]; if(!rec) return null;
       return [{
         id:'af-revert', label:'Revert Last Agent Edit',

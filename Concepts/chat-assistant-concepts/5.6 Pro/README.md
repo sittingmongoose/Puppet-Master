@@ -1,3 +1,9 @@
+# Current delivery — Batch 10: Revert Last Agent Edit
+
+Read `BATCH_10_README.md`, `BATCH_10_CHECKPOINT.json`, and `BATCH_10_COVERAGE_DELTA.json`. Open **Demo Studio → Guided Revert workflows**. This cumulative Assistant-only package preserves Batches 1–9, the layout rollback, and protected working animations. Functional acceptance is bounded; general motion and native-runtime acceptance remain open.
+
+## Earlier delivery notes (historical)
+
 > **Current continuation: Batch 8 — automatic memory and scoped polish repairs.** Read `BATCH_08_README.md`, `BATCH_08_CHECKPOINT.json`, and `BATCH_08_COVERAGE_DELTA.json`. Batches1–7 and the selective video-layout rollback are preserved. Older statements below are historical.
 
 > **Current continuation: Batch 7 — Teach.** Read `BATCH_07_README.md`, `BATCH_07_CHECKPOINT.json` and `BATCH_07_COVERAGE_DELTA.json`. Batches 1–6 and the selective video-layout rollback are preserved. Earlier notes below are historical, not fresh acceptance claims.
