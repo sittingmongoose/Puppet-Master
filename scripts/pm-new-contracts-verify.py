@@ -22,6 +22,10 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts"))
+from pm_full_thread_semantics import full_thread_semantic_failures
+from pm_restore_semantics import restore_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -977,6 +981,17 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
+        return restore_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/full_thread_runtime_contracts.schema.json":
+        if definition_name == "<root>" and isinstance(value, dict):
+            definition_name = {
+                "command_outcome": "CommandOutcomeRecord",
+                "observable_work": "ObservableWorkRecord",
+                "full_thread_projection": "FullThreadProjectionRecord",
+                "continuity": "ContinuityRecord",
+            }.get(value.get("record_kind"), definition_name)
+        return full_thread_semantic_failures(definition_name, value)
     if schema_rel in SERVER_REMOTE_OWNER_CHECKS:
         return server_remote_semantic_failures(definition_name, value)
     if schema_rel == EGOLITE_SCHEMA_REL:

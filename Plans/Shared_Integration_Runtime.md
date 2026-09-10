@@ -824,7 +824,13 @@ Every admitted operation preserves three independently changing axes. Consumers 
 
 1. `GovernorDecisionRecord.decision` is exactly `admitted | queued | admitted_degraded | permission_blocked | resource_blocked | cancelled`. It records the requested and effective budgets, physical-parent budget identity, policy generation, host observation, reason, lease refs, and reevaluation trigger. Host-local enforcement of a Home-Server policy is not a second governor.
 2. `CommandOutcomeRecord.outcome` is exactly `accepted | acknowledged | executing | succeeded | failed | cancelled | rejected | terminal_unknown`. Acceptance or same-frame acknowledgement proves only that the command entered its durable command lineage; neither value proves that the work started or completed.
-3. `ObservableWorkRecord.work_state` is exactly `accepted | queued | starting | running | waiting | retrying | reconnecting | backgrounded | degraded | stalled | committing | verifying | testing-route | migrating-route | rolling-back | completed | failed | cancelled | recovery-required`. A waiting row carries one typed wait reason and next reevaluation condition. Completion remains owner-receipt-backed; command success alone cannot fabricate it.
+3. `ObservableWorkRecord.work_state` is exactly `accepted | queued | starting | running | waiting | retrying | reconnecting | backgrounded | degraded | stalled | committing | verifying | testing-route | migrating-route | rolling-back | completed | failed | cancelled | recovery-required`. A queued or waiting row carries one typed wait reason and next reevaluation condition. Completion remains owner-receipt-backed; command success alone cannot fabricate it.
+
+Every successor work record includes a bounded human `title`, exact owner `subject_refs`, `blocking_scope = none | object | project | application`, `last_activity_at`, nullable `heartbeat_at`, an `activity_evidence_ref`, nullable `parent_work_id`, and bounded unique `child_work_ids`. Parent/child edges must resolve to the same operation's authorized work graph; self edges, parent-as-child, and indirect cycles fail closed. Activity timestamps cannot lie after the observation timestamp. The bounded value oracle checks direct cycles and timestamp order; authoritative graph resolution and indirect-cycle detection remain runtime obligations, not fixture proof.
+
+`progress_source = measured | provider_reported | derived | unknown` is independent of `progress_kind` and has a source reference for determinate progress. Determinate progress requires a known source, a positive denominator, and `0 <= completed_units <= total_units`. `none` or `indeterminate` carries no numerical numerator/denominator and must not display a made-up percentage. Work `completed`/`cancelled` requires an owner result receipt; `failed`/`recovery-required` requires an error/recovery evidence reference. Completed, failed, and cancelled work cannot offer Cancel or Background as live actions.
+
+Command outcomes require a non-null command-instance binding. `acknowledged`, `executing`, and `succeeded` require the acknowledgement receipt and frame identity/offset; a present acknowledgement has zero offset if and only if its frame equals the dispatch frame, and `same_frame_acknowledged` agrees with that comparison. Command `succeeded`/`cancelled` requires a terminal result receipt; `failed`/`rejected`/`terminal_unknown` requires error/reconciliation evidence. An acknowledgement without a terminal receipt is never success. References must resolve to the same command, operation, target, and generation through the owning result contract; schema shape alone does not prove resolution.
 
 The `testing-route` and `migrating-route` values describe active routed work, not successful testing or migration. `degraded` and `stalled` remain nonterminal until an owner receipt moves them to a terminal state. `backgrounded` changes presentation priority only; it does not cancel, pause, orphan, or weaken durable work.
 
@@ -838,13 +844,17 @@ Chats, threads, named Plans, Goals, WorkNodes, Browser tasks, provider attempts,
 
 The shared physical-parent budget tree prevents native hosts, WSL environments, containers, and Kubernetes workloads from each claiming the full parent CPU, memory, process, network, GPU/media, or storage budget. Admission applies Project-first then named-Plan fairness, weighted aging, temporary interaction boost, anti-starvation, completion-aware capacity, and provider/account/model/reset/cost limits. Required specialists and tests run in admitted waves; resource pressure may queue a wave but never silently remove it.
 
-Resource families include CPU, memory, process, watcher, descriptor, queue, log, artifact, network, port, storage, index, browser, capture, provider, LSP, DAP, Eval, MCP, test host, device, container, worktree, and package-manager-root pressure. These are mapping keys into the one governor, not new resource owners. One seglog writer, one worktree writer per fenced scope, one Browser page mutation controller per page generation, one package-manager-root mutator, one Goal owner epoch, and one activation switch are serialized even while independent owners proceed concurrently.
+Resource families include CPU, memory, GPU, media, process, watcher, descriptor, queue, log, artifact, network, port, storage, index, browser, capture, provider, LSP, DAP, Eval, MCP, test host, device, container, worktree, and package-manager-root pressure. These are mapping keys into the one governor, not new resource owners. One seglog writer, one worktree writer per fenced scope, one Browser page mutation controller per page generation, one package-manager-root mutator, one Goal owner epoch, and one activation switch are serialized even while independent owners proceed concurrently.
+
+CPU admission prefers measured physical-core capacity before assuming SMT siblings are equivalent additional cores. It considers heterogeneous-core capability, assigning suitable independent background jobs to slower cores without forcing the interactive critical path behind them. Effective parallelism adapts from measured throughput and latency by work family, not a fixed logical-CPU-count formula. Admission simultaneously respects memory, bandwidth, storage, process, GPU/media, and external-library pool limits; a CPU-only ceiling cannot overrule another exhausted budget. Domain and third-party pools report their own concurrency into this same parent budget, and platform QoS placement remains subordinate to the platform-specific rules below.
 
 ### Same-frame acknowledgement and truthful projection
 
 A user command that can be durably accepted must publish a visible pending shell in the dispatch frame where feasible, recording the command frame, acknowledgement frame, command instance, operation, target generation, and acknowledgement receipt. If the durable accept cannot be obtained in that frame, the UI may show only a non-success provisional affordance and must reconcile it to the durable command outcome. Pause, stop, New Plan, connect, install, Browser, and test controls never wait for broad hydration before showing the accepted pending shell, and any later failure rolls that shell back truthfully.
 
 Long lists are stable-ID, bounded, virtualized projections. Producers send narrow deltas and collection generations; consumers render only a bounded visible window plus a bounded overscan and preserve selection by identity. Streamed fragments are frame-batched under `StreamCoalescer`; terminal, approval, security, lease-loss, failure, cancellation, and completion frames bypass ordinary coalescing. Latest-request-wins may cancel obsolete projection work, but it cannot cancel the underlying durable operation unless the owning command explicitly requests cancellation.
+
+The projection contract rejects `window_start > total_item_count`, `window_start + window_count > total_item_count`, or `window_count + overscan_count > total_item_count`. `stable_item_ids` contains exactly the selected window and overscan identities, with no duplicates. Empty collections and a hidden zero-sized window are valid. `projection_generation` is the request generation producing this projection: it equals `latest_request_generation` exactly when `stale_generation_disposition = not_stale`; an older generation is `rejected` or `superseded_projection_only`, and a future generation fails closed. Generation and bounds comparisons supplement JSON Schema and cannot be replaced by case-name coverage.
 
 Inactive, hidden, off-screen, collapsed, and undocked surfaces share owner subscriptions and suppress expensive hydration, paint, animation clocks, media decode, and per-token repaint. Paint suppression never stops Server-owned work, drops canonical events, releases a lease, changes an `ObservableWork` terminal outcome, or suppresses a receipt. Returning visibility rehydrates from the current generation instead of replaying every hidden paint frame.
 
@@ -853,6 +863,20 @@ Inactive, hidden, off-screen, collapsed, and undocked surfaces share owner subsc
 Every command, projection delta, continuation, retry, subscription, route return, and result binds `OperationId`, command/attempt identity where applicable, owner generation, topology generation, projection generation, and an idempotency or deduplication key. A stale or superseded generation is rejected with an explicit receipt and cannot mutate the current projection. Same-payload retries retain the same logical identity; a genuinely new provider or local attempt receives a new `AttemptId` and links to the parent operation.
 
 Reconnect, process restart, operating-system sleep/wake, and external-return navigation preserve the same logical operation, command instance, durable owner, target object, return route, and continuation generation. They may create a new transport epoch or attempt but do not mint a second logical effect. Startup and return first show the compact cached shell, then reconcile owner truth; absence of a response or a lost client is never converted to cancellation or success. Replay/live overlap, projector retry, reconnect, and duplicate external-return callbacks are deduplicated before projection and Usage attribution.
+
+`ContinuityRecord` compares `prior_identity` with current `identity`, preserves stable scope/operation/command/target/owner bindings, and allows an independently identified attempt to change without treating it as another logical effect. Transport epochs cannot regress. The received continuation generation must equal `expected_continuation_generation` or carry `stale_generation_rejected`; observed duplicate-effect and duplicate-Usage counts must both be zero. These static assertions require future restart, reconnect, sleep, external-return, replay/live-overlap, and projector-retry traces before runtime deduplication is claimed.
+
+### Profile-first optimization and bounded startup/memory
+
+Optimization follows a measured order: profile the user-visible path; eliminate unnecessary work, scans, copies, allocations, and duplicate representations; improve scheduling, data layout, and locality; use proven libraries and measured release/LTO/PGO choices; then consider runtime-dispatched SIMD kernels. Handwritten assembly is the last option and requires a demonstrated remaining bottleneck, maintainable portable fallback, and end-to-end benefit. Neither a microbenchmark nor a more aggressive compiler flag alone proves that startup, input-to-paint, provider receive-to-paint, or total process-tree memory improved.
+
+Candidate measured kernels include stream delimiter scanning/framing, prefix/suffix mismatch and diff comparison, checksums/hashing, redaction, ANSI parsing, Tantivy/vector search, image work, and bitset operations. Each optimized path retains the same portable semantics, bounds, error behavior, and security rules; differential/equivalence tests and fuzzing exercise both selected and fallback paths. Runtime capability detection chooses specialization. The portable x86-64 baseline, older-hardware desktop support, native arm64, and ban on global AVX2/`target-cpu=native` requirements remain intact.
+
+Startup is staged: show the native window; load a compact cached shell; reconcile the live Server/runtime/storage authority; hydrate the selected visible surface; then admit deferred maintenance and inactive-Project work. Startup does not wait for every Vault, provider/CLI, CEF helper, index, Chat/Goal history, backup, integration-version check, or remote host. A cached shell is visibly cached until owner reconciliation; it never fabricates readiness. Security and restore/recovery fences still apply before a protected action or mutation, but unrelated cold data is not an application-wide loading barrier.
+
+Memory has explicit hot/warm/cold residency. Hot data is the visible message window, active edit buffers, selected Plan/Goal projections, active terminal/image state, and current interaction. Warm data is bounded IDs, offsets, headings, summaries, thumbnails, low-cost projections, and working indexes. Cold data is full histories, old tool/video/screenshot bodies, inactive indexes, old diffs, and artifacts; it is demand-loaded by reference and evictable without losing canonical data. Each class has a byte budget and owner-visible eviction/reload behavior; a row-count limit alone is insufficient.
+
+Byte caps and pressure behavior cover async channels, provider fragments, terminal buffers, images/GPU surfaces, video/capture rings, diff/syntax caches, search/index caches, notifications, Browser artifacts, retries, undo histories, log/receipt buffers, connection pools, and process pools. Producers backpressure, coalesce where safe, spill by redacted reference, or reject/degrade explicitly before unbounded growth; security, approval, terminal outcome, and durable-write evidence are never dropped as ordinary repaint traffic. Avoid simultaneously retaining raw provider JSON, normalized events, UI copies, serialized-storage copies, and log copies of the same payload. Use borrowed/pooled buffers with explicit lifetimes, discard raw provider payloads after normalization unless an authorized bounded diagnostic capture retains them, reference blobs instead of embedding base64, deduplicate media by content address, and bound compact-ID interning and job arenas. Exact canonical event/receipt content and required provenance remain recoverable; memory optimization cannot silently delete authority evidence.
 
 ### Platform-specific host adapters
 
@@ -935,9 +959,12 @@ acceptance_criteria:
   - ObservableWork accepts every retained state from accepted through recovery-required, including testing-route and migrating-route, without treating a route as successful proof.
   - The PMConcept7 browser fixture exposes exactly seven deterministic ObservableWork evidence rows, six GovernorDecision outcome rows, and five bounded-list families (findings, history, logs, provider, receipts), each with stable identity, truthful reason/reevaluation metadata, bounded row/byte metadata, and an explicit browser-fixture-only boundary; these rows do not prove native or production execution.
   - Same-frame acknowledgement is durable-command acknowledgement only and rolls back truthfully on later failure.
+  - Success/cancellation and failure/unknown outcomes require their corresponding terminal evidence; work rows retain title, subject, blocking scope, activity, parent/child, and typed progress provenance.
+  - Determinate work progress has a real positive denominator and never exceeds it; terminal controls and queued/waiting reevaluation remain truthful.
   - Stable-ID virtualized projections reject stale generations and hidden-surface paint suppression never cancels durable work.
+  - Projection bounds, stable-ID cardinality, acknowledgement frame equality, continuation generation, stable prior/current identity, and duplicate-effect/Usage counts are checked as cross-field laws.
   - Reconnect, restart, sleep, and external return preserve logical identity and deduplicate replay/projector overlap.
-validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Plans/shared_runtime_contracts.schema.json, Plans/storage_value_registry.json, tests/test_pm_runtime_vocabulary_migration.py, tests/test_pm_runtime_identity_scope.py, Concepts/pm7-tools/verify/full_thread_performance.mjs, future command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Plans/shared_runtime_contracts.schema.json, Plans/storage_value_registry.json, tests/test_pm_full_thread_contracts.py, tests/test_pm_runtime_vocabulary_migration.py, tests/test_pm_runtime_identity_scope.py, scripts/pm_full_thread_semantics.py, Concepts/pm7-tools/verify/full_thread_performance.mjs, future native command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
 risk_class: full_thread_axis_or_identity_conflation
 reasoning_tier: high
 context_scope: full_thread_runtime_axes_and_continuity
@@ -1997,3 +2024,130 @@ owner_hints: [Plans/Shared_Integration_Runtime.md, Plans/Project_Sync_and_Backbo
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Project_Sync_and_Backbone.md, ContractName:Plans/Multi-Account.md
+
+### SIR-038 - Profile-First Optimization And Portable Kernels
+
+```yaml
+plan_unit_id: SIR-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: >-
+  Performance optimization follows profile, eliminate work and copies, improve scheduling/layout/locality, select measured libraries and LTO/PGO, then runtime-dispatched SIMD; handwritten assembly requires a remaining measured bottleneck and portable equivalence. Kernel specialization never raises the global CPU baseline or substitutes microbenchmarks for end-to-end proof.
+gui_related: false
+depends_on: [SIR-004, SIR-015, SIR-017, SIR-018]
+unblocks: []
+acceptance_criteria:
+  - "Retain measured candidate kernels for delimiter/framing, prefix/suffix/diff comparison, checksum/hash, redaction, ANSI, search/vector, image, and bitset work."
+  - "Every specialization has capability detection, a portable fallback, differential/equivalence tests, and fuzz coverage of bounds, errors, and security behavior."
+  - "Retain portable x86-64 and native arm64 with no global AVX2 or target-cpu=native requirement."
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, tests/test_pm_full_thread_contracts.py, future native startup and whole-process-tree performance captures]
+risk_class: unsupported_or_unmeasured_optimization
+reasoning_tier: high
+context_scope: profile_first_portable_optimization
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: retained_performance_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md:8-48
+preserved_exact_tokens: ["LTO","PGO","SIMD","portable fallback"]
+negative_constraints:
+  - "Do not optimize by weakening bounds, redaction, provenance, or security checks."
+  - "Do not claim runtime performance from static contract coverage."
+```
+
+### SIR-039 - Adaptive Physical-Core And Multi-Resource Admission
+
+```yaml
+plan_unit_id: SIR-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: >-
+  The existing RuntimeResourceGovernor adapts admitted parallelism from measured work-family throughput and latency, physical-core and SMT capacity, heterogeneous-core capability, and simultaneous memory, bandwidth, storage, process, GPU/media, and external-pool budgets under one physical parent.
+gui_related: false
+depends_on: [SIR-004, SIR-015, SIR-017, SIR-018]
+unblocks: []
+acceptance_criteria:
+  - "Physical cores and SMT siblings are not assumed to be equivalent units of usable capacity."
+  - "Suitable independent work can use slower cores without placing the interactive critical path behind them; platform QoS rules remain controlling."
+  - "External library and domain pools are charged to the same physical parent and no CPU-count formula bypasses another exhausted resource budget."
+  - "Required specialists and tests remain queued in admitted waves rather than silently omitted."
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, tests/test_pm_full_thread_contracts.py, future native startup and whole-process-tree performance captures]
+risk_class: oversubscription_or_critical_path_starvation
+reasoning_tier: high
+context_scope: adaptive_physical_resource_admission
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: retained_performance_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md:153-163
+preserved_exact_tokens: ["RuntimeResourceGovernor","SMT","GPU","media"]
+negative_constraints:
+  - "Do not create another scheduler or physical resource owner."
+  - "Do not treat logical CPU count as a universal concurrency setting."
+```
+
+### SIR-040 - Staged Native Startup And Selected-Surface Hydration
+
+```yaml
+plan_unit_id: SIR-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: >-
+  Startup presents the native window, compact cached shell, live Server/runtime/storage reconciliation, selected visible hydration, and deferred maintenance/inactive-Project work in that order. Cold domain inventories are not an application-wide startup barrier and cached presentation is not readiness.
+gui_related: true
+gui_classification_reason: Startup presentation or visible hydration and eviction behavior affects the GUI.
+depends_on: [SIR-004, SIR-015, SIR-017, SIR-018]
+unblocks: []
+acceptance_criteria:
+  - "Do not wait for all Vaults, providers/CLIs, CEF helpers, indexes, Chat/Goal histories, backups, integration-version checks, or remote hosts before presenting the shell."
+  - "Hydrate only the selected visible surface before admitting unrelated deferred work."
+  - "Display cached/currentness truth and enforce security and recovery fences before affected actions or mutations."
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, tests/test_pm_full_thread_contracts.py, future native startup and whole-process-tree performance captures]
+risk_class: startup_global_hydration_barrier
+reasoning_tier: high
+context_scope: staged_native_startup
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: retained_performance_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md:284-307
+preserved_exact_tokens: ["native window","compact cached shell","selected visible surface"]
+negative_constraints:
+  - "Do not fabricate readiness while presenting cached state."
+  - "Do not remove permission or recovery preconditions to accelerate startup."
+```
+
+### SIR-041 - Hot Warm Cold Residency And Bounded Representations
+
+```yaml
+plan_unit_id: SIR-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: >-
+  Runtime memory uses byte-budgeted hot, warm, and cold residency with demand hydration and explicit eviction/reload. All channels, media, caches, histories, retries, evidence buffers, and connection/process pools are bounded; payloads use lifetime-safe pooled or borrowed buffers and references without redundant raw/normalized/UI/storage/log retention.
+gui_related: true
+gui_classification_reason: Startup presentation or visible hydration and eviction behavior affects the GUI.
+depends_on: [SIR-004, SIR-015, SIR-017, SIR-018]
+unblocks: []
+acceptance_criteria:
+  - "Hot data is visible/active interaction state; warm data is compact IDs, offsets, summaries, thumbnails, projections, and working indexes; full histories and inactive artifact/index bodies remain cold."
+  - "Byte caps cover async channels, provider fragments, terminal buffers, images/GPU surfaces, video/capture rings, diff/syntax caches, search/index caches, notifications, Browser artifacts, retries, undo histories, log/receipt buffers, connection pools, and process pools."
+  - "Backpressure, safe coalescing, redacted spill, or explicit degradation precedes unbounded growth."
+  - "Raw provider bodies are discarded after normalization unless a bounded authorized diagnostic capture retains them; blobs are referenced, media is content-addressed, and ID interning/job arenas are bounded."
+  - "Memory optimization preserves canonical event/receipt content, required provenance, durable work, and security/terminal evidence."
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, tests/test_pm_full_thread_contracts.py, future native startup and whole-process-tree performance captures]
+risk_class: unbounded_memory_or_evidence_loss
+reasoning_tier: high
+context_scope: bounded_residency_and_representation
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: retained_performance_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md:338-381
+preserved_exact_tokens: ["hot","warm","cold","byte caps","content address"]
+negative_constraints:
+  - "Do not use row counts as a replacement for byte budgets."
+  - "Do not discard authority evidence as ordinary repaint traffic."
+```
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractName:Plans/Shared_Integration_Runtime.md#SIR-017, ContractName:Plans/DRY_Rules.md, SchemaID:pm.full_thread_runtime.contracts.v1
