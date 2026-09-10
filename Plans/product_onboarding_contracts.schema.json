@@ -2327,7 +2327,7 @@
         "server_setup is predecessor seven-stage lineage only and is rejected by every current stage, scope, session, continuation, return-context, request, and result field",
         "one user choice dispatches at most one owner route; a current terminal owner return advances without an additional confirmation action",
         "scm_backend_selection and forge_provider_selection are independent; Jujutsu is never represented as a forge or account and none means local-only",
-        "cmd.source_control.repository.init is forbidden; a new local Project uses cmd.project.new_local with init_git=true through the Project owner",
+        "cmd.source_control.repository.init is forbidden; a new local Project uses the Project-owned cmd.project.new_local setup binding and its confirmed history/backend choice without a consumer-forced Git default",
         "ui.onboarding.defer persists the exact current stage, branch, revision, continuation, and return focus before the modal closes",
         "ui.onboarding.defer never sets completed, skipped, ready, or any owner-readiness state",
         "provider_setup and optional free_models_setup follow actual Project owner commit; Back/Close/Skip never uncreate a committed Project; Free Models delegates credentials to the same underlying account owners and leaves saved top-10 unchanged",
