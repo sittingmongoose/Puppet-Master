@@ -142,5 +142,52 @@ GUIDED_TOUR_SCRIPT = "script"
         self.assertEqual(validator.effective_guided_tour_bands(source), ("markup", "style", "script"))
 
 
+class WholeCommandAccountingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.inspection = load_module("whole_command_inspection", ROOT / "scripts/pm-assistant-contract-check.py")
+
+    def test_every_wiring_row_is_accounted_without_expanding_touch(self):
+        rows = {
+            "surface.one": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::alpha::one"},
+            "surface.two": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::alpha::one"},
+            "surface.three": {"ui_command_id": "cmd.beta.two", "handler_location": "handlers::beta::two"},
+        }
+        catalogue = '| `cmd.alpha.one` | one |\nLegacy `cmd.beta.two` is not a primary registration.\n'
+        touch = [{"action_id": "cmd.alpha.one", "touch_id": "T-ONE"}]
+        report = self.inspection.whole_wiring_inventory(ROOT, catalogue, rows, touch)
+        self.assertEqual(report["command_count"], 2)
+        self.assertEqual(report["wiring_row_count"], 3)
+        self.assertEqual(report["commands_in_packet_touch"], 1)
+        self.assertEqual(report["commands_without_packet_touch"], 1)
+        self.assertEqual(report["rows_with_request_and_result_pointers"], 0)
+        self.assertEqual(sum(len(c["wiring_rows"]) for c in report["commands"]), 3)
+        self.assertEqual(report["commands"][1]["catalogue_occurrences"][0]["kind"], "prose_or_planunit")
+        self.assertEqual(touch, [{"action_id": "cmd.alpha.one", "touch_id": "T-ONE"}])
+        self.assertTrue(all(c["semantic_review_status"] == "not_run" and not c["native_runtime_proven"] for c in report["commands"]))
+
+    def test_duplicate_handler_targets_and_missing_owner_are_real_gaps(self):
+        rows = {
+            "a": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::alpha::one"},
+            "b": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::other::one",
+                  "evidence_required": "Plans/nonexistent_synthetic_test_owner_20260910.md"},
+        }
+        report = self.inspection.whole_wiring_inventory(ROOT, '`cmd.alpha.one`', rows, [])
+        self.assertEqual({e["code"] for e in report["errors"]}, {"whole_command_handler_conflict", "whole_wiring_missing_owner_reference"})
+
+    def test_catalogue_alias_target_column_does_not_claim_primary_registration(self):
+        rows = {"a": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::alpha::one"}}
+        report = self.inspection.whole_wiring_inventory(ROOT, '| `cmd.old.one` | `cmd.alpha.one` | alias target |', rows, [])
+        self.assertEqual(report["commands"][0]["catalogue_occurrences"], [{"line": 1, "kind": "other_table_column"}])
+        self.assertEqual(report["errors"], [])
+
+    def test_machine_pointer_is_checked_instead_of_trusting_named_prose(self):
+        rows = {"a": {"ui_command_id": "cmd.alpha.one", "handler_location": "handlers::alpha::one",
+                      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/missing_synthetic_20260910"}}
+        report = self.inspection.whole_wiring_inventory(ROOT, '`cmd.alpha.one`', rows, [])
+        self.assertEqual(report["errors"][0]["code"], "whole_wiring_invalid_contract_reference")
+        self.assertEqual(report["commands"][0]["wiring_rows"][0]["missing_machine_contract_fields"], ["result_schema_ref"])
+
+
 if __name__ == "__main__":
     unittest.main()
