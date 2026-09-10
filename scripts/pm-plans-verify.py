@@ -560,6 +560,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_web_capability_contracts": "validate-web-capability-contracts",
     "validate_new_contracts": "validate-new-contracts",
     "validate_forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "validate_browser_event_admission": "validate-browser-event-admission",
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
@@ -591,6 +592,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "web_capability_contracts": "validate-web-capability-contracts",
     "server_command_gap": "validate-server-command-gap",
     "forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "browser_event_admission": "validate-browser-event-admission",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
@@ -615,6 +617,8 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "server_command_gap",
     "validate_forge_backup_acceptance",
     "forge_backup_acceptance",
+    "validate_browser_event_admission",
+    "browser_event_admission",
     "validate_working_notebook_contracts",
     "working_notebook_contracts",
     "validate_touch_closure",
@@ -6397,6 +6401,22 @@ def cmd_validate_forge_backup_acceptance(args: argparse.Namespace) -> dict[str, 
     )
 
 
+def cmd_validate_browser_event_admission(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the exact scoped admission without clearing global Event Authority."""
+    validator = ROOT / "scripts" / "pm-browser-event-admission.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-browser-event-admission", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-browser-event-admission", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
     """Validate Working Notebook contract schemas and static fixtures."""
     validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
@@ -6745,6 +6765,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("validate_new_contracts", cmd_validate_new_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
@@ -6798,6 +6819,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
@@ -6853,6 +6875,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         server_command_gap=compact_gate_report(check_map["server_command_gap"]),
         forge_backup_acceptance=compact_gate_report(check_map["forge_backup_acceptance"]),
+        browser_event_admission=compact_gate_report(check_map["browser_event_admission"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
@@ -6876,6 +6899,7 @@ COMMANDS = {
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "validate-new-contracts": cmd_validate_new_contracts,
     "validate-forge-backup-acceptance": cmd_validate_forge_backup_acceptance,
+    "validate-browser-event-admission": cmd_validate_browser_event_admission,
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
@@ -6912,6 +6936,7 @@ def main() -> int:
         "validate-prd-planning-runtime-contracts",
         "validate-new-contracts",
         "validate-forge-backup-acceptance",
+        "validate-browser-event-admission",
         "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",

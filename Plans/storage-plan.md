@@ -17760,7 +17760,7 @@ Status: `STATICALLY_MATERIALIZED`. This section is the Storage owner contract fo
 
 ### Known-37 retention assignment (`RET-K37-ASSIGNMENT-001@1.0.0`)
 
-The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-27.1` with 39 rows; that revision upgrades the existing `workspace.layout_changed` family and its closed payload contract to `1.1.0` without adding a fortieth family. The two post-Known-37 rows are not retroactively part of the Known-37 assignment, and neither the revision upgrade nor this currentness correction asserts a complete current registry or current denominator: the denominator remains `UNKNOWN_OPEN`.
+The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The August 27 snapshot at revision `2026-08-27.1` has 39 rows; that revision upgrades the existing `workspace.layout_changed` family and its closed payload contract to `1.1.0` without adding a fortieth family. The live registry at revision `2026-09-10.1` has 92 rows: those 39 rows unchanged plus the 53 individually adjudicated ordinary-browser families in `Plans/browser_event_admission.json`. None of the post-Known-37 rows is retroactively part of the Known-37 assignment. This scoped admission does not assert a complete global registry or refresh historical currentness evidence: the denominator remains `UNKNOWN_OPEN`.
 
 Currentness boundary (2026-08-10): the July Event Authority union records 37 registered rows, at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 and leaves the complete denominator `UNKNOWN_OPEN`. This claim is bound to `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under external `PuppetMaster-AssuranceLab` custody. This lower-bound evidence requires fresh reconciliation against current sources; it forbids bulk registration and does not close material contract depth, Case L, PNC-019, buildability, or `CL-CRIT-EVENT-AUTHORITY-001`. Unknown or unregistered families remain quarantined without checkpoint advance.
 
@@ -19089,3 +19089,44 @@ owner_hints:
 Storage preserves historical `chat.plan_todo_updated` reads under existing access, retention and deletion rules. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete mapping. Storage must establish the complete atomic mutation/projection boundary before execution consumes revised state; incomplete future event admission cannot fall back to legacy appends or partial durable publication.
 
 ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md
+
+## Scoped Browser Event Persistence — 2026-09-10
+
+### SP-260 - Browser Event Retention And Recovery Consumer
+
+```yaml
+plan_unit_id: SP-260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage consumes the fifty-three individually adjudicated browser event families through the existing EventRecord
+  seglog, scope/dedupe/checkpoint and retention owners. The admission manifest assigns existing policies to bounded
+  metadata events only: twenty-three Run-bound families use RP-RUNTIME-365D and thirty non-Run-capable families use
+  creation-anchored RP-AUTHORITY-INDEFINITE. Referenced content and physical owner records retain separate admission,
+  retention and redaction obligations.
+gui_related: false
+gui_classification_reason: Persistence, retention, recovery and dedupe are storage contracts.
+depends_on: [CV-330, SMPFS-166]
+unblocks: []
+acceptance_criteria:
+  - Resolve each exact manifest assignment against the sole storage_value_registry retention catalog without adding a policy or changing historical Known-37 rows.
+  - Every runtime-policy event requires a real Run and its run_completion anchor, one-million-per-Run and five-million-per-Project cardinality, successor rollover, holds and compact expiry.
+  - Non-Run-capable workspace, page, lease, representation, routing, routine and handoff metadata use the existing creation anchor; never fabricate a Run to obtain expiry.
+  - Indefinite retention is metadata-only, not indefinite retention of pages, DOM, code, screenshots, cookies, credentials or artifacts; referenced objects enforce their own independently admitted policy and permission.
+  - Event admission does not register BrowserProgram, ProgramWorkspace, representation, lease, handoff or other referenced physical record families and does not bypass physical-family-registration-pending blockers.
+  - Unknown or unregistered families, schema/scope conflicts and malformed payloads remain quarantined without checkpoint advance; recovery replays retained facts and revalidates current scope, generations, leases and effects before new action.
+  - The combined registry has ninety-three rows, including the separately approved compaction-completion family under SP-259, but the complete global denominator remains UNKNOWN_OPEN; July currentness evidence and PNC-019/kernel receipts remain historical and are not resealed by this change.
+validation_surfaces: [python3 scripts/pm-browser-event-admission.py, Plans/browser_event_admission_fixtures.json, tests/test_pm_browser_event_admission.py, Plans/storage_value_registry.json]
+risk_class: browser_event_retention_anchor_or_physical_admission_escape
+reasoning_tier: high
+context_scope: scoped_browser_event_storage
+implementation_surfaces: [Plans/event_family_registry.json, Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage_value_registry.json]
+node_compile_hint: {mode: static_storage_consumer_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md, Plans/Contracts_V0.md#CV-317, USER-PACKET-GAP-CLOSURE-20260910]
+negative_constraints:
+  - No bulk global Event Authority admission, historical Known-37 rewrite, new retention policy, raw body persistence or protected-auth access.
+  - No physical family, native producer, replay durability, Case L closure, readiness or governance seal claim.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-330, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json, ContractName:Plans/storage_value_registry.json
