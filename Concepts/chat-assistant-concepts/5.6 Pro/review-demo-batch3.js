@@ -4,7 +4,7 @@
  * inspect, export and convert. One bounded replay clock feeds the Review owner. */
 (function(){
  'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,P=window.PM56_REVIEW;
- const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={single:{label:'Single Agent Review',summary:'One reviewer → evidence → read-only report'},multi:{label:'Multi-Pass Review',summary:'Three independent passes → dissent → selected To-Dos'}};
  function checksum(text){let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return 'demo-fnv1a-'+(h>>>0).toString(16).padStart(8,'0');}
  function fixture(kind){
@@ -32,7 +32,7 @@
   c.state.threads.push(base);Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});
   c.state.capabilities.goal=false;c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
   window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,stage:'configure',played:false,reportOpened:false,markdownSeen:false,evidenceSeen:false,todosSeen:false,errors:[],events:[]};
+  active={kind,threadId:tid,runId:null,stage:'configure',played:false,reportOpened:false,markdownSeen:false,evidenceSeen:false,todosSeen:false,errors:[],events:[]};sessions.set(tid,active);
   c.switchThread(tid);C.openConfigure('review');draftTarget(kind);
   // Initial scenario configuration; all subsequent edits use the normal shared pickers.
   const d=C.draft();d.config.strategy=kind==='single'?'single_agent':'multi_pass';C.normalizeReview(d);
@@ -48,9 +48,10 @@
   const perf={id:'perf',findingKey:'pre-index-search',category:'performance',severity:'suggestion',claim:'Pre-indexing may help large lists',evidenceRefs:['performance'],proposedRemediation:'Measure list-search latency before adding an index',expectedOutcome:'A representative benchmark establishes whether indexing is needed.'};
   return kind==='single'?[[trim]]:[[trim],[{...clone(trim),id:'spacing-confirmed'},perf],[order]];
  }
- function play(){
-  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
-  const session=active;session.played=true;session.stage='playing';const clock={timers:[],runId:r.id};clocks.set(r.id,clock);
+ function play(runId){
+  const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
+  if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;
+  session.runId=r.id;session.played=true;session.stage='playing';const clock={timers:[],runId:r.id};clocks.set(r.id,clock);
   const expected=r.stopEpoch,results=observed(session.kind);
   function after(ms,fn){clock.timers.push(setTimeout(()=>{
    if(clocks.get(r.id)!==clock)return;
@@ -92,10 +93,17 @@
  E.action('review-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
  E.action('review-demo-play',()=>{play();return true;});
  E.action('review-demo-replay',()=>{if(active)start(active.kind);return true;});
- E.action('review-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ E.action('review-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_REVIEW_DEMOS={start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
+
+ function controls(c,r){
+  const session=sessions.get(r.threadId);
+  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
+  return '<button class="soft-button" data-action="review-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Play recorded passes</button>';
+ }
+ E.action('review-example-play',(c,b)=>{play(b.dataset.run);return true;});
+ window.PM56_REVIEW_DEMOS={controls,start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
 })();

@@ -121,7 +121,6 @@
       end: PM51.btn({ label: 'Approve', small: true, primary: true, icon: 'check', action: 'pm51-permissions-approve', data: { id: x.id } }) + PM51.btn({ label: 'Reject', small: true, action: 'pm51-permissions-reject', data: { id: x.id } })
     }))) : PM51.empty('Nothing waiting.', 'Requests that need your say-so show up here.') });
     const policy = PM51.section({ title: 'Approval policy', body: PM51.rows([
-      { label: 'Ask me in', help: 'Where the question appears.', control: PM51.select(pol.askIn, ['In-app', 'Phone alerts', 'In-app and phone alerts'], { action: 'pm51-permissions-policy-askin', label: 'Ask me in' }) },
       { label: 'Expire after', help: 'Unanswered requests are treated as rejected.', control: PM51.select(pol.expire, ['15 minutes', '30 minutes', '1 hour', 'Never'], { action: 'pm51-permissions-policy-expire', label: 'Expire after' }) },
       { label: 'Remember my choice for this session', help: 'The same request is not asked again until you close the app.', control: PM51.toggle(!!pol.remember, { action: 'pm51-permissions-policy-remember', label: 'Remember my choice for this session' }) }
     ]) });
@@ -133,8 +132,6 @@
   function renderLimits() {
     const G = pm().guardrails;
     const runaway = PM51.section({ title: 'Stop runaway work', help: 'Safety nets for Goals that loop, stall, or spend too much.', body: PM51.rows([
-      { label: 'Max turns per Goal', control: PM51.input(G.maxTurns, { action: 'pm51-permissions-limit', data: { key: 'maxTurns' }, type: 'number', label: 'Max turns per Goal' }) },
-      { label: 'Max cost per Goal', control: PM51.input(G.maxCost, { action: 'pm51-permissions-limit', data: { key: 'maxCost' }, label: 'Max cost per Goal' }) },
       { label: 'Max time without progress', control: PM51.select(G.maxIdle, ['10 minutes', '20 minutes', '30 minutes', '1 hour'], { action: 'pm51-permissions-limit-select', data: { key: 'maxIdle' }, label: 'Max time without progress' }) },
       { label: 'Then', help: 'What happens when a limit is hit.', control: PM51.select(G.then, ['Pause and ask', 'Stop the Goal', 'Keep going but warn me'], { action: 'pm51-permissions-limit-select', data: { key: 'then' }, label: 'Then' }) }
     ]) });

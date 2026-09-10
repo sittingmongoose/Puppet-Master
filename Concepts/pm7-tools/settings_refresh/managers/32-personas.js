@@ -35,7 +35,7 @@
 #panel-settings .pm51-personas-prompt { margin: 0; width: 100%; padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); font-size: 12.5px; line-height: 1.55; color: var(--k3-text-2); }
 #panel-settings .pm51-personas-try { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 #panel-settings .pm51-personas-try .text-control { flex: 1 1 240px; width: auto; max-width: 100%; }
-#panel-settings .pm51-personas-try .select-control { flex: 1 1 200px; }
+#panel-settings .pm51-personas-try .pm51-dd { flex: 1 1 200px; } #panel-settings .pm51-personas-try .pm51-dd-trigger { width: 100%; max-width: none; }
 `);
 
   /* ---------- Personas ------------------------------------------------- */

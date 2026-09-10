@@ -1,0 +1,277 @@
+{
+  "batch": 12,
+  "kind": "bounded_concept_coverage_delta_not_governance_seal",
+  "status": "FINAL_BUILD_EVIDENCE_BOUND",
+  "base_html_sha256": "342b6b0f7becc5a2379dda36dea5a1c855c7d2ebc54982fbe179272561ff23a3",
+  "html_sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95",
+  "source_commit": "43998719758a4ab32e04fee564fc7f81391237be",
+  "owner_blob": "0fcca40ce51184b80d42ec22aa60ea99d580f5c0",
+  "matrix_blob": "769061c8c8bd617ff5795208f9a935bc30906d36",
+  "closure_table_blob": "7a0e5f31d016ad00f6ba0a7b0160e792e8dac81d",
+  "retained_matrix_denominator": 551,
+  "retained_feature_groups": 67,
+  "workflows": [
+    "B12-BSD-SURVIVES",
+    "B12-BSD-RESOLVES"
+  ],
+  "requirement_rows": [
+    {
+      "coverage_id": "v2:BSD-001",
+      "source_wording": "BSD is a separate passive read-only advisor, not part of Multi-Agent Workflows and not a required reviewer/certifier.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Single read-only local protocol, separate UI, no primary writer or automatic Plan/work creation.",
+      "test_refs": "browser:survives; protocol:failure/primary control boundaries",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "No provider, native review or certification authority established.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-002",
+      "source_wording": "BSD modes are Off, Auto and On with Auto default.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Detached mode control, Auto default, Off no assignment, On explicit eligibility.",
+      "test_refs": "browser:off-on; protocol:defaults/stage modes",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Session policy only; production Settings persistence remains open.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-003",
+      "source_wording": "Auto uses deterministic trigger kinds and On evaluates every eligible bounded update within policy.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Closed ten-trigger set and On policy refusal checks.",
+      "test_refs": "protocol:Auto triggers and policy no-calls",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Source adapter supplies trigger/materiality; production trigger detectors and semantic sensitivity remain open.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-004",
+      "source_wording": "Each BSD assignment has isolated context/tool session, model/Persona, cursor, epoch, transcript and Usage.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Scoped assignment identity, separate transcript/cursor/epoch, unknown provider tokens/cost.",
+      "test_refs": "protocol:identity/retention/reset; browser:pickers/late-rebind",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "No isolated provider sessions or provider cache/window measurement.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-005",
+      "source_wording": "BSD input is a bounded redacted delta plus current constraint/Goal/Plan/PlanUnit/To-Do/evidence refs.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Whitelisted bounded public-fixture manifest, constraints, ref fields, watch text and redaction receipt.",
+      "test_refs": "protocol:bounded input/secret exclusions",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Full nonempty Goal/Plan/PlanUnit/To-Do integration and production redactor/sandbox are not established.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-006",
+      "source_wording": "Async concern/critical findings are held and must be reconfirmed against newer work before delivery.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "First concern held, same generation cannot emit, newer current state emits or clears, late result cannot clear.",
+      "test_refs": "browser:survives/resolves/late-rebind; protocol:currentness/reconfirmation",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Provider-asynchronous and durable recovery versions remain separate.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-007",
+      "source_wording": "Synchronous frozen safe-point findings may deliver immediately.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Stored frozen ticket and current generation checks allow immediate local boundary delivery.",
+      "test_refs": "protocol:frozen safe point; callback forgery negatives",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Fixture frozen state is not a production cross-worker lock.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-008",
+      "source_wording": "Terminal timeout may show unreconfirmed critical advice only with explicit stale labeling and cannot fail/restart primary.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Bounded expiry exposes critical only as stale/unreconfirmed without changing completed primary.",
+      "test_refs": "protocol:terminal timeout; boundaries:terminal-stale",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Clock-injected long caps and real zero-wait UI; no persistent server timer.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-009",
+      "source_wording": "BSD severities are nit, concern and critical; public blocker is not used.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Closed severity enum, no downgrade bypass, genuine escalation, public critical label.",
+      "test_refs": "protocol:severity/malformed/downgrade/escalation",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Not an evaluation of natural-language provider severity quality.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-010",
+      "source_wording": "BSD findings have stable dedup/closure identity and unchanged closed findings do not recur.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Stable family/object/rule identity, closure by evidence fingerprint, duplicate suppression, changed evidence reopening.",
+      "test_refs": "protocol:dedup/closure/self-compaction; browser:survives",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Closures survive local reset, not process restart or browser reload.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-011",
+      "source_wording": "BSD tools are read-only and exclude mutation, install, approval, credentials, publish and protected auth.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Fixed read-tool allowlist and refusal of nine forbidden tool classes.",
+      "test_refs": "protocol:forbidden tools; browser:quarantine-quota",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Classifier fixtures are not filesystem/process/AuthBrowser security certification.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-012",
+      "source_wording": "BSD unsafe output is quarantined; one re-prime is allowed then BSD pauses.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Whole-turn quarantine before advice, one re-prime then local pause and one host-warning count.",
+      "test_refs": "protocol:unsafe/malformed/two-strike; browser:quarantine-quota",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Host warning is inspectable state/health; no native notification dispatch or comprehensive semantic guard.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-013",
+      "source_wording": "BSD failure, quota or unavailability cannot block primary work.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Failed/timed-out/quota/unavailable local result leaves primary state exact; primary completes during quota refusal.",
+      "test_refs": "protocol:failure isolation; browser:quarantine-quota/stop-late",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "No production provider outage handling proof.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-014",
+      "source_wording": "BSD reset/re-prime and epoch fencing cover compaction, fork, rewind, replacement and model/Persona changes.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Rebind/context/history/worktree/lifecycle fingerprints reset epochs; previous callbacks are rejected.",
+      "test_refs": "browser:late-rebind/stale-config/rewind; boundaries:branch-history; protocol:resets",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Native context transitions, durable fork/restore/restart integration remain open.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-015",
+      "source_wording": "BSD supports configurable cooldown and bounded catch-up.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Configurable cooldown channel and catch-up cap with deadline/abort and release on failure.",
+      "test_refs": "protocol:cooldown/catch-up; boundaries:terminal-stale",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Positive-duration wall-clock performance across native host restart is not established.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-016",
+      "source_wording": "BSD can be enabled by stage in PRD Builder, Planning Wizard, PlanUnit, Plan Compile, WorkNode, audit, execution, verification, remediation and certification.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "All ten current owner presentation stages accept Inherit/Off/Auto/On and freeze into a local binding.",
+      "test_refs": "browser:pickers/launch-boundary; protocol:stage resolution",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "No real PRD/Wizard/PlanUnit/PlanCompile/WorkNode/audit/certification stages execute; owner terminology discrepancy is documented.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-017",
+      "source_wording": "BSD configuration modal appears when explicitly selected for PRD Builder/Planning Wizard and freezes stage bindings.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Explicit launch preview selection, modal cancellation, owning Start freeze with no pre-Start effects.",
+      "test_refs": "browser:launch-boundary; protocol:workflow snapshots",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Start-boundary preview only, not the actual PRD Builder or Planning Wizard end-to-end journey.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-018",
+      "source_wording": "Compact Context and Context Details show truthful BSD state and identity.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Single compact Context row and metric-card More Details with requested/effective identity and currentness.",
+      "test_refs": "browser:resolves/narrow-900/narrow-700/wand",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "Provider route readiness is a labelled catalog fixture, not a live health probe.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-019",
+      "source_wording": "Usage distinguishes BSD calls, no-calls, held/cleared/emitted/suppressed outcomes, cost, stage, latency and quota.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Separate local evaluations/no-calls and finding outcomes; zero provider calls, cost/tokens unknown, exact JSON export.",
+      "test_refs": "browser:local-export; protocol:usage/refusals; capture:both",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "remaining": "No native Usage storage, provider cost reconciliation or account quota measurement.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v2:BSD-020",
+      "source_wording": "BSD command/event/storage/wiring authority must be closed before implementation-ready status.",
+      "source_custody": "literal matrix source_wording; current live owner resolves meaning",
+      "local_demonstration": "Native boundary explicitly rejects command_not_registered; no native success is fabricated.",
+      "test_refs": "protocol:nativeCommand",
+      "full_clause_acceptance": "OPEN_NATIVE_AUTHORITY",
+      "remaining": "OPEN: native command/event/storage/wiring closure and implementation-ready status are not authorized or established.",
+      "native_proof": false
+    },
+    {
+      "coverage_id": "v3:APR-009",
+      "source_wording": null,
+      "live_closure_wording": "Context More Details compact first view; deep BSD behind disclosure; zero side stripes",
+      "owner_refs": [
+        "Plans/FinalGUISpec.md#F3-538",
+        "Plans/Back_Seat_Driver.md#BSD-027"
+      ],
+      "local_demonstration": "One compact BSD projection, native metric cards and deep disclosures, inspected at 1280/900/700.",
+      "test_refs": "browser:resolves/narrow-900/narrow-700",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "original_packet_wording_verified": false
+    },
+    {
+      "coverage_id": "v3:APR-061",
+      "source_wording": null,
+      "live_closure_wording": "Context More Details redesigned as coherent compact hierarchy; BSD status clear; no side stripes",
+      "owner_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-027"
+      ],
+      "local_demonstration": "Currentness and identity read from one local assignment; history/input behind disclosure.",
+      "test_refs": "browser:resolves/local-export/narrow-900/narrow-700",
+      "full_clause_acceptance": "BOUNDED_LOCAL_ONLY_NOT_FULL_CLAUSE_CERTIFICATION",
+      "original_packet_wording_verified": false
+    },
+    {
+      "coverage_id": "v3:APR-028",
+      "source_wording": null,
+      "status": "MAPPING_DISCREPANCY_PRESERVED_NOT_CLOSED",
+      "worklist_feature": "bsd",
+      "live_closure_wording": "Scheduled message grammar: active pending cards separate from quiet sent receipts; secrets in Details",
+      "live_closure_owner": "Plans/Scheduling_and_Quota_Resume.md#SQR-009",
+      "resolution": "Do not rename or consume as BSD proof. Live BSD configuration/re-prime contracts are BSD-026/027 and APR-031/032 in the closure table.",
+      "original_packet_wording_verified": false
+    }
+  ],
+  "source_adjudications": [
+    {
+      "issue": "APR-028 map conflicts with live closure table",
+      "disposition": "retained without relabeling or false closure"
+    },
+    {
+      "issue": "Catch-up example 15 seconds in historical closure vs explicit 30-second operational default in live BSD owner",
+      "disposition": "Use explicit operational default 30 seconds with supported 0/15/30/60 caps, disclose source difference"
+    },
+    {
+      "issue": "Descriptive High/Medium/Low sensitivity vs closed conservative/balanced/frequent enum",
+      "disposition": "Use the closed owner enum; no extra enum or invented thresholds"
+    },
+    {
+      "issue": "Reference-video flat-row layout was withdrawn",
+      "disposition": "Native metric cards and existing theme, no decorative left stripes"
+    }
+  ],
+  "full_feature_acceptance": false,
+  "APR_016": "OPEN",
+  "APR_018": "OPEN",
+  "native_runtime_enabled": false,
+  "next_batch": 13
+}

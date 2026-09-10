@@ -275,7 +275,6 @@
         title: 'Defaults',
         body: PM51.rows([
           { label: 'Version history tool', help: 'Git is the common choice. Jujutsu makes undo easy and works alongside Git.', control: PM51.segmented(c.tool, ['Git', 'Jujutsu'], { action: 'pm51-source-cfg-seg', data: { key: 'tool' }, label: 'Version history tool' }) },
-          { label: 'Default branch name', help: 'Used when history is started in a new folder.', control: PM51.input(c.branch, { action: 'pm51-source-branch', label: 'Default branch name', placeholder: 'main' }) },
           { label: 'Default code service', help: 'Where new repositories are created.', control: PM51.select(c.service, withCurrent(['None', ...services], c.service), { action: 'pm51-source-cfg', data: { key: 'service' }, label: 'Default code service' }) }
         ])
       }),
@@ -283,7 +282,6 @@
         title: 'Safety', help: 'Guard rails for the assistant and for you.',
         body: PM51.rows([
           { label: 'Protect main branch', help: 'Changes to main go through a review first.', control: PM51.toggle(!!c.protectMain, { action: 'pm51-source-cfg-toggle', data: { key: 'protectMain' }, label: 'Protect main branch' }) },
-          { label: 'Force push', help: 'Rewrites shared history. Never is safest.', control: PM51.segmented(c.forcePush, ['Never', 'Ask'], { action: 'pm51-source-cfg-seg', data: { key: 'forcePush' }, label: 'Force push' }) },
           { label: 'Ask before deleting branches', control: PM51.toggle(!!c.askDelete, { action: 'pm51-source-cfg-toggle', data: { key: 'askDelete' }, label: 'Ask before deleting branches' }) },
           { label: 'Back up before risky operations', help: 'A recovery point is saved first.', control: PM51.toggle(!!c.backupRisky, { action: 'pm51-source-cfg-toggle', data: { key: 'backupRisky' }, label: 'Back up before risky operations' }) }
         ])

@@ -167,21 +167,15 @@
 
   /* ---------- History ---------------------------------------------------------- */
   function renderHistory() {
-    const runs = t().runs, ev = t().evidence;
+    const runs = t().runs;
     const items = runs.map((r, i) => ({ title: r.profile, meta: `${r.time} · ${r.duration}`, pill: PM51.pill(r.result), avatar: icon('test'), action: 'pm51-testing-open-run', data: { index: i } }));
     return [
       PM51.section({
         title: 'Recent runs', help: 'Open a run to see what happened.',
         body: items.length ? PM51.list(items) : PM51.empty('No runs yet', 'Runs appear here after tests have run.')
       }),
-      PM51.section({
-        title: 'Evidence', help: 'What is kept from each run so you can look back.',
-        body: PM51.rows([
-          { label: 'Keep evidence for', control: PM51.select(String(ev.keepDays || 90), [['30', '30 days'], ['60', '60 days'], ['90', '90 days'], ['180', '180 days'], ['365', '1 year']], { action: 'pm51-testing-keep', label: 'Keep evidence for' }) },
-          { label: 'Capture screenshots', help: 'Pictures of the screen when a browser check fails.', control: PM51.toggle(!!ev.screenshots, { action: 'pm51-testing-evidence', data: { key: 'screenshots' }, label: 'Capture screenshots' }) },
-          { label: 'Capture logs', help: 'Output from failing stages, with secrets hidden.', control: PM51.toggle(!!ev.logs, { action: 'pm51-testing-evidence', data: { key: 'logs' }, label: 'Capture logs' }) }
-        ])
-      }),
+      /* Wave S: the canonical evidence rows (planning.verification.evidence-*, branching.worktrees.evidence-*)
+         render inline on this tab, so the kit keeps no duplicate keep-days / screenshots / logs rows. */
       PM51.advanced([
         PM51.section({ title: 'Policy', body: PM51.kv([['Secrets', 'Hidden before anything is saved'], ['Passing runs', 'Summary only'], ['Failing runs', 'Full output with secrets hidden'], ['Video', 'Only when a workflow needs motion review']]) }),
         actionRow(PM51.btn({ label: 'Export evidence', small: true, icon: 'download', action: 'pm51-testing-export' }), PM51.btn({ label: 'Clear history', small: true, icon: 'trash', action: 'pm51-testing-clear-history', disabled: !runs.length, reason: 'There are no runs to clear.' }))
@@ -321,8 +315,6 @@
         + PM51.note('Example data only. Real runs show their own stages and evidence here.', 'info')
     });
   });
-  PM51.onChange('testing-keep', el => { t().evidence.keepDays = Number(el.value); saveState(); });
-  PM51.on('testing-evidence', el => { const key = ds(el, 'key'); const ev = t().evidence; if (!['screenshots', 'logs'].includes(key)) return; ev[key] = !ev[key]; saveState(); PM51.refresh(ID, { swap: false }); });
   PM51.on('testing-export', () => PM51.panel({
     title: 'Export evidence', subtitle: 'A folder with the runs you choose, safe to share.',
     body: PM51.panelSection('What goes in', PM51.kv([['Runs', String(t().runs.length)], ['Includes', 'Summaries, logs with secrets hidden, screenshots'], ['Format', 'One folder per run']])) + PM51.note('Files are written only in the real app. Nothing was exported in this preview.', 'info')

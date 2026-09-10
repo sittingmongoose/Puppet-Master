@@ -4,7 +4,7 @@
 (function(){
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,B=window.PM56_BRAINSTORM,P=window.PM56_PLANS;
- const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={synthesis:{label:'Explore and synthesize',summary:'Independent ideas → debate → one Deep Plan'},constraint:{label:'A constraint outweighs the vote',summary:'Popular option rejected → dissent retained → offline Plan'}};
  const hash=x=>{let h=2166136261;for(const c of JSON.stringify(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'demo:'+((h>>>0).toString(16)).padStart(8,'0');};
  function fixture(kind){
@@ -35,7 +35,7 @@
   const tid='brainstorm-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));
   Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:fixture(kind).objective+' Collection contents must stay on the device.'}]});c.state.threads.push(base);
   Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
+  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};sessions.set(tid,active);C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
   // Prepare the final dialog before switching: switchThread already renders
   // the app and overlays. Do not render the old page and this modal twice.
   c.state.dialog={type:'collab-configure'};c.switchThread(tid);
@@ -47,10 +47,12 @@
   const steps=[{id:'snapshot',title:'Define the local snapshot',text:'Bind collection and query identities without uploading content.',dependsOn:[],acceptance:'The snapshot contains only local collection data and preserves input rank.'},{id:'query',title:'Implement latest-query filtering',text:'Apply the local algorithm in the worker and discard responses for obsolete queries.',dependsOn:['snapshot'],acceptance:'Padded queries return [z, a]; older query results cannot replace a newer result.'},{id:'measure',title:'Verify behavior and measure latency',text:'Compare local and worker paths on target devices before enabling the feature.',dependsOn:['query'],acceptance:'Record device timings and a rollback test; do not claim an improvement without measurement.'}];
   return {proposals,votes,steps};
  }
- function play(){
-  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
-  if(r.participants.length!==r.brainstorm.attempts.length){active.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
-  const session=active,records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
+ function play(runId){
+  const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
+  if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;
+  session.runId=r.id;
+  if(r.participants.length!==r.brainstorm.attempts.length){session.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
+  const records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
   const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
   const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:clone(records.proposals[i])}));
   actions.push(()=>B.normalize(r.id,x()));
@@ -88,9 +90,16 @@
   if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.bs-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}
  },true);
  E.slot('composerBelow',c=>guide(c));
- E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided BrainStorm workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_BRAINSTORM_DEMOS={start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
+
+ function controls(c,r){
+  const session=sessions.get(r.threadId);
+  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
+  return '<button class="soft-button" data-action="brainstorm-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Play exploration</button>';
+ }
+ E.action('brainstorm-example-play',(c,b)=>{play(b.dataset.run);return true;});
+ window.PM56_BRAINSTORM_DEMOS={controls,start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
 })();

@@ -11,7 +11,7 @@
   PM51.style(`
 #panel-settings .pm51-history-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 #panel-settings .pm51-history-filter .text-control { width: 200px; }
-#panel-settings .pm51-history-filter .select-control { min-width: 130px; }
+#panel-settings .pm51-history-filter .pm51-dd-trigger { min-width: 130px; }
 #panel-settings .pm51-history-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 `);
 

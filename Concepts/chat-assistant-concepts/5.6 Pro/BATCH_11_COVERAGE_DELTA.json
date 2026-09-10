@@ -1,0 +1,110 @@
+{
+  "batch_id": "assistant-demo-b11-eli5",
+  "source_matrix": "pm-assistant-demo-matrix.csv",
+  "source_matrix_sha256": "7948e105c5468dbcdf902d4aa3246791cf17ba6877acb3835c162a601510643e",
+  "source_rows": [
+    {
+      "coverage_id": "v2:FEATURE-005",
+      "feature_id": "eli5",
+      "feature_name": "ELI5",
+      "source_category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+      "source_statement": "ELI5 has an application/project default and independent per-thread override.",
+      "source_record_sha256": "0415b7f2ebe2f0801d64169dc97b25133ec17397d05e68776f7771d51221e429",
+      "owner_hint": "Plans/assistant-chat-design.md",
+      "scenario_a_required": "Change per-thread explanation preference",
+      "scenario_b_required": "Reset to project default without changing work products",
+      "candidate_gallery_ids": "[\"gallery-030\", \"gallery-097\"]",
+      "executed_subcheck_ids": "[]",
+      "coverage_status": "OUTCOME_GAP",
+      "two_meaningful_demos_verified": "False",
+      "additional_native_proof": "False",
+      "supersession": "retained; no semantic closure inferred from this census",
+      "unmet_acceptance": "All source clauses must be checked in two meaningful user-visible workflows.",
+      "evidence_limit": "Gallery launch is not outcome proof. API/registered-handler checks are separate concept subchecks; neither proves native persistence, authority, or full motion."
+    },
+    {
+      "coverage_id": "v2:FEATURE-006",
+      "feature_id": "eli5",
+      "feature_name": "ELI5",
+      "source_category": "Teach, Teacher, memory, Debug, ELI5, Revert and Context Lens",
+      "source_statement": "ELI5 changes explanation style only and never mutates code, Plan, artifact, evidence or identifiers.",
+      "source_record_sha256": "58df70582630dbb8c6ccab8884af26925ad567560349e8b5ff39da4fe152b4bd",
+      "owner_hint": "Plans/assistant-chat-design.md",
+      "scenario_a_required": "Change per-thread explanation preference",
+      "scenario_b_required": "Reset to project default without changing work products",
+      "candidate_gallery_ids": "[\"gallery-030\", \"gallery-097\"]",
+      "executed_subcheck_ids": "[]",
+      "coverage_status": "OUTCOME_GAP",
+      "two_meaningful_demos_verified": "False",
+      "additional_native_proof": "False",
+      "supersession": "retained; no semantic closure inferred from this census",
+      "unmet_acceptance": "All source clauses must be checked in two meaningful user-visible workflows.",
+      "evidence_limit": "Gallery launch is not outcome proof. API/registered-handler checks are separate concept subchecks; neither proves native persistence, authority, or full motion."
+    }
+  ],
+  "html_sha256": "f6aaee8c6bba07e93c392e15e30636c11845b72604c4f2363e766fb01956f0ef",
+  "scenario_ids": [
+    "B11-ELI5-OVERRIDE",
+    "B11-ELI5-INHERIT"
+  ],
+  "coverage_status": "BOUNDED_CONCEPT_WORKFLOWS_VERIFIED",
+  "two_meaningful_demos_verified": true,
+  "production_provider_semantics_verified": false,
+  "native_persistence_verified": false,
+  "global_completion_claim": false,
+  "evidence": {
+    "functional": [
+      "eli5-tests/RESULTS.json",
+      "eli5-supplemental/RESULTS.json"
+    ],
+    "prior_regressions": "final2-regressions/final-tests/RUNS.json",
+    "recordings": [
+      "recordings/override-result.json",
+      "recordings/inherit-result.json"
+    ],
+    "visual_review": "recordings/FINAL_REVIEW.json"
+  },
+  "next_checkpoint": {
+    "number": 12,
+    "title": "Back Seat Driver",
+    "feature_groups": [
+      "bsd",
+      "context-details"
+    ],
+    "source_rows": [
+      "v2:BSD-001",
+      "v2:BSD-002",
+      "v2:BSD-003",
+      "v2:BSD-004",
+      "v2:BSD-005",
+      "v2:BSD-006",
+      "v2:BSD-007",
+      "v2:BSD-008",
+      "v2:BSD-009",
+      "v2:BSD-010",
+      "v2:BSD-011",
+      "v2:BSD-012",
+      "v2:BSD-013",
+      "v2:BSD-014",
+      "v2:BSD-015",
+      "v2:BSD-016",
+      "v2:BSD-017",
+      "v2:BSD-018",
+      "v2:BSD-019",
+      "v2:BSD-020",
+      "v3:APR-028",
+      "v3:APR-009",
+      "v3:APR-061"
+    ],
+    "status": "PLANNED_NOT_EXECUTED"
+  },
+  "remaining": [
+    "Uniform 60fps capture/rendering: actual long acquisition and RAF intervals remain recorded.",
+    "General complex panel/replay performance and arbitrary intermediate-scroll Activity-pill occlusion.",
+    "Complete retained 551-row/67-feature-group demo coverage and all-feature motion acceptance.",
+    "Native persistence, reload/crash recovery, production provider requests and arbitrary semantic simplification.",
+    "Settings, onboarding, canonical Plans and full repository governance acceptance are not evaluated or changed here.",
+    "Direct file/loopback browser navigation is policy-blocked before application load; functional/capture tests load full frozen HTML with set_content."
+  ],
+  "source_row_rule": "Original source rows above are preserved byte-value-equivalent; their historical coverage fields are not silently rewritten. This delta adds bounded evidence, not global/native closure."
+}

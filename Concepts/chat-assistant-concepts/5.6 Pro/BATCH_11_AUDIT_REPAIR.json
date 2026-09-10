@@ -1,0 +1,19 @@
+{
+  "kind": "bounded_b11_audit_repair_recovered_delivery",
+  "baseline_html_sha256": "f6aaee8c6bba07e93c392e15e30636c11845b72604c4f2363e766fb01956f0ef",
+  "repaired_html_sha256": "342b6b0f7becc5a2379dda36dea5a1c855c7d2ebc54982fbe179272561ff23a3",
+  "repaired_html_bytes": 3145110,
+  "repaired_git_blob": "1c8bfa59ba5eb32b42669e4cdc772b533eb411da",
+  "source_recovered_from": "earlier repair operation record",
+  "batch12_started": false,
+  "repository_modified": false,
+  "historical_checkpoints": "unchanged; certify earlier build states only",
+  "fresh_evidence": "see separate recovery evidence archive for actual completed runs",
+  "open": [
+    "global rendering stalls",
+    "intermediate-scroll Activity-pill overlap",
+    "APR-016",
+    "APR-018",
+    "native persistence and providers"
+  ]
+}

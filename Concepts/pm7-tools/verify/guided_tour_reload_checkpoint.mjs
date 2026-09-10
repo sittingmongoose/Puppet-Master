@@ -87,6 +87,62 @@ try{
     assert.equal(result.applied.status,'applied');assert.equal(result.resumed.action_status,'complete');assert.equal(result.resumed.last_result.status,'no_change');assert.equal(result.layoutUnchanged,true);assert.equal(result.receiptDelta,0);
     const ended=await page.evaluate(()=>window.PM7_GUIDED_TOUR.skip());assert.equal(ended.skipped,true);assert.equal(ended.layout_snapshot_restored,true);
   });
+  for(const undo of [false,true]){
+    await fresh();
+    await check(`a completed Chat move ${undo?'loses its stale credit after undo':'keeps its credit when unchanged'} on Resume`,async()=>{
+      const result=await page.evaluate(undo=>{
+        const api=window.PM7_GUIDED_TOUR,workspace=window.PM_HOME_WORKSPACE;api.start({step:'tour.workspace.chat.dock'});
+        const initial=JSON.parse(JSON.stringify(workspace.layout.surfaces.find(row=>row.surface_instance_id==='chat')));
+        document.querySelector('#pm7-guided-tour [data-tour-action="try"]').click();api.target_adapter.perform('ui.guided_tour.show_me');api.pause();const completed=api.resume();api.pause();
+        if(undo)workspace.moveSurface('chat',initial.host,{index:initial.slot_index,bounds:initial.floating_bounds});
+        const before=JSON.stringify(api.target_adapter.layoutSnapshot()),ownerReceipts=workspace.receipt_log.length,effects=api.snapshot().effect_receipts.length,original=JSON.stringify(api.target_adapter.captureOriginal()),resumed=api.resume();
+        return {completed,resumed,layoutUnchanged:before===JSON.stringify(api.target_adapter.layoutSnapshot()),originalUnchanged:original===JSON.stringify(api.target_adapter.captureOriginal()),receiptDelta:workspace.receipt_log.length-ownerReceipts,effectDelta:resumed.effect_receipts.length-effects};
+      },undo);
+      assert.equal(result.completed.action_status,'complete');assert.equal(result.resumed.action_status,undo?'idle':'complete');assert.equal(result.resumed.step_id,'tour.workspace.chat.dock');assert.equal(result.layoutUnchanged,true);assert.equal(result.originalUnchanged,true);assert.equal(result.receiptDelta,0);assert.equal(result.effectDelta,0);
+      if(undo){assert.equal(await page.locator('#pm7-guided-tour [data-tour-action="try"]').count(),1);assert.equal(await page.locator('#pm7-guided-tour [data-tour-action="continue"]').count(),0);}
+    });
+  }
+  await fresh();
+  await check('widget Show Me retains its original target when another widget becomes hidden',async()=>{
+    const result=await page.evaluate(()=>{
+      const tour=window.PM7_GUIDED_TOUR,usage=window.PM7_USAGE,step='tour.workspace.widget.manage';
+      tour.start({step});const id=tour.target_adapter.descriptor(step).key.slice(step.length+1),room=usage.state.room,other=usage.roomWidgets(room).find(row=>row.id!==id);
+      if(!other)throw Error('This fixture requires another widget.');usage.state.hidden[room+':'+other.id]=true;usage.rerender();
+      const action=tour.target_adapter.perform('ui.guided_tour.show_me'),after=tour.snapshot();
+      return {id,room,action,active:after.active_widget_id,target:tour.target_adapter.descriptor(step).key,otherStillHidden:usage.state.hidden[room+':'+other.id]===true,currentRoom:usage.state.room};
+    });
+    assert.equal(result.action.status,'applied');assert.equal(result.active,result.id);assert.equal(result.target,'tour.workspace.widget.manage:'+result.id);assert.equal(result.otherStillHidden,true);assert.equal(result.currentRoom,result.room);
+  });
+  await fresh();
+  await check('changed Usage room blocks Resume without retargeting or changing a widget',async()=>{
+    const result=await page.evaluate(()=>{
+      const tour=window.PM7_GUIDED_TOUR,usage=window.PM7_USAGE,step='tour.workspace.widget.manage';tour.start({step});const descriptor=tour.target_adapter.descriptor(step),room=usage.state.room;
+      tour.pause();const other=Object.keys(usage.rooms).find(key=>key!==room);if(!other)throw Error('This fixture requires another Usage room.');usage.state.room=other;usage.rerender();
+      const before=JSON.stringify({hidden:usage.state.hidden,layout:usage.state.layout,room:usage.state.room}),resumed=tour.resume(),action=tour.target_adapter.perform('ui.guided_tour.show_me');
+      return {resumed,action,before,after:JSON.stringify({hidden:usage.state.hidden,layout:usage.state.layout,room:usage.state.room}),key:descriptor.key,currentKey:tour.target_adapter.descriptor(step).key};
+    });
+    assert.equal(result.resumed.status,'recovery_required');assert.equal(result.resumed.action_status,'failed');assert.equal(result.action.owner_action_dispatched,false);assert.equal(result.before,result.after);assert.equal(result.key,result.currentKey);assert.equal(result.resumed.target.selector,'');
+  });
+  await fresh();
+  await check('removed Chat-owned reply sends Resume back to the question without resending it',async()=>{
+    await page.evaluate(()=>{window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'});const state=window.PM7_GUIDED_TOUR.snapshot();window.PM_DEMO.chat.send(state.teacher_thread_id,'What happens before Puppet Master changes my files?');});
+    await page.waitForFunction(()=>window.PM7_GUIDED_TOUR.snapshot().teacher_message_sent===true);
+    const result=await page.evaluate(()=>{
+      const api=window.PM7_GUIDED_TOUR,d=window.PM_DEMO;document.querySelector('#pm7-guided-tour [data-tour-action="try"]').click();api.pause();const completed=api.resume();api.pause();
+      const thread=d.state.chat.threads[completed.teacher_thread_id];thread.messages.pop();const before=JSON.stringify(thread.messages),receipts=api.snapshot().effect_receipts.length,resumed=api.resume();
+      return {completed,resumed,unchanged:before===JSON.stringify(thread.messages),receiptDelta:resumed.effect_receipts.length-receipts,thread:d.state.chat.activeThread};
+    });
+    assert.equal(result.completed.action_status,'complete');assert.equal(result.resumed.step_id,'tour.chat.teacher.ask');assert.equal(result.resumed.action_status,'idle');assert.equal(result.resumed.teacher_message_sent,false);assert.equal(result.unchanged,true);assert.equal(result.receiptDelta,0);assert.equal(result.thread,result.completed.teacher_thread_id);
+  });
+  await fresh();
+  await check('ELI5 follows the bound reply when the Chat owner inserts an earlier message',async()=>{
+    await page.evaluate(()=>{window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'});const state=window.PM7_GUIDED_TOUR.snapshot();window.PM_DEMO.chat.send(state.teacher_thread_id,'What happens before Puppet Master changes my files?');});
+    await page.waitForFunction(()=>window.PM7_GUIDED_TOUR.snapshot().teacher_message_sent===true);
+    await page.evaluate(()=>{const state=window.PM7_GUIDED_TOUR.snapshot(),thread=window.PM_DEMO.state.chat.threads[state.teacher_thread_id],reply=thread.messages[thread.messages.length-1],user=thread.messages[thread.messages.length-2],other={role:'assistant',html:'Unrelated owner message',guided_example:false};window.__teacherIdentity={reply,user,other,replyBefore:reply.html,userBefore:user.text};thread.messages.unshift(other);});
+    await page.locator('#pm7gt-eli5').click();
+    const result=await page.evaluate(()=>({changed:window.__teacherIdentity.reply.html!==window.__teacherIdentity.replyBefore,userUnchanged:window.__teacherIdentity.user.text===window.__teacherIdentity.userBefore,unrelated:window.__teacherIdentity.other.html,state:window.PM7_GUIDED_TOUR.snapshot()}));
+    assert.equal(result.changed,true);assert.equal(result.userUnchanged,true);assert.equal(result.unrelated,'Unrelated owner message');assert.equal(result.state.teacher_copy_mode,'eli5');assert.equal(result.state.teacher_answer_id,'before_files_change');
+  });
   await fresh();
   await check('same-tab Teacher Resume preserves the paused draft and thread',async()=>{
     await page.evaluate(()=>window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'}));

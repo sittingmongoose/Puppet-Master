@@ -2,9 +2,10 @@
 (function () {
   const ID = 'skills';
   const KEY = 'tools-integrations';
-  const PREF_DEFAULTS = { autoFind: true, show: 'All', autoInvoke: true, autoEnable: false, share: false, budget: 'Balanced' };
+  /* Wave S: the canonical extensions.skills.* rows (discovery, rescan, which skills to show, auto-run,
+     auto-enable, sharing, catalog budget, validate) render inline below the list, so the kit keeps no
+     duplicate preference rows of its own. */
   const skills = () => PM51.s().skills;
-  const prefs = () => { const s = PM51.s(); if (!s.skillsPrefs) s.skillsPrefs = clone(PREF_DEFAULTS); return s.skillsPrefs; };
   const byId = id => skills().find(x => x.id === id);
   const bundled = s => /bundled/i.test(s.origin || '');
   const slug = name => String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'skill';
@@ -30,9 +31,7 @@
 
   function render() {
     const list = skills();
-    const p = prefs();
-    const shown = p.show === 'Only enabled' ? list.filter(s => s.enabled) : list;
-    const items = shown.map(s => ({
+    const items = list.map(s => ({
       title: s.name, meta: `${s.origin} · version ${s.version}`, note: noteFor(s), pill: PM51.pill(s.state),
       avatar: h(PM51.initials(s.name)),
       end: PM51.toggle(!!s.enabled, { action: 'pm51-skills-toggle', data: { id: s.id }, label: `${s.name} enabled` }),
@@ -42,25 +41,11 @@
       PM51.section({
         title: 'Your skills', help: 'Turn a skill off to keep it out of the way. Open one to see what it needs.',
         action: { label: 'Add skill', icon: 'plus', action: 'pm51-skills-add' },
-        body: items.length ? PM51.list(items) : (list.length ? PM51.empty('No skills are turned on', 'Every skill is off right now. Show all skills to turn one on.') : PM51.empty('No skills yet', 'Add one from the catalog.', { label: 'Add skill', action: 'pm51-skills-add', icon: 'plus' }))
-      }),
-      PM51.section({
-        title: 'Finding skills',
-        body: PM51.rows([
-          { label: 'Find skills automatically', help: 'Looks in this project and in places you added before.', control: PM51.toggle(!!p.autoFind, { action: 'pm51-skills-pref', data: { pref: 'autoFind' }, label: 'Find skills automatically' }) },
-          { label: 'Rescan now', help: 'Look again right away.', action: { label: 'Rescan', icon: 'refresh', action: 'pm51-skills-rescan' } },
-          { label: 'Show in assistant', help: 'Which skills the assistant offers while you work.', control: PM51.select(p.show, ['All', 'Only enabled'], { action: 'pm51-skills-show', label: 'Show in assistant' }) }
-        ])
+        body: items.length ? PM51.list(items) : PM51.empty('No skills yet', 'Add one from the catalog.', { label: 'Add skill', action: 'pm51-skills-add', icon: 'plus' })
       }),
       PM51.advanced([
         PM51.section({ title: 'What each skill may do', help: 'Skills only get what they ask for. You can allow or remove a skill at any time.', body: PM51.rows(list.map(s => ({ label: s.name, help: s.state === 'Needs permission' ? 'Waiting for your permission.' : '', value: permissionText(s) }))) }),
-        PM51.rows([
-          { label: 'Let skills start on their own', help: 'The assistant may pick up a skill without asking when it clearly fits the job.', control: PM51.toggle(!!p.autoInvoke, { action: 'pm51-skills-pref', data: { pref: 'autoInvoke' }, label: 'Let skills start on their own' }) },
-          { label: 'Turn on new skills automatically', help: 'Skills found by a scan start turned on.', control: PM51.toggle(!!p.autoEnable, { action: 'pm51-skills-pref', data: { pref: 'autoEnable' }, label: 'Turn on new skills automatically' }) },
-          { label: 'Share skills with other agent tools', help: 'Other assistants on this computer may use the same skills.', control: PM51.toggle(!!p.share, { action: 'pm51-skills-pref', data: { pref: 'share' }, label: 'Share skills with other agent tools' }) },
-          { label: 'Room for skills in each conversation', help: 'How much of the assistant\'s attention skills may take up.', control: PM51.select(p.budget, ['Small', 'Balanced', 'Large'], { action: 'pm51-skills-budget', label: 'Room for skills' }) }
-        ]),
-        PM51.section({ title: 'Technical details', body: PM51.kv([['Skill folders', '.skills in this project · shared skills in your profile'], ['Catalog', 'Puppet Master skill catalog'], ['Skills on your list', String(list.length)]]) + actionRow(PM51.btn({ label: 'Validate all skills', small: true, icon: 'test', action: 'pm51-skills-validate' }), PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-skills-diagnostics' })) })
+        PM51.section({ title: 'Technical details', body: PM51.kv([['Skill folders', '.skills in this project · shared skills in your profile'], ['Catalog', 'Puppet Master skill catalog'], ['Skills on your list', String(list.length)]]) + actionRow(PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-skills-diagnostics' })) })
       ].join(''))
     ].join('');
     return PM51.page({ id: ID, key: KEY, body, quiet: [{ label: 'Reset skill settings', action: 'pm51-skills-reset' }, { label: 'How skills work', action: 'pm51-skills-help' }] });
@@ -88,9 +73,6 @@
     if (el.classList.contains('pm51-toggle')) { el.classList.toggle('on', s.enabled); el.setAttribute('aria-checked', String(s.enabled)); }
     saveState(); PM51.refresh(ID, { swap: false });
   });
-  PM51.on('skills-pref', el => { const key = ds(el, 'pref'); if (!(key in PREF_DEFAULTS)) return; prefs()[key] = !prefs()[key]; saveState(); PM51.refresh(ID, { swap: false }); });
-  PM51.onChange('skills-show', el => { prefs().show = el.value; saveState(); PM51.refresh(ID, { swap: false }); });
-  PM51.onChange('skills-budget', el => { prefs().budget = el.value; saveState(); });
   PM51.on('skills-add', () => openDialog({
     title: 'Add skill', subtitle: 'Skills are small packs of know-how the assistant can follow.',
     body: formField('Where from', 'source', 'catalog', { type: 'select', full: true, choices: [{ value: 'catalog', label: 'From the catalog' }, { value: 'github', label: 'From GitHub' }, { value: 'disk', label: 'From a folder on this computer' }] })
@@ -105,11 +87,6 @@
       PM51.toast('Skill added to your list', 'Example data only. Nothing was downloaded in this preview.', 'info');
     }
   }));
-  PM51.on('skills-rescan', () => PM51.check({ title: 'Rescan for skills', steps: [
-    { title: 'Project folders', desc: 'Looked in .skills and .claude/skills' },
-    { title: 'Places you added before', desc: 'Looked in 2 folders from earlier scans' },
-    { title: 'New skills', desc: 'Nothing new in this preview', status: 'Example', tone: 'info' }
-  ] }));
   PM51.on('skills-check', el => {
     const s = byId(ds(el, 'id')); if (!s) return;
     const reqs = s.requirements || [];
@@ -137,18 +114,13 @@
       PM51.s().skills = skills().filter(x => x.id !== s.id); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast(`${s.name} removed`, 'It is no longer on your list.');
     }, true);
   });
-  PM51.on('skills-validate', () => {
-    const list = skills();
-    const ready = list.filter(s => s.state === 'Ready').length;
-    PM51.check({ title: 'Validate all skills', outcome: `${ready} of ${list.length} ready · example data`, tone: ready === list.length ? 'ready' : 'attention', steps: list.map(s => ({ title: s.name, desc: noteFor(s) || 'Instructions read and requirements met', status: s.state === 'Ready' ? 'Checked' : s.state, tone: s.state === 'Ready' ? 'ready' : 'attention' })) });
-  });
   PM51.on('skills-diagnostics', () => PM51.check({ title: 'Skill diagnostics', steps: [
     { title: 'Skill folders readable', desc: 'Project and profile folders opened' },
     { title: 'Instructions parsed', desc: `${skills().length} skills read without errors`, status: 'Example', tone: 'info' },
     { title: 'Catalog reachable', desc: 'Checked through your network', status: 'Example', tone: 'info' }
   ] }));
-  PM51.on('skills-reset', () => PM51.confirm('Reset skill settings?', 'Your skills list and finding options go back to their defaults.', 'Reset', () => {
-    PM51.s().skills = clone(DATA.skills); PM51.s().skillsPrefs = clone(PREF_DEFAULTS); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Skills reset', 'Defaults are back.');
+  PM51.on('skills-reset', () => PM51.confirm('Reset skill settings?', 'Your skills list goes back to its defaults. The skill settings below the list keep their values; use Details to reset one.', 'Reset', () => {
+    PM51.s().skills = clone(DATA.skills); delete PM51.s().skillsPrefs; saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Skills reset', 'Defaults are back.');
   }));
   PM51.on('skills-help', () => PM51.panel({
     title: 'How skills work',

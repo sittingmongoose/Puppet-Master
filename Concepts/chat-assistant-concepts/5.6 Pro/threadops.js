@@ -313,6 +313,7 @@
 
     var nt = {
       id: nid('branch'),
+      projectId: src.projectId || src.project_id || null,
       title: src.title + suffix,
       status: 'idle',
       pinned: false,
@@ -366,6 +367,7 @@
       id: nid('rp'),
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
+      projectId: t.projectId || t.project_id || null,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
       atTurn: ordinaryCovered.length,
       messageCount: ordinaryCovered.length,
@@ -412,6 +414,8 @@
     if (!src) return null;
     var nt = {
       id: nid('rpbranch'),
+      // New points freeze scope; legacy points inherit their source's project.
+      projectId: Object.prototype.hasOwnProperty.call(rp, 'projectId') ? rp.projectId : (src.projectId || src.project_id || null),
       title: src.title + ' · ' + rp.label,
       status: 'idle', pinned: false, archived: false, unread: 0, updated: 'now',
       model: src.model,
@@ -1032,7 +1036,7 @@
       id: 'rp', label: 'Create restore point', icon: 'restore', disabled: true,
       reason: rpHere.label + ' already covers this turn. Restore points are immutable, so a second one here would say the same thing.'
     } : {
-      id: 'rp', label: 'Create restore point', icon: 'restore', action: 'create-restore-point', value: m.id,
+      id: 'rp', label: 'Create restore point', icon: 'restore', action: 'create-restore-point', value: m.id, threadId: t.id,
       detail: 'An immutable snapshot of the first ' + plural(idx + 1, 'turn', 'turns') + '. Dispatches ' + CMD.createRestorePoint + '.'
     });
     items.push(isLast ? {
@@ -1548,12 +1552,16 @@
   });
 
   A('create-restore-point', function (ctx, btn) {
-    var mid = btn.dataset.value, tid = btn.dataset.id;
+    var mid = btn.dataset.value, tid = btn.dataset.thread || btn.dataset.id;
     var t = tid ? threadById(ctx, tid) : ctx.activeThread();
-    if (!t) return true;
-    var m = null;
-    if (mid) for (var i = 0; i < t.messages.length; i++) if (t.messages[i].id === mid) m = t.messages[i];
+    var m = t && mid ? t.messages.find(function (x) { return x.id === mid && !isInternalNote(x); }) : null;
+    // A stale selected message must not silently become a latest-turn snapshot.
+    if (!t || (mid && !m)) {
+      ctx.toast('Restore point not created', 'The source thread or selected message is no longer available.');
+      return true;
+    }
     createRestorePoint(ctx, t, m, null);
+    ctx.renderApp();
     if (ctx.state.dialog && ctx.state.dialog.type === 'threadops-restore') { ctx.renderOverlays(); focusSoon(); }
     return true;
   });

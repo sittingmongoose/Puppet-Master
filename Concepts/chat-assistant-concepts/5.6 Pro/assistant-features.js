@@ -579,6 +579,7 @@
      "presentation only" a visible, checkable claim rather than a promise.
      ===================================================================== */
   function eli5Effective(threadId){
+    if(window.PM56_ELI5) return window.PM56_ELI5.resolve(threadId).effective;
     if(Object.prototype.hasOwnProperty.call(F.eli5.perThread, threadId)) return F.eli5.perThread[threadId];
     return F.eli5.appDefault;
   }
@@ -590,6 +591,7 @@
   }
 
   EXT.action('af-eli5-toggle', function(ctx){
+    if(window.PM56_ELI5){ window.PM56_ELI5.setThread(ctx.thread.id,!eli5Effective(ctx.thread.id));ctx.renderApp();return true; }
     var tid=ctx.thread.id;
     F.eli5.perThread[tid] = !eli5Effective(tid);
     ctx.state.capabilities.eli5 = F.eli5.perThread[tid];
@@ -597,6 +599,7 @@
     return true;
   });
   EXT.action('af-eli5-reset', function(ctx){
+    if(window.PM56_ELI5){ window.PM56_ELI5.setThread(ctx.thread.id,null);ctx.renderApp();return true; }
     var tid=ctx.thread.id;
     delete F.eli5.perThread[tid];
     ctx.state.capabilities.eli5 = F.eli5.appDefault;
@@ -605,6 +608,7 @@
     return true;
   });
   EXT.action('af-eli5-demo', function(ctx){
+    if(window.PM56_ELI5_DEMOS){window.PM56_ELI5_DEMOS.start('override');return true;}
     var th=ctx.thread;
     ctx.appendMessage({ id:afUid('eli5prev'), role:'system', type:'af-eli5-preview',
       code:'CREATE INDEX CONCURRENTLY ix_events_tenant_created\n  ON events (tenant_id, created_at DESC);',
@@ -620,11 +624,13 @@
      one. Runs BEFORE the native handler and declines — the same technique
      composer-state.js documents for select-thread. See honesty note 1. */
   EXT.chainAction('set-eli5-cap', function(ctx, btn){
+    if(window.PM56_ELI5){ if(['On','Off'].includes(btn.dataset.value))window.PM56_ELI5.setThread(ctx.thread.id,btn.dataset.value==='On');ctx.closeMenu();ctx.renderApp();return true; }
     F.eli5.perThread[ctx.thread.id] = (btn.dataset.value==='On');
     return false;
   });
 
   function eli5WandRows(ctx){
+    if(window.PM56_ELI5) return window.PM56_ELI5.wand(ctx);
     var icon=ctx.icon;
     var tid=ctx.thread.id;
     var eff=eli5Effective(tid), override=eli5HasOverride(tid);
@@ -1262,7 +1268,7 @@
     var attempts=(F.title.attempts[tid]||[]).slice(-3).reverse();
     var body='<h3 class="af-settings-h3">ELI5 default</h3>'+
       '<label class="af-toggle-row"><input type="checkbox" data-af-input="eli5-default"'+(F.eli5.appDefault?' checked':'')+'>'+
-      '<span>Explain simply by default in new conversations</span></label>'+
+      '<span>Explain simply in conversations that inherit this default</span></label>'+
       '<p class="af-note">Any thread can still set its own override from the wand.</p>'+
       '<h3 class="af-settings-h3">Thread titles</h3>'+
       '<div class="af-policy-rows af-scroll-rows">'+
@@ -1283,7 +1289,7 @@
   document.addEventListener('change', function(e){
     var t=e.target; if(!t || !t.getAttribute) return;
     if(t.getAttribute('data-af-input')==='eli5-default'){
-      F.eli5.appDefault=!!t.checked;
+      if(window.PM56_ELI5)window.PM56_ELI5.setApplication(!!t.checked);else F.eli5.appDefault=!!t.checked;
       var c=ctxNow(); if(c){ eli5Reconcile(c); c.renderApp(); }
     }
   });

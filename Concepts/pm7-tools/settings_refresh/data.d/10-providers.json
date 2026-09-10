@@ -1,0 +1,1083 @@
+{
+  "providers": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "kind": "CLI",
+      "connect": "Installs on your server",
+      "status": "active",
+      "statusLabel": "Ready · 2 accounts",
+      "installed": true,
+      "signedIn": true,
+      "version": "1.8.4",
+      "installSource": "Official provider installer",
+      "defaultAccount": "work-claude",
+      "product": "Claude subscription",
+      "nextAction": "addaccount",
+      "signIn": [
+        [
+          "signin-claude",
+          "Sign In to Claude"
+        ],
+        [
+          "signin-console",
+          "Sign In to Console / API"
+        ],
+        [
+          "signin-sso",
+          "Use SSO"
+        ],
+        [
+          "import-auth",
+          "Import existing Claude auth"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": true
+      },
+      "lastCheck": "4 min ago",
+      "accounts": [
+        {
+          "id": "work-claude",
+          "nickname": "Work Claude",
+          "identity": "Playty Team",
+          "active": true,
+          "default": true,
+          "method": "Provider CLI sign-in",
+          "health": "Healthy",
+          "usage": {
+            "text": "Included window available",
+            "windows": {
+              "fiveHour": {
+                "pct": 78,
+                "reset": "Resets in 1h 42m"
+              },
+              "weekly": {
+                "pct": 54,
+                "reset": "Resets in 4d 11h"
+              }
+            }
+          },
+          "defaultModel": "claude-sonnet",
+          "models": [
+            {
+              "id": "claude-opus",
+              "enabled": true
+            },
+            {
+              "id": "claude-sonnet",
+              "enabled": true
+            },
+            {
+              "id": "claude-haiku",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "personal-claude",
+          "nickname": "Personal",
+          "identity": "Personal Max",
+          "active": true,
+          "default": false,
+          "method": "Provider CLI sign-in",
+          "health": "Limit reached",
+          "usage": {
+            "text": "Window used up until the reset",
+            "windows": {
+              "fiveHour": {
+                "pct": 100,
+                "reset": "Resets at 4:00 PM"
+              },
+              "weekly": {
+                "pct": 61
+              }
+            }
+          },
+          "defaultModel": "claude-sonnet",
+          "models": [
+            {
+              "id": "claude-opus",
+              "enabled": true
+            },
+            {
+              "id": "claude-sonnet",
+              "enabled": true
+            },
+            {
+              "id": "claude-haiku",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "claude-opus",
+          "name": "Claude Opus",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "vision",
+            "tools",
+            "long-context"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "claude-sonnet",
+          "name": "Claude Sonnet",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "vision",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "claude-haiku",
+          "name": "Claude Haiku",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "vision",
+            "tools"
+          ],
+          "context": "Standard",
+          "health": "Ready"
+        }
+      ],
+      "routing": {
+        "defaultModel": "claude-sonnet",
+        "accountOrder": [
+          "work-claude",
+          "personal-claude"
+        ],
+        "exhaustion": "Try next eligible account, then fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [
+        "Installed 1.8.4 from the official installer",
+        "Signed in as Playty Team"
+      ],
+      "windows": {
+        "fiveHour": "5-hour window",
+        "weekly": "Weekly window"
+      }
+    },
+    {
+      "id": "openai-codex",
+      "name": "Codex",
+      "kind": "Account",
+      "connect": "Sign in with ChatGPT or use an API key",
+      "status": "active",
+      "statusLabel": "Ready · 1 account",
+      "installed": true,
+      "signedIn": true,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "jared",
+      "product": "ChatGPT Plus",
+      "nextAction": "addaccount",
+      "signIn": [
+        [
+          "signin-chatgpt",
+          "Sign in with ChatGPT"
+        ],
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": true
+      },
+      "lastCheck": "12 min ago",
+      "accounts": [
+        {
+          "id": "jared",
+          "nickname": "Jared",
+          "identity": "jared@platyr.com",
+          "active": true,
+          "default": true,
+          "method": "ChatGPT sign-in",
+          "health": "Healthy",
+          "usage": {
+            "text": "Plan window available",
+            "windows": {
+              "fiveHour": {
+                "pct": 63,
+                "reset": "Resets in 3h 18m"
+              },
+              "weekly": {
+                "pct": 41,
+                "reset": "Resets in 5d 2h"
+              }
+            }
+          },
+          "defaultModel": "gpt-codex",
+          "models": [
+            {
+              "id": "gpt-codex",
+              "enabled": true
+            },
+            {
+              "id": "gpt-general",
+              "enabled": true
+            },
+            {
+              "id": "gpt-image",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "gpt-codex",
+          "name": "Codex coding model",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools",
+            "browser"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "gpt-general",
+          "name": "GPT general model",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "reasoning",
+            "vision",
+            "tools",
+            "browser"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "gpt-image",
+          "name": "GPT Image",
+          "plan": "Metered",
+          "enabled": true,
+          "caps": [
+            "image-generation",
+            "image-editing"
+          ],
+          "context": "N/A",
+          "health": "Ready"
+        }
+      ],
+      "routing": {
+        "defaultModel": "gpt-codex",
+        "accountOrder": [
+          "jared"
+        ],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [
+        "ChatGPT sign-in current"
+      ],
+      "windows": {
+        "fiveHour": "5-hour window",
+        "weekly": "Weekly window"
+      }
+    },
+    {
+      "id": "antigravity",
+      "name": "Antigravity CLI",
+      "kind": "CLI",
+      "connect": "Installs on your server · Google sign-in",
+      "status": "attention",
+      "statusLabel": "Needs sign-in",
+      "installed": true,
+      "signedIn": false,
+      "version": "0.9.2",
+      "installSource": "Official provider installer",
+      "defaultAccount": "",
+      "product": "Google account",
+      "nextAction": "signin",
+      "signIn": [
+        [
+          "signin-google",
+          "Sign in with Google"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Sign in first",
+      "accounts": [],
+      "models": [
+        {
+          "id": "gemini-pro-last",
+          "name": "Gemini Pro · last known",
+          "plan": "Unknown",
+          "enabled": false,
+          "caps": [
+            "reasoning",
+            "vision",
+            "tools",
+            "browser"
+          ],
+          "context": "Large",
+          "health": "Sign-in required"
+        },
+        {
+          "id": "gemini-flash-last",
+          "name": "Gemini Flash · last known",
+          "plan": "Unknown",
+          "enabled": false,
+          "caps": [
+            "reasoning",
+            "vision",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Sign-in required"
+        },
+        {
+          "id": "agy-claude-sonnet",
+          "name": "Claude Sonnet via Antigravity · last known",
+          "plan": "Unknown",
+          "enabled": false,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Sign-in required"
+        }
+      ],
+      "routing": {
+        "defaultModel": "gemini-pro-last",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [
+        "The CLI is installed but signed out; the model list is the last known one"
+      ],
+      "windows": {}
+    },
+    {
+      "id": "gemini-direct",
+      "name": "Gemini Direct",
+      "kind": "API",
+      "connect": "API key",
+      "status": "setup",
+      "statusLabel": "Not set up",
+      "installed": true,
+      "signedIn": false,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "apikey",
+      "signIn": [
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Not checked",
+      "accounts": [],
+      "models": [
+        {
+          "id": "gemini-pro",
+          "name": "Gemini Pro",
+          "plan": "Metered",
+          "enabled": false,
+          "caps": [
+            "reasoning",
+            "vision",
+            "tools"
+          ],
+          "context": "Very large",
+          "health": "Not set up"
+        },
+        {
+          "id": "gemini-flash",
+          "name": "Gemini Flash",
+          "plan": "Metered",
+          "enabled": false,
+          "caps": [
+            "reasoning",
+            "vision",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Not set up"
+        }
+      ],
+      "routing": {
+        "defaultModel": "gemini-pro",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "advancedFields": [
+        "Google Cloud project id (only for paid tiers)"
+      ],
+      "windows": {
+        "monthly": "Monthly budget"
+      }
+    },
+    {
+      "id": "cursor-cli",
+      "name": "Cursor CLI",
+      "kind": "CLI",
+      "connect": "Installs on your server · browser sign-in",
+      "status": "not-installed",
+      "statusLabel": "Not installed",
+      "installed": false,
+      "signedIn": false,
+      "version": "",
+      "installSource": "Official provider installer",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "install",
+      "signIn": [
+        [
+          "signin-browser",
+          "Sign in in browser"
+        ],
+        [
+          "import-auth",
+          "Import existing Cursor auth"
+        ]
+      ],
+      "readiness": {
+        "installed": false,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Install first",
+      "accounts": [],
+      "models": [],
+      "routing": {
+        "defaultModel": "",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "advancedFields": [
+        "API key (instead of browser sign-in)"
+      ],
+      "windows": {}
+    },
+    {
+      "id": "github-copilot",
+      "name": "GitHub Copilot",
+      "kind": "Account",
+      "connect": "Sign in with GitHub",
+      "status": "attention",
+      "statusLabel": "Needs attention · no active seat",
+      "installed": true,
+      "signedIn": true,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "sittingmongoose",
+      "product": "Individual",
+      "nextAction": "addaccount",
+      "signIn": [
+        [
+          "signin-github",
+          "Sign in with GitHub"
+        ]
+      ],
+      "entitlement": "Individual",
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": false
+      },
+      "lastCheck": "9 min ago",
+      "accounts": [
+        {
+          "id": "sittingmongoose",
+          "nickname": "sittingmongoose",
+          "identity": "GitHub",
+          "active": true,
+          "default": true,
+          "method": "GitHub sign-in",
+          "health": "No active seat",
+          "usage": {
+            "text": "No active seat · usage unavailable",
+            "windows": {}
+          },
+          "defaultModel": "",
+          "models": [
+            {
+              "id": "copilot-catalog",
+              "enabled": false
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "copilot-catalog",
+          "name": "Last known catalog",
+          "plan": "Unavailable",
+          "enabled": false,
+          "caps": [
+            "code",
+            "tools"
+          ],
+          "context": "Unknown",
+          "health": "No active seat"
+        }
+      ],
+      "routing": {
+        "defaultModel": "copilot-catalog",
+        "accountOrder": [
+          "sittingmongoose"
+        ],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [
+        "Signed in, but this GitHub account has no Copilot seat"
+      ],
+      "help": "Separate from your GitHub code service sign-in.",
+      "windows": {
+        "monthly": "Premium requests"
+      }
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "kind": "Server",
+      "connect": "A managed server, or attach to one you run",
+      "status": "setup",
+      "statusLabel": "Not set up",
+      "installed": false,
+      "signedIn": false,
+      "version": "",
+      "installSource": "Managed server",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "attach",
+      "signIn": [
+        [
+          "managed-server",
+          "Use a managed server"
+        ],
+        [
+          "attach-server",
+          "Attach to Existing Server"
+        ]
+      ],
+      "readiness": {
+        "installed": false,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Not checked",
+      "accounts": [],
+      "models": [],
+      "routing": {
+        "defaultModel": "",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "help": "The OpenCode server has its own sign-in; model credentials are separate.",
+      "windows": {}
+    },
+    {
+      "id": "kimi-coding",
+      "name": "Kimi For Coding",
+      "kind": "Account",
+      "connect": "Coding plan",
+      "status": "active",
+      "statusLabel": "Ready · 1 account",
+      "installed": true,
+      "signedIn": true,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "kimi-main",
+      "product": "Kimi coding plan",
+      "nextAction": "addaccount",
+      "signIn": [
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": true
+      },
+      "lastCheck": "1 h ago",
+      "accounts": [
+        {
+          "id": "kimi-main",
+          "nickname": "Kimi plan",
+          "identity": "jared",
+          "active": true,
+          "default": true,
+          "method": "Plan credential",
+          "health": "Healthy",
+          "usage": {
+            "text": "Plan window available",
+            "windows": {
+              "weekly": {
+                "pct": 52,
+                "reset": "Resets in 4d 11h"
+              },
+              "monthly": {
+                "pct": 36,
+                "reset": "Resets Oct 1"
+              }
+            }
+          },
+          "defaultModel": "kimi-k3",
+          "models": [
+            {
+              "id": "kimi-k3",
+              "enabled": true
+            },
+            {
+              "id": "kimi-fast",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "kimi-k3",
+          "name": "Kimi K3",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools",
+            "long-context"
+          ],
+          "context": "Very large",
+          "health": "Ready"
+        },
+        {
+          "id": "kimi-fast",
+          "name": "Kimi Fast",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        }
+      ],
+      "routing": {
+        "defaultModel": "kimi-k3",
+        "accountOrder": [
+          "kimi-main"
+        ],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "windows": {
+        "weekly": "Weekly window",
+        "monthly": "Monthly window"
+      }
+    },
+    {
+      "id": "minimax-coding",
+      "name": "MiniMax Coding Plan",
+      "kind": "Account",
+      "connect": "Coding plan · Global or CN",
+      "status": "setup",
+      "statusLabel": "Not set up",
+      "installed": true,
+      "signedIn": false,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "apikey",
+      "regions": [
+        "Global",
+        "CN"
+      ],
+      "signIn": [
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Not checked",
+      "accounts": [],
+      "models": [
+        {
+          "id": "minimax-m3",
+          "name": "MiniMax M3",
+          "plan": "Plan",
+          "enabled": false,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Not set up"
+        }
+      ],
+      "routing": {
+        "defaultModel": "minimax-m3",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "windows": {
+        "fiveHour": "5-hour window"
+      }
+    },
+    {
+      "id": "zai-coding",
+      "name": "Z.AI / Zhipu Coding Plan",
+      "kind": "Account",
+      "connect": "Coding plan",
+      "status": "setup",
+      "statusLabel": "Not set up",
+      "installed": true,
+      "signedIn": false,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "apikey",
+      "signIn": [
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": false,
+        "accountChosen": false,
+        "modelsReady": false
+      },
+      "lastCheck": "Not checked",
+      "accounts": [],
+      "models": [
+        {
+          "id": "glm-6",
+          "name": "GLM 6",
+          "plan": "Plan",
+          "enabled": false,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Not set up"
+        }
+      ],
+      "routing": {
+        "defaultModel": "glm-6",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "windows": {}
+    },
+    {
+      "id": "qwen-coding",
+      "name": "Alibaba / Qwen Coding Plan",
+      "kind": "Account",
+      "connect": "Coding plan · Global or CN",
+      "status": "active",
+      "statusLabel": "Ready · 2 accounts",
+      "installed": true,
+      "signedIn": true,
+      "version": "Direct",
+      "installSource": "No install needed",
+      "defaultAccount": "qwen-global",
+      "product": "Qwen coding plan",
+      "nextAction": "addaccount",
+      "regions": [
+        "Global",
+        "CN"
+      ],
+      "signIn": [
+        [
+          "apikey",
+          "Enter API Key"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": true
+      },
+      "lastCheck": "35 min ago",
+      "accounts": [
+        {
+          "id": "qwen-global",
+          "nickname": "Qwen Global",
+          "identity": "jared",
+          "active": true,
+          "default": true,
+          "method": "Plan credential",
+          "health": "Healthy",
+          "usage": {
+            "text": "Plan window available",
+            "windows": {
+              "fiveHour": {
+                "pct": 12
+              },
+              "weekly": {
+                "pct": 44,
+                "reset": "Resets in 2d 6h"
+              },
+              "monthly": {
+                "pct": 31,
+                "reset": "Resets Oct 1"
+              }
+            }
+          },
+          "defaultModel": "qwen-coder",
+          "models": [
+            {
+              "id": "qwen-coder",
+              "enabled": true
+            },
+            {
+              "id": "qwen-vision",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "qwen-cn",
+          "nickname": "Qwen CN",
+          "identity": "jared",
+          "active": true,
+          "default": false,
+          "method": "Plan credential",
+          "health": "Healthy",
+          "usage": {
+            "text": "Plan window available",
+            "windows": {
+              "fiveHour": {
+                "pct": 0
+              },
+              "weekly": {
+                "pct": 9
+              },
+              "monthly": {
+                "pct": 6,
+                "reset": "Resets Oct 1"
+              }
+            }
+          },
+          "defaultModel": "qwen-coder",
+          "models": [
+            {
+              "id": "qwen-coder",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "qwen-coder",
+          "name": "Qwen Coder",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "qwen-vision",
+          "name": "Qwen Vision",
+          "plan": "Included",
+          "enabled": true,
+          "caps": [
+            "vision",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        }
+      ],
+      "routing": {
+        "defaultModel": "qwen-coder",
+        "accountOrder": [
+          "qwen-global",
+          "qwen-cn"
+        ],
+        "exhaustion": "Try next eligible account, then fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "windows": {
+        "fiveHour": "5-hour window",
+        "weekly": "Weekly window",
+        "monthly": "Monthly window"
+      }
+    },
+    {
+      "id": "free-models",
+      "name": "Free Models",
+      "kind": "Grouped routes",
+      "connect": "Free and free-limited routes",
+      "status": "active",
+      "statusLabel": "Ready · 4 of 5 routes on",
+      "installed": true,
+      "signedIn": true,
+      "version": "Group",
+      "installSource": "No install needed",
+      "defaultAccount": "",
+      "product": "Free routes",
+      "nextAction": "routes",
+      "signIn": [],
+      "readiness": {
+        "installed": true,
+        "signedIn": true,
+        "accountChosen": true,
+        "modelsReady": true
+      },
+      "lastCheck": "2 h ago",
+      "accounts": [],
+      "models": [
+        {
+          "id": "or-deepseek",
+          "name": "DeepSeek route",
+          "plan": "Free",
+          "enabled": true,
+          "caps": [
+            "code",
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        },
+        {
+          "id": "or-llama",
+          "name": "Llama route",
+          "plan": "Free",
+          "enabled": true,
+          "caps": [
+            "reasoning",
+            "tools"
+          ],
+          "context": "Large",
+          "health": "Ready"
+        }
+      ],
+      "routing": {
+        "defaultModel": "or-deepseek",
+        "accountOrder": [],
+        "exhaustion": "Try the next free route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "windows": {}
+    },
+    {
+      "id": "local-endpoint",
+      "name": "Local / offline endpoint",
+      "kind": "URL",
+      "connect": "An address on your network",
+      "status": "setup",
+      "statusLabel": "Not set up",
+      "installed": true,
+      "signedIn": false,
+      "version": "",
+      "installSource": "No install needed",
+      "defaultAccount": "",
+      "product": "",
+      "nextAction": "address",
+      "signIn": [
+        [
+          "address",
+          "Enter address"
+        ]
+      ],
+      "readiness": {
+        "installed": true,
+        "signedIn": false,
+        "accountChosen": true,
+        "modelsReady": false
+      },
+      "lastCheck": "Not checked",
+      "accounts": [],
+      "models": [],
+      "routing": {
+        "defaultModel": "",
+        "accountOrder": [],
+        "exhaustion": "Use fallback route",
+        "paidOverage": false
+      },
+      "diagnostics": [],
+      "help": "Works without an outside account when the endpoint is already running.",
+      "windows": {}
+    }
+  ]
+}

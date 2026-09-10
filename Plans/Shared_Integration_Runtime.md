@@ -125,7 +125,24 @@ ContractRef: ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Tools.
 
 ### 4.7 Ownership-aware maintenance
 
-Proof-based installation ownership controls maintenance authority. PM-managed Tool Store generations may follow their reviewed automatic-maintenance policy. External, package-manager, user, and organization-managed installations default to check-and-notify: discovery and a verified update-available projection are allowed, but download, package-manager invocation, replacement, activation, repair, rollback, configuration mutation, and removal are not. A one-operation human action or a separately reviewed durable delegation may authorize only the exact ownership-compatible plan it names; `Auto`, `On`, Project demand, provider demand, baseline availability, a successful check, or prior unrelated consent is never delegation. Unknown ownership remains manual-only. Revocation or staleness of delegation returns the installation to check-and-notify before another effect.
+Proof-based installation ownership controls maintenance authority. PM-managed Tool Store generations may follow their reviewed automatic-maintenance policy. External, package-manager, user, and organization-managed installations initially default to check-and-notify: discovery and a verified update-available projection are allowed, but download, package-manager invocation, replacement, activation, repair, rollback, configuration mutation, and removal are not. A one-operation human action or a separately reviewed durable delegation may authorize only the exact ownership-compatible plan it names; provisioning `Auto`, `On`, Project demand, provider demand, baseline availability, a successful check, or prior unrelated consent is never delegation. Unknown ownership remains manual-only. Revocation or staleness removes automatic mutation authority before another effect; it never turns background checks or routine notifications back on against the user's saved choices.
+
+The September 9 user correction distinguishes ordinary **update choices** from those internal authority checks. Every installed-tool consumer uses the same choices below; ownership categories are not substitutes for the user-facing update setting.
+
+| User-facing choice | Meaning |
+|---|---|
+| Check for updates | One manual check now; do not install and do not change the saved automatic policy. |
+| Check for updates and install | One manual check followed by the exact approved update transaction if an eligible update exists; this action grants no future automatic-install permission. |
+| Automatically check for updates | Permit background checks and report update availability according to the separate notification preference; do not install automatically. |
+| Automatically check for updates and install | Permit background checks and eligible update transactions under the recorded, ownership-compatible maintenance policy. |
+| Do not check automatically | Disable background update checks, including startup checks; the two manual actions remain available subject to ordinary availability and permission checks. |
+| Do not notify | Suppress routine update-available notices independently of checking/installing. It does not hide failures, security warnings, required approvals, or the current update state in Details/ObservableWork. |
+
+`installation_update_preferences` in the existing IRT-008 contract owns `automatic_check_policy=disabled|check_only|check_and_install` and `routine_update_notifications=notify|do_not_notify`. The two check-now choices are actions, not additional persisted automatic modes. The initial external-installation default remains `check_only` plus `notify`; this correction introduces no new check frequency, global application-updater setting, or first-acquisition permission. Settings and other consumers edit the same installation-scoped lifecycle policy for the exact installation/Host/Environment, carrying current policy generation and owner references through the existing lifecycle owner; Project focus, a Client-local copy, and capability provisioning `Off|Auto|On` cannot silently replace it.
+
+Selecting automatic installation is an explicit review of that policy's exact target and allowed effects. For an externally managed installation, the same reviewed choice may establish the required scoped durable delegation; do not also require unrelated one-operation consent on each scheduled update. PM-managed maintenance uses its reviewed policy. A manual check-and-install action instead uses one-operation consent without requiring ongoing delegation. Plain checks and notification preferences require neither mutation grant. Missing ownership-compatible authority leaves requested automatic installation visibly ineffective (`effective_automatic_policy=check_only`, `automatic_install_disabled_reason=approval_required`) rather than dispatching an install; `disabled` remains disabled. The internal `authority_basis=none|pm_managed_policy|one_operation_consent|durable_delegation` is not a second update-mode picker. Unselected authority fields cannot be used as fallback permission.
+
+Automatic installation still rechecks ownership, exact target/current generations, source/provenance/signature, compatibility, license/cost/elevation, Permissions, active-work safety, transactional activation, and rollback. A changed authority scope or newly required approval blocks the effect and remains visible even under `do_not_notify`. Update preferences never grant repair/removal/configuration effects beyond the reviewed plan, never silently acquire a missing provider CLI, and never change Puppet Master's separate app-update/install-and-restart policy. Preference persistence, scheduling, command registration, native handlers, and real update/rollback execution are not proved by this static contract; the retained deferred command inventory below remains binding.
 
 ContractRef: ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Permissions_System.md
 
@@ -197,7 +214,7 @@ ContractRef: SchemaID:pm.shared_runtime.contracts.v1, Invariant:ObservableWorkTr
 
 `RuntimeResourceGovernor` is the sole shared policy/admission service for CPU, memory, process, watcher, descriptor, queue, log, artifact, network, port, test-host, debug, Eval, MCP, and worktree pressure. The Home Server may distribute policy, but the exact Execution Host enforces it and reports effective limits, admission, reduction, preemption, and refusal.
 
-Admission returns `admitted`, `admitted_reduced`, `queued`, `blocked`, or `rejected` with effective limits, reason, policy generation, host observation, lease refs, and reevaluation trigger. A consumer cannot convert `blocked` into local best effort.
+For read/import compatibility of predecessor shared-runtime rows only, legacy admission records use `admitted`, `admitted_reduced`, `queued`, `blocked`, or `rejected` with effective limits, reason, policy generation, host observation, lease refs, and reevaluation trigger. The Full-Thread Performance And Continuity Addendum below owns all new producer/consumer values and the one-time normalization map. A consumer cannot convert a legacy `blocked` value into local best effort or emit a new predecessor admission record.
 
 This owner also defines the shared physical-parent budget tree, reserved control/synthesis/verification capacity, host-pressure backoff, bounded queue admission, idle-resource reaping, low-memory reduction, and Explain/Resume admission evidence. Storage persists governor inputs, decisions, and observations only; Containers, Orchestrator, Testing, Debug, Browser, MCP, and Worktree owners may request domain ceilings but cannot create peer governors or compute an effective host admission independently.
 
@@ -205,7 +222,7 @@ ContractRef: Invariant:HostLocalRuntimeResourceGovernor, SchemaID:pm.shared_runt
 
 ### 8.2 ObservableWork
 
-`ObservableWork` records `queued`, `preflighting`, `awaiting_permission`, `awaiting_user`, `awaiting_resource`, `running`, `retry_backoff`, `reconciling`, `cancelling`, `succeeded`, `failed`, `cancelled`, and `recovery_required`. Every nonterminal wait carries a typed wait reason and next reevaluation condition. Progress includes completed/total units only when the producer can defend the denominator; otherwise it uses phase plus bounded activity evidence.
+For read/import compatibility of predecessor shared-runtime rows only, legacy `ObservableWork` records use `queued`, `preflighting`, `awaiting_permission`, `awaiting_user`, `awaiting_resource`, `running`, `retry_backoff`, `reconciling`, `cancelling`, `succeeded`, `failed`, `cancelled`, and `recovery_required`. The Full-Thread Performance And Continuity Addendum below owns all new producer/consumer values and one-time normalization; these predecessor spellings authorize no new legacy writes. Every nonterminal wait carries a typed wait reason and next reevaluation condition. Progress includes completed/total units only when the producer can defend the denominator; otherwise it uses phase plus bounded activity evidence.
 
 Server-owned providers, Goals, agents, tests, and approved operations continue when a client disconnects. Client projections reattach by identity and cursor; they do not become execution owners.
 
@@ -813,6 +830,8 @@ The `testing-route` and `migrating-route` values describe active routed work, no
 
 This addendum supersedes only the closed admission/status spellings in §8.1-§8.2; it does not supersede or duplicate the services. Existing `pm.shared_runtime.contracts.v1` rows are compatibility/import values and normalize once at the owner boundary: `admitted_reduced -> admitted_degraded`; a legacy `blocked` row becomes `permission_blocked` or `resource_blocked` from its mandatory typed reason and otherwise fails migration; `rejected` requires the same reasoned blocked disposition or fails migration. Legacy work values normalize as `preflighting -> starting`, `awaiting_permission -> waiting(permission)`, `awaiting_user -> waiting(user)`, `awaiting_resource -> waiting(resource)`, `retry_backoff -> retrying`, transport `reconciling -> reconnecting`, non-transport `reconciling -> starting` with the preserved reconcile phase, `cancelling -> running` with the human phase `Cancelling` and no further cancel action, `succeeded -> completed`, and `recovery_required -> recovery-required`; unchanged spellings remain unchanged. New producers emit only `pm.full_thread_runtime.contracts.v1` values. Consumers do not expose both vocabularies, and ambiguous legacy rows fail closed rather than inventing a status.
 
+Runtime identity scope is explicit. Every full-thread identity envelope carries `scope_kind = application | project` plus exact `server_id`, `execution_host_id`, `execution_environment_id`, and `topology_generation` bindings. Application scope requires `project_id`, `project_home_server_id`, and `named_plan_id` to be present as null; it never receives a fabricated default Project. Project scope requires non-empty `project_id` and `project_home_server_id`. `named_plan_id` is nullable, is used only when the operation references an actual `NamedPlan`, and when present must resolve through the Named Plan owner to that same Project; other owner-specific Plan identities retain their owner-defined fields and are not broadly renamed. Missing or unknown scope, an unresolved authoritative binding, a cross-Project Named Plan or Project Home Server edge, or a Host/Environment/topology mismatch fails closed. Legacy rows may acquire scope only once at the owner/import boundary when exactly one authoritative binding proves it; ambiguous rows are quarantined. The schema and fixtures close the value shape and deterministic negative cases only; runtime owner lookup, adapter behavior, and migration execution remain unproved.
+
 ### Logical concurrency, fairness, and physical budgets
 
 Chats, threads, named Plans, Goals, WorkNodes, Browser tasks, provider attempts, and agents are durable logical state machines rather than dedicated operating-system threads or processes. The canonical execution lanes are the Slint UI thread, a protected interactive control/projection reserve, the async I/O runtime, a bounded CPU work-stealing pool, a bounded blocking/platform/install pool, ordered storage append/projector/index lanes, and governed external-process pools. Consumers may request a domain ceiling, but they may not instantiate a peer pool governor or multiply independent Tokio, Rayon, Tantivy, renderer, CEF, compiler, test, LSP, provider-helper, compression, or image-library budgets without a governor mapping.
@@ -912,12 +931,13 @@ unblocks: [SIR-016, SIR-017, UF-097]
 acceptance_criteria:
   - Governor decision, command outcome, and work lifecycle remain three independent closed axes.
   - Legacy shared-runtime admission/work spellings normalize once through the explicit compatibility map; new producers and consumers expose only the full-thread vocabulary and ambiguous rows fail closed.
+  - Application and Project scope remain explicit without a fake Project; every record preserves exact Server, Host, Environment, and topology bindings, and a non-null named_plan_id resolves to a NamedPlan in the same Project or fails closed.
   - ObservableWork accepts every retained state from accepted through recovery-required, including testing-route and migrating-route, without treating a route as successful proof.
   - The PMConcept7 browser fixture exposes exactly seven deterministic ObservableWork evidence rows, six GovernorDecision outcome rows, and five bounded-list families (findings, history, logs, provider, receipts), each with stable identity, truthful reason/reevaluation metadata, bounded row/byte metadata, and an explicit browser-fixture-only boundary; these rows do not prove native or production execution.
   - Same-frame acknowledgement is durable-command acknowledgement only and rolls back truthfully on later failure.
   - Stable-ID virtualized projections reject stale generations and hidden-surface paint suppression never cancels durable work.
   - Reconnect, restart, sleep, and external return preserve logical identity and deduplicate replay/projector overlap.
-validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Concepts/pm7-tools/verify/full_thread_performance.mjs, future command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Plans/shared_runtime_contracts.schema.json, Plans/storage_value_registry.json, tests/test_pm_runtime_vocabulary_migration.py, tests/test_pm_runtime_identity_scope.py, Concepts/pm7-tools/verify/full_thread_performance.mjs, future command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
 risk_class: full_thread_axis_or_identity_conflation
 reasoning_tier: high
 context_scope: full_thread_runtime_axes_and_continuity
@@ -1147,7 +1167,7 @@ Adjacent installation command candidates are also retained without admission:
 | `cmd.installation.check_updates` | `deferred_noncanonical_candidate` | Owner contract, central registration, native route, and runtime evidence are absent. |
 | `cmd.installation.remove` | `deferred_noncanonical_candidate` | Destructive ownership/data-disposition contract and native route are absent. |
 | `cmd.installation.open_logs` | `deferred_noncanonical_candidate` | Bounded redacted projection contract and native route are absent. |
-| `cmd.installation.update_policy.set` | `deferred_noncanonical_candidate` | Policy owner, permission, and persistence contract are absent. |
+| `cmd.installation.update_policy.set` | `deferred_noncanonical_candidate` | Section 4.7 specifies preference behavior; exact command registration, request/result binding, permission/persistence implementation, and native route remain absent. |
 | `cmd.installation.attach_external` | `deferred_noncanonical_candidate` | External ownership/provenance binding contract and native route are absent. |
 | `cmd.installation.detach_external` | `deferred_noncanonical_candidate` | External ownership/data-disposition contract and native route are absent. |
 | `cmd.installation.open_details` | `deferred_noncanonical_candidate` | Bounded redacted projection contract and native route are absent. |
@@ -1162,8 +1182,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
-  Externally and package-manager managed installations default to check-and-notify; Puppet Master may mutate them only
-  under a current explicit ownership-compatible action or delegation. Identical provisioning or update requests across
+  Installed-tool maintenance offers separate manual check/check-and-install actions, automatic check-only or
+  check-and-install policy, disabled background checks, and independent routine update notifications. Externally and
+  package-manager managed installations initially default to check-and-notify; Puppet Master may mutate them only
+  under a current explicit ownership-compatible action or delegation. Internal authority is not the user-facing update mode. Identical provisioning or update requests across
   Projects and Clients coalesce at the logical installation-operation layer only when every effect, target, artifact,
   authority, and policy fingerprint matches; one attempt fans out separately current results without sharing caller
   authority, and conflicting requests never coalesce. The PM Tool Store and isolated profiles use explicit durable
@@ -1178,6 +1200,9 @@ unblocks: [SCS-007]
 acceptance_criteria:
   - IRT-008 makes external and package-manager ownership check-and-notify by default; automatic PM maintenance, Auto/On, demand, successful discovery, and baseline presence cannot mutate without a current explicit action or reviewed delegation.
   - IRT-008 positive fixtures separate PM-managed automatic maintenance, external notification, one-operation consent, and delegated maintenance; negatives reject automatic download/package-manager/configuration/activation/removal and unknown-owner mutation.
+  - IRT-008 uses installation_update_preferences for disabled, check_only, or check_and_install background policy and an independent notify or do_not_notify preference; manual check/check-and-install never edits those saved choices.
+  - IRT-008 authorizes a manual update with current one-operation consent without durable delegation, and a reviewed automatic update with a current PM-managed policy or exact durable delegation without one-operation consent; no-grant checks and muted notifications remain representable.
+  - IRT-008 rejects automatic-install effectiveness without current PM-managed policy or delegation, mismatched authority branches, and a preference that re-enables disabled checks or suppresses required approval/failure/security feedback. Grant revocation removes effects without overriding disabled checks or routine-notification suppression.
   - IRT-009 coalesces one identical provisioning/update attempt across Projects/Clients only when operation kind, desired effect, product/package/version/channel, source/provenance/artifact, exact Host/Environment, ownership/delegation generation, and policy generation match.
   - IRT-009 preserves per-waiter permission, approval, continuation, cancellation, currentness, and result; negatives vary each fingerprint/authority dimension, cancel one of two waiters, and submit conflicting install/update/remove states to prove no authority or cancellation fanout.
   - IRT-010 keeps Tool Store and isolated-profile roots on declared durable volumes across image and pod replacement, with product/profile isolation and restart/reconciliation receipts before readiness.
@@ -1185,16 +1210,17 @@ acceptance_criteria:
   - IRT-011 consumes the common AuthenticationProfile/CredentialAttachment contract and attaches only non-secret refs under exact provider/Host/Environment/repository/operation-capability scopes, expiry, revocation, owner generation, and broker enforcement.
   - IRT-011 negatives reject raw secret fields, expired/revoked/stale refs, provider/profile mismatch, Host/Environment/repository mismatch, operation/capability widening, and treating profile attachment as authentication/readiness proof.
   - Static schema/fixture success does not prove package-manager behavior, acquisition, update, persistence across replacement, broker isolation, or runtime recovery.
-validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, focused Egolite remediation validator, future ownership-maintenance positive/negative fixtures, future multi-Project/multi-Client coalescing matrix, future image/pod replacement recovery matrix, future broker attenuation and secret-isolation tests]
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, tests/test_pm_installation_update_preferences.py, focused Egolite remediation validator, future ownership-maintenance positive/negative fixtures, future multi-Project/multi-Client coalescing matrix, future image/pod replacement recovery matrix, future broker attenuation and secret-isolation tests]
 risk_class: installation_ownership_mutation_or_persistence_secret_failure
 reasoning_tier: high
 context_scope: integration_installation_and_credential_closure
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/Multi-Account_Connection_Spec.md, future InstallationLifecycleManager and CapabilityProvisioner, future credential-attachment enforcement]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011]
+source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011, source_ref:chat:user-update-options-correction-2026-09-09]
 preserved_exact_tokens: [check-and-notify, coalesce identical provisioning/update operations, Tool Store, isolated profiles, image replacement, pod replacement, AuthenticationProfile, CredentialAttachment]
 negative_constraints:
-  - Do not mutate an externally managed installation under an automatic PM maintenance policy.
+  - Do not mutate an externally managed installation under a PM-managed policy; a reviewed, exact durable delegation is required for its automatic updates.
+  - Do not substitute ownership/consent categories for ordinary user-facing update choices, conflate manual actions with saved automatic policy, or reset disabled checks and routine-notification preferences when authority is revoked.
   - Do not use StreamCoalescer, equal display text, or partial fingerprints as installation-operation deduplication authority.
   - Do not claim readiness after image/pod replacement until exact durable-root reconciliation succeeds.
   - Do not re-own AuthenticationProfile lifecycle, provider authentication policy, or credential custody.
@@ -1666,6 +1692,37 @@ Shared Integration Runtime remains the sole owner of the durable command outbox,
 
 Every projection is receipt/projection-only, event-silent, and marked `runtime_evidence_claimed=false`. Static schema acceptance does not establish a native handler, provider call, cloud account, OAuth registration, connector process, network route, secret-isolation result, or runtime success.
 
+**September 9 approved authentication-consumer reconciliation (SIR-032 / RAS-015):**
+`cmd.authentication.start|resume|cancel` remain the sole shared authentication lifecycle. For the
+broker-resolved hosted-Tailscale authorization operation only, current requests and results carry
+`client_handoff_policy=server_owned_authorized_client_handoff` and the non-secret `server_owned_handoff`
+binding in `Plans/shared_runtime_command_contracts.schema.json`. It references the existing Remote Access
+authorization session; it neither duplicates that record nor creates another operation. The outer
+`authentication_operation_id` remains the sole authentication identity. `initiating_client_id` and its
+session generation retain immutable origin lineage, not a requirement that the original Client remain
+connected. All other protected provider flows retain `initiating_active_client_only`.
+
+Before start, resume, cancellation, or result delivery, AuthenticationBroker resolves the named owner
+session and checks the same operation and revision, Server/connector, operation generation, current
+authorized Client/session and trust, the owner's existing `protected_action_ref`, approval/state and handoff generation, expiry/revocation,
+fresh protected-browser session, and exact return target/continuation. Client/session replacement requires
+a newly authorized handoff with a strictly newer handoff generation, fresh owner `protected_action_ref`, protected-session and
+continuation refs, and an explicitly authorized current-Client return context; it never transfers old
+protected content or navigates an arbitrary fallback Client. Repeating the same current request joins or
+returns its idempotent result rather than allocating another operation. A caller-provided provider label,
+owner reference, policy, or generation is not authority. A stale, revoked, expired, wrong-owner,
+wrong-operation, or mismatched return binding fails closed before any protected action. A timeout or
+cancellation returns its existing redacted terminal disposition and cannot revive the operation. Closing
+the original Client ends its protected browser session but does not cancel Server-owned authorization.
+
+The predecessor hosted-Tailscale initiating-Client-only shape is compatibility/import lineage only:
+it must resolve the current owner and obtain a new authorized handoff before dispatch, never merely
+rewrite the policy token or reuse an old URL. Each newly opened protected browser session keeps its own
+existing human-only Client fence. Protected URLs, cookies, browser contents, and credential bytes remain
+outside ordinary commands, results, receipts, events, logs, and durable projections. Schema/fixture checks
+exercise the typed boundary only; authoritative joins, handoff-generation comparisons, restart/race
+behavior, and native secret isolation still require runtime evidence.
+
 ### SIR-032 - Post-Integration Shared Consumer Boundary
 
 ```yaml
@@ -1684,15 +1741,19 @@ acceptance_criteria:
   - repository_automation requires an independent AutomationBinding and never derives automation authority from ForgeBinding or the selected shell.
   - Backup consumes outbox, governor, ObservableWork, lease, and exact auth continuation refs without transferring scheduler, crypto, repository, restore, or destination ownership.
   - The embedded connector carries exactly one Remote-Access-owned connector identity per PM Server and never a Project/WSL/environment/runner/replica/session identity.
+  - Hosted-Tailscale authentication consumes RAS-015 through server_owned_authorized_client_handoff and the exact Server-owned operation, current authorized Client/session, newly authorized handoff generation, fresh protected session, and exact current-Client return context; other protected providers retain initiating_active_client_only.
+  - Initial Client loss never cancels Server-owned authorization, but a new Client inherits no protected content and cannot resume without owner reauthorization; schema acceptance is not proof of live currentness, revocation, expiry, or idempotency joins.
   - handler_unavailable and read_only projections have mutation_dispatch_allowed=false; protected projections require the human-only boundary and expose no protected content to agents or adapters.
   - All records use receipt_projection_only_no_unregistered_eventrecord and runtime_evidence_claimed=false.
-validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, python3 scripts/pm-new-contracts-verify.py]
+validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_command_contract_fixtures.json, tests/test_pm_auth_handoff_contracts.py, python3 scripts/pm-new-contracts-verify.py]
 risk_class: shared_consumer_owner_drift_or_false_availability
 reasoning_tier: high
 context_scope: forge_backup_automation_connector_shared_consumption
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json]
 node_compile_hint: {mode: static_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - user-approval:2026-09-09:first-conflict-batch:authentication-handoff-reconciliation
+  - Plans/Remote_Access_System.md#RAS-015
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/01_AUTHORITY_SCOPE_AND_PRESERVATION.md:55-63
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:31-45
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:7-45

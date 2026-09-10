@@ -535,6 +535,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if (art.kind==='chart') body=renderChartEditor(art);
     else if (art.kind==='image') body=renderImageEditor(art);
     else if (art.kind==='evidence') body=renderEvidenceEditor(art);
+    else if (art.kind==='code') body=`<p>${esc(art.summary||'')}</p><pre class="code-block">${esc(art.content||art.body||'')}</pre>`;
     else body=`<p>${esc(art.summary)}</p><div class="code-block">Artifact source, versions, lineage, export, retry, and fallback views appear here.</div>`;
     return `<article class="editor-doc" data-artifact-id="${esc(art.id)}"><h1>${esc(art.title)}</h1>${meta}${art.status==='stale'?`<div class="event-card warning"><span class="event-icon">${icon('warning',14)}</span><div class="event-copy"><strong>A newer source revision exists</strong><p>Open version history, refresh this view, or keep the pinned version.</p></div></div>`:''}${art.status==='error'?`<div class="event-card danger"><span class="event-icon">${icon('warning',14)}</span><div class="event-copy"><strong>Renderer failed safely</strong><p>The source artifact is intact. Use source fallback or retry the native renderer.</p></div><button class="soft-button" data-action="retry-artifact" data-id="${esc(art.id)}">${icon('refresh',13)} Retry</button></div>`:''}${body}</article>`;
   }
@@ -3109,12 +3110,16 @@ recommended path                  migration 0043 + rollback</div></div></section
        path exactly as it was. Registered through the shared composer runtime
        so no module has to reopen this function. */
     const RTc = (window.PM56_RUNTIME||{}).composer;
+    const beforeSendCount=t.messages.length;
     if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
       for(let i=0;i<RTc.preSendHooks.length;i++){
         let claimed=false,decision=null;
         try{ decision=RTc.preSendHooks[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
         catch(err){ console.error('PM56 preSendHook threw', err); }
-        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();} renderApp();return; }
+        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();
+          const admitted=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+          if(admitted) RTc.commitAccepted?.(extCtx(),t,admitted);
+        } renderApp();return; }
       }
     }
     state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
@@ -3124,7 +3129,10 @@ recommended path                  migration 0043 + rollback</div></div></section
        clears the live field itself. Without this the message was sent and the
        text stayed visible in the box. */
     clearComposerField();
-    t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
+    const explanationPreference=window.PM56_ELI5?.resolve(t.id);
+    const admittedMessage={id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()};
+    if(explanationPreference?.ok)admittedMessage.explanationPreference=clone(explanationPreference);
+    t.messages.push(admittedMessage);
     const low=raw.toLowerCase();
     if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
       /* Plan owner authors the revision and receipt through the shared commit hook. */
@@ -3137,9 +3145,15 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/compact')){state.dialog={type:'compact'};}
     else if(low.startsWith('/todo')){state.activity={...state.activity,open:true,domain:'todo'};}
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
-    else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
+    else{
+      const example=window.PM56_ELI5_DEMOS?.reply(t,raw,explanationPreference,admittedMessage.id);
+      t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
+        ?'This example adds a reply to the conversation. You can try the message buttons and panels without changing your files.'
+        :'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString(),explanationPreference:clone(explanationPreference||null)});
+    }
     const finalMessage=t.messages[t.messages.length-1];
     if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
+    RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
   }
@@ -3447,7 +3461,15 @@ recommended path                  migration 0043 + rollback</div></div></section
     }
   });
 
-  document.addEventListener('pointermove',e=>{ lastPointer={x:e.clientX,y:e.clientY}; },{passive:true});
+  document.addEventListener('pointermove',e=>{
+    lastPointer={x:e.clientX,y:e.clientY};
+    if(state.hover?.type==='text'){
+      const anchor=e.target.closest?.('[data-hover-tip]');
+      if(!anchor||(anchor.dataset.hoverKey||'')!==(state.hover.key||'')){
+        clearTimeout(hoverTimer);state.hover=null;syncHoverCard();
+      }
+    }
+  },{passive:true});
   document.addEventListener('pointerover',e=>{
     /* Plain-text hover tips first so they still work inside open menus and
        drawers (those surfaces live under state.menu / overlay root). Instant
@@ -3459,7 +3481,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       clearTimeout(hoverTimer);
       const tipText=tip.dataset.hoverTip||'';
       hoverTimer=setTimeout(()=>{
-        if(!tip.isConnected) return;
+        if(!tip.isConnected || !tip.contains(document.elementFromPoint(lastPointer.x,lastPointer.y))) return;
         state.hover={type:'text',tip:tipText,key};
         /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
         syncHoverCard();

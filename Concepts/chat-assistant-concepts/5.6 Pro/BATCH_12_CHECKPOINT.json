@@ -1,0 +1,297 @@
+{
+  "batch_id": "assistant-demo-b12-bsd",
+  "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+  "baseline": "Installed guarded Batch 11 repair, exact supplied repaired archive",
+  "baseline_html_sha256": "342b6b0f7becc5a2379dda36dea5a1c855c7d2ebc54982fbe179272561ff23a3",
+  "source_archive_sha256": "96866da9008fa3645ef19d93df6cb9e2ca0aea5d38996ca89f6960ccb19e46dc",
+  "observed_repository_head_start": "43998719758a4ab32e04fee564fc7f81391237be",
+  "observed_repository_head_end": "43998719758a4ab32e04fee564fc7f81391237be",
+  "published_assistant_tree": "99591e56dc5f65c2fa360a8ebffe64bff5238021",
+  "published_assistant_baseline": "B10, intentionally not used to replace installed repaired B11",
+  "html": {
+    "bytes": 3188153,
+    "sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95",
+    "git_blob": "4e5d3191bbf962170e877ec9959f66a56908982e"
+  },
+  "scenario_ids": [
+    "B12-BSD-SURVIVES",
+    "B12-BSD-RESOLVES"
+  ],
+  "tests": {
+    "bsd_protocol_cases": 34,
+    "bsd_protocol_assertions": 173,
+    "bsd_browser_cases": 20,
+    "bsd_browser_assertions": 115,
+    "B1_B11_entry_points": 23,
+    "B1_B11_assertions": 1357,
+    "B11_repair_cases": 12,
+    "B11_repair_assertions": 67,
+    "recording_assertions": 32,
+    "recorded_frames": 1834,
+    "final_contact_sheets": 16
+  },
+  "evidence_directory": "final/ in separate evidence ZIP",
+  "proof_status": "LOCAL_CONCEPT_ONLY",
+  "full_feature_acceptance": false,
+  "motion": {
+    "status": "BOUNDED_REVIEW_COMPLETE_SMOOTH_60_FPS_NOT_ACCEPTED",
+    "scope": {
+      "html_sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95",
+      "reviewed_at_utc": "2026-09-09T21:30:16.975474+00:00",
+      "final_workflow_sheets_reviewed": true,
+      "workflow_frames_on_reviewed_sheets": 1834,
+      "workflow_sheets": [
+        {
+          "path": "frames-survives-clean/frames/consecutive-001.jpg",
+          "sha256": "a97e3703a9759e668982f68c958cacccffc077ca568302e2e094976f09975e5b"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-002.jpg",
+          "sha256": "f07f54beeb0ea2fd5b48e5f7b149093529c5e9ae9f1e1e9bb211efc57c660fc2"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-003.jpg",
+          "sha256": "7d0abd9c690265aeccf1f94b9254a61d8c99bd18480ba01a61007c065a8663db"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-004.jpg",
+          "sha256": "1b67bceec0453e46350a0e2c507ca3718cd717121e778d85fe4e3a93f4a8afef"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-005.jpg",
+          "sha256": "1f6eb9414c8229f1dd9c411d7378818aacd2f051dc7021caca9e199af4e84e02"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-006.jpg",
+          "sha256": "9e3f0d15c079988833fcca20612885261cc7ce24cc073e8b89e0c8e0a9692497"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-007.jpg",
+          "sha256": "b48806c7ae311da92ed5886f5fbda782ac8f5eb62ef749b9f373e8caf31288d3"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-008.jpg",
+          "sha256": "9f2b6547a6d399a32673e131a0ebf9e7c3bb0b4b6246e5db8a0bd88248109606"
+        },
+        {
+          "path": "frames-survives-clean/frames/consecutive-009.jpg",
+          "sha256": "eccf652883e7d8d0d2ab5fb2790b8499bfa580b0c36ee0d9f54dd81509974fb0"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-001.jpg",
+          "sha256": "8fa7cc6e9b22612ac5a5d8b65aae550723ea4ea10a379929165933327a713eb9"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-002.jpg",
+          "sha256": "62d4054911383f19e2a2e9ff9f7ac5809d0a9caddea6ad5abb7159a241adf3e1"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-003.jpg",
+          "sha256": "b79f2b17d2f382bd00702a58d8d10ac80830c769ce8fd20dda8074676c01a556"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-004.jpg",
+          "sha256": "775c78be489662400847f7b46862bc79e10a9262c0895c4073f79717b20831f7"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-005.jpg",
+          "sha256": "61b926db3f6a3c747bb3bed8d28406bec90608247ad89b1a65fd66acf36645ed"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-006.jpg",
+          "sha256": "58fc6a9a5392dc6a553ec52cdcf97b268786cc4bb5c76147bfb6f7bfc03a6f87"
+        },
+        {
+          "path": "frames-resolves-clean/frames/consecutive-007.jpg",
+          "sha256": "6f22ffbb81a2995294b1b77768aa0056d26c626b555ad3e753d21e3644be41de"
+        }
+      ],
+      "selected_native_video_frames_reviewed": [
+        {
+          "path": "frames-survives-clean/frames/native/selected-002.png",
+          "sha256": "e616eec56a83637baabead8b441c4d7150212c9d4c583fcd2e508b3698c4e00b"
+        },
+        {
+          "path": "frames-survives-clean/frames/native/selected-006.png",
+          "sha256": "c932865ffa127b9fd649fc7e2775304660cec80b7b6b8f3552c2c9864980d131"
+        },
+        {
+          "path": "frames-survives-clean/frames/native/selected-012.png",
+          "sha256": "54b250120d55eacb0353cb1cea29182c85aacf0b74e250fc7a61fd480e8d5b23"
+        },
+        {
+          "path": "frames-survives-clean/frames/native/selected-015.png",
+          "sha256": "1a61c236ccba0b41089d4ac2dee7481b5661ad5d8ab15e037ea6d27ed1b281b2"
+        },
+        {
+          "path": "frames-resolves-clean/frames/native/selected-009.png",
+          "sha256": "ee7f8183714d78cd96b5489f01f09e88109425ec73bd9428efb11913e695d3e5"
+        },
+        {
+          "path": "frames-resolves-clean/frames/native/selected-012.png",
+          "sha256": "72e91a42b38531e2f95ac1942629ba651a78158098c917ce8eba8b35aff425f8"
+        },
+        {
+          "path": "frames-resolves-clean/frames/native/selected-016.png",
+          "sha256": "ee612b5e580207b1b7d5f9bbc17f3ee2f0c74f83520f799ae95ea61086f5374e"
+        },
+        {
+          "path": "frames-resolves-clean/frames/native/selected-017.png",
+          "sha256": "8f244cba1d1c8a663e2bcb6473a2dcac8c3eba0c4820f2734d07837e45e9f24c"
+        }
+      ],
+      "native_browser_screenshots_reviewed": [
+        {
+          "path": "browser/config-700.png",
+          "sha256": "b44264eba03aac3149a67f9ad31736cbe40de66d51f6e3e06ae9df1a816ab60f"
+        },
+        {
+          "path": "browser/context-700.png",
+          "sha256": "1a31a3c9fefa33adaa6f17cf5ed3c923defa0af6b373b77b4de48075769774a2"
+        },
+        {
+          "path": "browser/survive-emitted.png",
+          "sha256": "5872fca86fe7961264d275db17876bb3e20157c6e534d9293a42bd21d8fe530d"
+        },
+        {
+          "path": "browser/config-900.png",
+          "sha256": "36c3f203fa660b4e964f12a1e050faad8cbb43e6a13863523785d7c037793384"
+        },
+        {
+          "path": "browser/context-900.png",
+          "sha256": "e7891b5654a08d502f5e70b81e186f550e4b6080f97f1e7041b3550d76e28276"
+        },
+        {
+          "path": "boundaries-v2/step-rail-running.png",
+          "sha256": "fa17a71eca1135f2f475741a54c59a7c01974d45ef505d7056222df243e41083"
+        },
+        {
+          "path": "boundaries-v2/terminal-stale.png",
+          "sha256": "06feb6257e3010f86688377cf3ac381e84b78d4422a1c25cc51f5951558cb9f6"
+        }
+      ],
+      "native_every_frame_reviewed": false,
+      "sheet_scale": "Each encoded frame shown consecutively at reduced resolution; no frames skipped in sheets. Eight selected full-resolution final video frames inspected, not all native frames.",
+      "findings": [
+        "Both workflows visibly traverse detached configuration, ordinary work controls, held state, current generation evidence and independent primary completion.",
+        "Survives workflow delivers one attributable current-generation concern. Final dismissed card remains clearly closed and stale for newer work rather than presented as a current warning.",
+        "Resolves workflow clears the held concern before public delivery and completes without a public BSD warning.",
+        "Final sheets show no browser fullscreen exit hint. Initial recordings included a browser-owned hint, not an application defect; final capture waits 5 seconds before acquisition. Videos are not post-trimmed or interpolated to conceal it.",
+        "Configuration and Context More Details fit 700/900px views with scrollable body, accessible inset footer, bounded disclosures, and native metric-card hierarchy.",
+        "Step Rail Simple remains operable. Existing floating Activity pill overlap with intermediate transcript content remains open; not a Batch 12 repair.",
+        "Long rAF intervals and prior same-build encoded timestamp gaps remain in evidence. Neither a cleaner acquisition cadence nor selected scenes establish overall smooth-60-fps or whole-app performance improvement."
+      ],
+      "motion_acceptance": "NOT_ACCEPTED_SMOOTH_60_FPS",
+      "acquisition_only_changes": [
+        "Final capture increased the pre-acquisition fullscreen warmup from 1000ms to 5000ms. No product source changed."
+      ],
+      "evidence_limits": [
+        "Actual browser render events and rAF timing are separate from encoded acquisition timestamps.",
+        "Identical decoded frames can represent intentional static dwell and are not automatically classified as stalls.",
+        "No browser/platform or native Slint parity certification.",
+        "Older captures retained for acquisition/performance evidence; final clean pair receives complete consecutive-sheet visual review."
+      ]
+    },
+    "clean_recording_max_raf_ms": {
+      "survives": 66.70000000000073,
+      "resolves": 50.100000000000364
+    },
+    "matched_no_capture_max_raf_ms": {
+      "survives": 33.5,
+      "resolves": 233.3000000000011
+    },
+    "clean_encoded_max_gap_ms": {
+      "survives": 24.56699999999934,
+      "resolves": 20.850000000000257
+    },
+    "earlier_same_build_recordings_retained": true,
+    "no_interpolation": true,
+    "no_forced_CFR_duplicates": true
+  },
+  "protected_working_sources": [
+    {
+      "file": "motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "file": "motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "source_custody": "BATCH_12_COVERAGE_DELTA.json",
+  "loading": {
+    "set_content": "VERIFIED",
+    "file_url": "BLOCKED_BY_ENVIRONMENT_BEFORE_APP_LOAD",
+    "loopback_http": "BLOCKED_BY_ENVIRONMENT_BEFORE_APP_LOAD"
+  },
+  "canonical_plans_modified": false,
+  "settings_modified": false,
+  "onboarding_modified": false,
+  "governance_modified": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_COMMITTED_OR_PUSHED",
+  "user_checkout_or_index_accessed": false,
+  "native_runtime_enabled": false,
+  "open": [
+    "global rendering stalls",
+    "intermediate-scroll floating Activity pill overlap",
+    "APR-016 full meaningful-demo coverage",
+    "APR-018 all-feature motion acceptance",
+    "native BSD command/event/storage/wiring closure",
+    "live provider execution, durable persistence and restart recovery",
+    "full Settings/onboarding and real PRD/Planning Wizard integration",
+    "APR-028 worklist/closure mapping discrepancy retained"
+  ],
+  "next_batch": {
+    "number": 13,
+    "title": "Context Lens and Wonderer",
+    "status": "NOT_STARTED"
+  },
+  "installation": {
+    "mode": "GUARDED_MERGE_ONLY",
+    "not_a_repository_inventory": true,
+    "deletion_authority": "none",
+    "git_index_mutation": false
+  }
+}

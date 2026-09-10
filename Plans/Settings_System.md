@@ -478,6 +478,10 @@ canonical_text: >-
   typed results. Provider setup preserves origin_surface, origin_route, provider/route identity, exact topology,
   operation identity, and a bounded continuation so successful owner work returns to the originating Settings row.
   Settings exposes no Provider Uninstall action, command, menu item, or implied destructive fallback.
+  Installed-tool update choices consume Shared Integration Runtime section 4.7: separate check-now and
+  check-and-install-now actions, automatic check-only or check-and-install policy, disabled background checks,
+  and an independent routine update-notification preference. These are user-facing update choices, not
+  ownership/consent-category choices, and do not alter Puppet Master's separate app-update/restart policy.
 gui_related: true
 gui_classification_reason: Install, Repair, Verify, disabled reasons, exact target, progress, and return context are visible provider-manager behavior.
 depends_on: [SSYS-006, SSYS-008, CS-066, UCC-145, SIR-003]
@@ -487,7 +491,10 @@ acceptance_criteria:
   - Each action carries exact Host/Environment, Project, expected revision/epoch, idempotency, permission, and continuation evidence required by CS-066.
   - A missing or invalid owner selector renders the exact disabled reason and dispatches nothing.
   - Provider Uninstall is absent from rendered controls, command lookup, natural-language suggestions, and automation routes.
-validation_surfaces: [existing CS-066 and UCC-145 fixtures, future Settings provider-card availability and continuation fixtures]
+  - Installed-tool consumers use the SIR-021 update preferences and exact installation/Host/Environment policy; manual actions do not edit the saved automatic mode, and disabling background checks does not remove manual checks.
+  - Do not notify suppresses routine update-available notices only; Details/ObservableWork still show update state, failures, security warnings, and required approvals. Missing automatic-install authority shows the requested/effective difference and the owner's disabled reason.
+  - Update preferences and manual action intent do not register a command or synthesize a Settings-local updater. Deferred check/update-policy candidates remain unavailable until their central contracts close; current manager layout and styling are unchanged by this Plan correction.
+validation_surfaces: [existing CS-066 and UCC-145 fixtures, Plans/egolite_retained_requirement_contracts.schema.json#/$defs/installation_update_preferences, tests/test_pm_installation_update_preferences.py, future Settings provider-card availability and continuation fixtures]
 risk_class: provider_setup_authority_or_target_drift
 reasoning_tier: high
 context_scope: settings_provider_installation
@@ -498,6 +505,7 @@ source_lineage:
   - Plans/UI_Command_Catalog.md#UCC-145
   - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
+  - source_ref:chat:user-update-options-correction-2026-09-09
 preserved_exact_tokens: [cmd.installation.install, cmd.installation.repair, cmd.installation.verify, Host, Environment, continuation, no Uninstall]
 negative_constraints: [Do not silently acquire a provider CLI., Do not synthesize Settings-local install commands., Do not show Provider Uninstall., Do not treat installer exit zero as provider readiness.]
 owner_hints: [Plans/Settings_System.md, Plans/Shared_Integration_Runtime.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
@@ -655,7 +663,8 @@ canonical_text: >-
   Readiness and Setup; Teacher and Help; Project Search Index; and DRY Method visible state. Concept presentation may group or split these destinations into workspaces (one System workspace
   Server & Project Location over the seven server/location keys; separate Code & Tools workspaces for Skills, Plugins, MCP
   Servers, and Commands & Shortcuts over tools-integrations and commands-shortcuts) without changing manager_id keys, routes,
-  or details paths (USER-SETTINGS-MANAGER-REFRESH-20260908). Each entry has one stable manager_id, owner route, lazy summary projection, supported actions,
+  or details paths (USER-SETTINGS-MANAGER-REFRESH-20260908), and may present canonical ordinary settings inline within the manager workspace
+  that owns their topic without changing manager_id keys or the inventory (USER-SETTINGS-MANAGER-REFRESH-20260909). Each entry has one stable manager_id, owner route, lazy summary projection, supported actions,
   exact unavailable reasons, and a details path; operational behavior remains in the retained owner.
 gui_related: true
 gui_classification_reason: The complete manager destination set and shared visible states define the Settings product surface.
@@ -1701,6 +1710,13 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity
      header, sectioned body, quiet footer), the same spring motion, and no decorative accent bars; the
      inspector keeps its width tokens.
+  11. *Status Tokens, Not Pills:* State reads as a small coloured dot with text; category labels are quiet
+     text; only keyboard keys keep a capsule.
+  12. *Themed Listboxes:* Every select is a listbox drawn by the concept over a hidden native select, sharing
+     the chat assistant's popout motion; no native option list is ever visible, and menus use the same popout.
+  13. *Manager-Topic Settings Live Inside Their Manager:* Canonical ordinary settings that belong to a manager
+     topic render as inline canonical sections inside that manager, before its Advanced disclosure; core
+     settings stay on plain pages; every inventory id renders exactly once.
 - **Universal Application Across 38 Managers:** These principles govern all thirty-eight registered
   managers:
   `all-settings`, `general-appearance-input`, `providers-accounts-models`, `web-routes`, `media-routes`,
@@ -1912,10 +1928,12 @@ acceptance_criteria:
   - build_testpm_settings_refresh.py --check reproduces the published file and every non-Settings script is byte-identical to the pinned base.
   - The browser checkpoint reports first-frame brightness at least 85 percent of settled on a domain switch, a playable labelled demonstration tone for every built-in sound row, no nested scroller in All Settings, and no page errors.
   - The 60 fps slow-motion films of panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration.
+  - (USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a concept-drawn listbox over a hidden native select and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035).
 validation_surfaces:
   - python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
   - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
   - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: manager_kit_regression_or_registry_drift
 reasoning_tier: high
@@ -1926,6 +1944,7 @@ implementation_surfaces:
   - Concepts/pm7-tools/settings_refresh_source.py
   - Concepts/pm7-tools/build_testpm_settings_refresh.py
   - Concepts/pm7-tools/settings_refresh/kit.js
+  - Concepts/pm7-tools/settings_refresh/placement.json
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -1933,6 +1952,7 @@ source_lineage:
   - USER-SETTINGS-MANAGER-REFRESH-20260908
   - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
   - SSYS-032
+  - USER-SETTINGS-MANAGER-REFRESH-20260909
   - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
 preserved_exact_tokens:
   - "shared manager kit"
@@ -1941,6 +1961,8 @@ preserved_exact_tokens:
   - "T50"
 negative_constraints:
   - Do not reintroduce a per-manager top action bar.
+  - Do not render a canonical setting twice or inside a second Advanced disclosure.
+  - Do not reintroduce capsule pills or a native option list in Settings.
   - Do not exceed six tabs in a manager.
   - Do not render a second Advanced disclosure in one manager view.
   - Do not mint, rename, or remove a manager_id key for a presentation grouping.
@@ -2035,3 +2057,68 @@ negative_constraints:
 - Do not move live-pane actions into persistent Settings or silently choose held policies.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
+
+```yaml
+plan_unit_id: SSYS-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Under USER-SETTINGS-MANAGER-REFRESH-20260909 the published concept places every manager-topic canonical setting inside the manager
+  that owns its topic: an authored placement map (Concepts/pm7-tools/settings_refresh/placement.json) resolves
+  each inventory id by reference subgroup, keyword override, or hand placement to one manager (and tab), renders
+  it as an inline canonical section through the engine row renderer before that manager's single Advanced
+  disclosure, and keeps its Details inspector, search landing, All Settings row, and change-refresh behaviour.
+  Core settings stay on six plain pages; 10 of the 12 machine-generated reference pages and the concept-only
+  Assistant page retire because every row they held now has a manager home; the planning domain keeps its id
+  with the label Planning. 674 inventory rows render inside managers, every one of the 892 concept ids
+  renders exactly once, and the five branching plan-limit ids that the reference builder dropped are hosted by
+  the placement map pending subgroup registration. The same pass gives the kit themed listboxes for every
+  select and menu, dot-plus-text status tokens instead of pills, hero side panels (identity header, facts,
+  progress rail, card sections revealed in a stagger, sticky footer), rosters that scroll inside their manager,
+  meter, order, and accordion primitives, and per-manager fixture files merged over the shared fixture.
+gui_related: true
+gui_classification_reason: Governs where canonical settings render, the listbox and status presentation, side-panel anatomy, and roster scrolling across every Settings manager in the published concept.
+depends_on: [SSYS-033, SSYS-005, SSYS-006, SSYS-015]
+unblocks: []
+acceptance_criteria:
+  - A walk over every workspace and every manager tab finds each of the 892 concept ids rendered exactly once; All Settings lists 892 rows in 12 categories.
+  - Details opens for a setting rendered inside a manager; global search lands on a setting inside a non-active manager tab; refreshSettingRow swaps an inline row in place.
+  - No manager renders a second Advanced disclosure; inline sections precede the manager's Advanced disclosure; advanced placements render first inside it.
+  - No native select is visible in Settings; dropdown and menu popouts open with the shared sprout motion inside the viewport; no capsule pills remain except keyboard keys.
+  - Rosters scroll independently inside their manager block while the settings document still scrolls.
+validation_surfaces:
+  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: canonical_setting_placement_drift
+reasoning_tier: high
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+  - Concepts/pm7-tools/settings_refresh/placement.json
+  - Concepts/pm7-tools/settings_refresh/kit.js
+  - Concepts/pm7-tools/settings_refresh/styles.css
+  - Concepts/pm7-tools/settings_refresh_source.py
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - USER-SETTINGS-MANAGER-REFRESH-20260909
+  - USER-SETTINGS-MANAGER-REFRESH-20260908
+  - SSYS-033
+  - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
+preserved_exact_tokens:
+  - "placement.json"
+  - "exactly once"
+  - "one Advanced disclosure"
+negative_constraints:
+  - Do not render a canonical setting twice or inside a second Advanced disclosure.
+  - Do not mint, rename, or delete a manager_id key or an inventory id for presentation reasons.
+  - Do not reintroduce capsule pills or a native option list in Settings.
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-033, ContractName:Plans/FinalGUISpec.md#F3-551

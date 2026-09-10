@@ -320,21 +320,10 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .chat-stage[data-shell="7"] .composer-box{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,var(--surface-2)),var(--surface-2));border-radius:18px;overflow:hidden}.chat-stage[data-shell="7"] .composer-input{min-height:72px}.chat-stage[data-shell="7"] .composer-tools{border-top:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));background:color-mix(in srgb,var(--surface-3) 50%,transparent)}
 
 .activity-panel { min-width:0;min-height:0;display:grid;grid-template-rows:auto auto minmax(0,1fr);border-right:1px solid var(--border);background:var(--surface-2);overflow:hidden;animation:panel-pin var(--spring) both; }
-/* The transient panel used to be offset from the bottom of .chat-stage by
-   calc(var(--composer-h,116px) + 48px) -- but --composer-h was never written
-   by anything, so the offset was a hard-coded 164px against a composer that
-   actually measures 133px (and grows to 200px+ as the textarea fills). The
-   variable is gone. .chat-stage is a grid and is the panel's containing
-   block, so grid-row/grid-column place the absolutely-positioned panel into
-   the TRANSCRIPT row instead: `bottom:10px` is then 10px above whatever
-   follows the transcript -- decision host, activity bar and composer alike --
-   at any composer height, and it needs no measurement. An abspos grid child
-   does not occupy a cell, so auto-placement of the five real rows is
-   unchanged. Both grid lines must be spelled out (`2/3`, not `2`): for an
-   absolutely-positioned grid child an `auto` end line resolves to the grid
-   container's PADDING EDGE rather than to a one-track span, which silently
-   handed back the full-stage containing block this rule exists to escape. */
-.activity-panel.transient { position:absolute;grid-row:2/3;grid-column:1/2;inset:auto 10px 10px auto;width:min(390px,calc(100% - 20px));max-height:min(620px,calc(100% - 20px));z-index:45;border:1px solid var(--border-strong);border-radius:15px;box-shadow:var(--shadow-float); }
+/* renderChat places header, Context Lens dock, then transcript in the first
+   three rows. Bind the floating detail to the transcript, not the potentially
+   zero-height Lens row. The transcript's grid cell also tracks composer growth. */
+.activity-panel.transient { position:absolute;grid-row:3/4;grid-column:1/2;inset:auto 10px 10px auto;width:min(390px,calc(100% - 20px));max-height:min(620px,calc(100% - 20px));z-index:45;border:1px solid var(--border-strong);border-radius:15px;box-shadow:var(--shadow-float); }
 .activity-panel-head { display:flex;align-items:center;gap:7px;padding:8px 9px;border-bottom:1px solid var(--border); }.activity-panel-head strong{font-size:13px}.activity-panel-head .spacer{flex:1}.activity-filter{display:grid;grid-template-columns:repeat(var(--activity-n,5),1fr);gap:3px;padding:6px;border-bottom:1px solid var(--border);}.activity-filter.hidden{display:none}.activity-filter button{min-width:0;height:29px;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;display:flex;justify-content:center;align-items:center;gap:4px}.activity-filter button:hover,.activity-filter button.active{background:var(--surface-3);color:var(--text)}.activity-filter button span{font-size:10px;overflow:hidden;text-overflow:ellipsis}.activity-scroll{min-height:0;overflow:auto;padding:8px;scrollbar-gutter:stable}.activity-summary-card{padding:10px;border:1px solid color-mix(in srgb,var(--accent-2) 30%,var(--border));border-radius:11px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent-2) 7%,var(--surface-3)),var(--surface-3));margin-bottom:8px}.activity-summary-card strong{font-size:12px}.activity-summary-card p{font-size:11px;color:var(--muted);margin:4px 0 8px}.activity-section{border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:6px;overflow:hidden}.activity-section-head{display:flex;align-items:center;gap:7px;width:100%;padding:8px 9px;background:transparent;cursor:pointer;text-align:left}.activity-section-head strong{font-size:11px}.activity-section-head .spacer{flex:1}.activity-section-body{padding:0 9px 9px;animation:details-open 280ms var(--spring-soft-ease) both}.activity-line{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-top:1px solid var(--border);font-size:11px}.activity-line:first-child{border-top:0}.activity-line .copy{min-width:0;flex:1}.activity-line .copy strong{display:block;font-size:11px}.activity-line .copy span{color:var(--muted);display:block;overflow-wrap:anywhere}.activity-line .right{color:var(--subtle);font-size:10px;white-space:nowrap}
 .activity-panel[data-variant="1"] .activity-scroll{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-content:start}.activity-panel[data-variant="1"] .activity-summary-card{grid-column:1/-1}.activity-panel[data-variant="1"] .activity-section{margin:0}.activity-panel[data-variant="2"] .activity-filter{order:-1;background:var(--surface-3)}.activity-panel[data-variant="2"] .activity-section{border-left:3px solid var(--accent)}.activity-panel[data-variant="3"] .activity-section{border-radius:16px}.activity-panel[data-variant="3"] .activity-section-head{min-height:43px}.activity-panel[data-variant="4"] .activity-scroll{font-family:var(--font-mono)}.activity-panel[data-variant="4"] .activity-section{border-radius:4px}.activity-panel[data-variant="5"] .activity-section-body{padding:0}.activity-panel[data-variant="5"] .activity-line{padding:7px 9px}.activity-panel[data-variant="6"] .activity-scroll{display:flex;flex-direction:column}.activity-panel[data-variant="6"] .activity-section{transition:order var(--spring)}.activity-panel[data-variant="7"] .activity-summary-card{background:var(--code)}
 
@@ -589,6 +578,9 @@ body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
 .hover-card.hover-tip { width:auto; max-width:min(280px, calc(100vw - 16px)); box-sizing:border-box; overflow:hidden; }
 .hover-card.hover-tip strong { display:block; font-size:12px; overflow-wrap:anywhere; word-break:break-word; max-width:100%; }
 .hover-card.hover-tip p { margin:3px 0 0; font-size:11.5px; color:var(--muted); overflow-wrap:anywhere; word-break:break-word; }
+
+/* Text labels are non-interactive. Activity previews retain their clickable surface. */
+#pmOverlayRoot > .hover-tip, #pmOverlayRoot > .hover-tip * { pointer-events:none; }
 
 /* =====================================================================
    Puppet Master Assistant — motion system
@@ -10540,6 +10532,8 @@ button.qs-spine-slot.is-current::after{
 .collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
 @media(max-width:560px){ .collab-participant-editor { grid-template-columns:1fr; } }
 
+/* Local BSD protocol: presentation is owned by bsd.css. */
+
 /* bsd.css — styles for bsd.js (Back Seat Driver: passive read-only advisor).
  * OWNER: ui-designer pass, Assistant-redesign wave (2026-09-03).
  *
@@ -11097,6 +11091,45 @@ button.qs-spine-slot.is-current::after{
 .bsd-stage-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px 10px; }
 .bsd-config-error { min-height:15px; color:var(--danger); font-size:11px; margin-top:10px; }
 @media(max-width:480px){ .bsd-config-pickers,.bsd-config-grid {grid-template-columns:1fr;} }
+
+/* Batch 12: scoped native cards, no decorative left-edge treatment. */
+.bsd12-dialog {width:min(610px,calc(100vw - 28px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;}
+.bsd12-dialog .dialog-body {min-height:0;overflow:auto;padding:16px;}
+.bsd12-dialog h3 {font-size:13px;margin:20px 0 10px;}
+.bsd12-label {display:block;font-size:12px;margin:8px 0;}
+.bsd12-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.bsd12-grid label,.bsd12-disclosure label {display:flex;flex-direction:column;gap:7px;font-size:12px;min-width:0;}
+.bsd12-dialog input[type=number] {width:100%;box-sizing:border-box;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px;}
+.bsd12-dialog .shared-picker-button {min-width:0;width:100%;}
+.bsd12-muted {color:var(--muted);font-size:11px;line-height:1.5;}
+.bsd12-error {color:var(--danger,var(--text));font-size:12px;min-height:1em;}
+.bsd12-footer {padding:16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
+.bsd12-actions {display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.bsd12-actions .active {outline:1px solid var(--accent);}
+.bsd12-metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0;}
+.bsd12-metric {background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:9px;min-width:0;}
+.bsd12-metric dt {font-size:10px;color:var(--muted);margin-bottom:5px;}
+.bsd12-metric dd {margin:0;font-size:12px;overflow-wrap:anywhere;}
+.bsd12-line {display:flex;gap:8px;align-items:center;min-width:0;}
+.bsd12-line h3 {margin:0;}
+.bsd12-overview {padding:12px;border:1px solid var(--border);border-radius:12px;}
+.bsd12-identity {font-size:12px;overflow-wrap:anywhere;}
+.bsd12-disclosure {margin:12px 0 0;border:1px solid var(--border);border-radius:9px;padding:10px;}
+.bsd12-disclosure summary {cursor:pointer;font-size:12px;font-weight:600;}
+.bsd12-disclosure summary span {color:var(--muted);font-size:10px;margin-left:6px;font-weight:400;}
+.bsd12-finding {margin-top:10px;border:1px solid var(--border);border-radius:8px;padding:10px;overflow-wrap:anywhere;}
+.bsd12-finding strong {display:block;font-size:12px;margin-top:7px;}
+.bsd12-finding p {font-size:11px;line-height:1.5;}
+.bsd12-badge {font-size:10px;background:var(--surface-2);border-radius:20px;border:1px solid var(--border);padding:2px 7px;}
+.bsd12-stages {display:grid;gap:8px;margin-top:12px;}
+.bsd12-stages>div {display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;}
+.bsd12-checkbox {display:flex!important;flex-direction:row!important;align-items:center;margin-bottom:12px;}
+.bsd12-raw,.bsd12-evidence pre {font-size:11px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;}
+.bsd12-advice {max-width:100%;}
+.bsd12-advice .event-copy {min-width:0;}
+.bsd12-advice small {color:var(--muted);display:block;line-height:1.5;}
+.bsd12-advice .bsd12-actions {margin-top:7px;}
+@media(max-width:740px){.bsd12-grid{grid-template-columns:1fr}.bsd12-dialog{width:calc(100vw - 20px)}.bsd12-footer>*{min-width:0}.bsd12-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* scheduling.css — feature module styles.  OWNER: Plans/Scheduling_and_Quota_Resume.md
  * (Assistant-redesign wave, 2026-09-03).
@@ -12537,6 +12570,48 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .revert-demo-guide>div:first-child{min-width:0}.revert-demo-guide small{display:block;font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:3px}.revert-demo-guide strong{display:block;font-size:11px;font-weight:500;line-height:1.5}.revert-demo-guide>div:last-child{display:flex;gap:6px;align-items:center;flex-shrink:0}.revert-demo-guide button{white-space:normal}
 .revert-demo-injection{border:1px dashed var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}.revert-demo-injection>small{font-size:10px;color:var(--muted)}.revert-demo-injection p{font-size:11px;color:var(--muted);line-height:1.6;margin:6px 0 10px}
 @media(max-width:820px){.revert-demo-guide{flex-wrap:wrap}.revert-demo-guide>div:last-child{flex-shrink:1}}
+
+/* B11: compact native cards; no left stripes, work animation or global layout overrides. */
+.eli5-dialog{width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden}
+.eli5-dialog .dialog-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px 16px;border-bottom:1px solid var(--border)}
+.eli5-dialog .dialog-head small{font-size:10px;color:var(--muted);letter-spacing:.8px}.eli5-dialog h2{font-size:21px;margin:3px 0 0;letter-spacing:-.4px}
+.eli5-dialog .dialog-body{padding:16px 22px;overflow-y:auto;min-height:0}.eli5-lede{color:var(--muted);font-size:12px;margin:0 0 14px}
+.eli5-choices{display:grid;gap:7px}.eli5-choice{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);color:var(--text);text-align:left;cursor:pointer;width:100%;font-family:inherit}
+.eli5-choice:hover{background:var(--hover)}.eli5-choice[aria-checked=true]{background:var(--surface-3,var(--surface-2));border-color:var(--muted)}
+.eli5-choice strong{display:block;font-size:12px;font-weight:600}.eli5-choice small{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:3px}
+.eli5-radio{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.eli5-defaults{margin-top:16px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}.eli5-defaults summary{cursor:pointer;font-size:12px}.eli5-defaults h3{font-size:11px;color:var(--muted);margin:16px 0 7px}.eli5-defaults .eli5-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.eli5-defaults .eli5-choices:last-child{grid-template-columns:1fr}.eli5-boundary{font-size:10px;line-height:1.6;color:var(--muted);margin:15px 0 0}
+.eli5-footer{padding:14px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--border)}.eli5-footer span{font-size:11px;color:var(--muted)}
+@media(max-width:700px){.eli5-dialog .dialog-head{padding:16px}.eli5-dialog .dialog-body{padding:14px 16px}.eli5-footer{padding:14px 16px 16px}}
+
+.eli5-demo-guide{padding:10px 12px;margin:8px 0 0;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
+.eli5-demo-guide>div:first-child{display:grid;gap:3px}.eli5-demo-guide small{font-size:9px;color:var(--muted)}.eli5-demo-guide strong{font-size:12px}.eli5-demo-guide span{font-size:10px;color:var(--muted)}.eli5-demo-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.eli5-demo-actions .soft-button{font-size:10px;padding:6px 8px}
+.eli5-answer{padding:16px 0;min-width:0}.eli5-answer-label{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted)}.eli5-answer p{font-size:13px;line-height:1.7;margin:10px 0}.eli5-answer pre,.eli5-evidence pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 var(--font-mono,monospace);background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:13px;margin:10px 0}.eli5-answer .text-button{color:var(--muted);font-size:11px}
+.eli5-evidence{padding:24px;min-width:0;font-size:13px;line-height:1.65}.eli5-evidence>small{font-size:10px;color:var(--muted)}.eli5-evidence h2{font-size:23px;letter-spacing:-.5px;margin:14px 0}.eli5-evidence h3{font-size:12px;margin:18px 0 10px}.eli5-evidence dl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.eli5-evidence dl>div{padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}.eli5-evidence dt{font-size:11px;color:var(--muted)}.eli5-evidence dd{margin:4px 0 0;font-size:19px}.eli5-evidence details{margin-top:18px;border:1px solid var(--border);border-radius:10px;padding:12px;font-size:11px;overflow-wrap:anywhere}.eli5-evidence summary{cursor:pointer}
+
+/* Local BSD workbench; no shared working-activity component changes. */
+.bsd12-work {padding:22px;max-width:800px;margin:0 auto;min-width:0;}
+.bsd12-work h2 {font-size:23px;line-height:1.25;letter-spacing:-.4px;margin:10px 0;}
+.bsd12-work h3 {font-size:13px;margin:20px 0 10px;}
+.bsd12-intro {font-size:12px;color:var(--muted);line-height:1.6;}
+.bsd12-work-summary {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0;}
+.bsd12-work-summary>div {padding:12px;border:1px solid var(--border);background:var(--surface-2);border-radius:10px;min-width:0;}
+.bsd12-work-summary small,.bsd12-work-summary strong {display:block;overflow-wrap:anywhere;}
+.bsd12-work-summary small {color:var(--muted);font-size:10px;margin-bottom:7px;}
+.bsd12-work-summary strong {font-size:14px;}
+.bsd12-work-advisor {border:1px solid var(--border);border-radius:11px;margin-top:20px;padding:14px;}
+.bsd12-work-advisor h3 {margin:0;}
+.bsd12-work-advisor p {font-size:12px;}
+.bsd12-work .bsd12-line {flex-wrap:wrap;}
+.bsd12-source-code {padding:14px;border:1px solid var(--border);border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.7;background:var(--surface-2);}
+.bsd12-success {font-size:12px;line-height:1.6;padding:12px;border:1px solid var(--border);border-radius:9px;}
+.bsd12-work .bsd12-disclosure input,.bsd12-work .bsd12-disclosure select {width:100%;min-width:0;padding:8px;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:8px;}
+.bsd12-work .bsd12-disclosure .bsd12-actions {margin-top:12px;}
+.bsd12-guide {display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:9px;padding:9px;margin:7px 0;}
+.bsd12-guide>div {flex:1;min-width:0;}
+.bsd12-guide small,.bsd12-guide strong {display:block;font-size:10px;line-height:1.5;}
+.bsd12-guide small {color:var(--muted);}
+@media(max-width:900px){.bsd12-work{padding:15px}.bsd12-work h2{font-size:20px}.bsd12-work-summary{grid-template-columns:1fr}.bsd12-work-summary>div{display:flex;justify-content:space-between;align-items:center;gap:8px}.bsd12-work-summary small{margin:0}.bsd12-guide{flex-wrap:wrap}}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -22177,6 +22252,7 @@ window.PM56_EXT = window.PM56_EXT || {
         ' data-k="pm-of:' + esc(it.id) + '"' +
         (dis ? ' disabled aria-disabled="true"' : ' data-action="' + esc(it.action || '') + '"' +
           ' data-id="' + esc(m.id) + '"' +
+          (it.threadId != null ? ' data-thread="' + esc(it.threadId) + '"' : '') +
           (it.value != null ? ' data-value="' + esc(it.value) + '"' : '')) +
         (dis ? tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, it.reason || 'Not available for this message') : ' aria-label="' + esc(it.label) + '"') + '>' +
         '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 13) + '</span>' +
@@ -23720,6 +23796,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
     var nt = {
       id: nid('branch'),
+      projectId: src.projectId || src.project_id || null,
       title: src.title + suffix,
       status: 'idle',
       pinned: false,
@@ -23773,6 +23850,7 @@ window.PM56_EXT = window.PM56_EXT || {
       id: nid('rp'),
       label: label || ('Restore point ' + (s.restorePoints.length + 1)),
       threadId: t.id,
+      projectId: t.projectId || t.project_id || null,
       atMessageId: t.messages[at] ? t.messages[at].id : null,
       atTurn: ordinaryCovered.length,
       messageCount: ordinaryCovered.length,
@@ -23819,6 +23897,8 @@ window.PM56_EXT = window.PM56_EXT || {
     if (!src) return null;
     var nt = {
       id: nid('rpbranch'),
+      // New points freeze scope; legacy points inherit their source's project.
+      projectId: Object.prototype.hasOwnProperty.call(rp, 'projectId') ? rp.projectId : (src.projectId || src.project_id || null),
       title: src.title + ' · ' + rp.label,
       status: 'idle', pinned: false, archived: false, unread: 0, updated: 'now',
       model: src.model,
@@ -24439,7 +24519,7 @@ window.PM56_EXT = window.PM56_EXT || {
       id: 'rp', label: 'Create restore point', icon: 'restore', disabled: true,
       reason: rpHere.label + ' already covers this turn. Restore points are immutable, so a second one here would say the same thing.'
     } : {
-      id: 'rp', label: 'Create restore point', icon: 'restore', action: 'create-restore-point', value: m.id,
+      id: 'rp', label: 'Create restore point', icon: 'restore', action: 'create-restore-point', value: m.id, threadId: t.id,
       detail: 'An immutable snapshot of the first ' + plural(idx + 1, 'turn', 'turns') + '. Dispatches ' + CMD.createRestorePoint + '.'
     });
     items.push(isLast ? {
@@ -24955,12 +25035,16 @@ window.PM56_EXT = window.PM56_EXT || {
   });
 
   A('create-restore-point', function (ctx, btn) {
-    var mid = btn.dataset.value, tid = btn.dataset.id;
+    var mid = btn.dataset.value, tid = btn.dataset.thread || btn.dataset.id;
     var t = tid ? threadById(ctx, tid) : ctx.activeThread();
-    if (!t) return true;
-    var m = null;
-    if (mid) for (var i = 0; i < t.messages.length; i++) if (t.messages[i].id === mid) m = t.messages[i];
+    var m = t && mid ? t.messages.find(function (x) { return x.id === mid && !isInternalNote(x); }) : null;
+    // A stale selected message must not silently become a latest-turn snapshot.
+    if (!t || (mid && !m)) {
+      ctx.toast('Restore point not created', 'The source thread or selected message is no longer available.');
+      return true;
+    }
     createRestorePoint(ctx, t, m, null);
+    ctx.renderApp();
     if (ctx.state.dialog && ctx.state.dialog.type === 'threadops-restore') { ctx.renderOverlays(); focusSoon(); }
     return true;
   });
@@ -27334,13 +27418,16 @@ window.PM56_EXT = window.PM56_EXT || {
   var lastMsgCount = -1;
   var reRenderArmed = false;
 
-  function commitBuffer(ctx, th) {
+  var committedMessages = new Set();
+  function commitBuffer(ctx, th, acceptedMessage) {
     var buf = bufferFor(th.id);
     if (isEmptyBuffer(buf)) return;
-    var msg = null;
-    for (var i = th.messages.length - 1; i >= 0; i--) {
+    var msg = acceptedMessage || null;
+    if(!msg) for (var i = th.messages.length - 1; i >= 0; i--) {
       if (th.messages[i].role === 'user') { msg = th.messages[i]; break; }
     }
+    if(!msg || msg.isolatedSubmission || committedMessages.has(th.id+"/"+msg.id)) return;
+    committedMessages.add(th.id+"/"+msg.id);
     for (var h = 0; h < C.commitHooks.length; h++) {
       try { C.commitHooks[h](ctx, th, msg, buf); }
       catch (err) { console.error('PM56 composer commitHook threw', err); }
@@ -27348,6 +27435,7 @@ window.PM56_EXT = window.PM56_EXT || {
     /* §2.2 "sending clears the buffer only after message and attachment
        admission commits" — which is exactly the point this runs. */
     buf.text = '';
+    if(ctx.state.drafts) ctx.state.drafts[th.id]='';
     buf.attachments = [];
     buf.cursor_position = null;
     buf.revision += 1;
@@ -27356,6 +27444,15 @@ window.PM56_EXT = window.PM56_EXT || {
     flush();
   }
 
+  /* Explicit acceptance closes the buffer even when a pre-send handler rendered
+     before clearing state.composer. Held modals and rejected sends never call it. */
+  C.commitAccepted = function(ctx, th, msg) {
+    if(!th || !msg || msg.role!=='user' || msg.isolatedSubmission || !th.messages.includes(msg)) return false;
+    var wasCommitting=committing; committing=true;
+    try { commitBuffer(ctx,th,msg); }
+    finally { committing=wasCommitting; if(lastThread===th.id) lastMsgCount=th.messages.length; }
+    return true;
+  };
   var committing = false;   /* see the re-entrancy guard in reconcile() */
   function reconcile(ctx) {
     var tid = ctx.state.selectedThread;
@@ -27730,6 +27827,7 @@ window.PM56_EXT = window.PM56_EXT || {
   });
 
   EXT.chainAction('reset-all', function () {
+    committedMessages.clear();
     C.buffers = {};
     C.history = {};
     C.historyIndex = {};
@@ -30598,7 +30696,7 @@ window.PM56_EXT = window.PM56_EXT || {
       '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
-      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+' steps</span><span>'+esc(r.status)+'</span></div>'+
+      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
       '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
@@ -35496,441 +35594,204 @@ window.PM56_EXT = window.PM56_EXT || {
   };
 })();
 
-/* bsd.js — feature module.  OWNER: Back Seat Driver (Assistant redesign, 2026-09-03).
- *
- * WHAT BSD IS
- * -----------
- * A separate PASSIVE ADVISOR. It is deliberately NOT one of the four
- * collaborative workflow kinds and is deliberately NOT in the Multi-Agent
- * Workflows manager: modelling it as a workflow would imply it participates in
- * a run, and it never does. It is read-only, it never authorizes, mutates,
- * certifies or substitutes for required review, and the primary flow must
- * complete identically whether BSD is Off, Auto, On, degraded or quarantined.
- *
- * THE ONE THING WORTH DEMONSTRATING
- * ---------------------------------
- * OMP-like HELD AND RECONFIRMED advice. An asynchronous advisor that raises a
- * concern against generation N and delivers it at generation N+2 is delivering
- * a claim about work that no longer exists. So a finding raised here is HELD,
- * re-evaluated against newer generations before delivery, and then either
- * CLEARED (the newer work already addressed it) or EMITTED (it still stands).
- * A one-step immediate warning would not prove the design, so the fixture runs
- * the full N -> hold -> N+2 -> clear/emit cycle and the panel shows every step
- * with its generation number.
- *
- * OWNERSHIP: Plans/Back_Seat_Driver.md. Settings owns the defaults
- * (assistant.bsd.*); this module owns the policy projection, the assignments,
- * the review cycles, the findings and their hold state.
- * NOT owned here: Usage totals (usage-feature), context materialization
- * (Prompt Pipeline), permissions, the primary run.
+/* Batch 12 — bounded LOCAL BSD state machine. No native command, EventRecord,
+ * provider attempt, persisted receipt, permission grant, or primary writer.
+ * Source: Plans/Back_Seat_Driver.md §§3–15, modal correction, BSD-026..028.
+ * The injected reader owns primary truth; the advisor gets redacted copies.
+ */
+(function(root){
+ 'use strict';
+ const clone=x=>x==null?x:JSON.parse(JSON.stringify(x));
+ const canonical=x=>x===null?'null':Array.isArray(x)?'['+x.map(canonical).join(',')+']':typeof x==='object'?'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}':JSON.stringify(x);
+ // Local deterministic identity, not a cryptographic integrity or security claim.
+ const digest=x=>{let h=2166136261;for(const c of canonical(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');};
+ const norm=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+ const TRIGGERS=['pre_first_material_mutation','pre_high_risk_action','constraint_divergence','repeated_normalized_failure','environment_identity_change','major_verification_failure','pre_terminal_completion_claim','configured_stage_boundary','project_watch_rule','held_finding_reconfirmation'];
+ const STAGES=[['prd_builder','PRD Builder'],['planning_wizard','Planning Wizard'],['deep_plan','Plan Drafting'],['planunit_compile','PlanUnit Compilation'],['worknode_generation','WorkNode Generation'],['worknode_execution','Code Generation'],['verification','Verification Run'],['plan_compile','Gate Evaluation'],['worknode_audit','Audit Review'],['certification','Certification']];
+ const READ_TOOLS=['file.read','file.search','grep','lsp.diagnostics','scm.diff','test.inspect','artifact.read','receipt.read','usage.read','browser.inspect','research.read'];
+ const QUARANTINE=['malformed_output','mutating_instruction','credential_exfiltration','instruction_override','unsafe_content','tool_authority_violation'];
+ const rank={nit:0,concern:1,critical:2};
+ const result=(ok,fields={})=>({ok,kind:'local_bsd_receipt',native:false,primary_run_mutated:false,authority_granted:false,...clone(fields)});
+ function defaults(){return {mode:'auto',modelId:'sonnet46',persona:'Critical Advisor',effort:'',fast:false,sensitivity:'balanced',catchUpSeconds:30,cooldownTurns:3,retainTranscript:true,selfCompactThreshold:.8,workflowMode:'inherit',stages:STAGES.map(([id,label])=>({id,label,mode:'inherit'}))};}
+ class Engine {
+  constructor(options={}){this.clock=options.clock||(()=>Date.now());this.onChange=options.onChange||(()=>{});this.clear();}
+  clear(){this.policies=new Map();this.sources=new Map();this.assignments=new Map();this.byScope=new Map();this.closed=new Map();this.bindings=[];this.workflowBindings=new Map();this.receipts=[];this.serial=0;this.lifecycle=(this.lifecycle||0)+1;}
+  id(prefix){return prefix+'-'+this.lifecycle+'-'+(++this.serial);}
+  register(threadId,reader){if(!threadId||typeof reader!=='function')return result(false,{error:'invalid_request'});this.sources.set(threadId,reader);return result(true);}
+  read(threadId){const reader=this.sources.get(threadId);let s=null;try{s=reader?clone(reader()):null;}catch(_){return null;}return s&&s.threadId===threadId&&s.projectId&&s.runId&&Number.isInteger(s.generation)?s:null;}
+  policy(projectId){return clone(this.policies.get(projectId)||{projectId,revision:0,...defaults()});}
+  validate(values){
+   if(!values||typeof values.fast!=='boolean'||typeof values.effort!=='string'||!['off','auto','on'].includes(values.mode)||!['inherit','off','auto','on'].includes(values.workflowMode)||!['conservative','balanced','frequent'].includes(values.sensitivity)||![0,15,30,60].includes(values.catchUpSeconds)||!Number.isInteger(values.cooldownTurns)||values.cooldownTurns<0||values.cooldownTurns>100||typeof values.retainTranscript!=='boolean'||!Number.isFinite(values.selfCompactThreshold)||values.selfCompactThreshold<.1||values.selfCompactThreshold>.95||typeof values.modelId!=='string'||!values.modelId||typeof values.persona!=='string'||!values.persona)return 'invalid_request';
+   if(!Array.isArray(values.stages)||values.stages.length!==STAGES.length||STAGES.some(([id])=>values.stages.filter(s=>s&&s.id===id).length!==1)||values.stages.some(s=>!s||!['inherit','off','auto','on'].includes(s.mode)))return 'invalid_request';
+   if(values.tools&&(!Array.isArray(values.tools)||values.tools.some(t=>!READ_TOOLS.includes(t))))return 'tool_profile_widening_rejected';
+   return null;
+  }
+  configure(req){
+   if(!req||!req.projectId)return result(false,{error:'project_not_found'});
+   const old=this.policy(req.projectId);if(old.revision!==req.expectedRevision)return result(false,{error:'stale_policy_revision'});
+   const error=this.validate(req.values);if(error)return result(false,{error});
+   let a=null;if(req.assignmentId){a=this.assignments.get(req.assignmentId);const s=a&&this.sync(a);if(!a||a.projectId!==req.projectId||!s||!this.sameScope(a,s))return result(false,{error:'stale_projection'});if(a.epoch!==req.expectedEpoch)return result(false,{error:'stale_epoch'});}
+   const p={projectId:req.projectId,revision:old.revision+1};for(const k of Object.keys(defaults()))p[k]=clone(req.values[k]);this.policies.set(req.projectId,p);
+   if(a){a.policy=clone(p);a.bindingRevision++;a.paused=false;a.quarantined=false;a.quarantineCount=0;a.mode=this.resolve(p,a.stage).mode;a.modeSource=this.resolve(p,a.stage).source;a.identity=clone(req.identity||a.identity);this.resetAssignment(a,'explicit_reconfiguration',false);a.state=a.stopped?'stopped':a.mode==='off'?'off':a.identity?.available===false?'unavailable':'idle';this.workflowBindings.set(this.workflowKey(this.read(a.threadId)),{id:a.bindingId,revision:a.bindingRevision,policy:clone(p),identity:clone(a.identity)});this.bindings.push(this.binding(a));}
+   if(!a&&req.threadId){const source=this.read(req.threadId);if(source&&source.projectId===req.projectId){const key=this.workflowKey(source),wb=this.workflowBindings.get(key);if(wb)this.workflowBindings.set(key,{...wb,revision:wb.revision+1,policy:clone(p),identity:clone(req.identity||wb.identity)});}}
+   this.onChange();return result(true,{revision:p.revision,epoch:a?.epoch,policy:p});
+  }
+  resolve(p,stage){const row=p.stages.find(s=>s.id===stage);if(row&&row.mode!=='inherit')return {mode:row.mode,source:'stage'};if(p.workflowMode!=='inherit')return {mode:p.workflowMode,source:'workflow'};return {mode:['off','auto','on'].includes(p.mode)?p.mode:'auto',source:'project'};}
+  workflowKey(s){return canonical([s.projectId,s.threadId,s.runId,s.workflow||'assistant']);}
+  key(s){return canonical([s.projectId,s.threadId,s.runId,s.workflow||'assistant',s.stage||'worknode_execution']);}
+  fingerprint(s){return digest([s.projectId,s.threadId,s.runId,s.primaryEpoch||0,s.worktree,s.primaryRoute,s.permission,s.contextRevision||'',s.historyRevision||'']);}
+  sameScope(a,s){return a.scopeKey===this.key(s);}
+  binding(a){return {id:a.bindingId,revision:a.bindingRevision,assignmentId:a.id,projectId:a.projectId,threadId:a.threadId,policy:clone(a.policy),identity:clone(a.identity),mode:a.mode,stage:a.stage};}
+  bind(threadId,identity){
+   const s=this.read(threadId);if(!s)return result(false,{error:'owner_unavailable'});
+   let wb=this.workflowBindings.get(this.workflowKey(s));if(!wb){wb={id:this.id('workflow-binding'),revision:1,policy:this.policy(s.projectId),identity:clone(identity)};this.workflowBindings.set(this.workflowKey(s),wb);}const p=clone(wb.policy),mode=this.resolve(p,s.stage||'worknode_execution'),key=this.key(s),prior=this.byScope.get(key);identity=clone(wb.identity);
+   if(prior)return result(true,{assignmentId:prior,duplicate:true,binding:this.binding(this.assignments.get(prior))});
+   if(mode.mode==='off'){this.receipts.push({threadId,projectId:s.projectId,outcome:'no_call_off',local:true});return result(true,{assignmentId:null,noCall:'no_call_off'});}
+   const a={id:this.id('advisor'),bindingId:wb.id,bindingRevision:wb.revision,scopeKey:key,projectId:s.projectId,threadId,runId:s.runId,stage:s.stage||'worknode_execution',policy:p,mode:mode.mode,modeSource:mode.source,identity:clone(identity),epoch:1,fingerprint:this.fingerprint(s),primaryEpoch:s.primaryEpoch||0,historyRevision:s.historyRevision||'',cursor:s.generation,generation:s.generation,stablePrefix:digest(['local-read-only',identity]),reprimeRequired:false,state:identity?.available===false?'unavailable':'idle',paused:false,stopped:false,quarantined:false,quarantineCount:0,hostWarnings:0,pending:null,findings:[],cycles:[],transcript:[],usage:{localEvaluations:0,providerCalls:0,noCalls:0,held:0,cleared:0,emitted:0,suppressed:0,failures:0,timeouts:0,quarantines:0,quotaPauses:0,costUsd:null,inputTokens:null,outputTokens:null},lastChecked:null,cooldownUntil:0,controlsRevision:0};
+   this.assignments.set(a.id,a);this.byScope.set(key,a.id);this.bindings.push(this.binding(a));this.onChange();return result(true,{assignmentId:a.id,binding:this.binding(a)});
+  }
+  current(threadId){const s=this.read(threadId);return s?this.assignments.get(this.byScope.get(this.key(s)))||null:null;}
+  sync(a){const s=this.read(a.threadId);if(!s||!this.sameScope(a,s))return null;
+   if(a.fingerprint!==this.fingerprint(s)){const primaryChanged=a.primaryEpoch!==(s.primaryEpoch||0)||a.historyRevision!==(s.historyRevision||'');this.resetAssignment(a,'primary_identity_changed',primaryChanged);a.fingerprint=this.fingerprint(s);a.primaryEpoch=s.primaryEpoch||0;a.historyRevision=s.historyRevision||'';}
+   a.generation=s.generation;return s;
+  }
+  resetAssignment(a,reason,primaryChanged){
+   if(a.pending){const cycle=a.cycles.find(c=>c.id===a.pending.id);if(cycle){cycle.status='cancelled';cycle.reason=reason;}a.pending=null;}
+   if(a.catchUp?.state==='waiting'){a.catchUp.state='released';a.catchUp.reason=reason;}a.epoch++;a.controlsRevision++;a.cursor=0;a.localContextChars=0;a.stablePrefix=digest(['local-read-only',a.identity,a.epoch]);a.reprimeRequired=true;a.lastChecked=null;a.transcript=[];a.cooldownUntil=0;
+   a.findings.forEach(f=>{if(f.status==='held'){f.history.push({generation:a.generation,what:'Preserved across '+reason+'. Reconfirmation required.'});f.needsReconfirmation=true;if(primaryChanged){f.status='closed';f.closeReason='epoch_replaced';}}});
+   a.state=a.mode==='off'?'off':a.paused?'paused':'catching_up';
+  }
+  reset(threadId,reason='primary_compaction'){const a=this.current(threadId);if(!a)return result(false,{error:'bsd_assignment_not_found'});this.resetAssignment(a,reason,false);this.onChange();return result(true,{epoch:a.epoch});}
+  selfCompact(threadId){const a=this.current(threadId);if(!a)return result(false,{error:'bsd_assignment_not_found'});this.resetAssignment(a,'advisor_self_compaction',false);this.onChange();return result(true,{epoch:a.epoch});}
+  noCall(a,reason){a.usage.noCalls++;a.cycles.push({id:this.id('no-call'),local:true,epoch:a.epoch,generation:a.generation,status:'no_call',reason});this.onChange();return result(true,{noCall:reason});}
+  begin(threadId,options={}){
+   const a=this.current(threadId);if(!a)return result(false,{error:'mode_off_no_assignment'});const s=this.sync(a);if(!s)return result(false,{error:'stale_projection'});
+   if(options.expectedEpoch!=null&&options.expectedEpoch!==a.epoch)return result(false,{error:'stale_epoch'});
+   if(a.mode==='off')return this.noCall(a,'no_call_off');
+   if(a.stopped||a.paused)return this.noCall(a,'no_call_paused');
+   if(a.state==='quota_paused')return this.noCall(a,'no_call_quota_unavailable');
+   if(a.identity?.available===false)return result(false,{error:'advisor_model_unavailable'});
+   if(a.pending)return result(true,{ticket:clone(a.pending),duplicate:true});
+   if(options.quotaUnavailable)return this.noCall(a,'no_call_quota_unavailable');
+   if(options.resourceRefused)return this.noCall(a,'no_call_resource_refused');
+   if(options.costLimit)return this.noCall(a,'no_call_cost_limit');
+   if(options.stageLimit)return this.noCall(a,'no_call_stage_limit');
+   const held=a.findings.filter(f=>f.status==='held');let trigger=options.trigger;
+   if(held.length)trigger='held_finding_reconfirmation';
+   if(a.mode==='auto'&&!TRIGGERS.includes(trigger))return this.noCall(a,'no_call_no_trigger');
+   if(!options.material&&!held.length&&!TRIGGERS.includes(trigger))return this.noCall(a,'no_call_no_material_delta');
+   if(!s.redaction?.checked||s.redaction.scope!=='local-fixture')return result(false,{error:'policy_denied'});
+   if((a.localContextChars||0)>=20000*a.policy.selfCompactThreshold)this.resetAssignment(a,'advisor_self_compaction',false);
+   const delta=(s.deltas||[]).filter(d=>d.generation>a.cursor&&d.generation<=s.generation&&!['bsd-advice','internal_memory','auth'].includes(d.kind)).slice(-12).map(d=>({generation:d.generation,kind:d.kind,summary:String(d.summary||'').slice(0,1600),ref:d.ref}));
+   const manifest={kind:'bounded_local_input',projectId:s.projectId,threadId:s.threadId,runId:s.runId,stage:a.stage,epoch:a.epoch,generation:s.generation,cursor:a.cursor,trigger:trigger||'eligible_update',delta,constraints:[...new Set(s.constraints||[])],refs:clone(s.refs||{}),redaction:clone(s.redaction),runtime:{worktree:s.worktree,primaryRoute:s.primaryRoute,permission:s.permission},held:held.map(f=>({id:f.id,key:f.key,severity:f.severity,raisedAgainst:f.raisedAgainst})),watch:(s.watch||[]).map(w=>({path:w.path,scope:w.scope,text:String(w.text||'').slice(0,1200),truncated:String(w.text||'').length>1200})),stablePrefix:a.stablePrefix};
+   if(canonical(manifest).length>16000)return this.noCall(a,'no_call_resource_refused');
+   const frozen=Boolean(options.frozen&&s.frozen&&['configured_stage_boundary','pre_first_material_mutation','pre_high_risk_action','pre_terminal_completion_claim'].includes(trigger));
+   const ticket={id:this.id('cycle'),assignmentId:a.id,epoch:a.epoch,fingerprint:a.fingerprint,generation:s.generation,scopeKey:a.scopeKey,manifest,frozen,terminal:Boolean(options.terminal),startedAt:this.clock(),lifecycle:this.lifecycle,bindingRevision:a.bindingRevision};
+   a.pending=ticket;a.usage.localEvaluations++;a.state='reviewing';a.cycles.push({...clone(ticket),status:'reviewing',local:true});this.onChange();return result(true,{ticket});
+  }
+  unsafe(output){if(!output||!Array.isArray(output.findings))return 'malformed_output';if(output.quarantine)return QUARANTINE.includes(output.quarantine)?output.quarantine:'malformed_output';const text=output.findings.map(f=>String(f?.title||'')+' '+String(f?.detail||'')).join(' ');if(/(?:sk-[a-zA-Z0-9]{16,}|Bearer [a-zA-Z0-9._-]{16,})/.test(text))return 'credential_exfiltration';if(/ignore (?:all |previous |prior )*(?:instructions|rules)|override (?:the )?(?:hold|policy|permissions)/i.test(text))return 'instruction_override';if(/(?:run|execute)\s+[`"']?(?:rm\s+-rf|git\s+push|npm\s+install)|approve (?:this|the) (?:permission|request)/i.test(text))return 'mutating_instruction';if(output.tools!=null&&!Array.isArray(output.tools))return 'malformed_output';if(output.tools?.some(t=>!READ_TOOLS.includes(t)))return 'tool_authority_violation';if(output.findings.some(f=>!f||typeof f!=='object'||!Object.hasOwn(rank,f.severity)||!f.family||!Array.isArray(f.objectRefs)||!f.ruleRef||!f.evidenceFingerprint||typeof f.title!=='string'||typeof f.detail!=='string'))return 'malformed_output';return null;}
+  finish(ticket,output){
+   const a=ticket&&this.assignments.get(ticket.assignmentId);if(!a||ticket.lifecycle!==this.lifecycle)return result(false,{error:'stale_epoch'});
+   const stored=a.cycles.find(c=>c.id===ticket.id);if(!stored)return result(false,{error:'invalid_request'});if(['epoch','fingerprint','generation','scopeKey','manifest','frozen','terminal','startedAt','bindingRevision'].some(k=>canonical(stored[k])!==canonical(ticket[k])))return result(false,{error:'stale_projection'});const s=this.sync(a);if(!s||ticket.scopeKey!==a.scopeKey||ticket.epoch!==a.epoch||ticket.fingerprint!==a.fingerprint)return result(false,{error:'stale_epoch'});
+   const cycle=a.cycles.find(c=>c.id===ticket.id);if(!cycle)return result(false,{error:'invalid_request'});if(cycle.result)return clone(cycle.result);
+   if(!a.pending||a.pending.id!==ticket.id)return result(false,{error:'cancelled'});
+   a.pending=null;cycle.finishedAt=this.clock();cycle.latencyMs=cycle.finishedAt-ticket.startedAt;
+   const end=(fields)=>{cycle.result=result(true,fields);this.onChange();return clone(cycle.result);};
+   if(output?.failure){const type=output.failure;if(!['failed','timed_out','quota_paused','unavailable'].includes(type)){cycle.status='failed';return end({outcome:'failed'});}cycle.status=type;a.state=type;if(a.catchUp?.state==='waiting'){a.catchUp.state='released';a.catchUp.reason=type;}if(type==='quota_paused')a.usage.quotaPauses++;else if(type==='timed_out')a.usage.timeouts++;else a.usage.failures++;return end({outcome:type});}
+   const unsafe=this.unsafe(output);if(unsafe){cycle.status='quarantined';cycle.reason=unsafe;cycle.payloadFingerprint=digest(output);a.usage.quarantines++;a.quarantineCount++;if(a.quarantineCount>=2){a.paused=true;a.quarantined=true;a.state='paused';a.hostWarnings=1;}else{this.resetAssignment(a,'quarantine_reprime',false);}return end({outcome:'quarantined',reason:unsafe,paused:a.paused});}
+   a.quarantineCount=0;a.quarantined=false;const nowCurrent=ticket.generation===s.generation;let emitted=0;const outcomes=[];
+   // Only a review of the latest generation may clear or reconfirm a held issue.
+   // A late generation is evidence of what was inspected, not current approval.
+   const existingHeld=new Set(ticket.manifest.held.map(f=>f.id));const reRaised=new Set();
+   for(const input of output.findings){
+    const f=clone(input);const family=canonical([norm(f.family),f.objectRefs.map(String).sort(),norm(f.ruleRef)]),key=family+'|'+f.evidenceFingerprint,closureKey=a.projectId+'|'+a.runId+'|'+key;
+    if(!f.detail.trim()||/^(looks fine|nothing to add|stop|ok)[.! ]*$/i.test(f.detail)){a.usage.suppressed++;outcomes.push('content_free_suppressed');continue;}
+    let previous=a.findings.find(x=>x.family===family&&x.status==='held')||a.findings.find(x=>x.key===key&&['emitted','closed','cleared'].includes(x.status));
+    if(previous&&rank[f.severity]<rank[previous.severity]){if(previous.status==='held')reRaised.add(previous.id);a.usage.suppressed++;outcomes.push('severity_downgrade_rejected');continue;}
+    if(this.closed.has(closureKey)){a.usage.suppressed++;outcomes.push('duplicate_suppressed');continue;}
+    if(previous?.status==='emitted'&&previous.key===key&&rank[f.severity]<=rank[previous.severity]){a.usage.suppressed++;outcomes.push('duplicate_suppressed');continue;}
+    if(previous?.status==='cleared'&&previous.key===key)previous=null;
+    const wasHeld=previous?.status==='held';if(wasHeld)reRaised.add(previous.id);
+    const canEmit=nowCurrent&&emitted===0&&((wasHeld&&existingHeld.has(previous.id)&&ticket.generation>previous.raisedAgainst)||ticket.frozen||f.severity==='nit'&&!ticket.terminal);
+    let record=previous;
+    if(!record||record.status==='closed'||record.key!==key&&!wasHeld){record={id:this.id('finding'),family,key,raisedAgainst:ticket.generation,history:[],projectId:a.projectId,threadId:a.threadId,runId:a.runId,advisor:clone(a.identity),originalEpoch:a.epoch};a.findings.push(record);}
+    Object.assign(record,{key,title:f.title,detail:f.detail,severity:f.severity,evidence:clone(f.evidence||[]),evidenceFingerprint:f.evidenceFingerprint,latestChecked:ticket.generation,epoch:a.epoch,needsReconfirmation:!nowCurrent});
+    if(canEmit){record.terminalStale=false;record.status='emitted';record.advisor=clone(a.identity);record.deliveredAt=s.generation;record.channel=s.status==='paused'||s.status==='stopped'?'resume_only':a.cooldownUntil>s.generation?'aside':'advice';record.history.push({generation:s.generation,what:ticket.frozen?'Reviewed at a recorded frozen boundary.':'Reconfirmed against current evidence.'});a.usage.emitted++;emitted++;outcomes.push('emitted');if(f.severity!=='nit')a.cooldownUntil=s.generation+a.policy.cooldownTurns;}
+    else{if(!wasHeld)a.usage.held++;record.needsReconfirmation=true;record.status='held';record.history.push({generation:ticket.generation,what:nowCurrent?'Held for a separate reconfirmation.':'Earlier-generation result held; current work is newer.'});outcomes.push('held');}
+   }
+   if(nowCurrent)for(const f of a.findings){if(f.status==='held'&&existingHeld.has(f.id)&&ticket.generation>f.raisedAgainst&&!reRaised.has(f.id)){f.status='cleared';f.latestChecked=s.generation;f.history.push({generation:s.generation,what:'Reconfirmation found no surviving issue in current evidence.'});a.usage.cleared++;outcomes.push('cleared');}}
+   if(nowCurrent&&a.catchUp?.state==='waiting'){a.catchUp.state='released';a.catchUp.reason='advisor_converged';}a.localContextChars=(a.localContextChars||0)+canonical(ticket.manifest).length;a.cursor=Math.max(a.cursor,ticket.generation);a.reprimeRequired=false;a.lastChecked=this.clock();a.state=a.findings.some(f=>f.status==='held')?'held':emitted?'delivered':a.cursor<s.generation?'catching_up':'idle';cycle.status=outcomes.includes('emitted')?'emitted':outcomes[0]||'silent';cycle.outcomes=outcomes;
+   if(a.policy.retainTranscript)a.transcript.push({cycleId:ticket.id,generation:ticket.generation,epoch:a.epoch,manifest:clone(ticket.manifest),outcome:cycle.status,findings:output.findings.map(f=>({title:f.title,severity:f.severity}))});
+   return end({outcome:cycle.status,outcomes,emitted});
+  }
+  closeFinding(threadId,id,expectedEpoch){const a=this.current(threadId),s=a&&this.sync(a);if(!a||!s)return result(false,{error:'bsd_assignment_not_found'});if(expectedEpoch!==a.epoch)return result(false,{error:'stale_epoch'});const f=a.findings.find(f=>f.id===id);if(!f)return result(false,{error:'bsd_finding_not_found'});f.status='closed';f.history.push({generation:s.generation,what:'Dismissed by the user; unchanged evidence stays closed.'});this.closed.set(a.projectId+'|'+a.runId+'|'+f.key,{id:f.id,evidenceFingerprint:f.evidenceFingerprint});this.onChange();return result(true);}
+  control(threadId,action,expectedEpoch){const a=this.current(threadId);if(!a)return result(false,{error:'bsd_assignment_not_found'});this.sync(a);if(expectedEpoch!==a.epoch)return result(false,{error:'stale_epoch'});if(a.stopped)return result(false,{error:'already_in_state'});if(action==='pause'&&a.paused||action==='resume'&&!a.paused&&a.state!=='quota_paused')return result(false,{error:'already_in_state'});if(action==='resume'&&a.quarantined)return result(false,{error:'quarantine_terminal_pause'});if(!['pause','resume','stop'].includes(action))return result(false,{error:'invalid_request'});a.paused=action==='pause';a.stopped=action==='stop';this.resetAssignment(a,action,false);a.state=action==='resume'?'idle':action==='stop'?'stopped':'paused';if(action==='stop')a.findings.filter(f=>f.status==='held').forEach(f=>{f.status='closed';f.closeReason='assignment_stopped';});this.onChange();return result(true,{epoch:a.epoch});}
+  startCatchup(threadId,expectedEpoch){const a=this.current(threadId),s=a&&this.sync(a);if(!a||!s)return result(false,{error:'bsd_assignment_not_found'});if(expectedEpoch!==a.epoch)return result(false,{error:'stale_epoch'});if(!s.frozen&&s.status!=='completed')return result(false,{error:'invalid_request'});if(!a.findings.some(f=>f.status==='held'&&f.severity==='critical')&&!s.frozen)return result(false,{error:'invalid_request'});if(a.catchUp?.state==='waiting')return result(true,{duplicate:true,catchUp:a.catchUp});a.catchUp={state:'waiting',generation:s.generation,epoch:a.epoch,startedAt:this.clock(),deadline:this.clock()+a.policy.catchUpSeconds*1000,budgetSeconds:a.policy.catchUpSeconds,terminal:s.status==='completed'};this.onChange();return result(true,{catchUp:a.catchUp});}
+  endCatchup(threadId,expectedEpoch,abort=false){const a=this.current(threadId),s=a&&this.sync(a);if(!a||!s||expectedEpoch!==a.epoch)return result(false,{error:'stale_epoch'});const w=a.catchUp;if(!w||w.epoch!==a.epoch||w.state!=='waiting')return result(false,{error:'already_in_state'});if(!abort&&this.clock()<w.deadline)return result(false,{error:'catch_up_not_expired'});w.state=abort?'aborted':'expired';w.finishedAt=this.clock();if(!abort&&w.terminal&&s.status==='completed'){const f=a.findings.find(f=>f.status==='held'&&f.severity==='critical');if(f){f.terminalStale=true;f.history.push({generation:s.generation,what:'Bounded terminal catch-up expired. Earlier-generation critical remains unreconfirmed.'});}}this.onChange();return result(true,{catchUp:w});}
+  terminalTimeout(threadId){const a=this.current(threadId);return this.endCatchup(threadId,a?.epoch,false);}
+  snapshot(threadId){const a=this.current(threadId);if(!a)return null;this.sync(a);return clone(a);}
+  nativeCommand(){return result(false,{error:'command_not_registered'});}
+ }
+ root.PM56_BSD_ENGINE={Engine,defaults,TRIGGERS,STAGES,READ_TOOLS,QUARANTINE,clone,digest,canonical};
+})(typeof window==='undefined'?globalThis:window);
+
+/* Back Seat Driver presentation, Batch 12. One thread/run/stage projection.
+ * All configuration here is explicitly session-only concept state. Native BSD
+ * command/event/storage registration is NOT claimed by these local controls.
  */
 (function(){
-  'use strict';
-  var D = window.PM56_DATA; if(!D) return;
-  var EXT = window.PM56_EXT; if(!EXT || !EXT.slot) return;
-  var RT = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
-
-  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-
-  /* ===================================================================
-     1. POLICY + FIXTURE
-     Defaults mirror machine/settings.json assistant.bsd.* exactly. Settings
-     owns those values; this record is the operational projection of them.
-     =================================================================== */
-  var SEED = {
-    demo:true,
-    sessionEpoch:1,
-    reprimeRequired:false,
-    mode:'auto',                       /* off | auto | on -- Auto is the default */
-    model:{ requested:'Default resolver', effective:'Claude Sonnet 4.6' },
-    persona:{ requested:'Critical Advisor', effective:'Critical Advisor' },
-    sensitivity:'balanced',
-    catchUpSeconds:30,
-    cooldownTurns:3,
-    retainTranscript:true,
-    selfCompactThreshold:0.8,
-    /* Liveness. `state` drives the compact Context row's nine states. */
-    state:'idle',                      /* off|idle|reviewing|catching_up|held|delivered|quota_paused|failed|unavailable */
-    checkedSecondsAgo:18,
-    generation:14,                     /* the primary flow's current generation */
-    cursor:12,                         /* the last generation BSD has read     */
-    cooldownRemaining:0,
-    quarantined:false,
-    /* Stage bindings: BSD is configurable per workflow stage, and Auto binds a
-       subset. Every one of these is read-only advice at that stage. */
-    stages:[
-      { id:'prd_builder',   label:'PRD Builder',            bound:true  },
-      { id:'planning_wizard', label:'Planning Wizard',      bound:true  },
-      { id:'ledger',        label:'Ledger / PlanUnit work', bound:true  },
-      { id:'plan_compile',  label:'Plan Compile',           bound:false },
-      { id:'worknode_create', label:'WorkNode creation',    bound:false },
-      { id:'worknode_audit',  label:'WorkNode audit',       bound:true  },
-      { id:'execution',     label:'Execution',              bound:true  },
-      { id:'verification',  label:'Verification',           bound:false },
-      { id:'remediation',   label:'Remediation',            bound:false },
-      { id:'certification', label:'Certification',          bound:false }
-    ],
-    /* Findings. severity is exactly nit | concern | critical. */
-    findings:[
-      { id:'bsd-f1', severity:'critical', stage:'execution',
-        title:'History rewrite would break the deployed rollback path',
-        detail:'The proposed force-push rewrites two commits that the rehearsed rollback runbook references by hash.',
-        raisedAtGeneration:11, status:'emitted', deliveredAtGeneration:11,
-        history:[ {gen:11, what:'Raised against generation 11.'},
-                  {gen:11, what:'Delivered immediately: the boundary was still current.'} ] },
-      { id:'bsd-f2', severity:'concern', stage:'execution',
-        title:'Index migration has no measured write-amplification bound',
-        detail:'The migration adds a covering index without a recorded write-amplification measurement, and the objective caps it at 8%.',
-        raisedAtGeneration:12, status:'held', heldSinceGeneration:12,
-        history:[ {gen:12, what:'Raised against generation 12.'},
-                  {gen:13, what:'Held: generation 13 changed the migration file; re-evaluating rather than delivering a stale claim.'},
-                  {gen:14, what:'Still held at generation 14. Awaiting the next safe boundary.'} ] },
-      { id:'bsd-f3', severity:'concern', stage:'ledger',
-        title:'Two ledger atoms record the same decision',
-        detail:'Atoms 0058 and 0079 both close the same question with different wording.',
-        raisedAtGeneration:9, status:'cleared', clearedAtGeneration:11,
-        history:[ {gen:9,  what:'Raised against generation 9.'},
-                  {gen:10, what:'Held while generation 10 rewrote the ledger section.'},
-                  {gen:11, what:'Cleared at generation 11: the newer work already merged both atoms. Never delivered.'} ] },
-      { id:'bsd-f4', severity:'nit', stage:'planning_wizard',
-        title:'Topic 4 restates topic 2 verbatim',
-        detail:'Low value; suppressed under the balanced sensitivity setting.',
-        raisedAtGeneration:13, status:'suppressed',
-        history:[ {gen:13, what:'Raised and immediately suppressed: nit severity under balanced sensitivity.'} ] }
-    ],
-    /* Distinct Usage attribution. These are BSD's own numbers and are never
-       folded into the primary run's totals. */
-    usage:{ calls:24, noCalls:9, held:1, cleared:1, emitted:1, suppressed:1,
-            timeouts:0, quotaPauses:1, failures:1,
-            inputTokens:41200, outputTokens:3800, costUsd:0.021,
-            model:'Claude Sonnet 4.6', account:'work', catchUpLatencyMs:820 },
-    transcript:[
-      { gen:12, role:'advisor', text:'Reading the delta for generation 12 in an isolated session. No primary context is shared and nothing here can write.' },
-      { gen:12, role:'advisor', text:'Concern: the migration adds a covering index with no recorded write-amplification measurement.' },
-      { gen:13, role:'system',  text:'Generation 13 changed the migration file. Holding the concern rather than delivering it against superseded work.' },
-      { gen:14, role:'advisor', text:'Re-evaluated at generation 14. The measurement is still absent, so the concern stands and stays held for the next safe boundary.' }
-    ]
-  };
-  SEED.findings.forEach(f=>{f.sessionEpoch=SEED.sessionEpoch;f.advisorModel=SEED.model.effective;f.advisorPersona=SEED.persona.effective;});
-  RT.bsd = RT.bsd || JSON.parse(JSON.stringify(SEED));
-  var BSD0 = JSON.stringify(SEED);
-  function P(){ return RT.bsd; }
-
-  var STATE_LABEL = {
-    off:'Off', idle:'Idle', reviewing:'Reviewing', catching_up:'Catching up',
-    held:'Finding held', delivered:'Advice delivered', quota_paused:'Quota paused',
-    failed:'Failed', unavailable:'Unavailable'
-  };
-  var STATE_TONE = {
-    off:'idle', idle:'idle', reviewing:'working', catching_up:'working',
-    held:'attention', delivered:'changed', quota_paused:'attention',
-    failed:'blocked', unavailable:'blocked'
-  };
-  var SEV_LABEL = { nit:'Nit', concern:'Concern', critical:'Critical' };
-
-  function liveState(){
-    var p=P();
-    if(p.mode==='off') return 'off';
-    if(p.quarantined) return 'failed';
-    return p.state;
+ 'use strict';const E=window.PM56_EXT,D=window.PM56_DATA,K=window.PM56_BSD_ENGINE;if(!E||!D||!K)return;
+ const {clone}=K;const disclosures=new Map();const opened=k=>disclosures.get(k)?' open':'';document.addEventListener('toggle',e=>{const d=e.target;if(d.isConnected&&d.matches?.('.bsd12-disclosure[data-k]')&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,d.open);},true);document.addEventListener('click',e=>{const sm=e.target.closest?.('.bsd12-disclosure[data-k]>summary'),d=sm?.parentElement;if(d&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,!d.open);},true);let draft=null,renderQueued=false,openFinding=null;
+ const engine=new K.Engine({onChange:refresh});
+ function thread(id){return E.ctx().state.threads.find(t=>t.id===id);}
+ function project(t){return t?.projectId||'concept:pm';}
+ function identity(p){const m=D.models.find(m=>m.id===p.modelId),available=!!m&&['ready','update-available'].includes(m.status);return {requestedModel:p.modelId,requestedName:m?.name||p.modelId,effectiveModel:available?m.id:null,effectiveName:available?m.name:null,provider:m?.provider||null,requestedAccount:m?.accountId||null,effectiveAccount:available?m.accountId:null,persona:p.persona,available,reason:available?'Selected catalog fixture':m?.status||'no_model',effort:p.effort||'',fast:!!p.fast};}
+ function publish(){
+  for(const a of engine.assignments.values()){
+   const t=thread(a.threadId),s=engine.read(a.threadId);if(!t||!s||project(t)!==a.projectId||!engine.sameScope(a,s))continue;
+   for(const f of a.findings){if(f.status!=='emitted'&&!f.terminalStale)continue;const id='bsd-note:'+f.id;if(!t.messages.some(m=>m.id===id))t.messages.push({id,role:'system',type:'bsd-advice-v3',assignmentId:a.id,findingId:f.id,projectId:a.projectId,sourceGeneration:f.latestChecked,recordedExample:true});}
   }
-  function heldFindings(){ return P().findings.filter(function(f){ return f.status==='held' && f.sessionEpoch===P().sessionEpoch; }); }
-  function emitted(){ return P().findings.filter(function(f){ return f.status==='emitted' && f.sessionEpoch===P().sessionEpoch; }); }
-
-  /* ===================================================================
-     2. COMPACT CONTEXT ROW
-     Two lines exactly, per the packet: mode + Persona, then liveness.
-     The row OPENS Context Details scrolled to BSD; it never sets the mode.
-     =================================================================== */
-  function contextRow(ctx){
-    var p=P(), st=liveState(), held=heldFindings().length;
-    var line2 = st==='off' ? 'Not running'
-      : st==='catching_up' ? 'Catching up · cursor at generation '+p.cursor+' of '+p.generation
-      : st==='held' ? held+' finding'+(held===1?'':'s')+' held · not shown as confirmed'
-      : st==='quota_paused' ? 'Paused on provider usage · primary flow unaffected'
-      : st==='failed' ? 'Isolated failure · primary flow unaffected'
-      : st==='unavailable' ? 'Advisor route unavailable'
-      : st==='reviewing' ? 'Reviewing the delta for generation '+p.generation
-      : 'Caught up · checked '+p.checkedSecondsAgo+'s ago';
-    return '<div class="menu-divider" data-k="bsd-div"></div>'+
-      '<button class="menu-item bsd-ctx-row" data-action="bsd-open-details" data-k="bsd-ctx-row">'+
-        '<span class="menu-icon">'+ctx.icon('eye',13)+'</span>'+
-        '<span class="menu-copy"><strong>BSD</strong>'+
-          '<span>'+esc(STATE_LABEL[st])+(st!=='off'?' · '+esc(p.persona.effective):'')+'</span></span>'+
-        '<span class="bsd-live bsd-tone-'+esc(STATE_TONE[st])+'">'+esc(line2)+'</span>'+
-      '</button>';
-  }
-
-  /* ===================================================================
-     3. CONTEXT DETAILS SECTION
-     Policy, identity, stage bindings, cursor, triggers, findings (with the
-     full hold history), isolated context, Usage, failure, watch guidance.
-     =================================================================== */
-  function findingRow(ctx,f){
-    var badge = '<span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span>';
-    var status = '<span class="bsd-status bsd-status-'+esc(f.status)+'">'+esc(f.status)+'</span>';
-    var stale = f.sessionEpoch!==P().sessionEpoch ? '<span class="bsd-stale">Previous session · '+esc(f.advisorModel)+'</span>' : (f.status==='emitted' && f.deliveredAtGeneration < P().generation - 1)
-      ? '<span class="bsd-stale">Not reconfirmed · gen '+f.deliveredAtGeneration+'</span>' : '';
-    return '<div class="bsd-finding" data-k="bsd-f-'+esc(f.id)+'">'+
-      '<div class="bsd-finding-head">'+badge+status+
-        '<span class="bsd-gen">gen '+f.raisedAtGeneration+'</span>'+
-        '<span class="spacer"></span>'+
-        '<button class="text-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">History</button></div>'+
-      '<strong class="bsd-finding-title">'+esc(f.title)+'</strong>'+
-      (RT.bsdOpenFinding===f.id?'<p class="bsd-finding-detail">'+esc(f.detail)+'</p>':'')+ stale +
-      (RT.bsdOpenFinding===f.id
-        ? '<div class="bsd-history">'+f.history.map(function(h){
-            return '<div class="bsd-hrow"><span class="bsd-hgen">gen '+h.gen+'</span><span>'+esc(h.what)+'</span></div>';
-          }).join('')+'</div>'
-        : '')+
-    '</div>';
-  }
-
-  function detailsSection(ctx){
-    var p=P(),st=liveState(),bound=p.stages.filter(s=>s.bound);
-    function row(label,value){return '<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>';}
-    return '<section class="bsd-section bsd-overview" data-k="bsd-section" id="ctx-bsd">'+
-      '<div class="bsd-overview-head"><h3>Back Seat Driver</h3><button class="text-button" data-action="bsd-configure-stages">Configure</button></div>'+
-      '<dl class="bsd-summary-table">'+row('Status',STATE_LABEL[st])+row('Mode',p.mode[0].toUpperCase()+p.mode.slice(1))+row('Model',p.model.effective)+row('Persona',p.persona.effective)+row('Coverage',p.cursor+' / '+p.generation+' turns')+'</dl>'+
-      '<details class="bsd-disclosure"><summary>Findings <span>'+p.findings.length+'</span></summary><div class="bsd-findings">'+p.findings.map(f=>findingRow(ctx,f)).join('')+'</div></details>'+
-      '<details class="bsd-disclosure"><summary>Session and usage</summary><dl class="bsd-session-grid">'+
-      [['Session',p.sessionEpoch],['Context',p.reprimeRequired?'Awaiting priming':'Current'],['Requested model',p.model.requested],['Sensitivity',p.sensitivity],['Catch-up',p.catchUpSeconds+' sec'],['Cooldown',p.cooldownTurns+' turns'],['Compaction',Math.round(p.selfCompactThreshold*100)+'%'],['Stages',bound.length+' of '+p.stages.length],['Calls',p.usage.calls],['No calls',p.usage.noCalls],['Cost','$'+p.usage.costUsd.toFixed(3)]].map(r=>row(...r)).join('')+'</dl>'+
-      '<div class="bsd-summary-actions"><button class="soft-button" data-action="bsd-open-usage">Usage</button><button class="soft-button" data-action="bsd-open-transcript" '+(!p.retainTranscript?'disabled':'')+'>Advisor transcript</button></div></details>'+
-      (p.quarantined?'<p class="bsd-quarantine">Advisor unavailable · primary work unaffected</p>':'')+'</section>';
-  }
-
-  var configDraft=null;
-  function beginConfig(ctx){
-    configDraft=JSON.parse(JSON.stringify(P()));
-    configDraft.modelId=configDraft.model.id||(D.models.find(m=>m.name===configDraft.model.effective)||D.models[0]).id;
-    ctx.closeMenu();ctx.openDialog({type:'bsd-stages'});
-  }
-  var BSD_CHOICES={sensitivity:[{value:'conservative',label:'Conservative',description:'Reserve advice for strong signals.'},{value:'balanced',label:'Balanced',description:'Balance useful feedback with fewer interruptions.'},{value:'frequent',label:'Frequent',description:'Surface more potential improvements.'}],catchUpSeconds:[0,15,30,60].map(v=>({value:v,label:v?v+' seconds':'Never wait',description:v?'Maximum wait for the advisor to catch up.':'Continue without waiting for the advisor.'}))};
-  function bsdChoice(ctx,d,key,label){var selected=BSD_CHOICES[key].find(o=>o.value===d[key])||BSD_CHOICES[key][0];return '<label>'+label+'<button type="button" class="shared-picker-button" data-action="bsd-pick-choice" data-field="'+key+'" data-menu-anchor="bsd-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';}
-  EXT.action('bsd-pick-choice',function(ctx,btn){var draft=configDraft,key=btn.dataset.field;if(!draft||!BSD_CHOICES[key])return true;window.PM56_PICKERS.openChoice(btn,key==='sensitivity'?'Trigger sensitivity':'Catch-up cap',draft[key],BSD_CHOICES[key],function(value){if(configDraft===draft){draft[key]=value;ctx.renderOverlays();}});return true;});
-  function configDialog(ctx){
-    var d=configDraft;if(!d){configDraft=JSON.parse(JSON.stringify(P()));d=configDraft;d.modelId=(D.models.find(m=>m.name===d.model.effective)||D.models[0]).id;}
-    const pick=window.PM56_PICKERS;
-    return '<section class="demo-dialog bsd-dialog bsd-configure" role="dialog" aria-label="Configure Back Seat Driver" data-k="bsd-configure">'+
-      '<div class="demo-dialog-head"><strong>Back Seat Driver</strong><span class="meta-pill">Read-only advisor</span><span class="spacer"></span><button class="icon-button" data-action="bsd-close-dialog" title="Cancel">'+ctx.icon('close',13)+'</button></div>'+
-      '<div class="demo-dialog-body"><div class="bsd-config-mode">'+['off','auto','on'].map(v=>'<button class="soft-button '+(d.mode===v?'active':'')+'" data-action="bsd-config-mode" data-value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</button>').join('')+'</div>'+
-      '<div class="bsd-config-pickers"><label>Advisor model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona.requested)+'</label></div>'+
-      '<div class="bsd-config-grid">'+bsdChoice(ctx,d,'sensitivity','Trigger sensitivity')+''+
-      ''+bsdChoice(ctx,d,'catchUpSeconds','Catch-up cap')+''+
-      '<label>Cooldown · turns<input data-bsd-field="cooldownTurns" type="number" min="0" max="100" value="'+d.cooldownTurns+'"></label>'+
-      '<label>Self-compact · %<input data-bsd-field="selfCompactThreshold" type="number" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label></div>'+
-      '<label class="bsd-retain"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label>'+
-      '<details class="bsd-disclosure"><summary>Workflow stages <span>'+d.stages.filter(s=>s.bound).length+' of '+d.stages.length+'</span></summary><div class="bsd-stage-grid">'+d.stages.map(s=>'<label class="bsd-stage-row"><input type="checkbox" data-bsd-stage="'+esc(s.id)+'" '+(s.bound?'checked':'')+'><span>'+esc(s.label)+'</span></label>').join('')+'</div></details>'+
-      '<div class="bsd-config-error" role="alert">'+esc(d.error||'')+'</div></div>'+
-      '<div class="demo-dialog-foot"><button class="soft-button" data-action="bsd-close-dialog">Cancel</button><button class="primary-button" data-action="bsd-save-config">Save configuration</button></div></section>';
-  }
-  document.addEventListener('change',function(e){
-    if(!configDraft)return;
-    const el=e.target, key=el.dataset.bsdField, stage=el.dataset.bsdStage;
-    if(stage){const s=configDraft.stages.find(x=>x.id===stage);if(s)s.bound=el.checked;return;}
-    if(!key)return;
-    configDraft[key]=key==='retainTranscript'?el.checked:key==='selfCompactThreshold'?Number(el.value)/100:['cooldownTurns','catchUpSeconds'].includes(key)?Number(el.value):el.value;
-  });
-  ['model','persona'].forEach(kind=>EXT.action('bsd-pick-'+kind,function(ctx,btn){
-    const draft=configDraft;if(!draft)return true;
-    window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:draft.modelId,persona:draft.persona.requested,effort:draft.model.effort,fast:draft.model.fast},v=>{
-      if(configDraft!==draft||ctx.state.dialog?.type!=='bsd-stages')return;
-      if(kind==='persona')draft.persona={requested:v.persona,effective:v.persona};
-      else{
-        const model=D.models.find(m=>m.id===v.model);if(!model)return;
-        draft.modelId=v.model;draft.model={id:v.model,requested:model.name,effective:model.name,effort:v.effort,fast:v.fast};
-      }
-      ctx.renderOverlays();
-    });return true;
-  }));
-  EXT.action('bsd-config-mode',function(ctx,btn){if(configDraft)configDraft.mode=btn.dataset.value;ctx.renderOverlays();return true;});
-  EXT.action('bsd-save-config',function(ctx){
-    const d=configDraft;if(!d)return true;
-    if(!Number.isInteger(d.cooldownTurns)||d.cooldownTurns<0||d.cooldownTurns>100||!Number.isFinite(d.selfCompactThreshold)||d.selfCompactThreshold<.1||d.selfCompactThreshold>.95){d.error='Check cooldown and compaction limits.';ctx.renderOverlays();return true;}
-    const p=P();
-    const identityChanged=JSON.stringify([p.model.id||p.model.effective,p.model.effort,p.model.fast,p.persona.effective])!==JSON.stringify([d.model.id||d.model.effective,d.model.effort,d.model.fast,d.persona.effective]);
-    ['mode','model','persona','sensitivity','catchUpSeconds','cooldownTurns','retainTranscript','selfCompactThreshold','stages'].forEach(k=>p[k]=JSON.parse(JSON.stringify(d[k])));
-    if(identityChanged){
-      // Historical findings retain their own advisor identity. A replacement
-      // advisor has not read the old cursor and must not reconfirm old advice.
-      p.sessionEpoch+=1;p.reprimeRequired=true;p.cursor=0;p.checkedSecondsAgo=null;p.cooldownRemaining=0;
-      p.transcript.push({gen:p.generation,role:'system',sessionEpoch:p.sessionEpoch,text:'Advisor changed. New session awaits context priming.'});
-    }
-    p.revision=(p.revision||0)+1;p.state=p.mode==='off'?'off':p.cursor<p.generation?'catching_up':'idle';
-    configDraft=null;ctx.closeMenu();ctx.closeDialog();ctx.renderApp();return true;
-  });
-
-  /* ===================================================================
-     4. TRANSCRIPT ADVICE CARD
-     Silent, duplicate and cleared evaluations create NO transcript noise --
-     only an emitted finding renders. Held findings never render here.
-     =================================================================== */
-  EXT.slot('transcriptMessage', function(ctx){
-    var m=ctx.m; if(!m || m.type!=='bsd-advice-v2') return '';
-    var f=P().findings.filter(function(x){return x.id===m.findingId;})[0];
-    if(!f || f.status!=='emitted') return '';
-    return '<article class="event-card bsd-card" data-k="bsd-card-'+esc(f.id)+'" data-message-id="'+esc(m.id||'')+'">'+
-      '<span class="event-icon">'+ctx.icon('eye',14)+'</span>'+
-      '<div class="event-copy">'+
-        '<strong><span class="bsd-sev bsd-sev-'+esc(f.severity)+'">'+esc(SEV_LABEL[f.severity])+'</span> '+esc(f.title)+'</strong>'+
-        '<p>'+esc(f.detail)+'</p>'+
-        '<p class="bsd-attr">Back Seat Driver · '+esc(f.advisorModel||P().model.effective)+' · gen '+f.raisedAtGeneration+'</p>'+
-      '</div>'+
-      '<div class="plan-actions">'+
-        '<button class="soft-button" data-action="bsd-open-finding" data-id="'+esc(f.id)+'">Evidence</button>'+
-        '<button class="text-button" data-action="bsd-dismiss" data-id="'+esc(f.id)+'">Dismiss</button>'+
-      '</div></article>';
-  });
-
-  /* ===================================================================
-     5. WAND ROW  (Off / Auto / On / Configure…)
-     Check state comes from the owner projection, not a local checkbox.
-     =================================================================== */
-  EXT.slot('wandRows', function(ctx){
-    var p=P();
-    return '<button class="menu-item" data-submenu="bsd-v2" data-k="bsd-wand">'+
-      '<span class="menu-icon">'+ctx.icon('eye',13)+'</span>'+
-      '<span class="menu-copy"><strong>Back Seat Driver</strong><span>Passive read-only advisor</span></span>'+
-      '<span class="shortcut">'+esc(p.mode==='auto'?'Auto':p.mode==='on'?'On':'Off')+'</span>'+
-      '<span class="chevron">'+ctx.icon('chevron',11)+'</span></button>';
-  });
-
-  /* The wand row above declares data-submenu="bsd-v2"; this renders it.
-     Without it the row opened a real but EMPTY sidecar. Off / Auto · Default /
-     On, then a divider and Configure…, exactly as 04_GUI_IMPACTS §4 specifies. */
-  EXT.slot('submenu', function(ctx){
-    if(ctx.id !== 'bsd-v2') return '';
-    var p=P();
-    var opts=[['off','Off','No advisor runs; nothing about the primary work changes'],
-              ['auto','Auto','Advise only when a delta is material · Default'],
-              ['on','On','Evaluate every substantial turn']];
-    return '<div class="menu-head"><strong>Back Seat Driver</strong><span class="spacer"></span>'+
-        '<span class="chat-meta">Read-only</span></div>'+
-      opts.map(function(o){
-        return '<button class="menu-item'+(p.mode===o[0]?' active':'')+'" data-action="bsd-set-mode" data-value="'+o[0]+'">'+
-          '<span class="menu-copy"><strong>'+esc(o[1])+'</strong><span>'+esc(o[2])+'</span></span>'+
-          (p.mode===o[0]?ctx.icon('check',11):'')+'</button>';
-      }).join('')+
-      '<div class="menu-divider"></div>'+
-      '<button class="menu-item" data-action="bsd-configure-stages">'+
-        '<span class="menu-copy"><strong>Configure…</strong><span>Stage bindings, severity and cooldown</span></span>'+
-      '</button>';
-  });
-
-  EXT.slot('contextBsdRow', contextRow);
-  EXT.slot('contextBsdSection', detailsSection);
-
-  /* ===================================================================
-     6. DIALOGS — stage configuration, finding detail, advisor transcript
-     =================================================================== */
-  EXT.slot('dialog', function(ctx){
-    var d=ctx.state.dialog; if(!d) return '';
-    var p=P();
-    if(d.type==='bsd-stages')return configDialog(ctx);
-    if(d.type==='bsd-transcript'){
-      return '<div class="demo-dialog bsd-dialog" data-k="bsd-transcript-dialog">'+
-        '<div class="demo-dialog-head"><strong>Advisor transcript</strong><span class="spacer"></span>'+
-          '<button class="icon-button" data-action="bsd-close-dialog">'+ctx.icon('close',13)+'</button></div>'+
-        '<div class="demo-dialog-body">'+
-          '<p class="bsd-sub">Advisor session history</p>'+
-          p.transcript.map(function(t){
-            return '<div class="bsd-tline bsd-tline-'+esc(t.role)+'"><span class="bsd-hgen">gen '+t.gen+'</span><p>'+esc(t.text)+'</p></div>';
-          }).join('')+
-        '</div></div>';
-    }
-    return '';
-  });
-
-  /* ===================================================================
-     7. ACTIONS
-     =================================================================== */
-  function reRender(ctx){ ctx.renderApp(); ctx.renderOverlays && ctx.renderOverlays(); }
-
-  var ACTIONS = {
-    'bsd-set-mode': function(ctx,btn){
-      var p=P(); p.mode=btn.dataset.value;
-      p.state = p.mode==='off' ? 'off' : (p.cursor<p.generation ? 'catching_up' : 'idle');
-      reRender(ctx);
-      ctx.toast('Back Seat Driver '+(p.mode==='auto'?'set to Auto':p.mode==='on'?'turned On':'turned Off'),
-        p.mode==='off' ? 'No advisor runs. Nothing about your primary work changes -- it never depended on BSD.'
-                       : 'Read-only advice only. It cannot approve, mutate, or certify anything.');
-    },
-    'bsd-open-details': function(ctx){
-      ctx.closeMenu && ctx.closeMenu();
-      ctx.state.context = ctx.state.context || {};
-      ctx.state.context.details = true;
-      ctx.state.context.drawerView='curated';
-      ctx.state.context.polishSections=Object.assign({},ctx.state.context.polishSections,{'Back Seat Driver':true});
-      reRender(ctx);
-      setTimeout(function(){ var el=document.getElementById('ctx-bsd'); if(el) el.scrollIntoView({block:'start'}); }, 30);
-    },
-    'bsd-configure-stages': beginConfig,
-    'bsd-close-dialog': function(ctx){ configDraft=null;ctx.closeMenu();ctx.closeDialog(); },
-    'bsd-toggle-stage': function(ctx,btn){
-      var id=btn.dataset.id, p=P();
-      p.stages.forEach(function(s){ if(s.id===id) s.bound=!s.bound; });
-      reRender(ctx);
-    },
-    'bsd-open-finding': function(ctx,btn){
-      RT.bsdOpenFinding = (RT.bsdOpenFinding===btn.dataset.id) ? null : btn.dataset.id;
-      ctx.state.context = ctx.state.context || {};
-      ctx.state.context.details = true;
-      reRender(ctx);
-    },
-    'bsd-open-transcript': function(ctx){ ctx.openDialog({type:'bsd-transcript'}); },
-    'bsd-open-usage': function(ctx){
-      ctx.toast('Usage · Back Seat Driver', 'BSD usage is attributed separately: '+P().usage.calls+' calls, $'+P().usage.costUsd.toFixed(3)+', never folded into the primary run.');
-    },
-    'bsd-dismiss': function(ctx,btn){
-      var id=btn.dataset.id;
-      P().findings.forEach(function(f){ if(f.id===id){ f.status='suppressed'; f.history.push({gen:P().generation, what:'Dismissed by the user at generation '+P().generation+'.'}); } });
-      reRender(ctx);
-    },
-    /* The demonstration the packet asks for: advance the primary flow a
-       generation and let the held finding be re-evaluated for real. */
-    'bsd-advance-generation': function(ctx){
-      var p=P();
-      p.generation += 1;
-      p.cursor = p.generation - 1;
-      p.state='catching_up';
-      var held=heldFindings();
-      held.forEach(function(f){
-        var age = p.generation - f.raisedAtGeneration;
-        if(age>=3){
-          /* Re-evaluated against work that already addressed it. */
-          f.status='cleared'; f.clearedAtGeneration=p.generation;
-          f.history.push({gen:p.generation, what:'Cleared at generation '+p.generation+': the newer work addressed it. Never delivered as current.'});
-        } else {
-          f.history.push({gen:p.generation, what:'Still held at generation '+p.generation+'. Re-evaluated against the newer delta rather than delivered.'});
-        }
-      });
-      p.cursor=p.generation;p.reprimeRequired=false;
-      p.state = heldFindings().length ? 'held' : 'idle';
-      p.checkedSecondsAgo=2;
-      reRender(ctx);
-      ctx.toast('Generation '+p.generation,
-        'Held findings were re-evaluated against the newer work. A concern raised two generations ago is never delivered as if it were current.');
-    },
-    'bsd-simulate-failure': function(ctx){
-      var p=P(); p.quarantined=!p.quarantined; p.state=p.quarantined?'failed':'idle';
-      reRender(ctx);
-      ctx.toast(p.quarantined?'Advisor quarantined':'Advisor recovered',
-        p.quarantined?'The advisor failed in isolation. Your primary work is unaffected and continues normally.'
-                     :'The advisor is reading again from its recorded cursor.');
-    }
-  };
-  Object.keys(ACTIONS).forEach(function(n){ EXT.action(n, function(ctx,btn,ev){ ACTIONS[n](ctx,btn,ev); return true; }); });
-
-  var prevReset = EXT._actions && EXT._actions['reset-all'];
-  EXT.chainAction('reset-all', function(ctx,btn,ev){
-    RT.bsd = JSON.parse(BSD0); RT.bsdOpenFinding=null;
-    configDraft=null;return false;
-  });
-
-  window.PM56_BSD = {
-    policy:P, state:liveState, held:heldFindings, emitted:emitted,
-    restore:function(){ RT.bsd = JSON.parse(BSD0); }
-  };
+ }
+ function refresh(){if(renderQueued||!E.ctx)return;renderQueued=true;queueMicrotask(()=>{renderQueued=false;publish();E.ctx().renderApp();});}
+ function view(id){const t=thread(id||E.ctx().thread.id),a=t?engine.snapshot(t.id):null,p=engine.policy(project(t));return {thread:t,projectId:project(t),policy:p,assignment:a,identity:a?.identity||identity(p),mode:a?.mode||p.mode};}
+ function attrs(id){return ' data-thread="'+E.ctx().esc(id||E.ctx().thread.id)+'"';}
+ function action(c,name,label,id,extra='',cls='soft-button'){return '<button class="'+cls+'" data-action="'+name+'"'+attrs(id)+' '+extra+'>'+c.esc(label)+'</button>';}
+ function label(a,mode){if(mode==='off')return 'Off';if(!a)return 'Idle';return ({idle:'Idle',reviewing:'Reviewing',catching_up:'Catching up',held:'Finding held',delivered:'Advice delivered',quota_paused:'Quota paused',failed:'Failed',timed_out:'Failed',unavailable:'Unavailable',paused:a.quarantined?'Failed':'Idle',stopped:'Off',off:'Off'})[a.state]||'Idle';}
+ function age(a){return a?.lastChecked==null?'Not checked':Math.max(0,Math.floor((Date.now()-a.lastChecked)/1000))+'s since check';}
+ function statusLine(v){const a=v.assignment;if(v.mode==='off')return 'No advisor evaluations';if(!a)return 'No active assignment · session preview';if(a.catchUp?.state==='waiting')return 'Catching up · up to '+a.catchUp.budgetSeconds+'s · user-abortable';if(a.state==='reviewing')return 'Reviewing generation '+a.pending?.generation;if(a.paused)return 'Advisor paused · primary unaffected';if(a.state==='quota_paused')return 'Quota paused · primary unaffected';if(['failed','unavailable','timed_out'].includes(a.state))return 'Advisor unavailable · primary unaffected';if(a.findings.some(f=>f.status==='held'))return 'Held for reconfirmation · '+age(a);if(a.lastChecked==null)return 'Awaiting context priming';return (a.cursor===a.generation?'Caught up':'Behind by '+(a.generation-a.cursor)+' generation(s)')+' · '+age(a);}
+ function metric(c,k,v){return '<div class="bsd12-metric"><dt>'+c.esc(k)+'</dt><dd>'+c.esc(v??'Unknown')+'</dd></div>';}
+ function compact(c){const v=view(c.thread.id);return '<div class="menu-divider"></div><button class="menu-item bsd-ctx-row" data-action="bsd-open-details"'+attrs(c.thread.id)+'><span class="menu-icon">'+c.icon('eye',13)+'</span><span class="menu-copy"><strong>BSD</strong><span>'+c.esc(v.mode[0].toUpperCase()+v.mode.slice(1)+' · '+v.identity.persona)+'</span></span><span class="bsd-live">'+c.esc(statusLine(v))+'</span></button>';}
+ function finding(c,f,a){const opened=openFinding===f.id,stale=f.terminalStale||f.latestChecked!==a.generation;return '<section class="bsd12-finding" data-k="bsd12-f:'+c.esc(f.id)+'" data-finding="'+c.esc(f.id)+'"><div class="bsd12-line"><span class="bsd12-badge">'+c.esc(f.severity)+'</span><small>'+c.esc(f.status)+(stale?' · not reconfirmed for latest work':'')+'</small></div><strong>'+c.esc(f.title)+'</strong><p>'+c.esc(f.detail)+'</p>'+action(c,'bsd-open-finding',opened?'Hide evidence':'Evidence and history',a.threadId,'data-id="'+c.esc(f.id)+'"','text-button')+(f.status==='emitted'?action(c,'bsd-dismiss','Dismiss',a.threadId,'data-id="'+c.esc(f.id)+'" data-epoch="'+a.epoch+'"','text-button'):'')+(opened?'<div class="bsd12-evidence"><p>Raised at '+f.raisedAgainst+' · checked at '+f.latestChecked+' · current '+a.generation+'</p><pre>'+c.esc(JSON.stringify(f.evidence,null,2))+'</pre>'+f.history.map(h=>'<p>Generation '+h.generation+' · '+c.esc(h.what)+'</p>').join('')+'</div>':'')+'</section>';}
+ function details(c){const v=view(c.thread.id),a=v.assignment,id=c.thread.id;return '<section class="bsd-section bsd12-overview" id="ctx-bsd" data-k="bsd12:'+c.esc(id)+'"><div class="bsd12-line"><h3>Back Seat Driver</h3><span class="spacer"></span>'+action(c,'bsd-configure-stages','Configure',id,'','text-button')+'</div><div class="bsd12-metrics">'+metric(c,'Mode',v.mode[0].toUpperCase()+v.mode.slice(1))+metric(c,'Status',label(a,v.mode))+metric(c,'Sensitivity',a?.policy.sensitivity||v.policy.sensitivity)+'</div><p class="bsd12-muted">'+c.esc(statusLine(v))+'</p><p class="bsd12-identity">'+c.esc(v.identity.effectiveName||'No available advisor')+' · '+c.esc(v.identity.persona)+'</p><small class="bsd12-muted">Session-only concept · no provider calls</small>'+(a?'<details class="bsd12-disclosure" data-k="bsd12-findings:'+c.esc(id)+'"'+opened('bsd12-findings:'+id)+'><summary>Findings <span>'+a.findings.length+'</span></summary>'+(a.findings.map(f=>finding(c,f,a)).join('')||'<p>No findings. A silent evaluation adds no chat card.</p>')+'</details><details class="bsd12-disclosure" data-k="bsd12-session:'+c.esc(id)+'"'+opened('bsd12-session:'+id)+'><summary>Session and identity</summary><dl class="bsd12-metrics">'+metric(c,'Assignment',a.id)+metric(c,'Stage',K.STAGES.find(s=>s[0]===a.stage)?.[1]||a.stage)+metric(c,'Epoch',a.epoch)+metric(c,'Cursor / current',a.cursor+' / '+a.generation)+metric(c,'Policy / binding',a.policy.revision+' / '+a.bindingRevision)+metric(c,'Requested model',a.identity.requestedName)+metric(c,'Effective model',a.identity.effectiveName)+metric(c,'Requested account',a.identity.requestedAccount)+metric(c,'Effective account',a.identity.effectiveAccount)+metric(c,'Resolution',a.identity.reason)+'</dl><p class="bsd12-muted">Read-only profile. Advisor failure never changes primary work.</p><div class="bsd12-actions">'+['pause','resume','stop'].map(x=>action(c,'bsd-control',x[0].toUpperCase()+x.slice(1)+' advisor',id,'data-control="'+x+'" data-epoch="'+a.epoch+'" '+(a.stopped||x==='resume'&&!a.paused&&a.state!=='quota_paused'?'disabled':''))).join('')+'</div></details><details class="bsd12-disclosure" data-k="bsd12-usage:'+c.esc(id)+'"'+opened('bsd12-usage:'+id)+'><summary>Usage and input</summary><dl class="bsd12-metrics">'+metric(c,'Local evaluations',a.usage.localEvaluations)+metric(c,'Provider calls',a.usage.providerCalls)+metric(c,'No calls',a.usage.noCalls)+metric(c,'Held / cleared',a.usage.held+' / '+a.usage.cleared)+metric(c,'Emitted / suppressed',a.usage.emitted+' / '+a.usage.suppressed)+metric(c,'Provider cost','Unknown — not measured')+'</dl><div class="bsd12-actions">'+action(c,'bsd-open-usage','Inspect local usage',id)+action(c,'bsd-open-transcript','Advisor transcript',id,a.policy.retainTranscript?'':'disabled title="Transcript retention is off"')+'</div></details>':'<p class="bsd12-muted">Configure an advisor without starting work. Completed local examples are in Demo Studio.</p>')+'</section>';}
+ function beginConfig(c){disclosures.delete('bsd12-stage-draft');disclosures.delete('bsd12-advanced-draft');const v=view(c.thread.id);draft={threadId:c.thread.id,projectId:v.projectId,revision:v.policy.revision,assignmentId:v.assignment?.id||null,epoch:v.assignment?.epoch,values:clone(v.assignment?.policy||v.policy),error:null};c.closeMenu();c.openDialog({type:'bsd-stages'});}
+ function currentDraft(){return draft&&thread(draft.threadId)&&E.ctx().thread.id===draft.threadId&&project(thread(draft.threadId))===draft.projectId;}
+ function choices(c,key,labelText,opts,current){return '<label>'+c.esc(labelText)+'<button type="button" class="shared-picker-button" data-action="bsd-choice" data-field="'+key+'" data-menu-anchor="bsd-'+key+'"><span class="shared-picker-copy"><strong>'+c.esc(opts.find(x=>x.value===current)?.label||current)+'</strong></span>'+c.icon('down',11)+'</button></label>';}
+ const options={sensitivity:[['conservative','Conservative','Fewer elastic triggers. Safety boundaries stay eligible.'],['balanced','Balanced','Useful signals with fewer low-value checks.'],['frequent','Frequent','More elastic triggers, never more authority.']].map(([value,label,description])=>({value,label,description})),catchUpSeconds:[0,15,30,60].map(value=>({value,label:value?value+' seconds':'Never wait',description:'Maximum catch-up at an eligible frozen boundary.'})),workflowMode:['inherit','off','auto','on'].map(value=>({value,label:value==='inherit'?'Use project mode':value[0].toUpperCase()+value.slice(1),description:'Frozen when a workflow binding is committed.'})),stage:['inherit','off','auto','on'].map(value=>({value,label:value[0].toUpperCase()+value.slice(1),description:value==='inherit'?'Follow workflow, then project policy.':'Explicit mode for this stage.'}))};
+ function config(c){if(!draft)return '';const d=draft.values,pick=window.PM56_PICKERS,stale=!currentDraft();return '<section class="dialog bsd12-dialog bsd-configure" role="dialog" aria-modal="true" aria-label="Configure Back Seat Driver"><div class="drawer-head"><strong>Back Seat Driver</strong><span class="spacer"></span>'+action(c,'bsd-close-dialog','Cancel',draft.threadId,'','text-button')+'</div><div class="dialog-body"><p class="bsd12-muted">Read-only advisor · session preview, not saved Settings</p><label class="bsd12-label">Project mode</label><div class="bsd12-actions">'+['off','auto','on'].map(v=>action(c,'bsd-config-mode',v[0].toUpperCase()+v.slice(1),draft.threadId,'data-value="'+v+'" aria-pressed="'+(d.mode===v)+'"','soft-button '+(d.mode===v?'active':''))).join('')+'</div><h3>Who advises</h3><div class="bsd12-grid"><label>Model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona)+'</label></div><p class="bsd12-muted">Changing model, account, or Persona starts a fresh advisor session.</p><h3>When to advise</h3><div class="bsd12-grid">'+choices(c,'sensitivity','Sensitivity',options.sensitivity,d.sensitivity)+choices(c,'catchUpSeconds','Catch-up cap',options.catchUpSeconds,d.catchUpSeconds)+'<label>Cooldown · turns<input type="number" data-bsd-field="cooldownTurns" min="0" max="100" value="'+d.cooldownTurns+'"></label></div><details class="bsd12-disclosure" data-k="bsd12-stage-draft"'+opened('bsd12-stage-draft')+'><summary>Where it watches <span>10 stages</span></summary>'+choices(c,'workflowMode','Workflow mode',options.workflowMode,d.workflowMode)+'<div class="bsd12-stages">'+d.stages.map(s=>'<div><span>'+c.esc(s.label)+'</span><button class="soft-button" data-action="bsd-stage-choice" data-stage="'+s.id+'" data-menu-anchor="bsd-stage-'+s.id+'">'+c.esc(s.mode[0].toUpperCase()+s.mode.slice(1))+'</button></div>').join('')+'</div></details><details class="bsd12-disclosure" data-k="bsd12-advanced-draft"'+opened('bsd12-advanced-draft')+'><summary>Advanced</summary><label class="bsd12-checkbox"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label><label>Self-compaction threshold · %<input type="number" data-bsd-field="selfCompactThreshold" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label><p class="bsd12-muted">Advisor context is separate. Held findings and closures survive its self-compaction. No fallback is silently substituted.</p><p class="bsd12-muted">Local maintenance uses a 20,000-character stand-in window; provider tokens are unknown. Native dispatch remains unavailable: command_not_registered.</p></details><p class="bsd12-error" role="alert">'+c.esc(stale?'Source conversation changed. Cancel and reopen here.':draft.error||'')+'</p></div><footer class="bsd12-footer">'+action(c,'bsd-close-dialog','Cancel',draft.threadId)+action(c,'bsd-save-config',draft.assignmentId?'Reconfigure advisor':'Save session configuration',draft.threadId,stale?'disabled':'','primary-button')+'</footer></section>';}
+ function error(c,r){if(!r.ok)c.toast('Advisor unchanged',r.error);}
+ E.slot('contextBsdRow',compact);E.slot('contextBsdSection',details);
+ E.slot('wandRows',c=>'<button class="menu-item" data-submenu="bsd-v2"><span class="menu-icon">'+c.icon('eye',13)+'</span><span class="menu-copy"><strong>Back Seat Driver</strong><span>Passive read-only advisor</span></span><span class="shortcut">'+c.esc(view(c.thread.id).mode)+'</span></button>');
+ E.slot('submenu',c=>c.id!=='bsd-v2'?'':'<div class="menu-head"><strong>Back Seat Driver</strong></div>'+['off','auto','on'].map(v=>action(c,'bsd-set-mode',v[0].toUpperCase()+v.slice(1),c.thread.id,'data-value="'+v+'"','menu-item')) .join('')+'<div class="menu-divider"></div>'+action(c,'bsd-configure-stages','Configure…',c.thread.id,'','menu-item'));
+ E.slot('dialog',c=>{const d=c.state.dialog;if(d?.type==='bsd-stages')return config(c);if(!['bsd-transcript','bsd-usage'].includes(d?.type))return '';const a=engine.snapshot(d.threadId);if(!a)return '<section class="dialog bsd12-dialog"><div class="dialog-body">The source assignment is unavailable.</div>'+action(c,'bsd-close-dialog','Close',d.threadId)+'</section>';const retained=a.policy.retainTranscript;return '<section class="dialog bsd12-dialog" role="dialog" aria-label="'+(d.type==='bsd-usage'?'BSD local usage':'Advisor transcript')+'"><div class="drawer-head"><strong>'+(d.type==='bsd-usage'?'BSD local usage':'Advisor transcript')+'</strong><span class="spacer"></span>'+action(c,'bsd-close-dialog','Close',a.threadId)+'</div><div class="dialog-body"><p class="bsd12-muted">'+c.esc(a.threadId)+' · '+c.esc(a.identity.effectiveName||'Unavailable')+' · no provider calls</p>'+(d.type==='bsd-usage'?'<pre class="bsd12-raw">'+c.esc(JSON.stringify({assignmentId:a.id,stage:a.stage,identity:a.identity,usage:a.usage,cycles:a.cycles.map(c=>({id:c.id,status:c.status,generation:c.generation,epoch:c.epoch,reason:c.reason,latencyMs:c.latencyMs}))},null,2))+'</pre>'+action(c,'bsd-export-local','Export local record',a.threadId):retained?a.transcript.map(t=>'<details class="bsd12-disclosure"><summary>Generation '+t.generation+' · '+c.esc(t.outcome)+'</summary><pre class="bsd12-raw">'+c.esc(JSON.stringify(t,null,2))+'</pre></details>').join('')||'<p>No retained advisor transcript yet.</p>':'<p>Unavailable: transcript retention is off.</p>')+'</div></section>';});
+ E.slot('transcriptMessage',c=>{const m=c.m;if(m?.type!=='bsd-advice-v3')return '';const a=engine.assignments.get(m.assignmentId),f=a?.findings.find(f=>f.id===m.findingId);if(!a||!f)return '<article class="event-card" data-k="'+c.esc(m.id)+'"><p>Historical BSD reference · source assignment unavailable</p></article>';const historical=c.thread.id!==a.threadId||project(c.thread)!==a.projectId,stale=historical||f.terminalStale||f.latestChecked!==engine.read(a.threadId)?.generation;return '<article class="event-card bsd12-advice" data-k="'+c.esc(m.id)+'" data-message-id="'+c.esc(m.id)+'"><span class="event-icon">'+c.icon('eye',14)+'</span><div class="event-copy"><small>Back Seat Driver · '+(historical?'source-conversation history':'local example')+' · '+c.esc(f.status)+'</small><strong>'+c.esc(f.title)+'</strong><p>'+c.esc(f.detail)+'</p><small>'+c.esc(f.advisor?.effectiveName||a.identity.effectiveName)+' · checked generation '+f.latestChecked+(stale?' · stale / unreconfirmed for current work':' · current evidence')+(f.channel==='resume_only'?' · context delivery waits for user resume':'')+'</small><div class="bsd12-actions">'+(historical?action(c,'bsd-open-source','Open source conversation',a.threadId,'','text-button'):action(c,'bsd-open-finding','Evidence',a.threadId,'data-id="'+c.esc(f.id)+'"','text-button'))+(!historical&&f.status==='emitted'?action(c,'bsd-dismiss','Dismiss',a.threadId,'data-id="'+c.esc(f.id)+'" data-epoch="'+a.epoch+'"','text-button'):'')+'</div></div></article>';});
+ E.action('bsd-configure-stages',beginConfig);
+ E.action('bsd-config-mode',(c,b)=>{if(currentDraft()){draft.values.mode=b.dataset.value;c.renderOverlays();}return true;});
+ for(const kind of ['model','persona'])E.action('bsd-pick-'+kind,(c,b)=>{const d=draft;if(!currentDraft())return true;window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](b,{model:d.values.modelId,persona:d.values.persona,effort:d.values.effort,fast:d.values.fast},x=>{if(draft!==d||!currentDraft()||c.state.dialog?.type!=='bsd-stages')return;if(kind==='model'){d.values.modelId=x.model;d.values.effort=x.effort||'';d.values.fast=!!x.fast;}else d.values.persona=x.persona;c.renderOverlays();});return true;});
+ E.action('bsd-choice',(c,b)=>{const d=draft,key=b.dataset.field;if(!currentDraft()||!options[key])return true;window.PM56_PICKERS.openChoice(b,key,d.values[key],options[key],x=>{if(draft===d&&currentDraft()){d.values[key]=x;c.renderOverlays();}});return true;});
+ E.action('bsd-stage-choice',(c,b)=>{const d=draft,s=d?.values.stages.find(s=>s.id===b.dataset.stage);if(!currentDraft()||!s)return true;window.PM56_PICKERS.openChoice(b,s.label,s.mode,options.stage,x=>{if(draft===d&&currentDraft()){s.mode=x;c.renderOverlays();}});return true;});
+ document.addEventListener('input',e=>{if(!currentDraft())return;const k=e.target.dataset?.bsdField;if(k==='cooldownTurns')draft.values[k]=Number(e.target.value);if(k==='selfCompactThreshold')draft.values[k]=Number(e.target.value)/100;if(k==='retainTranscript')draft.values[k]=e.target.checked;});
+ E.action('bsd-save-config',c=>{if(!currentDraft())return true;const d=draft,r=engine.configure({threadId:d.threadId,projectId:d.projectId,expectedRevision:d.revision,assignmentId:d.assignmentId,expectedEpoch:d.epoch,values:d.values,identity:identity(d.values)});if(!r.ok){d.error=r.error;c.renderOverlays();}else{draft=null;c.closeMenu();c.closeDialog();refresh();}return true;});
+ E.action('bsd-set-mode',(c,b)=>{if(b.dataset.thread&&b.dataset.thread!==c.thread.id)return true;const v=view(c.thread.id),values=clone(v.policy);values.mode=b.dataset.value;const r=engine.configure({threadId:c.thread.id,projectId:v.projectId,expectedRevision:v.policy.revision,assignmentId:v.assignment?.id,expectedEpoch:v.assignment?.epoch,values,identity:identity(values)});error(c,r);c.closeMenu();refresh();return true;});
+ E.action('bsd-close-dialog',c=>{draft=null;c.closeMenu();c.closeDialog();return true;});E.chainAction('close-dialog',c=>{if(c.state.dialog?.type==='bsd-stages')draft=null;return false;});
+ E.action('bsd-open-details',(c,b)=>{if(b.dataset.thread&&b.dataset.thread!==c.thread.id)return true;c.closeMenu();c.state.context.details=true;c.state.context.drawerView='curated';c.renderApp();requestAnimationFrame(()=>document.getElementById('ctx-bsd')?.scrollIntoView({block:'start'}));return true;});
+ E.action('bsd-open-finding',(c,b)=>{if(b.dataset.thread!==c.thread.id)return true;openFinding=openFinding===b.dataset.id?null:b.dataset.id;c.state.context.details=true;c.state.context.drawerView='curated';c.renderApp();requestAnimationFrame(()=>{const d=document.querySelector('#ctx-bsd .bsd12-disclosure');if(d)d.open=true;document.querySelector('[data-finding="'+CSS.escape(b.dataset.id)+'"]')?.scrollIntoView({block:'center'});});return true;});
+ E.action('bsd-open-source',(c,b)=>{if(thread(b.dataset.thread))c.switchThread(b.dataset.thread);return true;});
+ E.action('bsd-export-local',(c,b)=>{if(b.dataset.thread!==c.thread.id)return true;const a=engine.snapshot(b.dataset.thread);if(!a)return true;const url=URL.createObjectURL(new Blob([JSON.stringify({kind:'local_bsd_audit',native:false,primary_run_mutated:false,assignment:a},null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='bsd-local-record.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),2000);return true;});
+ E.action('bsd-dismiss',(c,b)=>{if(b.dataset.thread!==c.thread.id)return true;error(c,engine.closeFinding(b.dataset.thread,b.dataset.id,Number(b.dataset.epoch)));refresh();return true;});
+ E.action('bsd-control',(c,b)=>{if(b.dataset.thread!==c.thread.id)return true;error(c,engine.control(b.dataset.thread,b.dataset.control,Number(b.dataset.epoch)));refresh();return true;});
+ for(const [name,type] of [['bsd-open-transcript','bsd-transcript'],['bsd-open-usage','bsd-usage']])E.action(name,(c,b)=>{const id=b.dataset.thread||c.thread.id;if(id!==c.thread.id)return true;c.openDialog({type,threadId:id});return true;});
+ E.chainAction('reset-all',()=>{draft=null;openFinding=null;disclosures.clear();engine.clear();return false;});
+ window.PM56_BSD={engine,identity,refresh,view,policy:()=>view().policy,state:()=>label(view().assignment,view().mode),snapshot:id=>engine.snapshot(id||E.ctx().thread.id),held:()=>view().assignment?.findings.filter(f=>f.status==='held')||[],emitted:()=>view().assignment?.findings.filter(f=>f.status==='emitted')||[],restore:()=>{engine.clear();refresh();}};
 })();
 
 /* scheduling.js — feature module.  OWNER: Plans/Scheduling_and_Quota_Resume.md
@@ -39732,6 +39593,7 @@ window.PM56_EXT = window.PM56_EXT || {
      "presentation only" a visible, checkable claim rather than a promise.
      ===================================================================== */
   function eli5Effective(threadId){
+    if(window.PM56_ELI5) return window.PM56_ELI5.resolve(threadId).effective;
     if(Object.prototype.hasOwnProperty.call(F.eli5.perThread, threadId)) return F.eli5.perThread[threadId];
     return F.eli5.appDefault;
   }
@@ -39743,6 +39605,7 @@ window.PM56_EXT = window.PM56_EXT || {
   }
 
   EXT.action('af-eli5-toggle', function(ctx){
+    if(window.PM56_ELI5){ window.PM56_ELI5.setThread(ctx.thread.id,!eli5Effective(ctx.thread.id));ctx.renderApp();return true; }
     var tid=ctx.thread.id;
     F.eli5.perThread[tid] = !eli5Effective(tid);
     ctx.state.capabilities.eli5 = F.eli5.perThread[tid];
@@ -39750,6 +39613,7 @@ window.PM56_EXT = window.PM56_EXT || {
     return true;
   });
   EXT.action('af-eli5-reset', function(ctx){
+    if(window.PM56_ELI5){ window.PM56_ELI5.setThread(ctx.thread.id,null);ctx.renderApp();return true; }
     var tid=ctx.thread.id;
     delete F.eli5.perThread[tid];
     ctx.state.capabilities.eli5 = F.eli5.appDefault;
@@ -39758,6 +39622,7 @@ window.PM56_EXT = window.PM56_EXT || {
     return true;
   });
   EXT.action('af-eli5-demo', function(ctx){
+    if(window.PM56_ELI5_DEMOS){window.PM56_ELI5_DEMOS.start('override');return true;}
     var th=ctx.thread;
     ctx.appendMessage({ id:afUid('eli5prev'), role:'system', type:'af-eli5-preview',
       code:'CREATE INDEX CONCURRENTLY ix_events_tenant_created\n  ON events (tenant_id, created_at DESC);',
@@ -39773,11 +39638,13 @@ window.PM56_EXT = window.PM56_EXT || {
      one. Runs BEFORE the native handler and declines — the same technique
      composer-state.js documents for select-thread. See honesty note 1. */
   EXT.chainAction('set-eli5-cap', function(ctx, btn){
+    if(window.PM56_ELI5){ if(['On','Off'].includes(btn.dataset.value))window.PM56_ELI5.setThread(ctx.thread.id,btn.dataset.value==='On');ctx.closeMenu();ctx.renderApp();return true; }
     F.eli5.perThread[ctx.thread.id] = (btn.dataset.value==='On');
     return false;
   });
 
   function eli5WandRows(ctx){
+    if(window.PM56_ELI5) return window.PM56_ELI5.wand(ctx);
     var icon=ctx.icon;
     var tid=ctx.thread.id;
     var eff=eli5Effective(tid), override=eli5HasOverride(tid);
@@ -40415,7 +40282,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var attempts=(F.title.attempts[tid]||[]).slice(-3).reverse();
     var body='<h3 class="af-settings-h3">ELI5 default</h3>'+
       '<label class="af-toggle-row"><input type="checkbox" data-af-input="eli5-default"'+(F.eli5.appDefault?' checked':'')+'>'+
-      '<span>Explain simply by default in new conversations</span></label>'+
+      '<span>Explain simply in conversations that inherit this default</span></label>'+
       '<p class="af-note">Any thread can still set its own override from the wand.</p>'+
       '<h3 class="af-settings-h3">Thread titles</h3>'+
       '<div class="af-policy-rows af-scroll-rows">'+
@@ -40436,7 +40303,7 @@ window.PM56_EXT = window.PM56_EXT || {
   document.addEventListener('change', function(e){
     var t=e.target; if(!t || !t.getAttribute) return;
     if(t.getAttribute('data-af-input')==='eli5-default'){
-      F.eli5.appDefault=!!t.checked;
+      if(window.PM56_ELI5)window.PM56_ELI5.setApplication(!!t.checked);else F.eli5.appDefault=!!t.checked;
       var c=ctxNow(); if(c){ eli5Reconcile(c); c.renderApp(); }
     }
   });
@@ -41230,7 +41097,7 @@ window.PM56_EXT = window.PM56_EXT || {
   const v=r.review,done=v.passes.filter(p=>p.status==='completed').length;
   return '<div class="review-compact"><div class="review-status-line"><strong>'+c.esc(v.report?v.report.summary:({independent:'Independent review',corroboration:'Comparing findings',synthesis:'Preparing report'}[v.phase]||v.phase))+'</strong><span>'+done+'/'+v.passes.length+' reviewers</span></div><div class="review-caption">'+c.esc(v.targetPack.label)+' · read-only</div>'+(v.report?'<button class="text-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">'+c.icon('document',12)+' Open report · V1</button>':'')+'</div>';
  }
- function renderActions(c,r){return '<div class="review-action-row">'+(r.review.report?'<button class="soft-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">Open report</button>':'')+'<button class="soft-button" data-action="collab-review-run-again" data-run="'+c.esc(r.id)+'">Run another review…</button></div>';}
+ function renderActions(c,r){return '<div class="review-action-row">'+(window.PM56_REVIEW_DEMOS?.controls(c,r)||'')+(r.review.report?'<button class="soft-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">Open report</button>':'')+'<button class="soft-button" data-action="collab-review-run-again" data-run="'+c.esc(r.id)+'">Run another review…</button></div>';}
  function findingHtml(c,r,f){
   const esc=c.esc,sel=selected(r.id),todo=r.review.findings.find(x=>x.id===f.id)?.todoId;
   return '<section class="review-finding" data-finding="'+esc(f.id)+'"><div class="review-finding-head">'+(f.disposition==='confirmed'?'<input type="checkbox" aria-label="Select '+esc(f.claim)+'" data-action="collab-review-toggle-finding" data-run="'+esc(r.id)+'" data-finding="'+esc(f.id)+'"'+(sel[f.id]?' checked':'')+(todo?' disabled':'')+'>':'')+'<strong>'+esc(f.claim)+'</strong></div><div class="review-tags"><span>'+esc(f.severity)+'</span><span>'+esc(f.disposition)+'</span><span>'+f.originatingReviewerIds.length+' source '+(f.originatingReviewerIds.length===1?'reviewer':'reviewers')+'</span>'+(todo?'<span>To-Do created</span>':'')+'</div><p>'+esc(f.adjudication)+'</p><div class="review-evidence-links">'+f.evidenceRefs.map(id=>'<button class="text-button" data-action="review-open-evidence" data-run="'+esc(r.id)+'" data-evidence="'+esc(id)+'">'+c.icon('document',11)+' '+esc(r.review.targetPack.evidence.find(e=>e.id===id)?.label||id)+'</button>').join('')+'</div>'+(f.dissent?'<details class="review-dissent"><summary>Dissent retained</summary><p>'+esc(f.dissent).replace(/\n/g,'<br>')+'</p></details>':'')+'</section>';
@@ -41274,7 +41141,7 @@ window.PM56_EXT = window.PM56_EXT || {
  * inspect, export and convert. One bounded replay clock feeds the Review owner. */
 (function(){
  'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,P=window.PM56_REVIEW;
- const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={single:{label:'Single Agent Review',summary:'One reviewer → evidence → read-only report'},multi:{label:'Multi-Pass Review',summary:'Three independent passes → dissent → selected To-Dos'}};
  function checksum(text){let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return 'demo-fnv1a-'+(h>>>0).toString(16).padStart(8,'0');}
  function fixture(kind){
@@ -41302,7 +41169,7 @@ window.PM56_EXT = window.PM56_EXT || {
   c.state.threads.push(base);Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});
   c.state.capabilities.goal=false;c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
   window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,stage:'configure',played:false,reportOpened:false,markdownSeen:false,evidenceSeen:false,todosSeen:false,errors:[],events:[]};
+  active={kind,threadId:tid,runId:null,stage:'configure',played:false,reportOpened:false,markdownSeen:false,evidenceSeen:false,todosSeen:false,errors:[],events:[]};sessions.set(tid,active);
   c.switchThread(tid);C.openConfigure('review');draftTarget(kind);
   // Initial scenario configuration; all subsequent edits use the normal shared pickers.
   const d=C.draft();d.config.strategy=kind==='single'?'single_agent':'multi_pass';C.normalizeReview(d);
@@ -41318,9 +41185,10 @@ window.PM56_EXT = window.PM56_EXT || {
   const perf={id:'perf',findingKey:'pre-index-search',category:'performance',severity:'suggestion',claim:'Pre-indexing may help large lists',evidenceRefs:['performance'],proposedRemediation:'Measure list-search latency before adding an index',expectedOutcome:'A representative benchmark establishes whether indexing is needed.'};
   return kind==='single'?[[trim]]:[[trim],[{...clone(trim),id:'spacing-confirmed'},perf],[order]];
  }
- function play(){
-  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
-  const session=active;session.played=true;session.stage='playing';const clock={timers:[],runId:r.id};clocks.set(r.id,clock);
+ function play(runId){
+  const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
+  if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;
+  session.runId=r.id;session.played=true;session.stage='playing';const clock={timers:[],runId:r.id};clocks.set(r.id,clock);
   const expected=r.stopEpoch,results=observed(session.kind);
   function after(ms,fn){clock.timers.push(setTimeout(()=>{
    if(clocks.get(r.id)!==clock)return;
@@ -41362,12 +41230,19 @@ window.PM56_EXT = window.PM56_EXT || {
  E.action('review-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
  E.action('review-demo-play',()=>{play();return true;});
  E.action('review-demo-replay',()=>{if(active)start(active.kind);return true;});
- E.action('review-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ E.action('review-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_REVIEW_DEMOS={start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
+
+ function controls(c,r){
+  const session=sessions.get(r.threadId);
+  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
+  return '<button class="soft-button" data-action="review-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Play recorded passes</button>';
+ }
+ E.action('review-example-play',(c,b)=>{play(b.dataset.run);return true;});
+ window.PM56_REVIEW_DEMOS={controls,start,play,fixture,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
 })();
 
 /* BrainStorm concept protocol: validated recorded inputs on the existing
@@ -41487,8 +41362,8 @@ window.PM56_EXT = window.PM56_EXT || {
   const chosen=byOption.find(q=>q.proposalId===selected),support=chosen?.support||0,oppose=chosen?.oppose||0;
   return {support,oppose,abstain:valid.filter(v=>v.position==='abstain').length,other_option_support:valid.filter(v=>v.position==='support'&&v.proposalId!==selected).length,ineligible:b.votes.length-valid.length,denominator:valid.length,support_pct:selected&&valid.length?Math.round(100*support/valid.length):null,quorum:valid.length===b.attempts.length?'reached':'none',tie:false,selected_proposal_id:selected||null,by_option:byOption,decision_rule:'hard constraints and evidence; not majority rule'};
  }
- function renderActions(c,r){const b=r.brainstorm;return '<div class="bs-actions"><button class="text-button" data-action="brainstorm-open-results" data-run="'+c.esc(r.id)+'">'+c.icon('brain',12)+' Open exploration</button>'+(b.synthesis?'<button class="soft-button" data-action="brainstorm-open-plan" data-run="'+c.esc(r.id)+'">Open Deep Plan</button>':'<button class="soft-button" data-action="collab-brainstorm-synthesize" data-run="'+c.esc(r.id)+'"'+(b.phase==='synthesis'&&r.status==='running'?'':' disabled')+'>Synthesize Deep Plan</button>')+'</div>';}
- function renderSummary(c,r){const b=r.brainstorm;return '<div class="bs-summary"><strong>'+c.esc(phaseLabel(r))+'</strong><span>'+b.proposals.length+' alternatives · '+b.votes.length+'/'+b.attempts.length+' votes</span></div>'+renderActions(c,r);}
+ function renderActions(c,r,withPlayback=true){const b=r.brainstorm;return '<div class="bs-actions">'+(withPlayback?(window.PM56_BRAINSTORM_DEMOS?.controls(c,r)||''):'')+'<button class="text-button" data-action="brainstorm-open-results" data-run="'+c.esc(r.id)+'">'+c.icon('brain',12)+' Open exploration</button>'+(b.synthesis?'<button class="soft-button" data-action="brainstorm-open-plan" data-run="'+c.esc(r.id)+'">Open Deep Plan</button>':'<button class="soft-button" data-action="collab-brainstorm-synthesize" data-run="'+c.esc(r.id)+'"'+(b.phase==='synthesis'&&r.status==='running'?'':' disabled')+'>Synthesize Deep Plan</button>')+'</div>';}
+ function renderSummary(c,r){const b=r.brainstorm;return '<div class="bs-summary"><strong>'+c.esc(phaseLabel(r))+'</strong><span>'+b.proposals.length+' alternatives · '+b.votes.length+'/'+b.attempts.length+' votes</span></div>'+renderActions(c,r,false);}
  function markdown(r){const b=r.brainstorm;return ['# '+r.title,'',b.input.objective,'','## Alternatives',...b.proposals.map(q=>'### '+q.title+'\n'+q.approach+'\n'+q.originatingParticipantIds.length+' originating participants\n'+b.hardConstraintViolations.filter(h=>h.proposalId===q.id).map(h=>'Disqualified: '+h.constraint).join('\n')),'','## Debate',...b.debates.map(d=>'### Round '+d.round+'\n'+d.messages.map(m=>core(r).find(p=>p.id===m.participantId).role+': '+m.body).join('\n')),'','## Votes',...b.votes.map(v=>v.participantRole+' — '+v.position+' '+b.proposals.find(q=>q.id===v.proposalId).title+' ('+v.confidence+'): '+v.reason),'','## Decision',b.decision?.reason||'No final decision.','','## Preserved dissent',...b.dissent.map(v=>v.participantRole+': '+v.reason+' [evidence '+v.evidenceRefs.join(', ')+']'),'','## Source',b.input.sourceHash,'Recorded example; no live provider calls.'].join('\n');}
  function documentHtml(c,id){
   const r=run(id);if(!owns(id))return '';const b=r.brainstorm,esc=c.esc,mode=views.get(id)||'rich';
@@ -41522,7 +41397,7 @@ window.PM56_EXT = window.PM56_EXT || {
 (function(){
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,B=window.PM56_BRAINSTORM,P=window.PM56_PLANS;
- const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={synthesis:{label:'Explore and synthesize',summary:'Independent ideas → debate → one Deep Plan'},constraint:{label:'A constraint outweighs the vote',summary:'Popular option rejected → dissent retained → offline Plan'}};
  const hash=x=>{let h=2166136261;for(const c of JSON.stringify(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'demo:'+((h>>>0).toString(16)).padStart(8,'0');};
  function fixture(kind){
@@ -41553,7 +41428,7 @@ window.PM56_EXT = window.PM56_EXT || {
   const tid='brainstorm-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));
   Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:fixture(kind).objective+' Collection contents must stay on the device.'}]});c.state.threads.push(base);
   Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
+  active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};sessions.set(tid,active);C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
   // Prepare the final dialog before switching: switchThread already renders
   // the app and overlays. Do not render the old page and this modal twice.
   c.state.dialog={type:'collab-configure'};c.switchThread(tid);
@@ -41565,10 +41440,12 @@ window.PM56_EXT = window.PM56_EXT || {
   const steps=[{id:'snapshot',title:'Define the local snapshot',text:'Bind collection and query identities without uploading content.',dependsOn:[],acceptance:'The snapshot contains only local collection data and preserves input rank.'},{id:'query',title:'Implement latest-query filtering',text:'Apply the local algorithm in the worker and discard responses for obsolete queries.',dependsOn:['snapshot'],acceptance:'Padded queries return [z, a]; older query results cannot replace a newer result.'},{id:'measure',title:'Verify behavior and measure latency',text:'Compare local and worker paths on target devices before enabling the feature.',dependsOn:['query'],acceptance:'Record device timings and a rollback test; do not claim an improvement without measurement.'}];
   return {proposals,votes,steps};
  }
- function play(){
-  const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;
-  if(r.participants.length!==r.brainstorm.attempts.length){active.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
-  const session=active,records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
+ function play(runId){
+  const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
+  if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;
+  session.runId=r.id;
+  if(r.participants.length!==r.brainstorm.attempts.length){session.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
+  const records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
   const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
   const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:clone(records.proposals[i])}));
   actions.push(()=>B.normalize(r.id,x()));
@@ -41606,11 +41483,18 @@ window.PM56_EXT = window.PM56_EXT || {
   if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.bs-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}
  },true);
  E.slot('composerBelow',c=>guide(c));
- E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided BrainStorm workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_BRAINSTORM_DEMOS={start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
+
+ function controls(c,r){
+  const session=sessions.get(r.threadId);
+  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
+  return '<button class="soft-button" data-action="brainstorm-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Play exploration</button>';
+ }
+ E.action('brainstorm-example-play',(c,b)=>{play(b.dataset.run);return true;});
+ window.PM56_BRAINSTORM_DEMOS={controls,start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
 })();
 
 /* Bounded Crew concept result/admission protocol on RT.collab.runs.
@@ -41726,11 +41610,11 @@ window.PM56_EXT = window.PM56_EXT || {
   const result={ok:true,admitted:true,runId:started.runId,requestId:request.id,policyRevision:policy.revision};autoRequests.set(key,{fingerprint:fp,result});return result;
  }
  function renderSummary(c,r){const done=r.crew.assignments.filter(a=>a.status==='done').length;
-  return '<div class="crew-work-summary"><strong>'+done+' / 3 assignments complete</strong><span>'+r.crew.effectiveConcurrency+' simultaneous · '+(r.crew.admissionKind==='auto'?'Crew Auto':'Explicit Crew')+'</span></div><button class="text-button" data-action="crew-open-work" data-run="'+c.esc(r.id)+'">'+c.icon('document',12)+' '+(r.status==='completed'?'Open result':'Open assignments')+'</button>';
+  return (window.PM56_CREW_DEMOS?.controls(c,r)||'')+'<div class="crew-work-summary"><strong>'+done+' / 3 assignments complete</strong><span>'+r.crew.effectiveConcurrency+' simultaneous · '+(r.crew.admissionKind==='auto'?'Crew Auto':'Explicit Crew')+'</span></div><button class="text-button" data-action="crew-open-work" data-run="'+c.esc(r.id)+'">'+c.icon('document',12)+' '+(r.status==='completed'?'Open result':'Open assignments')+'</button>';
  }
  function documentHtml(c,id){const r=run(id);if(!owns(id))return '';const w=r.crew,esc=c.esc,view=views.get(id)||{},output=r.artifacts.find(a=>a.id===w.summary?.artifactId);
   const rows=w.assignments.map(a=>'<section class="crew-work-row" data-assignment="'+esc(a.id)+'"><header><strong>'+esc(a.title)+'</strong><span>'+esc(a.status==='done'?'Verified':a.status==='running'?'Working':'Pending')+'</span></header><p>'+esc(a.assignedRole)+(a.dependsOn.length?' · after '+a.dependsOn.map(k=>esc(w.assignments.find(t=>t.id===k).title)).join(' and '):' · independent')+'</p><details data-crew-disclosure="'+esc(a.id)+'" data-run="'+esc(id)+'"'+(view[a.id]?' open':'')+'><summary>Output contract'+(a.result?' and result':'')+'</summary><p>'+esc(a.expects)+'</p><small>Tools: local calculation · context: frozen collection example</small>'+(a.result?'<pre>'+esc(JSON.stringify(a.result,null,2))+'</pre>':'')+'</details></section>').join('');
-  return '<article class="editor-doc crew-work-document" data-crew-run="'+esc(id)+'">'+(window.PM56_CREW_DEMOS?.editorGuide(id)||'')+'<div class="crew-work-meta"><span>Crew · '+esc(r.status)+'</span><span>'+esc(w.admissionKind==='auto'?'Auto policy v'+w.policyRevision:'Explicit delegation')+'</span></div><h1>'+esc(r.title)+'</h1><p class="crew-work-objective">'+esc(r.purpose)+'</p><div class="crew-work-stats"><span>'+w.assignments.filter(a=>a.status==='done').length+' / 3 verified</span><span>'+w.effectiveConcurrency+' simultaneous'+(w.effectiveConcurrency!==w.requestedConcurrency?' · requested '+w.requestedConcurrency:'')+'</span></div>'+rows+(output?'<section class="crew-work-result"><header><strong>'+esc(output.label)+'</strong><button class="text-button" data-action="crew-export-result" data-run="'+esc(id)+'">Export CSV</button></header><pre>'+esc(output.body)+'</pre><small>'+w.summary.rowCount+' rows · original order preserved · quotes verified</small></section>':'')+'<details class="crew-work-source" data-crew-disclosure="source" data-run="'+esc(id)+'"'+(view.source?' open':'')+'><summary>Frozen input and activity</summary><pre>'+esc(JSON.stringify(w.input.rows,null,2))+'</pre><small>'+esc(w.input.sourceHash)+'</small>'+r.messages.map(m=>'<p><strong>'+esc(m.senderName)+'</strong> '+esc(m.body)+'</p>').join('')+'</details><div class="crew-work-actions">'+(['running','paused'].includes(r.status)?'<button class="soft-button" data-action="'+(r.status==='paused'?'collab-resume':'collab-pause')+'" data-run="'+esc(id)+'">'+(r.status==='paused'?'Resume':'Pause')+'</button><button class="text-button" data-action="collab-cancel" data-run="'+esc(id)+'">Cancel</button>':'<button class="soft-button" data-action="crew-run-again" data-run="'+esc(id)+'">Run another Crew</button>')+'</div><p class="crew-work-provenance">Local recorded example · no provider calls or project writes</p></article>';
+  return '<article class="editor-doc crew-work-document" data-crew-run="'+esc(id)+'">'+(window.PM56_CREW_DEMOS?.editorGuide(id)||'')+'<div class="crew-work-meta"><span>Crew · '+esc(r.status)+'</span><span>'+esc(w.admissionKind==='auto'?'Auto policy v'+w.policyRevision:'Explicit delegation')+'</span></div><h1>'+esc(r.title)+'</h1><p class="crew-work-objective">'+esc(r.purpose)+'</p><div class="crew-work-stats"><span>'+w.assignments.filter(a=>a.status==='done').length+' / 3 verified</span><span>'+w.effectiveConcurrency+' simultaneous'+(w.effectiveConcurrency!==w.requestedConcurrency?' · requested '+w.requestedConcurrency:'')+'</span></div>'+rows+(output?'<section class="crew-work-result"><header><strong>'+esc(output.label)+'</strong><button class="text-button" data-action="crew-export-result" data-run="'+esc(id)+'">Export CSV</button></header><pre>'+esc(output.body)+'</pre><small>'+w.summary.rowCount+' rows · original order preserved · quotes verified</small></section>':'')+'<details class="crew-work-source" data-crew-disclosure="source" data-run="'+esc(id)+'"'+(view.source?' open':'')+'><summary>Frozen input and activity</summary><pre>'+esc(JSON.stringify(w.input.rows,null,2))+'</pre><small>'+esc(w.input.sourceHash)+'</small>'+r.messages.map(m=>'<p><strong>'+esc(m.senderName)+'</strong> '+esc(m.body)+'</p>').join('')+'</details><div class="crew-work-actions">'+(window.PM56_CREW_DEMOS?.controls(c,r)||'')+(['running','paused'].includes(r.status)?'<button class="soft-button" data-action="'+(r.status==='paused'?'collab-resume':'collab-pause')+'" data-run="'+esc(id)+'">'+(r.status==='paused'?'Resume':'Pause')+'</button><button class="text-button" data-action="collab-cancel" data-run="'+esc(id)+'">Cancel</button>':'<button class="soft-button" data-action="crew-run-again" data-run="'+esc(id)+'">Run another Crew</button>')+'</div><p class="crew-work-provenance">Local recorded example · no provider calls or project writes</p></article>';
  }
  function activityRuns(c){return C.runsForThread(c.state.selectedThread).filter(r=>owns(r.id));}
  function activityMembers(c){return activityRuns(c).flatMap(r=>r.participants.map(p=>({...p,name:p.role,current:p.current,crewRunId:r.id})));}
@@ -41761,7 +41645,7 @@ window.PM56_EXT = window.PM56_EXT || {
 /* Two bounded gallery examples. Result payloads are computed from frozen local
  * inputs, not forced completion flags. No network/model/native execution. */
 (function(){
- 'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,W=window.PM56_CREW,clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map();
+ 'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,W=window.PM56_CREW,clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={delegation:{label:'Delegate and verify',detail:'Parallel assignments → verified CSV result'},auto:{label:'Crew Auto knows when to help',detail:'Small and single-agent requests stay single → independent work gets a Crew'}};
  function fixture(){const i={taskSet:'collection-csv-v1',label:'Prepare a collection export',objective:'Export two collection records without losing order, commas, or quotes.',rows:[{id:'z',title:'  Night, Sky '},{id:'a',title:' The "Arrival"  '}],requirements:['Trim outer title whitespace.','Preserve identifiers and input order.','Quote CSV cells containing commas, quotes or line breaks.'],capacity:{maxConcurrent:2,maxMembers:4},provenance:'Frozen local example inputs; capacity is a supplied concept fixture, not a production orchestrator probe.'};i.sourceHash=W.sourceHash(i);return i;}
  function current(){if(!active)return null;const r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>W.owns(r.id));if(r)active.runId=r.id;return r;}
@@ -41771,12 +41655,12 @@ window.PM56_EXT = window.PM56_EXT || {
  function start(kind){if(!flows[kind])return;const c=E.ctx(),old=current();if(old&&['running','paused'].includes(old.status)){const b=document.createElement('button');b.dataset.run=old.id;E.run('collab-cancel',b,new Event('click'));}if(old)stopClock(old.id);
   const tid='crew-demo-'+kind+'-'+(++serial),base=clone(c.state.threads.find(t=>t.id==='query'));Object.assign(base,{id:tid,title:flows[kind].label+' · local example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:kind==='auto'?'Use a Crew only when the work benefits from delegation. Respect a request to keep one agent.':fixture().objective}]});c.state.threads.push(base);
   Object.assign(c.state,{mode:'Agent',demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
-  active={kind,threadId:tid,runId:null,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};c.switchThread(tid);
+  active={kind,threadId:tid,runId:null,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};sessions.set(tid,active);c.switchThread(tid);
   if(kind==='auto'){const d=C.definitions().crew;d.autoEnabled=false;d.autoConfigured=false;delete d.autoPolicy;}configure(kind==='auto');
  }
  function request(which){const base={id:active.threadId+':'+which,threadId:active.threadId,input:fixture(),memberCount:3,complexity:which==='simple'?'low':'high',explicitSingle:which==='single'};return base;}
  function evaluate(which){if(!active||active.kind!=='auto')return;const r=W.evaluate(request(which));active.evaluations.push({which,result:clone(r)});if(r.admitted)active.runId=r.runId;if(!r.ok)active.errors.push(r.error);E.ctx().renderApp();return r;}
- function play(){const r=current();if(!r||r.status!=='running'||clocks.has(r.id)||active.played)return;const session=active,sourceHash=r.crew.input.sourceHash,envelope=()=>({epoch:r.stopEpoch,sourceHash});session.played=true;const clock={timer:null,index:0};clocks.set(r.id,clock);
+ function play(runId){const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;session.runId=r.id;const sourceHash=r.crew.input.sourceHash,envelope=()=>({epoch:r.stopEpoch,sourceHash});session.played=true;const clock={timer:null,index:0};clocks.set(r.id,clock);
   const claim=id=>()=>W.claim(r.id,id,envelope()),deliver=id=>()=>W.deliver(r.id,id,W.payload(r.id,id));
   const steps=r.crew.effectiveConcurrency>1?[()=>{const a=claim('normalize')();return a.ok?claim('quoting')():a;},deliver('normalize'),deliver('quoting')]:[claim('normalize'),deliver('normalize'),claim('quoting'),deliver('quoting')];
   steps.push(claim('export'),deliver('export'),()=>W.finalize(r.id,envelope()));
@@ -41803,15 +41687,22 @@ window.PM56_EXT = window.PM56_EXT || {
  }
  // Explicit Run another Crew receives a fresh guide after successful admission.
  // This observes an existing run; it creates no run, result, or provider effect.
- document.addEventListener('pm56:crew-example-admitted',e=>{const r=C.run(e.detail?.runId);if(!e.detail?.rerun||!r||!W.owns(r.id))return;active={kind:'delegation',threadId:r.threadId,runId:r.id,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};});
+ document.addEventListener('pm56:crew-example-admitted',e=>{const r=C.run(e.detail?.runId);if(!e.detail?.rerun||!r||!W.owns(r.id))return;active={kind:'delegation',threadId:r.threadId,runId:r.id,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};sessions.set(r.threadId,active);});
  E.chainAction('crew-open-work',(c,b)=>{if(current()?.id===b.dataset.run)active.opened=true;return false;});
  E.chainAction('crew-export-result',(c,b)=>{if(current()?.id===b.dataset.run&&current().crew.summary)active.exported=true;return false;});
  document.addEventListener('toggle',e=>{if(!active||!e.target.matches?.('.crew-work-source')||!e.target.open)return;active.sourceSeen=true;const html=guide(E.ctx(),false,innerWidth<=1100&&E.ctx().state.editorRevealed);if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.crew-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}},true);
- E.slot('composerBelow',c=>guide(c));E.action('crew-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('crew-demo-configure',()=>{configure(active?.kind==='auto');return true;});E.action('crew-demo-evaluate',(c,b)=>{evaluate(b.dataset.case);return true;});E.action('crew-demo-play',()=>{play();return true;});E.action('crew-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('crew-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);active=null;return false;});
+ E.slot('composerBelow',c=>guide(c));E.action('crew-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('crew-demo-configure',()=>{configure(active?.kind==='auto');return true;});E.action('crew-demo-evaluate',(c,b)=>{evaluate(b.dataset.case);return true;});E.action('crew-demo-play',()=>{play();return true;});E.action('crew-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('crew-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Crew workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="crew-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_CREW_DEMOS={start,play,evaluate,fixture,request,guide,editorGuide:id=>current()?.id===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:done()}):null};
+
+ function controls(c,r){
+  const session=sessions.get(r.threadId);
+  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
+  return '<button class="soft-button" data-action="crew-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Run local work</button>';
+ }
+ E.action('crew-example-play',(c,b)=>{play(b.dataset.run);return true;});
+ window.PM56_CREW_DEMOS={controls,start,play,evaluate,fixture,request,guide,editorGuide:id=>current()?.id===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:done()}):null};
 })();
 
 /* B06 Chat Room concept slice. One CollaborativeRun and one shared message store.
@@ -41991,7 +41882,20 @@ window.PM56_EXT = window.PM56_EXT || {
  const active=r=>!!r&&!r.revoked&&!r.supersededBy;
  const scope=r=>r.scope==='global'?'user':r.scope;
  const stamp=r=>JSON.stringify([r?.id,r?.text,r?.scope,r?.projectId,r?.userId,r?.sourceThreadId,r?.version||1,r?.revoked,r?.supersededBy,r?.locked,r?.updatedAt]);
- function context(){const c=E.ctx();return {threadId:c.thread?.id,projectId:c.thread?.projectId||c.state.projectId||'concept:pm',userId:'concept:user',consumer:'assistant'};}
+ function context(tid){
+  const c=E.ctx(),t=tid?c.state.threads.find(x=>x.id===tid):c.thread;
+  if(!t)return null;
+  return {threadId:t.id,projectId:t.projectId||t.project_id||'concept:pm',userId:'concept:user',consumer:'assistant'};
+ }
+ // Document actions carry their owner thread. Switching is explicit and uses
+ // the ordinary switch path, which preserves the previous composer's draft.
+ function documentTarget(c,b){
+  const tid=b.dataset.thread;
+  if(!tid)return true;
+  if(!context(tid)){c.toast('Teaching unavailable','The source conversation no longer exists.');return false;}
+  if(c.thread.id!==tid)c.switchThread(tid);
+  return true;
+ }
  const messages=id=>E.ctx().state.threads.find(t=>t.id===id)?.messages||[];
  function safeMessage(m){return !!m&&['user','assistant'].includes(m.role)&&m.type==='text'&&typeof m.body==='string'&&!m.internalOnly&&m.visibility!=='internal';}
  function sourceValid(s){if(!s||s.kind==='manual')return true;const m=messages(s.threadId).find(m=>m.id===s.messageId);return safeMessage(m)&&m.body.slice(s.start,s.end)===s.excerpt;}
@@ -42066,28 +41970,31 @@ window.PM56_EXT = window.PM56_EXT || {
  }
  function memoryRows(c){return visibleRecords(context()).slice().reverse().map(r=>'<div class="af-mem-row"><div class="af-mem-row-head"><strong>'+c.esc(status(r))+'</strong><span class="spacer"></span><small>'+c.esc(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></div><p class="af-mem-text">'+c.esc(r.text)+'</p><button class="text-button" data-action="teach-open" data-id="'+c.esc(r.id)+'">Details and history</button></div>').join('')||'<p>No teaching captured.</p>';}
  function status(r){return r.supersededBy?'Superseded':r.revoked?'Revoked':r.locked?'Active · locked':'Active';}
- function visibleRecords(ctx){return all().filter(r=>{const s=scope(r);if(s==='user')return (r.userId||'concept:user')===ctx.userId;if((r.projectId||'concept:pm')!==ctx.projectId)return false;return s==='project'||(s==='thread'&&r.sourceThreadId===ctx.threadId);});}
- function history(c,tid){const ctx={...context(),threadId:tid},v=views.get(tid)||{},records=visibleRecords(ctx),chosen=get(v.id),chain=chosen?records.filter(r=>(r.rootId||r.id)===(chosen.rootId||chosen.id)):records,upcoming=preview(ctx),e=c.esc;
-  return '<article class="teach-document" data-k="teach-doc:'+e(tid)+'"><div class="room-meta"><span>Teach · session preview</span><span>'+upcoming.items.length+' eligible · '+records.length+(records.length===1?' version':' versions')+'</span></div><h2>Taught memory</h2><div class="room-controls"><button class="soft-button" data-action="af-teach-open">Teach something</button><button class="soft-button" data-action="teach-preview" data-thread="'+e(tid)+'">Preview next context</button><button class="soft-button" data-action="teach-export" data-thread="'+e(tid)+'">Export history</button>'+(chosen?'<button class="text-button" data-action="teach-open">All teaching</button>':'')+'</div>'+(v.preview?'<section class="teach-preview" data-k="teach-preview"><header><strong>Eligible for this Assistant thread</strong><small>Preview only · not dispatched</small></header>'+(upcoming.items.length?upcoming.items.map(r=>'<p data-included-teaching="'+e(r.id)+'">'+e(r.text)+' <small>v'+r.version+'</small></p>').join(''):'<p>No active teaching applies.</p>')+'</section>':'')+'<div class="teach-versions">'+chain.slice().reverse().map(r=>'<section class="teach-version" data-k="teach:'+e(r.id)+'" data-teaching="'+e(r.id)+'"><header><strong>'+e(status(r))+'</strong><small>'+e(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></header><p>'+e(r.text)+'</p><div class="teach-actions">'+(active(r)?'<button class="soft-button" data-action="teach-correct" data-id="'+e(r.id)+'">Correct</button><button class="text-button" data-action="af-teach-lock" data-value="'+e(r.id)+'">'+(r.locked?'Unlock':'Lock')+'</button><button class="text-button" data-action="af-teach-revoke" data-value="'+e(r.id)+'">Revoke</button>':'')+'<button class="text-button" data-action="teach-source" data-id="'+e(r.id)+'">Source</button></div><details><summary>Version details</summary><dl><dt>Captured</dt><dd>'+e(r.createdAt)+'</dd><dt>Replaces</dt><dd>'+e(r.supersedes?'v'+(get(r.supersedes)?.version||1):'None')+'</dd><dt>Future use</dt><dd>'+e(upcoming.items.some(x=>x.id===r.id)?'Eligible here':status(r)==='Superseded'?'Replaced by newer teaching':'Not included here')+'</dd></dl></details>'+(v.source===r.id?'<div class="teach-source"><strong>Capture source</strong><p>'+e(r.source?.excerpt||r.text)+'</p>'+(r.sourceMessageId&&messages(r.sourceThreadId).some(m=>m.id===r.sourceMessageId)?'<button class="text-button" data-action="teach-source-jump" data-id="'+e(r.id)+'">Open original message</button>':'<small>Explicit instruction; preserved with this revision.</small>')+'</div>':'')+(v.revoke?.id===r.id?'<div class="teach-revoke"><strong>Stop using this version?</strong><p>History remains. Older versions will not reactivate.</p><button class="soft-button" data-action="teach-revoke-cancel" data-thread="'+e(tid)+'">Keep active</button><button class="primary-button" data-action="teach-revoke-confirm" data-thread="'+e(tid)+'">Revoke teaching</button></div>':'')+'</section>').join('')+'</div><p class="teach-help">Teaching is not the Teacher Persona. No model request is made here.</p>'+ (window.PM56_TEACH_DEMOS?.editorGuide(tid)||'')+'</article>';
+ function visibleRecords(ctx){if(!ctx)return [];return all().filter(r=>{const s=scope(r);if(s==='user')return (r.userId||'concept:user')===ctx.userId;if((r.projectId||'concept:pm')!==ctx.projectId)return false;return s==='project'||(s==='thread'&&r.sourceThreadId===ctx.threadId);});}
+ function history(c,tid){
+  const ctx=context(tid);
+  if(!ctx)return '<article class="teach-document"><h2>Taught memory unavailable</h2><p>The source conversation no longer exists.</p></article>';
+  const v=views.get(tid)||{},records=visibleRecords(ctx),chosen=records.find(r=>r.id===v.id),chain=chosen?records.filter(r=>(r.rootId||r.id)===(chosen.rootId||chosen.id)):records,upcoming=preview(ctx),e=c.esc;
+  return '<article class="teach-document" data-k="teach-doc:'+e(tid)+'"><div class="room-meta"><span>Teach · session preview</span><span>'+upcoming.items.length+' eligible · '+records.length+(records.length===1?' version':' versions')+'</span></div><h2>Taught memory</h2><div class="room-controls"><button class="soft-button" data-action="af-teach-open" data-thread="'+e(tid)+'">Teach something</button><button class="soft-button" data-action="teach-preview" data-thread="'+e(tid)+'">Preview next context</button><button class="soft-button" data-action="teach-export" data-thread="'+e(tid)+'">Export history</button>'+(chosen?'<button class="text-button" data-action="teach-open" data-thread="'+e(tid)+'">All teaching</button>':'')+'</div>'+(v.preview?'<section class="teach-preview" data-k="teach-preview"><header><strong>Eligible for this Assistant thread</strong><small>Preview only · not dispatched</small></header>'+(upcoming.items.length?upcoming.items.map(r=>'<p data-included-teaching="'+e(r.id)+'">'+e(r.text)+' <small>v'+r.version+'</small></p>').join(''):'<p>No active teaching applies.</p>')+'</section>':'')+'<div class="teach-versions">'+chain.slice().reverse().map(r=>'<section class="teach-version" data-k="teach:'+e(r.id)+'" data-teaching="'+e(r.id)+'"><header><strong>'+e(status(r))+'</strong><small>'+e(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></header><p>'+e(r.text)+'</p><div class="teach-actions">'+(active(r)?'<button class="soft-button" data-action="teach-correct" data-thread="'+e(tid)+'" data-id="'+e(r.id)+'">Correct</button><button class="text-button" data-action="af-teach-lock" data-thread="'+e(tid)+'" data-value="'+e(r.id)+'">'+(r.locked?'Unlock':'Lock')+'</button><button class="text-button" data-action="af-teach-revoke" data-thread="'+e(tid)+'" data-value="'+e(r.id)+'">Revoke</button>':'')+'<button class="text-button" data-action="teach-source" data-thread="'+e(tid)+'" data-id="'+e(r.id)+'">Source</button></div><details><summary>Version details</summary><dl><dt>Captured</dt><dd>'+e(r.createdAt)+'</dd><dt>Replaces</dt><dd>'+e(r.supersedes?'v'+(get(r.supersedes)?.version||1):'None')+'</dd><dt>Future use</dt><dd>'+e(upcoming.items.some(x=>x.id===r.id)?'Eligible here':status(r)==='Superseded'?'Replaced by newer teaching':'Not included here')+'</dd></dl></details>'+(v.source===r.id?'<div class="teach-source"><strong>Capture source</strong><p>'+e(r.source?.excerpt||r.text)+'</p>'+(r.sourceMessageId&&messages(r.sourceThreadId).some(m=>m.id===r.sourceMessageId)?'<button class="text-button" data-action="teach-source-jump" data-id="'+e(r.id)+'">Open original message</button>':'<small>Explicit instruction; preserved with this revision.</small>')+'</div>':'')+(v.revoke?.id===r.id?'<div class="teach-revoke"><strong>Stop using this version?</strong><p>History remains. Older versions will not reactivate.</p><button class="soft-button" data-action="teach-revoke-cancel" data-thread="'+e(tid)+'">Keep active</button><button class="primary-button" data-action="teach-revoke-confirm" data-thread="'+e(tid)+'">Revoke teaching</button></div>':'')+'</section>').join('')+'</div><p class="teach-help">Teaching is not the Teacher Persona. No model request is made here.</p>'+ (window.PM56_TEACH_DEMOS?.editorGuide(tid)||'')+'</article>';
  }
  function show(id){const c=E.ctx(),r=get(id),tid=c.thread.id;if(r&&!visibleRecords(context()).includes(r))return fail('outside_scope');views.set(tid,{...views.get(tid),id:r?.id||null,revoke:null});c.closeDialog();c.closeMenu();c.state.editorRevealed=true;c.openEditor('teach:'+tid);return {ok:true};}
  function receiptActions(c,m){return '<button class="soft-button" data-action="teach-open" data-id="'+c.esc(m.memoryId)+'">Open teaching</button>';}
  function update(){const c=E.ctx(),d=store().pending;if(!d)return;const error=document.getElementById('teach-error');if(error)error.textContent=d.error?explain(d.error):'';const rel=document.getElementById('teach-related');if(rel)rel.innerHTML=conflictHtml(c,d);}
- E.chainAction('af-teach-open',()=>{open();return true;});E.chainAction('af-teach-narrow',(c,b)=>{correction(b.dataset.value);return true;});
+ E.chainAction('af-teach-open',(c,b)=>{if(documentTarget(c,b))open();return true;});E.chainAction('af-teach-narrow',(c,b)=>{correction(b.dataset.value);return true;});
  E.chainAction('af-teach-set-scope',(c,b)=>{const d=store().pending;if(d&&scopes[b.dataset.value]){d.scope=b.dataset.value;d.conflictChoice=null;d.error=null;c.renderOverlays();}return true;});
  E.chainAction('af-teach-cancel',c=>{store().pending=null;c.closeDialog();return true;});
  E.chainAction('af-teach-capture',c=>{const x=commit(request());if(!x.ok){if(store().pending)store().pending.error=x.error;update();}else{c.closeDialog();c.renderApp();}return true;});
  E.action('teach-conflict',(c,b)=>{if(store().pending){store().pending.conflictChoice=b.dataset.choice;store().pending.error=null;update();}return true;});
- E.action('teach-open',(c,b)=>{show(b.dataset.id);return true;});E.action('teach-correct',(c,b)=>{correction(b.dataset.id);return true;});
- E.chainAction('af-teach-lock',(c,b)=>{const x=lock(mutationRequest(b.dataset.value));if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
- E.chainAction('af-teach-revoke',(c,b)=>{show(b.dataset.value);const tid=c.thread.id;views.set(tid,{...views.get(tid),revoke:mutationRequest(b.dataset.value)});c.renderApp();return true;});
+ E.action('teach-open',(c,b)=>{if(documentTarget(c,b))show(b.dataset.id);return true;});E.action('teach-correct',(c,b)=>{if(documentTarget(c,b))correction(b.dataset.id);return true;});
+ E.chainAction('af-teach-lock',(c,b)=>{if(!documentTarget(c,b))return true;const x=lock(mutationRequest(b.dataset.value));if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
+ E.chainAction('af-teach-revoke',(c,b)=>{if(!documentTarget(c,b))return true;show(b.dataset.value);const tid=E.ctx().thread.id;views.set(tid,{...views.get(tid),revoke:mutationRequest(b.dataset.value)});c.renderApp();return true;});
  E.action('teach-revoke-cancel',(c,b)=>{views.set(b.dataset.thread,{...views.get(b.dataset.thread),revoke:null});c.renderApp();return true;});
- E.action('teach-revoke-confirm',(c,b)=>{const v=views.get(b.dataset.thread),x=revoke(v?.revoke);views.set(b.dataset.thread,{...v,revoke:null});if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
+ E.action('teach-revoke-confirm',(c,b)=>{if(!documentTarget(c,b))return true;const v=views.get(b.dataset.thread),x=revoke(v?.revoke);views.set(b.dataset.thread,{...v,revoke:null});if(!x.ok)c.toast('Teaching unchanged',explain(x.error));c.renderApp();return true;});
  E.action('teach-preview',(c,b)=>{views.set(b.dataset.thread,{...views.get(b.dataset.thread),preview:!views.get(b.dataset.thread)?.preview});c.renderApp();return true;});
- E.action('teach-source',(c,b)=>{const tid=c.thread.id;views.set(tid,{...views.get(tid),source:views.get(tid)?.source===b.dataset.id?null:b.dataset.id});c.renderApp();return true;});
+ E.action('teach-source',(c,b)=>{const tid=b.dataset.thread||c.thread.id;if(!context(tid))return true;views.set(tid,{...views.get(tid),source:views.get(tid)?.source===b.dataset.id?null:b.dataset.id});c.renderApp();return true;});
  E.action('teach-source-jump',(c,b)=>{const r=get(b.dataset.id);if(r?.sourceMessageId){c.switchThread(r.sourceThreadId);c.state.editorRevealed=false;c.renderApp();requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(r.sourceMessageId)+'"]')?.scrollIntoView({block:'center'}));}return true;});
- function exportHistory(tid){return JSON.stringify({kind:'concept_taught_memory',threadId:tid,records:visibleRecords({...context(),threadId:tid}),preview:preview({...context(),threadId:tid})},null,2);}
- E.action('teach-export',(c,b)=>{const url=URL.createObjectURL(new Blob([exportHistory(b.dataset.thread)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='taught-memory.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);return true;});
+ function exportHistory(tid){const ctx=context(tid);if(!ctx)return null;return JSON.stringify({kind:'concept_taught_memory',threadId:ctx.threadId,projectId:ctx.projectId,records:visibleRecords(ctx),preview:preview(ctx)},null,2);}
+ E.action('teach-export',(c,b)=>{const data=exportHistory(b.dataset.thread);if(data===null){c.toast('Teaching unavailable','The source conversation no longer exists.');return true;}const url=URL.createObjectURL(new Blob([data],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='taught-memory.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);return true;});
  E.action('teach-from-message',(c,b)=>{const tid=b.dataset.thread||c.thread.id,m=messages(tid).find(m=>m.id===b.dataset.value);if(safeMessage(m))open({text:m.body,sourceThreadId:tid,sourceMessageId:m.id});return true;});
  document.addEventListener('input',e=>{const k=e.target.dataset?.teachInput,d=store().pending;if(!k||!d)return;if(k==='text'){d.text=e.target.value;d.conflictChoice=null;}if(k==='public')d.allowUserScope=e.target.checked;d.error=null;update();});
  E.slot('transcriptMessage',c=>{const m=c.m;if(m?.type!=='af-teach-receipt'||!m.memoryId)return '';return '<article class="event-card teach-receipt" data-k="teach-receipt:'+c.esc(m.id)+'" data-message-id="'+c.esc(m.id)+'"><span class="event-icon">'+c.icon('sparkles',13)+'</span><div class="event-copy"><strong>'+c.esc(m.title)+'</strong><p>'+c.esc(m.detail)+'</p></div><button class="soft-button" data-action="teach-open" data-id="'+c.esc(m.memoryId)+'">Open</button></article>';});
@@ -42584,6 +42491,166 @@ window.PM56_EXT = window.PM56_EXT || {
  E.chainAction('reset-all',()=>{active=null;return false;});['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start','memory-demo-start','debug-demo-start'].forEach(a=>E.chainAction(a,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Revert workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="revert-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_REVERT_DEMOS={start,guide,dialogGuide,snapshot:()=>active?copy(active):null};
+})();
+
+/* B11. One resolver over the existing Assistant ELI5 preference store.
+ * Session-only concept preferences; no native Settings, persistence or provider claims.
+ * Changes affect future request snapshots, not historical answers or work products. */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,RT=window.PM56_RUNTIME,has=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+ const copy=x=>JSON.parse(JSON.stringify(x));
+ function state(){const f=RT.features.eli5;f.perThread=f.perThread||{};f.projectDefaults=f.projectDefaults||{};return f;}
+ function thread(id){return E.ctx().state.threads.find(t=>t.id===id)||null;}
+ function project(t){return String(t.projectId||t.project_id||'concept:default-project');}
+ function valid(v){return v===true||v===false||v===null;}
+ function resolve(id){
+  const t=thread(id);if(!t)return {ok:false,error:'unknown_thread'};
+  const s=state(),pid=project(t),override=has(s.perThread,id)?s.perThread[id]:null;
+  const pd=has(s.projectDefaults,pid)?s.projectDefaults[pid]:null;
+  const app=s.appDefault===true, inherited=pd===null?app:pd;
+  return {ok:true,threadId:id,projectId:pid,override,projectDefault:pd,appDefault:app,
+   inherited,effective:override===null?inherited:override,
+   source:override!==null?'conversation':pd!==null?'project':'application',persistence:'session_only'};
+ }
+ function setThread(id,value){if(!valid(value))return {ok:false,error:'invalid_value'};if(!thread(id))return {ok:false,error:'unknown_thread'};const s=state();if(value===null)delete s.perThread[id];else s.perThread[id]=value;return resolve(id);}
+ function setProject(pid,value){if(!pid||!valid(value))return {ok:false,error:'invalid_value'};if(!E.ctx().state.threads.some(t=>project(t)===pid))return {ok:false,error:'unknown_project'};const s=state();if(value===null)delete s.projectDefaults[pid];else s.projectDefaults[pid]=value;return {ok:true};}
+ function setApplication(value){if(typeof value!=='boolean')return {ok:false,error:'invalid_value'};state().appDefault=value;return {ok:true};}
+ function open(c){const r=resolve(c.thread.id);c.closeMenu();c.openDialog({type:'eli5-style',threadId:r.threadId,projectId:r.projectId});}
+ const valueName=v=>v?'On':'Off';
+ function wand(c){const r=resolve(c.thread.id);return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+c.icon('sparkles',13)+'</span><span class="menu-copy"><strong>ELI5 explanations</strong><span>'+valueName(r.effective)+' · '+(r.source==='conversation'?'this conversation':r.source+' default')+'</span></span><span class="menu-right">'+c.icon('chevronRight',11)+'</span></button>';}
+ function choices(c,name,current,rows,tid){return '<div class="eli5-choices" role="radiogroup" aria-label="'+c.esc(name)+'">'+rows.map(([v,label,detail])=>'<button class="eli5-choice" role="radio" aria-checked="'+(current===v)+'" data-action="eli5-set" data-scope="'+name+'" data-thread="'+c.esc(tid)+'" data-value="'+(v===null?'inherit':v?'on':'off')+'"><span class="eli5-radio">'+(current===v?c.icon('check',12):'')+'</span><span><strong>'+c.esc(label)+'</strong>'+(detail?'<small>'+c.esc(detail)+'</small>':'')+'</span></button>').join('')+'</div>';}
+ function dialog(c){const d=c.state.dialog;if(d?.type!=='eli5-style')return '';const r=resolve(d.threadId),stale=!r.ok||r.threadId!==c.thread.id||r.projectId!==d.projectId;
+  if(stale)return '<section class="dialog eli5-dialog"><div class="dialog-head"><h2>Conversation changed</h2></div><div class="dialog-body"><p>Open explanation preferences from the current conversation.</p><button class="soft-button" data-action="close-dialog">Close</button></div></section>';
+  return '<section class="dialog eli5-dialog" role="dialog" aria-modal="true" aria-label="Explanation style"><div class="dialog-head"><div><small>ELI5</small><h2>Explanation style</h2></div><button class="icon-button" data-action="close-dialog" aria-label="Close">'+c.icon('close',13)+'</button></div><div class="dialog-body"><p class="eli5-lede">For future replies in this conversation.</p>'+choices(c,'conversation',r.override,[[null,'Use default',valueName(r.inherited)+' · '+(r.projectDefault===null?'application':'project')],[true,'On','Plain language, without changing technical details.'],[false,'Off','Standard explanations.']],r.threadId)+
+   '<details data-k="eli5-defaults" class="eli5-defaults"'+(d.defaultsOpen?' open':'')+'><summary>Application & project defaults</summary><h3>Application</h3>'+choices(c,'application',r.appDefault,[[false,'Off',''],[true,'On','']],r.threadId)+'<h3>This project</h3>'+choices(c,'project',r.projectDefault,[[null,'Use application default',valueName(r.appDefault)],[true,'On',''],[false,'Off','']],r.threadId)+'</details><p class="eli5-boundary">Session-only concept preferences. Existing answers and work products stay unchanged.</p></div><footer class="eli5-footer"><span>'+valueName(r.effective)+' · '+(r.source==='conversation'?'conversation override':r.source+' default')+'</span><button class="primary-button" data-action="close-dialog">Done</button></footer></section>';
+ }
+ E.action('eli5-open',c=>{open(c);return true;});
+ E.action('eli5-set',(c,b)=>{
+  const d=c.state.dialog;if(d?.type!=='eli5-style'||d.threadId!==c.thread.id||b.dataset.thread!==d.threadId||project(c.thread)!==d.projectId)return true;
+  if(!['inherit','on','off'].includes(b.dataset.value))return true;
+  const value=b.dataset.value==='inherit'?null:b.dataset.value==='on';
+  if(b.dataset.scope==='conversation')setThread(d.threadId,value);
+  else if(b.dataset.scope==='project')setProject(d.projectId,value);
+  else if(b.dataset.scope==='application')setApplication(value);
+  c.renderApp();return true;
+ });
+ document.addEventListener('toggle',event=>{const c=E.ctx();if(event.target.isConnected&&event.target.matches?.('.eli5-defaults')&&c.state.dialog?.type==='eli5-style')c.state.dialog.defaultsOpen=event.target.open;},true);
+ E.slot('dialog',dialog);
+ E.chainAction('demo-trigger',(c,b)=>{if(b.dataset.trigger==='ELI5 receipt'){window.PM56_ELI5_DEMOS?.start('override');return true;}return false;});
+ window.PM56_ELI5={resolve,setThread,setProject,setApplication,wand,open,project,
+  snapshot:()=>copy(state())};
+})();
+
+/* B11 gallery fixtures. Supplied reply variants demonstrate the real preference
+ * resolver at message admission. Not live generation or semantic rewriting. */
+(function(){
+ 'use strict';const E=window.PM56_EXT,P=window.PM56_ELI5,copy=x=>JSON.parse(JSON.stringify(x));let active=null,seq=0;
+ const flows={override:{title:'One conversation, simpler replies',detail:'Override this conversation; keep its sibling and existing work unchanged.'},inherit:{title:'Return to the shared default',detail:'Reset an explicit Off override, then follow project and application defaults.'}};
+ const code='const limit = options.maxRetries ?? 3;';
+ const questions=['Explain the retry limit.','What does the zero limit do?'];
+ const variants=[{standard:'The nullish-coalescing expression preserves an explicitly supplied maxRetries value, including zero, and falls back to 3 only for null or undefined.',simple:'Use the retry limit you provide—even 0. When the value is null or missing, use 3 instead.'},
+  {standard:'An explicit maxRetries value of 0 is not nullish, so the expression evaluates to 0 rather than the fallback value of 3.',simple:'A limit of 0 stays 0. This expression does not replace it with 3.'}];
+ function snap(){return active?copy(active):null;}
+ function guide(c){if(!active||!active.threads.includes(c.thread.id))return '';const other=active.threads.find(id=>id!==c.thread.id),r=P.resolve(c.thread.id);return '<section class="eli5-demo-guide" data-k="eli5-demo-guide"><div><small>Recorded example · no model calls</small><strong>'+c.esc(flows[active.kind].title)+'</strong><span>'+c.esc(c.thread.id===active.threads[0]?'Primary conversation':'Sibling conversation')+' · Ask: '+questions[0]+'</span></div><div class="eli5-demo-actions"><button class="soft-button" data-action="eli5-open">Explanation style</button><button class="soft-button" data-action="eli5-demo-switch" data-thread="'+c.esc(other)+'">'+(other===active.threads[0]?'Primary':'Sibling')+'</button><button class="soft-button" data-action="eli5-demo-replay">Replay</button><button class="icon-button" data-action="eli5-demo-close" aria-label="Close guide">'+c.icon('close',12)+'</button></div></section>';}
+ function start(kind){if(!flows[kind])return;const c=E.ctx(),n=++seq,pid='concept:eli5:'+n,ids=['eli5-'+n+'-primary','eli5-'+n+'-sibling'];
+  const planId='eli5-plan-'+n,artifactId='eli5-artifact-'+n;
+  const blocks=[{t:'heading',d:2,text:'Retry limit'},{t:'paragraph',text:'Preserve an explicit zero limit. Use 3 only when the input is null or undefined.'},{t:'plan_step',plan_step_id:'verify-zero',title:'Verify explicit zero',text:'Check 0, null and undefined without changing the expression.',depends_on:[],parallel_group_id:null,parent_step_id:null}];
+  const plan=copy(window.PM56_PLANS.fixture()['ap-index']);Object.assign(plan,{plan_id:planId,thread_id:ids[0],title:'Preserve the retry limit',version:1,strategy:'Standard',backend:'direct',status:'ready',current:true,view:'rich',revisions:{1:blocks},revisionLog:[],sources:[{kind:'creation',ref:'msg:'+ids[0]+'-original',note:'Recorded example.'}],attachmentRefs:[],research:[],runHistory:[],approved:null,attention:null,wait:null,schedule:null,goalBinding:null,topology:null,planunits:[],unitsMaterialized:null,todosCreated:null});window.PM56_PLANS.all()[planId]=plan;
+  const artifact={id:artifactId,threadId:ids[0],projectId:pid,title:'Retry expression',name:'retry-limit.js',kind:'code',type:'code',language:'javascript',version:1,status:'ready',updated:'Recorded example',summary:'Preserve an explicit zero retry limit.',sourceMessageId:ids[0]+'-original',content:code,body:code,code,readOnly:true};c.D.artifacts.push(artifact);
+  ids.forEach((id,i)=>{const t=copy(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);Object.assign(t,{id,projectId:pid,title:i?'Retry limit · sibling':'Retry limit · primary',pinned:false,archived:false,goalId:null,eli5Example:{kind,artifactId,planId,code},messages:[{id:id+'-original',role:'assistant',type:'text',body:'Recorded example: preserve an explicit zero retry limit. The existing Plan and source below are not rewritten by ELI5.'},...(i?[]:[{id:id+'-plan',role:'system',type:'plan-card-v2',planId}])]});c.state.threads.push(t);});
+  P.setProject(pid,kind==='inherit');if(kind==='inherit')P.setThread(ids[0],false);
+  // The default is set through the real owner, never by replacing its store.
+  // A private example project avoids altering preferences in existing projects.
+  active={kind,threads:ids,projectId:pid,planId,artifactId,questions:copy(questions),code,initialPlan:copy(plan),initialArtifact:copy(artifact)};
+  Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};window.PM56_RUNTIME.composer.destination=null;c.switchThread(ids[0]);c.openEditor('eli5-evidence:'+ids[0]);
+ }
+ function reply(t,raw,preference,requestId){if(!t.eli5Example)return null;const at=questions.indexOf(raw);if(at<0)return null;const v=variants[at];return {id:E.ctx().uid('eli5-answer'),role:'assistant',type:'eli5-example-answer',body:preference.effective?v.simple:v.standard,code:t.eli5Example.code,artifactId:t.eli5Example.artifactId,planId:t.eli5Example.planId,sourceMessageId:requestId,explanationPreference:copy(preference),time:new Date().toISOString(),recordedExample:true};}
+ E.slot('transcriptMessage',c=>{const m=c.m;if(m?.type!=='eli5-example-answer')return '';const more=c.extRender('messageOverflow',{message:m}),panel=c.extRender('messageOverflowPanel',{message:m});const opened=window.PM56_MSG_OVERFLOW?.isOpen(m.id);
+  return '<article class="message message-assistant eli5-answer" data-k="message:'+c.esc(m.id)+'" data-message-id="'+c.esc(m.id)+'">'+c.extRender('messageAffordance',{message:m})+'<div class="message-surface"><div class="eli5-answer-label">'+c.icon('sparkles',12)+'<span>Recorded reply · ELI5 '+(m.explanationPreference.effective?'On':'Off')+'</span></div><p>'+c.esc(m.body)+'</p><pre>'+c.esc(m.code)+'</pre><button class="text-button" data-action="eli5-demo-evidence" data-thread="'+c.esc(c.thread.id)+'">Inspect unchanged work</button></div><div class="message-chrome'+(opened?' is-overflow-open':'')+'"><div class="message-actions"><button class="text-button icon-only" data-action="copy-message" data-id="'+c.esc(m.id)+'" aria-label="Copy reply">'+c.icon('copy',13)+'<span>Copy</span></button>'+more+'</div>'+panel+'</div></article>';});
+ function evidence(c){const t=c.thread,f=t.eli5Example;if(!f)return '';const plan=window.PM56_PLANS.get(f.planId),a=c.D.artifacts.find(x=>x.id===f.artifactId);return '<article class="eli5-evidence"><small>Recorded example · stable work products</small><h2>Retry limit</h2><pre>'+c.esc(a.content)+'</pre><button class="soft-button" data-action="open-artifact" data-id="'+c.esc(f.artifactId)+'">Open source artifact</button><h3>Observed expression results</h3><dl>'+[[0,0],[null,3],[undefined,3]].map(([input,expected])=>'<div><dt>'+c.esc(input===undefined?'undefined':JSON.stringify(input))+'</dt><dd>'+c.esc(String(input??3))+'</dd></div>').join('')+'</dl><button class="soft-button" data-action="eli5-demo-plan" data-id="'+c.esc(f.planId)+'">Open existing Plan</button><details><summary>Exact identifiers</summary><p>Artifact: <code>'+c.esc(f.artifactId)+'</code></p><p>Plan: <code>'+c.esc(f.planId)+'</code> · V'+plan.version+'</p></details></article>';}
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('eli5-evidence:')?'Retry limit · evidence':'');
+ E.slot('editorDocument',c=>{if(!c.editorId?.startsWith('eli5-evidence:'))return '';return c.editorId.slice(14)===c.thread.id?evidence(c):'<article class="eli5-evidence"><h2>Source conversation</h2><p>Return to the source conversation to inspect this example.</p></article>';});
+ E.slot('composerBelow',guide);
+ E.action('eli5-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
+ E.action('eli5-demo-switch',(c,b)=>{const target=b.dataset.thread;if(active&&active.threads.includes(target)){c.switchThread(target);c.openEditor('eli5-evidence:'+target);}return true;});
+ E.action('eli5-demo-evidence',(c,b)=>{if(c.thread.eli5Example&&b.dataset.thread===c.thread.id)c.openEditor('eli5-evidence:'+c.thread.id);return true;});
+ E.action('eli5-demo-plan',(c,b)=>{if(c.thread.eli5Example?.planId===b.dataset.id)c.openEditor('plan:'+b.dataset.id);return true;});
+ E.action('eli5-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('eli5-demo-close',c=>{active=null;c.renderApp();return true;});
+ E.chainAction('reset-all',()=>{active=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start','memory-demo-start','debug-demo-start','revert-demo-start'].forEach(a=>E.chainAction(a,()=>{active=null;return false;}));
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided ELI5 workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="eli5-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_ELI5_DEMOS={start,snapshot:snap,reply,questions:()=>copy(questions)};
+})();
+
+/* B12 local laboratory. The primary fixture owns versioned work and measurements;
+ * the BSD protocol only inspects redacted snapshots. No model calls, native
+ * command success, real workspace writes, or Wizard/WorkNode execution claimed.
+ */
+(function(){
+ 'use strict';const E=window.PM56_EXT,B=window.PM56_BSD,K=window.PM56_BSD_ENGINE;if(!B||!K)return;const {clone,digest}=K;
+ const projects=new Map(),timers=new Map(),disclosures=new Map();const opened=k=>disclosures.get(k)?' open':'';document.addEventListener('toggle',e=>{const d=e.target;if(d.isConnected&&d.matches?.('.bsd12-work details[data-k]'))disclosures.set(d.dataset.k,d.open);},true);document.addEventListener('click',e=>{const sm=e.target.closest?.('.bsd12-work details[data-k]>summary'),d=sm?.parentElement;if(d)disclosures.set(d.dataset.k,!d.open);},true);let serial=0;
+ const flows={survives:{title:'Catch a missing measurement',detail:'Hold a concern, advance the work, and deliver it only after current-evidence reconfirmation.'},resolves:{title:'Resolve it before delivery',detail:'Record measured results while advice is held; recheck and clear it without transcript noise.'}};
+ function get(id){return projects.get(id||E.ctx().thread.id);}
+ function primary(g){if(!g)return null;const t=E.ctx().state.threads.find(t=>t.id===g.threadId);if(!t)return null;const cp=E.ctx().state.context.projections?.[g.threadId];return {...clone(g.primary),contextRevision:cp?String(cp.contextEpoch)+':'+(cp.compaction?.revision||0):'',historyRevision:JSON.stringify(t.messages.filter(m=>m.type==='threadops-rewind').map(m=>[m.id,m.title])),threadId:g.threadId,projectId:t?.projectId||g.projectId,worktree:t?.worktree||g.primary.worktree,primaryEpoch:g.primary.primaryEpoch};}
+ function content(p){return '/* Local fixture: '+p.note+' */\nCREATE INDEX events_account_time ON events(account_id, created_at);\n\n'+(p.measurements?'-- baseline writes: '+JSON.stringify(p.measurements.before)+'\n-- candidate writes: '+JSON.stringify(p.measurements.after):'-- write amplification: not measured');}
+ function updateArtifact(g){const c=E.ctx(),a=c.D.artifacts.find(a=>a.id===g.artifactId);a.version=g.primary.generation;a.content=content(g.primary);a.body=a.content;a.code=a.content;a.history=a.history||[];a.history.push({version:a.version,content:a.content});}
+ function start(flow){if(!flows[flow])return;const c=E.ctx(),n=++serial,tid='bsd12-'+n,pid='concept:bsd12:'+n,artifactId='bsd12-source-'+n,base=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);
+  const g={flow,threadId:tid,projectId:pid,artifactId,guide:true,sampleBefore:'[200,300,500]',sampleAfter:'[212,318,530]',delay:260,fault:'none',lastResult:null,primary:{projectId:pid,threadId:tid,runId:'local-index-'+n,workflow:'assistant',stage:'worknode_execution',status:'ready',generation:0,primaryEpoch:1,worktree:'demo/index-'+n,primaryRoute:{provider:'local',model:'deterministic-primary-fixture',account:'none'},permission:'read-only-local-demonstration',frozen:false,note:'initial proposal',measurements:null,constraints:['Measured write amplification must not exceed 8%.'],refs:{artifact:{id:artifactId,version:0},goal:null,plan:null,planUnits:[],todos:[]},redaction:{checked:true,scope:'local-fixture',receipt:'fixture-public-data-'+n},watch:[{path:'demo:/project/BSD_WATCH.md',scope:'project',text:'Check the measured write-amplification bound before accepting the covering index.'}],deltas:[]}};
+  projects.set(tid,g);Object.assign(base,{id:tid,projectId:pid,title:flows[flow].title,summary:flows[flow].detail,updated:'now',unread:0,status:'idle',pinned:false,archived:false,goalId:null,worktree:g.primary.worktree,messages:[{id:tid+'-ask',role:'user',type:'text',body:'Review this covering-index proposal. Keep measured write amplification at or below 8%.'},{id:tid+'-source',role:'system',type:'bsd12-source',artifactId,threadId:tid}],bsdExample:flow});c.state.threads.push(base);c.D.artifacts.push({id:artifactId,threadId:tid,projectId:pid,title:'Covering index · evidence',name:'covering-index.sql',kind:'code',type:'code',language:'sql',version:0,status:'ready',summary:'Versioned local index and measurements.',content:content(g.primary),body:content(g.primary),readOnly:true,history:[]});
+  B.engine.register(tid,()=>primary(g));Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',decision:null});c.state.context.details=false;c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};c.switchThread(tid);c.openEditor('bsd12:'+tid);
+ }
+ function change(g,kind,summary,patch={}){Object.assign(g.primary,patch);g.primary.generation++;g.primary.refs.artifact.version=g.primary.generation;g.primary.deltas.push({generation:g.primary.generation,kind,summary,ref:'artifact:'+g.artifactId+'@'+g.primary.generation});updateArtifact(g);B.refresh();}
+ function inspect(p){
+  const m=p.measurements;let value=null;if(m){if(!Array.isArray(m.before)||!Array.isArray(m.after)||!m.before.length||m.before.length!==m.after.length||[...m.before,...m.after].some(x=>!Number.isFinite(x)||x<0)||m.before.reduce((a,b)=>a+b,0)<=0)return {failure:'failed',reason:'invalid_measurement_fixture'};const before=m.before.reduce((a,b)=>a+b,0),after=m.after.reduce((a,b)=>a+b,0);value=(after-before)/before*100;}
+  if(value!=null&&value<=8)return {findings:[],tools:['file.read','test.inspect']};
+  const missing=value==null;return {tools:['file.read','test.inspect'],findings:[{family:missing?'missing measured bound':'measured bound exceeded',objectRefs:[p.refs.artifact.id],ruleRef:'write-amplification-at-most-eight-percent',evidenceFingerprint:digest({index:'events_account_time',measurement:p.measurements,limit:8}),severity:missing?'concern':'critical',title:missing?'The write-cost bound is not measured':'Measured write cost exceeds 8%',detail:missing?'The covering index has no measured write-amplification result. The 8% constraint is not yet supported.':'The local measurements show '+value.toFixed(2)+'% additional writes, above the 8% bound.',evidence:[{artifactId:p.refs.artifact.id,version:p.generation,measurement:p.measurements,computedPercent:value,limitPercent:8}]}]};
+ }
+ function review(g,opts={}){
+  if(!B.engine.current(g.threadId)){const r=B.engine.bind(g.threadId,B.identity(B.engine.policy(g.projectId)));if(!r.ok||!r.assignmentId){g.lastResult=r;B.refresh();return r;}}
+  const before=primary(g),r=B.engine.begin(g.threadId,{trigger:opts.trigger||'constraint_divergence',material:true,expectedEpoch:B.engine.snapshot(g.threadId).epoch,...opts});g.lastResult=r;
+  if(!r.ticket||r.duplicate){B.refresh();return r;}
+  const ticket=r.ticket,fault=g.fault;const output=fault==='unsafe'?{findings:inspect(before).findings,tools:['file.write']}:fault==='none'?inspect(before):{failure:fault};
+  const h=setTimeout(()=>{timers.delete(ticket.id);g.lastResult=B.engine.finish(ticket,output);B.refresh();},g.delay);timers.set(ticket.id,h);return r;
+ }
+ function act(c,b){const g=get(b.dataset.thread);if(!g||c.thread.id!==g.threadId||projectOf(c.thread)!==g.projectId)return true;const op=b.dataset.op;
+  if(op==='start'&&g.primary.status==='ready'){change(g,'proposal','Covering index proposed without a write-cost measurement.',{status:'running'});review(g,{trigger:'pre_first_material_mutation'});}
+  else if(op==='review'&&g.primary.status!=='ready'&&g.primary.status!=='cancelled')review(g);
+  else if(op==='cancel-launch'&&g.primary.status==='ready')g.primary.status='cancelled';
+  else if(op==='sample'&&g.primary.status==='running'&&!g.primary.frozen){try{const measurements={before:JSON.parse(g.sampleBefore),after:JSON.parse(g.sampleAfter)};const valid=inspect({...primary(g),measurements});if(valid.failure)throw Error('Enter matching non-negative sample arrays with a positive baseline.');change(g,'test_result','User supplied local measurement samples.',{measurements,note:'custom recorded sample inputs'});}catch(e){g.lastResult={ok:false,error:e.message};}}
+  else if(op==='advance'&&g.primary.status==='running')change(g,'file_change','Documentation refined; no measurement added.',{note:'comment clarified, measurement still absent'});
+  else if(op==='measure'&&g.primary.status==='running')change(g,'test_result','Measured 1060 writes against 1000 baseline writes.',{measurements:{before:[200,300,500],after:[212,318,530]},note:'measurement added'});
+  else if(op==='exceed'&&g.primary.status==='running')change(g,'test_result','Measured a candidate above the permitted bound.',{measurements:{before:[200,300,500],after:[240,360,600]},note:'high-cost candidate'});
+  else if(op==='finish'&&g.primary.status==='running'){const out=inspect(primary(g));if(out.failure||out.findings.length){g.lastResult={ok:false,error:'Primary check: measure within 8% before finishing.'};}else{change(g,'verification','Primary local checks passed; result completed.',{status:'completed'});g.lastResult={ok:true,primaryChecks:{measured:true,withinLimit:true},source:'primary-fixture-not-BSD'};}}
+  else if(op==='compact')g.lastResult=B.engine.selfCompact(g.threadId);
+  else if(op==='worktree'){c.thread.worktree='demo/changed-'+(++serial);g.primary.primaryEpoch++;B.engine.snapshot(g.threadId);}
+  else if(op==='pause-primary'&&g.primary.status==='running'){g.primary.status='paused';}
+  else if(op==='resume-primary'&&g.primary.status==='paused'){g.primary.status='running';}
+  else if(op==='frozen'&&g.primary.status==='running'){g.primary.frozen=true;review(g,{frozen:true,trigger:'configured_stage_boundary'});}
+  else if(op==='unfreeze')g.primary.frozen=false;
+  else if(op==='catchup'){const a=B.engine.snapshot(g.threadId),r=B.engine.startCatchup(g.threadId,a?.epoch);g.lastResult=r;if(r.ok&&!r.duplicate){const key='catchup:'+a.id,h=setTimeout(()=>{timers.delete(key);g.lastResult=B.engine.endCatchup(g.threadId,a.epoch,false);B.refresh();},Math.max(0,r.catchUp.deadline-Date.now()));timers.set(key,h);}}
+  else if(op==='abort-catchup'){const a=B.engine.snapshot(g.threadId);g.lastResult=B.engine.endCatchup(g.threadId,a?.epoch,true);}
+  c.thread.status=g.primary.status==='running'?'running':g.primary.status==='paused'?'paused':'idle';
+  B.refresh();return true;
+ }
+ const projectOf=t=>t.projectId||'concept:pm';
+ function btn(c,g,op,text,disabled=false){return '<button class="soft-button" data-action="bsd12-work" data-thread="'+c.esc(g.threadId)+'" data-op="'+op+'" '+(disabled?'disabled':'')+'>'+c.esc(text)+'</button>';}
+ function workspace(c,id){const g=get(id);if(!g)return '<article class="bsd12-work"><h2>Example unavailable</h2></article>';if(c.thread.id!==id||projectOf(c.thread)!==g.projectId)return '<article class="bsd12-work"><h2>Source conversation</h2><p>This document belongs to another conversation.</p><button class="soft-button" data-action="bsd12-return" data-thread="'+c.esc(id)+'">Return to its source</button></article>';
+  const p=primary(g),a=B.engine.snapshot(id),checking=!!a?.pending,measured=p.measurements?(p.measurements.after.reduce((x,y)=>x+y,0)-p.measurements.before.reduce((x,y)=>x+y,0))/p.measurements.before.reduce((x,y)=>x+y,0)*100:null,active=p.status==='running';return '<article class="bsd12-work" data-k="bsd12-work:'+c.esc(id)+'"><small class="bsd12-muted">Local workflow · recorded sample inputs, no database execution</small><h2>'+c.esc(flows[g.flow].title)+'</h2><p class="bsd12-intro">'+c.esc(flows[g.flow].detail)+'</p>'+(p.status==='ready'?'<details class="bsd12-disclosure" data-k="bsd12-launch:'+c.esc(id)+'"'+opened('bsd12-launch:'+id)+'><summary>Workflow binding preview</summary><p class="bsd12-muted">Preview Start/Cancel and stage binding only—not the PRD or Wizard journey.</p><label>Owning workflow<select data-bsd12-field="workflow" data-thread="'+c.esc(id)+'">'+[['assistant','Assistant'],['prd_builder','PRD Builder start preview'],['planning_wizard','Planning Wizard start preview']].map(([v,l])=>'<option value="'+v+'" '+(p.workflow===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+btn(c,g,'cancel-launch','Cancel launch')+'</details>':'')+'<div class="bsd12-work-summary"><div><small>Primary work</small><strong>'+c.esc(p.status)+'</strong></div><div><small>Evidence version</small><strong>'+p.generation+'</strong></div><div><small>Write amplification</small><strong>'+(measured==null?'Not measured':measured.toFixed(1)+'%')+'</strong></div></div><div class="bsd12-actions">'+(p.status==='cancelled'?'<p>Launch cancelled. No advisor binding, assignment, or usage was created.</p>':p.status==='ready'?btn(c,g,'start','Start local work'):btn(c,g,'review',checking?'Reviewing…':'Review current work',checking||a?.paused||a?.state==='off')+btn(c,g,'advance','Continue without measurement',!active||p.frozen)+btn(c,g,'measure','Record measurement',!active||p.frozen)+btn(c,g,'finish','Finish local work',!active||p.frozen))+'</div><div class="bsd12-work-advisor"><div class="bsd12-line"><h3>Advisor</h3><span class="spacer"></span><button class="text-button" data-action="bsd-configure-stages" data-thread="'+c.esc(id)+'">Configure</button><button class="text-button" data-action="bsd-open-details" data-thread="'+c.esc(id)+'">Context More Details</button></div><p>'+(a?c.esc(a.state)+' · epoch '+a.epoch+' · read '+a.cursor+' / '+p.generation:'Not started. Configuration alone creates no assignment.')+'</p><small class="bsd12-muted">'+(a?.catchUp?.state==='waiting'?'Catching up · cap '+a.catchUp.budgetSeconds+' seconds · primary result unchanged · ':'')+(a?a.findings.filter(f=>f.status==='held').length+' held · '+a.findings.filter(f=>f.status==='emitted').length+' emitted · '+a.findings.filter(f=>f.status==='cleared').length+' cleared':'Choose a route before starting, or use the configured default.')+'</small></div><h3>Versioned source evidence</h3><p class="bsd12-muted">Sample inputs are fixtures. Percentage calculations run locally; the SQL is not executed.</p><pre class="bsd12-source-code">'+c.esc(content(p))+'</pre><button class="text-button" data-action="open-artifact" data-id="'+c.esc(g.artifactId)+'">Open source artifact</button>'+(g.lastResult&&!g.lastResult.ok?'<p class="bsd12-error" role="status">'+c.esc(g.lastResult.error)+'</p>':'')+(p.status==='completed'?'<p class="bsd12-success">Primary checks passed: measured '+measured.toFixed(1)+'% ≤ 8%. BSD did not approve or complete this work.</p>':'')+'<details class="bsd12-disclosure" data-k="bsd12-lab:'+c.esc(id)+'"'+opened('bsd12-lab:'+id)+'><summary>Adversarial checks</summary><p class="bsd12-muted">Deliberate local test inputs. These do not contact a provider.</p><div class="bsd12-grid"><label>Baseline sample array<input data-bsd12-field="sampleBefore" data-thread="'+c.esc(id)+'" value="'+c.esc(g.sampleBefore)+'"></label><label>Candidate sample array<input data-bsd12-field="sampleAfter" data-thread="'+c.esc(id)+'" value="'+c.esc(g.sampleAfter)+'"></label></div>'+btn(c,g,'sample','Apply sample inputs',!active||p.frozen)+'<div class="bsd12-grid"><label>Review delay<input type="number" min="0" max="10000" data-bsd12-field="delay" data-thread="'+c.esc(id)+'" value="'+g.delay+'"></label><label>Next local result<select data-bsd12-field="fault" data-thread="'+c.esc(id)+'">'+[['none','Inspect current evidence'],['failed','Provider failure fixture'],['timed_out','Timeout fixture'],['quota_paused','Quota refusal fixture'],['unavailable','Unavailable fixture'],['unsafe','Forbidden tool request fixture']].map(([v,l])=>'<option value="'+v+'" '+(g.fault===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><div class="bsd12-actions">'+btn(c,g,'compact','Self-compact advisor',!a)+btn(c,g,'worktree','Change worktree',p.status==='ready')+btn(c,g,'exceed','Record over-limit measurement',!active||p.frozen)+btn(c,g,'pause-primary','Pause primary',!active)+btn(c,g,'resume-primary','Resume primary',p.status!=='paused')+btn(c,g,'frozen','Review frozen boundary',!active||checking)+btn(c,g,'unfreeze','Release boundary',!p.frozen)+btn(c,g,'catchup','Start bounded catch-up',p.status!=='completed'&&!p.frozen)+btn(c,g,'abort-catchup','Skip catch-up wait',a?.catchUp?.state!=='waiting')+'</div></details></article>';
+ }
+ function guide(c){const g=get(c.thread.id);if(!g||!g.guide)return '';return '<section class="bsd12-guide" data-k="bsd12-guide:'+c.esc(g.threadId)+'"><div><small>Back Seat Driver · local example</small><strong>'+c.esc(g.flow==='survives'?'Start → advance → recheck':'Start → record measurement → recheck')+'</strong></div><button class="soft-button" data-action="bsd12-open-work" data-thread="'+c.esc(g.threadId)+'">Work and evidence</button><button class="icon-button" data-action="bsd12-close-guide" data-thread="'+c.esc(g.threadId)+'" aria-label="Close guide">'+c.icon('close',12)+'</button></section>';}
+ E.action('bsd12-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('bsd12-work',act);
+ E.action('bsd12-open-work',(c,b)=>{if(c.thread.id===b.dataset.thread)c.openEditor('bsd12:'+b.dataset.thread);return true;});
+ E.action('bsd12-return',(c,b)=>{if(get(b.dataset.thread)){c.switchThread(b.dataset.thread);c.openEditor('bsd12:'+b.dataset.thread);}return true;});
+ E.action('bsd12-close-guide',(c,b)=>{const g=get(b.dataset.thread);if(g&&g.threadId===c.thread.id)g.guide=false;c.renderApp();return true;});
+ document.addEventListener('input',e=>{const el=e.target,g=get(el.dataset?.thread);if(!g||E.ctx().thread.id!==g.threadId)return;if(el.dataset.bsd12Field==='delay'){const n=Number(el.value);if(Number.isFinite(n)&&n>=0&&n<=10000)g.delay=n;}if(el.dataset.bsd12Field==='fault')g.fault=el.value;if(['sampleBefore','sampleAfter'].includes(el.dataset.bsd12Field))g[el.dataset.bsd12Field]=el.value;if(el.dataset.bsd12Field==='workflow'&&g.primary.status==='ready'&&['assistant','prd_builder','planning_wizard'].includes(el.value)){g.primary.workflow=el.value;g.primary.stage=el.value==='assistant'?'worknode_execution':el.value;B.refresh();}});
+ E.slot('composerBelow',guide);E.slot('editorTabLabel',c=>c.editorId?.startsWith('bsd12:')?'Advisor · work and evidence':'');E.slot('editorDocument',c=>c.editorId?.startsWith('bsd12:')?workspace(c,c.editorId.slice(6)):'');
+ E.slot('transcriptMessage',c=>c.m?.type!=='bsd12-source'?'':'<article class="event-card" data-k="'+c.esc(c.m.id)+'" data-message-id="'+c.esc(c.m.id)+'"><span class="event-icon">'+c.icon('file',13)+'</span><div class="event-copy"><strong>Covering index · versioned evidence</strong><p>Primary work and the read-only advisor are independently controlled.</p><button class="soft-button" data-action="bsd12-open-work" data-thread="'+c.esc(c.m.threadId)+'">Work and evidence</button></div></article>');
+ E.chainAction('reset-all',()=>{for(const h of timers.values())clearTimeout(h);timers.clear();projects.clear();disclosures.clear();return false;});
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Back Seat Driver · complete local workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="bsd12-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
+ E.chainAction('repair-demo',(c,b)=>{if(b.dataset.scenario==='bsd-held'){start('resolves');return true;}return false;});
+ E.chainAction('demo-trigger',(c,b)=>{if((b.dataset.trigger||'').startsWith('BSD ')){start(b.dataset.trigger==='BSD intervention'?'survives':'resolves');return true;}return false;});
+ window.PM56_BSD_DEMOS={start,snapshot:id=>clone(get(id)),inspect,review:id=>review(get(id)),primary:id=>primary(get(id)),count:()=>projects.size};
 })();
 </script>
   <script>(() => {
@@ -43123,6 +43190,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if (art.kind==='chart') body=renderChartEditor(art);
     else if (art.kind==='image') body=renderImageEditor(art);
     else if (art.kind==='evidence') body=renderEvidenceEditor(art);
+    else if (art.kind==='code') body=`<p>${esc(art.summary||'')}</p><pre class="code-block">${esc(art.content||art.body||'')}</pre>`;
     else body=`<p>${esc(art.summary)}</p><div class="code-block">Artifact source, versions, lineage, export, retry, and fallback views appear here.</div>`;
     return `<article class="editor-doc" data-artifact-id="${esc(art.id)}"><h1>${esc(art.title)}</h1>${meta}${art.status==='stale'?`<div class="event-card warning"><span class="event-icon">${icon('warning',14)}</span><div class="event-copy"><strong>A newer source revision exists</strong><p>Open version history, refresh this view, or keep the pinned version.</p></div></div>`:''}${art.status==='error'?`<div class="event-card danger"><span class="event-icon">${icon('warning',14)}</span><div class="event-copy"><strong>Renderer failed safely</strong><p>The source artifact is intact. Use source fallback or retry the native renderer.</p></div><button class="soft-button" data-action="retry-artifact" data-id="${esc(art.id)}">${icon('refresh',13)} Retry</button></div>`:''}${body}</article>`;
   }
@@ -45698,12 +45766,16 @@ recommended path                  migration 0043 + rollback</div></div></section
        path exactly as it was. Registered through the shared composer runtime
        so no module has to reopen this function. */
     const RTc = (window.PM56_RUNTIME||{}).composer;
+    const beforeSendCount=t.messages.length;
     if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
       for(let i=0;i<RTc.preSendHooks.length;i++){
         let claimed=false,decision=null;
         try{ decision=RTc.preSendHooks[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
         catch(err){ console.error('PM56 preSendHook threw', err); }
-        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();} renderApp();return; }
+        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();
+          const admitted=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+          if(admitted) RTc.commitAccepted?.(extCtx(),t,admitted);
+        } renderApp();return; }
       }
     }
     state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
@@ -45713,7 +45785,10 @@ recommended path                  migration 0043 + rollback</div></div></section
        clears the live field itself. Without this the message was sent and the
        text stayed visible in the box. */
     clearComposerField();
-    t.messages.push({id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()});
+    const explanationPreference=window.PM56_ELI5?.resolve(t.id);
+    const admittedMessage={id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()};
+    if(explanationPreference?.ok)admittedMessage.explanationPreference=clone(explanationPreference);
+    t.messages.push(admittedMessage);
     const low=raw.toLowerCase();
     if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
       /* Plan owner authors the revision and receipt through the shared commit hook. */
@@ -45726,9 +45801,15 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/compact')){state.dialog={type:'compact'};}
     else if(low.startsWith('/todo')){state.activity={...state.activity,open:true,domain:'todo'};}
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
-    else{t.messages.push({id:uid('assistant'),role:'assistant',type:'text',body:'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString()});}
+    else{
+      const example=window.PM56_ELI5_DEMOS?.reply(t,raw,explanationPreference,admittedMessage.id);
+      t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
+        ?'This example adds a reply to the conversation. You can try the message buttons and panels without changing your files.'
+        :'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString(),explanationPreference:clone(explanationPreference||null)});
+    }
     const finalMessage=t.messages[t.messages.length-1];
     if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
+    RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
   }
@@ -46036,7 +46117,15 @@ recommended path                  migration 0043 + rollback</div></div></section
     }
   });
 
-  document.addEventListener('pointermove',e=>{ lastPointer={x:e.clientX,y:e.clientY}; },{passive:true});
+  document.addEventListener('pointermove',e=>{
+    lastPointer={x:e.clientX,y:e.clientY};
+    if(state.hover?.type==='text'){
+      const anchor=e.target.closest?.('[data-hover-tip]');
+      if(!anchor||(anchor.dataset.hoverKey||'')!==(state.hover.key||'')){
+        clearTimeout(hoverTimer);state.hover=null;syncHoverCard();
+      }
+    }
+  },{passive:true});
   document.addEventListener('pointerover',e=>{
     /* Plain-text hover tips first so they still work inside open menus and
        drawers (those surfaces live under state.menu / overlay root). Instant
@@ -46048,7 +46137,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       clearTimeout(hoverTimer);
       const tipText=tip.dataset.hoverTip||'';
       hoverTimer=setTimeout(()=>{
-        if(!tip.isConnected) return;
+        if(!tip.isConnected || !tip.contains(document.elementFromPoint(lastPointer.x,lastPointer.y))) return;
         state.hover={type:'text',tip:tipText,key};
         /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
         syncHoverCard();

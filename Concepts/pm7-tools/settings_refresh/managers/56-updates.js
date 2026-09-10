@@ -41,9 +41,7 @@
     });
     const advanced = PM51.advanced([
       PM51.section({ title: 'How updates arrive', body: PM51.rows([
-        { label: 'Channel', help: 'Stable gets tested releases. Beta gets them earlier.', control: PM51.select(U.channel, ['Stable', 'Beta'], { action: 'pm51-updates-channel', label: 'Channel' }) },
         { label: 'Source', value: U.source },
-        { label: 'Check for updates', control: PM51.select(U.checkInterval, ['On open and hourly', 'Once a day', 'Once a week', 'Only when I check'], { action: 'pm51-updates-interval', label: 'Check for updates' }) },
         { label: 'Restart', help: 'When an update needs a restart.', control: PM51.select(U.restartPolicy || 'Wait until idle', ['Wait until idle', 'Ask me first', 'Right away'], { action: 'pm51-updates-restart', label: 'Restart policy' }) },
         { label: 'Skip versions with known problems', help: 'Waits for the fixed release instead.', control: PM51.toggle(U.skipKnownBad !== false, { action: 'pm51-updates-skipbad', label: 'Skip versions with known problems' }) }
       ]) }),

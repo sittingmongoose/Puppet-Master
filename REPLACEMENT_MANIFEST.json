@@ -1,21 +1,22 @@
 {
-  "delivery": "assistant-revert-demo-batch-10",
-  "basis": "Delivered pm-debug-batch9-replacement.zip",
-  "source_archive_sha256": "d217bf0460dd96051e6d6007b3c20a5718bd6ccecda5929833a447783c31830d",
-  "observed_repository_head": "0928f595fb34a3db2d3f475f05622dc6696b9116",
+  "delivery": "assistant-bsd-demo-batch-12",
+  "baseline": "Repaired B11 archive installed by user; local B12 delta only",
+  "observed_repository_head": "43998719758a4ab32e04fee564fc7f81391237be",
+  "assistant": {
+    "bytes": 3188153,
+    "sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95",
+    "git_blob": "4e5d3191bbf962170e877ec9959f66a56908982e"
+  },
+  "scope": "Cumulative Batches 1\u201312 and B11 audit repair. Both manifests excluded from inventory. Not a full repository inventory or deletion list.",
+  "functional_scope": "PASSED_BOUNDED_LOCAL_BSD",
+  "full_feature_acceptance": false,
   "canonical_plans_modified": false,
   "settings_modified": false,
   "onboarding_modified": false,
   "governance_modified": false,
-  "scope": "Cumulative Assistant Batches1–10 only; both manifests excluded from their own file inventory.",
-  "assistant": {
-    "bytes": 3118727,
-    "sha256": "1a92a6740719f85a03981147b5a73974875b276926447184dc77b8b748127512",
-    "lf_normalized_sha256": "cea75d5d64b9dbef2d3d58471333fbf74565e939dd8888f4e47bbf5535644399",
-    "git_blob": "fdf445b13293f2744d6f88e5ea634646712dd455"
-  },
-  "functional_scope": "PASSED_BOUNDED_LOCAL_REVERT",
-  "motion_quality": "Reviewed at recorded scales. Isolated missed-refresh RAF intervals remain; no uniform60fps or global performance certification.",
+  "native_runtime_enabled": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "batch13_started": false,
   "files": [
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_01_CHECKPOINT.json",
@@ -153,19 +154,64 @@
       "sha256": "3cc34bf80854c44cdd4ae6403675dccd77401d954c96b7ba36bf4bcdbd773f42"
     },
     {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_11_AUDIT_REPAIR.json",
+      "bytes": 801,
+      "sha256": "a790f5d2ce74bde6b5d8d9f867ca78a6d0cf10c0beaf2c76d9a2c7ecb95310bc"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_11_AUDIT_REPAIR_README.md",
+      "bytes": 4427,
+      "sha256": "51c432e5eaef833d998f6dd184da7c37738aacb97258ce4ee899af4924ddd8d3"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_11_CHECKPOINT.json",
+      "bytes": 7659,
+      "sha256": "30962ea7c453f0b5dba0e789a3c7099fc529cc1ca7959027b295466b72e7394d"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_11_COVERAGE_DELTA.json",
+      "bytes": 5027,
+      "sha256": "a3174973a63e9eb0fb9e3ae0d1717775c14ad3efddda6226fcbb8346ec5d41b2"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_11_README.md",
+      "bytes": 4487,
+      "sha256": "2bfddc7d7145453b71ad75e6eb13f3765e354fb61bc80f9aa9d34aa46d8db354"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_12_CHECKPOINT.json",
+      "bytes": 12835,
+      "sha256": "f1ae7cf37ee5e2991692363341e7ef2319b76e70383c866d8c538780ee6ef50e"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_12_COVERAGE_DELTA.json",
+      "bytes": 17210,
+      "sha256": "5e275c31c8cd9ad490693b7b911e345f207e4f6b5c40ce939a69de33272cf1f6"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/BATCH_12_README.md",
+      "bytes": 12169,
+      "sha256": "d2b40d4a5c02645d5014ee89c252218b990294335258def3e806b97c5c5755d3"
+    },
+    {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md",
       "bytes": 66975,
       "sha256": "bd99c9537165addedaff2d59299f857287786d2825d14adda55e299b4a5d9c44"
     },
     {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json",
+      "bytes": 18154,
+      "sha256": "cb165b52afbfd9f85418389c62fe6dacc09b20cf4bbe8417718dab498ace58a3"
+    },
+    {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html",
-      "bytes": 3118727,
-      "sha256": "1a92a6740719f85a03981147b5a73974875b276926447184dc77b8b748127512"
+      "bytes": 3188153,
+      "sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/README.md",
-      "bytes": 4471,
-      "sha256": "9c1aeccfc80ca85f9fcc0adfd2a0f516d5eef1ef8138246eadf9ed574edf0e27"
+      "bytes": 4871,
+      "sha256": "b42e6effd5d12c437628260123408327b91c8fb521a1306d004222c1b19f3f15"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/RELEASE_NOTES.md",
@@ -199,8 +245,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
-      "bytes": 299554,
-      "sha256": "d40e5b6538b99b04046fb91e854c6c6b5aa54eb012e273671175d1875b87a7bf"
+      "bytes": 300891,
+      "sha256": "509e06211ce694f07311ffe1f0102b0e88ce9d2ba2fb841d1e7d7944c6db00cf"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assets/component-contract.json",
@@ -214,8 +260,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/assistant-features.js",
-      "bytes": 82961,
-      "sha256": "54cae7d7e3442fde2e40d7ec50108620009282702bd0ed3239b06e7e292ed636"
+      "bytes": 83683,
+      "sha256": "c8d8a971b75ea3c580209ed57bd8690eca9ed723ad6b0a410e639de996dd31b1"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/attachments.css",
@@ -249,8 +295,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-demo-batch4.js",
-      "bytes": 16454,
-      "sha256": "f4786ea76405f2781afecea1e262bbba64a499d4594205614b3d7b3b53146aac"
+      "bytes": 17179,
+      "sha256": "4b0275448569bc39e6c50097f3e16cfa01cc807a5042ab8ff16f42749b7a3d1d"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-protocol.css",
@@ -259,8 +305,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/brainstorm-protocol.js",
-      "bytes": 24191,
-      "sha256": "e7791ae354d028f451ce1acb8496554a7102aebc55f98a22a465bfbc083af59a"
+      "bytes": 24286,
+      "sha256": "ae3a334342e1735194f5c9b4b7df07e21bac43de6496698b9f5bbd6e38495ae7"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/browser-capture.css",
@@ -273,19 +319,39 @@
       "sha256": "9091303f85ff7c0ea4b61276a653d65006d49211aa54ab3bd914dfea4ce3b756"
     },
     {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd-demo-batch12.css",
+      "bytes": 2167,
+      "sha256": "d577c79429e351912fd2bc8c878b4df496782ea3dd03f7ae0e8d4a18466fa8ac"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd-demo-batch12.js",
+      "bytes": 19682,
+      "sha256": "991eb73b480902a3e4e03a9c9c7aabea578942d26d04843a8487312a54773e3e"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd-protocol.css",
+      "bytes": 60,
+      "sha256": "648edb1fde6a9d3c8b2dceea6fa68e5007561a8b13e98b74606ac58a13e41529"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd-protocol.js",
+      "bytes": 25031,
+      "sha256": "5bc4fdbf98486ef9783a4c06234b1738dad735f4b9adcccb4763d8cd8e8f630b"
+    },
+    {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.css",
-      "bytes": 18757,
-      "sha256": "0e798e8c5fdc47864775e0e2cf06978434607d8ea29c530c9feda02eaf67a76b"
+      "bytes": 21998,
+      "sha256": "b3005ebb4d5e9d29ca1e3ed6773a61fac4394768f7fbbc13b305b79f7680f781"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/bsd.js",
-      "bytes": 29430,
-      "sha256": "c4f6b11390d152e27e49a6119e2b9bd7589cbece5c57f3e8a90757f61b2b6add"
+      "bytes": 22390,
+      "sha256": "6715015e9bfbbaf3d0aeb1f42a0e09bfe0fb25464e2d86ed790a921e65f75067"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
-      "bytes": 7463,
-      "sha256": "255381c8f3f6c4a2b7514ca57eb1209a95a7d4690747798fdab0e114226ae588"
+      "bytes": 7536,
+      "sha256": "6839441f931c28476957df01afdeee5c72b62c32bd822845004513a5c56d9471"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.css",
@@ -304,8 +370,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer-state.js",
-      "bytes": 42563,
-      "sha256": "62fed5bd43eb3d32e709f8174c8ba1742d5d35af2b9daf123ddc35d71588d407"
+      "bytes": 43397,
+      "sha256": "74c967343c5db7bba08fcb744e661d004420d81a8915fe5f91de1c6574d8becc"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/composer.css",
@@ -329,8 +395,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/crew-demo-batch5.js",
-      "bytes": 11153,
-      "sha256": "a9dc38dcbfe35dda0cfe6d52103d4f004c0945da611a0fdf179668f5b27fe23f"
+      "bytes": 11889,
+      "sha256": "812718e03318ca886cf1d3d24123461dbfb064559c767437ef9986ca1d20f5aa"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/crew-protocol.css",
@@ -339,8 +405,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/crew-protocol.js",
-      "bytes": 21401,
-      "sha256": "f8904f3802cec7fb79a443a5fdfff122bc0563a900406a918f44f4601fd6b344"
+      "bytes": 21489,
+      "sha256": "008abef74c5e61b1c0507b9f8a4f7e5a0afb29f9ab3fc5283793de98c746fcea"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/data.js",
@@ -376,6 +442,26 @@
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js",
       "bytes": 6758,
       "sha256": "3d7ca7aa378bc775cb5e2fcd99eaf3595e5073b995c8e2292c97a4acc950ddb9"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/eli5-demo-batch11.css",
+      "bytes": 1752,
+      "sha256": "700f03ab8a67c4c960ab2b311ba76e5a0e320c7b41a8b964975792115f98ac4f"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/eli5-demo-batch11.js",
+      "bytes": 9486,
+      "sha256": "39fd42913e4b1b3222a7d601f46a54a4f1e249ac14fbfe4ceb93084a5ddd001e"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/eli5-preferences.css",
+      "bytes": 2211,
+      "sha256": "4735aa971ae25fe9ede8480d69fa3b8917d03f2659a94ee5e6c447afb0fe4691"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/eli5-preferences.js",
+      "bytes": 6197,
+      "sha256": "f63703aa1b3c37b46245421bb2280ccdb07d32b8464d9baa384d67f164616665"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/final_certify_and_package.py",
@@ -414,8 +500,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/index.html",
-      "bytes": 3118727,
-      "sha256": "1a92a6740719f85a03981147b5a73974875b276926447184dc77b8b748127512"
+      "bytes": 3188153,
+      "sha256": "66360a28911fb591de8c60cfc320538ab299eaa83925768230f42f6e7a6a2b95"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/lens.css",
@@ -519,8 +605,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
-      "bytes": 149357,
-      "sha256": "e8c58ca1515310341d114ac7fce3d6c5509861855ad8373036ed7f2054f38be6"
+      "bytes": 149396,
+      "sha256": "65b79e2f5e8dad2b9973935bc74879ca96e5522bfdbe6c1d0661f5db2d567bc9"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/questions-verify.mjs",
@@ -574,8 +660,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-demo-batch3.js",
-      "bytes": 12309,
-      "sha256": "c422f1391c1216632ebefc8bbd98d161abb9fdac0e57f0a983ca5f1fbcf4637c"
+      "bytes": 13020,
+      "sha256": "d2fdc92f3dded3c8037f90b57b817a3cf4842f2f3eab7123ff72aa856c676099"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.css",
@@ -584,8 +670,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/review-protocol.js",
-      "bytes": 20544,
-      "sha256": "2a8d3873a419c9f260dc4a99576f501efed8f54d39a9d0685c3cd77494702fe1"
+      "bytes": 20590,
+      "sha256": "8841837ecc2e6ac899a8542a31a11b0e004d76b60862fbdf2c6ad962c56628d6"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/room-demo-batch6.css",
@@ -624,8 +710,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
-      "bytes": 202759,
-      "sha256": "83367adc12a707199895f60654b021c7cbbcada231b228be8646a54483972c1b"
+      "bytes": 202113,
+      "sha256": "588721519b0a8e5f530f165ee5420e9871accc3e5b3807e71156d7ecdedc792b"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/teach-demo-batch7.css",
@@ -644,8 +730,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/teach-protocol.js",
-      "bytes": 21925,
-      "sha256": "ff64ed3c36fd0cbfad666f97e6f60218e23bf384a9df0d4c84dbb7138c8866fd"
+      "bytes": 23110,
+      "sha256": "0f9dd15296be8e3f2067663945cf663b4dcd53bff6f67a67f4cf683f5ad68dbf"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/audit.mjs",
@@ -699,8 +785,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b10/qa/memory_verify.py",
-      "bytes": 12357,
-      "sha256": "59c23d986eba93cd9bdd10e18540bb45fc56fd2b8e44cb7965c5c5280768c0d7"
+      "bytes": 12539,
+      "sha256": "c42e68ddeff977a2dcf14309f5248be060cbdb4d9254b14e13732e48d69aa7c3"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b10/qa/polish_verify.py",
@@ -801,6 +887,71 @@
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b10/run.py",
       "bytes": 3391,
       "sha256": "b1dfd1bb2f032f5f7f5798bf44db0dec3cfd6e32fe790ed5e1c46e6132c22205"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/qa/capture_eli5.py",
+      "bytes": 9492,
+      "sha256": "5d9a67a5e19c6c3fbac0a67804f0735d74d155afaf9799b545166c32de2c0a79"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/qa/eli5_supplemental.py",
+      "bytes": 5050,
+      "sha256": "810876866562900980f169a83ea7e94e7e5ab2f5003e465b19f9ba43dcb3b810"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/qa/eli5_verify.py",
+      "bytes": 14457,
+      "sha256": "e7554e1f7b0323a39bd2028a8edefb958016fd4e70a524ed9b311e47738162e0"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/qa/frame_sheets.py",
+      "bytes": 2724,
+      "sha256": "e2ba5f3103c963eec4e372dc544f6f40e2425b69f277c4d82bb03eec515ec7f1"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/qa/run_regressions.py",
+      "bytes": 2707,
+      "sha256": "a03bcc0496c48a579e63bc3c38774d8128fbc3c6476ba7b0e054d5bd45e69583"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11/run.py",
+      "bytes": 3493,
+      "sha256": "7499450f5c0f8dcdc2d8f15718eab7ab1aa527d7d2448d038ad23076748f0a6d"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b11-repair/run.py",
+      "bytes": 16393,
+      "sha256": "aeeae9dfcbe8c1253f65e0a99827bbefa3515951438fa7c4c60369ff5b54fd6c"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/boundaries.py",
+      "bytes": 6045,
+      "sha256": "b876bdc08d486aa732f981048d12988e51e124b6f125e7bd0f4b7a4eee5f28e9"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/browser.py",
+      "bytes": 16679,
+      "sha256": "1d518966069b8fe7e5f6230ed3bcd6812eb4ef513f85d60ba02bd20fb1557b6a"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/capture.py",
+      "bytes": 13165,
+      "sha256": "cd0165eef87b510254706f248a77ed285297aaa6366e5e2376b58734437185e6"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/frames.py",
+      "bytes": 5063,
+      "sha256": "9743cc761ca65ce69763354598493fee0fd0dc4ca9cde3167df96879db9225df"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/protocol.test.cjs",
+      "bytes": 15407,
+      "sha256": "5db8c063327ca1ceb49f3c3eff7d1ef154f20ffe4d2f98ca1b9e8a6e89953ea6"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/b12/run.py",
+      "bytes": 2666,
+      "sha256": "4ee1bce28317f0d8ff3931bac5516137b4dfaab12ac60fde4e16800420e6bd69"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/tests/browser_audit.py",
@@ -909,8 +1060,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/threadops.js",
-      "bytes": 87534,
-      "sha256": "ebdb51a49df2c5167dddbc6abe665ded3d9c999052fe46d7d3a6535e174b9961"
+      "bytes": 88121,
+      "sha256": "7a645ca61164590bf09154020b6d5bc2b9cc07a270241088dca569a17dd6ac5e"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/todos.css",
@@ -939,8 +1090,8 @@
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript.js",
-      "bytes": 15222,
-      "sha256": "15af55d323b5a188c69b6ff8817c1220d9ed8feffc1f31a95fcfd41c1a3843b0"
+      "bytes": 15305,
+      "sha256": "62bacf06e61d302ea97199082a396698787eb26cc75f1bf1be0bc637b3c35123"
     },
     {
       "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcripts.css",

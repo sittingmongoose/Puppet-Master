@@ -113,14 +113,17 @@ try {
     return { first: a, settled: b, ratio: +(a / b).toFixed(3) };
   });
   await check('side panel uses the shared anatomy and the spring open reaches is-settled; close removes it', async () => {
-    await page.evaluate(() => window.PM12_KIMI.navigate('ai', 'bsd')); await sleep(500);
-    await page.evaluate(() => document.querySelector('#pm-settings-root [data-action="pm51-bsd-stages"]').click());
+    await page.evaluate(() => window.PM12_KIMI.navigate('general', 'notifications')); await sleep(500);
+    await page.evaluate(() => { const t = document.querySelector('[data-workspace-block="notifications"] .manager-tab[data-tab="events"]'); if (t) t.click(); }); await sleep(400);
+    await page.evaluate(() => { const b = [...document.querySelectorAll('#pm-settings-root [data-action="pm51-notifications-event"]')].find(x => x.getClientRects().length); if (!b) throw new Error('no event row to open'); b.click(); });
     await page.waitFor(() => !!document.querySelector('#pm-settings-portals .drawer-wrap.is-open.is-settled .pm51-panel'), { timeout: 4000 });
-    const anatomy = await page.evaluate(() => { const p = document.querySelector('#pm-settings-portals .pm51-panel'); return { head: !!p.querySelector('.pm51-panel-head'), body: !!p.querySelector('.pm51-panel-body'), foot: !!p.querySelector('.pm51-panel-foot'), width: p.getBoundingClientRect().width, transition: getComputedStyle(p).transitionTimingFunction }; });
+    await sleep(900);
+    const anatomy = await page.evaluate(() => { const p = document.querySelector('#pm-settings-portals .pm51-panel'); const reveals = [...p.querySelectorAll('.pm51-reveal')]; return { head: !!p.querySelector('.pm51-panel-head.pm51-hero .pm51-hero-icon svg'), body: !!p.querySelector('.pm51-panel-body'), foot: !!p.querySelector('.pm51-panel-foot'), footSticky: getComputedStyle(p.querySelector('.pm51-panel-foot')).position === 'sticky', cards: p.querySelectorAll('.pm51-panel-card').length, revealed: reveals.length && reveals.every(n => getComputedStyle(n).opacity === '1'), pills: p.querySelectorAll('.pm51-pill').length, width: p.getBoundingClientRect().width, transition: getComputedStyle(p).transitionTimingFunction }; });
     await page.screenshot(join(out, 'panel-open.png'));
     await page.evaluate(() => document.querySelector('#pm-settings-portals [data-action="close-overlay"]').click());
     await page.waitFor(() => !document.querySelector('#pm-settings-portals .drawer-wrap'), { timeout: 3000 });
-    if (!anatomy.head || !anatomy.body || !anatomy.foot) throw new Error('panel anatomy missing');
+    if (!anatomy.head || !anatomy.body || !anatomy.foot) throw new Error('panel anatomy missing: ' + JSON.stringify(anatomy));
+    if (!anatomy.footSticky || !anatomy.revealed || anatomy.pills) throw new Error('hero sheet incomplete: ' + JSON.stringify(anatomy));
     return anatomy;
   });
   await check('setting Details inspector keeps its 350 px width and theme background, no accent example', async () => {
@@ -192,6 +195,47 @@ try {
     if (r.workspace !== 'servers' || r.top == null || r.top < 0 || r.top > 140) throw new Error('did not land on Server & Project Location: ' + JSON.stringify(r));
     return r;
   });
+  await check('no native select is visible anywhere in Settings, no native disabled, no pills; every hidden select has a dropdown trigger', async () => {
+    let visible = 0, orphans = 0, disabled = 0, pills = 0, triggers = 0;
+    const scan = async () => { const r = await page.evaluate(() => { const rootEl = document.getElementById('panel-settings'); const selects = [...rootEl.querySelectorAll('select')]; return { visible: selects.filter(s => s.getClientRects().length).length, orphans: selects.filter(s => !s.closest('.pm51-dd') || !s.closest('.pm51-dd').querySelector('.pm51-dd-trigger')).length, disabled: rootEl.querySelectorAll('button[disabled], select[disabled]').length, pills: rootEl.querySelectorAll('.pm51-pill').length, triggers: rootEl.querySelectorAll('.pm51-dd-trigger').length }; }); visible += r.visible; orphans += r.orphans; disabled += r.disabled; pills += r.pills; triggers += r.triggers; };
+    for (const m of managers) { await page.evaluate((d, w) => window.PM12_KIMI.navigate(d, w), m.domain, m.id); await sleep(200); await scan(); }
+    await page.evaluate(() => window.PM12_KIMI.navigate('general', 'app-input')); await sleep(400); await scan();
+    await page.evaluate(() => window.PM12_KIMI.navigate('projects', 'project-settings')); await sleep(600); await scan();
+    if (visible || orphans || disabled || pills) throw new Error(`visible selects ${visible}, selects without trigger ${orphans}, native disabled ${disabled}, pills ${pills}`);
+    return { triggers };
+  });
+  await check('dropdown opens as a sprout popout inside the viewport and commits by keyboard through the engine change path', async () => {
+    await page.evaluate(() => window.PM12_KIMI.navigate('general', 'app-input')); await sleep(600);
+    await page.evaluate(() => { const t = [...document.querySelectorAll('#pm-settings-root .setting-row .pm51-dd-trigger')].find(x => x.getClientRects().length); t.scrollIntoView({ block: 'center' }); window.__pm51chg = []; document.addEventListener('change', e => window.__pm51chg.push((e.target.dataset && e.target.dataset.action) + ':' + e.target.value), true); }); await sleep(600);
+    await page.click('#pm-settings-root .setting-row .pm51-dd-trigger'); await sleep(450);
+    const open = await page.evaluate(() => { const p = document.querySelector('.pm51-popout.pm51-dd-list.is-open'); if (!p) return null; const r = p.getBoundingClientRect(); const t = document.querySelector('.pm51-dd-trigger[aria-expanded="true"]'); return { inBody: p.parentElement === document.body, inView: r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight, sprout: p.dataset.sprout, transition: getComputedStyle(p).transitionDuration, items: p.querySelectorAll('[role="option"]').length, focusOnTrigger: document.activeElement === t, hasSelected: !!p.querySelector('[aria-selected="true"]') }; });
+    if (!open || !open.inBody || !open.inView || !open.sprout || !/0\.3s/.test(open.transition) || !open.focusOnTrigger) throw new Error('dropdown did not open as a sprout popout: ' + JSON.stringify(open));
+    await page.key('ArrowDown'); await sleep(80); await page.key('Enter'); await sleep(500);
+    const after = await page.evaluate(() => ({ popouts: document.querySelectorAll('.pm51-popout').length, changes: window.__pm51chg }));
+    if (after.popouts || !after.changes.some(c => c.startsWith('change-setting:'))) throw new Error('keyboard commit did not dispatch the engine change: ' + JSON.stringify(after));
+    await page.evaluate(() => window.PM12_KIMI.setSettingFromHost('general.visual.theme', 'Basic Dark')); await sleep(500);
+    await page.click('#pm-settings-root .setting-row .pm51-dd-trigger'); await sleep(400);
+    await page.key('Escape'); await sleep(400);
+    const closed = await page.evaluate(() => ({ popouts: document.querySelectorAll('.pm51-popout').length, expanded: document.querySelectorAll('.pm51-dd-trigger[aria-expanded="true"]').length }));
+    if (closed.popouts || closed.expanded) throw new Error('Escape did not close the dropdown: ' + JSON.stringify(closed));
+    return open;
+  });
+  await check('engine menus open in body with the sprout motion, focus the first item, and return focus on Escape', async () => {
+    await page.evaluate(() => window.PM12_KIMI.navigate('ai', 'providers')); await sleep(700);
+    await page.click('[data-workspace-block="providers"] .pm51-detail-actions .pm51-icon-btn'); await sleep(450);
+    const menu = await page.evaluate(() => { const p = document.querySelector('.pm51-popout.pm51-menu.is-open'); if (!p) return null; const r = p.getBoundingClientRect(); return { inBody: p.parentElement === document.body, inView: r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight, items: p.querySelectorAll('.pm51-menu-item').length, focused: document.activeElement.classList.contains('pm51-menu-item'), disabled: p.querySelectorAll('button[disabled]').length, legacy: document.querySelectorAll('#pm-settings-portals .popover').length }; });
+    if (!menu || !menu.inBody || !menu.inView || !menu.items || !menu.focused || menu.disabled || menu.legacy) throw new Error('menu did not open through the popout engine: ' + JSON.stringify(menu));
+    await page.key('Escape'); await sleep(400);
+    const back = await page.evaluate(() => ({ popouts: document.querySelectorAll('.pm51-popout').length, focus: document.activeElement.className }));
+    if (back.popouts || !/pm51-icon-btn/.test(back.focus)) throw new Error('menu did not close/return focus: ' + JSON.stringify(back));
+    return menu;
+  });
+  await check('rosters scroll on their own inside the manager and the page still scrolls', async () => {
+    await page.evaluate(() => window.PM12_KIMI.navigate('memory', 'personas')); await sleep(900);
+    const r = await page.evaluate(() => { const ro = document.querySelector('[data-workspace-block="personas"] .pm51-roster'); const list = ro.querySelector('.roster-list'); const sc = document.getElementById('settings-document'); const before = sc.scrollTop; list.scrollTop = 120; return { position: getComputedStyle(ro).position, listOverflow: getComputedStyle(list).overflowY, scrolls: list.scrollHeight > list.clientHeight, listMoved: list.scrollTop > 0, pageUnchanged: sc.scrollTop === before }; });
+    if (r.position !== 'sticky' || r.listOverflow !== 'auto' || !r.scrolls || !r.listMoved || !r.pageUnchanged) throw new Error('roster does not scroll independently: ' + JSON.stringify(r));
+    return r;
+  });
   await check('every built-in sound row plays a real Web Audio signal; the unavailable upload never plays', async () => {
     await page.evaluate(() => window.PM12_KIMI.navigate('general', 'notifications')); await sleep(600);
     await page.evaluate(() => { const t = document.querySelector('[data-workspace-block="notifications"] .manager-tab[data-tab="sounds"]'); if (t) t.click(); }); await sleep(500);
@@ -212,7 +256,7 @@ try {
     if (silent.length) throw new Error('silent rows: ' + JSON.stringify(silent));
     return { played: played.length, unavailable: rows.filter(x => x.disabled).map(x => x.id) };
   });
-  await check('eight themes × three widths render the key managers without horizontal overflow', async () => {
+  await check('eight themes × three widths render the key managers without horizontal overflow, and popouts stay in view with a themed plate', async () => {
     const problems = []; report.matrix = [];
     for (const width of [760, 960, 1440]) {
       await page.setViewport(width, 1000); await sleep(200);
@@ -225,6 +269,27 @@ try {
           report.matrix.push({ width, theme, manager: w, ...g });
           if (g.blkOverflow > 1 || g.docOverflow > 1) problems.push(`${theme} ${width}px ${w}: overflow ${g.blkOverflow}/${g.docOverflow}`);
           if (width === 760 || width === 1440) await page.screenshot(join(out, `${w}-${theme.toLowerCase().replace(' ', '-')}-${width}.png`), { format: 'jpeg', quality: 70 });
+          if (w === 'servers' && (width === 760 || width === 1440)) {
+            // one dropdown and one menu per theme/width: popout inside the viewport, themed plate (never the old #171b31 in light themes)
+            const probe = await page.evaluate(ww => {
+              const blk = document.querySelector(`[data-workspace-block="${ww}"]`);
+              const trig = [...blk.querySelectorAll('.pm51-dd-trigger')].find(x => x.getClientRects().length);
+              const menuBtn = [...blk.querySelectorAll('.pm51-icon-btn')].find(x => x.getClientRects().length && /more/i.test(x.getAttribute('aria-label') || ''));
+              return { trig: !!trig, menu: !!menuBtn };
+            }, w);
+            const check = async (selector) => {
+              // instant scroll (the document scroller is smooth) so the click lands on a settled trigger
+              await page.evaluate(sel => { const el = [...document.querySelectorAll(sel)].find(x => x.getClientRects().length); const sc = document.getElementById('settings-document'); sc.style.scrollBehavior = 'auto'; el.scrollIntoView({ block: 'center' }); sc.style.scrollBehavior = ''; }, selector); await sleep(250);
+              await page.click(selector);
+              // glass themes paint slowly under software rendering: wait for the sprout to finish instead of a fixed delay
+              try { await page.waitFor(() => { const p = document.querySelector('.pm51-popout.is-open'); return !!p && Number(getComputedStyle(p).opacity) > .9; }, { timeout: 2500 }); } catch (e) { /* reported below */ }
+              const r = await page.evaluate(() => { const p = document.querySelector('.pm51-popout.is-open'); if (!p) return null; const b = p.getBoundingClientRect(); const cs = getComputedStyle(p); return { inView: b.left >= 0 && b.right <= innerWidth + 1 && b.top >= 0 && b.bottom <= innerHeight + 1, bg: cs.backgroundColor, visible: cs.visibility === 'visible' && Number(cs.opacity) > .9 }; });
+              await page.key('Escape'); await sleep(350);
+              return r;
+            };
+            if (probe.trig) { const r = await check(`[data-workspace-block="${w}"] .pm51-dd-trigger`); if (!r || !r.inView || !r.visible || (/Light/.test(theme) && r.bg === 'rgb(23, 27, 49)')) problems.push(`${theme} ${width}px dropdown popout ${JSON.stringify(r)}`); }
+            if (probe.menu) { const r = await check(`[data-workspace-block="${w}"] .pm51-icon-btn[aria-label*="More" i]`); if (!r || !r.inView || !r.visible || (/Light/.test(theme) && r.bg === 'rgb(23, 27, 49)')) problems.push(`${theme} ${width}px menu popout ${JSON.stringify(r)}`); }
+          }
         }
       }
     }

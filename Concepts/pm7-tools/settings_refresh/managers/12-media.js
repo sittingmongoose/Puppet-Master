@@ -143,7 +143,6 @@
     });
     const storage = PM51.rows([
       { label: 'Folder', value: o.destination || 'Not saved (shown in chat only)', action: { label: 'Change', icon: 'folder', action: 'pm51-media-saveto', data: { route: r.id } } },
-      { label: 'Keep outputs for', help: 'Older results are tidied up automatically.', control: PM51.select(o.keep || KEEP[0], KEEP, { action: 'pm51-media-option', data: data('keep'), label: 'Keep outputs for' }) },
       ...optionRows.filter(x => ['Extra details in the file', 'Overwriting files', 'Keep for'].includes(x.label))
     ]);
     const options = optionRows.filter(x => !['Extra details in the file', 'Overwriting files', 'Keep for'].includes(x.label));

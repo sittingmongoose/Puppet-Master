@@ -5,6 +5,53 @@
   "description": "Closed pre-build value envelopes for the existing RuntimeResourceGovernor, ObservableWork, command outcome, continuity, projection, and public-ingress composition. This schema creates no runtime owner or Event Authority.",
   "x-schema-id": "pm.full_thread_runtime.contracts.v1",
   "x-runtime-schema-id-policy": "aggregate_plus_record_kind",
+  "x-write-policy": "canonical_new_writes_only",
+  "x-legacy-normalization": {
+    "source_owner_contract_id": "pm.shared_runtime.contracts.v1",
+    "source_schema_ref": "Plans/shared_runtime_contracts.schema.json",
+    "source_record_schema_ids": {
+      "runtime_resource_admission": "pm.shared_runtime.runtime_resource_admission.v1",
+      "observable_work_projection": "pm.shared_runtime.observable_work_projection.v1"
+    },
+    "boundary": "owner_import_once",
+    "ambiguity_policy": "fail_closed",
+    "runtime_proof_claimed": false,
+    "governor_outcome": [
+      {"legacy": "admitted", "successor": "admitted"},
+      {"legacy": "admitted_reduced", "successor": "admitted_degraded"},
+      {"legacy": "queued", "successor": "queued"},
+      {"legacy": "blocked", "successor_by_typed_reason": ["permission_blocked", "resource_blocked"]},
+      {"legacy": "rejected", "successor_by_typed_reason": ["permission_blocked", "resource_blocked"]}
+    ],
+    "observable_work_state": [
+      {"legacy": "queued", "successor": "queued"},
+      {"legacy": "preflighting", "successor": "starting"},
+      {"legacy": "awaiting_permission", "successor": "waiting", "wait_reason": "permission"},
+      {"legacy": "awaiting_user", "successor": "waiting", "wait_reason": "user"},
+      {"legacy": "awaiting_resource", "successor": "waiting", "wait_reason": "resource"},
+      {"legacy": "running", "successor": "running"},
+      {"legacy": "retry_backoff", "successor": "retrying"},
+      {"legacy": "reconciling", "successor_by_context": {"transport": "reconnecting", "non_transport": "starting"}, "preserve_reconcile_phase": true},
+      {"legacy": "cancelling", "successor": "running", "phase": "Cancelling", "cancel_available": false},
+      {"legacy": "succeeded", "successor": "completed"},
+      {"legacy": "failed", "successor": "failed"},
+      {"legacy": "cancelled", "successor": "cancelled"},
+      {"legacy": "recovery_required", "successor": "recovery-required"}
+    ]
+  },
+  "x-identity-scope-policy": {
+    "scope_owner_ref": "Plans/Contracts_V0.md#EventRecord-2.0",
+    "server_owner_ref": "Plans/Server_System.md",
+    "named_plan_owner_ref": "Plans/Named_Plan_System.md",
+    "scope_kinds": ["application", "project"],
+    "required_bindings": ["server_id", "execution_host_id", "execution_environment_id", "topology_generation"],
+    "project_scope_bindings": ["project_id", "project_home_server_id"],
+    "named_plan_binding": "named_plan_id is null unless the operation references an actual NamedPlan; when present it must resolve to the same project_id",
+    "legacy_import_boundary": "owner_import_once",
+    "legacy_scope_rule": "derive scope only from one authoritative owner binding; never invent a default Project identity",
+    "ambiguity_or_cross_scope_policy": "fail_closed",
+    "runtime_proof_claimed": false
+  },
   "oneOf": [
     {"$ref": "#/$defs/GovernorDecisionRecord"},
     {"$ref": "#/$defs/CommandOutcomeRecord"},
@@ -20,22 +67,35 @@
     "IdentityEnvelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["operation_id", "operation_generation", "project_id", "project_home_server_id", "execution_host_id", "execution_environment_id", "topology_generation"],
+      "description": "Explicit application-or-Project operation scope with exact controlling Server, execution Host, Environment, and topology bindings. named_plan_id is only a NamedPlan identity and is nullable when no NamedPlan participates.",
+      "required": ["scope_kind", "operation_id", "operation_generation", "server_id", "project_id", "project_home_server_id", "named_plan_id", "execution_host_id", "execution_environment_id", "topology_generation"],
       "properties": {
+        "scope_kind": {"enum": ["application", "project"]},
         "operation_id": {"$ref": "#/$defs/Id"},
         "operation_generation": {"type": "integer", "minimum": 0},
         "attempt_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "command_instance_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
-        "project_id": {"$ref": "#/$defs/Id"},
-        "project_home_server_id": {"$ref": "#/$defs/Id"},
-        "plan_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "server_id": {"$ref": "#/$defs/Id"},
+        "project_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "project_home_server_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "named_plan_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "thread_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "goal_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "execution_host_id": {"$ref": "#/$defs/Id"},
         "execution_environment_id": {"$ref": "#/$defs/Id"},
         "source_location_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
         "topology_generation": {"type": "integer", "minimum": 0}
-      }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"scope_kind": {"const": "application"}}, "required": ["scope_kind"]},
+          "then": {"properties": {"project_id": {"type": "null"}, "project_home_server_id": {"type": "null"}, "named_plan_id": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"scope_kind": {"const": "project"}}, "required": ["scope_kind"]},
+          "then": {"properties": {"project_id": {"type": "string", "minLength": 1, "maxLength": 256}, "project_home_server_id": {"type": "string", "minLength": 1, "maxLength": 256}}}
+        }
+      ]
     },
     "GovernorDecisionRecord": {
       "type": "object",

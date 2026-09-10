@@ -395,13 +395,16 @@
   var lastMsgCount = -1;
   var reRenderArmed = false;
 
-  function commitBuffer(ctx, th) {
+  var committedMessages = new Set();
+  function commitBuffer(ctx, th, acceptedMessage) {
     var buf = bufferFor(th.id);
     if (isEmptyBuffer(buf)) return;
-    var msg = null;
-    for (var i = th.messages.length - 1; i >= 0; i--) {
+    var msg = acceptedMessage || null;
+    if(!msg) for (var i = th.messages.length - 1; i >= 0; i--) {
       if (th.messages[i].role === 'user') { msg = th.messages[i]; break; }
     }
+    if(!msg || msg.isolatedSubmission || committedMessages.has(th.id+"/"+msg.id)) return;
+    committedMessages.add(th.id+"/"+msg.id);
     for (var h = 0; h < C.commitHooks.length; h++) {
       try { C.commitHooks[h](ctx, th, msg, buf); }
       catch (err) { console.error('PM56 composer commitHook threw', err); }
@@ -409,6 +412,7 @@
     /* §2.2 "sending clears the buffer only after message and attachment
        admission commits" — which is exactly the point this runs. */
     buf.text = '';
+    if(ctx.state.drafts) ctx.state.drafts[th.id]='';
     buf.attachments = [];
     buf.cursor_position = null;
     buf.revision += 1;
@@ -417,6 +421,15 @@
     flush();
   }
 
+  /* Explicit acceptance closes the buffer even when a pre-send handler rendered
+     before clearing state.composer. Held modals and rejected sends never call it. */
+  C.commitAccepted = function(ctx, th, msg) {
+    if(!th || !msg || msg.role!=='user' || msg.isolatedSubmission || !th.messages.includes(msg)) return false;
+    var wasCommitting=committing; committing=true;
+    try { commitBuffer(ctx,th,msg); }
+    finally { committing=wasCommitting; if(lastThread===th.id) lastMsgCount=th.messages.length; }
+    return true;
+  };
   var committing = false;   /* see the re-entrancy guard in reconcile() */
   function reconcile(ctx) {
     var tid = ctx.state.selectedThread;
@@ -791,6 +804,7 @@
   });
 
   EXT.chainAction('reset-all', function () {
+    committedMessages.clear();
     C.buffers = {};
     C.history = {};
     C.historyIndex = {};

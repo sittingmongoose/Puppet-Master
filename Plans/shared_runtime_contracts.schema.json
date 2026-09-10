@@ -257,6 +257,10 @@
     },
     "runtime_resource_admission": {
       "title": "RuntimeResourceAdmission",
+      "description": "Legacy durable admission envelope retained only for read/import compatibility. New producer writes use pm.full_thread_runtime.contracts.v1 GovernorDecisionRecord; this row normalizes once at the owner boundary and ambiguous blocked/rejected reasons fail closed.",
+      "x-write-policy": "legacy_reader_import_only",
+      "x-successor-schema-ref": "Plans/full_thread_runtime_contracts.schema.json#/$defs/GovernorDecisionRecord",
+      "x-normalization-ref": "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization/governor_outcome",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -289,7 +293,10 @@
     },
     "observable_work_projection": {
       "title": "ObservableWorkProjection",
-      "description": "Derived redb projection. It is not a canonical event source and never fabricates percent complete.",
+      "description": "Legacy derived redb projection retained only for read/import compatibility. It is not a canonical event source, never fabricates percent complete, and is normalized once into pm.full_thread_runtime.contracts.v1 ObservableWorkRecord before current consumers see it.",
+      "x-write-policy": "legacy_reader_import_only",
+      "x-successor-schema-ref": "Plans/full_thread_runtime_contracts.schema.json#/$defs/ObservableWorkRecord",
+      "x-normalization-ref": "Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization/observable_work_state",
       "type": "object",
       "additionalProperties": false,
       "required": [

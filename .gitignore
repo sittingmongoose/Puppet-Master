@@ -55,6 +55,12 @@ tests/
 !/tests/test_pm_packet_audit_verdicts.py
 !/tests/test_pm_packet_audit_census.py
 !/tests/test_pm_working_notebook_contracts.py
+!/tests/test_pm_auth_handoff_contracts.py
+!/tests/test_pm_origin_retained_routes.py
+!/tests/test_pm_runtime_vocabulary_migration.py
+!/tests/test_pm_credential_attachment_lifetime.py
+!/tests/test_pm_runtime_identity_scope.py
+!/tests/test_pm_installation_update_preferences.py
 !/tests/test_v3_residuals.js
 Concepts/**/evidence/
 **/simulator_runs/
@@ -91,3 +97,18 @@ codex_goal_transfer_kit/
 .pytest_cache/
 __pycache__/
 *.pyc
+
+# Nested git repositories created by simulator runs (never gitlinks)
+**/sandbox_repo/
+
+# Raw experiment evidence lives in /mnt/Cursor/PuppetMaster-Evidence (ignored symlink keeps the gate path valid)
+/tests/agent_packet_restrictions
+/tests/r9g*
+
+# Scratch and superseded root-level material moved to the evidence home
+/.tmp-packet/
+/tmp/
+/SOURCE_DIFFS/
+/r9_codex_goal_runs/
+/_writetest.tmp
+/goal_native_broker_v2/

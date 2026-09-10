@@ -1,0 +1,12 @@
+/* B11: compact native cards; no left stripes, work animation or global layout overrides. */
+.eli5-dialog{width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden}
+.eli5-dialog .dialog-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px 16px;border-bottom:1px solid var(--border)}
+.eli5-dialog .dialog-head small{font-size:10px;color:var(--muted);letter-spacing:.8px}.eli5-dialog h2{font-size:21px;margin:3px 0 0;letter-spacing:-.4px}
+.eli5-dialog .dialog-body{padding:16px 22px;overflow-y:auto;min-height:0}.eli5-lede{color:var(--muted);font-size:12px;margin:0 0 14px}
+.eli5-choices{display:grid;gap:7px}.eli5-choice{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);color:var(--text);text-align:left;cursor:pointer;width:100%;font-family:inherit}
+.eli5-choice:hover{background:var(--hover)}.eli5-choice[aria-checked=true]{background:var(--surface-3,var(--surface-2));border-color:var(--muted)}
+.eli5-choice strong{display:block;font-size:12px;font-weight:600}.eli5-choice small{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:3px}
+.eli5-radio{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.eli5-defaults{margin-top:16px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}.eli5-defaults summary{cursor:pointer;font-size:12px}.eli5-defaults h3{font-size:11px;color:var(--muted);margin:16px 0 7px}.eli5-defaults .eli5-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.eli5-defaults .eli5-choices:last-child{grid-template-columns:1fr}.eli5-boundary{font-size:10px;line-height:1.6;color:var(--muted);margin:15px 0 0}
+.eli5-footer{padding:14px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--border)}.eli5-footer span{font-size:11px;color:var(--muted)}
+@media(max-width:700px){.eli5-dialog .dialog-head{padding:16px}.eli5-dialog .dialog-body{padding:14px 16px}.eli5-footer{padding:14px 16px 16px}}

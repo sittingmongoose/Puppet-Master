@@ -687,7 +687,9 @@
     {
       "profile_id": "TCP-AUTH-BROWSER",
       "requirement_refs": [
-        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-143"
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-143",
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Shared_Integration_Runtime.md#SIR-032"
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-143",
@@ -695,7 +697,7 @@
       "payload_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request",
       "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
       "error_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/command_error",
-      "availability_rule": "Only the human protected-auth surface with exact provider, route, account, Server, Host, Environment, authentication operation/revision, initiating active Client/session generation, protected-auth session, continuation, and return target is allowed.",
+      "availability_rule": "Only the human protected-auth surface with exact provider, route, account, Server, Host, Environment, authentication operation/revision, owner-selected Client/session fence, protected-auth session, continuation, and return target is allowed. RAS-015 hosted Tailscale requires SIR-032 server_owned_authorized_client_handoff with current owner-authorized Client/session and fresh handoff; all other protected providers retain initiating-active-Client-only behavior.",
       "permission_gate": "Human-only authentication owner; agents, adapters, capture, inspect, watch, share, takeover, evaluate, representation, and programs are prohibited.",
       "disabled_reason_rule": "Expose setup, auth-state, topology, permission, policy, wrong-Client, stale-operation, stale-session-generation, or deadline blocker without browser-content projection.",
       "handler_owner": "AuthenticationBroker is the specified shared lifecycle target; no Browser-owned auth handler exists and no native implementation is evidenced.",
@@ -705,7 +707,7 @@
       "gui_triggers": [
         "Protected AuthBrowser human handoff"
       ],
-      "return_route": "Exact authentication operation and initiating active Client/session generation return to the exact non-secret target; cancel and timeout return no protected content.",
+      "return_route": "The same authentication operation returns only to the exact owner-authorized Client/session and non-secret target. RAS-015 replacement requires a new authorized handoff generation and fresh protected session, never inherited browser content or arbitrary fallback navigation; other protected providers retain the initiating Client. Cancel and timeout return no protected content.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Forge_Integrations.md",
@@ -724,7 +726,8 @@
         "non-secret authentication operation, Client fence, return-target, and receipt/projection refs only; no protected content"
       ],
       "migration_refs": [
-        "AuthBrowserSession never converts to ordinary browser state"
+        "AuthBrowserSession never converts to ordinary browser state",
+        "Pre-RAS-015 Tailscale handoffs require owner reauthorization before dispatch; do not relabel or replay an old URL"
       ],
       "test_refs": [
         "Plans/protected_auth_browser_contract_fixtures.json",

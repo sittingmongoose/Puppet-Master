@@ -27,13 +27,19 @@ predecessor lineage (its CSS-only rollback is inside this lane's pinned base).
 |---|---|
 | `kit.js` | the shared manager kit: primitives (`page`, `section`, `rows`, `stats`, `list`, `listDetail`, `steps`, `advanced`, `quiet`, `empty`, `kv`, `note`, `field`, `pill`, `btn`, `select`, `toggle`, `segmented`, `input`, `chip`, `tech`), the side-panel anatomy (`openDrawer` re-assigned), the setting Details inspector body, the `pm51-*` action router, the workspace registry changes, the entrance-motion fixes and the page-scrolled virtualized All Project Settings list |
 | `managers/NN-<name>.js` | one file per manager; each registers `PM51.manager(type, {render})` and its `pm51-<manager>-*` actions |
+| `placement.json` | pass 2: the authored placement map (managers, subgroups, keyword overrides, synthetic sections, surviving pages, page defaults, hand moves, retired workspaces, domain labels); injected as `PM51_PLACEMENT`, validated at build time, resolved at boot by the kit's placement block so every concept id renders exactly once |
+| `data.d/*.json` | pass 2: per-manager fixture files deep-merged over `data.json` at build time (objects merge, arrays replace) |
 | `styles.css` | `<style id="pm51-settings-refresh">`, injected before `</head>` after the pm50 block; tokens only, no accent stripes |
 | `data.json` | canonical fixtures: 13 AI services, 12 code-service rows (13 forge profiles), 7 sounds (6 labelled demo tones + 1 unavailable upload), server/project location, doctor groups, skills, plugins, MCP servers, commands and shortcuts, and the smaller extras copied into `state.pm51` |
 
-`settings_refresh_source.py` replaces the provider, forge and sound fixture bands inside
-the Settings data IIFE, makes every built-in sound row a labelled demo tone, injects the CSS
-block and appends the concatenated kit + managers module right before `boot()` (after T49
-and narrow v3, so the re-assigned renderers win). Every non-Settings `<script>` is asserted
+`settings_refresh_source.py` replaces the provider, forge, event and sound fixture bands inside
+the Settings data IIFE, makes every built-in sound row a labelled demo tone, exports the reference
+row factory and widens the catalog and search walkers to any workspace that carries sections,
+injects the CSS block, injects `PM51_DATA` and `PM51_PLACEMENT`, and appends the concatenated kit +
+managers module right before `boot()` (after T49 and narrow v3, so the re-assigned renderers win).
+`validate_placement` aborts the build when a placement rule matches no id, an id resolves twice or
+not at all, a destination manager or tab does not exist, or a check-labelled inline action row sits
+outside Advanced. Every non-Settings `<script>` is asserted
 byte-identical; the builder runs `node --check` on all scripts and the pm6 no-emoji checker.
 
 Dev aid: `PM51_MANAGERS=40-,10-` limits which manager files are concatenated (used while
@@ -61,6 +67,31 @@ several people write managers at once).
   the active workspace block, so changing the theme while reading Doctor stays on Doctor;
 * roster filters are re-applied after any re-render (`PM51.applyFilters`).
 
+Pass 2 (2026-09-09, user review of pass 1):
+
+* every dropdown in Settings is a themed listbox (`PM51.dropdown`; `PM51.select` is an alias): the
+  native `<select>` stays in the DOM hidden beside a trigger so `change-setting`, every
+  `PM51.onChange`, dialog `FormData` and `querySelector('select')` consumers keep working; the option
+  list is a popout in `document.body` (never clipped by the settings portal) with the chat
+  assistant's "sprout" motion (`window.PM6_SPROUT` when present, an identical local class
+  choreography otherwise), grouped rows, icon tiles, meta, check mark, search above 12 options and a
+  full keyboard model. Engine `renderControl`, `formField`, `inlineSelect` and the All-Settings
+  facets are wrapped so no native select is ever visible;
+* engine menus (`openMenu`) use the same popout engine (`.pm51-popout.pm51-menu`), as does the
+  assistant model / persona picker (`PM51.pick`);
+* side panels are hero sheets: icon tile, eyebrow, title, status token, summary, facts, progress
+  rail, card sections that reveal in a stagger while the spring settles, sticky footer
+  (`openDrawer({icon, eyebrow, status, summary, facts, steps, tone, size, mode})`; the drawer
+  spring, backdrop fade and material close are unchanged);
+* no pills: `PM51.pill` renders a dot + text status token (`PM51.status`), category labels are
+  quiet tags (`PM51.tag`), keyboard keys use `PM51.kbd`;
+* rosters (`PM51.listDetail`) stick inside their manager block and their list scrolls on its own
+  (`--pm51-doc-h` from a ResizeObserver on the scroller);
+* new primitives: `PM51.meter`, `PM51.order`, `PM51.accordion`, `PM51.settingRows`;
+* fixtures may be split per manager: every `settings_refresh/data.d/*.json` is deep-merged over
+  `data.json` by `load_data()` (objects merge, arrays replace); the events fixture carries stable
+  ids and moved into the transform's `events` band.
+
 Registry keys (`Plans/settings_system_contract_fixtures.json`, 38 managers), command ids and
 the 887-row inventory are unchanged; workspaces carry `data-manager-key`.
 
@@ -68,6 +99,7 @@ the 887-row inventory are unchanged; workspaces carry `data-manager-key`.
 
 ```sh
 node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs Concepts/TestPMConcept.html <out-dir>
+node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs Concepts/TestPMConcept.html <out-dir>
 node Concepts/pm7-tools/verify/settings_refresh_film.mjs Concepts/TestPMConcept.html <film-dir> all
 python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py <film-dir> <sheet.png> domain-switch,panel-open,panel-close --stride=2 --cols=6
 ```
@@ -76,11 +108,45 @@ python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py <film-dir> <sheet.pn
 or `$CHROME`; `file://` only). The checkpoint asserts the contract above and writes
 `settings-refresh-checkpoint.json` plus screenshots (checks include the one-check-per-section rule,
 the flash metric, panel anatomy, inspector tokens, page-scrolled all-settings, Web Audio sound
-playback, roster-filter persistence, theme-change place-keeping, the 8-theme × 3-width matrix and
-zero page errors); the film tool captures true 60 fps frames
+playback, roster-filter persistence, theme-change place-keeping, the 8-theme × 3-width matrix with one
+dropdown and one menu probed per cell, no visible native select / native disabled / pills, the sprout
+dropdown keyboard path, body-portaled menus, the hero sheet reveal, independent roster scrolling and
+zero page errors); the placement checkpoint (`settings-placement-checkpoint.json`) walks every
+workspace and every manager tab and asserts that the union of `#setting-<id>` and `[data-setting-id]`
+rows is exactly the 892 concept ids with none rendered twice and each on the workspace and tab
+`placement.json` names (the concept's own 31 hand rows on the plain pages and the five hand rows
+that `hand_moves` carries into Toolchain, Commands and Doctor are reported separately), that no
+canonical manager-topic row remains on the six plain workspaces, that inline sections precede the
+view's single Advanced disclosure with advanced placements first inside it, that the page index lists
+every non-advanced inline section under tab captions and its links switch tabs, that All Project
+Settings still reads "of 892" with 12 categories, that Details, rail search and `refreshSettingRow`
+(plain, tab round-trip and inspector-open soft remount) keep working for moved rows, that the Back Seat
+Driver's composed rows keep their segmented override through an engine refresh, and that the runtime
+placement audit is clean; the film tool captures true 60 fps frames
 in slow motion (`Animation.setPlaybackRate(0.05)` + scaled timers) and the sheet tool tiles
 them with frame index and motion time labels for frame-by-frame review. These are browser
 concept checks, not native Slint, runtime, provider, delivery or audibility certification.
+
+## Motion facts from the pass-2 frame review (2026-09-09)
+
+* Popouts (dropdown lists, menus) open with the chat sprout: scale 0.72 × 0.48 at the anchor corner to
+  1 × 1 over 300 ms with a spring overshoot (measured ×1.025 / ×1.047 at 141 ms) and a 140 ms fade;
+  close is 220 ms. The first film frames look "instant" only because the spring covers most of its
+  travel in the first 50 ms; measure `getComputedStyle(pop).transform` under
+  `Animation.setPlaybackRate(0.05)` before calling it a jump (`scratchpad` probe pattern in the film tool).
+* Hero sheets: header from frame 0, icon at 40 ms, status/facts/rail at 110 ms, cards from 150 ms in
+  45 ms steps; the settled state adds a soft accent glow through `box-shadow`. While a sheet closes its
+  content stays put (`is-closing` keeps the reveal states at opacity 1) so the shell slides out whole;
+  the first pass let the body vanish on the first closing frame.
+* Sheet-to-sheet handoff (a route's Set up, a command's Preview): the outgoing sheet holds still with no
+  second backdrop (`pm51-handoff`) while the incoming one springs in over it (`pm51-handoff-in`, backdrop
+  without fade), and the kit removes the outgoing wrap at 270 ms while it is fully covered.
+* Accordions animate `grid-template-rows` 0fr → 1fr over 220 ms (ease-out, front-loaded); list reorders
+  (accounts, routes) are instant re-renders by design.
+* The film scenes that look at the account accordion scroll it into view first (the accounts section
+  sits below the fold on Providers); the hover-tag layer shows a tag for whatever element regains focus
+  after a sheet closes when the last input was keyboard-like (the film drives clicks from script), which is
+  shell behaviour, not part of this lane.
 
 ## Known limits and pre-existing findings (2026-09-08)
 

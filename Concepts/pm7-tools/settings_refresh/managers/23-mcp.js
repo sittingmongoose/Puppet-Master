@@ -51,10 +51,8 @@
       }),
       PM51.advanced([
         PM51.section({ title: 'How each server starts', help: 'The program or address behind each server.', body: PM51.kv(list.map(m => [m.name, `${isWeb(m) ? 'Address' : 'Command'}: ${launchText(m)}`])) }),
-        PM51.rows([
-          { label: 'Connection time limit', help: 'How long to wait for a server before giving up.', control: PM51.select(p.timeout, ['10 seconds', '30 seconds', '1 minute', '2 minutes'], { action: 'pm51-mcp-timeout', label: 'Connection time limit' }) },
-          { label: 'Load tools only when needed', help: 'Keeps the assistant\'s tool list short. A server\'s tools load the first time they are useful.', control: PM51.toggle(!!p.lazyTools, { action: 'pm51-mcp-pref', data: { pref: 'lazyTools' }, label: 'Load tools only when needed' }) }
-        ]),
+        /* Wave S: the connection time limit and lazy tool loading are the canonical system.mcp.timeout and
+           lazy-exposure rows in Connection defaults above. */
         PM51.section({ title: 'Technical details', body: PM51.kv([['Sign-in for web servers', 'Handled in your browser when a server asks for it'], ['Secrets', 'Kept in the credential store, never in settings files'], ['Logs', 'Kept per server with secrets hidden']]) + actionRow(PM51.btn({ label: 'View logs', small: true, icon: 'terminal', action: 'pm51-mcp-logs' }), PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-mcp-diagnostics' })) })
       ].join(''))
     ].join('');

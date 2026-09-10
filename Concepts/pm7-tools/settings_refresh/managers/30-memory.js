@@ -183,7 +183,6 @@
         title: 'How memories are chosen',
         body: PM51.rows([
           { label: 'Prefer pinned memories', help: 'Pinned memories are considered before anything else.', control: PM51.toggle(!!r.preferPinned, { action: 'pm51-memory-retrieval-toggle', data: { key: 'preferPinned' }, label: 'Prefer pinned memories' }) },
-          { label: 'Memories per reply', help: 'The most the assistant brings into one reply.', control: PM51.select(String(r.max), ['3', '5', '8', '12'], { action: 'pm51-memory-retrieval-select', data: { key: 'max' }, label: 'Memories per reply' }) },
           { label: 'When memories disagree', help: 'What happens when two memories point different ways.', control: PM51.select(r.disagree, ['Ask me', 'Newest wins', 'Show both'], { action: 'pm51-memory-retrieval-select', data: { key: 'disagree' }, label: 'When memories disagree' }) }
         ])
       }),

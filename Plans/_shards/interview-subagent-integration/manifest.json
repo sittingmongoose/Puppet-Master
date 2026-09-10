@@ -1,0 +1,104 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/interview-subagent-integration/00-index.md",
+  "index_sha256": "29c2384b66fd593a9a0ad7eb57c4375fedee377714ca8ce0f52997d0da377776",
+  "manifest_path": "Plans/_shards/interview-subagent-integration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/interview-subagent-integration/001-preamble.md",
+      "sha256": "727a8a9205875729aa1dfd914d61908b4972774ccb7e03943f3ca1b8824b42c1",
+      "shard_id": "001",
+      "source_line_end": 1,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md",
+      "sha256": "52747a6220cad68906463d2ab6d86bb3e1714f540b0d8485a2a4317893df94f2",
+      "shard_id": "002",
+      "source_line_end": 9,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Change Summary",
+      "path": "Plans/_shards/interview-subagent-integration/003-change-summary.md",
+      "sha256": "0ae323033bc4d516923b38f89aa14d762aad16d17d282780bb4a6940f497d44d",
+      "shard_id": "003",
+      "source_line_end": 18,
+      "source_line_start": 12,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Interview runtime boundary and handoff lineage",
+      "path": "Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md",
+      "sha256": "4776ccfd04c4abb78c51381d6f544caae4352007791fb512a0a5e8365816eaa8",
+      "shard_id": "004",
+      "source_line_end": 54,
+      "source_line_start": 20,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/interview-subagent-integration/005-owner-consumer-map.md",
+      "sha256": "8488cea6d540f59f63694104d969e96c1f34500b0a10b84ce27a2acdaa99e053",
+      "shard_id": "005",
+      "source_line_end": 60,
+      "source_line_start": 56,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/interview-subagent-integration/006-planunits.md",
+      "sha256": "b00eecd1038a96da7ee3b40287cea3ebaeb2aedeba285809ceefb91f5352eba9",
+      "shard_id": "006",
+      "source_line_end": 983,
+      "source_line_start": 62,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/interview-subagent-integration/007-migration-coverage.md",
+      "sha256": "923e7554fd28b5ba2b53096dbe78f73d8f7d6caeebfd0dabee49d245a5d10f05",
+      "shard_id": "007",
+      "source_line_end": 995,
+      "source_line_start": 985,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
+      "path": "Plans/_shards/interview-subagent-integration/008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "sha256": "72644f317904679a73d873fc7a5a5b412ebf790b77fd0a286656f804b8f4e034",
+      "shard_id": "008",
+      "source_line_end": 1055,
+      "source_line_start": 997,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
+      "path": "Plans/_shards/interview-subagent-integration/009-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+      "sha256": "d7953410f0bacdb001965a8c761e0954cbf290761b733519dd5be0cf07bd9581",
+      "shard_id": "009",
+      "source_line_end": 1062,
+      "source_line_start": 1056,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/interview-subagent-integration/010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "78c068f0bc93940904d180900438e20bcde3d20c2c9f011363905bcc5057ca36",
+      "shard_id": "010",
+      "source_line_end": 1072,
+      "source_line_start": 1064,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1072,
+    "path": "Plans/interview-subagent-integration.md",
+    "sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+  }
+}

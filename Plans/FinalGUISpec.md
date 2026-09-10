@@ -36497,6 +36497,9 @@ invariants.
   8. *Bounded Tabs:* At most six tabs per manager.
   9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items.
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity header, sectioned body, quiet footer) and the same spring motion, without decorative accent bars; inspector width tokens are unchanged.
+  11. *Status Tokens, Not Pills:* A small coloured dot with text for state; quiet text for category labels; capsules only for keyboard keys.
+  12. *Themed Listboxes:* Concept-drawn listboxes over hidden native selects with the chat assistant's popout motion; no native option list is visible; menus share the popout.
+  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once.
 - **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
   grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)
@@ -36968,6 +36971,7 @@ acceptance_criteria:
   - Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below).
   - The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close.
   - Eight themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow.
+  - (USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551).
 validation_surfaces:
   - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
   - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
@@ -36981,6 +36985,7 @@ implementation_surfaces:
   - Plans/Settings_System.md
   - Concepts/pm7-tools/settings_refresh/styles.css
   - Concepts/pm7-tools/settings_refresh/kit.js
+  - Concepts/pm7-tools/settings_refresh/placement.json
 node_compile_hint:
   mode: gui_presentation_specification
   create_worknodes: false
@@ -36989,6 +36994,7 @@ source_lineage:
   - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
   - F3-542
   - SSYS-033
+  - USER-SETTINGS-MANAGER-REFRESH-20260909
 preserved_exact_tokens:
   - "No Top Action Bar"
   - "Bounded Tabs"
@@ -36998,6 +37004,7 @@ negative_constraints:
   - Do not reintroduce a per-manager top action bar or more than six tabs.
   - Do not give the Details inspector or a drawer a decorative accent bar.
   - Do not change the inspector width tokens.
+  - Do not reintroduce capsule pills or a native option list in Settings.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -37424,3 +37431,60 @@ negative_constraints:
 - No colored status border bars/stripes, emoji glyphs or additional response disposition is permitted.
 - No implementation, WorkNodes, NodeSeeds or governance seal is created by this PlanUnit.
 ```
+
+```yaml
+plan_unit_id: F3-551
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings principles 11 to 13 (USER-SETTINGS-MANAGER-REFRESH-20260909) apply to every manager of the published concept: status
+  tokens instead of pills, concept-drawn listboxes and menus with the chat assistant's popout motion over hidden
+  native selects, and manager-topic canonical settings rendered inline inside their manager before its Advanced
+  disclosure through the authored placement map, with core settings on six plain pages and every inventory
+  id rendered exactly once. Side panels are hero sheets (identity header, status token, facts, progress rail,
+  card sections revealed in a stagger while the unchanged spring settles, sticky footer); rosters scroll inside
+  their manager block; the sound library is a two-column grid; provider accounts and remote routes are ordered
+  lists with inline priority controls.
+gui_related: true
+gui_classification_reason: Governs the listbox, status, side-panel, roster, and inline-settings presentation of every Settings manager in the published concept.
+depends_on: [F3-543, SSYS-035]
+unblocks: []
+acceptance_criteria:
+  - No native select is visible in Settings; each dropdown and menu opens as a popout inside the viewport with the shared motion and closes with its collapse.
+  - No capsule pill remains in Settings except keyboard keys.
+  - The exactly-once walk finds every concept id rendered once across managers and the surviving plain pages.
+  - The 60 fps slow-motion films of dropdown open/close, menu open/close, and hero sheet open show no blank frames and settle within their own durations.
+validation_surfaces:
+  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
+  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: settings_presentation_regression
+reasoning_tier: standard
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Concepts/pm7-tools/settings_refresh/placement.json
+  - Concepts/pm7-tools/settings_refresh/kit.js
+  - Concepts/pm7-tools/settings_refresh/styles.css
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - USER-SETTINGS-MANAGER-REFRESH-20260909
+  - F3-543
+  - SSYS-035
+preserved_exact_tokens:
+  - "Status Tokens, Not Pills"
+  - "Themed Listboxes"
+  - "Manager-Topic Settings Live Inside Their Manager"
+negative_constraints:
+  - Do not reintroduce capsule pills or a native option list in Settings.
+  - Do not render a canonical setting twice or inside a second Advanced disclosure.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md#SSYS-035

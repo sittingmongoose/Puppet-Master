@@ -258,6 +258,7 @@
         ' data-k="pm-of:' + esc(it.id) + '"' +
         (dis ? ' disabled aria-disabled="true"' : ' data-action="' + esc(it.action || '') + '"' +
           ' data-id="' + esc(m.id) + '"' +
+          (it.threadId != null ? ' data-thread="' + esc(it.threadId) + '"' : '') +
           (it.value != null ? ' data-value="' + esc(it.value) + '"' : '')) +
         (dis ? tipAttrs(esc, 'msg-of-' + m.id + '-' + it.id, it.reason || 'Not available for this message') : ' aria-label="' + esc(it.label) + '"') + '>' +
         '<span class="pm-overflow-icon">' + icon(it.icon || 'more', 13) + '</span>' +

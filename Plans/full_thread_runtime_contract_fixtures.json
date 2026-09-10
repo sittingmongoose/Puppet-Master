@@ -1,13 +1,71 @@
 {
   "schema_id": "pm.full_thread_runtime.contract_fixtures.v1",
   "contract_schema_id": "pm.full_thread_runtime.contracts.v1",
+  "identity_scope_cases": {
+    "claim_boundary": "Schema fixtures prove explicit scope/nullability and deterministic owner-binding checks only. They do not prove a runtime owner lookup, topology adapter, migration execution, or native handler.",
+    "known_bindings": {
+      "project_home_server_by_project": {"p-1": "srv-1", "p-2": "srv-2"},
+      "named_plan_project_by_id": {"named-plan-1": "p-1", "named-plan-2": "p-2"},
+      "execution_host_by_environment": {"env-app-1": "host-app-1", "env-1": "host-1", "env-2": "host-2"},
+      "controlling_server_by_environment": {"env-app-1": "srv-app-1", "env-1": "srv-1", "env-2": "srv-2"},
+      "topology_generation_by_environment": {"env-app-1": 4, "env-1": 8, "env-2": 3}
+    },
+    "positive": [
+      {"name": "application_scope_has_no_project_or_named_plan", "identity": {"scope_kind": "application", "operation_id": "op-app", "operation_generation": 1, "server_id": "srv-app-1", "project_id": null, "project_home_server_id": null, "named_plan_id": null, "execution_host_id": "host-app-1", "execution_environment_id": "env-app-1", "topology_generation": 4}},
+      {"name": "project_scope_without_named_plan", "identity": {"scope_kind": "project", "operation_id": "op-project", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 8}},
+      {"name": "project_scope_with_same_project_named_plan", "identity": {"scope_kind": "project", "operation_id": "op-named-plan", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": "named-plan-1", "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 8}}
+    ],
+    "negative": [
+      {"name": "missing_scope_fails_closed", "identity": {"operation_id": "op-missing-scope", "operation_generation": 1, "server_id": "srv-app-1", "project_id": null, "project_home_server_id": null, "named_plan_id": null, "execution_host_id": "host-app-1", "execution_environment_id": "env-app-1", "topology_generation": 4}, "expected_failure": "scope_kind_required"},
+      {"name": "unknown_scope_fails_closed", "identity": {"scope_kind": "global", "operation_id": "op-unknown-scope", "operation_generation": 1, "server_id": "srv-app-1", "project_id": null, "project_home_server_id": null, "named_plan_id": null, "execution_host_id": "host-app-1", "execution_environment_id": "env-app-1", "topology_generation": 4}, "expected_failure": "unknown_scope_kind"},
+      {"name": "application_scope_cannot_invent_project", "identity": {"scope_kind": "application", "operation_id": "op-fake-project", "operation_generation": 1, "server_id": "srv-app-1", "project_id": "default-project", "project_home_server_id": "srv-app-1", "named_plan_id": null, "execution_host_id": "host-app-1", "execution_environment_id": "env-app-1", "topology_generation": 4}, "expected_failure": "application_scope_project_forbidden"},
+      {"name": "application_scope_cannot_reference_named_plan", "identity": {"scope_kind": "application", "operation_id": "op-app-plan", "operation_generation": 1, "server_id": "srv-app-1", "project_id": null, "project_home_server_id": null, "named_plan_id": "named-plan-1", "execution_host_id": "host-app-1", "execution_environment_id": "env-app-1", "topology_generation": 4}, "expected_failure": "application_scope_named_plan_forbidden"},
+      {"name": "project_scope_requires_project_home", "identity": {"scope_kind": "project", "operation_id": "op-missing-home", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": null, "named_plan_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 8}, "expected_failure": "project_home_server_required"},
+      {"name": "cross_project_named_plan_fails_closed", "identity": {"scope_kind": "project", "operation_id": "op-cross-plan", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": "named-plan-2", "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 8}, "expected_failure": "named_plan_project_mismatch"},
+      {"name": "wrong_project_home_server_fails_closed", "identity": {"scope_kind": "project", "operation_id": "op-wrong-home", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-2", "named_plan_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 8}, "expected_failure": "project_home_server_mismatch"},
+      {"name": "execution_host_environment_mismatch_fails_closed", "identity": {"scope_kind": "project", "operation_id": "op-wrong-host", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "execution_host_id": "host-2", "execution_environment_id": "env-1", "topology_generation": 8}, "expected_failure": "execution_host_environment_mismatch"},
+      {"name": "stale_topology_generation_fails_closed", "identity": {"scope_kind": "project", "operation_id": "op-stale-topology", "operation_generation": 1, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "topology_generation": 7}, "expected_failure": "topology_generation_mismatch"},
+      {"name": "unbound_environment_fails_closed", "identity": {"scope_kind": "application", "operation_id": "op-unbound-environment", "operation_generation": 1, "server_id": "srv-unknown", "project_id": null, "project_home_server_id": null, "named_plan_id": null, "execution_host_id": "host-unknown", "execution_environment_id": "env-unknown", "topology_generation": 1}, "expected_failure": "execution_environment_unbound"}
+    ]
+  },
+  "legacy_normalization_cases": {
+    "claim_boundary": "Static one-time owner-boundary normalization fixtures only. They do not claim a physical family migration, executable adapter, or runtime proof.",
+    "positive": [
+      {"name": "legacy_admitted_is_unchanged", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "admitted", "successor_record_kind": "governor_decision", "successor_value": "admitted"},
+      {"name": "legacy_admitted_reduced_becomes_admitted_degraded", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "admitted_reduced", "successor_record_kind": "governor_decision", "successor_value": "admitted_degraded"},
+      {"name": "legacy_queued_admission_is_unchanged", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "queued", "successor_record_kind": "governor_decision", "successor_value": "queued"},
+      {"name": "legacy_blocked_permission_is_reasoned", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "blocked", "legacy_reason_class": "permission", "successor_record_kind": "governor_decision", "successor_value": "permission_blocked"},
+      {"name": "legacy_blocked_resource_is_reasoned", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "blocked", "legacy_reason_class": "resource", "successor_record_kind": "governor_decision", "successor_value": "resource_blocked"},
+      {"name": "legacy_rejected_permission_is_reasoned", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "rejected", "legacy_reason_class": "permission", "successor_record_kind": "governor_decision", "successor_value": "permission_blocked"},
+      {"name": "legacy_rejected_resource_is_reasoned", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "rejected", "legacy_reason_class": "resource", "successor_record_kind": "governor_decision", "successor_value": "resource_blocked"},
+      {"name": "legacy_queued_work_is_unchanged", "legacy_record_kind": "observable_work_projection", "legacy_value": "queued", "successor_record_kind": "observable_work", "successor_value": "queued"},
+      {"name": "legacy_preflighting_becomes_starting", "legacy_record_kind": "observable_work_projection", "legacy_value": "preflighting", "successor_record_kind": "observable_work", "successor_value": "starting"},
+      {"name": "legacy_awaiting_permission_becomes_typed_wait", "legacy_record_kind": "observable_work_projection", "legacy_value": "awaiting_permission", "successor_record_kind": "observable_work", "successor_value": "waiting", "successor_wait_reason": "permission"},
+      {"name": "legacy_awaiting_user_becomes_typed_wait", "legacy_record_kind": "observable_work_projection", "legacy_value": "awaiting_user", "successor_record_kind": "observable_work", "successor_value": "waiting", "successor_wait_reason": "user"},
+      {"name": "legacy_awaiting_resource_becomes_typed_wait", "legacy_record_kind": "observable_work_projection", "legacy_value": "awaiting_resource", "successor_record_kind": "observable_work", "successor_value": "waiting", "successor_wait_reason": "resource"},
+      {"name": "legacy_running_work_is_unchanged", "legacy_record_kind": "observable_work_projection", "legacy_value": "running", "successor_record_kind": "observable_work", "successor_value": "running"},
+      {"name": "legacy_retry_backoff_becomes_retrying", "legacy_record_kind": "observable_work_projection", "legacy_value": "retry_backoff", "successor_record_kind": "observable_work", "successor_value": "retrying"},
+      {"name": "legacy_transport_reconciling_becomes_reconnecting", "legacy_record_kind": "observable_work_projection", "legacy_value": "reconciling", "legacy_context": "transport", "successor_record_kind": "observable_work", "successor_value": "reconnecting", "preserve_reconcile_phase": true},
+      {"name": "legacy_non_transport_reconciling_becomes_starting", "legacy_record_kind": "observable_work_projection", "legacy_value": "reconciling", "legacy_context": "non_transport", "successor_record_kind": "observable_work", "successor_value": "starting", "preserve_reconcile_phase": true},
+      {"name": "legacy_cancelling_preserves_phase_without_second_cancel", "legacy_record_kind": "observable_work_projection", "legacy_value": "cancelling", "successor_record_kind": "observable_work", "successor_value": "running", "successor_phase": "Cancelling", "successor_cancel_available": false},
+      {"name": "legacy_succeeded_becomes_completed", "legacy_record_kind": "observable_work_projection", "legacy_value": "succeeded", "successor_record_kind": "observable_work", "successor_value": "completed"},
+      {"name": "legacy_failed_work_is_unchanged", "legacy_record_kind": "observable_work_projection", "legacy_value": "failed", "successor_record_kind": "observable_work", "successor_value": "failed"},
+      {"name": "legacy_cancelled_work_is_unchanged", "legacy_record_kind": "observable_work_projection", "legacy_value": "cancelled", "successor_record_kind": "observable_work", "successor_value": "cancelled"},
+      {"name": "legacy_recovery_required_becomes_hyphenated", "legacy_record_kind": "observable_work_projection", "legacy_value": "recovery_required", "successor_record_kind": "observable_work", "successor_value": "recovery-required"}
+    ],
+    "negative": [
+      {"name": "legacy_blocked_without_typed_reason_fails_closed", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "blocked", "legacy_reason_class": null, "expected_failure": "ambiguous_legacy_governor_outcome"},
+      {"name": "legacy_rejected_without_typed_reason_fails_closed", "legacy_record_kind": "runtime_resource_admission", "legacy_value": "rejected", "legacy_reason_class": null, "expected_failure": "ambiguous_legacy_governor_outcome"},
+      {"name": "legacy_reconciling_without_context_fails_closed", "legacy_record_kind": "observable_work_projection", "legacy_value": "reconciling", "legacy_context": null, "expected_failure": "ambiguous_legacy_work_context"}
+    ]
+  },
   "positive": [
     {
       "name": "same_frame_command_acknowledgement",
       "instance": {
         "schema_id": "pm.full_thread_runtime.contracts.v1",
         "record_kind": "command_outcome",
-        "identity": {"operation_id": "op-command", "operation_generation": 1, "attempt_id": null, "command_instance_id": "cmdi-command", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": null, "thread_id": "thread-1", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "identity": {"scope_kind": "project", "operation_id": "op-command", "operation_generation": 1, "attempt_id": null, "command_instance_id": "cmdi-command", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "thread_id": "thread-1", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
         "command_id": "cmd.environment.reconnect",
         "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "idempotency_key": "idem-command",
@@ -28,7 +86,7 @@
       "instance": {
         "schema_id": "pm.full_thread_runtime.contracts.v1",
         "record_kind": "governor_decision",
-        "identity": {"operation_id": "op-1", "operation_generation": 4, "attempt_id": null, "command_instance_id": "cmdi-1", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": "plan-1", "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": "src-1", "topology_generation": 8},
+        "identity": {"scope_kind": "project", "operation_id": "op-1", "operation_generation": 4, "attempt_id": null, "command_instance_id": "cmdi-1", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": "named-plan-1", "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": "src-1", "topology_generation": 8},
         "resource_family": "browser",
         "physical_parent_budget_id": "budget-physical-host-1",
         "requested_budget_ref": "budget-request-1",
@@ -47,7 +105,7 @@
       "instance": {
         "schema_id": "pm.full_thread_runtime.contracts.v1",
         "record_kind": "observable_work",
-        "identity": {"operation_id": "op-2", "operation_generation": 2, "attempt_id": "attempt-2", "command_instance_id": "cmdi-2", "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": "plan-1", "thread_id": "thread-2", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "identity": {"scope_kind": "project", "operation_id": "op-2", "operation_generation": 2, "attempt_id": "attempt-2", "command_instance_id": "cmdi-2", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": "named-plan-1", "thread_id": "thread-2", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
         "observable_work_id": "work-2",
         "owner_domain": "provider",
         "work_state": "waiting",
@@ -74,7 +132,7 @@
       "instance": {
         "schema_id": "pm.full_thread_runtime.contracts.v1",
         "record_kind": "full_thread_projection",
-        "identity": {"operation_id": "op-3", "operation_generation": 1, "attempt_id": null, "command_instance_id": null, "project_id": "p-1", "project_home_server_id": "srv-1", "plan_id": null, "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "identity": {"scope_kind": "project", "operation_id": "op-3", "operation_generation": 1, "attempt_id": null, "command_instance_id": null, "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "thread_id": null, "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
         "collection_id": "usage-ledger",
         "collection_generation": 33,
         "projection_generation": 44,
@@ -113,9 +171,9 @@
   ],
   "negative": [
     {"name": "flattened_status_is_not_a_contract", "instance": {"status": "running"}, "expected_failure": "no_matching_closed_record"},
-    {"name": "claimed_same_frame_has_nonzero_offset", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "command_outcome", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "command_id": "cmd.environment.reconnect", "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "idempotency_key": "i", "target_generation": 1, "outcome": "acknowledged", "dispatch_frame_id": "f1", "acknowledgement_frame_id": "f2", "acknowledgement_frame_offset": 1, "same_frame_acknowledged": true, "acknowledgement_receipt_ref": "r", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "same_frame_offset_must_be_zero"},
-    {"name": "waiting_without_reason", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "observable_work", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "observable_work_id": "w", "owner_domain": "provider", "work_state": "waiting", "phase": "wait", "progress_kind": "none", "freshness": "current", "projection_generation": 1, "cancel_available": false, "background_available": false, "retry_available": false, "dedupe_key": "d", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "wait_reason_and_reevaluation_required"},
-    {"name": "hidden_projection_cancels_work", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "full_thread_projection", "identity": {"operation_id": "op-x", "operation_generation": 1, "project_id": "p", "project_home_server_id": "s", "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "collection_id": "c", "collection_generation": 1, "projection_generation": 1, "window_start": 0, "window_count": 0, "overscan_count": 0, "total_item_count": 1, "stable_item_ids": [], "hidden_surface_policy": "hidden_paint_suppressed", "durable_work_continues": false, "latest_request_generation": 1, "stale_generation_disposition": "not_stale", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "durable_work_must_continue"},
+    {"name": "claimed_same_frame_has_nonzero_offset", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "command_outcome", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "command_id": "cmd.environment.reconnect", "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "idempotency_key": "i", "target_generation": 1, "outcome": "acknowledged", "dispatch_frame_id": "f1", "acknowledgement_frame_id": "f2", "acknowledgement_frame_offset": 1, "same_frame_acknowledged": true, "acknowledgement_receipt_ref": "r", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "same_frame_offset_must_be_zero"},
+    {"name": "waiting_without_reason", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "observable_work", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "observable_work_id": "w", "owner_domain": "provider", "work_state": "waiting", "phase": "wait", "progress_kind": "none", "freshness": "current", "projection_generation": 1, "cancel_available": false, "background_available": false, "retry_available": false, "dedupe_key": "d", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "wait_reason_and_reevaluation_required"},
+    {"name": "hidden_projection_cancels_work", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "full_thread_projection", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "collection_id": "c", "collection_generation": 1, "projection_generation": 1, "window_start": 0, "window_count": 0, "overscan_count": 0, "total_item_count": 1, "stable_item_ids": [], "hidden_surface_policy": "hidden_paint_suppressed", "durable_work_continues": false, "latest_request_generation": 1, "stale_generation_disposition": "not_stale", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "durable_work_must_continue"},
     {"name": "public_gate_after_hydration", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "public_ingress_gate", "endpoint_id": "ep", "endpoint_generation": 1, "request_id": "req", "exposure_class": "public_funnel", "authentication_decision_ref": "a", "rate_decision_ref": "r", "checked_before_expensive_hydration": false, "decision": "admitted", "response_class": "bounded_admitted", "operational_attribution_ref": "o", "usage_record_ref": null, "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "public_gate_must_precede_hydration"}
   ]
 }

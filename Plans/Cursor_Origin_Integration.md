@@ -387,10 +387,14 @@ canonical_text: >-
   feature-equivalent. The retained current create baseline exposes Internal and Private through requested/effective
   visibility only while the signed capability envelope proves them; stale or contrary capability evidence degrades
   those choices rather than guessing. Public is visibly unavailable and cannot dispatch until that exact capability is
-  proven. When the API is partial or unavailable for content, compare, push, thread, or reviewer data, the adapter
-  selects Git data, Git transport, or one version-gated typed CLI gap adapter. Content above 1 MiB, an oversized entry
-  in a content batch, summary-only compare data, an incomplete push commit list, missing thread resolution, and missing
-  reviewer mutations never truncate into success or claim complete behavior.
+  proven. When the API is partial or unavailable, content, compare, and push data may select Git data, Git transport,
+  or one version-gated typed CLI gap adapter. Review-thread reply/resolve/reopen and reviewer add/remove/rerequest are
+  Origin hosting actions: each requires its exact current provider/repository capability and the provider-locked,
+  documented structured-JSON Origin CLI adapter; ordinary Git data or transport can never satisfy those actions. When
+  that typed action route is unsupported or unavailable, the action remains partial/unavailable or offers Open in
+  Cursor Origin. Content above 1 MiB, an oversized entry in a content batch, summary-only compare data, an incomplete
+  push commit list, missing thread resolution, and missing reviewer mutations never truncate into success or claim
+  complete behavior.
 gui_related: true
 gui_classification_reason: Preview identity, create visibility, disabled Public state, and fallback/degradation are visible.
 depends_on: [ORI-001, ORI-004, ORI-005, ORI-006]
@@ -399,11 +403,11 @@ acceptance_criteria:
   - ORI-002 keeps self-hosted/open-source/feature-equivalent advertising false and represents Internal, Private, and Public as requested/effective capability-gated states.
   - The retained create baseline offers Internal and Private only under a current signed capability result; missing, stale, or failed capability evidence returns a typed degraded/unavailable state rather than optimistic create success.
   - Public creation remains `unavailable_until_capability_proven`, visibly disabled, and undispatched; a label, repository mode, successful Internal/Private create, or generic repository-create endpoint cannot infer Public support.
-  - ORI-020 covers all five exact data/action gaps: oversized content and content batches fall back without false batch completeness; summary-only compare falls back for a complete comparison; incomplete push webhooks enumerate commits against exact before/after revisions; thread resolution and reviewer add/remove/rerequest use a supported typed route or remain unavailable.
+  - ORI-020 covers all five exact data/action gaps: oversized content and content batches fall back without false batch completeness; summary-only compare falls back for a complete comparison; incomplete push webhooks enumerate commits against exact before/after revisions; review-thread reply/resolve/reopen and reviewer add/remove/rerequest require their exact current Origin capability plus the provider-locked documented typed CLI route, or remain partial/unavailable/Open in Cursor Origin.
   - The decoded-content boundary is greater than 1,048,576 bytes; exact-boundary, greater-than-boundary, oversized-batch-member, and unavailable-fallback fixtures preserve per-item truth and never turn partial content into complete success.
   - The complete-commit fixtures prove an exact-revision Git enumeration or typed complete result; webhook counts, compare summaries, or a successful request alone cannot prove complete history.
-  - Typed CLI fallback is optional, version-gated, structured-JSON only, and cannot replace API/App/Git readiness or parse prose; when no typed complete route exists, the result stays partial/unavailable and may offer Open in Cursor Origin.
-  - Negative fixtures reject stale capability, Public advertised/dispatchable, missing one of the five coverage classes, oversized/truncated content claimed complete, incomplete push claimed complete, unsupported thread/reviewer success, and prose-scraped CLI output.
+  - Typed CLI fallback is optional for data gaps and is the only automated retained route for the named Origin hosting actions; it is version-gated, structured-JSON only, bound to the exact Origin account/repository and operation capability, uses explicit repository/head/base/target rather than current-branch defaults, does not reuse Cursor Agent authentication as Origin proof, and cannot replace API/App/Git readiness or parse prose. When no typed complete route exists, the result stays partial/unavailable and may offer Open in Cursor Origin.
+  - Negative fixtures reject stale capability, Public advertised/dispatchable, missing one of the five coverage classes, oversized/truncated content claimed complete, incomplete push claimed complete, thread/reviewer actions routed through Git data or transport, provider/account/repository/capability drift, unsupported thread/reviewer success, current-branch defaults, Cursor Agent authentication reuse, and prose-scraped CLI output.
   - Static fixtures do not prove current provider capability, create success, API completeness, Git transport, CLI execution, or security.
 validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/cursor_origin_integration_fixtures.json, focused Egolite remediation validator, future Origin visibility currentness matrix, future five-class fallback positive/negative fixtures]
 risk_class: origin_visibility_overclaim_or_partial_api_data_loss
@@ -417,4 +421,5 @@ negative_constraints:
   - Do not advertise Origin as self-hosted, open-source, or generally feature-equivalent.
   - Do not send a Public create request while the exact current capability is absent, stale, failed, or false.
   - Do not treat truncated, partial, or prose-parsed data as complete success.
+  - Do not route Origin review-thread or reviewer hosting actions through ordinary Git data or Git transport.
 ```

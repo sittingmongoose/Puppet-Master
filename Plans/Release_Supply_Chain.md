@@ -998,7 +998,9 @@ Release tuning may use optimized libraries, LTO, and PGO only with reproducible 
 
 Platform admission covers native Windows without WSL, optional WSL distributions as separate environments, native macOS arm64 plus optional supported Apple Linux environment, Linux X11/Wayland, standalone Server, Docker/TrueNAS/Unraid, and namespace-scoped Kubernetes artifacts where supported. Each artifact carries target OS/architecture, minimum compatibility, signing/notarization, renderer/backend selection, sandbox/provisioning prerequisites, and exact installer/update/rollback evidence. Missing runners remain `not_run` with residual risk, never pass.
 
-Installed-size budgets report PM core, bundled CEF, each renderer/backend, Safe UI/recovery artifacts, on-demand capabilities, provider/source-control tools, project toolchains, plugin packages/data, and debug symbols separately plus combined supported configurations. Symbols publish separately. Duplicate tool versions, unused Slint backends/renderers, provider CLI pre-seeds, and unreferenced package payloads fail size admission. Renderer order remains bakeoff-evidence-gated across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size; release prose cannot freeze an unmeasured winner.
+Installed-size budgets report PM core, bundled CEF, each renderer/backend, Safe UI/recovery artifacts, on-demand capabilities, provider/source-control tools, project toolchains, plugin packages/data, and debug symbols separately plus combined supported configurations. Symbols publish separately. Duplicate tool versions, unused Slint backends/renderers, provider CLI pre-seeds, and unreferenced package payloads fail size admission.
+
+By explicit user approval on 2026-09-09, Release consumes the existing `Plans/FinalGUISpec.md` renderer-owner order: Winit + Skia is compiled and selected by default, Winit + FemtoVG-wgpu is the fallback, and the Winit software renderer is the emergency path. Selection precedence remains `SLINT_BACKEND` explicit override, persisted renderer preference, compiled Skia default, FemtoVG-wgpu fallback, then software emergency fallback; the compiled default never overrides either explicit operator choice. Release verification measures that selected order and precedence across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size. Those results may block a release or motivate a later explicit GUI-owner amendment, but Release does not reopen a renderer bakeoff, silently reorder the selector, or treat static packaging as runtime proof.
 
 Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
 
@@ -1016,7 +1018,7 @@ Release introduces no new UI command or EventRecord family here. Plugin lifecycl
 | size budget | release gate and Settings summary | separated PM core/CEF/renderer/on-demand/provider/plugin/toolchain/symbol bytes plus combined budget |
 | runtime performance | release candidate admission | benchmark scenario/profile/toolchain hashes and raw P50/P95/P99/worst/failure/soak receipts; no static substitution |
 
-ContractRef: SchemaID:pm.plugins.package_contracts.v1, SchemaID:pm.full_thread_runtime.contracts.v1, ContractName:Plans/Plugins_System.md, ContractName:Plans/Shared_Integration_Runtime.md
+ContractRef: SchemaID:pm.plugins.package_contracts.v1, SchemaID:pm.full_thread_runtime.contracts.v1, ContractName:Plans/Plugins_System.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/FinalGUISpec.md
 
 ### RSC-011 - Plugin Package Provenance, Diff, And Rollback Gate
 
@@ -1067,8 +1069,9 @@ status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
   Release candidates retain portable x86-64 and native arm64 compatibility, admit runtime-dispatched fast
-  paths only with portable equivalence evidence, separate installed-size families, and consume raw cross-platform,
-  low-resource, old-hardware, recovery, and soak benchmarks before any performance claim.
+  paths only with portable equivalence evidence, preserve the GUI-owner Winit plus Skia default, Winit plus
+  FemtoVG-wgpu fallback, and Winit software emergency order, separate installed-size families, and consume raw
+  cross-platform, low-resource, old-hardware, recovery, and soak benchmarks before any performance claim.
 gui_related: false
 depends_on: [SIR-017, RSC-006, RSC-008]
 unblocks: []
@@ -1076,20 +1079,23 @@ acceptance_criteria:
   - No artifact globally requires AVX2, AVX-512, target-cpu=native, WSL on Windows, or one CPU vendor.
   - Every optimized path retains a portable fallback and equivalence/fuzz/boundary/end-to-end/old-hardware evidence.
   - LTO/PGO and any assembly path bind reproducible toolchain/config/profile/ABI/fallback evidence.
+  - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia compiled/default, Winit plus FemtoVG-wgpu fallback, then Winit software emergency selection without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
-validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, renderer bakeoff, full-thread benchmark and 24-hour-soak receipts]
+validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
 risk_class: release_platform_or_performance_false_claim
 reasoning_tier: high
 context_scope: portable_release_artifact_performance_gate
 implementation_surfaces: [Plans/Release_Supply_Chain.md]
 node_compile_hint: {mode: portable_release_artifact_performance_gate, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - source_ref:user_approval:2026-09-09:uphold_final_gui_renderer_order
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md
 negative_constraints:
   - Do not infer platform, renderer, size, performance, or recovery acceptance from artifact retention or static schema checks.
+  - Do not let Release reopen the renderer choice or reorder the GUI-owner selector without a later explicit owner amendment.
   - Do not bundle provider CLIs into core/default artifacts under the plugin or performance contract.
 ```
 

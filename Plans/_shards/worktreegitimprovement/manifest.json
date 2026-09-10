@@ -1,0 +1,311 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/worktreegitimprovement/00-index.md",
+  "index_sha256": "3de3e15a262be0b0aa8236ca575aa27251e92a966b131a56f54a4ba840214d4b",
+  "manifest_path": "Plans/_shards/worktreegitimprovement/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/worktreegitimprovement/001-preamble.md",
+      "sha256": "8275b3355f2a86cb05d329e853840af154d57be0983c18395b038165ad8596d0",
+      "shard_id": "001",
+      "source_line_end": 1,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/worktreegitimprovement/002-canonical-owner-section-requirements.md",
+      "sha256": "3b1e88363b153230cc8d5c530e6188ac917fe90bb02392aa9cd529b84d8ed81d",
+      "shard_id": "002",
+      "source_line_end": 21,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Plan Document Status",
+      "path": "Plans/_shards/worktreegitimprovement/003-plan-document-status.md",
+      "sha256": "fe0f4a20f678e6a4f3ded8e963e9cb3713941d2755046d21f15c9d5bcf1f5038",
+      "shard_id": "003",
+      "source_line_end": 33,
+      "source_line_start": 24,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Rewrite alignment (2026-02-21)",
+      "path": "Plans/_shards/worktreegitimprovement/004-rewrite-alignment-2026-02-21.md",
+      "sha256": "b0872d50d5848dfb64c6d5f02ac55e4deee0c3c15bdeacca31c9073a64e9d89e",
+      "shard_id": "004",
+      "source_line_end": 41,
+      "source_line_start": 35,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "SSOT references (DRY)",
+      "path": "Plans/_shards/worktreegitimprovement/005-ssot-references-dry.md",
+      "sha256": "a12770f1f695d2c005829ae2db7c4a2d9587ded93a5f257200f9aa95abace14f",
+      "shard_id": "005",
+      "source_line_end": 55,
+      "source_line_start": 43,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Table of Contents",
+      "path": "Plans/_shards/worktreegitimprovement/006-table-of-contents.md",
+      "sha256": "99e448018659220ed66ced32be9789195608ac2e67bf7eac7b56501e3b13615b",
+      "shard_id": "006",
+      "source_line_end": 68,
+      "source_line_start": 57,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Executive Summary",
+      "path": "Plans/_shards/worktreegitimprovement/007-1.-executive-summary.md",
+      "sha256": "26634f9c78585e72313aaf2a1d2d1ec1ea7e76ba950b38b1f314ce3527a74f12",
+      "shard_id": "007",
+      "source_line_end": 95,
+      "source_line_start": 70,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Worktree Improvements",
+      "path": "Plans/_shards/worktreegitimprovement/008-2.-worktree-improvements.md",
+      "sha256": "4874d72c9ecb0f092bc1b658444122ac8ace48a6a00ee41f38c43d3534807d2c",
+      "shard_id": "008",
+      "source_line_end": 323,
+      "source_line_start": 97,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Git Improvements",
+      "path": "Plans/_shards/worktreegitimprovement/009-3.-git-improvements.md",
+      "sha256": "66c313e974469fc1381c12878e85e2dbe8771caa40a7b3a5a00aa20e48fe7ac8",
+      "shard_id": "009",
+      "source_line_end": 424,
+      "source_line_start": 325,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. GUI for Git & Worktrees",
+      "path": "Plans/_shards/worktreegitimprovement/010-4.-gui-for-git-worktrees.md",
+      "sha256": "60a80b37e391ae1fd67802f16722486b9b48324182d042a23411400babf1f852",
+      "shard_id": "010",
+      "source_line_end": 454,
+      "source_line_start": 426,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Config Wiring (Prerequisite)",
+      "path": "Plans/_shards/worktreegitimprovement/011-5.-config-wiring-prerequisite.md",
+      "sha256": "0d7bc28fdb53c114a7449bf71c34ec67b2c31890b6752a2e871d62f08f6a4615",
+      "shard_id": "011",
+      "source_line_end": 493,
+      "source_line_start": 456,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Implementation Checklist",
+      "path": "Plans/_shards/worktreegitimprovement/012-6.-implementation-checklist.md",
+      "sha256": "b6155dcecd19d65979a9628fa610a56431dd02a82c0d91cc247e4f56ac01829d",
+      "shard_id": "012",
+      "source_line_end": 584,
+      "source_line_start": 495,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Gaps, Risks, and Implementation Notes",
+      "path": "Plans/_shards/worktreegitimprovement/013-7.-gaps-risks-and-implementation-notes.md",
+      "sha256": "c1a4ebf1e9b762c909645f27dc6452e624ca92bcde39a291ccbd53ddbaee1719",
+      "shard_id": "013",
+      "source_line_end": 664,
+      "source_line_start": 586,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "DRY Method Compliance",
+      "path": "Plans/_shards/worktreegitimprovement/014-dry-method-compliance.md",
+      "sha256": "72dca1d1aadd0578036e00853d80024b22b673c06bd1c62c0537ab0378a336d5",
+      "shard_id": "014",
+      "source_line_end": 705,
+      "source_line_start": 666,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations",
+      "path": "Plans/_shards/worktreegitimprovement/015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md",
+      "sha256": "4075ab695f067c1b9cb92f84d6c6976f70b7ba99afe81181f3d88aec969c78ca",
+      "shard_id": "015",
+      "source_line_end": 724,
+      "source_line_start": 707,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations",
+      "path": "Plans/_shards/worktreegitimprovement/016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md",
+      "sha256": "a19130a1cec620745d118a8bb22be50ed975cbd91f65c06e7db486988c07e87c",
+      "shard_id": "016",
+      "source_line_end": 739,
+      "source_line_start": 725,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. References",
+      "path": "Plans/_shards/worktreegitimprovement/017-8.-references.md",
+      "sha256": "e548c1ac181a41ab8ae449e1ffb0d6d1610582c406a1d1934e0fd302446ad19d",
+      "shard_id": "017",
+      "source_line_end": 746,
+      "source_line_start": 740,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Safe-Point and Retry Integration Addendum (2026-03-08)",
+      "path": "Plans/_shards/worktreegitimprovement/018-safe-point-and-retry-integration-addendum-2026-03-08.md",
+      "sha256": "6456001f1779782fe133f8e3fdb2f1741a3a730316059ce0487b3230aec2d508",
+      "shard_id": "018",
+      "source_line_end": 771,
+      "source_line_start": 748,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)",
+      "path": "Plans/_shards/worktreegitimprovement/019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md",
+      "sha256": "8cd1361fe50334527025925ea8f2cc9026560310a3bc73baf7f4503d22a7f836",
+      "shard_id": "019",
+      "source_line_end": 781,
+      "source_line_start": 772,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Worktree Conflict Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/worktreegitimprovement/020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md",
+      "sha256": "ed170739d8b0620de0bf11acf3a12c596d9f16f83c640fe67c24671b1d763c4a",
+      "shard_id": "020",
+      "source_line_end": 818,
+      "source_line_start": 782,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Worktree Lane Allocation and Source Control Reconciliation",
+      "path": "Plans/_shards/worktreegitimprovement/021-worktree-lane-allocation-and-source-control-reconciliation.md",
+      "sha256": "cdafad5ff85d6b0dee8384173d45a690fabdbca1f87c33e2d94c3225186be75f",
+      "shard_id": "021",
+      "source_line_end": 850,
+      "source_line_start": 820,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Child Worktree Runtime Lifecycle and Typed Lease Protocol",
+      "path": "Plans/_shards/worktreegitimprovement/022-child-worktree-runtime-lifecycle-and-typed-lease-protocol.md",
+      "sha256": "6b5f51adc6c75c4edec6d899f1bf0533ee21962926d6a3baf522f06aab6bcac2",
+      "shard_id": "022",
+      "source_line_end": 914,
+      "source_line_start": 852,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/worktreegitimprovement/023-owner-consumer-map.md",
+      "sha256": "b1610b6f2bdcea290304be4f5fefd73fce2e0b30a3cb94283fe07f90c732546b",
+      "shard_id": "023",
+      "source_line_end": 920,
+      "source_line_start": 916,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/worktreegitimprovement/024-planunits.md",
+      "sha256": "2df2744a17064957ad83e65b7f46e0b396422aa8ccc4c94dcb33fff0f74f9e7a",
+      "shard_id": "024",
+      "source_line_end": 4910,
+      "source_line_start": 922,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/worktreegitimprovement/025-migration-coverage.md",
+      "sha256": "720aea77f37e8f85a944f50bcbd5ae8810f98a3ccbc2d5e3b41004787a34cbc9",
+      "shard_id": "025",
+      "source_line_end": 4925,
+      "source_line_start": 4911,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260614-001",
+      "path": "Plans/_shards/worktreegitimprovement/026-ledger-compile-addendum-pldg-20260614-001.md",
+      "sha256": "dfd7d754e431bba9a3fd4b0918c85ae5ca19c4e4b1c763648dd4258816a20531",
+      "shard_id": "026",
+      "source_line_end": 4964,
+      "source_line_start": 4927,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260616-002",
+      "path": "Plans/_shards/worktreegitimprovement/027-ledger-compile-addendum-pldg-20260616-002.md",
+      "sha256": "3a8edf40cd0a92ae846702d15c0b407a890611c9fd899747dae010bdc8119326",
+      "shard_id": "027",
+      "source_line_end": 5030,
+      "source_line_start": 4966,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/_shards/worktreegitimprovement/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "sha256": "a8d3b74a22557ec525b25f5f05207f2791fa5ccce8eaca7a2545c8050d94d58b",
+      "shard_id": "028",
+      "source_line_end": 5087,
+      "source_line_start": 5032,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/worktreegitimprovement/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "5480aeb68ecce1692620775589583d50b51c4df4b3f066f4608d41d5b114cb2b",
+      "shard_id": "029",
+      "source_line_end": 5185,
+      "source_line_start": 5090,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
+      "path": "Plans/_shards/worktreegitimprovement/030-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "sha256": "0eceafcbf7ef9b463df055e74d7c18f1823bbddf4080db052403e26699a901c2",
+      "shard_id": "030",
+      "source_line_end": 5231,
+      "source_line_start": 5187,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/worktreegitimprovement/031-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "1e69b11e106b1441906bd4014102a7687fd33c4f34ed2efb18c643a11f5250a2",
+      "shard_id": "031",
+      "source_line_end": 5239,
+      "source_line_start": 5233,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Cozy Shelves Panel Reconciliation Addendum - 2026-07-27",
+      "path": "Plans/_shards/worktreegitimprovement/032-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+      "sha256": "8cf365bf106383502ffe9a74a938c7aaee28c3160af643061658afe6e58c35f8",
+      "shard_id": "032",
+      "source_line_end": 5488,
+      "source_line_start": 5241,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Corrected Runtime Integration Child-Worktree Addendum - 2026-08-13",
+      "path": "Plans/_shards/worktreegitimprovement/033-corrected-runtime-integration-child-worktree-addendum-2026-08-13.md",
+      "sha256": "ee7d9e317d524ef1e05b6b9489d7fbc9b4733eba9e4b99df1e54aa996cbf78ca",
+      "shard_id": "033",
+      "source_line_end": 5709,
+      "source_line_start": 5490,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 5709,
+    "path": "Plans/WorktreeGitImprovement.md",
+    "sha256": "a91952094251ba92ee185e07d897f219d7f8a47942834c70e88d45e77fe6a5fb"
+  }
+}

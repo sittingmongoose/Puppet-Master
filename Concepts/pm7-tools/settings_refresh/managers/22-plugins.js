@@ -48,8 +48,8 @@
       PM51.advanced([
         PM51.section({ title: 'Hooks and tools', help: 'Hooks run at key moments, such as before a file is saved. Tools are things the assistant can call.', body: table }),
         PM51.rows([
-          { label: 'Hook time limit', help: 'A hook that takes longer is stopped so your work is not held up.', control: PM51.select(p.hookTimeout, ['5 seconds', '10 seconds', '30 seconds', '1 minute'], { action: 'pm51-plugins-timeout', label: 'Hook time limit' }) },
-          { label: 'Let plugins replace built-in tools', help: 'A plugin tool with the same name as a built-in one takes over. Usually best left off.', control: PM51.toggle(!!p.allowOverride, { action: 'pm51-plugins-override', label: 'Let plugins replace built-in tools' }) },
+          /* Wave S: hook time limit and built-in tool override are the canonical extensions.plugins.hook-timeout
+             and tool-override rows, rendered inline above. */
           { label: 'Before updating a plugin', help: 'Updates can ask for new permissions. Reviewing them keeps you in control.', control: PM51.select(p.updateReview, ['Always ask me', 'Ask only when permissions change', 'Update automatically'], { action: 'pm51-plugins-review', label: 'Before updating a plugin' }) }
         ]),
         PM51.section({ title: 'How plugins are checked', body: PM51.kv([['Signature', 'Checked before install and before every update'], ['Publisher', 'Shown in the plugin details before you install'], ['Known problems list', 'Checked before install and update'], ['Previous version', 'Kept so you can roll back']]) + actionRow(PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-plugins-diagnostics' })) })

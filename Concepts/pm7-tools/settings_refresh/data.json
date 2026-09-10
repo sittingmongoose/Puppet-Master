@@ -1,14 +1,4 @@
 {
-  "eventSoundRenames": [
-    [
-      "Peon ready",
-      "Task done"
-    ],
-    [
-      "Peon warning",
-      "Agent blocked"
-    ]
-  ],
   "copyRenames": [
     [
       "6 active · 3 need attention · configure accounts and exact models",
@@ -1954,57 +1944,7 @@
         "Debug sessions": false
       },
       "remoteAccess": {
-        "options": [
-          {
-            "id": "tailscale",
-            "title": "Tailscale",
-            "subtitle": "Built into PuppetMaster",
-            "action": "Set Up",
-            "recommended": true
-          },
-          {
-            "id": "domain",
-            "title": "Use My Domain",
-            "subtitle": "NGINX or Traefik",
-            "action": "Configure"
-          },
-          {
-            "id": "remote-link",
-            "title": "Puppet Master Remote Link",
-            "subtitle": "No external account or domain",
-            "action": "Set Up"
-          },
-          {
-            "id": "vpn",
-            "title": "I Already Use a VPN",
-            "subtitle": "",
-            "action": "Connect"
-          }
-        ],
-        "routes": [
-          [
-            "Local network",
-            "Ready"
-          ],
-          [
-            "Tailscale",
-            "Not set up"
-          ],
-          [
-            "Use My Domain",
-            "Not set up"
-          ],
-          [
-            "Puppet Master Remote Link",
-            "Not set up"
-          ],
-          [
-            "VPN",
-            "Not set up"
-          ]
-        ],
-        "headscale": null,
-        "publicAccess": false
+        "headscale": null
       },
       "sshFolders": [
         {
@@ -2194,5 +2134,95 @@
       "'Google Antigravity'",
       "'Antigravity CLI'"
     ]
+  ],
+  "events": [
+    {
+      "id": "goal-completed",
+      "name": "Goal completed",
+      "description": "A Goal finished all of its steps.",
+      "enabled": true,
+      "destinations": [
+        "In-app",
+        "System notifications"
+      ],
+      "sound": "Task done",
+      "priority": "Normal",
+      "custom": false
+    },
+    {
+      "id": "approval-required",
+      "name": "Approval required",
+      "description": "The assistant is waiting for your yes or no.",
+      "enabled": true,
+      "destinations": [
+        "System notifications",
+        "Phone alerts"
+      ],
+      "sound": "Attention chime",
+      "priority": "Urgent",
+      "custom": false
+    },
+    {
+      "id": "agent-blocked",
+      "name": "Agent blocked",
+      "description": "Work stopped and cannot continue on its own.",
+      "enabled": true,
+      "destinations": [
+        "System notifications",
+        "Phone alerts"
+      ],
+      "sound": "Agent blocked",
+      "priority": "Urgent",
+      "custom": false
+    },
+    {
+      "id": "provider-usage-exhausted",
+      "name": "Provider usage exhausted",
+      "description": "An AI account hit its limit and the next one is being used.",
+      "enabled": true,
+      "destinations": [
+        "In-app"
+      ],
+      "sound": "Soft warning",
+      "priority": "Normal",
+      "custom": false
+    },
+    {
+      "id": "backup-failed",
+      "name": "Backup failed",
+      "description": "A scheduled backup did not complete.",
+      "enabled": true,
+      "destinations": [
+        "System notifications",
+        "Project Discord"
+      ],
+      "sound": "Failure pulse",
+      "priority": "Urgent",
+      "custom": false
+    },
+    {
+      "id": "update-available",
+      "name": "Update available",
+      "description": "A new Puppet Master version is ready to install.",
+      "enabled": false,
+      "destinations": [
+        "In-app"
+      ],
+      "sound": "None",
+      "priority": "Low",
+      "custom": false
+    },
+    {
+      "id": "nightly-report-ready",
+      "name": "Nightly report ready",
+      "description": "Raised by your nightly report script.",
+      "enabled": true,
+      "destinations": [
+        "In-app"
+      ],
+      "sound": "None",
+      "priority": "Normal",
+      "custom": true
+    }
   ]
 }

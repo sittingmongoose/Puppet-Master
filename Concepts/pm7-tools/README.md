@@ -93,6 +93,38 @@ and an edit requires a recorded consequence revision. This is a local Planning
 subset, not full cross-chapter owner or durable checkpoint revalidation. The
 browser campaign and integration with concurrent preview work remain pending.
 
+The September 9 source follow-up also rechecks the current completed Chat/panel
+move against its retained comparison and exact surface identity. A still-applied
+move retains its existing receipt; an undone move loses only its current cached
+completion and waits for explicit Try it or Show Me. A missing/hidden surface,
+invalid comparison, or unavailable owner blocks progress before preparation,
+with Pause/retry and Skip retained. No move, fresh baseline capture, new receipt,
+or change to unrelated completion/history is performed by that check. It does
+not cover historical moves, widget completion recovery, or the full cross-chapter
+prerequisite chain. The tooling was restored by concurrent user work after its
+earlier pruning; this pass did not restore it or publish its candidate.
+
+The widget follow-up binds Show Me to the originally selected widget and Usage
+view instead of choosing again at dispatch. The same read-only context check
+guards the predicate and action: missing/retargeted widgets, changed views,
+malformed visibility or geometry, and unavailable reads cannot dispatch or
+claim completion. A hidden current widget fails even if an old card remains
+mounted. Resume validates context before and after redraw, then rechecks a
+completed widget using the shared predicate; undone resize/show or a missing
+card revokes only the current completion. No widget is changed by Resume, no
+comparison is recaptured, and the retained view is not added to the persisted
+marker. These remain source/unit results pending real-browser verification.
+
+The Teacher follow-up binds a completed local exchange to the exact Chat-owned
+question and reply objects. Deleted, replaced, stopped, reordered, or mismatched
+messages cannot satisfy the cached answered flag. ELI5 updates the bound reply,
+not its former array index, and addresses only that reply's DOM sink. Resume
+returns a missing exchange to the question without resending it or replacing the
+draft; unavailable message storage blocks progress before preparation. New local
+turns invalidate the old exchange until their reply completes. These live refs
+are never serialized and are not durable owner-snapshot custody. DOM recreation,
+full historical/cross-chapter recovery, and browser validation remain pending.
+
 ## Re-baseline — 2026-08-27 (current)
 
 The base is `base/PM7-base.html` (not PMConcept6). It hashes to

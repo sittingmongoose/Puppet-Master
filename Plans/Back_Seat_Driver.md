@@ -1886,18 +1886,22 @@ canonical_text: >-
   The Back Seat Driver Settings manager renders with the shared manager kit (USER-SETTINGS-MANAGER-REFRESH-20260908)
   over the settings.bsd projection and the eight canonical safety.approvals.bsd-* settings: Mode as an Off,
   Auto, On segmented control with a plain-language status line, Who advises (Model, Persona) noting that a
-  change starts a fresh advisor session, When to advise (Sensitivity, Catch-up delay, Cooldown), Where it
-  watches with a side panel that sets each of the ten stage bindings to Inherit, Off, Auto, or On, and one
-  Advanced disclosure for transcript retention, compaction threshold, usage boundary, fallback model, recent
-  findings, and technical details. It exposes no check control and no header-level action strip.
+  change starts a fresh advisor session, When to advise (Sensitivity, Catch-up delay, Cooldown), and Memory
+  (transcript retention, compaction threshold) as Overview sections of canonical rows; a Stages tab that sets
+  each of the ten stage bindings to Inherit, Off, Auto, or On inline; a Findings tab listing held, delivered,
+  and cleared findings whose sheets offer reconfirmation or dismissal but never surface a held finding as
+  current advice; a stats strip (mode, status, findings, stages on); and one Advanced disclosure for usage
+  boundary, fallback model, and technical details (USER-SETTINGS-MANAGER-REFRESH-20260909). It exposes no check control and no header-level
+  action strip.
 gui_related: true
 gui_classification_reason: Governs the Settings manager presentation of Back Seat Driver in the published concept.
 depends_on: [BSD-027, SSYS-031, SSYS-033]
 unblocks: []
 acceptance_criteria:
-  - The BSD manager mounts through the shared kit with the four sections and one Advanced disclosure listed above.
+  - The BSD manager mounts through the shared kit with a stats strip, the Overview, Stages, and Findings tabs, and one Advanced disclosure.
   - Mode, model, persona, sensitivity, catch-up, cooldown, transcript retention, and compaction threshold read and write the canonical safety.approvals.bsd-* keys.
-  - The stage side panel offers Inherit, Off, Auto, and On for all ten stages and updates safety.approvals.bsd-stage-bindings.
+  - The Stages tab offers Inherit, Off, Auto, and On for all ten stages inline and updates safety.approvals.bsd-stage-bindings.
+  - The eight canonical rows render exactly once through the engine row renderer with their Details buttons; the Findings tab never offers to deliver a held finding.
 validation_surfaces:
   - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
   - python3 scripts/pm-plans-verify.py run-gates
@@ -1913,6 +1917,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - USER-SETTINGS-MANAGER-REFRESH-20260908
+  - USER-SETTINGS-MANAGER-REFRESH-20260909
   - BSD-027
   - SSYS-031
 preserved_exact_tokens:
