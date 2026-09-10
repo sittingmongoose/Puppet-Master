@@ -20205,7 +20205,7 @@
  {
   "id": "safety.approvals.bsd-trigger-sensitivity",
   "label": "Adviser Sensitivity",
-  "desc": "How readily the adviser speaks up. Balanced raises concerns and criticals but stays quiet about nits.",
+  "desc": "How readily elastic review triggers fire. Balanced is the default. Sensitivity does not filter severity, disable required checks, or bypass held-finding reconfirmation.",
   "type": "select",
   "default": "Balanced",
   "scope": [
@@ -20224,12 +20224,17 @@
    "bsd",
    "sensitivity",
    "trigger"
+  ],
+  "options": [
+   "Conservative",
+   "Balanced",
+   "Frequent"
   ]
  },
  {
   "id": "safety.approvals.bsd-catch-up-seconds",
   "label": "Adviser Catch-Up",
-  "desc": "How long the adviser may spend catching up on work that happened while it was busy, before it skips ahead to current work.",
+  "desc": "Maximum user-abortable wait at an eligible frozen boundary while the adviser catches up. Off means no waiting; it does not switch BSD off or discard unresolved findings.",
   "type": "select",
   "options": [
    "Off",
