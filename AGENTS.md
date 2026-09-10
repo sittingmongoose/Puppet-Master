@@ -61,3 +61,10 @@ Spec Lock and governance:
 - Refresh governance artifacts only in an explicit governance seal phase after canonical docs and generated indexes stop changing.
 
 Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are unavailable, follow `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and the prompts in `Plans/bootstrap/Codex_Prompts.md`.
+
+## Where things go (layout since 2026-09-10)
+- This repository holds product canon and its governance only: `Plans/**` (owner docs, registries, schemas, fixtures, ledgers, `_shards`, `.plan_index`, `.evidence`, and in `.plan_migration` only runs 001, 002 and the current run), `Concepts/**` (every HTML concept; never prune or dedupe them), `scripts/**`, compact result bundles under `reports/**`, and `tests/fixtures/**` plus the named test files.
+- Raw evidence lives outside git in `/mnt/Cursor/PuppetMaster-Evidence/`: experiment captures (`tests/agent_packet_restrictions` is an ignored symlink into it so the raw-capture gate resolves), superseded migration runs, and root scratch. Cite evidence by path plus SHA-256. Never commit raw captures, run workspaces or scratch here.
+- Experiment code and campaign runtime live in `/mnt/Cursor/PM-Experiments/`, `/mnt/Cursor/PuppetMaster-AssuranceLab/` and `~/PM-Experiments/`.
+- Research and audit tasks work in their own git worktree under `/mnt/Cursor/PuppetMaster-research/<topic>-<date>` on a branch cut from a snapshot of `main`, and land on `main` with a currentness check. Never edit the shared checkout from such a task.
+- Commit only the paths you changed, with a message that says what they are; never sweep. Editing a Plans document means regenerating `Plans/_shards` and `Plans/.plan_index` for it; regeneration is deterministic, so only the edited document's files change. Governance reseals are done only by the designated Plans agent.
