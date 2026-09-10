@@ -1473,9 +1473,9 @@ owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
   PWIZ-017 preserves the 2026-07-01 four-screen, provider-first, direct-to-Planning-Wizard proposal as historical
   source lineage only. It is not current Product Onboarding choreography, command authority, or landing-page authority.
-  PWIZ-021 through PWIZ-023 own the current nine-stage `welcome` / `simple_path` / `first_project` /
+  PWIZ-021 through PWIZ-023 own the current eleven-stage `welcome` / `simple_path` / `first_project` /
   `source_control_setup` / `server_storage_client` / `remote_access_setup` / `review_setup_plan` /
-  `automatic_preparation` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
+  `automatic_preparation` / `provider_setup` / `free_models_setup` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
   three-chapter Guided Tour.
   Provider and advanced setup are optional and deferrable, incomplete provider state remains a truthful warning rather
   than a false Health/Doctor Ready claim; PWIZ-023's September 3 correction makes Planning Wizard the tour destination.
@@ -1489,7 +1489,7 @@ depends_on: [PWIZ-021, PWIZ-022, PWIZ-023]
 unblocks: []
 acceptance_criteria:
   - The four-screen/provider-first order, mandatory provider prompt, legacy setup-state shape, and direct landing behavior are classified as source-lineage rather than current product authority.
-  - Current behavior routes through PWIZ-021 through PWIZ-023, the nine-stage primary path, the six-stage connect-existing shortcut, and the exact three-scene Guided Tour.
+  - Current behavior routes through PWIZ-021 through PWIZ-023, the eleven-stage dependency graph, the six-stage connect-existing shortcut, and the exact three-scene Guided Tour.
   - The superseded seven-stage Onboarding flow and five-chapter Guided Tour are explicitly source-lineage only.
   - Legacy provider decisions and warnings remain migration inputs without becoming current stage, command, or readiness authority.
   - No old onboarding record reruns provider, Server, pairing, restore, Project, authentication, or source-control owner work.
@@ -1760,55 +1760,71 @@ owner_hints:
 
 This addendum records ownership boundaries from the user-approved PMConcept7 concept pass (ChatGuiUpdates2 workstreams, revs 4-9.2) and promotes no new PlanUnits in this document. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only. Workspace runhead presentation is owned by `Plans/FinalGUISpec.md` (F3-470): the runhead is one line carrying the project title, the state/PRD chip, and the Replay control, with no PlanningRun/revision/seed meta line in the header. PlanningRun identity, revision, and seed remain data-model canon in this document, the Approve And Build CAS/currentness payload is unchanged, and run identity fields may surface in inspector or rail projections rather than the header one-liner. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-## Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-01)
+## Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)
 
-This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: Onboarding's seven-stage and no-current-`simple_path` values and both predecessor tour controllers are migration inputs, not current authority. For Guided Tour, the September 3 correction below and PWIZ-023 own Chat-first/Planning-final, default restoration or explicit Keep, and safe-step resume. The v3 tour schema materializes these static obligations; predecessor v2 values cannot override them, and v3 validity does not prove a durable adapter or native recovery.
+This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: Onboarding's predecessor seven/nine-stage and no-current-`simple_path` values and both predecessor tour controllers are migration inputs, not current authority. For Guided Tour, the September 3 correction below and PWIZ-023 own Chat-first/Planning-final, default restoration or explicit Keep, and safe-step resume. The v3 tour schema materializes these static obligations; predecessor v2 values cannot override them, and v3 validity does not prove a durable adapter or native recovery.
 
-### Product-design law
+### Product-design law — September 3 draft-first correction
 
-Product Onboarding MUST feel simple, beautiful, cinematic, and calm. Each stage asks one decision, has one visually dominant CTA, and shows no more than two prominent choices. Additional valid choices live behind a clearly named secondary disclosure such as `More ways`; disclosure never changes a selection or starts work. Advanced configuration is not embedded in Onboarding: `Advanced settings` routes to the exact owner Settings manager and returns through the same continuation context. Before review confirmation, automatic detection is limited to safe cached projections. Copy is concise and human: visible headings and choices explain the outcome in ordinary language, while internal tool names, connection details, ports, package provenance, fingerprints, raw authentication state, and topology generations stay in Details. The primary copy never asks a beginner to understand source-control jargon or developer terminology.
+Product Onboarding is a short, calm interruption of the live application, not a full-page substitute application or a provider-first gate. It uses one bounded modal over a theme-aware input-blocking scrim, clear outer margins, one dialog accessibility surface, focus containment, and exact Close/Escape return. Branches replace its interior; they do not create nested dialogs or duplicate owner Settings managers. Each scene has one dominant action and concise adult-language copy. PWIZ-024's four First Project source routes remain visible together; other secondary choices use progressive disclosure. Introduce Git, Jujutsu, service names, NAS, SSH, account details, and topology only when the selected path makes them useful. Advanced detail is optional and consumes the exact owner surface with return context.
 
-The full nine-stage path and the connect-existing six-stage shortcut are presented in one bounded modal window over a theme-aware input-blocking scrim. The live Puppet Master application remains visibly present behind the modal so setup reads as a short guided interruption, never a full-page route or substitute application. Desktop layouts keep clear space around the modal. Narrow and short layouts may approach the viewport bounds only while retaining an explicit outer margin, modal border/chrome, one `role=dialog`/`aria-modal=true` accessibility surface, focus containment, and exact Close/Escape return to the initiating application control. Branches replace the modal interior only; they do not open a nested modal or full-page subflow.
+The semantic dependency graph is owned once by `Plans/product_onboarding_contracts.schema.json#/$defs/main_stage_order`. Its eleven ordered stages are:
 
-The nine canonical stages, in exact order, are:
+1. `welcome` — explain the outcome; offer Get Started and visible Skip.
+2. `simple_path` — choose ordinary guided setup or connection to an existing Puppet Master; choosing changes only local state.
+3. `first_project` — choose Start a new project, Open a folder here, Bring one from online, or Restore a backup; record source/name/destination intent without creating a Project or folder.
+4. `source_control_setup` — local Safe History and an optional online copy are independent. Show only relevant source choices and, when necessary for the chosen source, the bounded just-in-time source-account flow below.
+5. `server_storage_client` — independently resolve where work runs, where files live, and the current Client; validate selected locations without moving or creating content.
+6. `remote_access_setup` — record the relevant private access plan or an explicit skip; do not claim a route already exists.
+7. `review_setup_plan` — show the chosen source-to-destination/work-computer route, name, settings-copy summary, source-account state, privacy consequences, skips, and unresolved checks. Edit returns to the affected draft choice and retains later choices that remain valid. The final context-specific Create Project, Add Project, or Restore Project action confirms the exact current draft; it is the one Project commit boundary.
+8. `automatic_preparation` — observe the selected existing owner command and its required child results after the commit click. The Project becomes usable only from its actual listed/persisted owner result and receipts; acceptance alone is not completion.
+9. `provider_setup` — with that actual committed Project in context, offer Choose what powers Puppet Master. Reuse detected usable accounts and copied routes first; broad AI provider work never precedes Project commit.
+10. `free_models_setup` — offer the explicit optional Set Up Free Models continuation after the paid-provider prompt, including after Skip. It stays inside Onboarding and delegates to the existing underlying provider/account/model owners.
+11. `ready` — present the truthful handoff, Enter Puppet Master, and optional Guided Tour. It does not certify skipped/failed work or start Goals, Plans, agents, provider requests, or builds.
 
-1. `welcome` (`Welcome`) — explain the outcome in one short sentence; dominant CTA `Get Started`; secondary `Skip`.
-2. `simple_path` (`Choose your setup`) — choose either the ordinary guided setup or `Connect to an existing Puppet Master`. The choice is recorded locally and advances immediately; it performs no discovery, pairing, sign-in, installation, creation, or network work.
-3. `first_project` (`First Project`) — on the ordinary path, choose `Start a new project` or `Open one I already have`; `Other project options` reveals less-common origins. This stage records the intended Project action but does not create, open, clone, restore, or register anything yet.
-4. `source_control_setup` (`Safe History`) — on the ordinary path, explain that Safe History keeps recoverable versions on the selected work computer and that an online copy is separate and optional. Internal backend and service names may appear only in plain-language Details. The stage records the local-history and optional-online-copy plan but does not initialize, bind, clone, publish, authenticate, or create an online repository.
-5. `server_storage_client` (`Where your work lives`) — on the ordinary path, choose in plain language where work runs, where its data is kept, and which device is being used now. Cached known choices may be suggested, but discovery, pairing, setup, restore, storage movement, and trust work remain deferred.
-6. `remote_access_setup` (`Use it while away`) — on both paths, choose the safe supported private-access plan or `Not now`; public/manual details remain behind progressive disclosure. The stage records intent only and never claims that a route exists.
-7. `review_setup_plan` (`Review your setup`) — on both paths, show one concise, editable summary of every selected action, skipped item, destination, privacy consequence, and what Puppet Master will do. `Confirm and prepare` is the sole setup-plan confirmation boundary. Before it is activated, Onboarding may persist only its local draft and read cached projections; it MUST NOT probe the network or dispatch installation, authentication, pairing, trust, restore, Project, history, online-copy, storage, Remote Access, provider, update, or other external owner work.
-8. `automatic_preparation` (`Getting things ready`) — only after the current review is explicitly confirmed, dispatch the approved work through the canonical owners and observe their real progress, questions, results, and receipts. A question that only an owner can resolve may be shown here without silently expanding the confirmed plan. Protected authentication remains human-only and bound to the exact initiating active Client.
-9. `ready` (`Ready`) — show a compact truthful completion state and one dominant `Enter Puppet Master` CTA. `Take the Guided Tour` is secondary and optional. Ready means only that the confirmed setup plan reached its truthful handoff; it does not claim skipped or failed owner work is healthy or complete.
+These are dependency stages, not a requirement to render eleven equally complex screens. Hide irrelevant controls, not prerequisites; progress describes the actual applicable journey. `connect_existing_stage_order` retains the exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready shortcut. It does not fabricate a first Project or silently execute omitted setup. An explicit `project_disposition=deferred` on the guided path uses `deferred_project_stage_order`, leaves `project_id` and commit proof absent, and defers both provider phases. Do not turn later/Skip into a fake Project identity or a provider-readiness claim.
 
-The connect-existing shortcut uses exactly `welcome` -> `simple_path` -> `remote_access_setup` -> `review_setup_plan` -> `automatic_preparation` -> `ready`. After an explicit route choice, it may consume cached identity/setup projections, already-detected account or session status, known endpoints, and owner-bounded read-only nearby discovery for the selected existing Puppet Master. It records any connection or access work as part of the draft and skips `first_project`, `source_control_setup`, and `server_storage_client`; it never performs hidden authentication, pairing, configuration, or setup in place of the omitted stages. Review confirmation remains mandatory before any state-changing or protected operation begins.
+### Reversible draft, Settings-owned copy, and precommit source access
 
-Selecting a choice card records that choice in the local draft and advances to the next applicable stage immediately. It does not dispatch owner work. `Confirm and prepare` at `review_setup_plan` validates the current revision and dispatches the approved owner work exactly once through the fenced `OnboardingReturnContext`; `automatic_preparation` observes that work and advances only from current terminal results. Necessary trust, authentication, destructive, privacy, or restore questions remain explicit after confirmation, but an unchanged setup plan is never reconfirmed. Failed, cancelled, stale, or interrupted owner results stay in preparation with one plain-language recovery action.
+The durable session stores one closed setup_draft choice snapshot, not merely an unresolved pointer or a raw plan body. Its canonical bytes, draft identity and revision match the queued/reviewed plan binding; continuation/return projections keep references rather than duplicate the choices. The durable draft has its own `project_draft_ref` and revision, separate from any `project_id`, and remains `planned_only=true`, `applied=false`, and `project_created=false`. Before commit it may cache selections, read current Project metadata, browse folders/source listings, validate names/paths/permissions/free space/reachability/compatibility, resolve Server/storage/sync choices, and render Settings-owner transfer previews. Bounded owner reads and selected-source authentication are explicit exceptions to the predecessor blanket no-owner-work-before-Review rule. They do not permit destination creation/population, history initialization, repository creation, clone/import, Settings apply, Project sync/backup binding, or broad provider/agent work.
 
-`Back`, `Close`, `Skip`, `Do this later`, cancel, and resume are always responsive. `Close` is a non-completion dismissal: it closes the modal and restores the initiating focus without marking the session completed, skipped, deferred, or any owner Ready. `Skip` records the explicit `skipped` session outcome without asserting readiness. `Do this later` dispatches `ui.onboarding.defer`; it durably writes a resumable continuation snapshot containing the exact current stage, selected path, active owner branch, bounded stage history, revision, continuation generation, initiating Client, and return-focus identity before the modal closes. Resume restores that exact continuation rather than restarting or inferring a new path. `Details` is an ephemeral same-stage disclosure: opening or closing it writes no `OnboardingSession`, launches no owner route or command, and returns focus to its toggle. Rerun from Settings does not erase completed owner work. Browser/app/Client/Server/network round trips return to the initiating stage only when `expected_revision`, `continuation_generation`, and target identities still match. A stale return is rejected and shown as `This setup changed. Review the latest state.` No browser/route Back or breadcrumb chrome is added; the existing typed `Back` control changes only the bounded Onboarding stage/owner-branch presentation.
+Start like another Project? appears only while creating a new Project and at least one eligible existing source Project is available; opening an already registered Project, connect-existing and Project Later do not offer or apply a copy. Start fresh is the default, and eligible Projects are ordered by recent use and compatibility. A selected source renders a short Settings-owned preview; Choose settings optionally opens the same canonical category selector. Onboarding never owns a second group list or copy engine. `SSYS-007` and `SSYS-036` own exact eligible IDs, source and draft revisions, proposed values, provenance, exclusions, explicit-choice precedence, validation, expiry, destination rebind, rollback and readback. New explicit Project choices win over copied defaults. Accounts/routes copy only where that contract permits; credentials stay with their owner. An account unavailable on the selected Host retains the intended route and a truthful later setup action, never an invented replacement. Files, history, Goals, Plans, and later source changes remain independent.
+
+`ui.onboarding.open_owner_flow` before commit requires a current `onboarding_precommit_authorization`, an exact owner request/hash, selected source, draft/revision, permission/capability/consent refs, Server/Host/Environment, initiating active Client, return focus, expiry, and continuation generation. `owner_phase=read_only_preflight` permits only the admitted read-only owner request. `owner_phase=selected_source_auth` permits only authentication or verified official-page navigation necessary for that selected source. It does not open the full provider manager or ask about unrelated AI accounts. The owner must validate actual request semantics and authenticate the referenced fences; a structurally valid authorization value is not authority.
+
+Source sign-in and official signup-page navigation reuse `cmd.auth_profile.sign_in` and `cmd.auth_profile.open_official_page`. The Auth owner supplies the narrowly bounded first-time source variant in `MACS-005` when no account/profile exists and the route requires no external CLI. It allocates real account/profile identity only after verification. Do not fabricate an installation, account, or Project to satisfy an older request schema. `cmd.integration.connection.add` and shared `cmd.authentication.start` currently require a real Project context and are not precommit shortcuts. Project-scoped connection activation/binding remains in the approved owner chain after identity reservation. Protected authentication remains human-only, ephemeral, non-recordable/non-inspectable, secret-owner controlled, and bound to the initiating active Client.
+
+### One reviewed owner commit, then simple provider setup
+
+Before enabling the final commit, revalidate stale source, path, account, Server, permission, capacity and compatibility checks and the Settings draft preview. Explain the exact changed choice instead of clearing unrelated draft work. The visible commit routes through Project System §3.1's existing exact command mapping, not `cmd.project.create`, a new Onboarding command, or a second generic wrapper. The Project-owned `onboarding_setup_binding` binds the reviewed plan/hash, draft identity/revision, explicit commit consent, preflight and optional Settings preview. Git clone, Jujutsu clone, SSH source and restore keep their distinct child owners and terminal receipt chains.
+
+After the click, Project System may reserve the real never-reused identity needed by child owners. It lists the Project only after all required content/history/configuration/Settings work and readback have settled under the same commit, or rolls back/reports recovery failure without a half-ready row. Progress names the actual current phase; no percentage exists without an owner denominator. Idempotent replay returns the original owner result rather than creating another Project. The Project-owned `project_setup_commit_binding` is a read model over actual `ProjectActionResult` and terminal receipts, not a new physical receipt family or an Onboarding-written success flag.
+
+`provider_setup` requires that exact binding and the actual Project ID. Show verified usable accounts automatically as Ready, prioritizing copied routes, then a small set of relevant choices with See all providers/search. Start with one account; Add another account is secondary. Keep distinct subscription/API billing pools visible in ordinary language, but never ask the user to choose SDK, ACP, bridge, headless mode, protocol, or telemetry adapter. Multiple internal adapters sharing one credential remain one visible account.
+
+Detection is bounded/cached and prioritized by the selected Execution Host, copied routes, and likely installed products. Compatible installation plus usable credentials is verified and connected automatically; missing/expired credentials expose Sign In or Enter API Key. Only a selected canonical route requiring an external vendor CLI/host binary exposes explicit Install. It uses the vendor's official method, exact selected Host/Environment, provenance and compatibility verification before authentication; no silent first install or bundled CLI is inferred. Shipped SDK/bridge/runtime dependencies and API-only paths expose no provider-CLI Install control. The current provider/account catalog remains authoritative, not a second hard-coded Onboarding list. Ordinary actions Connect, Use This Installation, Use This Provider and Open Installer are absent.
+
+Ready is derived from actual current owner account/route/entitlement/permission/capability and availability facts, not credential presence, cached installation, a timer, or UI selection. Usage may be exact, estimated, or unavailable; PM-observed usage does not become exact provider allowance. Multi-account setup never globally signs another account out. Remote install/auth still targets the selected Host and returns safely through the authorized Client. Free Models consumes `MS-118` through `MS-122`, preserves paid-first defaults and explicit saved top-10 ordering, and never creates its own credentials, silently reorders the list, or revives `cmd.onboarding.free_models.*`.
 
 ### Typed actions, persistence, and owner routing
 
-The thirteen typed local UI action IDs remain `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`, `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`, `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. `ui.onboarding.choose_simple_path` is a current visible action at the current `simple_path` stage. Choice and navigation actions before review change only the local draft. `ui.onboarding.open_owner_flow` may dispatch setup owner work only from a current confirmed `review_setup_plan` revision, and `ui.onboarding.run_automatic_preparation` may begin only for that confirmed plan. No `cmd.onboarding.*` family is created. The packet candidate command tokens remain rejected as commands, aliases, and handlers.
+The exact thirteen local IDs remain `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`, `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`, `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. New choices and phase fields use these same typed requests/results; no peer `cmd.onboarding.*`, help, provider, free-model, draft-commit, or Project wrapper command is introduced. A local choice/disclosure is not owner dispatch. Each explicit owner action has one exact existing command/owner route and its current permission/idempotency/return binding.
 
-`OnboardingSession`, `OnboardingReturnContext`, `OnboardingActionRequest`, `OnboardingActionResult`, and `OnboardingLegacyMigrationReceipt` are consumed from the product-onboarding machine contract. The session and continuation preserve the chosen `path_kind=guided_setup|connect_existing`, all nine current stage IDs, the exact six-stage shortcut, local Safe History and optional online-copy selections, review revision and confirmation state, and owner truth/receipts after dispatch. A request binds one typed action to its action instance, current path and stage, expected revision, continuation generation, bounded choice, normalized secret-free local context, actor, idempotency key, source surface, and return-focus identity. Before a matching review confirmation, any request carrying an owner route or external-work intent is rejected with no dispatch or write beyond the local draft. Whole-session Skip remains distinct from an optional Project or Remote Access choice.
+The v2 session, continuation, request/result, projection and migration contracts own phase persistence. They preserve path, applicable stage/history, draft identity/revision, queued/reviewed plan/hash, active owner phase, actual commit binding, provider/free-model progress and owner-result refs, continuation generation and exact focus. `pm.product_onboarding.action_result.v2` remains `applied|disabled|rejected` with closed local effects. Every local result has `owner_mutation_claimed=false` and no production receipt; actual effects and receipts belong to the owner result referenced by the continuation. Disabled/rejected actions dispatch nothing. Same-frame acknowledgement is not owner completion.
 
-Every inline SVG `?` explanation control reuses `ui.onboarding.open_details`; no tooltip-only, untyped click, or new help command is created. Stage Details uses `intent=toggle_stage_details`, `scope=null`, and `selection_ref=null`. Choice help uses `intent=toggle_choice_explanation`, `scope=<exact current stage>`, `selection_ref=<stable help_topic_id>`, and exact `expanded=true|false`. Both forms are ephemeral, same-stage, owner-route-free, non-persistent, keyboard reachable, and accessibility-linked to the option they explain. Help copy uses familiar examples and explains local Safe History, Git, Jujutsu, online copies, accounts, Servers, and Remote Access without assuming prior coding or IDE knowledge.
+Before commit, Back edits the reversible draft. During a pending owner commit, cancellation/recovery is owner-controlled. After commit, Back never returns to an uncommitted draft or uncreates the Project; Free Models may return to provider setup, while later Project edits use the existing Project/Settings owner. Close/Escape persists a resumable non-completed session and returns focus. Skipping an optional provider phase is distinct from skipping the whole session. The visible escape copy is Skip, Close, and Skip Tour; retained `ui.onboarding.defer`/Do this later compatibility preserves the exact continuation without an extra mandatory visible action. Resume restores the draft before commit, or the unfinished provider phase with the same actual Project after commit. Reopening, rerunning, closing a branch, Client loss and navigation never replay or cancel completed owner work by implication.
 
-The canonical result is `pm.product_onboarding.action_result.v1`; it returns `applied|disabled|rejected`, exact before/after stage and session status, one closed local effect, whether the draft was written, an optional continuation snapshot, ephemeral Details state, optional post-review owner route/operation refs, error/disabled reason, focus return, revision, and continuation generation. Pre-review results require `owner_mutation_claimed=false`, no owner route, and no production receipt. Disabled and rejected results have `local_effect=none`, dispatch no owner route, carry no production receipt, and expose an exact error plus disabled reason. Applied `defer` requires the durable continuation write; applied `open_details` remains same-stage and non-persistent.
+Inline SVG `?` controls reuse `ui.onboarding.open_details`: stage disclosure uses `toggle_stage_details` with null scope/selection, and choice help uses `toggle_choice_explanation`, exact current stage, stable help-topic ref and expanded state. Both are ephemeral, same-stage, owner-route-free, keyboard reachable and accessibility linked; they persist no session and expose no protected content.
 
-Automatic Preparation consumes one closed `pm.product_onboarding.automatic_preparation_owner_projection.v1` record rather than a page timer, synthetic checklist, or inferred percentage. The projection additionally binds the exact confirmed review revision and approved setup-plan hash. The accepting boundary independently compares every fence identity; an unconfirmed, stale, expanded, or mismatched plan cannot dispatch, replace the last accepted state, or advance the stage. Determinate progress requires an owner denominator and named progress source; otherwise the UI remains indeterminate and exposes no fabricated percentage. `ready` advances only after current accepted owner projections truthfully settle the confirmed plan. Close, Defer, resume, reload, and view changes preserve the same owner operations and observe them by dedupe key; retry re-observes rather than starts duplicates. Browser-concept fixtures never claim production owner work, readiness, native execution, or a production receipt.
+`pm.product_onboarding.automatic_preparation_owner_projection.v2` observes the approved Project/setup owner chain, not broad provider setup. It fences the exact reviewed revision/hash and next projection generation; stale/out-of-order work cannot replace a current projection or advance. Close/resume/reload re-observes the same owner operation/dedupe identity. Browser-concept fixtures are not production owner work, readiness, native execution, or receipts.
 
-Durable state stores only stable identities, owner refs, path, stage, local draft selections, decisions, review revision/confirmation/hash, continuation generation, bounded warnings, receipt refs, and layout/tour handoff refs. It stores no raw transcript, key, token, authentication URL/code, credential, profile root, broad local path, or protected authentication content. The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted, stale, dropped, quarantined, per-stage, and per-path counts with `owner_work_replayed=false`. Legacy four-screen/provider-first, five-stage, and superseded seven-stage records migrate by preserving completed decisions and receipts, mapping unresolved work to the first applicable current stage, and forcing review of the resulting draft; migration never auto-confirms review or replays owner work. The predecessor meaning of `simple_path` as non-current is retired: a compatible saved choice now maps to the current stage, while ambiguous rows remain warnings.
-
-Owner routes remain strict across both phases: before review confirmation, Onboarding may request only owner-defined read-only Server endpoint discovery/projection and consume cached/already-detected owner state; this phase neither authenticates nor changes the discovered system, network, account, repository, route, or local machine and performs no live repository lookup. After confirmation, approved First Project, Safe History/online copy, Server/Storage/Client, Remote Access, restore, provider, and authentication intents dispatch only through their canonical owners, and `automatic_preparation` observes their `ObservableWork`, terminal results, and receipts. No choice silently dispatches state-changing work, and no second generic confirmation is synthesized after review. Onboarding never implements installer, package manager, pairing authority, history engine, online-service adapter, account creation, authentication broker, secret store, storage, route supervision, Project movement, backup/restore, update, health, or repair behavior.
+Durable state contains the closed bounded setup_draft user-choice snapshot, stable identities and owner refs, never raw keys/tokens/codes, authentication URLs, profile roots, transcripts, protected browser content or copied secrets. SP-252 consumes the existing onboarding_state family under its v3 session key with a deterministically bundled v2 owner value; this changes no physical-family/retention denominator and proves no native store or migration. Standalone authorization/preview/commit-binding values do not register physical families. Migration retains four-screen, five-stage, seven-stage and now nine-stage inputs only as lineage. Uncommitted drafts return to a fresh unconfirmed review; already committed rows resume provider setup only after their exact actual Project commit/owner refs are revalidated and recorded per-row in the disposition manifest. The migration's global null-review defaults describe unresolved drafts and do not fabricate approval for committed rows. Exact source/disposition/stage/path/committed-resume counts and the sole Storage migration receipt are mandatory; `owner_work_replayed=false`.
 
 ### Motion, responsiveness, Slint portability, and accessibility
 
 The motion storyboard is restrained and cinematic: the interruptible opening hero assembles the Puppet Master identity into the workspace and settles once in approximately `1.2-1.5 seconds`; step transitions use `420-560 ms`; element choreography uses a `60-80 ms` stagger; microinteractions use `120-220 ms`; and the success moment settles in approximately `700 ms`. These durations describe visual completion only: every action acknowledges in the same frame, input is enabled immediately, and navigation never waits for animation. Use bounded opacity, translation, scale, clipping/masking, and vector layers with continuity of position and visual focus between stages. All transitions are interruptible, reversible, resize-safe, theme-switch-safe, and finish immediately at the correct semantic state on navigation, suspension, or interruption. The outgoing visual layer is always inert, stripped of duplicate IDs, and excluded from the focus census while it animates. Friendly, Basic, and Glass use distinct material-appropriate cinematic easing; Retro uses dedicated deliberate stepped opacity/translation keyframes, hard cuts, and compact pixel/terminal-style reveals without scale choreography. Decorative work stops when hidden/off-screen. Reduced Motion uses an immediate state change or a very short opacity settle while preserving hierarchy; low-resource mode removes ambient/prewarm work without removing choices or receipts. These essentials must be portable to Slint 1.17.1 properties, models, timelines, transforms, opacity, vector shapes, and clipping; DOM measurement, browser physics, Canvas/WebGL, heavy SVG filters, or blur-dependent storytelling cannot be required.
 
-Every stage has a programmatic heading, path-correct progress text (`Step n of 9` or `Step n of 6`), concise description, one primary action, keyboard-reachable secondary action, persistent Back/Close/Escape semantics, visible focus, non-color state, and an announcement for async phase changes. Focus never moves because a background projection refreshes. Long/localized copy wraps without clipping; narrow layouts stack visually distinct choices while preserving primary-before-secondary order. A screen reader receives stage, decision, review-confirmation boundary, current owner work, wait reason, errors, and return outcome without decorative narration. Inline SVG help controls have stable accessible names and descriptions and never rely on hover alone.
+Every stage has a programmatic heading, path-correct progress derived from the applicable eleven-stage dependency graph, explicit deferred-project path, or six-stage connect-existing shortcut, concise description, one primary action, keyboard-reachable secondary action, persistent Back/Close/Escape semantics, visible focus, non-color state, and an announcement for async phase changes. Focus never moves because a background projection refreshes. Long/localized copy wraps without clipping; narrow layouts stack visually distinct choices while preserving primary-before-secondary order. A screen reader receives stage, decision, review-confirmation boundary, current owner work, wait reason, errors, and return outcome without decorative narration. Inline SVG help controls have stable accessible names and descriptions and never rely on hover alone.
 
 ### Guided Tour real-application contract — September 3 newbie-first correction
 
@@ -1828,61 +1844,107 @@ Every scene heading receives programmatic focus when that scene settles. Each ca
 
 Tour motion preserves cause/effect through bounded interruptible pre-cue, travel, arrival, and settle. User action, resize, reversal, Skip, route return, or effective preference change lands in the correct semantic state. Reduced Motion retains sequence, focus, announcements, and action parity through restrained state transitions without long travel. Hidden/collapsed surfaces stop decorative work and duplicate subscriptions. All eight themes receive intentional materials, focus, contrast, and motion. Background interaction is blocked only where it would invalidate the current action. Low-resource or squeezed layouts retain every choice and recover honestly from an unreachable target.
 
-Onboarding acceptance for the preceding owner revision requires positive and negative fixtures for the exact nine-stage primary order and exact six-stage connect-existing order; a current visible `simple_path`; the hard no-side-effect-before-current-review-confirmation fence plus bounded pre-Review read-only discovery/projection; current-review one-dispatch behavior; migration of four-screen, five-stage, and superseded seven-stage records without auto-confirmation or replay; path-correct progress; no-secret persistence; keyboard/screen-reader/focus tests; six-width and eight-theme rendering; interruption/reversal/resize tests; and truthful Ready semantics. This Guided Tour correction does not silently reconcile the separate September 3 Onboarding migration.
+Onboarding acceptance now requires the v2 eleven-stage dependency graph, unchanged six-stage connect shortcut, explicit Project-deferred path, Settings-owner draft preview/rebind/rollback, fenced first-time and existing-source authentication, one idempotent owner commit, postcommit provider/Free Models continuation, no-secret resume and predecessor migration, and exact thirteen-action request/result/return coverage. Static schemas and the named phase/draft-transfer tests establish value consistency only; six-width/eight-theme rendering, native owner dispatch, durability, restart, security, focus/accessibility, motion and full journeys remain unproved. This reconciles the separate September 3 Onboarding owner obligations without claiming that the unchanged concept or native application implements them.
 
 Tour acceptance requires the current Chat -> workspace -> Planning sequence, every manual and Show Me path with shared owner predicates, measured zero provider requests and usage increments, same-answer ELI5, planning action/dwell shares of at least one half, a real answer edit with visible specific consequence, restore/default versus explicit Keep, safe checkpoint recovery, missing-target and restoration-failure negatives, keyboard/focus/geometry checks, all eight themes, constrained widths, and Reduced Motion. The historical v2 schemas/fixtures and their ten-action/Usage-first/Chat-final/no-resume assertions are superseded migration inputs. The current v3 schema and Final GUI consumer enforce the replacement static obligations and reject those predecessors; passing them cannot establish native/runtime, durable recovery, or visual acceptance. Checkpoint references and revalidation records require real owner implementations before they can be used as runtime evidence.
 
-### PWIZ-021 - Product Onboarding nine-stage state machine and connect-existing shortcut
+### PWIZ-021 - Product Onboarding draft-first state machine and connect-existing shortcut
 
 ```yaml
 plan_unit_id: PWIZ-021
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  Product Onboarding owns the durable nine-stage
-  welcome/simple_path/first_project/source_control_setup/server_storage_client/remote_access_setup/review_setup_plan/automatic_preparation/ready
-  path and the exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready
-  connect-existing shortcut. Pre-review choices update the local draft and may consume cached owner data, nearby/known
-  Server endpoint projections, already-detected account/session status, and explicitly non-authenticating read-only
-  discovery. Pairing, authentication, live repository lookup/creation/binding, restore execution, Server/network
-  configuration, filesystem writes, and every other side effect remain deferred until the user confirms the current
-  Review Setup Plan.
-  Automatic Preparation then dispatches the approved
-  plan once through canonical owners and observes real results and receipts. Visible copy remains concise and novice-safe,
-  while internal implementation terms stay in plain-language Details. The superseded seven-stage flow is source lineage.
+canonical_text: Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the
+  unchanged six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
+  preflight and individually consented selected-source authentication may run. Project System commits the selected
+  existing owner command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback,
+  before broad provider setup. The actual committed Project then enters provider_setup, optional free_models_setup
+  and truthful Ready. Explicit Project deferral skips both provider phases without inventing a Project. UI choreography
+  remains thirteen typed local actions, never an Onboarding backend or command family.
 gui_related: true
-gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state presentation.
-depends_on: [SIR-003, PSB-001, SRV-001, SRV-004, RAS-001, BRS-001, PJCT-001, SCS-011]
+gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
+  presentation.
+depends_on:
+- SIR-003
+- PSB-001
+- SRV-001
+- SRV-004
+- RAS-001
+- BRS-001
+- PJCT-001
+- SCS-011
+- SSYS-007
+- SSYS-036
+- PJCT-007
+- MACS-005
+- MS-122
 unblocks: []
 acceptance_criteria:
-  - The nine exact stage IDs and order are `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, and `ready`.
-  - The connect-existing shortcut is exactly `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, and `ready`; it omits, rather than silently executes, the three ordinary-path setup stages.
-  - "`simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior; their predecessor-only disposition is retired."
-  - The four-screen/provider-first, five-stage, and seven-stage flows are migration/source lineage only and cannot drive current GUI order, stage counts, or progress text.
-  - Before the current `review_setup_plan` revision is confirmed, choices perform local draft transitions and may consume cached owner data, already-detected account/session status, known endpoint projections, and owner-defined read-only Local/VPN or already-active Tailscale discovery that performs no authentication and changes no external state.
-  - Installation, authentication, pairing, trust, restore, Project creation/open/registration, local-history setup, online-copy setup, Server, storage movement, Remote Access, provider, update, and all other external work remain deferred until review confirmation.
-  - "`Confirm and prepare` validates the path, revision, choices, consequences, and approved-plan hash, then dispatches the approved work once; stale, unconfirmed, or expanded plans dispatch nothing."
-  - First Project, Safe History/optional online copy, where-work-lives, Remote Access, restore, and provider work execute only through their canonical owners after confirmation.
-  - Safe History is explained as recoverable versions on the selected work computer; an online copy is separately explained and optional, with implementation names confined to Details.
-  - A remote protected-auth handoff opens and returns only through the initiating active Client; missing, inactive, disconnected, or mismatched Client identity blocks or interrupts it.
-  - Automatic Preparation accepts only current owner projections bound to the confirmed review revision and approved-plan hash; it never synthesizes work, progress, results, receipts, or readiness.
-  - Determinate progress requires an owner denominator and named progress source; resume/reload preserves owner operation identities and retry observes existing work instead of launching a duplicate.
-  - Every Onboarding control emits one typed local UI action; no `cmd.onboarding.*` semantic command or generic Onboarding mutation handler exists.
-  - Defer preserves exact path/stage/draft/review/history/focus continuation, Close is non-completing, Skip records an explicit skipped session, and Details is ephemeral and owner-work-free.
-  - Disabled or rejected outcomes dispatch and persist no owner work, carry no production receipt, and expose one plain-language reason.
-  - Reaching Ready never asserts skipped or failed owner readiness.
-  - Guided Tour is secondary and optional and follows PWIZ-023's three-scene contract.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Concepts/pm7-tools/onboarding_cinematic_source.py static assertions, Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier, future native owner-routing and migration negative fixtures]
+- The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI
+  uses the same definitions. These are dependencies, not eleven forced equally complex screens.
+- Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only
+  from its reviewed usable owner route.
+- The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness
+  claim.
+- Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings draft
+  previews leave no Project, destination files, history, repository, clone, sync or Settings mutation.
+- Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced, owner
+  verified, and unrelated to broad AI-provider setup.
+- Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit retains
+  later still-valid choices.
+- Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System 3.1,
+  never cmd.project.create or cmd.source_control.repository.init.
+- Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement,
+  provisional identity, partial work and cancelled/failed work are not completion.
+- Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact real
+  Project binding.
+- Detected usable accounts and copied routes appear first and become Ready after current owner verification without
+  Connect/Use This Installation/Use This Provider/Open Installer.
+- Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped
+  dependency paths never invent a provider-CLI Install.
+- Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying account
+  records and saved explicit model order remain canonical.
+- Every local action preserves exact revision/generation/return context and never claims a production receipt or
+  native owner success.
+- Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished
+  provider phase, and optional skip differs from whole-session Skip.
+- Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately
+  typed and permission bound.
+- Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
+- future native owner-routing, restart, accessibility and visual/motion receipts; not_run
 risk_class: onboarding_parallel_owner_or_overloaded_first_run
 reasoning_tier: high
 context_scope: product_onboarding_owner_and_flow
-implementation_surfaces: [Plans/Planning_Wizard.md, Plans/product_onboarding_contracts.schema.json]
-node_compile_hint: {mode: product_onboarding_contract, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/product_onboarding_contracts.schema.json
+node_compile_hint:
+  mode: product_onboarding_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - "source_report:register-settings-onboarding.md#1E"
-  - "source_report:register-fullthread.md#R-063"
-negative_constraints: [Do not create an onboarding-only backend., Do not expose more than two prominent choices., Do not restore a provider-first gate or the superseded seven-stage path., Do not hide or bypass the current simple_path or review_setup_plan stage., Do not authenticate, pair, enroll, perform a live repository lookup/create/bind, execute a restore, configure a Server or network, write a filesystem, or dispatch any other side effect before current review confirmation; do not misclassify bounded read-only Server discovery/projection as a side effect., Do not conflate local Safe History with an optional online copy., Do not expose unexplained source-control or developer jargon in primary copy., Do not use or mint cmd.source_control.repository.init., Do not add repeated confirmation after review., Do not synthesize Automatic Preparation work/progress/readiness from time or UI state., Do not register cmd.onboarding.* commands or packet candidate aliases/handlers., Do not turn the modal into a full-page route or add browser-style Back/breadcrumb chrome., Do not store secrets or protected authentication content., Do not claim native/runtime or visual proof from fixtures, static gates, or browser evidence.]
+- source_report:register-settings-onboarding.md#1E
+- source_report:register-fullthread.md#R-063
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/01_CANONICAL_NEWBIE_FLOW.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/03_SIMPLE_PROVIDER_SETUP_AFTER_PROJECT.md
+negative_constraints:
+- Do not create a Project, destination, history, repository, clone/import, Settings apply, sync/backup binding or
+  broad provider work before the reviewed commit.
+- Do not treat selected-source auth consent as broad provider, repository or Project authority.
+- Do not fabricate Project/account/profile/installation identities or copy secrets.
+- Do not add an Onboarding engine, command family, wrapper command, second Settings copy catalog or Free Models
+  credential model.
+- Do not restore provider-first/four/five/seven/nine-stage predecessors as current producers.
+- Do not synthesize readiness or progress from time, cache or UI state.
+- Do not turn the modal into a full-page route or nested-modal manager.
+- Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
@@ -1892,29 +1954,66 @@ plan_unit_id: PWIZ-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact path-correct progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and receipt-backed migration from legacy provider-first, five-stage, and superseded seven-stage records without auto-confirming Review or replaying owner mutations; it never becomes a full-page route or nested-modal owner branch.
+canonical_text: Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
+  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact path-correct
+  progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and receipt-backed
+  migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage records without fabricating
+  review or replaying owner mutations; already committed rows resume only after real Project-owner revalidation;
+  it never becomes a full-page route or nested-modal owner branch.
 gui_related: true
-gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration behavior.
-depends_on: [PWIZ-021]
+gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
+  behavior.
+depends_on:
+- PWIZ-021
 unblocks: []
 acceptance_criteria:
-  - The setup flow remains one bounded modal with explicit outer margin, modal chrome, an input-blocking scrim that also inerts late-mounted body siblings, exactly one dialog accessibility surface named by the active stage or branch, an inert/ID-clean outgoing visual layer, focus containment, and exact initiating-control return (or verified active-application-tab return for automatic first-run open) across desktop, narrow, and short windows.
-  - Progress and accessibility announcements use the exact active path denominator: nine for guided setup and six for connect existing.
-  - Close dismisses without completion, Skip records an explicit skipped session, Defer persists the exact resumable continuation before dismissal, and Details remains an ephemeral same-stage disclosure with no owner command.
-  - The modal adds no route-history or breadcrumb chrome; typed Back remains local to its bounded stage/branch presentation.
-  - The approximately `1.2-1.5 second` hero, `420-560 ms` step transitions, `60-80 ms` choreography stagger, `120-220 ms` microinteractions, approximately `700 ms` success settle, same-frame acknowledgement, interruption, reversal, resize, theme-switch, Retro stepped treatment, and reduced-motion settle are deterministic; the modal entrance keeps its layout bounds fixed and uses opacity/clipping so cross-family theme changes cannot push it outside the required outer margin.
-  - Focus and screen-reader output follow semantic stage state and never background refresh order; the modal releases inertness before Guided Tour starts, and a failed Tour start restores the transferred application focus target without claiming a successful handoff.
-  - Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the nine-/six-stage draft, requires an unconfirmed Review Setup Plan, and never reruns owner work.
-  - The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted, stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes.
-validation_surfaces: [Concepts/pm7-tools/onboarding_cinematic_source.py static assertions, Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier, future native six-width visual fixtures, Reduced Motion traces, keyboard and screen-reader fixtures, legacy migration fixtures]
+- The setup flow remains one bounded modal with explicit outer margin, modal chrome, an input-blocking scrim that
+  also inerts late-mounted body siblings, exactly one dialog accessibility surface named by the active stage or
+  branch, an inert/ID-clean outgoing visual layer, focus containment, and exact initiating-control return (or verified
+  active-application-tab return for automatic first-run open) across desktop, narrow, and short windows.
+- 'Progress and accessibility announcements use the exact active path denominator: the current eleven-stage semantic
+  graph, its explicit Project-deferred variant, and six-stage connect-existing shortcut.'
+- Close dismisses without completion, Skip records an explicit skipped session, Defer persists the exact resumable
+  continuation before dismissal, and Details remains an ephemeral same-stage disclosure with no owner command.
+- The modal adds no route-history or breadcrumb chrome; typed Back remains local to its bounded stage/branch presentation.
+- The approximately `1.2-1.5 second` hero, `420-560 ms` step transitions, `60-80 ms` choreography stagger, `120-220
+  ms` microinteractions, approximately `700 ms` success settle, same-frame acknowledgement, interruption, reversal,
+  resize, theme-switch, Retro stepped treatment, and reduced-motion settle are deterministic; the modal entrance
+  keeps its layout bounds fixed and uses opacity/clipping so cross-family theme changes cannot push it outside the
+  required outer margin.
+- Focus and screen-reader output follow semantic stage state and never background refresh order; the modal releases
+  inertness before Guided Tour starts, and a failed Tour start restores the transferred application focus target
+  without claiming a successful handoff.
+- Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the nine-/six-stage
+  draft, requires an unconfirmed Review Setup Plan, and never reruns owner work.
+- The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted,
+  stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes.
+validation_surfaces:
+- Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
+- Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
+- future native six-width visual fixtures
+- Reduced Motion traces
+- keyboard and screen-reader fixtures
+- legacy migration fixtures
+- tests/test_pm_onboarding_phases.py
 risk_class: onboarding_motion_or_resume_state_loss
 reasoning_tier: high
 context_scope: onboarding_presentation_and_persistence
-implementation_surfaces: [Plans/Planning_Wizard.md, Plans/product_onboarding_contracts.schema.json]
-node_compile_hint: {mode: onboarding_presentation_contract, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/product_onboarding_contracts.schema.json
+node_compile_hint:
+  mode: onboarding_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - "source_report:wave3-lane2.md#S0098"
-negative_constraints: [Do not block input on animation., Do not require browser-only effects., Do not overwrite saved Project or application layout., Do not migrate any predecessor record directly into confirmed Review or Automatic Preparation.]
+- source_report:wave3-lane2.md#S0098
+negative_constraints:
+- Do not block input on animation.
+- Do not require browser-only effects.
+- Do not overwrite saved Project or application layout.
+- Do not migrate an unresolved draft directly into confirmed Review or Automatic Preparation; do not replay completed
+  Project work when a verified committed row resumes provider setup.
 ```
 
 ### PWIZ-023 - Guided Tour newbie-first real-application practice
@@ -1968,9 +2067,7 @@ negative_constraints: [Do not restore either predecessor controller., Do not res
 
 ## Product Onboarding route-and-review correction addendum - 2026-09-01
 
-PWIZ-024 supersedes only the conflicting choice-density, hidden-project-route, and generic connect-existing wording in
-PWIZ-021 and the preceding Product-design law. The nine-stage guided path, six-stage connect-existing shortcut, typed
-local action vocabulary, Review confirmation fence, and retained owner boundaries remain unchanged.
+PWIZ-024 retains the September 1 four-route and independent-placement correction. PWIZ-021 now applies the September 3 draft/copy/late-commit and postcommit provider phases; the six-stage connect-existing shortcut, thirteen local actions and existing owner boundaries remain intact.
 
 ### PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft
 
@@ -1979,54 +2076,95 @@ plan_unit_id: PWIZ-024
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  Product Onboarding exposes all four First Project entry routes together: Start a new project, Open a folder here,
-  Bring one from online, and Restore a backup. It records Server, Storage, and this Client as independent choices;
-  records local Git or Jujutsu Safe History independently from optional forge hosting; and keeps FileSafe complementary.
-  Connect existing chooses a connection route before discovery, identity selection, and pairing. The local draft and
-  Review summary update immediately and may consume cached owner data, nearby/known Server endpoint projections,
-  already-detected account/session status, and explicitly non-authenticating read-only discovery. Authentication,
-  pairing, live repository lookup/creation/binding, restore execution, Server/network configuration, filesystem mutation,
-  and every other side effect wait for confirmation of the current Review revision. Setup-later remains a valid
-  resumable outcome.
+canonical_text: Product Onboarding exposes all four First Project source routes together, independently selects
+  Server, Storage and Client, and keeps local Git/Jujutsu Safe History independent from optional forge hosting and
+  complementary FileSafe. A durable reversible draft includes the Settings-owned Start fresh or Start like another
+  Project preview. Selected-source read-only browsing/validation and individually consented source-account authentication
+  may occur before Review; destination, repository, clone/history, Settings and Project mutations require the reviewed
+  owner commit. Broad provider setup follows the actual committed Project.
 gui_related: true
-gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection, and defer behavior.
-depends_on: [PWIZ-021, SCS-012, FGI-011, RAS-014]
+gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
+  projection, and defer behavior.
+depends_on:
+- PWIZ-021
+- SCS-012
+- FGI-011
+- RAS-014
 unblocks: []
 acceptance_criteria:
-  - The First Project stage shows four equal, aligned, keyboard-reachable routes at once — `new`, `existing_local`, `existing_online`, and `restore`; no More/Other Project Choices disclosure hides any route.
-  - Open a folder here supports a local folder, an OS-mounted SMB/NFS location, or Advanced SSH transport; Restore a backup uses its own backup source and transport and never reuses the ordinary folder path by implication.
-  - Server (where work runs), Storage (where files live), and Client (the device in hand) remain independent selections; mounted, SMB, NFS, and SSH storage choices do not force Server or Client identity.
-  - Local Safe History explicitly selects Git or Jujutsu without an account; FileSafe is an independent complementary safeguard; an online copy is optional and requires a verified forge account plus an explicit repository binding.
-  - Cursor Origin is a real eligible hosted Git destination in `Bring one from online` and optional online-copy setup, with Private or Internal visibility only; it is never rendered as a no-host or no-repository pseudo-option.
-  - The connect-existing stage first records one of four routes — Local or VPN, Tailscale with hosted or Headscale control, Reverse proxy, or Puppet Master Remote Link; bounded read-only discovery may project candidate endpoints before Review, while identity verification and pairing by approval, code, or QR remain owner-controlled work after confirmation.
-  - No visible `I recognize this Puppet Master` checkbox exists; verified Server identity plus the Server-owned pairing/trust result is the only recognition boundary.
-  - The Review summary is a live projection of the exact current draft, including edits, skips, destinations, transport, privacy, account/repository binding, pairing method, deferred items, and setup consequences.
-  - Before the current Review revision is confirmed, Onboarding performs local draft writes and may consume cached owner data, already-detected account/session status, known endpoints, and owner-bounded read-only LAN/VPN or active-tailnet discovery; no sign-in, enrollment, pairing, trust grant, protected account verification, live repository lookup/create/bind, filesystem mutation, restore execution, Server/Storage/network change, or Remote Access mutation occurs.
-  - The Do this later action remains available from every non-terminal stage and persists the exact resumable continuation; optional Remote Access may be Not now on guided setup, while connect-existing may defer the session but cannot claim Ready without a usable reviewed route plan.
-  - Confirmation dispatches only owner-defined operations and observes owner results; this PlanUnit creates no `cmd.onboarding.*` command, provider adapter, discovery engine, pairing authority, transport engine, or repository engine.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Concepts/pm7-tools/onboarding_cinematic_source.py static assertions, future native four-route, live-review, defer/resume, and pre-review no-effect fixtures]
+- The First Project stage shows four equal, aligned, keyboard-reachable routes at once — `new`, `existing_local`,
+  `existing_online`, and `restore`; no More/Other Project Choices disclosure hides any route.
+- Open a folder here supports a local folder, an OS-mounted SMB/NFS location, or Advanced SSH transport; Restore
+  a backup uses its own backup source and transport and never reuses the ordinary folder path by implication.
+- Server (where work runs), Storage (where files live), and Client (the device in hand) remain independent selections;
+  mounted, SMB, NFS, and SSH storage choices do not force Server or Client identity.
+- Local Safe History explicitly selects Git or Jujutsu without an account; FileSafe is an independent complementary
+  safeguard; an online copy is optional and requires a verified forge account plus an explicit repository binding.
+- Cursor Origin is a real eligible hosted Git destination in `Bring one from online` and optional online-copy setup,
+  with Private or Internal visibility only; it is never rendered as a no-host or no-repository pseudo-option.
+- The connect-existing stage first records one of four routes — Local or VPN, Tailscale with hosted or Headscale
+  control, Reverse proxy, or Puppet Master Remote Link; bounded read-only discovery may project candidate endpoints
+  before Review, while identity verification and pairing by approval, code, or QR remain owner-controlled work after
+  confirmation.
+- No visible `I recognize this Puppet Master` checkbox exists; verified Server identity plus the Server-owned pairing/trust
+  result is the only recognition boundary.
+- The Review summary is a live projection of the exact current draft, including edits, skips, destinations, transport,
+  privacy, account/repository binding, pairing method, deferred items, and setup consequences.
+- Before commit, only local draft writes, bounded read-only source/Project/Server/folder validation and selected-source
+  authentication with current owner authorization may run; no Project/destination/history/repository/clone/Settings/sync
+  mutation or unrelated provider work occurs.
+- Visible Close/Skip remain available and persist the proper resumable or skipped state; retained ui.onboarding.defer
+  is compatibility, not an extra required visible CTA; optional Remote Access may be Not now on guided setup, while
+  connect-existing may defer the session but cannot claim Ready without a usable reviewed route plan.
+- Confirmation dispatches only owner-defined operations and observes owner results; this PlanUnit creates no `cmd.onboarding.*`
+  command, provider adapter, discovery engine, pairing authority, transport engine, or repository engine.
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
+- future native four-route
+- live-review
+- defer/resume
+- and pre-review no-effect fixtures
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
 risk_class: onboarding_hidden_route_or_pre_review_side_effect
 reasoning_tier: high
 context_scope: onboarding_setup_plan_semantics
-implementation_surfaces: [Plans/Planning_Wizard.md, Plans/product_onboarding_contracts.schema.json, future Product Onboarding native controller]
-node_compile_hint: {mode: onboarding_setup_plan_projection_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user-correction:2026-09-01-onboarding-route-review-semantics, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
-preserved_exact_tokens: [Start a new project, Open a folder here, Bring one from online, Restore a backup, Local or VPN, Reverse proxy, Puppet Master Remote Link, Do this later]
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/product_onboarding_contracts.schema.json
+- future Product Onboarding native controller
+node_compile_hint:
+  mode: onboarding_setup_plan_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- user-correction:2026-09-01-onboarding-route-review-semantics
+- Plans/product_onboarding_contracts.schema.json
+- Concepts/pm7-tools/onboarding_cinematic_source.py
+preserved_exact_tokens:
+- Start a new project
+- Open a folder here
+- Bring one from online
+- Restore a backup
+- Local or VPN
+- Reverse proxy
+- Puppet Master Remote Link
+- Do this later
 negative_constraints:
-  - Do not hide a First Project route behind More or Other Project Choices.
-  - Do not conflate Server, Storage, Client, project-source transport, or restore transport.
-  - Do not conflate local Safe History, FileSafe, and optional forge hosting.
-  - Do not mutate network, authentication, owner, repository, filesystem, or trust state before Review confirmation.
-  - Do not add a recognition checkbox or claim reachability establishes trust.
-  - Do not create new commands, handlers, owner engines, or runtime-readiness evidence in Onboarding.
+- Do not hide a First Project route behind More or Other Project Choices.
+- Do not conflate Server, Storage, Client, project-source transport, or restore transport.
+- Do not conflate local Safe History, FileSafe, and optional forge hosting.
+- Do not add a recognition checkbox or claim reachability establishes trust.
+- Do not create new commands, handlers, owner engines, or runtime-readiness evidence in Onboarding.
+- Do not expand bounded selected-source access into precommit Project/repository/filesystem/Settings mutation or
+  broad provider setup.
 ```
 
 ## Forge/Backup/tsnet Product Onboarding consumer addendum - 2026-09-01
 
-PWIZ-025 preserves PWIZ-021/PWIZ-024's exact nine-stage guided path, exact six-stage connect-existing path, and
-Review/Apply fence. Fresh Full Server recovery is a Bootstrap preflow outside both Product Onboarding stage enums; it
-does not turn `Restore a backup` into a hidden pre-Review mutation or add a tenth Product stage.
+PWIZ-025 consumes PWIZ-021/PWIZ-024's current dependency graph and exact six-stage connect-existing shortcut. Fresh Full Server recovery remains a Bootstrap preflow outside Product Onboarding; it does not turn Restore a backup into a hidden precommit mutation or a Product stage.
 
 ### PWIZ-025 - Bootstrap recovery, connector phases, and forge parity
 
@@ -2035,66 +2173,126 @@ plan_unit_id: PWIZ-025
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes the
-  Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding keeps its
-  exact nine/six stage graphs and its `Restore a backup` First Project route as Project restore; after a confirmed plan
-  creates or opens the first Project, it may project optional backup-destination setup and Recovery Kit confirmation.
-  Remote Access setup consumes one Server-owned PM connector operation with typed connector, IPC, identity, control,
-  authorization, private-endpoint, and route-test phases instead of package/component install state. Online-copy choices
-  consume distinct Forgejo and Gitea provider/instance profiles and independent repository-hosting versus automation
-  bindings without probing or mutating them before Review confirmation.
+canonical_text: After safe local Server claim, Bootstrap may offer one `restore_existing_pm_data` branch that invokes
+  the Backup/Restore owner's protected fresh-recovery flow before Product Onboarding begins. Product Onboarding
+  keeps its current eleven-stage dependency graph and six-stage connect-existing shortcut and its `Restore a backup`
+  First Project route as Project restore; after a confirmed plan creates or opens the first Project, it may project
+  optional backup-destination setup and Recovery Kit confirmation. Remote Access setup consumes one Server-owned
+  PM connector operation with typed connector, IPC, identity, control, authorization, private-endpoint, and route-test
+  phases instead of package/component install state. Online-copy choices consume distinct Forgejo and Gitea provider/instance
+  profiles and independent repository-hosting versus automation bindings with only the selected-source read-only/auth
+  exception before commit; repository mutation and binding remain commit-fenced.
 gui_related: true
-gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider choices, protected handoffs, progress, exact return, and disabled/error states.
-depends_on: [PWIZ-021, PWIZ-024, SRV-013, BRS-012, BRS-013, BRS-014, BRS-016, RAS-015, FGI-012, SCS-013]
+gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
+  choices, protected handoffs, progress, exact return, and disabled/error states.
+depends_on:
+- PWIZ-021
+- PWIZ-024
+- SRV-013
+- BRS-012
+- BRS-013
+- BRS-014
+- BRS-016
+- RAS-015
+- FGI-012
+- SCS-013
 unblocks: []
 acceptance_criteria:
-  - The canonical Product Onboarding graphs remain exactly nine guided stages and six connect-existing stages. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local claim and before Product Onboarding.
-  - Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication, or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock, immutable snapshot inspection, preview, apply, and recovery receipts.
-  - Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer.
-  - "`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch."
-  - Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or mark acknowledgement as recovery proof.
-  - The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected` and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite appears.
-  - Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch, and route failure remain distinct.
-  - Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel, and reports certificate/version/reachability/registration capability truth independently.
-  - The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never inherited by another Client merely because the durable operation continues.
-  - Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery. Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review confirmation and return to the exact originating row/focus/generation.
-  - "`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions."
-  - No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner work, native Slint execution, provider readiness, recovery, or security.
+- The canonical Product Onboarding graphs remain the current eleven-stage dependency graph and exact six-stage connect-existing
+  shortcut. `restore_existing_pm_data` is represented outside those enums as a Bootstrap handoff after safe local
+  claim and before Product Onboarding.
+- Bootstrap fresh recovery does not require an old Server Catalog, a prior Project, model/provider authentication,
+  or a new onboarding command family; it uses Backup-owned destination, protected sign-in, Recovery Kit/unlock,
+  immutable snapshot inspection, preview, apply, and recovery receipts.
+- Full Server recovery begins recovery-safe, never auto-runs hooks, push, Goals, schedules, public ingress, or duplicate
+  Server/connector identity, and reaches Product Onboarding only after truthful completion or explicit decline/defer.
+- '`Restore a backup` in `first_project` remains a Project restore intent. It writes only the local draft before
+  Review, dispatches only after confirmation, and never aliases the Bootstrap full-recovery branch.'
+- Optional destination setup and Recovery Kit confirmation appear only after the confirmed owner work has established
+  the first Project. They route Backup-owned protected operations and never expose key bytes, claim PM escrow, or
+  mark acknowledgement as recovery proof.
+- The visible Tailscale card uses exact copy `Tailscale` / `Built into Puppet Master`, with normal `Not connected`
+  and `Set Up`; no install, package, daemon, sidecar, Serve-toggle, WSL, or already-authenticated-host-profile prerequisite
+  appears.
+- Hosted connector work projects the durable Server-owned phases Starting Puppet Master connection, Opening Tailscale
+  sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API,
+  and live connection, and Ready; cancel, denial, expiry, device approval, reauth, crash, corruption, mismatch,
+  and route failure remain distinct.
+- Self-hosted Headscale collects the owner-approved control URL and protected enrollment method, never offers Funnel,
+  and reports certificate/version/reachability/registration capability truth independently.
+- The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected
+  browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are
+  never inherited by another Client merely because the durable operation continues.
+- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery.
+  Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review
+  confirmation and return to the exact originating row/focus/generation.
+- '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance
+  choices with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ;
+  Git-ready/API-unavailable stays a valid truthful plan and never fabricates Actions.'
+- No command or EventRecord family is created here. Consumed packet commands remain handler_unavailable and event-silent
+  with expected_event_types=[] until owner and central integration exist; concept/static state never proves owner
+  work, native Slint execution, provider readiness, recovery, or security.
 validation_surfaces:
-  - Plans/product_onboarding_contracts.schema.json
-  - Plans/product_onboarding_contract_fixtures.json
-  - Plans/backup_restore_system_contracts.schema.json
-  - Plans/remote_access_system_contracts.schema.json
-  - Plans/forge_integration_contracts.schema.json
-  - future pre-Bootstrap recovery/no-old-Catalog/no-provider-auth fixtures
-  - future exact nine/six census and pre-Review no-effect fixtures
-  - future connector refresh/Client-loss/protected-handoff and Forgejo/Gitea parity fixtures
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Plans/backup_restore_system_contracts.schema.json
+- Plans/remote_access_system_contracts.schema.json
+- Plans/forge_integration_contracts.schema.json
+- future pre-Bootstrap recovery/no-old-Catalog/no-provider-auth fixtures
+- current phase-census and bounded selected-source precommit negative fixtures; native execution not_run
+- future connector refresh/Client-loss/protected-handoff and Forgejo/Gitea parity fixtures
 risk_class: onboarding_stage_drift_or_pre_review_owner_effect
 reasoning_tier: high
 context_scope: product_onboarding_cross_owner_handoffs
-implementation_surfaces: [Plans/Planning_Wizard.md, future Product Onboarding and Bootstrap projection controllers]
-node_compile_hint: {mode: onboarding_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- future Product Onboarding and Bootstrap projection controllers
+node_compile_hint:
+  mode: onboarding_cross_owner_consumer_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#onboarding-schema-and-fixtures
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#product-onboarding
-  - packet:03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md#FORGE-004
-  - packet:10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md
-  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-004
-  - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-preserved_exact_tokens: [restore_existing_pm_data, Restore a backup, Tailscale, Built into Puppet Master, review_setup_plan, automatic_preparation, Forgejo, Gitea, handler_unavailable, "expected_event_types=[]"]
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#onboarding-schema-and-fixtures
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#product-onboarding
+- packet:03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md#FORGE-004
+- packet:10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md
+- packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-004
+- packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+preserved_exact_tokens:
+- restore_existing_pm_data
+- Restore a backup
+- Tailscale
+- Built into Puppet Master
+- review_setup_plan
+- automatic_preparation
+- Forgejo
+- Gitea
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not add, remove, or reorder a Product Onboarding stage.
-  - Do not run recovery, connector, forge, account, repository, filesystem, Server, pairing, trust, or route mutation before confirmed Review.
-  - Do not model the PM connector as a full Tailscale install, host daemon, sidecar, WSL node, Project node, or reusable host session.
-  - Do not merge Bootstrap Full Server recovery with the Product Project-restore route.
-  - Do not conflate Forgejo with Gitea or repository hosting with automation binding.
-  - Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs, Chat, Usage, or agent context.
-  - Do not claim native/runtime/provider/recovery/security completion from Plans, schemas, fixtures, or PMConcept7.
+- This recovery/connector consumer does not add, remove or reorder PWIZ-021's current stage graph.
+- Do not run recovery, connector, repository, filesystem, Server, pairing, trust or route mutation before confirmed
+  Review. PWIZ-021 alone admits necessary selected-source authentication and read-only preflight; this consumer
+  neither forbids that narrow admission nor broadens it into other account/forge mutations.
+- Do not model the PM connector as a full Tailscale install, host daemon, sidecar, WSL node, Project node, or reusable
+  host session.
+- Do not merge Bootstrap Full Server recovery with the Product Project-restore route.
+- Do not conflate Forgejo with Gitea or repository hosting with automation binding.
+- Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs,
+  Chat, Usage, or agent context.
+- Do not claim native/runtime/provider/recovery/security completion from Plans, schemas, fixtures, or PMConcept7.
 owner_boundary_notes:
-  - Planning Wizard owns Product Onboarding orchestration, local draft/session/continuation, and owner projection; Server Claim/Bootstrap, Backup/Restore, Remote Access, Source Control/Forge, and auth owners retain effects and truth.
-owner_hints: [Plans/Planning_Wizard.md, Plans/Server_System.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Forge_Integrations.md, Plans/Source_Control_System.md]
+- Planning Wizard owns Product Onboarding orchestration, local draft/session/continuation, and owner projection;
+  Server Claim/Bootstrap, Backup/Restore, Remote Access, Source Control/Forge, and auth owners retain effects and
+  truth.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Server_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Remote_Access_System.md
+- Plans/Forge_Integrations.md
+- Plans/Source_Control_System.md
 ```
 
 ## Notebook Topic Research Addendum (2026-09-05)
