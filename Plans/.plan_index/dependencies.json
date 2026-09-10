@@ -5195,6 +5195,7 @@
     "PS-136",
     "SIR-017",
     "N2-153",
+    "CV-330",
     "SMPFS-148",
     "SMPFS-149",
     "TCME-006",
@@ -5582,6 +5583,7 @@
     "RAS-010",
     "RAS-011",
     "SMPFS-157",
+    "SMPFS-166",
     "PSMERA-018",
     "OSI-201",
     "OSI-406",
@@ -5616,6 +5618,9 @@
     "OSI-176",
     "RAS-015",
     "RAS-012",
+    "WM-054",
+    "PP-091",
+    "SP-259",
     "OSI-232",
     "OSI-408",
     "CRAU-092",
@@ -6117,6 +6122,7 @@
     "F3-507",
     "F3-508",
     "UF-092",
+    "UF-102",
     "UF-100",
     "OP-024",
     "PLUG-067",
@@ -20672,6 +20678,16 @@
       "edge_type": "depends_on",
       "from": "CV-328",
       "to": "DL-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "SMPFS-147"
     },
     {
       "edge_type": "depends_on",
@@ -43430,6 +43446,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PP-091",
+      "to": "PP-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-091",
+      "to": "PP-083"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-091",
+      "to": "SMPFS-166"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PRDB-008",
       "to": "PRDB-006"
     },
@@ -58950,6 +58981,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-166",
+      "to": "CV-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-166",
+      "to": "SMPFS-147"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-166",
+      "to": "SMPFS-156"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -64212,6 +64258,16 @@
       "edge_type": "depends_on",
       "from": "SP-258",
       "to": "SP-153"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-259",
+      "to": "CV-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-259",
+      "to": "SMPFS-166"
     },
     {
       "edge_type": "depends_on",
@@ -74075,6 +74131,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UF-102",
+      "to": "SMPFS-166"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-102",
+      "to": "UF-091"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UIW-002",
       "to": "UIW-001"
     },
@@ -78792,6 +78858,16 @@
       "edge_type": "depends_on",
       "from": "WM-053",
       "to": "UIW-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "CV-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "SMPFS-157"
     },
     {
       "edge_type": "depends_on",
@@ -92759,7 +92835,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-10T18:54:10Z",
+  "generated_at_utc": "2026-09-10T19:36:38Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -117036,6 +117112,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "browser_eventrecord_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-330",
+      "reasoning_tier": "high",
+      "risk_class": "browser_event_payload_identity_scope_or_replay_escape",
+      "source_location": {
+        "heading": "CV-330 - Browser Event Payload Identity Scope And Replay Admission",
+        "heading_level": 3,
+        "heading_line": 21468,
+        "line": 21470,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -174226,6 +174319,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "browser_prompt_consumer",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-091",
+      "reasoning_tier": "high",
+      "risk_class": "browser_event_to_prompt_authority_escape",
+      "source_location": {
+        "heading": "PP-091 - Browser Event And Artifact Prompt Consumer Boundary",
+        "heading_level": 3,
+        "heading_line": 5985,
+        "line": 5987,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
       "context_scope": "ledger_to_plans_compile",
       "gui_related": true,
       "owner_doc": "Plans/PRD_Builder.md",
@@ -184197,8 +184307,8 @@
       "source_location": {
         "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
         "heading_level": 3,
-        "heading_line": 9517,
-        "line": 9519,
+        "heading_line": 9519,
+        "line": 9521,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184214,8 +184324,8 @@
       "source_location": {
         "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
         "heading_level": 3,
-        "heading_line": 9597,
-        "line": 9599,
+        "heading_line": 9599,
+        "line": 9601,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184231,8 +184341,8 @@
       "source_location": {
         "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
         "heading_level": 3,
-        "heading_line": 9668,
-        "line": 9670,
+        "heading_line": 9670,
+        "line": 9672,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184248,8 +184358,8 @@
       "source_location": {
         "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
         "heading_level": 3,
-        "heading_line": 9748,
-        "line": 9750,
+        "heading_line": 9750,
+        "line": 9752,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184265,8 +184375,8 @@
       "source_location": {
         "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
         "heading_level": 3,
-        "heading_line": 9826,
-        "line": 9828,
+        "heading_line": 9828,
+        "line": 9830,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184282,8 +184392,8 @@
       "source_location": {
         "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
         "heading_level": 3,
-        "heading_line": 9902,
-        "line": 9904,
+        "heading_line": 9904,
+        "line": 9906,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184299,8 +184409,8 @@
       "source_location": {
         "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
         "heading_level": 3,
-        "heading_line": 9974,
-        "line": 9976,
+        "heading_line": 9976,
+        "line": 9978,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184316,8 +184426,8 @@
       "source_location": {
         "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
         "heading_level": 3,
-        "heading_line": 10044,
-        "line": 10046,
+        "heading_line": 10046,
+        "line": 10048,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184333,8 +184443,8 @@
       "source_location": {
         "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
         "heading_level": 3,
-        "heading_line": 10122,
-        "line": 10124,
+        "heading_line": 10124,
+        "line": 10126,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184350,8 +184460,8 @@
       "source_location": {
         "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
         "heading_level": 3,
-        "heading_line": 10191,
-        "line": 10193,
+        "heading_line": 10193,
+        "line": 10195,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184367,8 +184477,8 @@
       "source_location": {
         "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
         "heading_level": 3,
-        "heading_line": 10273,
-        "line": 10275,
+        "heading_line": 10275,
+        "line": 10277,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184384,8 +184494,8 @@
       "source_location": {
         "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
         "heading_level": 3,
-        "heading_line": 10344,
-        "line": 10346,
+        "heading_line": 10346,
+        "line": 10348,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184401,8 +184511,8 @@
       "source_location": {
         "heading": "SMPFS-137 - SMPFS-137",
         "heading_level": 3,
-        "heading_line": 10411,
-        "line": 10413,
+        "heading_line": 10413,
+        "line": 10415,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184418,8 +184528,8 @@
       "source_location": {
         "heading": "SMPFS-138 - Home Terminal Sections Workgroups And Pane Limits",
         "heading_level": 3,
-        "heading_line": 9391,
-        "line": 9393,
+        "heading_line": 9393,
+        "line": 9395,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184435,8 +184545,8 @@
       "source_location": {
         "heading": "SMPFS-139 - Typed Classical DebugSession Boundary",
         "heading_level": 3,
-        "heading_line": 9072,
-        "line": 9074,
+        "heading_line": 9074,
+        "line": 9076,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184452,8 +184562,8 @@
       "source_location": {
         "heading": "SMPFS-140 - Persistent EvalSession Policy Boundary",
         "heading_level": 3,
-        "heading_line": 9113,
-        "line": 9115,
+        "heading_line": 9115,
+        "line": 9117,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184469,8 +184579,8 @@
       "source_location": {
         "heading": "SMPFS-141 - Test Debug Lease And Awareness Consumption",
         "heading_level": 3,
-        "heading_line": 9154,
-        "line": 9156,
+        "heading_line": 9156,
+        "line": 9158,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184486,8 +184596,8 @@
       "source_location": {
         "heading": "SMPFS-142 - PM-Native Browser Program Architecture",
         "heading_level": 3,
-        "heading_line": 9195,
-        "line": 9197,
+        "heading_line": 9197,
+        "line": 9199,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184503,8 +184613,8 @@
       "source_location": {
         "heading": "SMPFS-143 - Protected AuthBrowserSession Boundary",
         "heading_level": 3,
-        "heading_line": 9243,
-        "line": 9245,
+        "heading_line": 9245,
+        "line": 9247,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184520,8 +184630,8 @@
       "source_location": {
         "heading": "SMPFS-144 - Multi-Agent BrowserWorkspace Controller Fencing",
         "heading_level": 3,
-        "heading_line": 9284,
-        "line": 9286,
+        "heading_line": 9286,
+        "line": 9288,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184537,8 +184647,8 @@
       "source_location": {
         "heading": "SMPFS-145 - PM Browser Dependency Prohibition And External Project Exception",
         "heading_level": 3,
-        "heading_line": 9325,
-        "line": 9327,
+        "heading_line": 9327,
+        "line": 9329,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184554,8 +184664,8 @@
       "source_location": {
         "heading": "SMPFS-146 - Three Flow Onboarding And Doctor Handoff",
         "heading_level": 3,
-        "heading_line": 9024,
-        "line": 9026,
+        "heading_line": 9026,
+        "line": 9028,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184605,8 +184715,8 @@
       "source_location": {
         "heading": "SMPFS-149 - Exact-Generation PageRepresentation And RepresentationQuery",
         "heading_level": 3,
-        "heading_line": 8870,
-        "line": 8872,
+        "heading_line": 8871,
+        "line": 8873,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184622,8 +184732,8 @@
       "source_location": {
         "heading": "SMPFS-150 - BrowserWorkspace Isolation Controller Takeover And Transfer",
         "heading_level": 3,
-        "heading_line": 8899,
-        "line": 8901,
+        "heading_line": 8901,
+        "line": 8903,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184639,8 +184749,8 @@
       "source_location": {
         "heading": "SMPFS-151 - Browser Routing Routines Screenshot Policy And External Adapters",
         "heading_level": 3,
-        "heading_line": 8928,
-        "line": 8930,
+        "heading_line": 8930,
+        "line": 8932,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184656,8 +184766,8 @@
       "source_location": {
         "heading": "SMPFS-152 - Browser Receipts ObservableWork Command GUI And Migration Projection",
         "heading_level": 3,
-        "heading_line": 8959,
-        "line": 8961,
+        "heading_line": 8961,
+        "line": 8963,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184673,8 +184783,8 @@
       "source_location": {
         "heading": "SMPFS-153 - Browser Program Record-Addressable Schema Identity",
         "heading_level": 3,
-        "heading_line": 8989,
-        "line": 8991,
+        "heading_line": 8991,
+        "line": 8993,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184741,8 +184851,8 @@
       "source_location": {
         "heading": "SMPFS-157 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 10489,
-        "line": 10491,
+        "heading_line": 10491,
+        "line": 10493,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184758,8 +184868,8 @@
       "source_location": {
         "heading": "SMPFS-158 - Enhanced Keyboard Protocol Capability Profile",
         "heading_level": 3,
-        "heading_line": 10639,
-        "line": 10641,
+        "heading_line": 10641,
+        "line": 10643,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184775,8 +184885,8 @@
       "source_location": {
         "heading": "SMPFS-159 - Richer Shell Context In The PM Parser",
         "heading_level": 3,
-        "heading_line": 10718,
-        "line": 10720,
+        "heading_line": 10720,
+        "line": 10722,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184792,8 +184902,8 @@
       "source_location": {
         "heading": "SMPFS-160 - Provider Output Snapshot Classification",
         "heading_level": 3,
-        "heading_line": 10792,
-        "line": 10794,
+        "heading_line": 10794,
+        "line": 10796,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184809,8 +184919,8 @@
       "source_location": {
         "heading": "SMPFS-161 - Per-Host Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 10866,
-        "line": 10868,
+        "heading_line": 10868,
+        "line": 10870,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184826,8 +184936,8 @@
       "source_location": {
         "heading": "SMPFS-162 - Pane Advisory OSC Progress And Collision Policy",
         "heading_level": 3,
-        "heading_line": 10942,
-        "line": 10944,
+        "heading_line": 10944,
+        "line": 10946,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184843,8 +184953,8 @@
       "source_location": {
         "heading": "SMPFS-163 - Insert Command And Open Retained Output",
         "heading_level": 3,
-        "heading_line": 11020,
-        "line": 11022,
+        "heading_line": 11022,
+        "line": 11024,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184860,8 +184970,8 @@
       "source_location": {
         "heading": "SMPFS-164 - Environment Provenance And Pending Launch Changes",
         "heading_level": 3,
-        "heading_line": 11101,
-        "line": 11103,
+        "heading_line": 11103,
+        "line": 11105,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -184877,12 +184987,29 @@
       "source_location": {
         "heading": "SMPFS-165 - Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 11177,
-        "line": 11179,
+        "heading_line": 11179,
+        "line": 11181,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "scoped_browser_event_admission",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-166",
+      "reasoning_tier": "high",
+      "risk_class": "browser_event_scope_retention_replay_or_consumer_drift",
+      "source_location": {
+        "heading": "SMPFS-166 - Browser Event And Consumer Admission Boundary",
+        "heading_level": 3,
+        "heading_line": 11263,
+        "line": 11265,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
     },
     {
       "context_scope": "storage_generated_residual_tail",
@@ -189265,6 +189392,23 @@
         "heading_level": 3,
         "heading_line": 18956,
         "line": 18958,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "scoped_browser_event_storage",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-259",
+      "reasoning_tier": "high",
+      "risk_class": "browser_event_retention_anchor_or_physical_admission_escape",
+      "source_location": {
+        "heading": "SP-259 - Browser Event Retention And Recovery Consumer",
+        "heading_level": 3,
+        "heading_line": 19029,
+        "line": 19031,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198808,6 +198952,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "browser_usage_consumer",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-102",
+      "reasoning_tier": "high",
+      "risk_class": "browser_operational_attribution_or_synthetic_usage",
+      "source_location": {
+        "heading": "UF-102 - Browser Operational Attribution Without Synthetic Usage",
+        "heading_level": 3,
+        "heading_line": 7010,
+        "line": 7012,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_wiring",
       "gui_related": true,
       "owner_doc": "Plans/UI_Wiring_Rules.md",
@@ -201511,6 +201672,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "browser_command_event_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-054",
+      "reasoning_tier": "high",
+      "risk_class": "browser_command_event_reverse_coverage_or_false_dispatch",
+      "source_location": {
+        "heading": "WM-054 - Browser Command Event Reverse Coverage",
+        "heading_level": 3,
+        "heading_line": 4494,
+        "line": 4496,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "working_notebook",
       "gui_related": false,
       "owner_doc": "Plans/Working_Notebook.md",
@@ -202197,10 +202375,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14615,
+    "depends_on_edge_count": 14629,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17263,
-    "node_count": 6437,
+    "edge_count": 17277,
+    "node_count": 6443,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
