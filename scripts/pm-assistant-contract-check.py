@@ -108,6 +108,81 @@ def dimension_observations(row,dimensions):
     return [dict(dimension=d,missing_fields=[k for k in DIMENSION_FIELDS[d]if k not in row or row[k]is None],
                  semantic_review_status='not_run')for d in dimensions]
 
+def whole_wiring_inventory(root, catalogue, wiring, materialized_touch):
+    """Account for every wired command without expanding packet Touch scope.
+
+    Catalogue mentions include explicit retirement and alias prose. Their mere
+    presence is deliberately not classified as primary command registration.
+    Missing schema pointers are measured separately from named prose contracts.
+    None of these observations supplies a per-case semantic or native verdict.
+    """
+    command_re = re.compile(r'\bcmd\.[a-z][a-z0-9_.]*[a-z0-9_]\b')
+    references_re = re.compile(r'Plans/[A-Za-z0-9_./-]+\.(?:md|json)')
+    mentions = {}
+    for number, line in enumerate(catalogue.splitlines(), 1):
+        for cid in set(command_re.findall(line)):
+            table = line.lstrip().startswith('|')
+            first = line.split('|', 2)[1] if table and '|' in line else ''
+            kind = 'first_column_declaration_or_disposition' if cid in command_re.findall(first) else 'other_table_column' if table else 'prose_or_planunit'
+            mentions.setdefault(cid, []).append({'line': number, 'kind': kind})
+    grouped = {}
+    for key, row in wiring.items():
+        grouped.setdefault(row['ui_command_id'], []).append((key, row))
+    touches = {}
+    for row in materialized_touch:
+        touches.setdefault(row['action_id'], []).append(row['touch_id'])
+    commands = []
+    errors = []
+    checked_references = {}
+    for cid, bindings in sorted(grouped.items()):
+        handlers = sorted({row.get('handler_location', '') for _, row in bindings})
+        if len(handlers) != 1 or not handlers[0]:
+            errors.append({'code': 'whole_command_handler_conflict', 'subject': cid, 'detail': handlers})
+        if cid not in mentions:
+            errors.append({'code': 'whole_command_without_catalogue_mention', 'subject': cid, 'detail': 'No exact token; a mention alone would still not prove registration'})
+        row_observations = []
+        for key, row in bindings:
+            missing = []
+            invalid = []
+            for field in ('request_schema_ref', 'result_schema_ref'):
+                ref = row.get(field)
+                if not ref:
+                    missing.append(field)
+                    continue
+                try:
+                    resolve(root, ref)
+                except (ValueError, KeyError, IndexError) as exc:
+                    invalid.append({'field': field, 'ref': ref, 'reason': str(exc)})
+            owner_refs = sorted(set(references_re.findall(json.dumps(row))))
+            missing_owners = []
+            for ref in owner_refs:
+                if ref not in checked_references:
+                    try:
+                        resolve(root, ref)
+                        checked_references[ref] = True
+                    except (ValueError, KeyError, IndexError):
+                        checked_references[ref] = False
+                if not checked_references[ref]:missing_owners.append(ref)
+            for ref in missing_owners:
+                errors.append({'code': 'whole_wiring_missing_owner_reference', 'subject': key, 'detail': ref})
+            for failure in invalid:
+                errors.append({'code': 'whole_wiring_invalid_contract_reference', 'subject': key, 'detail': failure})
+            row_observations.append({'wiring_row_ref': 'Plans/Wiring_Matrix.production.json#/entries/' + key.replace('~', '~0').replace('/', '~1'),
+                                     'missing_machine_contract_fields': missing, 'invalid_contract_refs': invalid,
+                                     'owner_document_refs': owner_refs, 'missing_owner_document_refs': missing_owners})
+        commands.append({'command_id': cid, 'sole_declared_handlers': handlers,
+                         'catalogue_occurrences': mentions.get(cid, []),
+                         'packet_touch_ids': touches.get(cid, []), 'wiring_rows': row_observations,
+                         'semantic_review_status': 'not_run', 'native_runtime_proven': False})
+    return {'scope': 'all production-intent wiring commands; independent of the packet Touch denominator',
+            'command_count': len(commands), 'wiring_row_count': len(wiring),
+            'commands_in_packet_touch': sum(bool(c['packet_touch_ids']) for c in commands),
+            'commands_without_packet_touch': sum(not c['packet_touch_ids'] for c in commands),
+            'rows_with_request_and_result_pointers': sum(not r['missing_machine_contract_fields'] for c in commands for r in c['wiring_rows']),
+            'commands': commands, 'errors': errors,
+            'reference_source_hashes': {ref: digest(root/ref) for ref, valid in checked_references.items() if valid},
+            'claim_boundary': 'Exhaustive structural accounting only; no primary-registration inference from a token, automatic Touch admission, semantic audit verdict, or native proof.'}
+
 def check(root):
     from jsonschema import Draft202012Validator
     from referencing import Registry,Resource
@@ -170,6 +245,9 @@ def check(root):
         # Full schema validation is structural, not a proof of any handler.
         gap('wiring_schema',str(list(ex.path)),ex.message)
     materialized=materialize_touch(touch)
+    whole_inventory=whole_wiring_inventory(root,catalogue,wiring,materialized)
+    errors.extend(whole_inventory['errors'])
+    source_hashes.update(whole_inventory['reference_source_hashes'])
     dimensions=read(root,'scripts/pm-integration-packet-audit.spec.json')['touch_closure_dimensions']
     if dimensions!=list(DIMENSION_FIELDS):raise ValueError('central audit dimension set/order changed')
     if set(bsd_ids)!=set(BSD_COMMANDS):gap('bsd_owner_command_set_drift','BSD',sorted(set(bsd_ids)^set(BSD_COMMANDS)))
@@ -215,7 +293,7 @@ def check(root):
     if settings['safety.approvals.bsd-catch-up-seconds']['default']!='30 seconds':gap('catchup_default_drift','BSD','Adjudicate current owner default')
     if settings['safety.approvals.bsd-trigger-sensitivity'].get('options')!=['Conservative','Balanced','Frequent']:gap('sensitivity_mapping_drift','BSD','Expected reconciled display mapping')
     if 'Only `cmd.bsd.set` has an existing catalog row.'in bsd_text:gap('stale_registration_claim','BSD','Owner still denies existing catalogue rows')
-    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,browser_candidate_dispositions=observations,browser_successor_admission_check=admission_observation,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
+    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,whole_wiring_inventory=whole_inventory,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,browser_candidate_dispositions=observations,browser_successor_admission_check=admission_observation,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[1]);a=p.parse_args()

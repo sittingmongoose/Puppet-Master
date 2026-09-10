@@ -336,7 +336,7 @@
         "schema_id", "schema_version", "result_type", "command_id", "operation_id",
         "command_instance_id", "outcome", "observable_work_id", "current_revision_or_epoch",
         "projection_ref", "receipt_refs", "artifact_refs", "disabled_reason", "error",
-        "recovery_actions", "replayed", "original_operation_id", "terminal_owner_result_ref"
+        "recovery_actions", "replayed", "original_operation_id", "terminal_owner_result_ref", "command_outcome_ref"
       ],
       "properties": {
         "schema_id": {"const": "pm.shared_runtime.command_result.v1"},
@@ -345,6 +345,7 @@
         "command_id": {"$ref": "#/$defs/canonical_command_id"},
         "operation_id": {"$ref": "#/$defs/non_empty_string"},
         "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "command_outcome_ref": {"$ref": "#/$defs/non_secret_ref"},
         "outcome": {"enum": ["accepted", "no_change", "blocked", "cancelled", "failed", "recovery_required"]},
         "observable_work_id": {"$ref": "#/$defs/nullable_non_empty_string"},
         "current_revision_or_epoch": {"type": "integer", "minimum": 0},
