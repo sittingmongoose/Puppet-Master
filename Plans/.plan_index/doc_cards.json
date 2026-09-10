@@ -2216,9 +2216,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 2,
-        "True": 18
+        "True": 19
       },
-      "heading_count": 42,
+      "heading_count": 44,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2252,9 +2252,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1122,
+      "line_count": 1180,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 20,
+      "plan_unit_count": 21,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2275,7 +2275,8 @@
         "BRS-017",
         "BRS-018",
         "BRS-019",
-        "BRS-020"
+        "BRS-020",
+        "BRS-021"
       ],
       "reasoning_tiers": [
         "high",
@@ -2294,6 +2295,7 @@
         "destination_partial_write_or_manifest_omission",
         "destructive_restore_or_identity_collision",
         "duplicate_schedule_or_destructive_prune",
+        "fabricated_recovery_or_unscoped_destructive_consent",
         "false_backup_or_restore_receipt",
         "incomplete_or_overbroad_backup_boundary",
         "inconsistent_backup_or_false_completion",
@@ -2303,10 +2305,10 @@
         "unsafe_migration_false_recovery_or_consumer_overclaim",
         "unsafe_restore_or_false_operational_completion"
       ],
-      "sha256": "7638c06e29a7bffa0cd6cce46f88902e000a56f7e3edf6c7c27cdcd7d6ccb089",
+      "sha256": "ccacffc1dd7fa7cf98e9903527cdbe2c566ee1c00fb39a6bff223b386d6aa820",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 20
+        "accepted": 21
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
@@ -2316,7 +2318,7 @@
         "migration_requirement": 2,
         "operational_policy": 1,
         "owner_boundary": 1,
-        "recovery_requirement": 3,
+        "recovery_requirement": 4,
         "requirement": 3,
         "security_requirement": 2,
         "validation_requirement": 1
@@ -2336,6 +2338,8 @@
         "future destructive restore/retention/provider/GUI/runtime tests",
         "future key-slot rotation compromise re-encryption no-store and tsnet-exclusion tests",
         "future migration fresh-install Doctor Settings GUI semantic and native runtime tests",
+        "future native per-phase crash and human-authority validation traces",
+        "future native restore-mode and per-phase crash tests",
         "future native web UI tests",
         "future offline partial-write protection and retention tests",
         "future one- and multi-Vault boundary tests",
@@ -2344,7 +2348,6 @@
         "future provider/OAuth/key-delivery/rotation/capture-isolation runtime tests",
         "future real-provider auth capability wrong-account quota throttle and existing-repository tests",
         "future receipt/currentness and readiness tests",
-        "future restore-mode and per-phase crash tests",
         "future secret-redaction and adapter-portability tests",
         "future traversal symlink archive cost Client Host and reverse-route tests",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -2352,7 +2355,9 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-forge-backup-acceptance",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-touch-closure-verify.py --json"
+        "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm_restore_semantics.py",
+        "tests/test_pm_restore_phase_contracts.py"
       ]
     },
     {
@@ -6527,7 +6532,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 37492,
+      "line_count": 37493,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 551,
       "plan_unit_ids": [
@@ -7179,7 +7184,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5",
+      "sha256": "cc63f403bc68742f39ff0ce856c63220845268b8e168cf9626689d746bdff823",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 550,
@@ -13415,7 +13420,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "ece22e4255155ec54a899ea105a3497426c3f7643efffabb33e3fa3d553a5340",
+      "sha256": "d5d06a1bd66a61bf375f79f264a8eff4dd4f2fff3f56b4e7c18f6920e876a976",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 6
@@ -15609,10 +15614,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 15,
-        "True": 22
+        "False": 17,
+        "True": 24
       },
-      "heading_count": 95,
+      "heading_count": 100,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -15661,9 +15666,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2046,
+      "line_count": 2200,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 37,
+      "plan_unit_count": 41,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -15701,7 +15706,11 @@
         "SIR-035",
         "SIR-036",
         "SIR-037",
-        "SIR-038"
+        "SIR-038",
+        "SIR-043",
+        "SIR-039",
+        "SIR-040",
+        "SIR-041"
       ],
       "reasoning_tiers": [
         "high",
@@ -15728,6 +15737,7 @@
         "installation_ownership_or_license_mismatch",
         "installation_selection_acquisition_or_auth_conflation",
         "lease_or_awareness_authority_drift",
+        "oversubscription_or_critical_path_starvation",
         "parallel_owner_drift",
         "platform_adapter_mechanism_or_evidence_overclaim",
         "project_topology_binding_or_external_data_loss",
@@ -15741,15 +15751,18 @@
         "shared_consumer_owner_drift_or_false_availability",
         "shared_runtime_duplication_or_external_effect_ambiguity",
         "stale_writer",
+        "startup_global_hydration_barrier",
         "static_evidence_promoted_to_performance_proof",
         "storage_migration_or_secret_drift",
         "topology_identity_race_or_unsettled_work",
-        "unsafe_recovery"
+        "unbounded_memory_or_evidence_loss",
+        "unsafe_recovery",
+        "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "a262a1e77b79f096be363d63b1531c1d3ad97b04d68e3b2a9cbf0b1ccdd26405",
+      "sha256": "e41fc7b712796ea356e0378d22c411e16744092eef07da738623d5289d9b1809",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 37
+        "accepted": 41
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -15762,7 +15775,7 @@
         "integration_contract": 2,
         "owner_boundary": 1,
         "platform_requirement": 1,
-        "requirement": 16,
+        "requirement": 20,
         "schema_contract": 4,
         "security_contract": 1
       },
@@ -15809,12 +15822,13 @@
         "future Usage outbox and replay attribution fixtures",
         "future broker attenuation and secret-isolation tests",
         "future central catalog/wiring and native connection fixtures",
-        "future command acknowledgement",
         "future full-thread benchmark matrix",
         "future image/pod replacement recovery matrix",
         "future inventory-generation",
         "future macOS Apple-Silicon and Low-Power tests",
         "future multi-Project/multi-Client coalescing matrix",
+        "future native command acknowledgement",
+        "future native startup and whole-process-tree performance captures",
         "future native-Windows-without-WSL tests",
         "future ownership-maintenance positive/negative fixtures",
         "future public unauthenticated",
@@ -15855,12 +15869,14 @@
         "rollback tests",
         "rule determinism tests",
         "runtime integration disposition validation",
+        "scripts/pm_full_thread_semantics.py",
         "secret scans",
         "server claim schema fixtures",
         "stale-endpoint",
         "stale-generation",
         "storage schema tests",
         "tests/test_pm_auth_handoff_contracts.py",
+        "tests/test_pm_full_thread_contracts.py",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_runtime_identity_scope.py",
         "tests/test_pm_runtime_vocabulary_migration.py",
@@ -18398,7 +18414,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:22:03Z",
+  "generated_at_utc": "2026-09-11T17:28:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18406,13 +18422,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3334,
-      "True": 3108
+      "False": 3336,
+      "True": 3111
     },
-    "plan_unit_count": 6442,
+    "plan_unit_count": 6447,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6251,
+      "accepted": 6256,
       "retired": 182,
       "superseded": 9
     },
@@ -18476,10 +18492,10 @@
       "provider_config": 1,
       "provider_surface_contract": 1,
       "provider_taxonomy": 1,
-      "recovery_requirement": 3,
+      "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5144,
+      "requirement": 5148,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
