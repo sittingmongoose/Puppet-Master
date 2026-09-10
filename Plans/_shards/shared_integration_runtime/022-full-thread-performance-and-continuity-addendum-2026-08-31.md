@@ -4,7 +4,7 @@ Source: `Plans/Shared_Integration_Runtime.md`
 
 Source lines: L817-L1082
 
-Source SHA256: `e41fc7b712796ea356e0378d22c411e16744092eef07da738623d5289d9b1809`
+Source SHA256: `d3a3e7644dd0a7596dd604bb70dea8a58580057e43c786d95e8717c6996a58f4`
 
 ---
 
@@ -24,7 +24,7 @@ Every successor work record includes a bounded human `title`, exact owner `subje
 
 `progress_source = measured | provider_reported | derived | unknown` is independent of `progress_kind` and has a source reference for determinate progress. Determinate progress requires a known source, a positive denominator, and `0 <= completed_units <= total_units`. `none` or `indeterminate` carries no numerical numerator/denominator and must not display a made-up percentage. Work `completed`/`cancelled` requires an owner result receipt; `failed`/`recovery-required` requires an error/recovery evidence reference. Completed, failed, and cancelled work cannot offer Cancel or Background as live actions.
 
-Command outcomes require a non-null command-instance binding. `acknowledged`, `executing`, and `succeeded` require the acknowledgement receipt and frame identity/offset; a present acknowledgement has zero offset if and only if its frame equals the dispatch frame, and `same_frame_acknowledged` agrees with that comparison. Command `succeeded`/`cancelled` requires a terminal result receipt; `failed`/`rejected`/`terminal_unknown` requires error/reconciliation evidence. An acknowledgement without a terminal receipt is never success. References must resolve to the same command, operation, target, and generation through the owning result contract; schema shape alone does not prove resolution.
+Command outcomes require a non-null command-instance binding. `acknowledged`, `executing`, and `succeeded` require the acknowledgement receipt and frame identity/offset; a present acknowledgement has zero offset if and only if its frame equals the dispatch frame, and `same_frame_acknowledged` agrees with that comparison. Command `succeeded`/`cancelled` requires a terminal result receipt; `failed`/`rejected`/`terminal_unknown` requires error/reconciliation evidence. Every terminal command outcome additionally binds its actual typed owner result/error through non-null `owner_result_ref`, `owner_result_schema_ref` and `owner_result_sha256`; these three fields are present but null together while no result exists. The hash uses RFC 8785 canonical JSON, and native publication requires authenticating the actual owner and result before joining the CV-331 response. An acknowledgement without a terminal receipt is never success. References must resolve to the same command, operation, target, and generation through the owning result contract; schema shape alone does not prove resolution.
 
 The `testing-route` and `migrating-route` values describe active routed work, not successful testing or migration. `degraded` and `stalled` remain nonterminal until an owner receipt moves them to a terminal state. `backgrounded` changes presentation priority only; it does not cancel, pause, orphan, or weaken durable work.
 
@@ -115,7 +115,7 @@ Endpoint ownership remains with the Server and security owners. Shared runtime o
 
 ### Commands, events, wiring, and GUI/reverse coverage
 
-No new performance-only command family is introduced. Existing owner commands dispatch through their existing central IDs and return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one owner receipt path.
+No new performance-only command family is introduced. Existing commands dispatch through their existing central IDs and consume the central CV-331 response. Actual durable owner operations return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref; a local-only route/open action or pre-dispatch refusal does not invent an operation or Full Thread identity. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one actual owner or local-disposition receipt path appropriate to its contract.
 
 These new records are receipt/projection values. They emit no new EventRecord while Event Authority is open. `event_effect_policy` remains `receipt_only_no_eventrecord_pending_event_authority`; existing admitted producer events remain governed by their existing owner registrations.
 
