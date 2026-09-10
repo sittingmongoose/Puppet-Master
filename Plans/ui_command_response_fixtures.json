@@ -1,0 +1,2367 @@
+{
+  "schema_id": "pm.ui_command_response_fixtures.v1",
+  "claim_boundary": "Static cross-record conformance only; request and record lookup are fixture inputs, not authenticated native producer, receipt-store, general numeric RFC8785, event emission or UI dispatch proof.",
+  "valid": [
+    {
+      "case_id": "shared_accepted",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_accepted",
+        "request_ref": "request:shared_accepted",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_accepted",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_accepted",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_accepted",
+        "owner_result_ref": "owner-result:shared_accepted",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_accepted",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_accepted",
+        "operation_id": "operation:shared_accepted",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_accepted",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "accepted",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": null,
+        "acknowledgement_frame_offset": null,
+        "same_frame_acknowledged": false,
+        "acknowledgement_receipt_ref": null,
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_accepted",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "22617bc890edce646810b434301e1d08aec11ab39cda9db814acaa5af8350017",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_accepted",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_accepted",
+        "command_instance_id": "command-instance:shared_accepted",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_accepted"
+      }
+    },
+    {
+      "case_id": "shared_acknowledged",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": "owner-result:shared_acknowledged",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_acknowledged",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "acknowledged",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_acknowledged",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_acknowledged",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "886cbb947e867fb0c884021e9fb8ef51c013af507131af31e67a7665775d0937",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_acknowledged",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_acknowledged",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_acknowledged"
+      }
+    },
+    {
+      "case_id": "shared_executing",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_executing",
+        "request_ref": "request:shared_executing",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_executing",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_executing",
+        "operation_id": "operation:shared_executing",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_executing",
+        "owner_result_ref": "owner-result:shared_executing",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_executing",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_executing",
+        "operation_id": "operation:shared_executing",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_executing",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "executing",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_executing",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_executing",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "4a9b820f7d0160c21b62cbc63ddd682df71ac973e2815cfc2b3643a12f8f6dfa",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_executing",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_executing",
+        "command_instance_id": "command-instance:shared_executing",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_executing"
+      }
+    },
+    {
+      "case_id": "shared_succeeded",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_succeeded",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:shared_succeeded",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "ec024a1ac7404ec16c24605675d25744e354cffeac8bae6a64aba2fb68dcf760",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_succeeded",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_succeeded",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "outcome": "no_change",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_succeeded"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_succeeded",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_succeeded"
+      }
+    },
+    {
+      "case_id": "shared_failed",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_failed",
+        "request_ref": "request:shared_failed",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_failed",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "failed",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_failed",
+        "operation_id": "operation:shared_failed",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_failed",
+        "owner_result_ref": "owner-result:shared_failed",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_failed",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_failed",
+        "operation_id": "operation:shared_failed",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_failed",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "failed",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_failed",
+        "result_receipt_ref": "receipt:shared_failed",
+        "error_ref": "error:shared_failed",
+        "owner_result_ref": "owner-result:shared_failed",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "bd2313bad949b00db2088086741c0780259fe7d75ddbbc2b7e78b9bfb17d38e9",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_failed",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_failed",
+        "command_instance_id": "command-instance:shared_failed",
+        "outcome": "failed",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_failed"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_failed"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_failed",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_failed"
+      }
+    },
+    {
+      "case_id": "shared_cancelled",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_cancelled",
+        "request_ref": "request:shared_cancelled",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "cancelled",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_cancelled",
+        "operation_id": "operation:shared_cancelled",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_cancelled",
+        "owner_result_ref": "owner-result:shared_cancelled",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_cancelled",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "operation_id": "operation:shared_cancelled",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_cancelled",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "cancelled",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_cancelled",
+        "result_receipt_ref": "receipt:shared_cancelled",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_cancelled",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "a01e566012aac13680984c29420194d8a2f1343969eb9e5c6ca9c3d1de3b2914",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_cancelled",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_cancelled",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "outcome": "cancelled",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_cancelled"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_cancelled",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_cancelled"
+      }
+    },
+    {
+      "case_id": "shared_rejected",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_rejected",
+        "request_ref": "request:shared_rejected",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_rejected",
+        "response_kind": "owner_operation",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_rejected",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_rejected",
+        "owner_result_ref": "owner-result:shared_rejected",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_rejected",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_rejected",
+        "operation_id": "operation:shared_rejected",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_rejected",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "rejected",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": null,
+        "acknowledgement_frame_offset": null,
+        "same_frame_acknowledged": false,
+        "acknowledgement_receipt_ref": null,
+        "result_receipt_ref": null,
+        "error_ref": "error:shared_rejected",
+        "owner_result_ref": "owner-result:shared_rejected",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "269fc011fdd6667e614d8c1b7868f9eca7017c0432eb312ca09c41436f60bdd7",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_rejected",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_rejected",
+        "command_instance_id": "command-instance:shared_rejected",
+        "outcome": "blocked",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_rejected"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_rejected"
+      }
+    },
+    {
+      "case_id": "shared_terminal_unknown",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_terminal_unknown",
+        "request_ref": "request:shared_terminal_unknown",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "recovery_required",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_terminal_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_terminal_unknown",
+        "owner_result_ref": "owner-result:shared_terminal_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_terminal_unknown",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "operation_id": "operation:shared_terminal_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_terminal_unknown",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "terminal_unknown",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_terminal_unknown",
+        "result_receipt_ref": null,
+        "error_ref": "error:shared_terminal_unknown",
+        "owner_result_ref": "owner-result:shared_terminal_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "36b3ad99d08e0e12d4e0a2edfdfc7a689964fc951ee8d509be3673439d87eb58",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_terminal_unknown",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_terminal_unknown",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "outcome": "recovery_required",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_terminal_unknown"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_terminal_unknown"
+      }
+    },
+    {
+      "case_id": "ack_before_owner_result",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_acknowledged",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "acknowledged",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_acknowledged",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "owner_result_sha256": null,
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "browser_succeeded",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:browser_succeeded",
+        "request_ref": "request:browser_succeeded",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:browser-workspace:create:1",
+        "operation_id": "operation:browser_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:browser_succeeded",
+        "owner_result_ref": "owner-result:browser_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:browser_succeeded",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "operation_id": "operation:browser_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:browser_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_id": "cmd.browser.workspace.create",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:browser_succeeded",
+        "result_receipt_ref": "receipt:browser-workspace:create:1",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:browser_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "owner_result_sha256": "8888c8607a5299acd8a51ae3f16eeef36db8609102d5bf9b3a279a0c3666f4d0",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:browser_succeeded",
+      "owner_result": {
+        "schema_id": "pm.browser_program.command_result.v1",
+        "record_kind": "browser_command_result",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "scope": {
+          "command_id": "cmd.browser.workspace.create",
+          "lineage": {
+            "project_id": "project-cmd",
+            "run_id": "run-cmd",
+            "attempt_id": "attempt-cmd",
+            "home_server_id": "server-cmd",
+            "execution_host_id": "host-cmd",
+            "execution_environment_id": "env-cmd",
+            "source_location_id": "source-cmd"
+          },
+          "browser_session_id": "browser-session-cmd",
+          "session_security_class": "ordinary",
+          "workspace_policy_ref": "policy:browser-workspace:1",
+          "capability_profile_id": "browser-capability-standard"
+        },
+        "outcome": "succeeded",
+        "effect_state": "effects_reconciled",
+        "result_refs": [
+          "receipt:browser-workspace:create:1"
+        ],
+        "dispatch_receipt_ref": null,
+        "completed_at_utc": "2026-08-31T13:10:00Z"
+      }
+    },
+    {
+      "case_id": "browser_effect_unknown",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:browser_effect_unknown",
+        "request_ref": "request:browser_effect_unknown",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "recovery_required",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:browser_effect_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:browser_effect_unknown",
+        "owner_result_ref": "owner-result:browser_effect_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:browser_effect_unknown",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "operation_id": "operation:browser_effect_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:browser_effect_unknown",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_id": "cmd.browser.workspace.create",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "terminal_unknown",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:browser_effect_unknown",
+        "result_receipt_ref": null,
+        "error_ref": "error:browser_effect_unknown",
+        "owner_result_ref": "owner-result:browser_effect_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "owner_result_sha256": "ee775bbaeb6c9aec7963f947765cca66b869e5d685eece929b4c6bf6cc018c7b",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:browser_effect_unknown",
+      "owner_result": {
+        "schema_id": "pm.browser_program.command_result.v1",
+        "record_kind": "browser_command_result",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "scope": {
+          "command_id": "cmd.browser.workspace.create",
+          "lineage": {
+            "project_id": "project-cmd",
+            "run_id": "run-cmd",
+            "attempt_id": "attempt-cmd",
+            "home_server_id": "server-cmd",
+            "execution_host_id": "host-cmd",
+            "execution_environment_id": "env-cmd",
+            "source_location_id": "source-cmd"
+          },
+          "browser_session_id": "browser-session-cmd",
+          "session_security_class": "ordinary",
+          "workspace_policy_ref": "policy:browser-workspace:1",
+          "capability_profile_id": "browser-capability-standard"
+        },
+        "outcome": "effect_unknown",
+        "effect_state": "effect_unknown",
+        "result_refs": [],
+        "dispatch_receipt_ref": null,
+        "completed_at_utc": "2026-08-31T13:10:00Z"
+      }
+    },
+    {
+      "case_id": "server_application_scope",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:server_application_scope",
+        "request_ref": "request:server_application_scope",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "srcpt_result-00000000001",
+        "operation_id": "operation:server_application_scope",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:server_application_scope",
+        "owner_result_ref": "owner-result:server_application_scope",
+        "owner_result_schema_ref": {
+          "path": "Plans/server_system_contracts.schema.json",
+          "json_pointer": "#/$defs/command_result",
+          "schema_id": "server.command.result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:server_application_scope",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "operation_id": "operation:server_application_scope",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:server_application_scope",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.server.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:server_application_scope",
+        "result_receipt_ref": "srcpt_result-00000000001",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:server_application_scope",
+        "owner_result_schema_ref": {
+          "path": "Plans/server_system_contracts.schema.json",
+          "json_pointer": "#/$defs/command_result",
+          "schema_id": "server.command.result.v1"
+        },
+        "owner_result_sha256": "15a3eeb89755be029cb8cd5517f0818b9cb71a6a886e5e19608335c6535d5283",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:server_application_scope",
+      "owner_result": {
+        "record_type": "server.command.result.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_result-00000000001",
+        "resulting_catalog_revision": 8,
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "output": {
+          "action": "cmd.server.connect",
+          "changed": true,
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "currentness": "current",
+          "requested_connection_mode": "reconnect",
+          "effective_connection_mode": "reconnect",
+          "session_id": "session:abcdefghijkl",
+          "cursor_ref": "cursor:server:abcdefghijkl:984"
+        }
+      }
+    },
+    {
+      "case_id": "local_projection_success",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_success",
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_success",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "local_projection_no_change",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_no_change",
+        "request_ref": "request:local_projection_no_change",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_no_change",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_no_change",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:local_projection_no_change",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_no_change",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "predispatch_handler_unavailable",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:predispatch_handler_unavailable",
+        "request_ref": "request:predispatch_handler_unavailable",
+        "command_id": "cmd.browser.program.run",
+        "command_instance_id": "command-instance:predispatch_handler_unavailable",
+        "response_kind": "pre_dispatch_rejection",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "handler_unavailable",
+          "reason": "No domain handler was invoked.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:predispatch_handler_unavailable",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:predispatch_handler_unavailable",
+        "command_id": "cmd.browser.program.run",
+        "command_instance_id": "command-instance:predispatch_handler_unavailable",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "predispatch_unknown_command",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:predispatch_unknown_command",
+        "request_ref": "request:predispatch_unknown_command",
+        "command_id": null,
+        "command_instance_id": "command-instance:predispatch_unknown_command",
+        "response_kind": "pre_dispatch_rejection",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "unknown_command",
+          "reason": "No domain handler was invoked.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:predispatch_unknown_command",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:predispatch_unknown_command",
+        "command_id": null,
+        "command_instance_id": "command-instance:predispatch_unknown_command",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "replay_returns_original_owner_result",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:retry",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": true,
+        "original_dispatch_id": "dispatch:shared_succeeded",
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:shared_succeeded",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "ec024a1ac7404ec16c24605675d25744e354cffeac8bae6a64aba2fb68dcf760",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_succeeded",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_succeeded",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "outcome": "no_change",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_succeeded"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_succeeded",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_succeeded"
+      },
+      "original_response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_succeeded",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "case_id": "response_command_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_id": "cmd.environment.disconnect"
+      },
+      "expected_error": "response_request_command_id_mismatch"
+    },
+    {
+      "case_id": "response_command_instance_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_instance_id": "other-instance"
+      },
+      "expected_error": "response_request_command_instance_id_mismatch"
+    },
+    {
+      "case_id": "response_operation_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.operation_id": "operation:other"
+      },
+      "expected_error": "command_outcome_operation_id_mismatch"
+    },
+    {
+      "case_id": "response_command_outcome_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_outcome_ref": "outcome:wrong"
+      },
+      "expected_error": "command_outcome_reference_mismatch"
+    },
+    {
+      "case_id": "response_owner_identity_project_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_identity.project_id": "project:other"
+      },
+      "expected_error": "response_outcome_scope_mismatch"
+    },
+    {
+      "case_id": "response_owner_identity_execution_host_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_identity.execution_host_id": "host:other"
+      },
+      "expected_error": "response_outcome_scope_mismatch"
+    },
+    {
+      "case_id": "response_owner_result_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_ref": "owner-result:wrong"
+      },
+      "expected_error": "outcome_owner_result_ref_mismatch"
+    },
+    {
+      "case_id": "response_owner_result_schema_ref_schema_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.schema_id": "wrong.schema"
+      },
+      "expected_error": "outcome_owner_result_schema_ref_mismatch"
+    },
+    {
+      "case_id": "response_receipt_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.receipt_ref": "receipt:wrong"
+      },
+      "expected_error": "terminal_response_receipt_mismatch"
+    },
+    {
+      "case_id": "request_payload_sha256",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_error": "outcome_request_payload_sha256_mismatch"
+    },
+    {
+      "case_id": "request_idempotency_key",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.idempotency_key": "other-key"
+      },
+      "expected_error": "outcome_request_idempotency_key_mismatch"
+    },
+    {
+      "case_id": "request_target_generation",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.target_generation": 999
+      },
+      "expected_error": "outcome_request_target_generation_mismatch"
+    },
+    {
+      "case_id": "request_dispatch_frame_id",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.dispatch_frame_id": "frame:other"
+      },
+      "expected_error": "outcome_request_dispatch_frame_id_mismatch"
+    },
+    {
+      "case_id": "ack_cannot_claim_success",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "response.result_status": "succeeded"
+      },
+      "expected_error": "acknowledgement_is_not_terminal_success"
+    },
+    {
+      "case_id": "accepted_cannot_claim_noop",
+      "base_case_id": "shared_accepted",
+      "patch": {
+        "response.result_status": "no_op"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "missing_outcome",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "outcome": null
+      },
+      "expected_error": "outcome_schema"
+    },
+    {
+      "case_id": "missing_typed_owner_result",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result": null
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "wrong_owner_ref_lookup",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "resolved_owner_result_ref": "owner-result:other"
+      },
+      "expected_error": "owner_result_reference_mismatch"
+    },
+    {
+      "case_id": "changed_owner_result_body",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.subject_ref": "environment:other"
+      },
+      "expected_error": "owner_result_digest_mismatch"
+    },
+    {
+      "case_id": "same_shape_wrong_command",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.command_id": "cmd.environment.disconnect"
+      },
+      "expected_error": "command_outcome_command_mismatch"
+    },
+    {
+      "case_id": "same_shape_wrong_operation",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.operation_id": "operation:other"
+      },
+      "expected_error": "command_outcome_operation_id_mismatch"
+    },
+    {
+      "case_id": "owner_accepted_cannot_be_terminal",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.outcome": "accepted"
+      },
+      "expected_error": "shared_owner_outcome_mismatch"
+    },
+    {
+      "case_id": "terminal_owner_receipt_unbound",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.terminal_owner_result_ref": "receipt:other"
+      },
+      "expected_error": "shared_owner_terminal_receipt_mismatch"
+    },
+    {
+      "case_id": "owner_result_wrong_schema",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.schema_id": "wrong.schema"
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "schema_pointer_unknown",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.json_pointer": "#/$defs/missing"
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "unregistered_owner_schema",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.path": "Plans/ui_command_response.schema.json"
+      },
+      "expected_error": "unadmitted_owner_result_schema"
+    },
+    {
+      "case_id": "local_cannot_invent_operation",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.operation_id": "operation:fake"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "local_cannot_attach_owner",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.command_outcome_ref": "outcome:fake"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "predispatch_cannot_invent_project",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {
+        "normalized_request.owner_identity": {
+          "project_id": "fake"
+        }
+      },
+      "expected_error": "non_operation_fabricated_scope"
+    },
+    {
+      "case_id": "predispatch_cannot_emit_event",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {
+        "response.event_refs": [
+          "event:fake"
+        ]
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "legacy_response_not_silently_upgraded",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.schema_version": "1.0.0"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "unknown_effect_not_success",
+      "base_case_id": "browser_effect_unknown",
+      "patch": {
+        "response.result_status": "succeeded"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "browser_wrong_project",
+      "base_case_id": "browser_succeeded",
+      "patch": {
+        "owner_result.scope.lineage.project_id": "project:other"
+      },
+      "expected_error": "browser_owner_scope_mismatch"
+    },
+    {
+      "case_id": "browser_receipt_not_bound",
+      "base_case_id": "browser_succeeded",
+      "patch": {
+        "owner_result.result_refs": [
+          "receipt:wrong"
+        ]
+      },
+      "expected_error": "browser_owner_result_receipt_mismatch"
+    },
+    {
+      "case_id": "server_wrong_scope",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.server_id": "server:mnopqrstuvwx"
+      },
+      "expected_error": "server_owner_scope_mismatch"
+    },
+    {
+      "case_id": "server_accepted_cannot_be_success",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.status": "accepted"
+      },
+      "expected_error": "server_owner_outcome_mismatch"
+    },
+    {
+      "case_id": "server_receipt_not_bound",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.receipt_id": "srcpt_result-00000000002"
+      },
+      "expected_error": "server_owner_result_receipt_mismatch"
+    },
+    {
+      "case_id": "replay_original_missing",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "original_response": null
+      },
+      "expected_error": "replay_original_response_missing"
+    },
+    {
+      "case_id": "replay_changed_receipt",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "response.receipt_ref": "receipt:other"
+      },
+      "expected_error": "replay_changed_original_result_identity"
+    },
+    {
+      "case_id": "replay_wrong_dispatch",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "response.original_dispatch_id": "dispatch:other"
+      },
+      "expected_error": "replay_original_dispatch_mismatch"
+    },
+    {
+      "case_id": "unknown_command_cannot_claim_canonical_id",
+      "base_case_id": "predispatch_unknown_command",
+      "patch": {"response.command_id": "cmd.settings.open"},
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "known_handler_refusal_cannot_drop_canonical_id",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {"response.command_id": null},
+      "expected_error": "response_schema"
+    }
+  ]
+}

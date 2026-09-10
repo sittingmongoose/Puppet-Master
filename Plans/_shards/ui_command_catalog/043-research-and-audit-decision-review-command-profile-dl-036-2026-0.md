@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12926-L13016
+Source lines: L12926-L13049
 
-Source SHA256: `05fc873e4f374c8af7ecb6edc20e87d03f77b4817e04e117c409d494db3607cc`
+Source SHA256: `fca7053167f4af0eddce3e2dc1a17365b3726e718e4f594edd70464b006ee617`
 
 ---
 
@@ -99,3 +99,36 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UCC-162 - Consume The Central Command Response Contract
+
+```yaml
+plan_unit_id: UCC-162
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: "Catalogued commands consume CV-331 rather than copying response minima. Domain result, command normalization, availability, permissions, receipt and event ownership remain with their existing command owner."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-331, UCC-158]
+unblocks: []
+acceptance_criteria:
+  - "New dispatch output uses the central v2 response; owner operations bind the actual typed owner result and Full Thread command outcome."
+  - "Canonical command and command-instance identities survive alias normalization and replay; no peer command or wrapper-specific response family is added."
+  - "Local-only route/open actions and pre-dispatch refusals use their non-operation response branch; shared durable commands cannot masquerade as local projections."
+  - "Accepted dispatch, UI dismissal and unknown effects do not display successful completion; missing native handlers remain visibly unavailable."
+  - "Every production row inherits the one central response binding while typed per-owner results and their adapter proof remain independently required."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

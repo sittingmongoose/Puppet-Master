@@ -1,0 +1,535 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+  "title": "Puppet Master central UICommandResponse",
+  "description": "Contracts_V0 owns this dispatcher projection. Owner operations consume the existing Full Thread CommandOutcomeRecord and separately validated typed owner result; local projections and pre-dispatch refusals never fabricate durable scope. Static shape is not authenticated producer or runtime proof.",
+  "x-owner-ref": "Plans/Contracts_V0.md#CV-331",
+  "x-compatibility-boundary": "Version-1 response minima are read/import lineage only. New output is version 2; migration requires actual owner/request/receipt lookup or remains unbound and cannot claim success.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "dispatch_id",
+    "request_ref",
+    "command_id",
+    "command_instance_id",
+    "response_kind",
+    "ack_status",
+    "result_status",
+    "error",
+    "event_refs",
+    "receipt_ref",
+    "operation_id",
+    "owner_identity",
+    "command_outcome_ref",
+    "owner_result_ref",
+    "owner_result_schema_ref",
+    "replayed",
+    "original_dispatch_id",
+    "ts"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.ui_command_response.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "dispatch_id": {
+      "$ref": "#/$defs/Id"
+    },
+    "request_ref": {
+      "$ref": "#/$defs/NonSecretRef"
+    },
+    "command_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CommandId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "command_instance_id": {
+      "$ref": "#/$defs/Id"
+    },
+    "response_kind": {
+      "enum": [
+        "owner_operation",
+        "local_projection",
+        "pre_dispatch_rejection"
+      ]
+    },
+    "ack_status": {
+      "enum": [
+        "accepted",
+        "rejected"
+      ]
+    },
+    "result_status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "pending",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "no_op",
+        "recovery_required"
+      ]
+    },
+    "error": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/UICommandError"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "event_refs": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/NonSecretRef"
+      }
+    },
+    "receipt_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operation_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_identity": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "command_outcome_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_result_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_result_schema_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/OwnerSchemaRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "replayed": {
+      "type": "boolean"
+    },
+    "original_dispatch_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ts": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"
+    }
+  },
+  "$defs": {
+    "Id": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"
+    },
+    "NonSecretRef": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "CommandId": {
+      "type": "string",
+      "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+      "maxLength": 160
+    },
+    "OwnerIdentity": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+    },
+    "UICommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "reason",
+        "offending_field"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_route",
+            "unknown_command",
+            "invalid_args",
+            "permission_denied",
+            "blocked_state_required",
+            "stale_projection",
+            "handler_unavailable",
+            "internal_error"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "offending_field": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 160
+        }
+      }
+    },
+    "OwnerSchemaRef": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef"
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"command_id": {"type": "null"}}},
+      "then": {"properties": {
+        "response_kind": {"const": "pre_dispatch_rejection"},
+        "error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}
+      }}
+    },
+    {
+      "if": {"properties": {"error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}}},
+      "then": {"properties": {
+        "command_id": {"type": "null"},
+        "response_kind": {"const": "pre_dispatch_rejection"}
+      }}
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "owner_operation"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "$ref": "#/$defs/CommandId"
+          },
+          "operation_id": {
+            "$ref": "#/$defs/Id"
+          },
+          "owner_identity": {
+            "$ref": "#/$defs/OwnerIdentity"
+          },
+          "command_outcome_ref": {
+            "$ref": "#/$defs/NonSecretRef"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "enum": [
+              "local_projection",
+              "pre_dispatch_rejection"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "operation_id": {
+            "type": "null"
+          },
+          "owner_identity": {
+            "type": "null"
+          },
+          "command_outcome_ref": {
+            "type": "null"
+          },
+          "owner_result_ref": {
+            "type": "null"
+          },
+          "owner_result_schema_ref": {
+            "type": "null"
+          },
+          "event_refs": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "local_projection"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "$ref": "#/$defs/CommandId"
+          },
+          "ack_status": {
+            "const": "accepted"
+          },
+          "result_status": {
+            "enum": [
+              "pending",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "no_op"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "pre_dispatch_rejection"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ack_status": {
+            "const": "rejected"
+          },
+          "result_status": {
+            "type": "null"
+          },
+          "error": {
+            "$ref": "#/$defs/UICommandError"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ack_status": {
+            "const": "rejected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result_status": {
+            "type": "null"
+          },
+          "error": {
+            "$ref": "#/$defs/UICommandError"
+          },
+          "event_refs": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ack_status": {
+            "const": "accepted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "$ref": "#/$defs/CommandId"
+          },
+          "result_status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "result_status": {
+            "enum": [
+              "failed",
+              "recovery_required"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "$ref": "#/$defs/UICommandError"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "result_status": {
+            "enum": [
+              "pending",
+              "succeeded",
+              "cancelled",
+              "no_op"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "result_status": {
+            "enum": [
+              "succeeded",
+              "cancelled",
+              "no_op"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "receipt_ref": {
+            "$ref": "#/$defs/NonSecretRef"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "owner_operation"
+          },
+          "result_status": {
+            "enum": [
+              "succeeded",
+              "failed",
+              "cancelled",
+              "no_op",
+              "recovery_required"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_result_ref": {
+            "$ref": "#/$defs/NonSecretRef"
+          },
+          "owner_result_schema_ref": {
+            "$ref": "#/$defs/OwnerSchemaRef"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "owner_result_ref": {
+            "type": "string"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_result_schema_ref": {
+            "$ref": "#/$defs/OwnerSchemaRef"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "owner_result_schema_ref": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "replayed": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_dispatch_id": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "original_dispatch_id": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1594-L1668
+Source lines: L1594-L1701
 
-Source SHA256: `d986040d92b297ae8682fa6569fd2cc6c25faa26497c785130c4b3e475fb195d`
+Source SHA256: `f67ecdcee1e1368527206db111e9bc9fd32b139dd2b8ee1036da9cfbd31d8e4a`
 
 ---
 
@@ -83,3 +83,36 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UIW-023 - Response Projection Wiring And Truthful Proof Boundaries
+
+```yaml
+plan_unit_id: UIW-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: "Every production command control consumes the central response projection while its typed owner result remains separate. UI acknowledgement, receipt-shaped fixtures and declared schema references are not native handler or effect proof."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-331, UCC-162]
+unblocks: []
+acceptance_criteria:
+  - "Use one production-root response_contract_ref and preserve each command row's owner request/result refs, normalization, state selector, disabled reasons, permissions and effect contract."
+  - "Render accepted/pending, verified terminal result and recovery-required distinctly; replay cannot imply another side effect."
+  - "Local actions do not invent owner-operation scope; pre-dispatch failures do not produce completion or domain events."
+  - "Check both run-gates and audit-governance integration and reject schema, cross-record identity, receipt, replay and generation mismatches."
+  - "Report declared global response coverage, explicit typed result refs and native proof separately; missing adapters or handlers remain unproven."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, scripts/pm-plans-verify.py]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

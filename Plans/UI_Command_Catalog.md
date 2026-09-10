@@ -8056,7 +8056,7 @@ This addendum closes the command-catalog portion of the FABLE GUI command and wi
 
 ### Command response and receipt baseline
 
-Every command in this addendum returns the `UICommandResponse` envelope from `Plans/Contracts_V0.md`. The field-level response minimum is `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`. Error codes are closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`. Commands that intentionally emit no persisted domain event still record a dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events.
+Every command in this addendum consumes the closed v2 `UICommandResponse` in `Plans/ui_command_response.schema.json` through CV-331. The catalog does not maintain a second response-field minimum or error enum. An actual owner operation binds the normalized request, Full Thread command outcome and separately validated typed owner result; local-only route/open actions and pre-dispatch refusals use the schema's non-operation branches without fabricated durable scope. Commands that intentionally emit no persisted domain event still record an actual dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events. Acceptance remains pending, and an unknown terminal effect remains recovery-required rather than successful or automatically retryable.
 
 ### Added GUI command families
 
@@ -8223,7 +8223,7 @@ Common fields for every covered row:
 - `command_id`: every concrete current `cmd.*` token in the row's `preserved_exact_tokens`, except a token expressly marked retired, source-lineage-only, or non-alias in `compatibility_only_notes` or `stale_retired_dispositions`; grouped or wildcard tokens are family aliases and must normalize to a concrete active `cmd.*` row before dispatch.
 - `payload_required`: `dispatch_id`, `command_id`, `source_surface`, `actor_ref`, and the row-specific identity listed below.
 - `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific refs allowed by the owner row.
-- `result_fields`: the shared `UICommandResponse` envelope fields `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`.
+- `result_fields`: the shared closed v2 `UICommandResponse` schema in CV-331, consuming the separately owned typed result rather than duplicating its domain fields.
 - `error_codes`: closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`; family owners may narrow but not expand this set without a new owner-doc row.
 - `disabled_reason_codes`: closed to `unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, and `permission_required`.
 - `owner_doc_ref`: this document plus the family owner named below; no handler may invent unowned payload keys or fabricate `*.command_applied` events.
@@ -13014,3 +13014,36 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UCC-162 - Consume The Central Command Response Contract
+
+```yaml
+plan_unit_id: UCC-162
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: "Catalogued commands consume CV-331 rather than copying response minima. Domain result, command normalization, availability, permissions, receipt and event ownership remain with their existing command owner."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-331, UCC-158]
+unblocks: []
+acceptance_criteria:
+  - "New dispatch output uses the central v2 response; owner operations bind the actual typed owner result and Full Thread command outcome."
+  - "Canonical command and command-instance identities survive alias normalization and replay; no peer command or wrapper-specific response family is added."
+  - "Local-only route/open actions and pre-dispatch refusals use their non-operation response branch; shared durable commands cannot masquerade as local projections."
+  - "Accepted dispatch, UI dismissal and unknown effects do not display successful completion; missing native handlers remain visibly unavailable."
+  - "Every production row inherits the one central response binding while typed per-owner results and their adapter proof remain independently required."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
