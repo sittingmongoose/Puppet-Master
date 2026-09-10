@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -28,6 +29,11 @@ def load(name, filename):
 
 AUDIT = load("census_audit", "pm-integration-packet-audit.py")
 WORK = load("census_work", "pm-integration-packet-audit-work.py")
+# dataclasses require their defining module to be registered under importlib.
+_custody_spec = importlib.util.spec_from_file_location("census_custody", ROOT / "scripts/pm-source-slice-coverage.py")
+CUSTODY = importlib.util.module_from_spec(_custody_spec)
+sys.modules[_custody_spec.name] = CUSTODY
+_custody_spec.loader.exec_module(CUSTODY)
 
 
 def repin(manifest):
@@ -232,6 +238,187 @@ class CensusTests(unittest.TestCase):
                 self.assertEqual(json.loads((directory / "audit_report.template.json").read_text()), template)
                 with self.assertRaisesRegex(WORK.WorkError, "overwrite"):
                     WORK.merge(directory)
+
+
+class MultiCustodyTests(unittest.TestCase):
+    """Synthetic custody fixtures, never packet review judgments."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="pm-multi-custody-test-")
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+
+    def source(self, name="source", content="- Synthetic custody obligation.\n"):
+        source = self.root / name
+        source.mkdir()
+        data = content.encode()
+        (source / "README.md").write_bytes(data)
+        write(source / "manifest.json", {"files": [{
+            "path": "README.md", "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
+        }]})
+        return source, hashlib.sha256((source / "manifest.json").read_bytes()).hexdigest()
+
+    def corpus(self, name="source", content="- Synthetic custody obligation.\n"):
+        source, digest = self.source(name, content)
+        output = self.root / (name + "-custody")
+        CUSTODY.Materializer(output).run_manifest_directory(source, digest)
+        self.assertEqual(CUSTODY.verify(output), [])
+        return output
+
+    def test_manifested_directory_freezes_only_exact_declared_inputs_and_provenance(self):
+        source, digest = self.source()
+        (source / "unlisted-scratch.md").write_text("Not part of this synthetic packet.")
+        output = self.root / "custody"
+        CUSTODY.Materializer(output).run_manifest_directory(source, digest)
+        inventory = json.loads((output / "inventory.json").read_text())
+        self.assertEqual(len(inventory["entries"]), 2)
+        self.assertFalse(any("unlisted" in entry["logical_path"] for entry in inventory["entries"]))
+        self.assertEqual(inventory["top_level_archive_count"], 0)
+        provenance = json.loads((output / "directory_source.json").read_text())
+        self.assertEqual(provenance["source_kind"], "manifested_directory_not_original_archive")
+        self.assertEqual(provenance["manifest_sha256"], digest)
+        self.assertTrue(AUDIT.SliceCorpus(output).verify_all()["valid"])
+
+    def test_changed_manifest_or_member_fails_before_creating_output(self):
+        for mutation in ("manifest", "member"):
+            source, digest = self.source(mutation)
+            if mutation == "manifest":
+                digest = "0" * 64
+            else:
+                (source / "README.md").write_text("Different source bytes.\n")
+            output = self.root / (mutation + "-out")
+            with self.assertRaises(CUSTODY.CustodyError):
+                CUSTODY.Materializer(output).run_manifest_directory(source, digest)
+            self.assertFalse(output.exists())
+
+    def test_duplicate_or_escaping_directory_members_are_rejected(self):
+        for mutation in ("duplicate", "escape"):
+            source, _ = self.source(mutation)
+            manifest = json.loads((source / "manifest.json").read_text())
+            if mutation == "duplicate":
+                manifest["files"].append(copy.deepcopy(manifest["files"][0]))
+            else:
+                manifest["files"][0]["path"] = "../outside.md"
+            write(source / "manifest.json", manifest)
+            digest = hashlib.sha256((source / "manifest.json").read_bytes()).hexdigest()
+            output = self.root / (mutation + "-out")
+            with self.assertRaises(CUSTODY.CustodyError):
+                CUSTODY.Materializer(output).run_manifest_directory(source, digest)
+            self.assertFalse(output.exists())
+
+    def test_retained_output_cannot_be_overwritten(self):
+        source, digest = self.source()
+        output = self.root / "retained"
+        output.mkdir()
+        sentinel = output / "sentinel.txt"
+        sentinel.write_text("Keep exact synthetic evidence")
+        with self.assertRaisesRegex(CUSTODY.CustodyError, "already exists"):
+            CUSTODY.Materializer(output).run_manifest_directory(source, digest)
+        self.assertEqual(sentinel.read_text(), "Keep exact synthetic evidence")
+
+    def test_duplicate_document_ids_and_invalid_slice_ceiling_fail_closed(self):
+        for mutation in ("duplicate", "ceiling", "count"):
+            output = self.corpus(mutation)
+            path = output / "slice_coverage.json"
+            coverage = json.loads(path.read_text())
+            if mutation == "duplicate":
+                coverage["documents"].append(copy.deepcopy(coverage["documents"][0]))
+                coverage["document_count"] += 1
+            elif mutation == "ceiling":
+                coverage["max_lines_per_slice"] = 221
+            else:
+                coverage["document_count"] += 1
+            write(path, coverage)
+            with self.assertRaises(AUDIT.AuditError):
+                AUDIT.SliceCorpus(output)
+
+    def test_raw_and_slice_bytes_are_joined_not_just_self_repinned(self):
+        output = self.corpus()
+        coverage_path = output / "slice_coverage.json"
+        coverage = json.loads(coverage_path.read_text())
+        document = coverage["documents"][0]
+        item = document["slices"][0]
+        changed = b"- Substituted synthetic requirement.\n"
+        (output / item["slice_relative_path"]).write_bytes(changed)
+        item["sha256"] = hashlib.sha256(changed).hexdigest()
+        write(coverage_path, coverage)
+        check = AUDIT.SliceCorpus(output).verify_all()
+        self.assertFalse(check["valid"])
+        self.assertTrue(any("raw source bounds" in failure for failure in check["failures"]))
+
+    def test_empty_and_overlapping_long_documents_are_verified(self):
+        for name, content in (("empty", ""), ("long", "line\n" * 451)):
+            corpus = AUDIT.SliceCorpus(self.corpus(name, content))
+            self.assertTrue(corpus.verify_all()["valid"])
+            self.assertEqual(len(list(corpus.lines("DOC-0001"))), len(content.splitlines()))
+
+    def test_custody_paths_cannot_escape_root(self):
+        corpus = AUDIT.SliceCorpus(self.corpus())
+        for path in ("../outside", "/absolute/outside"):
+            with self.assertRaises(AUDIT.AuditError):
+                corpus.file(path)
+        (corpus.root / "linked-source").symlink_to(self.root, target_is_directory=True)
+        with self.assertRaisesRegex(AUDIT.AuditError, "symlink"):
+            corpus.file("linked-source/hidden.txt")
+
+    def test_two_corpora_preserve_independent_duplicate_document_ids(self):
+        first, second = self.corpus("first"), self.corpus("second", "- Another synthetic obligation.\n")
+        spec = {
+            "custody_roots": {"first": str(first), "second": str(second)},
+            "default_custody_id": "first",
+            "source_groups": [
+                {"group_id": "first_group", "suite": "settings", "document_id": "DOC-0001",
+                 "extractor": "markdown_obligation", "expected_count": 1},
+                {"group_id": "second_group", "suite": "settings", "document_id": "DOC-0001",
+                 "custody_id": "second", "extractor": "markdown_obligation", "expected_count": 1},
+            ],
+            "touch_closure_dimensions": ["owner"],
+            "required_suite_verdicts": ["settings", "touch_closure", "overall"],
+        }
+        spec_path, touch_path = self.root / "spec.json", self.root / "touch.json"
+        write(spec_path, spec)
+        write(touch_path, {"row_columns": ["touch_id"], "rows": [["SYNTHETIC-TOUCH"]]})
+        with mock.patch.object(AUDIT, "SPEC_PATH", spec_path), mock.patch.object(AUDIT, "TOUCH_PATH", touch_path):
+            manifest = AUDIT.build_manifest()
+            self.assertTrue(manifest["source_census_valid"], manifest["source_census_failures"])
+            self.assertEqual(manifest["case_count"], 3)
+            self.assertEqual(manifest["source_coverage"]["document_count"], 4)
+            self.assertNotEqual(manifest["groups"][0]["source"], manifest["groups"][1]["source"])
+            self.assertEqual(manifest["implementation_verdict"], "not_run")
+            spec["source_groups"][1]["custody_id"] = "unknown"
+            write(spec_path, spec)
+            with self.assertRaisesRegex(AUDIT.AuditError, "unknown custody_id"):
+                AUDIT.build_manifest()
+
+    def test_prepare_supports_external_output_without_review_promotion(self):
+        manifest = synthetic_manifest()
+        output = self.root / "external-workbook"
+        with mock.patch.object(AUDIT, "build_manifest", return_value=manifest), \
+                mock.patch.object(AUDIT, "build_reference_review", return_value={}):
+            result = AUDIT.prepare(output)
+        self.assertEqual(result["manifest"], str(output / "audit_manifest.json"))
+        self.assertEqual(result["implementation_verdict"], "not_run")
+        self.assertFalse((output / AUDIT.COMPLETED_REPORT_NAME).exists())
+
+    def test_combined_source_scopes_preserve_shared_and_exact_prefix_areas(self):
+        group = {"group_id": "synthetic_combined", "case_metadata": {"area": "shared"},
+                 "area_by_id_prefix": {"FLOW-": "onboarding", "TOUR-": "tour",
+                                       "DOC-": "doctor"}}
+        for identifier, expected in (("FLOW-001", "onboarding"), ("TOUR-001", "tour"),
+                                     ("DOC-001", "doctor"), ("SHARED-001", "shared")):
+            case = {"case_id": identifier, "metadata": {}}
+            AUDIT.apply_case_metadata(group, case)
+            self.assertEqual(case["metadata"], {"area": expected})
+
+    def test_combined_scope_cannot_overwrite_source_or_ambiguous_prefix(self):
+        for group, metadata in (
+            ({"case_metadata": {"area": "shared"}}, {"area": "doctor"}),
+            ({"area_by_id_prefix": {"FLOW-": "onboarding"}}, {"area": "doctor"}),
+            ({"area_by_id_prefix": {"FLOW": "onboarding", "FLOW-": "doctor"}}, {}),
+        ):
+            with self.assertRaises(AUDIT.AuditError):
+                AUDIT.apply_case_metadata({"group_id": "synthetic_combined", **group},
+                                          {"case_id": "FLOW-001", "metadata": metadata})
 
 
 if __name__ == "__main__":

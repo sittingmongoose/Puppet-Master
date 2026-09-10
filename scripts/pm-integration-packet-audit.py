@@ -14,7 +14,7 @@ import hashlib
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Iterator
 
 # Also support the existing importlib-based harness entry point.
@@ -28,7 +28,7 @@ from pm_packet_audit_census import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "scripts" / "pm-integration-packet-audit.spec.json"
-DEFAULT_OUT = ROOT / "scratchpad" / "approval-gated-packet-audit-20260831-001"
+DEFAULT_OUT = Path("/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-closure-20260910")
 TOUCH_PATH = ROOT / "Plans" / "touch_closure.json"
 COMPLETED_REPORT_NAME = "audit_report.completed.json"
 EXPECTED_CASE_COUNT = LEGACY_CASE_COUNT  # Compatibility name for historical V1 harnesses only.
@@ -143,12 +143,44 @@ class SliceCorpus:
     def __init__(self, custody_root: Path) -> None:
         self.root = custody_root
         coverage = load_json(custody_root / "slice_coverage.json")
+        self.coverage_sha256 = sha256_file(custody_root / "slice_coverage.json")
         self.max_lines = coverage.get("max_lines_per_slice")
         self.overlap = coverage.get("overlap_lines")
         documents = coverage.get("documents")
-        if not isinstance(documents, list):
-            raise AuditError("slice_coverage.json documents must be an array")
+        if (type(self.max_lines) is not int or not 1 <= self.max_lines <= 220
+                or type(self.overlap) is not int or not 0 <= self.overlap < self.max_lines):
+            raise AuditError("custody requires at most 220 lines per slice and valid overlap")
+        if not isinstance(documents, list) or not documents:
+            raise AuditError("slice_coverage.json documents must be a nonempty array")
+        ids = [item.get("document_id") if isinstance(item, dict) else None for item in documents]
+        if any(not is_nonempty_string(value) for value in ids) or len(ids) != len(set(ids)):
+            raise AuditError("custody document IDs must be nonempty and unique within their corpus")
+        if coverage.get("document_count") != len(documents):
+            raise AuditError("custody document_count does not match its document array")
         self.documents = {item["document_id"]: item for item in documents}
+        self._paths: dict[str, Path] = {}
+        self._prefix_paths: dict[tuple[str, ...], Path] = {(): custody_root.resolve()}
+
+    def file(self, relative: str) -> Path:
+        if not isinstance(relative, str) or not relative:
+            raise AuditError("custody path must be a nonempty relative path")
+        if relative not in self._paths:
+            parts = PurePosixPath(relative.replace("\\", "/"))
+            if parts.is_absolute() or ".." in parts.parts:
+                raise AuditError(f"unsafe custody path: {relative}")
+            # Materialized custody contains regular files/directories only.
+            # Check each new prefix once instead of repeatedly resolving the
+            # complete external mount prefix for every bounded slice.
+            for count in range(1, len(parts.parts) + 1):
+                prefix = parts.parts[:count]
+                if prefix not in self._prefix_paths:
+                    path = self._prefix_paths[prefix[:-1]] / prefix[-1]
+                    if path.is_symlink():
+                        raise AuditError(f"custody symlink is not admitted: {relative}")
+                    self._prefix_paths[prefix] = path
+            path = self._prefix_paths[parts.parts]
+            self._paths[relative] = path
+        return self._paths[relative]
 
     def verify_all(self) -> dict[str, Any]:
         failures: list[str] = []
@@ -156,7 +188,22 @@ class SliceCorpus:
         unique_line_count = 0
         for document_id in sorted(self.documents):
             document = self.documents[document_id]
+            raw_path = self.file(document.get("raw_relative_path", ""))
+            try:
+                raw_data = raw_path.read_bytes()
+                raw_lines = raw_data.decode("utf-8").splitlines(keepends=True)
+            except (OSError, UnicodeError) as error:
+                failures.append(f"{document_id}: raw source unavailable: {error}")
+                continue
+            if sha256_bytes(raw_data) != document.get("source_sha256"):
+                failures.append(f"{document_id}: raw source hash mismatch")
+            if len(raw_data) != document.get("source_bytes"):
+                failures.append(f"{document_id}: raw source byte count mismatch")
+            if len(raw_lines) != document.get("source_line_count"):
+                failures.append(f"{document_id}: raw source line count mismatch")
             slices = document.get("slices", [])
+            if document.get("slice_count") != len(slices):
+                failures.append(f"{document_id}: slice_count mismatch")
             if not slices:
                 failures.append(f"{document_id}: no slices")
                 continue
@@ -167,24 +214,31 @@ class SliceCorpus:
                 start = item.get("start_line")
                 end = item.get("end_line")
                 count = item.get("line_count")
-                if not all(isinstance(value, int) for value in (start, end, count)):
+                if not all(type(value) is int for value in (start, end, count)):
                     failures.append(f"{document_id}: non-integer slice range")
                     continue
-                expected_start = 1 if index == 0 else previous_end - self.overlap + 1
+                expected_start = (0 if not raw_lines else 1) if index == 0 else previous_end - self.overlap + 1
                 if start != expected_start:
                     failures.append(
                         f"{document_id}: discontinuous slice start {start}; expected {expected_start}"
                     )
-                if count != end - start + 1 or count > self.max_lines:
+                empty_slice = not raw_lines and (start, end, count) == (0, 0, 0)
+                if not empty_slice and (start < 1 or end < start or count != end - start + 1 or count > self.max_lines):
                     failures.append(f"{document_id}: invalid slice line count at {start}-{end}")
-                path = self.root / item["slice_relative_path"]
+                path = self.file(item["slice_relative_path"])
                 if not path.is_file():
                     failures.append(f"{document_id}: missing slice {item['slice_relative_path']}")
                 else:
                     data = path.read_bytes()
                     if sha256_bytes(data) != item.get("sha256"):
                         failures.append(f"{document_id}: slice hash mismatch {item['slice_relative_path']}")
-                    physical_count = len(data.decode("utf-8").splitlines())
+                    if data != "".join(raw_lines[start - 1:end] if raw_lines else []).encode("utf-8"):
+                        failures.append(f"{document_id}: slice bytes differ from raw source bounds")
+                    try:
+                        physical_count = len(data.decode("utf-8").splitlines())
+                    except UnicodeError:
+                        failures.append(f"{document_id}: slice is not UTF-8")
+                        continue
                     if physical_count != count:
                         failures.append(
                             f"{document_id}: physical line count {physical_count} != {count}"
@@ -212,7 +266,7 @@ class SliceCorpus:
             raise AuditError(f"unknown custody document_id: {document_id}")
         previous_end = 0
         for item in document["slices"]:
-            path = self.root / item["slice_relative_path"]
+            path = self.file(item["slice_relative_path"])
             data = path.read_bytes()
             if sha256_bytes(data) != item["sha256"]:
                 raise AuditError(f"slice hash mismatch while reading {path}")
@@ -509,17 +563,62 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
     }, cases)
 
 
+def load_corpora(spec: dict[str, Any]) -> tuple[dict[str, SliceCorpus], str]:
+    """Keep DOC IDs local to each custody; source groups remain globally unique."""
+    roots = spec.get("custody_roots")
+    if roots is None:
+        roots = {"legacy": spec.get("custody_root")}
+    if (not isinstance(roots, dict) or not roots
+            or any(not is_nonempty_string(key) or not is_nonempty_string(value)
+                   for key, value in roots.items())):
+        raise AuditError("custody_roots must map nonempty unique IDs to source directories")
+    default = spec.get("default_custody_id", "legacy")
+    if default not in roots:
+        raise AuditError("default_custody_id is not in custody_roots")
+    corpora = {key: SliceCorpus(ROOT / value) for key, value in roots.items()}
+    return corpora, default
+
+
+def apply_case_metadata(group: dict[str, Any], case: dict[str, Any]) -> None:
+    """Bind explicit shared scopes, with unambiguous source-ID area refinements."""
+    for key, value in group.get("case_metadata", {}).items():
+        if key in case["metadata"] and case["metadata"][key] != value:
+            raise AuditError(f"{group['group_id']}: fixed metadata contradicts source")
+        case["metadata"][key] = value
+    areas = {area for prefix, area in group.get("area_by_id_prefix", {}).items()
+             if case["case_id"].startswith(prefix)}
+    if len(areas) > 1:
+        raise AuditError(f"{group['group_id']}: ambiguous source area prefixes")
+    if areas:
+        area = next(iter(areas))
+        if case["metadata"].get("area") not in (None, "shared", area):
+            raise AuditError(f"{group['group_id']}: source area contradicts ID prefix")
+        case["metadata"]["area"] = area
+
+
 def build_manifest() -> dict[str, Any]:
     spec = load_json(SPEC_PATH)
-    custody_root = ROOT / spec["custody_root"]
-    corpus = SliceCorpus(custody_root)
-    coverage = corpus.verify_all()
-    failures = list(coverage["failures"])
+    corpora, default_custody_id = load_corpora(spec)
+    corpus_coverage = {key: corpus.verify_all() for key, corpus in corpora.items()}
+    failures = [f"{key}: {failure}" for key, item in corpus_coverage.items() for failure in item["failures"]]
+    coverage = {
+        "document_count": sum(item["document_count"] for item in corpus_coverage.values()),
+        "slice_count": sum(item["slice_count"] for item in corpus_coverage.values()),
+        "unique_source_line_count": sum(item["unique_source_line_count"] for item in corpus_coverage.values()),
+        "corpora": corpus_coverage, "valid": not failures, "failures": list(failures),
+    }
     groups = []
     all_refs: set[str] = set()
     for source_group in spec["source_groups"]:
+        custody_id = source_group.get("custody_id", default_custody_id)
+        if custody_id not in corpora:
+            raise AuditError(f"{source_group['group_id']}: unknown custody_id {custody_id!r}")
+        corpus = corpora[custody_id]
+        if source_group.get("document_id") not in corpus.documents:
+            raise AuditError(f"{source_group['group_id']}: unknown document in custody {custody_id}")
         cases = extract_cases(source_group, corpus)
         for case in cases:
+            apply_case_metadata(source_group, case)
             case["applicability"] = classify_case(source_group["group_id"], case, spec)
         identifiers = [case["source_identifier"] for case in cases]
         if len(identifiers) != len(set(identifiers)):
@@ -550,7 +649,11 @@ def build_manifest() -> dict[str, Any]:
             "case_content_sha256": sha256_values(
                 json.dumps(case, sort_keys=True, separators=(",", ":")) for case in cases
             ),
-            "source": corpus.document_summary(source_group["document_id"]),
+            "source": {
+                **corpus.document_summary(source_group["document_id"]),
+                "custody_id": custody_id, "custody_root": str(corpus.root),
+                "coverage_sha256": corpus.coverage_sha256,
+            },
             "cases": cases,
         })
     touch_summary, touches = touch_cases(spec)
@@ -582,7 +685,7 @@ def build_manifest() -> dict[str, Any]:
         "created_at": utc_now(),
         "spec_path": "scripts/pm-integration-packet-audit.spec.json",
         "spec_sha256": sha256_file(SPEC_PATH),
-        "custody_root": spec["custody_root"],
+        "custody_roots": {key: str(corpus.root) for key, corpus in corpora.items()},
         "source_coverage": coverage,
         "source_census_valid": not failures,
         "source_census_failures": failures,
@@ -735,7 +838,7 @@ def prepare(outdir: Path) -> dict[str, Any]:
         "created_at": utc_now(),
         "source_census_valid": manifest["source_census_valid"],
         "implementation_verdict": "not_run",
-        "manifest": manifest_path.relative_to(ROOT).as_posix(),
+        "manifest": str(manifest_path),
         "manifest_sha256": sha256_file(manifest_path),
         "case_count": manifest["case_count"],
         "group_count": manifest["group_count"],
@@ -752,7 +855,7 @@ def prepare(outdir: Path) -> dict[str, Any]:
         "prepare review chunks, collect case-by-case results, and merge them to "
         "`audit_report.completed.json`. Complete `reference-review-report.json`, then run:\n\n"
         "```sh\n"
-        f"python3 scripts/pm-integration-packet-audit.py validate --dir {outdir.relative_to(ROOT)}\n"
+        f"python3 scripts/pm-integration-packet-audit.py validate --dir {outdir}\n"
         "```\n\n"
         "Never overwrite or delete this directory before explicit owner approval. Create a new "
         "timestamped output directory when the source or Touch Closure freeze changes.\n",
