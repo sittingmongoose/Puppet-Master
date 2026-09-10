@@ -5266,6 +5266,10 @@
     "SCS-013",
     "RSC-012",
     "SIR-025",
+    "SIR-039",
+    "SIR-040",
+    "SIR-041",
+    "SIR-043",
     "N2-155",
     "SMPFS-150",
     "SMPFS-154",
@@ -6336,6 +6340,7 @@
     "SSYS-023",
     "CS-070",
     "BRS-020",
+    "BRS-021",
     "PJCT-005",
     "SIR-034",
     "C-045",
@@ -12675,6 +12680,26 @@
       "edge_type": "depends_on",
       "from": "BRS-020",
       "to": "SP-257"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "BRS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "BRS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "BRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "SIR-015"
     },
     {
       "edge_type": "depends_on",
@@ -53673,6 +53698,86 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SIR-039",
+      "to": "SIR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-039",
+      "to": "SIR-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-039",
+      "to": "SIR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-039",
+      "to": "SIR-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-040",
+      "to": "SIR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-040",
+      "to": "SIR-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-040",
+      "to": "SIR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-040",
+      "to": "SIR-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-041",
+      "to": "SIR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-041",
+      "to": "SIR-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-041",
+      "to": "SIR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-041",
+      "to": "SIR-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-043",
+      "to": "SIR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-043",
+      "to": "SIR-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-043",
+      "to": "SIR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-043",
+      "to": "SIR-018"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-001",
       "to": "SMPFS-002"
     },
@@ -92722,7 +92827,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T16:35:09Z",
+  "generated_at_utc": "2026-09-11T16:54:41Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -105756,8 +105861,8 @@
       "source_location": {
         "heading": "BRS-007 - Required Receipts And Post-Restore Readiness",
         "heading_level": 3,
-        "heading_line": 311,
-        "line": 313,
+        "heading_line": 313,
+        "line": 315,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105773,8 +105878,8 @@
       "source_location": {
         "heading": "BRS-008 - Canonical Backup Restore Commands, Events, And UI",
         "heading_level": 3,
-        "heading_line": 349,
-        "line": 351,
+        "heading_line": 351,
+        "line": 353,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105790,8 +105895,8 @@
       "source_location": {
         "heading": "BRS-009 - Shared Primitives, Migration, And DRY Boundary",
         "heading_level": 3,
-        "heading_line": 393,
-        "line": 395,
+        "heading_line": 395,
+        "line": 397,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105807,8 +105912,8 @@
       "source_location": {
         "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
         "heading_level": 3,
-        "heading_line": 442,
-        "line": 444,
+        "heading_line": 444,
+        "line": 446,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105824,8 +105929,8 @@
       "source_location": {
         "heading": "BRS-011 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 893,
-        "line": 895,
+        "heading_line": 909,
+        "line": 911,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105841,8 +105946,8 @@
       "source_location": {
         "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
         "heading_level": 3,
-        "heading_line": 482,
-        "line": 484,
+        "heading_line": 484,
+        "line": 486,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105858,8 +105963,8 @@
       "source_location": {
         "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
         "heading_level": 3,
-        "heading_line": 522,
-        "line": 524,
+        "heading_line": 524,
+        "line": 526,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105875,8 +105980,8 @@
       "source_location": {
         "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
         "heading_level": 3,
-        "heading_line": 563,
-        "line": 565,
+        "heading_line": 565,
+        "line": 567,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105892,8 +105997,8 @@
       "source_location": {
         "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
         "heading_level": 3,
-        "heading_line": 601,
-        "line": 603,
+        "heading_line": 603,
+        "line": 605,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105909,8 +106014,8 @@
       "source_location": {
         "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
         "heading_level": 3,
-        "heading_line": 640,
-        "line": 642,
+        "heading_line": 642,
+        "line": 644,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105926,8 +106031,8 @@
       "source_location": {
         "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
         "heading_level": 3,
-        "heading_line": 944,
-        "line": 946,
+        "heading_line": 960,
+        "line": 962,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105943,8 +106048,8 @@
       "source_location": {
         "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
         "heading_level": 3,
-        "heading_line": 987,
-        "line": 989,
+        "heading_line": 1003,
+        "line": 1005,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105960,8 +106065,8 @@
       "source_location": {
         "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
         "heading_level": 3,
-        "heading_line": 1031,
-        "line": 1033,
+        "heading_line": 1047,
+        "line": 1049,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -105977,12 +106082,29 @@
       "source_location": {
         "heading": "Working Notebook Backup Participation Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1084,
-        "line": 1088,
+        "heading_line": 1100,
+        "line": 1104,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "restore_phase_and_emergency_prerequisite",
+      "gui_related": true,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-021",
+      "reasoning_tier": "high",
+      "risk_class": "fabricated_recovery_or_unscoped_destructive_consent",
+      "source_location": {
+        "heading": "BRS-021 - Phase-Local Restore Evidence And Bound Emergency Consent",
+        "heading_level": 3,
+        "heading_line": 1140,
+        "line": 1142,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "recovery_requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -138889,8 +139011,8 @@
       "source_location": {
         "heading": "F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics",
         "heading_level": 3,
-        "heading_line": 35697,
-        "line": 35699,
+        "heading_line": 35698,
+        "line": 35700,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138906,8 +139028,8 @@
       "source_location": {
         "heading": "F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation",
         "heading_level": 3,
-        "heading_line": 35789,
-        "line": 35791,
+        "heading_line": 35790,
+        "line": 35792,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138923,8 +139045,8 @@
       "source_location": {
         "heading": "F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement",
         "heading_level": 3,
-        "heading_line": 35953,
-        "line": 35955,
+        "heading_line": 35954,
+        "line": 35956,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138940,8 +139062,8 @@
       "source_location": {
         "heading": "F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip",
         "heading_level": 3,
-        "heading_line": 36005,
-        "line": 36007,
+        "heading_line": 36006,
+        "line": 36008,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138957,8 +139079,8 @@
       "source_location": {
         "heading": "F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains",
         "heading_level": 3,
-        "heading_line": 36052,
-        "line": 36054,
+        "heading_line": 36053,
+        "line": 36055,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138974,8 +139096,8 @@
       "source_location": {
         "heading": "F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions",
         "heading_level": 3,
-        "heading_line": 36107,
-        "line": 36109,
+        "heading_line": 36108,
+        "line": 36110,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -138991,8 +139113,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36568,
+        "heading_line": 36483,
+        "line": 36569,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139008,8 +139130,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36618,
+        "heading_line": 36483,
+        "line": 36619,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139025,8 +139147,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36666,
+        "heading_line": 36483,
+        "line": 36667,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139042,8 +139164,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36713,
+        "heading_line": 36483,
+        "line": 36714,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139059,8 +139181,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36761,
+        "heading_line": 36483,
+        "line": 36762,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139076,8 +139198,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36807,
+        "heading_line": 36483,
+        "line": 36808,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139093,8 +139215,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36853,
+        "heading_line": 36483,
+        "line": 36854,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139110,8 +139232,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36897,
+        "heading_line": 36483,
+        "line": 36898,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139127,8 +139249,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36482,
-        "line": 36950,
+        "heading_line": 36483,
+        "line": 36951,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139144,8 +139266,8 @@
       "source_location": {
         "heading": "F3-544 - Terminal Capability Shell Context And Snapshot Disclosure",
         "heading_level": 3,
-        "heading_line": 37023,
-        "line": 37025,
+        "heading_line": 37024,
+        "line": 37026,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139161,8 +139283,8 @@
       "source_location": {
         "heading": "F3-545 - Explicit Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 37082,
-        "line": 37084,
+        "heading_line": 37083,
+        "line": 37085,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139178,8 +139300,8 @@
       "source_location": {
         "heading": "F3-546 - Pane Local Advisory Command Progress",
         "heading_level": 3,
-        "heading_line": 37135,
-        "line": 37137,
+        "heading_line": 37136,
+        "line": 37138,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139195,8 +139317,8 @@
       "source_location": {
         "heading": "F3-547 - Safe Command Insertion And Retained Output Editor Actions",
         "heading_level": 3,
-        "heading_line": 37183,
-        "line": 37185,
+        "heading_line": 37184,
+        "line": 37186,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139212,8 +139334,8 @@
       "source_location": {
         "heading": "F3-548 - Redacted Environment Provenance And Pending Launch Display",
         "heading_level": 3,
-        "heading_line": 37241,
-        "line": 37243,
+        "heading_line": 37242,
+        "line": 37244,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139229,8 +139351,8 @@
       "source_location": {
         "heading": "F3-549 - Explicit Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 37295,
-        "line": 37297,
+        "heading_line": 37296,
+        "line": 37298,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139246,8 +139368,8 @@
       "source_location": {
         "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
         "heading_level": 3,
-        "heading_line": 37362,
-        "line": 37364,
+        "heading_line": 37363,
+        "line": 37365,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -139263,8 +139385,8 @@
       "source_location": {
         "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
         "heading_level": 3,
-        "heading_line": 37362,
-        "line": 37437,
+        "heading_line": 37363,
+        "line": 37438,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -181678,8 +181800,8 @@
       "source_location": {
         "heading": "SIR-015 - Full-Thread Admission, Command, And Work Axes",
         "heading_level": 3,
-        "heading_line": 916,
-        "line": 918,
+        "heading_line": 940,
+        "line": 942,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181695,8 +181817,8 @@
       "source_location": {
         "heading": "SIR-016 - Public Authentication And Rate Admission Gate",
         "heading_level": 3,
-        "heading_line": 957,
-        "line": 959,
+        "heading_line": 984,
+        "line": 986,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181712,8 +181834,8 @@
       "source_location": {
         "heading": "SIR-017 - Performance And Recovery Evidence Gate",
         "heading_level": 3,
-        "heading_line": 988,
-        "line": 990,
+        "heading_line": 1015,
+        "line": 1017,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181729,8 +181851,8 @@
       "source_location": {
         "heading": "SIR-018 - Platform-Specific Host Adapter Boundaries",
         "heading_level": 3,
-        "heading_line": 1019,
-        "line": 1021,
+        "heading_line": 1046,
+        "line": 1048,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181746,8 +181868,8 @@
       "source_location": {
         "heading": "SIR-019 - Shared Connection-Profile Command Contracts",
         "heading_level": 3,
-        "heading_line": 1084,
-        "line": 1086,
+        "heading_line": 1111,
+        "line": 1113,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181763,8 +181885,8 @@
       "source_location": {
         "heading": "SIR-020 - Verified Installation Selection Contract",
         "heading_level": 3,
-        "heading_line": 1117,
-        "line": 1119,
+        "heading_line": 1144,
+        "line": 1146,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181780,8 +181902,8 @@
       "source_location": {
         "heading": "SIR-021 - Installation Ownership Maintenance Coalescing Persistence And Credential Attachments",
         "heading_level": 3,
-        "heading_line": 1177,
-        "line": 1179,
+        "heading_line": 1204,
+        "line": 1206,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181797,8 +181919,8 @@
       "source_location": {
         "heading": "SIR-023 - Human Step Projection Consumption",
         "heading_level": 3,
-        "heading_line": 1232,
-        "line": 1234,
+        "heading_line": 1259,
+        "line": 1261,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181814,8 +181936,8 @@
       "source_location": {
         "heading": "SIR-024 - Credential Attachment And Provider Binding Commands",
         "heading_level": 3,
-        "heading_line": 1378,
-        "line": 1380,
+        "heading_line": 1405,
+        "line": 1407,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181831,8 +181953,8 @@
       "source_location": {
         "heading": "SIR-025 - Execution Host And Environment Commands",
         "heading_level": 3,
-        "heading_line": 1407,
-        "line": 1409,
+        "heading_line": 1434,
+        "line": 1436,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181848,8 +181970,8 @@
       "source_location": {
         "heading": "SIR-026 - Project Host And Source Location Commands",
         "heading_level": 3,
-        "heading_line": 1436,
-        "line": 1438,
+        "heading_line": 1463,
+        "line": 1465,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181865,8 +181987,8 @@
       "source_location": {
         "heading": "SIR-027 - Installation Ownership Extension Commands",
         "heading_level": 3,
-        "heading_line": 1465,
-        "line": 1467,
+        "heading_line": 1492,
+        "line": 1494,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181882,8 +182004,8 @@
       "source_location": {
         "heading": "SIR-028 - Local Action And Compatibility Normalization Boundary",
         "heading_level": 3,
-        "heading_line": 1494,
-        "line": 1496,
+        "heading_line": 1521,
+        "line": 1523,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181899,8 +182021,8 @@
       "source_location": {
         "heading": "SIR-029 - Shared Connection Sole Future Handlers",
         "heading_level": 3,
-        "heading_line": 1527,
-        "line": 1529,
+        "heading_line": 1554,
+        "line": 1556,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181916,8 +182038,8 @@
       "source_location": {
         "heading": "SIR-030 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 1569,
-        "line": 1571,
+        "heading_line": 1596,
+        "line": 1598,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181933,8 +182055,8 @@
       "source_location": {
         "heading": "SIR-031 - DRY Expansion Compatibility And Local-Action Materialization",
         "heading_level": 3,
-        "heading_line": 1620,
-        "line": 1622,
+        "heading_line": 1647,
+        "line": 1649,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181950,8 +182072,8 @@
       "source_location": {
         "heading": "SIR-032 - Post-Integration Shared Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 1726,
-        "line": 1728,
+        "heading_line": 1753,
+        "line": 1755,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181967,8 +182089,8 @@
       "source_location": {
         "heading": "SIR-033 - Post-Integration Auth Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 1774,
-        "line": 1776,
+        "heading_line": 1801,
+        "line": 1803,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -181984,8 +182106,8 @@
       "source_location": {
         "heading": "SIR-034 - Backup Shared Primitives And Common External-Effect Envelope",
         "heading_level": 3,
-        "heading_line": 1808,
-        "line": 1810,
+        "heading_line": 1835,
+        "line": 1837,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -182001,8 +182123,8 @@
       "source_location": {
         "heading": "SIR-035 - ConnectionDraft Lifecycle And ACT-148..153 Reconciliation",
         "heading_level": 3,
-        "heading_line": 1875,
-        "line": 1877,
+        "heading_line": 1902,
+        "line": 1904,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -182018,8 +182140,8 @@
       "source_location": {
         "heading": "Working Notebook Transition Runtime Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1926,
-        "line": 1934,
+        "heading_line": 1953,
+        "line": 1961,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -182035,8 +182157,8 @@
       "source_location": {
         "heading": "Working Notebook Transition Runtime Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1926,
-        "line": 1969,
+        "heading_line": 1953,
+        "line": 1996,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -182052,8 +182174,76 @@
       "source_location": {
         "heading": "SIR-038 - Compaction Completion Replay Binding",
         "heading_level": 3,
-        "heading_line": 2010,
-        "line": 2012,
+        "heading_line": 2037,
+        "line": 2039,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "adaptive_physical_resource_admission",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-039",
+      "reasoning_tier": "high",
+      "risk_class": "oversubscription_or_critical_path_starvation",
+      "source_location": {
+        "heading": "SIR-039 - Adaptive Physical-Core And Multi-Resource Admission",
+        "heading_level": 3,
+        "heading_line": 2105,
+        "line": 2107,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "staged_native_startup",
+      "gui_related": true,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-040",
+      "reasoning_tier": "high",
+      "risk_class": "startup_global_hydration_barrier",
+      "source_location": {
+        "heading": "SIR-040 - Staged Native Startup And Selected-Surface Hydration",
+        "heading_level": 3,
+        "heading_line": 2136,
+        "line": 2138,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "bounded_residency_and_representation",
+      "gui_related": true,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-041",
+      "reasoning_tier": "high",
+      "risk_class": "unbounded_memory_or_evidence_loss",
+      "source_location": {
+        "heading": "SIR-041 - Hot Warm Cold Residency And Bounded Representations",
+        "heading_level": 3,
+        "heading_line": 2167,
+        "line": 2169,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "profile_first_portable_optimization",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-043",
+      "reasoning_tier": "high",
+      "risk_class": "unsupported_or_unmeasured_optimization",
+      "source_location": {
+        "heading": "SIR-043 - Profile-First Optimization And Portable Kernels",
+        "heading_level": 3,
+        "heading_line": 2075,
+        "line": 2077,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -202211,10 +202401,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14607,
+    "depends_on_edge_count": 14627,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17255,
-    "node_count": 6440,
+    "edge_count": 17275,
+    "node_count": 6445,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
