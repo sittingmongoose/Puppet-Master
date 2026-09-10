@@ -830,7 +830,7 @@ Every successor work record includes a bounded human `title`, exact owner `subje
 
 `progress_source = measured | provider_reported | derived | unknown` is independent of `progress_kind` and has a source reference for determinate progress. Determinate progress requires a known source, a positive denominator, and `0 <= completed_units <= total_units`. `none` or `indeterminate` carries no numerical numerator/denominator and must not display a made-up percentage. Work `completed`/`cancelled` requires an owner result receipt; `failed`/`recovery-required` requires an error/recovery evidence reference. Completed, failed, and cancelled work cannot offer Cancel or Background as live actions.
 
-Command outcomes require a non-null command-instance binding. `acknowledged`, `executing`, and `succeeded` require the acknowledgement receipt and frame identity/offset; a present acknowledgement has zero offset if and only if its frame equals the dispatch frame, and `same_frame_acknowledged` agrees with that comparison. Command `succeeded`/`cancelled` requires a terminal result receipt; `failed`/`rejected`/`terminal_unknown` requires error/reconciliation evidence. An acknowledgement without a terminal receipt is never success. References must resolve to the same command, operation, target, and generation through the owning result contract; schema shape alone does not prove resolution.
+Command outcomes require a non-null command-instance binding. `acknowledged`, `executing`, and `succeeded` require the acknowledgement receipt and frame identity/offset; a present acknowledgement has zero offset if and only if its frame equals the dispatch frame, and `same_frame_acknowledged` agrees with that comparison. Command `succeeded`/`cancelled` requires a terminal result receipt; `failed`/`rejected`/`terminal_unknown` requires error/reconciliation evidence. Every terminal command outcome additionally binds its actual typed owner result/error through non-null `owner_result_ref`, `owner_result_schema_ref` and `owner_result_sha256`; these three fields are present but null together while no result exists. The hash uses RFC 8785 canonical JSON, and native publication requires authenticating the actual owner and result before joining the CV-329 response. An acknowledgement without a terminal receipt is never success. References must resolve to the same command, operation, target, and generation through the owning result contract; schema shape alone does not prove resolution.
 
 The `testing-route` and `migrating-route` values describe active routed work, not successful testing or migration. `degraded` and `stalled` remain nonterminal until an owner receipt moves them to a terminal state. `backgrounded` changes presentation priority only; it does not cancel, pause, orphan, or weaken durable work.
 
@@ -921,7 +921,7 @@ Endpoint ownership remains with the Server and security owners. Shared runtime o
 
 ### Commands, events, wiring, and GUI/reverse coverage
 
-No new performance-only command family is introduced. Existing owner commands dispatch through their existing central IDs and return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one owner receipt path.
+No new performance-only command family is introduced. Existing commands dispatch through their existing central IDs and consume the central CV-329 response. Actual durable owner operations return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref; a local-only route/open action or pre-dispatch refusal does not invent an operation or Full Thread identity. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one actual owner or local-disposition receipt path appropriate to its contract.
 
 These new records are receipt/projection values. They emit no new EventRecord while Event Authority is open. `event_effect_policy` remains `receipt_only_no_eventrecord_pending_event_authority`; existing admitted producer events remain governed by their existing owner registrations.
 
@@ -2151,3 +2151,37 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractName:Plans/Shared_Integration_Runtime.md#SIR-017, ContractName:Plans/DRY_Rules.md, SchemaID:pm.full_thread_runtime.contracts.v1
+
+
+### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+```yaml
+plan_unit_id: SIR-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: "Existing Full Thread command outcomes bind separately owned result/error records and feed CV-329. Command, governor and work axes remain independent; only actual owner operations have durable Full Thread identity."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [SIR-015, CV-329]
+unblocks: []
+acceptance_criteria:
+  - "CommandOutcomeRecord has present owner_result_ref, owner_result_schema_ref and owner_result_sha256 fields, null together only before a result exists and all non-null for terminal outcomes."
+  - "Authenticate and validate the actual result before publishing its exact schema identity and canonical-JSON digest; matching shape or hash alone never establishes authority."
+  - "Same-frame acknowledgement remains independent of terminal owner verification, and command completion does not fabricate ObservableWork completion."
+  - "Application-scope operations do not invent a Project; local-only route/open and pre-dispatch refusals do not invent Server or operation scope."
+  - "Replay preserves the original owner result, outcome, receipt and command identity with zero repeated effects; terminal_unknown remains recovery-required."
+  - "Schema evolution is a pre-build contract correction; old minimal records remain explicit unbound read/import lineage until actual missing references are resolved."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/full_thread_runtime_contracts.schema.json, Plans/ui_command_response.schema.json, Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

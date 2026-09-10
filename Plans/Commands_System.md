@@ -4051,7 +4051,7 @@ The retained `cmd.remote.reconnect` wrapper accepts `RemoteReconnectWrapperReque
 
 Every new request type below includes `command_instance_id`, `idempotency_key`, `expected_revision_or_epoch`, `project_id`, `project_home_server_id`, `execution_host_id`, `execution_environment_id`, nullable `source_location_id`, `topology_generation`, `actor_ref`, `permission_snapshot_ref`, optional `goal_id`, `plan_id`, `run_id`, `thread_id`, `agent_id`, `crew_id`, `deadline_utc`, and `recovery_of_operation_id`. A command whose subject does not use one optional lineage field carries it as absent; it never substitutes a path or display label for exact topology identity.
 
-Every result type includes `operation_id`, `command_instance_id`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. Replay returns the original result identity without a second side effect.
+Every result type includes `operation_id`, `command_instance_id`, `command_outcome_ref`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. The required outcome ref resolves to the same Full Thread command/operation/target generation; the central v2 `UICommandResponse` consumes that outcome and this separately owned result under CV-329, without replacing either owner vocabulary. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. `no_change` projects a verified `no_op`; `recovery_required` never projects success. Replay returns the original result identity without a second side effect.
 
 Until Event Authority individually admits a producer family, these commands have `event_effect = none_pending_event_authority`; they update only owner-authorized redb state and return the typed result/receipt/projection references below. A missing event registration is an explicit blocked integration edge, never permission to invent an EventRecord name.
 
@@ -6264,3 +6264,36 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+
+### CS-080 - Shared Runtime Result To Command Outcome Binding
+
+```yaml
+plan_unit_id: CS-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: "All twenty-six canonical shared-runtime command results inherit one required command_outcome_ref in command_result_envelope. CV-329 joins that existing result to its actual Full Thread operation without merging the two closed status vocabularies."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [CV-329, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - "All twenty-six result definitions inherit the required non-secret outcome ref through the existing shared envelope."
+  - "Resolve matching command, command instance, operation, target generation and request binding before projecting the owner result."
+  - "Accepted remains nonterminal; no_change projects verified no_op, blocked projects rejected, and recovery_required retains recovery semantics without automatic retry."
+  - "Cancellation and no-change carry the actual required terminal receipt; replay returns the original result and operation identity."
+  - "Existing generalized command IDs, compatibility spellings, remote wrapper normalization, permission and no-unregistered-event rules remain unchanged."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_command_contract_fixtures.json, Plans/Commands_System.md]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

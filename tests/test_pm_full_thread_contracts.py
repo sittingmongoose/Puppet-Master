@@ -71,6 +71,11 @@ class FullThreadContractTests(unittest.TestCase):
         for outcome in SCHEMA["$defs"]["CommandOutcomeRecord"]["properties"]["outcome"]["enum"]:
             record = example("same_frame_command_acknowledgement")
             record["outcome"] = outcome
+            if outcome in {"succeeded", "failed", "cancelled", "rejected", "terminal_unknown"}:
+                record.update(owner_result_ref="owner-result:terminal", owner_result_sha256="a" * 64,
+                              owner_result_schema_ref={"path": "Plans/shared_runtime_command_contracts.schema.json",
+                                                       "json_pointer": "#/$defs/environment_connection_command_result",
+                                                       "schema_id": "pm.shared_runtime.command_result.v1"})
             if outcome in {"succeeded", "cancelled"}:
                 record["result_receipt_ref"] = "receipt:terminal"
             if outcome in {"failed", "rejected", "terminal_unknown"}:

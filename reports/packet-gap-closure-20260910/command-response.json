@@ -1,0 +1,125 @@
+{
+  "schema_id": "pm.packet_gap_closure_result.v1",
+  "step": "central_command_response_bridge",
+  "status": "scoped_static_response_binding_and_consumer_repairs_verified",
+  "base_commit": "b59936de04cad61c863f52461f249b584c65b592",
+  "owner_docs": [
+    "Plans/Contracts_V0.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Commands_System.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Shared_Integration_Runtime.md"
+  ],
+  "new_plan_units": [
+    "CV-329",
+    "UCC-162",
+    "CS-080",
+    "UIW-023",
+    "WM-055",
+    "SIR-042"
+  ],
+  "repairs": [
+    "Materialized one closed v2 UICommandResponse and replaced stale duplicated response minima with central owner references.",
+    "Bound actual owner-operation responses to the authenticated-request fixture, existing Full Thread CommandOutcomeRecord and separately validated typed owner result/error; the outcome carries exact schema identity and result digest.",
+    "Preserved all eight outcome states: acceptance and acknowledgement remain pending, verified no-change remains no-op, and unknown terminal effects require recovery.",
+    "Kept application scope free of invented Projects and local/pre-dispatch responses free of invented Server, operation, owner-result or domain-event authority.",
+    "Required outcome references in all twenty-six existing shared-runtime command result definitions without adding commands or changing owner vocabularies.",
+    "Declared one response-contract root for all existing production-intent wiring rows while preserving per-owner result refs, availability and effect contracts.",
+    "Covered original-result replay for owner operations, local actions and pre-dispatch refusal, and integrated the check into both standard aggregate paths."
+  ],
+  "static_checks": {
+    "response_positive_cases": 17,
+    "response_negative_cases": 42,
+    "response_regression_tests": 12,
+    "full_thread_regression_tests": 15,
+    "command_outcome_states": 8,
+    "shared_commands_with_required_outcome_ref": 26,
+    "production_intent_rows_with_central_response_declaration": 1154,
+    "rows_with_explicit_typed_result_ref": 387,
+    "rows_without_explicit_typed_result_ref": 767,
+    "native_owner_adapters_proven": 0,
+    "aggregate_contract_positive_cases": 958,
+    "aggregate_contract_negative_cases": 3166,
+    "whole_touch_closure_rows": 606,
+    "touch_profiles": 93,
+    "whole_wiring_validation": "pass",
+    "sharded_sources_checked": 98,
+    "shards_checked": 2159,
+    "plan_units_indexed": 6449,
+    "acceptance_units_indexed": 24607,
+    "changed_index_units": 691,
+    "unexpected_generated_owner_changes": [],
+    "node_readiness_status": "blocked_runtime_certification_incomplete"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-join-fixtures.json",
+      "sha256": "e7ef4076ca95ef3eef2af0b5d2f5146642e600939cf514bfbd8a2cc07524d945"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-standard-gate.json",
+      "sha256": "e7ef4076ca95ef3eef2af0b5d2f5146642e600939cf514bfbd8a2cc07524d945"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-tests.log",
+      "sha256": "9bbb7f5047254fcd1f8354faf9fd8ea7f08193cae23974b7c07015c7106e9cb6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-full-thread-tests.log",
+      "sha256": "6f550e220603265f3c47ab3db20b984bae5af8ac29d1d9a02932308ceccb75e0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-new-contracts.json",
+      "sha256": "52af733428d7177eb3c0a10af79ab5bcd818602743ceef16de0c4bd38593f673"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-wiring-gate.json",
+      "sha256": "edb7ba360d8b1b70f558a05a9bd3593fe1cb008b121f59f2a021cc57751ef8f2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-touch-check.json",
+      "sha256": "1626dee23d6f7fcd17d9e0f3dc74dca73912d30a1295cfade52e572aca8ffc89"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-shards-check.log",
+      "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-index-validate.log",
+      "sha256": "93904169ed756913fc7b953db6012b6860e973e1c835c45551697577dd0b3680"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/response-derived-scope-check.json",
+      "sha256": "346d7b620733afec5b79bfef960e2dbc0968088ef22404a827163c6b90bdc6f7"
+    }
+  ],
+  "input_freeze": [
+    {
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "0106975a955ddca6494db4361009ac18a06592e186614be0ee8f3beb15dcf3d4"
+    },
+    {
+      "path": "Plans/ui_command_response_fixtures.json",
+      "sha256": "aaaa24ac215265357b1d65e3d08d2283c8346239197083ccf19360d2ca741f52"
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea"
+    },
+    {
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "0c831b12da9b4c6b5bcb497218369a819563343a7b201cc374400a8da7f94079"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "4a368d5ff22b5a8237922e3655e2816790e5a6243c5486a4f6d0f13bedc5ec06"
+    }
+  ],
+  "outside_this_step": [
+    "September 3 onboarding reconciliation and stale Guided Tour index summary.",
+    "Fresh complete multi-packet formal review and final whole-command/UI-wiring/DRY/governance check classification.",
+    "Rows without explicit typed-result refs need their owner-appropriate result or local-disposition proof before native admission; this inventory does not assert that every such row requires a durable operation."
+  ],
+  "claim_boundary": "Static schema and cross-record fixture/oracle proof only. The request and record resolver inputs are explicitly trusted fixtures, not caller-supplied authority or native authenticated lookup. Generic owner shape/hash validation does not prove every owner-specific adapter. The reused Case L digest oracle covers its integer/string domain, not general numeric RFC8785. No native dispatcher, handler, owner verification, repeated-effect safety, UI execution, new command/event/storage-family admission, readiness certification or governance reseal is claimed."
+}
