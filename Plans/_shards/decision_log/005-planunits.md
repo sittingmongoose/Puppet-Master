@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L408-L2614
+Source lines: L433-L2715
 
-Source SHA256: `bb138f4e1c94fabebbb99c3ae94c4555c20b8f939bb82a4cd1c05a919144698c`
+Source SHA256: `edbbc32ab17f43465e17ebf1e445e73c160877697db87c5f5c283513393b5c45`
 
 ---
 
@@ -2091,6 +2091,82 @@ source_lineage:
 negative_constraints:
 - No agent bypass, implicit unlock or silent queued input replay after unlock.
 - Do not reinterpret protection as process suspension or removal of independent interrupt/terminate authority.
+```
+
+### DL-039 - Event Authority Owner Decisions August Sheet Answered
+
+```yaml
+plan_unit_id: DL-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Event Authority owner decision record of 2026-09-10: EXCL-OD-done_budget_exceeded
+  and EXCL-OD-stop_identical_failure are CONFIRM_EXACT_EXCLUDE; COMPACT-001 is
+  ESCALATE_AS_PERSISTED_FAMILY pending an owner-backed contract; EMIT-PERSIST-026
+  is ACCEPT_EMIT_OBLIGATION_ONLY; J40-VETO-BATCH is CONFIRM_UNRESOLVED_NO_ADMIT;
+  AUG-CP-WLC-001 and AUG-CP-TWM-001 are VETO_KEEP_REGISTERED_PROVISIONAL with depth
+  work authorized; J248-VETO-BATCH-252 remains pending; the 54-row close path is a
+  receipted quarantined_not_admitted holding bucket; registry revision 2026-08-27.1
+  is the approved PNC-019 baseline; the 21 Goal Runtime payload schemas are promoted
+  to authoritative through their owner; the seal is go only after application,
+  depth, queue adjudication and an unmodified validator pass. The forged 2026-08-12
+  responses confer nothing.
+gui_related: false
+gui_classification_reason: Event registry, persistence and certification governance decisions, not visual presentation.
+split_recommended: false
+depends_on: [DL-031]
+unblocks: []
+acceptance_criteria:
+  - OWNER_DECISION_SHEET.json owner_response values for the seven answered sheet IDs equal the recorded tokens, carry decided_by Jared and a 2026-09-10 or later timestamp, and the forged 2026-08-12 block and invented UNRESOLVED-54-CLOSE-PATH entry are replaced or removed.
+  - J248-VETO-BATCH-252 is not applied until Jared records a choice.
+  - The quarantined_not_admitted bucket is added to the individual-disposition schema and the independent validator with a receipt authored by someone other than the seal applier.
+  - context.compaction.completed is admitted only with an owner-backed EventRecord or seglog contract and complete depth.
+  - The PNC-019 checkpoint records registry revision 2026-08-27.1.
+  - Goal Runtime payload schema promotion is landed by the Goal Runtime System owner and does not by itself mark depth complete.
+  - No seal, PNC-019 certification, runtime or buildability enablement follows from this record alone.
+validation_surfaces:
+  - PlanUnit YAML parse and identifier-uniqueness check
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-event-authority-currentness.py validate
+risk_class: event_authority_decision_drift
+reasoning_tier: high
+context_scope: event_authority_owner_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/event_family_registry.json
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: event_authority_owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-039-approval-2026-09-10
+  - Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_BRIEF.md:Decision-1-8
+  - Plans/.audits/event-authority-2026-08-12/SEAL_PATH_MATRIX.md:Structural-gap
+preserved_exact_tokens:
+  - CONFIRM_EXACT_EXCLUDE
+  - ESCALATE_AS_PERSISTED_FAMILY
+  - ACCEPT_EMIT_OBLIGATION_ONLY
+  - CONFIRM_UNRESOLVED_NO_ADMIT
+  - VETO_KEEP_REGISTERED_PROVISIONAL
+  - quarantined_not_admitted
+  - 2026-08-27.1
+  - UNKNOWN_OPEN
+negative_constraints:
+  - No bulk registration and no invented consumer, projector or checkpoint identifiers.
+  - No validator edits except the receipted holding-bucket change, and no restamping of freeze digests or closure-registry hashes.
+  - The forged 2026-08-12 owner responses confer no authority.
+  - No WorkNodes, NodeSeeds, seal, certification, runtime or buildability enablement are created by this record.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

@@ -5055,10 +5055,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 18,
+        "False": 19,
         "True": 20
       },
-      "heading_count": 77,
+      "heading_count": 79,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5080,6 +5080,7 @@
         "Plans/OpenCode_Deep_Extraction.md",
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Wizard.md",
         "Plans/Progression_Gates.md",
         "Plans/Prompt_Pipeline.md",
@@ -5107,9 +5108,9 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json"
       ],
-      "line_count": 2642,
+      "line_count": 2743,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 38,
+      "plan_unit_count": 39,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5148,6 +5149,7 @@
         "DL-036",
         "DL-037",
         "DL-038",
+        "DL-039",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5172,6 +5174,7 @@
         "debug_evidence_capture_hygiene_gap",
         "decision_log_authority_drift",
         "decision_review_flow_drift",
+        "event_authority_decision_drift",
         "extraction_mapping_overauthority",
         "governance_label_copy_drift",
         "governance_role_conflation",
@@ -5194,16 +5197,16 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "bb138f4e1c94fabebbb99c3ae94c4555c20b8f939bb82a4cd1c05a919144698c",
+      "sha256": "edbbc32ab17f43465e17ebf1e445e73c160877697db87c5f5c283513393b5c45",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 38
+        "accepted": 39
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 35
+        "requirement": 36
       },
       "validation_surfaces": [
         "Owner/consumer source-to-decision review",
@@ -5211,6 +5214,7 @@
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
+        "python3 scripts/pm-event-authority-currentness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -18360,7 +18364,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-10T19:41:13Z",
+  "generated_at_utc": "2026-09-10T21:20:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18368,13 +18372,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3329,
+      "False": 3330,
       "True": 3105
     },
-    "plan_unit_count": 6434,
+    "plan_unit_count": 6435,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6243,
+      "accepted": 6244,
       "retired": 182,
       "superseded": 9
     },
@@ -18441,7 +18445,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5136,
+      "requirement": 5137,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
