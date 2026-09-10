@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "904cfe8c870acf6e3b389e85af5411caa2c0e3693faaae7d97797b808b91fc08",
+    "source_sha256": "f0be1b2f608cc9b8e0df77f188a6a94903b336fe367b1df9c541904f2cd68f7a",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -72,7 +72,8 @@
     {
       "profile_id": "TCP-SET-CMD",
       "requirement_refs": [
-        "Plans/Settings_System.md#SSYS-018"
+        "Plans/Settings_System.md#SSYS-018",
+        "Plans/Settings_System.md#SSYS-036"
       ],
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-018",
@@ -80,7 +81,7 @@
       "payload_schema_ref": "Plans/settings_system_contracts.schema.json#",
       "result_schema_ref": "Plans/settings_system_contracts.schema.json#",
       "error_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/disabled_reason",
-      "availability_rule": "Current Project, exact route or value identities, current revision, and owner availability are required; command_not_registered or handler_unavailable disables dispatch.",
+      "availability_rule": "Current Project, exact route or value identities, current revision, and owner availability are required; command_not_registered or handler_unavailable disables dispatch. Draft preview/rebind consumes SSYS-036 with no destination Project until commit; actual source revision and copied-setting choices stay current.",
       "permission_gate": "Settings route is non-mutating; mutation/export requires the exact Project and owner permissions and excludes secrets.",
       "disabled_reason_rule": "Expose the exact typed Settings disabled reason and never simulate success.",
       "handler_owner": "Settings System sole command adapter; no native handler implementation is evidenced.",
@@ -88,13 +89,15 @@
       "wiring_status": "specified",
       "production_or_simulation": "Plans and central wiring contracts only; no native runtime claim.",
       "gui_triggers": [
-        "K3 Settings shell, transaction controls, transfer/export, palette or deep link"
+        "K3 Settings shell, transaction controls, transfer/export, palette or deep link",
+        "Product Onboarding uncreated Project: start fresh or explicit Copy settings from; Project-owned postcommit rebind/apply"
       ],
       "return_route": "Exact caller route, focus, Project, and transient/detail state.",
       "reverse_consumers": [
         "Plans/FinalGUISpec.md",
         "Plans/UI_Command_Catalog.md",
-        "Plans/Wiring_Matrix.production.json"
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Planning_Wizard.md"
       ],
       "event_refs": [
         "none_pending_event_authority"
@@ -112,7 +115,9 @@
         "Plans/Settings_System.md#SSYS-021"
       ],
       "test_refs": [
-        "Plans/settings_system_contract_fixtures.json"
+        "Plans/settings_system_contract_fixtures.json",
+        "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_settings_draft_transfer.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
@@ -214,7 +219,8 @@
     {
       "profile_id": "TCP-PROJECT",
       "requirement_refs": [
-        "Plans/Project_System.md#PJCT-002"
+        "Plans/Project_System.md#PJCT-002",
+        "Plans/Project_System.md#PJCT-007"
       ],
       "owner_plan": "Plans/Project_System.md",
       "plan_unit": "PJCT-002",
@@ -222,7 +228,7 @@
       "payload_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
       "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "error_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
-      "availability_rule": "Exact Project identity, expected revision, current registry projection, and owner dependency are required.",
+      "availability_rule": "Exact Project identity, expected revision, current registry projection, and owner dependency are required. Uncreated drafts fabricate no Project ID; Onboarding commit requires PJCT-007's reviewed binding and once-only owner chain.",
       "permission_gate": "Project owner plus FileSafe/Storage/forge permissions as applicable; remove is never delete_data.",
       "disabled_reason_rule": "Expose exact stale, missing, permission, hold, owner, or dependency reason.",
       "handler_owner": "Project System sole action handler; native implementation is absent.",
@@ -230,9 +236,10 @@
       "wiring_status": "specified",
       "production_or_simulation": "Static owner/schema and planned wiring only.",
       "gui_triggers": [
-        "Projects list/card/menu, Onboarding first project, Settings project route"
+        "Projects list/card/menu, Onboarding first project, Settings project route",
+        "Product Onboarding Review commit after draft/preflight; actual Project result feeds paid/free setup and resume"
       ],
-      "return_route": "Exact Project route and caller focus.",
+      "return_route": "Exact Project route and caller focus. Onboarding consumes its persisted/listed Project and required owner results bound to exact draft/hash; acknowledgement is not commit.",
       "reverse_consumers": [
         "Plans/Planning_Wizard.md",
         "Plans/Settings_System.md",
@@ -242,7 +249,8 @@
         "project owner events pending current Event Authority confirmation"
       ],
       "receipt_refs": [
-        "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
+        "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+        "Plans/project_system_contracts.schema.json#/$defs/project_setup_commit_binding"
       ],
       "observable_work": [
         "Required for asynchronous creation, forge, purge, and refresh paths."
@@ -254,7 +262,8 @@
         "Plans/Project_System.md#5 Persistence and migration"
       ],
       "test_refs": [
-        "Plans/project_system_contract_fixtures.json"
+        "Plans/project_system_contract_fixtures.json",
+        "tests/test_pm_onboarding_phases.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
@@ -958,7 +967,8 @@
         "Plans/Forge_Integrations.md#FGI-008",
         "Plans/Forge_Integrations.md#FGI-009",
         "Plans/Forge_Integrations.md#FGI-010",
-        "Plans/Forge_Integrations.md#FGI-013"
+        "Plans/Forge_Integrations.md#FGI-013",
+        "Plans/Forge_Integrations.md#FGI-011"
       ],
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
@@ -966,7 +976,7 @@
       "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
       "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
-      "availability_rule": "Exact provider, connection, repository binding, authority role, immutable review revision, capability, generation, and rate budget are required.",
+      "availability_rule": "Exact provider, connection, repository binding, authority role, immutable review revision, capability, generation, and rate budget are required. FGI-011's existing list command repository_list_scope requires current actual account/container, source/draft authorization and read scope; no Project/repository mutation.",
       "permission_gate": "Permissions, credential/grant broker, provider authority, immutable revision, FileSafe, and confirmation apply.",
       "disabled_reason_rule": "Expose connection/auth/setup, capability, rate, stale generation/revision, permission, mirror, degraded, or recovery blocker.",
       "handler_owner": "Forge Integrations owns 46 primaries; the common central route set contains 43, including the nine FGI-013 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
@@ -974,7 +984,8 @@
       "wiring_status": "specified",
       "production_or_simulation": "Static common/provider schemas and PMConcept7 projection only. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
       "gui_triggers": [
-        "Source Control forge sections, Settings connections, Project setup, official-page routes"
+        "Source Control forge sections, Settings connections, Project setup, official-page routes",
+        "Product Onboarding selected-source precommit read-only account/container repository list without a phantom repository"
       ],
       "return_route": "Exact provider/repository/review/pipeline and caller focus.",
       "reverse_consumers": [
@@ -982,7 +993,9 @@
         "Plans/GitLab_Integration.md",
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Bitbucket_Integration.md",
-        "Plans/Source_Control_System.md"
+        "Plans/Source_Control_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
         "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
@@ -1004,7 +1017,8 @@
         "Plans/cursor_origin_integration_fixtures.json",
         "Plans/gitlab_integration_fixtures.json",
         "Plans/azure_devops_integration_fixtures.json",
-        "Plans/bitbucket_integration_fixtures.json"
+        "Plans/bitbucket_integration_fixtures.json",
+        "tests/test_pm_onboarding_phases.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
@@ -1014,7 +1028,19 @@
       "profile_id": "TCP-ONBOARD",
       "requirement_refs": [
         "Plans/Planning_Wizard.md#PWIZ-021",
-        "Plans/Source_Control_System.md#SCS-011"
+        "Plans/Source_Control_System.md#SCS-011",
+        "Plans/Planning_Wizard.md#PWIZ-022",
+        "Plans/Planning_Wizard.md#PWIZ-024",
+        "Plans/Project_System.md#PJCT-007",
+        "Plans/Settings_System.md#SSYS-036",
+        "Plans/Multi-Account_Connection_Spec.md#MACS-005",
+        "Plans/Forge_Integrations.md#FGI-011",
+        "Plans/Models_System.md#MS-122",
+        "Plans/storage-plan.md#SP-252",
+        "Plans/FinalGUISpec.md#F3-520",
+        "Plans/UI_Wiring_Rules.md#UIW-015",
+        "Plans/UI_Command_Catalog.md#UCC-106",
+        "Plans/Wiring_Matrix.md#WM-041"
       ],
       "owner_plan": "Plans/Planning_Wizard.md",
       "plan_unit": "PWIZ-021",
@@ -1022,25 +1048,35 @@
       "payload_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_request",
       "result_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_result",
       "error_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_result",
-      "availability_rule": "The current exact nine-stage main path or six-stage connect-existing shortcut, exact branch, independent local Safe History backend and optional forge selection, current Review Setup Plan revision and confirmation, approved-plan hash, owner result/route, resumable progress generation, and initiating active Client are required.",
-      "permission_gate": "Local navigation grants no Project, Source Control/Jujutsu, forge/account/auth, Server, Remote Access, install, restore, or Doctor authority; owner flows gate their work.",
+      "availability_rule": "Consume PWIZ-021's v2 stage graphs, bounded uncreated draft/revision/hash, owner-authorized precommit read/source-auth admission, exact Project commit binding, paid/free phases, continuation and current Client/focus. A ref-shaped string or cached projection alone admits nothing.",
+      "permission_gate": "Local actions grant no domain authority. Only owner-authorized read-only preflight/necessary selected-source auth is allowed before commit; PJCT-007 Review binding admits one Project chain, then paid/free setup requires the actual Project. Protected-auth and owner permission/capability boundaries remain effective.",
       "disabled_reason_rule": "Show one plain-language blocker and one owner-routed recovery action without false readiness; a missing, inactive, or mismatched initiating Client blocks protected-auth handoff.",
       "handler_owner": "Product Onboarding local transition controller plus owner routes; the authored browser-concept controller exists and the native Slint handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "The closed request/result schemas and fixtures encode the exact nine-stage main path, exact six-stage connect-existing shortcut, independent local-backend/optional-forge selections, hard Review-confirmation fence, and exact thirteen-action set. Authored PMConcept7 remains concept simulation and no account, repository, owner mutation, production handler, or native Slint wiring is proven.",
+      "production_or_simulation": "V2 schema/fixture/static tests encode draft/copy/late commit/paid then Free Models and thirteen local actions. The authored browser concept is a separate not-yet-reconciled simulation; no native control/handler, protected auth, durable adapter, migration or provider execution is proven.",
       "gui_triggers": [
-        "Welcome, simple-path choice, first project, Source Control, independent Server/Storage/Client placement, Remote Access, Review Setup Plan, Automatic Preparation, and Ready",
-        "connect-existing shortcut through Remote Access, Review Setup Plan, Automatic Preparation, and Ready",
-        "post-confirmation Project/Source Control/Jujutsu/forge/account/Server/Storage/Remote owner routes with current terminal-return auto-advance",
-        "Do this later on every main stage and owner branch",
-        "bounded ephemeral stage Details and inline SVG choice-help disclosures"
+        "PWIZ-021 main, connect-existing and explicit Project Later stage graphs",
+        "First Project draft; fresh-settings default or searchable actual-Project copy preview",
+        "Necessary selected-source sign-in and read-only account/container repository listing via MACS-005/FGI-011",
+        "Exact Review confirmation and Project-owned commit chain, then paid-provider and Free Models setup/Skip",
+        "Close/Defer/resume and phase-safe Back without undoing/repeating commit",
+        "Ephemeral Details and inline SVG choice help"
       ],
-      "return_route": "Exact onboarding stage, path, local backend, optional forge, independent Server/Storage/Client choices, branch, bounded history, queued/reviewed plan revisions, Review confirmation, approved-plan hash, Automatic Preparation currentness, continuation generation, initiating active Client, focus target, owner continuation, and pre-onboarding application context.",
+      "return_route": "PWIZ-021 v2 exact draft/review/hash, actual Project binding, paid/free phases/results, independent placements, branch/history, current Client and focus continuation. Close/resume never erases or recreates a Project; Project Later stays deferred.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py"
+        "Concepts/pm7-tools/onboarding_cinematic_source.py",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Project_System.md",
+        "Plans/Multi-Account_Connection_Spec.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Models_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
       ],
       "event_refs": [
         "none_local_transition"
@@ -1054,7 +1090,10 @@
       ],
       "persistence_refs": [
         "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session",
-        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_continuation_snapshot"
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_continuation_snapshot",
+        "Plans/storage-plan.md#SP-252",
+        "Plans/storage_value_registry.json",
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_setup_plan"
       ],
       "migration_refs": [
         "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_legacy_migration_receipt",
@@ -1062,12 +1101,18 @@
       ],
       "test_refs": [
         "Plans/product_onboarding_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs"
+        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs",
+        "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_settings_draft_transfer.py",
+        "Plans/final_gui_interaction_contract_fixtures.json",
+        "scripts/pm-onboarding-contracts.py",
+        "scripts/pm-new-contracts-verify.py"
       ],
       "evidence_refs": [
-        "static_schema_fixture_and_authored_concept_only",
-        "final_exact_artifact_browser_campaign_pending",
-        "native_runtime_absent"
+        "static_v2_schema_fixture_and_named_tests_only",
+        "accepted_20260903_onboarding_source_reconciliation",
+        "browser_concept_v2_reconciliation_and_exact_artifact_campaign_pending",
+        "native_runtime_storage_and_owner_issuance_absent"
       ]
     },
     {
@@ -1635,7 +1680,8 @@
         "Plans/Multi-Account_Connection_Spec.md#MACS-002",
         "Plans/Forge_Integrations.md#FGI-008",
         "Plans/Multi-Account_Connection_Spec.md#MACS-003",
-        "Plans/Multi-Account_Connection_Spec.md#MACS-004"
+        "Plans/Multi-Account_Connection_Spec.md#MACS-004",
+        "Plans/Multi-Account_Connection_Spec.md#MACS-005"
       ],
       "owner_plan": "Plans/Multi-Account_Connection_Spec.md",
       "plan_unit": "MACS-001",
@@ -1643,22 +1689,26 @@
       "payload_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
       "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
       "error_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError",
-      "availability_rule": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability; exact selectors/revisions/Client, official source, eligibility, protected input, and return context apply.",
+      "availability_rule": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability; exact selectors/revisions/Client, official source, eligibility, protected input, and return context apply. MACS-005 first-time source sign-in requires current human consent/protected route proof and null prior Project/profile/account/install identities; normal sign-in retains its existing identities.",
       "permission_gate": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfilePermissionDecision plus #/$defs/ProtectedAuthBoundary; human-only, no credential/protected-content exposure or authority widening.",
       "disabled_reason_rule": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileDisabledReasonCode.",
       "handler_owner": "Multi-Account auth-profile facade semantic owner; shared authentication/provider native handlers absent for these IDs. Sole future official-page target: handlers::multi_account::open_official_page; protected-auth and native proof remain absent. The 7 commands added by the central Touch closure have sole future routes in Plans/Multi-Account_Connection_Spec.md#MACS-004; target strings are not native proof.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner schema/fixtures only; catalog, wiring, protected auth/provider native execution, and runtime proof absent. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
+      "production_or_simulation": "Static owner schema/fixtures and central production-intent wiring only; native protected-auth/provider execution, durable identity allocation and runtime proof are absent.",
       "gui_triggers": [
-        "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+        "Forge/Cursor Origin provider setup and owner-routed Doctor remediation",
+        "Product Onboarding selected-source sign-in before commit through MACS-005",
+        "Product Onboarding paid-provider/underlying-Free-Models setup after actual Project commit"
       ],
       "return_route": "Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved.",
       "reverse_consumers": [
         "Plans/Forge_Integrations.md",
         "Plans/Cursor_Origin_Integration.md",
         "Plans/newtools.md",
-        "Plans/Settings_System.md"
+        "Plans/Settings_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
         "receipt_only_no_eventrecord_pending_event_authority",
@@ -1678,11 +1728,12 @@
       ],
       "test_refs": [
         "Plans/multi_account_contract_fixtures.json",
-        "Plans/protected_auth_browser_contract_fixtures.json"
+        "Plans/protected_auth_browser_contract_fixtures.json",
+        "tests/test_pm_onboarding_phases.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only",
-        "catalog_wiring_handler_protected_browser_provider_runtime_proof_absent"
+        "native_handler_protected_browser_provider_and_runtime_proof_absent"
       ]
     },
     {

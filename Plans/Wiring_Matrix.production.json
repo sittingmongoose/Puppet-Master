@@ -887,19 +887,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.details dispatches the typed request AttachmentDetailsRequest and returns AttachmentDetailsResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_details.availability and state.assistant_redesign.chat_attachment_details.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.details: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_details, typed AttachmentDetailsRequest/AttachmentDetailsResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.details. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.details: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_details, typed AttachmentDetailsRequest/AttachmentDetailsResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.details. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_details.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_details.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentDetailsResult projection"
         ]
       },
@@ -923,7 +923,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_details.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_details.negative",
@@ -949,19 +949,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.freeze_reference dispatches the typed request AttachmentFreeze_ReferenceRequest and returns AttachmentFreeze_ReferenceResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_freeze_reference.availability and state.assistant_redesign.chat_attachment_freeze_reference.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.freeze_reference: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_freeze_reference, typed AttachmentFreeze_ReferenceRequest/AttachmentFreeze_ReferenceResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.freeze_reference. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.freeze_reference: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_freeze_reference, typed AttachmentFreeze_ReferenceRequest/AttachmentFreeze_ReferenceResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.freeze_reference. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_freeze_reference.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_freeze_reference.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentFreeze_ReferenceResult projection"
         ]
       },
@@ -985,7 +985,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_freeze_reference.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_freeze_reference.negative",
@@ -1011,19 +1011,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.open dispatches the typed request AttachmentOpenRequest and returns AttachmentOpenResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_open.availability and state.assistant_redesign.chat_attachment_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.open: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_open, typed AttachmentOpenRequest/AttachmentOpenResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.open. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.open: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_open, typed AttachmentOpenRequest/AttachmentOpenResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.open. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_open.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_open.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentOpenResult projection"
         ]
       },
@@ -1047,7 +1047,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_open.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_open.negative",
@@ -1073,19 +1073,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.remove dispatches the typed request AttachmentRemoveRequest and returns AttachmentRemoveResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_remove.availability and state.assistant_redesign.chat_attachment_remove.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.remove: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_remove, typed AttachmentRemoveRequest/AttachmentRemoveResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.remove. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.remove: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_remove, typed AttachmentRemoveRequest/AttachmentRemoveResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.remove. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_remove.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_remove.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentRemoveResult projection"
         ]
       },
@@ -1109,7 +1109,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_remove.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_remove.negative",
@@ -1135,19 +1135,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.retry dispatches the typed request AttachmentRetryRequest and returns AttachmentRetryResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_retry.availability and state.assistant_redesign.chat_attachment_retry.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.retry: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_retry, typed AttachmentRetryRequest/AttachmentRetryResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.retry. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.retry: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_retry, typed AttachmentRetryRequest/AttachmentRetryResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.retry. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_retry.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_retry.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentRetryResult projection"
         ]
       },
@@ -1171,7 +1171,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_retry.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_retry.negative",
@@ -1197,19 +1197,19 @@
       "acceptance_checks": [
         "cmd.chat.attachment.save_to_project dispatches the typed request AttachmentSave_To_ProjectRequest and returns AttachmentSave_To_ProjectResult; the surfaces that may raise it are exactly: composer, message_chrome, attachment_details.",
         "Read state.assistant_redesign.chat_attachment_save_to_project.availability and state.assistant_redesign.chat_attachment_save_to_project.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
-        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager/Runtime_Artifacts.md. Emit no unregistered EventRecord.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/FileManager.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.save_to_project: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_save_to_project, typed AttachmentSave_To_ProjectRequest/AttachmentSave_To_ProjectResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager/Runtime_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.save_to_project. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.save_to_project: source-hashed native dispatcher and sole handler handlers::chat_attachments::attachment_save_to_project, typed AttachmentSave_To_ProjectRequest/AttachmentSave_To_ProjectResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.attachment.save_to_project. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_save_to_project.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_save_to_project.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/FileManager/Runtime_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Owner typed result and projection under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager/Runtime_Artifacts.md",
+          "Plans/FileManager.md",
           "AttachmentSave_To_ProjectResult projection"
         ]
       },
@@ -1233,7 +1233,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_save_to_project.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager/Runtime_Artifacts.md, with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the durable effect is exactly the owner typed result under Plans/FileManager.md, with typed receipt correlation and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_attachment_save_to_project.negative",
@@ -3167,7 +3167,7 @@
       "handler_location": "handlers::chat_attachments::attachment_add",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.attachment.add names exactly one owner-adjudicated future target handlers::chat_attachments::attachment_add in Plans/FileManager_FileSafe.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.attachment.add names exactly one owner-adjudicated future target handlers::chat_attachments::attachment_add in Plans/FileManager.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_attachment_add.availability and state.assistant_redesign.chat_attachment_add.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: AttachmentRef + ObservableWork. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: attachment tray/message.",
@@ -3176,14 +3176,14 @@
         "Correction v4 (FOLDER-001, FOLDER-004): semantic_kind file|folder is part of the typed request, and picker, drag-and-drop and File Manager reference paths converge on this one command. A folder carries a bounded manifest -- exact root identity, entries/hash policy, exclusions, permissions, materialization status -- and is never recursively dumped into a prompt.",
         "Correction v4 (FOLDER-008): the folder manifest and any extracted content keep separate identities, so context selection never mutates the attachment, and a materialization receipt records what was included and omitted."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.add: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager_FileSafe.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-002. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-033) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.add: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-002. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-033) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_attachment_add.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_add.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "AttachmentRef + ObservableWork under Plans/FileManager_FileSafe.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "AttachmentRef + ObservableWork under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager_FileSafe.md",
+          "Plans/FileManager.md",
           "AttachmentRef + ObservableWork"
         ]
       },
@@ -3237,21 +3237,21 @@
       "handler_location": "handlers::chat_attachments::attachment_download",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.attachment.download names exactly one owner-adjudicated future target handlers::chat_attachments::attachment_download in Plans/FileManager_RuntimeArtifacts.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.attachment.download names exactly one owner-adjudicated future target handlers::chat_attachments::attachment_download in Plans/FileManager.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_attachment_download.availability and state.assistant_redesign.chat_attachment_download.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: exact version transfer/export receipt. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: OS/browser download + details.",
         "Negative path is enforced: no regeneration.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.attachment.download: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager_RuntimeArtifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-003. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.attachment.download: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-003. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_attachment_download.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_attachment_download.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "exact version transfer/export receipt under Plans/FileManager_RuntimeArtifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "exact version transfer/export receipt under Plans/FileManager.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/FileManager_RuntimeArtifacts.md",
+          "Plans/FileManager.md",
           "exact version transfer/export receipt"
         ]
       },
@@ -3300,21 +3300,21 @@
       "handler_location": "handlers::assistant_chat::composer_destination_set",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.composer.destination.set names exactly one owner-adjudicated future target handlers::assistant_chat::composer_destination_set in Plans/Chat_Collaborative.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.composer.destination.set names exactly one owner-adjudicated future target handlers::assistant_chat::composer_destination_set in Plans/assistant-chat-design.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_composer_destination_set.availability and state.assistant_redesign.chat_composer_destination_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: ComposerBuffer destination. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: composer ribbon/glyph.",
         "Negative path is enforced: no secondary input.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.composer.destination.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Chat_Collaborative.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-004. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.composer.destination.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-004. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_composer_destination_set.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_composer_destination_set.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "ComposerBuffer destination under Plans/Chat_Collaborative.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "ComposerBuffer destination under Plans/assistant-chat-design.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Chat_Collaborative.md",
+          "Plans/assistant-chat-design.md",
           "ComposerBuffer destination"
         ]
       },
@@ -3780,21 +3780,21 @@
       "handler_location": "handlers::goal_runtime::goal_propose_update",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.goal.propose_update names exactly one owner-adjudicated future target handlers::goal_runtime::goal_propose_update in Plans/Goal_Approval.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.goal.propose_update names exactly one owner-adjudicated future target handlers::goal_runtime::goal_propose_update in Plans/Goal_Runtime_System.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_goal_propose_update.availability and state.assistant_redesign.chat_goal_propose_update.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: approval request only. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: decision host.",
         "Negative path is enforced: no preapproval mutation.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.goal.propose_update: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Goal_Approval.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-011. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.goal.propose_update: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Goal_Runtime_System.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-011. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_goal_propose_update.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_goal_propose_update.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "approval request only under Plans/Goal_Approval.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "approval request only under Plans/Goal_Runtime_System.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Goal_Approval.md",
+          "Plans/Goal_Runtime_System.md",
           "approval request only"
         ]
       },
@@ -4032,7 +4032,7 @@
       "handler_location": "handlers::assistant_plan::plan_build",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.plan.build names exactly one owner-adjudicated future target handlers::assistant_plan::plan_build in Plans/Assistant_Plan_ToDo.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.plan.build names exactly one owner-adjudicated future target handlers::assistant_plan::plan_build in Plans/Assistant_Plan_Runtime.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_plan_build.availability and state.assistant_redesign.chat_plan_build.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: PlanRun + To-Dos (+ scoped units for Deep). Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: Building control + Activity.",
@@ -4042,14 +4042,14 @@
         "Correction v4 (PSCHED-005, PFAIL-010): Build Now for a plan_version with a pending exact-version schedule atomically invalidates that schedule before admitting the run and returns a schedule-invalidation receipt; a later timer delivery for it admits nothing.",
         "Correction v4 (PGOAL-012): repeated dispatch carrying the same idempotency binding returns the original Goal and PlanRun result; exactly one of each exists afterwards."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.plan.build: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant_Plan_ToDo.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-016. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-004, CW-009) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.chat.plan.build: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant_Plan_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-016. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-004, CW-009) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_plan_build.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_plan_build.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "PlanRun + To-Dos (+ scoped units for Deep) under Plans/Assistant_Plan_ToDo.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "PlanRun + To-Dos (+ scoped units for Deep) under Plans/Assistant_Plan_Runtime.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Assistant_Plan_ToDo.md",
+          "Plans/Assistant_Plan_Runtime.md",
           "PlanRun + To-Dos (+ scoped units for Deep)"
         ]
       },
@@ -4113,7 +4113,7 @@
       "handler_location": "handlers::assistant_plan::plan_build_with_crew",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.plan.build_with_crew names exactly one owner-adjudicated future target handlers::assistant_plan::plan_build_with_crew in Plans/Plan_Collaborative_ToDo.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.plan.build_with_crew names exactly one owner-adjudicated future target handlers::assistant_plan::plan_build_with_crew in Plans/Assistant_Plan_Runtime.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_plan_build_with_crew.availability and state.assistant_redesign.chat_plan_build_with_crew.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: atomic PlanRun+CrewRun+To-Dos. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: Plan + Crew card/activity.",
@@ -4122,14 +4122,14 @@
         "Correction v4 (MODAL-013): the specialised atomic contract is retained. PlanRun and CrewRun commit together or neither commits; the command is never decomposed into cmd.collaboration.start followed by cmd.chat.plan.build.",
         "Correction v4 (MODAL-014): Plan version and hash freeze at Start. A Plan that changed while the modal was open is refused with a typed stale result and the user reopens against the new version."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.plan.build_with_crew: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Plan_Collaborative_ToDo.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-017. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-022) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.chat.plan.build_with_crew: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant_Plan_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-017. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-022) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_plan_build_with_crew.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_plan_build_with_crew.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "atomic PlanRun+CrewRun+To-Dos under Plans/Plan_Collaborative_ToDo.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "atomic PlanRun+CrewRun+To-Dos under Plans/Assistant_Plan_Runtime.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Plan_Collaborative_ToDo.md",
+          "Plans/Assistant_Plan_Runtime.md",
           "atomic PlanRun+CrewRun+To-Dos"
         ]
       },
@@ -4337,7 +4337,7 @@
       "handler_location": "handlers::assistant_plan::plan_export",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.plan.export names exactly one owner-adjudicated future target handlers::assistant_plan::plan_export in Plans/Artifacts_Output.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.plan.export names exactly one owner-adjudicated future target handlers::assistant_plan::plan_export in Plans/Assistant_Plan_Runtime.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_plan_export.availability and state.assistant_redesign.chat_plan_export.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: Markdown/PDF/bundle artifact. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: download/details.",
@@ -4346,14 +4346,14 @@
         "Correction v4 (PPROG-015..016, CDRY-005): content_kind plan_document|execution_report is part of the typed request beside the existing format discriminator. A plan_document export carries no live execution state and never alters plan_hash; an execution_report is a separate versioned artifact keyed to plan_version, plan_hash and plan_run_id and is never presented as the approved Plan.",
         "Correction v4 (PDET-011..012): PDF export renders video and interactive blocks through static_fallback_ref with caption and stable artifact reference and never silently drops a supported block; a missing, stale, denied or unsupported embed produces an explicit unavailable block and a truthful export result."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.plan.export: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Artifacts_Output.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-020. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-011) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.chat.plan.export: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant_Plan_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-020. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-011) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_plan_export.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_plan_export.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Markdown/PDF/bundle artifact under Plans/Artifacts_Output.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Markdown/PDF/bundle artifact under Plans/Assistant_Plan_Runtime.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Artifacts_Output.md",
+          "Plans/Assistant_Plan_Runtime.md",
           "Markdown/PDF/bundle artifact"
         ]
       },
@@ -4493,7 +4493,7 @@
       "handler_location": "handlers::collaboration::crew_auto_set",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.crew_auto.set names exactly one owner-adjudicated future target handlers::collaboration::crew_auto_set in Plans/Collaborative_Settings.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.crew_auto.set names exactly one owner-adjudicated future target handlers::collaboration::crew_auto_set in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_crew_auto_set.availability and state.assistant_redesign.chat_crew_auto_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: project criteria/default revision. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: check/glyph.",
@@ -4501,14 +4501,14 @@
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (MODAL-006, MODAL-008): the checkmark commits only after configuration confirmation and a successful project Settings transaction and reflects effective stored state. Cancel or a failed commit preserves the prior enabled state; nothing is enabled optimistically when the modal opens."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.crew_auto.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Settings.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-024. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-018) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.chat.crew_auto.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-024. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-018) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_crew_auto_set.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_crew_auto_set.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "project criteria/default revision under Plans/Collaborative_Settings.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "project criteria/default revision under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Collaborative_Settings.md",
+          "Plans/Collaborative_Workflows.md",
           "project criteria/default revision"
         ]
       },
@@ -4562,7 +4562,7 @@
       "handler_location": "handlers::collaboration::start",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/BrainStorm_AssistantPlan.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.collaboration_start.availability and state.assistant_redesign.collaboration_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: BrainStormRun. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: card/activity/panel.",
@@ -4572,14 +4572,14 @@
         "Correction v4 (MODAL-009..010): the target identity and hash freeze at Start, not at modal open, and currentness is checked immediately before admission. A target that changed while the modal was open requires refresh-to-current or an explicitly identified old immutable target; two target hashes never form one review.",
         "Correction v4 (PART-001..002, PART-021): every participant slot is declared required or optional by the workflow definition and reaches exactly one terminal outcome. A model unavailable before Start blocks Start or requires explicit replacement and never creates a failed runtime participant from configuration alone."
       ],
-      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/BrainStorm_AssistantPlan.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-025. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-025. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_start.availability",
       "disabled_reason_projection": "state.assistant_redesign.collaboration_start.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "BrainStormRun under Plans/BrainStorm_AssistantPlan.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "BrainStormRun under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/BrainStorm_AssistantPlan.md",
+          "Plans/Collaborative_Workflows.md",
           "BrainStormRun"
         ]
       },
@@ -4643,21 +4643,21 @@
       "handler_location": "handlers::collaboration::brainstorm_synthesize_plan",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.brainstorm.synthesize_plan names exactly one owner-adjudicated future target handlers::collaboration::brainstorm_synthesize_plan in Plans/BrainStorm_AssistantPlan.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.brainstorm.synthesize_plan names exactly one owner-adjudicated future target handlers::collaboration::brainstorm_synthesize_plan in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.brainstorm_synthesize_plan.availability and state.assistant_redesign.brainstorm_synthesize_plan.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: Deep Plan version. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: linked Plan card.",
         "Negative path is enforced: one final Plan.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.brainstorm.synthesize_plan: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/BrainStorm_AssistantPlan.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-029. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.brainstorm.synthesize_plan: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-029. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.brainstorm_synthesize_plan.availability",
       "disabled_reason_projection": "state.assistant_redesign.brainstorm_synthesize_plan.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Deep Plan version under Plans/BrainStorm_AssistantPlan.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Deep Plan version under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/BrainStorm_AssistantPlan.md",
+          "Plans/Collaborative_Workflows.md",
           "Deep Plan version"
         ]
       },
@@ -4706,7 +4706,7 @@
       "handler_location": "handlers::collaboration::start",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/Review.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.collaboration_start.availability and state.assistant_redesign.collaboration_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: ReviewRun + frozen target. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: card/activity/panel.",
@@ -4716,14 +4716,14 @@
         "Correction v4 (MODAL-009..010): the target identity and hash freeze at Start, not at modal open, and currentness is checked immediately before admission. A target that changed while the modal was open requires refresh-to-current or an explicitly identified old immutable target; two target hashes never form one review.",
         "Correction v4 (PART-001..002, PART-021): every participant slot is declared required or optional by the workflow definition and reaches exactly one terminal outcome. A model unavailable before Start blocks Start or requires explicit replacement and never creates a failed runtime participant from configuration alone."
       ],
-      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Review.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-030. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-030. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_start.availability",
       "disabled_reason_projection": "state.assistant_redesign.collaboration_start.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "ReviewRun + frozen target under Plans/Review.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "ReviewRun + frozen target under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Review.md",
+          "Plans/Collaborative_Workflows.md",
           "ReviewRun + frozen target"
         ]
       },
@@ -4787,7 +4787,7 @@
       "handler_location": "handlers::collaboration::start",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/ChatRoom.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.collaboration.start names exactly one owner-adjudicated future target handlers::collaboration::start in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.collaboration_start.availability and state.assistant_redesign.collaboration_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: ChatRoomRun. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: card/activity/panel.",
@@ -4797,14 +4797,14 @@
         "Correction v4 (MODAL-009..010): the target identity and hash freeze at Start, not at modal open, and currentness is checked immediately before admission. A target that changed while the modal was open requires refresh-to-current or an explicitly identified old immutable target; two target hashes never form one review.",
         "Correction v4 (PART-001..002, PART-021): every participant slot is declared required or optional by the workflow definition and reaches exactly one terminal outcome. A model unavailable before Start blocks Start or requires explicit replacement and never creates a failed runtime participant from configuration alone."
       ],
-      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/ChatRoom.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-034. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.collaboration.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-034. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-016, CW-019) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_start.availability",
       "disabled_reason_projection": "state.assistant_redesign.collaboration_start.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "ChatRoomRun under Plans/ChatRoom.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "ChatRoomRun under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/ChatRoom.md",
+          "Plans/Collaborative_Workflows.md",
           "ChatRoomRun"
         ]
       },
@@ -5120,21 +5120,21 @@
       "handler_location": "handlers::browser_runtime::capture_full_to_chat",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.capture.full_to_chat names exactly one owner-adjudicated future target handlers::browser_runtime::capture_full_to_chat in Plans/Browser_TestCapture_Artifacts.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.browser.capture.full_to_chat names exactly one owner-adjudicated future target handlers::browser_runtime::capture_full_to_chat in Plans/Section15_MVP_Promoted_Features_Spec.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.browser_capture_full_to_chat.availability and state.assistant_redesign.browser_capture_full_to_chat.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: screenshot artifact + message. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: thread attachment.",
         "Negative path is enforced: isolated payload.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.browser.capture.full_to_chat: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Browser_TestCapture_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-041. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.browser.capture.full_to_chat: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-041. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.browser_capture_full_to_chat.availability",
       "disabled_reason_projection": "state.assistant_redesign.browser_capture_full_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "screenshot artifact + message under Plans/Browser_TestCapture_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "screenshot artifact + message under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Browser_TestCapture_Artifacts.md",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "screenshot artifact + message"
         ]
       },
@@ -5183,21 +5183,21 @@
       "handler_location": "handlers::browser_runtime::capture_region_to_chat",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.capture.region_to_chat names exactly one owner-adjudicated future target handlers::browser_runtime::capture_region_to_chat in Plans/Browser_TestCapture_Artifacts.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.browser.capture.region_to_chat names exactly one owner-adjudicated future target handlers::browser_runtime::capture_region_to_chat in Plans/Section15_MVP_Promoted_Features_Spec.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.browser_capture_region_to_chat.availability and state.assistant_redesign.browser_capture_region_to_chat.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: crop + message. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: thread attachment.",
         "Negative path is enforced: exact coordinates.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.browser.capture.region_to_chat: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Browser_TestCapture_Artifacts.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-042. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.browser.capture.region_to_chat: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-042. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.browser_capture_region_to_chat.availability",
       "disabled_reason_projection": "state.assistant_redesign.browser_capture_region_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "crop + message under Plans/Browser_TestCapture_Artifacts.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "crop + message under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Browser_TestCapture_Artifacts.md",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "crop + message"
         ]
       },
@@ -5316,7 +5316,7 @@
       "handler_location": "handlers::browser_runtime::component_send_now",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.component.send_now names exactly one owner-adjudicated future target handlers::browser_runtime::component_send_now in Plans/Browser_Chat.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.browser.component.send_now names exactly one owner-adjudicated future target handlers::browser_runtime::component_send_now in Plans/Section15_MVP_Promoted_Features_Spec.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.browser_component_send_now.availability and state.assistant_redesign.browser_component_send_now.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: isolated message. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: current destination.",
@@ -5325,14 +5325,14 @@
         "Correction v4 (BSTALE-001..003, BSTALE-010): the handler revalidates session, page, frame, page generation, stable locator and captured identity before dispatch. Exactly one compatible match may refresh generation and proceed; zero matches, multiple matches, a destroyed frame or page, or an identity mismatch returns typed stale_capture with a recapture action and admits no message. Currentness is generation and identity based, never timestamp based.",
         "Correction v4 (BSTALE-008): the submission payload is isolated and never consumes unrelated ComposerBuffer text or attachments; existing composer content is byte-for-byte unchanged."
       ],
-      "evidence_required": "Future production evidence for cmd.browser.component.send_now: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Browser_Chat.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-044. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-035) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.browser.component.send_now: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-044. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-035) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.browser_component_send_now.availability",
       "disabled_reason_projection": "state.assistant_redesign.browser_component_send_now.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "isolated message under Plans/Browser_Chat.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "isolated message under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Browser_Chat.md",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "isolated message"
         ]
       },
@@ -5391,7 +5391,7 @@
       "handler_location": "handlers::browser_runtime::component_add_to_composer",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.component.add_to_composer names exactly one owner-adjudicated future target handlers::browser_runtime::component_add_to_composer in Plans/ComposerBuffer.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.browser.component.add_to_composer names exactly one owner-adjudicated future target handlers::browser_runtime::component_add_to_composer in Plans/Section15_MVP_Promoted_Features_Spec.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.browser_component_add_to_composer.availability and state.assistant_redesign.browser_component_add_to_composer.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: numbered item/ref. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: composer.",
@@ -5399,14 +5399,14 @@
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (BSTALE-005, BSTALE-012): each hidden component reference in a numbered list is validated independently at message admission. One stale item stays visible and blocks only itself while the other valid items remain intact, and a partial list is never sent without an explicit user action. Late resolutions are fenced by browser selection epoch and ComposerBuffer revision."
       ],
-      "evidence_required": "Future production evidence for cmd.browser.component.add_to_composer: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/ComposerBuffer.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-045. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-036, CW-049) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
+      "evidence_required": "Future production evidence for cmd.browser.component.add_to_composer: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-045. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-036, CW-049) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.browser_component_add_to_composer.availability",
       "disabled_reason_projection": "state.assistant_redesign.browser_component_add_to_composer.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "numbered item/ref under Plans/ComposerBuffer.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "numbered item/ref under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/ComposerBuffer.md",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "numbered item/ref"
         ]
       },
@@ -5721,38 +5721,41 @@
       "ui_element_id": "assistant.redesign.w_052.chat_revert",
       "ui_location": "Puppet Master Assistant > revert.action",
       "ui_command_id": "cmd.chat.revert",
-      "handler_location": "handlers::filesafe::restore_turn_manifest",
+      "handler_location": "handlers::chat::revert",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.revert names exactly one owner-adjudicated future target handlers::filesafe::restore_turn_manifest in Plans/FileSafe_Chat.md; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Read state.assistant_redesign.chat_revert.availability and state.assistant_redesign.chat_revert.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "The durable effect is exactly: whole-turn restore result. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
+        "Dispatch cmd.chat.revert only through handlers::chat::revert. Chat resolves one immutable eligible whole-turn mutation manifest under Plans/assistant-chat-design.md, then delegates exact replacement to Plans/FileSafe.md; the internal FileSafe call is not a peer UICommand handler.",
+        "Bind exact project, thread, repository, worktree, complete recorded canonical-absolute affected paths, expected whole-turn manifest hash, idempotency key and permission evidence. Omitted target selection is Chat-owned; no_eligible_mutating_turn creates no restore transaction.",
+        "Every surface reads state.commands.chat_revert.availability and state.commands.chat_revert.disabled_reason. Keep handler_unavailable without native proof and fail closed on missing required Event Authority; no receipt-only substitute may bypass an unadmitted restore event family.",
+        "Consume only the exact FileSafe outcome and matching journal/equality proof: restored_clean, restore_skipped, restore_refused, restore_failed or restore_recovery_required. Preserve fences and holds on unresolved recovery; never report partial success or restored_with_conflicts.",
+        "FileSafe restores files only, never conversation, queue, or thread state. Refresh editors only after the durable owner result; do not reinterpret recorded paths through current working_directory or recreate a removed worktree.",
         "Every named reverse consumer renders from the same owner projection: Changes/message/wand.",
-        "Negative path is enforced: not Rewind/partial.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.revert: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileSafe_Chat.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-052. The owner binding and this production-intent row prove none of those runtime facts.",
-      "state_selector": "state.assistant_redesign.chat_revert.availability",
-      "disabled_reason_projection": "state.assistant_redesign.chat_revert.disabled_reason",
+      "evidence_required": "Future production evidence for cmd.chat.revert: source-hashed sole Chat dispatcher and FileSafe delegation, immutable whole-turn request binding, exact typed result/error projection, journal/equality and rollback proof, restart/kill/race/remote-custody negatives, owner-required event admission, actual pointer/keyboard/focus and reverse GUI coverage. Plans/assistant-chat-design.md resolves the turn; Plans/FileSafe.md owns restoration; Plans/Commands_System.md and Plans/Contracts_V0.md own command/result and EventRecord rules. Static rows prove no native handler or event producer.",
+      "state_selector": "state.commands.chat_revert.availability",
+      "disabled_reason_projection": "state.commands.chat_revert.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "whole-turn restore result under Plans/FileSafe_Chat.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Projection of the exact FileSafe whole-turn restore outcome and journal receipt; not a route-only or intrinsically no-persist mutation. No eligible target, refusal or unavailable-owner handling may produce a no-persist pretransaction disposition. A required but unadmitted safe-point restore family blocks mutation; this row does not admit that family or substitute a receipt for its EventRecord.",
         "receipt_or_event_refs": [
-          "Plans/FileSafe_Chat.md",
-          "whole-turn restore result"
+          "Plans/assistant-chat-design.md",
+          "Plans/FileSafe.md",
+          "Plans/Commands_System.md",
+          "Plans/Contracts_V0.md"
         ]
       },
       "accessibility_contract": {
         "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.revert in revert.action.",
         "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.revert only when available.",
         "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
-        "disabled_announcement": "Announce state.assistant_redesign.chat_revert.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
+        "disabled_announcement": "Announce state.commands.chat_revert.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
       },
       "test_evidence": [
         {
           "test_id": "wiring.assistant_redesign.chat_revert.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Prove cmd.chat.revert reaches only handlers::filesafe::restore_turn_manifest; the target string itself is not proof."
+          "requirement": "Prove cmd.chat.revert reaches only handlers::chat::revert, resolves the immutable whole-turn manifest, and delegates its complete file scope to the FileSafe owner without a peer dispatcher or conversation rewind."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_revert.state",
@@ -5762,7 +5765,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_revert.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly 'whole-turn restore result' with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove exact FileSafe restore outcome, durable journal/equality/rollback evidence and receipt correlation; missing required Event Authority refuses before mutation. A no-persist pretransaction refusal is not a successful restore and emits no unregistered EventRecord."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_revert.negative",
@@ -5776,8 +5779,9 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.revert records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
+        "Assert a missing required restore event-family admission fails closed before target mutation; no unregistered EventRecord is emitted and no receipt is treated as admission.",
+        "Assert no_eligible_mutating_turn, stale-target refusal and unavailable-owner handling have an explicit no-persist pretransaction disposition; this does not make an admitted file restore a route-only/no-persist operation.",
+        "Assert FileSafe event/receipt projection and consumer bindings are reconciled atomically with any future row-local event admission; this static wiring repair admits no event family."
       ]
     },
     "assistant.redesign.w_054.chat_thread_regenerate_title": {
@@ -5787,21 +5791,21 @@
       "handler_location": "handlers::assistant_chat::thread_regenerate_title",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.thread.regenerate_title names exactly one owner-adjudicated future target handlers::assistant_chat::thread_regenerate_title in Plans/Chat_Models.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.thread.regenerate_title names exactly one owner-adjudicated future target handlers::assistant_chat::thread_regenerate_title in Plans/assistant-chat-design.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_thread_regenerate_title.availability and state.assistant_redesign.chat_thread_regenerate_title.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: helper attempt. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: thread title.",
         "Negative path is enforced: explicit model no fallback.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.thread.regenerate_title: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Chat_Models.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-054. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.thread.regenerate_title: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-054. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_thread_regenerate_title.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_thread_regenerate_title.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "helper attempt under Plans/Chat_Models.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "helper attempt under Plans/assistant-chat-design.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Chat_Models.md",
+          "Plans/assistant-chat-design.md",
           "helper attempt"
         ]
       },
@@ -6079,61 +6083,6 @@
         "Assert cmd.actions.open_in_browser records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
-    "catalog.actions_pin": {
-      "ui_element_id": "catalog.actions_pin",
-      "ui_location": "Action surfaces > Context actions > Pin",
-      "ui_command_id": "cmd.actions.pin",
-      "handler_location": "handlers::actions::pin",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.actions.pin must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.actions.pin must expose projected state selector and disabled reason before dispatch",
-        "cmd.actions.pin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.actions.pin must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.actions.pin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.actions.pin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.actions_pin.availability",
-      "disabled_reason_projection": "state.commands.actions_pin.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.actions.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.actions.pin.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.actions_pin exposes a stable role/name/description matching cmd.actions.pin.",
-        "keyboard_access": "catalog.actions_pin is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.actions_pin preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.actions_pin surfaces state.commands.actions_pin.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.actions_pin.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.actions.pin reaches handlers::actions::pin with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.actions_pin.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.actions_pin.availability and disabled copy reads state.commands.actions_pin.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.actions_pin.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.actions.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.actions_pin.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.actions.pin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.actions_rerun": {
       "ui_element_id": "catalog.actions_rerun",
       "ui_location": "Action surfaces > Context actions > Rerun",
@@ -6352,61 +6301,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.actions.switch_subview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.actions_unpin": {
-      "ui_element_id": "catalog.actions_unpin",
-      "ui_location": "Action surfaces > Context actions > Unpin",
-      "ui_command_id": "cmd.actions.unpin",
-      "handler_location": "handlers::actions::unpin",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.actions.unpin must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.actions.unpin must expose projected state selector and disabled reason before dispatch",
-        "cmd.actions.unpin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.actions.unpin must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.actions.unpin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.actions.unpin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.actions_unpin.availability",
-      "disabled_reason_projection": "state.commands.actions_unpin.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.actions.unpin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.actions.unpin.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.actions_unpin exposes a stable role/name/description matching cmd.actions.unpin.",
-        "keyboard_access": "catalog.actions_unpin is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.actions_unpin preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.actions_unpin surfaces state.commands.actions_unpin.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.actions_unpin.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.actions.unpin reaches handlers::actions::unpin with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.actions_unpin.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.actions_unpin.availability and disabled copy reads state.commands.actions_unpin.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.actions_unpin.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.actions.unpin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.actions_unpin.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.actions.unpin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.actions_view_logs": {
@@ -8277,7 +8171,8 @@
         "Validate the exact request/result pair Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest -> Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
         "Read state.commands.auth_profile_open_official_page.availability and state.commands.auth_profile_open_official_page.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
-        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
+        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_open_official_page.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8323,11 +8218,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, busy state, disabled reason, and outcome announcement in every reverse consumer.",
           "test_id": "wiring.catalog.auth_profile_open_official_page.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_auth_profile_open_official_page.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.auth_profile.open_official_page",
       "ui_element_id": "catalog.auth_profile_open_official_page",
-      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface"
+      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route"
     },
     "catalog.auth_profile_rename": {
       "acceptance_checks": [
@@ -8565,7 +8465,8 @@
         "Validate Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest -> Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult and Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError with exact availability and permission gates.",
         "Read state.commands.auth_profile_sign_in.availability and state.commands.auth_profile_sign_in.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Consume MACS-005 FirstTimeSourceAuthBinding only for necessary selected-source auth: owner-verified permission/consent/source/draft/hash/Client, null prior Project/profile/account/install, protected human handoff, owner-allocated identity after proof. Postcommit provider setup uses the real Project and ordinary owner contracts; no native proof is implied."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_sign_in.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8610,11 +8511,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.auth_profile_sign_in.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_auth_profile_sign_in.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Consume MACS-005 FirstTimeSourceAuthBinding only for necessary selected-source auth: owner-verified permission/consent/source/draft/hash/Client, null prior Project/profile/account/install, protected human handoff, owner-allocated identity after proof. Postcommit provider setup uses the real Project and ordinary owner contracts; no native proof is implied. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.auth_profile.sign_in",
       "ui_element_id": "catalog.auth_profile_sign_in",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
     },
     "catalog.auth_profile_sign_out": {
       "acceptance_checks": [
@@ -14920,61 +14826,6 @@
         "Assert confirmation, writer, permission, scope, hold, tombstone, stale-state, family/schema, compaction-authority, idempotency-conflict, dedupe-unavailable, refusal, and replay cases create zero new append, zero owner mutation, zero projection effect, zero checkpoint advance, zero purge/compaction dispatch, and zero hold clear."
       ]
     },
-    "catalog.chat_delete_message": {
-      "ui_element_id": "catalog.chat_delete_message",
-      "ui_location": "Assistant Chat surface",
-      "ui_command_id": "cmd.chat.delete_message",
-      "handler_location": "handlers::chat::delete_message",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.chat.delete_message must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.chat.delete_message must expose projected state selector and disabled reason before dispatch",
-        "cmd.chat.delete_message dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.chat.delete_message must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.delete_message must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.chat.delete_message; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.chat_delete_message.availability",
-      "disabled_reason_projection": "state.commands.chat_delete_message.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.delete_message has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.chat.delete_message.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_delete_message exposes a stable role/name/description matching cmd.chat.delete_message.",
-        "keyboard_access": "catalog.chat_delete_message is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_delete_message preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_delete_message surfaces state.commands.chat_delete_message.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.chat_delete_message.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.chat.delete_message reaches handlers::chat::delete_message with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.chat_delete_message.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.chat_delete_message.availability and disabled copy reads state.commands.chat_delete_message.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.chat_delete_message.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.delete_message has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.chat_delete_message.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.chat.delete_message records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.chat_edit_last_user_message": {
       "ui_element_id": "catalog.chat_edit_last_user_message",
       "ui_location": "Assistant Chat surface",
@@ -16824,20 +16675,23 @@
       "handler_location": "handlers::chat::revert",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.revert must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.chat.revert must expose projected state selector and disabled reason before dispatch",
-        "cmd.chat.revert dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.chat.revert must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.revert must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "Dispatch cmd.chat.revert only through handlers::chat::revert. Chat resolves one immutable eligible whole-turn mutation manifest under Plans/assistant-chat-design.md, then delegates exact replacement to Plans/FileSafe.md; the internal FileSafe call is not a peer UICommand handler.",
+        "Bind exact project, thread, repository, worktree, complete recorded canonical-absolute affected paths, expected whole-turn manifest hash, idempotency key and permission evidence. Omitted target selection is Chat-owned; no_eligible_mutating_turn creates no restore transaction.",
+        "Every surface reads state.commands.chat_revert.availability and state.commands.chat_revert.disabled_reason. Keep handler_unavailable without native proof and fail closed on missing required Event Authority; no receipt-only substitute may bypass an unadmitted restore event family.",
+        "Consume only the exact FileSafe outcome and matching journal/equality proof: restored_clean, restore_skipped, restore_refused, restore_failed or restore_recovery_required. Preserve fences and holds on unresolved recovery; never report partial success or restored_with_conflicts.",
+        "FileSafe restores files only, never conversation, queue, or thread state. Refresh editors only after the durable owner result; do not reinterpret recorded paths through current working_directory or recreate a removed worktree."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.revert; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Future production evidence for cmd.chat.revert: source-hashed sole Chat dispatcher and FileSafe delegation, immutable whole-turn request binding, exact typed result/error projection, journal/equality and rollback proof, restart/kill/race/remote-custody negatives, owner-required event admission, actual pointer/keyboard/focus and reverse GUI coverage. Plans/assistant-chat-design.md resolves the turn; Plans/FileSafe.md owns restoration; Plans/Commands_System.md and Plans/Contracts_V0.md own command/result and EventRecord rules. Static rows prove no native handler or event producer.",
       "state_selector": "state.commands.chat_revert.availability",
       "disabled_reason_projection": "state.commands.chat_revert.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.chat.revert has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Projection of the exact FileSafe whole-turn restore outcome and journal receipt; not a route-only or intrinsically no-persist mutation. No eligible target, refusal or unavailable-owner handling may produce a no-persist pretransaction disposition. A required but unadmitted safe-point restore family blocks mutation; this row does not admit that family or substitute a receipt for its EventRecord.",
         "receipt_or_event_refs": [
-          "cmd.chat.revert.dispatch_receipt"
+          "Plans/assistant-chat-design.md",
+          "Plans/FileSafe.md",
+          "Plans/Commands_System.md",
+          "Plans/Contracts_V0.md"
         ]
       },
       "accessibility_contract": {
@@ -16850,7 +16704,7 @@
         {
           "test_id": "wiring.catalog.chat_revert.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.chat.revert reaches handlers::chat::revert with typed args/result contract."
+          "requirement": "Prove cmd.chat.revert reaches only handlers::chat::revert, resolves the immutable whole-turn manifest, and delegates its complete file scope to the FileSafe owner without a peer dispatcher or conversation rewind."
         },
         {
           "test_id": "wiring.catalog.chat_revert.state_projection",
@@ -16860,7 +16714,7 @@
         {
           "test_id": "wiring.catalog.chat_revert.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.revert has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove exact FileSafe restore outcome, durable journal/equality/rollback evidence and receipt correlation; missing required Event Authority refuses before mutation. A no-persist pretransaction refusal is not a successful restore and emits no unregistered EventRecord."
         },
         {
           "test_id": "wiring.catalog.chat_revert.accessibility",
@@ -16869,7 +16723,9 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.revert records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert a missing required restore event-family admission fails closed before target mutation; no unregistered EventRecord is emitted and no receipt is treated as admission.",
+        "Assert no_eligible_mutating_turn, stale-target refusal and unavailable-owner handling have an explicit no-persist pretransaction disposition; this does not make an admitted file restore a route-only/no-persist operation.",
+        "Assert FileSafe event/receipt projection and consumer bindings are reconciled atomically with any future row-local event admission; this static wiring repair admits no event family."
       ]
     },
     "catalog.chat_revoke_investigation_item": {
@@ -29422,7 +29278,8 @@
         "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.forge_repository_list.availability and state.commands.forge_repository_list.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Consume FGI-011 repository_list_scope across request/result/error/availability/receipt with null repository binding and zero repository generation, current verified account/container/provider/source/draft/permission/hash/expiry and exact return. It creates/binds no repository or Project and emits no EventRecord."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.forge_repository_list.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -29468,11 +29325,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.forge_repository_list.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_forge_repository_list.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Consume FGI-011 repository_list_scope across request/result/error/availability/receipt with null repository binding and zero repository generation, current verified account/container/provider/source/draft/permission/hash/expiry and exact return. It creates/binds no repository or Project and emits no EventRecord. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.forge.repository.list",
       "ui_element_id": "catalog.forge_repository_list",
-      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes"
+      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes; Product Onboarding selected-source read-only account/container repository picker before Project commit"
     },
     "catalog.forge_repository_open_in_browser": {
       "acceptance_checks": [
@@ -32936,61 +32798,6 @@
         "Assert cmd.github.actions.cancel records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
-    "catalog.github_actions_cancel_workflow": {
-      "ui_element_id": "catalog.github_actions_cancel_workflow",
-      "ui_location": "Github Actions surface > Cancel Workflow",
-      "ui_command_id": "cmd.github_actions.cancel_workflow",
-      "handler_location": "handlers::github_actions::cancel_workflow",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.cancel_workflow must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.cancel_workflow must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.cancel_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.cancel_workflow must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.cancel_workflow must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.cancel_workflow; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_cancel_workflow.availability",
-      "disabled_reason_projection": "state.commands.github_actions_cancel_workflow.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.cancel_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.cancel_workflow.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_cancel_workflow exposes a stable role/name/description matching cmd.github_actions.cancel_workflow.",
-        "keyboard_access": "catalog.github_actions_cancel_workflow is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_cancel_workflow preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_cancel_workflow surfaces state.commands.github_actions_cancel_workflow.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_cancel_workflow.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.cancel_workflow reaches handlers::github_actions::cancel_workflow with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_cancel_workflow.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_cancel_workflow.availability and disabled copy reads state.commands.github_actions_cancel_workflow.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_cancel_workflow.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.cancel_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_cancel_workflow.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.cancel_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.github_actions_compare_last_success": {
       "ui_element_id": "catalog.github_actions_compare_last_success",
       "ui_location": "GitHub Actions workflow health surface",
@@ -33504,61 +33311,6 @@
         "Assert cmd.github.actions.open_run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
-    "catalog.github_actions_open_run_diff": {
-      "ui_element_id": "catalog.github_actions_open_run_diff",
-      "ui_location": "Github Actions surface > Open Run Diff",
-      "ui_command_id": "cmd.github_actions.open_run_diff",
-      "handler_location": "handlers::github_actions::open_run_diff",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.open_run_diff must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.open_run_diff must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.open_run_diff dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.open_run_diff must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.open_run_diff must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.open_run_diff; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_open_run_diff.availability",
-      "disabled_reason_projection": "state.commands.github_actions_open_run_diff.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.open_run_diff has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.open_run_diff.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_open_run_diff exposes a stable role/name/description matching cmd.github_actions.open_run_diff.",
-        "keyboard_access": "catalog.github_actions_open_run_diff is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_open_run_diff preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_open_run_diff surfaces state.commands.github_actions_open_run_diff.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_diff.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.open_run_diff reaches handlers::github_actions::open_run_diff with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_diff.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_open_run_diff.availability and disabled copy reads state.commands.github_actions_open_run_diff.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_diff.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.open_run_diff has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_diff.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.open_run_diff records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.github_actions_open_run_diff_canonical": {
       "ui_element_id": "catalog.github_actions_open_run_diff_canonical",
       "ui_location": "GitHub Actions run detail and Source Control review route",
@@ -33666,61 +33418,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.github.actions.open_run_in_browser records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.github_actions_open_run_log": {
-      "ui_element_id": "catalog.github_actions_open_run_log",
-      "ui_location": "Github Actions surface > Open Run Log",
-      "ui_command_id": "cmd.github_actions.open_run_log",
-      "handler_location": "handlers::github_actions::open_run_log",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.open_run_log must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.open_run_log must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.open_run_log dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.open_run_log must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.open_run_log must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.open_run_log; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_open_run_log.availability",
-      "disabled_reason_projection": "state.commands.github_actions_open_run_log.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.open_run_log has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.open_run_log.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_open_run_log exposes a stable role/name/description matching cmd.github_actions.open_run_log.",
-        "keyboard_access": "catalog.github_actions_open_run_log is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_open_run_log preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_open_run_log surfaces state.commands.github_actions_open_run_log.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_log.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.open_run_log reaches handlers::github_actions::open_run_log with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_log.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_open_run_log.availability and disabled copy reads state.commands.github_actions_open_run_log.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_log.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.open_run_log has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_open_run_log.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.open_run_log records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.github_actions_open_step_logs": {
@@ -33831,61 +33528,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.github.actions.pin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.github_actions_pin_workflow": {
-      "ui_element_id": "catalog.github_actions_pin_workflow",
-      "ui_location": "Github Actions surface > Pin Workflow",
-      "ui_command_id": "cmd.github_actions.pin_workflow",
-      "handler_location": "handlers::github_actions::pin_workflow",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.pin_workflow must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.pin_workflow must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.pin_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.pin_workflow must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.pin_workflow must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.pin_workflow; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_pin_workflow.availability",
-      "disabled_reason_projection": "state.commands.github_actions_pin_workflow.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.pin_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.pin_workflow.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_pin_workflow exposes a stable role/name/description matching cmd.github_actions.pin_workflow.",
-        "keyboard_access": "catalog.github_actions_pin_workflow is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_pin_workflow preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_pin_workflow surfaces state.commands.github_actions_pin_workflow.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_pin_workflow.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.pin_workflow reaches handlers::github_actions::pin_workflow with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_pin_workflow.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_pin_workflow.availability and disabled copy reads state.commands.github_actions_pin_workflow.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_pin_workflow.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.pin_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_pin_workflow.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.pin_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.github_actions_rerun": {
@@ -34022,61 +33664,6 @@
         "Assert cmd.github.actions.rerun_failed records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
-    "catalog.github_actions_rerun_workflow": {
-      "ui_element_id": "catalog.github_actions_rerun_workflow",
-      "ui_location": "Github Actions surface > Rerun Workflow",
-      "ui_command_id": "cmd.github_actions.rerun_workflow",
-      "handler_location": "handlers::github_actions::rerun_workflow",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.rerun_workflow must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.rerun_workflow must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.rerun_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.rerun_workflow must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.rerun_workflow must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.rerun_workflow; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_rerun_workflow.availability",
-      "disabled_reason_projection": "state.commands.github_actions_rerun_workflow.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.rerun_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.rerun_workflow.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_rerun_workflow exposes a stable role/name/description matching cmd.github_actions.rerun_workflow.",
-        "keyboard_access": "catalog.github_actions_rerun_workflow is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_rerun_workflow preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_rerun_workflow surfaces state.commands.github_actions_rerun_workflow.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_rerun_workflow.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.rerun_workflow reaches handlers::github_actions::rerun_workflow with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_rerun_workflow.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_rerun_workflow.availability and disabled copy reads state.commands.github_actions_rerun_workflow.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_rerun_workflow.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.rerun_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_rerun_workflow.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.rerun_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.github_actions_settings_open": {
       "ui_element_id": "catalog.github_actions_settings_open",
       "ui_location": "Source Control > GitHub Actions > Actions > Settings > Open",
@@ -34130,116 +33717,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.github.actions.settings.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.github_actions_show": {
-      "ui_element_id": "catalog.github_actions_show",
-      "ui_location": "Github Actions surface > Show",
-      "ui_command_id": "cmd.github_actions.show",
-      "handler_location": "handlers::github_actions::show",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.show must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.show must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.show dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.show must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.show must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.show; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_show.availability",
-      "disabled_reason_projection": "state.commands.github_actions_show.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.show.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_show exposes a stable role/name/description matching cmd.github_actions.show.",
-        "keyboard_access": "catalog.github_actions_show is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_show preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_show surfaces state.commands.github_actions_show.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_show.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.show reaches handlers::github_actions::show with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_show.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_show.availability and disabled copy reads state.commands.github_actions_show.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_show.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_show.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.show records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.github_actions_switch_subview": {
-      "ui_element_id": "catalog.github_actions_switch_subview",
-      "ui_location": "Github Actions surface > Switch Subview",
-      "ui_command_id": "cmd.github_actions.switch_subview",
-      "handler_location": "handlers::github_actions::switch_subview",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github_actions.switch_subview must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github_actions.switch_subview must expose projected state selector and disabled reason before dispatch",
-        "cmd.github_actions.switch_subview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github_actions.switch_subview must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github_actions.switch_subview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.github_actions.switch_subview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_switch_subview.availability",
-      "disabled_reason_projection": "state.commands.github_actions_switch_subview.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github_actions.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github_actions.switch_subview.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_switch_subview exposes a stable role/name/description matching cmd.github_actions.switch_subview.",
-        "keyboard_access": "catalog.github_actions_switch_subview is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_actions_switch_subview preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_switch_subview surfaces state.commands.github_actions_switch_subview.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_actions_switch_subview.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github_actions.switch_subview reaches handlers::github_actions::switch_subview with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_switch_subview.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_switch_subview.availability and disabled copy reads state.commands.github_actions_switch_subview.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_switch_subview.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github_actions.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_actions_switch_subview.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github_actions.switch_subview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.github_actions_unpin": {
@@ -43982,7 +43459,7 @@
     },
     "catalog.project_add_existing": {
       "ui_element_id": "catalog.project_add_existing",
-      "ui_location": "Project surface > Add Existing",
+      "ui_location": "Project surface > Add Existing; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.add_existing",
       "handler_location": "handlers::project::add_existing",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -43994,7 +43471,8 @@
         "cmd.project.add_existing must expose projected state selector and disabled reason before dispatch",
         "cmd.project.add_existing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.add_existing must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.add_existing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_add_existing.availability",
@@ -44032,6 +43510,11 @@
           "test_id": "wiring.catalog.project_add_existing.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_add_existing.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -44846,7 +44329,7 @@
     },
     "catalog.project_new_github_repo": {
       "ui_element_id": "catalog.project_new_github_repo",
-      "ui_location": "Project creation and GitHub integration surface",
+      "ui_location": "Project creation and GitHub integration surface; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.new_github_repo",
       "handler_location": "handlers::github::project_new_repo",
       "expected_event_types": [
@@ -44858,7 +44341,8 @@
         "Auth, permission, organization/owner selection, remote side-effect approval, and duplicate-repo disabled reasons are exposed before dispatch",
         "Receipt evidence preserves repository identity, project binding identity, correlation_id, remote-side-effect outcome, and recovery route",
         "Regression evidence covers unauthenticated, permission-denied, existing-repo, dirty-project, and user-declined cases",
-        "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_github_repo; Production certification requires GitHub/project render evidence, dispatcher fixture, typed create/bind payload/result assertion, auth and permission disabled-reason proof, repo/project receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_github_repo.availability",
@@ -44902,6 +44386,11 @@
           "test_id": "wiring.catalog.project_new_github_repo.events",
           "evidence_kind": "event_test",
           "requirement": "Assert cmd.project.new_github_repo emits expected event type github.repo.create_requested with command_id, origin, correlation_id, and handler target.; Assert cmd.project.new_github_repo emits expected event type project.github_repo_bound with command_id, origin, correlation_id, and handler target."
+        },
+        {
+          "test_id": "wiring.cmd_project_new_github_repo.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -44911,7 +44400,7 @@
     },
     "catalog.project_new_local": {
       "ui_element_id": "catalog.project_new_local",
-      "ui_location": "Project surface > New Local",
+      "ui_location": "Project surface > New Local; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.new_local",
       "handler_location": "handlers::project::new_local",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -44923,7 +44412,8 @@
         "cmd.project.new_local must expose projected state selector and disabled reason before dispatch",
         "cmd.project.new_local dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.new_local must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.new_local must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.new_local must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_local; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_local.availability",
@@ -44961,6 +44451,11 @@
           "test_id": "wiring.catalog.project_new_local.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_new_local.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -44969,7 +44464,7 @@
     },
     "catalog.project_open": {
       "ui_element_id": "catalog.project_open",
-      "ui_location": "Project surface > Open",
+      "ui_location": "Project surface > Open; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.open",
       "handler_location": "handlers::project::open",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -44981,7 +44476,8 @@
         "cmd.project.open must expose projected state selector and disabled reason before dispatch",
         "cmd.project.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.open must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_open.availability",
@@ -45019,6 +44515,11 @@
           "test_id": "wiring.catalog.project_open.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_open.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -45087,7 +44588,7 @@
     },
     "catalog.project_refresh": {
       "ui_element_id": "catalog.project_refresh",
-      "ui_location": "Projects list > Refresh",
+      "ui_location": "Projects list > Refresh; Product Onboarding read-only real-Project picker/preflight under PWIZ-021",
       "ui_command_id": "cmd.project.refresh",
       "handler_location": "handlers::project::refresh",
       "expected_event_types": [],
@@ -45096,7 +44597,8 @@
         "Refresh surfaces scan failures as projection health instead of silently dropping entries",
         "Refresh does not reorder user-pinned entries beyond the projection contract",
         "cmd.project.refresh must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Use the Project owner's read-only nullable-Project refresh request for source selection; consume only real registry identities. An uncreated draft is not registered or assigned a placeholder Project ID."
       ],
       "evidence_required": "Production wiring contract for cmd.project.refresh; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_refresh.availability",
@@ -45134,6 +44636,11 @@
           "test_id": "wiring.catalog.project_refresh.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_refresh.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Use the Project owner's read-only nullable-Project refresh request for source selection; consume only real registry identities. An uncreated draft is not registered or assigned a placeholder Project ID. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -54298,7 +53805,8 @@
         "Validate Plans/server_system_contracts.schema.json#/$defs/command_payload -> Plans/server_system_contracts.schema.json#/$defs/command_result and Plans/server_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.server_discovery_refresh.availability and state.commands.server_discovery_refresh.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Use only the Server owner's current read-only discovery scope after route selection; PWIZ-021 precommit admission grants no enrollment, pairing, trust, endpoint mutation or Project creation."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.server_discovery_refresh.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54347,11 +53855,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.server_discovery_refresh.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_server_discovery_refresh.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Use only the Server owner's current read-only discovery scope after route selection; PWIZ-021 precommit admission grants no enrollment, pairing, trust, endpoint mutation or Project creation. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.server.discovery.refresh",
       "ui_element_id": "catalog.server_discovery_refresh",
-      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API"
+      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API; Product Onboarding selected-route read-only precommit discovery under PWIZ-021"
     },
     "catalog.server_discovery_set_enabled": {
       "acceptance_checks": [
@@ -55687,7 +55200,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55696,7 +55209,8 @@
       "acceptance_checks": [
         "Apply exactly one current preview under revision/CAS and idempotency guards",
         "Route each value to its sole owner and require readback before committed",
-        "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement"
+        "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
+        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -55734,6 +55248,11 @@
           "test_id": "wiring.catalog.settings_transaction_apply.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Confirmation, busy state, result announcement, and focus return are verified."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_apply.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -55742,7 +55261,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -55751,16 +55270,17 @@
       "acceptance_checks": [
         "Resolve exact stable setting IDs and owner routes without committing",
         "Reject stale revisions, invalid values, permission/policy blockers, secrets, and unavailable owners with typed reasons",
-        "Return rollback eligibility and migration/readback requirements without claiming a handler ran"
+        "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
+        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
       "disabled_reason_projection": "state.commands.settings_transaction_preview.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Preview writes no Settings value or domain event and returns only pm.settings_transaction_preview.v1.",
+        "description": "Read-only preview returns the owner-discriminated ordinary preview or SSYS-036 uncreated-Project draft preview; neither writes Settings/Project state or emits a domain event.",
         "receipt_or_event_refs": [
-          "pm.settings_transaction_preview.v1"
+          "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview"
         ]
       },
       "accessibility_contract": {
@@ -55783,12 +55303,17 @@
         {
           "test_id": "wiring.catalog.settings_transaction_preview.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Preview returns pm.settings_transaction_preview.v1, writes nothing, and emits no domain event."
+          "requirement": "Read-only preview returns the owner-discriminated ordinary preview or SSYS-036 uncreated-Project draft preview; neither writes Settings/Project state or emits a domain event."
         },
         {
           "test_id": "wiring.catalog.settings_transaction_preview.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Role, name, keyboard path, focus return, and disabled announcement are verified."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_preview.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [

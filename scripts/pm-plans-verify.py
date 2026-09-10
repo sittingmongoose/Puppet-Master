@@ -23,6 +23,9 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import urlparse
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_wiring_inventory import command_handler_bindings, wiring_command_excluded
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -3790,17 +3793,6 @@ USAGE_ROUTE_PASSTHROUGH_FIELDS = {
 }
 
 
-def wiring_command_excluded(command_id: str, excluded_tokens: list[str]) -> bool:
-    for token in excluded_tokens:
-        if "*" in token and fnmatch.fnmatchcase(command_id, token):
-            return True
-        if token.endswith("_") and command_id.startswith(token):
-            return True
-        if command_id == token:
-            return True
-    return False
-
-
 def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     matrix_path = PLANS / "Wiring_Matrix.production.json"
@@ -3922,6 +3914,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                             "rendered_label": label, "matched_text": match.group(0),
                             "error": "wiring_vocabulary_rendered_provider_name",
                         })
+        if wiring_command_excluded(command_id, excluded_tokens):
+            failures.append({"path": row_path, "command_id": command_id, "error": "excluded_command_has_peer_production_wiring"})
         if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
             failures.append({"path": row_path, "command_id": command_id, "error": "retired_chat_usage_alias_in_production_wiring"})
         if RETIRED_WEB_COMMAND_RE.match(command_id):
@@ -4143,6 +4137,10 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                                 "error": "usage_local_aggregate_no_dispatch_disposition_missing",
                             }
                         )
+
+    for command_id, handlers in command_handler_bindings(entries).items():
+        if len(handlers) != 1 or not handlers[0]:
+            failures.append({"path": rel(matrix_path), "command_id": command_id, "handlers": handlers, "error": "command_has_no_sole_handler_identity"})
 
     if REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID in production_commands:
         failures.append(

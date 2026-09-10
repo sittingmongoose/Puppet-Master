@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3464-L3792
+Source lines: L3464-L3798
 
-Source SHA256: `34eef9bec70d4d2bc601e3ac491e1d04ed6af93ff0a67acf20b253e6623c8440`
+Source SHA256: `21debd1e7b920be044b4035f9bc0d82eb396fe97b5bea7d6bfda6e519c43a93a`
 
 ---
 
@@ -20,25 +20,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Current Product Onboarding wiring binds the exact nine-stage `welcome -> simple_path -> first_project ->
-  source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation ->
-  ready` main path and exact six-stage `welcome -> simple_path -> remote_access_setup -> review_setup_plan ->
-  automatic_preparation -> ready` connect-existing shortcut to exactly thirteen typed local actions:
+  Current Product Onboarding wiring consumes PWIZ-021's owner-defined main_stage_order, connect_existing_stage_order,
+  and deferred_project_stage_order. The eleven-stage main path commits the Project before paid-provider setup and then
+  Free Models; the six-stage connect-existing shortcut and explicit Project Later path do not fabricate a Project or
+  run its provider phases. These graphs bind exactly thirteen typed local actions:
   `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`,
   `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
   `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. These
   actions transition or project local Product Onboarding state; they are not UICommands and receive no command-catalog
   row, semantic command handler, generic Onboarding mutation handler, or EventRecord. They use the closed
-  pm.product_onboarding.action_request.v1 -> pm.product_onboarding.action_result.v1 local contract. Every request has
+  pm.product_onboarding.action_request.v2 -> pm.product_onboarding.action_result.v2 local contract. Every request has
   required closed, normalized, secret-free local_context fields; arbitrary/raw payload fields, additional keys, and
   secret-bearing values are rejected. Exact intent/scope/choice/branch combinations distinguish setup/project disclosure
   from branch-local more_ways updates and whole-session Skip from Project/Remote-Access optional-scope Skip. When a selected branch needs owner
-  work, its local draft queues only the typed owner route and intent. No network probe, command, handler, or owner
-  mutation is reachable until the person confirms the current `review_setup_plan`. That confirmation binds
+  work, its local draft queues the typed owner route and intent. The only precommit dispatch is owner-authorized read-only
+  preflight or authentication necessary for the selected source, with exact current owner request validation, permission,
+  consent, draft/session revision, hash, expiry and return context. MACS-005 supports first-time source sign-in without
+  phantom Project/account/repository identities; it is not broad provider setup. Every other owner mutation waits for
+  current Review and PJCT-007's exact Project-owned setup-commit binding. That confirmation binds
   `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`, `reviewed_setup_plan_revision`,
   `review_confirmation=person_confirmed_reviewed_plan`, `approved_setup_plan_sha256`, revision, and continuation
-  generation; only a matching `automatic_preparation_currentness_ref` admits the existing canonical command to that
-  owner's sole handler once. Current owner ObservableWork/results/receipts reverse-project through the exact reviewed
+  generation plus the bounded draft and actual commit binding; a matching `automatic_preparation_currentness_ref`
+  admits the Project owner's existing command and sole commit chain once. Settings copy uses SSYS-036's precommit
+  preview and postcommit rebind/apply. Paid-provider setup then Free Models use the actual Project result; explicit
+  paid Skip still offers Free Models. Current owner ObservableWork/results/receipts reverse-project through the exact reviewed
   revision and plan hash; terminal success may advance without a second confirmation, while stale, mismatched, blocked,
   failed, cancelled, or recovery-required results dispatch nothing new and cannot replace the last accepted projection.
   Session/continuation wiring preserves independent `scm_backend_selection` for local Git/Jujutsu Safe History and
@@ -70,20 +75,21 @@ canonical_text: >-
   are rejected as commands, aliases, and handlers because typed local ui.onboarding.* actions own those semantics. This
   PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
-gui_classification_reason: Defines user-visible nine-/six-stage Product Onboarding and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
+gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520]
 unblocks: []
 acceptance_criteria:
-  - The main path is exactly `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready`; the connect-existing shortcut is exactly `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready`, omitting rather than executing the three main-path-only stages.
+  - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
   - Back consumes the exact durable path history: connect-existing `remote_access_setup` returns to `simple_path`, while main-path `remote_access_setup` returns to `server_storage_client`; no skipped shortcut stage is synthesized into reverse wiring.
   - The exact current action set contains the thirteen named `ui.onboarding.*` IDs; every authored control emits one typed local action and no action is registered as a UICommand, domain event, or production wiring row. `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
   - Requests and results validate against the closed action schema; applied, disabled, and rejected are distinct, and disabled/rejected results dispatch no owner work, write no session/continuation, carry no production receipt, and expose exact reasons.
-  - Every request carries the exact required closed local_context fields intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition. `review_confirmation` is the sole additionally admitted field and is required only for the schema-gated current Review/Automatic-Preparation owner-flow cases; missing gated proof, any other additional/arbitrary/raw field, or secret-bearing context fails closed.
+  - Every request consumes the exact closed v2 local_context definition, including phase-specific owner-command/preflight/commit proof. The schema owns its required/null/gated fields; missing gated proof, an additional/arbitrary/raw field, or secret-bearing context fails closed.
   - more_ways uses toggle_setup_options plus setup_options/project_options and a matching choice for stage disclosure, or update_branch_state plus non-null canonical branch_kind and choice=null for branch-local updates; the variants cannot normalize into each other.
   - Skip uses skip_product_onboarding/product_onboarding/choice=null with session_skipped and skipped status, or skip_optional_scope with matching Project/Remote-Access choice/scope/branch and optional_scope_skipped while the session remains active.
   - Defer durably writes exact path/stage/setup-mode/local-backend/forge/queued-plan/review/branch/history/revision/continuation/initiating-Client/focus-return state before dismissal; Close is non-completing; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and has no owner command.
   - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, exact current-stage scope, a stable help-topic `selection_ref`, and exact expanded state; it is same-stage, non-persistent, keyboard reachable, accessibility-linked, and owner-route-free.
-  - Before person confirmation of the current Review revision, all choices are local draft writes or cached reads and reverse wiring exposes no network probe, owner route, command, handler, mutation, or production receipt.
+  - Before exact Project commit, selections are bounded draft writes or observations; only owner-authorized read-only preflight and selected-source authentication may dispatch. Both require a valid actual owner request and current authorization join, not a local ref/availability claim. Project/repository/filesystem mutation and broad provider setup remain forbidden.
+  - Close/resume preserves the actual Project binding and exact provider/free-model phase. Back does not cross into an uncreated draft or replay commit, completed auth, copied Settings, or settled provider work. Local action results never claim a production receipt.
   - Person confirmation requires matching `path_kind`, `queued_setup_plan_ref`, queued/reviewed revision, exact approved-plan SHA-256, session revision, and continuation generation. Automatic Preparation additionally requires the matching currentness ref; stale, unconfirmed, expanded, revision-mismatched, hash-mismatched, path-mismatched, or currentness-mismatched plans dispatch nothing.
   - Owner work uses the selected owner's existing canonical command and sole handler; each unchanged reviewed operation dispatches at most once, current terminal owner results reverse-project through ObservableWork/receipt refs, and retry/reload/resume observes the existing dedupe identity instead of launching a duplicate.
   - Confirmed intents route only to existing Project, Git/Jujutsu/forge, Server/Storage/Client, Remote Access, backup/restore, provider, authentication, Settings, widget, layout, Planning, or Assistant Chat owners as applicable; Wiring Matrix creates no parallel owner or generic mutation handler.
@@ -246,8 +252,8 @@ negative_constraints:
   - Do not accept open-ended local_context, raw/arbitrary payload copies, secret-bearing values, or ambiguous more_ways/skip variants.
   - Do not claim native Slint, dispatcher, handler, persistence, or runtime wiring from schemas, static assertions, PMConcept7, or browser evidence.
   - Do not turn the bounded modal into a route or add browser-style Back/breadcrumb chrome.
-  - Do not restore the provider-first flow, add provider/advanced setup/Guided Tour as a canonical stage, or treat `ready` as owner readiness.
-  - Do not dispatch any external Onboarding owner work before person-confirmed current Review or accept a stale revision, hash, path, continuation, or currentness ref.
+  - Do not restore provider-first setup or insert peer advanced/Tour stages; paid-provider then Free Models are the PWIZ-021 post-Project phases, not pre-Project setup. Do not treat `ready` as universal owner readiness.
+  - Do not broaden current owner-authorized precommit reads/selected-source auth into mutation; do not accept stale revision/hash/path/continuation/currentness or a ref-shaped authorization claim. Exact reviewed Project commit remains mandatory before provider phases.
   - Do not restore the retired five-chapter Tour, synthesize separate move/resize/configure/focus checkpoints, or admit retired restore-layout, keep-layout, or Tour-owned Reduced Motion actions.
   - Do not let narration, timers, generic Next, look-alike controls, or browser/static fixtures fabricate a performed Tour checkpoint, owner result, native handler, production receipt, or completion.
   - Do not persist Guided Tour scene, status, Teacher text, focus, motion, demonstrated-action, or completed-action state.
