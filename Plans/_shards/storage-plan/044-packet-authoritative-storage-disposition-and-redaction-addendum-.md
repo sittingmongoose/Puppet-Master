@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18409-L18638
+Source lines: L18409-L18655
 
-Source SHA256: `acb277ac667bafd8a29a980cc38a4baab67416405bc0aa6701269be128488815`
+Source SHA256: `b3802ab52407af666fb6a9984d717190e94932bcd1b7426b3ae2ddeb0628e8cd`
 
 ---
 
@@ -87,96 +87,113 @@ owner_hints:
   - Plans/storage_value_registry.json
 ```
 
-### SP-252 - Product Onboarding Nine-Stage Storage Migration
+### SP-252 - Product Onboarding Draft-First Storage Migration
 
 ```yaml
 plan_unit_id: SP-252
 unit_type: migration_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Registry family `onboarding_state` now binds canonical key
-  `onboarding_state.v2:{onboarding_session_id}` to `pm.product_onboarding.session.v1` and the owner schema
-  `Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session`. The former
-  `onboarding_state.v1:{project_id}` and `onboarding:v1` keys are read-once compatibility inputs only.
-  Current values persist the exact nine-stage guided-setup path `welcome | simple_path | first_project |
-  source_control_setup | server_storage_client | remote_access_setup | review_setup_plan |
-  automatic_preparation | ready` or the exact six-stage connect-existing shortcut `welcome | simple_path |
-  remote_access_setup | review_setup_plan | automatic_preparation | ready`. `path_kind` is the path discriminator;
-  `simple_path_selection` is the current visible setup-mode choice and MUST agree with it. The session persists
-  `queued_setup_plan_ref`, `queued_setup_plan_revision`, `reviewed_setup_plan_revision`, `review_confirmation`,
-  `approved_setup_plan_sha256`, and `automatic_preparation_currentness_ref` so no owner work can begin before a
-  person confirms the current Review revision and Automatic Preparation can resume only against the same current
-  plan. StorageMigrationCoordinator maps admissible provider-first/four-screen, predecessor-five-stage, and
-  superseded seven-stage records once to the first applicable unresolved current stage, forces an unconfirmed
-  `review_setup_plan`, preserves compatible decisions, valid receipt refs, and bounded warnings, never replays owner
-  work, and rejects or quarantines ambiguous, corrupt, stale, or secret-bearing rows. It emits the sole terminal
-  durable `pm.storage_value.migration_receipt.v1`; the typed
-  `pm.product_onboarding.legacy_migration_receipt.v1` is a domain reconciliation record that references that
-  Storage receipt, proves exact source/accepted/stale/dropped/quarantined counts, `mapped_stage_counts`, and
-  `mapped_path_counts` plus a hashed disposition manifest, and is not peer commit authority. New writes use only
-  v2 session identity. Guided Tour live session, action, Teacher text, focus, and motion state is never stored in this
-  family; only a stable non-secret handoff ref may be retained. PWIZ-023's bounded safe checkpoint follows its separate
-  v3 contract and pending SP-251 disposition, not an extension of onboarding_state or a claim of implemented recovery.
+canonical_text: The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
+  with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session
+  stores the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical
+  hash, current dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and
+  continuation. Return contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage
+  paths consume the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence.
+  v2 session-key/v1 values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts
+  are unconfirmed; already committed rows resume provider setup only after exact owner-result/receipt validation.
+  Migration emits the sole durable Storage migration receipt, reports exact disposition/stage/path/committed-resume
+  counts with a hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately
+  pending physical admission. No physical family, retention policy, native store, readiness or recovery certification
+  is added.
 gui_related: true
-gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume point shown to the user.
-depends_on: [SP-251, PWIZ-021, PWIZ-022]
+gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
+  point shown to the user.
+depends_on:
+- SP-251
+- PWIZ-021
+- PWIZ-022
 unblocks: []
 acceptance_criteria:
-  - The materialized onboarding_state family schema ID, key, required fields, owner, producer, and consumers match the nine-stage Product Onboarding owner contract and exact six-stage connect-existing shortcut.
-  - Both legacy key shapes are read-only coordinator copy-forward inputs and never continuing dual-read or write authorities.
-  - Missing current state starts at welcome; a completed session requires stage=ready.
-  - "`simple_path` and `ui.onboarding.choose_simple_path` are current behavior; `path_kind = guided_setup | connect_existing | null` is the persisted path discriminator and `simple_path_selection = start_on_this_computer | connect_existing_server | setup_server | restore_backup | null` is the distinct current setup-mode choice. Null is admitted only before a choice at `welcome` or `simple_path`; `connect_existing` requires `connect_existing_server`, and every other non-null setup-mode choice requires `guided_setup`."
-  - "`scm_backend_selection = git | jujutsu | null` records the independent local Safe History backend, while `forge_provider_selection = github | gitlab | azure_devops | bitbucket_cloud | bitbucket_data_center | forgejo | gitea | cursor_origin | none | null` independently records the optional online-copy provider; migration never derives either axis from the other or invents a Jujutsu service account."
-  - "Before person confirmation, reviewed_setup_plan_revision, approved_setup_plan_sha256, and automatic_preparation_currentness_ref are null and review_confirmation=unconfirmed; confirmation binds queued_setup_plan_revision to reviewed_setup_plan_revision and its approved SHA-256, and automatic_preparation/ready additionally require the currentness ref."
-  - Persisted setup-plan and continuation data is limited to stable identities, revisions, enums, SHA-256 values, and non-secret refs/handles; it contains no plan body, transcript, credential, authentication content, or broad local path.
-  - Migration covers provider-first/four-screen, predecessor-five-stage, and superseded seven-stage `server_setup` records, maps each admissible row to the first unresolved current stage, forces unconfirmed Review, reports exact per-stage and per-path counts, quarantines secrets, and never runs or replays installation, authentication, repository creation/publication, restore, Project, provider, Server, remote-access, or source-control work.
-  - The domain migration receipt references the sole Storage migration receipt and never substitutes for it.
-  - Raw transcripts, API keys, tokens, auth URLs/codes, credentials, profile roots, broad paths, and AuthBrowserSession content/state fail storage admission.
-  - Guided Tour live UI/session state and its separately specified bounded checkpoint are absent from onboarding_state; only a stable non-secret handoff ref is admissible. The checkpoint's pending physical registration cannot be bypassed through this family.
+- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing
+  onboarding_state family; the registry contains the same 88 families and 24 retention policies.
+- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id},
+  onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read
+  or current writes.
+- Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching
+  draft identity/revision; the confirmed plan hash matches its canonical bytes.
+- A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation
+  snapshots preserve only the exact references and phases.
+- Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not
+  authorize Project/destination/history/repository/Settings/sync or broad provider mutation.
+- Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider
+  failure; navigation never uncreates or recommits the Project.
+- The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain
+  owner-defined; backend/forge/Server/Storage/Client axes are not conflated.
+- Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately
+  validates every committed resume in the disposition manifest without synthesizing review or owner work.
+- The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending,
+  never peer commit authority.
+- Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile
+  roots, unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint
+  content are excluded.
+- Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models;
+  actual underlying owner result/receipt authority remains separate and no new physical family is admitted.
 validation_surfaces:
-  - Draft 2020-12 validation of Plans/product_onboarding_contracts.schema.json
-  - Draft 2020-12 validation of the onboarding_state inline registry value schema
-  - python3 scripts/pm-implementation-readiness.py validate-case-l
-  - future migration positive/quarantine/restart/rollback fixtures and raw receipts
+- python3 scripts/pm-onboarding-contracts.py --check
+- tests/test_pm_onboarding_phases.py
+- python3 scripts/pm-implementation-readiness.py validate-case-l
+- future native durable save/reload/migration/quarantine/rollback receipts; not_run
 risk_class: stale_onboarding_path_or_unconfirmed_owner_work_replayed
 reasoning_tier: high
-context_scope: onboarding_nine_stage_storage_migration
+context_scope: onboarding_draft_first_storage_migration
 implementation_surfaces:
-  - Plans/storage-plan.md
-  - Plans/storage_value_registry.json
-  - Plans/product_onboarding_contracts.schema.json
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/product_onboarding_contracts.schema.json
 node_compile_hint:
-  mode: onboarding_nine_stage_storage_migration
+  mode: onboarding_draft_first_storage_migration
   create_worknodes: false
   create_nodeseeds: false
 preserved_exact_tokens:
-  - onboarding_state.v2:{onboarding_session_id}
-  - onboarding_state.v1:{project_id}
-  - onboarding:v1
-  - pm.product_onboarding.session.v1
-  - pm.product_onboarding.legacy_migration_receipt.v1
-  - pm.storage_value.migration_receipt.v1
-  - path_kind
-  - queued_setup_plan_ref
-  - queued_setup_plan_revision
-  - reviewed_setup_plan_revision
-  - review_confirmation
-  - approved_setup_plan_sha256
-  - automatic_preparation_currentness_ref
-  - mapped_stage_counts
-  - mapped_path_counts
-source_lineage: [source_ref:Plans/Planning_Wizard.md#PWIZ-021, source_ref:Plans/Planning_Wizard.md#PWIZ-022, source_ref:Plans/product_onboarding_contracts.schema.json, source_report:register-settings-onboarding.md#1E, source_report:register-fullthread.md#R-063, source_report:wave3-lane2.md#S0098]
+- onboarding_state.v2:{onboarding_session_id}
+- onboarding_state.v1:{project_id}
+- onboarding:v1
+- pm.product_onboarding.session.v1
+- pm.product_onboarding.legacy_migration_receipt.v1
+- pm.storage_value.migration_receipt.v1
+- path_kind
+- queued_setup_plan_ref
+- queued_setup_plan_revision
+- reviewed_setup_plan_revision
+- review_confirmation
+- approved_setup_plan_sha256
+- automatic_preparation_currentness_ref
+- mapped_stage_counts
+- mapped_path_counts
+- onboarding_state.v3:{onboarding_session_id}
+- pm.product_onboarding.session.v2
+- pm.product_onboarding.legacy_migration_receipt.v2
+- setup_draft
+- project_commit_binding
+- committed_resume_count
+source_lineage:
+- source_ref:Plans/Planning_Wizard.md#PWIZ-021
+- source_ref:Plans/Planning_Wizard.md#PWIZ-022
+- source_ref:Plans/product_onboarding_contracts.schema.json
+- source_report:register-settings-onboarding.md#1E
+- source_report:register-fullthread.md#R-063
+- source_report:wave3-lane2.md#S0098
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
 negative_constraints:
-  - Do not silently reinterpret a provider-first, predecessor-five-stage, or superseded seven-stage row as a current nine-stage record.
-  - Do not treat current `simple_path` or `simple_path_selection` as compatibility-only, permit `path_kind` disagreement, or collapse local Safe History and optional online-copy selections into one provider field.
-  - Do not dispatch or resume external owner work from an unconfirmed, stale, hash-mismatched, revision-mismatched, or currentness-mismatched setup plan.
-  - Do not rerun owner mutations during migration.
-  - Do not persist Guided Tour session, scene, action, Teacher, focus, motion, or checkpoint state as part of Product Onboarding.
-  - Do not treat static schema validation as executed migration or restart proof.
+- Do not silently reinterpret v1 or four/five/seven/nine-stage predecessor values as current v2 writes.
+- Do not infer review, committed Project, provider readiness or effect replay from persisted UI state.
+- Do not fabricate owner receipts or treat the bundle as native persistence/migration proof.
+- Do not create a new physical family/retention policy or hide Tour checkpoints, protected contents or arbitrary
+  raw plans inside onboarding_state.
 owner_hints:
-  - Plans/storage-plan.md
-  - Plans/Planning_Wizard.md
+- Plans/storage-plan.md
+- Plans/Planning_Wizard.md
 ```
 
 ### SP-253 - Registered Redaction Contracts And Protected-Auth Exclusion

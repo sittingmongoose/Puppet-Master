@@ -75,6 +75,10 @@ Product Onboarding launches owner flows; it does not gain a Project wrapper comm
 | `ssh_project` or server-hosted content | Server/Remote Access verifies Server, route/trust, Source Location, and current connection first; `cmd.project.add_existing {registration_kind=ssh_remote}` registers those stable refs and owner receipts. Opening after registration is `cmd.project.open`. No `cmd.project.ssh.*` alias exists. |
 | `restore_project` | Backup/Restore owns `cmd.restore.preview` and the restore execution. Project System accepts only a verified terminal restore result through `cmd.project.add_existing {registration_kind=restore_same_project|restore_as_new}`; it does not accept a preview as registration success. |
 
+For the reviewed Onboarding commit, these exact mappings remain the only owner routes. New/add requests carry the Project-owned onboarding_setup_binding: queued plan/ref/reviewed revision/hash, draft/ref/revision, explicit commit consent, current preflight, and paired optional Settings draft-preview ref/hash. The draft is not a Project ID. Only after the user commits may the Project owner reserve the actual identity required by clone/restore/configuration/Settings child owners. Required work must settle under that one idempotency binding before registry publication as listed and usable. If Settings copy was selected, SSYS-036 rebinds the exact preview to the reserved identity, performs the ordinary apply/readback/rollback transaction, and contributes its terminal result. Failure remains failure/recovery-required, not a half-ready list row.
+
+The project_setup_commit_binding value is a Project-owned read model over the actual typed ProjectActionResult, its content hash, listed lifecycle, persistence disposition, Project/registry revisions and required child receipt/result refs. outcome=accepted alone is not Project completion. New/add require persisted state; opening an already listed Project keeps its distinct no-persist navigation disposition and verified listing receipt. A duplicate request returns the original identity/results. This read model admits no new physical receipt family, and Onboarding cannot write it as a success flag. After a verified commit, provider setup may start in that real Project; Back, Close, Skip or provider failure cannot undo it.
+
 Standalone versus containerized Server execution is not Project registration semantics. Project System records the selected Project Home Server reference but does not choose, create, or certify a standalone/container execution form; that residual stays with Server/Deployment owners and their central commands.
 
 ### 3.2 Project-context Backup and Restore routes
@@ -364,3 +368,60 @@ owner_hints: [Plans/Project_System.md, Plans/Backup_Restore_System.md]
 ```
 
 ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Working_Notebook.md
+
+### PJCT-007 - Reviewed Onboarding Commit And Provider Handoff
+
+```yaml
+plan_unit_id: PJCT-007
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Project_System.md
+canonical_text: Project System consumes one explicitly confirmed Onboarding draft through its existing new/open/add
+  command mapping and backend-native clone/SSH/restore child owners. A real identity may be reserved only after
+  commit consent. Publication as listed and usable waits for required configuration, content/history, Settings rebind/apply/readback
+  and terminal owner receipts. project_setup_commit_binding is an exact read model of the actual ProjectActionResult
+  and required receipt chain, never new physical commit authority. Provider setup requires that committed real Project
+  and cannot uncreate it on navigation or failure.
+gui_related: true
+gui_classification_reason: Determines the visible Review commit, truthful Project creation progress/listing and
+  provider handoff.
+depends_on:
+- PJCT-001
+- PJCT-002
+- SSYS-036
+unblocks: []
+acceptance_criteria:
+- Onboarding creation/add requests require the exact Project-owned setup/review/draft/consent/preflight binding;
+  no generic cmd.project.create or Onboarding wrapper is introduced.
+- Git clone, Jujutsu clone, existing folder, SSH source and restore retain distinct existing owner commands, registration
+  kinds and terminal receipts.
+- No Project/destination mutation happens before commit, and acceptance or provisional identity is not listed/persisted
+  completion.
+- Selected Settings copy must rebind and settle before listing; failures cannot publish a half-ready Project.
+- The provider handoff compares actual owner result ref/hash, command/instance/idempotency, Project/registry revisions,
+  lifecycle, persistence and receipt membership.
+- Same idempotency/binding yields original result and identity; conflict, stale revision, rejected/failed/cancelled
+  result or mismatched receipt fails closed.
+- Close/Back/provider Skip and failure preserve an already committed Project and do not replay the owner operation.
+validation_surfaces:
+- Plans/project_system_contract_fixtures.json
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
+- future native registration, child-owner rollback, idempotency and restart receipts; not_run
+risk_class: premature_project_publication_or_false_provider_context
+reasoning_tier: high
+context_scope: onboarding_project_commit
+implementation_surfaces:
+- Plans/Project_System.md
+- Plans/project_system_contracts.schema.json
+node_compile_hint:
+  mode: onboarding_project_commit_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+negative_constraints:
+- Do not mint a generic Project or Onboarding command or physical receipt family.
+- Do not confuse owner acceptance, preview or provisional identity with committed listing.
+- Do not fabricate child results, overwrite unrelated Project state or claim native persistence proof.
+```

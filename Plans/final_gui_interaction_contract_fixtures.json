@@ -14,23 +14,67 @@
         "page_index_px": 168,
         "details_px": 350,
         "body_max_px": 1040,
-        "continuous_regions": ["document", "index", "details", "manager"],
-        "themes": ["Basic Dark", "Basic Light", "Friendly Dark", "Friendly Light", "Glass Dark", "Glass Light", "Retro Dark", "Retro Light"],
+        "continuous_regions": [
+          "document",
+          "index",
+          "details",
+          "manager"
+        ],
+        "themes": [
+          "Basic Dark",
+          "Basic Light",
+          "Friendly Dark",
+          "Friendly Light",
+          "Glass Dark",
+          "Glass Light",
+          "Retro Dark",
+          "Retro Light"
+        ],
         "workspace_tabs": true,
-        "responsive_widths_px": [1180, 960, 720, 320],
+        "responsive_widths_px": [
+          1180,
+          960,
+          720,
+          320
+        ],
         "owner_projection_only": true,
         "new_back_or_breadcrumb": false
       },
       {
         "contract_kind": "onboarding_motion",
         "plan_unit_ref": "F3-520",
-        "setup_model": "reversible_staged_setup_plan",
-        "stage_count": 9,
-        "stages": ["welcome", "path", "project", "source", "places", "access", "review", "preparing", "ready"],
+        "setup_model": "draft_then_explicit_project_commit_then_provider_setup",
+        "stage_count": 11,
+        "stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
         "journey_mode": "dynamic_path_with_reversible_visited_stages",
         "connect_existing_stage_count": 6,
-        "connect_existing_stages": ["welcome", "path", "access", "review", "preparing", "ready"],
-        "connect_existing_skips": ["project", "source", "places"],
+        "connect_existing_stages": [
+          "welcome",
+          "simple_path",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ],
+        "connect_existing_skips": [
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "provider_setup",
+          "free_models_setup"
+        ],
         "reverse_back_contract": {
           "action_label": "Back",
           "traversal": "previous_visited_stage",
@@ -38,22 +82,41 @@
           "preserves_queued_selections": true
         },
         "navigation_before_apply": "back_and_forward_reversible",
-        "selection_effect": "queue_only_until_apply",
-        "first_choice_stage": "path",
-        "first_choice_options": ["start_new_setup", "connect_existing_puppet_master"],
-        "independent_roles": ["Server", "Storage", "Client"],
+        "selection_effect": "draft_only_with_owner_authorized_read_preflight_or_selected_source_auth",
+        "first_choice_stage": "simple_path",
+        "first_choice_options": [
+          "start_new_setup",
+          "connect_existing_puppet_master"
+        ],
+        "independent_roles": [
+          "Server",
+          "Storage",
+          "Client"
+        ],
         "roles_visible": true,
-        "role_choice_stage": "places",
+        "role_choice_stage": "server_storage_client",
         "theme_choice_stage": "welcome",
         "theme_choice_timing": "early_before_project_and_infrastructure",
         "theme_picker": {
-          "themes": ["Basic Dark", "Basic Light", "Friendly Dark", "Friendly Light", "Glass Dark", "Glass Light", "Retro Dark", "Retro Light"],
+          "themes": [
+            "Basic Dark",
+            "Basic Light",
+            "Friendly Dark",
+            "Friendly Light",
+            "Glass Dark",
+            "Glass Light",
+            "Retro Dark",
+            "Retro Light"
+          ],
           "presentation": "modal",
           "bounded": true
         },
         "safe_history": {
           "local_history_required": true,
-          "source_control_backends": ["Git", "Jujutsu"],
+          "source_control_backends": [
+            "Git",
+            "Jujutsu"
+          ],
           "git_role": "local_source_control_backend",
           "jujutsu_role": "local_source_control_backend",
           "filesafe_role": "independent_local_recovery_history",
@@ -64,7 +127,11 @@
         },
         "remote_access": {
           "local_group": "Local_or_VPN",
-          "remote_options": ["Tailscale_or_Headscale", "reverse_proxy", "Remote_Link"],
+          "remote_options": [
+            "Tailscale_or_Headscale",
+            "reverse_proxy",
+            "Remote_Link"
+          ],
           "remote_link_label": "Remote Link",
           "remote_link_placement": "always_visible_remote_choice"
         },
@@ -78,8 +145,8 @@
           "expands_peer_sections": false
         },
         "review_apply": {
-          "review_stage": "review",
-          "apply_progress_stage": "preparing",
+          "review_stage": "review_setup_plan",
+          "apply_progress_stage": "automatic_preparation",
           "review_required": true,
           "back_available_before_apply": true,
           "apply_is_user_initiated": true,
@@ -91,15 +158,55 @@
         "private_owner_mutations": false,
         "synthetic_onboarding_commands": false,
         "max_prominent_choices": 2,
+        "first_project_prominent_choice_exception": 4,
         "dominant_primary_actions": 1,
-        "hero_ms": {"min": 1200, "max": 1500},
-        "step_transition_ms": {"min": 420, "max": 560},
-        "stagger_ms": {"min": 60, "max": 80},
-        "microinteraction_ms": {"min": 120, "max": 220},
+        "hero_ms": {
+          "min": 1200,
+          "max": 1500
+        },
+        "step_transition_ms": {
+          "min": 420,
+          "max": 560
+        },
+        "stagger_ms": {
+          "min": 60,
+          "max": 80
+        },
+        "microinteraction_ms": {
+          "min": 120,
+          "max": 220
+        },
         "success_ms": 700,
         "interruptible": true,
         "input_blocking": false,
-        "reduced_motion": "immediate_or_short_opacity"
+        "reduced_motion": "immediate_or_short_opacity",
+        "contract_revision": "draft-copy-late-project-paid-then-free-2026-09-03",
+        "project_choices_effect": "uncreated_project_draft",
+        "settings_choice_owner": "Plans/Settings_System.md#SSYS-036",
+        "copy_settings_explicit_opt_in": true,
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": true,
+        "precommit_access_owner": "Plans/Planning_Wizard.md#PWIZ-021",
+        "precommit_mutations_except_necessary_selected_source_auth": false,
+        "project_commit_owner": "Plans/Project_System.md#PJCT-007",
+        "paid_provider_stage": "provider_setup",
+        "free_models_stage": "free_models_setup",
+        "provider_setup_requires_actual_project_commit": true,
+        "free_models_after_paid_ready_or_explicit_skip": true,
+        "free_models_underlying_provider_owner_setup": true,
+        "project_later_supported": true,
+        "close_retains_existing_project_and_exact_phase": true,
+        "back_replays_commit_or_returns_to_uncreated_draft": false,
+        "deferred_project_stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ]
       },
       {
         "contract_kind": "guided_tour",
@@ -263,10 +370,51 @@
         "plan_unit_ref": "F3-524",
         "native_target": "Slint 1.17.1",
         "rust_toolchain": "stable",
-        "widths_px": [320, 520, 680, 720, 750, 760, 860, 900, 960, 975, 980, 1180, 1200, 1280, 1440, 1700, 2200, 2500],
-        "themes": ["Basic Dark", "Basic Light", "Friendly Dark", "Friendly Light", "Glass Dark", "Glass Light", "Retro Dark", "Retro Light"],
-        "motion_modes": ["full", "reduced"],
-        "evidence_classes": ["static", "schema", "browser", "visual", "motion", "accessibility", "performance", "native_runtime", "certification"],
+        "widths_px": [
+          320,
+          520,
+          680,
+          720,
+          750,
+          760,
+          860,
+          900,
+          960,
+          975,
+          980,
+          1180,
+          1200,
+          1280,
+          1440,
+          1700,
+          2200,
+          2500
+        ],
+        "themes": [
+          "Basic Dark",
+          "Basic Light",
+          "Friendly Dark",
+          "Friendly Light",
+          "Glass Dark",
+          "Glass Light",
+          "Retro Dark",
+          "Retro Light"
+        ],
+        "motion_modes": [
+          "full",
+          "reduced"
+        ],
+        "evidence_classes": [
+          "static",
+          "schema",
+          "browser",
+          "visual",
+          "motion",
+          "accessibility",
+          "performance",
+          "native_runtime",
+          "certification"
+        ],
         "evidence_classes_interchangeable": false,
         "browser_is_native_certification": false,
         "static_is_runtime_proof": false,
@@ -289,7 +437,12 @@
           "identity": "AutomationBinding",
           "selected_only_when_multiple": true,
           "repository_host_inferred_as_automation_provider": false,
-          "provider_headings": ["GitHub Actions", "GitLab Pipelines", "Forgejo Actions", "Gitea Actions"]
+          "provider_headings": [
+            "GitHub Actions",
+            "GitLab Pipelines",
+            "Forgejo Actions",
+            "Gitea Actions"
+          ]
         },
         "automation_regions": [
           "repository_and_automation_context",
@@ -305,7 +458,16 @@
           "runners_secrets_variables",
           "external_unsupported_explanation"
         ],
-        "backup_components": ["DestinationCard", "ScopeCoverageSummary", "SnapshotBrowser", "RestorePreview", "RecoveryKitHandoff", "VerificationBadge", "RetentionPreview", "ObservableWorkProgress"],
+        "backup_components": [
+          "DestinationCard",
+          "ScopeCoverageSummary",
+          "SnapshotBrowser",
+          "RestorePreview",
+          "RecoveryKitHandoff",
+          "VerificationBadge",
+          "RetentionPreview",
+          "ObservableWorkProgress"
+        ],
         "backup_projection": {
           "scope_explicit": true,
           "owner_truth_only": true,
@@ -336,7 +498,12 @@
           "key_or_kit_bytes_visible": false
         },
         "connector_projection": {
-          "disconnected_copy": ["Tailscale", "Built into Puppet Master", "Not connected", "[Set Up]"],
+          "disconnected_copy": [
+            "Tailscale",
+            "Built into Puppet Master",
+            "Not connected",
+            "[Set Up]"
+          ],
           "owner_truth_only": true,
           "headscale_funnel_shown": false,
           "serve_toggle_shown": false,
@@ -345,7 +512,15 @@
           "connector_secrets_or_raw_state_exposed": false,
           "exact_return_focus_preserved": true
         },
-        "consumer_surfaces": ["Settings", "Files", "Projects", "Source Control", "Product Onboarding", "Doctor", "bottom/status"],
+        "consumer_surfaces": [
+          "Settings",
+          "Files",
+          "Projects",
+          "Source Control",
+          "Product Onboarding",
+          "Doctor",
+          "bottom/status"
+        ],
         "owner_projection_only": true,
         "private_mutations": false,
         "handler_state": "handler_unavailable",
@@ -356,22 +531,404 @@
       {
         "contract_kind": "source_control_forge_depth_presentation",
         "plan_unit_ref": "F3-529",
-        "source_control_header": {"summary_identity": ["repository", "workspace"], "compact_labels": ["local_engine", "hosting_service"], "details_fields": ["home_server", "execution_environment", "source_path", "remote_fetch_targets", "remote_push_targets", "authentication", "observed_revision"], "infrastructure_identity_overload": false},
-        "source_control_sections": ["changes_and_diff", "backend_working_action", "branch_or_bookmark_tracking", "remotes_and_publication", "history_and_graph", "conflicts", "conditional_stashes", "worktrees_or_workspaces", "review_requests", "changed_files_comments_checks", "recovery_or_operation_history", "source_protection_and_backup", "retained_or_explicitly_migrated_live_additional_sections"],
-        "git_visual_semantics": {"groups": ["Staged", "Unstaged"], "diff_kind": "index_aware", "primary_action": "Commit", "stashes_visible": true, "workspaces_label": "Worktrees"},
-        "jujutsu_visual_semantics": {"groups": ["Current Change", "Description", "Parent and change context", "Bookmarks and tracking", "Operation History"], "actions": ["New Change", "Edit", "Split", "Squash", "Abandon"], "graph_identities": ["stable_change_id", "current_commit_id", "current_at"], "graph_states": ["rewritten", "abandoned", "conflicted", "local_bookmarks", "remote_bookmarks"], "staging_visible": false, "stash_visible": false, "operation_history_distinct_from_backup": true, "hidden_git_mutation": false},
-        "review_and_publication": {"common_review_shell": true, "provider_native_detail_label": true, "fields": ["native_status", "source_ref", "target_ref", "author", "draft", "permissions", "threads", "checks", "currentness"], "publish_preview_fields": ["actual_push_destination", "refspecs", "origin_mirror_write_through", "protection", "ci_and_cost_effects"], "publish_and_review_separate_by_default": true, "combined_preview_lists_both_effects": true, "expected_head_guard": true, "remote_limit_reasons_visible": true, "outcome_unknown_distinct_from_failure": true, "blanket_origin_read_only_badge": false},
-        "automation_sections": ["current_revision_checks", "pinned_definitions", "available_definitions", "active_and_recent_runs", "queued_scheduled_manual_gates", "run_details", "native_stage_job_step_hierarchy_or_trace", "streamed_logs", "artifacts_and_retention", "environments_deployments_approvals", "runner_secret_variable_links", "external_or_unsupported_explanation"],
-        "capability_states": ["ready", "not_configured", "auth_required", "permission_denied", "policy_blocked", "protected", "unsupported", "adapter_missing", "external_only", "temporarily_unavailable", "stale", "unknown"],
-        "related_surfaces": {"files": ["engine_correct_decorations_and_ignore", "useful_repository_source_badges", "read_only_backup_preview", "Restore this file"], "artifacts": ["provider_ci", "pm_runtime", "backup_export", "expiry", "checksum", "provenance", "explicit_import_or_download", "download_never_auto_executes"], "testing": ["check_links", "reproduction_receipts", "remote_ci_not_local_test_proof"], "assistant_chat": ["compact_capability_summary", "action_receipts", "no_extra_forge_or_host_banner"], "bottom_bar": ["truthful_publication_backup_connector_work", "no_routine_synced", "no_secret_content", "no_backup_as_token_usage"]},
-        "hosted_administration": {"areas": ["repository_and_branch_policy", "ci_environments_and_deployment_approvals", "secrets_and_variables", "runner_list_registration_removal", "release_assets"], "read_write_independent": true, "versioned_provider_field_schema": true, "external_only_labeled": true, "secret_readback": false, "runner_requires_host_and_consent": true, "enable_ci_registers_runner": false},
+        "source_control_header": {
+          "summary_identity": [
+            "repository",
+            "workspace"
+          ],
+          "compact_labels": [
+            "local_engine",
+            "hosting_service"
+          ],
+          "details_fields": [
+            "home_server",
+            "execution_environment",
+            "source_path",
+            "remote_fetch_targets",
+            "remote_push_targets",
+            "authentication",
+            "observed_revision"
+          ],
+          "infrastructure_identity_overload": false
+        },
+        "source_control_sections": [
+          "changes_and_diff",
+          "backend_working_action",
+          "branch_or_bookmark_tracking",
+          "remotes_and_publication",
+          "history_and_graph",
+          "conflicts",
+          "conditional_stashes",
+          "worktrees_or_workspaces",
+          "review_requests",
+          "changed_files_comments_checks",
+          "recovery_or_operation_history",
+          "source_protection_and_backup",
+          "retained_or_explicitly_migrated_live_additional_sections"
+        ],
+        "git_visual_semantics": {
+          "groups": [
+            "Staged",
+            "Unstaged"
+          ],
+          "diff_kind": "index_aware",
+          "primary_action": "Commit",
+          "stashes_visible": true,
+          "workspaces_label": "Worktrees"
+        },
+        "jujutsu_visual_semantics": {
+          "groups": [
+            "Current Change",
+            "Description",
+            "Parent and change context",
+            "Bookmarks and tracking",
+            "Operation History"
+          ],
+          "actions": [
+            "New Change",
+            "Edit",
+            "Split",
+            "Squash",
+            "Abandon"
+          ],
+          "graph_identities": [
+            "stable_change_id",
+            "current_commit_id",
+            "current_at"
+          ],
+          "graph_states": [
+            "rewritten",
+            "abandoned",
+            "conflicted",
+            "local_bookmarks",
+            "remote_bookmarks"
+          ],
+          "staging_visible": false,
+          "stash_visible": false,
+          "operation_history_distinct_from_backup": true,
+          "hidden_git_mutation": false
+        },
+        "review_and_publication": {
+          "common_review_shell": true,
+          "provider_native_detail_label": true,
+          "fields": [
+            "native_status",
+            "source_ref",
+            "target_ref",
+            "author",
+            "draft",
+            "permissions",
+            "threads",
+            "checks",
+            "currentness"
+          ],
+          "publish_preview_fields": [
+            "actual_push_destination",
+            "refspecs",
+            "origin_mirror_write_through",
+            "protection",
+            "ci_and_cost_effects"
+          ],
+          "publish_and_review_separate_by_default": true,
+          "combined_preview_lists_both_effects": true,
+          "expected_head_guard": true,
+          "remote_limit_reasons_visible": true,
+          "outcome_unknown_distinct_from_failure": true,
+          "blanket_origin_read_only_badge": false
+        },
+        "automation_sections": [
+          "current_revision_checks",
+          "pinned_definitions",
+          "available_definitions",
+          "active_and_recent_runs",
+          "queued_scheduled_manual_gates",
+          "run_details",
+          "native_stage_job_step_hierarchy_or_trace",
+          "streamed_logs",
+          "artifacts_and_retention",
+          "environments_deployments_approvals",
+          "runner_secret_variable_links",
+          "external_or_unsupported_explanation"
+        ],
+        "capability_states": [
+          "ready",
+          "not_configured",
+          "auth_required",
+          "permission_denied",
+          "policy_blocked",
+          "protected",
+          "unsupported",
+          "adapter_missing",
+          "external_only",
+          "temporarily_unavailable",
+          "stale",
+          "unknown"
+        ],
+        "related_surfaces": {
+          "files": [
+            "engine_correct_decorations_and_ignore",
+            "useful_repository_source_badges",
+            "read_only_backup_preview",
+            "Restore this file"
+          ],
+          "artifacts": [
+            "provider_ci",
+            "pm_runtime",
+            "backup_export",
+            "expiry",
+            "checksum",
+            "provenance",
+            "explicit_import_or_download",
+            "download_never_auto_executes"
+          ],
+          "testing": [
+            "check_links",
+            "reproduction_receipts",
+            "remote_ci_not_local_test_proof"
+          ],
+          "assistant_chat": [
+            "compact_capability_summary",
+            "action_receipts",
+            "no_extra_forge_or_host_banner"
+          ],
+          "bottom_bar": [
+            "truthful_publication_backup_connector_work",
+            "no_routine_synced",
+            "no_secret_content",
+            "no_backup_as_token_usage"
+          ]
+        },
+        "hosted_administration": {
+          "areas": [
+            "repository_and_branch_policy",
+            "ci_environments_and_deployment_approvals",
+            "secrets_and_variables",
+            "runner_list_registration_removal",
+            "release_assets"
+          ],
+          "read_write_independent": true,
+          "versioned_provider_field_schema": true,
+          "external_only_labeled": true,
+          "secret_readback": false,
+          "runner_requires_host_and_consent": true,
+          "enable_ci_registers_runner": false
+        },
         "local_action_pairs": {
-          "profile_preview_request": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_request", "action_id": "ui.source_control.profile.preview", "packet_token": "not_applicable_typed_local_ui_action", "request_id": "request:source-profile-preview:1", "projection_ref": "projection:source-control:project-1:repo-1", "expected_projection_generation": 43, "return_context_ref": "return:source-control:profile-switch", "accessibility_description_ref": "a11y:source-control:profile-preview", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "project_ref": "project:1", "repository_ref": "repository:1", "action_context": {"selected_profile": "jj", "presentation_selection_only": true, "backend_mutated": false, "repository_binding_mutated": false, "workspace_mutated": false, "history_mutated": false, "capability_ref": "capability-snapshot:repository-1:generation-43"}, "requested_at_utc": "2026-09-02T11:59:00Z"},
-          "profile_preview_result": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_result", "action_id": "ui.source_control.profile.preview", "packet_token": "not_applicable_typed_local_ui_action", "request_id": "request:source-profile-preview:1", "projection_generation": 43, "outcome": "completed", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "settled_projection_ref": "projection:source-control:project-1:repo-1:generation-43", "result_detail": {"selected_profile": "jj", "presentation_selection_applied": true, "backend_mutated": false, "repository_binding_mutated": false, "workspace_mutated": false, "history_mutated": false}, "return_settlement": {"return_context_ref": "return:source-control:profile-switch", "settlement": "restored", "initiating_surface_restored": true}, "completed_at_utc": "2026-09-02T11:59:01Z"},
-          "binding_select_request": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_request", "action_id": "ui.repository_automation.binding.select", "packet_token": "cmd.repository_automation.binding.select", "request_id": "request:binding-select:1", "projection_ref": "projection:repository-automation:project-1:repo-1", "expected_projection_generation": 17, "return_context_ref": "return:repository-automation:binding-picker", "accessibility_description_ref": "a11y:repository-automation:binding-picker", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "project_ref": "project:1", "repository_ref": "repository:1", "action_context": {"automation_binding_refs": ["automation-binding:github-primary", "automation-binding:gitlab-secondary"], "selected_automation_binding_ref": "automation-binding:github-primary", "presentation_selection_only": true, "repository_binding_mutated": false, "automation_binding_mutated": false, "capability_ref": "capability-snapshot:repository-1:generation-17"}, "requested_at_utc": "2026-09-02T12:00:00Z"},
-          "binding_select_result": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_result", "action_id": "ui.repository_automation.binding.select", "packet_token": "cmd.repository_automation.binding.select", "request_id": "request:binding-select:1", "projection_generation": 18, "outcome": "completed", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "settled_projection_ref": "projection:repository-automation:project-1:repo-1:generation-18", "result_detail": {"selected_automation_binding_ref": "automation-binding:github-primary", "presentation_selection_applied": true, "repository_binding_mutated": false, "automation_binding_mutated": false}, "return_settlement": {"return_context_ref": "return:repository-automation:binding-picker", "settlement": "restored", "initiating_surface_restored": true}, "completed_at_utc": "2026-09-02T12:00:01Z"},
-          "backup_history_open_request": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_request", "action_id": "ui.source_control.backup_history.open", "packet_token": "cmd.source_control.backup_history.open", "request_id": "request:backup-history-open:1", "projection_ref": "projection:source-control:project-1:repo-1", "expected_projection_generation": 44, "return_context_ref": "return:source-control:recovery-history", "accessibility_description_ref": "a11y:source-control:open-backup-history", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "project_ref": "project:1", "repository_ref": "repository:1", "action_context": {"target_owner": "Backup", "route_kind": "backup_history_repository_revision", "repository_revision_ref": "revision:sha256:0123456789abcdef", "backup_owner_route_ref": "route:backup:history:project-1:repo-1", "backup_history_deep_link_ref": "deep-link:backup-history:project-1:repo-1:revision-0123456789abcdef", "read_only_navigation": true, "restore_requested": false, "source_or_backup_mutation": false}, "requested_at_utc": "2026-09-02T12:01:00Z"},
-          "backup_history_open_result": {"schema_id": "pm.final_gui.repository_local_action.v1", "record_kind": "repository_local_action_result", "action_id": "ui.source_control.backup_history.open", "packet_token": "cmd.source_control.backup_history.open", "request_id": "request:backup-history-open:1", "projection_generation": 45, "outcome": "completed", "controller_target": "owner_local_typed_ui_controller", "domain_command_registered": false, "semantic_domain_handler": null, "domain_event_emitted": false, "presentation_only": true, "persistent_state_mutation": false, "return_behavior": "deterministic_presentation_settlement", "installation_authority_granted": false, "authentication_authority_granted": false, "filesystem_authority_granted": false, "browser_authority_granted": false, "provider_authority_granted": false, "settled_projection_ref": "projection:backup:history:project-1:repo-1:generation-45", "result_detail": {"target_owner": "Backup", "route_kind": "backup_history_repository_revision", "backup_owner_route_ref": "route:backup:history:project-1:repo-1", "backup_history_deep_link_ref": "deep-link:backup-history:project-1:repo-1:revision-0123456789abcdef", "target_opened": true, "restore_started": false, "source_or_backup_mutation": false}, "return_settlement": {"return_context_ref": "return:source-control:recovery-history", "settlement": "target_opened", "initiating_surface_restored": false}, "completed_at_utc": "2026-09-02T12:01:01Z"}
+          "profile_preview_request": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_request",
+            "action_id": "ui.source_control.profile.preview",
+            "packet_token": "not_applicable_typed_local_ui_action",
+            "request_id": "request:source-profile-preview:1",
+            "projection_ref": "projection:source-control:project-1:repo-1",
+            "expected_projection_generation": 43,
+            "return_context_ref": "return:source-control:profile-switch",
+            "accessibility_description_ref": "a11y:source-control:profile-preview",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "project_ref": "project:1",
+            "repository_ref": "repository:1",
+            "action_context": {
+              "selected_profile": "jj",
+              "presentation_selection_only": true,
+              "backend_mutated": false,
+              "repository_binding_mutated": false,
+              "workspace_mutated": false,
+              "history_mutated": false,
+              "capability_ref": "capability-snapshot:repository-1:generation-43"
+            },
+            "requested_at_utc": "2026-09-02T11:59:00Z"
+          },
+          "profile_preview_result": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_result",
+            "action_id": "ui.source_control.profile.preview",
+            "packet_token": "not_applicable_typed_local_ui_action",
+            "request_id": "request:source-profile-preview:1",
+            "projection_generation": 43,
+            "outcome": "completed",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "settled_projection_ref": "projection:source-control:project-1:repo-1:generation-43",
+            "result_detail": {
+              "selected_profile": "jj",
+              "presentation_selection_applied": true,
+              "backend_mutated": false,
+              "repository_binding_mutated": false,
+              "workspace_mutated": false,
+              "history_mutated": false
+            },
+            "return_settlement": {
+              "return_context_ref": "return:source-control:profile-switch",
+              "settlement": "restored",
+              "initiating_surface_restored": true
+            },
+            "completed_at_utc": "2026-09-02T11:59:01Z"
+          },
+          "binding_select_request": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_request",
+            "action_id": "ui.repository_automation.binding.select",
+            "packet_token": "cmd.repository_automation.binding.select",
+            "request_id": "request:binding-select:1",
+            "projection_ref": "projection:repository-automation:project-1:repo-1",
+            "expected_projection_generation": 17,
+            "return_context_ref": "return:repository-automation:binding-picker",
+            "accessibility_description_ref": "a11y:repository-automation:binding-picker",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "project_ref": "project:1",
+            "repository_ref": "repository:1",
+            "action_context": {
+              "automation_binding_refs": [
+                "automation-binding:github-primary",
+                "automation-binding:gitlab-secondary"
+              ],
+              "selected_automation_binding_ref": "automation-binding:github-primary",
+              "presentation_selection_only": true,
+              "repository_binding_mutated": false,
+              "automation_binding_mutated": false,
+              "capability_ref": "capability-snapshot:repository-1:generation-17"
+            },
+            "requested_at_utc": "2026-09-02T12:00:00Z"
+          },
+          "binding_select_result": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_result",
+            "action_id": "ui.repository_automation.binding.select",
+            "packet_token": "cmd.repository_automation.binding.select",
+            "request_id": "request:binding-select:1",
+            "projection_generation": 18,
+            "outcome": "completed",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "settled_projection_ref": "projection:repository-automation:project-1:repo-1:generation-18",
+            "result_detail": {
+              "selected_automation_binding_ref": "automation-binding:github-primary",
+              "presentation_selection_applied": true,
+              "repository_binding_mutated": false,
+              "automation_binding_mutated": false
+            },
+            "return_settlement": {
+              "return_context_ref": "return:repository-automation:binding-picker",
+              "settlement": "restored",
+              "initiating_surface_restored": true
+            },
+            "completed_at_utc": "2026-09-02T12:00:01Z"
+          },
+          "backup_history_open_request": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_request",
+            "action_id": "ui.source_control.backup_history.open",
+            "packet_token": "cmd.source_control.backup_history.open",
+            "request_id": "request:backup-history-open:1",
+            "projection_ref": "projection:source-control:project-1:repo-1",
+            "expected_projection_generation": 44,
+            "return_context_ref": "return:source-control:recovery-history",
+            "accessibility_description_ref": "a11y:source-control:open-backup-history",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "project_ref": "project:1",
+            "repository_ref": "repository:1",
+            "action_context": {
+              "target_owner": "Backup",
+              "route_kind": "backup_history_repository_revision",
+              "repository_revision_ref": "revision:sha256:0123456789abcdef",
+              "backup_owner_route_ref": "route:backup:history:project-1:repo-1",
+              "backup_history_deep_link_ref": "deep-link:backup-history:project-1:repo-1:revision-0123456789abcdef",
+              "read_only_navigation": true,
+              "restore_requested": false,
+              "source_or_backup_mutation": false
+            },
+            "requested_at_utc": "2026-09-02T12:01:00Z"
+          },
+          "backup_history_open_result": {
+            "schema_id": "pm.final_gui.repository_local_action.v1",
+            "record_kind": "repository_local_action_result",
+            "action_id": "ui.source_control.backup_history.open",
+            "packet_token": "cmd.source_control.backup_history.open",
+            "request_id": "request:backup-history-open:1",
+            "projection_generation": 45,
+            "outcome": "completed",
+            "controller_target": "owner_local_typed_ui_controller",
+            "domain_command_registered": false,
+            "semantic_domain_handler": null,
+            "domain_event_emitted": false,
+            "presentation_only": true,
+            "persistent_state_mutation": false,
+            "return_behavior": "deterministic_presentation_settlement",
+            "installation_authority_granted": false,
+            "authentication_authority_granted": false,
+            "filesystem_authority_granted": false,
+            "browser_authority_granted": false,
+            "provider_authority_granted": false,
+            "settled_projection_ref": "projection:backup:history:project-1:repo-1:generation-45",
+            "result_detail": {
+              "target_owner": "Backup",
+              "route_kind": "backup_history_repository_revision",
+              "backup_owner_route_ref": "route:backup:history:project-1:repo-1",
+              "backup_history_deep_link_ref": "deep-link:backup-history:project-1:repo-1:revision-0123456789abcdef",
+              "target_opened": true,
+              "restore_started": false,
+              "source_or_backup_mutation": false
+            },
+            "return_settlement": {
+              "return_context_ref": "return:source-control:recovery-history",
+              "settlement": "target_opened",
+              "initiating_surface_restored": false
+            },
+            "completed_at_utc": "2026-09-02T12:01:01Z"
+          }
         },
         "provider_native_vocabulary": true,
         "selector_only_when_ambiguous": true,
@@ -389,7 +946,12 @@
         "availability_ref": "availability:credential-attachment:github:alpha:17",
         "disabled_reason_ref": null,
         "accepted_payload": "owner_reference_and_redacted_status_only",
-        "actions": ["ui.secret_reference.choose", "ui.secret_reference.replace", "ui.secret_reference.remove", "ui.secret_reference.open_owner"],
+        "actions": [
+          "ui.secret_reference.choose",
+          "ui.secret_reference.replace",
+          "ui.secret_reference.remove",
+          "ui.secret_reference.open_owner"
+        ],
         "protected_submission_route_ref": "route:credential-owner:protected-submission:github:alpha",
         "accessibility": {
           "label_ref": "a11y:credential-reference:github:alpha:label",
@@ -426,10 +988,18 @@
         "expected_generation": 9,
         "currentness": "current",
         "consequence_description_ref": "a11y:consequence:backup-export:project-alpha:9",
-        "actions": ["ui.human_step_up.respond", "ui.human_step_up.cancel"],
+        "actions": [
+          "ui.human_step_up.respond",
+          "ui.human_step_up.cancel"
+        ],
         "response_contract": {
           "response_payload": "typed_local_response_reference_only",
-          "outcomes": ["responded", "cancelled", "stale_target", "caller_unavailable"],
+          "outcomes": [
+            "responded",
+            "cancelled",
+            "stale_target",
+            "caller_unavailable"
+          ],
           "return_context_ref": "return:settings:backup-export:project-alpha",
           "stale_target_blocks_owner_dispatch": true,
           "cancel_is_safe": true,
@@ -471,17 +1041,106 @@
         "post_closure_equivalent_mappings": 8,
         "post_closure_unresolved": 0,
         "mappings": [
-          {"packet_component": "CapabilityReason", "disposition": "semantic_equivalent", "canonical_name": "EffectiveOperationCapability plus typed disabled reason", "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability", "canonical_owner": "Source Control", "source_line_ref": "machine/dry_components.json:6-15", "duplicate_component_created": false},
-          {"packet_component": "EngineSpecificChanges", "disposition": "semantic_equivalent", "canonical_name": "BackendOperationSemantics", "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/backend_operation_semantics", "canonical_owner": "Source Control", "source_line_ref": "machine/dry_components.json:17-26", "duplicate_component_created": false},
-          {"packet_component": "SourceGraph", "disposition": "bounded_typed_closure", "canonical_name": "source_graph_projection", "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection", "canonical_owner": "Source Control", "source_line_ref": "machine/dry_components.json:17-26", "duplicate_component_created": false},
-          {"packet_component": "WorkspaceSelector", "disposition": "semantic_equivalent", "canonical_name": "RepositoryContext plus cmd.source_control.workspace.switch", "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/repository_context", "canonical_owner": "Source Control", "source_line_ref": "machine/dry_components.json:17-26", "duplicate_component_created": false},
-          {"packet_component": "RemotePublicationPreview", "disposition": "semantic_equivalent", "canonical_name": "RemoteOperationTarget plus ExternalEffectReconciliation", "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/remote_operation_target", "canonical_owner": "Source Control", "source_line_ref": "machine/dry_components.json:17-26", "duplicate_component_created": false},
-          {"packet_component": "NativeAutomationTree", "disposition": "superseded_source_lineage_alias", "canonical_name": "NativeJobTree", "canonical_contract_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord/properties/source_integration_components", "canonical_owner": "Shared Integration Runtime", "source_line_ref": "machine/dry_components.json:29-37", "duplicate_component_created": false, "migration_read_alias_only": true},
-          {"packet_component": "PipelineRunSummary", "disposition": "semantic_equivalent", "canonical_name": "PipelineProjection plus AutomationRun", "canonical_contract_ref": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection", "canonical_owner": "Forge Integrations", "source_line_ref": "machine/dry_components.json:29-37", "duplicate_component_created": false},
-          {"packet_component": "SecretReferenceControl", "disposition": "bounded_typed_closure", "canonical_name": "SecretReferenceControl", "canonical_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/secret_reference_control", "canonical_owner": "Final GUI presentation consumer", "source_line_ref": "machine/dry_components.json:51-61", "duplicate_component_created": false},
-          {"packet_component": "AuthSessionProgress", "disposition": "semantic_equivalent", "canonical_name": "ProtectedAuthBrowserLifecycleProjection", "canonical_contract_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/protected_auth_browser_lifecycle_projection", "canonical_owner": "Protected Auth Browser", "source_line_ref": "machine/dry_components.json:51-61", "duplicate_component_created": false},
-          {"packet_component": "HumanStepUpDialog", "disposition": "bounded_typed_closure", "canonical_name": "HumanStepUpDialog", "canonical_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/human_step_up_dialog", "canonical_owner": "Final GUI presentation consumer", "source_line_ref": "machine/dry_components.json:51-61", "duplicate_component_created": false},
-          {"packet_component": "DoctorHealthProjection", "disposition": "semantic_equivalent", "canonical_name": "DoctorFindingProjection plus DoctorWorkspace", "canonical_contract_ref": "Plans/doctor_contracts.schema.json#/$defs/doctor_finding_projection", "canonical_owner": "Doctor registry", "source_line_ref": "machine/dry_components.json:51-61", "duplicate_component_created": false}
+          {
+            "packet_component": "CapabilityReason",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "EffectiveOperationCapability plus typed disabled reason",
+            "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability",
+            "canonical_owner": "Source Control",
+            "source_line_ref": "machine/dry_components.json:6-15",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "EngineSpecificChanges",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "BackendOperationSemantics",
+            "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/backend_operation_semantics",
+            "canonical_owner": "Source Control",
+            "source_line_ref": "machine/dry_components.json:17-26",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "SourceGraph",
+            "disposition": "bounded_typed_closure",
+            "canonical_name": "source_graph_projection",
+            "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
+            "canonical_owner": "Source Control",
+            "source_line_ref": "machine/dry_components.json:17-26",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "WorkspaceSelector",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "RepositoryContext plus cmd.source_control.workspace.switch",
+            "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/repository_context",
+            "canonical_owner": "Source Control",
+            "source_line_ref": "machine/dry_components.json:17-26",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "RemotePublicationPreview",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "RemoteOperationTarget plus ExternalEffectReconciliation",
+            "canonical_contract_ref": "Plans/source_control_contracts.schema.json#/$defs/remote_operation_target",
+            "canonical_owner": "Source Control",
+            "source_line_ref": "machine/dry_components.json:17-26",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "NativeAutomationTree",
+            "disposition": "superseded_source_lineage_alias",
+            "canonical_name": "NativeJobTree",
+            "canonical_contract_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord/properties/source_integration_components",
+            "canonical_owner": "Shared Integration Runtime",
+            "source_line_ref": "machine/dry_components.json:29-37",
+            "duplicate_component_created": false,
+            "migration_read_alias_only": true
+          },
+          {
+            "packet_component": "PipelineRunSummary",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "PipelineProjection plus AutomationRun",
+            "canonical_contract_ref": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+            "canonical_owner": "Forge Integrations",
+            "source_line_ref": "machine/dry_components.json:29-37",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "SecretReferenceControl",
+            "disposition": "bounded_typed_closure",
+            "canonical_name": "SecretReferenceControl",
+            "canonical_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/secret_reference_control",
+            "canonical_owner": "Final GUI presentation consumer",
+            "source_line_ref": "machine/dry_components.json:51-61",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "AuthSessionProgress",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "ProtectedAuthBrowserLifecycleProjection",
+            "canonical_contract_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/protected_auth_browser_lifecycle_projection",
+            "canonical_owner": "Protected Auth Browser",
+            "source_line_ref": "machine/dry_components.json:51-61",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "HumanStepUpDialog",
+            "disposition": "bounded_typed_closure",
+            "canonical_name": "HumanStepUpDialog",
+            "canonical_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/human_step_up_dialog",
+            "canonical_owner": "Final GUI presentation consumer",
+            "source_line_ref": "machine/dry_components.json:51-61",
+            "duplicate_component_created": false
+          },
+          {
+            "packet_component": "DoctorHealthProjection",
+            "disposition": "semantic_equivalent",
+            "canonical_name": "DoctorFindingProjection plus DoctorWorkspace",
+            "canonical_contract_ref": "Plans/doctor_contracts.schema.json#/$defs/doctor_finding_projection",
+            "canonical_owner": "Doctor registry",
+            "source_line_ref": "machine/dry_components.json:51-61",
+            "duplicate_component_created": false
+          }
         ],
         "duplicate_owner_or_component_created": false,
         "runtime_evidence_claimed": false,
@@ -490,152 +1149,1018 @@
     ]
   },
   "negative_mutations": [
-    {"case_id": "k3_rail_drift", "json_pointer": "/contracts/0/rail_px", "replacement": 240, "expected": "rejected"},
-    {"case_id": "new_settings_breadcrumb", "json_pointer": "/contracts/0/new_back_or_breadcrumb", "replacement": true, "expected": "rejected"},
-    {"case_id": "k3_workspace_tabs_removed", "json_pointer": "/contracts/0/workspace_tabs", "replacement": false, "expected": "rejected"},
-    {"case_id": "k3_responsive_width_order_drift", "json_pointer": "/contracts/0/responsive_widths_px", "replacement": [320, 720, 960, 1180], "expected": "rejected"},
-    {"case_id": "k3_private_projection", "json_pointer": "/contracts/0/owner_projection_only", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_choice_overload", "json_pointer": "/contracts/1/max_prominent_choices", "replacement": 4, "expected": "rejected"},
-    {"case_id": "onboarding_blocks_input", "json_pointer": "/contracts/1/input_blocking", "replacement": true, "expected": "rejected"},
-    {"case_id": "onboarding_immediate_mutation", "json_pointer": "/contracts/1/selection_effect", "replacement": "execute_immediately", "expected": "rejected"},
-    {"case_id": "onboarding_connect_stage_count_drift", "json_pointer": "/contracts/1/connect_existing_stage_count", "replacement": 5, "expected": "rejected"},
-    {"case_id": "onboarding_connect_stage_order_drift", "json_pointer": "/contracts/1/connect_existing_stages", "replacement": ["welcome", "path", "review", "access", "preparing", "ready"], "expected": "rejected"},
-    {"case_id": "onboarding_connect_path_runs_new_setup_stages", "json_pointer": "/contracts/1/connect_existing_skips", "replacement": [], "expected": "rejected"},
-    {"case_id": "onboarding_back_label_drift", "json_pointer": "/contracts/1/reverse_back_contract/action_label", "replacement": "Previous", "expected": "rejected"},
-    {"case_id": "onboarding_back_traversal_drift", "json_pointer": "/contracts/1/reverse_back_contract/traversal", "replacement": "previous_declared_stage", "expected": "rejected"},
-    {"case_id": "onboarding_back_unavailable_before_apply", "json_pointer": "/contracts/1/reverse_back_contract/available_before_apply", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_back_discards_queue", "json_pointer": "/contracts/1/reverse_back_contract/preserves_queued_selections", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_roles_collapsed", "json_pointer": "/contracts/1/independent_roles", "replacement": ["Server"], "expected": "rejected"},
-    {"case_id": "onboarding_roles_hidden", "json_pointer": "/contracts/1/roles_visible", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_roles_moved_from_places", "json_pointer": "/contracts/1/role_choice_stage", "replacement": "path", "expected": "rejected"},
-    {"case_id": "onboarding_theme_choice_delayed", "json_pointer": "/contracts/1/theme_choice_stage", "replacement": "path", "expected": "rejected"},
-    {"case_id": "onboarding_theme_timing_late", "json_pointer": "/contracts/1/theme_choice_timing", "replacement": "after_project", "expected": "rejected"},
-    {"case_id": "onboarding_theme_count_drift", "json_pointer": "/contracts/1/theme_picker/themes", "replacement": ["Basic Dark", "Basic Light"], "expected": "rejected"},
-    {"case_id": "onboarding_theme_picker_not_modal", "json_pointer": "/contracts/1/theme_picker/presentation", "replacement": "inline_grid", "expected": "rejected"},
-    {"case_id": "onboarding_theme_modal_unbounded", "json_pointer": "/contracts/1/theme_picker/bounded", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_safe_history_optional", "json_pointer": "/contracts/1/safe_history/local_history_required", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_safe_history_backend_order_drift", "json_pointer": "/contracts/1/safe_history/source_control_backends", "replacement": ["Jujutsu", "Git"], "expected": "rejected"},
-    {"case_id": "onboarding_git_role_drift", "json_pointer": "/contracts/1/safe_history/git_role", "replacement": "forge", "expected": "rejected"},
-    {"case_id": "onboarding_jujutsu_role_drift", "json_pointer": "/contracts/1/safe_history/jujutsu_role", "replacement": "recovery_history", "expected": "rejected"},
-    {"case_id": "onboarding_filesafe_role_drift", "json_pointer": "/contracts/1/safe_history/filesafe_role", "replacement": "source_control_backend", "expected": "rejected"},
-    {"case_id": "onboarding_filesafe_collapsed_into_source_control", "json_pointer": "/contracts/1/safe_history/filesafe_is_source_control_backend", "replacement": true, "expected": "rejected"},
-    {"case_id": "onboarding_forge_role_drift", "json_pointer": "/contracts/1/safe_history/forge_role", "replacement": "local_recovery_history", "expected": "rejected"},
-    {"case_id": "onboarding_forge_required", "json_pointer": "/contracts/1/safe_history/forge_optional", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_forge_replaces_local_history", "json_pointer": "/contracts/1/safe_history/forge_does_not_replace_local_history", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_remote_group_drift", "json_pointer": "/contracts/1/remote_access/local_group", "replacement": "Nearby_only", "expected": "rejected"},
-    {"case_id": "onboarding_remote_option_order_drift", "json_pointer": "/contracts/1/remote_access/remote_options", "replacement": ["Remote_Link", "Tailscale_or_Headscale", "reverse_proxy"], "expected": "rejected"},
-    {"case_id": "onboarding_remote_link_label_drift", "json_pointer": "/contracts/1/remote_access/remote_link_label", "replacement": "Remote access", "expected": "rejected"},
-    {"case_id": "onboarding_remote_link_hidden", "json_pointer": "/contracts/1/remote_access/remote_link_placement", "replacement": "more_options", "expected": "rejected"},
-    {"case_id": "onboarding_choice_help_duplicate_surfaces", "json_pointer": "/contracts/1/choice_help/max_visible", "replacement": 2, "expected": "rejected"},
-    {"case_id": "onboarding_choice_help_hidden_copy_target", "json_pointer": "/contracts/1/choice_help/target_id", "replacement": "pm7ob-help-forgejo", "expected": "rejected"},
-    {"case_id": "onboarding_review_cannot_go_back", "json_pointer": "/contracts/1/review_apply/back_available_before_apply", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_owner_action_identity_drift", "json_pointer": "/contracts/1/owner_action_identity", "replacement": "private_onboarding_command", "expected": "rejected"},
-    {"case_id": "onboarding_owner_projection_disabled", "json_pointer": "/contracts/1/owner_projection_only", "replacement": false, "expected": "rejected"},
-    {"case_id": "onboarding_private_owner_mutation", "json_pointer": "/contracts/1/private_owner_mutations", "replacement": true, "expected": "rejected"},
-    {"case_id": "onboarding_synthetic_command_family", "json_pointer": "/contracts/1/synthetic_onboarding_commands", "replacement": true, "expected": "rejected"},
-    {"case_id":"tour_demo_shell","json_pointer":"/contracts/2/application_surface","replacement":"parallel_demo","expected":"rejected"},
-    {"case_id":"tour_usage_first","json_pointer":"/contracts/2/first_surface","replacement":"Usage","expected":"rejected"},
-    {"case_id":"tour_predecessor_scene_order","json_pointer":"/contracts/2/scenes","replacement":["usage","planning_wizard","chat_teacher"],"expected":"rejected"},
-    {"case_id":"tour_action_vocabulary_drift","json_pointer":"/contracts/2/actions","replacement":["ui.guided_tour.start"],"expected":"rejected"},
-    {"case_id":"tour_retired_restore_layout_action","json_pointer":"/contracts/2/actions/1","replacement":"ui.guided_tour.restore_layout","expected":"rejected"},
-    {"case_id":"tour_retired_keep_layout_action","json_pointer":"/contracts/2/actions/1","replacement":"ui.guided_tour.keep_layout","expected":"rejected"},
-    {"case_id":"tour_retired_toggle_reduced_motion_action","json_pointer":"/contracts/2/actions/1","replacement":"ui.guided_tour.toggle_reduced_motion","expected":"rejected"},
-    {"case_id":"tour_show_me_label_drift","json_pointer":"/contracts/2/practice_contract/show_me_label","replacement":"Watch","expected":"rejected"},
-    {"case_id":"tour_separate_mutation_path","json_pointer":"/contracts/2/practice_contract/same_mounted_owner_handler","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_unshared_predicate","json_pointer":"/contracts/2/practice_contract/same_success_predicate","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_timer_fabricates_practice","json_pointer":"/contracts/2/practice_contract/timer_satisfies_practice","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_next_bypasses_practice","json_pointer":"/contracts/2/practice_contract/generic_next_satisfies_practice","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_invisible_action_target","json_pointer":"/contracts/2/practice_contract/target_visible_before_action","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_uninterruptible_show_me","json_pointer":"/contracts/2/practice_contract/interruptible_choreography","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_planning_demo_surface","json_pointer":"/contracts/2/planning_contract/surface","replacement":"simulated_planning_wizard","expected":"rejected"},
-    {"case_id":"tour_planning_action_minority","json_pointer":"/contracts/2/planning_contract/minimum_meaningful_action_share","replacement":0.49,"expected":"rejected"},
-    {"case_id":"tour_planning_dwell_minority","json_pointer":"/contracts/2/planning_contract/minimum_meaningful_dwell_share","replacement":0.49,"expected":"rejected"},
-    {"case_id":"tour_edit_without_changed_answer","json_pointer":"/contracts/2/planning_contract/edit_requires_changed_answer","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_uncertainty_denies_shared_access","json_pointer":"/contracts/2/planning_contract/uncertain_answer_remains_unresolved","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_outcomes_rebuilt","json_pointer":"/contracts/2/planning_contract/unchanged_outcomes_retain_identity_and_position","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_unrelated_consequences_changed","json_pointer":"/contracts/2/planning_contract/only_affected_consequence_changes","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_wrong_opening_question","json_pointer":"/contracts/2/chat_contract/prompt","replacement":"What is a Project?","expected":"rejected"},
-    {"case_id":"tour_eli5_changes_answer","json_pointer":"/contracts/2/chat_contract/same_answer_eli5","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_copies_chat_content","json_pointer":"/contracts/2/chat_contract/tour_stores_refs_not_content","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_provider_fallthrough","json_pointer":"/contracts/2/chat_contract/local_example_provider_fallthrough","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_unobserved_zero_usage","json_pointer":"/contracts/2/chat_contract/zero_use_requires_observation","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_private_chat_send","json_pointer":"/contracts/2/chat_contract/domain_actions/1","replacement":"ui.assistant_chat.send","expected":"rejected"},
-    {"case_id":"tour_eli5_not_top_beside_pause_skip","json_pointer":"/contracts/2/top_controls","replacement":["Pause","Skip Tour","ELI5"],"expected":"rejected"},
-    {"case_id":"tour_reduced_motion_not_settings_owned","json_pointer":"/contracts/2/reduced_motion_owner","replacement":"Guided Tour","expected":"rejected"},
-    {"case_id":"tour_adds_reduced_motion_toggle","json_pointer":"/contracts/2/tour_reduced_motion_toggle","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_skip_loses_chat_or_draft","json_pointer":"/contracts/2/skip_restores","replacement":["pre_tour_layout","pre_tour_placeholder","pre_tour_focus"],"expected":"rejected"},
-    {"case_id":"tour_finish_implicit_keep","json_pointer":"/contracts/2/finish_contract/default_layout_disposition","replacement":"keep","expected":"rejected"},
-    {"case_id":"tour_keep_not_explicit","json_pointer":"/contracts/2/finish_contract/keep_requires_explicit_selection","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_finish_chat_final","json_pointer":"/contracts/2/finish_contract/real_destination","replacement":"chat_teacher","expected":"rejected"},
-    {"case_id":"tour_finish_leaves_practice","json_pointer":"/contracts/2/finish_contract/practice_removed","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_finish_without_project","json_pointer":"/contracts/2/finish_contract/committed_project_selected","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_finish_starts_work","json_pointer":"/contracts/2/finish_contract/work_started","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_finish_grants_approval","json_pointer":"/contracts/2/finish_contract/grants_approval","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_finish_second_approval","json_pointer":"/contracts/2/finish_contract/second_approval_fence","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_restore_failure_completes","json_pointer":"/contracts/2/finish_contract/restoration_failure_can_complete","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_resume_without_owner_revalidation","json_pointer":"/contracts/2/resume_contract/owner_state_revalidated","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_resume_skips_unsatisfied_prerequisite","json_pointer":"/contracts/2/resume_contract/earliest_unsatisfied_prerequisite","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_resume_replays_work","json_pointer":"/contracts/2/resume_contract/replay_domain_work","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_resume_raw_chat","json_pointer":"/contracts/2/resume_contract/raw_chat_content","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_resume_credentials","json_pointer":"/contracts/2/resume_contract/credentials","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_resume_animation_geometry","json_pointer":"/contracts/2/resume_contract/transient_animation_geometry","replacement":true,"expected":"rejected"},
-    {"case_id":"tour_pause_keeps_decorative_work","json_pointer":"/contracts/2/resume_contract/pause_stops_decorative_work","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_replay_reuses_session","json_pointer":"/contracts/2/resume_contract/replay_starts_fresh_session","replacement":false,"expected":"rejected"},
-    {"case_id":"tour_fabricates_success","json_pointer":"/contracts/2/fabricated_success","replacement":true,"expected":"rejected"},
-    {"case_id": "doctor_private_mutation", "json_pointer": "/contracts/3/private_mutations", "replacement": true, "expected": "rejected"},
-    {"case_id": "hover_native_title_only", "json_pointer": "/contracts/4/accessible_relation", "replacement": "title", "expected": "rejected"},
-    {"case_id": "hover_accessible_description_delayed", "json_pointer": "/contracts/4/accessible_description_binding", "replacement": "after_dwell", "expected": "rejected"},
-    {"case_id": "retro_scale_drift", "json_pointer": "/contracts/4/retro_scales", "replacement": true, "expected": "rejected"},
-    {"case_id": "hover_pointer_residence_predecessor_timing", "json_pointer": "/contracts/4/pointer_residence_ms", "replacement": 1050, "expected": "rejected"},
-    {"case_id": "hover_pointer_stationary_predecessor_timing", "json_pointer": "/contracts/4/pointer_stationary_ms", "replacement": 750, "expected": "rejected"},
-    {"case_id": "hover_focus_dwell_predecessor_timing", "json_pointer": "/contracts/4/focus_dwell_ms", "replacement": 900, "expected": "rejected"},
-    {"case_id": "hover_departure_grace_predecessor_timing", "json_pointer": "/contracts/4/departure_grace_ms", "replacement": 220, "expected": "rejected"},
-    {"case_id": "evidence_rust_toolchain_drift", "json_pointer": "/contracts/5/rust_toolchain", "replacement": "nightly", "expected": "rejected"},
-    {"case_id": "evidence_class_missing", "json_pointer": "/contracts/5/evidence_classes", "replacement": ["static", "schema", "browser", "visual", "motion", "accessibility", "performance", "native_runtime"], "expected": "rejected"},
-    {"case_id": "evidence_classes_conflated", "json_pointer": "/contracts/5/evidence_classes_interchangeable", "replacement": true, "expected": "rejected"},
-    {"case_id": "browser_claimed_native", "json_pointer": "/contracts/5/browser_is_native_certification", "replacement": true, "expected": "rejected"},
-    {"case_id": "resampled_fps_claim", "json_pointer": "/contracts/5/resample_to_claim_60fps", "replacement": true, "expected": "rejected"},
-    {"case_id": "automation_legacy_id_remains_canonical", "json_pointer": "/contracts/6/activity_bar/occupant_id", "replacement": "github_actions", "expected": "rejected"},
-    {"case_id": "automation_adds_duplicate_occupant", "json_pointer": "/contracts/6/activity_bar/duplicate_occupant_allowed", "replacement": true, "expected": "rejected"},
-    {"case_id": "backup_browse_mutates", "json_pointer": "/contracts/6/snapshot_browse/read_only", "replacement": false, "expected": "rejected"},
-    {"case_id": "backup_preview_dispatches_prune", "json_pointer": "/contracts/6/backup_projection/prune_dispatched_from_preview", "replacement": true, "expected": "rejected"},
-    {"case_id": "recovery_kit_reaches_doctor", "json_pointer": "/contracts/6/recovery_kit_handoff/doctor_consumer_allowed", "replacement": true, "expected": "rejected"},
-    {"case_id": "recovery_kit_bytes_visible", "json_pointer": "/contracts/6/recovery_kit_handoff/key_or_kit_bytes_visible", "replacement": true, "expected": "rejected"},
-    {"case_id": "headscale_invents_funnel", "json_pointer": "/contracts/6/connector_projection/headscale_funnel_shown", "replacement": true, "expected": "rejected"},
-    {"case_id": "connector_exposes_protected_browser_content", "json_pointer": "/contracts/6/connector_projection/protected_browser_content_exposed", "replacement": true, "expected": "rejected"},
-    {"case_id": "gui_claims_runtime_evidence", "json_pointer": "/contracts/6/runtime_evidence_claimed", "replacement": true, "expected": "rejected"},
-    {"case_id": "gui_invents_event_family", "json_pointer": "/contracts/6/expected_event_types", "replacement": ["backup.completed"], "expected": "rejected"},
-    {"case_id": "jj_shows_git_staging", "json_pointer": "/contracts/7/jujutsu_visual_semantics/staging_visible", "replacement": true, "expected": "rejected"},
-    {"case_id": "jj_action_hides_git_mutation", "json_pointer": "/contracts/7/jujutsu_visual_semantics/hidden_git_mutation", "replacement": true, "expected": "rejected"},
-    {"case_id": "origin_gets_blanket_read_only_badge", "json_pointer": "/contracts/7/review_and_publication/blanket_origin_read_only_badge", "replacement": true, "expected": "rejected"},
-    {"case_id": "publication_outcome_unknown_painted_failed", "json_pointer": "/contracts/7/review_and_publication/outcome_unknown_distinct_from_failure", "replacement": false, "expected": "rejected"},
-    {"case_id": "automation_selector_always_shown", "json_pointer": "/contracts/7/selector_only_when_ambiguous", "replacement": false, "expected": "rejected"},
-    {"case_id": "provider_artifact_auto_executes", "json_pointer": "/contracts/7/related_surfaces/artifacts/7", "replacement": "download_auto_executes", "expected": "rejected"},
-    {"case_id": "remote_ci_claimed_as_local_test_proof", "json_pointer": "/contracts/7/related_surfaces/testing/2", "replacement": "remote_ci_is_local_test_proof", "expected": "rejected"},
-    {"case_id": "admin_secret_value_readback", "json_pointer": "/contracts/7/hosted_administration/secret_readback", "replacement": true, "expected": "rejected"},
-    {"case_id": "ci_enablement_registers_runner", "json_pointer": "/contracts/7/hosted_administration/enable_ci_registers_runner", "replacement": true, "expected": "rejected"},
-    {"case_id": "source_control_gui_claims_runtime", "json_pointer": "/contracts/7/runtime_evidence_claimed", "replacement": true, "expected": "rejected"},
-    {"case_id": "source_profile_preview_cannot_mutate_backend", "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/action_context/backend_mutated", "replacement": true, "expected": "rejected"},
-    {"case_id": "source_profile_preview_cannot_dispatch_domain_command", "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/domain_command_registered", "replacement": true, "expected": "rejected"},
-    {"case_id": "source_profile_preview_result_cannot_mutate_history", "json_pointer": "/contracts/7/local_action_pairs/profile_preview_result/result_detail/history_mutated", "replacement": true, "expected": "rejected"},
-    {"case_id": "source_profile_preview_rejects_unknown_profile", "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/action_context/selected_profile", "replacement": "mercurial", "expected": "rejected"},
-    {"case_id": "binding_select_cannot_mutate_repository_binding", "json_pointer": "/contracts/7/local_action_pairs/binding_select_request/action_context/repository_binding_mutated", "replacement": true, "expected": "rejected"},
-    {"case_id": "binding_select_result_cannot_mutate_automation_binding", "json_pointer": "/contracts/7/local_action_pairs/binding_select_result/result_detail/automation_binding_mutated", "replacement": true, "expected": "rejected"},
-    {"case_id": "binding_select_cannot_register_domain_command", "json_pointer": "/contracts/7/local_action_pairs/binding_select_request/domain_command_registered", "replacement": true, "expected": "rejected"},
-    {"case_id": "backup_history_route_must_target_backup_owner", "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_request/action_context/target_owner", "replacement": "Source Control", "expected": "rejected"},
-    {"case_id": "backup_history_open_cannot_request_restore", "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_request/action_context/restore_requested", "replacement": true, "expected": "rejected"},
-    {"case_id": "backup_history_open_result_cannot_mutate_backup", "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_result/result_detail/source_or_backup_mutation", "replacement": true, "expected": "rejected"},
-    {"case_id": "secret_reference_control_cannot_read_back_raw_secret", "json_pointer": "/contracts/8/authority_boundary/raw_secret_readback", "replacement": true, "expected": "rejected"},
-    {"case_id": "secret_reference_control_cannot_register_domain_command", "json_pointer": "/contracts/8/authority_boundary/domain_command_registered", "replacement": true, "expected": "rejected"},
-    {"case_id": "secret_reference_control_cannot_expose_protected_entry_to_agents", "json_pointer": "/contracts/8/authority_boundary/agents_or_adapters_can_access_protected_entry", "replacement": true, "expected": "rejected"},
-    {"case_id": "secret_reference_control_cannot_claim_runtime", "json_pointer": "/contracts/8/runtime_evidence_claimed", "replacement": true, "expected": "rejected"},
-    {"case_id": "human_step_up_visibility_is_not_authority", "json_pointer": "/contracts/9/authority_boundary/visibility_grants_authority", "replacement": true, "expected": "rejected"},
-    {"case_id": "human_step_up_button_is_not_authority", "json_pointer": "/contracts/9/authority_boundary/button_click_grants_authority", "replacement": true, "expected": "rejected"},
-    {"case_id": "human_step_up_stale_target_must_block_dispatch", "json_pointer": "/contracts/9/response_contract/stale_target_blocks_owner_dispatch", "replacement": false, "expected": "rejected"},
-    {"case_id": "human_step_up_optional_hitl_is_not_universal", "json_pointer": "/contracts/9/authority_boundary/optional_hitl_made_universal", "replacement": true, "expected": "rejected"},
-    {"case_id": "dry_reconciliation_denominator_cannot_revert_to_29", "json_pointer": "/contracts/10/packet_component_denominator", "replacement": 29, "expected": "rejected"},
-    {"case_id": "dry_reconciliation_cannot_create_duplicate_component", "json_pointer": "/contracts/10/duplicate_owner_or_component_created", "replacement": true, "expected": "rejected"},
-    {"case_id": "native_automation_tree_is_migration_read_only", "json_pointer": "/contracts/10/mappings/5/migration_read_alias_only", "replacement": false, "expected": "rejected"},
-    {"case_id": "dry_reconciliation_does_not_claim_packet_scenarios_run", "json_pointer": "/contracts/10/packet_scenarios_claimed_run", "replacement": true, "expected": "rejected"}
+    {
+      "case_id": "k3_rail_drift",
+      "json_pointer": "/contracts/0/rail_px",
+      "replacement": 240,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "new_settings_breadcrumb",
+      "json_pointer": "/contracts/0/new_back_or_breadcrumb",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "k3_workspace_tabs_removed",
+      "json_pointer": "/contracts/0/workspace_tabs",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "k3_responsive_width_order_drift",
+      "json_pointer": "/contracts/0/responsive_widths_px",
+      "replacement": [
+        320,
+        720,
+        960,
+        1180
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "k3_private_projection",
+      "json_pointer": "/contracts/0/owner_projection_only",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_choice_overload",
+      "json_pointer": "/contracts/1/max_prominent_choices",
+      "replacement": 4,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_blocks_input",
+      "json_pointer": "/contracts/1/input_blocking",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_immediate_mutation",
+      "json_pointer": "/contracts/1/selection_effect",
+      "replacement": "execute_immediately",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_connect_stage_count_drift",
+      "json_pointer": "/contracts/1/connect_existing_stage_count",
+      "replacement": 5,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_connect_stage_order_drift",
+      "json_pointer": "/contracts/1/connect_existing_stages",
+      "replacement": [
+        "welcome",
+        "path",
+        "review",
+        "access",
+        "preparing",
+        "ready"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_connect_path_runs_new_setup_stages",
+      "json_pointer": "/contracts/1/connect_existing_skips",
+      "replacement": [],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_back_label_drift",
+      "json_pointer": "/contracts/1/reverse_back_contract/action_label",
+      "replacement": "Previous",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_back_traversal_drift",
+      "json_pointer": "/contracts/1/reverse_back_contract/traversal",
+      "replacement": "previous_declared_stage",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_back_unavailable_before_apply",
+      "json_pointer": "/contracts/1/reverse_back_contract/available_before_apply",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_back_discards_queue",
+      "json_pointer": "/contracts/1/reverse_back_contract/preserves_queued_selections",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_roles_collapsed",
+      "json_pointer": "/contracts/1/independent_roles",
+      "replacement": [
+        "Server"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_roles_hidden",
+      "json_pointer": "/contracts/1/roles_visible",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_roles_moved_from_places",
+      "json_pointer": "/contracts/1/role_choice_stage",
+      "replacement": "path",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_theme_choice_delayed",
+      "json_pointer": "/contracts/1/theme_choice_stage",
+      "replacement": "path",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_theme_timing_late",
+      "json_pointer": "/contracts/1/theme_choice_timing",
+      "replacement": "after_project",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_theme_count_drift",
+      "json_pointer": "/contracts/1/theme_picker/themes",
+      "replacement": [
+        "Basic Dark",
+        "Basic Light"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_theme_picker_not_modal",
+      "json_pointer": "/contracts/1/theme_picker/presentation",
+      "replacement": "inline_grid",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_theme_modal_unbounded",
+      "json_pointer": "/contracts/1/theme_picker/bounded",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_safe_history_optional",
+      "json_pointer": "/contracts/1/safe_history/local_history_required",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_safe_history_backend_order_drift",
+      "json_pointer": "/contracts/1/safe_history/source_control_backends",
+      "replacement": [
+        "Jujutsu",
+        "Git"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_git_role_drift",
+      "json_pointer": "/contracts/1/safe_history/git_role",
+      "replacement": "forge",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_jujutsu_role_drift",
+      "json_pointer": "/contracts/1/safe_history/jujutsu_role",
+      "replacement": "recovery_history",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_filesafe_role_drift",
+      "json_pointer": "/contracts/1/safe_history/filesafe_role",
+      "replacement": "source_control_backend",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_filesafe_collapsed_into_source_control",
+      "json_pointer": "/contracts/1/safe_history/filesafe_is_source_control_backend",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_forge_role_drift",
+      "json_pointer": "/contracts/1/safe_history/forge_role",
+      "replacement": "local_recovery_history",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_forge_required",
+      "json_pointer": "/contracts/1/safe_history/forge_optional",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_forge_replaces_local_history",
+      "json_pointer": "/contracts/1/safe_history/forge_does_not_replace_local_history",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_remote_group_drift",
+      "json_pointer": "/contracts/1/remote_access/local_group",
+      "replacement": "Nearby_only",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_remote_option_order_drift",
+      "json_pointer": "/contracts/1/remote_access/remote_options",
+      "replacement": [
+        "Remote_Link",
+        "Tailscale_or_Headscale",
+        "reverse_proxy"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_remote_link_label_drift",
+      "json_pointer": "/contracts/1/remote_access/remote_link_label",
+      "replacement": "Remote access",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_remote_link_hidden",
+      "json_pointer": "/contracts/1/remote_access/remote_link_placement",
+      "replacement": "more_options",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_choice_help_duplicate_surfaces",
+      "json_pointer": "/contracts/1/choice_help/max_visible",
+      "replacement": 2,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_choice_help_hidden_copy_target",
+      "json_pointer": "/contracts/1/choice_help/target_id",
+      "replacement": "pm7ob-help-forgejo",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_review_cannot_go_back",
+      "json_pointer": "/contracts/1/review_apply/back_available_before_apply",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_owner_action_identity_drift",
+      "json_pointer": "/contracts/1/owner_action_identity",
+      "replacement": "private_onboarding_command",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_owner_projection_disabled",
+      "json_pointer": "/contracts/1/owner_projection_only",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_private_owner_mutation",
+      "json_pointer": "/contracts/1/private_owner_mutations",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_synthetic_command_family",
+      "json_pointer": "/contracts/1/synthetic_onboarding_commands",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_demo_shell",
+      "json_pointer": "/contracts/2/application_surface",
+      "replacement": "parallel_demo",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_usage_first",
+      "json_pointer": "/contracts/2/first_surface",
+      "replacement": "Usage",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_predecessor_scene_order",
+      "json_pointer": "/contracts/2/scenes",
+      "replacement": [
+        "usage",
+        "planning_wizard",
+        "chat_teacher"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_action_vocabulary_drift",
+      "json_pointer": "/contracts/2/actions",
+      "replacement": [
+        "ui.guided_tour.start"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_retired_restore_layout_action",
+      "json_pointer": "/contracts/2/actions/1",
+      "replacement": "ui.guided_tour.restore_layout",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_retired_keep_layout_action",
+      "json_pointer": "/contracts/2/actions/1",
+      "replacement": "ui.guided_tour.keep_layout",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_retired_toggle_reduced_motion_action",
+      "json_pointer": "/contracts/2/actions/1",
+      "replacement": "ui.guided_tour.toggle_reduced_motion",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_show_me_label_drift",
+      "json_pointer": "/contracts/2/practice_contract/show_me_label",
+      "replacement": "Watch",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_separate_mutation_path",
+      "json_pointer": "/contracts/2/practice_contract/same_mounted_owner_handler",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_unshared_predicate",
+      "json_pointer": "/contracts/2/practice_contract/same_success_predicate",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_timer_fabricates_practice",
+      "json_pointer": "/contracts/2/practice_contract/timer_satisfies_practice",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_next_bypasses_practice",
+      "json_pointer": "/contracts/2/practice_contract/generic_next_satisfies_practice",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_invisible_action_target",
+      "json_pointer": "/contracts/2/practice_contract/target_visible_before_action",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_uninterruptible_show_me",
+      "json_pointer": "/contracts/2/practice_contract/interruptible_choreography",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_planning_demo_surface",
+      "json_pointer": "/contracts/2/planning_contract/surface",
+      "replacement": "simulated_planning_wizard",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_planning_action_minority",
+      "json_pointer": "/contracts/2/planning_contract/minimum_meaningful_action_share",
+      "replacement": 0.49,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_planning_dwell_minority",
+      "json_pointer": "/contracts/2/planning_contract/minimum_meaningful_dwell_share",
+      "replacement": 0.49,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_edit_without_changed_answer",
+      "json_pointer": "/contracts/2/planning_contract/edit_requires_changed_answer",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_uncertainty_denies_shared_access",
+      "json_pointer": "/contracts/2/planning_contract/uncertain_answer_remains_unresolved",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_outcomes_rebuilt",
+      "json_pointer": "/contracts/2/planning_contract/unchanged_outcomes_retain_identity_and_position",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_unrelated_consequences_changed",
+      "json_pointer": "/contracts/2/planning_contract/only_affected_consequence_changes",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_wrong_opening_question",
+      "json_pointer": "/contracts/2/chat_contract/prompt",
+      "replacement": "What is a Project?",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_eli5_changes_answer",
+      "json_pointer": "/contracts/2/chat_contract/same_answer_eli5",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_copies_chat_content",
+      "json_pointer": "/contracts/2/chat_contract/tour_stores_refs_not_content",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_provider_fallthrough",
+      "json_pointer": "/contracts/2/chat_contract/local_example_provider_fallthrough",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_unobserved_zero_usage",
+      "json_pointer": "/contracts/2/chat_contract/zero_use_requires_observation",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_private_chat_send",
+      "json_pointer": "/contracts/2/chat_contract/domain_actions/1",
+      "replacement": "ui.assistant_chat.send",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_eli5_not_top_beside_pause_skip",
+      "json_pointer": "/contracts/2/top_controls",
+      "replacement": [
+        "Pause",
+        "Skip Tour",
+        "ELI5"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_reduced_motion_not_settings_owned",
+      "json_pointer": "/contracts/2/reduced_motion_owner",
+      "replacement": "Guided Tour",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_adds_reduced_motion_toggle",
+      "json_pointer": "/contracts/2/tour_reduced_motion_toggle",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_skip_loses_chat_or_draft",
+      "json_pointer": "/contracts/2/skip_restores",
+      "replacement": [
+        "pre_tour_layout",
+        "pre_tour_placeholder",
+        "pre_tour_focus"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_implicit_keep",
+      "json_pointer": "/contracts/2/finish_contract/default_layout_disposition",
+      "replacement": "keep",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_keep_not_explicit",
+      "json_pointer": "/contracts/2/finish_contract/keep_requires_explicit_selection",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_chat_final",
+      "json_pointer": "/contracts/2/finish_contract/real_destination",
+      "replacement": "chat_teacher",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_leaves_practice",
+      "json_pointer": "/contracts/2/finish_contract/practice_removed",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_without_project",
+      "json_pointer": "/contracts/2/finish_contract/committed_project_selected",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_starts_work",
+      "json_pointer": "/contracts/2/finish_contract/work_started",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_grants_approval",
+      "json_pointer": "/contracts/2/finish_contract/grants_approval",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_finish_second_approval",
+      "json_pointer": "/contracts/2/finish_contract/second_approval_fence",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_restore_failure_completes",
+      "json_pointer": "/contracts/2/finish_contract/restoration_failure_can_complete",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_without_owner_revalidation",
+      "json_pointer": "/contracts/2/resume_contract/owner_state_revalidated",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_skips_unsatisfied_prerequisite",
+      "json_pointer": "/contracts/2/resume_contract/earliest_unsatisfied_prerequisite",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_replays_work",
+      "json_pointer": "/contracts/2/resume_contract/replay_domain_work",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_raw_chat",
+      "json_pointer": "/contracts/2/resume_contract/raw_chat_content",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_credentials",
+      "json_pointer": "/contracts/2/resume_contract/credentials",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_resume_animation_geometry",
+      "json_pointer": "/contracts/2/resume_contract/transient_animation_geometry",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_pause_keeps_decorative_work",
+      "json_pointer": "/contracts/2/resume_contract/pause_stops_decorative_work",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_replay_reuses_session",
+      "json_pointer": "/contracts/2/resume_contract/replay_starts_fresh_session",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_fabricates_success",
+      "json_pointer": "/contracts/2/fabricated_success",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "doctor_private_mutation",
+      "json_pointer": "/contracts/3/private_mutations",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_native_title_only",
+      "json_pointer": "/contracts/4/accessible_relation",
+      "replacement": "title",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_accessible_description_delayed",
+      "json_pointer": "/contracts/4/accessible_description_binding",
+      "replacement": "after_dwell",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "retro_scale_drift",
+      "json_pointer": "/contracts/4/retro_scales",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_pointer_residence_predecessor_timing",
+      "json_pointer": "/contracts/4/pointer_residence_ms",
+      "replacement": 1050,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_pointer_stationary_predecessor_timing",
+      "json_pointer": "/contracts/4/pointer_stationary_ms",
+      "replacement": 750,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_focus_dwell_predecessor_timing",
+      "json_pointer": "/contracts/4/focus_dwell_ms",
+      "replacement": 900,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "hover_departure_grace_predecessor_timing",
+      "json_pointer": "/contracts/4/departure_grace_ms",
+      "replacement": 220,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "evidence_rust_toolchain_drift",
+      "json_pointer": "/contracts/5/rust_toolchain",
+      "replacement": "nightly",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "evidence_class_missing",
+      "json_pointer": "/contracts/5/evidence_classes",
+      "replacement": [
+        "static",
+        "schema",
+        "browser",
+        "visual",
+        "motion",
+        "accessibility",
+        "performance",
+        "native_runtime"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "evidence_classes_conflated",
+      "json_pointer": "/contracts/5/evidence_classes_interchangeable",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "browser_claimed_native",
+      "json_pointer": "/contracts/5/browser_is_native_certification",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "resampled_fps_claim",
+      "json_pointer": "/contracts/5/resample_to_claim_60fps",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "automation_legacy_id_remains_canonical",
+      "json_pointer": "/contracts/6/activity_bar/occupant_id",
+      "replacement": "github_actions",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "automation_adds_duplicate_occupant",
+      "json_pointer": "/contracts/6/activity_bar/duplicate_occupant_allowed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "backup_browse_mutates",
+      "json_pointer": "/contracts/6/snapshot_browse/read_only",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "backup_preview_dispatches_prune",
+      "json_pointer": "/contracts/6/backup_projection/prune_dispatched_from_preview",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "recovery_kit_reaches_doctor",
+      "json_pointer": "/contracts/6/recovery_kit_handoff/doctor_consumer_allowed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "recovery_kit_bytes_visible",
+      "json_pointer": "/contracts/6/recovery_kit_handoff/key_or_kit_bytes_visible",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "headscale_invents_funnel",
+      "json_pointer": "/contracts/6/connector_projection/headscale_funnel_shown",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "connector_exposes_protected_browser_content",
+      "json_pointer": "/contracts/6/connector_projection/protected_browser_content_exposed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "gui_claims_runtime_evidence",
+      "json_pointer": "/contracts/6/runtime_evidence_claimed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "gui_invents_event_family",
+      "json_pointer": "/contracts/6/expected_event_types",
+      "replacement": [
+        "backup.completed"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "jj_shows_git_staging",
+      "json_pointer": "/contracts/7/jujutsu_visual_semantics/staging_visible",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "jj_action_hides_git_mutation",
+      "json_pointer": "/contracts/7/jujutsu_visual_semantics/hidden_git_mutation",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "origin_gets_blanket_read_only_badge",
+      "json_pointer": "/contracts/7/review_and_publication/blanket_origin_read_only_badge",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "publication_outcome_unknown_painted_failed",
+      "json_pointer": "/contracts/7/review_and_publication/outcome_unknown_distinct_from_failure",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "automation_selector_always_shown",
+      "json_pointer": "/contracts/7/selector_only_when_ambiguous",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "provider_artifact_auto_executes",
+      "json_pointer": "/contracts/7/related_surfaces/artifacts/7",
+      "replacement": "download_auto_executes",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "remote_ci_claimed_as_local_test_proof",
+      "json_pointer": "/contracts/7/related_surfaces/testing/2",
+      "replacement": "remote_ci_is_local_test_proof",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "admin_secret_value_readback",
+      "json_pointer": "/contracts/7/hosted_administration/secret_readback",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "ci_enablement_registers_runner",
+      "json_pointer": "/contracts/7/hosted_administration/enable_ci_registers_runner",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "source_control_gui_claims_runtime",
+      "json_pointer": "/contracts/7/runtime_evidence_claimed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "source_profile_preview_cannot_mutate_backend",
+      "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/action_context/backend_mutated",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "source_profile_preview_cannot_dispatch_domain_command",
+      "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/domain_command_registered",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "source_profile_preview_result_cannot_mutate_history",
+      "json_pointer": "/contracts/7/local_action_pairs/profile_preview_result/result_detail/history_mutated",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "source_profile_preview_rejects_unknown_profile",
+      "json_pointer": "/contracts/7/local_action_pairs/profile_preview_request/action_context/selected_profile",
+      "replacement": "mercurial",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "binding_select_cannot_mutate_repository_binding",
+      "json_pointer": "/contracts/7/local_action_pairs/binding_select_request/action_context/repository_binding_mutated",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "binding_select_result_cannot_mutate_automation_binding",
+      "json_pointer": "/contracts/7/local_action_pairs/binding_select_result/result_detail/automation_binding_mutated",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "binding_select_cannot_register_domain_command",
+      "json_pointer": "/contracts/7/local_action_pairs/binding_select_request/domain_command_registered",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "backup_history_route_must_target_backup_owner",
+      "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_request/action_context/target_owner",
+      "replacement": "Source Control",
+      "expected": "rejected"
+    },
+    {
+      "case_id": "backup_history_open_cannot_request_restore",
+      "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_request/action_context/restore_requested",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "backup_history_open_result_cannot_mutate_backup",
+      "json_pointer": "/contracts/7/local_action_pairs/backup_history_open_result/result_detail/source_or_backup_mutation",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "secret_reference_control_cannot_read_back_raw_secret",
+      "json_pointer": "/contracts/8/authority_boundary/raw_secret_readback",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "secret_reference_control_cannot_register_domain_command",
+      "json_pointer": "/contracts/8/authority_boundary/domain_command_registered",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "secret_reference_control_cannot_expose_protected_entry_to_agents",
+      "json_pointer": "/contracts/8/authority_boundary/agents_or_adapters_can_access_protected_entry",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "secret_reference_control_cannot_claim_runtime",
+      "json_pointer": "/contracts/8/runtime_evidence_claimed",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "human_step_up_visibility_is_not_authority",
+      "json_pointer": "/contracts/9/authority_boundary/visibility_grants_authority",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "human_step_up_button_is_not_authority",
+      "json_pointer": "/contracts/9/authority_boundary/button_click_grants_authority",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "human_step_up_stale_target_must_block_dispatch",
+      "json_pointer": "/contracts/9/response_contract/stale_target_blocks_owner_dispatch",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "human_step_up_optional_hitl_is_not_universal",
+      "json_pointer": "/contracts/9/authority_boundary/optional_hitl_made_universal",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "dry_reconciliation_denominator_cannot_revert_to_29",
+      "json_pointer": "/contracts/10/packet_component_denominator",
+      "replacement": 29,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "dry_reconciliation_cannot_create_duplicate_component",
+      "json_pointer": "/contracts/10/duplicate_owner_or_component_created",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "native_automation_tree_is_migration_read_only",
+      "json_pointer": "/contracts/10/mappings/5/migration_read_alias_only",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "dry_reconciliation_does_not_claim_packet_scenarios_run",
+      "json_pointer": "/contracts/10/packet_scenarios_claimed_run",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_predecessor_nine_stage_graph",
+      "json_pointer": "/contracts/1/stages",
+      "replacement": [
+        "welcome",
+        "simple_path",
+        "first_project",
+        "source_control_setup",
+        "server_storage_client",
+        "remote_access_setup",
+        "review_setup_plan",
+        "automatic_preparation",
+        "ready"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_predecessor_nine_stage_count",
+      "json_pointer": "/contracts/1/stage_count",
+      "replacement": 9,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_provider_setup_before_real_project",
+      "json_pointer": "/contracts/1/provider_setup_requires_actual_project_commit",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_free_models_before_paid_phase",
+      "json_pointer": "/contracts/1/free_models_after_paid_ready_or_explicit_skip",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_copy_settings_without_explicit_opt_in",
+      "json_pointer": "/contracts/1/copy_settings_explicit_opt_in",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_settings_copy_without_owner_rebind",
+      "json_pointer": "/contracts/1/copy_settings_requires_precommit_preview_and_postcommit_rebind",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_precommit_broad_mutation",
+      "json_pointer": "/contracts/1/precommit_mutations_except_necessary_selected_source_auth",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_back_undoes_or_repeats_commit",
+      "json_pointer": "/contracts/1/back_replays_commit_or_returns_to_uncreated_draft",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_close_loses_committed_project",
+      "json_pointer": "/contracts/1/close_retains_existing_project_and_exact_phase",
+      "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "onboarding_deferred_project_requires_provider_setup",
+      "json_pointer": "/contracts/1/deferred_project_stages",
+      "replacement": [
+        "welcome",
+        "simple_path",
+        "first_project",
+        "source_control_setup",
+        "server_storage_client",
+        "remote_access_setup",
+        "review_setup_plan",
+        "automatic_preparation",
+        "provider_setup",
+        "free_models_setup",
+        "ready"
+      ],
+      "expected": "rejected"
+    }
   ]
 }
