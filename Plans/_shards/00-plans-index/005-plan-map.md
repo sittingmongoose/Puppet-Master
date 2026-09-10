@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L265-L613
+Source lines: L268-L616
 
-Source SHA256: `22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be`
+Source SHA256: `83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926`
 
 ---
 
@@ -246,7 +246,7 @@ The five retained implementation packets extend canon through distinct owners ra
 - `Plans/Source_Control_System.md` owns common Git/source-control repository, workspace, status, diff, history, fetch/sync/publish semantics. `Plans/Jujutsu_Integration.md` owns JJ-specific changes, bookmarks, operations, Git interchange, and workspaces. `Plans/Forge_Integrations.md` owns provider-neutral hosted-forge reviews, pipelines, webhooks, repositories, mirrors, and connections.
 - `Plans/Cursor_Origin_Integration.md`, `Plans/GitLab_Integration.md`, `Plans/Azure_DevOps_Integration.md`, and `Plans/Bitbucket_Integration.md` are provider-specific consumers of the common forge/auth/install/connection contracts. They do not create `cmd.origin.*`, `cmd.gitlab.*`, `cmd.azure_devops.*`, or generic `cmd.bitbucket.*` primary namespaces. Cursor Origin remains a brief Preview insertion, not an SCM backend or dedicated Onboarding subsystem.
 - `Plans/Section15_MVP_Promoted_Features_Spec.md` remains the PM-native Browser/Browser Program owner. Protected `AuthBrowserSession` is human-only, ephemeral, non-recordable, non-inspectable, non-exportable, and unavailable to agents and adapters.
-- `Plans/Planning_Wizard.md` owns the bounded nine-stage Product Onboarding modal (`welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready`), its six-stage connect-existing shortcut (`welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready`), and the directed live-workspace Guided Tour (`usage -> planning_wizard -> chat_teacher`); `Plans/newtools.md` N2-151 owns Doctor registry/routing. Onboarding records local Safe History selection independently from any optional online forge copy, queues all external work until the person confirms Review, and consumes owner commands, projections, `ObservableWork`, and receipts rather than privately installing, authenticating, creating, pairing, restoring, routing, moving storage, or mutating source control. The tour uses mounted controls and a deterministic local Teacher practice rather than a parallel demo application.
+- `Plans/Planning_Wizard.md` owns Product Onboarding's v2 bounded modal graphs and thirteen local actions (PWIZ-021): uncreated Project draft, Settings-owned explicit copy preview, narrowly admitted read-only preflight/necessary source sign-in, exact Project-owner commit, then paid-provider and Free Models phases. Connect-existing and explicit Project Later consume their own owner-defined graphs without a fabricated Project. PJCT-007, SSYS-036, MACS-005, FGI-011, MS-122 and SP-252 retain the domain/physical-storage boundaries. PWIZ-023 separately owns the v3 `chat_teacher -> workspace -> planning_wizard` Tour, shared Try it/Show Me predicates, safe checkpoint and default restoration or explicit Keep. Final GUI and wiring consume these definitions rather than a second stage/field roster; `Plans/newtools.md` N2-151 owns Doctor registry/routing. Static schema, fixture and source coverage do not prove native handlers, protected authentication, durable adapters, runtime, motion or visual acceptance.
 
 ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Remote_Access_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Test_Capture_and_Motion_Evidence.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Cursor_Origin_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Azure_DevOps_Integration.md, ContractName:Plans/Bitbucket_Integration.md, ContractName:Plans/Named_Plan_System.md
 

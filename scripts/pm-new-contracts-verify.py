@@ -8,6 +8,7 @@ Slint, browser, WAN, recovery, security, performance, or readiness evidence.
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import re
 import sys
@@ -27,6 +28,7 @@ if str(ROOT / "scripts") not in sys.path:
 from pm_full_thread_semantics import full_thread_semantic_failures
 from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
+from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -982,6 +984,10 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/product_onboarding_contracts.schema.json":
+        return onboarding_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/settings_system_contracts.schema.json":
+        return settings_draft_semantic_failures(definition_name, value)
     if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
         return browser_program_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
@@ -1092,6 +1098,19 @@ def validate_server_remote_inventory(
     return findings
 
 
+def validate_onboarding_storage_contract() -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Check the existing family's offline owner bundle, not native persistence."""
+    try:
+        spec = importlib.util.spec_from_file_location("onboarding_storage_contract", ROOT / "scripts/pm-onboarding-contracts.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        failures = module.validate(load_json(ROOT / "Plans/storage_value_registry.json"))
+    except (OSError, ValueError, KeyError, TypeError, SchemaError) as exc:
+        return [{"code": "onboarding_storage_contract_unreadable", "detail": str(exc)}], {"onboarding_storage_contracts_checked": 1}
+    return ([{"code": code, "path": "Plans/storage_value_registry.json"} for code in failures],
+            {"onboarding_storage_contracts_checked": 1, "onboarding_storage_contracts_valid": int(not failures)})
+
+
 def main() -> int:
     findings: list[dict[str, Any]] = []
     counts = Counter()
@@ -1106,6 +1125,10 @@ def main() -> int:
     counts["internal_self_tests"] = self_test_count
     counts["internal_self_tests_passed"] = self_test_count - len(self_test_failures)
     findings.extend(self_test_failures)
+
+    storage_findings, storage_counts = validate_onboarding_storage_contract()
+    findings.extend(storage_findings)
+    counts.update(storage_counts)
 
     try:
         schema_registry = offline_schema_registry()

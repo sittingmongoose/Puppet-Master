@@ -528,6 +528,16 @@
             "encrypted_admitted",
             null
           ]
+        },
+        "first_time_source_auth": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/FirstTimeSourceAuthBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -675,17 +685,64 @@
                     "$ref": "#/$defs/NonSecretRef"
                   }
                 }
-              },
-              "profile_id": {
-                "$ref": "#/$defs/NonSecretRef"
-              },
-              "account_id": {
-                "$ref": "#/$defs/NonSecretRef"
-              },
-              "installation_id": {
-                "$ref": "#/$defs/NonSecretRef"
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "payload": {
+                      "properties": {
+                        "first_time_source_auth": {
+                          "$ref": "#/$defs/FirstTimeSourceAuthBinding"
+                        }
+                      },
+                      "required": [
+                        "first_time_source_auth"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "payload"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "profile_id": {
+                      "type": "null"
+                    },
+                    "account_id": {
+                      "type": "null"
+                    },
+                    "installation_id": {
+                      "type": "null"
+                    },
+                    "expected_auth_revision": {
+                      "const": 0
+                    },
+                    "expected_profile_generation": {
+                      "const": 0
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "profile_id": {
+                      "$ref": "#/$defs/NonSecretRef"
+                    },
+                    "account_id": {
+                      "$ref": "#/$defs/NonSecretRef"
+                    },
+                    "installation_id": {
+                      "$ref": "#/$defs/NonSecretRef"
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -731,6 +788,35 @@
                     "$ref": "#/$defs/NonSecretRef"
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "payload": {
+                "properties": {
+                  "first_time_source_auth": {
+                    "$ref": "#/$defs/FirstTimeSourceAuthBinding"
+                  }
+                },
+                "required": [
+                  "first_time_source_auth"
+                ]
+              }
+            },
+            "required": [
+              "payload"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.sign_in"
+              },
+              "origin": {
+                "const": "human_gui"
               }
             }
           }
@@ -2150,6 +2236,72 @@
           "$ref": "#/$defs/ReturnSettlement"
         }
       }
+    },
+    "FirstTimeSourceAuthBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "selected_source_ref",
+        "onboarding_session_ref",
+        "project_draft_ref",
+        "project_draft_revision",
+        "source_authorization_ref",
+        "route_capability_snapshot_ref",
+        "owner_issuance_ref",
+        "route_scope",
+        "installation_requirement",
+        "profile_creation_policy",
+        "project_created",
+        "repository_mutation_allowed",
+        "filesystem_mutation_allowed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.multi_account.first_time_source_auth_binding.v1"
+        },
+        "selected_source_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "onboarding_session_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_authorization_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "route_capability_snapshot_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "owner_issuance_ref": {
+          "$ref": "#/$defs/NonSecretRef"
+        },
+        "route_scope": {
+          "const": "source_control_host"
+        },
+        "installation_requirement": {
+          "const": "not_required"
+        },
+        "profile_creation_policy": {
+          "const": "owner_allocates_only_after_verified_identity"
+        },
+        "project_created": {
+          "const": false
+        },
+        "repository_mutation_allowed": {
+          "const": false
+        },
+        "filesystem_mutation_allowed": {
+          "const": false
+        }
+      },
+      "description": "Auth-owner-issued, selected-source-only no-profile/no-Project bootstrap. The owner verifies the exact provider/route has no CLI installation requirement, the source permission/consent and initiating Client, then allocates real profile/account identities only after verification; this value is not a new physical receipt or permission grant."
     }
   },
   "x-owner-command-count": 12,

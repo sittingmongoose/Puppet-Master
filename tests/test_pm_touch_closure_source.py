@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import importlib.util
+import argparse
+import copy
 import json
 from pathlib import Path
 import sys
@@ -187,6 +189,42 @@ class WholeCommandAccountingTests(unittest.TestCase):
         report = self.inspection.whole_wiring_inventory(ROOT, '`cmd.alpha.one`', rows, [])
         self.assertEqual(report["errors"][0]["code"], "whole_wiring_invalid_contract_reference")
         self.assertEqual(report["commands"][0]["wiring_rows"][0]["missing_machine_contract_fields"], ["result_schema_ref"])
+
+    def test_exact_and_wildcard_exclusions_cannot_reappear_as_peer_rows(self):
+        rows = {"a": {"ui_command_id": "cmd.legacy.one", "handler_location": "handlers::legacy::one"}}
+        for excluded in (["cmd.legacy.one"], ["cmd.legacy.*"]):
+            report = self.inspection.whole_wiring_inventory(ROOT, '`cmd.legacy.one`', rows, [], excluded)
+            self.assertEqual(report["errors"][0]["code"], "whole_wiring_excluded_command_has_peer_row")
+        self.assertFalse(self.inspection.wiring_command_excluded("cmd.legacy.one", ["cmd.legacy"]))
+
+    def test_standard_gate_rejects_peer_alias_and_competing_revert_handler(self):
+        gate = load_module("whole_wiring_standard_gate", ROOT / "scripts/pm-plans-verify.py")
+        matrix_path = ROOT / "Plans/Wiring_Matrix.production.json"
+        original_load = gate.load_json
+        baseline = original_load(matrix_path)
+        mutations = [("cmd.actions.pin", "excluded_command_has_peer_production_wiring"),
+                     ("cmd.chat.revert", "command_has_no_sole_handler_identity")]
+        for cid, expected_error in mutations:
+            altered = copy.deepcopy(baseline)
+            row = copy.deepcopy(altered["entries"]["catalog.chat_revert"])
+            row.update(ui_element_id="synthetic.peer", ui_command_id=cid, handler_location="handlers::synthetic::peer")
+            altered["entries"]["synthetic.peer"] = row
+            def fixture_load(path):
+                return altered if Path(path) == matrix_path else original_load(path)
+            with self.subTest(command=cid), mock.patch.object(gate, "load_json", side_effect=fixture_load):
+                result = gate.cmd_validate_wiring_matrix(argparse.Namespace())
+            self.assertEqual(result["status"], "fail")
+            self.assertTrue(any(item.get("error") == expected_error for item in result["failures"]))
+
+    def test_live_wiring_has_resolved_owners_one_handler_and_no_excluded_peers(self):
+        matrix = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())
+        exclusions = json.loads((ROOT / "Plans/Wiring_Matrix.production.exclusions.json").read_text())
+        report = self.inspection.whole_wiring_inventory(
+            ROOT, (ROOT / "Plans/UI_Command_Catalog.md").read_text(), matrix["entries"], [], exclusions["excluded_tokens"])
+        self.assertEqual(report["errors"], [])
+        revert = next(c for c in report["commands"] if c["command_id"] == "cmd.chat.revert")
+        self.assertEqual(revert["sole_declared_handlers"], ["handlers::chat::revert"])
+        self.assertEqual(report["wiring_row_count"], sum(len(c["wiring_rows"]) for c in report["commands"]))
 
 
 if __name__ == "__main__":

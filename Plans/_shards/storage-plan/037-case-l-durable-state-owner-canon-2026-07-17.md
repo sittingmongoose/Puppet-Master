@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L16869-L17754
 
-Source SHA256: `f3090c4a1bf60ce0a2933c71fda487e07a406e8d5fafbcc06eba773072d1628d`
+Source SHA256: `77aad50ae3c8e61ba068a4c1074f59db24685b150b3598c1e3122744093fb435`
 
 ---
 
@@ -509,7 +509,7 @@ Required-MVP storage family routing also includes these distinct materialized fa
 - per-file `editor_buffer_recovery_state` at `editor_state.v1:{project_id}:{file_path_hash}`;
 - sibling project-wide `editor_workspace_state` at `editor_workspace_state.v1:{project_id}`; Final GUI's `editor_state:v1:{project_id}` is its read-only migration alias and MUST NOT route to the per-file family or contain unsaved buffer bytes;
 - `hotreload_state` at `hotreload_state.v1:{project_id}`, with `hotreload_state:v1:{project_id}` read-only during migration;
-- `onboarding_state` at `onboarding_state.v1:{project_id}`, with global `onboarding:v1` read-only and copy-forward permitted only when the project target is unambiguous.
+- `onboarding_state` through SP-252's current session key/value and exact predecessor-key roster; its global legacy input requires unambiguous Project/session mapping and never authorizes replaying Project creation.
 
 Storage prose is routing inventory until the machine registry owner materializes the rows; this section does not hand-author their closed value schemas. Required-family aliases are coordinator-owned copy-forward inputs, not lazy ordinary-writer rewrite-on-save rules.
 
