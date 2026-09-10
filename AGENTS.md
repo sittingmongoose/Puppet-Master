@@ -71,13 +71,16 @@ Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are
 
 ### Where to work
 - Never work on `main` in the shared checkout `/mnt/Cursor/PuppetMaster`. It is for landing only.
-- Make your own worktree and branch from the current `main`. The mount assigns new directories to another owner, so the first line is required:
+- Make your own worktree and branch from the current `main`, on the VM's local disk under `~/pm-worktrees/`, never on the mount. The mount is a network share: every `git status`, checkout and regeneration in a worktree there walks the tree over NFS and slows every other agent, and the periodic scans that the Codex app-server and the Claude desktop server run against an open checkout do the same. A sparse worktree is under 1 GB and the VM disk has room. The first line is still required even on local disk: the worktree's git directory lives inside the shared checkout's `.git` on the mount, which assigns it to another owner.
   ```
-  git config --global --add safe.directory /mnt/Cursor/PuppetMaster-research/<name>-<date>
-  git -C /mnt/Cursor/PuppetMaster worktree add --no-checkout -b <kind>/<name>-<date> /mnt/Cursor/PuppetMaster-research/<name>-<date> origin/main
-  cd /mnt/Cursor/PuppetMaster-research/<name>-<date> && git sparse-checkout set Plans scripts reports Concepts && git checkout <kind>/<name>-<date>
+  git config --global --add safe.directory ~/pm-worktrees/<name>-<date>
+  git -C /mnt/Cursor/PuppetMaster fetch origin
+  git -C /mnt/Cursor/PuppetMaster worktree add --no-checkout -b <kind>/<name>-<date> ~/pm-worktrees/<name>-<date> origin/main
+  cd ~/pm-worktrees/<name>-<date> && git sparse-checkout set Plans scripts reports Concepts && git checkout <kind>/<name>-<date>
   ```
-  Drop directories you do not need from the sparse set. Branch kinds: `research/`, `audit/`, `concept/`, `plans/`, `fix/`.
+  Drop directories you do not need from the sparse set. Branch kinds: `research/`, `audit/`, `concept/`, `plans/`, `fix/`. The object store stays with the shared checkout on the mount; only your index and working tree are local, which is what makes git fast.
+- Open your thread, IDE or Codex session in your worktree, not in the shared checkout, so the harness scans hit local disk.
+- Worktrees that already exist on the mount under `/mnt/Cursor/PuppetMaster-research/` may finish the branch they are on; create no new ones there.
 
 ### How to commit and push
 - Commit only the paths you changed, with a message that says what they are. Never `git add -A` or `git add .`. Never commit another thread's edits.
