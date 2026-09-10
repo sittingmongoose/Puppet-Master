@@ -438,53 +438,940 @@
         {"if": {"properties": {"state": {"const": "revoked"}}, "required": ["state"]}, "then": {"properties": {"revoked_at_utc": {"$ref": "#/$defs/timestamp"}}}}
       ]
     },
+    "emergency_recovery_consent": {
+      "title": "Verified one-restore emergency consent binding",
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A bounded binding to existing Permissions human consent and owner validation receipts, not a new Backup receipt family or proof that a recovery point exists.",
+      "required": [
+        "schema_id",
+        "consent_receipt_ref",
+        "unavailability_evidence_ref",
+        "actor_kind",
+        "actor_ref",
+        "authorization_ref",
+        "validation_receipt_ref",
+        "restore_run_id",
+        "mode",
+        "target_server_id",
+        "target_project_ids",
+        "idempotency_key",
+        "preview_receipt_ref",
+        "approval_receipt_ref",
+        "issued_at_utc",
+        "validated_at_utc",
+        "expires_at_utc",
+        "intent",
+        "scope",
+        "verified_unavailable",
+        "risks_acknowledged",
+        "recovery_point_claimed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_restore_system.emergency_recovery_consent.v1"
+        },
+        "consent_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "unavailability_evidence_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_kind": {
+          "const": "human"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "authorization_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "validation_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "restore_run_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "mode": {
+          "$ref": "#/$defs/restore_mode"
+        },
+        "target_server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "target_project_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "preview_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "approval_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "validated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "intent": {
+          "const": "restore_without_pre_restore_recovery"
+        },
+        "scope": {
+          "const": "this_restore_only"
+        },
+        "verified_unavailable": {
+          "const": true
+        },
+        "risks_acknowledged": {
+          "const": true
+        },
+        "recovery_point_claimed": {
+          "const": false
+        }
+      }
+    },
+    "restore_recovery_prerequisite": {
+      "description": "Exactly one pre-staging prerequisite: an actual verified recovery receipt, or validated human consent after verified unavailability. Consent never makes rollback available.",
+      "oneOf": [
+        {
+          "required": [
+            "recovery_point_receipt_ref"
+          ],
+          "properties": {
+            "recovery_point_receipt_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "emergency_recovery_consent": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "required": [
+            "restore_run_id",
+            "emergency_recovery_consent",
+            "preview_receipt_ref",
+            "approval_receipt_ref"
+          ],
+          "properties": {
+            "recovery_point_receipt_ref": {
+              "type": "null"
+            },
+            "emergency_recovery_consent": {
+              "$ref": "#/$defs/emergency_recovery_consent"
+            },
+            "preview_receipt_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "approval_receipt_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          }
+        }
+      ]
+    },
     "restore_run": {
       "title": "RestoreRun",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "restore_run_id", "backup_id", "manifest_id", "snapshot_ids", "mode", "state", "source_server_id", "target_server_id", "source_project_ids", "target_project_ids", "selected_family_ids", "settings_strategy", "identity_policy", "recovery_safe_mode", "recovery_coordinator_ref", "preview_receipt_ref", "approval_receipt_ref", "recovery_point_receipt_ref", "staged_verification_receipt_ref", "identity_resolution_ref", "credential_resolution_ref", "source_location_resolution_ref", "derived_rebuild_ref", "post_restore_verification_ref", "rollback_ref", "observable_work_ref", "phase_journal", "idempotency_key", "failure_ref", "started_at_utc", "updated_at_utc", "terminal_at_utc"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "restore_run_id",
+        "backup_id",
+        "manifest_id",
+        "snapshot_ids",
+        "mode",
+        "state",
+        "source_server_id",
+        "target_server_id",
+        "source_project_ids",
+        "target_project_ids",
+        "selected_family_ids",
+        "settings_strategy",
+        "identity_policy",
+        "recovery_safe_mode",
+        "recovery_coordinator_ref",
+        "preview_receipt_ref",
+        "approval_receipt_ref",
+        "recovery_point_receipt_ref",
+        "staged_verification_receipt_ref",
+        "identity_resolution_ref",
+        "credential_resolution_ref",
+        "source_location_resolution_ref",
+        "derived_rebuild_ref",
+        "post_restore_verification_ref",
+        "rollback_ref",
+        "observable_work_ref",
+        "phase_journal",
+        "idempotency_key",
+        "failure_ref",
+        "started_at_utc",
+        "updated_at_utc",
+        "terminal_at_utc",
+        "mutation_applied",
+        "client_cache_invalidation_ref"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.backup_restore_system.restore_run.v2"},
-        "schema_version": {"const": "2.0.0"},
-        "restore_run_id": {"$ref": "#/$defs/stable_id"},
-        "backup_id": {"$ref": "#/$defs/stable_id"},
-        "manifest_id": {"$ref": "#/$defs/stable_id"},
-        "snapshot_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
-        "mode": {"$ref": "#/$defs/restore_mode"},
-        "state": {"$ref": "#/$defs/restore_state"},
-        "source_server_id": {"$ref": "#/$defs/stable_id"},
-        "target_server_id": {"$ref": "#/$defs/stable_id"},
-        "source_project_ids": {"$ref": "#/$defs/id_list"},
-        "target_project_ids": {"$ref": "#/$defs/id_list"},
-        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
-        "settings_strategy": {"enum": ["not_applicable", "merge", "replace"]},
-        "identity_policy": {"enum": ["new_identity", "same_project_new_recovery_epoch", "explicit_fenced_takeover"]},
-        "recovery_safe_mode": {"type": "boolean"},
-        "recovery_coordinator_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "preview_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "approval_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "staged_verification_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "identity_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "credential_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "source_location_resolution_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "derived_rebuild_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "post_restore_verification_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "rollback_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "phase_journal": {"$ref": "#/$defs/phase_journal"},
-        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
-        "failure_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-        "started_at_utc": {"$ref": "#/$defs/timestamp"},
-        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
-        "terminal_at_utc": {"$ref": "#/$defs/nullable_timestamp"}
+        "schema_id": {
+          "const": "pm.backup_restore_system.restore_run.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "restore_run_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "backup_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        },
+        "manifest_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        },
+        "snapshot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/restore_mode"
+        },
+        "state": {
+          "$ref": "#/$defs/restore_state"
+        },
+        "source_server_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        },
+        "target_server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "source_project_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "target_project_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "selected_family_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/family_id"
+          }
+        },
+        "settings_strategy": {
+          "enum": [
+            "not_applicable",
+            "merge",
+            "replace"
+          ]
+        },
+        "identity_policy": {
+          "enum": [
+            "new_identity",
+            "same_project_new_recovery_epoch",
+            "explicit_fenced_takeover"
+          ]
+        },
+        "recovery_safe_mode": {
+          "type": "boolean"
+        },
+        "recovery_coordinator_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "preview_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "approval_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "recovery_point_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "staged_verification_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "identity_resolution_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "credential_resolution_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "source_location_resolution_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "derived_rebuild_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "post_restore_verification_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "rollback_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "phase_journal": {
+          "$ref": "#/$defs/phase_journal"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "failure_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "terminal_at_utc": {
+          "$ref": "#/$defs/nullable_timestamp"
+        },
+        "mutation_applied": {
+          "type": "boolean"
+        },
+        "client_cache_invalidation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "emergency_recovery_consent": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/emergency_recovery_consent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "allOf": [
-        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
-        {"if": {"properties": {"mode": {"const": "as_new"}}, "required": ["mode"]}, "then": {"properties": {"identity_policy": {"const": "new_identity"}}}},
-        {"if": {"properties": {"mode": {"const": "in_place"}}, "required": ["mode"]}, "then": {"properties": {"identity_policy": {"const": "same_project_new_recovery_epoch"}}}},
-        {"if": {"properties": {"mode": {"const": "server_full"}}, "required": ["mode"]}, "then": {"properties": {"recovery_safe_mode": {"const": true}}}},
-        {"if": {"properties": {"state": {"const": "complete"}}, "required": ["state"]}, "then": {"properties": {"staged_verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "post_restore_verification_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_ref": {"type": "null"}, "terminal_at_utc": {"$ref": "#/$defs/timestamp"}}}}
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "reading_manifest"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "backup_id": {
+                "$ref": "#/$defs/stable_id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "compatibility_check",
+                  "previewing",
+                  "waiting_for_approval",
+                  "pre_restore_backup",
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "backup_id": {
+                "$ref": "#/$defs/stable_id"
+              },
+              "manifest_id": {
+                "$ref": "#/$defs/stable_id"
+              },
+              "source_server_id": {
+                "$ref": "#/$defs/stable_id"
+              },
+              "snapshot_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "previewing",
+                  "waiting_for_approval",
+                  "pre_restore_backup",
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "selected_family_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "waiting_for_approval",
+                  "pre_restore_backup",
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "preview_receipt_ref"
+            ],
+            "properties": {
+              "preview_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "pre_restore_backup",
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "approval_receipt_ref"
+            ],
+            "properties": {
+              "approval_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/restore_recovery_prerequisite"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "staged_verification_receipt_ref"
+            ],
+            "properties": {
+              "staged_verification_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "identity_resolution_ref"
+            ],
+            "properties": {
+              "identity_resolution_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "resolving_source_locations",
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "credential_resolution_ref"
+            ],
+            "properties": {
+              "credential_resolution_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "quiescing",
+                  "activating",
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "source_location_resolution_ref"
+            ],
+            "properties": {
+              "source_location_resolution_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "selecting_backup",
+                  "reading_manifest",
+                  "compatibility_check",
+                  "previewing",
+                  "waiting_for_approval",
+                  "pre_restore_backup",
+                  "staging",
+                  "verifying_staged_data",
+                  "resolving_identity",
+                  "resolving_credentials",
+                  "resolving_source_locations",
+                  "quiescing"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "mutation_applied": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "rebuilding_derived_state",
+                  "post_restore_verifying",
+                  "complete",
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "mutation_applied": {
+                "const": true
+              },
+              "phase_journal": {
+                "properties": {
+                  "commit_marker_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation_applied": {
+                "const": true
+              }
+            },
+            "required": [
+              "mutation_applied"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/restore_recovery_prerequisite"
+              },
+              {
+                "required": [
+                  "preview_receipt_ref",
+                  "approval_receipt_ref",
+                  "staged_verification_receipt_ref",
+                  "identity_resolution_ref",
+                  "credential_resolution_ref",
+                  "source_location_resolution_ref"
+                ],
+                "properties": {
+                  "preview_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "approval_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "staged_verification_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "identity_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "credential_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "source_location_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "backup_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "manifest_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "source_server_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "snapshot_ids": {
+                    "minItems": 1
+                  },
+                  "selected_family_ids": {
+                    "minItems": 1
+                  },
+                  "phase_journal": {
+                    "properties": {
+                      "commit_marker_ref": {
+                        "$ref": "#/$defs/non_secret_ref"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "derived_rebuild_ref",
+                  "post_restore_verification_ref",
+                  "client_cache_invalidation_ref"
+                ],
+                "properties": {
+                  "derived_rebuild_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "post_restore_verification_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "client_cache_invalidation_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "failure_ref": {
+                    "type": "null"
+                  },
+                  "terminal_at_utc": {
+                    "$ref": "#/$defs/timestamp"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "failure_ref"
+            ],
+            "properties": {
+              "failure_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "rollback_available",
+                  "rolling_back"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "recovery_point_receipt_ref",
+              "rollback_ref"
+            ],
+            "properties": {
+              "recovery_point_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "rollback_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "as_new"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "identity_policy": {
+                "const": "new_identity"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "in_place"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "identity_policy": {
+                "const": "same_project_new_recovery_epoch"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "server_full"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "recovery_safe_mode": {
+                "const": true
+              }
+            }
+          }
+        }
       ]
     },
     "preview_change": {
@@ -505,36 +1392,192 @@
       "title": "RestorePreview",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "restore_preview_id", "preview_sha256", "backup_id", "manifest_id", "snapshot_ids", "mode", "settings_strategy", "identity_policy", "target_server_id", "target_project_ids", "selected_family_ids", "compatibility_result", "manifest_verification_result", "mutation_planned", "recovery_point_required", "identity_rewrite_required", "changes", "blocking_reason_refs", "warning_refs", "created_at_utc", "expires_at_utc", "currentness_ref"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "restore_preview_id",
+        "preview_sha256",
+        "backup_id",
+        "manifest_id",
+        "snapshot_ids",
+        "mode",
+        "settings_strategy",
+        "identity_policy",
+        "target_server_id",
+        "target_project_ids",
+        "selected_family_ids",
+        "compatibility_result",
+        "manifest_verification_result",
+        "mutation_planned",
+        "recovery_point_required",
+        "identity_rewrite_required",
+        "changes",
+        "blocking_reason_refs",
+        "warning_refs",
+        "created_at_utc",
+        "expires_at_utc",
+        "currentness_ref",
+        "emergency_recovery_exception"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.backup_restore_system.restore_preview.v2"},
-        "schema_version": {"const": "2.0.0"},
-        "restore_preview_id": {"$ref": "#/$defs/stable_id"},
-        "preview_sha256": {"$ref": "#/$defs/sha256"},
-        "backup_id": {"$ref": "#/$defs/stable_id"},
-        "manifest_id": {"$ref": "#/$defs/stable_id"},
-        "snapshot_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
-        "mode": {"$ref": "#/$defs/restore_mode"},
-        "settings_strategy": {"enum": ["not_applicable", "merge", "replace"]},
-        "identity_policy": {"enum": ["new_identity", "same_project_new_recovery_epoch", "explicit_fenced_takeover"]},
-        "target_server_id": {"$ref": "#/$defs/stable_id"},
-        "target_project_ids": {"$ref": "#/$defs/id_list"},
-        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
-        "compatibility_result": {"enum": ["compatible", "migration_required", "incompatible", "unknown"]},
-        "manifest_verification_result": {"enum": ["passed", "failed", "not_run"]},
-        "mutation_planned": {"type": "boolean"},
-        "recovery_point_required": {"type": "boolean"},
-        "identity_rewrite_required": {"type": "boolean"},
-        "changes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/preview_change"}},
-        "blocking_reason_refs": {"$ref": "#/$defs/ref_list"},
-        "warning_refs": {"$ref": "#/$defs/ref_list"},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"},
-        "expires_at_utc": {"$ref": "#/$defs/timestamp"},
-        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"}
+        "schema_id": {
+          "const": "pm.backup_restore_system.restore_preview.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "restore_preview_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "preview_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "backup_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "manifest_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "snapshot_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/restore_mode"
+        },
+        "settings_strategy": {
+          "enum": [
+            "not_applicable",
+            "merge",
+            "replace"
+          ]
+        },
+        "identity_policy": {
+          "enum": [
+            "new_identity",
+            "same_project_new_recovery_epoch",
+            "explicit_fenced_takeover"
+          ]
+        },
+        "target_server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "target_project_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "selected_family_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/family_id"
+          }
+        },
+        "compatibility_result": {
+          "enum": [
+            "compatible",
+            "migration_required",
+            "incompatible",
+            "unknown"
+          ]
+        },
+        "manifest_verification_result": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_run"
+          ]
+        },
+        "mutation_planned": {
+          "type": "boolean"
+        },
+        "recovery_point_required": {
+          "type": "boolean",
+          "description": "Normal default. This preview does not grant the emergency exception; restore_recovery_prerequisite requires separate verified-unavailability and bound human-consent validation."
+        },
+        "identity_rewrite_required": {
+          "type": "boolean"
+        },
+        "changes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/preview_change"
+          }
+        },
+        "blocking_reason_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "warning_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "emergency_recovery_exception": {
+          "const": "verified_unavailability_and_scoped_human_consent_only"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"mutation_planned": {"const": true}, "recovery_point_required": {"const": true}}}},
-        {"if": {"properties": {"mode": {"const": "as_new"}}, "required": ["mode"]}, "then": {"properties": {"identity_rewrite_required": {"const": true}, "identity_policy": {"const": "new_identity"}}}}
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "enum": [
+                  "as_new",
+                  "in_place",
+                  "selective",
+                  "server_full"
+                ]
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "mutation_planned": {
+                "const": true
+              },
+              "recovery_point_required": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "as_new"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "identity_rewrite_required": {
+                "const": true
+              },
+              "identity_policy": {
+                "const": "new_identity"
+              }
+            }
+          }
+        }
       ]
     },
     "receipt_common": {
@@ -616,7 +1659,7 @@
       "title": "RestorePreviewReceipt",
       "allOf": [
         {"$ref": "#/$defs/receipt_common"},
-        {"type": "object", "required": ["schema_id", "restore_preview_id", "backup_id", "manifest_id", "mode", "target_server_id", "target_project_ids", "selected_family_ids", "compatibility_result", "manifest_verification_result", "mutation_planned", "recovery_point_required", "identity_rewrite_required", "blocking_reason_refs", "warning_refs", "terminal_status", "expires_at_utc", "currentness_ref"], "properties": {
+        {"type": "object", "required": ["schema_id", "restore_preview_id", "backup_id", "manifest_id", "mode", "target_server_id", "target_project_ids", "selected_family_ids", "compatibility_result", "manifest_verification_result", "mutation_planned", "recovery_point_required", "emergency_recovery_exception", "identity_rewrite_required", "blocking_reason_refs", "warning_refs", "terminal_status", "expires_at_utc", "currentness_ref"], "properties": {
           "schema_id": {"const": "pm.backup_restore_system.restore_preview_receipt.v1"},
           "restore_preview_id": {"$ref": "#/$defs/stable_id"},
           "backup_id": {"$ref": "#/$defs/stable_id"},
@@ -629,6 +1672,7 @@
           "manifest_verification_result": {"enum": ["passed", "failed", "not_run"]},
           "mutation_planned": {"type": "boolean"},
           "recovery_point_required": {"type": "boolean"},
+          "emergency_recovery_exception": {"const": "verified_unavailability_and_scoped_human_consent_only"},
           "identity_rewrite_required": {"type": "boolean"},
           "blocking_reason_refs": {"$ref": "#/$defs/ref_list"},
           "warning_refs": {"$ref": "#/$defs/ref_list"},
@@ -661,38 +1705,353 @@
     "restore_receipt": {
       "title": "RestoreReceipt",
       "allOf": [
-        {"$ref": "#/$defs/receipt_common"},
-        {"type": "object", "required": ["schema_id", "restore_run_id", "backup_id", "manifest_id", "mode", "source_server_id", "target_server_id", "source_project_ids", "target_project_ids", "selected_family_ids", "terminal_status", "preview_receipt_ref", "approval_receipt_ref", "recovery_point_receipt_ref", "staged_verification_receipt_ref", "post_restore_verification_ref", "identity_resolution_ref", "source_location_resolution_ref", "derived_rebuild_ref", "integration_readiness", "mutation_applied", "rollback_available", "rollback_ref", "quarantine_ref", "client_cache_invalidation_ref"], "properties": {
-          "schema_id": {"const": "pm.backup_restore_system.restore_receipt.v1"},
-          "restore_run_id": {"$ref": "#/$defs/stable_id"},
-          "backup_id": {"$ref": "#/$defs/stable_id"},
-          "manifest_id": {"$ref": "#/$defs/stable_id"},
-          "mode": {"$ref": "#/$defs/restore_mode"},
-          "source_server_id": {"$ref": "#/$defs/stable_id"},
-          "target_server_id": {"$ref": "#/$defs/stable_id"},
-          "source_project_ids": {"$ref": "#/$defs/id_list"},
-          "target_project_ids": {"$ref": "#/$defs/id_list"},
-          "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
-          "terminal_status": {"enum": ["complete", "verified_browse_only", "rolled_back", "blocked", "failed", "recovery_required"]},
-          "preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-          "approval_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-          "recovery_point_receipt_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-          "staged_verification_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-          "post_restore_verification_ref": {"$ref": "#/$defs/non_secret_ref"},
-          "identity_resolution_ref": {"$ref": "#/$defs/non_secret_ref"},
-          "source_location_resolution_ref": {"$ref": "#/$defs/non_secret_ref"},
-          "derived_rebuild_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-          "integration_readiness": {"type": "array", "items": {"$ref": "#/$defs/integration_readiness_item"}},
-          "mutation_applied": {"type": "boolean"},
-          "rollback_available": {"type": "boolean"},
-          "rollback_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-          "quarantine_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
-          "client_cache_invalidation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
-        }},
-        {"if": {"properties": {"mode": {"enum": ["as_new", "in_place", "selective", "server_full"]}}, "required": ["mode"]}, "then": {"properties": {"approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}, "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
-        {"if": {"properties": {"terminal_status": {"const": "complete"}}, "required": ["terminal_status"]}, "then": {"properties": {"mutation_applied": {"const": true}, "derived_rebuild_ref": {"$ref": "#/$defs/non_secret_ref"}, "client_cache_invalidation_ref": {"$ref": "#/$defs/non_secret_ref"}, "failure_refs": {"maxItems": 0}}}},
-        {"if": {"properties": {"terminal_status": {"enum": ["blocked", "failed", "recovery_required"]}}, "required": ["terminal_status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}}}},
-        {"if": {"properties": {"terminal_status": {"const": "rolled_back"}}, "required": ["terminal_status"]}, "then": {"properties": {"rollback_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+        {
+          "$ref": "#/$defs/receipt_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "schema_id",
+            "restore_run_id",
+            "backup_id",
+            "manifest_id",
+            "mode",
+            "source_server_id",
+            "target_server_id",
+            "source_project_ids",
+            "target_project_ids",
+            "selected_family_ids",
+            "terminal_status",
+            "preview_receipt_ref",
+            "approval_receipt_ref",
+            "recovery_point_receipt_ref",
+            "staged_verification_receipt_ref",
+            "post_restore_verification_ref",
+            "identity_resolution_ref",
+            "source_location_resolution_ref",
+            "derived_rebuild_ref",
+            "integration_readiness",
+            "mutation_applied",
+            "rollback_available",
+            "rollback_ref",
+            "quarantine_ref",
+            "client_cache_invalidation_ref",
+            "credential_resolution_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.backup_restore_system.restore_receipt.v1"
+            },
+            "restore_run_id": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "backup_id": {
+              "$ref": "#/$defs/nullable_stable_id"
+            },
+            "manifest_id": {
+              "$ref": "#/$defs/nullable_stable_id"
+            },
+            "mode": {
+              "$ref": "#/$defs/restore_mode"
+            },
+            "source_server_id": {
+              "$ref": "#/$defs/nullable_stable_id"
+            },
+            "target_server_id": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "source_project_ids": {
+              "$ref": "#/$defs/id_list"
+            },
+            "target_project_ids": {
+              "$ref": "#/$defs/id_list"
+            },
+            "selected_family_ids": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/family_id"
+              }
+            },
+            "terminal_status": {
+              "enum": [
+                "complete",
+                "verified_browse_only",
+                "rolled_back",
+                "blocked",
+                "failed",
+                "recovery_required"
+              ]
+            },
+            "preview_receipt_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "approval_receipt_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "recovery_point_receipt_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "staged_verification_receipt_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "post_restore_verification_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "identity_resolution_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "source_location_resolution_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "derived_rebuild_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "integration_readiness": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/integration_readiness_item"
+              }
+            },
+            "mutation_applied": {
+              "type": "boolean"
+            },
+            "rollback_available": {
+              "type": "boolean"
+            },
+            "rollback_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "quarantine_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "client_cache_invalidation_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "credential_resolution_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "emergency_recovery_consent": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/emergency_recovery_consent"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "terminal_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "mutation_applied": {
+                "const": true
+              },
+              "derived_rebuild_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "client_cache_invalidation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "failure_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "enum": [
+                  "blocked",
+                  "failed",
+                  "recovery_required"
+                ]
+              }
+            },
+            "required": [
+              "terminal_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "failure_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "rolled_back"
+              }
+            },
+            "required": [
+              "terminal_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rollback_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation_applied": {
+                "const": true
+              }
+            },
+            "required": [
+              "mutation_applied"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/restore_recovery_prerequisite"
+              },
+              {
+                "required": [
+                  "preview_receipt_ref",
+                  "approval_receipt_ref",
+                  "staged_verification_receipt_ref",
+                  "identity_resolution_ref",
+                  "credential_resolution_ref",
+                  "source_location_resolution_ref"
+                ],
+                "properties": {
+                  "preview_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "approval_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "staged_verification_receipt_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "identity_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "credential_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "source_location_resolution_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "backup_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "manifest_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "source_server_id": {
+                    "$ref": "#/$defs/stable_id"
+                  },
+                  "selected_family_ids": {
+                    "minItems": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "terminal_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "post_restore_verification_ref"
+            ],
+            "properties": {
+              "post_restore_verification_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "rolled_back"
+              }
+            },
+            "required": [
+              "terminal_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "recovery_point_receipt_ref",
+              "post_restore_verification_ref"
+            ],
+            "properties": {
+              "recovery_point_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "post_restore_verification_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rollback_available": {
+                "const": true
+              }
+            },
+            "required": [
+              "rollback_available"
+            ]
+          },
+          "then": {
+            "required": [
+              "recovery_point_receipt_ref",
+              "rollback_ref"
+            ],
+            "properties": {
+              "recovery_point_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "rollback_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
       ],
       "unevaluatedProperties": false
     },
@@ -1116,94 +2475,849 @@
       "description": "One owner-DRY request envelope for the exact 41 canonical backup/restore commands. Conditional branches add action-specific repository, destination, snapshot, RecoverySet, currentness, preview, protected-channel, lease, confirmation, and target requirements.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "actor_ref", "permission_snapshot_ref", "idempotency_key", "expected_currentness_ref", "expected_currentness_sha256", "source_surface", "return_route_ref"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "expected_currentness_ref",
+        "expected_currentness_sha256",
+        "source_surface",
+        "return_route_ref"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.backup_restore_system.command_request.v1"},
-        "schema_version": {"const": "1.0.0"},
-        "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
-        "command_instance_id": {"$ref": "#/$defs/stable_id"},
-        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
-        "expected_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "expected_currentness_sha256": {"$ref": "#/$defs/sha256"},
-        "source_surface": {"enum": ["settings", "bootstrap", "server_card", "project_card", "files", "source_control", "jujutsu_history", "onboarding", "doctor", "command_palette", "api", "automation"]},
-        "return_route_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
-        "destination_config_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "expected_destination_generation": {"type": "integer", "minimum": 0},
-        "backup_policy_id": {"$ref": "#/$defs/stable_id"},
-        "policy_patch_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "expected_policy_revision": {"type": "integer", "minimum": 0},
-        "backup_id": {"$ref": "#/$defs/stable_id"},
-        "backup_type": {"$ref": "#/$defs/backup_type"},
-        "backup_run_id": {"$ref": "#/$defs/stable_id"},
-        "restore_run_id": {"$ref": "#/$defs/stable_id"},
-        "restore_mode": {"$ref": "#/$defs/restore_mode"},
-        "restore_preview_id": {"$ref": "#/$defs/stable_id"},
-        "preview_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "preview_currentness_sha256": {"$ref": "#/$defs/sha256"},
-        "recovery_point_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "approval_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "confirmation_receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "target_server_id": {"$ref": "#/$defs/stable_id"},
-        "target_project_ids": {"$ref": "#/$defs/id_list"},
-        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
-        "new_project_name": {"type": "string", "minLength": 1, "maxLength": 160},
-        "protection_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "portable_secret_envelope_ref": {"$ref": "#/$defs/stable_id"},
-        "recovery_key_record_ref": {"$ref": "#/$defs/stable_id"}
-        ,"destination_family": {"enum": ["aws_s3", "s3_compatible", "backblaze_b2", "azure_blob", "gcs", "google_drive", "onedrive", "local_nas", "sftp", "webdav", "rest_server"]}
-        ,"repository_id": {"$ref": "#/$defs/stable_id"}
-        ,"repository_revision": {"type": "integer", "minimum": 0}
-        ,"snapshot_id": {"$ref": "#/$defs/stable_id"}
-        ,"capture_set_id": {"$ref": "#/$defs/stable_id"}
-        ,"recovery_set_id": {"$ref": "#/$defs/stable_id"}
-        ,"recovery_set_generation": {"type": "integer", "minimum": 1}
-        ,"initiating_client_id": {"$ref": "#/$defs/stable_id"}
-        ,"source_host_id": {"$ref": "#/$defs/stable_id"}
-        ,"source_environment_id": {"$ref": "#/$defs/stable_id"}
-        ,"selected_path_refs": {"$ref": "#/$defs/ref_list"}
-        ,"target_host_id": {"$ref": "#/$defs/stable_id"}
-        ,"target_path_authorization_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"filesafe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"protected_submission_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"human_step_up_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"retention_preview_id": {"$ref": "#/$defs/stable_id"}
-        ,"candidate_set_sha256": {"$ref": "#/$defs/sha256"}
-        ,"maintenance_lease_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"archive_consent_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}
-        ,"new_recovery_set_id": {"$ref": "#/$defs/stable_id"}
+        "schema_id": {
+          "const": "pm.backup_restore_system.command_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "$ref": "#/$defs/backup_restore_command_id"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_surface": {
+          "enum": [
+            "settings",
+            "bootstrap",
+            "server_card",
+            "project_card",
+            "files",
+            "source_control",
+            "jujutsu_history",
+            "onboarding",
+            "doctor",
+            "command_palette",
+            "api",
+            "automation"
+          ]
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "backup_destination_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "destination_config_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "backup_policy_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "policy_patch_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "backup_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "backup_type": {
+          "$ref": "#/$defs/backup_type"
+        },
+        "backup_run_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "restore_run_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "restore_mode": {
+          "$ref": "#/$defs/restore_mode"
+        },
+        "restore_preview_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "preview_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "preview_currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "recovery_point_receipt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "approval_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "confirmation_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "target_project_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "selected_family_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/family_id"
+          }
+        },
+        "new_project_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "protection_policy_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "portable_secret_envelope_ref": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "recovery_key_record_ref": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "destination_family": {
+          "enum": [
+            "aws_s3",
+            "s3_compatible",
+            "backblaze_b2",
+            "azure_blob",
+            "gcs",
+            "google_drive",
+            "onedrive",
+            "local_nas",
+            "sftp",
+            "webdav",
+            "rest_server"
+          ]
+        },
+        "repository_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "repository_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "capture_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "recovery_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "recovery_set_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "source_host_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "source_environment_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "selected_path_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "target_host_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "target_path_authorization_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "filesafe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "protected_submission_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "human_step_up_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "retention_preview_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "candidate_set_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "maintenance_lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "archive_consent_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "new_recovery_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "emergency_recovery_consent": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/emergency_recovery_consent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "allOf": [
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.add"}}}, "then": {"required": ["target_server_id", "destination_config_ref"]}},
-        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.destination.update", "cmd.backup.destination.test"]}}}, "then": {"required": ["target_server_id", "backup_destination_id", "expected_destination_generation"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.remove"}}}, "then": {"required": ["target_server_id", "backup_destination_id", "expected_destination_generation", "confirmation_receipt_ref"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.policy.update"}}}, "then": {"required": ["target_server_id", "backup_policy_id", "policy_patch_ref", "expected_policy_revision"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.project.create"}}}, "then": {"required": ["target_server_id", "target_project_ids", "backup_destination_id", "backup_policy_id", "expected_policy_revision", "backup_type"], "properties": {"backup_type": {"const": "project_backup"}, "target_project_ids": {"minItems": 1, "maxItems": 1}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.server.create"}}}, "then": {"required": ["target_server_id", "backup_destination_id", "backup_policy_id", "expected_policy_revision", "backup_type"], "properties": {"backup_type": {"const": "full_server_backup"}}}},
-        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.cancel", "cmd.backup.retry"]}}}, "then": {"required": ["backup_run_id"]}},
-        {"if": {"properties": {"command_id": {"enum": ["cmd.backup.verify", "cmd.backup.test_restore", "cmd.backup.browse", "cmd.backup.open_details"]}}}, "then": {"required": ["backup_id"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.delete"}}}, "then": {"required": ["backup_id", "confirmation_receipt_ref"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.protect"}}}, "then": {"required": ["backup_id", "protection_policy_ref"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.backup.open_history"}}}, "then": {"required": ["target_server_id"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.preview"}}}, "then": {"required": ["backup_id", "restore_mode", "target_server_id", "selected_family_ids"]}},
-        {"if": {"properties": {"command_id": {"enum": ["cmd.restore.project_in_place", "cmd.restore.project_as_new", "cmd.restore.selective"]}}}, "then": {"required": ["backup_id", "restore_preview_id", "preview_receipt_ref", "preview_currentness_sha256", "recovery_point_receipt_ref", "approval_receipt_ref", "confirmation_receipt_ref", "target_server_id", "target_project_ids", "selected_family_ids"], "properties": {"target_project_ids": {"minItems": 1}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.project_in_place"}}}, "then": {"required": ["restore_mode"], "properties": {"restore_mode": {"const": "in_place"}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.project_as_new"}}}, "then": {"required": ["restore_mode", "new_project_name"], "properties": {"restore_mode": {"const": "as_new"}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.selective"}}}, "then": {"required": ["restore_mode"], "properties": {"restore_mode": {"const": "selective"}}}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.server_full"}}}, "then": {"required": ["backup_id", "restore_mode", "restore_preview_id", "preview_receipt_ref", "preview_currentness_sha256", "recovery_point_receipt_ref", "approval_receipt_ref", "confirmation_receipt_ref", "target_server_id"], "properties": {"restore_mode": {"const": "server_full"}}}},
-        {"if": {"properties": {"command_id": {"enum": ["cmd.restore.cancel", "cmd.restore.retry", "cmd.restore.open_details"]}}}, "then": {"required": ["restore_run_id"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.restore.rollback"}}}, "then": {"required": ["restore_run_id", "recovery_point_receipt_ref", "confirmation_receipt_ref", "target_server_id"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.destination.discover"}}}, "then": {"required": ["target_server_id", "destination_family"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.retention.preview"}}}, "then": {"required": ["repository_id", "repository_revision", "backup_policy_id", "expected_policy_revision"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.prune"}}}, "then": {"required": ["repository_id", "repository_revision", "backup_policy_id", "expected_policy_revision", "retention_preview_id", "candidate_set_sha256", "maintenance_lease_ref", "confirmation_receipt_ref"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.unlock"}}}, "then": {"required": ["repository_id", "recovery_set_id", "recovery_set_generation", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref"]}}
-        ,{"if": {"properties": {"command_id": {"enum": ["cmd.backup.file.download", "cmd.backup.extract", "cmd.backup.file.compare", "cmd.backup.export"]}}}, "then": {"required": ["repository_id", "snapshot_id", "capture_set_id", "backup_destination_id", "target_server_id", "initiating_client_id", "source_host_id", "source_environment_id", "selected_path_refs", "filesafe_decision_ref"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.extract"}}}, "then": {"required": ["target_host_id", "target_path_authorization_ref"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.archive.retrieve"}}}, "then": {"required": ["repository_id", "snapshot_id", "backup_destination_id", "initiating_client_id", "archive_consent_receipt_ref"]}}
-        ,{"if": {"properties": {"command_id": {"enum": ["cmd.backup.recovery_key.export", "cmd.backup.recovery_key.copy", "cmd.backup.recovery_key.print", "cmd.backup.recovery_key.test", "cmd.backup.recovery_key.acknowledge_saved", "cmd.backup.recovery_key.rotate"]}}}, "then": {"required": ["recovery_set_id", "recovery_set_generation", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref"]}}
-        ,{"if": {"properties": {"command_id": {"const": "cmd.backup.recovery_key.reencrypt"}}}, "then": {"required": ["recovery_set_id", "recovery_set_generation", "new_recovery_set_id", "repository_id", "repository_revision", "initiating_client_id", "human_step_up_receipt_ref", "protected_submission_ref", "maintenance_lease_ref", "confirmation_receipt_ref"]}}
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.destination.add"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "destination_config_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.backup.destination.update",
+                  "cmd.backup.destination.test"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "backup_destination_id",
+              "expected_destination_generation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.destination.remove"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "backup_destination_id",
+              "expected_destination_generation",
+              "confirmation_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.policy.update"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "backup_policy_id",
+              "policy_patch_ref",
+              "expected_policy_revision"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.project.create"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "target_project_ids",
+              "backup_destination_id",
+              "backup_policy_id",
+              "expected_policy_revision",
+              "backup_type"
+            ],
+            "properties": {
+              "backup_type": {
+                "const": "project_backup"
+              },
+              "target_project_ids": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.server.create"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "backup_destination_id",
+              "backup_policy_id",
+              "expected_policy_revision",
+              "backup_type"
+            ],
+            "properties": {
+              "backup_type": {
+                "const": "full_server_backup"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.backup.cancel",
+                  "cmd.backup.retry"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_run_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.backup.verify",
+                  "cmd.backup.test_restore",
+                  "cmd.backup.browse",
+                  "cmd.backup.open_details"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.delete"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "confirmation_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.protect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "protection_policy_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.open_history"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.preview"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "restore_mode",
+              "target_server_id",
+              "selected_family_ids"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.restore.project_in_place",
+                  "cmd.restore.project_as_new",
+                  "cmd.restore.selective"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "restore_preview_id",
+              "preview_receipt_ref",
+              "preview_currentness_sha256",
+              "approval_receipt_ref",
+              "confirmation_receipt_ref",
+              "target_server_id",
+              "target_project_ids",
+              "selected_family_ids"
+            ],
+            "properties": {
+              "target_project_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.project_in_place"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "restore_mode"
+            ],
+            "properties": {
+              "restore_mode": {
+                "const": "in_place"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.project_as_new"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "restore_mode",
+              "new_project_name"
+            ],
+            "properties": {
+              "restore_mode": {
+                "const": "as_new"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.selective"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "restore_mode"
+            ],
+            "properties": {
+              "restore_mode": {
+                "const": "selective"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.server_full"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "restore_mode",
+              "restore_preview_id",
+              "preview_receipt_ref",
+              "preview_currentness_sha256",
+              "approval_receipt_ref",
+              "confirmation_receipt_ref",
+              "target_server_id"
+            ],
+            "properties": {
+              "restore_mode": {
+                "const": "server_full"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.restore.cancel",
+                  "cmd.restore.retry",
+                  "cmd.restore.open_details"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "restore_run_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.rollback"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "restore_run_id",
+              "recovery_point_receipt_ref",
+              "confirmation_receipt_ref",
+              "target_server_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.destination.discover"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_server_id",
+              "destination_family"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.retention.preview"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "repository_revision",
+              "backup_policy_id",
+              "expected_policy_revision"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.prune"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "repository_revision",
+              "backup_policy_id",
+              "expected_policy_revision",
+              "retention_preview_id",
+              "candidate_set_sha256",
+              "maintenance_lease_ref",
+              "confirmation_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.unlock"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "recovery_set_id",
+              "recovery_set_generation",
+              "initiating_client_id",
+              "human_step_up_receipt_ref",
+              "protected_submission_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.backup.file.download",
+                  "cmd.backup.extract",
+                  "cmd.backup.file.compare",
+                  "cmd.backup.export"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "snapshot_id",
+              "capture_set_id",
+              "backup_destination_id",
+              "target_server_id",
+              "initiating_client_id",
+              "source_host_id",
+              "source_environment_id",
+              "selected_path_refs",
+              "filesafe_decision_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.extract"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_host_id",
+              "target_path_authorization_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.archive.retrieve"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "snapshot_id",
+              "backup_destination_id",
+              "initiating_client_id",
+              "archive_consent_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.backup.recovery_key.export",
+                  "cmd.backup.recovery_key.copy",
+                  "cmd.backup.recovery_key.print",
+                  "cmd.backup.recovery_key.test",
+                  "cmd.backup.recovery_key.acknowledge_saved",
+                  "cmd.backup.recovery_key.rotate"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "recovery_set_id",
+              "recovery_set_generation",
+              "initiating_client_id",
+              "human_step_up_receipt_ref",
+              "protected_submission_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.backup.recovery_key.reencrypt"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "recovery_set_id",
+              "recovery_set_generation",
+              "new_recovery_set_id",
+              "repository_id",
+              "repository_revision",
+              "initiating_client_id",
+              "human_step_up_receipt_ref",
+              "protected_submission_ref",
+              "maintenance_lease_ref",
+              "confirmation_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.restore.project_in_place",
+                  "cmd.restore.project_as_new",
+                  "cmd.restore.selective",
+                  "cmd.restore.server_full"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/restore_recovery_prerequisite"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.restore.rollback"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "recovery_point_receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "emergency_recovery_consent": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "emergency_recovery_consent"
+            ],
+            "properties": {
+              "emergency_recovery_consent": {
+                "type": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.restore.project_in_place",
+                  "cmd.restore.project_as_new",
+                  "cmd.restore.selective",
+                  "cmd.restore.server_full"
+                ]
+              }
+            }
+          }
+        }
       ]
     },
     "backup_restore_command_result": {
@@ -1467,35 +3581,201 @@
       "title": "RestoreOperationalSafetyRecord",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "recovery_sequence", "immutable_snapshot_selection", "preview_is_untrusted", "restore_modes", "selective_dependency_closure", "pre_restore_recovery_required", "target_lease_required", "filesafe_required", "cross_filesystem_activation", "durable_restore_run", "resource_governor_ref", "external_effect_states", "object_lock_requires_tested_profile", "shared_components", "handler_availability", "expected_event_types", "proc_execution_evidence", "runtime_evidence_claimed"],
+      "required": [
+        "schema_id",
+        "recovery_sequence",
+        "immutable_snapshot_selection",
+        "preview_is_untrusted",
+        "restore_modes",
+        "selective_dependency_closure",
+        "pre_restore_recovery_required",
+        "target_lease_required",
+        "filesafe_required",
+        "cross_filesystem_activation",
+        "durable_restore_run",
+        "resource_governor_ref",
+        "external_effect_states",
+        "object_lock_requires_tested_profile",
+        "shared_components",
+        "handler_availability",
+        "expected_event_types",
+        "proc_execution_evidence",
+        "runtime_evidence_claimed",
+        "emergency_recovery_exception"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.backup_restore_system.restore_operational_safety.v1"},
+        "schema_id": {
+          "const": "pm.backup_restore_system.restore_operational_safety.v1"
+        },
         "recovery_sequence": {
-          "type": "array", "minItems": 8, "maxItems": 8,
-          "prefixItems": [{"const": "validate_destination_or_kit"}, {"const": "authenticate_storage"}, {"const": "select_existing_repository"}, {"const": "protected_unlock"}, {"const": "load_encrypted_manifests"}, {"const": "select_immutable_snapshot"}, {"const": "inspect_coverage_compatibility"}, {"const": "preview_before_restore"}],
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "prefixItems": [
+            {
+              "const": "validate_destination_or_kit"
+            },
+            {
+              "const": "authenticate_storage"
+            },
+            {
+              "const": "select_existing_repository"
+            },
+            {
+              "const": "protected_unlock"
+            },
+            {
+              "const": "load_encrypted_manifests"
+            },
+            {
+              "const": "select_immutable_snapshot"
+            },
+            {
+              "const": "inspect_coverage_compatibility"
+            },
+            {
+              "const": "preview_before_restore"
+            }
+          ],
           "items": false
         },
-        "immutable_snapshot_selection": {"const": true},
-        "preview_is_untrusted": {"const": true},
-        "restore_modes": {"type": "array", "uniqueItems": true, "minItems": 4, "maxItems": 4, "items": {"enum": ["as_new", "in_place", "selective", "server_full"]}},
-        "selective_dependency_closure": {"const": true},
-        "pre_restore_recovery_required": {"const": true},
-        "target_lease_required": {"const": true},
-        "filesafe_required": {"const": true},
-        "cross_filesystem_activation": {"const": "journaled_recoverable_boundary_not_false_atomic"},
-        "durable_restore_run": {"const": true},
-        "resource_governor_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "external_effect_states": {"type": "array", "uniqueItems": true, "minItems": 7, "maxItems": 7, "items": {"enum": ["accepted", "running", "outcome_unknown", "observed_complete", "failed", "partial", "cancelled"]}},
-        "object_lock_requires_tested_profile": {"const": true},
-        "shared_components": {
-          "type": "array", "uniqueItems": true, "minItems": 8,
-          "items": {"enum": ["DestinationCard", "ScopeCoverageSummary", "SnapshotBrowser", "RestorePreview", "RecoveryKitHandoff", "VerificationBadge", "RetentionPreview", "ObservableWorkProgress"]},
-          "allOf": [{"contains": {"const": "DestinationCard"}}, {"contains": {"const": "ScopeCoverageSummary"}}, {"contains": {"const": "SnapshotBrowser"}}, {"contains": {"const": "RestorePreview"}}, {"contains": {"const": "RecoveryKitHandoff"}}, {"contains": {"const": "VerificationBadge"}}, {"contains": {"const": "RetentionPreview"}}, {"contains": {"const": "ObservableWorkProgress"}}]
+        "immutable_snapshot_selection": {
+          "const": true
         },
-        "handler_availability": {"const": "handler_unavailable"},
-        "expected_event_types": {"type": "array", "maxItems": 0},
-        "proc_execution_evidence": {"const": "partial_not_implemented"},
-        "runtime_evidence_claimed": {"const": false}
+        "preview_is_untrusted": {
+          "const": true
+        },
+        "restore_modes": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "as_new",
+              "in_place",
+              "selective",
+              "server_full"
+            ]
+          }
+        },
+        "selective_dependency_closure": {
+          "const": true
+        },
+        "pre_restore_recovery_required": {
+          "const": true,
+          "description": "Normal default; only restore_recovery_prerequisite's verified-unavailability and scoped human-consent alternative can replace the recovery receipt."
+        },
+        "target_lease_required": {
+          "const": true
+        },
+        "filesafe_required": {
+          "const": true
+        },
+        "cross_filesystem_activation": {
+          "const": "journaled_recoverable_boundary_not_false_atomic"
+        },
+        "durable_restore_run": {
+          "const": true
+        },
+        "resource_governor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "external_effect_states": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "enum": [
+              "accepted",
+              "running",
+              "outcome_unknown",
+              "observed_complete",
+              "failed",
+              "partial",
+              "cancelled"
+            ]
+          }
+        },
+        "object_lock_requires_tested_profile": {
+          "const": true
+        },
+        "shared_components": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 8,
+          "items": {
+            "enum": [
+              "DestinationCard",
+              "ScopeCoverageSummary",
+              "SnapshotBrowser",
+              "RestorePreview",
+              "RecoveryKitHandoff",
+              "VerificationBadge",
+              "RetentionPreview",
+              "ObservableWorkProgress"
+            ]
+          },
+          "allOf": [
+            {
+              "contains": {
+                "const": "DestinationCard"
+              }
+            },
+            {
+              "contains": {
+                "const": "ScopeCoverageSummary"
+              }
+            },
+            {
+              "contains": {
+                "const": "SnapshotBrowser"
+              }
+            },
+            {
+              "contains": {
+                "const": "RestorePreview"
+              }
+            },
+            {
+              "contains": {
+                "const": "RecoveryKitHandoff"
+              }
+            },
+            {
+              "contains": {
+                "const": "VerificationBadge"
+              }
+            },
+            {
+              "contains": {
+                "const": "RetentionPreview"
+              }
+            },
+            {
+              "contains": {
+                "const": "ObservableWorkProgress"
+              }
+            }
+          ]
+        },
+        "handler_availability": {
+          "const": "handler_unavailable"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "proc_execution_evidence": {
+          "const": "partial_not_implemented"
+        },
+        "runtime_evidence_claimed": {
+          "const": false
+        },
+        "emergency_recovery_exception": {
+          "const": "verified_unavailability_and_scoped_human_consent_only"
+        }
       }
     }
   }
