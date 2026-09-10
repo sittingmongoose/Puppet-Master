@@ -11880,7 +11880,7 @@
         "cmd.browser.page.activate names exactly one owner-adjudicated future target handlers::browser_program::page_activate in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_activate.availability and state.commands.browser_page_activate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after an actual selection change commits; no-op activation is event-silent. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -11891,19 +11891,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_activate.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/5",
+          "browser.page.activated"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.activate records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after an actual selection change commits; no-op activation is event-silent.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.activate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.page.activated"
+      ],
       "handler_location": "handlers::browser_program::page_activate",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -11921,13 +11926,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_activate.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_activate.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_activate.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.activate",
@@ -11939,7 +11949,7 @@
         "cmd.browser.page.close names exactly one owner-adjudicated future target handlers::browser_program::page_close in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_close.availability and state.commands.browser_page_close.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after the exact page closes; no newest/focused-page substitution. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -11950,19 +11960,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_close.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/4",
+          "browser.page.closed"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.close records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after the exact page closes; no newest/focused-page substitution.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.close: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.page.closed"
+      ],
       "handler_location": "handlers::browser_program::page_close",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -11980,13 +11995,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_close.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_close.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_close.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.close",
@@ -11998,7 +12018,7 @@
         "cmd.browser.page.create names exactly one owner-adjudicated future target handlers::browser_program::page_create in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_create.availability and state.commands.browser_page_create.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after the exact page is created and bound to its workspace/generation. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12009,19 +12029,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_create.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/3",
+          "browser.page.created"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.create records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after the exact page is created and bound to its workspace/generation.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.create: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.page.created"
+      ],
       "handler_location": "handlers::browser_program::page_create",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12039,13 +12064,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_create.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_create.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_create.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.create",
@@ -12057,7 +12087,7 @@
         "cmd.browser.page.evaluate names exactly one owner-adjudicated future target handlers::browser_program::page_evaluate in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_evaluate.availability and state.commands.browser_page_evaluate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Conditional on the permitted named action actually changing navigation/document generation; read-only/no-change actions return their owner result without either event. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12068,19 +12098,26 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_evaluate.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/6",
+          "browser.navigation.generation_changed",
+          "browser.document.generation_changed"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.evaluate records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Conditional on the permitted named action actually changing navigation/document generation; read-only/no-change actions return their owner result without either event.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.evaluate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.navigation.generation_changed",
+        "browser.document.generation_changed"
+      ],
       "handler_location": "handlers::browser_program::page_evaluate",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12098,13 +12135,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_evaluate.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_evaluate.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_evaluate.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.evaluate",
@@ -12116,7 +12158,7 @@
         "cmd.browser.page.representation.capture names exactly one owner-adjudicated future target handlers::browser_program::page_representation_capture in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_representation_capture.availability and state.commands.browser_page_representation_capture.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after the bounded exact-generation representation result exists with truthful counts, estimates and coverage. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12127,19 +12169,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_representation_capture.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/7",
+          "browser.representation.captured"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.representation.capture records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after the bounded exact-generation representation result exists with truthful counts, estimates and coverage.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.representation.capture: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.representation.captured"
+      ],
       "handler_location": "handlers::browser_program::page_representation_capture",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12157,13 +12204,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_representation_capture.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_representation_capture.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_representation_capture.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.representation.capture",
@@ -12175,7 +12227,7 @@
         "cmd.browser.page.representation.delta names exactly one owner-adjudicated future target handlers::browser_program::page_representation_delta in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_representation_delta.availability and state.commands.browser_page_representation_delta.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after a bounded delta against an admitted current base; stale/base rejection returns an error, not a successful delta event. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12186,19 +12238,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_representation_delta.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/8",
+          "browser.representation.delta_created"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.representation.delta records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after a bounded delta against an admitted current base; stale/base rejection returns an error, not a successful delta event.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.representation.delta: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.representation.delta_created"
+      ],
       "handler_location": "handlers::browser_program::page_representation_delta",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12216,13 +12273,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_representation_delta.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_representation_delta.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_representation_delta.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.representation.delta",
@@ -12234,7 +12296,7 @@
         "cmd.browser.page.representation.query names exactly one owner-adjudicated future target handlers::browser_program::page_representation_query in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_page_representation_query.availability and state.commands.browser_page_representation_query.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after a bounded exact-generation query result exists; no raw query/result body is persisted in the event. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12245,19 +12307,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_page_representation_query.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/9",
+          "browser.representation.queried"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.page.representation.query records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after a bounded exact-generation query result exists; no raw query/result body is persisted in the event.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.page.representation.query: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.representation.queried"
+      ],
       "handler_location": "handlers::browser_program::page_representation_query",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12275,13 +12342,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_page_representation_query.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_page_representation_query.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_page_representation_query.events"
         }
       ],
       "ui_command_id": "cmd.browser.page.representation.query",
@@ -12419,7 +12491,7 @@
         "cmd.browser.program.cancel names exactly one owner-adjudicated future target handlers::browser_program::program_cancel in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_program_cancel.availability and state.commands.browser_program_cancel.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after cancellation is confirmed with effect and artifact disposition; an acknowledgement or disconnect is not cancellation. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12430,19 +12502,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_program_cancel.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/13",
+          "browser.program.cancelled"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.program.cancel records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after cancellation is confirmed with effect and artifact disposition; an acknowledgement or disconnect is not cancellation.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.program.cancel: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.program.cancelled"
+      ],
       "handler_location": "handlers::browser_program::program_cancel",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12460,13 +12537,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_program_cancel.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_program_cancel.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_program_cancel.events"
         }
       ],
       "ui_command_id": "cmd.browser.program.cancel",
@@ -12478,7 +12560,7 @@
         "cmd.browser.program.inspect names exactly one specified target handlers::browser_program::inspect; the target string is not implementation or dispatch proof.",
         "Validate the exact request/result pair Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and reject unknown, stale, conflicting, or authority-widening fields.",
         "Read state.commands.browser_program_inspect.availability and state.commands.browser_program_inspect.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
-        "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Read-only inspection emits no new domain EventRecord and changes no program, page, lease or checkpoint authority. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
       ],
       "accessibility_contract": {
@@ -12489,15 +12571,16 @@
       },
       "disabled_reason_projection": "state.commands.browser_program_inspect.disabled_reason",
       "effect_contract": {
-        "description": "Receipt/projection-only static intent; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
+        "description": "Read-only owner receipt/projection; inspection is event-silent by contract, not by missing event admission.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
-          "missing_event_registration"
+          "Plans/browser_event_admission.json#/command_event_bindings/14"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.program.inspect records only its typed receipt/projection result and emits no unexpected persisted domain event while Event Authority remains open."
+        "Read-only inspection emits no new domain EventRecord and changes no program, page, lease or checkpoint authority.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.program.inspect: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
@@ -12518,7 +12601,7 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_program_inspect.effect"
         },
         {
@@ -12536,7 +12619,7 @@
         "cmd.browser.program.pause names exactly one owner-adjudicated future target handlers::browser_program::program_pause in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_program_pause.availability and state.commands.browser_program_pause.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only at the confirmed checkpoint/safe-pause boundaries; receipt of a pause request is not either fact. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12547,19 +12630,26 @@
       },
       "disabled_reason_projection": "state.commands.browser_program_pause.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/11",
+          "browser.program.checkpointed",
+          "browser.program.paused"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.program.pause records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only at the confirmed checkpoint/safe-pause boundaries; receipt of a pause request is not either fact.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.program.pause: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.program.checkpointed",
+        "browser.program.paused"
+      ],
       "handler_location": "handlers::browser_program::program_pause",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12577,13 +12667,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_program_pause.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_program_pause.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_program_pause.events"
         }
       ],
       "ui_command_id": "cmd.browser.program.pause",
@@ -12595,7 +12690,7 @@
         "cmd.browser.program.resume names exactly one owner-adjudicated future target handlers::browser_program::program_resume in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_program_resume.availability and state.commands.browser_program_resume.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after current checkpoint, Run/Attempt, generation, lease, permission and target revalidation. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12606,19 +12701,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_program_resume.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/12",
+          "browser.program.resumed"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.program.resume records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after current checkpoint, Run/Attempt, generation, lease, permission and target revalidation.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.program.resume: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.program.resumed"
+      ],
       "handler_location": "handlers::browser_program::program_resume",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12636,13 +12736,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_program_resume.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_program_resume.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_program_resume.events"
         }
       ],
       "ui_command_id": "cmd.browser.program.resume",
@@ -12654,7 +12759,7 @@
         "cmd.browser.program.run names exactly one owner-adjudicated future target handlers::browser_program::program_run in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_program_run.availability and state.commands.browser_program_run.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Start and eventual terminal milestones are separately observed, never simultaneous mandatory emissions or test verdicts. Compiler, segment, workspace, lease, routing and timeout subevents use their individually admitted owner rows; they are not new GUI commands. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -12665,19 +12770,30 @@
       },
       "disabled_reason_projection": "state.commands.browser_program_run.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/10",
+          "browser.program.started",
+          "browser.program.completed",
+          "browser.program.failed",
+          "browser.program.cancelled"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.program.run records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Start and eventual terminal milestones are separately observed, never simultaneous mandatory emissions or test verdicts. Compiler, segment, workspace, lease, routing and timeout subevents use their individually admitted owner rows; they are not new GUI commands.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.program.run: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.program.started",
+        "browser.program.completed",
+        "browser.program.failed",
+        "browser.program.cancelled"
+      ],
       "handler_location": "handlers::browser_program::program_run",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -12695,13 +12811,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_program_run.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_program_run.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_program_run.events"
         }
       ],
       "ui_command_id": "cmd.browser.program.run",
@@ -13267,7 +13388,7 @@
         "cmd.browser.workspace.close names exactly one owner-adjudicated future target handlers::browser_program::workspace_close in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_workspace_close.availability and state.commands.browser_workspace_close.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after confirmed close of the exact workspace; a close request is not closure. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -13278,19 +13399,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_workspace_close.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/1",
+          "browser.workspace.closed"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.workspace.close records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after confirmed close of the exact workspace; a close request is not closure.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.workspace.close: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.workspace.closed"
+      ],
       "handler_location": "handlers::browser_program::workspace_close",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -13308,13 +13434,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_workspace_close.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_workspace_close.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_workspace_close.events"
         }
       ],
       "ui_command_id": "cmd.browser.workspace.close",
@@ -13326,7 +13457,7 @@
         "cmd.browser.workspace.create names exactly one owner-adjudicated future target handlers::browser_program::workspace_create in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_workspace_create.availability and state.commands.browser_workspace_create.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after the new ordinary workspace identity commits. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -13337,19 +13468,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_workspace_create.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/0",
+          "browser.workspace.created"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.workspace.create records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after the new ordinary workspace identity commits.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.workspace.create: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.workspace.created"
+      ],
       "handler_location": "handlers::browser_program::workspace_create",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -13367,13 +13503,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_workspace_create.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_workspace_create.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_workspace_create.events"
         }
       ],
       "ui_command_id": "cmd.browser.workspace.create",
@@ -13385,7 +13526,7 @@
         "cmd.browser.workspace.reset names exactly one owner-adjudicated future target handlers::browser_program::workspace_reset in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request -> Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result and Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_error with exact availability and permission gates.",
         "Read state.commands.browser_workspace_reset.availability and state.commands.browser_workspace_reset.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Consume the exact command-event binding in Plans/browser_event_admission.json; Only after the new workspace generation commits and old projections are fenced. All other families remain subject to their independent admission.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
       "accessibility_contract": {
@@ -13396,19 +13537,24 @@
       },
       "disabled_reason_projection": "state.commands.browser_workspace_reset.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
-        "effect_kind": "receipt",
+        "description": "Owner typed result plus conditional admitted Browser EventRecord milestones; dispatch acceptance is not a transition, terminal completion, test verdict or native producer proof.",
+        "effect_kind": "mixed",
         "receipt_or_event_refs": [
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
           "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
-          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt"
+          "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_handoff_receipt",
+          "Plans/browser_event_admission.json#/command_event_bindings/2",
+          "browser.workspace.reset"
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.browser.workspace.reset records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Only after the new workspace generation commits and old projections are fenced.",
+        "Assert zero domain events on pre-dispatch rejection, handler_unavailable, acceptance-only and no-change outcomes. A declared future handler and a schema fixture never prove native event production."
       ],
       "evidence_required": "Future production evidence for cmd.browser.workspace.reset: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.workspace.reset"
+      ],
       "handler_location": "handlers::browser_program::workspace_reset",
       "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
       "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
@@ -13426,13 +13572,18 @@
         },
         {
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "requirement": "Verify the owner result and conditional event set against Plans/browser_event_admission.json, including event-silent rejection/no-op/acceptance and exact scope/idempotency replay.",
           "test_id": "wiring.catalog.browser_workspace_reset.effect"
         },
         {
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.browser_workspace_reset.accessibility"
+        },
+        {
+          "evidence_kind": "event_test",
+          "requirement": "Verify exact registered conditional events and owner scope after actual committed transitions; reject spoofed producers, schema/scope conflicts, stale generations and duplicate effects. Assert zero events for unavailable, rejected, acceptance-only and no-change outcomes; native producer execution remains required separately.",
+          "test_id": "wiring.catalog.browser_workspace_reset.events"
         }
       ],
       "ui_command_id": "cmd.browser.workspace.reset",

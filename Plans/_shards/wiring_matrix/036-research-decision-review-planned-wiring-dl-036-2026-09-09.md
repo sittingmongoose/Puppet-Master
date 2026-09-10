@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4414-L4492
+Source lines: L4414-L4526
 
-Source SHA256: `cf2670dc74a8f798dfa913c8604634c8acd11520975d90c836bf68edb2493013`
+Source SHA256: `bc638afdc80e7d7aa7de74166034cf5b4611036baf17a99163ba62eeb23b85e6`
 
 ---
 
@@ -87,3 +87,37 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+### WM-054 - Browser Command Event Reverse Coverage
+
+```yaml
+plan_unit_id: WM-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  The fifteen existing Browser production-intent rows consume the exact command_event_bindings in the scoped
+  admission manifest while retaining owner-DRY request/result/error/availability/permission refs, disabled reasons,
+  selectors and future handler targets. This is static reverse coverage, not implemented dispatch.
+gui_related: true
+gui_classification_reason: Browser controls retain truthful disabled state and exact command/result/event wiring.
+depends_on: [SMPFS-157, CV-330]
+unblocks: []
+acceptance_criteria:
+  - All fifteen canonical commands are covered exactly once by the admission bindings and production-intent rows; no additional Browser or protected-auth command family is created.
+  - Workspace/page transitions map to their actual owner events; page evaluate emits navigation/document-generation events only when those transitions occur.
+  - Representation capture/delta/query map to their selected admitted transitions; program run/pause/resume/cancel consume the declared lifecycle events with compiler/segment/workspace subevents independently admitted.
+  - Inspect is read-only/no-effect and receipt-only by contract; it does not require an invented inspect EventRecord.
+  - Handler-unavailable, pre-dispatch rejection, acceptance-only and no-change results produce zero transition events and no fabricated successful outcome.
+  - Every control remains handler_unavailable until exact native handler and effect proof exists; a selector, catalog row, schema, receipt or event registration is not runtime or UI wiring proof.
+validation_surfaces: [python3 scripts/pm-browser-event-admission.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, future native Browser disabled-state and effect-event wiring fixtures]
+risk_class: browser_command_event_reverse_coverage_or_false_dispatch
+reasoning_tier: high
+context_scope: browser_command_event_wiring
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/browser_event_admission.json, Plans/touch_closure.json]
+node_compile_hint: {mode: static_wiring_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md, USER-PACKET-GAP-CLOSURE-20260910]
+negative_constraints: [No native handler or producer proof from production-intent rows., No new Browser inspect event or protected-auth automation route., No availability lift or false success.]
+```
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/Contracts_V0.md#CV-330, ContractName:Plans/browser_event_admission.json, ContractName:Plans/Wiring_Matrix.production.json

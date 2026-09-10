@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-09-11.1",
+  "registry_revision": "2026-09-11.4",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -2386,6 +2386,2709 @@
       "source_refs": [
         "Plans/event_payloads/terminal_workgroup_moved.schema.json#",
         "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-workspace-created",
+      "family_revision": "1.0.0",
+      "event_type": "browser.workspace.created",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/workspace_created",
+        "schema_id": "pm.browser_event.workspace_created.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/0",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/workspace_created"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-workspace-reset",
+      "family_revision": "1.0.0",
+      "event_type": "browser.workspace.reset",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/workspace_reset",
+        "schema_id": "pm.browser_event.workspace_reset.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/1",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/workspace_reset"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-workspace-closed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.workspace.closed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.workspace_closed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/workspace_closed",
+        "schema_id": "pm.browser_event.workspace_closed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/2",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/workspace_closed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-page-created",
+      "family_revision": "1.0.0",
+      "event_type": "browser.page.created",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.page_created.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/page_created",
+        "schema_id": "pm.browser_event.page_created.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/3",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/page_created"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-page-activated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.page.activated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.page_activated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/page_activated",
+        "schema_id": "pm.browser_event.page_activated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/4",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/page_activated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-page-closed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.page.closed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.page_closed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/page_closed",
+        "schema_id": "pm.browser_event.page_closed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/5",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/page_closed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-controller-lease-granted",
+      "family_revision": "1.0.0",
+      "event_type": "browser.controller_lease.granted",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.controller_lease_granted.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/controller_lease_granted",
+        "schema_id": "pm.browser_event.controller_lease_granted.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/6",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/controller_lease_granted"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-controller-lease-renewed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.controller_lease.renewed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.controller_lease_renewed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/controller_lease_renewed",
+        "schema_id": "pm.browser_event.controller_lease_renewed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/7",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/controller_lease_renewed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-controller-lease-lost",
+      "family_revision": "1.0.0",
+      "event_type": "browser.controller_lease.lost",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.controller_lease_lost.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/controller_lease_lost",
+        "schema_id": "pm.browser_event.controller_lease_lost.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/8",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/controller_lease_lost"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-controller-lease-takeover-requested",
+      "family_revision": "1.0.0",
+      "event_type": "browser.controller_lease.takeover_requested",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.controller_lease_takeover_requested.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/controller_lease_takeover_requested",
+        "schema_id": "pm.browser_event.controller_lease_takeover_requested.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/9",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/controller_lease_takeover_requested"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-controller-lease-takeover-completed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.controller_lease.takeover_completed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.controller_lease_takeover_completed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/controller_lease_takeover_completed",
+        "schema_id": "pm.browser_event.controller_lease_takeover_completed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/10",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/controller_lease_takeover_completed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-navigation-generation-changed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.navigation.generation_changed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.navigation_generation_changed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/navigation_generation_changed",
+        "schema_id": "pm.browser_event.navigation_generation_changed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/11",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/navigation_generation_changed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-document-generation-changed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.document.generation_changed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.document_generation_changed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/document_generation_changed",
+        "schema_id": "pm.browser_event.document_generation_changed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/12",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/document_generation_changed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-representation-captured",
+      "family_revision": "1.0.0",
+      "event_type": "browser.representation.captured",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.representation_captured.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/representation_captured",
+        "schema_id": "pm.browser_event.representation_captured.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/13",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/representation_captured"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-representation-delta-created",
+      "family_revision": "1.0.0",
+      "event_type": "browser.representation.delta_created",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.representation_delta_created.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/representation_delta_created",
+        "schema_id": "pm.browser_event.representation_delta_created.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/14",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/representation_delta_created"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-representation-queried",
+      "family_revision": "1.0.0",
+      "event_type": "browser.representation.queried",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.representation_queried.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/representation_queried",
+        "schema_id": "pm.browser_event.representation_queried.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/15",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/representation_queried"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-representation-invalidated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.representation.invalidated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.representation_invalidated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/representation_invalidated",
+        "schema_id": "pm.browser_event.representation_invalidated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/16",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/representation_invalidated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-script-compile-started",
+      "family_revision": "1.0.0",
+      "event_type": "browser.script.compile_started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.script_compile_started.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/script_compile_started",
+        "schema_id": "pm.browser_event.script_compile_started.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/17",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/script_compile_started"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-script-compiled",
+      "family_revision": "1.0.0",
+      "event_type": "browser.script.compiled",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.script_compiled.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/script_compiled",
+        "schema_id": "pm.browser_event.script_compiled.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/18",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/script_compiled"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-script-compile-failed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.script.compile_failed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.script_compile_failed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/script_compile_failed",
+        "schema_id": "pm.browser_event.script_compile_failed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/19",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/script_compile_failed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-execution-strategy-selected",
+      "family_revision": "1.0.0",
+      "event_type": "browser.execution_strategy.selected",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.execution_strategy_selected.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/execution_strategy_selected",
+        "schema_id": "pm.browser_event.execution_strategy_selected.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/20",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/execution_strategy_selected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-execution-strategy-fallback-selected",
+      "family_revision": "1.0.0",
+      "event_type": "browser.execution_strategy.fallback_selected",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.execution_strategy_fallback_selected.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/execution_strategy_fallback_selected",
+        "schema_id": "pm.browser_event.execution_strategy_fallback_selected.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/21",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/execution_strategy_fallback_selected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-started",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_started.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_started",
+        "schema_id": "pm.browser_event.program_started.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/22",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_started"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-checkpointed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.checkpointed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_checkpointed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_checkpointed",
+        "schema_id": "pm.browser_event.program_checkpointed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/23",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_checkpointed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-paused",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.paused",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_paused.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_paused",
+        "schema_id": "pm.browser_event.program_paused.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/24",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_paused"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-resumed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.resumed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_resumed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_resumed",
+        "schema_id": "pm.browser_event.program_resumed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/25",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_resumed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-completed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.completed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_completed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_completed",
+        "schema_id": "pm.browser_event.program_completed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/26",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_completed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-failed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.failed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_failed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_failed",
+        "schema_id": "pm.browser_event.program_failed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/27",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_failed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-cancelled",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.cancelled",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_cancelled.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_cancelled",
+        "schema_id": "pm.browser_event.program_cancelled.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/28",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_cancelled"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-segment-started",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.segment.started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_segment_started.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_segment_started",
+        "schema_id": "pm.browser_event.program_segment_started.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/29",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_segment_started"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-segment-checkpointed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.segment.checkpointed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_segment_checkpointed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_segment_checkpointed",
+        "schema_id": "pm.browser_event.program_segment_checkpointed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/30",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_segment_checkpointed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-segment-completed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.segment.completed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_segment_completed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_segment_completed",
+        "schema_id": "pm.browser_event.program_segment_completed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/31",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_segment_completed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-segment-failed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.segment.failed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_segment_failed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_segment_failed",
+        "schema_id": "pm.browser_event.program_segment_failed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/32",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_segment_failed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-segment-timed-out",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.segment.timed_out",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_segment_timed_out.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_segment_timed_out",
+        "schema_id": "pm.browser_event.program_segment_timed_out.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/33",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_segment_timed_out"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-timeout-stopped",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.timeout.stopped",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_timeout_stopped.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_timeout_stopped",
+        "schema_id": "pm.browser_event.program_timeout_stopped.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/34",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_timeout_stopped"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-timeout-effects-reconciled",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.timeout.effects_reconciled",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_timeout_effects_reconciled.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_timeout_effects_reconciled",
+        "schema_id": "pm.browser_event.program_timeout_effects_reconciled.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/35",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effects_reconciled"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-timeout-effect-state-unknown",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program.timeout.effect_state_unknown",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_timeout_effect_state_unknown.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_timeout_effect_state_unknown",
+        "schema_id": "pm.browser_event.program_timeout_effect_state_unknown.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/36",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effect_state_unknown"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-workspace-created",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program_workspace.created",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_workspace_created.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_workspace_created",
+        "schema_id": "pm.browser_event.program_workspace_created.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/37",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_workspace_created"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-workspace-updated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program_workspace.updated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_workspace_updated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_workspace_updated",
+        "schema_id": "pm.browser_event.program_workspace_updated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/38",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_workspace_updated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-workspace-checkpointed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program_workspace.checkpointed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_workspace_checkpointed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_workspace_checkpointed",
+        "schema_id": "pm.browser_event.program_workspace_checkpointed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/39",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_workspace_checkpointed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-workspace-spilled",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program_workspace.spilled",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_workspace_spilled.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_workspace_spilled",
+        "schema_id": "pm.browser_event.program_workspace_spilled.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/40",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_workspace_spilled"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-program-workspace-closed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.program_workspace.closed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.program_workspace_closed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/program_workspace_closed",
+        "schema_id": "pm.browser_event.program_workspace_closed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/41",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/program_workspace_closed"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-screenshot-model-attachment-selected",
+      "family_revision": "1.0.0",
+      "event_type": "browser.screenshot.model_attachment_selected",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.screenshot_model_attachment_selected.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/screenshot_model_attachment_selected",
+        "schema_id": "pm.browser_event.screenshot_model_attachment_selected.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/42",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/screenshot_model_attachment_selected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-screenshot-skipped",
+      "family_revision": "1.0.0",
+      "event_type": "browser.screenshot.skipped",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.screenshot_skipped.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/screenshot_skipped",
+        "schema_id": "pm.browser_event.screenshot_skipped.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/43",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/screenshot_skipped"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-route-fetch-selected",
+      "family_revision": "1.0.0",
+      "event_type": "browser.route.fetch_selected",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.route_fetch_selected.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/route_fetch_selected",
+        "schema_id": "pm.browser_event.route_fetch_selected.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/44",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/route_fetch_selected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-route-browser-escalated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.route.browser_escalated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.route_browser_escalated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/route_browser_escalated",
+        "schema_id": "pm.browser_event.route_browser_escalated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/45",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/route_browser_escalated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-routine-generated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.routine.generated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.routine_generated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/routine_generated",
+        "schema_id": "pm.browser_event.routine_generated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/46",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/routine_generated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-routine-validated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.routine.validated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.routine_validated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/routine_validated",
+        "schema_id": "pm.browser_event.routine_validated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/47",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/routine_validated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-routine-promoted",
+      "family_revision": "1.0.0",
+      "event_type": "browser.routine.promoted",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.routine_promoted.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/routine_promoted",
+        "schema_id": "pm.browser_event.routine_promoted.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/48",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/routine_promoted"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-routine-invalidated",
+      "family_revision": "1.0.0",
+      "event_type": "browser.routine.invalidated",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.routine_invalidated.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/routine_invalidated",
+        "schema_id": "pm.browser_event.routine_invalidated.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/49",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/routine_invalidated"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-routine-disabled",
+      "family_revision": "1.0.0",
+      "event_type": "browser.routine.disabled",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.routine_disabled.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/routine_disabled",
+        "schema_id": "pm.browser_event.routine_disabled.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/50",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/routine_disabled"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-session-reconstructed-on-host",
+      "family_revision": "1.0.0",
+      "event_type": "browser.session.reconstructed_on_host",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.session_reconstructed_on_host.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/session_reconstructed_on_host",
+        "schema_id": "pm.browser_event.session_reconstructed_on_host.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/51",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/session_reconstructed_on_host"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-session-interrupted",
+      "family_revision": "1.0.0",
+      "event_type": "browser.session.interrupted",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.session_interrupted.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/session_interrupted",
+        "schema_id": "pm.browser_event.session_interrupted.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/52",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+        "Plans/browser_event_payloads.schema.json#/$defs/session_interrupted"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
