@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.contract_repair_integration.v1",
+  "base_commit": "400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+  "status": "bounded_repair_validated_with_open_governance_and_audit_gaps",
+  "source_file_count": 18,
+  "source_files": [
+    "Plans/Back_Seat_Driver.md",
+    "Plans/settings_inventory.json",
+    "Plans/assistant-chat-design.md",
+    "Plans/section15_browser_program_contracts.schema.json",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "scripts/pm_packet_audit_census.py",
+    "scripts/pm-integration-packet-audit.py",
+    "scripts/pm-event-authority-currentness.py",
+    "Plans/Automated_Testing_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/browser_event_admission_candidates.json",
+    "Plans/browser_event_admission_candidates.schema.json",
+    "Plans/browser_event_payloads.schema.json",
+    "scripts/pm-assistant-contract-check.py",
+    "scripts/pm_browser_event_contract.py",
+    "scripts/pm_event_evidence_adapter.py",
+    "scripts/pm_evidence_paths.py",
+    "scripts/pm_packet_custody.py"
+  ],
+  "integration_correction": "The supplied Lens ID ACD-459 collides with the existing research decision artifact unit. The local integration copy uses unused ACD-460 and preserves ACD-459; the original ZIP is unchanged.",
+  "new_plan_units": [
+    "ACD-460",
+    "BSD-029"
+  ],
+  "verification": {
+    "package_tests": {
+      "passed": 89,
+      "failed": 0
+    },
+    "candidate_tests_with_complete_owner_schema": {
+      "passed": 15,
+      "failed": 0
+    },
+    "existing_packet_audit_tests": {
+      "passed": 22,
+      "failed": 0
+    },
+    "protected_auth_tests": {
+      "passed": 2,
+      "failed": 1,
+      "baseline_same_failure": true
+    },
+    "real_legacy_custody": {
+      "valid": true,
+      "document_count": 339,
+      "slice_count": 569,
+      "unique_source_line_count": 74180
+    },
+    "shard_check": "pass",
+    "plan_index_validation": "pass",
+    "installed_hashes_match": true,
+    "unexpected_changed_source_or_derived_families": [],
+    "scoped_checker": {
+      "before_gap_count": 25,
+      "after_gap_count": 19,
+      "resolved_gap_count": 6,
+      "remaining": {
+        "touch_disposition_required": 16,
+        "touch_reference": 3
+      },
+      "browser_events_pending_admission": 53
+    },
+    "standard_gates": {
+      "baseline_status": "fail",
+      "repaired_status": "fail",
+      "changed_status_categories": [],
+      "failing_categories": [
+        "json_syntax",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_audit_closure",
+        "validate_audit_status_index",
+        "validate_evidence",
+        "validate_implementation_readiness",
+        "validate_plan_graph",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_touch_closure",
+        "verify_spec_lock"
+      ],
+      "additional_evidence_and_plan_graph_failures": 105,
+      "explanation": "104 newly stale settings inventory/source-shard hash pins and one historical last-shard path renamed by deterministic regeneration. Existing evidence remains immutable; no reseal was performed."
+    }
+  },
+  "boundaries": {
+    "browser_event_authority_admission_performed": false,
+    "formal_full_packet_audit_completed": false,
+    "exhaustive_dry_command_ui_wiring_review_completed": false,
+    "governance_sealed": false,
+    "native_runtime_proven": false,
+    "runtime_readiness_status": "blocked_runtime_certification_incomplete",
+    "batch_13_implementation_completed": false
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/pm-contract-repair-update.zip",
+      "sha256": "2854743d8dc67b2f4a8c040f8ee53d972f4cdbbbf7b41c22b03324318b60f5cf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/pm-contract-repair-evidence.zip",
+      "sha256": "44ae083a6d83f51aa7b44e2f7a9326991aa5d4853a53a6995c3fb823ed1c652c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/INTEGRATION_CORRECTIONS.json",
+      "sha256": "b2ba292a1d304792f395d678d42c9efe79024804aaf594a0537580f16d89c777"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/install.json",
+      "sha256": "cac0f35f6a32744fc459c88efe1ed5780a49a6a679b6d8e783bf463fbe09546c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/integration-tests.log",
+      "sha256": "e0ddf72830c92be6f462cedfe1b22ce0d7eab92fe0c2a6200f73b97b81129e34"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/final-full-owner-browser-tests.log",
+      "sha256": "2458b2f615679ff6503f91371077a60ab5d489e2ceb834456b4a8e2c39289a6b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/repaired-packet-tests.log",
+      "sha256": "8aa0104d97e585b011dbb9928162a3ae80848607fa4cb945c7437df651b761fe"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/baseline-protected-auth-tests.log",
+      "sha256": "22443e9cd45914c10179f0ee879c3e6bfb4f1bfe5960d4d4617f941cdce61b32"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/protected-auth-tests.log",
+      "sha256": "d520a96f2f1e8ec228cb54248a06b1ed2ff20247bcbb8c2e8b43d980e7b0f286"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/custody-check.json",
+      "sha256": "e640961fb3514910ed45ebd3f0eb5270b7b7c695d573448d0d24ea34e84f00f8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/baseline-gates.json",
+      "sha256": "9f7526c04a378dc7a2ea968756dbc04d8feba66672974a99d1fab47d86a2965e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/repaired-gates.json",
+      "sha256": "4bdaa39f95aef0b412a3e111ba04f90813b61cf5545c71b99ff6595ab6ff99c4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/baseline-with-candidates-contract-check.json",
+      "sha256": "2eeb3916bfc40bc5a0f0ec31230d0f879281a8bffa7509083464a2fb58d9303a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/repaired-contract-check.json",
+      "sha256": "e14df1faf4aabdc1a1f08ce43a7a671d9d8006e0347278a1fda72492a4d341c6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/shards-check.json",
+      "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/index-validate.json",
+      "sha256": "74b5ca6f3e8a98fbe99441b0bff8afd58854e4b0045279ccbbdd536366fde6a0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/shard-scope.json",
+      "sha256": "5839a521a00d4c5cfb463ee7b43ce808bcdba8206cc9970308eaa9003841bb2a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/index-scope.json",
+      "sha256": "e81d7493a2e515ce431e21f9b2fdcfc862867baa8cf50bdcfa85009b3e1b6d47"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/evidence-pin-delta.json",
+      "sha256": "ddceda9dfd08928050ded2c5bf8cb6329eeb6af727ed0bf1494bc4c961b9d3d2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/contract-repair-20260910/verify-full-owner.py",
+      "sha256": "f0e2ed959e742a87750bc677879c2b02fb96409ce9f2122079de0d29543d2521"
+    }
+  ]
+}

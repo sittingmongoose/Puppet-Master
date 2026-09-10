@@ -6281,6 +6281,7 @@
     "BRS-014",
     "BRS-015",
     "BRS-018",
+    "ACD-460",
     "ACD-457",
     "ATS-037",
     "F3-518",
@@ -6430,6 +6431,7 @@
     "SSYS-034",
     "SSYS-035",
     "F3-543",
+    "BSD-029",
     "ATS-047",
     "F3-551"
   ],
@@ -10070,6 +10072,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ACD-460",
+      "to": "ACD-192"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-460",
+      "to": "ACD-193"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-460",
+      "to": "ACD-194"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-460",
+      "to": "ACD-455"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ADO-001",
       "to": "FGI-001"
     },
@@ -13117,6 +13139,21 @@
       "edge_type": "depends_on",
       "from": "BSD-028",
       "to": "SSYS-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-029",
+      "to": "BSD-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-029",
+      "to": "BSD-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-029",
+      "to": "BSD-028"
     },
     {
       "edge_type": "depends_on",
@@ -92654,7 +92691,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-10T03:55:14Z",
+  "generated_at_utc": "2026-09-10T19:41:13Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -101616,6 +101653,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "context_lens_shaping",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-460",
+      "reasoning_tier": "high",
+      "risk_class": "stale_context_application",
+      "source_location": {
+        "heading": "Context Lens Source and Preview Reconciliation — 2026-09-10",
+        "heading_level": 2,
+        "heading_line": 25220,
+        "line": 25253,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "azure_devops_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Azure_DevOps_Integration.md",
@@ -106828,7 +106882,24 @@
         "heading": "26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)",
         "heading_level": 3,
         "heading_line": 1868,
-        "line": 1880,
+        "line": 1872,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "bsd_cross_owner_reconciliation",
+      "gui_related": true,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-029",
+      "reasoning_tier": "high",
+      "risk_class": "configuration_or_admission_drift",
+      "source_location": {
+        "heading": "Registration, implementation, and demonstrations remain distinct",
+        "heading_level": 3,
+        "heading_line": 2006,
+        "line": 2024,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -202007,10 +202078,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14595,
+    "depends_on_edge_count": 14602,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17243,
-    "node_count": 6432,
+    "edge_count": 17250,
+    "node_count": 6434,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0

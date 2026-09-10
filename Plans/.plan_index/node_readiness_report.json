@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14595,
+    "depends_on_edge_count": 14602,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17243,
-    "node_count": 6432,
+    "edge_count": 17250,
+    "node_count": 6434,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-10T03:55:38Z",
+  "generated_at_utc": "2026-09-10T19:41:14Z",
   "gui_related_units": {
-    "count": 3103,
+    "count": 3105,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3449,6 +3449,17 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-460",
+        "source_location": {
+          "heading": "Context Lens Source and Preview Reconciliation — 2026-09-10",
+          "heading_level": 2,
+          "heading_line": 25220,
+          "line": 25253,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Azure_DevOps_Integration.md",
         "plan_unit_id": "ADO-001",
         "source_location": {
@@ -5039,7 +5050,18 @@
           "heading": "26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)",
           "heading_level": 3,
           "heading_line": 1868,
-          "line": 1880,
+          "line": 1872,
+          "path": "Plans/Back_Seat_Driver.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Back_Seat_Driver.md",
+        "plan_unit_id": "BSD-029",
+        "source_location": {
+          "heading": "Registration, implementation, and demonstrations remain distinct",
+          "heading_level": 3,
+          "heading_line": 2006,
+          "line": 2024,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -34157,10 +34179,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6432,
+  "plan_unit_count": 6434,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1888,
+      "high": 1890,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -34816,6 +34838,7 @@
       "config_wiring_option_b": 1,
       "config_wiring_tier_matrix_non_skip_timing": 1,
       "config_wiring_validator_entrypoint_failure_policy": 1,
+      "configuration_or_admission_drift": 1,
       "configuration_parameter_omission": 1,
       "conflict_detector_file_overlap_example": 1,
       "conflict_resolution_and_file_locking_gap": 1,
@@ -37263,6 +37286,7 @@
       "stale_authorization": 1,
       "stale_capability_cross_target_publication_or_backend_semantic_loss": 1,
       "stale_capability_use": 1,
+      "stale_context_application": 1,
       "stale_edit_conflict": 1,
       "stale_eligibility_or_replayed_side_effect": 1,
       "stale_gap_promotion_risk": 1,
@@ -37853,7 +37877,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6241,
+      "accepted": 6243,
       "retired": 182,
       "superseded": 9
     },
@@ -37920,7 +37944,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5134,
+      "requirement": 5136,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38038,13 +38062,13 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "99e9295576a0806699baa2862eeca645961d89d26cba8087c6426f2e5394fc42",
+        "expected": "75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "12d28a021671cfad436d0cf5a3363545ca06e65de3feb03b55152111187edf07",
+        "expected": "46e57138eeec16db54907afcf615a2a2512fa935f6d8a3e47e3be44519ff23c1",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -38072,161 +38096,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Assistant_Plan_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Back_Seat_Driver.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Collaborative_Workflows.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Commands_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Containers_Registry_and_Unraid.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Cursor_Origin_Integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/LSPSupport.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Release_Supply_Chain.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Server_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Shared_Integration_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Spec_Lock.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ToDo_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Wiring_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/egolite_retained_requirement_contract_fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/ledger_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/shared_runtime_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure.json"
-      },
-      {
-        "error": "event_authority_currentness_live_registry_drift"
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/PM-Experiments/worktrees/contract-repair-20260910/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "actual_checkpoint": {

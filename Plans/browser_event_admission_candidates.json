@@ -1,0 +1,1051 @@
+{
+  "schema_id": "pm.browser_event_admission_candidates.v1",
+  "base_commit": "400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+  "event_set_sha256": "c80444d09090a0963f7c3216f0f33088e19ac5035210f0a57f94cf72bbcac809",
+  "scope": "53 exact Browser Program event names from Section15; not the global Event Authority denominator",
+  "status": "requires_row_local_admission_evidence",
+  "global_event_authority_closed": false,
+  "runtime_enabled": false,
+  "rows": [
+    {
+      "event_type": "browser.workspace.created",
+      "payload_schema_id": "pm.browser_event.workspace_created.v1",
+      "payload_schema_pointer": "#/$defs/browser_workspace_created",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.workspace.reset",
+      "payload_schema_id": "pm.browser_event.workspace_reset.v1",
+      "payload_schema_pointer": "#/$defs/browser_workspace_reset",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.workspace.closed",
+      "payload_schema_id": "pm.browser_event.workspace_closed.v1",
+      "payload_schema_pointer": "#/$defs/browser_workspace_closed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.page.created",
+      "payload_schema_id": "pm.browser_event.page_created.v1",
+      "payload_schema_pointer": "#/$defs/browser_page_created",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.page.activated",
+      "payload_schema_id": "pm.browser_event.page_activated.v1",
+      "payload_schema_pointer": "#/$defs/browser_page_activated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.page.closed",
+      "payload_schema_id": "pm.browser_event.page_closed.v1",
+      "payload_schema_pointer": "#/$defs/browser_page_closed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.controller_lease.granted",
+      "payload_schema_id": "pm.browser_event.controller_lease_granted.v1",
+      "payload_schema_pointer": "#/$defs/browser_controller_lease_granted",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.controller_lease.renewed",
+      "payload_schema_id": "pm.browser_event.controller_lease_renewed.v1",
+      "payload_schema_pointer": "#/$defs/browser_controller_lease_renewed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.controller_lease.lost",
+      "payload_schema_id": "pm.browser_event.controller_lease_lost.v1",
+      "payload_schema_pointer": "#/$defs/browser_controller_lease_lost",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.controller_lease.takeover_requested",
+      "payload_schema_id": "pm.browser_event.controller_lease_takeover_requested.v1",
+      "payload_schema_pointer": "#/$defs/browser_controller_lease_takeover_requested",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.controller_lease.takeover_completed",
+      "payload_schema_id": "pm.browser_event.controller_lease_takeover_completed.v1",
+      "payload_schema_pointer": "#/$defs/browser_controller_lease_takeover_completed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "lease_epoch_advances",
+        "holder_changes"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.navigation.generation_changed",
+      "payload_schema_id": "pm.browser_event.navigation_generation_changed.v1",
+      "payload_schema_pointer": "#/$defs/browser_navigation_generation_changed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "page_generation_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.document.generation_changed",
+      "payload_schema_id": "pm.browser_event.document_generation_changed.v1",
+      "payload_schema_pointer": "#/$defs/browser_document_generation_changed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "page_generation_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.representation.captured",
+      "payload_schema_id": "pm.browser_event.representation_captured.v1",
+      "payload_schema_pointer": "#/$defs/browser_representation_captured",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.representation.delta_created",
+      "payload_schema_id": "pm.browser_event.representation_delta_created.v1",
+      "payload_schema_pointer": "#/$defs/browser_representation_delta_created",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "delta_base_distinct"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.representation.queried",
+      "payload_schema_id": "pm.browser_event.representation_queried.v1",
+      "payload_schema_pointer": "#/$defs/browser_representation_queried",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.representation.invalidated",
+      "payload_schema_id": "pm.browser_event.representation_invalidated.v1",
+      "payload_schema_pointer": "#/$defs/browser_representation_invalidated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.script.compile_started",
+      "payload_schema_id": "pm.browser_event.script_compile_started.v1",
+      "payload_schema_pointer": "#/$defs/browser_script_compile_started",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService compiler",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.script.compiled",
+      "payload_schema_id": "pm.browser_event.script_compiled.v1",
+      "payload_schema_pointer": "#/$defs/browser_script_compiled",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService compiler",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.script.compile_failed",
+      "payload_schema_id": "pm.browser_event.script_compile_failed.v1",
+      "payload_schema_pointer": "#/$defs/browser_script_compile_failed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService compiler",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.execution_strategy.selected",
+      "payload_schema_id": "pm.browser_event.execution_strategy_selected.v1",
+      "payload_schema_pointer": "#/$defs/browser_execution_strategy_selected",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.execution_strategy.fallback_selected",
+      "payload_schema_id": "pm.browser_event.execution_strategy_fallback_selected.v1",
+      "payload_schema_pointer": "#/$defs/browser_execution_strategy_fallback_selected",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "strategy_changes"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.started",
+      "payload_schema_id": "pm.browser_event.program_started.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_started",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.checkpointed",
+      "payload_schema_id": "pm.browser_event.program_checkpointed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_checkpointed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.paused",
+      "payload_schema_id": "pm.browser_event.program_paused.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_paused",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.resumed",
+      "payload_schema_id": "pm.browser_event.program_resumed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_resumed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.completed",
+      "payload_schema_id": "pm.browser_event.program_completed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_completed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint",
+        "completion_has_no_unknown_effects"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.failed",
+      "payload_schema_id": "pm.browser_event.program_failed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_failed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.cancelled",
+      "payload_schema_id": "pm.browser_event.program_cancelled.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_cancelled",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.segment.started",
+      "payload_schema_id": "pm.browser_event.program_segment_started.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_segment_started",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.segment.checkpointed",
+      "payload_schema_id": "pm.browser_event.program_segment_checkpointed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_segment_checkpointed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.segment.completed",
+      "payload_schema_id": "pm.browser_event.program_segment_completed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_segment_completed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint",
+        "completion_has_no_unknown_effects"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.segment.failed",
+      "payload_schema_id": "pm.browser_event.program_segment_failed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_segment_failed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.segment.timed_out",
+      "payload_schema_id": "pm.browser_event.program_segment_timed_out.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_segment_timed_out",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.timeout.stopped",
+      "payload_schema_id": "pm.browser_event.program_timeout_stopped.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_timeout_stopped",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.timeout.effects_reconciled",
+      "payload_schema_id": "pm.browser_event.program_timeout_effects_reconciled.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_timeout_effects_reconciled",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint",
+        "completion_has_no_unknown_effects"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program.timeout.effect_state_unknown",
+      "payload_schema_id": "pm.browser_event.program_timeout_effect_state_unknown.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_timeout_effect_state_unknown",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection",
+        "ObservableWork projection",
+        "Usage attribution"
+      ],
+      "semantic_checks": [
+        "unknown_effects_fail_closed",
+        "action_sets_disjoint"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program_workspace.created",
+      "payload_schema_id": "pm.browser_event.program_workspace_created.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_workspace_created",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program_workspace.updated",
+      "payload_schema_id": "pm.browser_event.program_workspace_updated.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_workspace_updated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program_workspace.checkpointed",
+      "payload_schema_id": "pm.browser_event.program_workspace_checkpointed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_workspace_checkpointed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program_workspace.spilled",
+      "payload_schema_id": "pm.browser_event.program_workspace_spilled.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_workspace_spilled",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.program_workspace.closed",
+      "payload_schema_id": "pm.browser_event.program_workspace_closed.v1",
+      "payload_schema_pointer": "#/$defs/browser_program_workspace_closed",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "workspace_revision_advances"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.screenshot.model_attachment_selected",
+      "payload_schema_id": "pm.browser_event.screenshot_model_attachment_selected.v1",
+      "payload_schema_pointer": "#/$defs/browser_screenshot_model_attachment_selected",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.screenshot.skipped",
+      "payload_schema_id": "pm.browser_event.screenshot_skipped.v1",
+      "payload_schema_pointer": "#/$defs/browser_screenshot_skipped",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.route.fetch_selected",
+      "payload_schema_id": "pm.browser_event.route_fetch_selected.v1",
+      "payload_schema_pointer": "#/$defs/browser_route_fetch_selected",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routing",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.route.browser_escalated",
+      "payload_schema_id": "pm.browser_event.route_browser_escalated.v1",
+      "payload_schema_pointer": "#/$defs/browser_route_browser_escalated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routing",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.routine.generated",
+      "payload_schema_id": "pm.browser_event.routine_generated.v1",
+      "payload_schema_pointer": "#/$defs/browser_routine_generated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routine owner",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.routine.validated",
+      "payload_schema_id": "pm.browser_event.routine_validated.v1",
+      "payload_schema_pointer": "#/$defs/browser_routine_validated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routine owner",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.routine.promoted",
+      "payload_schema_id": "pm.browser_event.routine_promoted.v1",
+      "payload_schema_pointer": "#/$defs/browser_routine_promoted",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routine owner",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.routine.invalidated",
+      "payload_schema_id": "pm.browser_event.routine_invalidated.v1",
+      "payload_schema_pointer": "#/$defs/browser_routine_invalidated",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routine owner",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.routine.disabled",
+      "payload_schema_id": "pm.browser_event.routine_disabled.v1",
+      "payload_schema_pointer": "#/$defs/browser_routine_disabled",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService routine owner",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.session.reconstructed_on_host",
+      "payload_schema_id": "pm.browser_event.session_reconstructed_on_host.v1",
+      "payload_schema_pointer": "#/$defs/browser_session_reconstructed_on_host",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [
+        "host_changes",
+        "destination_host_matches"
+      ],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    },
+    {
+      "event_type": "browser.session.interrupted",
+      "payload_schema_id": "pm.browser_event.session_interrupted.v1",
+      "payload_schema_pointer": "#/$defs/browser_session_interrupted",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-event-contract-admission-20260910",
+      "payload_owner_ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "producer_role": "BrowserRuntimeService",
+      "consumer_roles": [
+        "EventRecord append/dedupe",
+        "Browser owner projection"
+      ],
+      "semantic_checks": [],
+      "source_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "source_section": "\u00a715.11 exact required browser event list",
+      "runtime_producer_conformance": "not_run",
+      "registration_disposition": "proposed_requires_admission",
+      "retention_policy_proposal": "RP-RUNTIME-365D"
+    }
+  ]
+}

@@ -762,7 +762,7 @@
         "record_kind": {"const": "browser_command_error"},
         "command_instance_id": {"$ref": "#/$defs/id"},
         "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "error_code": {"type": "string", "enum": ["runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization", "invalid_named_action", "invalid_representation_base"]},
+        "error_code": {"type": "string", "enum": ["handler_unavailable", "event_authority_unavailable", "runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization", "invalid_named_action", "invalid_representation_base"]},
         "effect_state": {"type": "string", "enum": ["no_effect", "effects_reconciled", "effect_unknown"]},
         "retry_allowed": {"type": "boolean"},
         "safe_next_actions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["inspect", "retry", "reconcile_effects", "request_permission", "select_capability", "close", "none"]}},
@@ -781,7 +781,7 @@
         "schema_id": {"const": "pm.browser_program.command_disabled_reason.v1"},
         "record_kind": {"const": "browser_command_disabled_reason"},
         "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "reason_code": {"type": "string", "enum": ["runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization"]},
+        "reason_code": {"type": "string", "enum": ["handler_unavailable", "event_authority_unavailable", "runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization"]},
         "blocking_ref": {"$ref": "#/$defs/non_secret_ref"},
         "safe_next_actions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["inspect", "retry", "reconcile_effects", "request_permission", "select_capability", "close", "none"]}},
         "observed_at_utc": {"$ref": "#/$defs/timestamp"}

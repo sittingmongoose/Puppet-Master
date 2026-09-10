@@ -16,6 +16,8 @@ import tempfile
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from pm_evidence_paths import EvidencePathError
+from pm_event_evidence_adapter import configure as configure_evidence_paths
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -517,7 +519,7 @@ def validate_data(inventory: dict, rows_blob: bytes, status: dict, artifact_hash
         "quarantined_252_exact_set_and_custody": quarantine_checks,
     }
     if not allow_receipt_absent:
-        checks["artifact_hashes_match_receipt"] = all((ROOT / p).is_file() and sha((ROOT / p).read_bytes()) == digest for p, digest in artifact_hashes.items())
+        checks["artifact_hashes_match_receipt"] = all(resolve_artifact_reference(p).is_file() and sha(resolve_artifact_reference(p).read_bytes()) == digest for p, digest in artifact_hashes.items())
     return checks
 
 
@@ -558,7 +560,14 @@ def self_test() -> int:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("generate", "validate", "self-test"))
+    parser.add_argument("--outdir", help="External currentness output directory; generate requires an empty directory")
     args = parser.parse_args()
+    if args.command != "self-test":
+        try:
+            configure_evidence_paths(globals(), outdir=args.outdir, command=args.command)
+        except (EvidencePathError, OSError) as exc:
+            print(json.dumps({"evidence_valid": False, "event_authority_closed": False, "error": str(exc)}))
+            return 2
     if args.command == "generate":
         generate()
         return validate()

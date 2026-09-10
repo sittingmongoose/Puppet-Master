@@ -53,8 +53,8 @@ PLACEHOLDER_EVIDENCE_PREFIXES = (
 )
 
 
-class AuditError(RuntimeError):
-    pass
+from pm_packet_custody import AuditError, SliceCorpus
+from pm_evidence_paths import resolve_evidence_input, EvidencePathError
 
 
 def load_json(path: Path) -> Any:
@@ -137,100 +137,6 @@ def scalar_from_line(line: str, field: str) -> str | None:
     except json.JSONDecodeError:
         return None
     return value if isinstance(value, str) else None
-
-
-class SliceCorpus:
-    def __init__(self, custody_root: Path) -> None:
-        self.root = custody_root
-        coverage = load_json(custody_root / "slice_coverage.json")
-        self.max_lines = coverage.get("max_lines_per_slice")
-        self.overlap = coverage.get("overlap_lines")
-        documents = coverage.get("documents")
-        if not isinstance(documents, list):
-            raise AuditError("slice_coverage.json documents must be an array")
-        self.documents = {item["document_id"]: item for item in documents}
-
-    def verify_all(self) -> dict[str, Any]:
-        failures: list[str] = []
-        slice_count = 0
-        unique_line_count = 0
-        for document_id in sorted(self.documents):
-            document = self.documents[document_id]
-            slices = document.get("slices", [])
-            if not slices:
-                failures.append(f"{document_id}: no slices")
-                continue
-            previous_end = 0
-            emitted = 0
-            for index, item in enumerate(slices):
-                slice_count += 1
-                start = item.get("start_line")
-                end = item.get("end_line")
-                count = item.get("line_count")
-                if not all(isinstance(value, int) for value in (start, end, count)):
-                    failures.append(f"{document_id}: non-integer slice range")
-                    continue
-                expected_start = 1 if index == 0 else previous_end - self.overlap + 1
-                if start != expected_start:
-                    failures.append(
-                        f"{document_id}: discontinuous slice start {start}; expected {expected_start}"
-                    )
-                if count != end - start + 1 or count > self.max_lines:
-                    failures.append(f"{document_id}: invalid slice line count at {start}-{end}")
-                path = self.root / item["slice_relative_path"]
-                if not path.is_file():
-                    failures.append(f"{document_id}: missing slice {item['slice_relative_path']}")
-                else:
-                    data = path.read_bytes()
-                    if sha256_bytes(data) != item.get("sha256"):
-                        failures.append(f"{document_id}: slice hash mismatch {item['slice_relative_path']}")
-                    physical_count = len(data.decode("utf-8").splitlines())
-                    if physical_count != count:
-                        failures.append(
-                            f"{document_id}: physical line count {physical_count} != {count}"
-                        )
-                emitted += count if index == 0 else count - self.overlap
-                previous_end = end
-            if previous_end != document.get("source_line_count"):
-                failures.append(f"{document_id}: final slice does not reach source EOF")
-            if emitted != document.get("source_line_count"):
-                failures.append(f"{document_id}: de-overlapped line count mismatch")
-            unique_line_count += emitted
-        return {
-            "document_count": len(self.documents),
-            "slice_count": slice_count,
-            "unique_source_line_count": unique_line_count,
-            "max_lines_per_slice": self.max_lines,
-            "overlap_lines": self.overlap,
-            "valid": not failures,
-            "failures": failures,
-        }
-
-    def lines(self, document_id: str) -> Iterator[tuple[int, str]]:
-        document = self.documents.get(document_id)
-        if document is None:
-            raise AuditError(f"unknown custody document_id: {document_id}")
-        previous_end = 0
-        for item in document["slices"]:
-            path = self.root / item["slice_relative_path"]
-            data = path.read_bytes()
-            if sha256_bytes(data) != item["sha256"]:
-                raise AuditError(f"slice hash mismatch while reading {path}")
-            lines = data.decode("utf-8").splitlines()
-            for line_number, line in enumerate(lines, start=item["start_line"]):
-                if line_number > previous_end:
-                    yield line_number, line
-            previous_end = item["end_line"]
-
-    def document_summary(self, document_id: str) -> dict[str, Any]:
-        document = self.documents[document_id]
-        return {
-            "document_id": document_id,
-            "logical_path": document["logical_path"],
-            "source_line_count": document["source_line_count"],
-            "source_sha256": document["source_sha256"],
-            "slice_count": document["slice_count"],
-        }
 
 
 def line_case(group: dict[str, Any], corpus: SliceCorpus, line_number: int, text: str) -> dict[str, Any]:
@@ -511,10 +417,15 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
 
 def build_manifest() -> dict[str, Any]:
     spec = load_json(SPEC_PATH)
-    custody_root = ROOT / spec["custody_root"]
+    try:
+        custody_root = resolve_evidence_input(ROOT, spec["custody_root"])
+    except EvidencePathError as exc:
+        raise AuditError(str(exc)) from exc
     corpus = SliceCorpus(custody_root)
     coverage = corpus.verify_all()
     failures = list(coverage["failures"])
+    if failures:
+        raise AuditError("packet custody is invalid: " + "; ".join(failures))
     groups = []
     all_refs: set[str] = set()
     for source_group in spec["source_groups"]:
@@ -1106,10 +1017,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
     prepare_parser = subparsers.add_parser("prepare", help="create a new retained audit workbook")
-    prepare_parser.add_argument("--outdir", type=Path, default=DEFAULT_OUT)
+    prepare_parser.add_argument("--outdir", type=Path, required=True)
     subparsers.add_parser("census", help="inspect current source coverage without creating a review workbook")
     validate_parser = subparsers.add_parser("validate", help="validate census and a filled report")
-    validate_parser.add_argument("--dir", type=Path, default=DEFAULT_OUT)
+    validate_parser.add_argument("--dir", type=Path, required=True)
     validate_parser.add_argument(
         "--result-out", type=Path,
         help="optional new path for the validation receipt; an existing file is never overwritten",
@@ -1135,6 +1046,8 @@ def main() -> int:
             return 0 if result["source_census_valid"] else 1
         if args.command == "prepare":
             outdir = args.outdir if args.outdir.is_absolute() else ROOT / args.outdir
+            if outdir.resolve().is_relative_to(ROOT.resolve()):
+                raise AuditError("raw packet workbooks require an explicit external --outdir")
             result = prepare(outdir)
             print(json.dumps(result, indent=2, sort_keys=True))
             return 0 if result["source_census_valid"] else 1

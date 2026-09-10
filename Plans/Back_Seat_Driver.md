@@ -239,7 +239,7 @@ An assignment resets and re-primes, incrementing `epoch` and rewinding `cursor`,
 - advisor model, account, or Persona change;
 - advisor context-maintenance re-prime that the advisor's own context cannot absorb.
 
-Reset clears the advisor's private transcript and in-context dedup history and rewinds the cursor so the next review replays the current bounded primary state instead of continuing from stale pre-rewrite context. Reset does not clear held findings and does not clear durable closures; held findings are re-presented to the re-primed advisor as the reconfirmation preamble, fenced by the new primary epoch.
+Reset clears the advisor's private transcript and in-context dedup history and rewinds the cursor so the next review replays current bounded primary state. It preserves held records and durable closures as owner history, never as a cross-epoch delivery capability. An advisor-only re-prime within the same primary epoch re-presents eligible held records for reconfirmation. Primary-epoch replacement closes old-epoch eligibility with `epoch_replaced`; any independent re-raise in the new epoch follows §8 rather than inheriting current-advice status.
 
 When BSD is enabled mid-run, the cursor seeds to the current primary generation so the first review does not replay the entire prior conversation.
 
@@ -337,7 +337,7 @@ This owner therefore **reuses that exact command ID and its existing request and
 | `cmd.bsd.open_usage` | Navigate to the Usage view filtered to BSD attribution | Navigation only; no Usage record is created by navigating. |
 | `cmd.bsd.open_transcript` | Navigate to the advisor's private transcript | Navigation only; subject to `retain_transcript` and to ordinary redaction. Returns an honest unavailable state when retention is off. |
 
-Only `cmd.bsd.set` has an existing catalog row. `cmd.bsd.configure`, `cmd.bsd.workflow.configure`, `cmd.bsd.assignment.pause`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.bsd.assignment.stop`, `cmd.bsd.finding.open`, `cmd.bsd.open_usage`, and `cmd.bsd.open_transcript` are canonical owner requests that require central command-catalog registration, central event registration, and production wiring rows before they exist as dispatchable commands. Until that registration closes, the corresponding GUI controls remain disabled with `command_not_registered`, and no page-local handler, alias, or fixture may simulate success. The trigger evaluator, hold and reconfirm transitions, and the window/eligibility interactions described in §4, §8, and §11 are internal service behavior with no user-facing command ID; they must not be given one to make a surface look wired.
+All ten commands in this table now have central catalogue declarations; the former statement that only `cmd.bsd.set` was registered is superseded. Their existing names and sole future targets are reused. Dispatch still requires the actual owner, current projection, exact payload binding, permissions, and any applicable event admission. Missing registration is `command_not_registered`; missing owner/native implementation is `owner_unavailable`. Neither a catalogue row nor an isolated, explicitly labelled concept simulation proves successful product dispatch. No page-local handler or fixture may bypass those guards. The trigger evaluator, hold/reconfirmation transitions, and window/eligibility behavior remain internal service behavior; no GUI command is invented for them.
 
 ## 18. Typed request, result, and error enumerations
 
@@ -392,7 +392,7 @@ ContractRef: ContractName:Plans/usage-feature.md
 
 ## 22. Settings boundary
 
-Settings owns the defaults; this owner owns the operational records. Settings stores and renders `assistant.bsd.mode` (enum `off|auto|on`, default `auto`), `assistant.bsd.model` (dynamic enum, default `default`), `assistant.bsd.persona` (dynamic enum, default `critical_advisor`), `assistant.bsd.trigger_sensitivity` (enum, default `balanced`), `assistant.bsd.catch_up_seconds` (enum `0|15|30|60`, default `30`), `assistant.bsd.cooldown_turns` (integer, default `3`), `assistant.bsd.retain_transcript` (bool, default `true`), and `assistant.bsd.self_compact_threshold` (number, default `0.8`), under a BSD manager in the Settings shell.
+Settings owns the defaults; this owner owns the operational records. Settings stores and renders the eight existing `safety.approvals.bsd-*` keys in `Plans/settings_inventory.json`. The exact preference-to-operational mapping, defaults, and legacy `assistant.bsd.*` read/import aliases are defined in [BSD Configuration and Authority Reconciliation](#bsd-configuration-reconciliation-20260910). That mapping preserves default Auto, Balanced sensitivity, 30-second catch-up, three-turn cooldown, retained private transcript, and the 0.8 advisor-window compaction fraction. It creates no second preference store.
 
 Back Seat Driver stores the actual `BSDPolicy` revision, workflow bindings, assignments, review cycles, findings, and quarantines, and it computes effective resolution. A Settings value is an input to resolution, never the effective truth of a running assignment: an assignment's frozen binding continues to govern that run after a Settings change, and the change applies to the next binding. Settings must not store assignment state, finding state, or health, and this owner must not create a parallel preference store.
 
@@ -1735,11 +1735,11 @@ APR-047, and APR-061.
   1. *Operational Mode:* Off, Auto, On.
   2. *Advisor Identity:* Shared Model selector and Persona picker backed by `Plans/Models_System.md`
      and `Plans/Personas.md`.
-  3. *Trigger Sensitivity:* High, Medium, Low thresholds for proactive intervention.
-  4. *Catch-up Delay:* Configurable duration threshold (seconds) before issuing advice during fast bursts.
+  3. *Trigger Sensitivity:* Conservative, Balanced, Frequent thresholds for the elastic triggers in §4; never a severity filter.
+  4. *Catch-up Delay:* The bounded, user-abortable safe-boundary wait in §11: 0, 15, 30, or 60 seconds; default 30 seconds.
   5. *Cooldown Period:* Configurable turn threshold to avoid repetitive or spammy recommendations.
-  6. *Retain Transcript Policy:* Toggle governing advisor awareness of historical transcript turns.
-  7. *Self-Compaction Threshold:* Token ceiling triggering independent advisor context compaction.
+  6. *Retain Transcript Policy:* Retention of the private advisor transcript; it grants no additional access to primary history.
+  7. *Self-Compaction Threshold:* Fraction of the advisor's own context window triggering independent compaction; default 0.8.
   8. *Ten Stage Bindings:* Explicit enablement toggles across all ten supported development stages:
      PRD Builder, Planning Wizard, Plan Drafting, PlanUnit Compilation, WorkNode Generation,
      Code Generation, Verification Run, Gate Evaluation, Audit Review, and Certification.
@@ -1867,15 +1867,7 @@ ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/FinalGUI
 
 ### 26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)
 
-- **Own kit manager:** The Back Seat Driver Settings manager renders with the shared manager kit over the
-  `settings.bsd` projection and the eight canonical `safety.approvals.bsd-*` settings: a Mode row with an
-  Off / Auto / On segmented control and a plain-language status line (Off, Idle, Reviewing, Catching up,
-  Finding held, Advice delivered, Quota paused, Failed, Unavailable); a "Who advises" section (Model, Persona)
-  that states a fresh advisor session starts on change; a "When to advise" section (Sensitivity, Catch-up delay,
-  Cooldown); a "Where it watches" section whose side panel sets each of the ten stage bindings to Inherit,
-  Off, Auto, or On; and one Advanced disclosure holding transcript retention, the compaction threshold, the
-  usage boundary, the fallback model, recent findings, and technical details. It has no check control and no
-  header-level action strip, and keeps §25's stripe-free presentation.
+- **Own kit manager:** The current September 9 presentation is defined by BSD-028 below: Overview, Stages, and Findings tabs, a stats strip, the eight canonical engine-rendered rows exactly once, and one Advanced disclosure. The earlier stage side-panel description is superseded. This reconciliation preserves the newer manager rather than restoring an old snapshot.
 
 ```yaml
 plan_unit_id: BSD-028
@@ -1932,3 +1924,135 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/Settings_System.md
+
+## BSD Configuration and Authority Reconciliation — 2026-09-10
+
+<a id="bsd-configuration-reconciliation-20260910"></a>
+
+This section resolves the conflicting configuration wording within this owner. It preserves the
+September 9 Settings manager's Overview, Stages, and Findings tabs, shared engine rows, stats
+strip, and one Advanced disclosure. It does not restore the superseded stage side-panel layout.
+
+### One preference store, one operational resolver
+
+The canonical preference keys are the existing `safety.approvals.bsd-*` inventory rows. The
+`assistant.bsd.*` spellings retained in earlier sections and source-lineage records are import/read
+aliases, not a second write destination. `settings.bsd` is a projection of those same preferences,
+not an independent store. Import preserves an explicit Off. A conflict between a canonical value
+and an alias is resolved in favor of the canonical value with a migration warning; no alias writes
+back over a canonical value. Requested and effective runtime identities remain owner-resolved.
+
+| Canonical preference suffix | Legacy read/import alias | Operational meaning |
+|---|---|---|
+| `bsd-mode` | `assistant.bsd.mode` | Off/Auto/On labels resolve to off/auto/on; default Auto. |
+| `bsd-model` | `assistant.bsd.model` | Shared Model selection, not a copied model catalogue. |
+| `bsd-persona` | `assistant.bsd.persona` | Shared Persona selection; default Critical Advisor. |
+| `bsd-trigger-sensitivity` | `assistant.bsd.trigger_sensitivity` | Conservative/Balanced/Frequent labels resolve to conservative/balanced/frequent; default Balanced. |
+| `bsd-catch-up-seconds` | `assistant.bsd.catch_up_seconds` | Off/15 seconds/30 seconds/60 seconds resolve to 0/15/30/60; default 30 seconds. |
+| `bsd-cooldown-turns` | `assistant.bsd.cooldown_turns` | Primary-turn delivery cooldown; default 3. |
+| `bsd-retain-transcript` | `assistant.bsd.retain_transcript` | Retention of the private advisor transcript; default true. |
+| `bsd-self-compact-threshold` | `assistant.bsd.self_compact_threshold` | Fraction of the advisor's own context window; default 0.8, not an absolute token ceiling. |
+
+The suffixes above are under `safety.approvals.`. High/Medium/Low from the cumulative display
+prose are legacy display labels only: High maps to Frequent, Medium to Balanced, Low to
+Conservative when an explicit legacy import is performed. These are not new stored enum values.
+Sensitivity changes only the elastic trigger thresholds in §4. It never disables required triggers,
+filters findings by severity, grants authority, or changes the hold/reconfirmation rule.
+
+Catch-up is the bounded, user-abortable safe-boundary wait in §11; it is not a debounce timer, a
+routine background delay, or permission to skip unresolved findings. Off means zero waiting, not
+BSD mode Off. Retention controls inspectability of the advisor's private history; it does not grant
+full primary-transcript access or disable its bounded context. Unknown Usage stays unknown.
+
+Settings changes affect the next binding. Explicit reconfiguration of an active assignment creates
+an attributable binding revision and applies §12's re-prime/epoch fencing; opening or cancelling a
+modal does neither. Old review identities and Usage attribution are immutable.
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/Models_System.md, ContractName:Plans/Personas.md, ContractName:Plans/usage-feature.md
+
+### Ten presentation rows do not delete runtime stages
+
+The ten Settings rows group the operational stage vocabulary in §13; they do not replace it.
+PRD Builder and Planning Wizard cover their respective stage sets. Plan Drafting covers
+`deep_plan`. PlanUnit Compilation covers `planunit_compile` and the distinct `plan_compile`
+operation. WorkNode Generation covers `worknode_generation`. Code Generation covers
+`worknode_execution` and the distinct `remediation` operation. Verification Run covers
+`verification`. Audit Review covers the WorkNode-audit stage of `worknode_audit`; Gate Evaluation
+covers its readiness stage. Certification covers `certification`. Ordinary `assistant` work resolves
+from the project policy without pretending it is a hidden stage or requiring an eleventh row.
+
+Each row supplies an inherit/off/auto/on default for the exact operational members named above.
+A frozen workflow binding still stores each exact workflow/stage identity, its effective resolution,
+policy revision, and requested/effective identity. The two worknode_audit projections target
+different stages, not competing defaults for the same stage. Hidden-stage coverage never starts
+WorkNodes, substitutes for a verifier/certifier, or grants mutation authority. Unknown stage names
+fail validation rather than being silently omitted.
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md#13-workflow-stage-coverage, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md
+
+### Historical findings are not current authority
+
+Advisor self-compaction and advisor-identity re-prime preserve held records and durable closures
+outside the private transcript. No such reset is evidence of reconfirmation. A primary-epoch
+replacement preserves the old records as history but closes old-epoch held eligibility with
+`epoch_replaced`; an independently re-raised concern in the new epoch follows the normal hold
+protocol. Merely reading, restoring, or copying an old finding cannot emit it, clear a newer finding,
+advance a cursor, or satisfy a primary work gate. Project, repository, worktree, thread, and primary
+run identities are compared as well as epoch and generation; equal numbers across different
+scopes do not make callbacks interchangeable.
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md#12-reset-re-prime-and-epoch-fencing, ContractName:Plans/Prompt_Pipeline.md
+
+### Registration, implementation, and demonstrations remain distinct
+
+All ten §17 command IDs have central catalogue declarations. Reuse their existing request/result
+names and sole handler targets; never register peer BSD aliases. Catalogue presence does not
+prove that a native handler, current projection, permission decision, payload binding, or production
+dispatch exists. Missing registration uses `command_not_registered`; an unavailable owner or
+native implementation uses `owner_unavailable`, under §18's existing closed error vocabulary.
+A declared handler string cannot turn the latter into an enabled control.
+
+A labelled, isolated Demo Studio simulation may exercise these semantics under local fixture
+action IDs. It must not dispatch or report success for an unavailable product command, emit an
+unregistered EventRecord, claim a persisted receipt, or satisfy native acceptance. Product controls
+remain gated by the actual owner. Local evidence records are not an alternate command/event
+registry. Required event registration under §19 remains independently checked against the central
+Event Authority registry.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/event_family_registry.json
+
+```yaml
+plan_unit_id: BSD-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  BSD configuration uses the existing safety.approvals.bsd-* preference keys, with legacy
+  assistant.bsd.* names as read/import aliases only. Sensitivity is conservative/balanced/frequent
+  and changes only elastic triggers; catch-up is the bounded safe-boundary wait with default 30
+  seconds; retention governs private-transcript retention and compaction uses the advisor-window
+  fraction. Ten presentation rows preserve all exact operational stages. Historical held records
+  cannot cross primary epochs as current advice. Existing central command identities are reused;
+  declaration, native dispatch, event admission, and isolated concept evidence remain separate.
+gui_related: true
+gui_classification_reason: Settings, configuration, Context Details, and disabled controls project these rules.
+depends_on: [BSD-026, BSD-027, BSD-028]
+unblocks: []
+acceptance_criteria:
+  - Canonical values win over conflicting legacy aliases and explicit Off is preserved.
+  - Sensitivity never filters severity or disables mandatory reconfirmation triggers.
+  - Catch-up default is 30 seconds and retention does not widen primary-context access.
+  - All operational stages map without duplicate per-stage defaults or silently dropped coverage.
+  - Primary-epoch replacement preserves history without preserving old current-advice eligibility.
+  - All ten existing command IDs and sole targets are reused without a local success bypass.
+validation_surfaces: [scripts/pm-assistant-contract-check.py, Plans/settings_inventory.json, Plans/Wiring_Matrix.production.json]
+risk_class: configuration_or_admission_drift
+reasoning_tier: high
+context_scope: bsd_cross_owner_reconciliation
+implementation_surfaces: [Plans/Back_Seat_Driver.md, Plans/Settings_System.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: contract_reconciliation_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [user_correction:2026-09-10-fix-gaps-and-authority, BSD-026, BSD-027, BSD-028]
+negative_constraints:
+  - Do not infer native or Event Authority admission from a catalogue row or a concept test.
+  - Do not rewrite immutable prior review identities or silently widen advisor permissions.
+```

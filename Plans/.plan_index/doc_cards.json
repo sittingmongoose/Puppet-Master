@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 276
+        "True": 277
       },
-      "heading_count": 661,
+      "heading_count": 662,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -617,9 +617,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25218,
+      "line_count": 25284,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 459,
+      "plan_unit_count": 460,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1079,7 +1079,8 @@
         "ACD-456",
         "ACD-457",
         "ACD-458",
-        "ACD-459"
+        "ACD-459",
+        "ACD-460"
       ],
       "reasoning_tiers": [
         "high",
@@ -1335,6 +1336,7 @@
         "source_control_owner_drift",
         "source_control_state",
         "source_preservation",
+        "stale_context_application",
         "stale_lineage",
         "stale_owner_residue",
         "stale_reference_drift",
@@ -1409,10 +1411,10 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "b6e967a9240db69b449e5d0861fd4eed988ef07e7e00f2d639f0f7abba686d24",
+      "sha256": "f5513c64efa1971abdfd94949abf1543ec7ee54808f480ed00c2a67da3fa1796",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 459
+        "accepted": 460
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1420,7 +1422,7 @@
         "constraint": 137,
         "decision": 6,
         "gui_requirement": 5,
-        "requirement": 302,
+        "requirement": 303,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1454,6 +1456,7 @@
         "future Chat work/advisory/disabled-control fixtures",
         "future GUI usage projection fixture suite",
         "future onboarding Teacher handoff copy fixture",
+        "future registered Lens dispatch and stale-preview fixtures",
         "future skipped-provider Teacher degraded-state fixture",
         "git diff --check",
         "inline visualizer stream and bridge fixtures",
@@ -1474,6 +1477,7 @@
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "rg newfeatures.md Plans/assistant-chat-design.md",
+        "scripts/pm-assistant-contract-check.py",
         "server-first Chat owner audit"
       ]
     },
@@ -1707,7 +1711,7 @@
         "False": 15,
         "True": 32
       },
-      "heading_count": 109,
+      "heading_count": 110,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1787,7 +1791,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4256,
+      "line_count": 4288,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 47,
       "plan_unit_ids": [
@@ -1888,7 +1892,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "99e9295576a0806699baa2862eeca645961d89d26cba8087c6426f2e5394fc42",
+      "sha256": "75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47
@@ -2079,21 +2083,22 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 3,
-        "True": 25
+        "True": 26
       },
-      "heading_count": 61,
+      "heading_count": 66,
       "implementation_surfaces": [
         "Concepts/pm7-tools/settings_refresh/managers/40-bsd.js",
         "Plans/Back_Seat_Driver.md",
         "Plans/FinalGUISpec.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Settings_System.md",
+        "Plans/UI_Command_Catalog.md",
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1934,
+      "line_count": 2058,
       "path": "Plans/Back_Seat_Driver.md",
-      "plan_unit_count": 28,
+      "plan_unit_count": 29,
       "plan_unit_ids": [
         "BSD-001",
         "BSD-002",
@@ -2122,7 +2127,8 @@
         "BSD-025",
         "BSD-026",
         "BSD-027",
-        "BSD-028"
+        "BSD-028",
+        "BSD-029"
       ],
       "reasoning_tiers": [
         "high",
@@ -2141,6 +2147,7 @@
         "bsd_mode_default_drift",
         "bsd_record_or_owner_collision",
         "bsd_trigger_invention",
+        "configuration_or_admission_drift",
         "configuration_parameter_omission",
         "cross_epoch_advisor_write",
         "duplicate_command_registration",
@@ -2158,20 +2165,22 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "fce4bea4dda9b5fc893b10c730d87cf716dc5107d06b8b3b2185a26a2a8d26f8",
+      "sha256": "6b0232d02c4b84adac08e08179fe41526399602f7756ca595d7ed9a4d413c823",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 28
+        "accepted": 29
       },
       "title": "Back Seat Driver (Canonical Owner)",
       "unit_type_counts": {
         "owner_boundary": 2,
-        "requirement": 26
+        "requirement": 27
       },
       "validation_surfaces": [
         "BSD mode resolution and Off-no-call fixtures",
         "BSD required-reviewer-boundary negative fixtures",
         "BSD trigger matrix and no-call reason fixtures",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/settings_inventory.json",
         "Usage attribution and no-call accounting fixtures",
         "advisor isolation and self-compaction fixtures",
         "bounded-delta and redaction-receipt fixtures",
@@ -2190,6 +2199,7 @@
         "quarantine reason closure and re-prime-then-pause fixtures",
         "requested versus effective disclosure fixtures",
         "restart recovery and legacy import fixtures",
+        "scripts/pm-assistant-contract-check.py",
         "severity closure and blocker-absence fixtures",
         "stage coverage and idempotent assignment fixtures",
         "start modal and binding revision fixtures",
@@ -14776,7 +14786,7 @@
         "False": 65,
         "True": 100
       },
-      "heading_count": 253,
+      "heading_count": 254,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -14809,7 +14819,7 @@
         "future Testing evidence harness",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current"
       ],
-      "line_count": 11257,
+      "line_count": 11296,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 165,
       "plan_unit_ids": [
@@ -15112,7 +15122,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "559160bb3bfde9675074338b19188675dd6bed3c1fd583b4ba96ee33d88775fe",
+      "sha256": "e2a2fa44e0fb4f80abda779e2e8f7acb1e713877407e6614a2fad13323b52fb9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -17338,7 +17348,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "12d28a021671cfad436d0cf5a3363545ca06e65de3feb03b55152111187edf07",
+      "sha256": "46e57138eeec16db54907afcf615a2a2512fa935f6d8a3e47e3be44519ff23c1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 160,
@@ -18350,7 +18360,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-10T03:55:14Z",
+  "generated_at_utc": "2026-09-10T19:41:13Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18359,12 +18369,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3329,
-      "True": 3103
+      "True": 3105
     },
-    "plan_unit_count": 6432,
+    "plan_unit_count": 6434,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6241,
+      "accepted": 6243,
       "retired": 182,
       "superseded": 9
     },
@@ -18431,7 +18441,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5134,
+      "requirement": 5136,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

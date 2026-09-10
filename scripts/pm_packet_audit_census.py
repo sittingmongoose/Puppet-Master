@@ -65,6 +65,8 @@ def build_census_contract(groups: list[dict[str, Any]], spec_sha256: str) -> dic
 
 def validate_manifest_census(manifest: dict[str, Any]) -> list[str]:
     """Validate a stored snapshot without relabelling historical V1 evidence."""
+    if not isinstance(manifest, dict):
+        return ["census manifest must be an object"]
     schema = manifest.get("schema_id")
     if schema == LEGACY_SCHEMA and manifest.get("schema_version") == "1.0.0":
         return ([] if manifest.get("case_count") == LEGACY_CASE_COUNT else
@@ -77,12 +79,16 @@ def validate_manifest_census(manifest: dict[str, Any]) -> list[str]:
     groups = manifest.get("groups")
     if not isinstance(groups, list) or any(not isinstance(group, dict) for group in groups):
         return ["census groups must be an array of objects"]
+    if manifest.get("group_count") != len(groups):
+        failures.append("census group_count does not equal actual group count")
     ids = [group.get("group_id") for group in groups]
     if not _names(ids) or ids.count(TOUCH_GROUP) != 1:
         return ["census requires unique packet groups and exactly one Touch Closure group"]
     if not _sha(manifest.get("spec_sha256")):
         failures.append("census extraction spec hash is missing or invalid")
     for group in groups:
+        if not isinstance(group.get("suite"), str) or not group["suite"].strip():
+            return failures + [f"census {group['group_id']}: missing suite identity"]
         cases = group.get("cases")
         if not isinstance(cases, list) or any(not isinstance(case, dict) for case in cases):
             return failures + [f"census {group['group_id']}: invalid case array"]
@@ -132,10 +138,29 @@ def validate_manifest_census(manifest: dict[str, Any]) -> list[str]:
 
 def validate_source_freeze(stored: dict[str, Any], current: dict[str, Any]) -> list[str]:
     """Compare to independently re-extracted custody, not self-repinned totals."""
+    if not isinstance(stored, dict) or not isinstance(current, dict):
+        return ["source freeze inputs must be manifest objects"]
     failures = []
+    # A claimed valid flag is not an oracle. Check the contents that the hashes
+    # purport to describe, before comparing the two source freezes.
+    for label, manifest in (("stored", stored), ("current", current)):
+        if manifest.get("schema_id") == CURRENT_SCHEMA:
+            failures.extend(f"{label}: {error}" for error in validate_manifest_census(manifest))
+        elif label == "current":
+            failures.append("current source freeze must use the current manifest schema")
+        groups = manifest.get("groups")
+        if not isinstance(groups, list) or any(not isinstance(g, dict) for g in groups):
+            failures.append(f"{label}: invalid source group array")
+    if failures:
+        return failures
+    errors = current.get("source_census_failures", [])
+    if not isinstance(errors, list) or any(not isinstance(e, str) for e in errors):
+        failures.append("source census failures must be an array of strings")
+    elif errors:
+        failures.append("current source census contains unresolved failures")
+        failures.extend(errors)
     if current.get("source_census_valid") is not True:
         failures.append("current source census is invalid")
-        failures.extend(current.get("source_census_failures", []))
     if stored.get("spec_sha256") != current.get("spec_sha256"):
         failures.append("audit extraction/adaptation spec drift")
     if stored.get("required_suite_verdicts") != current.get("required_suite_verdicts"):
