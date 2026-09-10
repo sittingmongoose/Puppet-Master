@@ -1,0 +1,185 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/release_supply_chain/00-index.md",
+  "index_sha256": "df552c0fa1d1a85c72e81e6c9f4dc64847c676239f1af7b57e6468b9220c051b",
+  "manifest_path": "Plans/_shards/release_supply_chain/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/release_supply_chain/001-preamble.md",
+      "sha256": "7320b002e26b8f89fb9faf869e975e05bcd810c0faf73c683632ecb1ed6a810e",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/release_supply_chain/002-0.-scope.md",
+      "sha256": "ab6d119ecd624195662362a7409a765fd3f7641cdd5807e5becf458bdae86e72",
+      "shard_id": "002",
+      "source_line_end": 10,
+      "source_line_start": 6,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Ownership And Consumers",
+      "path": "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
+      "sha256": "5a690262ca106f84673018f492b0e5d4124b8663fe42444d7867ed07a6a311de",
+      "shard_id": "003",
+      "source_line_end": 36,
+      "source_line_start": 12,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Canonical PlanUnits",
+      "path": "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
+      "sha256": "b0d41a751cf3c91799ea9210011d56dc03b653af3b953bde7f51e810069945bd",
+      "shard_id": "004",
+      "source_line_end": 602,
+      "source_line_start": 38,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
+      "path": "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
+      "sha256": "281cfffa17ae64e33b83f985c5426b734ba7e99e183d5a98bdb89a0a9598e864",
+      "shard_id": "005",
+      "source_line_end": 606,
+      "source_line_start": 604,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Integration Surfaces",
+      "path": "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
+      "sha256": "187308b244342408432496158b8995c187c18f7689b955818a80b2637ab8bf28",
+      "shard_id": "006",
+      "source_line_end": 610,
+      "source_line_start": 608,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Validation And Acceptance",
+      "path": "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
+      "sha256": "51aa0acaf2a932575af7cb6032ab5f615c33323580211d519c78f7314a1e916c",
+      "shard_id": "007",
+      "source_line_end": 614,
+      "source_line_start": 612,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Plan-To-Node Readiness",
+      "path": "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
+      "sha256": "b2f145cca8b8e21712d4e8e794f0aa9469bac2c0714de88ba7931492e1703163",
+      "shard_id": "008",
+      "source_line_end": 618,
+      "source_line_start": 616,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
+      "path": "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
+      "sha256": "a6e53622106d820dcd49f0eecfe08e8dcf5edccf3d152ddbad05bfee58b81dd3",
+      "shard_id": "009",
+      "source_line_end": 622,
+      "source_line_start": 620,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Source Lineage And Governance",
+      "path": "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
+      "sha256": "5273baec010e9057f2e1cefe1383fd5898fef8d22dc40df518e6505c14c367c2",
+      "shard_id": "010",
+      "source_line_end": 628,
+      "source_line_start": 624,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07",
+      "path": "Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md",
+      "sha256": "252be20a82cca063f406465161f19f2196d732ad47c12f9d7c5a338472090e50",
+      "shard_id": "011",
+      "source_line_end": 719,
+      "source_line_start": 630,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Case L Release Migration And Recovery Gate Propagation - 2026-07-17",
+      "path": "Plans/_shards/release_supply_chain/012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md",
+      "sha256": "63e3a8b2b45ed8a95687555b4520080ac55463ffcc115395db8d87bb0428f80e",
+      "shard_id": "012",
+      "source_line_end": 810,
+      "source_line_start": 721,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/release_supply_chain/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "64878d1b69dae758f506c5f6d19c1e1d63efebeb70d78611137ecda1b9ddbcac",
+      "shard_id": "013",
+      "source_line_end": 821,
+      "source_line_start": 812,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
+      "path": "Plans/_shards/release_supply_chain/014-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "sha256": "c1161655cadc96a103c31e00e47dcd008070b7bdb9c38865a4e22a8a4ed62c0b",
+      "shard_id": "014",
+      "source_line_end": 831,
+      "source_line_start": 822,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Provider CLI Acquisition Supply-Chain Addendum - 2026-08-13",
+      "path": "Plans/_shards/release_supply_chain/015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md",
+      "sha256": "de8b0dd8c538c6a6f2656503f5b13e41e294302caba759e29343e744846403b1",
+      "shard_id": "015",
+      "source_line_end": 962,
+      "source_line_start": 833,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Plugin Package And Full-Thread Artifact Addendum - 2026-08-31",
+      "path": "Plans/_shards/release_supply_chain/016-plugin-package-and-full-thread-artifact-addendum-2026-08-31.md",
+      "sha256": "56738c3241b96dbdc050c63b39430fc28005d057dc0aee1ac26239ab72ca142c",
+      "shard_id": "016",
+      "source_line_end": 1100,
+      "source_line_start": 964,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Typed Command Supply-Chain Handoff Addendum",
+      "path": "Plans/_shards/release_supply_chain/017-typed-command-supply-chain-handoff-addendum.md",
+      "sha256": "cb5ad907621697839bb025a14ae906a14eb21539ba42ed80f8b54b9dbbea77b7",
+      "shard_id": "017",
+      "source_line_end": 1165,
+      "source_line_start": 1102,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Server command-gap owner closure - application update lifecycle (2026-09-01)",
+      "path": "Plans/_shards/release_supply_chain/018-server-command-gap-owner-closure-application-update-lifecycle-20.md",
+      "sha256": "6271542ab4326a6da5adbd9bebca1a45c7c4b81cf66ef9fcbbe0234007ad7bf1",
+      "shard_id": "018",
+      "source_line_end": 1207,
+      "source_line_start": 1167,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01",
+      "path": "Plans/_shards/release_supply_chain/019-post-integration-bundled-dependency-and-provider-registration-ad.md",
+      "sha256": "583c72f6efd301de16a818804df4b08aff43ceac6b0ef152c4ccd3fd6ac78447",
+      "shard_id": "019",
+      "source_line_end": 1287,
+      "source_line_start": 1209,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1287,
+    "path": "Plans/Release_Supply_Chain.md",
+    "sha256": "6417b4bebe91fcbe41b0c28abb0a9c47ba09faf1473b695a0722540548f69e61"
+  }
+}

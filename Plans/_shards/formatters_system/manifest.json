@@ -1,0 +1,131 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/formatters_system/00-index.md",
+  "index_sha256": "c43de6b9532f64cd096f2f2ce947a8697c1ae8814bce869f9d99bb016423bed1",
+  "manifest_path": "Plans/_shards/formatters_system/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/formatters_system/001-preamble.md",
+      "sha256": "2469241581c39bf1c341e6c50e1a052c85e3f01a2a5a8968d43ced9ab28f00d4",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope and SSOT status",
+      "path": "Plans/_shards/formatters_system/002-0.-scope-and-ssot-status.md",
+      "sha256": "b23e56452a1be717df4ba36ffe3637647cf7ddafc538dbda2798f5dc53b181e1",
+      "shard_id": "002",
+      "source_line_end": 29,
+      "source_line_start": 6,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Definitions",
+      "path": "Plans/_shards/formatters_system/003-1.-definitions.md",
+      "sha256": "8f2e38c6cdc32e25e458f3d122d6c301fd6afaeb92cd95f46fbebcad801bf081",
+      "shard_id": "003",
+      "source_line_end": 45,
+      "source_line_start": 31,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Lifecycle",
+      "path": "Plans/_shards/formatters_system/004-2.-lifecycle.md",
+      "sha256": "15ffb62f88db01f510b59d01b87d264e9ab1ddd02dea62fa00afef899a65a807",
+      "shard_id": "004",
+      "source_line_end": 94,
+      "source_line_start": 47,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Built-in formatters",
+      "path": "Plans/_shards/formatters_system/005-3.-built-in-formatters.md",
+      "sha256": "1821688b15a616e5ef92fa1b370fed6d2abc131982e2b9493f9f4a3cb753edf0",
+      "shard_id": "005",
+      "source_line_end": 130,
+      "source_line_start": 96,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Configuration",
+      "path": "Plans/_shards/formatters_system/006-4.-configuration.md",
+      "sha256": "4c18ebee2d5230f06e40f75f8f94ba8c3593e25f46a075ba54edd523e14aaefe",
+      "shard_id": "006",
+      "source_line_end": 183,
+      "source_line_start": 132,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. GUI requirements",
+      "path": "Plans/_shards/formatters_system/007-5.-gui-requirements.md",
+      "sha256": "65b355ab1b44b5302a8e4dadb55a841b9b85eda281db0bfbe024a7cb088857d7",
+      "shard_id": "007",
+      "source_line_end": 220,
+      "source_line_start": 185,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. OpenCode baseline and Puppet Master deltas",
+      "path": "Plans/_shards/formatters_system/008-6.-opencode-baseline-and-puppet-master-deltas.md",
+      "sha256": "b4848485ed7ddba1d06608e06bc4b7fb6a5f1a1df5c38d1baabfad8be5b22c43",
+      "shard_id": "008",
+      "source_line_end": 242,
+      "source_line_start": 222,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Acceptance criteria",
+      "path": "Plans/_shards/formatters_system/009-7.-acceptance-criteria.md",
+      "sha256": "21aebb30c4f19fb60ab3a20ccdba54363d81ed9995dcba96a2806fae3857c403",
+      "shard_id": "009",
+      "source_line_end": 275,
+      "source_line_start": 244,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/formatters_system/010-owner-consumer-map.md",
+      "sha256": "54e512de291a4c0d43822ced4384a6f300fac7beb0b4a14694b7a90ba1d3538b",
+      "shard_id": "010",
+      "source_line_end": 281,
+      "source_line_start": 277,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/formatters_system/011-planunits.md",
+      "sha256": "2efd5eab3bc78e884b5767fd8dcdffbbd4450973bb1eb984ad39b8b5c978ae33",
+      "shard_id": "011",
+      "source_line_end": 1088,
+      "source_line_start": 283,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/formatters_system/012-migration-coverage.md",
+      "sha256": "80cfeea7769a9cd3f0a266d451dd971aacb4721e930b13ec7b3f7b2b6c0a1dea",
+      "shard_id": "012",
+      "source_line_end": 1100,
+      "source_line_start": 1090,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/formatters_system/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "9ddc22204731807253e2b31b605d212c2bc4dc6db68a54b861d25b5b96d0c653",
+      "shard_id": "013",
+      "source_line_end": 1106,
+      "source_line_start": 1102,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1106,
+    "path": "Plans/Formatters_System.md",
+    "sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+  }
+}

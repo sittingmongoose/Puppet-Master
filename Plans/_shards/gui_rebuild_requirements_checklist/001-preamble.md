@@ -1,0 +1,11 @@
+# Shard 001: Preamble
+
+Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
+
+Source lines: L1-L1
+
+Source SHA256: `19c2e9efe0fa0322b01ca45e4f2ddea6809e5d0581e5da73ca070c6ba9b55583`
+
+---
+
+# GUI Rebuild Requirements Checklist (2026-02-23)

@@ -1,0 +1,32 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/prd_planning_runtime_contracts/00-index.md",
+  "index_sha256": "0ccae3f4f6e6b539caef168385ee6e72dedbdf63c4fd4f345e433ecf0884c37e",
+  "manifest_path": "Plans/_shards/prd_planning_runtime_contracts/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/prd_planning_runtime_contracts/001-lines-1-200.md",
+      "sha256": "cb1cf63fa8182be761b452c80daeddf469c6c73b70c134a5d9b657e98a01b99f",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-233",
+      "path": "Plans/_shards/prd_planning_runtime_contracts/002-lines-201-233.md",
+      "sha256": "bc5b6e14676ae52a41bb79879a420bf4efaa8de075a85c63dddb55b4e4060b9f",
+      "shard_id": "002",
+      "source_line_end": 233,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 233,
+    "path": "Plans/prd_planning_runtime_contracts.json",
+    "sha256": "6038b2905b68550bf7454213c3d8acbc2bd2a4509b6de1c16fa8b8da3d7ab5dd"
+  }
+}

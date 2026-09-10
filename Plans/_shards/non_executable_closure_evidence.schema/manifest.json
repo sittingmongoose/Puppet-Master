@@ -1,0 +1,41 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/non_executable_closure_evidence.schema/00-index.md",
+  "index_sha256": "06432978b7e98bf2b66380686b9470ebf70fb9eb3665ba9e5a586a71c1b3c70d",
+  "manifest_path": "Plans/_shards/non_executable_closure_evidence.schema/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/non_executable_closure_evidence.schema/001-lines-1-200.md",
+      "sha256": "a6d2c383f56af7705a2082585973c2f9bebeb89fc7e97fd424739d58bfbeb3a5",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/non_executable_closure_evidence.schema/002-lines-201-400.md",
+      "sha256": "6ee6f211efc3f52ba2a9e5a01d3146cf71723de950dbbac7ec0436b720ea0ef5",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-443",
+      "path": "Plans/_shards/non_executable_closure_evidence.schema/003-lines-401-443.md",
+      "sha256": "bfeb60f9a58d00c04442cbe7ae98d259e78b1d961b65b03a379e25f29371059d",
+      "shard_id": "003",
+      "source_line_end": 443,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 443,
+    "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+  }
+}

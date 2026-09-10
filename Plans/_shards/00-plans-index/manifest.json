@@ -1,0 +1,212 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/00-plans-index/00-index.md",
+  "index_sha256": "0c9ac6aa12367d31df8d81eb11181b93f035354abbb2e22c0f0811f21b3433c5",
+  "manifest_path": "Plans/_shards/00-plans-index/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/00-plans-index/001-preamble.md",
+      "sha256": "ddf99fd4d9e3012e29c1f718f0c953443eb5f6999208455f43dd442c8fe0b5f8",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Change Summary",
+      "path": "Plans/_shards/00-plans-index/002-change-summary.md",
+      "sha256": "aa2fc5e06c3b10c4df64af0f76ccb047495d207ec4cbeab44c4558a1584db57a",
+      "shard_id": "002",
+      "source_line_end": 82,
+      "source_line_start": 7,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Anti-drift layer (required reading order)",
+      "path": "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      "sha256": "eaf517c465bec63ffd43db55228a20a0b329107a69da8eb3ed6bfd1d03951656",
+      "shard_id": "003",
+      "source_line_end": 241,
+      "source_line_start": 84,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Rewrite tie-in (2026-02-21)",
+      "path": "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      "sha256": "fdfac4ef915297f1b938f407e8faa798ac3e12bec675c53290f1cc029d16fef1",
+      "shard_id": "004",
+      "source_line_end": 263,
+      "source_line_start": 243,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Plan map",
+      "path": "Plans/_shards/00-plans-index/005-plan-map.md",
+      "sha256": "5a59f5eea3dd37fcb2dc992d7aae2e82c7dc2497dfa5470bd4b918b10a30019e",
+      "shard_id": "005",
+      "source_line_end": 613,
+      "source_line_start": 265,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Known cross-cutting duplication hotspots",
+      "path": "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      "sha256": "8abc88d955fd5b1f37e7d09e8ece81d24f3f665263eca480b50dddeea2126050",
+      "shard_id": "006",
+      "source_line_end": 635,
+      "source_line_start": 615,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Shard indexes",
+      "path": "Plans/_shards/00-plans-index/007-shard-indexes.md",
+      "sha256": "2007f984f34e04177a897e94177b87d943ba73edcd44f0149d6ae8b59e3c9e6a",
+      "shard_id": "007",
+      "source_line_end": 739,
+      "source_line_start": 636,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2026-03-07 addendum \u2014 containers, registry, and Unraid",
+      "path": "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      "sha256": "b1f3de1b2af493b9d79e26e2090bcaf692aff8f76a50b424abf180c3a2865e15",
+      "shard_id": "008",
+      "source_line_end": 746,
+      "source_line_start": 740,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)",
+      "path": "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      "sha256": "c6f6bd588e8a84350623527f873f514e45487216f9565a9a5191c3612cc98a0f",
+      "shard_id": "009",
+      "source_line_end": 765,
+      "source_line_start": 748,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2026-03-12 addendum \u2014 source control, GitHub Actions, and Docker Manager",
+      "path": "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      "sha256": "094ab0f54e219fe7eff1154ac03cb2518c96e550945e93ea167d827c8ef7355f",
+      "shard_id": "010",
+      "source_line_end": 783,
+      "source_line_start": 767,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)",
+      "path": "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      "sha256": "5cb4b126d3dd094c08d8c53a5a5ce7e58db6483fdbca35859082519ae6e0b869",
+      "shard_id": "011",
+      "source_line_end": 850,
+      "source_line_start": 786,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "A2A / OpenCode research packet map (2026-03-28)",
+      "path": "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      "sha256": "31a1844fcee8aa3b837424ac44efc6f1825f47013b1876f3c41d3f9a7e5a4b89",
+      "shard_id": "012",
+      "source_line_end": 874,
+      "source_line_start": 852,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+      "sha256": "69941cf85d39faec91233295cad80f5e6b09225be548fb5a5392e2a8f262dcfe",
+      "shard_id": "013",
+      "source_line_end": 880,
+      "source_line_start": 876,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/00-plans-index/014-planunits.md",
+      "sha256": "de224b5e740df16ace6bb58fbb300276ffa3c8c23943d9450e25396bcec1648f",
+      "shard_id": "014",
+      "source_line_end": 4433,
+      "source_line_start": 882,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/00-plans-index/015-migration-coverage.md",
+      "sha256": "5d5ecca046d7f2e4d0639673ed5f73a037be47eed5496d913f6c87729404b2b9",
+      "shard_id": "015",
+      "source_line_end": 4446,
+      "source_line_start": 4436,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/00-plans-index/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "d62e138b85ad4a09c8b3ed912e845869277403145abf2b7b5b00868195aa842a",
+      "shard_id": "016",
+      "source_line_end": 4641,
+      "source_line_start": 4449,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
+      "path": "Plans/_shards/00-plans-index/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "sha256": "5cc113ca205a2f453ae8307df33dfaad50d58125c879b84bb9ce3cc63ed4d02b",
+      "shard_id": "017",
+      "source_line_end": 4720,
+      "source_line_start": 4643,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
+      "path": "Plans/_shards/00-plans-index/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "sha256": "13472b5db67770d55a3d20e84942ac2babc4016168f0933d45962dc53f3e40a8",
+      "shard_id": "018",
+      "source_line_end": 4930,
+      "source_line_start": 4723,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
+      "path": "Plans/_shards/00-plans-index/019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "sha256": "dcc5277b55595329f4f13f00cb7b223416af97b34d0066f8c6c56bab9ba4c664",
+      "shard_id": "019",
+      "source_line_end": 5014,
+      "source_line_start": 4932,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
+      "path": "Plans/_shards/00-plans-index/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "sha256": "41f7c8719839279aebc014f12dc64535ea356a95727a2131efe9cf24e5bf3497",
+      "shard_id": "020",
+      "source_line_end": 5077,
+      "source_line_start": 5016,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
+      "path": "Plans/_shards/00-plans-index/021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "sha256": "b7346f58985dd900547303df8faf8f7f90bc9c117d762b64f403ea30df096349",
+      "shard_id": "021",
+      "source_line_end": 5174,
+      "source_line_start": 5079,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
+      "path": "Plans/_shards/00-plans-index/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "sha256": "41eefaece7b2b7f5768b8517872f839919b6411ee5dc57455ed098091c5da60b",
+      "shard_id": "022",
+      "source_line_end": 5964,
+      "source_line_start": 5176,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 5964,
+    "path": "Plans/00-plans-index.md",
+    "sha256": "22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be"
+  }
+}

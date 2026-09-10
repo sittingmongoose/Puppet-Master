@@ -1,0 +1,230 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/personas/00-index.md",
+  "index_sha256": "36e0f373b620775703d42ea1c4761bcf505a983c0860b3d599de4dc4e8dcd400",
+  "manifest_path": "Plans/_shards/personas/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/personas/001-preamble.md",
+      "sha256": "1b30dd2d68b9f572317ca18e1d00aac19772be2583e9e28b430b24190eff6cc1",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope and SSOT status",
+      "path": "Plans/_shards/personas/002-0.-scope-and-ssot-status.md",
+      "sha256": "8d2fad4a3a0346a3d39d82e5ce4bdf6225ddc598fbf0126c415b7057e62a6c02",
+      "shard_id": "002",
+      "source_line_end": 27,
+      "source_line_start": 6,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Definitions",
+      "path": "Plans/_shards/personas/003-1.-definitions.md",
+      "sha256": "160d454c21a87b78240a123d802bacff79e462db7d472b8e7c192dd8b47cbbcd",
+      "shard_id": "003",
+      "source_line_end": 76,
+      "source_line_start": 29,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Storage layout",
+      "path": "Plans/_shards/personas/004-2.-storage-layout.md",
+      "sha256": "e2d046f3c88a079c99f2af4e32aae8669f97ad8480218177e482f3509b7042fc",
+      "shard_id": "004",
+      "source_line_end": 123,
+      "source_line_start": 78,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Persona format (schema)",
+      "path": "Plans/_shards/personas/005-3.-persona-format-schema.md",
+      "sha256": "aeb19ec67fc2a81afc3c3ff83c0d6ccca5e8006029aef5cbf1e54d835c360201",
+      "shard_id": "005",
+      "source_line_end": 211,
+      "source_line_start": 125,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. GUI requirements",
+      "path": "Plans/_shards/personas/006-4.-gui-requirements.md",
+      "sha256": "b6f722727429f67a2428ad0e99ca263220ba76493cc9af119727a0d3ad6d076f",
+      "shard_id": "006",
+      "source_line_end": 261,
+      "source_line_start": 213,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Integration: Persona application to a run",
+      "path": "Plans/_shards/personas/007-5.-integration-persona-application-to-a-run.md",
+      "sha256": "71928404fe96eeebe35b79a5c53217e957750c81cd328f09c50fe50ebd07ce2f",
+      "shard_id": "007",
+      "source_line_end": 329,
+      "source_line_start": 263,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Reserved Personas",
+      "path": "Plans/_shards/personas/008-6.-reserved-personas.md",
+      "sha256": "61d040bd2e28403af8ba9a819f97c33875fc4ab1605d16831a0b5c4bb97d8356",
+      "shard_id": "008",
+      "source_line_end": 355,
+      "source_line_start": 331,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Relationship to the Persona registry and delegated-subagent registry",
+      "path": "Plans/_shards/personas/009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md",
+      "sha256": "9a86986d682e738d81dbda5a334ce7616a92a9070d66f7021fbda71961da32d0",
+      "shard_id": "009",
+      "source_line_end": 377,
+      "source_line_start": 356,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. OpenCode baseline and Puppet Master deltas",
+      "path": "Plans/_shards/personas/010-8.-opencode-baseline-and-puppet-master-deltas.md",
+      "sha256": "3a6e20acb0e2b6002010f33c5e0e851d430a26e6e97cb746005cbbaad2652502",
+      "shard_id": "010",
+      "source_line_end": 398,
+      "source_line_start": 378,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. Acceptance criteria",
+      "path": "Plans/_shards/personas/011-9.-acceptance-criteria.md",
+      "sha256": "233c0d3919541f99f3f2472ed80f0da232d67b8148ddd0bd02dda7616499625b",
+      "shard_id": "011",
+      "source_line_end": 427,
+      "source_line_start": 400,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Persona Runtime Contract Expansion (2026-03-06)",
+      "path": "Plans/_shards/personas/012-10.-persona-runtime-contract-expansion-2026-03-06.md",
+      "sha256": "17f4e57d7368aecfedc35a5ff053f1b0cfcc91db5fd1332ece12af572da2ab9d",
+      "shard_id": "012",
+      "source_line_end": 471,
+      "source_line_start": 428,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "11. Core Persona catalog",
+      "path": "Plans/_shards/personas/013-11.-core-persona-catalog.md",
+      "sha256": "e9aa23a60ceeab8349c22a4e763fc4b76d28121e2b7c5df1eecf601d8e7c9e69",
+      "shard_id": "013",
+      "source_line_end": 617,
+      "source_line_start": 472,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "12. Specialty Persona catalog and curation",
+      "path": "Plans/_shards/personas/014-12.-specialty-persona-catalog-and-curation.md",
+      "sha256": "d0aabac3c01054f7f33aed5e79f8e6d8cc495fc1a0c5c129f3812de2e91d954c",
+      "shard_id": "014",
+      "source_line_end": 684,
+      "source_line_start": 618,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/personas/015-owner-consumer-map.md",
+      "sha256": "1ad567ed40c4569335c7f3e74a5f8e3c169db4c51c5cc1cff0e7cd65bd062e55",
+      "shard_id": "015",
+      "source_line_end": 690,
+      "source_line_start": 686,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/personas/016-planunits.md",
+      "sha256": "b8c6a63d3f92bc2ad96cffbdaf0bf2229f6f21f4d5501ca8d0d02928a07cfd50",
+      "shard_id": "016",
+      "source_line_end": 3179,
+      "source_line_start": 692,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/personas/017-migration-coverage.md",
+      "sha256": "f1f7751600444ac01b954faef22556b54bfdfd97d7950e3e7d1ff16702a0a008",
+      "shard_id": "017",
+      "source_line_end": 3191,
+      "source_line_start": 3181,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260614-001",
+      "path": "Plans/_shards/personas/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "sha256": "3848f808120e4d448bf3459c6e3dea9b1cdbd6fb1328a50954c802c8783dc260",
+      "shard_id": "018",
+      "source_line_end": 3240,
+      "source_line_start": 3193,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/personas/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "634164e7ec0de34f51e8986d653a24371388e50e80ddf82814ca39cea5a76303",
+      "shard_id": "019",
+      "source_line_end": 3311,
+      "source_line_start": 3243,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
+      "path": "Plans/_shards/personas/020-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "sha256": "a100943d583424332a579b284adc66a26dc262a75c3fe1b896cd221f2e64b591",
+      "shard_id": "020",
+      "source_line_end": 3448,
+      "source_line_start": 3314,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/personas/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "9953f0f24a589cef1f800ec1e9b08fd0e0181ee05421b51139abf503a1cdd559",
+      "shard_id": "021",
+      "source_line_end": 3458,
+      "source_line_start": 3450,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
+      "path": "Plans/_shards/personas/022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+      "sha256": "6c431fdcbc6f74c7668fa659c774d961f2f19accd71b9c937626d2c48fa4e679",
+      "shard_id": "022",
+      "source_line_end": 3465,
+      "source_line_start": 3459,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "`run.started` Persona owner join",
+      "path": "Plans/_shards/personas/023-run.started-persona-owner-join.md",
+      "sha256": "df551c9565f5ba1522af07871e80dda368fe22b04a2b174fff2d8b3f6f092e52",
+      "shard_id": "023",
+      "source_line_end": 3498,
+      "source_line_start": 3468,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Additive Correction v4 \u2014 Wonderer Convergence Boundary (2026-09-03)",
+      "path": "Plans/_shards/personas/024-additive-correction-v4-wonderer-convergence-boundary-2026-09-03.md",
+      "sha256": "64026b0acb23efe9c8859cc93426c47bb18fd4a360873cb69d308400b2cc3e1b",
+      "shard_id": "024",
+      "source_line_end": 3535,
+      "source_line_start": 3500,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 3535,
+    "path": "Plans/Personas.md",
+    "sha256": "bc6e85b1db32bbc0f521ad44ad09a2264a72be000d1e29aadd18e90f43ed1dd0"
+  }
+}

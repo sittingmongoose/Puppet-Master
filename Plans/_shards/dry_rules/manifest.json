@@ -1,0 +1,239 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/dry_rules/00-index.md",
+  "index_sha256": "26dabafca26d1cd71ec9272f8a4a36612e9c70c0ed47ac07a3336d637b0734cd",
+  "manifest_path": "Plans/_shards/dry_rules/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/dry_rules/001-preamble.md",
+      "sha256": "cbfa1c9f01780f56d9df2ce0913611f11c0575eb45629ae622fd35d7cae4e39d",
+      "shard_id": "001",
+      "source_line_end": 13,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/dry_rules/002-0.-scope.md",
+      "sha256": "41391d99912b9132176f9a496228ff93d5360cea85343942c3fe27da7145a433",
+      "shard_id": "002",
+      "source_line_end": 22,
+      "source_line_start": 15,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. SSOT precedence (global)",
+      "path": "Plans/_shards/dry_rules/003-1.-ssot-precedence-global.md",
+      "sha256": "467cdacbd09d415bd1d5946689356bd3503b22cc026a35f85c1a8bba5bfd0e35",
+      "shard_id": "003",
+      "source_line_end": 34,
+      "source_line_start": 24,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Don't duplicate canonical contracts",
+      "path": "Plans/_shards/dry_rules/004-2.-don-t-duplicate-canonical-contracts.md",
+      "sha256": "522966094b3e1437a829e5c5bd5fb25cc352931463e69ac755b7cfba02b48918",
+      "shard_id": "004",
+      "source_line_end": 98,
+      "source_line_start": 36,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. \"Index-only\" guidance",
+      "path": "Plans/_shards/dry_rules/005-3.-index-only-guidance.md",
+      "sha256": "fd9925e170b002e7329f5be9ff5f9c0ebcb03c979216e2341de16b6aac553ee2",
+      "shard_id": "005",
+      "source_line_end": 133,
+      "source_line_start": 100,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Forbidden patterns (drift accelerators)",
+      "path": "Plans/_shards/dry_rules/006-4.-forbidden-patterns-drift-accelerators.md",
+      "sha256": "61e0cbfc17fbad55fb6c9fd3bff0d4691e5e8565a4b8f2563b65cc14d7c211c5",
+      "shard_id": "006",
+      "source_line_end": 142,
+      "source_line_start": 135,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. MUST/SHALL/REQUIRED implies ContractRef",
+      "path": "Plans/_shards/dry_rules/007-5.-must-shall-required-implies-contractref.md",
+      "sha256": "07d8965db6ea4da2a2e05124d7e8457bd6da484d365552ca8aefff907debaff0",
+      "shard_id": "007",
+      "source_line_end": 149,
+      "source_line_start": 144,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. ContractRef taxonomy (allowed categories)",
+      "path": "Plans/_shards/dry_rules/008-6.-contractref-taxonomy-allowed-categories.md",
+      "sha256": "d10263723d599a622c66d02638216e78dcbbb26c67f4b061a659fa141dc80a56",
+      "shard_id": "008",
+      "source_line_end": 172,
+      "source_line_start": 151,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. ContractRef annotation rule (canonical)",
+      "path": "Plans/_shards/dry_rules/009-7.-contractref-annotation-rule-canonical.md",
+      "sha256": "ff21d0e2aed05083201db2149cc7385be1311b827f1b6691beac0afad7dbe13b",
+      "shard_id": "009",
+      "source_line_end": 191,
+      "source_line_start": 173,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7.1 Packet-fidelity semantic matching",
+      "path": "Plans/_shards/dry_rules/010-7.1-packet-fidelity-semantic-matching.md",
+      "sha256": "2f5a0968ef34e21f9049c1a1f165f3143248516324e2e9b946fb299331b237fc",
+      "shard_id": "010",
+      "source_line_end": 208,
+      "source_line_start": 193,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Reference style",
+      "path": "Plans/_shards/dry_rules/011-8.-reference-style.md",
+      "sha256": "c2658bef1e8d9c36218d51cf216e1bd0ee94c63286ad8503081061360ccc454e",
+      "shard_id": "011",
+      "source_line_end": 218,
+      "source_line_start": 210,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. No unreferenced operational text",
+      "path": "Plans/_shards/dry_rules/012-9.-no-unreferenced-operational-text.md",
+      "sha256": "77ce4591b2d4e299a79f3cd02c9e795e3744abc5b8fa59fdf0018b522043e965",
+      "shard_id": "012",
+      "source_line_end": 228,
+      "source_line_start": 219,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Inline requirement tag convention (readability only)",
+      "path": "Plans/_shards/dry_rules/013-10.-inline-requirement-tag-convention-readability-only.md",
+      "sha256": "aaabf31a5266d74d418d311bf69ce0041001b196ccdb0d8f511d950b093b4466",
+      "shard_id": "013",
+      "source_line_end": 250,
+      "source_line_start": 229,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "References",
+      "path": "Plans/_shards/dry_rules/014-references.md",
+      "sha256": "24a8cbe85a18f85b7e0bb20a91a41ba82de02d8db5aeaed911532f6cb5a36d45",
+      "shard_id": "014",
+      "source_line_end": 257,
+      "source_line_start": 252,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/dry_rules/015-owner-consumer-map.md",
+      "sha256": "05ed4ec2a4ae5382dc8d0d0aa36cac42b4cf07958959ded80b39c701e04bdb3f",
+      "shard_id": "015",
+      "source_line_end": 263,
+      "source_line_start": 259,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/dry_rules/016-planunits.md",
+      "sha256": "13f812cba026fe470b4c834d953533b00e71c6606bd6e2e756ae8c7528ae0a79",
+      "shard_id": "016",
+      "source_line_end": 1968,
+      "source_line_start": 265,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/dry_rules/017-migration-coverage.md",
+      "sha256": "4cca5fa9f61aa6034e537996d64d79b1d0f85789f35b3bc51c6a4a064ceb13f8",
+      "shard_id": "017",
+      "source_line_end": 1981,
+      "source_line_start": 1969,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
+      "path": "Plans/_shards/dry_rules/018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "sha256": "4525b1103d82bbc5e5a350c9af200f0fab9c9dcc2dfd9eee72e1984ba86adec1",
+      "shard_id": "018",
+      "source_line_end": 2044,
+      "source_line_start": 1983,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/dry_rules/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "a0ee1e7e8e409ee833769a37d9cb2bdee21b93a5c52d8a9e7930f6892be1a489",
+      "shard_id": "019",
+      "source_line_end": 2050,
+      "source_line_start": 2046,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PMConcept7 Home Workspace owner boundary \u2014 2026-08-04",
+      "path": "Plans/_shards/dry_rules/020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md",
+      "sha256": "467dfd0d78f061f48ba7fbe011898257c05fcf8167fbaa4049dc0f52535c8a8a",
+      "shard_id": "020",
+      "source_line_end": 2072,
+      "source_line_start": 2052,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Shared Integration Runtime DRY service registry \u2014 2026-08-13",
+      "path": "Plans/_shards/dry_rules/021-shared-integration-runtime-dry-service-registry-2026-08-13.md",
+      "sha256": "7a212845cef09a115d0220b15edadba7acb6ed2fc90a644497da44d46d8e99ac",
+      "shard_id": "021",
+      "source_line_end": 2198,
+      "source_line_start": 2073,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "u11 Prism II Usage candidate-role dispositions - 2026-08-18",
+      "path": "Plans/_shards/dry_rules/022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md",
+      "sha256": "25f62aa1ff513296e78cf1d28d44528479e58d55b3fa2488261853f9cd143e3e",
+      "shard_id": "022",
+      "source_line_end": 2315,
+      "source_line_start": 2199,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27",
+      "path": "Plans/_shards/dry_rules/023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md",
+      "sha256": "f58ae1c7c01428e2eded3d809010f0e28eb9a69d501cb7211fa4931572118e58",
+      "shard_id": "023",
+      "source_line_end": 2404,
+      "source_line_start": 2317,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Universal touch-closure and projection-owner addendum - 2026-08-31",
+      "path": "Plans/_shards/dry_rules/024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md",
+      "sha256": "12120031adf8c3fed0f0a63ebd7626738d2e8909cce258fb3ec3cdf384f527d4",
+      "shard_id": "024",
+      "source_line_end": 2455,
+      "source_line_start": 2406,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Touch Closure Exact-Key Addendum - 2026-09-01",
+      "path": "Plans/_shards/dry_rules/025-touch-closure-exact-key-addendum-2026-09-01.md",
+      "sha256": "0fe62257bf6d74b9cc58c6f3a2201e479bf7078f8d5c20d39e84462289d76320",
+      "shard_id": "025",
+      "source_line_end": 2514,
+      "source_line_start": 2457,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 2514,
+    "path": "Plans/DRY_Rules.md",
+    "sha256": "595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec"
+  }
+}

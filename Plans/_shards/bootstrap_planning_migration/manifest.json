@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
+  "index_sha256": "c9b6d0889a78c4ade329d3ad9035f1366e91f8982bd061655c7626ddfad69a66",
+  "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
+      "sha256": "6f0c158a378c6442274b69882f0a79bc52eb2e6be10ab488b12b9b1bffdfbd1d",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
+      "sha256": "9c2ff91027ba41c68ec68916b7106dfa49ff6c697857c34aa780ae50e33bedc2",
+      "shard_id": "002",
+      "source_line_end": 9,
+      "source_line_start": 5,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Migration Principles",
+      "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
+      "sha256": "57a63154b97385a8b798076179ae639663cbbaffc24a24f79c6f4be7b0dd6016",
+      "shard_id": "003",
+      "source_line_end": 19,
+      "source_line_start": 11,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. PlanUnits",
+      "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
+      "sha256": "b52b37333fc477cab28ce62943916fece548b74b9d03e0d86b8e8cb0f2813892",
+      "shard_id": "004",
+      "source_line_end": 280,
+      "source_line_start": 21,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Compilation Coverage",
+      "path": "Plans/_shards/bootstrap_planning_migration/005-3.-compilation-coverage.md",
+      "sha256": "0408e437fcbdd437275b1559ab93b9f15d2db561e647b82b41930db923a53de4",
+      "shard_id": "005",
+      "source_line_end": 298,
+      "source_line_start": 282,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/bootstrap_planning_migration/006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "fe629a47c8492f5438a7bd5175beb31cf8579038e05c93574e24f43f9c005ae3",
+      "shard_id": "006",
+      "source_line_end": 381,
+      "source_line_start": 301,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/bootstrap_planning_migration/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "ea6c4c905b0792886bd9ce20f68439946f324b4f604612bb80ef2e822a11bf55",
+      "shard_id": "007",
+      "source_line_end": 389,
+      "source_line_start": 383,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
+      "path": "Plans/_shards/bootstrap_planning_migration/008-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "sha256": "0f2d584ef3b3ea86e0d6282d12975ea56a9d5ae67c88e944b68a986c6bf931ac",
+      "shard_id": "008",
+      "source_line_end": 396,
+      "source_line_start": 390,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 396,
+    "path": "Plans/Bootstrap_Planning_Migration.md",
+    "sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1"
+  }
+}

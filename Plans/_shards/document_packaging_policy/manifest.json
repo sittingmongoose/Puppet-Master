@@ -1,0 +1,140 @@
+{
+  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "index_path": "Plans/_shards/document_packaging_policy/00-index.md",
+  "index_sha256": "d839e360ae4fe8e6806d947ae38beb101f56724a66e86d8aaee964f8230ab92e",
+  "manifest_path": "Plans/_shards/document_packaging_policy/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/document_packaging_policy/001-preamble.md",
+      "sha256": "a6e3d285c400d793d82c44b507a5cdce3ef0107c94fddec2e0ea055c41812b4a",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope and alignment",
+      "path": "Plans/_shards/document_packaging_policy/002-0.-scope-and-alignment.md",
+      "sha256": "56cd96c8afb8a97cc6f15f21ef019f4d5c924e76291cdb1dc2110e9baa5c0705",
+      "shard_id": "002",
+      "source_line_end": 16,
+      "source_line_start": 6,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Document Set contract",
+      "path": "Plans/_shards/document_packaging_policy/003-1.-document-set-contract.md",
+      "sha256": "e5ce0f8cfadfa21cb431a088353f19ec4141bd2b2a16b8534d2f8849e95732d0",
+      "shard_id": "003",
+      "source_line_end": 72,
+      "source_line_start": 18,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Deterministic split rules",
+      "path": "Plans/_shards/document_packaging_policy/004-2.-deterministic-split-rules.md",
+      "sha256": "9df04c3a2db80e392521309a3867f7b3e979333e68c337904bb99af35ca1a9f7",
+      "shard_id": "004",
+      "source_line_end": 135,
+      "source_line_start": 74,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Trigger budgets and deterministic defaults",
+      "path": "Plans/_shards/document_packaging_policy/005-3.-trigger-budgets-and-deterministic-defaults.md",
+      "sha256": "e1579cf6a61297acf4210a17ce573bb4c47c4d554bdef9165dfa0c079e04158a",
+      "shard_id": "005",
+      "source_line_end": 148,
+      "source_line_start": 137,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Losslessness proof (hard requirement)",
+      "path": "Plans/_shards/document_packaging_policy/006-4.-losslessness-proof-hard-requirement.md",
+      "sha256": "b62fada088878ad53d6969a81d85eb1c8888ccddb76914a8aa2d72aeb43c470f",
+      "shard_id": "006",
+      "source_line_end": 164,
+      "source_line_start": 150,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Three independent audits (full coverage, no sampling)",
+      "path": "Plans/_shards/document_packaging_policy/007-5.-three-independent-audits-full-coverage-no-sampling.md",
+      "sha256": "1bdedfb800a95fedfe4f70c53646cf8df5eafc14dfc9ecf9100a9bff698a348a",
+      "shard_id": "007",
+      "source_line_end": 196,
+      "source_line_start": 166,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Enforcement coverage and run failure rule",
+      "path": "Plans/_shards/document_packaging_policy/008-6.-enforcement-coverage-and-run-failure-rule.md",
+      "sha256": "b075df1f03bcbebe4bdbed17e4ca4708faeec84b511ec108e587945417ef6a7b",
+      "shard_id": "008",
+      "source_line_end": 215,
+      "source_line_start": 198,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. On-disk path convention and pointer stub contract",
+      "path": "Plans/_shards/document_packaging_policy/009-7.-on-disk-path-convention-and-pointer-stub-contract.md",
+      "sha256": "23c656f81b9415e039fb06d162a517122891624f8497a8e0010287aef91f9db2",
+      "shard_id": "009",
+      "source_line_end": 338,
+      "source_line_start": 217,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "References",
+      "path": "Plans/_shards/document_packaging_policy/010-references.md",
+      "sha256": "6429e1d89ec5ba8efae59cb94bed042553e4cc2361d714751d9dc43304a6490d",
+      "shard_id": "010",
+      "source_line_end": 344,
+      "source_line_start": 340,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/document_packaging_policy/011-owner-consumer-map.md",
+      "sha256": "115845af11b3427220483d7f78b38e4b8b754eb48e24f97a1a9a0dfb0ed1c304",
+      "shard_id": "011",
+      "source_line_end": 350,
+      "source_line_start": 346,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/document_packaging_policy/012-planunits.md",
+      "sha256": "54d36e77e9c312487f37e0e7eacf5c62d5b53c52cf5679d569ecdc8d7d111224",
+      "shard_id": "012",
+      "source_line_end": 1729,
+      "source_line_start": 352,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/document_packaging_policy/013-migration-coverage.md",
+      "sha256": "68d00a2f85d6e13744c9ac251a24173f770d92e3cedf655632964cedfb02ce22",
+      "shard_id": "013",
+      "source_line_end": 1743,
+      "source_line_start": 1731,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/document_packaging_policy/014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "757c0b0dd8e400ef08995b8160385efacc182b94ed3a547ebabafb75ae243f47",
+      "shard_id": "014",
+      "source_line_end": 1750,
+      "source_line_start": 1745,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1750,
+    "path": "Plans/Document_Packaging_Policy.md",
+    "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+  }
+}

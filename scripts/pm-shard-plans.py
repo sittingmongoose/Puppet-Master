@@ -179,7 +179,8 @@ def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
     return sections
 
 
-def shard_source(source: Path, output_root: Path, generated_at: str) -> dict[str, Any]:
+def shard_source(source: Path, output_root: Path, generated_at: str,
+                 previous_manifests: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     source_bytes = source.read_bytes()
     source_hash = hashlib.sha256(source_bytes).hexdigest()
     text = source_bytes.decode("utf-8", errors="replace")
@@ -221,6 +222,12 @@ def shard_source(source: Path, output_root: Path, generated_at: str) -> dict[str
 
     manifest_path = doc_dir / "manifest.json"
     index_path = doc_dir / "00-index.md"
+    # Deterministic regeneration: keep the previous timestamp when the source and its
+    # shard partition are unchanged, so unrelated documents do not churn on every run.
+    previous = (previous_manifests or {}).get(doc_slug)
+    if (previous and previous.get("source", {}).get("sha256") == source_hash
+            and previous.get("shards") == shards and previous.get("generated_at_utc")):
+        generated_at = previous["generated_at_utc"]
     manifest = {
         "schema_id": "pm.plan_shards.manifest.v1",
         "generated_at_utc": generated_at,
@@ -264,7 +271,13 @@ def shard_source(source: Path, output_root: Path, generated_at: str) -> dict[str
 def generate(config_path: Path, report_path: Path | None) -> dict[str, Any]:
     config = load_config(config_path)
     output_root = ROOT / config.get("output_root", "Plans/_shards")
+    previous_manifests: dict[str, dict[str, Any]] = {}
     if output_root.exists():
+        for manifest_file in output_root.glob("*/manifest.json"):
+            try:
+                previous_manifests[manifest_file.parent.name] = json.loads(manifest_file.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
         shutil.rmtree(output_root)
     output_root.mkdir(parents=True, exist_ok=True)
 
@@ -280,7 +293,7 @@ def generate(config_path: Path, report_path: Path | None) -> dict[str, Any]:
         if not source.exists():
             failures.append({"source": source_ref, "error": "missing_source"})
             continue
-        docs.append(shard_source(source, output_root, generated_at))
+        docs.append(shard_source(source, output_root, generated_at, previous_manifests))
 
     report = {
         "schema_id": "pm.plan_shards.report.v1",
