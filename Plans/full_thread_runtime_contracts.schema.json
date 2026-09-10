@@ -64,6 +64,15 @@
     "Id": {"type": "string", "minLength": 1, "maxLength": 256},
     "Sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "UtcTimestamp": {"type": "string", "format": "date-time"},
+    "OwnerResultSchemaRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "json_pointer", "schema_id"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json$"},
+        "json_pointer": {"type": "string", "pattern": "^#(?:/\\$defs/[A-Za-z0-9_]+)?$"},
+        "schema_id": {"$ref": "#/$defs/Id"}
+      }
+    },
     "IdentityEnvelope": {
       "type": "object",
       "additionalProperties": false,
@@ -121,13 +130,16 @@
     "CommandOutcomeRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "identity", "command_id", "payload_sha256", "idempotency_key", "target_generation", "outcome", "dispatch_frame_id", "acknowledgement_frame_id", "acknowledgement_frame_offset", "same_frame_acknowledged", "acknowledgement_receipt_ref", "result_receipt_ref", "error_ref", "observed_at"],
+      "required": ["schema_id", "record_kind", "identity", "command_id", "payload_sha256", "idempotency_key", "target_generation", "outcome", "dispatch_frame_id", "acknowledgement_frame_id", "acknowledgement_frame_offset", "same_frame_acknowledged", "acknowledgement_receipt_ref", "result_receipt_ref", "error_ref", "owner_result_ref", "owner_result_schema_ref", "owner_result_sha256", "observed_at"],
       "properties": {
         "schema_id": {"const": "pm.full_thread_runtime.contracts.v1"},
         "record_kind": {"const": "command_outcome"},
         "identity": {"$ref": "#/$defs/IdentityEnvelope"},
         "command_id": {"type": "string", "pattern": "^cmd\\.[a-z0-9_.-]+$", "maxLength": 160},
         "payload_sha256": {"$ref": "#/$defs/Sha256"},
+        "owner_result_ref": {"oneOf": [{"$ref": "#/$defs/Id"}, {"type": "null"}]},
+        "owner_result_schema_ref": {"oneOf": [{"$ref": "#/$defs/OwnerResultSchemaRef"}, {"type": "null"}]},
+        "owner_result_sha256": {"oneOf": [{"$ref": "#/$defs/Sha256"}, {"type": "null"}]},
         "idempotency_key": {"$ref": "#/$defs/Id"},
         "target_generation": {"type": "integer", "minimum": 0},
         "outcome": {"enum": ["accepted", "acknowledged", "executing", "succeeded", "failed", "cancelled", "rejected", "terminal_unknown"]},
@@ -143,6 +155,15 @@
       "allOf": [
         {
           "properties": {"identity": {"required": ["command_instance_id"], "properties": {"command_instance_id": {"$ref": "#/$defs/Id"}}}}
+        },
+        {
+          "if": {"properties": {"outcome": {"enum": ["succeeded", "failed", "cancelled", "rejected", "terminal_unknown"]}}},
+          "then": {"properties": {"owner_result_ref": {"$ref": "#/$defs/Id"}, "owner_result_schema_ref": {"$ref": "#/$defs/OwnerResultSchemaRef"}, "owner_result_sha256": {"$ref": "#/$defs/Sha256"}}}
+        },
+        {
+          "if": {"properties": {"owner_result_ref": {"type": "string"}}},
+          "then": {"properties": {"owner_result_schema_ref": {"$ref": "#/$defs/OwnerResultSchemaRef"}, "owner_result_sha256": {"$ref": "#/$defs/Sha256"}}},
+          "else": {"properties": {"owner_result_schema_ref": {"type": "null"}, "owner_result_sha256": {"type": "null"}}}
         },
         {
           "if": {"properties": {"outcome": {"enum": ["acknowledged", "executing", "succeeded"]}}, "required": ["outcome"]},

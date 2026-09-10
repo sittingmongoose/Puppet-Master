@@ -1,38 +1,38 @@
 # Shard Index: Plans/UI_Wiring_Rules.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-09-10T20:09:20Z
 
-Source SHA256: `d986040d92b297ae8682fa6569fd2cc6c25faa26497c785130c4b3e475fb195d`
+Source SHA256: `c3a58eb8cd5785e2d6b7985f0a24b25dfaa21b335a30bedd1f839b3958cf806a`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L15 `58f9a43ffe6972263e0e07aeee0476aca12244e1f75ce86277dce6de93ed60f3`
-- [002 - 0. Scope](002-0.-scope.md) L16-L62 `d89ca657afa2303933821193c921c2ebb30416884601d7f189c83617fbe3ec36`
-- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `53197008c3a45d7455761e240c74304fef43804571f015f5b9bfc781de41eb3d`
-- [004 - PlanUnits](004-planunits.md) L72-L424 `b68dd71733d87220f209822f3ee9667f85a5e7784a2023465f38167bb812d465`
-- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L425-L438 `8dbfb38c62752ede4759b46c7df64d20984f97ab6d559159ea0e0a0c49d2f026`
-- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L439-L453 `ae200624c05a2f3cf61b2d019109964961cb7c58c1252e31e13d78358f62821d`
-- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L454-L489 `66f60530580983f82758ebe8ed1d32018224fa9cc34fb57e5c4cb3068415830a`
-- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L490-L527 `ff728ec0bf3406152801231b86b58c4402e7234d714dcf2f93fdcad299f01033`
-- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L528-L555 `a0ad3736b651aeb86e9a264cfcc3bb3556afe3e7754b132cfc38c3e298536999`
-- [010 - 6. References](010-6.-references.md) L556-L568 `32511b9f8b8b5035dd2991d84b9e3c7d1feb503ec5fa6863e63ec119e7b80868`
-- [011 - Migration Coverage](011-migration-coverage.md) L570-L591 `feec1cf65c82f56116336a2ebe46478785ca2ee3800c5c7db7ed8537da7ef98b`
-- [012 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L593-L597 `0b941e66b8e0b97d068cf81f72d3f51fda9e10dcb9ab0264ac32481bb456a49e`
-- [013 - PMConcept7 Home Workspace wiring rules — 2026-08-04](013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md) L599-L675 `423757f2e215677215d16d55f86b53912b0198faf6222b3e7ab2ccd67e126a7e`
-- [014 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L677-L679 `4e51680f49dc6d82ad71ee3b23da1bbec23f16212560e9ef58a60a9ba2b312b9`
-- [015 - Shared Runtime receipt/projection wiring addendum - 2026-08-13](015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md) L681-L732 `d04adf3d9acd65d4bc0c349ffe9372003f6fe6e08c5988f904ea96aba2baee84`
-- [016 - PMConcept7 transactional interaction and shared-seat wiring addendum - 2026-08-27](016-pmconcept7-transactional-interaction-and-shared-seat-wiring-adde.md) L734-L842 `8fd3118f6a0ff44605c80b9cca6e6ce8abd665482bc1651090b5798e1617c6ee`
-- [017 - Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31](017-typed-controls-exact-owner-routes-and-shared-hover-overlay-adden.md) L844-L891 `1d9eae333e8be5573c01525d5fd84be4c04428568252535223c8427e620c5b38`
-- [018 - Settings command and route-only action wiring addendum - 2026-08-31](018-settings-command-and-route-only-action-wiring-addendum-2026-08-3.md) L893-L958 `601104e32858069a8dde1c233df5f20b27620e470e6c2b18cebed1bb0e3d9430`
-- [019 - Product Onboarding typed-local action wiring addendum - 2026-09-01](019-product-onboarding-typed-local-action-wiring-addendum-2026-09-01.md) L960-L1065 `2e03c2f08d44dbcbbd96089da7000e49c48dd5301a6ea3c47c293b3e6b259fa8`
-- [020 - Server/Egolite Alias, Local-Action, And Handler-Truth Rules - 2026-09-01](020-server-egolite-alias-local-action-and-handler-truth-rules-2026-0.md) L1066-L1101 `20f52b68c62bd1417cd36765b0e4b242614cc61c59a0b1733bdb9fe8326e5cfd`
-- [021 - Central Touch Command/GUI Closure Rule Addendum - 2026-09-01](021-central-touch-command-gui-closure-rule-addendum-2026-09-01.md) L1103-L1134 `8289ffc5e916fc94558cc05a35f90791f52b4614c231121524fe3799a5ff1e82`
-- [022 - Puppet Master Assistant Redesign Wiring Rules - 2026-09-03](022-puppet-master-assistant-redesign-wiring-rules-2026-09-03.md) L1136-L1201 `644cd176e8eb660547a7a5b5963f8efd9dcbc56328e7032efe181b68cdc92336`
-- [023 - Assistant redesign: what belongs in the production wiring matrix (2026-09-03)](023-assistant-redesign-what-belongs-in-the-production-wiring-matrix-.md) L1203-L1290 `da5f813037af0653dd9ea31920e2ca131d64dfbb3f6d4601ba0ec4e68867c88a`
-- [024 - Additive Correction v4: wiring coverage and the internal-producer register (2026-09-03)](024-additive-correction-v4-wiring-coverage-and-the-internal-producer.md) L1292-L1409 `c97feb359e5b6309ad056c6004e300006d982173a7a194f651bc896292da97c0`
-- [025 - Working Notebook Wiring Disposition Addendum (2026-09-05)](025-working-notebook-wiring-disposition-addendum-2026-09-05.md) L1411-L1444 `d5f609b503b02c8a30bf48e46265781635b168b938c7d50817e9ad07c2d59da1`
-- [026 - Cumulative v3 Production Wiring and Action Chaining Specification (2026-09-07)](026-cumulative-v3-production-wiring-and-action-chaining-specificatio.md) L1446-L1514 `9332b856f9c49fbc13f9ec8e8d4511a6f792b4acf5b1e17c2b427ca4cc3d2a5d`
-- [027 - Terminal Research Dispatch Rules — DL-035 (2026-09-09)](027-terminal-research-dispatch-rules-dl-035-2026-09-09.md) L1517-L1592 `de9b15a071c4a47bfcf5b4ccd97373f92ca28f529d5b16eb3dc6ee88e0b7f601`
-- [028 - Research Decision Review Dispatch and Resume — DL-036 (2026-09-09)](028-research-decision-review-dispatch-and-resume-dl-036-2026-09-09.md) L1594-L1668 `c5e4f043c470ae06bfcff7e2cfbaf4ac41ec6312392c5f2f90ebf82383782870`
+- [001 - Preamble](001-preamble.md) L1-L15 `3967d3f0503d22885dc6f660cb742c74197e7ba79b62b7859b299c09f38f86b6`
+- [002 - 0. Scope](002-0.-scope.md) L16-L62 `74914fbdb93a6e96043a30b1ba0b20107088111e7dd9bcc21983ad4154388fa3`
+- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `284a6ccefe016ee08de276eb79162c345f851597bc78d692aedef3b18343ed3a`
+- [004 - PlanUnits](004-planunits.md) L72-L424 `1a3c1da0a6135b3898cef77525f41c9594f4930214f9e025fdab0e6dce105f50`
+- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L425-L438 `14ecf44a4e2be252eb3ac8f2b397ea000c09a63d81e05dbb358b35531492e686`
+- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L439-L453 `6399f4b2bb1db8f6e80385f47a7ca4343d94153c5d18a00be24ecbb7e1fdccdb`
+- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L454-L489 `65a8abbfaaa3d459aff0d8b5d3647e741ff8392a576e55973fc9c21df63174a7`
+- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L490-L527 `73c33508d924412f1d5c7e648f559fb2d0b36059f46de398bbc7574719f77a48`
+- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L528-L555 `ee9712c43bb6e3871a59471afac518208e8c1881ffe7a5265d278970033dc585`
+- [010 - 6. References](010-6.-references.md) L556-L568 `a02670e950f35592bad6e493b937bd426b0468fec6f6927a2f9a926035c58b50`
+- [011 - Migration Coverage](011-migration-coverage.md) L570-L591 `d4529b84dd263e6ea1590c002c2c78c74f96d312b973fd97d8283b69b1d40dfd`
+- [012 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L593-L597 `4f7bf7b5db48aac45a2c3791bf12b0ce951883e45639992ae896025419d8664a`
+- [013 - PMConcept7 Home Workspace wiring rules — 2026-08-04](013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md) L599-L675 `012b8bbe3e6a5bdab6d2e471dca850a0b8714ad72d14c654f03755a35d96b24e`
+- [014 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L677-L679 `3290da8d469a6a20de92101342b91b08c8520b1b8a72e8512937e2b31c7afaa6`
+- [015 - Shared Runtime receipt/projection wiring addendum - 2026-08-13](015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md) L681-L732 `cdf5ca0ff66f53a551c1440920a0c180378533bd39cf420fbc81aa908f9873d3`
+- [016 - PMConcept7 transactional interaction and shared-seat wiring addendum - 2026-08-27](016-pmconcept7-transactional-interaction-and-shared-seat-wiring-adde.md) L734-L842 `3e5756750508480ceb13ba533e8f8c2b2db4e75c873c26519d8eb552fcb62055`
+- [017 - Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31](017-typed-controls-exact-owner-routes-and-shared-hover-overlay-adden.md) L844-L891 `3060950ea5ea2c3371535ce4870f7f871f1c686e9d373bc96d1d50cb2bb5cd79`
+- [018 - Settings command and route-only action wiring addendum - 2026-08-31](018-settings-command-and-route-only-action-wiring-addendum-2026-08-3.md) L893-L958 `5a3b38593fa49582d0b21c79c21247ea33a47868e672d25abf1ba830b0d38d51`
+- [019 - Product Onboarding typed-local action wiring addendum - 2026-09-01](019-product-onboarding-typed-local-action-wiring-addendum-2026-09-01.md) L960-L1065 `fcf1f84d70c1acf12aaf302c8026d0af0d6dc1b73a9181aa31aabccf232ccddc`
+- [020 - Server/Egolite Alias, Local-Action, And Handler-Truth Rules - 2026-09-01](020-server-egolite-alias-local-action-and-handler-truth-rules-2026-0.md) L1066-L1101 `430e76433383fcff433f303a7f8628c741a2cf4a7365fe45b3c871f09288373d`
+- [021 - Central Touch Command/GUI Closure Rule Addendum - 2026-09-01](021-central-touch-command-gui-closure-rule-addendum-2026-09-01.md) L1103-L1134 `3d30a266195355842704fb02300a9519773d1e905b8c0d43ab55eb374a37cdd0`
+- [022 - Puppet Master Assistant Redesign Wiring Rules - 2026-09-03](022-puppet-master-assistant-redesign-wiring-rules-2026-09-03.md) L1136-L1201 `b335af4b981f8fe092acb8025e02c32da9c974d0f2df25715caadc1f98402a68`
+- [023 - Assistant redesign: what belongs in the production wiring matrix (2026-09-03)](023-assistant-redesign-what-belongs-in-the-production-wiring-matrix-.md) L1203-L1290 `618d4569c8ca4d5f89b58584dac3d41bf02f5a906b131fb8192df9e464e1212f`
+- [024 - Additive Correction v4: wiring coverage and the internal-producer register (2026-09-03)](024-additive-correction-v4-wiring-coverage-and-the-internal-producer.md) L1292-L1409 `33f9309e087e5d7c41ed676e9b928bc2078fdf32d790fbd9c74be8b0d917c64b`
+- [025 - Working Notebook Wiring Disposition Addendum (2026-09-05)](025-working-notebook-wiring-disposition-addendum-2026-09-05.md) L1411-L1444 `e3d182dad5514cb1360428a94246a728f9a492fa7c1433c3678d6c7ac1ea5485`
+- [026 - Cumulative v3 Production Wiring and Action Chaining Specification (2026-09-07)](026-cumulative-v3-production-wiring-and-action-chaining-specificatio.md) L1446-L1514 `5c7f688e5ae88683367e2c872e367be59c88912828c44059d4940a7d339f84ab`
+- [027 - Terminal Research Dispatch Rules — DL-035 (2026-09-09)](027-terminal-research-dispatch-rules-dl-035-2026-09-09.md) L1517-L1592 `5311b83eae2c1820aefa8a30f410e351ba2260657cd26f19fde509e3bfc2530c`
+- [028 - Research Decision Review Dispatch and Resume — DL-036 (2026-09-09)](028-research-decision-review-dispatch-and-resume-dl-036-2026-09-09.md) L1594-L1701 `2e4dfbf9602593a816b1dc63a570d1fa507f66356db82a8362ece85e3171f4e8`

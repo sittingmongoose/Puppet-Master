@@ -3328,10 +3328,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 33,
+        "False": 34,
         "True": 46
       },
-      "heading_count": 187,
+      "heading_count": 188,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3373,6 +3373,8 @@
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/settings_system_contracts.schema.json",
+        "Plans/shared_runtime_command_contract_fixtures.json",
+        "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
@@ -3380,9 +3382,9 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6266,
+      "line_count": 6299,
       "path": "Plans/Commands_System.md",
-      "plan_unit_count": 79,
+      "plan_unit_count": 80,
       "plan_unit_ids": [
         "CS-002",
         "CS-003",
@@ -3462,7 +3464,8 @@
         "CS-076",
         "CS-077",
         "CS-078",
-        "CS-079"
+        "CS-079",
+        "CS-080"
       ],
       "reasoning_tiers": [
         "high",
@@ -3494,6 +3497,7 @@
         "command_reference_map_drift",
         "command_registry_route_drift",
         "command_reserved_name_drift",
+        "command_response_identity_or_false_completion",
         "command_restore_or_baseline_substitution",
         "command_runtime_identity_drift",
         "command_save_validation_drift",
@@ -3550,10 +3554,10 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "4db908950fd355b040ad67c3e4730fd479bad8eb70cc34ed4b05c52e821d08b4",
+      "sha256": "6d063875ca69d3441ba5f96f810b39fdc82786f66b6a8175a8c5f2c89c3a27e7",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 79
+        "accepted": 80
       },
       "title": "Commands System (Canonical SSOT)",
       "unit_type_counts": {
@@ -3566,7 +3570,7 @@
         "compatibility_disposition": 1,
         "constraint": 19,
         "reference": 1,
-        "requirement": 45
+        "requirement": 46
       },
       "validation_surfaces": [
         "CAS",
@@ -3586,6 +3590,7 @@
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response_fixtures.json",
         "RSP-ATOMIC-001",
         "RSP-ATOMIC-002",
         "RSP-ATOMIC-003",
@@ -3623,6 +3628,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
@@ -3630,6 +3636,7 @@
         "restart",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_ui_command_response.py",
         "typed command replay, restart, race, accessibility, and no-unregistered-event fixtures"
       ]
     },
@@ -3920,10 +3927,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 256,
+        "False": 257,
         "True": 73
       },
-      "heading_count": 500,
+      "heading_count": 501,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -3977,6 +3984,7 @@
         "Plans/event_payloads/workspace_layout_changed.schema.json",
         "Plans/event_record.schema.json",
         "Plans/execution_unit_context.schema.json",
+        "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/human-in-the-loop.md",
         "Plans/newtools.md",
@@ -3988,12 +3996,14 @@
         "Plans/rewrite-tie-in-memo.md",
         "Plans/server_command_gap_adjudication.json",
         "Plans/server_command_gap_adjudication.schema.json",
+        "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_recovery_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
         "Plans/touch_closure.schema.json",
+        "Plans/ui_command_response.schema.json",
         "Plans/usage-feature.md",
         "future Teacher activity and guided action records",
         "future canonical route schema and resolver",
@@ -4008,9 +4018,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 21505,
+      "line_count": 21552,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 329,
+      "plan_unit_count": 330,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4340,7 +4350,8 @@
         "CV-326",
         "CV-327",
         "CV-328",
-        "CV-330"
+        "CV-330",
+        "CV-329"
       ],
       "reasoning_tiers": [
         "high",
@@ -4408,6 +4419,7 @@
         "child_signal_label_drift",
         "cleanup_order_false_closure",
         "clock_skew_schedule_projection_drift",
+        "command_response_identity_or_false_completion",
         "command_route_fork",
         "compact_usage_row_schema_drift",
         "compatibility_route_drift",
@@ -4676,10 +4688,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "5b217846e9b9b9224fe47996035c2172b47323d06392c365b1fe5e87ed62ecb1",
+      "sha256": "fec0ad18c16c84f24305f7c844ca837e7125e7177fd0d9450aa6cede842148d3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 329
+        "accepted": 330
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4689,7 +4701,7 @@
         "future_scope_decision": 1,
         "integration_contract": 1,
         "requirement": 221,
-        "schema_contract": 19,
+        "schema_contract": 20,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -4707,6 +4719,7 @@
         "Plans/browser_event_admission_fixtures.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
         "Plans/shared_integration_runtime_expansion_fixtures.json",
+        "Plans/ui_command_response_fixtures.json",
         "Remote/tunnel WS requires configured auth",
         "Restarted workspace probes every configured surface before run",
         "Unavailable plugin is shown before model attempts tool use",
@@ -4754,6 +4767,7 @@
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py validate-server-command-gap",
         "python3 scripts/pm-plans-verify.py validate-touch-closure",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-server-command-gap-verify.py --json",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
@@ -4762,6 +4776,7 @@
         "security receipts are visible and redacted.",
         "seglog replay tests",
         "tests/test_pm_browser_event_admission.py",
+        "tests/test_pm_ui_command_response.py",
         "wrong Origin/CSRF/runtime id is rejected before initialize"
       ]
     },
@@ -15620,10 +15635,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 16,
+        "False": 17,
         "True": 24
       },
-      "heading_count": 98,
+      "heading_count": 99,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -15658,6 +15673,7 @@
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response.schema.json",
         "Plans/usage-feature.md",
         "future AuthenticationBroker and CredentialBroker",
         "future ExecutionTopologyRegistry",
@@ -15672,9 +15688,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2153,
+      "line_count": 2187,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 40,
+      "plan_unit_count": 41,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -15715,7 +15731,8 @@
         "SIR-038",
         "SIR-039",
         "SIR-040",
-        "SIR-041"
+        "SIR-041",
+        "SIR-042"
       ],
       "reasoning_tiers": [
         "high",
@@ -15723,6 +15740,7 @@
       ],
       "risk_classes": [
         "advisory_authority_widening",
+        "command_response_identity_or_false_completion",
         "command_route_authority_and_runtime_claim_boundary",
         "connection_domain_conflation",
         "copied_expansion_state_machine_or_local_authority_widening",
@@ -15763,10 +15781,10 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "5f68424017662b22dbb771645606c16ea5b9a91aebee2245e17899dc5a0aa874",
+      "sha256": "059fe519f192f6c95f332fd6ee9425fe25737160d4665ac5022a7b1212137a87",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 40
+        "accepted": 41
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -15779,7 +15797,7 @@
         "integration_contract": 2,
         "owner_boundary": 1,
         "platform_requirement": 1,
-        "requirement": 19,
+        "requirement": 20,
         "schema_contract": 4,
         "security_contract": 1
       },
@@ -15804,6 +15822,7 @@
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response_fixtures.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Usage attribution tests",
         "activation",
@@ -15859,6 +15878,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-new-contracts",
         "python3 scripts/pm-plans-verify.py validate-server-command-gap",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-server-command-gap-verify.py --json",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
@@ -15882,6 +15902,7 @@
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_runtime_identity_scope.py",
         "tests/test_pm_runtime_vocabulary_migration.py",
+        "tests/test_pm_ui_command_response.py",
         "topology",
         "topology conflict negative fixtures",
         "topology contract tests",
@@ -17121,9 +17142,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 20,
-        "True": 141
+        "True": 142
       },
-      "heading_count": 316,
+      "heading_count": 317,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
@@ -17174,9 +17195,9 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13016,
+      "line_count": 13049,
       "path": "Plans/UI_Command_Catalog.md",
-      "plan_unit_count": 161,
+      "plan_unit_count": 162,
       "plan_unit_ids": [
         "UCC-002",
         "UCC-003",
@@ -17338,7 +17359,8 @@
         "UCC-158",
         "UCC-159",
         "UCC-160",
-        "UCC-161"
+        "UCC-161",
+        "UCC-162"
       ],
       "reasoning_tiers": [
         "high",
@@ -17359,6 +17381,7 @@
         "catalog_reverse_coverage_or_alias_promotion_drift",
         "chat_command_catalog_gap",
         "command_catalog_duplication",
+        "command_response_identity_or_false_completion",
         "decision_authority_or_disposition_loss",
         "dev_preview_command_authority_leak",
         "docker_command_catalog_gap",
@@ -17404,10 +17427,10 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "46e57138eeec16db54907afcf615a2a2512fa935f6d8a3e47e3be44519ff23c1",
+      "sha256": "25cef379d0e08e9909f6f24079e15d854ff66bdf2fa0c87156cf5966eaf91dc1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 160,
+        "accepted": 161,
         "retired": 1
       },
       "title": "UI Command Catalog (Canonical)",
@@ -17418,7 +17441,7 @@
         "compatibility_disposition": 1,
         "constraint": 1,
         "gui_command_catalog": 7,
-        "requirement": 119
+        "requirement": 120
       },
       "validation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
@@ -17443,6 +17466,7 @@
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response_fixtures.json",
         "RSP-ATOMIC-001",
         "RSP-ATOMIC-003",
         "RSP-BASELINE-001",
@@ -17473,20 +17497,22 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
         "scripts/pm-plans-verify.py",
-        "scripts/pm-touch-closure-verify.py"
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_ui_command_response.py"
       ]
     },
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 22
+        "True": 23
       },
-      "heading_count": 66,
+      "heading_count": 67,
       "implementation_surfaces": [
         "Concepts/pm7-tools/",
         "Concepts/pm7-tools/global_hover_tags_source.py",
@@ -17510,11 +17536,12 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1668,
+      "line_count": 1701,
       "path": "Plans/UI_Wiring_Rules.md",
-      "plan_unit_count": 22,
+      "plan_unit_count": 23,
       "plan_unit_ids": [
         "UIW-001",
         "UIW-002",
@@ -17537,13 +17564,15 @@
         "UIW-019",
         "UIW-020",
         "UIW-021",
-        "UIW-022"
+        "UIW-022",
+        "UIW-023"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "command_response_identity_or_false_completion",
         "decision_authority_or_disposition_loss",
         "disabled_command_false_enablement",
         "dispatcher_integrity",
@@ -17567,16 +17596,16 @@
         "unwired_gui",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "d986040d92b297ae8682fa6569fd2cc6c25faa26497c785130c4b3e475fb195d",
+      "sha256": "c3a58eb8cd5785e2d6b7985f0a24b25dfaa21b335a30bedd1f839b3958cf806a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 22
+        "accepted": 23
       },
       "title": "UI Wiring Rules (Canonical)",
       "unit_type_counts": {
         "constraint": 1,
         "gui_wiring_rule": 1,
-        "requirement": 16,
+        "requirement": 17,
         "ui_wiring_rule": 1,
         "wiring_contract": 2,
         "wiring_rule": 1
@@ -17607,6 +17636,7 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response_fixtures.json",
         "UI purity check",
         "UI purity lints",
         "accessibility",
@@ -17623,13 +17653,15 @@
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
         "scripts/pm-touch-closure-verify.py",
         "shared-runtime command row census, alias exclusion, exact-handler, receipt/projection, accessibility, restart, race, and no-unregistered-event fixtures",
-        "stale-return"
+        "stale-return",
+        "tests/test_pm_ui_command_response.py"
       ]
     },
     {
@@ -17990,9 +18022,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 13,
-        "True": 41
+        "True": 42
       },
-      "heading_count": 123,
+      "heading_count": 124,
       "implementation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Concepts/pm7-tools/systems_integration_source.py",
@@ -18012,6 +18044,7 @@
         "Plans/Wiring_Matrix.md",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/Wiring_Matrix.schema.json",
         "Plans/assistant-chat-design.md",
         "Plans/browser_event_admission.json",
         "Plans/chain-wizard-flexibility.md",
@@ -18019,11 +18052,12 @@
         "Plans/touch_closure.json",
         "future Product Onboarding and Guided Tour local-action and owner-route bindings",
         "future Settings command wiring",
-        "future UI command dispatcher fixtures"
+        "future UI command dispatcher fixtures",
+        "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4526,
+      "line_count": 4560,
       "path": "Plans/Wiring_Matrix.md",
-      "plan_unit_count": 54,
+      "plan_unit_count": 55,
       "plan_unit_ids": [
         "WM-002",
         "WM-003",
@@ -18078,7 +18112,8 @@
         "WM-051",
         "WM-052",
         "WM-053",
-        "WM-054"
+        "WM-054",
+        "WM-055"
       ],
       "reasoning_tiers": [
         "high",
@@ -18086,6 +18121,7 @@
       ],
       "risk_classes": [
         "browser_command_event_reverse_coverage_or_false_dispatch",
+        "command_response_identity_or_false_completion",
         "decision_authority_or_disposition_loss",
         "dry_method_settings_wiring_gap",
         "execution_boundary",
@@ -18109,10 +18145,10 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "bc638afdc80e7d7aa7de74166034cf5b4611036baf17a99163ba62eeb23b85e6",
+      "sha256": "56de1a4c45763a684fbf2775aa48879532f3ad86534763e1809e91ecdab03f46",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 54
+        "accepted": 55
       },
       "title": "Wiring Matrix (Canonical)",
       "unit_type_counts": {
@@ -18120,7 +18156,7 @@
         "constraint": 11,
         "generated_artifact_residual": 1,
         "production_wiring": 1,
-        "requirement": 32,
+        "requirement": 33,
         "validation_rule": 1,
         "wiring_contract": 6,
         "wiring_disposition": 1
@@ -18143,6 +18179,7 @@
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/touch_closure.json",
+        "Plans/ui_command_response_fixtures.json",
         "future Usage forecast wiring fixture suite",
         "future Usage route wiring fixture suite",
         "future native Browser disabled-state and effect-event wiring fixtures",
@@ -18154,11 +18191,13 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "scripts/pm-plans-verify.py",
-        "scripts/pm-touch-closure-verify.py"
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_ui_command_response.py"
       ]
     },
     {
@@ -18429,7 +18468,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-10T23:10:05Z",
+  "generated_at_utc": "2026-09-10T23:19:26Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18437,13 +18476,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3336,
-      "True": 3110
+      "False": 3339,
+      "True": 3113
     },
-    "plan_unit_count": 6446,
+    "plan_unit_count": 6452,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6255,
+      "accepted": 6261,
       "retired": 182,
       "superseded": 9
     },
@@ -18510,12 +18549,12 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5144,
+      "requirement": 5149,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 60,
+      "schema_contract": 61,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 14,
