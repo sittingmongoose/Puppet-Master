@@ -91,6 +91,17 @@
           "caller_context_ref": "onboarding-return:first-project:01",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -129,6 +140,17 @@
           "caller_context_ref": "onboarding-return:first-project:02",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -167,6 +189,17 @@
           "caller_context_ref": "onboarding-return:first-project:03",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -205,6 +238,17 @@
           "caller_context_ref": "onboarding-return:first-project:04",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -244,6 +288,17 @@
           "caller_context_ref": "onboarding-return:first-project:05",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -282,6 +337,17 @@
           "caller_context_ref": "onboarding-return:first-project:06",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -1428,8 +1494,19 @@
         "project_vault_ref": "vault:project:alpha-copy",
         "server_catalog_ref": "catalog:server:home",
         "operation": "copy_preferences",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1456,8 +1533,19 @@
         "project_vault_ref": "vault:project:alpha-move",
         "server_catalog_ref": "catalog:server:target",
         "operation": "move_project",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1484,8 +1572,19 @@
         "project_vault_ref": "vault:project:restored-new-alpha",
         "server_catalog_ref": "catalog:server:home",
         "operation": "restore_as_new",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1501,6 +1600,72 @@
         "expected_event_types": [],
         "proc_execution_evidence": "partial_not_implemented",
         "runtime_evidence_claimed": false
+      }
+    },
+    {
+      "name": "project_setup_commit_requires_actual_listed_result",
+      "definition": "project_action_result",
+      "value": {
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_local",
+        "command_instance_id": "command:project:commit:1",
+        "outcome": "accepted",
+        "project_id": "project:new-1",
+        "project_revision": 1,
+        "project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "resulting_registry_revision": 4,
+        "resulting_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "lifecycle": "listed",
+        "route_ref": "route:project:new-1",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.open_detected_project",
+          "invocation_token": "return:project:open:01",
+          "caller_context_ref": "onboarding-return:first-project:07",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "receipt_refs": [
+          "receipt:project-commit-1"
+        ],
+        "persistence_disposition": "persisted",
+        "error_code": null,
+        "replayed": false
+      }
+    },
+    {
+      "name": "project_setup_commit_binding_for_provider_continuation",
+      "definition": "project_setup_commit_binding",
+      "value": {
+        "schema_id": "pm.project.setup_commit_binding.v1",
+        "binding_id": "binding:project-commit-1",
+        "setup_plan_ref": "setup-plan:queued:1",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "commit_authorization_ref": "consent:project-commit-1",
+        "command_id": "cmd.project.new_local",
+        "command_instance_id": "command:project:commit:1",
+        "idempotency_key": "idempotency:project-commit-1",
+        "project_action_result_ref": "result:project-commit-1",
+        "project_action_result_sha256": "cb8d8babf0ad73cb2328897da6fcd4fe27320377964568729bb257f74eafd97f",
+        "project_id": "project:new-1",
+        "project_revision": 1,
+        "registry_revision": 4,
+        "lifecycle": "listed",
+        "persistence_disposition": "persisted",
+        "terminal_receipt_refs": [
+          "receipt:project-commit-1"
+        ],
+        "settings_transfer_rebind_ref": null,
+        "settings_transfer_result_ref": null,
+        "required_owner_result_refs": [
+          "result:project-commit-1"
+        ],
+        "replayed": false
       }
     }
   ],
@@ -2089,12 +2254,92 @@
         }
       }
     },
-    {"name":"project_backup_preferences_cannot_copy_credentials","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"credentials_copied":true},"expected_error":"credentials_remain_server_protected_refs"},
-    {"name":"project_copy_cannot_duplicate_schedule_or_writer","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"schedule_or_writer_duplicated":true},"expected_error":"copy_does_not_activate_jobs_or_writer_authority"},
-    {"name":"project_move_requires_verified_one_writer_transfer","definition":"project_backup_consumer_projection","base_valid":"project_move_requires_one_backup_writer_transfer","patch":{"one_writer_transfer_verified":false},"expected_error":"move_has_exactly_one_scheduler_writer_prune_authority"},
-    {"name":"restore_as_new_requires_fresh_project_identity","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"fresh_project_id_required":false},"expected_error":"restore_as_new_never_reuses_source_project_id"},
-    {"name":"project_backup_consumer_cannot_activate_recovered_runtime","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"recovered_runtime_activated":true},"expected_error":"registration_does_not_activate_goals_leases_push_or_automation"},
-    {"name":"project_backup_consumer_cannot_claim_proc_execution","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"proc_execution_evidence":"implemented"},"expected_error":"proc_001_002_remain_later_execution_evidence"}
+    {
+      "name": "project_backup_preferences_cannot_copy_credentials",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "credentials_copied": true
+      },
+      "expected_error": "credentials_remain_server_protected_refs"
+    },
+    {
+      "name": "project_copy_cannot_duplicate_schedule_or_writer",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "schedule_or_writer_duplicated": true
+      },
+      "expected_error": "copy_does_not_activate_jobs_or_writer_authority"
+    },
+    {
+      "name": "project_move_requires_verified_one_writer_transfer",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_move_requires_one_backup_writer_transfer",
+      "patch": {
+        "one_writer_transfer_verified": false
+      },
+      "expected_error": "move_has_exactly_one_scheduler_writer_prune_authority"
+    },
+    {
+      "name": "restore_as_new_requires_fresh_project_identity",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "restore_as_new_requires_fresh_project_and_external_repository_revalidation",
+      "patch": {
+        "fresh_project_id_required": false
+      },
+      "expected_error": "restore_as_new_never_reuses_source_project_id"
+    },
+    {
+      "name": "project_backup_consumer_cannot_activate_recovered_runtime",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "restore_as_new_requires_fresh_project_and_external_repository_revalidation",
+      "patch": {
+        "recovered_runtime_activated": true
+      },
+      "expected_error": "registration_does_not_activate_goals_leases_push_or_automation"
+    },
+    {
+      "name": "project_backup_consumer_cannot_claim_proc_execution",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "proc_execution_evidence": "implemented"
+      },
+      "expected_error": "proc_001_002_remain_later_execution_evidence"
+    },
+    {
+      "name": "onboarding_creation_requires_confirmed_setup_binding",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_local_from_onboarding",
+      "remove": [
+        "onboarding_setup_binding"
+      ]
+    },
+    {
+      "name": "setup_commit_binding_cannot_claim_registering_as_listed",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "lifecycle": "registering"
+      }
+    },
+    {
+      "name": "setup_commit_binding_needs_terminal_receipt",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "terminal_receipt_refs": []
+      }
+    },
+    {
+      "name": "setup_commit_binding_cannot_claim_unpersisted_new_project",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "persistence_disposition": "no_persist_navigation"
+      }
+    }
   ],
   "server_gap_b_coverage": {
     "rows": 11,

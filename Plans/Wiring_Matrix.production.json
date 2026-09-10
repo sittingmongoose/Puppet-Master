@@ -8277,7 +8277,8 @@
         "Validate the exact request/result pair Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest -> Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
         "Read state.commands.auth_profile_open_official_page.availability and state.commands.auth_profile_open_official_page.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
-        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
+        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_open_official_page.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8323,11 +8324,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, busy state, disabled reason, and outcome announcement in every reverse consumer.",
           "test_id": "wiring.catalog.auth_profile_open_official_page.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_auth_profile_open_official_page.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.auth_profile.open_official_page",
       "ui_element_id": "catalog.auth_profile_open_official_page",
-      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface"
+      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route"
     },
     "catalog.auth_profile_rename": {
       "acceptance_checks": [
@@ -8565,7 +8571,8 @@
         "Validate Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest -> Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult and Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError with exact availability and permission gates.",
         "Read state.commands.auth_profile_sign_in.availability and state.commands.auth_profile_sign_in.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Consume MACS-005 FirstTimeSourceAuthBinding only for necessary selected-source auth: owner-verified permission/consent/source/draft/hash/Client, null prior Project/profile/account/install, protected human handoff, owner-allocated identity after proof. Postcommit provider setup uses the real Project and ordinary owner contracts; no native proof is implied."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_sign_in.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8610,11 +8617,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.auth_profile_sign_in.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_auth_profile_sign_in.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Consume MACS-005 FirstTimeSourceAuthBinding only for necessary selected-source auth: owner-verified permission/consent/source/draft/hash/Client, null prior Project/profile/account/install, protected human handoff, owner-allocated identity after proof. Postcommit provider setup uses the real Project and ordinary owner contracts; no native proof is implied. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.auth_profile.sign_in",
       "ui_element_id": "catalog.auth_profile_sign_in",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
     },
     "catalog.auth_profile_sign_out": {
       "acceptance_checks": [
@@ -29414,7 +29426,8 @@
         "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.forge_repository_list.availability and state.commands.forge_repository_list.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Consume FGI-011 repository_list_scope across request/result/error/availability/receipt with null repository binding and zero repository generation, current verified account/container/provider/source/draft/permission/hash/expiry and exact return. It creates/binds no repository or Project and emits no EventRecord."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.forge_repository_list.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -29460,11 +29473,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.forge_repository_list.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_forge_repository_list.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Consume FGI-011 repository_list_scope across request/result/error/availability/receipt with null repository binding and zero repository generation, current verified account/container/provider/source/draft/permission/hash/expiry and exact return. It creates/binds no repository or Project and emits no EventRecord. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.forge.repository.list",
       "ui_element_id": "catalog.forge_repository_list",
-      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes"
+      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes; Product Onboarding selected-source read-only account/container repository picker before Project commit"
     },
     "catalog.forge_repository_open_in_browser": {
       "acceptance_checks": [
@@ -44029,7 +44047,7 @@
     },
     "catalog.project_add_existing": {
       "ui_element_id": "catalog.project_add_existing",
-      "ui_location": "Project surface > Add Existing",
+      "ui_location": "Project surface > Add Existing; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.add_existing",
       "handler_location": "handlers::project::add_existing",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -44041,7 +44059,8 @@
         "cmd.project.add_existing must expose projected state selector and disabled reason before dispatch",
         "cmd.project.add_existing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.add_existing must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.add_existing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_add_existing.availability",
@@ -44079,6 +44098,11 @@
           "test_id": "wiring.catalog.project_add_existing.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_add_existing.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -44893,7 +44917,7 @@
     },
     "catalog.project_new_github_repo": {
       "ui_element_id": "catalog.project_new_github_repo",
-      "ui_location": "Project creation and GitHub integration surface",
+      "ui_location": "Project creation and GitHub integration surface; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.new_github_repo",
       "handler_location": "handlers::github::project_new_repo",
       "expected_event_types": [
@@ -44905,7 +44929,8 @@
         "Auth, permission, organization/owner selection, remote side-effect approval, and duplicate-repo disabled reasons are exposed before dispatch",
         "Receipt evidence preserves repository identity, project binding identity, correlation_id, remote-side-effect outcome, and recovery route",
         "Regression evidence covers unauthenticated, permission-denied, existing-repo, dirty-project, and user-declined cases",
-        "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_github_repo; Production certification requires GitHub/project render evidence, dispatcher fixture, typed create/bind payload/result assertion, auth and permission disabled-reason proof, repo/project receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_github_repo.availability",
@@ -44949,6 +44974,11 @@
           "test_id": "wiring.catalog.project_new_github_repo.events",
           "evidence_kind": "event_test",
           "requirement": "Assert cmd.project.new_github_repo emits expected event type github.repo.create_requested with command_id, origin, correlation_id, and handler target.; Assert cmd.project.new_github_repo emits expected event type project.github_repo_bound with command_id, origin, correlation_id, and handler target."
+        },
+        {
+          "test_id": "wiring.cmd_project_new_github_repo.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -44958,7 +44988,7 @@
     },
     "catalog.project_new_local": {
       "ui_element_id": "catalog.project_new_local",
-      "ui_location": "Project surface > New Local",
+      "ui_location": "Project surface > New Local; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.new_local",
       "handler_location": "handlers::project::new_local",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -44970,7 +45000,8 @@
         "cmd.project.new_local must expose projected state selector and disabled reason before dispatch",
         "cmd.project.new_local dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.new_local must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.new_local must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.new_local must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_local; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_local.availability",
@@ -45008,6 +45039,11 @@
           "test_id": "wiring.catalog.project_new_local.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_new_local.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -45016,7 +45052,7 @@
     },
     "catalog.project_open": {
       "ui_element_id": "catalog.project_open",
-      "ui_location": "Project surface > Open",
+      "ui_location": "Project surface > Open; Product Onboarding exact Review commit chain under PJCT-007",
       "ui_command_id": "cmd.project.open",
       "handler_location": "handlers::project::open",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
@@ -45028,7 +45064,8 @@
         "cmd.project.open must expose projected state selector and disabled reason before dispatch",
         "cmd.project.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.project.open must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
       "evidence_required": "Production wiring contract for cmd.project.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_open.availability",
@@ -45066,6 +45103,11 @@
           "test_id": "wiring.catalog.project_open.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_open.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -45134,7 +45176,7 @@
     },
     "catalog.project_refresh": {
       "ui_element_id": "catalog.project_refresh",
-      "ui_location": "Projects list > Refresh",
+      "ui_location": "Projects list > Refresh; Product Onboarding read-only real-Project picker/preflight under PWIZ-021",
       "ui_command_id": "cmd.project.refresh",
       "handler_location": "handlers::project::refresh",
       "expected_event_types": [],
@@ -45143,7 +45185,8 @@
         "Refresh surfaces scan failures as projection health instead of silently dropping entries",
         "Refresh does not reorder user-pinned entries beyond the projection contract",
         "cmd.project.refresh must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.project.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.project.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Use the Project owner's read-only nullable-Project refresh request for source selection; consume only real registry identities. An uncreated draft is not registered or assigned a placeholder Project ID."
       ],
       "evidence_required": "Production wiring contract for cmd.project.refresh; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_refresh.availability",
@@ -45181,6 +45224,11 @@
           "test_id": "wiring.catalog.project_refresh.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.cmd_project_refresh.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Use the Project owner's read-only nullable-Project refresh request for source selection; consume only real registry identities. An uncreated draft is not registered or assigned a placeholder Project ID. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -54345,7 +54393,8 @@
         "Validate Plans/server_system_contracts.schema.json#/$defs/command_payload -> Plans/server_system_contracts.schema.json#/$defs/command_result and Plans/server_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.server_discovery_refresh.availability and state.commands.server_discovery_refresh.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Use only the Server owner's current read-only discovery scope after route selection; PWIZ-021 precommit admission grants no enrollment, pairing, trust, endpoint mutation or Project creation."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.server_discovery_refresh.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54394,11 +54443,16 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.server_discovery_refresh.accessibility"
+        },
+        {
+          "test_id": "wiring.cmd_server_discovery_refresh.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Use only the Server owner's current read-only discovery scope after route selection; PWIZ-021 precommit admission grants no enrollment, pairing, trust, endpoint mutation or Project creation. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "ui_command_id": "cmd.server.discovery.refresh",
       "ui_element_id": "catalog.server_discovery_refresh",
-      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API"
+      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API; Product Onboarding selected-route read-only precommit discovery under PWIZ-021"
     },
     "catalog.server_discovery_set_enabled": {
       "acceptance_checks": [
@@ -55796,7 +55850,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55805,7 +55859,8 @@
       "acceptance_checks": [
         "Apply exactly one current preview under revision/CAS and idempotency guards",
         "Route each value to its sole owner and require readback before committed",
-        "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement"
+        "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
+        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -55843,6 +55898,11 @@
           "test_id": "wiring.catalog.settings_transaction_apply.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Confirmation, busy state, result announcement, and focus return are verified."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_apply.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [
@@ -55851,7 +55911,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -55860,16 +55920,17 @@
       "acceptance_checks": [
         "Resolve exact stable setting IDs and owner routes without committing",
         "Reject stale revisions, invalid values, permission/policy blockers, secrets, and unavailable owners with typed reasons",
-        "Return rollback eligibility and migration/readback requirements without claiming a handler ran"
+        "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
+        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
       "disabled_reason_projection": "state.commands.settings_transaction_preview.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Preview writes no Settings value or domain event and returns only pm.settings_transaction_preview.v1.",
+        "description": "Read-only preview returns the owner-discriminated ordinary preview or SSYS-036 uncreated-Project draft preview; neither writes Settings/Project state or emits a domain event.",
         "receipt_or_event_refs": [
-          "pm.settings_transaction_preview.v1"
+          "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview"
         ]
       },
       "accessibility_contract": {
@@ -55892,12 +55953,17 @@
         {
           "test_id": "wiring.catalog.settings_transaction_preview.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Preview returns pm.settings_transaction_preview.v1, writes nothing, and emits no domain event."
+          "requirement": "Read-only preview returns the owner-discriminated ordinary preview or SSYS-036 uncreated-Project draft preview; neither writes Settings/Project state or emits a domain event."
         },
         {
           "test_id": "wiring.catalog.settings_transaction_preview.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Role, name, keyboard path, focus return, and disabled announcement are verified."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_preview.onboarding_phase_binding",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
         }
       ],
       "event_test_requirements": [

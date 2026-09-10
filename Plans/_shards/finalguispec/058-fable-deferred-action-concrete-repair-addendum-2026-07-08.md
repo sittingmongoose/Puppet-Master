@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L28945-L29020
 
-Source SHA256: `8f303b23608d8986b0fe699bba5c8c35e96bb6e0bfd6d64a2b5a3842368b3a5f`
+Source SHA256: `f7aa5834ef202396ffff50a599bccb6bcd1b35b8d1ac21522b01a506f0fe9367`
 
 ---
 
@@ -75,7 +75,7 @@ These paths are planned GUI host locations only. They do not create implementati
 
 Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
-Startup restore reads `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}` as defined by `Plans/storage-plan.md`. These two registered `resettable_ui_state` families may use defaults when missing; corrupt/incompatible bytes are secured in quarantine before reset and the warning card names the affected family. `editor_workspace_state.v1:{project_id}` and per-file `editor_state.v1:{project_id}:{file_path_hash}` are instead canonical non-rebuildable families: missing/corrupt/incompatible state attempts mandatory-backup recovery and discloses credible loss rather than showing a false first-run, empty project, or silent default. `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only `StorageMigrationCoordinator` inputs only, and the global onboarding alias may copy forward only to an unambiguous project.
+Startup restore reads `hotreload_state.v1:{project_id}` and the current `onboarding_state` session binding defined by SP-252 / `Plans/storage_value_registry.json`. These two registered `resettable_ui_state` families may use defaults when missing; corrupt/incompatible bytes are secured in quarantine before reset and the warning card names the affected family. Resetting Onboarding UI state never deletes a real Project or proves it was never committed: the Project owner is revalidated before a new creation or provider-phase resume. `editor_workspace_state.v1:{project_id}` and per-file `editor_state.v1:{project_id}:{file_path_hash}` are instead canonical non-rebuildable families: missing/corrupt/incompatible state attempts mandatory-backup recovery and discloses credible loss rather than showing a false first-run, empty project, or silent default. Editor/hotreload aliases and SP-252's exact Onboarding predecessor roster are coordinator-only migration inputs; the global Onboarding alias requires an unambiguous Project/session.
 
 ### Terminal-Core Section Anchor
 

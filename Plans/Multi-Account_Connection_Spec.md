@@ -4,7 +4,7 @@
 
 ## 1. Scope and claim boundary
 
-This contract closes the owner-side request, result, error, availability, permission, disabled-reason, redaction, and protected-input shapes for eight exact command candidates:
+The original eight-command core below has owner-side request, result, error, availability, permission, disabled-reason, redaction and protected-input contracts. MACS-003/004 and the current exact schema inventory extend it to twelve registered command identities; registration does not establish native handlers:
 
 `cmd.auth_profile.sign_in`, `cmd.auth_profile.sign_out`, `cmd.auth_profile.verify`, `cmd.auth_profile.cancel`, `cmd.auth_profile.retry`, `cmd.auth_profile.submit_code`, `cmd.auth_profile.open_official_page`, and `cmd.auth_profile.select`.
 
@@ -17,7 +17,7 @@ Their closed machine contracts are:
 - error: `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError`;
 - protected Browser lifecycle projection: `Plans/protected_auth_browser_contracts.schema.json#/$defs/protected_auth_browser_lifecycle_projection`.
 
-These definitions make the candidates contract-complete for later central adjudication. They do not add them to `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.production.json`, or a native handler registry. Until those independent bindings exist, availability is `available=false`, `command_registered=false`, `native_handler_available=false`, and `disabled_reason=command_not_registered`. Static schema and fixture success is not runtime, provider, protected-browser, Slint, or security certification.
+The current central catalog/wiring bindings are consumed from MACS-004 and the later command extensions, not inferred from this schema. Missing registration or a native handler still fails closed with the corresponding exact reason. Current registrations have future handler targets, not source-hashed native execution proof. Static schema and fixture success is not runtime, provider, protected-browser, Slint or security certification.
 
 ContractRef: ContractName:Plans/Multi-Account.md#MA-045, SchemaID:pm.multi_account.auth_profile_command_contracts.v1, SchemaID:pm.protected_auth_browser_contracts.schema.v1
 
@@ -25,7 +25,7 @@ ContractRef: ContractName:Plans/Multi-Account.md#MA-045, SchemaID:pm.multi_accou
 
 | Exact command | Owner semantics | Required safe result |
 |---|---|---|
-| `cmd.auth_profile.sign_in` | Begin the selected provider-native path for one exact provider, route, profile/account, verified installation, Server, Host, Environment, auth revision, profile generation, initiating Client, and continuation. | Redacted auth-operation/proof refs and lifecycle state; no credential or protected content. |
+| `cmd.auth_profile.sign_in` | Begin the selected provider-native path for one exact provider, route, profile/account, verified installation where required, Server, Host, Environment, auth revision, profile generation, initiating Client, and continuation. MACS-005 alone defines the fenced first-time selected-source exception without preexisting profile/account/installation. | Redacted auth-operation/proof refs and lifecycle state; no credential or protected content. |
 | `cmd.auth_profile.sign_out` | End or revoke authentication for one exact profile/account under expected generations, with explicit credential and dependent-connection dispositions. It is not cancellation of an in-progress sign-in. | Exact resulting auth/profile revisions and a receipt; no silent deletion of provider-owned data. |
 | `cmd.auth_profile.verify` | Verify one exact profile/account through broker-owned credential use and a bounded supported verification policy. | Non-secret proof identity, freshness-bearing revision, bounded state, and remediation reference. |
 | `cmd.auth_profile.cancel` | Cancel the exact nonterminal authentication operation under its original topology and initiating-Client binding. | Cancellation or truthful already-terminal/stale result; established credentials remain untouched. |
@@ -40,7 +40,7 @@ All requests carry exact command and operation identity, command instance and id
 
 Multi-Account owns the auth-profile facade semantics. Authentication execution remains with the shared authentication owner and provider-specific/native mechanism. The already registered `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume` contracts remain independent authentication-owner commands; this document does not rename them, declare the eight exact IDs to be aliases, or mint a second authentication engine.
 
-If a future central binding admits an exact `cmd.auth_profile.*` command, the binding must prove one logical dispatch and an explicit translation into an existing authentication-owner operation where applicable. `sign_out`, `verify`, `submit_code`, `open_official_page`, and `select` require their exact owner semantics and cannot be guessed as lossy aliases. No native module path or event producer is claimed here.
+The current binding for an exact `cmd.auth_profile.*` command must preserve one logical dispatch and an explicit translation into an existing authentication-owner operation where applicable. `sign_out`, `verify`, `submit_code`, `open_official_page`, and `select` require their exact owner semantics and cannot be guessed as lossy aliases. No native module path or event producer is claimed here.
 
 ## 4. Protected `AuthBrowserSession` boundary
 
@@ -252,3 +252,66 @@ compile_disposition: extend_existing_owner
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/touch_closure.json
+
+## Selected-source first-time authentication — 2026-09-10
+
+### MACS-005 - First-Time Source Authentication Without A Fabricated Project
+
+```yaml
+plan_unit_id: MACS-005
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Multi-Account_Connection_Spec.md
+canonical_text: The existing AuthProfileCommandRequest sign_in operation supports an owner-issued FirstTimeSourceAuthBinding
+  only for explicit human_gui selected-source access. The binding names the actual source, Onboarding session and
+  draft/revision, source-authorization ref, route capability and owner issuance. The owner verifies that this exact
+  source_control_host route needs no external CLI. Project, profile, account and installation IDs remain null and
+  initial auth/profile generations are zero; no identity is invented to satisfy the ordinary existing-profile request.
+  The existing AuthenticationBroker performs protected sign-in and allocates real profile/account identities only
+  after verified provider identity. Existing-profile sign-in and other commands keep their original fences.
+gui_related: true
+gui_classification_reason: Defines the just-in-time sign-in control and protected return needed to browse a chosen
+  online Project source before commit.
+depends_on:
+- MACS-001
+- MACS-002
+- MACS-004
+unblocks: []
+acceptance_criteria:
+- FirstTimeSourceAuthBinding is closed and legal only on cmd.auth_profile.sign_in with human_gui, current selected-source
+  authorization, explicit consent and exact Server/Host/Environment/Client context.
+- No prior Project/profile/account/installation is claimed; zero initial generations and a current owner proof that
+  no external CLI is required are mandatory.
+- Ordinary existing-profile sign-in retains actual profile/account/installation requirements; the exception cannot
+  enable an uninstalled CLI route or unrelated provider setup.
+- Source/draft/session/route/capability/permission/consent/request-hash changes, expiry or Client mismatch fail
+  before protected handoff.
+- Verified official signup pages use cmd.auth_profile.open_official_page with current official-source proof; page
+  navigation does not create a provider account or count as successful authentication.
+- Success returns actual owner-verified identities; failure/cancel returns exact source focus without a Project,
+  repository, destination filesystem or broad provider mutation.
+- The same canonical command/handler/result family is reused; no generic no-Project authentication command, credential
+  store, physical receipt family, event or native runtime proof is created.
+validation_surfaces:
+- Plans/multi_account_contract_fixtures.json
+- tests/test_pm_onboarding_phases.py
+- future native owner issuance, first-time broker, cancellation, restart, exact-Client and protected-session security
+  tests; not_run
+risk_class: first_time_auth_fabricated_identity_or_scope_escape
+reasoning_tier: high
+context_scope: first_time_selected_source_authentication
+implementation_surfaces:
+- Plans/Multi-Account_Connection_Spec.md
+- Plans/multi_account_contracts.schema.json
+node_compile_hint:
+  mode: first_time_source_auth_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+negative_constraints:
+- Do not fabricate existing account/profile/installation or Project identity.
+- Do not bypass required CLI acquisition or infer route capability from a flag without current owner evidence.
+- Do not expose protected browser or credential contents, grant broad provider authority, or treat schema success
+  as native security proof.
+```

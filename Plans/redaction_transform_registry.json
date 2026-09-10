@@ -51,15 +51,15 @@
       "transform_id": "rt.onboarding_state.v1",
       "transform_version": "1.0.0",
       "kind": "bounded_normalization",
-      "applies_to": ["pm.product_onboarding.session.v1", "pm.product_onboarding.legacy_migration_receipt.v1"],
+      "applies_to": ["pm.product_onboarding.session.v2", "pm.product_onboarding.legacy_migration_receipt.v2", "pm.product_onboarding.session.v1", "pm.product_onboarding.legacy_migration_receipt.v1"],
       "input_class": "Product Onboarding session and legacy migration input",
-      "output_rule": "Preserve stable identities; the exact current nine-stage main-path or six-stage connect-existing state; independent local Safe History backend, optional online-forge, Server, Storage, and Client selections; queued and reviewed plan revisions; person-confirmed Review state; approved-plan hash; Automatic Preparation currentness; owner refs; decisions; generations; bounded warnings; receipt refs; and exact migration counts only. Seven-stage input is migration lineage and never current state.",
+      "output_rule": "Preserve the closed bounded setup_draft user-choice snapshot and stable identities for the current eleven-stage dependency graph, explicit deferred-Project path or six-stage connect-existing shortcut; independent local history/forge/Server/Storage/Client choices; queued/reviewed draft revisions and exact canonical hash; phase dispositions; actual Project commit binding; current owner/progress/return refs; bounded warnings; and exact migration counts. Arbitrary raw plan/transcript bodies and protected material are rejected. Four/five/seven/nine-stage and v1 value inputs are one-time migration lineage only; unresolved drafts never gain approval and committed rows resume only after actual owner revalidation without replay.",
       "prohibited_inputs": ["raw transcript", "API key", "token", "auth URL", "auth code", "credential", "profile root", "broad local path", "protected browser content"],
       "quarantine_on_match": true,
       "retention_effect": "Current session is replace-current; one-time domain migration receipt and the referenced Storage migration receipt retain independently under receipt authority.",
       "auth_browser_session_disposition": "reject_entire_subject_no_output",
       "implementation_status": "contract_only_no_runtime_evidence",
-      "source_refs": ["Plans/Planning_Wizard.md#product-onboarding-and-guided-tour-owner-addendum-2026-08-31", "Plans/product_onboarding_contracts.schema.json"]
+      "source_refs": ["Plans/Planning_Wizard.md#PWIZ-021", "Plans/storage-plan.md#SP-252", "Plans/product_onboarding_contracts.schema.json"]
     },
     {
       "transform_id": "rt.doctor_bounded_evidence.v1",

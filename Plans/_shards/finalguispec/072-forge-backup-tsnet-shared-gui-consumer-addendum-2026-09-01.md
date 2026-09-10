@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35608-L35692
+Source lines: L35617-L35701
 
-Source SHA256: `8f303b23608d8986b0fe699bba5c8c35e96bb6e0bfd6d64a2b5a3842368b3a5f`
+Source SHA256: `f7aa5834ef202396ffff50a599bccb6bcd1b35b8d1ac21522b01a506f0fe9367`
 
 ---
 
@@ -51,7 +51,7 @@ acceptance_criteria:
   - Setup projects the Server-owned connector phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready. The operation survives refresh/Client loss while protected browser content remains authorized-Client bound; exact origin/focus return is preserved.
   - Advanced `Connection engine` may show bounded redacted connector/tsnet build/protocol, control kind, Headscale origin, node/DNS and endpoint IDs, process/IPC/state/listener/binding health, last auth/test, logs, and owner repair/reset routes. It never shows private/auth/pre-auth keys, raw state, reusable authorization URLs, browser content/cookies, IPC secrets, or a backend selector.
   - Browser copy states that PM-native connector egress does not enroll an ordinary browser; private browser access still needs user-managed reachability or an approved public/other route. Funnel remains hosted-only, public, off by default, consent/preflight gated, and separable from private/LAN/proxy/Remote Link operation.
-  - F3-520 keeps the exact nine/six Product Onboarding stage graphs and Review hard fence. Bootstrap Full Server recovery renders before Product Onboarding after safe local claim; the Product `Restore a backup` route stays Project-scoped, and post-first-Project destination/Recovery Kit setup uses owner projections only.
+  - F3-520 consumes PWIZ-021's eleven-stage main, six-stage connect-existing and explicit-deferred graphs, narrow precommit read/source-auth admission, exact Project commit fence, then paid/free-provider phases. Bootstrap Full Server recovery renders before Product Onboarding after safe local claim; the Product `Restore a backup` route stays Project-scoped, and post-first-Project destination/Recovery Kit setup uses owner projections only.
   - F3-522 consumes N2-156's independent Backup and connector findings. Optional-off or inapplicable targets do not paint global degradation; Doctor never installs, authenticates, decrypts, unlocks, exports, prunes, restores, or resets identity without an explicit owner-routed destructive flow.
   - All eight PMConcept7 themes, selected K3 geometry, representative narrow/default/wide widths, variable-height virtualization, keyboard/touch, stable focus, non-color status, screen readers, localization, Reduced Motion, and phase-based non-fake progress apply to every new state. Browser-concept or static fixture results remain `concept_fixture_only`, never native Slint/runtime/visual/security/performance/accessibility evidence.
   - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler, permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.

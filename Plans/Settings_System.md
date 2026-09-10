@@ -312,36 +312,75 @@ plan_unit_id: SSYS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Copy Settings From Another Project is a one-time detached exact-ID transaction. The user selects broad categories,
-  preview resolves each category to an immutable sorted setting_id set and source/destination revisions, and the UI
-  shows a redacted diff, source Project, provenance, exclusions, conflicts, validation, and rollback plan before apply.
-  The ten stable selector IDs are appearance_workspace, assistant_chat, providers_accounts_models_routing,
-  planning_goal, orchestrator_automation, tools_integrations, testing_browser_devices, permissions_security,
-  memory_retention_history, and notifications_usage_budgets. Apply creates a destination restore point, validates and
-  atomically writes only the previewed IDs, reads back, emits a durable result, and rolls back on failure. The destination
-  is independent immediately: no inheritance, live link, or later source propagation exists.
+canonical_text: 'Copy Settings From Another Project is a one-time detached exact-ID transaction. The user selects
+  broad categories, preview resolves each category to an immutable sorted setting_id set and source/destination
+  revisions, and the UI shows a redacted diff, source Project, provenance, exclusions, conflicts, validation, and
+  rollback plan before apply. The ten stable selector IDs are appearance_workspace, assistant_chat, providers_accounts_models_routing,
+  planning_goal, orchestrator_automation, tools_integrations, testing_browser_devices, permissions_security, memory_retention_history,
+  and notifications_usage_budgets. Apply creates a destination restore point, validates and atomically writes only
+  the previewed IDs, reads back, emits a durable result, and rolls back on failure. The destination is independent
+  immediately: no inheritance, live link, or later source propagation exists. For an uncreated Onboarding destination,
+  the same preview command uses the Settings-owned draft variant with source Project/revision and destination draft/ref/revision/hash,
+  never a fake destination Project ID. No value applies before the reviewed Project commit. After real identity
+  reservation, rebind/revalidate to an ordinary Project preview and apply with exact-ID readback/rollback; explicit
+  new choices override copied defaults.'
 gui_related: true
-gui_classification_reason: Category selection, preview, diff, provenance, confirmation, result, and rollback are visible flows.
-depends_on: [SSYS-002, SSYS-004, SSYS-008, SSYS-009]
-unblocks: [SSYS-017]
+gui_classification_reason: Category selection, preview, diff, provenance, confirmation, result, and rollback are
+  visible flows.
+depends_on:
+- SSYS-002
+- SSYS-004
+- SSYS-008
+- SSYS-009
+unblocks:
+- SSYS-017
 acceptance_criteria:
-  - Preview and apply bind the exact source/destination Project IDs, revisions, category IDs, and sorted setting IDs.
-  - Credential-bearing IDs and owner-excluded IDs are listed as excluded and never copied.
-  - Stale preview, validation failure, commit/read-back failure, or cancellation produces no partial destination mutation.
-  - Later source changes cannot affect the destination.
-validation_surfaces: [future settings transfer positive and negative fixtures, future rollback fixtures]
+- Existing-Project preview/apply binds exact source/destination Project IDs and revisions; Onboarding draft preview
+  binds the exact source Project and uncreated destination draft, selectors, sorted eligible IDs and hash, then
+  rebinds only after actual Project identity reservation.
+- Credential-bearing IDs and owner-excluded IDs are listed as excluded and never copied.
+- Stale preview, validation failure, commit/read-back failure, or cancellation produces no partial destination mutation.
+- Later source changes cannot affect the destination.
+- Explicit choices made for the new Project win over copied defaults; excluded credential-bearing and owner-excluded
+  IDs are never applied.
+- A draft preview or rebind cannot itself satisfy the ordinary apply request; source/draft/preview/inventory changes
+  or expiry invalidate the proposed copy.
+validation_surfaces:
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- tests/test_pm_settings_draft_transfer.py
+- future native Settings restore/readback/rollback receipts; not_run
 risk_class: settings_transfer_leak_or_partial_apply
 reasoning_tier: high
 context_scope: project_settings_transfer
-implementation_surfaces: [Plans/Settings_System.md, Plans/storage-plan.md, future Settings transfer service]
-node_compile_hint: {mode: detached_settings_transfer_contract, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Settings_System.md
+- Plans/storage-plan.md
+- future Settings transfer service
+node_compile_hint:
+  mode: detached_settings_transfer_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/SERVER_BACKBONE_SETTINGS_RETURN.md
-  - source_ref:chat:settings-canonical-owner-lane-2026-08-31
-preserved_exact_tokens: [Copy Settings From Another Project, exact-ID, preview, diff, provenance, rollback, no inheritance]
-negative_constraints: [Do not copy raw credentials or credential-store contents., Do not copy unpreviewed IDs., Do not create continuous inheritance., Do not expose hundreds of per-ID merge choices as the primary flow.]
-owner_hints: [Plans/Settings_System.md, Plans/storage-plan.md, Plans/Permissions_System.md]
+- Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/SERVER_BACKBONE_SETTINGS_RETURN.md
+- source_ref:chat:settings-canonical-owner-lane-2026-08-31
+preserved_exact_tokens:
+- Copy Settings From Another Project
+- exact-ID
+- preview
+- diff
+- provenance
+- rollback
+- no inheritance
+negative_constraints:
+- Do not copy raw credentials or credential-store contents.
+- Do not copy unpreviewed IDs.
+- Do not create continuous inheritance.
+- Do not expose hundreds of per-ID merge choices as the primary flow.
+owner_hints:
+- Plans/Settings_System.md
+- Plans/storage-plan.md
+- Plans/Permissions_System.md
 ```
 
 ### SSYS-008 - Credential Exclusion And Secure Reference Custody
@@ -2122,3 +2161,66 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-033, ContractName:Plans/FinalGUISpec.md#F3-551
+
+## Onboarding draft transfer extension — 2026-09-10
+
+### SSYS-036 - Settings Transfer To An Uncreated Project Draft
+
+```yaml
+plan_unit_id: SSYS-036
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: The original cmd.settings.transaction.preview request/result refs select either the unchanged existing-Project
+  transfer contract or a closed draft-preview variant. Draft preview binds one actual source Project/revision to
+  destination_draft with a draft identity/revision/hash and null destination Project, exact owner selector/setting
+  IDs, proposed values, exclusions, explicit-choice precedence, expiry and a redacted summary. It creates/applies
+  nothing. After the confirmed Project operation reserves an actual destination identity, Settings revalidates the
+  source/draft/preview/inventory, emits settings_transfer_draft_rebind and an ordinary Project-bound preview, and
+  uses the unchanged apply transaction with restore point, exact-ID readback and rollback. Onboarding renders this
+  owner result and never owns a copy engine.
+gui_related: true
+gui_classification_reason: Controls the user-visible Start fresh/Start like another Project preview, optional Choose
+  settings, meaningful conflicts and copy result.
+depends_on:
+- SSYS-007
+- SSYS-008
+- SSYS-009
+unblocks: []
+acceptance_criteria:
+- The same canonical preview command and Wiring Matrix refs accept both typed variants; no draft-copy command is
+  added.
+- The uncreated destination carries no Project identity; real source identity, revision, draft/hash, selectors and
+  expiry are mandatory.
+- Onboarding offers this variant only for a new Project with eligible existing sources, never when simply opening
+  an already registered Project, connecting to an existing Puppet Master or choosing Project Later.
+- Only owner-eligible exact IDs are proposed, excluding explicit new choices and all protected/owner-excluded settings;
+  proposed value keys equal those IDs.
+- Rebind consumes the exact confirmed draft preview and newly reserved real Project, then creates an ordinary bound
+  preview; neither draft preview nor rebind is accepted directly by apply.
+- A changed or expired source/draft/preview, wrong destination, unresolved conflict, permission or readback failure
+  cannot leave partial applied Settings or a half-ready listed Project.
+- The copy is detached; no source link, future propagation, credential duplication, account replacement or copied
+  Goals/Plans/files/history is implied.
+validation_surfaces:
+- Plans/settings_system_contract_fixtures.json
+- tests/test_pm_settings_draft_transfer.py
+- tests/test_pm_onboarding_phases.py
+- future native restore/readback/rollback and restart tests; not_run
+risk_class: precommit_mutation_or_settings_copy_authority_drift
+reasoning_tier: high
+context_scope: onboarding_settings_draft_preview_rebind
+implementation_surfaces:
+- Plans/Settings_System.md
+- Plans/settings_system_contracts.schema.json
+node_compile_hint:
+  mode: settings_draft_transfer_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+negative_constraints:
+- Do not invent a destination Project ID or apply Settings before commit.
+- Do not fork the owner category/eligibility inventory or copy credentials.
+- Do not treat fixtures as native transaction, rollback, security or readiness evidence.
+```
