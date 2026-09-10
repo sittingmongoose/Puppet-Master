@@ -79,6 +79,8 @@ For the reviewed Onboarding commit, these exact mappings remain the only owner r
 
 The project_setup_commit_binding value is a Project-owned read model over the actual typed ProjectActionResult, its content hash, listed lifecycle, persistence disposition, Project/registry revisions and required child receipt/result refs. outcome=accepted alone is not Project completion. New/add require persisted state; opening an already listed Project keeps its distinct no-persist navigation disposition and verified listing receipt. A duplicate request returns the original identity/results. This read model admits no new physical receipt family, and Onboarding cannot write it as a success flag. After a verified commit, provider setup may start in that real Project; Back, Close, Skip or provider failure cannot undo it.
 
+Before executing an Onboarding creation request, Project System resolves the exact approved draft bytes identified by the setup binding and checks their digest. Content, history/backend and Settings choices come from that confirmed draft, not a consumer default. An explicit no-history choice does not initialize Git, and a Jujutsu choice is never silently substituted with Git; an unavailable required owner route blocks the commit. Legacy caller payload summaries such as optional `init_git` do not override the reviewed binding or establish a second Project request schema.
+
 Standalone versus containerized Server execution is not Project registration semantics. Project System records the selected Project Home Server reference but does not choose, create, or certify a standalone/container execution form; that residual stays with Server/Deployment owners and their central commands.
 
 ### 3.2 Project-context Backup and Restore routes
@@ -398,6 +400,8 @@ acceptance_criteria:
 - No Project/destination mutation happens before commit, and acceptance or provisional identity is not listed/persisted
   completion.
 - Selected Settings copy must rebind and settle before listing; failures cannot publish a half-ready Project.
+- Resolve and hash-check the actual confirmed draft before effects; honor its history/backend choice without a
+  consumer-forced Git default, and block an unavailable required backend route instead of substituting one.
 - The provider handoff compares actual owner result ref/hash, command/instance/idempotency, Project/registry revisions,
   lifecycle, persistence and receipt membership.
 - Same idempotency/binding yields original result and identity; conflict, stale revision, rejected/failed/cancelled
