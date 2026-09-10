@@ -1,0 +1,327 @@
+{
+  "batch": 13,
+  "source_row_count": 19,
+  "all_source_row_ids_accounted_for": true,
+  "full_feature_acceptance": false,
+  "rows": [
+    {
+      "source_row_id": "v2:FEATURE-010",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "BOUNDED_LOCAL_LENS_VERIFIED",
+      "scenarios": [
+        "shape",
+        "stale"
+      ],
+      "surfaces": [
+        "lens-protocol.js",
+        "lens.js",
+        "lens.css",
+        "app.js",
+        "threadops.js"
+      ],
+      "residual": "Local excerpts and effective-history projection, not model summarization, provider prompt ingress, or durable state proof."
+    },
+    {
+      "source_row_id": "v3:APR-030",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "BOUNDED_LOCAL_LENS_VERIFIED",
+      "scenarios": [
+        "shape",
+        "stale"
+      ],
+      "surfaces": [
+        "lens-protocol.js",
+        "lens.js",
+        "lens.css",
+        "app.js",
+        "threadops.js"
+      ],
+      "residual": "Local excerpts and effective-history projection, not model summarization, provider prompt ingress, or durable state proof."
+    },
+    {
+      "source_row_id": "v2:WONDER-001",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Wonderer is a built-in Persona plus methodology Skill, not external profile infrastructure.",
+      "status": "BOUNDED_LOCAL_CONCEPT_VERIFIED",
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Real Persona/Skill materialization and live research are not executed."
+    },
+    {
+      "source_row_id": "v2:WONDER-002",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Explore adjacent possibilities with explicit connection to the seed.",
+      "status": "BOUNDED_LOCAL_CONCEPT_VERIFIED",
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Real Persona/Skill materialization and live research are not executed."
+    },
+    {
+      "source_row_id": "v2:WONDER-003",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Keep leads hypothetical until researched or explicitly decided.",
+      "status": "BOUNDED_LOCAL_CONCEPT_VERIFIED",
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Real Persona/Skill materialization and live research are not executed."
+    },
+    {
+      "source_row_id": "v2:WONDER-004",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Additive across BrainStorm, Crew, Chat Room, PRD Builder and Planning Wizard.",
+      "status": "BRAINSTORM_ADDITIVE_VERIFIED_OTHER_PLACEMENTS_PRESERVED",
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "collaboration.js"
+      ],
+      "residual": "The other workflow placements are inherited and not all re-executed in Batch 13."
+    },
+    {
+      "source_row_id": "v2:WONDER-005",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Grill Me uses a shared dependency-aware question frontier and recommended answers.",
+      "status": "INHERITED_OWNER_SCOPE_NOT_NEWLY_EXECUTED",
+      "scenarios": [],
+      "surfaces": [
+        "collaboration.js",
+        "plans.js"
+      ],
+      "residual": "Grill Me and PRD/Planning Wizard lifecycle acceptance requires its own complete owner-driven exercises. This row is accounted for, not bulk-passed."
+    },
+    {
+      "source_row_id": "v2:WONDER-006",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Grill Me routes factual research to agents and has no implementation authority.",
+      "status": "INHERITED_OWNER_SCOPE_NOT_NEWLY_EXECUTED",
+      "scenarios": [],
+      "surfaces": [
+        "collaboration.js",
+        "plans.js"
+      ],
+      "residual": "Grill Me and PRD/Planning Wizard lifecycle acceptance requires its own complete owner-driven exercises. This row is accounted for, not bulk-passed."
+    },
+    {
+      "source_row_id": "v2:WONDER-007",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Grill Me is additive in workflow modals and the Deep Plan footer.",
+      "status": "INHERITED_OWNER_SCOPE_NOT_NEWLY_EXECUTED",
+      "scenarios": [],
+      "surfaces": [
+        "collaboration.js",
+        "plans.js"
+      ],
+      "residual": "Grill Me and PRD/Planning Wizard lifecycle acceptance requires its own complete owner-driven exercises. This row is accounted for, not bulk-passed."
+    },
+    {
+      "source_row_id": "v2:WONDER-008",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "PRD Builder uses Wonderer early and Grill Me near discovery closure.",
+      "status": "INHERITED_OWNER_SCOPE_NOT_NEWLY_EXECUTED",
+      "scenarios": [],
+      "surfaces": [
+        "collaboration.js",
+        "plans.js"
+      ],
+      "residual": "Grill Me and PRD/Planning Wizard lifecycle acceptance requires its own complete owner-driven exercises. This row is accounted for, not bulk-passed."
+    },
+    {
+      "source_row_id": "v2:WONDER-009",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "supported_requirement_summary": "Planning Wizard uses Wonderer at topic entry and Grill Me near topic closure with global duplicate prevention.",
+      "status": "INHERITED_OWNER_SCOPE_NOT_NEWLY_EXECUTED",
+      "scenarios": [],
+      "surfaces": [
+        "collaboration.js",
+        "plans.js"
+      ],
+      "residual": "Grill Me and PRD/Planning Wizard lifecycle acceptance requires its own complete owner-driven exercises. This row is accounted for, not bulk-passed."
+    },
+    {
+      "source_row_id": "v4:WONV-001",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-002",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-003",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-004",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-005",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-006",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-007",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    },
+    {
+      "source_row_id": "v4:WONV-008",
+      "full_clause_acceptance": false,
+      "native_proof": false,
+      "source_basis": "Supplied Batch 12 worklist and current published owner/matrix at 400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+      "status": "OWNER_SUPPORTED_CONVERGENCE_VERIFIED_EXACT_PACKET_CLAUSE_OPEN",
+      "original_clause_wording": null,
+      "scenarios": [
+        "leads",
+        "dissent"
+      ],
+      "surfaces": [
+        "wonderer-protocol.js",
+        "brainstorm-protocol.js",
+        "lens-wonderer-batch13.js"
+      ],
+      "residual": "Original complete per-ID companion wording is not present in the supplied archive; no exact per-clause PASS is inferred from neighboring rows."
+    }
+  ]
+}

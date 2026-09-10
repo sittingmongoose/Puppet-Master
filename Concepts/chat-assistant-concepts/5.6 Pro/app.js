@@ -204,7 +204,7 @@
      ===================================================================== */
   const EXT_SLOTS = ['headerLeading','headerExtras','activityPanelBody','activityHoverCard','threadRowStatus',
     'historyChrome','messageMeta','messageAffordance','messageOverflow','messageOverflowPanel','threadMenu','goalSection','goalEditor',
-    'contextCompactMenu','contextLensMenu','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N',
+    'contextCompactMenu','contextLensMenu','contextLensInline','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N',
     /* Assistant-redesign wave. transcriptMessage is a DECLINE-able replace slot: return ''
        and the built-in renderMessage chain runs. composerTray/composerRibbon/composerBelow
        are append slots inside the composer; wandRows and modeRows extend those two menus
@@ -2419,13 +2419,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   // The lens is an in-flow sibling, never a positioned transcript overlay.
   function renderInlineLens(){
-    return state.menu?.type==='lens' ? `<div class="lens-inline" data-k="lens-inline">${extReplace('contextLensMenu',{},'')}</div>` : '';
+    const content=extReplace('contextLensInline',{},'');
+    return content ? `<div class="lens-inline" data-k="lens-inline">${content}</div>` : '';
   }
   function syncInlineLens(){
     const dock=document.querySelector('.lens-dock');
     if(!dock)return;
     pmPatch(dock,renderInlineLens());
-    dock.classList.toggle('is-open',state.menu?.type==='lens');
+    dock.classList.toggle('is-open',!!dock.firstElementChild);
   }
   let lastOverlayPayload='';
   function renderOverlays(){
@@ -2434,7 +2435,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.historyMode==='floating') parts.push(`<aside class="history-flyout" data-history-variant="${state.variants[1]}">${renderHistoryContent(true)}</aside>`);
     if(state.context.details) parts.push(renderContextDrawer());
     if(state.dialog) parts.push(renderDialog());
-    if(state.menu && state.menu.type!=='lens') parts.push(renderMenu());
+    if(state.menu) parts.push(renderMenu());
     syncInlineLens();
     /* Hover tips are synced after the patch so tip-only updates can avoid
        re-patching menus/drawers (which live in this same overlay root). */
@@ -2841,8 +2842,8 @@ recommended path                  migration 0043 + rollback</div></div></section
           const tr=document.querySelector('.transcript')||header;
           const hr=(header||anchor).getBoundingClientRect();
           const trr=tr.getBoundingClientRect();
-          const w=Math.max(280, Math.min(trr.width-16, window.innerWidth-16));
-          const left=clamp(trr.left+8, 8, window.innerWidth-w-8);
+          const w=Math.min(300, window.innerWidth-16);
+          const left=clamp(anchor.getBoundingClientRect().right-w, 8, window.innerWidth-w-8);
           const top=clamp(hr.bottom+4, 8, window.innerHeight-8);
           root.style.left=`${left}px`; root.style.top=`${top}px`; root.style.width=`${w}px`;
           root.style.maxWidth='none';

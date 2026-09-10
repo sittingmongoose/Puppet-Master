@@ -323,3 +323,29 @@
   .transcript[data-variant] .message:has(> .pm-lens-check),
   .transcript[data-variant] .message:has(> .pm-lens-mark[data-lens-state]) { transition: none; }
 }
+
+/* Batch 13. Compact chooser; the expanded controls remain an in-flow row. */
+.overlay-menu.lens-strip {display:block;width:300px!important;max-width:calc(100vw - 24px);}
+.lens13-controls {padding:10px 14px;color:var(--text);font-size:11px;max-width:100%;min-width:0;}
+.lens13-top {display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.lens13-top>div:first-child {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.lens13-top strong {display:inline-flex;gap:6px;align-items:center;}
+.lens13-top span {color:var(--muted);font-variant-numeric:tabular-nums;}
+.lens13-controls .lens-actions {margin:0;}
+.lens13-preview {margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0;}
+.lens13-preview header {display:flex;justify-content:space-between;gap:8px;}
+.lens13-preview header span,.lens13-method {color:var(--muted);}
+.lens13-excerpts {max-height:145px;overflow-y:auto;overflow-x:hidden;margin:8px 0;}
+.lens13-excerpts p {display:grid;grid-template-columns:65px minmax(0,1fr);gap:8px;margin:6px 0;line-height:1.5;}
+.lens13-excerpts span {white-space:pre-wrap;overflow-wrap:anywhere;}
+.lens13-method {font-size:10px;line-height:1.5;margin:7px 0 10px;}
+.lens13-warning {color:var(--warning);margin:7px 0;font-size:11px;}
+.lens13-preview[data-state="stale"] {border-color:color-mix(in srgb,var(--warning) 45%,var(--border));}
+.lens13-operations {margin-top:8px;}
+.lens13-operations summary {cursor:pointer;color:var(--muted);}
+.lens13-operations>div {display:flex;justify-content:space-between;gap:8px;margin-top:6px;align-items:center;}
+.lens13-summary-text {white-space:pre-wrap;overflow-wrap:anywhere;max-height:240px;overflow:auto;}
+.lens13-source pre {white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 var(--font,system-ui);padding:18px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);}
+.lens13-source p {color:var(--muted);font-size:12px;}
+.lens-inline:has(.lens13-controls) {max-height:48vh;overflow-y:auto;overflow-x:hidden;}
+.lens13-controls button {white-space:normal;}

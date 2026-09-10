@@ -5722,6 +5722,8 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   .message:has(.pm-msg-more[aria-expanded="true"]) .message-chrome { transition: none; }
 }
 
+/* The Lens protocol has no visual rules. */
+
 /* lens.css — feature module styles.  OWNER: Wave 3 — Transcript + Lens agent (item 9)
  *
  * Concatenated LAST, after styles.css / motion.css / variants-*.css /
@@ -6047,6 +6049,32 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   .transcript[data-variant] .message:has(> .pm-lens-check),
   .transcript[data-variant] .message:has(> .pm-lens-mark[data-lens-state]) { transition: none; }
 }
+
+/* Batch 13. Compact chooser; the expanded controls remain an in-flow row. */
+.overlay-menu.lens-strip {display:block;width:300px!important;max-width:calc(100vw - 24px);}
+.lens13-controls {padding:10px 14px;color:var(--text);font-size:11px;max-width:100%;min-width:0;}
+.lens13-top {display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.lens13-top>div:first-child {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.lens13-top strong {display:inline-flex;gap:6px;align-items:center;}
+.lens13-top span {color:var(--muted);font-variant-numeric:tabular-nums;}
+.lens13-controls .lens-actions {margin:0;}
+.lens13-preview {margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0;}
+.lens13-preview header {display:flex;justify-content:space-between;gap:8px;}
+.lens13-preview header span,.lens13-method {color:var(--muted);}
+.lens13-excerpts {max-height:145px;overflow-y:auto;overflow-x:hidden;margin:8px 0;}
+.lens13-excerpts p {display:grid;grid-template-columns:65px minmax(0,1fr);gap:8px;margin:6px 0;line-height:1.5;}
+.lens13-excerpts span {white-space:pre-wrap;overflow-wrap:anywhere;}
+.lens13-method {font-size:10px;line-height:1.5;margin:7px 0 10px;}
+.lens13-warning {color:var(--warning);margin:7px 0;font-size:11px;}
+.lens13-preview[data-state="stale"] {border-color:color-mix(in srgb,var(--warning) 45%,var(--border));}
+.lens13-operations {margin-top:8px;}
+.lens13-operations summary {cursor:pointer;color:var(--muted);}
+.lens13-operations>div {display:flex;justify-content:space-between;gap:8px;margin-top:6px;align-items:center;}
+.lens13-summary-text {white-space:pre-wrap;overflow-wrap:anywhere;max-height:240px;overflow:auto;}
+.lens13-source pre {white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 var(--font,system-ui);padding:18px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);}
+.lens13-source p {color:var(--muted);font-size:12px;}
+.lens-inline:has(.lens13-controls) {max-height:48vh;overflow-y:auto;overflow-x:hidden;}
+.lens13-controls button {white-space:normal;}
 
 /* orbit.css — feature module styles.  OWNER: Wave 4 — Orbit agent (item 12: clickable orbit, responsive radius, shared trail icon fix)
  *
@@ -12612,6 +12640,24 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .bsd12-guide small,.bsd12-guide strong {display:block;font-size:10px;line-height:1.5;}
 .bsd12-guide small {color:var(--muted);}
 @media(max-width:900px){.bsd12-work{padding:15px}.bsd12-work h2{font-size:20px}.bsd12-work-summary{grid-template-columns:1fr}.bsd12-work-summary>div{display:flex;justify-content:space-between;align-items:center;gap:8px}.bsd12-work-summary small{margin:0}.bsd12-guide{flex-wrap:wrap}}
+
+/* Wonderer lead protocol: presentation is owned by the Batch 13 adapter. */
+
+/* B13 consumes theme tokens and existing surface primitives. No left accent. */
+.b13-guide {display:flex;align-items:center;gap:12px;margin:7px 0 0;padding:9px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);font-size:11px;line-height:1.45;min-width:0;}
+.b13-guide>div{flex:1;min-width:0}.b13-guide strong,.b13-guide span{display:block}.b13-guide span{color:var(--muted);margin-top:2px}.b13-guide .icon-button{flex-shrink:0}
+.b13-entry{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--border);border-radius:15px;background:var(--surface-2);margin:12px 0;min-width:0}.b13-entry>div{min-width:0}.b13-entry h3{margin:0 0 6px;font-size:14px}.b13-entry p{margin:0 0 10px;color:var(--muted);font-size:12px;line-height:1.6}
+.b13-lens-tools{padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2);margin:14px 0}.b13-lens-tools h3{margin:0;font-size:13px}.b13-lens-tools p{font-size:12px;line-height:1.6}
+.b13-workspace,.b13-source{box-sizing:border-box;width:100%;min-width:0;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important;overflow-wrap:anywhere}
+.b13-heading small{color:var(--accent);font-weight:650}.b13-heading h1{font-size:clamp(20px,2.3vw,29px)!important;line-height:1.3;margin:10px 0!important}.b13-heading p{color:var(--muted);font-size:13px;line-height:1.65}
+.b13-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:20px 0}.b13-stats span{padding:12px 10px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);font-size:11px;color:var(--muted)}.b13-stats strong{display:block;font-size:23px;color:var(--text);line-height:1.3}
+.b13-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:12px 0}.b13-actions .soft-button{white-space:normal;line-height:1.4;min-height:30px;padding:7px 10px;max-width:100%}
+.b13-lead{border:1px solid var(--border);border-radius:16px;background:var(--surface-2);padding:18px;margin:18px 0;min-width:0;animation:b13-enter 280ms var(--spring-soft-ease,ease) both}.b13-lead-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:space-between}.b13-lead-head small{font-size:10.5px;color:var(--muted)}.b13-status{font-size:11px;color:var(--accent);font-weight:650}.b13-lead h2{font-size:16px!important;line-height:1.45;margin:11px 0!important}.b13-lead p{font-size:12px;line-height:1.65;margin:9px 0}.b13-tether strong{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.045em;color:var(--muted)}
+.b13-evidence{border:1px solid var(--border);border-radius:11px;background:var(--surface);padding:12px;margin:12px 0}.b13-evidence strong{font-size:11px}.b13-evidence small,.b13-quiet{font-size:10.5px!important;color:var(--muted);line-height:1.65;display:block}.b13-warning{color:var(--text);border:1px dashed var(--border-strong);border-radius:10px;padding:10px;background:var(--surface)}.b13-disposition{color:var(--text)}
+.b13-reason{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:14px}.b13-reason textarea{display:block;box-sizing:border-box;width:100%;max-width:100%;min-height:58px;margin-top:6px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);padding:10px;font:12px/1.5 inherit;resize:vertical}.b13-reason textarea:focus{outline:1px solid var(--accent)}
+.b13-convergence{padding:16px;border:1px solid var(--border-strong);border-radius:14px;margin:22px 0;background:var(--surface-2)}.b13-convergence h2{font-size:17px!important;margin:0 0 8px!important}.b13-convergence p{font-size:12px;line-height:1.6}.b13-technical{font-size:11px;color:var(--muted);margin:20px 0}.b13-technical summary{cursor:pointer;padding:8px 0}.b13-technical pre,.b13-source pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--border);padding:14px;border-radius:12px;font-size:11px;line-height:1.65;background:var(--surface-2);max-width:100%;box-sizing:border-box}
+@keyframes b13-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.b13-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.b13-lead{padding:13px}.b13-heading h1{font-size:21px!important}.b13-guide{padding:8px;font-size:10px}}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -22307,680 +22353,118 @@ window.PM56_EXT = window.PM56_EXT || {
   };
 })();
 
-/* lens.js — feature module.  OWNER: Wave 3 — Transcript + Lens agent (item 9)
- *
- * ITEM 9 — Context Lens message selection.
- *
- * What was wrong
- * --------------
- * Context Lens was a wand submenu emitting canned receipts. There was no
- * selection capability anywhere in the concept: no checkboxes, no selection
- * state, no `select-message` action, no per-message applied state. Its own copy
- * ("Selected superseded sources omitted") described a mechanism that did not
- * exist. The submenu also offered five options -- `Auto, Focus, Mute,
- * Subcompact, Off` -- where canon (ACD-192/193, `preserved_exact_tokens`)
- * defines exactly four: `Mute`, `Focus`, `Subcompact`, `Turn Off`. `Auto` is
- * not a mode.
- *
- * The contract this implements
- * ----------------------------
- *   ACD-192  Modes are exactly Mute · Focus · Subcompact · Turn Off.
- *   ACD-193  Mute and Focus apply as selection toggles happen. Subcompact
- *            requires an explicit Apply before creating a local summary
- *            artifact. Turn Off clears active selection state.
- *   ACD-194  Effective assembly EXCLUDES muted, PROTECTS focused, and replaces
- *            a Subcompact selection with a local summary while preserving
- *            canonical source history and rehydration handles.
- *   ACD-195  Lens state is thread-local UI shaping, NOT Assistant memory.
- *            Hence one slice per thread, and `effectiveHistory()` derives from
- *            canonical history every time rather than from a lossy copy.
- *
- *   The cap is 25 messages PER APPLY OPERATION, not per thread, so `ops` is a
- *   LIST of operations and they accumulate. Selecting the 26th message in one
- *   operation is refused (never silently truncated) and the refusal offers the
- *   way forward: seal this operation and start the next.
- *
- * Where the three sibling implementations were followed, and where not
- * ---------------------------------------------------------------------
- *   - `opus-5/shared/lens.js` has the best semantics: an operations list, a
- *     distinct `source` state once a subcompacted range is rehydrated, and an
- *     `effectiveHistory()` that implements the human-search-vs-agent-retrieval
- *     split. All three are taken. Its `toggleSelect` is never called by any UI,
- *     which is the half this module supplies.
- *   - `kimi-k3` supplies the UI shape: a gutter check button, immediate apply
- *     on toggle, the cap enforced on BOTH toggle and apply, and a subcompact
- *     summary card with a Rehydrate button. Its `applyLens` commits and clears
- *     the selection on every single toggle, which means an already-muted
- *     message can never be un-muted; here the live selection stays live so a
- *     second click genuinely un-mutes, and sealing is an explicit act.
- *   - `qwen-3-8` supplies the per-message escape hatch ("Show full message").
- *   - NOT taken: a coloured left-edge accent bar for selection or status. The
- *     packet forbids it. Selection is an outline plus a gutter control.
- *
- * Deliberate reading of one ambiguity, stated rather than buried: "Turn Off
- * exits Context Lens mode and clears active selection state" also releases the
- * applied operations here, because ACD-194 defines the lens by what it does to
- * effective assembly -- a lens that is off but still excluding messages is a
- * contradiction. The release is announced with a receipt naming the counts, so
- * it is never silent. kimi-k3 does the same; opus-5 keeps the operations.
- *
- * data-k: every node this module emits lives inside `.message`, which survives
- * the 2s work tick, so all of them carry a stable key or pmPatch would remount
- * them and replay their entrance animation twice a second.
- */
-(function () {
-  'use strict';
-
-  var EXT = window.PM56_EXT;
-  if (!EXT || !EXT.slot) return;
-
-  var MAX_PER_OP = 25;
-
-  /* Canonical vocabulary. `Auto` is deliberately absent from MODES -- it is not
-     a mode -- but IS accepted on the way in, because app.js seeds
-     state.capabilities.context to 'Auto' and savePrefs may have persisted it. */
-  var MODES = [
-    ['mute', 'Mute', 'Omit the selected messages from the effective context. Canonical history keeps them.'],
-    ['focus', 'Focus', 'Protect the selected messages and raise their priority in the effective context.'],
-    ['subcompact', 'Subcompact', 'Replace the selected range with a local summary. Needs an explicit Apply.'],
-    ['off', 'Turn Off', 'Leave selection mode, clear the selection, and restore every shaped message.']
-  ];
-  var CAP_OF = { mute: 'Mute', focus: 'Focus', subcompact: 'Subcompact', off: 'Off' };
-  var MODE_OF = { Mute: 'mute', Focus: 'focus', Subcompact: 'subcompact', Off: 'off', Auto: 'off' };
-  var TITLE_OF = { mute: 'Mute', focus: 'Focus', subcompact: 'Subcompact', off: 'Turn Off' };
-
-  /* ------------------------------------------------------------- the store */
-  /* Thread-local, per ACD-195. Module-level rather than in app.js's `state` so
-     app.js stays closed; it survives re-render because it is closure state, and
-     it is intentionally NOT persisted -- view shaping is not memory. */
-  var store = Object.create(null);
-  var seq = 0;
-  var lastCapWritten = null;
-
-  function slice(tid) {
-    var l = store[tid];
-    if (!l) l = store[tid] = { mode: 'off', selection: [], ops: [], picking: false };
-    if (l.picking == null) l.picking = false;
-    return l;
+/* Context Lens local protocol. The caller supplies canonical source records.
+ * Exact byte comparisons are freshness guards, not cryptographic security.
+ * Session-only concept state; no provider, memory, storage or native commands. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.PM56_LENS_ENGINE=api;})(typeof window==='object'?window:globalThis,function(){
+ 'use strict';
+ const copy=x=>JSON.parse(JSON.stringify(x));
+ const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;};
+ const fail=error=>({ok:false,error,reason:error});
+ const MAX_PER_OP=25, MAX_SUMMARY_CHARS=6000;
+ const token=m=>JSON.stringify([m.id,m.body,m.revision??null,m.version??null,m.attachments??null,m.sourceRefs??null,m.revoked??false,m.status??null]);
+ const one=(f,id)=>{const found=f.messages.filter(m=>m.id===id);return found.length===1?found[0]:null;};
+ const eligible=m=>m&&m.type==='text'&&typeof m.body==='string'&&!m.revoked&&!['revoked','deleted'].includes(m.status);
+ class Engine {
+  constructor(read){if(typeof read!=='function')throw Error('source reader required');this.read=read;this.states=new Map();this.seq=0;this.receipts=[];}
+  frame(tid){const t=this.read(tid);return t?{threadId:t.id,projectId:t.projectId??t.project_id??null,epoch:t.epoch??0,messages:t.messages||[]}:null;}
+  scope(f){return JSON.stringify([f.threadId,f.projectId,f.epoch]);}
+  state(tid){if(!this.states.has(tid))this.states.set(tid,{mode:'off',picking:false,selection:[],ops:[],revision:0,preview:null,history:[],scope:null});return this.states.get(tid);}
+  record(tid,kind,fields={}){const r=freeze({id:'lens-receipt-'+(++this.seq),threadId:tid,kind,...copy(fields)});this.receipts.push(r);return r;}
+  binding(f,ids){return ids.map(id=>{const m=one(f,id);return eligible(m)?{id,token:token(m)}:null;});}
+  match(f,refs){return refs.every(ref=>{const m=one(f,ref.id);return eligible(m)&&token(m)===ref.token;});}
+  refresh(tid){const s=this.state(tid),f=this.frame(tid);if(!f){s.mode='off';s.picking=false;s.selection=[];for(const o of [...s.ops,...s.history,s.preview].filter(Boolean)){o.status='stale';o.reason='thread_missing';o.summary='Source unavailable or revoked. Preview withheld.';o.excerpts=[];o.redacted=true;}return s;}
+   if(s.scope!==null&&s.scope!==this.scope(f)){s.ops.forEach(o=>{o.status='stale';o.reason='scope_changed';});s.selection=[];if(s.preview)s.preview.status='stale';s.revision++;s.mode='off';s.picking=false;}
+   s.scope=this.scope(f);
+   for(const o of s.ops){if(o.status==='active'&&!this.match(f,o.sources)){o.status='stale';o.reason='source_changed';s.revision++;this.record(tid,'operation_invalidated',{operationId:o.id,reason:o.reason});}}
+   const before=s.selection.length;s.selection=s.selection.filter(id=>eligible(one(f,id)));if(before!==s.selection.length)s.revision++;
+   if(s.preview&&s.preview.status==='ready'&&(s.preview.scope!==s.scope||s.preview.shapingRevision!==s.revision||!this.match(f,s.preview.sources))){s.preview.status='stale';s.preview.reason='source_or_shaping_changed';}
+   // Revocation must not keep a source excerpt inspectable through Lens history.
+   for(const o of [...s.ops,...s.history,s.preview].filter(Boolean))if(o.sources?.some(ref=>!eligible(one(f,ref.id)))){o.summary='Source unavailable or revoked. Preview withheld.';o.excerpts=[];o.redacted=true;}
+   return s;
   }
-
-  function selectionOf(tid) { return slice(tid).selection.slice(); }
-  function isSelected(tid, id) { return slice(tid).selection.indexOf(id) >= 0; }
-
-  /* A message already covered by a SEALED operation is not re-selectable: it
-     already has an applied state, and letting it join a second live operation
-     is how a message ends up simultaneously muted and focused. It gets its own
-     restore handle instead. */
-  function sealedOpFor(tid, id) {
-    var ops = slice(tid).ops;
-    for (var i = ops.length - 1; i >= 0; i--) if (ops[i].ids.indexOf(id) >= 0) return ops[i];
-    return null;
+  snapshot(tid){return copy(this.refresh(tid));}
+  bump(s){s.revision++;if(s.preview&&s.preview.status==='ready'){s.preview.status='stale';s.preview.reason='shaping_changed';}}
+  setMode(tid,mode){if(!['mute','focus','subcompact','off'].includes(mode))return fail('invalid_mode');if(!this.frame(tid))return fail('thread_missing');if(mode==='off')return this.releaseAll(tid);const s=this.refresh(tid);if(s.mode!==mode){s.selection=[];s.mode=mode;this.bump(s);}s.picking=true;return {ok:true};}
+  operation(tid,id){return this.refresh(tid).ops.find(o=>o.id===id)||null;}
+  covers(tid,id){return this.refresh(tid).ops.find(o=>o.status==='active'&&o.ids.includes(id))||null;}
+  toggle(tid,id){const s=this.refresh(tid),f=this.frame(tid);if(!f||!eligible(one(f,id)))return fail('source_unavailable');if(s.mode==='off')return fail('off');if(this.covers(tid,id))return fail('sealed');const i=s.selection.indexOf(id);if(i<0&&s.selection.length>=MAX_PER_OP)return fail('cap');if(i<0)s.selection.push(id);else s.selection.splice(i,1);this.bump(s);return {ok:true,on:i<0};}
+  clear(tid){const s=this.refresh(tid);s.selection=[];this.bump(s);return {ok:true};}
+  seal(tid){const s=this.refresh(tid),f=this.frame(tid);if(!['mute','focus'].includes(s.mode))return fail('mode');if(!s.selection.length)return fail('empty');const ids=f.messages.filter(m=>s.selection.includes(m.id)).map(m=>m.id);const op={id:'lensop-'+(++this.seq),mode:s.mode,ids,sources:this.binding(f,ids),scope:s.scope,status:'active',rehydrated:false};s.ops.push(op);s.selection=[];s.picking=false;this.bump(s);this.record(tid,'sealed',{operationId:op.id,count:ids.length});return {ok:true,count:ids.length,operationId:op.id};}
+  preview(tid){const s=this.refresh(tid),f=this.frame(tid);if(s.mode!=='subcompact')return fail('mode');if(!s.selection.length)return fail('empty');if(s.selection.length>MAX_PER_OP)return fail('cap');const ids=f.messages.filter(m=>s.selection.includes(m.id)&&eligible(m)).map(m=>m.id);if(ids.length!==s.selection.length)return fail('source_unavailable');
+   const allowance=Math.max(32,Math.floor((MAX_SUMMARY_CHARS-ids.length*30)/ids.length));
+   const excerpts=ids.map((id,i)=>{const m=one(f,id);const text=m.body.length<=allowance?m.body:m.body.slice(0,allowance-1)+'…';return {id,label:'Source '+(i+1),text,sourceCharacters:m.body.length,omittedCharacters:Math.max(0,m.body.length-allowance+1)};});
+   const p={id:'lens-preview-'+(++this.seq),summaryId:'lens-summary-'+this.seq,status:'ready',scope:s.scope,shapingRevision:s.revision,ids,sources:this.binding(f,ids),summary:excerpts.map(e=>e.label+': '+e.text).join('\n\n'),excerpts,omittedCharacters:excerpts.reduce((a,e)=>a+e.omittedCharacters,0),sourceCharacters:excerpts.reduce((a,e)=>a+e.sourceCharacters,0),method:'bounded_source_excerpts_not_model_summary'};
+   s.preview=p;this.record(tid,'previewed',{previewId:p.id,count:ids.length});return {ok:true,preview:copy(p)};
   }
-
-  /* One message id maps to exactly one of five states:
-       muted | focused | subcompacted | source | null
-     `source` is opus-5's distinction: a subcompacted range that has been
-     rehydrated is showing its canonical sources again but is STILL,
-     structurally, a subcompacted range. */
-  function stateOf(tid, id) {
-    var l = slice(tid);
-    var op = sealedOpFor(tid, id);
-    if (op) {
-      if (op.mode === 'subcompact') return op.rehydrated ? 'source' : 'subcompacted';
-      return op.mode === 'mute' ? 'muted' : 'focused';
-    }
-    /* The live selection under an immediate mode IS applied, by ACD-193. */
-    if ((l.mode === 'mute' || l.mode === 'focus') && l.selection.indexOf(id) >= 0) {
-      return l.mode === 'mute' ? 'muted' : 'focused';
-    }
-    return null;
+  apply(tid,previewId){const s=this.refresh(tid),f=this.frame(tid);const existing=s.ops.find(o=>o.previewId===previewId);if(existing)return existing.status==='active'?{ok:true,reused:true,operationId:existing.id,count:existing.ids.length}:fail('applied_source_stale');const p=s.preview;if(!p||p.id!==previewId)return fail('preview_missing');if(p.status!=='ready'||p.scope!==this.scope(f)||p.shapingRevision!==s.revision||!this.match(f,p.sources))return fail('stale_preview');
+   const op={...copy(p),id:'lensop-'+(++this.seq),previewId:p.id,mode:'subcompact',status:'active',rehydrated:false};s.ops.push(op);s.history.push({...copy(p),status:'applied',operationId:op.id});s.preview=null;s.selection=[];s.picking=false;this.bump(s);this.record(tid,'applied',{operationId:op.id,previewId,count:op.ids.length});return {ok:true,count:op.ids.length,operationId:op.id};
   }
+  cancel(tid){const s=this.refresh(tid);if(s.preview){s.history.push({...copy(s.preview),status:'cancelled'});this.record(tid,'preview_cancelled',{previewId:s.preview.id});s.preview=null;}return {ok:true};}
+  rehydrate(tid,id,on){const o=this.operation(tid,id);if(!o||o.status!=='active')return fail('operation_stale');o.rehydrated=!!on;this.bump(this.state(tid));this.record(tid,on?'rehydrated':'collapsed',{operationId:id});return {ok:true};}
+  release(tid,id){const s=this.refresh(tid),i=s.ops.findIndex(o=>o.id===id);if(i<0)return fail('operation_missing');const [o]=s.ops.splice(i,1);s.history.push({...copy(o),status:'released'});this.bump(s);this.record(tid,'released',{operationId:id,count:o.ids.length});return {ok:true,count:o.ids.length};}
+  releaseAll(tid){const s=this.refresh(tid),ids=new Set([...s.ops.filter(o=>o.status==='active').flatMap(o=>o.ids),...(['mute','focus'].includes(s.mode)?s.selection:[])]),count=s.ops.length;for(const o of s.ops)s.history.push({...copy(o),status:'released'});if(s.preview)s.history.push({...copy(s.preview),status:'cancelled'});s.ops=[];s.preview=null;s.selection=[];s.mode='off';s.picking=false;this.bump(s);this.record(tid,'turned_off',{operations:count,messages:ids.size});return {ok:true,ops:count,messages:ids.size};}
+  stateOf(tid,id){const s=this.refresh(tid),o=this.covers(tid,id);if(o)return o.mode==='subcompact'?(o.rehydrated?'source':'subcompacted'):o.mode==='mute'?'muted':'focused';return s.selection.includes(id)?({mute:'muted',focus:'focused'}[s.mode]||null):null;}
+  effective(tid){const f=this.frame(tid),s=this.refresh(tid);if(!f)return [];const out=[],seen=new Set(),byId=new Map(),duplicates=new Set();for(const m of f.messages){if(byId.has(m.id))duplicates.add(m.id);byId.set(m.id,m);}const ops=new Map();for(const o of s.ops.filter(o=>o.status==='active'))for(const id of o.ids)ops.set(id,o);const selected=new Set(s.selection);for(const m of f.messages){if(duplicates.has(m.id))continue;if(!eligible(m)){if(m.type!=='text')out.push({id:m.id,kind:'system'});continue;}const op=ops.get(m.id),mode=op?op.mode:(selected.has(m.id)?s.mode:null);if(mode==='mute')continue;if(mode==='subcompact'&&op&&!op.rehydrated){if(!seen.has(op.id)){seen.add(op.id);out.push({id:op.summaryId,kind:'summary',body:op.summary,summaryOf:op.ids.slice(),rehydrate:op.ids.slice(),sourceRefs:copy(op.sources),coverage:op.omittedCharacters?'excerpted':'full'});}continue;}out.push({id:m.id,kind:'message',body:m.body,priority:mode==='focus'?'high':'normal',protected:mode==='focus',rehydratedFrom:op?.rehydrated?op.id:null});}return out;}
+  fork(sourceTid,targetTid){const from=this.refresh(sourceTid),f=this.frame(targetTid);if(!f)return fail('thread_missing');const s=this.state(targetTid);s.scope=this.scope(f);s.mode=from.mode;s.picking=false;s.selection=[];s.preview=null;s.ops=from.ops.filter(o=>o.status==='active'&&this.match(f,o.sources)).map(o=>({...copy(o),id:'lensop-'+(++this.seq),previewId:null,scope:s.scope,origin:{threadId:sourceTid,operationId:o.id}}));s.revision++;this.record(targetTid,'branch_shaping_copied',{sourceTid,count:s.ops.length,pendingPreviewInherited:false});return {ok:true};}
+  reset(){this.states.clear();this.receipts=[];/* Do not reuse IDs after reset. */}
+ }
+ return {Engine,MAX_PER_OP,MAX_SUMMARY_CHARS,eligible};
+});
 
-  function shapedCount(tid) {
-    var l = slice(tid), n = 0;
-    for (var i = 0; i < l.ops.length; i++) n += l.ops[i].ids.length;
-    if (l.mode === 'mute' || l.mode === 'focus') n += l.selection.length;
-    return n;
-  }
-
-  function remaining(tid) { return Math.max(0, MAX_PER_OP - slice(tid).selection.length); }
-
-  /* ------------------------------------------------------------- mutators */
-  function setMode(tid, mode) {
-    var l = slice(tid);
-    if (mode === 'off') return { released: releaseAll(tid) };
-    if (mode !== l.mode) {
-      /* A fresh mode never inherits a selection made under a DIFFERENT mode --
-         that would instantly mute messages the user picked to focus. */
-      l.selection = [];
-      l.mode = mode;
-    }
-    l.picking = true;
-    return { released: null };
-  }
-
-  function releaseAll(tid) {
-    var l = slice(tid);
-    var opCount = l.ops.length;
-    var msgCount = shapedCount(tid);
-    l.mode = 'off';
-    l.selection = [];
-    l.ops = [];
-    l.picking = false;
-    return { ops: opCount, messages: msgCount };
-  }
-
-  /* Refused, never truncated: the cap is what makes an operation reviewable, so
-     silently dropping the 26th would be worse than declining it. */
-  function toggle(tid, id) {
-    var l = slice(tid);
-    if (l.mode === 'off') return { ok: false, reason: 'off' };
-    if (sealedOpFor(tid, id)) return { ok: false, reason: 'sealed' };
-    var i = l.selection.indexOf(id);
-    if (i >= 0) { l.selection.splice(i, 1); return { ok: true, on: false }; }
-    if (l.selection.length >= MAX_PER_OP) return { ok: false, reason: 'cap', cap: MAX_PER_OP };
-    l.selection.push(id);
-    return { ok: true, on: true };
-  }
-
-  /* Mute and Focus apply live, so "seal" is what lets them accumulate past the
-     per-operation cap: it freezes the live selection into an operation of its
-     own and empties the buffer for the next 25. */
-  function seal(tid) {
-    var l = slice(tid);
-    if (l.mode !== 'mute' && l.mode !== 'focus') return { ok: false, reason: 'mode' };
-    if (!l.selection.length) return { ok: false, reason: 'empty' };
-    l.ops.push({ id: 'lensop-' + (++seq), mode: l.mode, ids: l.selection.slice(), at: nowIso(), rehydrated: false });
-    var n = l.selection.length;
-    l.selection = [];
-    l.picking = false;
-    return { ok: true, count: n };
-  }
-
-  /* Subcompact is the only mode that needs an explicit Apply, because it is the
-     only one that creates an artifact (the local summary). */
-  function applySubcompact(tid) {
-    var l = slice(tid);
-    if (l.mode !== 'subcompact') return { ok: false, reason: 'mode' };
-    if (!l.selection.length) return { ok: false, reason: 'empty' };
-    if (l.selection.length > MAX_PER_OP) return { ok: false, reason: 'cap' };
-    var ids = l.selection.slice();
-    l.ops.push({
-      id: 'lensop-' + (++seq), mode: 'subcompact', ids: ids, at: nowIso(), rehydrated: false,
-      summary: 'Condensed ' + ids.length + ' selected message' + (ids.length === 1 ? '' : 's') +
-        ' into one local summary. Canonical source history is unchanged and every source stays rehydratable.'
-    });
-    l.selection = [];
-    l.picking = false;
-    return { ok: true, count: ids.length };
-  }
-
-  function opById(tid, opId) {
-    var ops = slice(tid).ops;
-    for (var i = 0; i < ops.length; i++) if (ops[i].id === opId) return ops[i];
-    return null;
-  }
-
-  function releaseOp(tid, opId) {
-    var l = slice(tid);
-    for (var i = 0; i < l.ops.length; i++) {
-      if (l.ops[i].id === opId) { var n = l.ops[i].ids.length; l.ops.splice(i, 1); return n; }
-    }
-    return 0;
-  }
-
-  function nowIso() { return new Date().toISOString(); }
-
-  /* ----------------------------------------------- effective assembly (194) */
-  /* The AGENT-side view, deliberately different from what a human search sees:
-     human search always reads canonical stored history (renderHistoryContent in
-     app.js still searches every message body, which is correct and untouched),
-     this does not. Derived from canonical history on every call -- never from a
-     lossy copy -- which is ACD-195's handoff rule. */
-  function effectiveHistory(ctx, tid) {
-    var t = (ctx.state.threads || []).filter(function (x) { return x.id === tid; })[0];
-    if (!t) return [];
-    var out = [], emitted = Object.create(null);
-    for (var i = 0; i < t.messages.length; i++) {
-      var m = t.messages[i];
-      if (m.type !== 'text') { out.push({ id: m.id, kind: 'system' }); continue; }
-      var st = stateOf(tid, m.id);
-      if (st === 'muted') continue;                       /* excluded entirely */
-      if (st === 'subcompacted') {
-        var op = sealedOpFor(tid, m.id);
-        if (emitted[op.id]) continue;
-        emitted[op.id] = true;
-        out.push({ id: 'summary-' + op.id, kind: 'summary', summaryOf: op.ids.slice(), rehydrate: op.ids.slice() });
-        continue;
-      }
-      out.push({
-        id: m.id, kind: 'message',
-        priority: st === 'focused' ? 'high' : 'normal',
-        rehydratedFrom: st === 'source' ? (sealedOpFor(tid, m.id) || {}).id : null
-      });
-    }
-    /* Focused turns are protected AND high priority (ACD-194), so they sort to
-       the front of the effective assembly; nothing is dropped by the sort. */
-    out.sort(function (a, b) { return (b.priority === 'high' ? 1 : 0) - (a.priority === 'high' ? 1 : 0); });
-    return out;
-  }
-
-  /* --------------------------------------------------- capability mirroring */
-  /* app.js's wand row, the composer capability dot and the Demo Studio's
-     `Context Focus` / `Context Mute` / `Context Subcompact` triggers all read or
-     write `state.capabilities.context`. Keeping the two in step means those
-     triggers now genuinely enter selection mode instead of only printing a
-     receipt, and `Auto` -- which is not a mode -- is normalised out on the first
-     render without app.js having to change its default. */
-  function syncCapability(ctx) {
-    var st = ctx.state, tid = st.selectedThread;
-    var l = slice(tid);
-    var cap = st.capabilities ? st.capabilities.context : 'Off';
-    var want = MODE_OF[cap];
-    if (want && want !== l.mode && cap !== lastCapWritten) {
-      if (want === 'off') releaseAll(tid); else setMode(tid, want);
-    }
-    var disp = CAP_OF[l.mode];
-    if (st.capabilities) st.capabilities.context = disp;
-    lastCapWritten = disp;
-    return l;
-  }
-
-  /* ============================ RENDERING ============================== */
-
-  /* ---- the wand submenu: the canonical control (ACD-192) ---------------- */
-  EXT.slot('contextLensMenu', function (ctx) {
-    var esc = ctx.esc, icon = ctx.icon;
-    var tid = ctx.state.selectedThread;
-    var l = syncCapability(ctx);
-    var sel = l.selection.length;
-    var shaped = shapedCount(tid);
-    var eff = effectiveHistory(ctx, tid);
-    var textTurns = eff.filter(function (x) { return x.kind === 'message'; }).length;
-    var summaries = eff.filter(function (x) { return x.kind === 'summary'; }).length;
-
-    var rows = '<div class="lens-mode-row">' + MODES.map(function (mo) {
-      /* `Turn Off` is an ACTION, not a state to sit checked in a radio group --
-         a menu that shows "Turn Off ✓" is telling the reader the lens is on. */
-      var on = mo[0] !== 'off' && l.mode === mo[0];
-      return '<button class="menu-item lens-mode-item' + (on ? ' active' : '') + '"' +
-        ' data-action="lens-mode" data-value="' + mo[0] + '">' +
-        '<span class="menu-icon">' + icon(mo[0] === 'mute' ? 'eyeoff' : mo[0] === 'focus' ? 'lens'
-          : mo[0] === 'subcompact' ? 'collapse' : 'close', 13) + '</span>' +
-        '<span class="menu-copy"><strong>' + esc(mo[1]) + '</strong><span>' + esc(mo[2]) + '</span></span>' +
-        (on ? icon('check', 11) : '') + '</button>';
-    }).join('') + '</div>';
-
-    var body = '';
-    if (l.mode !== 'off') {
-      var over = sel >= MAX_PER_OP;
-      var lastSealed = l.ops.length ? l.ops[l.ops.length - 1].ids.length : 0;
-      var meterN = sel ? sel : lastSealed;
-      var pct = Math.round(meterN / MAX_PER_OP * 100);
-      var headLabel = sel ? (TITLE_OF[l.mode] + ' selection') : TITLE_OF[l.mode];
-      var headPill = meterN + ' of ' + MAX_PER_OP;
-      body += '<div class="menu-divider"></div><div class="lens-status">' +
-        '<div class="lens-status-head"><strong>' + esc(headLabel) + '</strong>' +
-        '<span class="meta-pill' + (over ? ' is-full' : '') + '">' + esc(headPill) + '</span>' +
-        '</div>' +
-        '<div class="lens-meter"><i style="width:' + Math.min(100, pct) + '%"></i></div>' +
-        '<p class="lens-note">' + esc(
-          l.mode === 'subcompact'
-            ? 'Subcompact creates a local summary artifact, so it waits for an explicit Apply.'
-            : TITLE_OF[l.mode] + ' applies the moment a message is selected or deselected.') +
-        '</p>' +
-        '<div class="lens-counts">' +
-        '<span>' + shaped + ' shaped</span><span>' + l.ops.length + ' operation' + (l.ops.length === 1 ? '' : 's') + '</span>' +
-        '<span>' + textTurns + ' turn' + (textTurns === 1 ? '' : 's') + ' in effective context</span>' +
-        (summaries ? '<span>' + summaries + ' summary card' + (summaries === 1 ? '' : 's') + '</span>' : '') +
-        '</div>' +
-        '<div class="lens-actions">' +
-        (l.mode === 'subcompact'
-          ? '<button class="primary-button" data-action="lens-apply"' + (sel ? '' : ' disabled aria-disabled="true"') +
-            ' title="' + esc(sel ? 'Create one local summary from the ' + sel + ' selected messages'
-              : 'Select at least one message first') + '">Apply</button>'
-          : '<button class="soft-button" data-action="lens-seal"' + (sel ? '' : ' disabled aria-disabled="true"') +
-            ' title="' + esc(sel ? 'Freeze these ' + sel + ' messages as one operation and start the next 25'
-              : 'Select at least one message first') + '">' + icon('check', 12) + ' Seal operation</button>') +
-        '<button class="soft-button" data-action="lens-clear"' + (sel ? '' : ' disabled aria-disabled="true"') + '>' +
-          icon('reset', 12) + ' Clear</button>' +
-        '<button class="soft-button lens-off" data-action="lens-mode" data-value="off">Turn Off</button>' +
-        '</div>';
-      if (over) {
-        body += '<p class="lens-warn">' + icon('warning', 11) +
-          ' This operation is full. The cap is per operation, not per thread — seal it and the next 25 start fresh.</p>';
-      }
-      body += '</div>';
-    }
-
-    return '<div class="menu-head"><strong>Context Lens</strong><span class="spacer"></span>' +
-      '<span class="meta-pill">' + esc(l.mode === 'off' ? 'Off' : TITLE_OF[l.mode]) + '</span></div>' +
-      rows + body +
-      '<p class="lens-foot">Thread-local view shaping, not Assistant memory. Canonical source history is never altered and every operation keeps its rehydration handles.</p>';
-  });
-
-  /* Header trigger: left of thread-search. Context Lens is header-only. */
-  EXT.slot('headerLeading', function (ctx) {
-    var l = syncCapability(ctx);
-    var esc = ctx.esc, icon = ctx.icon;
-    var on = l.mode !== 'off';
-    var count = shapedCount(ctx.state.selectedThread);
-    return '<button class="icon-button pm-lens-trigger' + (on ? ' is-on' : '') + '"' +
-      ' data-k="lensbtn" data-action="lens-open" data-menu-anchor="pm-lens-trigger"' +
-      ' data-lens-mode="' + l.mode + '"' +
-      ' data-hover-key="lensbtn" data-hover-tip="' + esc(on ? ('Context Lens · ' + TITLE_OF[l.mode]) : 'Context Lens') + '"' +
-      ' aria-label="' + esc(on ? ('Context Lens · ' + TITLE_OF[l.mode]) : 'Context Lens') + '">' +
-      icon('lens', 16) +
-      (count && on ? '<i class="pm-lens-badge">' + count + '</i>' : '') +
-      '</button>';
-  });
-  void 'pm-lens-trigger';
-
-  /* ---- per-message affordance ------------------------------------------- */
-  EXT.slot('messageAffordance', function (ctx) {
-    var m = ctx.message;
-    if (!m) return '';
-    var esc = ctx.esc, icon = ctx.icon;
-    var tid = ctx.state.selectedThread;
-    var l = slice(tid);
-    var st = stateOf(tid, m.id);
-    var op = sealedOpFor(tid, m.id);
-    var selected = isSelected(tid, m.id);
-    if (l.mode === 'off' && !st) return '';
-
-    /* The marker is inert: it exists so lens.css can style the SIBLING
-       `.message-surface` and the article itself without app.js having to put a
-       data attribute on `<article>`. */
-    var head = op && op.mode === 'subcompact' && op.ids[0] === m.id;
-    var mark = '<i class="pm-lens-mark" data-k="pm-lens-mark"' +
-      (st ? ' data-lens-state="' + st + '"' : '') +
-      (selected ? ' data-lens-sel="1"' : '') +
-      (head ? ' data-lens-head="1"' : '') + '></i>';
-
-    var out = mark;
-
-    /* Gutter control. Absolutely positioned so it never becomes a grid or flex
-       item -- takes 2, 7 and 10 make `.message` a grid container and an in-flow
-       child would break their columns. */
-    if (l.mode !== 'off' && l.picking) {
-      var lockedReason = op ? 'Already shaped by an applied operation — restore it first' : '';
-      var full = !selected && !op && l.selection.length >= MAX_PER_OP;
-      out += '<button class="pm-lens-check' + (selected ? ' is-on' : '') + (op || full ? ' is-locked' : '') + '"' +
-        ' data-k="pm-lens-check" data-action="lens-toggle" data-id="' + esc(m.id) + '"' +
-        ' role="checkbox" aria-checked="' + (selected ? 'true' : 'false') + '"' +
-        ' title="' + esc(lockedReason || (full
-          ? 'This operation already holds ' + MAX_PER_OP + ' messages — seal it to start the next'
-          : (selected ? 'Remove from the ' + TITLE_OF[l.mode] + ' selection' : 'Add to the ' + TITLE_OF[l.mode] + ' selection'))) + '">' +
-        icon('check', 12) + '</button>';
-    }
-
-    /* Applied-state handle, for SEALED operations only. A live-selected message
-       already explains itself -- it is dimmed and its gutter box is checked --
-       so flagging those too would put 25 identical banners in one thread. A
-       sealed message has no checkbox, so it needs its own escape hatch; that is
-       qwen-3-8's "Show full message" affordance.
-       Absolutely positioned: takes 2 and 10 make `.message` a two-column grid,
-       and an in-flow child would take a cell and shove the message sideways. */
-    if (op && (st === 'muted' || st === 'focused')) {
-      out += '<div class="pm-lens-flag is-' + st + '" data-k="pm-lens-flag">' +
-        icon(st === 'muted' ? 'eyeoff' : 'lens', 10) +
-        '<span>' + (st === 'muted' ? 'Muted' : 'Focused') + '</span>' +
-        '<button class="text-button" data-action="lens-release" data-value="' + esc(op.id) + '"' +
-        ' title="' + esc('Restore the ' + op.ids.length + '-message ' + TITLE_OF[op.mode] + ' operation') + '">' +
-        (st === 'muted' ? 'Show full message' : 'Release') + '</button></div>';
-    }
-
-    /* The subcompact summary card replaces the whole range, drawn once on the
-       first message of the operation. lens.css hides the rest of the range and
-       this message's own surface. */
-    if (head && op) {
-      out += '<div class="pm-lens-card" data-k="pm-lens-card">' +
-        '<div class="pm-lens-card-head">' + icon('collapse', 13) +
-        '<strong>Subcompacted ' + op.ids.length + ' message' + (op.ids.length === 1 ? '' : 's') + '</strong>' +
-        '<span class="meta-pill">local summary</span></div>' +
-        '<p>' + esc(op.summary) + '</p>' +
-        '<div class="pm-lens-card-actions">' +
-        '<button class="soft-button" data-action="' + (op.rehydrated ? 'lens-collapse' : 'lens-rehydrate') +
-        '" data-value="' + esc(op.id) + '">' + icon(op.rehydrated ? 'collapse' : 'restore', 12) + ' ' +
-        (op.rehydrated ? 'Collapse again' : 'Rehydrate') + '</button>' +
-        '<button class="text-button" data-action="lens-release" data-value="' + esc(op.id) + '">Release operation</button>' +
-        '</div>' +
-        (op.rehydrated ? '<p class="pm-lens-card-note">Rehydrated for viewing. The sources below come from canonical history, not from the summary.</p>' : '') +
-        '</div>';
-    }
-    return out;
-  });
-
-  /* ============================= ACTIONS ================================ */
-
-  EXT.action('lens-open', function (ctx) {
-    if (ctx.state.menu && ctx.state.menu.type === 'lens') {
-      ctx.closeMenu();
-      ctx.renderApp();
-      return true;
-    }
-    ctx.openMenu('lens', 'pm-lens-trigger');
-    ctx.renderApp();
-    return true;
-  });
-
-  EXT.action('lens-mode', function (ctx, btn) {
-    var tid = ctx.state.selectedThread;
-    var mode = btn.dataset.value;
-    if (mode === 'off') {
-      var rel = releaseAll(tid);
-      ctx.state.capabilities.context = 'Off'; lastCapWritten = 'Off';
-      if (rel.messages) {
-        ctx.addReceipt('context-mute', 'Context Lens · Turned off',
-          'Selection mode exited. ' + rel.ops + ' operation' + (rel.ops === 1 ? '' : 's') +
-          ' released and ' + rel.messages + ' message' + (rel.messages === 1 ? '' : 's') +
-          ' restored to the effective context. Canonical history was never altered.');
-      } else {
-        ctx.toast('Context Lens off', 'Selection mode exited.');
-      }
-    } else {
-      setMode(tid, mode);
-      ctx.state.capabilities.context = CAP_OF[mode]; lastCapWritten = CAP_OF[mode];
-      ctx.toast('Context Lens · ' + TITLE_OF[mode],
-        mode === 'subcompact'
-          ? 'Select messages, then Apply to create the local summary.'
-          : 'Select messages — ' + TITLE_OF[mode] + ' applies immediately.');
-    }
-    ctx.renderApp();
-    ctx.renderOverlays();
-    return true;
-  });
-
-  EXT.action('lens-toggle', function (ctx, btn) {
-    var tid = ctx.state.selectedThread;
-    var id = btn.dataset.id;
-    var r = toggle(tid, id);
-    if (!r.ok) {
-      if (r.reason === 'cap') {
-        ctx.toast('One operation covers ' + MAX_PER_OP + ' messages',
-          'The cap is per operation, not per thread. Seal this one and the next ' + MAX_PER_OP + ' start fresh.');
-      } else if (r.reason === 'sealed') {
-        ctx.toast('Already shaped', 'Release the operation that covers this message first.');
-      }
-      ctx.renderApp();
-      return true;
-    }
-    ctx.renderApp();
-    ctx.renderOverlays();
-    return true;
-  });
-
-  EXT.action('lens-seal', function (ctx) {
-    var tid = ctx.state.selectedThread;
-    var l = slice(tid);
-    var mode = l.mode;
-    var r = seal(tid);
-    if (!r.ok) { ctx.toast('Nothing to seal', 'Select at least one message first.'); return true; }
-    ctx.addReceipt(mode === 'mute' ? 'context-mute' : 'context-focus',
-      'Context Lens · ' + TITLE_OF[mode] + ' operation sealed',
-      r.count + ' message' + (r.count === 1 ? '' : 's') + ' sealed into operation ' + l.ops.length +
-      '. Operations accumulate: the next ' + MAX_PER_OP + ' start fresh.');
-    ctx.closeMenu();
-    ctx.renderApp();
-    return true;
-  });
-
-  EXT.action('lens-apply', function (ctx) {
-    var tid = ctx.state.selectedThread;
-    var r = applySubcompact(tid);
-    if (!r.ok) {
-      ctx.toast(r.reason === 'empty' ? 'Nothing selected' : 'Cannot apply',
-        r.reason === 'empty' ? 'Select the messages to condense first.'
-          : 'One operation covers up to ' + MAX_PER_OP + ' messages.');
-      return true;
-    }
-    ctx.addReceipt('context-subcompact', 'Context Lens · Subcompact applied',
-      r.count + ' message' + (r.count === 1 ? '' : 's') +
-      ' replaced by one local summary. Canonical source history is unchanged and rehydration handles are kept.');
-    ctx.closeMenu();
-    ctx.renderApp();
-    return true;
-  });
-
-  EXT.action('lens-clear', function (ctx) {
-    slice(ctx.state.selectedThread).selection = [];
-    ctx.renderApp();
-    ctx.renderOverlays();
-    return true;
-  });
-
-  EXT.action('lens-rehydrate', function (ctx, btn) {
-    var op = opById(ctx.state.selectedThread, btn.dataset.value);
-    if (op) op.rehydrated = true;
-    ctx.renderApp();
-    return true;
-  });
-
-  EXT.action('lens-collapse', function (ctx, btn) {
-    var op = opById(ctx.state.selectedThread, btn.dataset.value);
-    if (op) op.rehydrated = false;
-    ctx.renderApp();
-    return true;
-  });
-
-  EXT.action('lens-release', function (ctx, btn) {
-    var n = releaseOp(ctx.state.selectedThread, btn.dataset.value);
-    if (n) ctx.toast('Operation released', n + ' message' + (n === 1 ? '' : 's') + ' restored to the effective context.');
-    ctx.renderApp();
-    ctx.renderOverlays();
-    return true;
-  });
-
-  function openLensFromMessage(ctx, mode, messageId) {
-    var tid = ctx.state.selectedThread;
-    setMode(tid, mode);
-    ctx.state.capabilities.context = CAP_OF[mode];
-    lastCapWritten = CAP_OF[mode];
-    if (messageId) toggle(tid, messageId);
-    if (window.PM56_MSG_OVERFLOW) window.PM56_MSG_OVERFLOW.close();
-    ctx.openMenu('lens', 'pm-lens-trigger');
-    ctx.renderApp();
-    ctx.renderOverlays();
-  }
-
-  /* The stock `set-context-cap` still exists on the Demo Studio path and on any
-     persisted preference; route it through the same store so the two can never
-     disagree, and translate the retired `Auto`/`Off` values on the way in. */
-  EXT.action('set-context-cap', function (ctx, btn) {
-    var v = btn.dataset.value;
-    var mode = MODE_OF[v] || 'off';
-    var tid = ctx.state.selectedThread;
-    if (mode === 'off') releaseAll(tid); else setMode(tid, mode);
-    ctx.state.capabilities.context = CAP_OF[mode];
-    lastCapWritten = CAP_OF[mode];
-    ctx.renderApp();
-    ctx.renderOverlays();
-    return true;
-  });
-
-  /* ---- one message-overflow item, so the row is live rather than a stub --- */
-  /* transcript.js owns the More button; item 13's operations arrive in Wave 4.
-     Registering the lens' own entry here means the affordance is exercised
-     today instead of shipping as an empty shell. */
-  function registerOverflow() {
-    var R = window.PM56_MSG_OVERFLOW;
-    if (!R || !R.register) return false;
-    R.register(function (ctx, m) {
-      var tid = ctx.state.selectedThread;
-      var l = slice(tid);
-      var st = stateOf(tid, m.id);
-      if (l.mode === 'off') {
-        return [
-          {
-            id: 'lens-start-mute', label: 'Mute in Context Lens',
-            detail: 'Enter Mute selection mode and omit this turn from the effective context.',
-            icon: 'eyeoff', action: 'lens-start-mute', value: m.id
-          },
-          {
-            id: 'lens-start-focus', label: 'Focus in Context Lens',
-            detail: 'Enter Focus selection mode and raise this turn\'s priority in the effective context.',
-            icon: 'filter', action: 'lens-start-focus', value: m.id
-          },
-          {
-            id: 'lens-start-subcompact', label: 'Subcompact in Context Lens',
-            detail: 'Enter Subcompact selection mode to replace selected turns with a local summary.',
-            icon: 'collapse', action: 'lens-start-subcompact', value: m.id
-          }
-        ];
-      }
-      if (st && sealedOpFor(tid, m.id)) {
-        return [{
-          id: 'lens-restore', label: 'Restore from Context Lens',
-          detail: 'Release the applied operation covering this message.',
-          icon: 'restore', action: 'lens-release', value: sealedOpFor(tid, m.id).id
-        }];
-      }
-      return [{
-        id: 'lens-toggle-of',
-        label: (isSelected(tid, m.id) ? 'Remove from ' : 'Add to ') + TITLE_OF[l.mode] + ' selection',
-        detail: l.selection.length + ' of ' + MAX_PER_OP + ' in this operation.',
-        icon: 'lens', action: 'lens-toggle', value: m.id
-      }];
-    });
-    return true;
-  }
-  if (!registerOverflow()) {
-    /* transcript.js loads first in build.py's MODULES order, so this is belt
-       and braces for a build that reorders them. */
-    window.addEventListener('DOMContentLoaded', registerOverflow);
-  }
-
-  EXT.action('lens-start-mute', function (ctx, btn) {
-    openLensFromMessage(ctx, 'mute', btn.dataset.value || btn.dataset.id);
-    return true;
-  });
-  EXT.action('lens-start-focus', function (ctx, btn) {
-    openLensFromMessage(ctx, 'focus', btn.dataset.value || btn.dataset.id);
-    return true;
-  });
-  EXT.action('lens-start-subcompact', function (ctx, btn) {
-    openLensFromMessage(ctx, 'subcompact', btn.dataset.value || btn.dataset.id);
-    return true;
-  });
-
-  /* Exposed for the verification harness and for any later wave that needs the
-     effective assembly rather than the canonical transcript. */
-  window.PM56_LENS = {
-    version: 1,
-    MAX_PER_OP: MAX_PER_OP,
-    modes: MODES.map(function (m) { return m[1]; }),
-    slice: function (tid) { var l = slice(tid); return { mode: l.mode, picking: !!l.picking, selection: l.selection.slice(), ops: l.ops.map(function (o) { return { id: o.id, mode: o.mode, ids: o.ids.slice(), rehydrated: !!o.rehydrated }; }) }; },
-    stateOf: stateOf,
-    isSelected: isSelected,
-    selection: selectionOf,
-    shapedCount: shapedCount,
-    remaining: remaining,
-    effectiveHistory: function (tid) { return effectiveHistory(EXT.ctx(), tid); },
-    reset: function () { store = Object.create(null); seq = 0; lastCapWritten = null; }
-  };
-  /* Sealed-op row chrome stayed in lens.css after restore moved into the
-     status head. Keep the class tokens live for the orphan gate. */
-  void 'lens-op-row lens-op-copy lens-op-icon lens-ops';
+/* Lens presentation and command adapter. State/selection/preview semantics live
+ * once in lens-protocol.js. The expanded row is an in-flow header sibling. */
+(function(){
+ 'use strict';const E=window.PM56_EXT,K=window.PM56_LENS_ENGINE;
+ const engine=new K.Engine(tid=>{const c=E.ctx(),t=c.state.threads.find(t=>t.id===tid);if(!t)return null;const cp=c.state.context.projections?.[tid];return {...t,epoch:JSON.stringify([cp?.contextEpoch??0,t.messages.filter(m=>m.type==='threadops-rewind').map(m=>m.id)])};});
+ const disclosures=new Set();
+ const labels={mute:'Mute',focus:'Focus',subcompact:'Subcompact',off:'Off'};
+ const descriptions={mute:'Omit selected messages from effective context. Keep their history.',focus:'Protect selected messages and prioritize them for context.',subcompact:'Preview a bounded, source-linked summary before applying it.',off:'Release all shaping and restore the canonical messages.'};
+ function s(tid){return engine.snapshot(tid);}
+ function refresh(c){c.state.capabilities.context=labels[s(c.thread.id).mode];c.renderApp();c.renderOverlays();}
+ function b(c,action,label,attrs='',disabled=''){return '<button class="soft-button" data-action="'+action+'" '+attrs+(disabled?' disabled aria-disabled="true" title="'+c.esc(disabled)+'"':'')+'>'+label+'</button>';}
+ function sync(c){const snap=s(c.thread.id);c.state.capabilities.context=labels[snap.mode];return snap;}
+ function shapedCount(tid){const l=s(tid);return new Set([...l.ops.filter(o=>o.status==='active').flatMap(o=>o.ids),...(['mute','focus'].includes(l.mode)?l.selection:[])]).size;}
+ function result(c,r){if(!r.ok)c.toast('Context Lens',r.error.replaceAll('_',' ')+'. No summary was applied.');refresh(c);}
+ E.slot('headerLeading',c=>{const l=sync(c),n=shapedCount(c.thread.id);return '<button class="icon-button pm-lens-trigger'+(l.mode!=='off'?' is-on':'')+'" data-k="lensbtn" data-action="lens-open" data-menu-anchor="pm-lens-trigger" data-lens-mode="'+l.mode+'" data-hover-key="lensbtn" data-hover-tip="Context Lens" aria-label="Context Lens">'+c.icon('lens',16)+(n?'<i class="pm-lens-badge">'+n+'</i>':'')+'</button>';});
+ E.slot('contextLensMenu',c=>{const l=sync(c);return '<div class="menu-head"><strong>Context Lens</strong></div>'+['mute','focus','subcompact','off'].map(mode=>'<button class="menu-item'+(mode===l.mode&&mode!=='off'?' active':'')+'" data-action="lens-mode" data-value="'+mode+'"><span class="menu-icon">'+c.icon(mode==='mute'?'eyeoff':mode==='focus'?'lens':mode==='subcompact'?'collapse':'close',14)+'</span><span class="menu-copy"><strong>'+(mode==='off'?'Turn Off':labels[mode])+'</strong><span>'+descriptions[mode]+'</span></span></button>').join('');});
+ E.slot('contextLensInline',c=>{const tid=c.thread.id,l=sync(c);if(l.mode==='off')return '';const esc=c.esc,n=l.selection.length,p=l.preview;const opCount=l.ops.filter(o=>o.status==='active').length;
+  let html='<section class="lens13-controls" data-k="lens13-controls:'+esc(tid)+'" data-thread="'+esc(tid)+'"><div class="lens13-top"><div><strong>'+c.icon('lens',13)+' '+labels[l.mode]+'</strong><span>'+n+' / '+K.MAX_PER_OP+' selected · '+shapedCount(tid)+' shaped</span></div><div class="lens-actions">';
+  html+=l.mode==='subcompact'?b(c,'lens-preview',p?'Refresh preview':'Preview','',''+(!n?'Select messages first':'')):b(c,'lens-seal','Seal operation','',!n?'Select messages first':'');
+  html+=b(c,'lens-clear','Clear','',!n?'No active selection':'')+b(c,'lens-mode','Turn Off','data-value="off"')+'</div></div>';
+  if(p){html+='<div class="lens13-preview" data-k="preview:'+esc(p.id)+'" data-preview="'+esc(p.id)+'" data-state="'+p.status+'"><header><strong>'+(p.status==='ready'?'Review the summary':'Preview is out of date')+'</strong><span>'+p.ids.length+' sources</span></header>'+(p.status==='ready'?'':'<p class="lens13-warning">The source or selection changed. Refresh the preview before applying.</p>')+'<div class="lens13-excerpts">'+p.excerpts.map(e=>'<p><button class="text-button" data-action="lens-source" data-thread="'+esc(tid)+'" data-id="'+esc(e.id)+'">'+esc(e.label)+'</button><span>'+esc(e.text)+'</span></p>').join('')+'</div><p class="lens13-method">Local source excerpts, not a model-generated summary.'+(p.omittedCharacters?' '+p.omittedCharacters+' characters are omitted; check the full sources.':' Full selected text retained.')+'</p><div class="lens-actions">'+b(c,'lens-apply','Apply summary','data-thread="'+esc(tid)+'" data-preview="'+esc(p.id)+'"',p.status!=='ready'?'Refresh stale preview':'')+b(c,'lens-cancel','Cancel preview')+'</div></div>';}
+  if(opCount||l.ops.some(o=>o.status==='stale'))html+='<details class="lens13-operations" data-lens-disclosure="'+esc(tid)+'"'+(disclosures.has(tid)?' open':'')+' data-k="lens13-operations"><summary>Operations · '+opCount+' active</summary>'+l.ops.map(o=>'<div><span>'+labels[o.mode]+' · '+o.ids.length+' messages'+(o.status==='stale'?' · source changed, no longer applied':'')+'</span>'+b(c,'lens-release','Release','data-value="'+esc(o.id)+'"')+'</div>').join('')+'</details>';
+  return html+'</section>';
+ });
+ E.slot('messageAffordance',c=>{const m=c.message;if(!m||m.type!=='text')return '';const tid=c.thread.id,l=s(tid),st=engine.stateOf(tid,m.id),op=engine.covers(tid,m.id),selected=l.selection.includes(m.id),esc=c.esc;if(l.mode==='off'&&!st)return '';
+  let out='<i class="pm-lens-mark" data-k="pm-lens-mark"'+(st?' data-lens-state="'+st+'"':'')+(selected?' data-lens-sel="1"':'')+(op?.mode==='subcompact'&&op.ids[0]===m.id?' data-lens-head="1"':'')+'></i>';
+  if(l.picking){const reason=op?'Release this operation first':!K.eligible(m)?'Source unavailable':!selected&&l.selection.length>=K.MAX_PER_OP?'25-message operation is full; seal it first':'';out+='<button class="pm-lens-check'+(selected?' is-on':'')+'" data-k="pm-lens-check" data-action="lens-toggle" data-id="'+esc(m.id)+'" role="checkbox" aria-checked="'+selected+'"'+(reason?' disabled title="'+esc(reason)+'"':' title="'+(selected?'Remove from':'Add to')+' selection"')+'>'+c.icon('check',12)+'</button>';}
+  if(op&&op.mode!=='subcompact')out+='<div class="pm-lens-flag is-'+st+'" data-k="pm-lens-flag"><span>'+labels[op.mode]+'</span><button class="text-button" data-action="lens-release" data-value="'+esc(op.id)+'">Release</button></div>';
+  if(op?.mode==='subcompact'&&op.ids[0]===m.id)out+='<div class="pm-lens-card" data-k="pm-lens-card:'+esc(op.id)+'"><div class="pm-lens-card-head">'+c.icon('collapse',14)+'<strong>'+op.ids.length+' messages · source summary</strong></div><p class="lens13-summary-text">'+esc(op.summary)+'</p><div class="pm-lens-card-actions">'+b(c,op.rehydrated?'lens-collapse':'lens-rehydrate',op.rehydrated?'Collapse again':'Rehydrate sources','data-value="'+esc(op.id)+'"')+b(c,'lens-release','Release operation','data-value="'+esc(op.id)+'"')+'</div><small>'+(op.rehydrated?'Canonical sources restored to effective context.':'Original messages stay in history. Local excerpt summary; no model call.')+'</small></div>';
+  return out;
+ });
+ E.action('lens-open',c=>{if(c.state.menu?.type==='lens')c.closeMenu();else c.openMenu('lens','pm-lens-trigger');c.renderOverlays();return true;});
+ E.action('lens-mode',(c,btn)=>{const r=engine.setMode(c.thread.id,btn.dataset.value);c.closeMenu();if(btn.dataset.value==='off'&&r.ok)c.addReceipt('context-mute','Context Lens · Turned off',r.ops+' operations released; '+r.messages+' shaped messages restored. Canonical history is unchanged.');result(c,r);return true;});
+ E.action('lens-toggle',(c,btn)=>{result(c,engine.toggle(c.thread.id,btn.dataset.id||btn.dataset.value));return true;});
+ E.action('lens-seal',c=>{result(c,engine.seal(c.thread.id));return true;});
+ E.action('lens-preview',c=>{result(c,engine.preview(c.thread.id));return true;});
+ E.action('lens-apply',(c,btn)=>{if(btn.dataset.thread&&btn.dataset.thread!==c.thread.id){c.toast('Different thread','Return to the preview’s source thread. Nothing was applied.');return true;}const r=engine.apply(c.thread.id,btn.dataset.preview||s(c.thread.id).preview?.id);if(r.ok&&!r.reused)c.addReceipt('context-subcompact','Context Lens · Summary applied',r.count+' messages shaped. The local summary preserves source links; canonical history is unchanged.');result(c,r);return true;});
+ E.action('lens-cancel',c=>{result(c,engine.cancel(c.thread.id));return true;});
+ E.action('lens-clear',c=>{result(c,engine.clear(c.thread.id));return true;});
+ E.action('lens-release',(c,btn)=>{result(c,engine.release(c.thread.id,btn.dataset.value));return true;});
+ for(const [a,on] of [['lens-rehydrate',true],['lens-collapse',false]])E.action(a,(c,btn)=>{result(c,engine.rehydrate(c.thread.id,btn.dataset.value,on));return true;});
+ E.action('lens-source',(c,btn)=>{if(btn.dataset.thread!==c.thread.id)return true;c.openEditor('lens-source:'+c.thread.id+':'+btn.dataset.id);return true;});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('lens-source:')?'Lens source':'');
+ E.slot('editorDocument',c=>{if(!c.editorId?.startsWith('lens-source:'))return '';const rest=c.editorId.slice(12),t=c.state.threads.find(t=>rest.startsWith(t.id+':'));const id=t?rest.slice(t.id.length+1):'',m=t?.messages.find(m=>m.id===id);return '<article class="editor-doc lens13-source"><small>Canonical source · '+c.esc(t?.title||'Unavailable')+'</small><h1>Full source message</h1><pre>'+c.esc(K.eligible(m)?m.body:'Source unavailable or revoked.')+'</pre><p>Read-only source view. Opening it does not change effective context.</p></article>';});
+ function overflow(){const R=window.PM56_MSG_OVERFLOW;if(!R?.register)return;R.register((c,m)=>{if(!K.eligible(m))return [];const op=engine.covers(c.thread.id,m.id);if(op)return [{id:'lens-restore',label:'Restore from Context Lens',detail:'Release the operation, keeping canonical history.',icon:'restore',action:'lens-release',value:op.id}];return ['mute','focus','subcompact'].map(mode=>({id:'lens-start-'+mode,label:labels[mode]+' in Context Lens',detail:descriptions[mode],icon:'lens',action:'lens-start-'+mode,value:m.id}));});}
+ overflow();for(const mode of ['mute','focus','subcompact'])E.action('lens-start-'+mode,(c,btn)=>{engine.setMode(c.thread.id,mode);const r=engine.toggle(c.thread.id,btn.dataset.value||btn.dataset.id);window.PM56_MSG_OVERFLOW?.close();c.closeMenu();result(c,r);return true;});
+ E.action('set-context-cap',(c,btn)=>{result(c,engine.setMode(c.thread.id,({Mute:'mute',Focus:'focus',Subcompact:'subcompact',Off:'off',Auto:'off'})[btn.dataset.value]||'off'));return true;});
+ // Retired canned demo actions now route through the real local preview boundary.
+ E.action('apply-subcompact',(c,b)=>E._actions['lens-apply'](c,b));E.action('cancel-subcompact',c=>E._actions['lens-cancel'](c));
+ E.chainAction('demo-trigger',(c,b)=>{if(!['Subcompact applied','Subcompact cancelled'].includes(b.dataset.trigger))return false;engine.setMode(c.thread.id,'subcompact');c.toast('Context Lens','Select messages and preview their actual content.');refresh(c);return true;});
+ document.addEventListener('toggle',e=>{const id=e.target?.dataset?.lensDisclosure;if(id){if(e.target.open)disclosures.add(id);else disclosures.delete(id);}},true);
+ E.chainAction('reset-all',()=>{disclosures.clear();engine.reset();return false;});
+ window.PM56_LENS={version:2,engine,MAX_PER_OP:K.MAX_PER_OP,modes:['Mute','Focus','Subcompact','Turn Off'],slice:s,stateOf:(tid,id)=>engine.stateOf(tid,id),isSelected:(tid,id)=>s(tid).selection.includes(id),selection:tid=>s(tid).selection,shapedCount,remaining:tid=>K.MAX_PER_OP-s(tid).selection.length,effectiveHistory:tid=>engine.effective(tid),fork:(a,b)=>engine.fork(a,b),reset:()=>engine.reset()};
 })();
 
 /* orbit.js — feature module.  OWNER: Wave 4 — Orbit agent (item 12: clickable orbit, responsive radius, shared trail icon fix)
@@ -23821,6 +23305,7 @@ window.PM56_EXT = window.PM56_EXT || {
     };
     ctx.state.threads.unshift(nt);
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch');
+    window.PM56_LENS?.fork(src.id, nt.id);
 
     var detail = 'A branch of ' + plural(at + 1, 'turn', 'turns') + ' was created from ' +
       (anchor ? turnLabel(src, anchor) : 'the latest turn') + '. The original thread is unchanged.';
@@ -35142,11 +34627,12 @@ window.PM56_EXT = window.PM56_EXT || {
          Opening, editing and cancelling a modal reach none of these lines. */
       effect('runs'); effect('cards'); effect('events');
       effect('participants', newRun.participants.length);
-      if(!d.roomInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
+      if(!d.roomInput&&!d.wondererInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
       RTC.runs.push(newRun);
       if(newRun.kind==='chat_room' && d.roomInput && window.PM56_ROOM) window.PM56_ROOM.admit(newRun,d);
       if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
       if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
+      if(d.wondererInput && window.PM56_WONDERER) window.PM56_WONDERER.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }
@@ -41341,7 +40827,8 @@ window.PM56_EXT = window.PM56_EXT || {
  function planPayload(r){
   const b=r.brainstorm,d=b.decision,q=b.proposals.find(q=>q.id===d.selectedProposalId),h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text}),ul=items=>({t:'unordered_list',items});
   const blocks=[h('Objective'),p(b.input.objective),h('Decision'),p(q.title+' — '+d.reason),h('Constraints'),ul(b.input.constraints.map(c=>c.text)),h('Research and evidence'),...b.input.evidence.map(e=>p(e.label+' — '+(e.summary||e.provenance)+' [source: '+e.id+']')),h('Implementation'),...d.steps.map(s=>({t:'plan_step',plan_step_id:s.id,title:s.title,text:s.text,depends_on:s.dependsOn,parent_step_id:null,parallel_group_id:null})),h('Verification'),ul(d.steps.map(s=>s.acceptance)),h('Assumptions'),ul(q.assumptions),h('Risks and trade-offs'),ul([...q.risks,...q.costs]),h('Rollback'),ul(q.rollback),h('Alternatives considered'),...b.proposals.filter(p=>p.id!==q.id).map(o=>p(o.title+' — '+(b.hardConstraintViolations.filter(h=>h.proposalId===o.id).map(h=>'Disqualified: '+h.constraint).join('; ')||'Not selected: '+o.approach))),h('Dissent'),...(b.dissent.length?b.dissent.map(v=>p(v.participantRole+' ['+v.position+'; confidence '+v.confidence+']: '+v.reason+' · evidence: '+v.evidenceRefs.join(', '))):[p('No opposing position was recorded in this example.')]),h('Scope notes'),p(b.input.scopeNotes),h('Provenance'),p('Recorded BrainStorm example. Local evidence is frozen, not live external research; provider, persistence and native-runtime proof are outside this demonstration.')];
-  return {runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
+  const result={runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
+  return window.PM56_WONDERER?.augmentPlan(r,result)||result;
  }
  function synthesize(id){
   const r=run(id);if(!owns(id))return fail('brainstorm_input_unavailable');const b=r.brainstorm;
@@ -41350,6 +40837,7 @@ window.PM56_EXT = window.PM56_EXT || {
   if(b.phase!=='synthesis'||!b.decision)return fail('synthesis_not_ready');
   if(b.attempts.some(a=>!current(r,a)))return fail('stale_participant_result');
   if(b.hardConstraintViolations.some(h=>h.proposalId===b.decision.selectedProposalId))return fail('hard_constraint_disqualified');
+  const wonderGate=window.PM56_WONDERER?.convergence(r);if(wonderGate&&!wonderGate.ok)return fail('wonderer_dispositions_incomplete');
   const result=P.createFromBrainstorm(planPayload(r));if(!result.ok)return result;
   const q=b.proposals.find(q=>q.id===b.decision.selectedProposalId);
   b.synthesis=freeze({planId:result.planId,selected:q.id,summary:b.decision.reason,dissentPreserved:b.dissent.length,sourceHash:b.input.sourceHash});
@@ -42652,6 +42140,246 @@ window.PM56_EXT = window.PM56_EXT || {
  E.chainAction('demo-trigger',(c,b)=>{if((b.dataset.trigger||'').startsWith('BSD ')){start(b.dataset.trigger==='BSD intervention'?'survives':'resolves');return true;}return false;});
  window.PM56_BSD_DEMOS={start,snapshot:id=>clone(get(id)),inspect,review:id=>review(get(id)),primary:id=>primary(get(id)),count:()=>projects.size};
 })();
+
+/* Wonderer lead records on the existing CollaborativeRun, not a new workflow.
+ * Evidence is read through an injected artifact-owner adapter. Local concept
+ * receipts do not certify research quality, live tools, or native execution. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.PM56_WONDERER_ENGINE=api;})(typeof window==='object'?window:globalThis,function(){
+ 'use strict';const copy=x=>JSON.parse(JSON.stringify(x)),fail=error=>({ok:false,error});
+ const stable=x=>JSON.stringify(x);let sequence=0;
+ const fp=a=>a&&a.status!=='revoked'?stable([a.id,a.projectId,a.threadId,a.version,a.content,a.status]):null;
+ const text=x=>typeof x==='string'&&x.trim().length>0;
+ class Protocol {
+  constructor(readArtifact){this.read=readArtifact;}
+  receipt(r,kind,data={}){const x={id:'wonder-receipt-'+(++sequence),kind,runId:r.id,epoch:r.stopEpoch,...copy(data)};r.wonderer.receipts.push(x);return x;}
+  gate(r){if(!r?.wonderer)return 'wonderer_not_configured';if(r.status!=='running')return 'run_not_running';const p=r.participants.find(p=>p.id===r.wonderer.participantId);if(!p||p.additiveRoleKind!=='wonderer'||p.status==='disabled')return 'specialist_unavailable';if(r.definitionRevision!==r.wonderer.definitionRevision)return 'definition_changed';return null;}
+  attach(r,input){if(!input)return {ok:false,error:'no_input'};if(r.wonderer)return {ok:true,reused:true};const p=r.participants.find(p=>p.additiveRoleKind==='wonderer');if(!p)return fail('wonderer_not_configured');if(!text(input.seed)||!text(input.seedId))return fail('seed_required');
+   r.wonderer={version:1,seed:input.seed,seedId:input.seedId,seedRevision:1,definitionRevision:r.definitionRevision,projectId:input.projectId??r.projectId??null,participantId:p.id,persona:'Wonderer',methodologySkill:'builtin:wonderer',leads:[],receipts:[],rejected:[],pending:[],defaultVote:'abstain',providerCalls:0,costUsd:null};return {ok:true};}
+  add(r,x){const why=this.gate(r);if(why)return fail(why);const w=r.wonderer;if(!text(x.id)||!text(x.claim)||!text(x.tether)||!text(x.dimension)||x.seedId!==w.seedId)return fail('untethered_lead');if(x.claim.length>1600||x.tether.length>800)return fail('lead_too_large');if(w.leads.length>=5)return fail('lead_budget');if(w.leads.some(l=>l.id===x.id))return fail('duplicate_lead');const l={...copy(x),revision:1,state:'hypothesis',seedRevision:w.seedRevision,evidence:null,decision:null,included:false,dispositionReason:null,history:[]};w.leads.push(l);this.receipt(r,'lead_added',{leadId:l.id});return {ok:true};}
+  lead(r,id){return r.wonderer?.leads.find(l=>l.id===id);}
+  refresh(r){const w=r?.wonderer;if(!w)return null;for(const l of w.leads){const staleSeed=l.seedRevision!==w.seedRevision,staleEvidence=l.evidence&&(!this.read(l.evidence.artifactId)||fp(this.read(l.evidence.artifactId))!==l.evidence.fingerprint);if((staleSeed||staleEvidence)&&!['stale','dropped'].includes(l.state)){l.history.push({state:l.state,evidence:copy(l.evidence),decision:copy(l.decision),included:l.included});l.state='stale';l.included=false;l.dispositionReason=staleSeed?'seed_changed':'evidence_changed';this.receipt(r,'lead_invalidated',{leadId:l.id,reason:l.dispositionReason});}}
+   return w;}
+  begin(r,id,artifactId){const why=this.gate(r);if(why)return fail(why);this.refresh(r);const l=this.lead(r,id),a=this.read(artifactId),w=r.wonderer,p=r.participants.find(p=>p.id===w.participantId);if(!l)return fail('lead_missing');if(l.state==='dropped')return fail('lead_dropped');if(l.seedRevision!==w.seedRevision)return fail('retether_to_current_seed');if(!a||!fp(a)||a.threadId!==r.threadId||(w.projectId!=null&&a.projectId!==w.projectId))return fail('evidence_unavailable');if(w.pending.some(t=>t.leadId===id&&!t.finished))return fail('research_pending');
+   const ticket={id:'wonder-ticket-'+(++sequence),runId:r.id,threadId:r.threadId,projectId:a.projectId,epoch:r.stopEpoch,definitionRevision:r.definitionRevision,participantId:p.id,assignmentRevision:p.assignmentRevision,leadId:id,leadRevision:l.revision,seedRevision:w.seedRevision,artifactId,fingerprint:fp(a),finished:false};w.pending.push(ticket);l.state='research_pending';l.included=false;l.decision=null;l.dispositionReason=null;this.receipt(r,'research_requested',{ticketId:ticket.id,leadId:id,artifactId});return {ok:true,ticket:copy(ticket),source:copy(a)};}
+  complete(r,ticketId,x){const w=r?.wonderer,t=w?.pending.find(t=>t.id===ticketId);if(!t)return fail('ticket_missing');if(t.finished)return t.responseFingerprint===stable(x)?{ok:true,reused:true}:fail('ticket_consumed');const l=this.lead(r,t.leadId),p=r.participants.find(p=>p.id===t.participantId),a=this.read(t.artifactId);let why=this.gate(r);
+   if(!why&&(t.epoch!==r.stopEpoch||t.definitionRevision!==r.definitionRevision||p?.assignmentRevision!==t.assignmentRevision))why='stale_assignment_or_epoch';
+   if(!why&&(!l||t.leadRevision!==l.revision||t.seedRevision!==w.seedRevision))why='stale_seed_or_lead';
+   if(!why&&fp(a)!==t.fingerprint)why='stale_evidence';
+   if(why){t.finished=true;t.rejected=why;w.rejected.push({ticketId,reason:why});if(l?.state==='research_pending'){l.state='stale';l.included=false;}this.receipt(r,'research_rejected',{ticketId,reason:why});return fail(why);}
+   if(!x||!['supports','refutes','inconclusive'].includes(x.outcome)||!text(x.summary)||x.artifactId!==t.artifactId)return fail('invalid_research_result');
+   t.finished=true;t.responseFingerprint=stable(x);l.evidence={artifactId:t.artifactId,version:a.version,fingerprint:t.fingerprint,outcome:x.outcome,summary:x.summary,provenance:a.provenance||'Supplied local evidence; not live external research.',ticketId};l.seedRevision=w.seedRevision;l.state=x.outcome==='supports'?'researched':'unsubstantiated';this.receipt(r,'research_recorded',{leadId:l.id,artifactId:a.id,outcome:x.outcome});return {ok:true,state:l.state};
+  }
+  decide(r,id,kind,reason){const why=this.gate(r);if(why)return fail(why);this.refresh(r);const l=this.lead(r,id);if(!l)return fail('lead_missing');if(!['include','exclude','user_decided'].includes(kind)||!text(reason))return fail('explicit_reason_required');if(l.state==='research_pending')return fail('research_pending');if(kind==='include'&&!['researched','user_decided'].includes(l.state))return fail('lead_not_substantiated');if(kind==='user_decided'&&['stale','dropped'].includes(l.state))return fail('refresh_stale_lead');
+   if(l.decision?.kind===kind&&l.decision?.reason===reason&&l.decision?.seedRevision===r.wonderer.seedRevision)return {ok:true,reused:true};if(kind==='user_decided')l.state='user_decided';if(kind==='exclude'&&l.state==='stale')l.state='dropped';l.decision={kind,reason,actor:'user',seedRevision:r.wonderer.seedRevision};l.included=kind!=='exclude';l.dispositionReason=reason;this.receipt(r,'lead_disposition',{leadId:id,decision:copy(l.decision)});return {ok:true};}
+  retether(r,id,claim,tether){const why=this.gate(r);if(why)return fail(why);const l=this.lead(r,id);if(!l||!text(claim)||!text(tether)||claim.length>1600||tether.length>800)return fail('invalid_lead');l.history.push({state:l.state,evidence:copy(l.evidence),decision:copy(l.decision),included:l.included,claim:l.claim,tether:l.tether});Object.assign(l,{claim,tether,revision:l.revision+1,state:'hypothesis',seedRevision:r.wonderer.seedRevision,evidence:null,decision:null,included:false});return {ok:true};}
+  seed(r,newSeed){const why=this.gate(r);if(why)return fail(why);if(!text(newSeed))return fail('seed_required');r.wonderer.seed=newSeed;r.wonderer.seedRevision++;this.refresh(r);return {ok:true};}
+  convergence(r){const w=this.refresh(r);if(!w)return {ok:true,additions:[],unresolved:[]};const unresolved=w.leads.filter(l=>!l.decision||l.state==='stale'||l.state==='research_pending');return {ok:unresolved.length===0,additions:w.leads.filter(l=>l.included&&['researched','user_decided'].includes(l.state)).map(copy),unresolved:unresolved.map(l=>l.id),all:copy(w.leads),defaultVote:'abstain'};}
+ }
+ return {Protocol,copy};
+});
+
+/* Batch 13: four self-contained local exercises on the existing owners.
+ * No provider/network calls. No product persistence or runtime admission.
+ * Evidence samples are inspectable artifacts; only a small JS fence is tested.
+ */
+(function () {
+  'use strict';
+  const E=window.PM56_EXT, C=window.PM56_COLLAB, B=window.PM56_BRAINSTORM;
+  const D=window.PM56_DATA, L=window.PM56_LENS, BD=window.PM56_BRAINSTORM_DEMOS;
+  const copy=x=>JSON.parse(JSON.stringify(x));
+  const protocol=new window.PM56_WONDERER_ENGINE.Protocol(id=>D.artifacts.find(a=>a.id===id));
+  const sessions=new Map(), clocks=new Map(), reasons=new Map(), disclosures=new Set();let serial=0;
+  const flows={
+    shape:{title:'Shape, summarize, and restore',detail:'Mute → Focus → source preview → restore unchanged history',kind:'lens'},
+    stale:{title:'A preview is not a promise',detail:'Change a source → reject stale Apply → review the new version',kind:'lens'},
+    leads:{title:'Follow a connected lead',detail:'Research a hypothesis → deliberate disposition → one Deep Plan',kind:'wonderer'},
+    dissent:{title:'Evidence changes; dissent stays',detail:'Reject an outdated check → research again → retain core dissent',kind:'wonderer'}
+  };
+  const run=id=>C.run(id), session=tid=>sessions.get(tid||E.ctx().thread.id);
+  const current=c=>C.runsForThread(c.thread.id).find(r=>r.wonderer);
+  const refresh=()=>{E.ctx().renderApp();E.ctx().renderOverlays();};
+  function reply(r){if(!r?.ok)E.ctx().toast('No change made',(r?.error||'Unavailable').replaceAll('_',' ')+'.');refresh();return r;}
+  function button(c,action,label,attrs='',why=''){
+    return '<button class="soft-button" data-action="'+action+'" '+attrs+(why?' disabled title="'+c.esc(why)+'"':'')+'>'+label+'</button>';
+  }
+  function newThread(flow){
+    const c=E.ctx(),tid='batch13-'+flow+'-'+(++serial),base=copy(c.state.threads.find(t=>t.id==='query'));
+    Object.assign(base,{id:tid,title:flows[flow].title+' · local example',status:'ready',pinned:false,archived:false,goalId:null,messages:[]});
+    c.state.threads.push(base);sessions.set(tid,{threadId:tid,flow,guide:true,startedAt:Date.now()});
+    Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});
+    c.state.activity.open=false;c.state.capabilities.goal=false;
+    c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
+    return {c,t:base,tid};
+  }
+  function start(flow){
+    if(!flows[flow])return;
+    const {c,t,tid}=newThread(flow),s=session(tid);
+    if(flows[flow].kind==='lens'){
+      const texts=[
+        ['user','Design local collection search. Collection contents must never leave this device.'],
+        ['assistant','Preserve the existing ranking. A padded query such as " alpha " must return the same matches in the same order.'],
+        ['user','Keep a simple local-filter fallback. Do not introduce a persistent database migration for this change.'],
+        ['assistant','A snapshot worker is an option, not a measured speedup. Discard obsolete query responses and measure startup and transfer overhead before choosing the default.'],
+        ['user','This older color discussion is unrelated to search. We compared amber and blue icons; leave that decision for a separate task.'],
+        ['assistant','Verification: check offline behavior, query ordering, cancellation, source revisions, and a reversible fallback. No benchmark results have been supplied.']
+      ];
+      t.messages=texts.map(([role,body],i)=>({id:tid+'-m'+(i+1),role,type:'text',body,revision:1}));
+      t.messages.push({id:tid+'-controls',role:'assistant',type:'b13-lens-controls',threadId:tid});
+      s.sourceId=tid+'-m2';s.originalBodies=t.messages.filter(m=>m.type==='text').map(m=>({id:m.id,body:m.body}));
+      c.switchThread(tid);return;
+    }
+    const input=BD.fixture(flow==='dissent'?'constraint':'synthesis');
+    t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+' Keep Wonderer’s adjacent leads separate from the core decision.'},{id:tid+'-work',role:'assistant',type:'b13-wonderer',threadId:tid}];
+    C.openConfigure('brainstorm');const d=C.draft();
+    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;
+    d.wondererInput={seedId:'offline-search',seed:input.objective,projectId:t.projectId??null,flow};
+    c.state.dialog={type:'collab-configure'};c.switchThread(tid);
+  }
+  function artifact(r,suffix,name,value){
+    const t=E.ctx().state.threads.find(t=>t.id===r.threadId),id='wonderer-'+r.id+'-'+suffix;
+    const a={id,name,type:'text',extension:'json',projectId:t?.projectId??null,threadId:r.threadId,version:1,status:'active',content:JSON.stringify(value,null,2),provenance:'Supplied local exercise. Not live research, a native worker, or a device benchmark.'};
+    D.artifacts.push(a);return a;
+  }
+  function admit(r,d){
+    const result=protocol.attach(r,d.wondererInput);if(!result.ok)return result;
+    const w=r.wonderer;w.flow=d.wondererInput.flow;w.corePlayback={cursor:0,status:'not_started',errors:[]};
+    const fence=artifact(r,'fence','Latest-query fence.json',{kind:'latest_query_fence',latestRequest:2,arrivals:[{requestId:2,value:'new result'},{requestId:1,value:'old result'}],expected:'new result'});
+    const measure=artifact(r,'measurement','Measurement availability.json',{kind:'measurement_availability',measurements:[],note:'No worker startup, transfer, latency, CPU or memory measurements have been supplied.'});
+    w.artifactIds=[fence.id,measure.id];
+    const leads=[
+      {id:'fence',claim:'Treat stale query replies like out-of-order deliveries: admit only the current request.',dimension:'Distributed systems · ordering',tether:'The search UI must not let an old query replace a newer result.',artifactId:fence.id},
+      {id:'speed',claim:'A worker may improve responsiveness, but setup and transfer overhead could outweigh its benefit.',dimension:'Scale boundary · measurement',tether:'The seed asks for responsive local search, so the cutoff needs device evidence.',artifactId:measure.id},
+      {id:'fallback',claim:'Keep an explicit local-filter fallback while the worker path is evaluated.',dimension:'Human factors · reversibility',tether:'A reversible rollout limits disruption without claiming an unmeasured performance improvement.',artifactId:null}
+    ];
+    for(const lead of leads){const out=protocol.add(r,{...lead,seedId:w.seedId});if(!out.ok)throw Error(out.error);}
+    const s=session(r.threadId);if(s)s.runId=r.id;return result;
+  }
+  function sourceResult(a){
+    try{
+      if(a.content.length>20000)return {ok:false,error:'evidence_too_large'};
+      const v=JSON.parse(a.content);let outcome,summary;
+      if(v.kind==='latest_query_fence'&&Number.isInteger(v.latestRequest)&&v.latestRequest>=0&&typeof v.expected==='string'&&Array.isArray(v.arrivals)&&v.arrivals.length>0&&v.arrivals.length<=30){
+        let accepted=null;const dropped=[];
+        for(const item of v.arrivals){if(!Number.isInteger(item.requestId)||typeof item.value!=='string')return {ok:false,error:'invalid_sample'};if(item.requestId===v.latestRequest)accepted=item.value;else dropped.push(item.requestId);}
+        outcome=accepted===v.expected?'supports':'refutes';
+        summary='Executed the supplied JS ordering sample: accepted '+JSON.stringify(accepted)+'; rejected request IDs '+JSON.stringify(dropped)+'. This checks the fence algorithm only, not a real worker or its latency.';
+      }else if(v.kind==='measurement_availability'&&Array.isArray(v.measurements)&&v.measurements.length===0){
+        outcome='inconclusive';summary='No device measurements are present. This sample cannot substantiate a speedup or a default threshold.';
+      }else return {ok:false,error:'unsupported_evidence_sample'};
+      return {ok:true,record:{artifactId:a.id,outcome,summary}};
+    }catch(_){return {ok:false,error:'invalid_evidence_sample'};}
+  }
+  function research(r,id){
+    const l=protocol.lead(r,id);if(!l?.artifactId)return reply({ok:false,error:'no_evidence_selected'});
+    const res=protocol.begin(r,id,l.artifactId);if(!res.ok)return reply(res);
+    const evidence=sourceResult(res.source),key=res.ticket.id;
+    // Completion uses the original run/ticket, never whichever thread is open later.
+    clocks.set(key,setTimeout(()=>{
+      clocks.delete(key);
+      if(evidence.ok)protocol.complete(r,key,evidence.record);
+      else {const ticket=r.wonderer.pending.find(t=>t.id===key);ticket.finished=true;protocol.lead(r,id).state='hypothesis';protocol.receipt(r,'research_refused',{leadId:id,reason:evidence.error});}
+      refresh();
+    },1250));refresh();return res;
+  }
+  function coreActions(r){
+    const records=BD.expected(r,r.wonderer.flow==='dissent'?'constraint':'synthesis'),a=r.brainstorm.attempts;
+    const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
+    const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:copy(records.proposals[i])}));
+    actions.push(()=>B.normalize(r.id,x()));
+    for(let round=1;round<=r.config.debateRounds;round++)actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:'Preserve offline operation and ranking. The specialist’s leads are separate hypotheses until disposed.',evidenceRefs:['requirements','query']},{participantId:a[1].participantId,body:'Keep uncertainty and dissent visible. No device speedup has been measured.',evidenceRefs:['latency']}]}));
+    actions.push(()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'This candidate requires a network and fails the offline rule.':'This candidate preserves local data; device performance is unmeasured.'}))}));
+    actions.push(()=>{for(let i=0;i<a.length;i++){const out=B.vote(r.id,a[i].participantId,{...x(),...copy(records.votes[i])});if(!out.ok)return out;}return {ok:true};});
+    actions.push(()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:'Choose a local snapshot design with a reversible fallback. The offline constraint remains controlling; recorded opposing preferences remain dissent, and no unmeasured speedup is asserted.',steps:records.steps}));return actions;
+  }
+  function playCore(r){
+    if(!r?.wonderer||r.status!=='running')return reply({ok:false,error:'run_not_running'});
+    const state=r.wonderer.corePlayback;if(state.status==='completed'||clocks.has('core:'+r.id))return;
+    const actions=coreActions(r);state.status='playing';
+    function next(){
+      if(r.status==='paused'){clocks.set('core:'+r.id,setTimeout(next,200));return;}
+      if(r.status!=='running'){state.status='stopped';clocks.delete('core:'+r.id);refresh();return;}
+      const res=actions[state.cursor]();if(!res.ok){state.status='failed';state.errors.push(res.error);clocks.delete('core:'+r.id);refresh();return;}
+      state.cursor++;if(state.cursor<actions.length)clocks.set('core:'+r.id,setTimeout(next,300));else {state.status='completed';clocks.delete('core:'+r.id);}refresh();
+    }
+    clocks.set('core:'+r.id,setTimeout(next,400));refresh();
+  }
+  function augmentPlan(r,payload){
+    if(!r.wonderer)return payload;
+    const g=protocol.convergence(r),h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text});
+    payload.blocks.push(h('Wonderer · deliberately selected additions'));
+    if(!g.additions.length)payload.blocks.push(p('No specialist lead was included. Core decisions remain unchanged.'));
+    for(const l of g.additions){
+      payload.blocks.push(h(l.claim),p('Connection to the seed: '+l.tether),p((l.state==='user_decided'?'Explicit user decision, not an established fact':'Locally researched lead')+' — '+l.decision.reason),p(l.evidence?l.evidence.summary+' [artifact: '+l.evidence.artifactId+'; version '+l.evidence.version+']':'No research evidence supplied. This is a deliberate user choice.'));
+      payload.ledgerEntries.push({k:l.state==='user_decided'?'user_decision':'researched_lead',v:l.claim+' — '+l.decision.reason});
+      if(l.evidence)payload.sourceRefs.push({ref:'wonderer-evidence:'+l.evidence.artifactId+':v'+l.evidence.version,kind:'recorded_evidence',summary:l.evidence.summary});
+    }
+    payload.blocks.push(h('Wonderer · excluded leads and remaining uncertainty'));
+    for(const l of g.all.filter(l=>!l.included))payload.blocks.push(p('Excluded: '+l.claim+' — '+(l.decision?.reason||'No current admission.')+' This is not a Plan decision.'));
+    payload.blocks.push(p('Wonderer is an additive Persona plus methodology Skill. It abstains from the core ballot; no core participant, vote, decision, or dissent was replaced. Local exercise evidence is not live external research.'));
+    return payload;
+  }
+  function leadCard(c,r,l){
+    const w=r.wonderer,esc=c.esc,attrs='data-run="'+esc(r.id)+'" data-lead="'+esc(l.id)+'"',busy=l.state==='research_pending'||w.pending.some(t=>t.leadId===l.id&&!t.finished),why=r.status!=='running'?'Run is not running':'';
+    const label=({hypothesis:'Hypothesis',research_pending:'Checking source',researched:'Source supports this lead',unsubstantiated:'Not substantiated',user_decided:'User decision · not fact',stale:'Out of date',dropped:'Excluded outdated lead'})[l.state]||l.state;
+    return '<section class="b13-lead" data-k="lead:'+esc(r.id+':'+l.id)+'" data-lead-id="'+esc(l.id)+'" data-state="'+l.state+'"><div class="b13-lead-head"><small>'+esc(l.dimension)+'</small><span class="b13-status">'+esc(label)+'</span></div><h2>'+esc(l.claim)+'</h2><p class="b13-tether"><strong>Why it matters</strong> '+esc(l.tether)+'</p>'+
+      (l.evidence?'<div class="b13-evidence"><strong>Evidence · version '+l.evidence.version+'</strong><p>'+esc(l.evidence.summary)+'</p><small>'+esc(l.evidence.provenance)+'</small></div>':'<p class="b13-quiet">'+(l.state==='user_decided'?'No research evidence supplied. Included only as an explicit user choice.':'No research conclusion yet. This lead is not a fact or an accepted decision.')+'</p>')+
+      (l.state==='stale'?'<p class="b13-warning">The source changed. The old conclusion is not eligible for inclusion. Check the current version or explicitly exclude it.</p>':'')+
+      (l.decision?'<p class="b13-disposition"><strong>'+(l.included?'Included':'Excluded')+'</strong> · '+esc(l.decision.reason)+'</p>':'')+
+      '<div class="b13-actions">'+(l.artifactId?button(c,'b13-research',busy?'Checking…':l.evidence||l.state==='stale'?'Research again':'Research local sample',attrs,why||(busy?'Check already pending':''))+button(c,'b13-source','Open source',attrs)+(w.flow==='dissent'&&l.id==='fence'?button(c,'b13-source-change','Revise ordering sample','data-run="'+esc(r.id)+'"',why):''):'')+'</div>'+
+      '<label class="b13-reason">Disposition reason<textarea data-k="reason:'+esc(r.id+':'+l.id)+'" data-b13-reason="'+esc(r.id+':'+l.id)+'" rows="2" placeholder="Explain the inclusion, exclusion, or explicit user choice.">'+esc(reasons.get(r.id+':'+l.id)||'')+'</textarea></label><div class="b13-actions">'+
+      button(c,'b13-decide',l.state==='user_decided'?'Include user decision':'Include researched lead',attrs+' data-kind="include"',why||(!['researched','user_decided'].includes(l.state)?'Research support or an explicit user decision is required':''))+
+      button(c,'b13-decide','Exclude',attrs+' data-kind="exclude"',why||(busy?'Wait for the source check':''))+
+      button(c,'b13-decide','Use as my decision',attrs+' data-kind="user_decided"',why||(['research_pending','stale','dropped'].includes(l.state)?'Refresh or finish the source check first':''))+'</div><small class="b13-quiet">A user choice remains labelled as a choice, never as researched fact.</small></section>';
+  }
+  function workspace(c,r){
+    if(!r?.wonderer)return '<article class="editor-doc"><h1>Wonderer unavailable</h1><p>Start a configured collaborative run first.</p></article>';
+    const w=protocol.refresh(r),g=protocol.convergence(r),esc=c.esc,attrs='data-run="'+esc(r.id)+'"',s=session(r.threadId);
+    const core=r.participants.filter(p=>!p.additiveRoleKind||p.additiveRoleKind==='none');
+    return '<article class="editor-doc b13-workspace" data-wonderer-run="'+esc(r.id)+'"><header class="b13-heading"><small>Wonderer · additive exploration</small><h1>'+esc(w.seed)+'</h1><p>Three connected leads. One existing collaborative run. No automatic promotion.</p></header><div class="b13-stats"><span><strong>'+core.length+'</strong> core roles</span><span><strong>1</strong> Wonderer</span><span><strong>'+g.additions.length+'</strong> included</span><span><strong>'+g.unresolved.length+'</strong> undecided</span></div>'+
+      '<div class="b13-actions">'+button(c,'b13-core',w.corePlayback.status==='playing'?'Core round playing…':w.corePlayback.status==='completed'?'Core round complete':'Play recorded core round',attrs,r.status!=='running'||['playing','completed'].includes(w.corePlayback.status)?'Core round is already running, complete, or unavailable':'')+button(c,'brainstorm-open-results','Core exploration',attrs)+button(c,'collab-pause','Pause',attrs,r.status!=='running'?'Run is not running':'')+button(c,'collab-resume','Resume',attrs,r.status!=='paused'?'Run is not paused':'')+'</div>'+
+      (w.corePlayback.errors.length?'<p class="b13-warning">'+esc(w.corePlayback.errors.join('; '))+'</p>':'')+
+      '<p class="b13-quiet">Built-in Persona + methodology Skill · default ballot: abstain · local sample only · no provider calls or claimed cost.</p>'+
+      w.leads.map(l=>leadCard(c,r,l)).join('')+
+      '<section class="b13-convergence" data-k="convergence:'+esc(r.id)+'"><h2>Bring the work together</h2><p>'+(g.ok?'Every specialist lead has an explicit disposition.':'Resolve '+g.unresolved.length+' specialist lead'+(g.unresolved.length===1?'':'s')+' before synthesis.')+' Core votes and dissent stay separate.</p><p>Core phase: <strong>'+esc(B.phaseLabel(r))+'</strong> · recorded dissent: <strong>'+r.brainstorm.dissent.length+'</strong></p>'+button(c,'collab-brainstorm-synthesize',r.brainstorm.synthesis?'Open Deep Plan':'Synthesize Deep Plan',attrs,!r.brainstorm.synthesis&&(!g.ok||r.brainstorm.phase!=='synthesis'||r.status!=='running')?'Finish the core round and every specialist disposition':'')+'</section>'+
+      '<details class="b13-technical" data-b13-disclosure="'+esc(r.id)+'"'+(disclosures.has(r.id)?' open':'')+' data-k="technical:'+esc(r.id)+'"><summary>Technical details and source-revision exercise</summary><p>Run '+esc(r.id)+' · '+esc(r.status)+' · epoch '+r.stopEpoch+' · definition '+r.definitionRevision+'</p><p>Source checks rejected: '+w.rejected.length+'. Local record history is session-only.</p>'+button(c,'b13-source-change','Revise the ordering sample',attrs,r.status!=='running'?'Run is not running':'')+'<p>Changes the shared artifact version. A pending response must be rejected; an included result becomes stale.</p><pre>'+esc(JSON.stringify({defaultSpecialistVote:w.defaultVote,coreVotes:r.brainstorm.votes,dissent:r.brainstorm.dissent,rejected:w.rejected},null,2))+'</pre></details>'+((s?.guide)?'<p class="b13-quiet">Start with Research local sample. Give every lead an explicit disposition, play the core round, then synthesize. '+button(c,'b13-hide-guide','Dismiss guidance')+'</p>':'')+'</article>';
+  }
+  function lensCard(c){
+    const s=session(),tid=c.thread.id;if(!s)return '';
+    return '<section class="b13-lens-tools" data-k="b13-lens-tools"><h3>Source and effective context</h3><p>Inspect what the local Lens assembler would include. The original conversation is never rewritten.</p><div class="b13-actions">'+button(c,'b13-effective','Inspect effective context')+button(c,'b13-change-message','Revise the ranking source')+'</div><small class="b13-quiet">The revision button edits message 2 in this exercise only; it tests an outdated preview. Other threads are unchanged.</small></section>';
+  }
+  function guide(c){const s=session(c.thread.id);if(!s?.guide)return '';return '<div class="b13-guide" data-k="b13-guide"><div><strong>'+c.esc(flows[s.flow].title)+'</strong><span>'+c.esc(flows[s.flow].kind==='lens'?'Open Lens beside search. Choose a mode, select messages, then preview or seal.':'Configure Wonderer additively, then open the leads workspace. Research alone does not include a lead.')+'</span></div><button class="icon-button" data-action="b13-hide-guide" title="Dismiss guidance">'+c.icon('close',12)+'</button></div>';}
+  E.slot('composerBelow',guide);
+  E.slot('transcriptMessage',c=>{
+    if(c.m?.type==='b13-lens-controls')return lensCard(c);
+    if(c.m?.type!=='b13-wonderer')return '';
+    const r=current(c);return '<section class="b13-entry" data-k="b13-entry"><div>'+c.icon('sparkles',20)+'</div><div><h3>Wonderer · connected leads</h3><p>'+(r?'Hypotheses, source checks, and deliberate choices stay separate from the core vote.':'Configure the additive specialist. Opening the modal starts nothing.')+'</p>'+button(c,r?'b13-open':'b13-configure',r?'Open leads and evidence':'Configure BrainStorm','data-run="'+c.esc(r?.id||'')+'"')+'</div></section>';
+  });
+  E.slot('editorTabLabel',c=>c.editorId?.startsWith('wonderer:')?'Wonderer · leads':c.editorId?.startsWith('wonder-source:')?'Wonderer · source':c.editorId?.startsWith('lens-effective:')?'Effective context':'');
+  E.slot('editorDocument',c=>{
+    if(c.editorId?.startsWith('wonderer:'))return workspace(c,run(c.editorId.slice(9)));
+    if(c.editorId?.startsWith('wonder-source:')){const a=D.artifacts.find(a=>a.id===c.editorId.slice(14));return '<article class="editor-doc b13-source"><small>Shared artifact · current version '+c.esc(a?.version??'unknown')+'</small><h1>'+c.esc(a?.name||'Source unavailable')+'</h1><pre>'+c.esc(a?.status==='active'?a.content:'Source unavailable or revoked.')+'</pre><p>'+c.esc(a?.provenance||'')+'</p></article>';}
+    if(c.editorId?.startsWith('lens-effective:')){const tid=c.editorId.slice(15),f=L.effectiveHistory(tid);return '<article class="editor-doc b13-source"><small>Local Lens assembly · session-only</small><h1>Effective context</h1><p>Read-only projection of selected canonical messages and source-linked summaries. Focus preserves chronology and marks priority; it does not claim a live provider prompt.</p><pre>'+c.esc(JSON.stringify(f,null,2))+'</pre></article>';}
+    return '';
+  });
+  E.action('b13-start',(c,b)=>{start(b.dataset.flow);return true;});
+  E.action('b13-hide-guide',c=>{const s=session();if(s)s.guide=false;refresh();return true;});
+  E.action('b13-open',(c,b)=>{c.openEditor('wonderer:'+b.dataset.run);return true;});
+  E.action('b13-configure',c=>{const s=session();if(s)start(s.flow);return true;});
+  E.action('b13-core',(c,b)=>{playCore(run(b.dataset.run));return true;});
+  E.action('b13-research',(c,b)=>{research(run(b.dataset.run),b.dataset.lead);return true;});
+  E.action('b13-source',(c,b)=>{const l=protocol.lead(run(b.dataset.run),b.dataset.lead);if(l?.artifactId)c.openEditor('wonder-source:'+l.artifactId);return true;});
+  E.action('b13-decide',(c,b)=>{reply(protocol.decide(run(b.dataset.run),b.dataset.lead,b.dataset.kind,reasons.get(b.dataset.run+':'+b.dataset.lead)||''));return true;});
+  E.action('b13-source-change',(c,b)=>{const r=run(b.dataset.run);if(!r||r.status!=='running')return true;const a=D.artifacts.find(a=>a.id===r.wonderer.artifactIds[0]);if(a){const x=JSON.parse(a.content);x.latestRequest++;x.arrivals.unshift({requestId:x.latestRequest,value:'new result'});a.version++;a.content=JSON.stringify(x,null,2);protocol.refresh(r);refresh();}return true;});
+  E.action('b13-effective',c=>{c.openEditor('lens-effective:'+c.thread.id);return true;});
+  E.action('b13-change-message',c=>{const s=session(),m=c.thread.messages.find(m=>m.id===s?.sourceId);if(m){m.body+=' Revision '+(++m.revision)+': preserve rank even when matching is case-insensitive.';L.engine.refresh(c.thread.id);refresh();}return true;});
+  document.addEventListener('toggle',e=>{const id=e.target?.dataset?.b13Disclosure;if(id){if(e.target.open)disclosures.add(id);else disclosures.delete(id);}},true);
+  document.addEventListener('input',e=>{const key=e.target?.dataset?.b13Reason;if(key)reasons.set(key,e.target.value);});
+  E.chainAction('reset-all',()=>{for(const t of clocks.values())clearTimeout(t);clocks.clear();sessions.clear();reasons.clear();disclosures.clear();return false;});
+  const G=window.PM56_REPAIR_DEMOS,previous=G.gallery;
+  G.gallery=c=>'<section class="demo-section"><h3>Context Lens & Wonderer · Batch 13</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b13-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+previous(c);
+  window.PM56_WONDERER={protocol,admit,convergence:r=>protocol.convergence(r),augmentPlan,sourceResult,research,playCore};
+  window.PM56_BATCH13={start,flows,snapshot:tid=>copy(session(tid)||null),currentRun:()=>current(E.ctx())};
+})();
 </script>
   <script>(() => {
   'use strict';
@@ -42859,7 +42587,7 @@ window.PM56_EXT = window.PM56_EXT || {
      ===================================================================== */
   const EXT_SLOTS = ['headerLeading','headerExtras','activityPanelBody','activityHoverCard','threadRowStatus',
     'historyChrome','messageMeta','messageAffordance','messageOverflow','messageOverflowPanel','threadMenu','goalSection','goalEditor',
-    'contextCompactMenu','contextLensMenu','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N',
+    'contextCompactMenu','contextLensMenu','contextLensInline','contextDrawer','dialog','systemCardActions','threadSearchMenu','planEditorActions','questionSurface','workingTake:N',
     /* Assistant-redesign wave. transcriptMessage is a DECLINE-able replace slot: return ''
        and the built-in renderMessage chain runs. composerTray/composerRibbon/composerBelow
        are append slots inside the composer; wandRows and modeRows extend those two menus
@@ -45074,13 +44802,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   // The lens is an in-flow sibling, never a positioned transcript overlay.
   function renderInlineLens(){
-    return state.menu?.type==='lens' ? `<div class="lens-inline" data-k="lens-inline">${extReplace('contextLensMenu',{},'')}</div>` : '';
+    const content=extReplace('contextLensInline',{},'');
+    return content ? `<div class="lens-inline" data-k="lens-inline">${content}</div>` : '';
   }
   function syncInlineLens(){
     const dock=document.querySelector('.lens-dock');
     if(!dock)return;
     pmPatch(dock,renderInlineLens());
-    dock.classList.toggle('is-open',state.menu?.type==='lens');
+    dock.classList.toggle('is-open',!!dock.firstElementChild);
   }
   let lastOverlayPayload='';
   function renderOverlays(){
@@ -45089,7 +44818,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.historyMode==='floating') parts.push(`<aside class="history-flyout" data-history-variant="${state.variants[1]}">${renderHistoryContent(true)}</aside>`);
     if(state.context.details) parts.push(renderContextDrawer());
     if(state.dialog) parts.push(renderDialog());
-    if(state.menu && state.menu.type!=='lens') parts.push(renderMenu());
+    if(state.menu) parts.push(renderMenu());
     syncInlineLens();
     /* Hover tips are synced after the patch so tip-only updates can avoid
        re-patching menus/drawers (which live in this same overlay root). */
@@ -45496,8 +45225,8 @@ recommended path                  migration 0043 + rollback</div></div></section
           const tr=document.querySelector('.transcript')||header;
           const hr=(header||anchor).getBoundingClientRect();
           const trr=tr.getBoundingClientRect();
-          const w=Math.max(280, Math.min(trr.width-16, window.innerWidth-16));
-          const left=clamp(trr.left+8, 8, window.innerWidth-w-8);
+          const w=Math.min(300, window.innerWidth-16);
+          const left=clamp(anchor.getBoundingClientRect().right-w, 8, window.innerWidth-w-8);
           const top=clamp(hr.bottom+4, 8, window.innerHeight-8);
           root.style.left=`${left}px`; root.style.top=`${top}px`; root.style.width=`${w}px`;
           root.style.maxWidth='none';
