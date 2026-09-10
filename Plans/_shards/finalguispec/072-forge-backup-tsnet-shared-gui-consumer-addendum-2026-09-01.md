@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35610-L35693
+Source lines: L35610-L35694
 
-Source SHA256: `627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5`
+Source SHA256: `cc63f403bc68742f39ff0ce856c63220845268b8e168cf9626689d746bdff823`
 
 ---
 
@@ -41,6 +41,7 @@ acceptance_criteria:
   - Provider-neutral regions cover repository/automation context, current checks, pinned definitions, definitions/workflows/pipelines, runs, gates/approvals, stage/job/step detail when supported, logs/trace, artifacts, manual dispatch, runners/secrets/variables, and external/unsupported explanation. Capability refresh never reorders icons or jumps focus.
   - Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates `Origin Actions`.
   - Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`, `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
+  - Restore progress renders the BRS-021 phase-local evidence without inventing future receipts. Only the existing human permission/confirmation flow may display the exact-target emergency alternative after verified recovery-point unavailability; refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback. All command, preview, generation, and evidence rules remain Backup-owned.
   - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
   - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities, export is disclosed as a non-restore artifact, and none activates or executes a Project.
   - Archive retrieval presents capability, wait, possible fee/cost without a hard-coded price, explicit human consent, external-effect/indeterminate outcome, phase-based ObservableWork, cancellation/recovery truth, and exact reverse focus. No billable action starts from visibility or stale projection.

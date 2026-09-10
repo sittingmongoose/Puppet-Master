@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14603,
+    "depends_on_edge_count": 14623,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17251,
-    "node_count": 6439,
+    "edge_count": 17271,
+    "node_count": 6444,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T16:11:40Z",
+  "generated_at_utc": "2026-09-11T16:26:06Z",
   "gui_related_units": {
-    "count": 3106,
+    "count": 3109,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -4576,8 +4576,8 @@
         "source_location": {
           "heading": "BRS-007 - Required Receipts And Post-Restore Readiness",
           "heading_level": 3,
-          "heading_line": 311,
-          "line": 313,
+          "heading_line": 313,
+          "line": 315,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4587,8 +4587,8 @@
         "source_location": {
           "heading": "BRS-008 - Canonical Backup Restore Commands, Events, And UI",
           "heading_level": 3,
-          "heading_line": 349,
-          "line": 351,
+          "heading_line": 351,
+          "line": 353,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4598,8 +4598,8 @@
         "source_location": {
           "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
           "heading_level": 3,
-          "heading_line": 442,
-          "line": 444,
+          "heading_line": 444,
+          "line": 446,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4609,8 +4609,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 893,
-          "line": 895,
+          "heading_line": 909,
+          "line": 911,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4620,8 +4620,8 @@
         "source_location": {
           "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
           "heading_level": 3,
-          "heading_line": 482,
-          "line": 484,
+          "heading_line": 484,
+          "line": 486,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4631,8 +4631,8 @@
         "source_location": {
           "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
           "heading_level": 3,
-          "heading_line": 522,
-          "line": 524,
+          "heading_line": 524,
+          "line": 526,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4642,8 +4642,8 @@
         "source_location": {
           "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
           "heading_level": 3,
-          "heading_line": 563,
-          "line": 565,
+          "heading_line": 565,
+          "line": 567,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4653,8 +4653,8 @@
         "source_location": {
           "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
           "heading_level": 3,
-          "heading_line": 601,
-          "line": 603,
+          "heading_line": 603,
+          "line": 605,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4664,8 +4664,8 @@
         "source_location": {
           "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
           "heading_level": 3,
-          "heading_line": 640,
-          "line": 642,
+          "heading_line": 642,
+          "line": 644,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4675,8 +4675,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 944,
-          "line": 946,
+          "heading_line": 960,
+          "line": 962,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4686,8 +4686,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 987,
-          "line": 989,
+          "heading_line": 1003,
+          "line": 1005,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4697,8 +4697,19 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1031,
-          "line": 1033,
+          "heading_line": 1047,
+          "line": 1049,
+          "path": "Plans/Backup_Restore_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Backup_Restore_System.md",
+        "plan_unit_id": "BRS-021",
+        "source_location": {
+          "heading": "BRS-021 - Phase-Local Restore Evidence And Bound Emergency Consent",
+          "heading_level": 3,
+          "heading_line": 1140,
+          "line": 1142,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -16016,8 +16027,8 @@
         "source_location": {
           "heading": "F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics",
           "heading_level": 3,
-          "heading_line": 35697,
-          "line": 35699,
+          "heading_line": 35698,
+          "line": 35700,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16027,8 +16038,8 @@
         "source_location": {
           "heading": "F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation",
           "heading_level": 3,
-          "heading_line": 35789,
-          "line": 35791,
+          "heading_line": 35790,
+          "line": 35792,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16038,8 +16049,8 @@
         "source_location": {
           "heading": "F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement",
           "heading_level": 3,
-          "heading_line": 35953,
-          "line": 35955,
+          "heading_line": 35954,
+          "line": 35956,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16049,8 +16060,8 @@
         "source_location": {
           "heading": "F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip",
           "heading_level": 3,
-          "heading_line": 36005,
-          "line": 36007,
+          "heading_line": 36006,
+          "line": 36008,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16060,8 +16071,8 @@
         "source_location": {
           "heading": "F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains",
           "heading_level": 3,
-          "heading_line": 36052,
-          "line": 36054,
+          "heading_line": 36053,
+          "line": 36055,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16071,8 +16082,8 @@
         "source_location": {
           "heading": "F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions",
           "heading_level": 3,
-          "heading_line": 36107,
-          "line": 36109,
+          "heading_line": 36108,
+          "line": 36110,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16082,8 +16093,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36568,
+          "heading_line": 36483,
+          "line": 36569,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16093,8 +16104,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36618,
+          "heading_line": 36483,
+          "line": 36619,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16104,8 +16115,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36666,
+          "heading_line": 36483,
+          "line": 36667,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16115,8 +16126,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36713,
+          "heading_line": 36483,
+          "line": 36714,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16126,8 +16137,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36761,
+          "heading_line": 36483,
+          "line": 36762,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16137,8 +16148,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36807,
+          "heading_line": 36483,
+          "line": 36808,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16148,8 +16159,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36853,
+          "heading_line": 36483,
+          "line": 36854,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16159,8 +16170,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36897,
+          "heading_line": 36483,
+          "line": 36898,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16170,8 +16181,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 36482,
-          "line": 36950,
+          "heading_line": 36483,
+          "line": 36951,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16181,8 +16192,8 @@
         "source_location": {
           "heading": "F3-544 - Terminal Capability Shell Context And Snapshot Disclosure",
           "heading_level": 3,
-          "heading_line": 37023,
-          "line": 37025,
+          "heading_line": 37024,
+          "line": 37026,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16192,8 +16203,8 @@
         "source_location": {
           "heading": "F3-545 - Explicit Remote Terminal Compatibility Setup",
           "heading_level": 3,
-          "heading_line": 37082,
-          "line": 37084,
+          "heading_line": 37083,
+          "line": 37085,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16203,8 +16214,8 @@
         "source_location": {
           "heading": "F3-546 - Pane Local Advisory Command Progress",
           "heading_level": 3,
-          "heading_line": 37135,
-          "line": 37137,
+          "heading_line": 37136,
+          "line": 37138,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16214,8 +16225,8 @@
         "source_location": {
           "heading": "F3-547 - Safe Command Insertion And Retained Output Editor Actions",
           "heading_level": 3,
-          "heading_line": 37183,
-          "line": 37185,
+          "heading_line": 37184,
+          "line": 37186,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16225,8 +16236,8 @@
         "source_location": {
           "heading": "F3-548 - Redacted Environment Provenance And Pending Launch Display",
           "heading_level": 3,
-          "heading_line": 37241,
-          "line": 37243,
+          "heading_line": 37242,
+          "line": 37244,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16236,8 +16247,8 @@
         "source_location": {
           "heading": "F3-549 - Explicit Live Pane Input Protection",
           "heading_level": 3,
-          "heading_line": 37295,
-          "line": 37297,
+          "heading_line": 37296,
+          "line": 37298,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16247,8 +16258,8 @@
         "source_location": {
           "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
           "heading_level": 3,
-          "heading_line": 37362,
-          "line": 37364,
+          "heading_line": 37363,
+          "line": 37365,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -16258,8 +16269,8 @@
         "source_location": {
           "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
           "heading_level": 3,
-          "heading_line": 37362,
-          "line": 37437,
+          "heading_line": 37363,
+          "line": 37438,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -26664,8 +26675,8 @@
         "source_location": {
           "heading": "SIR-015 - Full-Thread Admission, Command, And Work Axes",
           "heading_level": 3,
-          "heading_line": 916,
-          "line": 918,
+          "heading_line": 940,
+          "line": 942,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26675,8 +26686,8 @@
         "source_location": {
           "heading": "SIR-019 - Shared Connection-Profile Command Contracts",
           "heading_level": 3,
-          "heading_line": 1084,
-          "line": 1086,
+          "heading_line": 1111,
+          "line": 1113,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26686,8 +26697,8 @@
         "source_location": {
           "heading": "SIR-020 - Verified Installation Selection Contract",
           "heading_level": 3,
-          "heading_line": 1117,
-          "line": 1119,
+          "heading_line": 1144,
+          "line": 1146,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26697,8 +26708,8 @@
         "source_location": {
           "heading": "SIR-021 - Installation Ownership Maintenance Coalescing Persistence And Credential Attachments",
           "heading_level": 3,
-          "heading_line": 1177,
-          "line": 1179,
+          "heading_line": 1204,
+          "line": 1206,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26708,8 +26719,8 @@
         "source_location": {
           "heading": "SIR-023 - Human Step Projection Consumption",
           "heading_level": 3,
-          "heading_line": 1232,
-          "line": 1234,
+          "heading_line": 1259,
+          "line": 1261,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26719,8 +26730,8 @@
         "source_location": {
           "heading": "SIR-024 - Credential Attachment And Provider Binding Commands",
           "heading_level": 3,
-          "heading_line": 1378,
-          "line": 1380,
+          "heading_line": 1405,
+          "line": 1407,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26730,8 +26741,8 @@
         "source_location": {
           "heading": "SIR-025 - Execution Host And Environment Commands",
           "heading_level": 3,
-          "heading_line": 1407,
-          "line": 1409,
+          "heading_line": 1434,
+          "line": 1436,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26741,8 +26752,8 @@
         "source_location": {
           "heading": "SIR-026 - Project Host And Source Location Commands",
           "heading_level": 3,
-          "heading_line": 1436,
-          "line": 1438,
+          "heading_line": 1463,
+          "line": 1465,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26752,8 +26763,8 @@
         "source_location": {
           "heading": "SIR-027 - Installation Ownership Extension Commands",
           "heading_level": 3,
-          "heading_line": 1465,
-          "line": 1467,
+          "heading_line": 1492,
+          "line": 1494,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26763,8 +26774,8 @@
         "source_location": {
           "heading": "SIR-028 - Local Action And Compatibility Normalization Boundary",
           "heading_level": 3,
-          "heading_line": 1494,
-          "line": 1496,
+          "heading_line": 1521,
+          "line": 1523,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26774,8 +26785,8 @@
         "source_location": {
           "heading": "SIR-029 - Shared Connection Sole Future Handlers",
           "heading_level": 3,
-          "heading_line": 1527,
-          "line": 1529,
+          "heading_line": 1554,
+          "line": 1556,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26785,8 +26796,8 @@
         "source_location": {
           "heading": "SIR-030 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1569,
-          "line": 1571,
+          "heading_line": 1596,
+          "line": 1598,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26796,8 +26807,8 @@
         "source_location": {
           "heading": "SIR-031 - DRY Expansion Compatibility And Local-Action Materialization",
           "heading_level": 3,
-          "heading_line": 1620,
-          "line": 1622,
+          "heading_line": 1647,
+          "line": 1649,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26807,8 +26818,8 @@
         "source_location": {
           "heading": "SIR-032 - Post-Integration Shared Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 1726,
-          "line": 1728,
+          "heading_line": 1753,
+          "line": 1755,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26818,8 +26829,8 @@
         "source_location": {
           "heading": "SIR-034 - Backup Shared Primitives And Common External-Effect Envelope",
           "heading_level": 3,
-          "heading_line": 1808,
-          "line": 1810,
+          "heading_line": 1835,
+          "line": 1837,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -26829,8 +26840,30 @@
         "source_location": {
           "heading": "SIR-035 - ConnectionDraft Lifecycle And ACT-148..153 Reconciliation",
           "heading_level": 3,
-          "heading_line": 1875,
-          "line": 1877,
+          "heading_line": 1902,
+          "line": 1904,
+          "path": "Plans/Shared_Integration_Runtime.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-040",
+        "source_location": {
+          "heading": "SIR-040 - Staged Native Startup And Selected-Surface Hydration",
+          "heading_level": 3,
+          "heading_line": 2136,
+          "line": 2138,
+          "path": "Plans/Shared_Integration_Runtime.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-041",
+        "source_location": {
+          "heading": "SIR-041 - Hot Warm Cold Residency And Bounded Representations",
+          "heading_level": 3,
+          "heading_line": 2167,
+          "line": 2169,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -34190,10 +34223,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6439,
+  "plan_unit_count": 6444,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1895,
+      "high": 1900,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35366,6 +35399,7 @@
       "fabricated_command_or_event_registration": 1,
       "fabricated_oauth_readiness_or_distributed_confidential_client_secret": 1,
       "fabricated_participant_output_or_lost_transcript": 1,
+      "fabricated_recovery_or_unscoped_destructive_consent": 1,
       "fabricated_registration": 1,
       "fabricated_reset_time_or_global_auto_resume": 1,
       "fabricated_todo_completion_on_recovery_or_migration": 1,
@@ -36176,6 +36210,7 @@
       "overseer_authority_scope": 1,
       "overseer_review_fit_drift": 1,
       "overseer_scheduler_ownership_drift": 1,
+      "oversubscription_or_critical_path_starvation": 1,
       "owner_adjudication": 1,
       "owner_and_legacy_tier_hazards": 1,
       "owner_audit_and_storage_gap_posture": 1,
@@ -37329,6 +37364,7 @@
       "start_end_verification_lifecycle_ordering": 1,
       "start_end_verification_timing_matrix": 1,
       "start_verification_result_types_categories": 1,
+      "startup_global_hydration_barrier": 1,
       "startup_recovered_wake_drift": 1,
       "state_machine": 1,
       "state_reset_loss": 1,
@@ -37635,6 +37671,7 @@
       "unbounded_autonomous_browsing": 1,
       "unbounded_graph_hydration_or_source_history_identity_conflation": 1,
       "unbounded_injection": 1,
+      "unbounded_memory_or_evidence_loss": 1,
       "unbounded_todo_leaf_or_cyclic_graph": 1,
       "unbounded_tool_output": 1,
       "unification_phase_boundary": 1,
@@ -37666,6 +37703,7 @@
       "unsafe_worktree_reuse": 1,
       "unsubstantiated_efficiency_claim": 1,
       "unsupported_completion_claim": 1,
+      "unsupported_or_unmeasured_optimization": 1,
       "unsupported_persona_control_skip_disclosure": 1,
       "unsupported_runtime_controls_skipped_state": 1,
       "unsustainable_concurrency_or_reserve_starvation": 1,
@@ -37890,7 +37928,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6248,
+      "accepted": 6253,
       "retired": 182,
       "superseded": 9
     },
@@ -37954,10 +37992,10 @@
       "provider_config": 1,
       "provider_surface_contract": 1,
       "provider_taxonomy": 1,
-      "recovery_requirement": 3,
+      "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5141,
+      "requirement": 5145,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38109,261 +38147,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Assistant_Plan_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Back_Seat_Driver.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Collaborative_Workflows.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Commands_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Containers_Registry_and_Unraid.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Cursor_Origin_Integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Jujutsu_Integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/LSPSupport.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Prompt_Pipeline.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Release_Supply_Chain.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Server_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Shared_Integration_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Spec_Lock.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ToDo_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Wiring_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/egolite_retained_requirement_contract_fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/ledger_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/shared_runtime_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure.json"
-      },
-      {
-        "error": "event_authority_currentness_validator_drift",
-        "validator_path": "scripts/pm-event-authority-currentness.py"
-      },
-      {
-        "error": "event_authority_currentness_live_registry_drift"
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/PuppetMaster-worktrees/packet-gap-closure-20260910-local/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "actual_checkpoint": {
