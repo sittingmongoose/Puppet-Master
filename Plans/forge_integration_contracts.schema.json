@@ -1881,7 +1881,14 @@
           "$ref": "#/$defs/provider"
         },
         "repository_binding_ref": {
-          "$ref": "#/$defs/non_empty_string"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          ]
         },
         "requested_authority_role": {
           "$ref": "#/$defs/authority_role"
@@ -1959,6 +1966,9 @@
         },
         "completed_at_utc": {
           "$ref": "#/$defs/timestamp"
+        },
+        "repository_list_scope": {
+          "$ref": "#/$defs/repository_list_scope"
         }
       },
       "allOf": [
@@ -1987,6 +1997,51 @@
             "properties": {
               "event_refs": {
                 "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "repository_list_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.list"
+              },
+              "repository_binding_ref": {
+                "type": "null"
+              },
+              "expected_binding_generation": {
+                "const": 0
+              },
+              "event_refs": {
+                "maxItems": 0
+              },
+              "automation_binding_ref": {
+                "type": "null"
+              },
+              "expected_automation_binding_generation": {
+                "type": "null"
+              },
+              "review_revision_ref": {
+                "type": "null"
+              },
+              "requested_authority_role": {
+                "const": "not_applicable"
+              },
+              "effective_authority_role": {
+                "const": "not_applicable"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_empty_string"
               }
             }
           }
@@ -3410,6 +3465,104 @@
       ],
       "additionalProperties": false
     },
+    "repository_list_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "project_id",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "selected_source_ref",
+        "source_provider_id",
+        "source_route_id",
+        "precommit_authorization_ref",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "initiating_client_id",
+        "return_focus_id",
+        "account_verification_ref",
+        "account_container_ref",
+        "project_draft_revision",
+        "account_generation",
+        "read_only",
+        "creates_repository",
+        "binds_repository",
+        "writes_filesystem",
+        "completes_project_setup"
+      ],
+      "properties": {
+        "scope_kind": {
+          "const": "onboarding_selected_source_account_list"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "selected_source_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "source_provider_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "source_route_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "precommit_authorization_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "return_focus_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "account_verification_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "account_container_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "account_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "read_only": {
+          "const": true
+        },
+        "creates_repository": {
+          "const": false
+        },
+        "binds_repository": {
+          "const": false
+        },
+        "writes_filesystem": {
+          "const": false
+        },
+        "completes_project_setup": {
+          "const": false
+        }
+      }
+    },
     "command_request": {
       "type": "object",
       "required": [
@@ -3467,10 +3620,24 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "repo_id": {
-          "$ref": "#/$defs/non_empty_string"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          ]
         },
         "repository_binding_ref": {
-          "$ref": "#/$defs/non_secret_ref"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
         },
         "expected_binding_generation": {
           "type": "integer",
@@ -3574,6 +3741,9 @@
               "$ref": "#/$defs/browser_handoff"
             }
           ]
+        },
+        "repository_list_scope": {
+          "$ref": "#/$defs/repository_list_scope"
         }
       },
       "allOf": [
@@ -3609,9 +3779,9 @@
             "properties": {
               "command_id": {
                 "enum": [
-                "cmd.forge.repository.create",
-                "cmd.forge.repository.fork",
-                "cmd.forge.mirror.connect",
+                  "cmd.forge.repository.create",
+                  "cmd.forge.repository.fork",
+                  "cmd.forge.mirror.connect",
                   "cmd.forge.mirror.sync",
                   "cmd.forge.mirror.detach",
                   "cmd.forge.review.create",
@@ -3627,13 +3797,13 @@
                   "cmd.forge.review.thread.reopen",
                   "cmd.forge.pipeline.run",
                   "cmd.forge.pipeline.retry",
-                "cmd.forge.pipeline.cancel",
-                "cmd.forge.pipeline.approve",
-                "cmd.forge.repository.policy.apply",
-                "cmd.forge.runner.registration.apply",
-                "cmd.forge.runner.remove",
-                "cmd.forge.release.asset.download",
-                "cmd.forge.webhook.redeliver"
+                  "cmd.forge.pipeline.cancel",
+                  "cmd.forge.pipeline.approve",
+                  "cmd.forge.repository.policy.apply",
+                  "cmd.forge.runner.registration.apply",
+                  "cmd.forge.runner.remove",
+                  "cmd.forge.release.asset.download",
+                  "cmd.forge.webhook.redeliver"
                 ]
               }
             },
@@ -3756,7 +3926,12 @@
             },
             "required": [
               "command_id"
-            ]
+            ],
+            "not": {
+              "required": [
+                "repository_list_scope"
+              ]
+            }
           },
           "then": {
             "properties": {
@@ -4992,7 +5167,12 @@
             },
             "required": [
               "command_id"
-            ]
+            ],
+            "not": {
+              "required": [
+                "repository_list_scope"
+              ]
+            }
           },
           "then": {
             "properties": {
@@ -5002,6 +5182,219 @@
                     "const": "validated_repository_binding"
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "repository_list_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.list"
+              },
+              "repository_binding_ref": {
+                "type": "null"
+              },
+              "expected_binding_generation": {
+                "const": 0
+              },
+              "automation_binding_ref": {
+                "type": "null"
+              },
+              "expected_automation_binding_generation": {
+                "type": "null"
+              },
+              "currentness": {
+                "properties": {
+                  "binding_generation": {
+                    "const": 0
+                  },
+                  "mutation_safety": {
+                    "const": "reads_only"
+                  },
+                  "state": {
+                    "const": "current"
+                  }
+                }
+              },
+              "repo_id": {
+                "type": "null"
+              },
+              "invocation_source": {
+                "const": "gui"
+              },
+              "permission": {
+                "properties": {
+                  "scope": {
+                    "const": "read"
+                  },
+                  "actor_kind": {
+                    "const": "human"
+                  }
+                }
+              },
+              "browser_handoff": {
+                "type": "null"
+              },
+              "file_safe_decision_ref": {
+                "type": "null"
+              },
+              "requested_authority_role": {
+                "const": "not_applicable"
+              },
+              "effective_authority_role": {
+                "const": "not_applicable"
+              },
+              "target": {
+                "properties": {
+                  "target_kind": {
+                    "const": "repository"
+                  },
+                  "identity_source": {
+                    "const": "validated_account_container"
+                  },
+                  "remote_text_used_for_identity": {
+                    "const": false
+                  },
+                  "provider_repository_id": {
+                    "type": "null"
+                  },
+                  "repository_locator_ref": {
+                    "type": "null"
+                  },
+                  "mirror_id": {
+                    "type": "null"
+                  },
+                  "source_binding_ref": {
+                    "type": "null"
+                  },
+                  "destination_binding_ref": {
+                    "type": "null"
+                  },
+                  "authority_resolution_state": {
+                    "type": "null"
+                  },
+                  "provider_review_id": {
+                    "type": "null"
+                  },
+                  "review_revision_ref": {
+                    "type": "null"
+                  },
+                  "thread_id": {
+                    "type": "null"
+                  },
+                  "left_review_revision_ref": {
+                    "type": "null"
+                  },
+                  "right_review_revision_ref": {
+                    "type": "null"
+                  },
+                  "source_revision": {
+                    "type": "null"
+                  },
+                  "target_revision": {
+                    "type": "null"
+                  },
+                  "pipeline_id": {
+                    "type": "null"
+                  },
+                  "pipeline_definition_ref": {
+                    "type": "null"
+                  },
+                  "job_id": {
+                    "type": "null"
+                  },
+                  "delivery_id": {
+                    "type": "null"
+                  },
+                  "connection_id": {
+                    "type": "null"
+                  },
+                  "official_page_route_ref": {
+                    "type": "null"
+                  },
+                  "webhook_redelivery_gate": {
+                    "type": "null"
+                  },
+                  "source_control_handoff_ref": {
+                    "type": "null"
+                  },
+                  "target_namespace": {
+                    "type": "null"
+                  },
+                  "automation_run_id": {
+                    "type": "null"
+                  },
+                  "automation_gate_id": {
+                    "type": "null"
+                  },
+                  "approval_decision": {
+                    "type": "null"
+                  },
+                  "expected_automation_revision": {
+                    "type": "null"
+                  },
+                  "review_head_oid": {
+                    "type": "null"
+                  },
+                  "policy_resource_id": {
+                    "type": "null"
+                  },
+                  "provider_patch_ref": {
+                    "type": "null"
+                  },
+                  "policy_preview_ref": {
+                    "type": "null"
+                  },
+                  "expected_policy_revision": {
+                    "type": "null"
+                  },
+                  "runner_id": {
+                    "type": "null"
+                  },
+                  "registration_preview_ref": {
+                    "type": "null"
+                  },
+                  "execution_host_ref": {
+                    "type": "null"
+                  },
+                  "expected_host_revision": {
+                    "type": "null"
+                  },
+                  "step_up_ref": {
+                    "type": "null"
+                  },
+                  "execution_host_consent_ref": {
+                    "type": "null"
+                  },
+                  "release_id": {
+                    "type": "null"
+                  },
+                  "release_asset_id": {
+                    "type": "null"
+                  },
+                  "download_destination_ref": {
+                    "type": "null"
+                  },
+                  "expected_digest": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "repo_id": {
+                "$ref": "#/$defs/non_empty_string"
               }
             }
           }
@@ -5047,7 +5440,14 @@
           "$ref": "#/$defs/provider"
         },
         "repository_binding_ref": {
-          "$ref": "#/$defs/non_secret_ref"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
         },
         "expected_binding_generation": {
           "type": "integer",
@@ -5148,6 +5548,9 @@
         },
         "completed_at_utc": {
           "$ref": "#/$defs/timestamp"
+        },
+        "repository_list_scope": {
+          "$ref": "#/$defs/repository_list_scope"
         }
       },
       "allOf": [
@@ -5297,6 +5700,42 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "required": [
+              "repository_list_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.list"
+              },
+              "repository_binding_ref": {
+                "type": "null"
+              },
+              "expected_binding_generation": {
+                "const": 0
+              },
+              "event_refs": {
+                "maxItems": 0
+              },
+              "automation_binding_ref": {
+                "type": "null"
+              },
+              "expected_automation_binding_generation": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
         }
       ],
       "additionalProperties": false
@@ -5330,16 +5769,52 @@
           "$ref": "#/$defs/provider"
         },
         "repository_binding_ref": {
-          "$ref": "#/$defs/non_secret_ref"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
         },
         "error": {
           "$ref": "#/$defs/command_error_payload"
         },
         "recorded_at_utc": {
           "$ref": "#/$defs/timestamp"
+        },
+        "repository_list_scope": {
+          "$ref": "#/$defs/repository_list_scope"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "repository_list_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.list"
+              },
+              "repository_binding_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
     },
     "command_availability": {
       "type": "object",
@@ -5365,7 +5840,14 @@
           "$ref": "#/$defs/provider"
         },
         "repository_binding_ref": {
-          "$ref": "#/$defs/non_secret_ref"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
         },
         "expected_binding_generation": {
           "type": "integer",
@@ -5382,9 +5864,51 @@
         },
         "recorded_at_utc": {
           "$ref": "#/$defs/timestamp"
+        },
+        "repository_list_scope": {
+          "$ref": "#/$defs/repository_list_scope"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "repository_list_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.repository.list"
+              },
+              "repository_binding_ref": {
+                "type": "null"
+              },
+              "expected_binding_generation": {
+                "const": 0
+              },
+              "currentness": {
+                "properties": {
+                  "binding_generation": {
+                    "const": 0
+                  },
+                  "mutation_safety": {
+                    "const": "reads_only"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
     },
     "official_page_handoff": {
       "type": "object",

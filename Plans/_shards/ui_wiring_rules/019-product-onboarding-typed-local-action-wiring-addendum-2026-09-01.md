@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L972-L1077
 
-Source SHA256: `9e140e41e7e3015f940c62cdee072627e7ef1d329aea6d9238d561f3db2472f7`
+Source SHA256: `d99b47c5ed93e7148f218743e172c2bce459f1bf91a40b9fe9b4713708c71fee`
 
 ---
 
@@ -22,13 +22,12 @@ The exact current typed-local action census is thirteen:
 Every actionable control emits exactly one of these IDs. They are not `UICommand`s, catalog aliases, handler names,
 EventRecords, or production-wiring rows.
 
-Each action emits one closed `pm.product_onboarding.action_request.v1` carrying the action/session/stage identity,
-expected revision, continuation generation, bounded choice, required `local_context`, optional owner route, actor,
-idempotency key, source surface, and exact return-focus identity. `local_context` contains only normalized, secret-free
-`intent`, optional `review_confirmation`, `scope`, `branch_kind`, `branch_step`, `selection_ref`, `target_ref`, `owner_operation_ref`,
-`owner_branch_ref`, `expanded`, `start_tour`, and `recovery_condition`. It has `additionalProperties=false` semantics:
+Each action emits one closed `pm.product_onboarding.action_request.v2` and consumes the exact PWIZ-021 owner definition
+for session/stage/currentness, local context, phase-specific command/preflight/commit bindings and focus identity.
+`local_context` remains normalized and secret-free; its required/null/gated fields are owned by that schema, not a
+second UI wiring field list. It has `additionalProperties=false` semantics:
 arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected and never logged or
-persisted. It resolves to one `pm.product_onboarding.action_result.v1` carrying
+persisted. It resolves to one `pm.product_onboarding.action_result.v2` carrying
 `status=applied|disabled|rejected`, before/after stage, resulting session status, closed local effect, session-write flag,
 optional continuation snapshot, ephemeral Details state, optional owner route/operation refs,
 `production_receipt_ref=null` for local choreography, `owner_mutation_claimed=false`, exact error/disabled reason, focus
@@ -62,7 +61,7 @@ non-completing Close, and ephemeral Details behavior at their declared
 evidence layers. They do not prove a native Slint controller, native Storage binding, dispatcher/handler execution,
 production persistence, runtime behavior, accessibility certification, motion quality, or visual acceptance.
 
-ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v1, SchemaID:pm.product_onboarding.action_result.v1
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v2, SchemaID:pm.product_onboarding.action_result.v2
 
 ### UIW-015 - Product Onboarding typed-local request/result closure
 
@@ -87,8 +86,9 @@ depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
 unblocks: []
 acceptance_criteria:
   - The exact action census is the thirteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
-  - Every request/result validates against pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 with closed applied, disabled, and rejected outcomes.
-  - local_context is required and closed to intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; missing/additional/arbitrary/raw/secret-bearing context is rejected.
+  - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 with closed applied, disabled, and rejected outcomes.
+  - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit bindings and their gated proofs; the wiring rule does not re-own a field list. Missing/additional/arbitrary/raw/secret-bearing context is rejected.
+  - UI controls preserve the bounded uncreated draft and Settings-owned copy preview until exact Review commit. Precommit routes require current owner-issued read-only or selected-source-auth admission and actual owner request validation; a route/ref string alone grants nothing. Paid-provider then Free Models setup uses the real committed Project; Close/resume/Back neither undo nor repeat its creation. Consume PWIZ-021, PJCT-007, SSYS-036, MACS-005, and MS-122.
   - more_ways stage disclosure and branch-local state updates cannot normalize into each other, and whole-session Skip cannot normalize into optional Project/Remote-Access Skip; exact request fields and result effects/statuses prove the selected variant.
   - Disabled/rejected results have no local effect, write, continuation, owner route, owner operation, or production receipt and expose exact accessible reasons.
   - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
@@ -104,7 +104,7 @@ source_lineage:
   - approved current Product Onboarding source/schema reconciliation
   - Plans/Planning_Wizard.md#PWIZ-021
   - Plans/product_onboarding_contracts.schema.json
-preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v1, pm.product_onboarding.action_result.v1, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
+preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
   - Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected result.

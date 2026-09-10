@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1635-L1886
+Source lines: L1635-L1895
 
-Source SHA256: `8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02`
+Source SHA256: `097faf23fbdf2c72d259b9a885e2eb5cf39a3cc5c8e96ae562f043e8f6ec487d`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02
 
 This addendum compiles first-run onboarding, Doctor/Health, Teacher handoff, and Planning Wizard landing acceptance coverage from bootstrap ledger `pldg-20260701-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
 
-### ATS-020 - Nine-Stage Product Onboarding, Three-Scene Guided Tour, And Doctor Acceptance Tests
+### ATS-020 - Draft And Commit Product Onboarding, Three-Scene Guided Tour, And Doctor Acceptance Tests
 
 ```yaml
 plan_unit_id: ATS-020
@@ -20,14 +20,14 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Automated acceptance coverage enforces the exact nine-stage Product Onboarding main path
-  `welcome`/`simple_path`/`first_project`/`source_control_setup`/`server_storage_client`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`
-  and the exact six-stage connect-existing shortcut
-  `welcome`/`simple_path`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`. Pre-review selections
-  update only the local draft: no external owner work or network probe begins until the person confirms the current
-  Review Setup Plan. Automatic Preparation dispatches the approved plan once through canonical owners and observes real
-  results and receipts. Four-screen/provider-first, five-stage, and superseded seven-stage records migrate with
-  path-correct counts, an unconfirmed Review, and no auto-confirmation or owner-work replay. Guided Tour acceptance
+  Automated acceptance consumes PWIZ-021's exact v2 main, connect-existing and explicit Project Later graphs.
+  First Project selections persist an uncreated draft; Settings copy requires explicit source selection and owner preview.
+  Only owner-authorized read-only preflight or necessary selected-source authentication may run before commit.
+  Exact Review and PJCT-007 binding admit one Project-owner commit chain; actual listed/persisted Project and required
+  owner results then admit paid-provider setup followed by Free Models, including after paid Skip. Close/resume/Back
+  never undo or replay commit. Four-screen/provider-first, five-stage, seven-stage and predecessor nine-stage records
+  migrate with path-correct counts and no auto-confirmation or owner-work replay; unresolved drafts return to unconfirmed
+  Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance
   consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
   `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
   same-answer ELI5, at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
@@ -40,32 +40,34 @@ gui_classification_reason: Validates modal onboarding, optional three-chapter to
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, T-088, T-089, MI-028, MI-029, F2-155]
 unblocks: []
 acceptance_criteria:
-  - Tests verify the exact nine-stage main order `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator nine.
+  - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
   - Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client` are omitted rather than silently executed.
   - Tests enforce the exact thirteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish; `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
-  - Before person confirmation of the current `review_setup_plan` revision, every choice performs a local draft transition or cached read only; tests reject any network probe, owner route, owner operation, mutation, or production receipt before that fence.
+  - Precommit tests reject every owner dispatch except current owner-authorized read-only preflight or necessary selected-source authentication; actual owner request shape/hash, permission, capability, consent, source/draft/revision, Client/Host, focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never authorize work.
   - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}` through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
   - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null` and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none|null` axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than replaces the selected backend.
-  - Existing-forge and signup selections queue only before Review. After confirmation, existing accounts route through connection and sign-in owners; people without accounts can open only the verified official signup page through protected AuthBrowserSession, then return for owner verification. Repository list/create, Git or Jujutsu clone/publish, and final Project registration follow the exact owner sequence and terminal results; Onboarding never claims to create an account.
-  - Forgejo/Gitea Onboarding fixtures cover distinct named instances and provider-specific variants, HTTPS/API base paths, SSH URL/custom port, scoped private-CA and known-host proof refs, cached product/version/API-schema/Git/API/Actions/currentness refs, PAT by default, OAuth PKCE only with a registered instance flow, and no secret bytes. Pre-Review planning performs no network probe, sign-in, trust decision, credential use, repository operation, filesystem mutation, or automation dispatch.
-  - "`server_storage_client` and `remote_access_setup` remain separate progressive stages on the main path; discovery alone never passes trust, explicit pairing is required, identity/certificate mismatch blocks, and restore preserves preview, preflight, verification, rollback, and default secret-exclusion requirements. Their pre-review selections do not begin owner work."
+  - Selected-source first-time sign-in consumes MACS-005 with null pre-existing Project/profile/account/install identities and protected human consent; only the auth owner allocates verified identity. FGI-011 account/container listing has no phantom repository/Project and cannot create/bind/publish. Actual repository and content mutations remain in the exact reviewed Project-owner chain; Onboarding never claims account creation.
+  - Forgejo/Gitea fixtures retain distinct instances/adapters, HTTPS/API base paths, SSH/custom port, scoped CA/known-host refs, product/version/API/Git/Actions currentness, PAT default and registered-flow-only OAuth PKCE. PWIZ-021's necessary-source read/auth admission is tested separately from forbidden precommit trust, repository mutation, filesystem write and automation; no secret bytes enter durable Onboarding state.
+  - "Server/Storage/Client and Remote Access remain independent owner-routed stages. Read-only selected-route discovery is not pairing/trust; identity/certificate mismatch blocks, and restore retains preview/preflight/verification/rollback/default secret exclusion. The source-auth exception cannot bypass Server/Remote Access/Restore mutation fences."
   - "`review_setup_plan` shows the current path, revision, queued choices, consequences, and approved-plan hash. `Confirm and prepare` is person-confirmed, rejects stale/unconfirmed/expanded plans, dispatches the approved work at most once, and adds no redundant confirmation step."
   - Automatic Preparation begins only after that confirmation, uses current owner projections and safe defaults, never silently invents probes or mutations across owner/security boundaries, and leaves provider/tool setup optional and deferrable.
-  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v1` across pending/running/waiting/requires-input/blocked/failed/cancelled/recovery-required/ready states, denominator-bearing and indeterminate progress, exact session/path/local-backend/forge/target/current-review-revision/approved-plan-hash/continuation/generation fencing, and stale rejection without state replacement.
+  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v2` across the owner-defined states/progress modes with exact session/draft/Project-commit/path/target/review/hash/continuation fences; stale results cannot replace state, and this phase cannot begin broad provider setup before actual Project commit.
   - Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections cannot carry production readiness, native execution, or a production receipt.
   - Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted, exported, replayed, or exposed to agents/adapters.
   - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and optional Origin Preview selections without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
-  - Pre-review choices cause zero owner dispatches. A current Review confirmation causes at most one deduplicated dispatch per approved operation, and current terminal owner returns advance Automatic Preparation without repeated Continue/confirm clicks.
+  - Draft choices cause zero mutation. Only exact precommit read/source-auth admission permits those existing owner commands; current Review permits at most one Project commit chain, and matching terminal results advance without repeated Continue/confirm clicks. Tests reject acknowledgement-only, unlisted/unpersisted, wrong-Project/hash and unsettled selected-Settings results as commit proof.
   - Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes Guided Tour secondary and optional; tour terminal behavior is validated against PWIZ-023's default restoration or explicit Keep followed by the real Planning Wizard, and exact Skip restoration.
   - Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler exists.
-  - Request/result fixtures validate pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, no production receipt, and exact error/disabled reasons.
-  - Every request keeps local_context closed to intent, review_confirmation, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; review_confirmation is null outside its gated cases, exact person-confirmed or previously-confirmed proof is required where owner work is admitted, and missing required fields, additional/arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected.
+  - Request/result fixtures validate pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, and exact error/disabled reasons. All local results have no production receipt.
+  - local_context consumes PWIZ-021's closed v2 required/null/gated fields and phase-specific preflight/commit proofs rather than a testing-owned field list; missing, extra, raw, ambiguous and secret-bearing fields fail closed. Exact actual request/result/draft joins are exercised in addition to shape validation.
+  - Draft persistence tests validate every current Session through the deterministic offline existing-family bundle, bind the approved hash to actual bounded draft bytes, reject missing/tampered draft bodies, and fail schema/field/key drift in the standard contract gate. The physical-family and retention-policy denominators remain 88 and 24; this does not prove a native adapter.
+  - Settings tests require source/draft revision, exact eligible/explicit setting sets, exclusions, expiry and preview hash, reject draft apply, and require actual Project rebind plus ordinary current apply. Paid-provider Skip still offers Free Models, both phases require actual commit, and Close/resume/Back preserve that Project and settled phases.
   - Tests separately cover more_ways setup/project disclosure (`toggle_setup_options` plus matching choice/scope and null branch) and branch-local update (`update_branch_state`, null choice, canonical branch), rejecting mixed or ambiguous combinations.
   - Tests separately cover whole-session Skip (`skip_product_onboarding`, product_onboarding, null choice -> session_skipped/skipped) and optional Project/Remote-Access Skip (`skip_optional_scope` plus matching choice/scope/branch -> optional_scope_skipped/active), rejecting cross-normalization and false global skipped state.
   - Defer must durably preserve exact path, stage, draft selections, review revision/confirmation state, independent local-backend and forge selections, active branch, bounded history, continuation generation, initiating Client, and return-focus identity before modal dismissal; resume restores that snapshot. Close is a non-completion dismissal with exact focus return, Skip records an explicit skipped session, and Details opens/closes ephemerally on the same stage with no persistence or owner command.
   - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, the exact stage scope, a stable help-topic selection ref, and exact expanded state; it is keyboard reachable, accessibility-linked, same-stage, ephemeral, non-persistent, and owner-route-free.
   - The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are each rejected as commands, aliases, handlers, and production-wiring rows; the eleven UCC-106 command-era tokens retain their separate source-lineage count.
-  - Durable migration tests cover provider-first/four-screen, predecessor-five-stage, and superseded-seven-stage inputs; map unresolved work into the correct nine-stage or six-stage draft; preserve admissible decisions, warnings, selection axes, and valid owner receipts; require an unconfirmed Review; report exact accepted/stale/dropped/quarantined, per-stage, and per-path counts; reference the sole Storage migration receipt; quarantine secret-bearing input; and never auto-confirm or replay installation, authentication, account/repository creation, publication, pairing, restore, Project, provider, Server, Remote Access, or source-control work. Tour safe-checkpoint persistence/revalidation follows PWIZ-023 separately and cannot replay Onboarding work.
+  - Migration tests cover four/five/seven/nine-stage predecessors using PWIZ-022/SP-252, preserve admissible choices/warnings/real owner results, quarantine secrets, return unresolved drafts to unconfirmed Review, and resume committed rows only with exact per-row revalidated Project/owner refs. Accepted/stale/dropped/quarantined/stage/path/committed-resume counts reconcile and reference the sole Storage migration receipt; nothing auto-confirms or replays domain work. Tour checkpoint rules remain separate under PWIZ-023.
   - Back, Close, Skip, Do this later, Details, stale return, reconnect, interruption, reversal, resize, Reduced Motion, keyboard, focus, and screen-reader cases settle deterministically without false readiness; tests prove automatic first-run return prioritizes the genuinely active non-Home application tab before the Home fallback, exact explicit-initiator return, late-mounted body-sibling inertness and restoration, active stage/branch dialog naming, an inert outgoing layer with no duplicate IDs or focus candidates, transferred-and-cleared close-before-Tour focus ownership plus unavailable/throwing Tour fallback, distinct Basic/Friendly/Glass easing, fixed-bounds modal-window opacity/clipping across live cross-family theme changes, and Retro stepped opacity/translation keyframes with no scale; the flow remains one bounded modal and adds no browser-style Back/breadcrumb chrome.
   - Guided Tour tests enforce the exact three-chapter order `chat_teacher`, `workspace`, `planning_wizard` and every current stable step; both predecessor controllers and v2's Usage-first/Chat-final expectations are migration inputs, not current acceptance.
   - Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption during pre-cue/travel/arrival/settle. None may fabricate an action result.
@@ -86,6 +88,9 @@ validation_surfaces:
   - python3 scripts/pm-new-contracts-verify.py
   - Plans/product_onboarding_contracts.schema.json
   - Plans/product_onboarding_contract_fixtures.json
+  - tests/test_pm_onboarding_phases.py static phase/draft/actual-owner-input/commit/offline-storage checks only
+  - tests/test_pm_settings_draft_transfer.py static explicit-copy/preview/rebind/exclusion checks only
+  - python3 scripts/pm-onboarding-contracts.py --check
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
   - tests/test_pm_guided_tour_v3_contracts.py static v3 positive/negative record coverage only
@@ -101,7 +106,7 @@ validation_surfaces:
   - Concepts/pm7-tools/build_pm7.py final generated-artifact static gate
   - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py
   - future Onboarding/Tour acceptance runner (the scratchpad runner above is predecessor-packet audit only and is not current acceptance)
-  - future native nine-/six-stage Product Onboarding GUI, request/result, review-confirmation fence, owner-return, durable-migration, and no-command-family acceptance suite
+  - future native PWIZ-021 v2 Product Onboarding GUI, draft/copy/preflight/source-auth/Project-commit/paid-free phases, durable continuation/migration and no-command-family acceptance suite
   - future native newbie-first Guided Tour manual/Show Me, safe-resume, callout, focus, Skip-restore, and Finish-layout acceptance suite
   - future Doctor/Health no-false-green fixture suite
 risk_class: first_run_acceptance_gap
@@ -191,6 +196,10 @@ preserved_exact_tokens:
   - "general.visual.reduce-animations"
   - "pm.product_onboarding.action_request.v1"
   - "pm.product_onboarding.action_result.v1"
+  - "pm.product_onboarding.action_request.v2"
+  - "pm.product_onboarding.action_result.v2"
+  - "provider_setup"
+  - "free_models_setup"
   - "pm.guided_tour.action_request.v2"
   - "pm.guided_tour.terminal_result.v2"
   - "local_context"
@@ -228,9 +237,9 @@ preserved_exact_tokens:
   - "fail-closed"
 negative_constraints:
   - Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor no-false-green tests.
-  - Do not restore the predecessor four-screen/provider-first, five-stage, seven-stage, or paid-provider-before-Free-Models choreography as current behavior.
+  - Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Paid-provider then Free Models is now the accepted post-Project-commit order, including Free Models after paid Skip; it does not restore provider-first setup.
   - Do not hide or bypass current `simple_path`, `server_storage_client`, or `review_setup_plan`, or silently execute stages omitted by the connect-existing shortcut.
-  - Do not dispatch any network probe, owner route, mutation, or external work before person confirmation of the current Review Setup Plan revision.
+  - Do not widen narrowly authorized precommit reads/selected-source authentication into Project/repository/filesystem mutation, pairing/trust/enrollment, or broad provider setup; do not infer authorization from shape/ref/availability alone.
   - Do not migrate a predecessor directly into a confirmed Review or Automatic Preparation state, auto-confirm it, replay owner work, or report counts against the wrong current path.
   - Do not register cmd.onboarding.* or treat a local ui.onboarding.* action as a semantic command.
   - Do not register, alias, normalize, wire, or assign a handler to any packet candidate cmd.onboarding.* token.
