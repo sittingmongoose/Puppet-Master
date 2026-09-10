@@ -101,175 +101,505 @@
     "onboarding_motion": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["contract_kind", "plan_unit_ref", "setup_model", "stage_count", "stages", "journey_mode", "connect_existing_stage_count", "connect_existing_stages", "connect_existing_skips", "reverse_back_contract", "navigation_before_apply", "selection_effect", "first_choice_stage", "first_choice_options", "independent_roles", "roles_visible", "role_choice_stage", "theme_choice_stage", "theme_choice_timing", "theme_picker", "safe_history", "remote_access", "choice_help", "review_apply", "owner_action_identity", "owner_projection_only", "private_owner_mutations", "synthetic_onboarding_commands", "max_prominent_choices", "dominant_primary_actions", "hero_ms", "step_transition_ms", "stagger_ms", "microinteraction_ms", "success_ms", "interruptible", "input_blocking", "reduced_motion"],
+      "required": [
+        "contract_kind",
+        "plan_unit_ref",
+        "setup_model",
+        "stage_count",
+        "stages",
+        "journey_mode",
+        "connect_existing_stage_count",
+        "connect_existing_stages",
+        "connect_existing_skips",
+        "reverse_back_contract",
+        "navigation_before_apply",
+        "selection_effect",
+        "first_choice_stage",
+        "first_choice_options",
+        "independent_roles",
+        "roles_visible",
+        "role_choice_stage",
+        "theme_choice_stage",
+        "theme_choice_timing",
+        "theme_picker",
+        "safe_history",
+        "remote_access",
+        "choice_help",
+        "review_apply",
+        "owner_action_identity",
+        "owner_projection_only",
+        "private_owner_mutations",
+        "synthetic_onboarding_commands",
+        "max_prominent_choices",
+        "dominant_primary_actions",
+        "hero_ms",
+        "step_transition_ms",
+        "stagger_ms",
+        "microinteraction_ms",
+        "success_ms",
+        "interruptible",
+        "input_blocking",
+        "reduced_motion",
+        "contract_revision",
+        "project_choices_effect",
+        "settings_choice_owner",
+        "copy_settings_explicit_opt_in",
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind",
+        "precommit_access_owner",
+        "precommit_mutations_except_necessary_selected_source_auth",
+        "project_commit_owner",
+        "paid_provider_stage",
+        "free_models_stage",
+        "provider_setup_requires_actual_project_commit",
+        "free_models_after_paid_ready_or_explicit_skip",
+        "free_models_underlying_provider_owner_setup",
+        "project_later_supported",
+        "close_retains_existing_project_and_exact_phase",
+        "back_replays_commit_or_returns_to_uncreated_draft",
+        "deferred_project_stages",
+        "first_project_prominent_choice_exception"
+      ],
       "properties": {
-        "contract_kind": {"const": "onboarding_motion"},
-        "plan_unit_ref": {"const": "F3-520"},
-        "setup_model": {"const": "reversible_staged_setup_plan"},
-        "stage_count": {"const": 9},
-        "stages": {
-          "type": "array",
-          "prefixItems": [
-            {"const": "welcome"},
-            {"const": "path"},
-            {"const": "project"},
-            {"const": "source"},
-            {"const": "places"},
-            {"const": "access"},
-            {"const": "review"},
-            {"const": "preparing"},
-            {"const": "ready"}
-          ],
-          "items": false,
-          "minItems": 9,
-          "maxItems": 9
+        "contract_kind": {
+          "const": "onboarding_motion"
         },
-        "journey_mode": {"const": "dynamic_path_with_reversible_visited_stages"},
-        "connect_existing_stage_count": {"const": 6},
+        "plan_unit_ref": {
+          "const": "F3-520"
+        },
+        "setup_model": {
+          "const": "draft_then_explicit_project_commit_then_provider_setup"
+        },
+        "stage_count": {
+          "const": 11
+        },
+        "stages": {
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/main_stage_order"
+        },
+        "journey_mode": {
+          "const": "dynamic_path_with_reversible_visited_stages"
+        },
+        "connect_existing_stage_count": {
+          "const": 6
+        },
         "connect_existing_stages": {
-          "type": "array",
-          "prefixItems": [
-            {"const": "welcome"},
-            {"const": "path"},
-            {"const": "access"},
-            {"const": "review"},
-            {"const": "preparing"},
-            {"const": "ready"}
-          ],
-          "items": false,
-          "minItems": 6,
-          "maxItems": 6
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/connect_existing_stage_order"
         },
         "connect_existing_skips": {
-          "type": "array",
-          "prefixItems": [{"const": "project"}, {"const": "source"}, {"const": "places"}],
-          "items": false,
-          "minItems": 3,
-          "maxItems": 3
+          "const": [
+            "first_project",
+            "source_control_setup",
+            "server_storage_client",
+            "provider_setup",
+            "free_models_setup"
+          ]
         },
         "reverse_back_contract": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["action_label", "traversal", "available_before_apply", "preserves_queued_selections"],
+          "required": [
+            "action_label",
+            "traversal",
+            "available_before_apply",
+            "preserves_queued_selections"
+          ],
           "properties": {
-            "action_label": {"const": "Back"},
-            "traversal": {"const": "previous_visited_stage"},
-            "available_before_apply": {"const": true},
-            "preserves_queued_selections": {"const": true}
+            "action_label": {
+              "const": "Back"
+            },
+            "traversal": {
+              "const": "previous_visited_stage"
+            },
+            "available_before_apply": {
+              "const": true
+            },
+            "preserves_queued_selections": {
+              "const": true
+            }
           }
         },
-        "navigation_before_apply": {"const": "back_and_forward_reversible"},
-        "selection_effect": {"const": "queue_only_until_apply"},
-        "first_choice_stage": {"const": "path"},
+        "navigation_before_apply": {
+          "const": "back_and_forward_reversible"
+        },
+        "selection_effect": {
+          "const": "draft_only_with_owner_authorized_read_preflight_or_selected_source_auth"
+        },
+        "first_choice_stage": {
+          "const": "simple_path"
+        },
         "first_choice_options": {
           "type": "array",
-          "prefixItems": [{"const": "start_new_setup"}, {"const": "connect_existing_puppet_master"}],
+          "prefixItems": [
+            {
+              "const": "start_new_setup"
+            },
+            {
+              "const": "connect_existing_puppet_master"
+            }
+          ],
           "items": false,
           "minItems": 2,
           "maxItems": 2
         },
         "independent_roles": {
           "type": "array",
-          "prefixItems": [{"const": "Server"}, {"const": "Storage"}, {"const": "Client"}],
+          "prefixItems": [
+            {
+              "const": "Server"
+            },
+            {
+              "const": "Storage"
+            },
+            {
+              "const": "Client"
+            }
+          ],
           "items": false,
           "minItems": 3,
           "maxItems": 3
         },
-        "roles_visible": {"const": true},
-        "role_choice_stage": {"const": "places"},
-        "theme_choice_stage": {"const": "welcome"},
-        "theme_choice_timing": {"const": "early_before_project_and_infrastructure"},
+        "roles_visible": {
+          "const": true
+        },
+        "role_choice_stage": {
+          "const": "server_storage_client"
+        },
+        "theme_choice_stage": {
+          "const": "welcome"
+        },
+        "theme_choice_timing": {
+          "const": "early_before_project_and_infrastructure"
+        },
         "theme_picker": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["themes", "presentation", "bounded"],
+          "required": [
+            "themes",
+            "presentation",
+            "bounded"
+          ],
           "properties": {
-            "themes": {"$ref": "#/$defs/theme_order"},
-            "presentation": {"const": "modal"},
-            "bounded": {"const": true}
+            "themes": {
+              "$ref": "#/$defs/theme_order"
+            },
+            "presentation": {
+              "const": "modal"
+            },
+            "bounded": {
+              "const": true
+            }
           }
         },
         "safe_history": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["local_history_required", "source_control_backends", "git_role", "jujutsu_role", "filesafe_role", "filesafe_is_source_control_backend", "forge_role", "forge_optional", "forge_does_not_replace_local_history"],
+          "required": [
+            "local_history_required",
+            "source_control_backends",
+            "git_role",
+            "jujutsu_role",
+            "filesafe_role",
+            "filesafe_is_source_control_backend",
+            "forge_role",
+            "forge_optional",
+            "forge_does_not_replace_local_history"
+          ],
           "properties": {
-            "local_history_required": {"const": true},
+            "local_history_required": {
+              "const": true
+            },
             "source_control_backends": {
               "type": "array",
-              "prefixItems": [{"const": "Git"}, {"const": "Jujutsu"}],
+              "prefixItems": [
+                {
+                  "const": "Git"
+                },
+                {
+                  "const": "Jujutsu"
+                }
+              ],
               "items": false,
               "minItems": 2,
               "maxItems": 2
             },
-            "git_role": {"const": "local_source_control_backend"},
-            "jujutsu_role": {"const": "local_source_control_backend"},
-            "filesafe_role": {"const": "independent_local_recovery_history"},
-            "filesafe_is_source_control_backend": {"const": false},
-            "forge_role": {"const": "optional_remote_collaboration"},
-            "forge_optional": {"const": true},
-            "forge_does_not_replace_local_history": {"const": true}
+            "git_role": {
+              "const": "local_source_control_backend"
+            },
+            "jujutsu_role": {
+              "const": "local_source_control_backend"
+            },
+            "filesafe_role": {
+              "const": "independent_local_recovery_history"
+            },
+            "filesafe_is_source_control_backend": {
+              "const": false
+            },
+            "forge_role": {
+              "const": "optional_remote_collaboration"
+            },
+            "forge_optional": {
+              "const": true
+            },
+            "forge_does_not_replace_local_history": {
+              "const": true
+            }
           }
         },
         "remote_access": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["local_group", "remote_options", "remote_link_label", "remote_link_placement"],
+          "required": [
+            "local_group",
+            "remote_options",
+            "remote_link_label",
+            "remote_link_placement"
+          ],
           "properties": {
-            "local_group": {"const": "Local_or_VPN"},
+            "local_group": {
+              "const": "Local_or_VPN"
+            },
             "remote_options": {
               "type": "array",
-              "prefixItems": [{"const": "Tailscale_or_Headscale"}, {"const": "reverse_proxy"}, {"const": "Remote_Link"}],
+              "prefixItems": [
+                {
+                  "const": "Tailscale_or_Headscale"
+                },
+                {
+                  "const": "reverse_proxy"
+                },
+                {
+                  "const": "Remote_Link"
+                }
+              ],
               "items": false,
               "minItems": 3,
               "maxItems": 3
             },
-            "remote_link_label": {"const": "Remote Link"},
-            "remote_link_placement": {"const": "always_visible_remote_choice"}
+            "remote_link_label": {
+              "const": "Remote Link"
+            },
+            "remote_link_placement": {
+              "const": "always_visible_remote_choice"
+            }
           }
         },
         "choice_help": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["component", "target_id", "max_visible", "control_relation", "active_description_relation", "replaces_previous", "expands_peer_sections"],
+          "required": [
+            "component",
+            "target_id",
+            "max_visible",
+            "control_relation",
+            "active_description_relation",
+            "replaces_previous",
+            "expands_peer_sections"
+          ],
           "properties": {
-            "component": {"const": "shared_anchored_explainer"},
-            "target_id": {"const": "pm7ob-explainer"},
-            "max_visible": {"const": 1},
-            "control_relation": {"const": "aria-controls"},
-            "active_description_relation": {"const": "aria-describedby"},
-            "replaces_previous": {"const": true},
-            "expands_peer_sections": {"const": false}
+            "component": {
+              "const": "shared_anchored_explainer"
+            },
+            "target_id": {
+              "const": "pm7ob-explainer"
+            },
+            "max_visible": {
+              "const": 1
+            },
+            "control_relation": {
+              "const": "aria-controls"
+            },
+            "active_description_relation": {
+              "const": "aria-describedby"
+            },
+            "replaces_previous": {
+              "const": true
+            },
+            "expands_peer_sections": {
+              "const": false
+            }
           }
         },
         "review_apply": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["review_stage", "apply_progress_stage", "review_required", "back_available_before_apply", "apply_is_user_initiated", "apply_executes_queued_actions", "ready_requires_apply_settlement"],
+          "required": [
+            "review_stage",
+            "apply_progress_stage",
+            "review_required",
+            "back_available_before_apply",
+            "apply_is_user_initiated",
+            "apply_executes_queued_actions",
+            "ready_requires_apply_settlement"
+          ],
           "properties": {
-            "review_stage": {"const": "review"},
-            "apply_progress_stage": {"const": "preparing"},
-            "review_required": {"const": true},
-            "back_available_before_apply": {"const": true},
-            "apply_is_user_initiated": {"const": true},
-            "apply_executes_queued_actions": {"const": true},
-            "ready_requires_apply_settlement": {"const": true}
+            "review_stage": {
+              "const": "review_setup_plan"
+            },
+            "apply_progress_stage": {
+              "const": "automatic_preparation"
+            },
+            "review_required": {
+              "const": true
+            },
+            "back_available_before_apply": {
+              "const": true
+            },
+            "apply_is_user_initiated": {
+              "const": true
+            },
+            "apply_executes_queued_actions": {
+              "const": true
+            },
+            "ready_requires_apply_settlement": {
+              "const": true
+            }
           }
         },
-        "owner_action_identity": {"const": "canonical_owner_command_or_typed_local_ui_action"},
-        "owner_projection_only": {"const": true},
-        "private_owner_mutations": {"const": false},
-        "synthetic_onboarding_commands": {"const": false},
-        "max_prominent_choices": {"const": 2},
-        "dominant_primary_actions": {"const": 1},
-        "hero_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 1200}, "max": {"const": 1500}}},
-        "step_transition_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 420}, "max": {"const": 560}}},
-        "stagger_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 60}, "max": {"const": 80}}},
-        "microinteraction_ms": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"const": 120}, "max": {"const": 220}}},
-        "success_ms": {"const": 700},
-        "interruptible": {"const": true},
-        "input_blocking": {"const": false},
-        "reduced_motion": {"const": "immediate_or_short_opacity"}
+        "owner_action_identity": {
+          "const": "canonical_owner_command_or_typed_local_ui_action"
+        },
+        "owner_projection_only": {
+          "const": true
+        },
+        "private_owner_mutations": {
+          "const": false
+        },
+        "synthetic_onboarding_commands": {
+          "const": false
+        },
+        "max_prominent_choices": {
+          "const": 2
+        },
+        "first_project_prominent_choice_exception": {"const": 4},
+        "dominant_primary_actions": {
+          "const": 1
+        },
+        "hero_ms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "const": 1200
+            },
+            "max": {
+              "const": 1500
+            }
+          }
+        },
+        "step_transition_ms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "const": 420
+            },
+            "max": {
+              "const": 560
+            }
+          }
+        },
+        "stagger_ms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "const": 60
+            },
+            "max": {
+              "const": 80
+            }
+          }
+        },
+        "microinteraction_ms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "const": 120
+            },
+            "max": {
+              "const": 220
+            }
+          }
+        },
+        "success_ms": {
+          "const": 700
+        },
+        "interruptible": {
+          "const": true
+        },
+        "input_blocking": {
+          "const": false
+        },
+        "reduced_motion": {
+          "const": "immediate_or_short_opacity"
+        },
+        "contract_revision": {
+          "const": "draft-copy-late-project-paid-then-free-2026-09-03"
+        },
+        "project_choices_effect": {
+          "const": "uncreated_project_draft"
+        },
+        "settings_choice_owner": {
+          "const": "Plans/Settings_System.md#SSYS-036"
+        },
+        "copy_settings_explicit_opt_in": {
+          "const": true
+        },
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": {
+          "const": true
+        },
+        "precommit_access_owner": {
+          "const": "Plans/Planning_Wizard.md#PWIZ-021"
+        },
+        "precommit_mutations_except_necessary_selected_source_auth": {
+          "const": false
+        },
+        "project_commit_owner": {
+          "const": "Plans/Project_System.md#PJCT-007"
+        },
+        "paid_provider_stage": {
+          "const": "provider_setup"
+        },
+        "free_models_stage": {
+          "const": "free_models_setup"
+        },
+        "provider_setup_requires_actual_project_commit": {
+          "const": true
+        },
+        "free_models_after_paid_ready_or_explicit_skip": {
+          "const": true
+        },
+        "free_models_underlying_provider_owner_setup": {
+          "const": true
+        },
+        "project_later_supported": {
+          "const": true
+        },
+        "close_retains_existing_project_and_exact_phase": {
+          "const": true
+        },
+        "back_replays_commit_or_returns_to_uncreated_draft": {
+          "const": false
+        },
+        "deferred_project_stages": {
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/deferred_project_stage_order"
+        }
       }
     },
     "guided_tour": {

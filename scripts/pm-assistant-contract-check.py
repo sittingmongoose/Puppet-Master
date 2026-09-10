@@ -8,6 +8,9 @@ unperformed evidence/independent/native review. It does not repair a registry.
 from __future__ import annotations
 import argparse,hashlib,importlib.util,json,re,sys
 from pathlib import Path
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0,str(Path(__file__).resolve().parent))
+from pm_wiring_inventory import command_handler_bindings,wiring_command_excluded
 
 def read(root,path):return json.loads((root/path).read_text())
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -108,7 +111,7 @@ def dimension_observations(row,dimensions):
     return [dict(dimension=d,missing_fields=[k for k in DIMENSION_FIELDS[d]if k not in row or row[k]is None],
                  semantic_review_status='not_run')for d in dimensions]
 
-def whole_wiring_inventory(root, catalogue, wiring, materialized_touch):
+def whole_wiring_inventory(root, catalogue, wiring, materialized_touch, excluded_tokens=()):
     """Account for every wired command without expanding packet Touch scope.
 
     Catalogue mentions include explicit retirement and alias prose. Their mere
@@ -134,8 +137,11 @@ def whole_wiring_inventory(root, catalogue, wiring, materialized_touch):
     commands = []
     errors = []
     checked_references = {}
+    all_handlers = command_handler_bindings(wiring)
     for cid, bindings in sorted(grouped.items()):
-        handlers = sorted({row.get('handler_location', '') for _, row in bindings})
+        handlers = all_handlers[cid]
+        if wiring_command_excluded(cid, excluded_tokens):
+            errors.append({'code': 'whole_wiring_excluded_command_has_peer_row', 'subject': cid, 'detail': [key for key, _ in bindings]})
         if len(handlers) != 1 or not handlers[0]:
             errors.append({'code': 'whole_command_handler_conflict', 'subject': cid, 'detail': handlers})
         if cid not in mentions:
@@ -187,6 +193,7 @@ def check(root):
     from jsonschema import Draft202012Validator
     from referencing import Registry,Resource
     inputs=['Plans/Back_Seat_Driver.md','Plans/assistant-chat-design.md','Plans/settings_inventory.json','Plans/section15_browser_program_contracts.schema.json','Plans/browser_event_payloads.schema.json','Plans/browser_event_admission_candidates.json','Plans/browser_event_admission_candidates.schema.json','scripts/pm-integration-packet-audit.spec.json','Plans/Section15_MVP_Promoted_Features_Spec.md','Plans/UI_Command_Catalog.md','Plans/Wiring_Matrix.production.json','Plans/Wiring_Matrix.schema.json','Plans/touch_closure.json','Plans/event_family_registry.json']
+    inputs.extend(['Plans/Wiring_Matrix.production.exclusions.json','scripts/pm-assistant-contract-check.py','scripts/pm_wiring_inventory.py','Plans/DRY_Rules.md','Plans/Commands_System.md','Plans/UI_Wiring_Rules.md','Plans/Wiring_Matrix.md'])
     missing=[p for p in inputs if not(root/p).is_file()]
     if missing:raise ValueError('required live inputs missing: '+', '.join(missing))
     candidate_path='Plans/browser_event_payload_candidates.schema.json'
@@ -245,7 +252,7 @@ def check(root):
         # Full schema validation is structural, not a proof of any handler.
         gap('wiring_schema',str(list(ex.path)),ex.message)
     materialized=materialize_touch(touch)
-    whole_inventory=whole_wiring_inventory(root,catalogue,wiring,materialized)
+    whole_inventory=whole_wiring_inventory(root,catalogue,wiring,materialized,read(root,'Plans/Wiring_Matrix.production.exclusions.json')['excluded_tokens'])
     errors.extend(whole_inventory['errors'])
     source_hashes.update(whole_inventory['reference_source_hashes'])
     dimensions=read(root,'scripts/pm-integration-packet-audit.spec.json')['touch_closure_dimensions']

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://puppetmaster.local/schemas/product_onboarding/1.0.0/product_onboarding_contracts.schema.json",
+  "$id": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json",
   "title": "Puppet Master Product Onboarding contracts",
-  "description": "Closed Product Onboarding setup-plan, session, continuation, typed UI action, owner-projection, and predecessor-migration contracts for the current nine-stage journey, plus the distinct Bootstrap restore-existing-data preflow handoff and the Remote Access connector projection consumed by Onboarding. The standalone setup plan is a secret-free draft of user choices; session, continuation, and owner-projection records reference its revision and approved SHA-256 instead of embedding it. The Bootstrap preflow is outside the Product Onboarding stage graph.",
+  "description": "Closed Product Onboarding setup-plan, session, continuation, typed UI action, owner-projection, and predecessor-migration contracts for the current eleven-stage semantic journey, plus the distinct Bootstrap restore-existing-data preflow handoff and the Remote Access connector projection consumed by Onboarding. The standalone setup plan is a secret-free draft of user choices; session, continuation, and owner-projection records reference its revision and approved SHA-256 instead of embedding it. The Bootstrap preflow is outside the Product Onboarding stage graph.",
   "x-owner-contract-refs": [
     "Plans/Source_Control_System.md#SCS-013",
     "Plans/source_control_contracts.schema.json#/$defs/repository_context",
@@ -22,7 +22,8 @@
     {"$ref": "#/$defs/automatic_preparation_owner_projection"},
     {"$ref": "#/$defs/bootstrap_restore_existing_pm_data_preflow"},
     {"$ref": "#/$defs/onboarding_connector_owner_projection"},
-    {"$ref": "#/$defs/onboarding_legacy_migration_receipt"}
+    {"$ref": "#/$defs/onboarding_legacy_migration_receipt"},
+    {"$ref": "#/$defs/onboarding_precommit_authorization"}
   ],
   "$defs": {
     "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
@@ -36,23 +37,14 @@
       "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
     },
     "nullable_safe_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
-    "bounded_nonsecret_string": {
-      "type": "string",
-      "maxLength": 160,
-      "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code)).*$"
-    },
+    "bounded_nonsecret_string": {"type": "string", "maxLength": 160, "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code)).*$"},
     "bounded_nonsecret_non_empty_string": {
       "type": "string",
       "minLength": 1,
       "maxLength": 160,
       "pattern": "^(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code)).+$"
     },
-    "https_url": {
-      "type": "string",
-      "minLength": 9,
-      "maxLength": 512,
-      "pattern": "^https://[^\\s/?#]+(?:[/?#][^\\s]*)?$"
-    },
+    "https_url": {"type": "string", "minLength": 9, "maxLength": 512, "pattern": "^https://[^\\s/?#]+(?:[/?#][^\\s]*)?$"},
     "nonsecret_endpoint_ref": {
       "type": "string",
       "minLength": 1,
@@ -140,31 +132,118 @@
         "Product Onboarding records this draft without a network probe, sign-in, repository operation, trust decision, credential use, or filesystem mutation"
       ]
     },
-    "stage": {"enum": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]},
+    "stage": {
+      "enum": [
+        "welcome",
+        "simple_path",
+        "first_project",
+        "source_control_setup",
+        "server_storage_client",
+        "remote_access_setup",
+        "review_setup_plan",
+        "automatic_preparation",
+        "provider_setup",
+        "free_models_setup",
+        "ready"
+      ]
+    },
     "same_stage_transition": {
       "oneOf": [
         {"properties": {"stage_before": {"const": "welcome"}, "stage_after": {"const": "welcome"}}, "required": ["stage_before", "stage_after"]},
         {"properties": {"stage_before": {"const": "simple_path"}, "stage_after": {"const": "simple_path"}}, "required": ["stage_before", "stage_after"]},
         {"properties": {"stage_before": {"const": "first_project"}, "stage_after": {"const": "first_project"}}, "required": ["stage_before", "stage_after"]},
-        {"properties": {"stage_before": {"const": "source_control_setup"}, "stage_after": {"const": "source_control_setup"}}, "required": ["stage_before", "stage_after"]},
-        {"properties": {"stage_before": {"const": "server_storage_client"}, "stage_after": {"const": "server_storage_client"}}, "required": ["stage_before", "stage_after"]},
-        {"properties": {"stage_before": {"const": "remote_access_setup"}, "stage_after": {"const": "remote_access_setup"}}, "required": ["stage_before", "stage_after"]},
-        {"properties": {"stage_before": {"const": "review_setup_plan"}, "stage_after": {"const": "review_setup_plan"}}, "required": ["stage_before", "stage_after"]},
-        {"properties": {"stage_before": {"const": "automatic_preparation"}, "stage_after": {"const": "automatic_preparation"}}, "required": ["stage_before", "stage_after"]},
+        {
+          "properties": {"stage_before": {"const": "source_control_setup"}, "stage_after": {"const": "source_control_setup"}},
+          "required": ["stage_before", "stage_after"]
+        },
+        {
+          "properties": {"stage_before": {"const": "server_storage_client"}, "stage_after": {"const": "server_storage_client"}},
+          "required": ["stage_before", "stage_after"]
+        },
+        {
+          "properties": {"stage_before": {"const": "remote_access_setup"}, "stage_after": {"const": "remote_access_setup"}},
+          "required": ["stage_before", "stage_after"]
+        },
+        {
+          "properties": {"stage_before": {"const": "review_setup_plan"}, "stage_after": {"const": "review_setup_plan"}},
+          "required": ["stage_before", "stage_after"]
+        },
+        {
+          "properties": {"stage_before": {"const": "automatic_preparation"}, "stage_after": {"const": "automatic_preparation"}},
+          "required": ["stage_before", "stage_after"]
+        },
+        {"properties": {"stage_before": {"const": "provider_setup"}, "stage_after": {"const": "provider_setup"}}, "required": ["stage_before", "stage_after"]},
+        {
+          "properties": {"stage_before": {"const": "free_models_setup"}, "stage_after": {"const": "free_models_setup"}},
+          "required": ["stage_before", "stage_after"]
+        },
         {"properties": {"stage_before": {"const": "ready"}, "stage_after": {"const": "ready"}}, "required": ["stage_before", "stage_after"]}
       ]
     },
     "snapshot_matches_stage_after": {
       "oneOf": [
-        {"properties": {"stage_after": {"const": "welcome"}, "continuation_snapshot": {"properties": {"stage": {"const": "welcome"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "simple_path"}, "continuation_snapshot": {"properties": {"stage": {"const": "simple_path"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "first_project"}, "continuation_snapshot": {"properties": {"stage": {"const": "first_project"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "source_control_setup"}, "continuation_snapshot": {"properties": {"stage": {"const": "source_control_setup"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "server_storage_client"}, "continuation_snapshot": {"properties": {"stage": {"const": "server_storage_client"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"stage": {"const": "remote_access_setup"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "review_setup_plan"}, "continuation_snapshot": {"properties": {"stage": {"const": "review_setup_plan"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "automatic_preparation"}, "continuation_snapshot": {"properties": {"stage": {"const": "automatic_preparation"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]},
-        {"properties": {"stage_after": {"const": "ready"}, "continuation_snapshot": {"properties": {"stage": {"const": "ready"}}, "required": ["stage"]}}, "required": ["stage_after", "continuation_snapshot"]}
+        {
+          "properties": {"stage_after": {"const": "welcome"}, "continuation_snapshot": {"properties": {"stage": {"const": "welcome"}}, "required": ["stage"]}},
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {"stage_after": {"const": "simple_path"}, "continuation_snapshot": {"properties": {"stage": {"const": "simple_path"}}, "required": ["stage"]}},
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {"stage_after": {"const": "first_project"}, "continuation_snapshot": {"properties": {"stage": {"const": "first_project"}}, "required": ["stage"]}},
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "source_control_setup"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "source_control_setup"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "server_storage_client"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "server_storage_client"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "remote_access_setup"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "remote_access_setup"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "review_setup_plan"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "review_setup_plan"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "automatic_preparation"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "automatic_preparation"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {"stage_after": {"const": "provider_setup"}, "continuation_snapshot": {"properties": {"stage": {"const": "provider_setup"}}, "required": ["stage"]}},
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {
+            "stage_after": {"const": "free_models_setup"},
+            "continuation_snapshot": {"properties": {"stage": {"const": "free_models_setup"}}, "required": ["stage"]}
+          },
+          "required": ["stage_after", "continuation_snapshot"]
+        },
+        {
+          "properties": {"stage_after": {"const": "ready"}, "continuation_snapshot": {"properties": {"stage": {"const": "ready"}}, "required": ["stage"]}},
+          "required": ["stage_after", "continuation_snapshot"]
+        }
       ]
     },
     "onboarding_setup_plan": {
@@ -229,10 +308,16 @@
         "proxy_hostname",
         "proxy_tls",
         "source_more",
-        "review_confirmed"
+        "review_confirmed",
+        "project_draft_ref",
+        "project_draft_revision",
+        "settings_transfer",
+        "preflight_result_refs",
+        "source_access_authorization_refs",
+        "project_created"
       ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.setup_plan.v1"},
+        "schema_id": {"const": "pm.product_onboarding.setup_plan.v2"},
         "planned_only": {"const": true},
         "applied": {"const": false},
         "journey": {"enum": ["new_or_local", "connect_existing"]},
@@ -251,7 +336,14 @@
         "filesafe": {"type": "boolean"},
         "online_mode": {"enum": ["none", "new", "existing"]},
         "forge": {"enum": ["none", "github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin"]},
-        "forge_provider_variant": {"oneOf": [{"enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]}, {"type": "null"}]},
+        "forge_provider_variant": {
+          "oneOf": [
+            {
+              "enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]
+            },
+            {"type": "null"}
+          ]
+        },
         "forge_instance_url": {"$ref": "#/$defs/bounded_nonsecret_string"},
         "forge_instance_profile": {"oneOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"type": "null"}]},
         "forge_account_action": {"oneOf": [{"enum": ["sign_in_during_setup", "create_account_during_setup", "already_connected"]}, {"type": "null"}]},
@@ -292,9 +384,19 @@
         "proxy_hostname": {"$ref": "#/$defs/bounded_nonsecret_string"},
         "proxy_tls": {"oneOf": [{"enum": ["lets_encrypt", "existing_certificate"]}, {"type": "null"}]},
         "source_more": {"type": "boolean"},
-        "review_confirmed": {"type": "boolean"}
+        "review_confirmed": {"type": "boolean"},
+        "project_draft_ref": {"$ref": "#/$defs/safe_ref"},
+        "project_draft_revision": {"type": "integer", "minimum": 1},
+        "settings_transfer": {"$ref": "#/$defs/onboarding_settings_transfer_selection"},
+        "preflight_result_refs": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "source_access_authorization_refs": {"type": "array", "maxItems": 16, "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "project_created": {"const": false}
       },
       "allOf": [
+        {
+          "if": {"properties": {"settings_transfer": {"properties": {"mode": {"const": "copy_from_project"}}, "required": ["mode"]}}, "required": ["settings_transfer"]},
+          "then": {"properties": {"journey": {"const": "new_or_local"}, "project_mode": {"not": {"const": "later"}}}}
+        },
         {
           "if": {"properties": {"journey": {"const": "connect_existing"}}},
           "then": {
@@ -340,12 +442,14 @@
           "then": {
             "properties": {
               "forge": {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin"]},
-              "forge_provider_variant": {"enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]},
+              "forge_provider_variant": {
+                "enum": ["hosted", "self_managed", "cloud", "data_center", "preview", "forgejo_self_managed", "forgejo_cloud", "gitea_self_managed", "gitea_cloud"]
+              },
               "forge_instance_url": {"$ref": "#/$defs/https_url"},
               "forge_account_action": {"enum": ["sign_in_during_setup", "create_account_during_setup", "already_connected"]},
-              "forge_account_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
+              "forge_account_ref": {"$ref": "#/$defs/bounded_nonsecret_string"},
               "repository_name": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"},
-              "repository_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}
+              "repository_ref": {"$ref": "#/$defs/bounded_nonsecret_string"}
             }
           }
         },
@@ -363,7 +467,13 @@
         },
         {
           "if": {"properties": {"forge": {"const": "azure_devops"}}},
-          "then": {"properties": {"forge_provider_variant": {"enum": ["cloud", "self_managed"]}, "repository_visibility": {"type": "null"}, "repository_project": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+          "then": {
+            "properties": {
+              "forge_provider_variant": {"enum": ["cloud", "self_managed"]},
+              "repository_visibility": {"type": "null"},
+              "repository_project": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}
+            }
+          }
         },
         {
           "if": {"properties": {"forge": {"const": "bitbucket_cloud"}}},
@@ -371,31 +481,94 @@
         },
         {
           "if": {"properties": {"forge": {"const": "bitbucket_data_center"}}},
-          "then": {"properties": {"forge_provider_variant": {"const": "data_center"}, "repository_visibility": {"oneOf": [{"enum": ["private", "public"]}, {"type": "null"}]}}}
+          "then": {
+            "properties": {"forge_provider_variant": {"const": "data_center"}, "repository_visibility": {"oneOf": [{"enum": ["private", "public"]}, {"type": "null"}]}}
+          }
         },
         {
           "if": {"properties": {"forge": {"const": "cursor_origin"}}},
-          "then": {"properties": {"forge_provider_variant": {"const": "preview"}, "forge_instance_url": {"const": "https://origin.cursor.com"}, "repository_visibility": {"enum": ["private", "internal"]}}}
+          "then": {
+            "properties": {
+              "forge_provider_variant": {"const": "preview"},
+              "forge_instance_url": {"const": "https://origin.cursor.com"},
+              "repository_visibility": {"enum": ["private", "internal"]}
+            }
+          }
         },
         {
           "if": {"properties": {"forge": {"const": "forgejo"}}, "required": ["forge"]},
-          "then": {"properties": {"forge_provider_variant": {"enum": ["forgejo_self_managed", "forgejo_cloud"]}, "forge_instance_profile": {"allOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"properties": {"provider": {"const": "forgejo"}, "detected_product": {"const": "forgejo"}}}]}, "repository_visibility": {"enum": ["private", "public", "internal"]}}}
+          "then": {
+            "properties": {
+              "forge_provider_variant": {"enum": ["forgejo_self_managed", "forgejo_cloud"]},
+              "forge_instance_profile": {
+                "allOf": [
+                  {"$ref": "#/$defs/onboarding_forge_instance_profile"},
+                  {"properties": {"provider": {"const": "forgejo"}, "detected_product": {"const": "forgejo"}}}
+                ]
+              },
+              "repository_visibility": {"enum": ["private", "public", "internal"]}
+            }
+          }
         },
         {
           "if": {"properties": {"forge": {"const": "gitea"}}, "required": ["forge"]},
-          "then": {"properties": {"forge_provider_variant": {"enum": ["gitea_self_managed", "gitea_cloud"]}, "forge_instance_profile": {"allOf": [{"$ref": "#/$defs/onboarding_forge_instance_profile"}, {"properties": {"provider": {"const": "gitea"}, "detected_product": {"const": "gitea"}}}]}, "repository_visibility": {"enum": ["private", "public", "internal"]}}}
+          "then": {
+            "properties": {
+              "forge_provider_variant": {"enum": ["gitea_self_managed", "gitea_cloud"]},
+              "forge_instance_profile": {
+                "allOf": [
+                  {"$ref": "#/$defs/onboarding_forge_instance_profile"},
+                  {"properties": {"provider": {"const": "gitea"}, "detected_product": {"const": "gitea"}}}
+                ]
+              },
+              "repository_visibility": {"enum": ["private", "public", "internal"]}
+            }
+          }
         },
         {
           "if": {"properties": {"remote_mode": {"const": "none"}}},
-          "then": {"properties": {"include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"const": ""}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "include_vpn_networks": {"const": false},
+              "tailscale_control": {"type": "null"},
+              "tailscale_account_action": {"type": "null"},
+              "headscale_url": {"const": ""},
+              "remote_endpoint": {"const": ""},
+              "proxy_kind": {"type": "null"},
+              "proxy_hosting": {"type": "null"},
+              "proxy_hostname": {"const": ""},
+              "proxy_tls": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"remote_mode": {"const": "local_or_vpn"}}},
-          "then": {"properties": {"tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "tailscale_control": {"type": "null"},
+              "tailscale_account_action": {"type": "null"},
+              "headscale_url": {"const": ""},
+              "proxy_kind": {"type": "null"},
+              "proxy_hosting": {"type": "null"},
+              "proxy_hostname": {"const": ""},
+              "proxy_tls": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"remote_mode": {"const": "tailscale"}}},
-          "then": {"properties": {"server_connection_mode": {"const": "discover"}, "include_vpn_networks": {"const": false}, "tailscale_control": {"enum": ["hosted", "headscale"]}, "tailscale_account_action": {"enum": ["check_existing_then_sign_in_once", "headscale_enrollment"]}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "server_connection_mode": {"const": "discover"},
+              "include_vpn_networks": {"const": false},
+              "tailscale_control": {"enum": ["hosted", "headscale"]},
+              "tailscale_account_action": {"enum": ["check_existing_then_sign_in_once", "headscale_enrollment"]},
+              "proxy_kind": {"type": "null"},
+              "proxy_hosting": {"type": "null"},
+              "proxy_hostname": {"const": ""},
+              "proxy_tls": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"remote_mode": {"const": "tailscale"}, "tailscale_control": {"const": "hosted"}}},
@@ -407,15 +580,47 @@
         },
         {
           "if": {"properties": {"remote_mode": {"const": "reverse_proxy"}}},
-          "then": {"properties": {"include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"const": ""}, "proxy_hostname": {"$ref": "#/$defs/https_url"}}}
+          "then": {
+            "properties": {
+              "include_vpn_networks": {"const": false},
+              "tailscale_control": {"type": "null"},
+              "tailscale_account_action": {"type": "null"},
+              "headscale_url": {"const": ""},
+              "remote_endpoint": {"const": ""},
+              "proxy_hostname": {"$ref": "#/$defs/https_url"}
+            }
+          }
         },
         {
           "if": {"properties": {"journey": {"const": "connect_existing"}, "remote_mode": {"const": "reverse_proxy"}}},
-          "then": {"properties": {"server_connection_mode": {"const": "manual"}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_tls": {"type": "null"}}}
+          "then": {
+            "properties": {"server_connection_mode": {"const": "manual"}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_tls": {"type": "null"}}
+          }
         },
         {
           "if": {"properties": {"remote_mode": {"const": "remote_link"}}},
-          "then": {"properties": {"server_connection_mode": {"const": "manual"}, "include_vpn_networks": {"const": false}, "tailscale_control": {"type": "null"}, "tailscale_account_action": {"type": "null"}, "headscale_url": {"const": ""}, "remote_endpoint": {"$ref": "#/$defs/nonsecret_endpoint_ref"}, "proxy_kind": {"type": "null"}, "proxy_hosting": {"type": "null"}, "proxy_hostname": {"const": ""}, "proxy_tls": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "server_connection_mode": {"const": "manual"},
+              "include_vpn_networks": {"const": false},
+              "tailscale_control": {"type": "null"},
+              "tailscale_account_action": {"type": "null"},
+              "headscale_url": {"const": ""},
+              "remote_endpoint": {"$ref": "#/$defs/nonsecret_endpoint_ref"},
+              "proxy_kind": {"type": "null"},
+              "proxy_hosting": {"type": "null"},
+              "proxy_hostname": {"const": ""},
+              "proxy_tls": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"forge_account_action": {"const": "already_connected"}}, "required": ["forge_account_action"]},
+          "then": {"properties": {"forge_account_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"online_mode": {"const": "existing"}, "review_confirmed": {"const": true}}, "required": ["online_mode", "review_confirmed"]},
+          "then": {"properties": {"repository_ref": {"$ref": "#/$defs/bounded_nonsecret_non_empty_string"}}}
         }
       ],
       "x-puppet-master-assertions": [
@@ -430,15 +635,35 @@
         "remote_endpoint is a non-secret manual discovery fallback or Puppet Master Remote Link reference; it never contains raw pairing, enrollment, credential, or authentication material",
         "repository_visibility=internal requires a current provider capability projection before dispatch; GitLab hosted means GitLab.com and rejects internal, self_managed GitLab remains capability-probed, Azure DevOps visibility belongs to its project and stays null, and Cursor Origin Preview permits only private or internal",
         "Forgejo and Gitea each require a matching distinct onboarding_forge_instance_profile; forge_instance_url equals that profile's web_base_url and the profile's cached refs cannot be treated as live/current owner proof",
-        "before person confirmation of the exact reviewed queued plan revision, forge/account/repository/automation choices cause no owner dispatch, network probe, authentication, trust decision, credential use, repository operation, or filesystem mutation",
+        "before Project commit confirmation only bounded read-only validation and individually consented selected-source account authentication may run; repository creation, clone, history initialization, settings apply, folder mutation, broad provider setup and Project registration remain forbidden",
         "after confirmation, account connection/authentication, Forge repository list/create/bind, backend-native clone/publish, optional AutomationBinding setup, and Project registration dispatch only through their canonical owners with currentness, permission, FileSafe, idempotency, ObservableWork, and typed terminal returns",
         "AutomationBinding is independent from RepositoryForgeBinding and may name a different provider, instance, account, or host; absence of automation_binding_ref never disables ordinary Git or Jujutsu"
       ]
     },
-    "simple_path_selection": {"description": "Current setup-origin selection made on the canonical simple_path stage and preserved across continuation, owner projection, and migration.", "oneOf": [{"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}, {"type": "null"}]},
+    "simple_path_selection": {
+      "description": "Current setup-origin selection made on the canonical simple_path stage and preserved across continuation, owner projection, and migration.",
+      "oneOf": [{"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}, {"type": "null"}]
+    },
     "onboarding_durable_setup_state_fields": {
       "type": "object",
-      "required": ["path_kind", "queued_setup_plan_ref", "queued_setup_plan_revision", "reviewed_setup_plan_revision", "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref", "active_branch"],
+      "required": [
+        "path_kind",
+        "queued_setup_plan_ref",
+        "queued_setup_plan_revision",
+        "reviewed_setup_plan_revision",
+        "review_confirmation",
+        "approved_setup_plan_sha256",
+        "automatic_preparation_currentness_ref",
+        "active_branch",
+        "project_draft_ref",
+        "project_draft_revision",
+        "project_disposition",
+        "project_commit_binding",
+        "provider_phase_status",
+        "free_models_phase_status",
+        "provider_owner_result_refs",
+        "free_models_owner_result_refs"
+      ],
       "properties": {
         "path_kind": {"oneOf": [{"enum": ["guided_setup", "connect_existing"]}, {"type": "null"}]},
         "queued_setup_plan_ref": {"$ref": "#/$defs/nullable_safe_ref"},
@@ -447,22 +672,218 @@
         "review_confirmation": {"enum": ["unconfirmed", "person_confirmed_reviewed_plan"]},
         "approved_setup_plan_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
         "automatic_preparation_currentness_ref": {"$ref": "#/$defs/nullable_safe_ref"},
-        "active_branch": {"oneOf": [{"$ref": "#/$defs/onboarding_branch_context"}, {"type": "null"}]}
+        "active_branch": {"oneOf": [{"$ref": "#/$defs/onboarding_branch_context"}, {"type": "null"}]},
+        "project_draft_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "project_draft_revision": {"$ref": "#/$defs/nullable_positive_integer"},
+        "project_disposition": {"enum": ["not_selected", "draft", "deferred", "committed", "not_applicable"]},
+        "project_commit_binding": {
+          "oneOf": [
+            {"$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_commit_binding"},
+            {"type": "null"}
+          ]
+        },
+        "provider_phase_status": {"enum": ["not_started", "active", "ready", "skipped", "deferred", "not_applicable"]},
+        "free_models_phase_status": {"enum": ["not_started", "active", "ready", "skipped", "deferred", "not_applicable"]},
+        "provider_owner_result_refs": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+        "free_models_owner_result_refs": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}}
       },
       "allOf": [
-        {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"properties": {"path_kind": {"type": "null"}, "queued_setup_plan_ref": {"type": "null"}, "queued_setup_plan_revision": {"type": "null"}, "reviewed_setup_plan_revision": {"type": "null"}, "review_confirmation": {"const": "unconfirmed"}, "approved_setup_plan_sha256": {"type": "null"}, "automatic_preparation_currentness_ref": {"type": "null"}}}},
-        {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"properties": {"path_kind": {"const": "connect_existing"}}}},
-        {"if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}, "then": {"properties": {"path_kind": {"const": "guided_setup"}}}},
-        {"if": {"properties": {"path_kind": {"const": "connect_existing"}}}, "then": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}, "stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}},
-        {"if": {"properties": {"path_kind": {"const": "guided_setup"}}}, "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}},
-        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}, "then": {"properties": {"path_kind": {"enum": ["guided_setup", "connect_existing"]}, "queued_setup_plan_ref": {"$ref": "#/$defs/safe_ref"}, "queued_setup_plan_revision": {"type": "integer", "minimum": 1}}}},
+        {
+          "if": {"properties": {"simple_path_selection": {"type": "null"}}},
+          "then": {
+            "properties": {
+              "path_kind": {"type": "null"},
+              "queued_setup_plan_ref": {"type": "null"},
+              "queued_setup_plan_revision": {"type": "null"},
+              "reviewed_setup_plan_revision": {"type": "null"},
+              "review_confirmation": {"const": "unconfirmed"},
+              "approved_setup_plan_sha256": {"type": "null"},
+              "automatic_preparation_currentness_ref": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}},
+          "then": {"properties": {"path_kind": {"const": "connect_existing"}}}
+        },
+        {
+          "if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}},
+          "then": {"properties": {"path_kind": {"const": "guided_setup"}}}
+        },
+        {
+          "if": {"properties": {"path_kind": {"const": "connect_existing"}}},
+          "then": {
+            "properties": {
+              "simple_path_selection": {"const": "connect_existing_server"},
+              "stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"path_kind": {"const": "guided_setup"}}},
+          "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup",
+                  "ready"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "path_kind": {"enum": ["guided_setup", "connect_existing"]},
+              "queued_setup_plan_ref": {"$ref": "#/$defs/safe_ref"},
+              "queued_setup_plan_revision": {"type": "integer", "minimum": 1}
+            }
+          }
+        },
         {"if": {"properties": {"queued_setup_plan_ref": {"type": "null"}}}, "then": {"properties": {"queued_setup_plan_revision": {"type": "null"}}}},
         {"if": {"properties": {"queued_setup_plan_revision": {"type": "null"}}}, "then": {"properties": {"queued_setup_plan_ref": {"type": "null"}}}},
-        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}}}, "then": {"properties": {"review_confirmation": {"const": "unconfirmed"}}}},
-        {"if": {"properties": {"review_confirmation": {"const": "unconfirmed"}}}, "then": {"properties": {"reviewed_setup_plan_revision": {"type": "null"}, "approved_setup_plan_sha256": {"type": "null"}, "automatic_preparation_currentness_ref": {"type": "null"}}}},
-        {"if": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}}}, "then": {"properties": {"stage": {"enum": ["review_setup_plan", "automatic_preparation", "ready"]}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}}}},
+        {
+          "if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}}},
+          "then": {"properties": {"review_confirmation": {"const": "unconfirmed"}}}
+        },
+        {
+          "if": {"properties": {"review_confirmation": {"const": "unconfirmed"}}},
+          "then": {
+            "properties": {
+              "reviewed_setup_plan_revision": {"type": "null"},
+              "approved_setup_plan_sha256": {"type": "null"},
+              "automatic_preparation_currentness_ref": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}}},
+          "then": {
+            "properties": {
+              "stage": {"enum": ["review_setup_plan", "automatic_preparation", "provider_setup", "free_models_setup", "ready"]},
+              "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1},
+              "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        },
         {"if": {"properties": {"stage": {"const": "review_setup_plan"}}}, "then": {"properties": {"automatic_preparation_currentness_ref": {"type": "null"}}}},
-        {"if": {"properties": {"stage": {"enum": ["automatic_preparation", "ready"]}}}, "then": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}, "automatic_preparation_currentness_ref": {"$ref": "#/$defs/safe_ref"}}}}
+        {
+          "if": {"properties": {"stage": {"enum": ["automatic_preparation", "provider_setup", "free_models_setup", "ready"]}}},
+          "then": {
+            "properties": {
+              "review_confirmation": {"const": "person_confirmed_reviewed_plan"},
+              "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1},
+              "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"},
+              "automatic_preparation_currentness_ref": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"stage": {"enum": ["provider_setup", "free_models_setup"]}}, "required": ["stage"]},
+          "then": {
+            "properties": {
+              "project_disposition": {"const": "committed"},
+              "project_commit_binding": {"$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_commit_binding"},
+              "path_kind": {"const": "guided_setup"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"project_disposition": {"const": "committed"}}, "required": ["project_disposition"]},
+          "then": {
+            "properties": {
+              "project_commit_binding": {"$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_commit_binding"},
+              "stage": {"enum": ["automatic_preparation", "provider_setup", "free_models_setup", "ready"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"project_disposition": {"enum": ["not_selected", "draft", "deferred", "not_applicable"]}}, "required": ["project_disposition"]},
+          "then": {"properties": {"project_commit_binding": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"stage": {"const": "free_models_setup"}}, "required": ["stage"]},
+          "then": {"properties": {"provider_phase_status": {"enum": ["ready", "skipped"]}}}
+        },
+        {
+          "if": {"properties": {"stage": {"const": "ready"}, "project_disposition": {"const": "committed"}}, "required": ["stage", "project_disposition"]},
+          "then": {"properties": {"provider_phase_status": {"enum": ["ready", "skipped"]}, "free_models_phase_status": {"enum": ["ready", "skipped"]}}}
+        },
+        {
+          "if": {"properties": {"project_disposition": {"const": "deferred"}}, "required": ["project_disposition"]},
+          "then": {"properties": {"provider_phase_status": {"const": "deferred"}, "free_models_phase_status": {"const": "deferred"}}}
+        },
+        {
+          "if": {"properties": {"path_kind": {"const": "connect_existing"}}, "required": ["path_kind"]},
+          "then": {
+            "properties": {
+              "project_disposition": {"const": "not_applicable"},
+              "provider_phase_status": {"const": "not_applicable"},
+              "free_models_phase_status": {"const": "not_applicable"},
+              "project_commit_binding": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"project_draft_ref": {"type": "null"}}, "required": ["project_draft_ref"]},
+          "then": {"properties": {"project_draft_revision": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"project_draft_revision": {"type": "null"}}, "required": ["project_draft_revision"]},
+          "then": {"properties": {"project_draft_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"project_disposition": {"enum": ["draft", "committed"]}}, "required": ["project_disposition"]},
+          "then": {"properties": {"project_draft_ref": {"$ref": "#/$defs/safe_ref"}, "project_draft_revision": {"type": "integer", "minimum": 1}}}
+        },
+        {
+          "if": {"properties": {"provider_phase_status": {"enum": ["active", "ready", "skipped"]}}, "required": ["provider_phase_status"]},
+          "then": {"properties": {"project_disposition": {"const": "committed"}}}
+        },
+        {
+          "if": {"properties": {"provider_phase_status": {"const": "ready"}}, "required": ["provider_phase_status"]},
+          "then": {"properties": {"provider_owner_result_refs": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"free_models_phase_status": {"enum": ["active", "ready", "skipped"]}}, "required": ["free_models_phase_status"]},
+          "then": {"properties": {"project_disposition": {"const": "committed"}}}
+        },
+        {
+          "if": {"properties": {"free_models_phase_status": {"const": "ready"}}, "required": ["free_models_phase_status"]},
+          "then": {"properties": {"free_models_owner_result_refs": {"minItems": 1}}}
+        },
+        {
+          "if": {
+            "properties": {"active_branch": {"type": "object", "properties": {"owner_phase": {"const": "postcommit_provider"}}, "required": ["owner_phase"]}},
+            "required": ["active_branch"]
+          },
+          "then": {"properties": {"stage": {"const": "provider_setup"}, "project_disposition": {"const": "committed"}}}
+        },
+        {
+          "if": {
+            "properties": {"active_branch": {"type": "object", "properties": {"owner_phase": {"const": "postcommit_free_models"}}, "required": ["owner_phase"]}},
+            "required": ["active_branch"]
+          },
+          "then": {"properties": {"stage": {"const": "free_models_setup"}, "project_disposition": {"const": "committed"}}}
+        },
+        {
+          "if": {
+            "properties": {"active_branch": {"type": "object", "properties": {"owner_phase": {"const": "project_commit"}}, "required": ["owner_phase"]}},
+            "required": ["active_branch"]
+          },
+          "then": {
+            "properties": {"stage": {"enum": ["review_setup_plan", "automatic_preparation"]}, "review_confirmation": {"const": "person_confirmed_reviewed_plan"}}
+          }
+        }
       ],
       "x-puppet-master-assertions": [
         "person_confirmed_reviewed_plan requires reviewed_setup_plan_revision == queued_setup_plan_revision; consumers must reject a mismatch because standard JSON Schema cannot express equality between sibling instance values",
@@ -480,33 +901,178 @@
       "oneOf": [
         {"properties": {"stage": {"const": "welcome"}, "history": {"const": ["welcome"]}}, "required": ["stage", "history"]},
         {"properties": {"stage": {"const": "simple_path"}, "history": {"const": ["welcome", "simple_path"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "first_project"}, "history": {"const": ["welcome", "simple_path", "first_project"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "source_control_setup"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "server_storage_client"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "remote_access_setup"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "review_setup_plan"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "automatic_preparation"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "ready"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}, "required": ["stage", "history"]}
+        {
+          "properties": {"stage": {"const": "first_project"}, "history": {"const": ["welcome", "simple_path", "first_project"]}},
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {"stage": {"const": "source_control_setup"}, "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup"]}},
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "server_storage_client"},
+            "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client"]}
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "remote_access_setup"},
+            "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "review_setup_plan"},
+            "history": {"const": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan"]}
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "automatic_preparation"},
+            "history": {
+              "const": [
+                "welcome",
+                "simple_path",
+                "first_project",
+                "source_control_setup",
+                "server_storage_client",
+                "remote_access_setup",
+                "review_setup_plan",
+                "automatic_preparation"
+              ]
+            }
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "provider_setup"},
+            "history": {
+              "const": [
+                "welcome",
+                "simple_path",
+                "first_project",
+                "source_control_setup",
+                "server_storage_client",
+                "remote_access_setup",
+                "review_setup_plan",
+                "automatic_preparation",
+                "provider_setup"
+              ]
+            }
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "free_models_setup"},
+            "history": {
+              "const": [
+                "welcome",
+                "simple_path",
+                "first_project",
+                "source_control_setup",
+                "server_storage_client",
+                "remote_access_setup",
+                "review_setup_plan",
+                "automatic_preparation",
+                "provider_setup",
+                "free_models_setup"
+              ]
+            }
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "ready"},
+            "history": {
+              "const": [
+                "welcome",
+                "simple_path",
+                "first_project",
+                "source_control_setup",
+                "server_storage_client",
+                "remote_access_setup",
+                "review_setup_plan",
+                "automatic_preparation",
+                "provider_setup",
+                "free_models_setup",
+                "ready"
+              ]
+            },
+            "project_disposition": {"const": "committed"}
+          },
+          "required": ["stage", "history", "project_disposition"]
+        },
+        {
+          "properties": {"stage": {"const": "ready"}, "history": {"$ref": "#/$defs/deferred_project_stage_order"}, "project_disposition": {"const": "deferred"}},
+          "required": ["stage", "history", "project_disposition"]
+        }
       ]
     },
     "connect_existing_path_continuation": {
       "oneOf": [
         {"properties": {"stage": {"const": "welcome"}, "history": {"const": ["welcome"]}}, "required": ["stage", "history"]},
         {"properties": {"stage": {"const": "simple_path"}, "history": {"const": ["welcome", "simple_path"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "remote_access_setup"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "review_setup_plan"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "automatic_preparation"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}}, "required": ["stage", "history"]},
-        {"properties": {"stage": {"const": "ready"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}, "required": ["stage", "history"]}
+        {
+          "properties": {"stage": {"const": "remote_access_setup"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup"]}},
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {"stage": {"const": "review_setup_plan"}, "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan"]}},
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "automatic_preparation"},
+            "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}
+          },
+          "required": ["stage", "history"]
+        },
+        {
+          "properties": {
+            "stage": {"const": "ready"},
+            "history": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}
+          },
+          "required": ["stage", "history"]
+        }
       ]
     },
     "scm_backend_selection": {"oneOf": [{"enum": ["git", "jujutsu"]}, {"type": "null"}]},
-    "forge_provider_selection": {"oneOf": [{"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "none"]}, {"type": "null"}]},
+    "forge_provider_selection": {
+      "oneOf": [
+        {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "none"]},
+        {"type": "null"}
+      ]
+    },
     "onboarding_branch_context": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["branch_kind", "branch_step", "selection_ref", "target_ref", "expected_revision", "continuation_generation", "owner_operation_id", "owner_branch_ref", "initiating_client_id", "return_stage", "return_focus_id", "pending_owner_action_id"],
+      "required": [
+        "branch_kind",
+        "branch_step",
+        "selection_ref",
+        "target_ref",
+        "expected_revision",
+        "continuation_generation",
+        "owner_operation_id",
+        "owner_branch_ref",
+        "initiating_client_id",
+        "return_stage",
+        "return_focus_id",
+        "pending_owner_action_id",
+        "owner_phase",
+        "owner_command_id",
+        "precommit_authorization_ref",
+        "project_commit_ref"
+      ],
       "properties": {
-        "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]},
+        "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access", "free-models"]},
         "branch_step": {"$ref": "#/$defs/non_empty_string"},
         "selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "target_ref": {"$ref": "#/$defs/safe_ref"},
@@ -517,18 +1083,92 @@
         "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
         "return_stage": {"$ref": "#/$defs/stage"},
         "return_focus_id": {"$ref": "#/$defs/safe_ref"},
-        "pending_owner_action_id": {"$ref": "#/$defs/nullable_safe_ref"}
+        "pending_owner_action_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "owner_phase": {"oneOf": [{"$ref": "#/$defs/owner_phase"}, {"type": "null"}]},
+        "owner_command_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "precommit_authorization_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "project_commit_ref": {"$ref": "#/$defs/nullable_safe_ref"}
       }
     },
     "onboarding_local_action_context": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["intent", "scope", "branch_kind", "branch_step", "selection_ref", "target_ref", "owner_operation_ref", "owner_branch_ref", "expanded", "start_tour", "recovery_condition"],
+      "required": [
+        "intent",
+        "scope",
+        "branch_kind",
+        "branch_step",
+        "selection_ref",
+        "target_ref",
+        "owner_operation_ref",
+        "owner_branch_ref",
+        "expanded",
+        "start_tour",
+        "recovery_condition",
+        "owner_phase",
+        "owner_command_id",
+        "precommit_authorization_ref",
+        "project_commit_ref",
+        "setup_commit_binding"
+      ],
       "properties": {
-        "intent": {"enum": ["start", "resume", "advance", "retry_concept_preview", "return", "dismiss", "skip_product_onboarding", "skip_optional_scope", "defer", "toggle_stage_details", "toggle_choice_explanation", "toggle_setup_options", "update_branch_state", "choose_simple_path", "open_owner_flow", "owner_route_preview", "automatic_preparation", "choose_first_project", "finish"]},
+        "intent": {
+          "enum": [
+            "start",
+            "resume",
+            "advance",
+            "retry_concept_preview",
+            "return",
+            "dismiss",
+            "skip_product_onboarding",
+            "skip_optional_scope",
+            "defer",
+            "toggle_stage_details",
+            "toggle_choice_explanation",
+            "toggle_setup_options",
+            "update_branch_state",
+            "choose_simple_path",
+            "open_owner_flow",
+            "owner_route_preview",
+            "automatic_preparation",
+            "choose_first_project",
+            "finish"
+          ]
+        },
         "review_confirmation": {"oneOf": [{"enum": ["person_confirmed_reviewed_plan", "previously_confirmed_reviewed_plan"]}, {"type": "null"}]},
-        "scope": {"oneOf": [{"enum": ["product_onboarding", "setup_options", "project_options", "welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready", "local_safe_history", "online_copy", "remote_access", "server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, {"type": "null"}]},
-        "branch_kind": {"oneOf": [{"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, {"type": "null"}]},
+        "scope": {
+          "oneOf": [
+            {
+              "enum": [
+                "product_onboarding",
+                "setup_options",
+                "project_options",
+                "welcome",
+                "simple_path",
+                "first_project",
+                "source_control_setup",
+                "server_storage_client",
+                "remote_access_setup",
+                "review_setup_plan",
+                "automatic_preparation",
+                "ready",
+                "local_safe_history",
+                "online_copy",
+                "remote_access",
+                "server-connect",
+                "server-claim",
+                "source-control",
+                "provider",
+                "project",
+                "remote-access",
+                "provider_setup",
+                "free_models_setup"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
+        "branch_kind": {"oneOf": [{"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access", "free-models"]}, {"type": "null"}]},
         "branch_step": {"$ref": "#/$defs/nullable_safe_ref"},
         "selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "target_ref": {"$ref": "#/$defs/nullable_safe_ref"},
@@ -536,13 +1176,35 @@
         "owner_branch_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "expanded": {"oneOf": [{"type": "boolean"}, {"type": "null"}]},
         "start_tour": {"oneOf": [{"type": "boolean"}, {"type": "null"}]},
-        "recovery_condition": {"oneOf": [{"enum": ["offline", "error"]}, {"type": "null"}]}
+        "recovery_condition": {"oneOf": [{"enum": ["offline", "error"]}, {"type": "null"}]},
+        "owner_phase": {"oneOf": [{"$ref": "#/$defs/owner_phase"}, {"type": "null"}]},
+        "owner_command_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "precommit_authorization_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "project_commit_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "setup_commit_binding": {
+          "oneOf": [
+            {"$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/onboarding_project_setup_binding"},
+            {"type": "null"}
+          ]
+        }
       }
     },
     "onboarding_continuation_snapshot": {
       "type": "object",
       "unevaluatedProperties": false,
-      "required": ["onboarding_session_id", "stage", "simple_path_selection", "scm_backend_selection", "forge_provider_selection", "active_branch", "history", "revision", "continuation_generation", "initiating_client_id", "return_focus_id"],
+      "required": [
+        "onboarding_session_id",
+        "stage",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "active_branch",
+        "history",
+        "revision",
+        "continuation_generation",
+        "initiating_client_id",
+        "return_focus_id"
+      ],
       "properties": {
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "stage": {"$ref": "#/$defs/stage"},
@@ -560,16 +1222,38 @@
         {"$ref": "#/$defs/onboarding_durable_setup_state_fields"},
         {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"$ref": "#/$defs/unselected_path_continuation"}},
         {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"$ref": "#/$defs/connect_existing_path_continuation"}},
-        {"if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}, "then": {"$ref": "#/$defs/main_path_continuation"}}
+        {
+          "if": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}},
+          "then": {"$ref": "#/$defs/main_path_continuation"}
+        }
       ]
     },
     "onboarding_return_context": {
       "type": "object",
       "unevaluatedProperties": false,
-      "required": ["schema_id", "schema_version", "return_context_id", "onboarding_session_id", "stage", "simple_path_selection", "owner_route_ref", "project_id", "server_id", "execution_host_id", "execution_environment_id", "owner_operation_id", "expected_revision", "continuation_generation", "initiating_client_id", "client_handoff_policy", "return_focus_id", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "return_context_id",
+        "onboarding_session_id",
+        "stage",
+        "simple_path_selection",
+        "owner_route_ref",
+        "project_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "owner_operation_id",
+        "expected_revision",
+        "continuation_generation",
+        "initiating_client_id",
+        "client_handoff_policy",
+        "return_focus_id",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.return_context.v1"},
-        "schema_version": {"const": "1.0.0"},
+        "schema_id": {"const": "pm.product_onboarding.return_context.v2"},
+        "schema_version": {"const": "2.0.0"},
         "return_context_id": {"$ref": "#/$defs/safe_ref"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "stage": {"$ref": "#/$defs/stage"},
@@ -592,10 +1276,31 @@
     "onboarding_session": {
       "type": "object",
       "unevaluatedProperties": false,
-      "required": ["schema_id", "schema_version", "onboarding_session_id", "project_id", "stage", "status", "simple_path_selection", "scm_backend_selection", "forge_provider_selection", "active_branch", "provider_selection_ref", "project_selection_ref", "owner_operation_refs", "warning_codes", "revision", "continuation_generation", "return_context", "guided_tour_handoff_ref", "updated_at_utc"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "onboarding_session_id",
+        "project_id",
+        "stage",
+        "status",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "active_branch",
+        "provider_selection_ref",
+        "project_selection_ref",
+        "owner_operation_refs",
+        "warning_codes",
+        "revision",
+        "continuation_generation",
+        "return_context",
+        "guided_tour_handoff_ref",
+        "updated_at_utc",
+        "setup_draft"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.session.v1"},
-        "schema_version": {"const": "1.0.0"},
+        "schema_id": {"const": "pm.product_onboarding.session.v2"},
+        "schema_version": {"const": "2.0.0"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "project_id": {"$ref": "#/$defs/nullable_safe_ref"},
         "stage": {"$ref": "#/$defs/stage"},
@@ -612,31 +1317,147 @@
         "continuation_generation": {"type": "integer", "minimum": 1},
         "return_context": {"oneOf": [{"$ref": "#/$defs/onboarding_return_context"}, {"type": "null"}]},
         "guided_tour_handoff_ref": {"$ref": "#/$defs/nullable_safe_ref"},
-        "updated_at_utc": {"type": "string", "format": "date-time"}
+        "updated_at_utc": {"type": "string", "format": "date-time"},
+        "setup_draft": {"oneOf": [{"$ref": "#/$defs/onboarding_setup_plan"}, {"type": "null"}]}
       },
       "allOf": [
         {"$ref": "#/$defs/onboarding_durable_setup_state_fields"},
         {"if": {"properties": {"status": {"const": "completed"}}}, "then": {"properties": {"stage": {"const": "ready"}}}},
         {"if": {"properties": {"status": {"const": "deferred"}}}, "then": {"properties": {"return_context": {"$ref": "#/$defs/onboarding_return_context"}}}},
-        {"if": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}, "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}},
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup",
+                  "ready"
+                ]
+              }
+            }
+          },
+          "then": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}
+        },
         {"if": {"properties": {"simple_path_selection": {"type": "null"}}}, "then": {"properties": {"stage": {"enum": ["welcome", "simple_path"]}}}},
-        {"if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}, "then": {"properties": {"stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}}
+        {
+          "if": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}},
+          "then": {"properties": {"stage": {"enum": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}}}
+        },
+        {
+          "if": {"properties": {"queued_setup_plan_ref": {"type": "null"}}, "required": ["queued_setup_plan_ref"]},
+          "then": {"properties": {"setup_draft": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"queued_setup_plan_ref": {"$ref": "#/$defs/safe_ref"}}, "required": ["queued_setup_plan_ref"]},
+          "then": {"properties": {"setup_draft": {"$ref": "#/$defs/onboarding_setup_plan"}}}
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "setup_draft is the closed bounded typed choice snapshot, not a raw plan/transcript; its exact canonical bytes and draft identity/revision match the queued/reviewed plan binding. Return contexts and continuation projections retain references, not duplicate bodies."
       ]
     },
     "onboarding_action_request": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "action_id", "action_instance_id", "onboarding_session_id", "stage", "expected_revision", "continuation_generation", "choice", "local_context", "owner_route_ref", "actor_ref", "idempotency_key", "source_surface", "return_focus_id"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "action_instance_id",
+        "onboarding_session_id",
+        "stage",
+        "expected_revision",
+        "continuation_generation",
+        "choice",
+        "local_context",
+        "owner_route_ref",
+        "actor_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_focus_id"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.action_request.v1"},
-        "schema_version": {"const": "1.0.0"},
-        "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.open_details", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]},
+        "schema_id": {"const": "pm.product_onboarding.action_request.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "action_id": {
+          "enum": [
+            "ui.onboarding.start",
+            "ui.onboarding.next",
+            "ui.onboarding.back",
+            "ui.onboarding.close",
+            "ui.onboarding.skip",
+            "ui.onboarding.defer",
+            "ui.onboarding.open_details",
+            "ui.onboarding.more_ways",
+            "ui.onboarding.choose_simple_path",
+            "ui.onboarding.open_owner_flow",
+            "ui.onboarding.run_automatic_preparation",
+            "ui.onboarding.choose_first_project",
+            "ui.onboarding.finish"
+          ]
+        },
         "action_instance_id": {"$ref": "#/$defs/safe_ref"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "stage": {"$ref": "#/$defs/stage"},
         "expected_revision": {"type": "integer", "minimum": 1},
         "continuation_generation": {"type": "integer", "minimum": 1},
-        "choice": {"oneOf": [{"enum": ["start_on_this_computer", "other_setup_options", "connect_existing_server", "setup_server", "restore_backup", "detected_provider", "setup_provider", "skip_provider", "open_detected_project", "create_project", "open_local_project", "open_online_project", "clone_project", "jj_project", "ssh_project", "restore_project", "skip_project", "local_safe_history_git", "local_safe_history_jujutsu", "keep_local_only", "add_online_copy", "forge_github", "forge_gitlab", "forge_azure_devops", "forge_bitbucket_cloud", "forge_bitbucket_data_center", "forge_forgejo", "forge_gitea", "forge_cursor_origin", "forge_sign_in", "forge_create_account", "forge_create_repository", "server_this_computer", "server_connect_existing", "server_setup_new", "remote_access_enable", "skip_remote_access", "other_project_options", "guided_tour", "enter_puppet_master"]}, {"type": "null"}]},
+        "choice": {
+          "oneOf": [
+            {
+              "enum": [
+                "start_on_this_computer",
+                "other_setup_options",
+                "connect_existing_server",
+                "setup_server",
+                "restore_backup",
+                "detected_provider",
+                "setup_provider",
+                "skip_provider",
+                "open_detected_project",
+                "create_project",
+                "open_local_project",
+                "open_online_project",
+                "clone_project",
+                "jj_project",
+                "ssh_project",
+                "restore_project",
+                "skip_project",
+                "local_safe_history_git",
+                "local_safe_history_jujutsu",
+                "keep_local_only",
+                "add_online_copy",
+                "forge_github",
+                "forge_gitlab",
+                "forge_azure_devops",
+                "forge_bitbucket_cloud",
+                "forge_bitbucket_data_center",
+                "forge_forgejo",
+                "forge_gitea",
+                "forge_cursor_origin",
+                "forge_sign_in",
+                "forge_create_account",
+                "forge_create_repository",
+                "server_this_computer",
+                "server_connect_existing",
+                "server_setup_new",
+                "remote_access_enable",
+                "skip_remote_access",
+                "other_project_options",
+                "guided_tour",
+                "enter_puppet_master",
+                "setup_free_models",
+                "skip_free_models"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
         "local_context": {"$ref": "#/$defs/onboarding_local_action_context"},
         "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "actor_ref": {"$ref": "#/$defs/safe_ref"},
@@ -655,11 +1476,43 @@
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.next"}}},
-          "then": {"properties": {"stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "local_context": {"properties": {"intent": {"enum": ["advance", "retry_concept_preview"]}}}}}
+          "then": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup"
+                ]
+              },
+              "local_context": {"properties": {"intent": {"enum": ["advance", "retry_concept_preview"]}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.back"}}},
-          "then": {"properties": {"stage": {"enum": ["simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "local_context": {"properties": {"intent": {"const": "return"}}}}}
+          "then": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "simple_path",
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "free_models_setup"
+                ]
+              },
+              "local_context": {"properties": {"intent": {"const": "return"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.close"}}},
@@ -670,7 +1523,9 @@
           "then": {"properties": {"local_context": {"properties": {"intent": {"enum": ["skip_product_onboarding", "skip_optional_scope"]}}}}}
         },
         {
-          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"enum": ["skip_project", "skip_remote_access"]}}},
+          "if": {
+            "properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"enum": ["skip_project", "skip_remote_access", "skip_provider", "skip_free_models"]}}
+          },
           "then": {"properties": {"local_context": {"properties": {"intent": {"const": "skip_optional_scope"}}}}}
         },
         {
@@ -679,15 +1534,27 @@
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "local_context": {"properties": {"intent": {"const": "skip_optional_scope"}}}}},
-          "then": {"properties": {"choice": {"enum": ["skip_project", "skip_remote_access"]}, "local_context": {"properties": {"scope": {"enum": ["first_project", "remote_access"]}}}}}
+          "then": {
+            "properties": {
+              "choice": {"enum": ["skip_project", "skip_remote_access", "skip_provider", "skip_free_models"]},
+              "local_context": {"properties": {"scope": {"enum": ["first_project", "remote_access", "provider_setup", "free_models_setup"]}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_project"}}},
-          "then": {"properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"scope": {"const": "first_project"}, "branch_kind": {"const": "project"}}}}}
+          "then": {
+            "properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"scope": {"const": "first_project"}, "branch_kind": {"const": "project"}}}}
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_remote_access"}}},
-          "then": {"properties": {"stage": {"const": "remote_access_setup"}, "local_context": {"properties": {"scope": {"const": "remote_access"}, "branch_kind": {"const": "remote-access"}}}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "remote_access_setup"},
+              "local_context": {"properties": {"scope": {"const": "remote_access"}, "branch_kind": {"const": "remote-access"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.defer"}}},
@@ -695,15 +1562,43 @@
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}}},
-          "then": {"properties": {"local_context": {"properties": {"intent": {"enum": ["toggle_stage_details", "toggle_choice_explanation"]}, "branch_kind": {"type": "null"}}}}}
+          "then": {
+            "properties": {"local_context": {"properties": {"intent": {"enum": ["toggle_stage_details", "toggle_choice_explanation"]}, "branch_kind": {"type": "null"}}}}
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "local_context": {"properties": {"intent": {"const": "toggle_stage_details"}}}}},
           "then": {"properties": {"local_context": {"properties": {"scope": {"type": "null"}, "selection_ref": {"type": "null"}}}}}
         },
         {
-          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "local_context": {"properties": {"intent": {"const": "toggle_choice_explanation"}}}}},
-          "then": {"properties": {"local_context": {"properties": {"scope": {"enum": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]}, "selection_ref": {"$ref": "#/$defs/safe_ref"}, "expanded": {"type": "boolean"}}}}}
+          "if": {
+            "properties": {"action_id": {"const": "ui.onboarding.open_details"}, "local_context": {"properties": {"intent": {"const": "toggle_choice_explanation"}}}}
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "scope": {
+                    "enum": [
+                      "welcome",
+                      "simple_path",
+                      "first_project",
+                      "source_control_setup",
+                      "server_storage_client",
+                      "remote_access_setup",
+                      "review_setup_plan",
+                      "automatic_preparation",
+                      "ready",
+                      "provider_setup",
+                      "free_models_setup"
+                    ]
+                  },
+                  "selection_ref": {"$ref": "#/$defs/safe_ref"},
+                  "expanded": {"type": "boolean"}
+                }
+              }
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}}},
@@ -711,35 +1606,108 @@
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "local_context": {"properties": {"intent": {"const": "update_branch_state"}}}}},
-          "then": {"properties": {"choice": {"type": "null"}, "local_context": {"properties": {"branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}}}}}
+          "then": {
+            "properties": {
+              "choice": {"type": "null"},
+              "local_context": {
+                "properties": {"branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access", "free-models"]}}
+              }
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}}}}},
-          "then": {"properties": {"choice": {"enum": ["other_setup_options", "other_project_options"]}, "local_context": {"properties": {"scope": {"enum": ["setup_options", "project_options"]}, "branch_kind": {"type": "null"}}}}}
+          "then": {
+            "properties": {
+              "choice": {"enum": ["other_setup_options", "other_project_options"]},
+              "local_context": {"properties": {"scope": {"enum": ["setup_options", "project_options"]}, "branch_kind": {"type": "null"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "choice": {"const": "other_setup_options"}}},
-          "then": {"properties": {"stage": {"const": "simple_path"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "setup_options"}}}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "simple_path"},
+              "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "setup_options"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.more_ways"}, "choice": {"const": "other_project_options"}}},
-          "then": {"properties": {"stage": {"const": "first_project"}, "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "project_options"}}}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "first_project"},
+              "local_context": {"properties": {"intent": {"const": "toggle_setup_options"}, "scope": {"const": "project_options"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.choose_simple_path"}}},
-          "then": {"properties": {"stage": {"const": "simple_path"}, "choice": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}, "owner_route_ref": {"type": "null"}, "local_context": {"properties": {"intent": {"const": "choose_simple_path"}, "scope": {"const": "simple_path"}}}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "simple_path"},
+              "choice": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]},
+              "owner_route_ref": {"type": "null"},
+              "local_context": {"properties": {"intent": {"const": "choose_simple_path"}, "scope": {"const": "simple_path"}}}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}}},
-          "then": {"properties": {"stage": {"enum": ["review_setup_plan", "automatic_preparation"]}, "owner_route_ref": {"$ref": "#/$defs/safe_ref"}, "local_context": {"properties": {"intent": {"const": "open_owner_flow"}, "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access"]}, "target_ref": {"$ref": "#/$defs/safe_ref"}}, "required": ["review_confirmation"]}}}
+          "then": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup"
+                ]
+              },
+              "owner_route_ref": {"$ref": "#/$defs/safe_ref"},
+              "local_context": {
+                "properties": {
+                  "intent": {"const": "open_owner_flow"},
+                  "branch_kind": {"enum": ["server-connect", "server-claim", "source-control", "provider", "project", "remote-access", "free-models"]},
+                  "target_ref": {"$ref": "#/$defs/safe_ref"}
+                }
+              }
+            }
+          }
         },
         {
-          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "review_setup_plan"}}},
-          "then": {"properties": {"local_context": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}, "owner_operation_ref": {"type": "null"}}}}}
+          "if": {
+            "properties": {
+              "action_id": {"const": "ui.onboarding.open_owner_flow"},
+              "stage": {"const": "review_setup_plan"},
+              "local_context": {"properties": {"owner_phase": {"const": "project_commit"}}, "required": ["owner_phase"]}
+            }
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}, "owner_operation_ref": {"type": "null"}},
+                "required": ["review_confirmation"]
+              }
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "automatic_preparation"}}},
-          "then": {"properties": {"source_surface": {"enum": ["resume", "owner_return"]}, "local_context": {"properties": {"review_confirmation": {"const": "previously_confirmed_reviewed_plan"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}}}
+          "then": {
+            "properties": {
+              "source_surface": {"enum": ["resume", "owner_return"]},
+              "local_context": {
+                "properties": {"review_confirmation": {"const": "previously_confirmed_reviewed_plan"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}},
+                "required": ["review_confirmation"]
+              }
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.run_automatic_preparation"}}},
@@ -752,6 +1720,162 @@
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.finish"}}},
           "then": {"properties": {"stage": {"const": "ready"}, "local_context": {"properties": {"intent": {"const": "finish"}}}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {"const": "ui.onboarding.open_owner_flow"},
+              "stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup"]}
+            },
+            "required": ["action_id", "stage"]
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "owner_phase": {"enum": ["read_only_preflight", "selected_source_auth"]},
+                  "precommit_authorization_ref": {"$ref": "#/$defs/safe_ref"},
+                  "owner_command_id": {
+                    "enum": [
+                      "cmd.project.refresh",
+                      "cmd.settings.transaction.preview",
+                      "cmd.server.discovery.refresh",
+                      "cmd.forge.repository.list",
+                      "cmd.auth_profile.sign_in",
+                      "cmd.auth_profile.open_official_page"
+                    ]
+                  },
+                  "project_commit_ref": {"type": "null"},
+                  "review_confirmation": {"type": "null"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "provider_setup"}}, "required": ["action_id", "stage"]},
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "owner_phase": {"const": "postcommit_provider"},
+                  "project_commit_ref": {"$ref": "#/$defs/safe_ref"},
+                  "owner_command_id": {"$ref": "#/$defs/safe_ref"},
+                  "branch_kind": {"const": "provider"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "free_models_setup"}}, "required": ["action_id", "stage"]},
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "owner_phase": {"const": "postcommit_free_models"},
+                  "project_commit_ref": {"$ref": "#/$defs/safe_ref"},
+                  "owner_command_id": {"$ref": "#/$defs/safe_ref"},
+                  "branch_kind": {"const": "free-models"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_provider"}}, "required": ["action_id", "choice"]},
+          "then": {
+            "properties": {
+              "stage": {"const": "provider_setup"},
+              "local_context": {"properties": {"scope": {"const": "provider_setup"}, "branch_kind": {"const": "provider"}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.skip"}, "choice": {"const": "skip_free_models"}}, "required": ["action_id", "choice"]},
+          "then": {
+            "properties": {
+              "stage": {"const": "free_models_setup"},
+              "local_context": {"properties": {"scope": {"const": "free_models_setup"}, "branch_kind": {"const": "free-models"}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "review_setup_plan"}}, "required": ["action_id", "stage"]},
+          "then": {"properties": {"local_context": {"properties": {"owner_phase": {"enum": ["read_only_preflight", "selected_source_auth", "project_commit"]}}}}}
+        },
+        {
+          "if": {
+            "properties": {"action_id": {"const": "ui.onboarding.open_owner_flow"}, "stage": {"const": "automatic_preparation"}},
+            "required": ["action_id", "stage"]
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "owner_phase": {"const": "project_commit"},
+                  "setup_commit_binding": {
+                    "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/onboarding_project_setup_binding"
+                  }
+                },
+                "required": ["review_confirmation"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {"const": "ui.onboarding.open_owner_flow"},
+              "local_context": {"properties": {"owner_phase": {"const": "project_commit"}}, "required": ["owner_phase"]}
+            },
+            "required": ["action_id", "local_context"]
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "setup_commit_binding": {
+                    "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/onboarding_project_setup_binding"
+                  },
+                  "owner_command_id": {"$ref": "#/$defs/safe_ref"},
+                  "precommit_authorization_ref": {"type": "null"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "ui.onboarding.next"}, "stage": {"const": "review_setup_plan"}}, "required": ["action_id", "stage"]},
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "review_confirmation": {"const": "person_confirmed_reviewed_plan"},
+                  "setup_commit_binding": {
+                    "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/onboarding_project_setup_binding"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {"const": "ui.onboarding.open_owner_flow"},
+              "local_context": {"properties": {"owner_phase": {"enum": ["read_only_preflight", "selected_source_auth"]}}, "required": ["owner_phase"]}
+            },
+            "required": ["action_id", "local_context"]
+          },
+          "then": {
+            "properties": {
+              "stage": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan"]},
+              "local_context": {
+                "properties": {"precommit_authorization_ref": {"$ref": "#/$defs/safe_ref"}, "setup_commit_binding": {"type": "null"}, "project_commit_ref": {"type": "null"}}
+              }
+            }
+          }
         }
       ]
     },
@@ -760,24 +1884,82 @@
       "description": "Closed result/error envelope for a typed Product Onboarding local action. Local choreography never claims domain-owner mutation or a production receipt.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "action_id", "action_instance_id", "onboarding_session_id", "status", "stage_before", "stage_after", "session_status_after", "local_effect", "onboarding_session_written", "continuation_snapshot", "details_open_after", "owner_route_ref", "owner_operation_ref", "production_receipt_ref", "owner_mutation_claimed", "error_code", "disabled_reason", "return_focus_id", "revision", "continuation_generation"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "action_instance_id",
+        "onboarding_session_id",
+        "status",
+        "stage_before",
+        "stage_after",
+        "session_status_after",
+        "local_effect",
+        "onboarding_session_written",
+        "continuation_snapshot",
+        "details_open_after",
+        "owner_route_ref",
+        "owner_operation_ref",
+        "production_receipt_ref",
+        "owner_mutation_claimed",
+        "error_code",
+        "disabled_reason",
+        "return_focus_id",
+        "revision",
+        "continuation_generation"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.action_result.v1"},
-        "schema_version": {"const": "1.0.0"},
-        "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.open_details", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]},
+        "schema_id": {"const": "pm.product_onboarding.action_result.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "action_id": {
+          "enum": [
+            "ui.onboarding.start",
+            "ui.onboarding.next",
+            "ui.onboarding.back",
+            "ui.onboarding.close",
+            "ui.onboarding.skip",
+            "ui.onboarding.defer",
+            "ui.onboarding.open_details",
+            "ui.onboarding.more_ways",
+            "ui.onboarding.choose_simple_path",
+            "ui.onboarding.open_owner_flow",
+            "ui.onboarding.run_automatic_preparation",
+            "ui.onboarding.choose_first_project",
+            "ui.onboarding.finish"
+          ]
+        },
         "action_instance_id": {"$ref": "#/$defs/safe_ref"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "status": {"enum": ["applied", "disabled", "rejected"]},
         "stage_before": {"$ref": "#/$defs/stage"},
         "stage_after": {"$ref": "#/$defs/stage"},
         "session_status_after": {"enum": ["active", "interrupted", "deferred", "skipped", "completed", "cancelled"]},
-        "local_effect": {"enum": ["none", "session_started", "advanced", "returned", "session_closed", "session_deferred", "session_skipped", "optional_scope_skipped", "disclosure_opened", "disclosure_closed", "branch_state_updated", "simple_path_selected", "owner_flow_opened", "automatic_preparation_started", "first_project_selected", "finished"]},
+        "local_effect": {
+          "enum": [
+            "none",
+            "session_started",
+            "advanced",
+            "returned",
+            "session_closed",
+            "session_deferred",
+            "session_skipped",
+            "optional_scope_skipped",
+            "disclosure_opened",
+            "disclosure_closed",
+            "branch_state_updated",
+            "simple_path_selected",
+            "owner_flow_opened",
+            "automatic_preparation_started",
+            "first_project_selected",
+            "finished"
+          ]
+        },
         "onboarding_session_written": {"type": "boolean"},
         "continuation_snapshot": {"oneOf": [{"$ref": "#/$defs/onboarding_continuation_snapshot"}, {"type": "null"}]},
         "details_open_after": {"type": "boolean"},
         "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "owner_operation_ref": {"$ref": "#/$defs/nullable_safe_ref"},
-        "production_receipt_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "production_receipt_ref": {"type": "null"},
         "owner_mutation_claimed": {"const": false},
         "error_code": {"$ref": "#/$defs/nullable_string"},
         "disabled_reason": {"$ref": "#/$defs/nullable_string"},
@@ -786,57 +1968,142 @@
         "continuation_generation": {"type": "integer", "minimum": 1}
       },
       "allOf": [
-        {
-          "if": {"properties": {"status": {"const": "applied"}}},
-          "then": {"properties": {"error_code": {"type": "null"}, "disabled_reason": {"type": "null"}}}
-        },
+        {"if": {"properties": {"status": {"const": "applied"}}}, "then": {"properties": {"error_code": {"type": "null"}, "disabled_reason": {"type": "null"}}}},
         {
           "if": {"properties": {"status": {"enum": ["disabled", "rejected"]}}},
-          "then": {"properties": {"error_code": {"$ref": "#/$defs/non_empty_string"}, "disabled_reason": {"$ref": "#/$defs/non_empty_string"}, "local_effect": {"const": "none"}, "onboarding_session_written": {"const": false}, "continuation_snapshot": {"type": "null"}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "error_code": {"$ref": "#/$defs/non_empty_string"},
+              "disabled_reason": {"$ref": "#/$defs/non_empty_string"},
+              "local_effect": {"const": "none"},
+              "onboarding_session_written": {"const": false},
+              "continuation_snapshot": {"type": "null"},
+              "owner_route_ref": {"type": "null"},
+              "owner_operation_ref": {"type": "null"},
+              "production_receipt_ref": {"type": "null"}
+            }
+          }
         },
-        {
-          "if": {"properties": {"status": {"enum": ["disabled", "rejected"]}}},
-          "then": {"$ref": "#/$defs/same_stage_transition"}
-        },
+        {"if": {"properties": {"status": {"enum": ["disabled", "rejected"]}}}, "then": {"$ref": "#/$defs/same_stage_transition"}},
         {
           "if": {"properties": {"onboarding_session_written": {"const": true}}},
           "then": {"$ref": "#/$defs/snapshot_matches_stage_after", "properties": {"continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}}}
         },
+        {"if": {"properties": {"onboarding_session_written": {"const": false}}}, "then": {"properties": {"continuation_snapshot": {"type": "null"}}}},
         {
-          "if": {"properties": {"onboarding_session_written": {"const": false}}},
-          "then": {"properties": {"continuation_snapshot": {"type": "null"}}}
-        },
-        {
-          "if": {"properties": {"status": {"const": "applied"}, "action_id": {"enum": ["ui.onboarding.start", "ui.onboarding.next", "ui.onboarding.back", "ui.onboarding.close", "ui.onboarding.skip", "ui.onboarding.defer", "ui.onboarding.more_ways", "ui.onboarding.choose_simple_path", "ui.onboarding.open_owner_flow", "ui.onboarding.run_automatic_preparation", "ui.onboarding.choose_first_project", "ui.onboarding.finish"]}}},
+          "if": {
+            "properties": {
+              "status": {"const": "applied"},
+              "action_id": {
+                "enum": [
+                  "ui.onboarding.start",
+                  "ui.onboarding.next",
+                  "ui.onboarding.back",
+                  "ui.onboarding.close",
+                  "ui.onboarding.skip",
+                  "ui.onboarding.defer",
+                  "ui.onboarding.more_ways",
+                  "ui.onboarding.choose_simple_path",
+                  "ui.onboarding.open_owner_flow",
+                  "ui.onboarding.run_automatic_preparation",
+                  "ui.onboarding.choose_first_project",
+                  "ui.onboarding.finish"
+                ]
+              }
+            }
+          },
           "then": {"properties": {"onboarding_session_written": {"const": true}, "continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}}}
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.start"}}},
-          "then": {"properties": {"stage_before": {"const": "welcome"}, "stage_after": {"const": "simple_path"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "session_started"}}}
+          "then": {
+            "properties": {
+              "stage_before": {"const": "welcome"},
+              "stage_after": {"const": "simple_path"},
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "session_started"}
+            }
+          }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.next"}}},
           "then": {
-            "properties": {"stage_before": {"enum": ["first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "advanced"}},
+            "properties": {
+              "stage_before": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup"
+                ]
+              },
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "advanced"}
+            },
             "allOf": [
               {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
-              {"if": {"properties": {"stage_before": {"const": "source_control_setup"}}}, "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}},
-              {"if": {"properties": {"stage_before": {"const": "server_storage_client"}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
-              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}},
-              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"stage_after": {"const": "automatic_preparation"}}}},
-              {"if": {"properties": {"stage_before": {"const": "automatic_preparation"}}}, "then": {"properties": {"stage_after": {"const": "ready"}}}}
+              {
+                "if": {"properties": {"stage_before": {"const": "source_control_setup"}}},
+                "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "server_storage_client"}}},
+                "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "remote_access_setup"}}},
+                "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "review_setup_plan"}}},
+                "then": {"properties": {"stage_after": {"const": "automatic_preparation"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "automatic_preparation"}}},
+                "then": {"properties": {"stage_after": {"enum": ["provider_setup", "ready"]}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "provider_setup"}}, "required": ["stage_before"]},
+                "then": {"properties": {"stage_after": {"const": "free_models_setup"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "free_models_setup"}}, "required": ["stage_before"]},
+                "then": {"properties": {"stage_after": {"const": "ready"}}}
+              }
             ]
           }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.back"}}},
           "then": {
-            "properties": {"stage_before": {"enum": ["simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "returned"}},
+            "properties": {
+              "stage_before": {
+                "enum": [
+                  "simple_path",
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "free_models_setup"
+                ]
+              },
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "returned"}
+            },
             "allOf": [
               {"if": {"properties": {"stage_before": {"const": "simple_path"}}}, "then": {"properties": {"stage_after": {"const": "welcome"}}}},
               {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "simple_path"}}}},
               {"if": {"properties": {"stage_before": {"const": "source_control_setup"}}}, "then": {"properties": {"stage_after": {"const": "first_project"}}}},
-              {"if": {"properties": {"stage_before": {"const": "server_storage_client"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
+              {
+                "if": {"properties": {"stage_before": {"const": "server_storage_client"}}},
+                "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}
+              },
               {
                 "if": {"properties": {"stage_before": {"const": "remote_access_setup"}}},
                 "then": {
@@ -846,16 +2113,45 @@
                   }
                 }
               },
-              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}}}, "then": {"properties": {"stage_after": {"const": "simple_path"}}}},
-              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}}}, "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}},
-              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
-              {"if": {"properties": {"stage_before": {"const": "automatic_preparation"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}}
+              {
+                "if": {
+                  "properties": {
+                    "stage_before": {"const": "remote_access_setup"},
+                    "continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}
+                  }
+                },
+                "then": {"properties": {"stage_after": {"const": "simple_path"}}}
+              },
+              {
+                "if": {
+                  "properties": {
+                    "stage_before": {"const": "remote_access_setup"},
+                    "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}
+                  }
+                },
+                "then": {"properties": {"stage_after": {"const": "server_storage_client"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "review_setup_plan"}}},
+                "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "automatic_preparation"}}},
+                "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "free_models_setup"}}, "required": ["stage_before"]},
+                "then": {"properties": {"stage_after": {"const": "provider_setup"}}}
+              }
             ]
           }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.close"}}},
-          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "interrupted"}, "local_effect": {"const": "session_closed"}}}
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {"session_status_after": {"const": "interrupted"}, "local_effect": {"const": "session_closed"}}
+          }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.skip"}}},
@@ -868,24 +2164,57 @@
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.skip"}, "local_effect": {"const": "optional_scope_skipped"}}},
           "then": {
-            "properties": {"stage_before": {"enum": ["first_project", "remote_access_setup"]}, "session_status_after": {"const": "active"}},
+            "properties": {
+              "stage_before": {"enum": ["first_project", "remote_access_setup", "provider_setup", "free_models_setup"]},
+              "session_status_after": {"const": "active"}
+            },
             "allOf": [
               {"if": {"properties": {"stage_before": {"const": "first_project"}}}, "then": {"properties": {"stage_after": {"const": "source_control_setup"}}}},
-              {"if": {"properties": {"stage_before": {"const": "remote_access_setup"}}}, "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}}
+              {
+                "if": {"properties": {"stage_before": {"const": "remote_access_setup"}}},
+                "then": {"properties": {"stage_after": {"const": "review_setup_plan"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "provider_setup"}}, "required": ["stage_before"]},
+                "then": {
+                  "properties": {"stage_after": {"const": "free_models_setup"}, "continuation_snapshot": {"properties": {"provider_phase_status": {"const": "skipped"}}}}
+                }
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "free_models_setup"}}, "required": ["stage_before"]},
+                "then": {"properties": {"stage_after": {"const": "ready"}, "continuation_snapshot": {"properties": {"free_models_phase_status": {"const": "skipped"}}}}}
+              }
             ]
           }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.more_ways"}}},
-          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "active"}, "local_effect": {"enum": ["disclosure_opened", "disclosure_closed", "branch_state_updated"]}}}
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {"session_status_after": {"const": "active"}, "local_effect": {"enum": ["disclosure_opened", "disclosure_closed", "branch_state_updated"]}}
+          }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.choose_simple_path"}}},
           "then": {
-            "properties": {"stage_before": {"const": "simple_path"}, "stage_after": {"enum": ["first_project", "remote_access_setup"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "simple_path_selected"}, "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}},
+            "properties": {
+              "stage_before": {"const": "simple_path"},
+              "stage_after": {"enum": ["first_project", "remote_access_setup"]},
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "simple_path_selected"},
+              "continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "connect_existing_server", "setup_server", "restore_backup"]}}}
+            },
             "allOf": [
-              {"if": {"properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}}}, "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}},
-              {"if": {"properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}}}, "then": {"properties": {"stage_after": {"const": "first_project"}}}}
+              {
+                "if": {"properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"const": "connect_existing_server"}}}}},
+                "then": {"properties": {"stage_after": {"const": "remote_access_setup"}}}
+              },
+              {
+                "if": {
+                  "properties": {"continuation_snapshot": {"properties": {"simple_path_selection": {"enum": ["start_on_this_computer", "setup_server", "restore_backup"]}}}}
+                },
+                "then": {"properties": {"stage_after": {"const": "first_project"}}}
+              }
             ]
           }
         },
@@ -893,31 +2222,87 @@
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.open_owner_flow"}}},
           "then": {
             "$ref": "#/$defs/same_stage_transition",
-            "properties": {"stage_before": {"enum": ["review_setup_plan", "automatic_preparation"]}, "session_status_after": {"const": "active"}, "local_effect": {"const": "owner_flow_opened"}},
-            "allOf": [
-              {"if": {"properties": {"stage_before": {"const": "review_setup_plan"}}}, "then": {"properties": {"continuation_snapshot": {"properties": {"review_confirmation": {"const": "person_confirmed_reviewed_plan"}}}}}}
-            ]
+            "properties": {
+              "stage_before": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup"
+                ]
+              },
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "owner_flow_opened"}
+            }
           }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.run_automatic_preparation"}}},
-          "then": {"properties": {"stage_before": {"const": "automatic_preparation"}, "stage_after": {"const": "automatic_preparation"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "automatic_preparation_started"}}}
+          "then": {
+            "properties": {
+              "stage_before": {"const": "automatic_preparation"},
+              "stage_after": {"const": "automatic_preparation"},
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "automatic_preparation_started"}
+            }
+          }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.choose_first_project"}}},
-          "then": {"properties": {"stage_before": {"const": "first_project"}, "stage_after": {"const": "source_control_setup"}, "session_status_after": {"const": "active"}, "local_effect": {"const": "first_project_selected"}}}
+          "then": {
+            "properties": {
+              "stage_before": {"const": "first_project"},
+              "stage_after": {"const": "source_control_setup"},
+              "session_status_after": {"const": "active"},
+              "local_effect": {"const": "first_project_selected"}
+            }
+          }
         },
         {
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.finish"}}},
-          "then": {"properties": {"stage_before": {"const": "ready"}, "stage_after": {"const": "ready"}, "session_status_after": {"const": "completed"}, "local_effect": {"const": "finished"}}}
+          "then": {
+            "properties": {
+              "stage_before": {"const": "ready"},
+              "stage_after": {"const": "ready"},
+              "session_status_after": {"const": "completed"},
+              "local_effect": {"const": "finished"}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.defer"}, "status": {"const": "applied"}}},
-          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "deferred"}, "local_effect": {"const": "session_deferred"}, "onboarding_session_written": {"const": true}, "continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"}, "details_open_after": {"const": false}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {
+              "session_status_after": {"const": "deferred"},
+              "local_effect": {"const": "session_deferred"},
+              "onboarding_session_written": {"const": true},
+              "continuation_snapshot": {"$ref": "#/$defs/onboarding_continuation_snapshot"},
+              "details_open_after": {"const": false},
+              "owner_route_ref": {"type": "null"},
+              "owner_operation_ref": {"type": "null"},
+              "production_receipt_ref": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.open_details"}, "status": {"const": "applied"}}},
-          "then": {"$ref": "#/$defs/same_stage_transition", "properties": {"session_status_after": {"const": "active"}, "local_effect": {"enum": ["disclosure_opened", "disclosure_closed"]}, "onboarding_session_written": {"const": false}, "continuation_snapshot": {"type": "null"}, "owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}}
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {
+              "session_status_after": {"const": "active"},
+              "local_effect": {"enum": ["disclosure_opened", "disclosure_closed"]},
+              "onboarding_session_written": {"const": false},
+              "continuation_snapshot": {"type": "null"},
+              "owner_route_ref": {"type": "null"},
+              "owner_operation_ref": {"type": "null"},
+              "production_receipt_ref": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"action_id": {"enum": ["ui.onboarding.defer", "ui.onboarding.open_details"]}, "status": {"const": "applied"}}},
@@ -929,22 +2314,24 @@
         "choice explanations use intent=toggle_choice_explanation with the exact current stage as scope and a stable help-topic selection_ref; they are ephemeral, owner-route-free, and non-persistent",
         "ui.onboarding.open_details is ephemeral and never writes OnboardingSession or owner state",
         "every persisted action result continuation_snapshot.stage equals stage_after and the durable history ends at that same current stage",
-        "the exact canonical main-path stage order is welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready",
+        "the exact semantic dependency order is main_stage_order; optional/deferred screens use only the explicit shortcut or deferred-project history; no fake Project identity",
         "connect_existing_server uses the exact shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not materialize skipped first_project, source_control_setup, or server_storage_client history entries",
         "a current session or continuation at first_project or any later stage has a non-null simple_path_selection; null is current only before a choice at welcome or simple_path, while later-stage predecessor null input is handled only by the migration receipt boundary",
-        "continuation history is the exact ordered prefix of either the nine-stage main path or the six-stage connect_existing_server path selected by simple_path_selection; cross-path and skipped-stage histories are rejected",
+        "continuation history is an exact main_stage_order prefix, six-stage connect shortcut, or explicit deferred-project ready history; rendered screens may collapse irrelevant details but preserve dependencies",
         "path_kind is null before a path choice, equals connect_existing only for connect_existing_server, and equals guided_setup only for the three normal choices",
         "queued_setup_plan_ref and queued_setup_plan_revision are a paired durable reference and revision; person confirmation binds reviewed_setup_plan_revision to that exact queued revision and approved_setup_plan_sha256 to the exact reviewed bytes without embedding the plan",
         "automatic_preparation and ready require a person-confirmed reviewed plan plus a non-null automatic_preparation_currentness_ref; unconfirmed state carries null reviewed revision, approved hash, and currentness reference",
         "ui.onboarding.start advances welcome -> simple_path; ui.onboarding.choose_simple_path advances simple_path -> first_project except that connect_existing_server advances simple_path -> remote_access_setup",
         "ui.onboarding.back returns to the exact preceding entry in durable history, so remote_access_setup returns to simple_path on connect_existing_server and to server_storage_client on the main path",
-        "ui.onboarding.open_owner_flow is unavailable before review_setup_plan, requires person_confirmed_reviewed_plan at review_setup_plan, and is allowed at automatic_preparation only as a previously_confirmed_reviewed_plan resume or owner return with an existing owner_operation_ref",
+        "precommit owner routes require a current selected-source-only read-only/auth authorization; Project/repository/filesystem/settings mutation requires exact reviewed-plan commit consent; broad provider work requires actual Project commit binding",
         "server_setup is predecessor seven-stage lineage only and is rejected by every current stage, scope, session, continuation, return-context, request, and result field",
         "one user choice dispatches at most one owner route; a current terminal owner return advances without an additional confirmation action",
         "scm_backend_selection and forge_provider_selection are independent; Jujutsu is never represented as a forge or account and none means local-only",
         "cmd.source_control.repository.init is forbidden; a new local Project uses cmd.project.new_local with init_git=true through the Project owner",
         "ui.onboarding.defer persists the exact current stage, branch, revision, continuation, and return focus before the modal closes",
-        "ui.onboarding.defer never sets completed, skipped, ready, or any owner-readiness state"
+        "ui.onboarding.defer never sets completed, skipped, ready, or any owner-readiness state",
+        "provider_setup and optional free_models_setup follow actual Project owner commit; Back/Close/Skip never uncreate a committed Project; Free Models delegates credentials to the same underlying account owners and leaves saved top-10 unchanged",
+        "the static onboarding_semantic_failures and phase join fixtures test value relationships only; native current-owner lookup, permission, idempotency, restart, accessibility and motion remain required"
       ]
     },
     "automatic_preparation_owner_projection": {
@@ -996,8 +2383,8 @@
         "observed_at_utc"
       ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.automatic_preparation_owner_projection.v1"},
-        "schema_version": {"const": "1.0.0"},
+        "schema_id": {"const": "pm.product_onboarding.automatic_preparation_owner_projection.v2"},
+        "schema_version": {"const": "2.0.0"},
         "automatic_preparation_projection_id": {"$ref": "#/$defs/safe_ref"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "stage": {"const": "automatic_preparation"},
@@ -1010,11 +2397,54 @@
         "expected_revision": {"type": "integer", "minimum": 1},
         "continuation_generation": {"type": "integer", "minimum": 1},
         "projection_generation": {"type": "integer", "minimum": 1},
-        "owner_domain": {"enum": ["project", "source_control", "jujutsu", "forge", "server", "connection", "remote_access", "backup_restore", "shared_integration_runtime", "provider", "authentication", "storage", "other_registered"]},
+        "owner_domain": {
+          "enum": [
+            "project",
+            "source_control",
+            "jujutsu",
+            "forge",
+            "server",
+            "connection",
+            "remote_access",
+            "backup_restore",
+            "shared_integration_runtime",
+            "authentication",
+            "storage",
+            "other_registered"
+          ]
+        },
         "owner_operation_id": {"$ref": "#/$defs/safe_ref"},
         "observable_work_id": {"$ref": "#/$defs/safe_ref"},
         "dedupe_key": {"$ref": "#/$defs/safe_ref"},
-        "work_state": {"enum": ["pending", "queued", "starting", "running", "synchronizing", "waiting_provider", "waiting_host", "waiting_network", "waiting_resource", "waiting_permission", "waiting_for_sign_in", "waiting_for_idle", "waiting_user", "retrying", "backgrounded", "degraded", "stalled", "committing", "verifying", "requires_input", "blocked", "failed", "cancelled", "recovery_required", "ready"]},
+        "work_state": {
+          "enum": [
+            "pending",
+            "queued",
+            "starting",
+            "running",
+            "synchronizing",
+            "waiting_provider",
+            "waiting_host",
+            "waiting_network",
+            "waiting_resource",
+            "waiting_permission",
+            "waiting_for_sign_in",
+            "waiting_for_idle",
+            "waiting_user",
+            "retrying",
+            "backgrounded",
+            "degraded",
+            "stalled",
+            "committing",
+            "verifying",
+            "requires_input",
+            "blocked",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "ready"
+          ]
+        },
         "human_phase": {"$ref": "#/$defs/non_empty_string"},
         "wait_reason": {"oneOf": [{"enum": ["provider", "host", "network", "resource", "permission", "sign_in", "idle", "user", "owner_recovery"]}, {"type": "null"}]},
         "input_request_ref": {"$ref": "#/$defs/nullable_safe_ref"},
@@ -1036,7 +2466,17 @@
         "currentness": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["session_match", "path_match", "reviewed_setup_plan_revision_match", "approved_setup_plan_sha256_match", "target_match", "revision_match", "continuation_match", "generation_match", "disposition"],
+          "required": [
+            "session_match",
+            "path_match",
+            "reviewed_setup_plan_revision_match",
+            "approved_setup_plan_sha256_match",
+            "target_match",
+            "revision_match",
+            "continuation_match",
+            "generation_match",
+            "disposition"
+          ],
           "properties": {
             "session_match": {"const": true},
             "path_match": {"const": true},
@@ -1056,14 +2496,36 @@
       "allOf": [
         {
           "if": {"properties": {"progress_kind": {"enum": ["units", "bytes", "items", "steps", "time"]}}, "required": ["progress_kind"]},
-          "then": {"properties": {"completed_units": {"type": "number", "minimum": 0}, "total_units": {"type": "number", "exclusiveMinimum": 0}, "progress_source": {"enum": ["measured", "provider_reported", "derived"]}}}
+          "then": {
+            "properties": {
+              "completed_units": {"type": "number", "minimum": 0},
+              "total_units": {"type": "number", "exclusiveMinimum": 0},
+              "progress_source": {"enum": ["measured", "provider_reported", "derived"]}
+            }
+          }
         },
         {
           "if": {"properties": {"progress_kind": {"enum": ["none", "indeterminate"]}}, "required": ["progress_kind"]},
           "then": {"properties": {"completed_units": {"type": "null"}, "total_units": {"type": "null"}, "progress_source": {"const": "unknown"}}}
         },
         {
-          "if": {"properties": {"work_state": {"enum": ["waiting_provider", "waiting_host", "waiting_network", "waiting_resource", "waiting_permission", "waiting_for_sign_in", "waiting_for_idle", "waiting_user"]}}, "required": ["work_state"]},
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": [
+                  "waiting_provider",
+                  "waiting_host",
+                  "waiting_network",
+                  "waiting_resource",
+                  "waiting_permission",
+                  "waiting_for_sign_in",
+                  "waiting_for_idle",
+                  "waiting_user"
+                ]
+              }
+            },
+            "required": ["work_state"]
+          },
           "then": {"properties": {"wait_reason": {"not": {"type": "null"}}, "result_status": {"const": "pending"}}}
         },
         {
@@ -1071,8 +2533,22 @@
           "then": {"properties": {"input_request_ref": {"$ref": "#/$defs/safe_ref"}, "result_status": {"const": "requires_input"}}}
         },
         {
-          "if": {"properties": {"work_state": {"enum": ["pending", "queued", "starting", "running", "synchronizing", "retrying", "backgrounded", "degraded", "stalled", "committing", "verifying"]}}, "required": ["work_state"]},
-          "then": {"properties": {"result_status": {"const": "pending"}, "owner_result_ref": {"type": "null"}, "error_ref": {"type": "null"}, "production_readiness": {"const": false}}}
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": ["pending", "queued", "starting", "running", "synchronizing", "retrying", "backgrounded", "degraded", "stalled", "committing", "verifying"]
+              }
+            },
+            "required": ["work_state"]
+          },
+          "then": {
+            "properties": {
+              "result_status": {"const": "pending"},
+              "owner_result_ref": {"type": "null"},
+              "error_ref": {"type": "null"},
+              "production_readiness": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"work_state": {"const": "blocked"}}, "required": ["work_state"]},
@@ -1080,30 +2556,69 @@
         },
         {
           "if": {"properties": {"work_state": {"const": "failed"}}, "required": ["work_state"]},
-          "then": {"properties": {"result_status": {"const": "failed"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"$ref": "#/$defs/safe_ref"}, "production_readiness": {"const": false}}}
+          "then": {
+            "properties": {
+              "result_status": {"const": "failed"},
+              "owner_result_ref": {"$ref": "#/$defs/safe_ref"},
+              "error_ref": {"$ref": "#/$defs/safe_ref"},
+              "production_readiness": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"work_state": {"const": "cancelled"}}, "required": ["work_state"]},
-          "then": {"properties": {"result_status": {"const": "cancelled"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "can_cancel": {"const": false}, "production_readiness": {"const": false}}}
+          "then": {
+            "properties": {
+              "result_status": {"const": "cancelled"},
+              "owner_result_ref": {"$ref": "#/$defs/safe_ref"},
+              "can_cancel": {"const": false},
+              "production_readiness": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"work_state": {"const": "recovery_required"}}, "required": ["work_state"]},
-          "then": {"properties": {"result_status": {"const": "recovery_required"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"$ref": "#/$defs/safe_ref"}, "production_readiness": {"const": false}}}
+          "then": {
+            "properties": {
+              "result_status": {"const": "recovery_required"},
+              "owner_result_ref": {"$ref": "#/$defs/safe_ref"},
+              "error_ref": {"$ref": "#/$defs/safe_ref"},
+              "production_readiness": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"work_state": {"const": "ready"}}, "required": ["work_state"]},
-          "then": {"properties": {"result_status": {"const": "succeeded"}, "owner_result_ref": {"$ref": "#/$defs/safe_ref"}, "error_ref": {"type": "null"}, "can_cancel": {"const": false}, "can_retry": {"const": false}}}
+          "then": {
+            "properties": {
+              "result_status": {"const": "succeeded"},
+              "owner_result_ref": {"$ref": "#/$defs/safe_ref"},
+              "error_ref": {"type": "null"},
+              "can_cancel": {"const": false},
+              "can_retry": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"evidence_class": {"const": "browser_concept_fixture_only"}}, "required": ["evidence_class"]},
-          "then": {"properties": {"production_owner_work": {"const": false}, "production_readiness": {"const": false}, "native_runtime_exercised": {"const": false}, "production_receipt_ref": {"type": "null"}}}
+          "then": {
+            "properties": {
+              "production_owner_work": {"const": false},
+              "production_readiness": {"const": false},
+              "native_runtime_exercised": {"const": false},
+              "production_receipt_ref": {"type": "null"}
+            }
+          }
         },
         {
           "if": {"properties": {"evidence_class": {"const": "production_owner_projection"}}, "required": ["evidence_class"]},
           "then": {"properties": {"production_owner_work": {"const": true}}}
         },
         {
-          "if": {"properties": {"evidence_class": {"const": "production_owner_projection"}, "work_state": {"const": "ready"}}, "required": ["evidence_class", "work_state"]},
+          "if": {
+            "properties": {"evidence_class": {"const": "production_owner_projection"}, "work_state": {"const": "ready"}},
+            "required": ["evidence_class", "work_state"]
+          },
           "then": {"properties": {"production_readiness": {"const": true}, "production_receipt_ref": {"$ref": "#/$defs/safe_ref"}}}
         }
       ],
@@ -1176,7 +2691,14 @@
       "allOf": [
         {
           "if": {"properties": {"review_confirmation": {"const": "unconfirmed"}}, "required": ["review_confirmation"]},
-          "then": {"properties": {"approved_preflow_sha256": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "external_effect_started": {"const": false}, "mutation_applied": {"const": false}}}
+          "then": {
+            "properties": {
+              "approved_preflow_sha256": {"type": "null"},
+              "owner_operation_ref": {"type": "null"},
+              "external_effect_started": {"const": false},
+              "mutation_applied": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"review_confirmation": {"const": "person_confirmed_current_preview"}}, "required": ["review_confirmation"]},
@@ -1184,7 +2706,13 @@
         },
         {
           "if": {"properties": {"external_effect_started": {"const": true}}, "required": ["external_effect_started"]},
-          "then": {"properties": {"review_confirmation": {"const": "person_confirmed_current_preview"}, "approved_preflow_sha256": {"$ref": "#/$defs/sha256"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}
+          "then": {
+            "properties": {
+              "review_confirmation": {"const": "person_confirmed_current_preview"},
+              "approved_preflow_sha256": {"$ref": "#/$defs/sha256"},
+              "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
         },
         {
           "if": {"properties": {"mutation_applied": {"const": true}}, "required": ["mutation_applied"]},
@@ -1241,8 +2769,8 @@
         "observed_at_utc"
       ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.connector_owner_projection.v1"},
-        "schema_version": {"const": "1.0.0"},
+        "schema_id": {"const": "pm.product_onboarding.connector_owner_projection.v2"},
+        "schema_version": {"const": "2.0.0"},
         "projection_id": {"$ref": "#/$defs/safe_ref"},
         "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
         "projection_context": {"enum": ["cached_pre_review", "automatic_preparation"]},
@@ -1255,7 +2783,27 @@
         "connector_implementation": {"const": "pm_tailnet_connector_embedded_tsnet"},
         "node_identity_scope": {"const": "one_active_persistent_connector_identity_per_server_id"},
         "control_kind": {"enum": ["hosted_tailscale", "headscale"]},
-        "connector_phase": {"enum": ["disabled", "starting", "needs_login", "authorization_url_ready", "waiting_for_authorization", "needs_device_approval", "connected", "private_endpoint_starting", "private_endpoint_ready", "funnel_preflight", "funnel_starting", "funnel_ready", "reauth_required", "backing_off", "needs_attention", "stopping", "failed"]},
+        "connector_phase": {
+          "enum": [
+            "disabled",
+            "starting",
+            "needs_login",
+            "authorization_url_ready",
+            "waiting_for_authorization",
+            "needs_device_approval",
+            "connected",
+            "private_endpoint_starting",
+            "private_endpoint_ready",
+            "funnel_preflight",
+            "funnel_starting",
+            "funnel_ready",
+            "reauth_required",
+            "backing_off",
+            "needs_attention",
+            "stopping",
+            "failed"
+          ]
+        },
         "authorization_handoff_state": {"enum": ["none", "redacted_url_ready", "waiting", "approval_required", "reauth_required", "complete", "cancelled", "failed"]},
         "private_endpoint_state": {"enum": ["not_requested", "starting", "ready", "failed"]},
         "funnel_state": {"enum": ["off", "preflight", "starting", "ready", "unsupported_headscale", "failed"]},
@@ -1277,11 +2825,26 @@
       "allOf": [
         {
           "if": {"properties": {"projection_context": {"const": "cached_pre_review"}}, "required": ["projection_context"]},
-          "then": {"properties": {"stage": {"const": "remote_access_setup"}, "reviewed_setup_plan_revision": {"type": "null"}, "approved_setup_plan_sha256": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "external_effect_started_by_onboarding": {"const": false}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "remote_access_setup"},
+              "reviewed_setup_plan_revision": {"type": "null"},
+              "approved_setup_plan_sha256": {"type": "null"},
+              "owner_operation_ref": {"type": "null"},
+              "external_effect_started_by_onboarding": {"const": false}
+            }
+          }
         },
         {
           "if": {"properties": {"projection_context": {"const": "automatic_preparation"}}, "required": ["projection_context"]},
-          "then": {"properties": {"stage": {"const": "automatic_preparation"}, "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1}, "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"}, "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}}}
+          "then": {
+            "properties": {
+              "stage": {"const": "automatic_preparation"},
+              "reviewed_setup_plan_revision": {"type": "integer", "minimum": 1},
+              "approved_setup_plan_sha256": {"$ref": "#/$defs/sha256"},
+              "owner_operation_ref": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
         },
         {
           "if": {"properties": {"control_kind": {"const": "headscale"}}, "required": ["control_kind"]},
@@ -1293,7 +2856,14 @@
         },
         {
           "if": {"properties": {"connector_phase": {"const": "funnel_ready"}}, "required": ["connector_phase"]},
-          "then": {"properties": {"control_kind": {"const": "hosted_tailscale"}, "private_endpoint_state": {"const": "ready"}, "funnel_state": {"const": "ready"}, "browser_reachability": {"const": "funnel_public_route"}}}
+          "then": {
+            "properties": {
+              "control_kind": {"const": "hosted_tailscale"},
+              "private_endpoint_state": {"const": "ready"},
+              "funnel_state": {"const": "ready"},
+              "browser_reachability": {"const": "funnel_public_route"}
+            }
+          }
         },
         {
           "if": {"properties": {"pm_trust_state": {"const": "trusted"}}, "required": ["pm_trust_state"]},
@@ -1323,20 +2893,67 @@
     },
     "onboarding_legacy_migration_receipt": {
       "title": "OnboardingLegacyMigrationReceipt",
-      "description": "Domain reconciliation receipt for a one-time legacy provider-first/four-screen, predecessor five-stage, or predecessor seven-stage mapping into the current nine-stage journey. Predecessor stage tokens are source-lineage values only and are never accepted by current stage fields. The referenced pm.storage_value.migration_receipt.v1 remains the sole terminal durable storage migration receipt. The x-puppet-master-assertions rules are mandatory; a consumer that cannot enforce them must reject the receipt.",
+      "description": "One-time predecessor-to-eleven-stage reconciliation. Global unconfirmed fields describe unresolved drafts only; committed resumptions require per-row actual Project commit bindings in the disposition manifest. No review, Project, provider readiness, or owner effect is synthesized.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "migration_receipt_id", "storage_migration_receipt_schema_id", "storage_migration_receipt_ref", "migration_kind", "migration_generation", "source_state_machine", "target_state_machine", "source_record_count", "accepted_record_count", "stale_record_count", "dropped_record_count", "quarantined_record_count", "mapped_stage_counts", "mapped_path_counts", "reviewed_setup_plan_revision", "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref", "preserved_decision_ref_count", "preserved_warning_count", "owner_work_replayed", "secret_handling", "disposition_manifest_ref", "disposition_manifest_sha256", "terminal_status", "completed_at_utc"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "migration_receipt_id",
+        "storage_migration_receipt_schema_id",
+        "storage_migration_receipt_ref",
+        "migration_kind",
+        "migration_generation",
+        "source_state_machine",
+        "target_state_machine",
+        "source_record_count",
+        "accepted_record_count",
+        "stale_record_count",
+        "dropped_record_count",
+        "quarantined_record_count",
+        "mapped_stage_counts",
+        "mapped_path_counts",
+        "reviewed_setup_plan_revision",
+        "review_confirmation",
+        "approved_setup_plan_sha256",
+        "automatic_preparation_currentness_ref",
+        "preserved_decision_ref_count",
+        "preserved_warning_count",
+        "owner_work_replayed",
+        "secret_handling",
+        "disposition_manifest_ref",
+        "disposition_manifest_sha256",
+        "terminal_status",
+        "completed_at_utc",
+        "committed_resume_count",
+        "committed_resume_policy"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.product_onboarding.legacy_migration_receipt.v1"},
-        "schema_version": {"const": "1.0.0"},
+        "schema_id": {"const": "pm.product_onboarding.legacy_migration_receipt.v2"},
+        "schema_version": {"const": "2.0.0"},
         "migration_receipt_id": {"$ref": "#/$defs/safe_ref"},
         "storage_migration_receipt_schema_id": {"const": "pm.storage_value.migration_receipt.v1"},
         "storage_migration_receipt_ref": {"$ref": "#/$defs/safe_ref"},
-        "migration_kind": {"enum": ["legacy_provider_first_four_screen_to_nine_stage", "predecessor_five_stage_to_nine_stage", "predecessor_seven_stage_to_nine_stage"]},
+        "migration_kind": {
+          "enum": [
+            "legacy_provider_first_four_screen_to_eleven_stage",
+            "predecessor_five_stage_to_eleven_stage",
+            "predecessor_seven_stage_to_eleven_stage",
+            "predecessor_nine_stage_to_eleven_stage"
+          ]
+        },
         "migration_generation": {"const": 1},
-        "source_state_machine": {"enum": ["legacy_provider_first_four_screen", "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready", "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready"]},
-        "target_state_machine": {"const": "nine_stage_welcome_simple_path_first_project_source_control_setup_server_storage_client_remote_access_setup_review_setup_plan_automatic_preparation_ready"},
+        "source_state_machine": {
+          "enum": [
+            "legacy_provider_first_four_screen",
+            "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready",
+            "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready",
+            "nine_stage_welcome_simple_path_first_project_source_control_setup_server_storage_client_remote_access_setup_review_setup_plan_automatic_preparation_ready"
+          ]
+        },
+        "target_state_machine": {
+          "const": "eleven_stage_welcome_simple_path_first_project_source_control_setup_server_storage_client_remote_access_setup_review_setup_plan_automatic_preparation_provider_setup_free_models_setup_ready"
+        },
         "source_record_count": {"$ref": "#/$defs/row_count"},
         "accepted_record_count": {"$ref": "#/$defs/row_count"},
         "stale_record_count": {"$ref": "#/$defs/row_count"},
@@ -1345,7 +2962,19 @@
         "mapped_stage_counts": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["welcome", "simple_path", "first_project", "source_control_setup", "server_storage_client", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"],
+          "required": [
+            "welcome",
+            "simple_path",
+            "first_project",
+            "source_control_setup",
+            "server_storage_client",
+            "remote_access_setup",
+            "review_setup_plan",
+            "automatic_preparation",
+            "ready",
+            "provider_setup",
+            "free_models_setup"
+          ],
           "properties": {
             "welcome": {"$ref": "#/$defs/row_count"},
             "simple_path": {"$ref": "#/$defs/row_count"},
@@ -1355,17 +2984,16 @@
             "remote_access_setup": {"$ref": "#/$defs/row_count"},
             "review_setup_plan": {"$ref": "#/$defs/row_count"},
             "automatic_preparation": {"$ref": "#/$defs/row_count"},
-            "ready": {"$ref": "#/$defs/row_count"}
+            "ready": {"$ref": "#/$defs/row_count"},
+            "provider_setup": {"$ref": "#/$defs/row_count"},
+            "free_models_setup": {"$ref": "#/$defs/row_count"}
           }
         },
         "mapped_path_counts": {
           "type": "object",
           "additionalProperties": false,
           "required": ["guided_setup", "connect_existing"],
-          "properties": {
-            "guided_setup": {"$ref": "#/$defs/row_count"},
-            "connect_existing": {"$ref": "#/$defs/row_count"}
-          }
+          "properties": {"guided_setup": {"$ref": "#/$defs/row_count"}, "connect_existing": {"$ref": "#/$defs/row_count"}}
         },
         "reviewed_setup_plan_revision": {"type": "null"},
         "review_confirmation": {"const": "unconfirmed"},
@@ -1378,12 +3006,37 @@
         "disposition_manifest_ref": {"$ref": "#/$defs/safe_ref"},
         "disposition_manifest_sha256": {"$ref": "#/$defs/sha256"},
         "terminal_status": {"enum": ["committed", "committed_with_quarantine", "blocked"]},
-        "completed_at_utc": {"type": "string", "format": "date-time"}
+        "completed_at_utc": {"type": "string", "format": "date-time"},
+        "committed_resume_count": {"$ref": "#/$defs/row_count"},
+        "committed_resume_policy": {"const": "verify_actual_project_commit_then_resume_provider_without_recommit"}
       },
       "allOf": [
-        {"if": {"properties": {"migration_kind": {"const": "legacy_provider_first_four_screen_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "legacy_provider_first_four_screen"}}}},
-        {"if": {"properties": {"migration_kind": {"const": "predecessor_five_stage_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready"}}}},
-        {"if": {"properties": {"migration_kind": {"const": "predecessor_seven_stage_to_nine_stage"}}}, "then": {"properties": {"source_state_machine": {"const": "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready"}}}}
+        {
+          "if": {"properties": {"migration_kind": {"const": "legacy_provider_first_four_screen_to_eleven_stage"}}},
+          "then": {"properties": {"source_state_machine": {"const": "legacy_provider_first_four_screen"}}}
+        },
+        {
+          "if": {"properties": {"migration_kind": {"const": "predecessor_five_stage_to_eleven_stage"}}},
+          "then": {"properties": {"source_state_machine": {"const": "predecessor_five_stage_welcome_simple_path_automatic_preparation_first_project_ready"}}}
+        },
+        {
+          "if": {"properties": {"migration_kind": {"const": "predecessor_seven_stage_to_eleven_stage"}}},
+          "then": {
+            "properties": {
+              "source_state_machine": {"const": "predecessor_seven_stage_welcome_first_project_source_control_setup_server_setup_remote_access_setup_automatic_preparation_ready"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"migration_kind": {"const": "predecessor_nine_stage_to_eleven_stage"}}, "required": ["migration_kind"]},
+          "then": {
+            "properties": {
+              "source_state_machine": {
+                "const": "nine_stage_welcome_simple_path_first_project_source_control_setup_server_storage_client_remote_access_setup_review_setup_plan_automatic_preparation_ready"
+              }
+            }
+          }
+        }
       ],
       "x-puppet-master-assertions": [
         "source_record_count == accepted_record_count + stale_record_count + dropped_record_count + quarantined_record_count",
@@ -1395,6 +3048,179 @@
         "predecessor server_setup maps only to current server_storage_client and never becomes a current stage token",
         "predecessor seven-stage rows preserve their source machine and disposition lineage while newly required simple_path and review_setup_plan resolution follows the disposition manifest",
         "no installation, authentication, restore, Project, provider, Server, or source-control owner work is rerun"
+      ]
+    },
+    "main_stage_order": {
+      "const": [
+        "welcome",
+        "simple_path",
+        "first_project",
+        "source_control_setup",
+        "server_storage_client",
+        "remote_access_setup",
+        "review_setup_plan",
+        "automatic_preparation",
+        "provider_setup",
+        "free_models_setup",
+        "ready"
+      ]
+    },
+    "connect_existing_stage_order": {"const": ["welcome", "simple_path", "remote_access_setup", "review_setup_plan", "automatic_preparation", "ready"]},
+    "deferred_project_stage_order": {
+      "const": [
+        "welcome",
+        "simple_path",
+        "first_project",
+        "source_control_setup",
+        "server_storage_client",
+        "remote_access_setup",
+        "review_setup_plan",
+        "automatic_preparation",
+        "ready"
+      ]
+    },
+    "owner_phase": {"enum": ["read_only_preflight", "selected_source_auth", "project_commit", "postcommit_provider", "postcommit_free_models"]},
+    "onboarding_precommit_authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "authorization_id",
+        "owner_phase",
+        "owner_command_id",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "project_draft_revision",
+        "project_id",
+        "selected_source_ref",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "initiating_client_id",
+        "permission_snapshot_ref",
+        "capability_snapshot_ref",
+        "consent_ref",
+        "owner_request_ref",
+        "owner_request_sha256",
+        "expected_revision",
+        "continuation_generation",
+        "return_focus_id",
+        "source_access_required",
+        "scope",
+        "project_mutation_allowed",
+        "filesystem_mutation_allowed",
+        "repository_mutation_allowed",
+        "broad_provider_setup_allowed",
+        "protected_content_embedded",
+        "expires_at_utc",
+        "selected_provider_id",
+        "selected_route_id"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.product_onboarding.precommit_authorization.v2"},
+        "owner_phase": {"enum": ["read_only_preflight", "selected_source_auth"]},
+        "owner_command_id": {
+          "enum": [
+            "cmd.project.refresh",
+            "cmd.settings.transaction.preview",
+            "cmd.server.discovery.refresh",
+            "cmd.forge.repository.list",
+            "cmd.auth_profile.sign_in",
+            "cmd.auth_profile.open_official_page"
+          ]
+        },
+        "onboarding_session_id": {"$ref": "#/$defs/safe_ref"},
+        "project_draft_ref": {"$ref": "#/$defs/safe_ref"},
+        "project_draft_revision": {"type": "integer", "minimum": 1},
+        "project_id": {"type": "null"},
+        "selected_source_ref": {"$ref": "#/$defs/safe_ref"},
+        "server_id": {"$ref": "#/$defs/safe_ref"},
+        "execution_host_id": {"$ref": "#/$defs/safe_ref"},
+        "execution_environment_id": {"$ref": "#/$defs/safe_ref"},
+        "initiating_client_id": {"$ref": "#/$defs/safe_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/safe_ref"},
+        "capability_snapshot_ref": {"$ref": "#/$defs/safe_ref"},
+        "consent_ref": {"$ref": "#/$defs/safe_ref"},
+        "owner_request_ref": {"$ref": "#/$defs/safe_ref"},
+        "owner_request_sha256": {"$ref": "#/$defs/sha256"},
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "continuation_generation": {"type": "integer", "minimum": 1},
+        "return_focus_id": {"$ref": "#/$defs/safe_ref"},
+        "source_access_required": {"type": "boolean"},
+        "scope": {"const": "selected_source_only"},
+        "project_mutation_allowed": {"const": false},
+        "filesystem_mutation_allowed": {"const": false},
+        "repository_mutation_allowed": {"const": false},
+        "broad_provider_setup_allowed": {"const": false},
+        "protected_content_embedded": {"const": false},
+        "expires_at_utc": {"type": "string", "format": "date-time"},
+        "selected_provider_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "selected_route_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "authorization_id": {"$ref": "#/$defs/safe_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"owner_phase": {"const": "read_only_preflight"}}, "required": ["owner_phase"]},
+          "then": {
+            "properties": {
+              "owner_command_id": {"enum": ["cmd.project.refresh", "cmd.settings.transaction.preview", "cmd.server.discovery.refresh", "cmd.forge.repository.list"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"owner_phase": {"const": "selected_source_auth"}}, "required": ["owner_phase"]},
+          "then": {
+            "properties": {
+              "owner_command_id": {"enum": ["cmd.auth_profile.sign_in", "cmd.auth_profile.open_official_page"]},
+              "source_access_required": {"const": true},
+              "selected_provider_id": {"$ref": "#/$defs/safe_ref"},
+              "selected_route_id": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_settings_transfer_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "source_project_id", "source_revision", "draft_preview_ref", "draft_preview_sha256", "explicit_choice_setting_ids", "settings_applied"],
+      "properties": {
+        "mode": {"enum": ["start_fresh", "copy_from_project"]},
+        "source_project_id": {"$ref": "#/$defs/nullable_safe_ref"},
+        "source_revision": {"$ref": "#/$defs/nullable_positive_integer"},
+        "draft_preview_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "draft_preview_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "explicit_choice_setting_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 1024,
+          "items": {"$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/setting_id"}
+        },
+        "settings_applied": {"const": false}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"mode": {"const": "start_fresh"}}, "required": ["mode"]},
+          "then": {
+            "properties": {
+              "source_project_id": {"type": "null"},
+              "source_revision": {"type": "null"},
+              "draft_preview_ref": {"type": "null"},
+              "draft_preview_sha256": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"mode": {"const": "copy_from_project"}}, "required": ["mode"]},
+          "then": {
+            "properties": {
+              "source_project_id": {"$ref": "#/$defs/safe_ref"},
+              "source_revision": {"type": "integer", "minimum": 1},
+              "draft_preview_ref": {"$ref": "#/$defs/safe_ref"},
+              "draft_preview_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
       ]
     }
   }

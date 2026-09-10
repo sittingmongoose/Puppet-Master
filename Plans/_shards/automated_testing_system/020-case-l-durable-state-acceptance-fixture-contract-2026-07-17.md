@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2034-L2396
+Source lines: L2043-L2405
 
-Source SHA256: `75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec`
+Source SHA256: `1480e187d6a469a07cc2ea41bd95ee760bca6bd219dbbca61f0d63a13413f7b0`
 
 ---
 
@@ -287,7 +287,7 @@ Migration, compaction, store restore, salvage, and backup-boundary capture must 
 ### Required-MVP storage-family registry routing
 
 - `REGISTRY-MVP-001` asserts exactly one materialized machine row, canonical key, closed value schema, owner/producer/consumer, migration, recovery, retention, and redaction disposition for every storage-owner-required MVP family, including `migration_receipt`, `editor_buffer_recovery_state`, `editor_workspace_state`, `hotreload_state`, `onboarding_state`, safe-point/restore transaction/restore point, EventRecord dedupe/index/checkpoint, and hold/anchor/maintenance/quarantine/deletion families.
-- `REGISTRY-MVP-002` separates current-key cases from compatibility cases. First-launch, valid-current-row, and corrupt-current-row oracles use the canonical keys `editor_state.v1:{project_id}:{file_path_hash}`, `editor_workspace_state.v1:{project_id}`, `hotreload_state.v1:{project_id}`, and `onboarding_state.v1:{project_id}`. `editor_buffer_recovery_state` uses the per-file canonical key and has no compatibility alias or copy-forward case. Coordinator-owned old-key copy-forward cases are exactly `editor_state:v1:{project_id}` for `editor_workspace_state`, `hotreload_state:v1:{project_id}` for `hotreload_state`, and `onboarding:v1` for `onboarding_state`; the global onboarding alias fails closed when project identity is ambiguous. All compatibility aliases are read-only and never receive new writes.
+- `REGISTRY-MVP-002` separates current-key from compatibility cases using the exact machine registry. Editor/hotreload current keys remain `editor_state.v1:{project_id}:{file_path_hash}`, `editor_workspace_state.v1:{project_id}` and `hotreload_state.v1:{project_id}`; `editor_buffer_recovery_state` has no alias, while its workspace sibling and hotreload retain their coordinator-only colon-version inputs. Onboarding consumes SP-252's current session key/value and exact predecessor roster, rejects ambiguous global Project/session mapping, and tests actual-Project revalidation after UI reset without recreating it. No compatibility alias receives new writes or acts as an ordinary-open fallback.
 - `REGISTRY-MVP-NEG-001` removes or defers each launch-critical family and falsifies recovery/retention metadata in turn; validation and mutation admission fail closed, and no prose key template or bundled multi-owner row substitutes for machine authority.
 
 ### Mandatory negative acceptance

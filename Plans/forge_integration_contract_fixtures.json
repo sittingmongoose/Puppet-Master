@@ -3,6 +3,320 @@
   "owner_schema": "Plans/forge_integration_contracts.schema.json",
   "valid": [
     {
+      "name": "precommit_account_repository_list_command_request",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.repository.list",
+        "command_instance_id": "command:forge:precommit-list:1",
+        "idempotency_key": "idempotency:forge:precommit-list:1",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": null,
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "requested_authority_role": "not_applicable",
+        "effective_authority_role": "not_applicable",
+        "requested_capability": "repository",
+        "capability_snapshot_ref": "capability:source-list-1",
+        "api_compatibility_ref": "api-compatibility:forge:1",
+        "credential_or_grant_ref": "grant:forge:1",
+        "currentness": {
+          "binding_generation": 0,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:1",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:1"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:1",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:1",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "identity_source": "validated_account_container",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": null,
+          "repository_locator_ref": null,
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null,
+        "repository_list_scope": {
+          "scope_kind": "onboarding_selected_source_account_list",
+          "project_id": null,
+          "onboarding_session_id": "onboarding:source-list:1",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "selected_source_ref": "source:git-host:1",
+          "server_id": "server:home:1",
+          "execution_host_id": "host:local:1",
+          "execution_environment_id": "environment:native:1",
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.source_control_setup.account",
+          "project_draft_revision": 3,
+          "read_only": true,
+          "creates_repository": false,
+          "binds_repository": false,
+          "writes_filesystem": false,
+          "completes_project_setup": false,
+          "precommit_authorization_ref": "source-access:list:1",
+          "source_provider_id": "provider:gitlab",
+          "source_route_id": "route:gitlab:repository-list",
+          "account_verification_ref": "account-verification:gitlab:alpha",
+          "account_generation": 4,
+          "account_container_ref": "account-container:gitlab:alpha"
+        }
+      }
+    },
+    {
+      "name": "precommit_account_repository_list_command_result",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.list",
+        "command_instance_id": "command:forge:precommit-list:1",
+        "operation_id": "operation:forge:precommit-list:1",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "succeeded",
+        "target_ref": "repository-list:gitlab:alpha",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": null,
+        "observable_work_id": null,
+        "terminal_provider_result_ref": "provider-result:forge:precommit-list:1",
+        "receipt_ref": "receipt:forge:precommit-list:1",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z",
+        "repository_list_scope": {
+          "scope_kind": "onboarding_selected_source_account_list",
+          "project_id": null,
+          "onboarding_session_id": "onboarding:source-list:1",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "selected_source_ref": "source:git-host:1",
+          "server_id": "server:home:1",
+          "execution_host_id": "host:local:1",
+          "execution_environment_id": "environment:native:1",
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.source_control_setup.account",
+          "project_draft_revision": 3,
+          "read_only": true,
+          "creates_repository": false,
+          "binds_repository": false,
+          "writes_filesystem": false,
+          "completes_project_setup": false,
+          "precommit_authorization_ref": "source-access:list:1",
+          "source_provider_id": "provider:gitlab",
+          "source_route_id": "route:gitlab:repository-list",
+          "account_verification_ref": "account-verification:gitlab:alpha",
+          "account_generation": 4,
+          "account_container_ref": "account-container:gitlab:alpha"
+        }
+      }
+    },
+    {
+      "name": "precommit_account_repository_list_command_receipt",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:forge:precommit-list:1",
+        "command_id": "cmd.forge.repository.list",
+        "command_instance_id": "command:forge:precommit-list:1",
+        "operation_id": "operation:forge:precommit-list:1",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "not_applicable",
+        "effective_authority_role": "not_applicable",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:precommit-list:1",
+        "outcome": "succeeded",
+        "observable_work_id": null,
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z",
+        "repository_list_scope": {
+          "scope_kind": "onboarding_selected_source_account_list",
+          "project_id": null,
+          "onboarding_session_id": "onboarding:source-list:1",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "selected_source_ref": "source:git-host:1",
+          "server_id": "server:home:1",
+          "execution_host_id": "host:local:1",
+          "execution_environment_id": "environment:native:1",
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.source_control_setup.account",
+          "project_draft_revision": 3,
+          "read_only": true,
+          "creates_repository": false,
+          "binds_repository": false,
+          "writes_filesystem": false,
+          "completes_project_setup": false,
+          "precommit_authorization_ref": "source-access:list:1",
+          "source_provider_id": "provider:gitlab",
+          "source_route_id": "route:gitlab:repository-list",
+          "account_verification_ref": "account-verification:gitlab:alpha",
+          "account_generation": 4,
+          "account_container_ref": "account-container:gitlab:alpha"
+        }
+      }
+    },
+    {
+      "name": "precommit_account_repository_list_command_availability",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.forge.command_availability.v1",
+        "command_id": "cmd.forge.repository.list",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "requested_capability": "repository",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "catalog_stale"
+          ],
+          "disabled_reason_code": "catalog_stale",
+          "allowed_action_ids": [
+            "cmd.forge.repository.list"
+          ],
+          "evaluated_at_utc": "2026-08-31T21:12:00Z"
+        },
+        "currentness": {
+          "binding_generation": 0,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:blocked",
+          "state": "stale",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-08-31T20:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:blocked"
+        },
+        "recorded_at_utc": "2026-08-31T21:12:00Z",
+        "repository_list_scope": {
+          "scope_kind": "onboarding_selected_source_account_list",
+          "project_id": null,
+          "onboarding_session_id": "onboarding:source-list:1",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "selected_source_ref": "source:git-host:1",
+          "server_id": "server:home:1",
+          "execution_host_id": "host:local:1",
+          "execution_environment_id": "environment:native:1",
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.source_control_setup.account",
+          "project_draft_revision": 3,
+          "read_only": true,
+          "creates_repository": false,
+          "binds_repository": false,
+          "writes_filesystem": false,
+          "completes_project_setup": false,
+          "precommit_authorization_ref": "source-access:list:1",
+          "source_provider_id": "provider:gitlab",
+          "source_route_id": "route:gitlab:repository-list",
+          "account_verification_ref": "account-verification:gitlab:alpha",
+          "account_generation": 4,
+          "account_container_ref": "account-container:gitlab:alpha"
+        }
+      }
+    },
+    {
+      "name": "precommit_account_repository_list_command_error_record",
+      "definition": "command_error_record",
+      "value": {
+        "schema_id": "pm.forge.command_error.v1",
+        "command_id": "cmd.forge.repository.list",
+        "command_instance_id": "command:forge:precommit-list:1",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "error": {
+          "code": "permission_denied",
+          "message": "Account-scoped list permission denied.",
+          "retry_disposition": "never",
+          "effect_state": "none",
+          "provider_error_ref": "provider-error:forge:1",
+          "recovery_action_ids": []
+        },
+        "recorded_at_utc": "2026-08-31T21:11:00Z",
+        "repository_list_scope": {
+          "scope_kind": "onboarding_selected_source_account_list",
+          "project_id": null,
+          "onboarding_session_id": "onboarding:source-list:1",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "selected_source_ref": "source:git-host:1",
+          "server_id": "server:home:1",
+          "execution_host_id": "host:local:1",
+          "execution_environment_id": "environment:native:1",
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.source_control_setup.account",
+          "project_draft_revision": 3,
+          "read_only": true,
+          "creates_repository": false,
+          "binds_repository": false,
+          "writes_filesystem": false,
+          "completes_project_setup": false,
+          "precommit_authorization_ref": "source-access:list:1",
+          "source_provider_id": "provider:gitlab",
+          "source_route_id": "route:gitlab:repository-list",
+          "account_verification_ref": "account-verification:gitlab:alpha",
+          "account_generation": 4,
+          "account_container_ref": "account-container:gitlab:alpha"
+        }
+      }
+    },
+    {
       "name": "provider_neutral_repository_binding",
       "definition": "repository_binding",
       "value": {
@@ -4894,6 +5208,132 @@
     }
   ],
   "invalid": [
+    {
+      "name": "precommit_source_list_rejects_phantom_repo",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "repo_id": "repo:phantom"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_phantom_binding",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "repository_binding_ref": "binding:phantom"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_mutating_command",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "command_id": "cmd.forge.repository.create"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_unverified_identity",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "target.identity_source": "validated_repository_binding"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_pretended_authority",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "effective_authority_role": "authority"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_filesystem_write",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "repository_list_scope.writes_filesystem": true
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_fake_project",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "repository_list_scope.project_id": "project:phantom"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_nonhuman",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "invocation_source": "automation"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_unscoped_read",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "permission.scope": "remote_mutation"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_source_list_rejects_stale_list",
+      "definition": "command_request",
+      "base_valid": "precommit_account_repository_list_command_request",
+      "patch": {
+        "currentness.state": "stale"
+      },
+      "expected_error": "Account-only precommit listing must preserve read scope and real unbound identity."
+    },
+    {
+      "name": "precommit_account_repository_list_command_result_rejects_fake_binding",
+      "definition": "command_result",
+      "base_valid": "precommit_account_repository_list_command_result",
+      "patch": {
+        "repository_binding_ref": "binding:phantom"
+      },
+      "expected_error": "An account list never invents a selected repository binding."
+    },
+    {
+      "name": "precommit_account_repository_list_command_receipt_rejects_fake_binding",
+      "definition": "command_receipt",
+      "base_valid": "precommit_account_repository_list_command_receipt",
+      "patch": {
+        "repository_binding_ref": "binding:phantom"
+      },
+      "expected_error": "An account list never invents a selected repository binding."
+    },
+    {
+      "name": "precommit_account_repository_list_command_availability_rejects_fake_binding",
+      "definition": "command_availability",
+      "base_valid": "precommit_account_repository_list_command_availability",
+      "patch": {
+        "repository_binding_ref": "binding:phantom"
+      },
+      "expected_error": "An account list never invents a selected repository binding."
+    },
+    {
+      "name": "precommit_account_repository_list_command_error_record_rejects_fake_binding",
+      "definition": "command_error_record",
+      "base_valid": "precommit_account_repository_list_command_error_record",
+      "patch": {
+        "repository_binding_ref": "binding:phantom"
+      },
+      "expected_error": "An account list never invents a selected repository binding."
+    },
     {
       "name": "bitbucket_data_center_cannot_inherit_cloud_pipelines",
       "definition": "provider_capability_matrix",
