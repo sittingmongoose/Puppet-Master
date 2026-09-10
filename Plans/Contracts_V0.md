@@ -1912,21 +1912,30 @@ Rules:
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 
-`UICommandResponse` is the canonical acknowledgement/error envelope for UI command dispatch. Minimum fields are:
+`UICommandResponse` is the canonical acknowledgement/error projection for UI command dispatch. New output uses the closed `2.0.0` schema in `Plans/ui_command_response.schema.json` (CV-329); all fields below are present, with null used only where the schema permits it. Typed owner results and Full Thread command outcomes remain separately owned records, not copied domain payloads in this envelope.
 
 | Field | Requirement |
 | --- | --- |
-| `schema_version` | Response payload schema version. |
+| `schema_id`, `schema_version` | `pm.ui_command_response.v2`, `2.0.0`. |
 | `dispatch_id` | Dispatch attempt identity. |
-| `command_id` | Canonical command ID after alias normalization. |
+| `request_ref`, `command_id`, `command_instance_id` | Actual normalized request, canonical command and stable command instance; only an unknown pre-dispatch command has null canonical ID, preserving the original input through the request ref. |
+| `response_kind` | `owner_operation`, `local_projection`, or `pre_dispatch_rejection`; determined by the actual owner contract, never chosen to evade durable dispatch. |
 | `ack_status` | Closed enum `accepted | rejected`. |
-| `result_status?` | Closed enum `pending | succeeded | failed | cancelled | no_op`. |
-| `error?` | Present when rejected or failed; shape below. |
-| `event_refs[]?` | Durable event refs emitted by the command. |
-| `receipt_ref?` | Runtime, approval, transport, or mutation receipt produced by the command. |
+| `result_status` | Null on rejection; otherwise `pending | succeeded | failed | cancelled | no_op | recovery_required`. |
+| `error` | Required non-null for rejection, failure or recovery-required; null for pending, success, cancellation and no-op. |
+| `event_refs[]`, `receipt_ref` | Bounded actual authorized event refs and actual dispatch/route/owner receipt, or null receipt where no such receipt exists. No synthetic event substitutes for a receipt. |
+| `operation_id`, `owner_identity`, `command_outcome_ref` | Exact actual Full Thread operation identity and outcome ref for an owner operation; all null for local-only projection and pre-dispatch refusal. |
+| `owner_result_ref`, `owner_result_schema_ref` | Matching separately validated typed owner result/error and its exact schema path, definition pointer and schema identity; null only while no owner result exists. |
+| `replayed`, `original_dispatch_id` | Replay preserves the original command, scope, outcome, owner result, receipt, error and event identities; the original dispatch ID is present exactly when replayed. |
 | `ts` | Response timestamp. |
 
-`UICommandResponse.error` fields are `code`, `reason`, and optional `offending_field?`. Error `code` is closed to `invalid_route | unknown_command | invalid_args | permission_denied | blocked_state_required | stale_projection | handler_unavailable | internal_error`.
+`UICommandResponse.error` has required `code`, bounded nonempty `reason`, and nullable `offending_field`. Error `code` remains closed to `invalid_route | unknown_command | invalid_args | permission_denied | blocked_state_required | stale_projection | handler_unavailable | internal_error`; domain error/recovery details remain in the typed owner record. `recovery_required` is a result state, not an invented ninth generic error code.
+
+The dispatcher joins the authenticated request, actual `CommandOutcomeRecord`, and owner result by exact command ID/instance, operation, full topology scope, payload hash, idempotency key, target generation and dispatch frame. The outcome binds the typed result through `owner_result_ref`, `owner_result_schema_ref`, and SHA-256 of its RFC 8785 canonical JSON. Native owner verification must precede publishing a completion; a schema-valid body, caller-supplied ref, digest, acknowledgement or button dismissal is not authority. Local view-only actions return their actual route/open disposition without fabricating a Server, Project, operation or domain event. Pre-dispatch refusal has no accepted operation and no effect.
+
+Version-1 response minima remain read/import lineage only. An importer cannot synthesize missing request, operation, scope, owner-result or receipt identities to produce v2 success; unresolved legacy records remain explicitly unbound and non-authoritative. This does not introduce a second request envelope, outcome vocabulary, durable record family or event admission.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-042
 
 ### 7.2 UICommand envelope rules
 
@@ -21503,3 +21512,41 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json, ContractName:Plans/browser_event_payloads.schema.json
+
+
+### CV-329 - Central UI Command Response And Typed Owner Result Join
+
+```yaml
+plan_unit_id: CV-329
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: "The closed v2 UICommandResponse is the single dispatcher projection over the authenticated normalized request, existing Full Thread CommandOutcomeRecord and separately owned typed result/error. It does not duplicate domain schemas, equate acknowledgement with success, or fabricate durable scope for local projections and pre-dispatch refusals."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [CV-313, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - "Every response validates Plans/ui_command_response.schema.json; all twenty fields are present with conditional nullability, closed error codes, bounded references and replay identity."
+  - "Owner-operation joins preserve exact request, canonical command, command instance, operation, full topology identity, payload hash, idempotency key, target generation and dispatch frame."
+  - "Terminal outcomes bind the actual owner result ref, exact schema path/definition/schema identity, and SHA-256 of RFC 8785 canonical JSON; native resolution authenticates the owner and applies its validation and permission rules before publication."
+  - "Accepted, acknowledged and executing project accepted/pending; succeeded projects succeeded or owner-verified no_op; failed and cancelled retain those states; rejected projects rejected with null result status; terminal_unknown projects recovery_required."
+  - "A typed owner acceptance cannot prove completion; owner-specific receipt and effect-unknown semantics remain authoritative, including the shared-runtime, Browser and Server result contracts."
+  - "Local route/open disposition has null operation, owner identity, outcome and typed owner refs, with zero domain events; pre-dispatch refusal has no accepted operation or effects and preserves unknown input only through request lineage."
+  - "Replay preserves the original request, command, scope, outcome, owner result, receipt, events, error and status for all three response kinds; it cannot re-execute an effect or mint replacement operation identity."
+  - "Version-1 minima are read/import lineage only; missing identities are never synthesized to claim v2 success."
+  - "Static fixtures cover cross-record mismatch, hash tampering, unknown schema, stale generation, acknowledgement laundering, application scope, local action, refusal and replay; trusted fixture resolutions do not prove native authentication."
+  - "The integer/string Case L digest oracle is reused; fixture success does not claim general numeric RFC 8785 or every owner-specific native adapter."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/ui_command_response.schema.json, Plans/full_thread_runtime_contracts.schema.json, Plans/shared_runtime_command_contracts.schema.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

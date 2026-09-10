@@ -68,7 +68,8 @@
         "replayed": false,
         "original_operation_id": null,
         "terminal_owner_result_ref": null,
-        "subject_ref": "environment:1"
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "command-outcome:accepted_environment_result_is_nonterminal"
       }
     },
     {
@@ -536,7 +537,8 @@
         "caller_navigation_allowed": false,
         "content_capture_allowed": false,
         "content_recording_allowed": false,
-        "content_persistence_allowed": false
+        "content_persistence_allowed": false,
+        "command_outcome_ref": "command-outcome:protected_auth_cancel_redacted_exact_return"
       }
     },
     {
@@ -586,7 +588,8 @@
         "caller_navigation_allowed": false,
         "content_capture_allowed": false,
         "content_recording_allowed": false,
-        "content_persistence_allowed": false
+        "content_persistence_allowed": false,
+        "command_outcome_ref": "command-outcome:protected_auth_timeout_failed_deadline_expired"
       }
     },
     {
@@ -627,7 +630,8 @@
         "caller_navigation_allowed": false,
         "content_capture_allowed": false,
         "content_recording_allowed": false,
-        "content_persistence_allowed": false
+        "content_persistence_allowed": false,
+        "command_outcome_ref": "command-outcome:protected_auth_verified_exact_return_without_content"
       }
     },
     {
@@ -656,7 +660,12 @@
         "topology_generation": 7,
         "actor_ref": "actor:user:1",
         "permission_snapshot_ref": "permission:snapshot:tailscale-auth:1",
-        "goal_id": null, "plan_id": null, "run_id": null, "thread_id": null, "agent_id": null, "crew_id": null,
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
         "deadline_utc": "2026-09-09T18:30:00Z",
         "recovery_of_operation_id": null,
         "action": "start",
@@ -717,7 +726,12 @@
         "topology_generation": 7,
         "actor_ref": "actor:user:2",
         "permission_snapshot_ref": "permission:snapshot:tailscale-auth:2",
-        "goal_id": null, "plan_id": null, "run_id": null, "thread_id": null, "agent_id": null, "crew_id": null,
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
         "deadline_utc": "2026-09-09T18:30:00Z",
         "recovery_of_operation_id": "auth-operation:tailscale:1",
         "action": "resume",
@@ -766,9 +780,15 @@
         "observable_work_id": null,
         "current_revision_or_epoch": 3,
         "projection_ref": "projection:authentication:tailscale:1:3",
-        "receipt_refs": ["receipt:authentication:tailscale:verified:1"],
-        "artifact_refs": [], "disabled_reason": null, "error": null, "recovery_actions": [],
-        "replayed": false, "original_operation_id": null,
+        "receipt_refs": [
+          "receipt:authentication:tailscale:verified:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
         "terminal_owner_result_ref": "receipt:authentication:tailscale:verified:1",
         "subject_ref": "authentication:operation:tailscale:1",
         "authentication_operation_id": "auth-operation:tailscale:1",
@@ -779,21 +799,27 @@
         "return_target_ref": "ui-return:remote-access:client:2",
         "return_fence_state": "exact_operation_and_current_authorized_client_handoff",
         "authentication_disposition": "verified",
-        "content_exposed_to_caller": false, "caller_navigation_allowed": false,
-        "content_capture_allowed": false, "content_recording_allowed": false, "content_persistence_allowed": false,
+        "content_exposed_to_caller": false,
+        "caller_navigation_allowed": false,
+        "content_capture_allowed": false,
+        "content_recording_allowed": false,
+        "content_persistence_allowed": false,
         "client_handoff_policy": "server_owned_authorized_client_handoff",
         "server_owned_handoff": {
           "owner_contract_ref": "Plans/Remote_Access_System.md#RAS-015",
           "control_server_kind": "hosted_tailscale",
-          "server_id": "server:home:1", "connector_id": "connector:1",
+          "server_id": "server:home:1",
+          "connector_id": "connector:1",
           "authorization_session_ref": "authorization-session:tailscale:1",
-          "operation_generation": 3, "handoff_generation": 2,
+          "operation_generation": 3,
+          "handoff_generation": 2,
           "authorized_client_id": "client:replacement:2",
           "authorized_client_session_generation": 1,
           "protected_action_ref": "protected-action:tailscale:2",
           "client_loss_policy": "operation_survives_handoff_must_be_reauthorized",
           "inherited_protected_content": false
-        }
+        },
+        "command_outcome_ref": "command-outcome:tailscale_auth_verified_current_authorized_handoff"
       }
     },
     {
@@ -1479,62 +1505,86 @@
     {
       "name": "tailscale_handoff_requires_owner_binding",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "remove": ["server_owned_handoff"]
+      "remove": [
+        "server_owned_handoff"
+      ]
     },
     {
       "name": "tailscale_handoff_requires_new_authorization",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.protected_action_ref": null}
+      "patch": {
+        "server_owned_handoff.protected_action_ref": null
+      }
     },
     {
       "name": "tailscale_handoff_requires_current_client_session",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.authorized_client_session_generation": null}
+      "patch": {
+        "server_owned_handoff.authorized_client_session_generation": null
+      }
     },
     {
       "name": "tailscale_handoff_cannot_inherit_protected_content",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.inherited_protected_content": true}
+      "patch": {
+        "server_owned_handoff.inherited_protected_content": true
+      }
     },
     {
       "name": "tailscale_handoff_cannot_accept_raw_url",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.authorization_url": "https://invalid.example/auth"}
+      "patch": {
+        "server_owned_handoff.authorization_url": "https://invalid.example/auth"
+      }
     },
     {
       "name": "tailscale_handoff_cannot_use_headscale_policy",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.control_server_kind": "headscale"}
+      "patch": {
+        "server_owned_handoff.control_server_kind": "headscale"
+      }
     },
     {
       "name": "tailscale_handoff_ref_is_not_an_authorization_url",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.protected_action_ref": "https://invalid.example/authorize"}
+      "patch": {
+        "server_owned_handoff.protected_action_ref": "https://invalid.example/authorize"
+      }
     },
     {
       "name": "tailscale_handoff_cannot_use_unapproved_generation",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"server_owned_handoff.handoff_generation": 0}
+      "patch": {
+        "server_owned_handoff.handoff_generation": 0
+      }
     },
     {
       "name": "tailscale_handoff_cannot_keep_old_client_policy",
       "base_valid": "tailscale_auth_resume_replacement_client_fresh_handoff",
-      "patch": {"client_handoff_policy": "initiating_active_client_only"}
+      "patch": {
+        "client_handoff_policy": "initiating_active_client_only"
+      }
     },
     {
       "name": "tailscale_verified_result_cannot_claim_old_client_fence",
       "base_valid": "tailscale_auth_verified_current_authorized_handoff",
-      "patch": {"return_fence_state": "exact_operation_and_initiating_active_client"}
+      "patch": {
+        "return_fence_state": "exact_operation_and_initiating_active_client"
+      }
     },
     {
       "name": "tailscale_verified_result_cannot_return_content",
       "base_valid": "tailscale_auth_verified_current_authorized_handoff",
-      "patch": {"content_exposed_to_caller": true}
+      "patch": {
+        "content_exposed_to_caller": true
+      }
     },
     {
       "name": "generic_auth_cannot_select_handoff_without_owner",
       "base_valid": "protected_auth_start_bound_to_initiating_active_client",
-      "patch": {"client_handoff_policy": "server_owned_authorized_client_handoff"}
+      "patch": {
+        "client_handoff_policy": "server_owned_authorized_client_handoff"
+      }
     },
     {
       "name": "runtime_local_action_is_non_persistent",
