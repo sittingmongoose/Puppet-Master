@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L5700-L5983
+Source lines: L5700-L6018
 
-Source SHA256: `cbda2ffd980a861f82ffab67431b1190940e9227a2d3302a8337a726502f14b7`
+Source SHA256: `cc9687d13adfc6d17c749fc5d1e523f1b64451a17c35c9c54eb70381b96c9eb1`
 
 ---
 
@@ -292,3 +292,38 @@ owner_hints: [Plans/Prompt_Pipeline.md, Plans/Permissions_System.md]
 ```
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Working_Notebook.md
+
+### PP-091 - Browser Event And Artifact Prompt Consumer Boundary
+
+```yaml
+plan_unit_id: PP-091
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  An admitted Browser event is bounded operational metadata, never prompt content admission. Browser result chips,
+  representation refs and screenshot artifacts enter the existing prompt/context materialization path only under
+  current permission, capability, target/generation, privacy, redaction, vision, byte/token budget and prompt-context
+  epoch checks. Capability-specific compact digests and explicit on-demand help remain owned by PP-083.
+gui_related: false
+gui_classification_reason: This is prompt content admission and invalidation, not visual chip design.
+depends_on: [PP-074, PP-083, SMPFS-166]
+unblocks: []
+acceptance_criteria:
+  - Consume admitted event identity and bounded artifact refs without injecting the event payload, page/DOM body, query/source code, expanded API union or full help into the base prompt.
+  - Event registration, successful capture, program completion and screenshot model_attachment_selected each remain insufficient to attach content without independent current prompt admission.
+  - Screenshot auto, always and never preserve artifact identity and human/test capture independently; always cannot bypass permission, redaction, vision or budget and never does not delete a requested artifact.
+  - Current permission, capability, API/help/registry, target PageGeneration and prompt-context epoch changes invalidate affected materialization; stale/historical evidence cannot authorize current mutation.
+  - Replay is projection-only and cannot deliver a prompt, grant capability, consume a provider call, or turn operational byte/token estimates into model usage.
+  - Protected AuthBrowserSession and secrets never enter Browser chips, captures, help, context or prompt records.
+validation_surfaces: [Plans/browser_event_admission_fixtures.json, python3 scripts/pm-browser-event-admission.py, Plans/section15_browser_program_contract_fixtures.json, future native Browser prompt attachment and epoch invalidation fixtures]
+risk_class: browser_event_to_prompt_authority_escape
+reasoning_tier: high
+context_scope: browser_prompt_consumer
+implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/browser_event_admission.json, Plans/section15_browser_program_contracts.schema.json]
+node_compile_hint: {mode: static_prompt_consumer_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:HBU-005, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-022, USER-PACKET-GAP-CLOSURE-20260910]
+negative_constraints: [No event-to-prompt auto-attachment., No authority or budget widening from capture policy., No provider execution or token-efficiency proof from static admission.]
+```
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#PP-083, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json

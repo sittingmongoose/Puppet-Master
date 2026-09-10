@@ -590,7 +590,8 @@
       "requirement_refs": [
         "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-147",
         "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-156",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157"
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166"
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-147",
@@ -604,7 +605,7 @@
       "handler_owner": "Section 15 Browser Program owner; native browser handlers are absent. Sole future inspect target: handlers::browser_program::inspect; the target string is not native-handler proof. The 14 commands added by the central Touch closure have sole future routes in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157; target strings are not native proof.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static Browser Program contracts and T46 concept projection only; no CEF/native runtime proof. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
+      "production_or_simulation": "Static Browser contracts and concept projection only. Exactly 53 required Browser event families are individually admitted by Plans/browser_event_admission.json and consumed by the fifteen existing command/wiring rows. No CEF, native handler/producer, physical owner-record admission, benchmark, global currentness or readiness proof.",
       "gui_triggers": [
         "Browser workspace/page/program controls, Settings, Doctor, Testing"
       ],
@@ -613,10 +614,15 @@
         "Plans/Settings_System.md",
         "Plans/newtools.md",
         "Plans/Test_Capture_and_Motion_Evidence.md",
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Concepts/pm7-tools/systems_integration_source.py",
+        "Plans/usage-feature.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Wiring_Matrix.md"
       ],
       "event_refs": [
-        "Plans/Section15_MVP_Promoted_Features_Spec.md#required-browser-event-registrations pending Event Authority"
+        "Plans/browser_event_admission.json",
+        "Plans/event_family_registry.json",
+        "Plans/browser_event_payloads.schema.json"
       ],
       "receipt_refs": [
         "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program_segment_receipt",
@@ -626,13 +632,17 @@
         "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_observable_work_projection"
       ],
       "persistence_refs": [
-        "BrowserWorkspace and ProgramWorkspace owner records"
+        "BrowserWorkspace and ProgramWorkspace owner records",
+        "Plans/storage-plan.md#SP-259"
       ],
       "migration_refs": [
         "Plans/Section15_MVP_Promoted_Features_Spec.md#browser migration and negative security rules"
       ],
       "test_refs": [
-        "Plans/section15_browser_program_contract_fixtures.json"
+        "Plans/section15_browser_program_contract_fixtures.json",
+        "Plans/browser_event_admission_fixtures.json",
+        "tests/test_pm_browser_event_admission.py",
+        "tests/test_pm_browser_program_semantics.py"
       ],
       "evidence_refs": [
         "static_schema_fixture_and_concept_projection_only"
