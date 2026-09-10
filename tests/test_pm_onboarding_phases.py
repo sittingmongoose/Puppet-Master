@@ -351,6 +351,26 @@ class OnboardingStorageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "onboarding_storage_unbound_owner_ref"):
             onboarding_storage_value_schema(changed, PROJECT_SCHEMA, settings)
 
+    def test_explicit_history_choices_are_bound_not_replaced_by_consumer_defaults(self):
+        for field, replacement in (("local_history", False), ("history_backend", "git")):
+            changed = copy.deepcopy(CASES["valid.session.postcommit_provider"])
+            self.assertNotEqual(changed["setup_draft"][field], replacement)
+            changed["setup_draft"][field] = replacement
+            self.assertTrue(valid("onboarding_session", changed))
+            self.assertIn("onboarding_persisted_draft_approved_bytes_mismatch",
+                          onboarding_semantic_failures("onboarding_session", changed))
+
+    def test_touch_onboarding_residuals_do_not_restore_predecessor_contracts(self):
+        touch = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        rows = [dict(zip(touch["row_columns"], row)) for row in touch["rows"]]
+        relevant = [row for row in rows if row["profile_id"] == "TCP-ONBOARD"]
+        self.assertEqual(len(relevant), 13)
+        for row in relevant:
+            self.assertEqual(row["disposition"], "partial")
+            for stale in ("exact nine-stage main path", "exact nine-/six-stage path",
+                          "only from a person-confirmed current Review", "init_git:true"):
+                self.assertNotIn(stale, row["residual_risk"])
+
     def test_gui_stage_graphs_reference_owner_instead_of_visual_alias_roster(self):
         gui = json.loads((ROOT / "Plans/final_gui_interaction_contracts.schema.json").read_text())
         props = gui["$defs"]["onboarding_motion"]["properties"]
