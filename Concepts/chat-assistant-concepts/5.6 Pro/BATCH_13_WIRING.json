@@ -1,0 +1,90 @@
+{
+  "claim_boundary": "Concept adapter and planned-command correspondence, not native registration or runtime dispatch proof.",
+  "new_canonical_commands": [],
+  "single_owner_modules": {
+    "lens": "lens-protocol.js",
+    "wonderer_leads": "wonderer-protocol.js on existing CollaborativeRun",
+    "core_workflow": "collaboration.js and brainstorm-protocol.js",
+    "plans": "plans.js",
+    "artifacts": "existing PM56_DATA.artifacts collection"
+  },
+  "command_bindings": [
+    {
+      "local_action": "lens-open",
+      "planned_owner_reference": "cmd.chat.context_lens.toggle",
+      "guard": "Compact chooser only"
+    },
+    {
+      "local_action": "lens-mode",
+      "planned_owner_reference": "cmd.chat.context_lens.set_mode / .turn_off",
+      "guard": "Single Lens owner mode or full release"
+    },
+    {
+      "local_action": "lens-toggle",
+      "planned_owner_reference": "cmd.chat.context_lens.toggle_message_selection",
+      "guard": "25-source cap, eligibility, source identity"
+    },
+    {
+      "local_action": "lens-clear",
+      "planned_owner_reference": "cmd.chat.context_lens.clear_selection",
+      "guard": "Active selection only"
+    },
+    {
+      "local_action": "lens-apply",
+      "planned_owner_reference": "cmd.chat.context_lens.apply_subcompact",
+      "guard": "Exact preview/thread/source/shaping revision"
+    },
+    {
+      "local_action": "lens-rehydrate / lens-release",
+      "planned_owner_reference": "cmd.chat.context_lens.revert_subcompact",
+      "guard": "Full source rehydration / operation release"
+    },
+    {
+      "local_action": "collab-modal-commit",
+      "planned_owner_reference": "existing collaborative owner start",
+      "guard": "Detached modal \u2192 one run \u2192 additive participant"
+    },
+    {
+      "local_action": "collab-pause / collab-resume / collab-cancel",
+      "planned_owner_reference": "existing collaborative owner controls",
+      "guard": "Authoritative run state and epoch gates"
+    },
+    {
+      "local_action": "collab-brainstorm-synthesize",
+      "planned_owner_reference": "existing BrainStorm/Plan owner handoff",
+      "guard": "Core-ready + lead dispositions \u2192 one Plan"
+    }
+  ],
+  "typed_local_actions": [
+    "lens-preview",
+    "lens-cancel",
+    "lens-source",
+    "lens-seal",
+    "lens-collapse",
+    "b13-effective",
+    "b13-open",
+    "b13-source",
+    "b13-decide"
+  ],
+  "explicit_exercise_actions": [
+    "b13-start",
+    "b13-core",
+    "b13-research (fixed local JSON sample only)",
+    "b13-source-change",
+    "b13-change-message",
+    "b13-hide-guide"
+  ],
+  "proof_dimensions": {
+    "source_refs": "BATCH_13_COVERAGE_DELTA.json",
+    "owners_and_dry": "single-owner modules and existing owner hooks",
+    "payload_result_error": "protocol tests; no-effect errors preserve existing result",
+    "availability_and_permissions": "local disabled reasons; native permission authority not claimed",
+    "handler": "PM56_EXT actions; no Rust symbol claimed",
+    "ui_and_return_routes": "editor owner, canonical-source view, existing Plan details",
+    "reverse_consumers": "Lens header/in-flow/message/branch; Wonderer card/workspace/artifact/Plan",
+    "events_receipts_progress": "local receipt history, pending state; no EventRecord admission",
+    "persistence": "session-only, explicit not proved",
+    "tests": "tests/b13",
+    "residuals": "row-level coverage and checkpoint"
+  }
+}
