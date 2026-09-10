@@ -6,11 +6,30 @@ missing input/dependencies. JSON output separates inspected structure from
 unperformed evidence/independent/native review. It does not repair a registry.
 """
 from __future__ import annotations
-import argparse,hashlib,json,re,sys
+import argparse,hashlib,importlib.util,json,re,sys
 from pathlib import Path
 
 def read(root,path):return json.loads((root/path).read_text())
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def payload_binding_error(candidate, registered, successor=None):
+    """A retained candidate is lineage, never an alias for a later admission."""
+    if registered is None:return None
+    if successor is None:
+        return None if registered.get('payload_schema_id')==candidate['payload_schema_id']else 'Registered payload differs and no row-local successor was supplied'
+    if successor.get('event_type')!=candidate['event_type'] or successor.get('admission_status')!='admitted_static_contract':
+        return 'Successor does not admit this exact event family'
+    if registered.get('payload_schema_id')!=successor.get('payload_schema_ref',{}).get('schema_id'):
+        return 'Current registry disagrees with the row-local successor payload'
+    return None
+
+def inspect_browser_admission(root):
+    """Use the central executable oracle rather than a second admission test."""
+    spec=importlib.util.spec_from_file_location('assistant_browser_admission',root/'scripts/pm-browser-event-admission.py')
+    if spec is None or spec.loader is None:raise ValueError('cannot load Browser admission oracle')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module.ROOT=root
+    return module.validate()
 def resolve(root,ref):
     if not isinstance(ref,str) or not ref.startswith('Plans/'):raise ValueError('not a canonical Plans reference')
     path,_,frag=ref.partition('#');p=(root/path).resolve()
@@ -95,9 +114,12 @@ def check(root):
     inputs=['Plans/Back_Seat_Driver.md','Plans/assistant-chat-design.md','Plans/settings_inventory.json','Plans/section15_browser_program_contracts.schema.json','Plans/browser_event_payloads.schema.json','Plans/browser_event_admission_candidates.json','Plans/browser_event_admission_candidates.schema.json','scripts/pm-integration-packet-audit.spec.json','Plans/Section15_MVP_Promoted_Features_Spec.md','Plans/UI_Command_Catalog.md','Plans/Wiring_Matrix.production.json','Plans/Wiring_Matrix.schema.json','Plans/touch_closure.json','Plans/event_family_registry.json']
     missing=[p for p in inputs if not(root/p).is_file()]
     if missing:raise ValueError('required live inputs missing: '+', '.join(missing))
+    candidate_path='Plans/browser_event_payload_candidates.schema.json'
+    if not(root/candidate_path).is_file():candidate_path='Plans/browser_event_payloads.schema.json'
+    if candidate_path not in inputs:inputs.append(candidate_path)
     errors=[];observations=[];source_hashes={p:digest(root/p)for p in inputs}
     def gap(code,subject,detail):errors.append(dict(code=code,subject=subject,detail=detail))
-    owner=read(root,'Plans/section15_browser_program_contracts.schema.json');candidate=read(root,'Plans/browser_event_payloads.schema.json');rows=read(root,'Plans/browser_event_admission_candidates.json')['rows']
+    owner=read(root,'Plans/section15_browser_program_contracts.schema.json');candidate=read(root,candidate_path);rows=read(root,'Plans/browser_event_admission_candidates.json')['rows']
     for path,doc in [('Browser owner',owner),('event candidates',candidate)]:
         try:Draft202012Validator.check_schema(doc)
         except Exception as ex:gap('invalid_schema',path,str(ex))
@@ -115,6 +137,15 @@ def check(root):
     for ex in Draft202012Validator(inventory_schema).iter_errors(read(root,'Plans/browser_event_admission_candidates.json')):gap('candidate_inventory_schema',str(list(ex.path)),ex.message)
     event_registry=read(root,'Plans/event_family_registry.json');registered={r['event_type']:r for r in event_registry['families']}
     if len(registered)!=len(event_registry['families']):gap('duplicate_event_family','registry','Duplicate event types cannot be hidden by a map')
+    successors={};admission_observation=None
+    if(root/'Plans/browser_event_admission.json').is_file():
+        admission_rows=read(root,'Plans/browser_event_admission.json')['rows']
+        successors={r['event_type']:r for r in admission_rows}
+        if len(successors)!=len(admission_rows):gap('duplicate_successor_admission','Browser events','Duplicate row-local identities')
+        for p in ('Plans/browser_event_admission.json','Plans/browser_event_admission.schema.json','Plans/browser_event_admission_fixtures.json','Plans/event_family_registry.schema.json','Plans/storage_value_registry.json','Plans/event_record.schema.json','scripts/pm-browser-event-admission.py','scripts/pm-implementation-readiness.py'):
+            source_hashes[p]=digest(root/p)
+        admission_observation=inspect_browser_admission(root)
+        if admission_observation.get('status')!='pass':gap('successor_admission_not_valid','Browser events',admission_observation.get('failures'))
     planned=[];section=(root/'Plans/Section15_MVP_Promoted_Features_Spec.md').read_text()
     for row in rows:
         e=row['event_type'];definition=candidate['$defs'].get(e.replace('.','_'),{})
@@ -122,7 +153,12 @@ def check(root):
         if f'`{e}`'not in section:gap('event_source_missing',e,'Exact event name absent from semantic owner')
         r=registered.get(e)
         if r is None:planned.append(e)
-        elif r.get('payload_schema_id')!=row['payload_schema_id']:gap('admitted_payload_disagrees',e,'Adjudicate against current registry; never overwrite a newer admission')
+        else:
+            mismatch=payload_binding_error(row,r,successors.get(e))
+            if mismatch:gap('admitted_payload_disagrees',e,mismatch)
+        observations.append(dict(event_type=e,candidate_schema_id=row['payload_schema_id'],candidate_payload_document=candidate_path,
+                                 current_payload_schema_id=r.get('payload_schema_id')if r else None,
+                                 candidate_is_runtime_alias=False,successor_admission_present=e in successors))
     expected={r['event_type']for r in rows}
     if len(expected)!=53 or len(rows)!=53:gap('candidate_set_drift','Browser events','Expected the exact reviewed 53-name candidate set')
     unknown_registered=sorted(e for e in registered if e.startswith('browser.')and e not in expected)
@@ -179,7 +215,7 @@ def check(root):
     if settings['safety.approvals.bsd-catch-up-seconds']['default']!='30 seconds':gap('catchup_default_drift','BSD','Adjudicate current owner default')
     if settings['safety.approvals.bsd-trigger-sensitivity'].get('options')!=['Conservative','Balanced','Frequent']:gap('sensitivity_mapping_drift','BSD','Expected reconciled display mapping')
     if 'Only `cmd.bsd.set` has an existing catalog row.'in bsd_text:gap('stale_registration_claim','BSD','Owner still denies existing catalogue rows')
-    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
+    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,browser_candidate_dispositions=observations,browser_successor_admission_check=admission_observation,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[1]);a=p.parse_args()
