@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/browser_event_admission/1.0.0/browser_event_admission.schema.json",
+  "title": "Scoped Browser event-authority admission decisions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "admission_id",
+    "scope",
+    "required_event_count",
+    "preexisting_family_count",
+    "preexisting_family_rows_sha256",
+    "preexisting_family_ids",
+    "global_event_denominator",
+    "known37_assignment_disposition",
+    "physical_record_admission",
+    "claim_boundary",
+    "source_owner_ref",
+    "validation_command",
+    "rows",
+    "command_event_bindings",
+    "maximum_payload_utf8_bytes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://puppetmaster.local/schemas/browser_event_admission/1.0.0/browser_event_admission.schema.json"
+    },
+    "schema_id": {
+      "const": "pm.browser_event_admission.v1"
+    },
+    "admission_id": {
+      "const": "BROWSER-SECTION15-53-20260910"
+    },
+    "scope": {
+      "const": "exact_section15_required_event_families_only"
+    },
+    "required_event_count": {
+      "const": 53
+    },
+    "preexisting_family_count": {
+      "const": 39
+    },
+    "preexisting_family_rows_sha256": {
+      "const": "f548a2977dc4f1c51dc0a4976940a0a3562de6281a707a96fbd5cee67f618c0e"
+    },
+    "preexisting_family_ids": {
+      "type": "array",
+      "minItems": 39,
+      "maxItems": 39,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "global_event_denominator": {
+      "const": "UNKNOWN_OPEN"
+    },
+    "known37_assignment_disposition": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "physical_record_admission": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "source_owner_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "validation_command": {
+      "const": "python3 scripts/pm-browser-event-admission.py"
+    },
+    "command_event_bindings": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "command_id",
+          "event_types",
+          "emission_rule",
+          "event_silent_outcomes",
+          "handler_proof"
+        ],
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "pattern": "^cmd\\.browser\\.[a-z_.]+$"
+          },
+          "event_types": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^browser\\.[a-z_.]+$"
+            }
+          },
+          "emission_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "event_silent_outcomes": {
+            "const": [
+              "pre_dispatch_rejection",
+              "handler_unavailable",
+              "acceptance_only",
+              "no_change"
+            ]
+          },
+          "handler_proof": {
+            "const": "required_separately_before_runtime_enablement"
+          }
+        }
+      }
+    },
+    "maximum_payload_utf8_bytes": {"const": 65536},
+    "rows": {
+      "type": "array",
+      "minItems": 53,
+      "maxItems": 53,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_type",
+          "family_id",
+          "family_revision",
+          "admission_status",
+          "semantic_owner_ref",
+          "producer_component",
+          "producer_admission",
+          "transition_rule",
+          "subject_kind",
+          "required_context_fields",
+          "owner_record_contract_ref",
+          "payload_schema_ref",
+          "compatibility_rule",
+          "replay_rule",
+          "consumer_contract_refs",
+          "consumer_rule",
+          "retention_policy_ref",
+          "retention_reason",
+          "recovery_rule",
+          "redaction_rule",
+          "validation_case_id",
+          "runtime_producer_status"
+        ],
+        "properties": {
+          "event_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "family_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "family_revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "admission_status": {
+            "const": "admitted_static_contract"
+          },
+          "semantic_owner_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "producer_component": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "producer_admission": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "transition_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "subject_kind": {
+            "enum": [
+              "workspace",
+              "page",
+              "lease",
+              "representation",
+              "compile",
+              "routing",
+              "program",
+              "segment",
+              "program_workspace",
+              "screenshot",
+              "routine",
+              "session"
+            ]
+          },
+          "required_context_fields": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "owner_record_contract_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "payload_schema_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "json_pointer",
+              "schema_id"
+            ],
+            "properties": {
+              "path": {
+                "const": "Plans/browser_event_payloads.schema.json"
+              },
+              "json_pointer": {
+                "type": "string",
+                "pattern": "^#/\\$defs/[a-z0-9_]+$"
+              },
+              "schema_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "compatibility_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "replay_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "consumer_contract_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "consumer_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "retention_policy_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "registry_schema_id",
+              "policy_id",
+              "policy_version"
+            ],
+            "properties": {
+              "registry_schema_id": {
+                "const": "pm.storage_value_registry.v2"
+              },
+              "policy_id": {
+                "enum": ["RP-AUTHORITY-INDEFINITE", "RP-RUNTIME-365D"]
+              },
+              "policy_version": {
+                "const": "1.0.0"
+              }
+            }
+          },
+          "retention_reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "recovery_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "redaction_rule": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "validation_case_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "runtime_producer_status": {
+            "const": "unimplemented_not_proven"
+          }
+        }
+      }
+    }
+  }
+}
