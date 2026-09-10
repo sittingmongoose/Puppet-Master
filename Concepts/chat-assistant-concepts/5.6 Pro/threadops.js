@@ -338,6 +338,7 @@
     };
     ctx.state.threads.unshift(nt);
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch');
+    window.PM56_LENS?.fork(src.id, nt.id);
 
     var detail = 'A branch of ' + plural(at + 1, 'turn', 'turns') + ' was created from ' +
       (anchor ? turnLabel(src, anchor) : 'the latest turn') + '. The original thread is unchanged.';

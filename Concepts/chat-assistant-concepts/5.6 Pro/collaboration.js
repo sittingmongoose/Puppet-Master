@@ -2017,11 +2017,12 @@
          Opening, editing and cancelling a modal reach none of these lines. */
       effect('runs'); effect('cards'); effect('events');
       effect('participants', newRun.participants.length);
-      if(!d.roomInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
+      if(!d.roomInput&&!d.wondererInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
       RTC.runs.push(newRun);
       if(newRun.kind==='chat_room' && d.roomInput && window.PM56_ROOM) window.PM56_ROOM.admit(newRun,d);
       if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
       if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
+      if(d.wondererInput && window.PM56_WONDERER) window.PM56_WONDERER.admit(newRun,d);
       attachCardToThread(ctx, newRun);
       ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
     }

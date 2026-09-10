@@ -74,7 +74,9 @@
         "v4:WONV-007",
         "v4:WONV-008"
       ],
-      "status": "PLANNED_NOT_EXECUTED"
+      "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+      "checkpoint": "BATCH_13_CHECKPOINT.json",
+      "full_feature_acceptance": false
     },
     {
       "number": 14,
@@ -740,5 +742,6 @@
     "boundary": "Previous primary checkpoints are not blanket closure of all group clauses."
   },
   "updated_in_batch": 12,
-  "remaining_batch_estimate_after_batch12": 17
+  "remaining_batch_estimate_after_batch12": 17,
+  "remaining_batch_estimate_after_batch13": 16
 }

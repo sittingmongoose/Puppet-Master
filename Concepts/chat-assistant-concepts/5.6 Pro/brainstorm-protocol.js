@@ -94,7 +94,8 @@
  function planPayload(r){
   const b=r.brainstorm,d=b.decision,q=b.proposals.find(q=>q.id===d.selectedProposalId),h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text}),ul=items=>({t:'unordered_list',items});
   const blocks=[h('Objective'),p(b.input.objective),h('Decision'),p(q.title+' — '+d.reason),h('Constraints'),ul(b.input.constraints.map(c=>c.text)),h('Research and evidence'),...b.input.evidence.map(e=>p(e.label+' — '+(e.summary||e.provenance)+' [source: '+e.id+']')),h('Implementation'),...d.steps.map(s=>({t:'plan_step',plan_step_id:s.id,title:s.title,text:s.text,depends_on:s.dependsOn,parent_step_id:null,parallel_group_id:null})),h('Verification'),ul(d.steps.map(s=>s.acceptance)),h('Assumptions'),ul(q.assumptions),h('Risks and trade-offs'),ul([...q.risks,...q.costs]),h('Rollback'),ul(q.rollback),h('Alternatives considered'),...b.proposals.filter(p=>p.id!==q.id).map(o=>p(o.title+' — '+(b.hardConstraintViolations.filter(h=>h.proposalId===o.id).map(h=>'Disqualified: '+h.constraint).join('; ')||'Not selected: '+o.approach))),h('Dissent'),...(b.dissent.length?b.dissent.map(v=>p(v.participantRole+' ['+v.position+'; confidence '+v.confidence+']: '+v.reason+' · evidence: '+v.evidenceRefs.join(', '))):[p('No opposing position was recorded in this example.')]),h('Scope notes'),p(b.input.scopeNotes),h('Provenance'),p('Recorded BrainStorm example. Local evidence is frozen, not live external research; provider, persistence and native-runtime proof are outside this demonstration.')];
-  return {runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
+  const result={runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
+  return window.PM56_WONDERER?.augmentPlan(r,result)||result;
  }
  function synthesize(id){
   const r=run(id);if(!owns(id))return fail('brainstorm_input_unavailable');const b=r.brainstorm;
@@ -103,6 +104,7 @@
   if(b.phase!=='synthesis'||!b.decision)return fail('synthesis_not_ready');
   if(b.attempts.some(a=>!current(r,a)))return fail('stale_participant_result');
   if(b.hardConstraintViolations.some(h=>h.proposalId===b.decision.selectedProposalId))return fail('hard_constraint_disqualified');
+  const wonderGate=window.PM56_WONDERER?.convergence(r);if(wonderGate&&!wonderGate.ok)return fail('wonderer_dispositions_incomplete');
   const result=P.createFromBrainstorm(planPayload(r));if(!result.ok)return result;
   const q=b.proposals.find(q=>q.id===b.decision.selectedProposalId);
   b.synthesis=freeze({planId:result.planId,selected:q.id,summary:b.decision.reason,dissentPreserved:b.dissent.length,sourceHash:b.input.sourceHash});
