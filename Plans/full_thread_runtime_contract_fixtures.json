@@ -107,12 +107,21 @@
         "record_kind": "observable_work",
         "identity": {"scope_kind": "project", "operation_id": "op-2", "operation_generation": 2, "attempt_id": "attempt-2", "command_instance_id": "cmdi-2", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": "named-plan-1", "thread_id": "thread-2", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
         "observable_work_id": "work-2",
+        "title": "Resume provider work",
+        "subject_refs": ["provider-attempt:attempt-2"],
+        "blocking_scope": "object",
+        "last_activity_at": "2026-08-31T00:00:00Z",
+        "heartbeat_at": "2026-08-31T00:00:01Z",
+        "activity_evidence_ref": "provider-wait-receipt-2",
+        "parent_work_id": null,
+        "child_work_ids": [],
         "owner_domain": "provider",
         "work_state": "waiting",
         "phase": "Waiting for provider reset",
         "wait_reason": "rate-limit",
         "next_reevaluation_condition": "provider reset window or user reroute",
         "progress_kind": "none",
+        "progress_source": "unknown",
         "completed_units": null,
         "total_units": null,
         "progress_source_ref": null,
@@ -149,6 +158,26 @@
       }
     },
     {
+      "name": "reconnect_preserves_operation_and_deduplicates_usage",
+      "instance": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "continuity",
+        "prior_identity": {"scope_kind": "project", "operation_id": "op-command", "operation_generation": 1, "attempt_id": "attempt-old", "command_instance_id": "cmdi-command", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "thread_id": "thread-1", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "identity": {"scope_kind": "project", "operation_id": "op-command", "operation_generation": 1, "attempt_id": "attempt-new", "command_instance_id": "cmdi-command", "server_id": "srv-1", "project_id": "p-1", "project_home_server_id": "srv-1", "named_plan_id": null, "thread_id": "thread-1", "goal_id": null, "execution_host_id": "host-1", "execution_environment_id": "env-1", "source_location_id": null, "topology_generation": 8},
+        "continuity_trigger": "reconnect",
+        "prior_transport_epoch": 2,
+        "current_transport_epoch": 3,
+        "continuation_generation": 4,
+        "expected_continuation_generation": 4,
+        "duplicate_effect_count": 0,
+        "duplicate_usage_count": 0,
+        "return_route_ref": "route:thread-1",
+        "dedupe_key": "operation:op-command:continuation-4",
+        "disposition": "same_logical_operation_reconciled",
+        "observed_at": "2026-08-31T00:00:03Z"
+      }
+    },
+    {
       "name": "public_rate_limit_precedes_hydration",
       "instance": {
         "schema_id": "pm.full_thread_runtime.contracts.v1",
@@ -170,10 +199,25 @@
     }
   ],
   "negative": [
-    {"name": "flattened_status_is_not_a_contract", "instance": {"status": "running"}, "expected_failure": "no_matching_closed_record"},
-    {"name": "claimed_same_frame_has_nonzero_offset", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "command_outcome", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "command_id": "cmd.environment.reconnect", "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "idempotency_key": "i", "target_generation": 1, "outcome": "acknowledged", "dispatch_frame_id": "f1", "acknowledgement_frame_id": "f2", "acknowledgement_frame_offset": 1, "same_frame_acknowledged": true, "acknowledgement_receipt_ref": "r", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "same_frame_offset_must_be_zero"},
-    {"name": "waiting_without_reason", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "observable_work", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "observable_work_id": "w", "owner_domain": "provider", "work_state": "waiting", "phase": "wait", "progress_kind": "none", "freshness": "current", "projection_generation": 1, "cancel_available": false, "background_available": false, "retry_available": false, "dedupe_key": "d", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "wait_reason_and_reevaluation_required"},
-    {"name": "hidden_projection_cancels_work", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "full_thread_projection", "identity": {"scope_kind": "project", "operation_id": "op-x", "operation_generation": 1, "server_id": "s", "project_id": "p", "project_home_server_id": "s", "named_plan_id": null, "execution_host_id": "h", "execution_environment_id": "e", "topology_generation": 1}, "collection_id": "c", "collection_generation": 1, "projection_generation": 1, "window_start": 0, "window_count": 0, "overscan_count": 0, "total_item_count": 1, "stable_item_ids": [], "hidden_surface_policy": "hidden_paint_suppressed", "durable_work_continues": false, "latest_request_generation": 1, "stale_generation_disposition": "not_stale", "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "durable_work_must_continue"},
-    {"name": "public_gate_after_hydration", "instance": {"schema_id": "pm.full_thread_runtime.contracts.v1", "record_kind": "public_ingress_gate", "endpoint_id": "ep", "endpoint_generation": 1, "request_id": "req", "exposure_class": "public_funnel", "authentication_decision_ref": "a", "rate_decision_ref": "r", "checked_before_expensive_hydration": false, "decision": "admitted", "response_class": "bounded_admitted", "operational_attribution_ref": "o", "usage_record_ref": null, "observed_at": "2026-08-31T00:00:00Z"}, "expected_failure": "public_gate_must_precede_hydration"}
+    {"name":"flattened_status_is_not_a_contract","instance":{"status":"running"},"expected_failure":"no_matching_closed_record"},
+    {"name":"claimed_same_frame_has_nonzero_offset","base_valid":"same_frame_command_acknowledgement","patch":{"acknowledgement_frame_id":"frame-102","acknowledgement_frame_offset":1},"expected_failure":"same_frame_offset_must_be_zero"},
+    {"name":"waiting_without_reason","base_valid":"waiting_work_has_reason_and_reevaluation","remove":["wait_reason","next_reevaluation_condition"],"expected_failure":"wait_reason_and_reevaluation_required"},
+    {"name":"hidden_projection_cancels_work","instance":{"schema_id":"pm.full_thread_runtime.contracts.v1","record_kind":"full_thread_projection","identity":{"scope_kind":"project","operation_id":"op-x","operation_generation":1,"server_id":"s","project_id":"p","project_home_server_id":"s","named_plan_id":null,"execution_host_id":"h","execution_environment_id":"e","topology_generation":1},"collection_id":"c","collection_generation":1,"projection_generation":1,"window_start":0,"window_count":0,"overscan_count":0,"total_item_count":1,"stable_item_ids":[],"hidden_surface_policy":"hidden_paint_suppressed","durable_work_continues":false,"latest_request_generation":1,"stale_generation_disposition":"not_stale","observed_at":"2026-08-31T00:00:00Z"},"expected_failure":"durable_work_must_continue"},
+    {"name":"public_gate_after_hydration","instance":{"schema_id":"pm.full_thread_runtime.contracts.v1","record_kind":"public_ingress_gate","endpoint_id":"ep","endpoint_generation":1,"request_id":"req","exposure_class":"public_funnel","authentication_decision_ref":"a","rate_decision_ref":"r","checked_before_expensive_hydration":false,"decision":"admitted","response_class":"bounded_admitted","operational_attribution_ref":"o","usage_record_ref":null,"observed_at":"2026-08-31T00:00:00Z"},"expected_failure":"public_gate_must_precede_hydration"},
+    {"name":"acknowledged_without_receipt","base_valid":"same_frame_command_acknowledgement","patch":{"acknowledgement_receipt_ref":null},"expected_failure":"acknowledged_requires_receipt"},
+    {"name":"succeeded_without_result","base_valid":"same_frame_command_acknowledgement","patch":{"outcome":"succeeded"},"expected_failure":"terminal_result_required"},
+    {"name":"failed_without_error","base_valid":"same_frame_command_acknowledgement","patch":{"outcome":"failed"},"expected_failure":"terminal_error_required"},
+    {"name":"same_frame_identity_mismatch","base_valid":"same_frame_command_acknowledgement","patch":{"acknowledgement_frame_id":"other-frame"},"semantic_rule":"command_acknowledgement_frame_parity"},
+    {"name":"projection_window_exceeds_collection","base_valid":"hidden_projection_does_not_cancel_work","patch":{"window_start":50001},"semantic_rule":"projection_window_out_of_bounds"},
+    {"name":"projection_missing_stable_ids","base_valid":"hidden_projection_does_not_cancel_work","patch":{"window_count":1},"semantic_rule":"projection_stable_id_cardinality"},
+    {"name":"stale_projection_claims_current","base_valid":"hidden_projection_does_not_cancel_work","patch":{"projection_generation":43},"semantic_rule":"projection_generation_disposition"},
+    {"name":"future_projection_claims_current","base_valid":"hidden_projection_does_not_cancel_work","patch":{"projection_generation":45},"semantic_rule":"projection_generation_disposition"},
+    {"name":"work_progress_exceeds_total","base_valid":"waiting_work_has_reason_and_reevaluation","patch":{"progress_kind":"bytes","progress_source":"measured","progress_source_ref":"measure:bytes","completed_units":11,"total_units":10},"semantic_rule":"work_progress_exceeds_denominator"},
+    {"name":"work_parent_is_itself","base_valid":"waiting_work_has_reason_and_reevaluation","patch":{"parent_work_id":"work-2"},"semantic_rule":"work_relationship_cycle"},
+    {"name":"work_heartbeat_is_in_future","base_valid":"waiting_work_has_reason_and_reevaluation","patch":{"heartbeat_at":"2099-01-01T00:00:00Z"},"semantic_rule":"work_activity_in_future"},
+    {"name":"reconnect_changes_logical_operation","base_valid":"reconnect_preserves_operation_and_deduplicates_usage","patch":{"identity.operation_id":"other-operation"},"semantic_rule":"continuity_logical_identity_changed"},
+    {"name":"reconnect_regresses_transport_epoch","base_valid":"reconnect_preserves_operation_and_deduplicates_usage","patch":{"current_transport_epoch":1},"semantic_rule":"continuity_transport_epoch_regressed"},
+    {"name":"stale_continuation_claims_reconciled","base_valid":"reconnect_preserves_operation_and_deduplicates_usage","patch":{"continuation_generation":3},"semantic_rule":"continuity_generation_disposition"},
+    {"name":"reconnect_duplicates_usage","base_valid":"reconnect_preserves_operation_and_deduplicates_usage","patch":{"duplicate_usage_count":1},"expected_failure":"duplicate_usage_forbidden"}
   ]
 }
