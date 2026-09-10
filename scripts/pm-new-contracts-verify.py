@@ -26,6 +26,7 @@ if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 from pm_full_thread_semantics import full_thread_semantic_failures
 from pm_restore_semantics import restore_semantic_failures
+from pm_browser_program_semantics import browser_program_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -981,6 +982,8 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
+        return browser_program_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
         return restore_semantic_failures(definition_name, value)
     if schema_rel == "Plans/full_thread_runtime_contracts.schema.json":

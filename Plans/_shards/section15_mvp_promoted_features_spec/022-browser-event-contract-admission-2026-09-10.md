@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11259-L11296
+Source lines: L11261-L11303
 
-Source SHA256: `e2a2fa44e0fb4f80abda779e2e8f7acb1e713877407e6614a2fad13323b52fb9`
+Source SHA256: `ed6bb2f8a102a2bab3b7ea67eddb5bcd155bb3c67f85bfef59c0e62607783f68`
 
 ---
 
@@ -13,10 +13,15 @@ Source SHA256: `e2a2fa44e0fb4f80abda779e2e8f7acb1e713877407e6614a2fad13323b52fb9
 <a id="browser-event-contract-admission-20260910"></a>
 
 The 53 exact Browser event names in §15.11 remain the required Browser admission set.
-`Plans/browser_event_payloads.schema.json` gives each a closed, event-specific payload candidate
+`Plans/browser_event_payload_candidates.schema.json` preserves each predecessor event-specific payload candidate
 and reuses the existing Browser identity/lineage definitions. Its companion candidate inventory
 records each exact name, schema identity, semantic checks, producer/consumer roles, and proposed
 retention. These are admission inputs, not central registry entries or runtime emission authority.
+The later row-local disposition in `Plans/browser_event_admission.json` and SMPFS-166 below
+supersedes those candidate payloads for the same exact event names. The candidate schema IDs,
+subject/lineage shapes, and proposed retention do not become aliases for the admitted schema IDs,
+context shapes, or row-specific retention in `Plans/browser_event_payloads.schema.json`.
+Candidate-only records remain quarantined unless a separately admitted transform exists.
 The existing `pm.event.v0` EventRecord envelope is unchanged; no Browser-specific envelope,
 per-page event store, arbitrary payload catch-all, or duplicate event registry is introduced.
 
