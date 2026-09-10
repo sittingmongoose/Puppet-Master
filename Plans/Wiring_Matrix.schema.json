@@ -27,6 +27,10 @@
       "format": "date-time",
       "description": "ISO 8601 timestamp indicating when this wiring matrix was generated."
     },
+    "response_contract_ref": {
+      "const": "Plans/ui_command_response.schema.json",
+      "description": "One central response contract inherited by every production row; per-row result_schema_ref remains the separately owned typed result, not a replacement response envelope. Required by the production response gate; historical examples may omit it."
+    },
     "entries": {
       "type": "object",
       "minProperties": 0,

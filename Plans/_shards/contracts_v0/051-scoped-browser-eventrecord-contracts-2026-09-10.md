@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21512-L21551
+Source lines: L21521-L21598
 
-Source SHA256: `bd661fae4e30a997f7a5de42b0ad2b0aaae7bec6962c01e4d57f8b755f2b7ba9`
+Source SHA256: `f420c8cf89836e0d4c513aeb31d2f15c3b1d96dac600dfbb1e68c9bd7d9c116d`
 
 ---
 
@@ -48,3 +48,41 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json, ContractName:Plans/browser_event_payloads.schema.json
+
+
+### CV-331 - Central UI Command Response And Typed Owner Result Join
+
+```yaml
+plan_unit_id: CV-331
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: "The closed v2 UICommandResponse is the single dispatcher projection over the authenticated normalized request, existing Full Thread CommandOutcomeRecord and separately owned typed result/error. It does not duplicate domain schemas, equate acknowledgement with success, or fabricate durable scope for local projections and pre-dispatch refusals."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [CV-313, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - "Every response validates Plans/ui_command_response.schema.json; all twenty fields are present with conditional nullability, closed error codes, bounded references and replay identity."
+  - "Owner-operation joins preserve exact request, canonical command, command instance, operation, full topology identity, payload hash, idempotency key, target generation and dispatch frame."
+  - "Terminal outcomes bind the actual owner result ref, exact schema path/definition/schema identity, and SHA-256 of RFC 8785 canonical JSON; native resolution authenticates the owner and applies its validation and permission rules before publication."
+  - "Accepted, acknowledged and executing project accepted/pending; succeeded projects succeeded or owner-verified no_op; failed and cancelled retain those states; rejected projects rejected with null result status; terminal_unknown projects recovery_required."
+  - "A typed owner acceptance cannot prove completion; owner-specific receipt and effect-unknown semantics remain authoritative, including the shared-runtime, Browser and Server result contracts."
+  - "Local route/open disposition has null operation, owner identity, outcome and typed owner refs, with zero domain events; pre-dispatch refusal has no accepted operation or effects and preserves unknown input only through request lineage."
+  - "Replay preserves the original request, command, scope, outcome, owner result, receipt, events, error and status for all three response kinds; it cannot re-execute an effect or mint replacement operation identity."
+  - "Version-1 minima are read/import lineage only; missing identities are never synthesized to claim v2 success."
+  - "Static fixtures cover cross-record mismatch, hash tampering, unknown schema, stale generation, acknowledgement laundering, application scope, local action, refusal and replay; trusted fixture resolutions do not prove native authentication."
+  - "The integer/string Case L digest oracle is reused; fixture success does not claim general numeric RFC 8785 or every owner-specific native adapter."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/ui_command_response.schema.json, Plans/full_thread_runtime_contracts.schema.json, Plans/shared_runtime_command_contracts.schema.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

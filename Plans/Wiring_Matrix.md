@@ -44,6 +44,7 @@ Column definitions for wiring matrix entries:
 
 Machine-readable format note:
 - `entries` in JSON is a map keyed by `ui_element_id` (not an array). This keying makes interactive-element IDs unique by construction.
+- The production root requires `response_contract_ref = Plans/ui_command_response.schema.json` through the central response gate. It applies once to all rows; row-level `result_schema_ref` remains the typed owner result, not a duplicate envelope. Historical examples may omit the production-only root binding. This declaration proves neither native handlers nor unmaterialized typed result adapters.
 
 **Markdown table header:**
 
@@ -4536,3 +4537,36 @@ negative_constraints: [No native handler or producer proof from production-inten
 ```
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/Contracts_V0.md#CV-330, ContractName:Plans/browser_event_admission.json, ContractName:Plans/Wiring_Matrix.production.json
+
+
+### WM-055 - One Production Response Contract With Separate Typed Results
+
+```yaml
+plan_unit_id: WM-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: "The production matrix carries one response_contract_ref for all existing command rows. Per-row typed result refs remain owned contracts, not duplicate UI response envelopes or evidence of native adapter implementation."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-331, UIW-023]
+unblocks: []
+acceptance_criteria:
+  - "Require response_contract_ref to equal Plans/ui_command_response.schema.json in the production response gate; retain historical matrix examples without treating them as production proof."
+  - "The current 1154 production-intent rows inherit the declared envelope; 387 have explicit typed result schema refs and 767 do not. These counts are a scoped September 10 inventory, not adapter certification."
+  - "All twenty-six shared-runtime commands have exact typed result refs inheriting the required command outcome binding."
+  - "No row, handler, availability, event effect, candidate exclusion or command identity is added or lifted merely by adding the root reference."
+  - "Native admission still requires actual typed-result resolution, authenticated owner verification, effect receipts and end-to-end interaction proof."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/Wiring_Matrix.schema.json, Plans/Wiring_Matrix.production.json, scripts/pm-ui-command-response.py]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L338-L375
+Source lines: L339-L376
 
-Source SHA256: `f90d1c2364d44fefc800ac4ccd97982cdcd9adf65a54954b751cb7c732b0b47b`
+Source SHA256: `34eef9bec70d4d2bc601e3ac491e1d04ed6af93ff0a67acf20b253e6623c8440`
 
 ---
 
