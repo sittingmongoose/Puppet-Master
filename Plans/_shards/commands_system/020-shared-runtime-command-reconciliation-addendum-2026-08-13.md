@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L4028-L4267
 
-Source SHA256: `4db908950fd355b040ad67c3e4730fd479bad8eb70cc34ed4b05c52e821d08b4`
+Source SHA256: `6e17ce48d8456122190b95a6908b98aac207095e25b1a82c8782ad7be6d6c3da`
 
 ---
 
@@ -34,7 +34,7 @@ The retained `cmd.remote.reconnect` wrapper accepts `RemoteReconnectWrapperReque
 
 Every new request type below includes `command_instance_id`, `idempotency_key`, `expected_revision_or_epoch`, `project_id`, `project_home_server_id`, `execution_host_id`, `execution_environment_id`, nullable `source_location_id`, `topology_generation`, `actor_ref`, `permission_snapshot_ref`, optional `goal_id`, `plan_id`, `run_id`, `thread_id`, `agent_id`, `crew_id`, `deadline_utc`, and `recovery_of_operation_id`. A command whose subject does not use one optional lineage field carries it as absent; it never substitutes a path or display label for exact topology identity.
 
-Every result type includes `operation_id`, `command_instance_id`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. Replay returns the original result identity without a second side effect.
+Every result type includes `operation_id`, `command_instance_id`, `command_outcome_ref`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. The required outcome ref resolves to the same Full Thread command/operation/target generation; the central v2 `UICommandResponse` consumes that outcome and this separately owned result under CV-331, without replacing either owner vocabulary. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. `no_change` projects a verified `no_op`; `recovery_required` never projects success. Replay returns the original result identity without a second side effect.
 
 Until Event Authority individually admits a producer family, these commands have `event_effect = none_pending_event_authority`; they update only owner-authorized redb state and return the typed result/receipt/projection references below. A missing event registration is an explicit blocked integration edge, never permission to invent an EventRecord name.
 

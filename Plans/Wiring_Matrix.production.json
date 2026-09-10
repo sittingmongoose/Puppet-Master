@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_id": "pm.wiring_matrix.v0",
+  "response_contract_ref": "Plans/ui_command_response.schema.json",
   "generated_at": "2026-09-03T00:00:00Z",
   "entries": {
     "assistant.chat.restore_point.create": {
