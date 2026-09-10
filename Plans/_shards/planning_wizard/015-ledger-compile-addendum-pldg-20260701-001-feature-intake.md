@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L1462-L1550
 
-Source SHA256: `075ddde45f65b24583fc7c8a13eb6833c2f8fa90a37f0744b31052f4a4c14e36`
+Source SHA256: `ac582b97a7bf56c06d7b7f9b6dc72ba773b4da659e1de5cd6c3872e2b541b0b0`
 
 ---
 
@@ -22,9 +22,9 @@ owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
   PWIZ-017 preserves the 2026-07-01 four-screen, provider-first, direct-to-Planning-Wizard proposal as historical
   source lineage only. It is not current Product Onboarding choreography, command authority, or landing-page authority.
-  PWIZ-021 through PWIZ-023 own the current nine-stage `welcome` / `simple_path` / `first_project` /
+  PWIZ-021 through PWIZ-023 own the current eleven-stage `welcome` / `simple_path` / `first_project` /
   `source_control_setup` / `server_storage_client` / `remote_access_setup` / `review_setup_plan` /
-  `automatic_preparation` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
+  `automatic_preparation` / `provider_setup` / `free_models_setup` / `ready` flow, its six-stage connect-existing shortcut, durable migration, and optional
   three-chapter Guided Tour.
   Provider and advanced setup are optional and deferrable, incomplete provider state remains a truthful warning rather
   than a false Health/Doctor Ready claim; PWIZ-023's September 3 correction makes Planning Wizard the tour destination.
@@ -38,7 +38,7 @@ depends_on: [PWIZ-021, PWIZ-022, PWIZ-023]
 unblocks: []
 acceptance_criteria:
   - The four-screen/provider-first order, mandatory provider prompt, legacy setup-state shape, and direct landing behavior are classified as source-lineage rather than current product authority.
-  - Current behavior routes through PWIZ-021 through PWIZ-023, the nine-stage primary path, the six-stage connect-existing shortcut, and the exact three-scene Guided Tour.
+  - Current behavior routes through PWIZ-021 through PWIZ-023, the eleven-stage dependency graph, the six-stage connect-existing shortcut, and the exact three-scene Guided Tour.
   - The superseded seven-stage Onboarding flow and five-chapter Guided Tour are explicitly source-lineage only.
   - Legacy provider decisions and warnings remain migration inputs without becoming current stage, command, or readiness authority.
   - No old onboarding record reruns provider, Server, pairing, restore, Project, authentication, or source-control owner work.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3393-L4019
+Source lines: L3402-L4028
 
-Source SHA256: `75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec`
+Source SHA256: `1480e187d6a469a07cc2ea41bd95ee760bca6bd219dbbca61f0d63a13413f7b0`
 
 ---
 
@@ -470,7 +470,7 @@ acceptance_criteria:
   - RepositoryContext tests cover Git plus Gitea, Jujutsu plus Forgejo, no automation binding, same-forge automation, and automation on a different provider/instance/account/host; AutomationBinding is never inferred from RepositoryForgeBinding, remote origin, repository name, or display label.
   - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture fabricates Origin Actions.
   - Security negatives cover certificate bytes or local paths instead of scoped CA refs, missing or mismatched known-host proof, invalid SSH ports, raw credentials/secrets, Authorization forwarded across redirect-origin change, unapproved localhost/metadata targets, stale provider/binding/catalog/currentness generations, denied permission, and missing FileSafe decision for local writes or downloads.
-  - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately, preserve typed self-host inputs and cached owner refs without probing, and prove all pre-Review choices are draft-only. Only a person-confirmed current Review may dispatch each deduplicated canonical owner action; owner return advances without a second confirmation, and the plan never claims account creation, adapter execution, trust, readiness, or success.
+  - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately and preserve typed self-host inputs/current owner refs. PWIZ-021's precommit read/necessary-source-auth exception requires exact actual owner admission; repository/filesystem/Project mutation waits for reviewed commit. Tests reject broader authority, synthetic accounts/IDs, duplicate dispatch, and false readiness; owner return advances without a second confirmation.
   - Each of the exact nine admissions cmd.forge.repository.fork, cmd.forge.pipeline.approve, cmd.forge.review.checks, cmd.forge.repository.policy.preview, cmd.forge.repository.policy.apply, cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.release.list, and cmd.forge.release.asset.download receives one valid request plus a rejected permission, guard, or currentness case as required by its owner contract.
   - Every newly admitted Forge command starts handler_unavailable, has expected_event_types=[], returns only its owner-typed result/receipt/projection, and emits no unregistered forge.* EventRecord. Operation receipts and ObservableWork correlation never count as EventRecord admission.
   - Repository fork, pipeline-gate approval, review checks, policy preview/apply, runner administration, release list, and release-asset download retain distinct targets, permissions, confirmations, digest/FileSafe/currentness/idempotency guards and cannot pass through aliases or generic settings/connection/pipeline-artifact substitutes.
