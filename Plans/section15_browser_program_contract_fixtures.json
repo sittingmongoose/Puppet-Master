@@ -184,6 +184,10 @@
           "budget_exhausted": true,
           "synthetic_id_collisions": 0
         },
+        "result_count": 128,
+        "omitted_count": 64,
+        "byte_estimate": 4096,
+        "token_estimate": 1024,
         "result_schema_ref": "schema:page-representation:v1",
         "result_ref": "artifact:representation:4",
         "continuation": "continuation:representation:4:1",
@@ -438,6 +442,342 @@
       "name": "browser_command_availability_keeps_disabled_reason",
       "definition": "browser_command_availability",
       "value": {"schema_id":"pm.browser_program.command_availability.v1","record_kind":"browser_command_availability","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"available":false,"effective_capability_profile_id":"browser-capability-unavailable","disabled_reason":{"schema_id":"pm.browser_program.command_disabled_reason.v1","record_kind":"browser_command_disabled_reason","scope":{"command_id":"cmd.browser.workspace.create","lineage":{"project_id":"project-cmd","run_id":"run-cmd","attempt_id":"attempt-cmd","home_server_id":"server-cmd","execution_host_id":"host-cmd","execution_environment_id":"env-cmd","source_location_id":"source-cmd"},"browser_session_id":"browser-session-cmd","session_security_class":"ordinary","workspace_policy_ref":"policy:browser-workspace:1","capability_profile_id":"browser-capability-standard"},"reason_code":"runtime_unavailable","blocking_ref":"runtime:browser:unavailable","safe_next_actions":["inspect"],"observed_at_utc":"2026-08-31T13:13:00Z"},"checked_at_utc":"2026-08-31T13:13:00Z"}
+    },
+    {
+      "name": "invalidated_representation_is_historical_with_reason",
+      "value": {
+        "schema_id": "pm.browser_program.representation_query_result.v1",
+        "record_kind": "representation_query_result",
+        "query_id": "representation-query-stale",
+        "representation_id": "representation-stale",
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "base_index_generation": 4,
+        "coverage": {
+          "status": "stale_rejected",
+          "nodes_indexed": 20000,
+          "frames_total": 4,
+          "frames_covered": 3,
+          "omission_codes": [
+            "cross_origin_frame",
+            "node_budget"
+          ],
+          "budget_exhausted": true,
+          "synthetic_id_collisions": 0
+        },
+        "result_count": 128,
+        "omitted_count": 64,
+        "byte_estimate": 4096,
+        "token_estimate": 1024,
+        "result_schema_ref": "schema:page-representation:v1",
+        "result_ref": "artifact:representation:4",
+        "invalidated": true,
+        "invalidation_reason": "navigation"
+      }
+    },
+    {
+      "name": "empty_representation_preserves_explicit_measures",
+      "value": {
+        "schema_id": "pm.browser_program.representation_query_result.v1",
+        "record_kind": "representation_query_result",
+        "query_id": "representation-query-empty",
+        "representation_id": "representation-empty",
+        "subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "base_index_generation": 4,
+        "coverage": {
+          "status": "complete",
+          "nodes_indexed": 0,
+          "frames_total": 0,
+          "frames_covered": 0,
+          "omission_codes": [],
+          "budget_exhausted": false,
+          "synthetic_id_collisions": 0
+        },
+        "result_count": 0,
+        "omitted_count": 0,
+        "byte_estimate": 2,
+        "token_estimate": 1,
+        "result_schema_ref": "schema:page-representation:v1",
+        "result_ref": "artifact:representation:empty",
+        "invalidated": false
+      }
+    },
+    {
+      "name": "manual_routing_has_no_fabricated_run",
+      "value": {
+        "schema_id": "pm.browser_program.routing_decision.v1",
+        "record_kind": "browser_routing_decision",
+        "routing_decision_id": "routing-manual-1",
+        "lineage": {
+          "project_id": "project-1",
+          "run_id": null,
+          "attempt_id": null,
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "strategy": {
+          "requested": "automatic",
+          "effective": "compiled_program",
+          "reason_code": "multi_action_local_efficiency"
+        },
+        "runtime": {
+          "requested": "pm_native_local",
+          "effective": "pm_native_remote",
+          "reason_code": "exact_environment_required"
+        },
+        "source": {
+          "requested": "authorized_private_browser",
+          "effective": "authorized_private_browser",
+          "reason_code": "localhost_project_preview"
+        },
+        "visibility": {
+          "requested": "visible_watchable",
+          "effective": "visible_watchable",
+          "reason_code": "user_requested"
+        },
+        "capture": {
+          "requested": "on_failure",
+          "effective": "on_failure",
+          "reason_code": "test_policy"
+        },
+        "screenshot_model_attachment": "auto",
+        "permission_snapshot_ref": "permission:snapshot:browser:1",
+        "capture_policy_ref": "capture:policy:1",
+        "created_at_utc": "2026-08-31T12:03:00Z"
+      }
+    },
+    {
+      "name": "manual_workspace_creation_has_no_fabricated_run",
+      "value": {
+        "schema_id": "pm.browser_program.command_request.v1",
+        "record_kind": "browser_command_request",
+        "command_instance_id": "browser-command-manual-create",
+        "idempotency_key": "browser-command-manual-create",
+        "scope": {
+          "command_id": "cmd.browser.workspace.create",
+          "lineage": {
+            "project_id": "project-cmd",
+            "run_id": null,
+            "attempt_id": null,
+            "home_server_id": "server-cmd",
+            "execution_host_id": "host-cmd",
+            "execution_environment_id": "env-cmd",
+            "source_location_id": "source-cmd"
+          },
+          "browser_session_id": "browser-session-cmd",
+          "session_security_class": "ordinary",
+          "workspace_policy_ref": "policy:browser-workspace:1",
+          "capability_profile_id": "browser-capability-standard"
+        },
+        "permission_snapshot_ref": "permission:browser:01",
+        "filesafe_decision_ref": "filesafe:browser:01",
+        "requested_at_utc": "2026-08-31T13:00:01Z"
+      }
+    },
+    {
+      "name": "handoff_blocked_source_not_fenced_does_not_claim_future_reconstruction",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-blocked_source_not_fenced",
+        "lineage": {
+          "project_id": "project-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "source_subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_fence": {
+          "lease_id": "lease-1",
+          "lease_generation": 7,
+          "lease_epoch": 2,
+          "holder_id": "agent-1",
+          "page_generation": 4,
+          "last_sequence": 19
+        },
+        "source_fenced": false,
+        "checkpoint_ref": null,
+        "finalized_capture_refs": [],
+        "destination_home_server_id": null,
+        "destination_execution_host_id": null,
+        "destination_execution_environment_id": null,
+        "destination_browser_session_id": null,
+        "destination_browser_workspace_id": null,
+        "destination_page_generation": null,
+        "reconstructed": false,
+        "live_process_migrated": false,
+        "unknown_effects": false,
+        "retry_allowed": false,
+        "terminal_state": "blocked_source_not_fenced",
+        "created_at_utc": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "handoff_blocked_unknown_effects_does_not_claim_future_reconstruction",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-blocked_unknown_effects",
+        "lineage": {
+          "project_id": "project-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "source_subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_fence": {
+          "lease_id": "lease-1",
+          "lease_generation": 7,
+          "lease_epoch": 2,
+          "holder_id": "agent-1",
+          "page_generation": 4,
+          "last_sequence": 19
+        },
+        "source_fenced": true,
+        "checkpoint_ref": null,
+        "finalized_capture_refs": [],
+        "destination_home_server_id": null,
+        "destination_execution_host_id": null,
+        "destination_execution_environment_id": null,
+        "destination_browser_session_id": null,
+        "destination_browser_workspace_id": null,
+        "destination_page_generation": null,
+        "reconstructed": false,
+        "live_process_migrated": false,
+        "unknown_effects": true,
+        "retry_allowed": false,
+        "terminal_state": "blocked_unknown_effects",
+        "created_at_utc": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "handoff_destination_failed_does_not_claim_future_reconstruction",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-destination_failed",
+        "lineage": {
+          "project_id": "project-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "source_subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_fence": {
+          "lease_id": "lease-1",
+          "lease_generation": 7,
+          "lease_epoch": 2,
+          "holder_id": "agent-1",
+          "page_generation": 4,
+          "last_sequence": 19
+        },
+        "source_fenced": true,
+        "checkpoint_ref": null,
+        "finalized_capture_refs": [],
+        "destination_home_server_id": null,
+        "destination_execution_host_id": null,
+        "destination_execution_environment_id": null,
+        "destination_browser_session_id": null,
+        "destination_browser_workspace_id": null,
+        "destination_page_generation": null,
+        "reconstructed": false,
+        "live_process_migrated": false,
+        "unknown_effects": false,
+        "retry_allowed": false,
+        "terminal_state": "destination_failed",
+        "created_at_utc": "2026-08-31T12:02:00Z"
+      }
+    },
+    {
+      "name": "handoff_interrupted_does_not_claim_future_reconstruction",
+      "value": {
+        "schema_id": "pm.browser_program.handoff_receipt.v1",
+        "record_kind": "browser_handoff_receipt",
+        "handoff_id": "handoff-interrupted",
+        "lineage": {
+          "project_id": "project-1",
+          "goal_id": "goal-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "home_server_id": "server-1",
+          "execution_host_id": "host-1",
+          "execution_environment_id": "environment-1",
+          "source_location_id": "source-1"
+        },
+        "source_subject": {
+          "browser_session_id": "browser-session-1",
+          "browser_workspace_id": "browser-workspace-1",
+          "browser_page_id": "browser-page-1",
+          "page_generation": 4,
+          "session_security_class": "ordinary"
+        },
+        "source_fence": {
+          "lease_id": "lease-1",
+          "lease_generation": 7,
+          "lease_epoch": 2,
+          "holder_id": "agent-1",
+          "page_generation": 4,
+          "last_sequence": 19
+        },
+        "source_fenced": true,
+        "checkpoint_ref": null,
+        "finalized_capture_refs": [],
+        "destination_home_server_id": null,
+        "destination_execution_host_id": null,
+        "destination_execution_environment_id": null,
+        "destination_browser_session_id": null,
+        "destination_browser_workspace_id": null,
+        "destination_page_generation": null,
+        "reconstructed": false,
+        "live_process_migrated": false,
+        "unknown_effects": false,
+        "retry_allowed": false,
+        "terminal_state": "interrupted",
+        "created_at_utc": "2026-08-31T12:02:00Z"
+      }
     }
   ],
   "invalid": [
@@ -723,6 +1063,180 @@
     {"name":"browser_command_stale_negative_generation_fails","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.page_generation":-1}},
     {"name":"browser_command_stale_controller_generation_fails","definition":"browser_command_request","base_valid":"browser_command_request_07_page_evaluate","patch":{"scope.controller_authority.lease_generation":-1}},
     {"name":"browser_command_available_state_cannot_keep_disabled_reason","definition":"browser_command_availability","base_valid":"browser_command_availability_keeps_disabled_reason","patch":{"available":true}},
-    {"name":"browser_command_effect_unknown_error_cannot_retry","definition":"browser_command_error","base_valid":"browser_command_error_blocks_unknown_effect_retry","patch":{"retry_allowed":true,"safe_next_actions":["retry"]}}
+    {"name":"browser_command_effect_unknown_error_cannot_retry","definition":"browser_command_error","base_valid":"browser_command_error_blocks_unknown_effect_retry","patch":{"retry_allowed":true,"safe_next_actions":["retry"]}},
+    {
+      "name": "representation_missing_result_count",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "remove": [
+        "result_count"
+      ]
+    },
+    {
+      "name": "representation_missing_omitted_count",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "remove": [
+        "omitted_count"
+      ]
+    },
+    {
+      "name": "representation_missing_byte_estimate",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "remove": [
+        "byte_estimate"
+      ]
+    },
+    {
+      "name": "representation_missing_token_estimate",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "remove": [
+        "token_estimate"
+      ]
+    },
+    {
+      "name": "representation_invalidated_requires_reason",
+      "definition": "representation_query_result",
+      "base_valid": "invalidated_representation_is_historical_with_reason",
+      "remove": [
+        "invalidation_reason"
+      ]
+    },
+    {
+      "name": "representation_current_cannot_have_invalidation_reason",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "invalidation_reason": "navigation"
+      }
+    },
+    {
+      "name": "representation_stale_cannot_offer_continuation",
+      "definition": "representation_query_result",
+      "base_valid": "invalidated_representation_is_historical_with_reason",
+      "patch": {
+        "continuation": "continuation:stale"
+      }
+    },
+    {
+      "name": "representation_negative_result_count",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "result_count": -1
+      }
+    },
+    {
+      "name": "representation_negative_token_estimate",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "token_estimate": -1
+      }
+    },
+    {
+      "name": "representation_impossible_frame_coverage",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "coverage.frames_covered": 5
+      },
+      "semantic_rule": "representation_coverage_bounds"
+    },
+    {
+      "name": "representation_cannot_call_omitted_frames_complete",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "coverage.status": "complete"
+      },
+      "semantic_rule": "representation_false_complete"
+    },
+    {
+      "name": "representation_invalidation_must_match_coverage",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "coverage.status": "stale_rejected"
+      },
+      "semantic_rule": "representation_invalidation_coverage_mismatch"
+    },
+    {
+      "name": "representation_wrong_base_generation",
+      "definition": "representation_query_result",
+      "base_valid": "partial_representation_is_truthful",
+      "patch": {
+        "base_index_generation": 3
+      },
+      "semantic_rule": "representation_base_generation_mismatch"
+    },
+    {
+      "name": "manual_browser_cannot_have_attempt_without_run",
+      "definition": "browser_command_request",
+      "base_valid": "manual_workspace_creation_has_no_fabricated_run",
+      "patch": {
+        "scope.lineage.attempt_id": "attempt-unbound"
+      }
+    },
+    {
+      "name": "program_must_retain_actual_run",
+      "definition": "browser_program",
+      "base_valid": "typed_program_targets_only_ordinary_session",
+      "patch": {
+        "lineage.run_id": null,
+        "lineage.attempt_id": null
+      }
+    },
+    {
+      "name": "program_command_must_retain_actual_run",
+      "definition": "browser_command_request",
+      "base_valid": "browser_command_request_11_program_run",
+      "patch": {
+        "scope.lineage.run_id": null,
+        "scope.lineage.attempt_id": null
+      }
+    },
+    {
+      "name": "completed_handoff_requires_destination_identity",
+      "definition": "browser_handoff_receipt",
+      "base_valid": "handoff_is_reconstructive_and_source_fenced",
+      "patch": {
+        "destination_browser_session_id": null
+      }
+    },
+    {
+      "name": "completed_handoff_requires_checkpoint",
+      "definition": "browser_handoff_receipt",
+      "base_valid": "handoff_is_reconstructive_and_source_fenced",
+      "patch": {
+        "checkpoint_ref": null
+      }
+    },
+    {
+      "name": "completed_handoff_cannot_have_unknown_effects",
+      "definition": "browser_handoff_receipt",
+      "base_valid": "handoff_is_reconstructive_and_source_fenced",
+      "patch": {
+        "unknown_effects": true
+      }
+    },
+    {
+      "name": "blocked_handoff_cannot_claim_reconstructed",
+      "definition": "browser_handoff_receipt",
+      "base_valid": "handoff_blocked_source_not_fenced_does_not_claim_future_reconstruction",
+      "patch": {
+        "reconstructed": true
+      }
+    },
+    {
+      "name": "interrupted_handoff_cannot_retry_unreconciled",
+      "definition": "browser_handoff_receipt",
+      "base_valid": "handoff_interrupted_does_not_claim_future_reconstruction",
+      "patch": {
+        "retry_allowed": true
+      }
+    }
   ]
 }

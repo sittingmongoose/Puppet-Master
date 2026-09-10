@@ -1,0 +1,3977 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.browser_event_payloads.schema.v1",
+  "title": "Browser event payload admission candidates",
+  "description": "Closed event-specific payload contracts. This schema does not itself register or admit an EventRecord family, prove a producer, or authorize runtime dispatch. BrowserRuntimeService input identities reuse the Section15 owner; EventRecord envelope stays centrally owned.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/browser_workspace_created"
+    },
+    {
+      "$ref": "#/$defs/browser_workspace_reset"
+    },
+    {
+      "$ref": "#/$defs/browser_workspace_closed"
+    },
+    {
+      "$ref": "#/$defs/browser_page_created"
+    },
+    {
+      "$ref": "#/$defs/browser_page_activated"
+    },
+    {
+      "$ref": "#/$defs/browser_page_closed"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_granted"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_renewed"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_lost"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_takeover_requested"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_takeover_completed"
+    },
+    {
+      "$ref": "#/$defs/browser_navigation_generation_changed"
+    },
+    {
+      "$ref": "#/$defs/browser_document_generation_changed"
+    },
+    {
+      "$ref": "#/$defs/browser_representation_captured"
+    },
+    {
+      "$ref": "#/$defs/browser_representation_delta_created"
+    },
+    {
+      "$ref": "#/$defs/browser_representation_queried"
+    },
+    {
+      "$ref": "#/$defs/browser_representation_invalidated"
+    },
+    {
+      "$ref": "#/$defs/browser_script_compile_started"
+    },
+    {
+      "$ref": "#/$defs/browser_script_compiled"
+    },
+    {
+      "$ref": "#/$defs/browser_script_compile_failed"
+    },
+    {
+      "$ref": "#/$defs/browser_execution_strategy_selected"
+    },
+    {
+      "$ref": "#/$defs/browser_execution_strategy_fallback_selected"
+    },
+    {
+      "$ref": "#/$defs/browser_program_started"
+    },
+    {
+      "$ref": "#/$defs/browser_program_checkpointed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_paused"
+    },
+    {
+      "$ref": "#/$defs/browser_program_resumed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_completed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_failed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_cancelled"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_started"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_checkpointed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_completed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_failed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_timed_out"
+    },
+    {
+      "$ref": "#/$defs/browser_program_timeout_stopped"
+    },
+    {
+      "$ref": "#/$defs/browser_program_timeout_effects_reconciled"
+    },
+    {
+      "$ref": "#/$defs/browser_program_timeout_effect_state_unknown"
+    },
+    {
+      "$ref": "#/$defs/browser_program_workspace_created"
+    },
+    {
+      "$ref": "#/$defs/browser_program_workspace_updated"
+    },
+    {
+      "$ref": "#/$defs/browser_program_workspace_checkpointed"
+    },
+    {
+      "$ref": "#/$defs/browser_program_workspace_spilled"
+    },
+    {
+      "$ref": "#/$defs/browser_program_workspace_closed"
+    },
+    {
+      "$ref": "#/$defs/browser_screenshot_model_attachment_selected"
+    },
+    {
+      "$ref": "#/$defs/browser_screenshot_skipped"
+    },
+    {
+      "$ref": "#/$defs/browser_route_fetch_selected"
+    },
+    {
+      "$ref": "#/$defs/browser_route_browser_escalated"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_generated"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_validated"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_promoted"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_invalidated"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_disabled"
+    },
+    {
+      "$ref": "#/$defs/browser_session_reconstructed_on_host"
+    },
+    {
+      "$ref": "#/$defs/browser_session_interrupted"
+    }
+  ],
+  "$defs": {
+    "workspace_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "browser_session_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "browser_workspace_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "session_security_class": {
+          "const": "ordinary"
+        }
+      },
+      "required": [
+        "browser_session_id",
+        "browser_workspace_id",
+        "session_security_class"
+      ]
+    },
+    "program_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "browser": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        },
+        "program_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "program_workspace_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        }
+      },
+      "required": [
+        "browser",
+        "program_id",
+        "program_workspace_id"
+      ]
+    },
+    "browser_workspace_created": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.workspace_created.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.workspace_created.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "created"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/workspace_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_workspace_reset": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.workspace_reset.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.workspace_reset.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "reset"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/workspace_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_workspace_closed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.workspace_closed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.workspace_closed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "closed"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/workspace_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_page_created": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.page_created.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.page_created.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "created"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_page_activated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.page_activated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.page_activated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "activated"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_page_closed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.page_closed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.page_closed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "closed"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_controller_lease_granted": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.controller_lease_granted.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.controller_lease_granted.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lease_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "lease_state": {
+              "const": "granted"
+            },
+            "authority_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "lease_id",
+            "lease_epoch",
+            "holder_ref",
+            "lease_state",
+            "authority_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_controller_lease_renewed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.controller_lease_renewed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.controller_lease_renewed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lease_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "lease_state": {
+              "const": "renewed"
+            },
+            "authority_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "renewal_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "lease_id",
+            "lease_epoch",
+            "holder_ref",
+            "lease_state",
+            "authority_receipt_ref",
+            "renewal_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_controller_lease_lost": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.controller_lease_lost.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.controller_lease_lost.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lease_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "lease_state": {
+              "const": "lost"
+            },
+            "authority_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "loss_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "lease_id",
+            "lease_epoch",
+            "holder_ref",
+            "lease_state",
+            "authority_receipt_ref",
+            "loss_reason_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_controller_lease_takeover_requested": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.controller_lease_takeover_requested.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.controller_lease_takeover_requested.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lease_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "lease_state": {
+              "const": "takeover_requested"
+            },
+            "authority_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "requested_holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "lease_id",
+            "lease_epoch",
+            "holder_ref",
+            "lease_state",
+            "authority_receipt_ref",
+            "requested_holder_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_controller_lease_takeover_completed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.controller_lease_takeover_completed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.controller_lease_takeover_completed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lease_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "lease_state": {
+              "const": "takeover_completed"
+            },
+            "authority_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "previous_lease_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "previous_holder_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "source_fence_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "lease_id",
+            "lease_epoch",
+            "holder_ref",
+            "lease_state",
+            "authority_receipt_ref",
+            "previous_lease_epoch",
+            "previous_holder_ref",
+            "source_fence_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_navigation_generation_changed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.navigation_generation_changed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.navigation_generation_changed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "previous_page_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "change_kind": {
+              "const": "navigation"
+            },
+            "invalidation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "previous_page_generation",
+            "change_kind",
+            "invalidation_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_document_generation_changed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.document_generation_changed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.document_generation_changed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "previous_page_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "change_kind": {
+              "const": "document"
+            },
+            "invalidation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "previous_page_generation",
+            "change_kind",
+            "invalidation_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_representation_captured": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.representation_captured.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.representation_captured.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "representation_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "representation_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "captured"
+            },
+            "coverage_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "representation_id",
+            "representation_hash",
+            "operation",
+            "coverage_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_representation_delta_created": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.representation_delta_created.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.representation_delta_created.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "representation_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "representation_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "delta_created"
+            },
+            "coverage_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "base_representation_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "base_representation_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "representation_id",
+            "representation_hash",
+            "operation",
+            "coverage_receipt_ref",
+            "base_representation_id",
+            "base_representation_hash"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_representation_queried": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.representation_queried.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.representation_queried.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "representation_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "representation_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "queried"
+            },
+            "coverage_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "query_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "query_result_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "representation_id",
+            "representation_hash",
+            "operation",
+            "coverage_receipt_ref",
+            "query_id",
+            "query_result_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_representation_invalidated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.representation_invalidated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.representation_invalidated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "representation_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "representation_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "invalidated"
+            },
+            "coverage_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "invalidation_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "representation_id",
+            "representation_hash",
+            "operation",
+            "coverage_receipt_ref",
+            "invalidation_reason_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_script_compile_started": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.script_compile_started.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.script_compile_started.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compile_request_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "source_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compiler_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compile_state": {
+              "const": "compile_started"
+            },
+            "no_effect": {
+              "const": true
+            }
+          },
+          "required": [
+            "compile_request_id",
+            "source_hash",
+            "compiler_hash",
+            "compile_state",
+            "no_effect"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_script_compiled": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.script_compiled.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.script_compiled.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compile_request_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "source_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compiler_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compile_state": {
+              "const": "compiled"
+            },
+            "no_effect": {
+              "const": true
+            },
+            "program_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "ast_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "program_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "compile_request_id",
+            "source_hash",
+            "compiler_hash",
+            "compile_state",
+            "no_effect",
+            "program_id",
+            "ast_hash",
+            "program_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_script_compile_failed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.script_compile_failed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.script_compile_failed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compile_request_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "source_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compiler_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "compile_state": {
+              "const": "compile_failed"
+            },
+            "no_effect": {
+              "const": true
+            },
+            "compile_error_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "compile_request_id",
+            "source_hash",
+            "compiler_hash",
+            "compile_state",
+            "no_effect",
+            "compile_error_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_execution_strategy_selected": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.execution_strategy_selected.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.execution_strategy_selected.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "decision_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "requested_strategy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "effective_strategy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "selection_kind": {
+              "const": "selected"
+            }
+          },
+          "required": [
+            "decision_id",
+            "requested_strategy_ref",
+            "effective_strategy_ref",
+            "capability_snapshot_ref",
+            "selection_kind"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_execution_strategy_fallback_selected": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.execution_strategy_fallback_selected.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.execution_strategy_fallback_selected.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "decision_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "requested_strategy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "effective_strategy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "selection_kind": {
+              "const": "fallback_selected"
+            },
+            "fallback_policy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "fallback_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "decision_id",
+            "requested_strategy_ref",
+            "effective_strategy_ref",
+            "capability_snapshot_ref",
+            "selection_kind",
+            "fallback_policy_ref",
+            "fallback_reason_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_program_started": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_started.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_started.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "started"
+            },
+            "progress_is_verdict": {
+              "const": false
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_checkpointed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_checkpointed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_checkpointed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "checkpointed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "checkpoint_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "checkpoint_sha256": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "checkpoint_ref",
+            "checkpoint_sha256"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_paused": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_paused.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_paused.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "paused"
+            },
+            "progress_is_verdict": {
+              "const": false
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_resumed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_resumed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_resumed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "resumed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "checkpoint_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "checkpoint_sha256": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "checkpoint_ref",
+            "checkpoint_sha256"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_completed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_completed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_completed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "completed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "test_verdict_claimed": {
+              "const": false
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "test_verdict_claimed"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_failed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_failed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_failed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "failed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled",
+                "effect_unknown"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "failure_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "failure_reason_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_cancelled": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_cancelled.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_cancelled.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "cancelled"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled",
+                "effect_unknown"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "cancellation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "cancellation_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_segment_started": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_segment_started.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_segment_started.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "segment.started"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "segment_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "segment_ordinal": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "segment_id",
+            "segment_ordinal"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_segment_checkpointed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_segment_checkpointed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_segment_checkpointed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "segment.checkpointed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "segment_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "segment_ordinal": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "checkpoint_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "checkpoint_sha256": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "segment_id",
+            "segment_ordinal",
+            "checkpoint_ref",
+            "checkpoint_sha256"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_segment_completed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_segment_completed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_segment_completed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "segment.completed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "segment_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "segment_ordinal": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "test_verdict_claimed": {
+              "const": false
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "segment_id",
+            "segment_ordinal",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "test_verdict_claimed"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_segment_failed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_segment_failed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_segment_failed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "segment.failed"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "segment_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "segment_ordinal": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled",
+                "effect_unknown"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "failure_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "segment_id",
+            "segment_ordinal",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "failure_reason_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_segment_timed_out": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_segment_timed_out.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_segment_timed_out.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "segment.timed_out"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "segment_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "segment_ordinal": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled",
+                "effect_unknown"
+              ]
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "segment_id",
+            "segment_ordinal",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_timeout_stopped": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_timeout_stopped.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_timeout_stopped.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "timeout.stopped"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "type": "string",
+              "enum": [
+                "no_effect",
+                "effects_reconciled",
+                "effect_unknown"
+              ]
+            },
+            "retry_allowed": {
+              "const": false
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "stop_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids",
+            "stop_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_timeout_effects_reconciled": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_timeout_effects_reconciled.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_timeout_effects_reconciled.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "timeout.effects_reconciled"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "const": "effects_reconciled"
+            },
+            "retry_allowed": {
+              "type": "boolean"
+            },
+            "effect_reconciliation_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "safe_next_action": {
+              "type": "string",
+              "enum": [
+                "inspect",
+                "retry",
+                "reconcile_effects",
+                "none"
+              ]
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_timeout_effect_state_unknown": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_timeout_effect_state_unknown.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_timeout_effect_state_unknown.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "program_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "timeout.effect_state_unknown"
+            },
+            "progress_is_verdict": {
+              "const": false
+            },
+            "effect_state": {
+              "const": "effect_unknown"
+            },
+            "retry_allowed": {
+              "const": false
+            },
+            "effect_reconciliation_ref": {
+              "oneOf": [
+                {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "safe_next_action": {
+              "const": "reconcile_effects"
+            },
+            "completed_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            },
+            "unknown_effect_action_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              }
+            }
+          },
+          "required": [
+            "program_workspace_revision",
+            "operation",
+            "progress_is_verdict",
+            "effect_state",
+            "retry_allowed",
+            "effect_reconciliation_ref",
+            "safe_next_action",
+            "completed_action_ids",
+            "unknown_effect_action_ids"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_workspace_created": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_workspace_created.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_workspace_created.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "created"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_workspace_updated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_workspace_updated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_workspace_updated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "updated"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_workspace_checkpointed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_workspace_checkpointed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_workspace_checkpointed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "checkpointed"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "checkpoint_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision",
+            "checkpoint_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_workspace_spilled": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_workspace_spilled.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_workspace_spilled.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "spilled"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "artifact_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "artifact_sha256": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "spill_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision",
+            "artifact_ref",
+            "artifact_sha256",
+            "spill_receipt_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_program_workspace_closed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.program_workspace_closed.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.program_workspace_closed.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "operation": {
+              "const": "closed"
+            },
+            "previous_workspace_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "workspace_revision",
+            "operation",
+            "previous_workspace_revision"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.browser_event_payloads.schema.v1#/$defs/program_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_screenshot_model_attachment_selected": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.screenshot_model_attachment_selected.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.screenshot_model_attachment_selected.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "model_request_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capture_policy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "selection_kind": {
+              "const": "model_attachment_selected"
+            },
+            "capture_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capture_sha256": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "attachment_manifest_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "model_request_ref",
+            "capture_policy_ref",
+            "selection_kind",
+            "capture_ref",
+            "capture_sha256",
+            "attachment_manifest_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_screenshot_skipped": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.screenshot_skipped.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.screenshot_skipped.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "model_request_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capture_policy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "selection_kind": {
+              "const": "skipped"
+            },
+            "skip_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "model_request_ref",
+            "capture_policy_ref",
+            "selection_kind",
+            "skip_reason_ref"
+          ]
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_route_fetch_selected": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.route_fetch_selected.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.route_fetch_selected.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routing_decision_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "request_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "routing_policy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "routing_decision_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "route_kind": {
+              "const": "fetch_selected"
+            }
+          },
+          "required": [
+            "routing_decision_id",
+            "request_ref",
+            "routing_policy_ref",
+            "routing_decision_ref",
+            "route_kind"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_route_browser_escalated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.route_browser_escalated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.route_browser_escalated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routing_decision_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "request_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "routing_policy_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "routing_decision_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "route_kind": {
+              "const": "browser_escalated"
+            },
+            "escalation_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "permission_decision_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "routing_decision_id",
+            "request_ref",
+            "routing_policy_ref",
+            "routing_decision_ref",
+            "route_kind",
+            "escalation_reason_ref",
+            "permission_decision_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_routine_generated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.routine_generated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.routine_generated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routine_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "routine_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "routine_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "generated"
+            }
+          },
+          "required": [
+            "routine_id",
+            "routine_revision",
+            "routine_hash",
+            "operation"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_routine_validated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.routine_validated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.routine_validated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routine_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "routine_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "routine_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "validated"
+            },
+            "validation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "routine_id",
+            "routine_revision",
+            "routine_hash",
+            "operation",
+            "validation_receipt_ref",
+            "capability_snapshot_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_routine_promoted": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.routine_promoted.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.routine_promoted.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routine_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "routine_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "routine_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "promoted"
+            },
+            "validation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "explicit_promotion_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "permission_decision_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "routine_id",
+            "routine_revision",
+            "routine_hash",
+            "operation",
+            "validation_receipt_ref",
+            "capability_snapshot_ref",
+            "explicit_promotion_receipt_ref",
+            "permission_decision_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_routine_invalidated": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.routine_invalidated.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.routine_invalidated.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routine_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "routine_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "routine_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "invalidated"
+            },
+            "validation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "routine_id",
+            "routine_revision",
+            "routine_hash",
+            "operation",
+            "validation_receipt_ref",
+            "capability_snapshot_ref",
+            "reason_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_routine_disabled": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.routine_disabled.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.routine_disabled.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routine_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "routine_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "routine_hash": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+            },
+            "operation": {
+              "const": "disabled"
+            },
+            "validation_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "capability_snapshot_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            }
+          },
+          "required": [
+            "routine_id",
+            "routine_revision",
+            "routine_hash",
+            "operation",
+            "validation_receipt_ref",
+            "capability_snapshot_ref",
+            "reason_ref"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts"
+      ]
+    },
+    "browser_session_reconstructed_on_host": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.session_reconstructed_on_host.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.session_reconstructed_on_host.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation": {
+              "const": "reconstructed_on_host"
+            },
+            "source_execution_host_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "destination_execution_host_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "source_fence_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "reconstruction_receipt_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "checkpoint_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "live_process_migrated": {
+              "const": false
+            }
+          },
+          "required": [
+            "operation",
+            "source_execution_host_id",
+            "destination_execution_host_id",
+            "source_fence_receipt_ref",
+            "reconstruction_receipt_ref",
+            "checkpoint_ref",
+            "live_process_migrated"
+          ]
+        },
+        "subject": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "browser_session_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "session_security_class": {
+              "const": "ordinary"
+            }
+          },
+          "required": [
+            "browser_session_id",
+            "session_security_class"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    },
+    "browser_session_interrupted": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.browser_event.session_interrupted.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_event.session_interrupted.v1"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/lineage"
+        },
+        "source_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "source_receipt_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation": {
+              "const": "interrupted"
+            },
+            "interruption_reason_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+            },
+            "recovery_action": {
+              "type": "string",
+              "enum": [
+                "reconcile",
+                "reconstruct",
+                "close",
+                "none"
+              ]
+            },
+            "auto_resumed": {
+              "const": false
+            }
+          },
+          "required": [
+            "operation",
+            "interruption_reason_ref",
+            "recovery_action",
+            "auto_resumed"
+          ]
+        },
+        "subject": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "browser_session_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "session_security_class": {
+              "const": "ordinary"
+            }
+          },
+          "required": [
+            "browser_session_id",
+            "session_security_class"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "lineage",
+        "source_receipt_ref",
+        "source_receipt_sha256",
+        "redaction_receipt_ref",
+        "facts",
+        "subject"
+      ]
+    }
+  }
+}
