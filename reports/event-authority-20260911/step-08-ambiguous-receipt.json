@@ -1,0 +1,52 @@
+{
+  "step": "8C",
+  "status": "root_reviewed_report_complete_product_cards_unanswered",
+  "base_commit": "4869b4cbaaa9e5452a1b16b68ce92b9f269df738",
+  "queue_path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json",
+  "queue_sha256": "7361d14c7d799c58441de921422b758fa6d998f92737af72daf2ebaaad86d8d6",
+  "queue_key": "live_mechanical_census.unregistered_ambiguous_event_like_tokens",
+  "queue_count": 153,
+  "report_count": 153,
+  "unique_token_count": 153,
+  "classification_counts": {
+    "non_event": 115,
+    "unresolved": 13,
+    "persisted_candidate": 23,
+    "exact_alias": 2
+  },
+  "new_cards": 3,
+  "settled_j40_holds": 10,
+  "j248_overlaps": 11,
+  "registered": 0,
+  "depth_pass": 0,
+  "step9_started": false,
+  "source_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/ambiguous/live.json",
+    "sha256": "fb1a72a2c8050e1e9e45d0a6e25d604166b585257933b216b9def17184d485ba"
+  },
+  "historical_cohort_lookup": {
+    "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+    "sha256": "ce0a7c471c0a4b219072fbefefc110375d0726aa7f1da54c05394cd5ab340e14",
+    "authority": "membership_lineage_only"
+  },
+  "limitations": [
+    "No registry, canonical owner, validator, checkpoint, freeze, closure or seal mutation.",
+    "Persisted candidates are not registration decisions or depth passes.",
+    "Existing J40 holds are preserved; three new cards remain unanswered.",
+    "J248 overlap is current-source classification only; Step9 remains separate."
+  ],
+  "billing_usage": "unavailable",
+  "validation": {
+    "exact_ordered_coverage": "153/153",
+    "duplicate_tokens": 0,
+    "current_source_citations_checked": 165,
+    "current_source_hashes_checked": 36,
+    "missing_exact_token_citations": 0,
+    "three_cards_unanswered": true,
+    "excerpt_matching": "literal substring of exact cited line span",
+    "result": "PASS_report_integrity_only"
+  },
+  "report_sha256": "47f8e4720f1ddbf951331fdffb8282260244e1c2dff5df0a0405610df7b5e400",
+  "cards_sha256": "443b800c965edbc6dfae8316bb8f28909258c866e5508a2df3a9acefa76912c1",
+  "cost": "Actual billed tokens and monetary usage unavailable; no inferred cost."
+}
