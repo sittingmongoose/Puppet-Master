@@ -7680,11 +7680,12 @@
         "cmd.artifacts.play_recording must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.artifacts.play_recording must expose projected state selector and disabled reason before dispatch",
         "cmd.artifacts.play_recording dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.artifacts.play_recording must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.artifacts.play_recording must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.artifacts.play_recording availability class is record_only (recording_artifact_terminal) with confirmation class none; disabled reasons come only from the closed set: degraded, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.artifacts.play_recording availability class is record_only (recording_artifact_terminal) with confirmation class none; disabled reasons consume the RAP-056 typed owner set",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-056 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Runtime_Artifacts_Panel.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Runtime_Artifacts_Panel.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Runtime_Artifacts_Panel.md#RAP-056; static fixtures are not native execution proof.",
       "state_selector": "state.cmd_artifacts_play_recording.enabled",
       "disabled_reason_projection": "state.cmd_artifacts_play_recording.disabled_reason",
       "effect_contract": {
@@ -7714,7 +7715,7 @@
         {
           "test_id": "wiring.catalog.artifacts_play_recording.disabled_reason",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_artifacts_play_recording.enabled and disabled copy reads state.cmd_artifacts_play_recording.disabled_reason; disabled_reason values come only from the closed set: degraded, stale_projection."
+          "requirement": "Availability reads state.cmd_artifacts_play_recording.enabled and disabled copy reads state.cmd_artifacts_play_recording.disabled_reason; disabled reasons consume the RAP-056 typed owner set including handler_unavailable and exact-source/permission/redaction blockers."
         },
         {
           "test_id": "wiring.catalog.artifacts_play_recording.effect",
@@ -7734,7 +7735,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.artifacts.play_recording records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandRequest",
+      "result_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandResult"
     },
     "catalog.artifacts_show_in_ledger": {
       "ui_element_id": "catalog.artifacts_show_in_ledger",
@@ -8054,11 +8057,12 @@
         "cmd.artifacts.watch_recording must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.artifacts.watch_recording must expose projected state selector and disabled reason before dispatch",
         "cmd.artifacts.watch_recording dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.artifacts.watch_recording must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.artifacts.watch_recording must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.artifacts.watch_recording availability class is live_subject (recording_in_progress) with confirmation class none; disabled reasons come only from the closed set: degraded, unreachable (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.artifacts.watch_recording availability class is live_subject (recording_in_progress) with confirmation class none; disabled reasons consume the RAP-056 typed owner set",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-056 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Runtime_Artifacts_Panel.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Runtime_Artifacts_Panel.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Runtime_Artifacts_Panel.md#RAP-056; static fixtures are not native execution proof.",
       "state_selector": "state.cmd_artifacts_watch_recording.enabled",
       "disabled_reason_projection": "state.cmd_artifacts_watch_recording.disabled_reason",
       "effect_contract": {
@@ -8088,7 +8092,7 @@
         {
           "test_id": "wiring.catalog.artifacts_watch_recording.disabled_reason",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_artifacts_watch_recording.enabled and disabled copy reads state.cmd_artifacts_watch_recording.disabled_reason; disabled_reason values come only from the closed set: degraded, unreachable."
+          "requirement": "Availability reads state.cmd_artifacts_watch_recording.enabled and disabled copy reads state.cmd_artifacts_watch_recording.disabled_reason; disabled reasons consume the RAP-056 typed owner set including handler_unavailable and exact-source/permission/redaction blockers."
         },
         {
           "test_id": "wiring.catalog.artifacts_watch_recording.effect",
@@ -8108,7 +8112,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.artifacts.watch_recording records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandRequest",
+      "result_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandResult"
     },
     "catalog.auth_profile_cancel": {
       "acceptance_checks": [
@@ -59955,10 +59961,11 @@
         "Export enables only when log_artifact_refs[] or visual_artifact_refs[] is non-empty",
         "The bundle packages records, artifacts, and a manifest per the record/bundle/view export taxonomy",
         "Export output is not canonical record truth and includes no secrets",
-        "cmd.testing.export_bundle must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.export_bundle must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.export_bundle must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.export_bundle; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.export_bundle; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_export_bundle.availability",
       "disabled_reason_projection": "state.commands.testing_export_bundle.disabled_reason",
       "effect_contract": {
@@ -59998,7 +60005,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.export_bundle records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "catalog.testing_open_failure": {
       "ui_element_id": "catalog.testing_open_failure",
@@ -60383,10 +60392,11 @@
         "Background action preserves visible session identity, test receipt refs, and recovery route without discarding evidence streams",
         "Disabled reasons cover no active session, required attention, redaction block, and policy-forced foreground state",
         "Regression evidence proves backgrounding does not mark testing complete or hide critical blockers",
-        "cmd.testing.session.background must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
@@ -60431,7 +60441,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "catalog.testing_session_open": {
       "ui_element_id": "catalog.testing_session_open",
@@ -60445,10 +60457,11 @@
         "Open action routes to the visible testing session with stable session id, active target, projection freshness, and receipt refs",
         "Disabled reasons cover no active session, unavailable surface, missing evidence stream, redaction block, and stale session projection",
         "Regression evidence proves Open never fabricates a running test session from fixture/demo state",
-        "cmd.testing.session.open must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
@@ -60493,7 +60506,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "catalog.testing_session_redaction_inspect": {
       "ui_element_id": "catalog.testing_session_redaction_inspect",
@@ -60507,10 +60522,11 @@
         "Redaction inspection opens only redaction manifest/projection evidence for the selected testing session",
         "Disabled reasons cover missing manifest, policy denial, unavailable evidence, and stale projection",
         "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
-        "cmd.testing.session.redaction.inspect must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
@@ -60555,7 +60571,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "catalog.testing_session_watch": {
       "ui_element_id": "catalog.testing_session_watch",
@@ -60569,10 +60587,11 @@
         "Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs",
         "Disabled reasons cover no active session, unavailable stream, policy Off, missing approval, redaction block, and stale session projection",
         "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
-        "cmd.testing.session.watch must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
@@ -60617,7 +60636,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "catalog.testing_visibility_policy_set": {
       "ui_element_id": "catalog.testing_visibility_policy_set",
@@ -67761,10 +67782,11 @@
         "Background action preserves visible session identity, test receipt refs, and recovery route without discarding evidence streams",
         "Disabled reasons cover no active session, required attention, redaction block, and policy-forced foreground state",
         "Regression evidence proves backgrounding does not mark testing complete or hide critical blockers",
-        "cmd.testing.session.background must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
@@ -67809,7 +67831,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "testing.session.open": {
       "ui_element_id": "testing.session.open",
@@ -67823,10 +67847,11 @@
         "Open action routes to the visible testing session with stable session id, active target, projection freshness, and receipt refs",
         "Disabled reasons cover no active session, unavailable surface, missing evidence stream, redaction block, and stale session projection",
         "Regression evidence proves Open never fabricates a running test session from fixture/demo state",
-        "cmd.testing.session.open must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
@@ -67871,7 +67896,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "testing.session.redaction.inspect": {
       "ui_element_id": "testing.session.redaction.inspect",
@@ -67885,10 +67912,11 @@
         "Redaction inspection opens only redaction manifest/projection evidence for the selected testing session",
         "Disabled reasons cover missing manifest, policy denial, unavailable evidence, and stale projection",
         "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
-        "cmd.testing.session.redaction.inspect must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
@@ -67933,7 +67961,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     },
     "testing.session.watch": {
       "ui_element_id": "testing.session.watch",
@@ -67947,10 +67977,11 @@
         "Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs",
         "Disabled reasons cover no active session, unavailable stream, policy Off, missing approval, redaction block, and stale session projection",
         "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
-        "cmd.testing.session.watch must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
@@ -67995,7 +68026,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
-      ]
+      ],
+      "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
     }
   }
 }
