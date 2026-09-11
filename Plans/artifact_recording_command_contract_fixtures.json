@@ -1,0 +1,457 @@
+{
+  "schema_id": "pm.artifact_recording.command_contract_fixtures.v1",
+  "fixture_format": "materialize request_template, apply dot-path patch, then validate target_def",
+  "owner_schema": "Plans/artifact_recording_command_contracts.schema.json",
+  "claim_boundary": "Static schema and fixture consistency only; no native dispatch, authority, persistence, playback, capture or security proof.",
+  "request_template": {
+    "schema_id": "pm.artifact_recording.command_request.v1",
+    "record_kind": "ArtifactRecordingCommandRequest",
+    "command_id": "cmd.artifacts.play_recording",
+    "command_instance_id": "command:play_recording",
+    "idempotency": {
+      "schema_id": "pm.shared_runtime.command_idempotency.v1",
+      "idempotency_key": "idempotency:play_recording",
+      "scope_ref": "scope:testing",
+      "binding_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+      "replay_policy": "return_original_result",
+      "conflict_behavior": "reject_same_key_different_binding"
+    },
+    "context": {
+      "project_id": "project:alpha",
+      "home_server_id": "server:home",
+      "execution_host_id": "host:test",
+      "execution_environment_id": "environment:test",
+      "source_location_id": "source:alpha",
+      "thread_id": "thread:test",
+      "run_id": "run:test",
+      "attempt_id": "attempt:test",
+      "topology_generation": 7,
+      "actor_ref": "actor:human",
+      "permission_snapshot_ref": "permission:test",
+      "initiating_client_id": "client:desktop",
+      "client_session_generation": 3,
+      "expected_currentness_ref": "currentness:before",
+      "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "return_context_ref": "return:testing",
+      "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "subject": {
+      "kind": "terminal_recording",
+      "artifact_id": "artifact:recording",
+      "artifact_version": 2,
+      "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "security_class": "ordinary",
+      "capture_id": "capture:test",
+      "provenance_ref": "provenance:recording",
+      "recording_state": "terminal"
+    },
+    "args": {
+      "redaction_profile_ref": "redaction:ordinary",
+      "viewer_policy_ref": "policy:viewer",
+      "fallback_route_ref": "fallback:readonly",
+      "clock_alignment_ref": "clock:recording"
+    }
+  },
+  "request_cases": [
+    {
+      "name": "play_recording",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "patch": {}
+    },
+    {
+      "name": "watch_recording",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "patch": {
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:watch_recording",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "subject": {
+          "kind": "live_recording",
+          "capture_session_id": "capture-session:test",
+          "capture_id": "capture:test",
+          "stream_ref": "stream:recording",
+          "expected_stream_generation": 2,
+          "expected_capture_revision": 6,
+          "recording_state": "recording_in_progress",
+          "security_class": "ordinary"
+        },
+        "args": {
+          "redaction_profile_ref": "redaction:ordinary",
+          "viewer_policy_ref": "policy:viewer",
+          "fallback_route_ref": "fallback:readonly",
+          "clock_alignment_ref": "clock:recording"
+        }
+      }
+    }
+  ],
+  "other_positive_cases": [
+    {
+      "name": "play_recording_result",
+      "target_def": "ArtifactRecordingCommandResult",
+      "instance": {
+        "schema_id": "pm.artifact_recording.command_result.v1",
+        "record_kind": "ArtifactRecordingCommandResult",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "operation_id": "operation:play_recording",
+        "request_binding_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:play_recording",
+        "status": "completed",
+        "receipt_ref": "receipt:play_recording",
+        "projection_ref": "projection:play_recording",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "watch_recording_result",
+      "target_def": "ArtifactRecordingCommandResult",
+      "instance": {
+        "schema_id": "pm.artifact_recording.command_result.v1",
+        "record_kind": "ArtifactRecordingCommandResult",
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "operation_id": "operation:watch_recording",
+        "request_binding_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:watch_recording",
+        "status": "completed",
+        "receipt_ref": "receipt:watch_recording",
+        "projection_ref": "projection:watch_recording",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "typed_error",
+      "target_def": "ArtifactRecordingCommandError",
+      "instance": {
+        "schema_id": "pm.artifact_recording.command_error.v1",
+        "record_kind": "ArtifactRecordingCommandError",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "error": {
+          "reason": "handler_unavailable",
+          "safe_message_code": "handler_unavailable",
+          "detail_ref": null,
+          "retry_policy": "after_state_change",
+          "effect_state": "no_effect"
+        }
+      }
+    },
+    {
+      "name": "handler_unavailable",
+      "target_def": "ArtifactRecordingCommandAvailability",
+      "instance": {
+        "schema_id": "pm.artifact_recording.command_availability.v1",
+        "record_kind": "ArtifactRecordingCommandAvailability",
+        "command_id": "cmd.artifacts.play_recording",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:play_recording",
+        "native_handler_available": false,
+        "permission_allowed": true,
+        "subject_current": true,
+        "redaction_allowed": true,
+        "capability_available": true,
+        "available": false,
+        "disabled_reason": "handler_unavailable",
+        "safe_next_action_ref": "action:inspect_status"
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "play_recording_protected",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "play_recording",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "play_recording_protected"
+    },
+    {
+      "name": "play_recording_raw_content",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "play_recording",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "play_recording_raw_content"
+    },
+    {
+      "name": "play_recording_stale_binding",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "play_recording",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "play_recording_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "play_recording_capture_mutation",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "play_recording_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "play_recording_capture_mutation"
+    },
+    {
+      "name": "play_recording_false_success",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "play_recording_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "play_recording_false_success"
+    },
+    {
+      "name": "play_recording_replay_without_original",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "play_recording_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "play_recording_replay_without_original"
+    },
+    {
+      "name": "watch_recording_protected",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "watch_recording",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "watch_recording_protected"
+    },
+    {
+      "name": "watch_recording_raw_content",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "watch_recording",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "watch_recording_raw_content"
+    },
+    {
+      "name": "watch_recording_stale_binding",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "watch_recording",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "watch_recording_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "watch_recording_capture_mutation",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "watch_recording_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "watch_recording_capture_mutation"
+    },
+    {
+      "name": "watch_recording_false_success",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "watch_recording_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "watch_recording_false_success"
+    },
+    {
+      "name": "watch_recording_replay_without_original",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "watch_recording_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "watch_recording_replay_without_original"
+    },
+    {
+      "name": "unregistered_command",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "play_recording",
+      "patch": {
+        "command_id": "cmd.testing.capture.start"
+      },
+      "expected_invalid_reason": "unregistered_command"
+    },
+    {
+      "name": "fake_availability",
+      "target_def": "ArtifactRecordingCommandAvailability",
+      "base_positive_case": "handler_unavailable",
+      "patch": {
+        "available": true,
+        "disabled_reason": null,
+        "safe_next_action_ref": null
+      },
+      "expected_invalid_reason": "fake_availability"
+    },
+    {
+      "name": "unknown_effect_retry_blindly",
+      "target_def": "ArtifactRecordingCommandError",
+      "base_positive_case": "typed_error",
+      "patch": {
+        "error.effect_state": "unknown",
+        "error.retry_policy": "never"
+      },
+      "expected_invalid_reason": "unknown_effect_retry_blindly"
+    },
+    {
+      "name": "unpaired_currentness",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "play_recording_result",
+      "patch": {
+        "status": "accepted",
+        "receipt_ref": null,
+        "artifact_refs": [],
+        "observable_work_ref": "work:pending",
+        "currentness_ref": null
+      },
+      "expected_invalid_reason": "unpaired_currentness"
+    },
+    {
+      "name": "failed_unknown_effect",
+      "target_def": "ArtifactRecordingCommandResult",
+      "base_positive_case": "play_recording_result",
+      "patch": {
+        "status": "failed",
+        "error": {
+          "reason": "effect_reconciliation_required",
+          "safe_message_code": "reconcile",
+          "detail_ref": null,
+          "retry_policy": "same_operation_after_reconciliation",
+          "effect_state": "unknown"
+        }
+      },
+      "expected_invalid_reason": "failed_unknown_effect"
+    },
+    {
+      "name": "play_is_not_live",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "play_recording",
+      "patch": {
+        "subject": {
+          "kind": "live_recording",
+          "capture_session_id": "capture-session:test",
+          "capture_id": "capture:test",
+          "stream_ref": "stream:recording",
+          "expected_stream_generation": 2,
+          "expected_capture_revision": 6,
+          "recording_state": "recording_in_progress",
+          "security_class": "ordinary"
+        }
+      },
+      "expected_invalid_reason": "play_is_not_live"
+    },
+    {
+      "name": "watch_is_not_terminal",
+      "target_def": "ArtifactRecordingCommandRequest",
+      "base_positive_case": "watch_recording",
+      "patch": {
+        "subject": {
+          "kind": "terminal_recording",
+          "artifact_id": "artifact:recording",
+          "artifact_version": 2,
+          "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "security_class": "ordinary",
+          "capture_id": "capture:test",
+          "provenance_ref": "provenance:recording",
+          "recording_state": "terminal"
+        }
+      },
+      "expected_invalid_reason": "watch_is_not_terminal"
+    }
+  ],
+  "coverage": {
+    "exact_command_ids": [
+      "cmd.artifacts.play_recording",
+      "cmd.artifacts.watch_recording"
+    ],
+    "request_case_count": 2,
+    "positive_result_case_count": 2,
+    "negative_case_count": 19,
+    "all_commands_have_positive_request_and_result": true
+  }
+}

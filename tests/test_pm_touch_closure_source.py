@@ -239,7 +239,7 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
         self.assertEqual(len(rows), 644)
-        self.assertEqual(len(profiles), 131)
+        self.assertEqual(len(profiles), 133)
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
