@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12938-L13061
+Source lines: L12938-L13085
 
-Source SHA256: `1b3784c10373f86b792dfb269670e5c34f58eef54d5daa5339eb72400aa45db5`
+Source SHA256: `1560e40520743e05097ad9438a9843be64ce147c1853d142601f602c1a82f27c`
 
 ---
 
@@ -132,3 +132,27 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Testing and Recording Contract Consumption — 2026-09-11
+
+The four existing `cmd.testing.session.open`, `cmd.testing.session.watch`,
+`cmd.testing.session.background`, `cmd.testing.session.redaction.inspect` IDs and
+run-scoped `cmd.testing.export_bundle` consume ATS-048's
+`TestingSessionCommandRequest/Result/Error/Availability` definitions in
+`Plans/testing_session_command_contracts.schema.json`. The two existing recording
+Play/Watch IDs consume RAP-056's `ArtifactRecordingCommandRequest/Result/Error/Availability`
+definitions in `Plans/artifact_recording_command_contracts.schema.json`.
+The owners define semantics; this catalog does not copy their field lists or mint
+parallel commands. The seven commands retain eleven existing production-intent
+placements and their sole planned handlers. They do not belong to TCME's closed
+ten-ID capture schema or widen the shared-runtime command enum.
+
+Typed requests and results are mandatory at these placements; the former generic
+"typed contract or route/open disposition" fallback does not apply. Existing
+selectors project the typed owner availability/error, including `handler_unavailable`.
+Recording row scope remains record-only versus live-subject. Existing session event
+obligations are preserved and require separate Event Authority admission; export
+and recording controls retain receipt-only domain-event dispositions. No new native
+handler, visual design, command, storage family, runtime proof or readiness is claimed.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md

@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14684,
+    "depends_on_edge_count": 14690,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17332,
-    "node_count": 6464,
+    "edge_count": 17338,
+    "node_count": 6466,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T17:17:40Z",
+  "generated_at_utc": "2026-09-11T17:18:08Z",
   "gui_related_units": {
     "count": 3121,
     "units": [
@@ -30591,8 +30591,8 @@
         "source_location": {
           "heading": "TCME-002 - Capture Clocks Motion Health Privacy And Cadence",
           "heading_level": 3,
-          "heading_line": 266,
-          "line": 268,
+          "heading_line": 268,
+          "line": 270,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -30602,8 +30602,8 @@
         "source_location": {
           "heading": "TCME-003 - Immutable Raw Capture And Derivation Provenance",
           "heading_level": 3,
-          "heading_line": 295,
-          "line": 297,
+          "heading_line": 297,
+          "line": 299,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -30613,8 +30613,8 @@
         "source_location": {
           "heading": "TCME-004 - Capture Playback Comparison ObservableWork And GUI Projection",
           "heading_level": 3,
-          "heading_line": 324,
-          "line": 326,
+          "heading_line": 326,
+          "line": 328,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -30624,8 +30624,8 @@
         "source_location": {
           "heading": "TCME-007 - Consolidated PMConcept7 Motion Evidence And Approval-Gated Cleanup",
           "heading_level": 3,
-          "heading_line": 412,
-          "line": 414,
+          "heading_line": 414,
+          "line": 416,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -30635,8 +30635,8 @@
         "source_location": {
           "heading": "TCME-008 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 473,
-          "line": 475,
+          "heading_line": 475,
+          "line": 477,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -34355,10 +34355,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6464,
+  "plan_unit_count": 6466,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1920,
+      "high": 1922,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35459,6 +35459,7 @@
       "event_table_underimplementation": 1,
       "event_taxonomy_drift": 1,
       "eventrecord_scope_legacy_dedupe_drift": 1,
+      "evidence_authority_and_false_completion": 1,
       "evidence_docs_drift": 1,
       "evidence_loop": 1,
       "evidence_media_doctor_checks": 1,
@@ -36913,6 +36914,7 @@
       "record_envelope_join_loss": 1,
       "record_identity_drift": 1,
       "record_schema_drift": 1,
+      "recording_identity_and_evidence_authority": 1,
       "recovery_audit_boundary": 1,
       "recovery_boundary_graph_lock_drift": 1,
       "recovery_evidence_and_context_integrity": 1,
@@ -38075,7 +38077,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6273,
+      "accepted": 6275,
       "retired": 182,
       "superseded": 9
     },
@@ -38142,7 +38144,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5156,
+      "requirement": 5158,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38260,19 +38262,19 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "097faf23fbdf2c72d259b9a885e2eb5cf39a3cc5c8e96ae562f043e8f6ec487d",
+        "expected": "c5d52e380cd004edfe694b995adfcb2f54e8ae00c21248ac288c6679b0673afb",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "1b3784c10373f86b792dfb269670e5c34f58eef54d5daa5339eb72400aa45db5",
+        "expected": "1560e40520743e05097ad9438a9843be64ce147c1853d142601f602c1a82f27c",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "bf0e1800e5804ee52b12e21b1e075e87b11db7c9ba9dc490edfbdaaa7c83bc90",
+        "expected": "b53292c8f230592ca00c21a4dd85a215ac7519927e0958afdf34eebf06886455",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
