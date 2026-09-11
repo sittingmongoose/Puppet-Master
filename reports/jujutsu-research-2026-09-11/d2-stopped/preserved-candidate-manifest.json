@@ -1,0 +1,70 @@
+{
+  "schema": "jujutsu.stopped_candidate_preservation.v1",
+  "status": "preserved_partial_NOT_campaign_freeze",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/PRICING_BASIS.md",
+      "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/codex_native.py",
+      "sha256": "4c95ccf06d33b929fd55bac9bcece51642faad65e7321e15e970b676c35c52cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/omp_native.py",
+      "sha256": "233ba6b5f5d7e4a28fc0826d679e11399b69656e285f4eeef6782af090a12c40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/bounded_campaign.py",
+      "sha256": "98896594f96864fe87bbf299566ae317e0aed8c08a8c8a1c00a28e86d4411030"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/child_transport.py",
+      "sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cost_watch.py",
+      "sha256": "866f1f9bc3f6333d37e61347f5ffe525cf26cdf403ea4cee1703b55cb1febe34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/discovery_to_plan.py",
+      "sha256": "0009845be6b30791f495d930be0826bd0bafc2bb94029e88b21607c709df7e91"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze.json",
+      "sha256": "570abec19007627eb77b548bebf0122316a495f7cf09ded22f1bb23f368dae9c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze_protocol.py",
+      "sha256": "715d7f948c11b8737fee8280cad4dd31fa146d795b790c548b636c65f214da8d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/prepare_case.py",
+      "sha256": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/protocol/research_base.py",
+      "sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/research.py",
+      "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/research_shared_v3.py",
+      "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/test_bounded_campaign.py",
+      "sha256": "dddfa8860756b052ac12c632cc7c5d04e457260033c3ff7cd4b1e1cebd118072"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/test_cost_watch.py",
+      "sha256": "63a9a2ff7341199d0863dda74580158d6248892516d8fc52b6aa92d0e9d94c45"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/valuation.py",
+      "sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+    }
+  ]
+}

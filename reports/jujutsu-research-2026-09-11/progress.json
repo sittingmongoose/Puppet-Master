@@ -1,6 +1,6 @@
 {
   "schema": "jujutsu.checkpoint_progress.v1",
-  "captured_at": "2026-09-11T03:27:27.363278+00:00",
+  "captured_at": "2026-09-11T03:40:40.516706+00:00",
   "processing_start": "2026-09-11T03:06:26Z",
   "human_waiting_seconds_at_capture": 0,
   "completion_point": "After deliverable4; not reached",
@@ -11,10 +11,17 @@
     "report": "d1/README.md"
   },
   "d2": {
-    "status": "preflight_only_no_campaigns",
-    "report": "d2-preflight/summary.md",
-    "scheduler_tests": "12/12 PASS; independent review PASS",
-    "blocker": "No verified native monetary enforcement for the at-most campaign caps. Goal tokenBudget excludes cached input and permits a final response after budgetLimited."
+    "status": "partial_preflight_stopped_non_arm_tier_uncertainty",
+    "report": "d2-stopped/summary.md",
+    "initial_scheduler_tests": "12/12 PASS; independent review PASS",
+    "successor_tests": "18 last passed, worker-reported; targeted independent review pending",
+    "successor_freeze": "not final; preserved candidate hashes only",
+    "remaining": [
+      "DeepSeek reservation metadata and frozen common cost policy",
+      "Independent targeted audit of monitored successor",
+      "Final identical protocol freeze"
+    ],
+    "stop_reason": "Stop before either campaign: service tier unresolved and conservative Fast scenario exceeds the overall non-arm allowance. This is not a claim that the standard-rate estimate or actual cash exceeds $60."
   },
   "d3": {
     "status": "pending_arms"
@@ -33,16 +40,67 @@
     "status": "not_started"
   },
   "non_arm": {
-    "standard_api_equivalent_observed_usd": 25.341994,
-    "unknown_tier_fast_scenario_observed_usd": 50.519216,
+    "captured_at": "2026-09-11T03:40:40.516706+00:00",
+    "non_arm_cap_usd": 60,
+    "standard_api_equivalent_observed_usd": 33.402671999999995,
+    "unknown_tier_fast_scenario_observed_usd": 66.64057199999999,
     "basis": "Preserved2026-09-08; inclusive input subtracts cache categories; output includes reasoning once",
-    "includes_probe_standard_usd": 0.164772,
+    "agents": [
+      {
+        "agent": "root",
+        "known_standard_subtotal_usd": 11.326712,
+        "known_fast_subtotal_usd": 22.653424,
+        "request_coverage_complete_in_captured_counters": true,
+        "gaps": [],
+        "service_tier_verified": false,
+        "actual_cash_usd": null
+      },
+      {
+        "agent": "case",
+        "known_standard_subtotal_usd": 5.112392,
+        "known_fast_subtotal_usd": 10.224784,
+        "request_coverage_complete_in_captured_counters": true,
+        "gaps": [],
+        "service_tier_verified": false,
+        "actual_cash_usd": null
+      },
+      {
+        "agent": "protocol",
+        "known_standard_subtotal_usd": 9.6367,
+        "known_fast_subtotal_usd": 19.2734,
+        "request_coverage_complete_in_captured_counters": true,
+        "gaps": [],
+        "service_tier_verified": false,
+        "actual_cash_usd": null
+      },
+      {
+        "agent": "audit",
+        "known_standard_subtotal_usd": 7.162096,
+        "known_fast_subtotal_usd": 14.324192,
+        "request_coverage_complete_in_captured_counters": true,
+        "gaps": [],
+        "service_tier_verified": false,
+        "actual_cash_usd": null
+      }
+    ],
+    "probe_default_api_equivalent_usd": 0.164772,
     "actual_cash_usd": null,
-    "in_flight_usage_usd": null,
-    "complete_cost_certified": false,
-    "receipt": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/preflight_usage_preserved.json",
-    "receipt_sha256": "e5e3b746c9217e5b780c769cbb2a0aa4fc336a8beffd88ef5bbe00dbf490a036"
+    "unreported_or_in_flight_usage_usd": null,
+    "limitations": [
+      "Native context service tier absent; standard/Fast scenarios, not bill",
+      "Usage after capture and in-flight/unreported failed-request charges remain unknown",
+      "Counter gaps excluded from known subtotals and explicitly listed",
+      "Posthoc receipts do not enforce prospective spending cap",
+      "Root start conservatively includes request begun before Goal activation if completed after start",
+      "Fast scenario doubles only root/support unknown-tier sessions; explicitly default-tier probe keeps default tariff."
+    ],
+    "raw_sanitized_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/stop_usage_preserved.json",
+      "sha256": "cd2aaebc6302674b50e7b864e4e65d6d3be21ac767ac7bd624c94d16e2a714c7"
+    },
+    "decision": "Stop before either campaign: service tier unresolved and conservative Fast scenario exceeds the overall non-arm allowance. This is not a claim that the standard-rate estimate or actual cash exceeds $60."
   },
   "governance": "No Plans edits, derived regeneration or reseal; main landing not attempted.",
-  "scope_note": "This is partial progress, not completion of deliverables2\u20134 or the required checkpoint."
+  "scope_note": "This is partial progress, not completion of deliverables2\u20134 or the required checkpoint.",
+  "processing_seconds_at_capture": 2054.516706
 }
