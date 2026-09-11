@@ -1,0 +1,32 @@
+{
+  "verdict": "PASS",
+  "blocking_findings": [],
+  "sole_delta": {
+    "fixture": "accepted_work_allows_null_receipt",
+    "path": "value.command_instance_id",
+    "before": "command:jj:result:1",
+    "after": "command:jj:accepted:null-receipt",
+    "byte_exact_single_replacement_verified": true
+  },
+  "final_canonical_output_hashes": {
+    "Plans/Jujutsu_Integration.md": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+    "Plans/jujutsu_integration_contracts.schema.json": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+    "Plans/jujutsu_integration_contract_fixtures.json": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868"
+  },
+  "original_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/review.json",
+    "sha256": "1ebf7fd232f13c2c6fadeb9f0fdf1c94229c8cf7f7c98f6f3e2aba579c9f1e28"
+  },
+  "scoped_checks": {
+    "positive_cases": 48,
+    "negative_cases": 65,
+    "all_passed": true,
+    "positive_command_instance_ids_unique": true,
+    "accepted_null_receipt_and_missing_observable_work_negative_preserved": true
+  },
+  "full_verifier_evidence_before_fix": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/scoped-contracts.json",
+    "sha256": "01867c17c692dc419c22141a786025b3f337d4269b2b71b2e73aa9659435f715"
+  },
+  "limitations": "Independent checks cover exact byte amendment and all JJ fixture semantics. Coordinator will rerun full cross-contract verifier and final checks; no full-verifier PASS claimed here."
+}

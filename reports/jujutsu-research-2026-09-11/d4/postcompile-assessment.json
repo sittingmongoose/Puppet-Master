@@ -1,0 +1,63 @@
+{
+  "assessment": "COMPILED_CORRECTION_INTEGRITY_PASS_WITH_GOVERNANCE_VALIDATION_FAIL",
+  "source_compile_integrity_defects": [],
+  "validator_status": "fail",
+  "validator_exit_code": 1,
+  "validator_errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+  ],
+  "base_main_commit": "3f02e24d7aa90fc527ba4e9c280252ac40c0b1e1",
+  "coverage_comparison": {
+    "Plans/sharding_config.json": {
+      "base_main_sha256": "91d918be2a958c0d60fb189a9ef532682951ce3b564b2c942ba97677eb752eaf",
+      "current_identical_to_base": true,
+      "target_coverage_missing_in_both": true
+    },
+    "Plans/Spec_Lock.json": {
+      "base_main_sha256": "fc6a67bc5f7e17f615f67369cfb80c538ce45b89b9be0bf9bb245d7473e9db2e",
+      "current_identical_to_base": true,
+      "target_coverage_missing_in_both": true
+    },
+    "Plans/plan_graph.json": {
+      "base_main_sha256": "6c78f4c85f4aa11e3f7e95361fd9d59b425cb0df9daeacd2acf17bcfbaf5c255",
+      "current_identical_to_base": true,
+      "target_coverage_missing_in_both": true
+    }
+  },
+  "disposition": "Keep the compiled atom, JJI-003 target, reciprocal lineage and compiled registry entry because the reviewed correction is actually present. Record ledger validation as fail with these exact pre-existing governance coverage omissions deferred to an explicitly authorized governance phase. Keep governance_status not_requested; do not claim ledger validator PASS, sealed state, readiness admission, or all-gates success.",
+  "reasoning": "Validator derives governance_coverage_targets from canonical_plan_targets unconditionally at lines 568 onward; not_requested does not bypass coverage checks. These omissions predate this correction and are surfaced by truthfully registering the compiled owner, not by source/compile corruption. Independent execution returned no other errors; exact three applied outputs match the previously reviewed proposed hashes.",
+  "required_followup": "Replace post_compile_validation_pending in health/handoff with truthful failure disposition and exact check evidence, preserving that this does not reverse completed canonical compilation. Publish deferred governance limitations. No validator edits, target removal, or out-of-scope governance changes.",
+  "scope_limits": [
+    "No authority to amend Spec_Lock, plan_graph, evidence, readiness, or perform seal inferred.",
+    "This assessment makes no claim about the independent derived-index issue or landing checks."
+  ],
+  "evidence": {
+    "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/postcompile-validator.json": "dee5687ae07e187f7918e4d41679fb79edba03518caedef2121281794696c3cd",
+    "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/review.json": "1ebf7fd232f13c2c6fadeb9f0fdf1c94229c8cf7f7c98f6f3e2aba579c9f1e28",
+    "scripts/pm-bootstrap-ledger-validate.py": "228fe9cbd695cbc67d67f1bc76bfed7b409c91845a612ae1da657ec2358dbfb1"
+  },
+  "applied_outputs": {
+    "Plans/Jujutsu_Integration.md": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+    "Plans/jujutsu_integration_contracts.schema.json": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+    "Plans/jujutsu_integration_contract_fixtures.json": "3f48e76d23f12c829d60b543f3772457754dfd9afac57c7059d574a955b75da5"
+  },
+  "compiled_state_hashes": {
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/events.jsonl": "b6d503f2d7899d4a004ee3767276123213d8a96ca2ad6232a7bcc41d26ad3bf0",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/manifest.json": "9ca98f5a33b328d49907ab296b24e183cef5f59e03ca84e1ad176e046b5e5e8b",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/blockers.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/corrections.jsonl": "632cb61c88d1b0f4f79bbdbc2e118123b1a59deac9c4d329690cebb96d867b88",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/decisions.jsonl": "ac6dd3b64a28ca59e45eab50292e13f9a8cc1e574a6dcaa07c554884332b31b6",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/design_atoms.jsonl": "81d629b17dd43e7607db52b92f3ba498625efda99b8cb1fa1d80ac426282bd6e",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/questions.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/authorization.md": "603b48116f61674c1d17ac8f8cba712725da8c7da37f74cb62fc5ff1a512ba31",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/findings.md": "b522fb221b961afaeea668d278dd91281375f8a95848ad3918bf7b74092ad440",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/compile_queue.json": "33113bb423e6df1051511ea369aaea07afd2b1a365902308867aa08016f2e482",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/current.json": "d2cce606030b9f0de4a7f8a7ff2cb7f0fbd26c9e064874d6223e0aa04ec7d531",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/handoff.json": "87b5b6ee7f4a91128dc154d5d18ebb1e72b6f969a817e4aac3f87c2d58053bd7",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/open_items.json": "3ecfeebd5ad7b074e151e17f9fc7f13f9c14fc8c90bf1c0983db1e8fd193fced",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/operating_capsule.json": "1cd50ed3d53ed116fade9dc6edadeb15a4858d589fa23dcb3e8032bf568599b8",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/validation/ledger_health.json": "fdf06dc44cab71a2ae38017983ea1349ee5e826f698f4e7fbe5cdf285442b597"
+  }
+}

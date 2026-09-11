@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+  "updated_at_utc": "2026-09-11T15:25:58.336505+00:00",
+  "phase": "compiled_jujutsu_receipt_correction",
+  "last_event_id": "evt-003",
+  "accepted_decisions_count": 1,
+  "design_atoms_total": 1,
+  "ready_for_plan_compile_atoms": 0,
+  "candidate_atoms_count": 0,
+  "open_questions_count": 0,
+  "deferred_questions_count": 0,
+  "open_blockers_count": 0,
+  "canonical_plan_targets": [
+    "Plans/Jujutsu_Integration.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/jujutsu_integration_contracts.schema.json",
+    "Plans/jujutsu_integration_contract_fixtures.json"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Jujutsu_Integration.md"
+  ],
+  "governance_status": "not_requested",
+  "cursor": {
+    "last_event_id": "evt-003",
+    "next_action": "Verify that this bundle is reachable from origin/main and its external landing receipt is complete; then await Jared's packet answers. The designated Plans agent owns deferred governance coverage and resealing."
+  },
+  "latest_audit_ref": "reports/jujutsu-research-2026-09-11/d4/postcompile-assessment.json",
+  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_WITH_GOVERNANCE_VALIDATION_FAIL",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "applied_independently_reviewed_correction",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+    ],
+    "claim_boundary": "Static compile integrity passes; the full ledger validator fails existing governance coverage. No seal, runtime certification, or readiness admission."
+  },
+  "landing_receipt_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/checkpoint-receipt.json",
+  "landing_condition": "Containing correction and result bundle commit is reachable from origin/main; verify external receipt and live Git ancestry."
+}

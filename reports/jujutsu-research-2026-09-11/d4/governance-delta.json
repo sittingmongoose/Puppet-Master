@@ -1,0 +1,268 @@
+{
+  "scope": "Pre-correction and post-correction standard run-gates, followed by final ledger projection validation.",
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/baseline-governance.json",
+    "sha256": "fe95bcf379c160f7d80f1d6b9b64243ef5856c058a5455004bfe91976629d8c6",
+    "bytes": 145392
+  },
+  "post": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/post-governance.json",
+    "sha256": "b98652f9c86bda6600af2797dbe0649b0a313f19c67cbaace1cff0b1d08341f8",
+    "bytes": 141962
+  },
+  "checks": [
+    {
+      "check": "check_project_artifact_requirements",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "check_shards",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "json_syntax",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1,
+      "post_failure_count": 1
+    },
+    {
+      "check": "lint_banned_phrases",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "lint_contractrefs",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1,
+      "post_failure_count": 1
+    },
+    {
+      "check": "lint_path_refs",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 10,
+      "post_failure_count": 10
+    },
+    {
+      "check": "validate_audit_closure",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 201,
+      "post_failure_count": 201
+    },
+    {
+      "check": "validate_audit_status_index",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1,
+      "post_failure_count": 1
+    },
+    {
+      "check": "validate_auto_decisions",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_case_l_non_event_materialization",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_evidence",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1038,
+      "post_failure_count": 1038
+    },
+    {
+      "check": "validate_filesafe_security_policy",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_forge_backup_acceptance",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_goal_runtime_event_fixtures",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_gui_asset_policy",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 29,
+      "post_failure_count": 88
+    },
+    {
+      "check": "validate_new_contracts",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_plan_graph",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1038,
+      "post_failure_count": 1038
+    },
+    {
+      "check": "validate_plan_migration",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 179,
+      "post_failure_count": 179
+    },
+    {
+      "check": "validate_plans_to_code_handoff_schema",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_pm7_gui_fixtures",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 1,
+      "post_failure_count": 1
+    },
+    {
+      "check": "validate_prd_planning_runtime_contracts",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_project_output_fixtures",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_runtime_artifact_schemas",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_server_command_gap",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_touch_closure",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_usage_contract_drift",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_usage_gui_fixtures",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_web_capability_contracts",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_wiring_matrix",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "validate_working_notebook_contracts",
+      "baseline_status": "pass",
+      "post_status": "pass",
+      "baseline_failure_count": 0,
+      "post_failure_count": 0
+    },
+    {
+      "check": "verify_spec_lock",
+      "baseline_status": "fail",
+      "post_status": "fail",
+      "baseline_failure_count": 19,
+      "post_failure_count": 19
+    }
+  ],
+  "failed_checks_before": 11,
+  "failed_checks_after": 11,
+  "newly_failing_checks": [],
+  "interpretation": "The same eleven checks fail. Exact failure details are not all pre-existing: this correction changes source/index/ledger hashes without a seal. Supplying unchanged ignored historical audit inputs exposes further existing stale-source checks (implementation-readiness count 29 to 88), including the newly edited Jujutsu source. Scope verification independently excludes changes for unrelated owners. No seal or artifact refresh was performed.",
+  "ledger": {
+    "errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+    ],
+    "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+    "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+    "status": "fail",
+    "summary": {
+      "atoms": 1,
+      "compile_queue_items": 1,
+      "corrections": 1,
+      "decisions": 1,
+      "events": 3,
+      "plan_units_checked": 8,
+      "questions": 0
+    },
+    "warnings": []
+  },
+  "limitations": [
+    "Configured shard check covers 98 owners and 2159 shards, but Jujutsu is absent from that pre-existing configured source set.",
+    "Final ledger projection validation occurs after run-gates; the canonical three output hashes and index projection bytes did not change during that metadata update.",
+    "Full governance validation and runtime readiness remain failed/blocked."
+  ]
+}

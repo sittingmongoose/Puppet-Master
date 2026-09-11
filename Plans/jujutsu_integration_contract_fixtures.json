@@ -3045,6 +3045,374 @@
         "outcome": "blocked_conflict",
         "recorded_at_utc": "2026-09-01T14:35:00Z"
       }
+    },
+    {
+      "name": "terminal_succeeded_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:succeeded",
+        "operation_id": "operation:jj:terminal:succeeded",
+        "outcome": "succeeded",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": null,
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:succeeded",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "terminal_blocked_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:blocked",
+        "operation_id": "operation:jj:terminal:blocked",
+        "outcome": "blocked",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": {
+          "code": "operation_stale",
+          "message": "Established attempt terminated with blocked.",
+          "retry_disposition": "after_revalidation",
+          "effect_state": "known_not_applied",
+          "recovery_action_ids": [],
+          "detail_ref": "diagnostic:jj:terminal:blocked"
+        },
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:blocked",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "terminal_failed_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:failed",
+        "operation_id": "operation:jj:terminal:failed",
+        "outcome": "failed",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": {
+          "code": "adapter_failed",
+          "message": "Established attempt terminated with failed.",
+          "retry_disposition": "after_revalidation",
+          "effect_state": "known_not_applied",
+          "recovery_action_ids": [],
+          "detail_ref": "diagnostic:jj:terminal:failed"
+        },
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:failed",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "terminal_cancelled_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:cancelled",
+        "operation_id": "operation:jj:terminal:cancelled",
+        "outcome": "cancelled",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": {
+          "code": "operation_cancelled",
+          "message": "Established attempt terminated with cancelled.",
+          "retry_disposition": "after_revalidation",
+          "effect_state": "known_not_applied",
+          "recovery_action_ids": [],
+          "detail_ref": "diagnostic:jj:terminal:cancelled"
+        },
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:cancelled",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "terminal_recovery_required_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:recovery_required",
+        "operation_id": "operation:jj:terminal:recovery_required",
+        "outcome": "recovery_required",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": {
+          "code": "cleanup_unproven",
+          "message": "Established attempt terminated with recovery_required.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "known_not_applied",
+          "recovery_action_ids": [],
+          "detail_ref": "diagnostic:jj:terminal:recovery_required"
+        },
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:recovery_required",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "terminal_effect_unknown_with_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "command_instance_id": "command:jj:terminal:effect_unknown",
+        "operation_id": "operation:jj:terminal:effect_unknown",
+        "outcome": "effect_unknown",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": {
+          "code": "effect_unknown_reconciliation_required",
+          "message": "Effect is unknown; reconcile the exact operation before retry.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "unknown",
+          "recovery_action_ids": [
+            "cmd.jujutsu.status.refresh"
+          ],
+          "detail_ref": "diagnostic:jj:error:1"
+        },
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": "receipt:jj:terminal:effect_unknown",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
+    },
+    {
+      "name": "accepted_work_allows_null_receipt",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.change.rebase",
+        "command_instance_id": "command:jj:accepted:null-receipt",
+        "operation_id": "operation:jj:result:1",
+        "outcome": "accepted",
+        "repository_context_ref": "repository-context:jj:main",
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-result",
+          "commit_id": "commit-before-result",
+          "operation_id": "op-before-result",
+          "workspace_id": "ws-main",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [
+            "change-result"
+          ],
+          "commit_ids": [
+            "commit-after-result"
+          ],
+          "bookmark_names": [],
+          "workspace_ids": [
+            "ws-main"
+          ],
+          "operation_ids": [
+            "op-before-result",
+            "op-after-result"
+          ],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:00Z"
+        },
+        "error": null,
+        "observable_work_id": "observable-work:jj:result:1",
+        "receipt_ref": null,
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T20:10:00Z"
+      }
     }
   ],
   "invalid": [
@@ -3581,6 +3949,69 @@
         "return_context.focus_id"
       ],
       "expected_error": "cancelled clone returns to exact focus"
+    },
+    {
+      "name": "terminal_succeeded_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_succeeded_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "terminal_blocked_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_blocked_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "terminal_failed_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_failed_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "terminal_cancelled_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_cancelled_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "terminal_recovery_required_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_recovery_required_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "terminal_effect_unknown_rejects_null_receipt",
+      "definition": "command_result",
+      "base_valid": "terminal_effect_unknown_with_receipt",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_error": "every established terminal attempt requires a non-secret receipt reference"
+    },
+    {
+      "name": "accepted_work_still_requires_observable_work",
+      "definition": "command_result",
+      "base_valid": "accepted_work_allows_null_receipt",
+      "patch": {
+        "observable_work_id": null
+      },
+      "expected_error": "acceptance requires ObservableWork before a terminal receipt exists"
     }
   ]
 }

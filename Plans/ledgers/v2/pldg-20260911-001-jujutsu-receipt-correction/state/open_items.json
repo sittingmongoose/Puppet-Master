@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+  "updated_at_utc": "2026-09-11T15:25:58.336505+00:00",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "remaining_work": [
+    "Verify that this bundle is reachable from origin/main and its external landing receipt is complete; then await Jared's packet answers. The designated Plans agent owns deferred governance coverage and resealing."
+  ],
+  "scope_note": "44 optional packet questions are outside this correction ledger.",
+  "deferred_governance_validation_errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+  ]
+}

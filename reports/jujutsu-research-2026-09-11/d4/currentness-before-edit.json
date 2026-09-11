@@ -1,0 +1,77 @@
+{
+  "at": "2026-09-11T15:04:06.351013+00:00",
+  "frozen_snapshot": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "rebased_main": "07643d8ff190d35eb1056ce02297141b5d0eb8f4",
+  "subject_head_before_edits": "d43371611e6a30edb604de9d8e1ea4d6995387a8",
+  "status": "PASS",
+  "files": [
+    {
+      "path": "Plans/Jujutsu_Integration.md",
+      "frozen_sha256": "5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418",
+      "current_sha256": "5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418",
+      "unchanged": true
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "frozen_sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "current_sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "unchanged": true
+    },
+    {
+      "path": "Plans/jujutsu_integration_contract_fixtures.json",
+      "frozen_sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff",
+      "current_sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff",
+      "unchanged": true
+    },
+    {
+      "path": "Plans/jujutsu_integration_contracts.schema.json",
+      "frozen_sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "current_sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "unchanged": true
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "frozen_sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada",
+      "current_sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada",
+      "unchanged": true
+    }
+  ],
+  "correction_passages": [
+    {
+      "finding_id": "F001",
+      "path": "Plans/Source_Control_System.md",
+      "line_start": 127,
+      "line_end": 131,
+      "quote": "  Every source-control mutation requires one current writer lease with repository/workspace/backend, holder,\n  generation, epoch, expiry and reconciliation state; one expected native revision; Permissions and FileSafe\n  decisions; and one idempotent command instance. HTTPS and SSH credentials are brokered as expiring,\n  revocable, operation- or GoalRun-scoped leases. Async work uses ObservableWork and every terminal attempt\n  emits a typed operation receipt even when the effect is unknown or recovery is required. The nineteen",
+      "sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "current_quote_unchanged": true
+    },
+    {
+      "finding_id": "F001",
+      "path": "Plans/jujutsu_integration_contracts.schema.json",
+      "line_start": 1861,
+      "line_end": 1869,
+      "quote": "        \"receipt_ref\": {\n          \"oneOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/non_secret_ref\"\n            }\n          ]",
+      "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "current_quote_unchanged": true
+    },
+    {
+      "finding_id": "F001",
+      "path": "Plans/jujutsu_integration_contracts.schema.json",
+      "line_start": 1998,
+      "line_end": 2000,
+      "quote": "              \"outcome\": {\n                \"const\": \"succeeded\"\n              },",
+      "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "current_quote_unchanged": true
+    },
+    {
+      "finding_id": "F001",
+      "path": "Plans/jujutsu_integration_contracts.schema.json",
+      "line_start": 2040,
+      "line_end": 2042,
+      "quote": "              \"receipt_ref\": {\n                \"$ref\": \"#/$defs/non_secret_ref\"\n              }",
+      "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "current_quote_unchanged": true
+    }
+  ]
+}

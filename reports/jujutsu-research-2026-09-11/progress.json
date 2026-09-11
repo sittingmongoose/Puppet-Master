@@ -1,8 +1,8 @@
 {
-  "at": "2026-09-11T15:01:44.783768+00:00",
-  "status": "d3_complete_independently_reviewed_and_published",
+  "at": "2026-09-11T15:28:31.779282+00:00",
+  "status": "d4_verified_branch_bundle_pending_serialized_main_landing",
   "checkpoint_reached": false,
-  "non_arm_observed_api_equivalent_usd": 144.541896,
+  "non_arm_observed_api_equivalent_usd": 159.710216,
   "non_arm_cap_usd": 180,
   "operational_reserve_usd": 5,
   "reserve_is_not_spend": true,
@@ -12,10 +12,10 @@
   "d1": "complete_pushed",
   "d2": "complete_partial_campaigns_frozen_pushed",
   "d3": "complete_independent_review_passed_comparison_published",
-  "d4": "pending_ledger_compile_and_landing_of_one_evaluator_derived_correction",
-  "d5": "pending_answers_after_d4",
+  "d4": "one_correction_compiled_independently_reviewed_verified_and_packet_published_pending_main_landing",
+  "d5": "pending_Jared_answers_fresh_worktree_required",
   "budget_extension": "d3-prepared/allowance-extension.json",
-  "accounting_snapshot_captured_at": "2026-09-11T15:01:44.466121+00:00",
+  "accounting_snapshot_captured_at": "2026-09-11T15:29:21.781492+00:00",
   "adjudication": {
     "documents": 206,
     "extraction_keys": 404,
@@ -23,5 +23,12 @@
     "decision_cards": 44,
     "evaluator_derived_corrections": 1,
     "direct_arm_credit_for_evaluator_correction": 0
+  },
+  "checkpoint_receipt_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/checkpoint-receipt.json",
+  "checkpoint_state_basis": "This is a prelanding publication; use live origin/main ancestry and the completed external receipt for final arrival.",
+  "governance_status": "fail_11_of_32_checks; ledger_fail_3_existing_coverage_omissions",
+  "accounting_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/prelanding-accounting.json",
+    "sha256": "30007d4f5145f13974f987c5d846ccd63a56104b6605448cadcbecdf1121b700"
   }
 }

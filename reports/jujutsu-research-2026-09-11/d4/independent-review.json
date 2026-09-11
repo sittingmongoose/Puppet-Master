@@ -1,0 +1,147 @@
+{
+  "verdict": "PASS",
+  "blocking_findings": [],
+  "scope": "Independent D4 F001 correction review: installed precompile source ledger, exact proposed three-file patch, and prospective compile transition. No adoption of optional decision packet.",
+  "subjects": {
+    "patch_sha256": "fead89665b8f9938956baf995788250c53a49c2982ccc702d52eb547b8fed383",
+    "ledger_transition_script_sha256": "09049c1970616f2fbdafcc70f8926150892a6b95e74f0efc2b05e42de91fa0fb",
+    "proposed_outputs": {
+      "Plans/Jujutsu_Integration.md": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+      "Plans/jujutsu_integration_contracts.schema.json": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+      "Plans/jujutsu_integration_contract_fixtures.json": "3f48e76d23f12c829d60b543f3772457754dfd9afac57c7059d574a955b75da5"
+    },
+    "precompile_current_outputs": {
+      "Plans/Jujutsu_Integration.md": "5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418",
+      "Plans/jujutsu_integration_contracts.schema.json": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "Plans/jujutsu_integration_contract_fixtures.json": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff"
+    },
+    "installed_ledger_files": {
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/events.jsonl": "02276a8f10f8e9be093abaca659eae2de55cd7096e1a1d34955fe702372d2698",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/manifest.json": "584dd3b1ff21f8c8b307bdd016e894ff2e5c149a8ceb0de9b70bdd47f817018b",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/blockers.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/corrections.jsonl": "dae1dfd25506909914699c5c22e693d5d24424bca831671c61150a29dfe435d7",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/decisions.jsonl": "ac6dd3b64a28ca59e45eab50292e13f9a8cc1e574a6dcaa07c554884332b31b6",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/design_atoms.jsonl": "37d444e6c7ca5272de0c8f27a62816a654758c5523d948a7278625123351cd66",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/records/questions.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/authorization.md": "603b48116f61674c1d17ac8f8cba712725da8c7da37f74cb62fc5ff1a512ba31",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/findings.md": "b522fb221b961afaeea668d278dd91281375f8a95848ad3918bf7b74092ad440",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/compile_queue.json": "65aa094025f41a1b264ce9d484a5f8cdcc5ef0f9e5eb4c77d5d30b66dfc31936",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/current.json": "b4239cfac53721878065e4f4540b8673810ef2f27e3f09f042b978d0a49b09b0",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/handoff.json": "a9403d9b7b4c889e2618f724f185963c5f5c07602a1463a11f8d6f69b76aab4c",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/open_items.json": "f12515c0416ffac4ea19d15e676270bd91dd5fcb16cc14d00a4431782f8fb0c6",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/operating_capsule.json": "c8eadf3e9ea269a0a6259516e6cc8d59cc7ba3fd7489fce24d86319c75873de9",
+      "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/validation/ledger_health.json": "7dfff40589422574683c384c352f6435e3d4d24701106391ac4d000ade8c8997"
+    },
+    "installed_registry_sha256": "3b34f15da2b2c7c8dc78a1d569df1b2c01d35cbc8f87c7ccecdf54480ca0fa19",
+    "proposal_artifacts": {
+      "artifact-hashes.json": "6d9971be45be0c8c392c918294f97720c976689f6334edff63e3eeb378ee01e9",
+      "currentness.json": "76b73f852897568456ce428523715db7802fcbe2e2b937e0d069d5fcbdaecfa4",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/events.jsonl": "02276a8f10f8e9be093abaca659eae2de55cd7096e1a1d34955fe702372d2698",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/manifest.json": "584dd3b1ff21f8c8b307bdd016e894ff2e5c149a8ceb0de9b70bdd47f817018b",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/records/blockers.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/records/corrections.jsonl": "dae1dfd25506909914699c5c22e693d5d24424bca831671c61150a29dfe435d7",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/records/decisions.jsonl": "405bb7cb89908d3b8fc7bbc8dda7ff486a79b956e1107cb8e21f446abcf955a5",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/records/design_atoms.jsonl": "7c75c5a7d6e7d5a930eecdcaaa35c0ad8a9ac9b48ae13c54bd70cf81003feec1",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/records/questions.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/source_shards/authorization.md": "603b48116f61674c1d17ac8f8cba712725da8c7da37f74cb62fc5ff1a512ba31",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/source_shards/findings.md": "b522fb221b961afaeea668d278dd91281375f8a95848ad3918bf7b74092ad440",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/state/compile_queue.json": "65aa094025f41a1b264ce9d484a5f8cdcc5ef0f9e5eb4c77d5d30b66dfc31936",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/state/current.json": "b4239cfac53721878065e4f4540b8673810ef2f27e3f09f042b978d0a49b09b0",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/state/handoff.json": "a9403d9b7b4c889e2618f724f185963c5f5c07602a1463a11f8d6f69b76aab4c",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/state/open_items.json": "f12515c0416ffac4ea19d15e676270bd91dd5fcb16cc14d00a4431782f8fb0c6",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/state/operating_capsule.json": "c8eadf3e9ea269a0a6259516e6cc8d59cc7ba3fd7489fce24d86319c75873de9",
+      "ledger/pldg-20260911-001-jujutsu-receipt-correction/validation/ledger_health.json": "7dfff40589422574683c384c352f6435e3d4d24701106391ac4d000ade8c8997",
+      "ledger-validation.json": "fa5b8893ccf6f5571173a81fb55c4ba0a002c7ff4a918ea5e4adb35754f0c0f2",
+      "prepare.py": "a38c832df9819bd2f56ced979e07bf23c5c06266b994a66ff6acbec624244b10",
+      "proposal.md": "1c6a7a98f44fcca0f25f7240009a87adcf020b347ffc1bbde989a288e7d18703",
+      "proposed.patch": "fead89665b8f9938956baf995788250c53a49c2982ccc702d52eb547b8fed383",
+      "registry-entry.json": "56b9a4df8bf0df8dd50f21ed07bf2e7502eec3451cefafecf2145cf0ef7c9f1e",
+      "validate.py": "c69851ceccec77d19899ed80c0e25ee863ff3b86618e0dce73dd3996668581b9",
+      "validation.json": "7d1883dc30d2f0d07c54290f8686da53c0dc3da4949a63950c6660b81141da96"
+    },
+    "independent_evidence": {
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/checks.json": "296aff24d6a3900369a4174ad582d99310c651324eeb92638fc6a292d5f2d000",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/installed-ledger-validation.json": "fa5b8893ccf6f5571173a81fb55c4ba0a002c7ff4a918ea5e4adb35754f0c0f2",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/transition-checks.json": "3619d9cc516cc84e73dda6e9a83c3352e068ef6e2fd81d44b68e032516aa6096",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/check.py": "16758bde77da615bc24a5170e115594b3ebcfb7e3c8b7bf4040d8c6d877752ec",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/transition_check.py": "9c8b4460f316b5d7b3bed727882f3190aadbceb723eaae7ea97b0c745cd59c1b"
+    }
+  },
+  "checks": {
+    "valid": 48,
+    "invalid": 65,
+    "prior_valid_preserved": 41,
+    "prior_invalid_preserved": 58,
+    "terminal_counterexamples": [
+      {
+        "case": "terminal_succeeded_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      },
+      {
+        "case": "terminal_blocked_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      },
+      {
+        "case": "terminal_failed_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      },
+      {
+        "case": "terminal_cancelled_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      },
+      {
+        "case": "terminal_recovery_required_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      },
+      {
+        "case": "terminal_effect_unknown_rejects_null_receipt",
+        "old_accepts": true,
+        "new_error_paths": [
+          [
+            "receipt_ref"
+          ]
+        ]
+      }
+    ],
+    "missing_receipt_rejected_all_six": true,
+    "availability_and_error_definitions_unchanged": true,
+    "currentness_and_artifact_hashes_match": true
+  },
+  "ledger_review": {
+    "installed_state": "ready_for_plan_compile; canonical patch not yet applied; independent unmodified repository ledger validator passed",
+    "lineage": "SCS-003 existing every-terminal-attempt promise consumed by JJI-003; one evaluator-derived constraint and standing correction authorization; source summary is explicitly attributed, not a fabricated user quotation; JJI-003 reciprocal source_lineage present in proposed output",
+    "scope_boundaries": "No new owner, feature, command, native identity or native oplog requirement. accepted ObservableWork, effect_unknown null after_revision/error/reconciliation, and preattempt error/availability semantics preserved. All 44 optional decisions excluded. No governance changes in reviewed patch.",
+    "transition": "Executed original revised script with globals rebound into external copy; all compile projections and registry agree, with validation explicitly pending. Exact patch/script guards reviewed.",
+    "resolved_finding": "Coordinator revised compiled() to advance open_items.remaining_work and updated_at_utc; verified in external dry-run."
+  },
+  "limitations": [
+    "This PASS does not attest actual canonical application, postcompile ledger validation, regenerated shards/index, full governance gates, runtime behavior or landing.",
+    "Parent reports baseline full gates failed before correction. No full-gate pass is claimed.",
+    "Final coordinator must run postcompile checks and truthfully advance validation/landing projections after those checks."
+  ]
+}

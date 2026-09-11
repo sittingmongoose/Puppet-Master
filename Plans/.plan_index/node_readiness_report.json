@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T14:35:50Z",
+  "generated_at_utc": "2026-09-11T15:21:20Z",
   "gui_related_units": {
     "count": 3105,
     "units": [
@@ -18084,8 +18084,8 @@
         "source_location": {
           "heading": "JJI-004 - Colocated Repository Mutation Authority And Git Fencing",
           "heading_level": 3,
-          "heading_line": 145,
-          "line": 147,
+          "heading_line": 146,
+          "line": 148,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18095,8 +18095,8 @@
         "source_location": {
           "heading": "JJI-005 - Undo, Operation Restore, Conflicts, FileSafe, And Recovery",
           "heading_level": 3,
-          "heading_line": 180,
-          "line": 182,
+          "heading_line": 181,
+          "line": 183,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18106,8 +18106,8 @@
         "source_location": {
           "heading": "JJI-006 - JJ Setup, GUI Projection, Compatibility, And Migration",
           "heading_level": 3,
-          "heading_line": 212,
-          "line": 214,
+          "heading_line": 213,
+          "line": 215,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18117,8 +18117,8 @@
         "source_location": {
           "heading": "JJI-007 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 390,
-          "line": 392,
+          "heading_line": 391,
+          "line": 393,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18128,8 +18128,8 @@
         "source_location": {
           "heading": "JJI-008 - Complete JJ Backup Closure Across Layouts And Safe Restore Handoff",
           "heading_level": 3,
-          "heading_line": 441,
-          "line": 443,
+          "heading_line": 442,
+          "line": 444,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -38153,6 +38153,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Jujutsu_Integration.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
