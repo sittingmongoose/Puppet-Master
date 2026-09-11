@@ -1,0 +1,119 @@
+{
+  "at": "2026-09-11T15:28:31.779282+00:00",
+  "status": "PASS_SCOPED_WITH_EXPLICIT_GOVERNANCE_FAILURES",
+  "correction": "F001",
+  "compiled_plan_unit": "JJI-003",
+  "canonical_outputs": {
+    "Plans/Jujutsu_Integration.md": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+    "Plans/jujutsu_integration_contracts.schema.json": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+    "Plans/jujutsu_integration_contract_fixtures.json": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/pm-worktrees/jujutsu-20260911/reports/jujutsu-research-2026-09-11/d4/independent-review.json",
+    "sha256": "1ebf7fd232f13c2c6fadeb9f0fdf1c94229c8cf7f7c98f6f3e2aba579c9f1e28",
+    "bytes": 10931
+  },
+  "independent_fixture_amendment": {
+    "path": "/home/sittingmongoose/pm-worktrees/jujutsu-20260911/reports/jujutsu-research-2026-09-11/d4/fixture-identity-amendment.json",
+    "sha256": "38a5bc30f7829f0089199e5a073df56ca2c474a47d2d5e161e4c5d6ce50e9b26",
+    "bytes": 1564
+  },
+  "independent_governance_assessment": {
+    "path": "/home/sittingmongoose/pm-worktrees/jujutsu-20260911/reports/jujutsu-research-2026-09-11/d4/postcompile-assessment.json",
+    "sha256": "6bbaf82620a6870baafcbeee5ed2f676c9ab0b69d32e4531bfbe7a51d826e84c",
+    "bytes": 6003
+  },
+  "scoped_contracts": {
+    "status": "pass",
+    "counts": {
+      "contract_pairs": 24,
+      "expansion_alias_records_checked": 36,
+      "expansion_alias_records_valid": 36,
+      "expansion_command_records_checked": 264,
+      "expansion_command_records_valid": 264,
+      "expansion_fixture_packs": 1,
+      "expansion_local_records_checked": 28,
+      "expansion_local_records_valid": 28,
+      "expansion_metaschemas_valid": 1,
+      "expansion_negative_records_checked": 21,
+      "expansion_negative_records_rejected": 21,
+      "internal_self_tests": 12,
+      "internal_self_tests_passed": 12,
+      "metaschemas_valid": 24,
+      "negative_cases": 3116,
+      "negative_cases_rejected": 3116,
+      "owner_compat_command_records_checked": 240,
+      "owner_compat_command_records_valid": 240,
+      "owner_local_records_checked": 28,
+      "owner_local_records_valid": 28,
+      "positive_cases": 930,
+      "positive_cases_valid": 930
+    },
+    "evidence": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/scoped-contracts-final.json",
+      "sha256": "1d80ec0918905699b81a9fab2427fb7fa9026f543271478f49365473e7607e7e",
+      "bytes": 4533
+    }
+  },
+  "jj_specific_cases": {
+    "positive": 48,
+    "negative": 65,
+    "prior_positive_preserved": 41,
+    "prior_negative_preserved": 58,
+    "terminal_old_accepts_new_rejects_counterexamples": 6
+  },
+  "configured_shards": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2159,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "plan_index": {
+    "failures": [],
+    "generated_at_utc": "2026-09-11T15:22:33Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 24523,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6435
+    }
+  },
+  "ledger_validator": {
+    "errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+    ],
+    "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+    "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+    "status": "fail",
+    "summary": {
+      "atoms": 1,
+      "compile_queue_items": 1,
+      "corrections": 1,
+      "decisions": 1,
+      "events": 3,
+      "plan_units_checked": 8,
+      "questions": 0
+    },
+    "warnings": []
+  },
+  "governance_checks": {
+    "status": "fail",
+    "total": 32,
+    "failed": 11
+  },
+  "optional_packet": {
+    "cards": 44,
+    "optional_findings": 35,
+    "product_choice_findings": 6,
+    "adopted": 0,
+    "sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767"
+  },
+  "landing": "Pending serialized main ancestry, configured shard check, both pushes and worktree removal; completed external checkpoint receipt is authoritative for arrival.",
+  "checkpoint_receipt_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/checkpoint-receipt.json",
+  "no_runtime_or_governance_seal_claim": true
+}

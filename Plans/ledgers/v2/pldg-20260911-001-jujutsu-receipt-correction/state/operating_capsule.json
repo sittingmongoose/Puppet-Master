@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+  "updated_at_utc": "2026-09-11T15:25:58.336505+00:00",
+  "authority": "Live Plans are canon; this ledger is source lineage only.",
+  "scope": "Require non_secret_ref receipt_ref on all six terminal outcomes of an established Jujutsu command_result attempt, preserving accepted work and unknown-after revision semantics.",
+  "negative_constraints": [
+    "Do not change accepted work, command_availability or pre-attempt command_error_record semantics.",
+    "Do not invent native before/after identities or require native oplog publication.",
+    "Do not decide any of the 44 optional packet questions.",
+    "No command, feature, version choice, EventRecord, native implementation, WorkNode, NodeSeed, governance seal, Spec_Lock, evidence, readiness, plan_graph or auto_decisions changes."
+  ],
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/source_shards/findings.md"
+  ],
+  "next_action": "Verify that this bundle is reachable from origin/main and its external landing receipt is complete; then await Jared's packet answers. The designated Plans agent owns deferred governance coverage and resealing."
+}

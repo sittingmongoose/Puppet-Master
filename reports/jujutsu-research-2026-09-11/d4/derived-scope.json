@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-11T15:24:32.071136+00:00",
+  "status": "PASS",
+  "comparison_base": "d43371611e6a30edb604de9d8e1ea4d6995387a8",
+  "changed_derived_files": [
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "sha256": "2f232a0293880d2d6d5af7ce9c2bf16788bb09fdcb5732d4e39d9728d46ce720",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "sha256": "76a19f4b04aaad7f50c2a0d4204e1889e47e1c6f0222fd6c0bcc35bfe8e8c5d6",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "sha256": "b45b98bed5ffeec52a9c7b3c7b478b1b0a42dc5862dd7ba49c21ed82195f7ac1",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "sha256": "d02fdb30553e9114aeabe4e4dc2997a19821b4608a68b2c45622059a1db1748b",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "sha256": "1b884ac0c10159ee10415e8ff45e340a951bb462261e0792cc1cbaf640e40402",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "sha256": "5c3504ab9cc48f1fac57c9ae00ed123e4e49e12383cf27233843af4ddaab9d2b",
+      "only_edited_owner_or_generated_timestamp_changed": true
+    }
+  ],
+  "unrelated_owner_changes": [],
+  "shard_changes": [],
+  "shard_limitation": "Existing configured sources omit Jujutsu_Integration.md; generator and check ran unchanged, but do not prove a Jujutsu shard exists.",
+  "audit_input_recovery": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/existing-audit-inputs/manifest.json",
+  "claim_boundary": "Generated index projections only. Runtime readiness remains blocked; no governance seal or evidence refresh."
+}

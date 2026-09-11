@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+  "updated_at_utc": "2026-09-11T15:25:58.336505+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 3,
+    "design_atoms": 1,
+    "decisions": 1,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 1
+  },
+  "notes": "Static compile integrity passes; the full ledger validator fails existing governance coverage. No seal, runtime certification, or readiness admission.",
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md']"
+  ]
+}

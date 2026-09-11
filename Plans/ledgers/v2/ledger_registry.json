@@ -116,6 +116,23 @@
         "UIW-021",
         "WM-052"
       ]
+    },
+    {
+      "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+      "title": "Jujutsu terminal receipt correction",
+      "status": "compiled",
+      "phase": "compiled_jujutsu_receipt_correction",
+      "created_at_utc": "2026-09-11T15:07:42.092991+00:00",
+      "last_updated_at_utc": "2026-09-11T15:25:58.336505+00:00",
+      "last_event_id": "evt-003",
+      "canonical_plan_targets": [
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260911-001-jujutsu-receipt-correction/state/handoff.json",
+      "notes": "F001 compiled with independent review. Static contracts/index/configured shards pass; ledger validation fails pre-existing governance coverage. Await packet answers once origin/main ancestry and external landing receipt are verified. No packet disposition or seal.",
+      "compiled_owner_docs": [
+        "Plans/Jujutsu_Integration.md"
+      ]
     }
   ],
   "paused_ledgers": [],

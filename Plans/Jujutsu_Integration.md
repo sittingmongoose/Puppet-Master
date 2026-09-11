@@ -125,6 +125,7 @@ acceptance_criteria:
   - Each primary JJ command has one schema-valid request path and one rejected negative fixture; request/result/error/availability/disabled-reason shapes are closed without per-command object duplication.
   - Each primary JJ command still requires exactly one future native handler and explicit central registration; schema validity does not prove either.
   - cmd.jj.* aliases normalize before policy and receive no separate handler or receipt.
+  - Every established command_result attempt with outcome succeeded, blocked, failed, cancelled, recovery_required, or effect_unknown references a typed operation receipt through non_secret_ref; accepted work still requires ObservableWork and may have a null receipt_ref.
   - Effect-unknown or stale-operation results block automatic retry.
   - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
@@ -136,7 +137,7 @@ reasoning_tier: high
 context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01]
+source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001]
 preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
@@ -300,7 +301,7 @@ JJ receipts extend the common operation receipt with adapter-owned facts referen
 
 The command request enum is exactly the 31 IDs in §3.1. Family-level conditionals require change, bookmark, workspace, operation, transport, or repository targets without repeating 31 object definitions. Reads and navigation carry no writer, credential, FileSafe, confirmation, or interop authority. Mutations require a current catalog, writer lease, FileSafe decision, permission snapshot, exact expected Jujutsu revision, and target identity. Transport requires a bounded credential lease. Destructive/recovery operations require target-bound confirmation. `git.import` and `git.export` additionally require the exact certified-adapter/live-probe gate, `implicit_reconciliation_allowed=false`, and `fallback_mutation=none`; a blocked capability is represented by typed availability/result records and cannot validate as a dispatch-admitted request.
 
-Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork`; successful mutation requires an after revision and receipt ref; `effect_unknown` requires a typed error, null after revision, and `after_reconciliation` retry disposition. Clone results additionally preserve the admitted currentness fence and exact caller return context. Availability uses a closed disabled-reason vocabulary and allowed recovery command IDs. No schema field assigns a persisted event, event family, native handler symbol, direct subprocess, or runtime certification. Those remain central Event Authority, command-owner, adapter, persistence, and evidence work.
+Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork` and may retain a null `receipt_ref`. Every established `command_result` attempt with terminal outcome `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, or `effect_unknown` requires a `receipt_ref` satisfying the existing `non_secret_ref` contract. This obligation does not apply to `command_availability` or pre-attempt `command_error_record` rejection, whose nullable command identity remains unchanged. The common receipt preserves attempt evidence independently of native operation-log publication; it does not require a new native operation or invent before/after native identities. Successful mutation still requires an after revision; `effect_unknown` requires a typed error, null after revision, and `after_reconciliation` retry disposition. Clone results additionally preserve the admitted currentness fence and exact caller return context. Availability uses a closed disabled-reason vocabulary and allowed recovery command IDs. No schema field assigns a persisted event, event family, native handler symbol, direct subprocess, or runtime certification. Those remain central Event Authority, command-owner, adapter, persistence, and evidence work.
 
 ## 4. Integration Surfaces
 

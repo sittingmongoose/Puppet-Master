@@ -1,0 +1,107 @@
+{
+  "at": "2026-09-11T15:28:31.779282+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/proposal/proposed.patch",
+      "sha256": "fead89665b8f9938956baf995788250c53a49c2982ccc702d52eb547b8fed383",
+      "bytes": 21646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/proposal/validation.json",
+      "sha256": "7d1883dc30d2f0d07c54290f8686da53c0dc3da4949a63950c6660b81141da96",
+      "bytes": 16018
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/proposal/artifact-hashes.json",
+      "sha256": "6d9971be45be0c8c392c918294f97720c976689f6334edff63e3eeb378ee01e9",
+      "bytes": 544
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/ledger_transition.py",
+      "sha256": "09049c1970616f2fbdafcc70f8926150892a6b95e74f0efc2b05e42de91fa0fb",
+      "bytes": 7803
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/finalize_ledger.py",
+      "sha256": "7fa19414c3492c3d5d1235879deefe3902bb4c8e49ba82d65940eabee4619149",
+      "bytes": 5190
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/verify_derived_scope.py",
+      "sha256": "b38ed358b6386838cf696de9c0477e5a66459c158d4459278517f3610a618a9b",
+      "bytes": 3023
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/currentness-before-edit.json",
+      "sha256": "69fd3bc494411a66e10afed4456fab01bdab47dad559a864b17a84836b73a218",
+      "bytes": 3807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/derived-scope.json",
+      "sha256": "3e070a6c1bfbf8e9b9873e6558ef13e08933d7f0b385ca9a96e3f4f86d62f417",
+      "bytes": 1924
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/existing-audit-inputs/manifest.json",
+      "sha256": "162f549a4fa0f5581856e21529d7d59f56399a97532904dd5b27c1c79dbb1149",
+      "bytes": 6804
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/baseline-governance.json",
+      "sha256": "fe95bcf379c160f7d80f1d6b9b64243ef5856c058a5455004bfe91976629d8c6",
+      "bytes": 145392
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/post-governance.json",
+      "sha256": "b98652f9c86bda6600af2797dbe0649b0a313f19c67cbaace1cff0b1d08341f8",
+      "bytes": 141962
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/scoped-contracts.json",
+      "sha256": "01867c17c692dc419c22141a786025b3f337d4269b2b71b2e73aa9659435f715",
+      "bytes": 5417
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/scoped-contracts-final.json",
+      "sha256": "1d80ec0918905699b81a9fab2427fb7fa9026f543271478f49365473e7607e7e",
+      "bytes": 4533
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/shard-check.json",
+      "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872",
+      "bytes": 111
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/index-validate-final.json",
+      "sha256": "703b78bb7c3f3d2b0ec4b155e692d9377cb2bf44da57d56b82f22c42189740f3",
+      "bytes": 328
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/ledger-final.json",
+      "sha256": "83f12e200463c93092fe4810f1f1422849c45a2c1258d28e55d2c34a7b443fec",
+      "bytes": 662
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/review.json",
+      "sha256": "1ebf7fd232f13c2c6fadeb9f0fdf1c94229c8cf7f7c98f6f3e2aba579c9f1e28",
+      "bytes": 10931
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/postcompile-assessment.json",
+      "sha256": "6bbaf82620a6870baafcbeee5ed2f676c9ab0b69d32e4531bfbe7a51d826e84c",
+      "bytes": 6003
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/independent-review/fixture-identity-amendment.json",
+      "sha256": "38a5bc30f7829f0089199e5a073df56ca2c474a47d2d5e161e4c5d6ce50e9b26",
+      "bytes": 1564
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/publish_report.py",
+      "sha256": "8ffa7311bda76d26861e663ea41e4b8313266f5d70647caaabce892348ab2131",
+      "bytes": 10488
+    }
+  ],
+  "raw_evidence_retained_outside_repository": true,
+  "checkpoint_receipt": "Written externally only after successful main push and worktree cleanup; its final path and SHA-256 are reported at the checkpoint."
+}

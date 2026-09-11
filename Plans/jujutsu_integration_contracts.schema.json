@@ -1902,6 +1902,32 @@
             "properties": {
               "outcome": {
                 "enum": [
+                  "succeeded",
+                  "blocked",
+                  "failed",
+                  "cancelled",
+                  "recovery_required",
+                  "effect_unknown"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "receipt_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
                   "accepted",
                   "succeeded"
                 ]
