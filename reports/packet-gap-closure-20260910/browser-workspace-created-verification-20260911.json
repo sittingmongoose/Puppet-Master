@@ -1,0 +1,406 @@
+{
+  "schema_id": "pm.browser_single_family_verification.v1",
+  "report_id": "BROWSER-WORKSPACE-CREATED-VERIFICATION-20260911",
+  "event_type": "browser.workspace.created",
+  "status": "single_family_static_contract_verified_with_explicit_open_governance",
+  "tested_source_commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
+  "integrated_main": "7beae1203d6cecbd6c7ae03fd23e291227eccca1",
+  "preparation_commit": "844635c26a6d03d9fec1b5df9f343eb25559fc12",
+  "source_base_commit": "99c03d502a742421c57c66ab0e8e5b7d6649f064",
+  "scope": "One Storage-owned Browser event admission and its independently defined derived checkpoint. No other Browser family, canonical Browser owner-record family, native capability, formal packet closure or governance clearance is admitted.",
+  "root_review_ref": "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json",
+  "root_final_review": {
+    "decision": "approve_exact_single_family_landing",
+    "owner_refs": [
+      "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+      "Plans/storage-plan.md#SP-266",
+      "Plans/Decision_Log.md#DL-046"
+    ],
+    "currentness": "The pre-admission owner, schema, helper and test bytes are unchanged after rebase; only the reviewed row-local admission transition and exact central row were subsequently applied. The final source snapshot is clean and the root reviewed final membership and preservation results.",
+    "independent_product_gates": "No unresolved new feature, integration, retention/deletion-policy or competing-owner choice was identified for the exact workspace-created contract. This is the bounded technical-definition permission, not a substitute for independent Event Authority/currentness or native certification.",
+    "rebase": "Rebased onto 7beae1203d. Upstream f23c165 DL-044/UIW-004 vocabulary, validator, test, two Forge production rows and Touch changes are preserved. Later upstream additions are unrelated Jujutsu reports. The only conflicts were generated PlanUnit indexes, regenerated from combined canonical sources.",
+    "no_governance_bypass": "Frozen 40-event/88-storage readiness expectations and all governance receipts remain untouched. Their failures continue to block corresponding readiness/currentness claims; this landing records static per-family authority only."
+  },
+  "preservation": {
+    "original_40_event_rows_unchanged": true,
+    "central_event_rows": 41,
+    "only_appended_event": "browser.workspace.created",
+    "original_89_storage_rows_unchanged": true,
+    "storage_family_count": 90,
+    "only_appended_storage_family": "browser_workspace_created_index_checkpoint",
+    "retention_policies_unchanged": 24,
+    "other_52_browser_rows_unchanged": true,
+    "existing_payload_schemas_and_fixtures_unchanged": true,
+    "command_event_bindings_unchanged": 15,
+    "production_wiring": "No Browser wiring mutation. Final production wiring matches upstream f23c165 exactly; its two Forge null-vocabulary checks are unrelated to Browser admission.",
+    "derived_outputs": "Only the edited Section15, Storage and storage-value-registry shard families change relative to integrated main, plus the six regenerated PlanUnit-index outputs.",
+    "preserved_boundaries": [
+      "Concepts",
+      "Spec_Lock",
+      "auto_decisions",
+      "frozen evidence",
+      "plan graph",
+      "readiness artifacts",
+      "historical audit results"
+    ]
+  },
+  "browser": {
+    "admission_complete": false,
+    "admitted_scoped_event_families": 1,
+    "claim_boundary": "Pass means prepared-contract and exact admitted-subset consistency, not completion of pending family admission, root review, native execution, currentness or seal.",
+    "command_event_bindings_checked": 15,
+    "failures": [],
+    "global_event_denominator": "UNKNOWN_OPEN",
+    "governance_sealed": false,
+    "negative_cases": 576,
+    "positive_cases": 53,
+    "preexisting_family_rows_unchanged": true,
+    "prepared_scoped_event_families": 52,
+    "registry_family_count": 41,
+    "required_event_families": 53,
+    "runtime_producer_proven": false,
+    "schema_id": "pm.browser_event_admission_report.v1",
+    "single_family_authority_reports": [
+      {
+        "checkpoint_negative_cases": 18,
+        "checkpoint_positive_cases": 2,
+        "claim_boundary": "Synthetic schema, resolved-value join and checkpoint-model checks only; no authenticated producer, resolved Storage bytes, native durability, admission, runtime, currentness or seal proof.",
+        "creation_negative_cases": 34,
+        "creation_positive_cases": 1,
+        "failures": [],
+        "native_proof": false,
+        "schema_id": "pm.browser_workspace_created_static_report.v1",
+        "status": "pass"
+      }
+    ],
+    "status": "pass"
+  },
+  "unit_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tests -p test_pm*.py -v",
+    "discovered_tests": 510,
+    "tests_run": 510,
+    "passes": 501,
+    "failures": 0,
+    "errors": 9,
+    "skips": 0,
+    "exit_code": 1,
+    "elapsed_seconds": 271.2602576770005,
+    "runner_reported_seconds": 269.762,
+    "head_before": "69553720f1c55528ed423a8c723bc97ec9cc4281",
+    "head_after": "69553720f1c55528ed423a8c723bc97ec9cc4281",
+    "python_files_before": 301,
+    "python_files_after": 301,
+    "python_hash_changes": {},
+    "json_hash_changes": {},
+    "inventory_scope": "301 tracked Python and 4402 tracked JSON entries inventoried before/after, with no hash changes. This is the recorded inventory scope, not a claim of native source-byte resolution.",
+    "error_cause": "All nine errors are per-test Pnc019CurrentnessTests.setUp FileNotFoundError for the absent historical Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json. No assertion failures, skipped tests, fabricated receipt or currentness bypass.",
+    "claim_boundary": "Static unit tests only. Full tracebacks and individual test identities remain in the external execution summary."
+  },
+  "standard_gates": {
+    "status": "fail",
+    "generated_at_utc": "2026-09-11T19:48:28Z",
+    "passed": 25,
+    "total": 36,
+    "failure_counts": [
+      {
+        "check": "json_syntax",
+        "failures": 1,
+        "prior_failures": 1
+      },
+      {
+        "check": "lint_contractrefs",
+        "failures": 1,
+        "prior_failures": 1
+      },
+      {
+        "check": "lint_path_refs",
+        "failures": 10,
+        "prior_failures": 15
+      },
+      {
+        "check": "validate_audit_closure",
+        "failures": 201,
+        "prior_failures": 201
+      },
+      {
+        "check": "validate_audit_status_index",
+        "failures": 1,
+        "prior_failures": 1
+      },
+      {
+        "check": "validate_evidence",
+        "failures": 1448,
+        "prior_failures": 1448
+      },
+      {
+        "check": "validate_implementation_readiness",
+        "failures": 38,
+        "prior_failures": 35
+      },
+      {
+        "check": "validate_plan_graph",
+        "failures": 1448,
+        "prior_failures": 1449
+      },
+      {
+        "check": "validate_plan_migration",
+        "failures": 180,
+        "prior_failures": 180
+      },
+      {
+        "check": "validate_pm7_gui_fixtures",
+        "failures": 1,
+        "prior_failures": 1
+      },
+      {
+        "check": "verify_spec_lock",
+        "failures": 26,
+        "prior_failures": 26
+      }
+    ],
+    "command": "python3 scripts/pm-plans-verify.py run-gates",
+    "prior_comparison": "Prepared integration ab42/b092 source verification, retained in the external prior run-gates receipt.",
+    "delta_adjudication": [
+      "Readiness failures rise from 35 to 38: two changed-event-checkpoint approval failures and the frozen 40-versus-41 kernel-count mismatch. Existing storage count/status failures now observe 90 families and 68 materialized rows; existing legacy fixture revision/currentness and self-test failures remain.",
+      "Path-reference failures drop from 15 to 10 because this worktree has tracked AGENTS.md; remaining references are pre-existing missing test, PM7 and scratch paths. No new SMPFS-167/SP-266 reference failure.",
+      "Plan-graph failure count is 1448 versus 1449 in the prior retained run. This is not graph certification; all frozen evidence/graph/index/readiness/Spec Lock failures remain open.",
+      "Missing raw-capture schema, prior audit reference, PM7 motion fixture, migration and historical closure/status evidence remain unresolved. No governance artifacts were repaired or restamped."
+    ]
+  },
+  "shards": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2208,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "plan_index": {
+    "failures": [],
+    "generated_at_utc": "2026-09-11T19:44:40Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 25014,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6521
+    }
+  },
+  "census": {
+    "claim_boundary": "Read-only source census, not a review freeze, execution result, or implementation verdict.",
+    "dimension_count": 13,
+    "implementation_verdict": "not_run",
+    "manifest_schema": "pm.integration_packet_audit_manifest.v2",
+    "packet_case_count": 5057,
+    "schema_id": "pm.integration_packet_audit_census_inspection.v1",
+    "source_census_failures": [],
+    "source_census_valid": true,
+    "spec_sha256": "ba3d6e4e8f57c50c1d6ac04d76d1b771fdfa5e35fbbbac3899e2327349064cc5",
+    "total_case_count": 13416,
+    "touch_case_count": 8359,
+    "touch_row_count": 643,
+    "touch_source_sha256": "f0aa478f081ed86005d4818466cdce879a658f98ec4f0abcd61df5e18a158e05"
+  },
+  "touch_closure": {
+    "status": "pass",
+    "rows": 643,
+    "profiles": 133,
+    "disposition_counts": {
+      "blocked": 1,
+      "partial": 642
+    },
+    "open_residual_count": 643,
+    "action_kind_counts": {
+      "command": 466,
+      "command_alias": 65,
+      "presentation": 7,
+      "ui_action": 105
+    },
+    "actionable_primary_commands": 465,
+    "with_one_handler_identity": 465,
+    "with_production_wiring": 465,
+    "handler_status_counts": {
+      "absent": 2,
+      "specified": 641
+    },
+    "wiring_status_counts": {
+      "absent": 2,
+      "concept_simulated": 97,
+      "specified": 544
+    },
+    "whole_production_wiring": {
+      "placements": 1142,
+      "unique_commands": 1078,
+      "inside_actionable_touch": 465,
+      "outside_actionable_touch": 613,
+      "both_request_result_refs": 400,
+      "missing_one_or_both": 742
+    },
+    "claim_boundary": "Structural routing and source census only. Named handlers, schema references and declared production placements do not establish native implementation or reverse GUI behavior."
+  },
+  "source_pins": [
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "522aeec49afa52ccfc3331e84437298993ec9ddbabf18739e558737a3d2fb76a"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "68a38a9652d4ee69fabebb4b4254f75398447ed2dd17347178e677ad9ba7a7b2"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3"
+    },
+    {
+      "path": "Plans/browser_workspace_created_contracts.schema.json",
+      "sha256": "0be9ff6f77fba79156d65afa6c73bf2055c103a651f0237dd289f5d765ee0409"
+    },
+    {
+      "path": "Plans/browser_workspace_created_contract_fixtures.json",
+      "sha256": "be14d9e4c52443300b63665af50187edeca8138d5ef228ce14d9acf7567f7e8a"
+    },
+    {
+      "path": "Plans/browser_event_admission.json",
+      "sha256": "81be15614ffdca75dbe3ccd85b243139e9bbbea63d7ab0b5e4a5ae1a900c5f6c"
+    },
+    {
+      "path": "Plans/browser_event_admission.schema.json",
+      "sha256": "c6896b57a9dad5ab205d647bbbf4d69e29cfe094b33deea17408ba36db6b7cb1"
+    },
+    {
+      "path": "Plans/browser_event_payloads.schema.json",
+      "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "6fd73e9787d7e8fc0c676cb1414836e5ed74dae8a2bdcf606f33cf3030c095cb"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "da9860b26f3630c50de41c6e84fcd56c12feaa537de64b44bf05c26ef6b79b70"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "f0aa478f081ed86005d4818466cdce879a658f98ec4f0abcd61df5e18a158e05"
+    },
+    {
+      "path": "scripts/pm_browser_workspace_created.py",
+      "sha256": "f27da85961cde0b1955fd77133abb0cb2278579f9bc8b14157a031fba2fb9c9c"
+    },
+    {
+      "path": "scripts/pm-browser-event-admission.py",
+      "sha256": "d28a7170403dfbedfbec57537641d7fee09ee05def97550a151ec3d1f521bf59"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "18f750d3b732a70a2726be29d4a6e0213e83bfb7e63c6205da48579a6158c054"
+    },
+    {
+      "path": "tests/test_pm_browser_workspace_created.py",
+      "sha256": "4591b7be1a65898c098ef1e1c129ce27eadb28fa1e6a6d31cc84023f251d33b4"
+    },
+    {
+      "path": "tests/test_pm_browser_event_admission.py",
+      "sha256": "4df6ab89d5bf374a0b862a0c539945c7ff9724f1aff159a2d0d9a437af7387b1"
+    },
+    {
+      "path": "tests/test_pm_onboarding_phases.py",
+      "sha256": "1c5742bf326e2cb08a08a1949708e3cbab7775c4ecab2d27e79fa0b5f31cf46f"
+    },
+    {
+      "path": "tests/test_pm_wiring_vocabulary.py",
+      "sha256": "12f503dcee2b2f48069489e0a99b4c661a59aae6bd3e322dc9801bc9e70a28a0"
+    },
+    {
+      "path": "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json",
+      "sha256": "64e4df8292b7663b97e45fa8c0a16dae1524408c3d3fcaf8996af9f98dce1696"
+    }
+  ],
+  "external_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/run-gates.json",
+      "sha256": "80170e438c43cfd8a82e5184eaf75dbe021890126b2d9b2b3494f1618ff2da79"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/census.json",
+      "sha256": "25567c44ea032f7e5b9a3d81ba373969abc42fe241e278e265df658b3f05b924"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/index-validation.json",
+      "sha256": "7d2f053d96e58598af4d35cc4d089f05a56cbe3247b5962d175998a94af9e5dd"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/shard-check.json",
+      "sha256": "018171cdedfd597b2e7ad1bac2d97e541f59c20455ef0d492d1612140fec7475"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/touch-closure.json",
+      "sha256": "c12c961c0a38e2184cd3ab434b86dc0bb784e0f09c3942c185d68ce77d4623ed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/browser-admission.json",
+      "sha256": "9dec2661f1590dd93ba54fe5a47a0af591b91b464cb9fdaeed52b687ae1798aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-created-final-20260911-p66NAm/created-contract-fixtures.json",
+      "sha256": "7245ec2c38512ef09f190afbccd3420871c5bf320219a02d49a373953f74a8e7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/execution-summary.json",
+      "sha256": "3261ac6a47980df95988434b96442e26121deff0bfabe4b62ea8c8d2b7f15389"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/stderr.log",
+      "sha256": "0e731b972b4c93f5584730b4522498e177186f8a8fa28c8ec85a0f758dad0e24"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/discovery-inventory.json",
+      "sha256": "afa70c3ad699cc3463785ceff8270c20a6c4c324caaf37409820d4b5783a3fc4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/python-hashes-before.json",
+      "sha256": "8b8a121777cdc05015d76715ba9a054a8552db785d16d86544c984b83e7d5268"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/python-hashes-after.json",
+      "sha256": "8b8a121777cdc05015d76715ba9a054a8552db785d16d86544c984b83e7d5268"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/json-hashes-before.json",
+      "sha256": "c0ccd8196718fb7362328da9c36ac43350ff2f48b1804beacdf9902667eb1ea7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/workspace-created-unittest-20260911-4RXZAUgS/json-hashes-after.json",
+      "sha256": "c0ccd8196718fb7362328da9c36ac43350ff2f48b1804beacdf9902667eb1ea7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-workspace-created-preservation-20260911-dHVhzp/preservation.json",
+      "sha256": "7d327034afa62d5ba20a2ce1bb1d9108541c586255797f5513b3ed1f7645e46f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-20260911-azL5T5/run-gates.json",
+      "sha256": "c4c9950601d9e2b56863cfa94239dd47e3f89ee3997ff8ab1b64dee4f70bd8c3"
+    }
+  ],
+  "remaining_work": [
+    "52 prepared Browser families require separate current searches, owner contracts, semantic checks, root review and individual Storage landings.",
+    "Formal 13416-case packet audit and both correction-reference reviews remain incomplete; the current census is not a reviewed workbook.",
+    "Authenticated native producer, barrier/resource isolation, resolved source bytes, replay/recovery/retention/deletion and durable checkpoint execution remain unproved.",
+    "Global Event Authority denominator/depth, PNC-019, runtime readiness and governance seal remain open."
+  ],
+  "native_proven": false,
+  "formal_packet_audit_complete": false,
+  "governance_sealed": false
+}
