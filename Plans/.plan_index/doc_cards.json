@@ -1720,10 +1720,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 16,
+        "False": 17,
         "True": 32
       },
-      "heading_count": 111,
+      "heading_count": 112,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1768,6 +1768,7 @@
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/testing_session_command_contracts.schema.json",
+        "Plans/testing_session_event_payloads.schema.json",
         "Plans/touch_closure.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Plans/working_notebook_contracts.schema.json",
@@ -1805,9 +1806,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4388,
+      "line_count": 4477,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 48,
+      "plan_unit_count": 49,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1856,7 +1857,8 @@
         "ATS-045",
         "ATS-046",
         "ATS-047",
-        "ATS-048"
+        "ATS-048",
+        "ATS-049"
       ],
       "reasoning_tiers": [
         "high",
@@ -1873,6 +1875,7 @@
         "dropped_packet_acceptance_or_false_execution_claim",
         "dry_method_validation_gap",
         "eval_policy_escape_or_false_proof",
+        "event_authority_and_false_completion",
         "evidence_authority_and_false_completion",
         "false_dap_lifecycle_proof",
         "false_green_home_certification",
@@ -1908,16 +1911,16 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "c5d52e380cd004edfe694b995adfcb2f54e8ae00c21248ac288c6679b0673afb",
+      "sha256": "6851ed233249a29701b1e87bf78da3f44f30389152186072927adc0ffd0fa1dc",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 48
+        "accepted": 49
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
         "acceptance_contract": 3,
         "constraint": 1,
-        "requirement": 21,
+        "requirement": 22,
         "validation_criterion": 23
       },
       "validation_surfaces": [
@@ -2010,6 +2013,7 @@
         "python3 scripts/pm-server-command-gap-verify.py --json",
         "python3 scripts/pm-shared-runtime-command-contracts.py validate",
         "python3 scripts/pm-terminal-command-block-contracts.py",
+        "python3 scripts/pm-testing-session-event-admission.py",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-ui-command-response.py",
@@ -2028,6 +2032,7 @@
         "tests/test_pm_packet_audit_verdicts.py",
         "tests/test_pm_plans_verify_subprocess.py",
         "tests/test_pm_settings_draft_transfer.py static explicit-copy/preview/rebind/exclusion checks only",
+        "tests/test_pm_testing_session_events.py",
         "tests/test_pm_touch_closure_source.py source/action inventory and owner routing checks only",
         "tests/test_pm_working_notebook_contracts.py",
         "verification_pending: fresh exact-T43 Usage pointer live-resize preview and settlement film evidence under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
@@ -17274,7 +17279,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13085,
+      "line_count": 13086,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 162,
       "plan_unit_ids": [
@@ -17506,7 +17511,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "1560e40520743e05097ad9438a9843be64ce147c1853d142601f602c1a82f27c",
+      "sha256": "8284a6915b69ac969ca00e2b73620818e820e0b00edddb3bffd456be606cdd05",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 161,
@@ -18134,7 +18139,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4704,
+      "line_count": 4708,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 56,
       "plan_unit_ids": [
@@ -18226,7 +18231,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "5bed0be4bfcdcb6498bfd183f3d6415f5d0dca8abc6a82d07446f2fb9c24220d",
+      "sha256": "ae7269e1dcd11a02faf9923588d40f44cb51db22e382e6d771a52e843934f91d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 56
@@ -18552,7 +18557,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:18:08Z",
+  "generated_at_utc": "2026-09-11T17:18:36Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18560,13 +18565,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3345,
+      "False": 3346,
       "True": 3121
     },
-    "plan_unit_count": 6466,
+    "plan_unit_count": 6467,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6275,
+      "accepted": 6276,
       "retired": 182,
       "superseded": 9
     },
@@ -18633,7 +18638,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5158,
+      "requirement": 5159,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
