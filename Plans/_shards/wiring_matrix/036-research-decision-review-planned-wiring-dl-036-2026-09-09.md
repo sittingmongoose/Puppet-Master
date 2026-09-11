@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4435-L4684
+Source lines: L4435-L4704
 
-Source SHA256: `c936efafcef535ca405f4c0600cf2ff538c1c0bf4ccb111ce1b20ef7ef96d6e5`
+Source SHA256: `5bed0be4bfcdcb6498bfd183f3d6415f5d0dca8abc6a82d07446f2fb9c24220d`
 
 ---
 
@@ -258,3 +258,23 @@ negative_constraints: [No ambient-token denominator expansion., No fabricated ma
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-040, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/touch_closure.json
+
+### Existing Testing/Recording Typed-Wiring Repair — 2026-09-11
+
+ATS-048 and RAP-056 bind the seven existing Testing/recording consumers to their
+actual command schemas. All eleven placements retain their existing command,
+control identity and sole planned handler, and now carry exact `request_schema_ref`
+and `result_schema_ref`. Availability, disabled reasons, settlement and replay
+consume those owners, not a capture schema that excludes the dispatched ID.
+
+Existing Touch rows `TOUCH-CAP-009` through `TOUCH-CAP-013` move to
+`TCP-TESTING-EVIDENCE`; `TOUCH-CAP-014` and `TOUCH-CAP-015` move to
+`TCP-ARTIFACT-RECORDING`. `TCP-CAPTURE` remains the ten capture-owned IDs.
+The current denominator stays 644 Touch rows and 1,144 production placements;
+the profile count becomes 133 solely because of these two owner splits. All seven
+rows remain `partial`. This correction is not native handler, runtime, visual,
+security, whole-packet audit completion, WorkNode, readiness or governance proof.
+Event obligations remain separate: a typed command binding cannot admit an event,
+and a no-op/replay must not manufacture a second effect.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-004, ContractName:Plans/Commands_System.md

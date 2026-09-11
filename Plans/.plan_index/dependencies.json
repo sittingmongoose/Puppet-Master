@@ -5274,6 +5274,7 @@
     "N2-155",
     "SMPFS-150",
     "SMPFS-154",
+    "ATS-048",
     "TCME-007",
     "W-046",
     "W-054",
@@ -6164,6 +6165,7 @@
     "WN-010",
     "WN-012",
     "WN-020",
+    "RAP-056",
     "OP-029",
     "DR-038",
     "SP-248",
@@ -12203,6 +12205,21 @@
       "edge_type": "depends_on",
       "from": "ATS-047",
       "to": "WM-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-048",
+      "to": "ATS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-048",
+      "to": "ATS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-048",
+      "to": "TCME-004"
     },
     {
       "edge_type": "depends_on",
@@ -48318,6 +48335,21 @@
       "edge_type": "depends_on",
       "from": "RAP-055",
       "to": "WN-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-056",
+      "to": "ATS-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-056",
+      "to": "RAP-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-056",
+      "to": "TCME-004"
     },
     {
       "edge_type": "depends_on",
@@ -93125,7 +93157,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T17:02:52Z",
+  "generated_at_utc": "2026-09-11T17:03:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -105842,6 +105874,23 @@
       },
       "status": "accepted",
       "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "existing_testing_command_integration",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-048",
+      "reasoning_tier": "high",
+      "risk_class": "evidence_authority_and_false_completion",
+      "source_location": {
+        "heading": "ATS-048 — Existing Session and Bundle Command Bindings",
+        "heading_level": 2,
+        "heading_line": 4271,
+        "line": 4330,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -179318,6 +179367,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "existing_artifact_recording_command_integration",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-056",
+      "reasoning_tier": "high",
+      "risk_class": "recording_identity_and_evidence_authority",
+      "source_location": {
+        "heading": "RAP-056 — Existing Recording Playback and Watch Bindings",
+        "heading_level": 2,
+        "heading_line": 2802,
+        "line": 2836,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "remote_access_owner_routing",
       "gui_related": true,
       "owner_doc": "Plans/Remote_Access_System.md",
@@ -194729,8 +194795,8 @@
       "source_location": {
         "heading": "TCME-001 - Generic TestCaptureService Modes Targets And Recovery",
         "heading_level": 3,
-        "heading_line": 237,
-        "line": 239,
+        "heading_line": 239,
+        "line": 241,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194746,8 +194812,8 @@
       "source_location": {
         "heading": "TCME-002 - Capture Clocks Motion Health Privacy And Cadence",
         "heading_level": 3,
-        "heading_line": 266,
-        "line": 268,
+        "heading_line": 268,
+        "line": 270,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194763,8 +194829,8 @@
       "source_location": {
         "heading": "TCME-003 - Immutable Raw Capture And Derivation Provenance",
         "heading_level": 3,
-        "heading_line": 295,
-        "line": 297,
+        "heading_line": 297,
+        "line": 299,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194780,8 +194846,8 @@
       "source_location": {
         "heading": "TCME-004 - Capture Playback Comparison ObservableWork And GUI Projection",
         "heading_level": 3,
-        "heading_line": 324,
-        "line": 326,
+        "heading_line": 326,
+        "line": 328,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194797,8 +194863,8 @@
       "source_location": {
         "heading": "TCME-005 - Capture Security Migration And External Harness Boundary",
         "heading_level": 3,
-        "heading_line": 354,
-        "line": 356,
+        "heading_line": 356,
+        "line": 358,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194814,8 +194880,8 @@
       "source_location": {
         "heading": "TCME-006 - Capture Record-Addressable Schema Identity",
         "heading_level": 3,
-        "heading_line": 383,
-        "line": 385,
+        "heading_line": 385,
+        "line": 387,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194831,8 +194897,8 @@
       "source_location": {
         "heading": "TCME-007 - Consolidated PMConcept7 Motion Evidence And Approval-Gated Cleanup",
         "heading_level": 3,
-        "heading_line": 412,
-        "line": 414,
+        "heading_line": 414,
+        "line": 416,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -194848,8 +194914,8 @@
       "source_location": {
         "heading": "TCME-008 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 473,
-        "line": 475,
+        "heading_line": 475,
+        "line": 477,
         "path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       "status": "accepted",
@@ -203005,10 +203071,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14683,
+    "depends_on_edge_count": 14689,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17331,
-    "node_count": 6463,
+    "edge_count": 17337,
+    "node_count": 6465,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
