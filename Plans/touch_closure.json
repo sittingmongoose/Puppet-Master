@@ -2830,6 +2830,7 @@
       "profile_id": "TCP-PROJECT",
       "requirement_refs": [
         "Plans/Project_System.md#PJCT-002",
+        "Plans/Project_System.md#PJCT-003",
         "Plans/Project_System.md#PJCT-007"
       ],
       "owner_plan": "Plans/Project_System.md",
@@ -2838,8 +2839,8 @@
       "payload_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
       "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "error_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
-      "availability_rule": "Exact Project identity, expected revision, current registry projection, and owner dependency are required. Uncreated drafts fabricate no Project ID; Onboarding commit requires PJCT-007's reviewed binding and once-only owner chain.",
-      "permission_gate": "Project owner plus FileSafe/Storage/forge permissions as applicable; remove is never delete_data.",
+      "availability_rule": "Exact Project identity, expected revision, current registry projection, and owner dependency are required. Uncreated drafts fabricate no Project ID; Onboarding commit requires PJCT-007's reviewed binding and once-only owner chain. Unarchive requires an existing archived Project (already listed is no-change), exact Project/registry fences and current permission; removed/deletion states cannot be restored through this command.",
+      "permission_gate": "Project owner plus FileSafe/Storage/forge permissions as applicable; remove is never delete_data. Unarchive changes only registry lifecycle/update/revision/currentness metadata; no backup, content, topology, or runtime authority.",
       "disabled_reason_rule": "Expose exact stale, missing, permission, hold, owner, or dependency reason.",
       "handler_owner": "Project System sole action handler; native implementation is absent.",
       "handler_status": "specified",
@@ -2847,9 +2848,10 @@
       "production_or_simulation": "Static owner/schema and planned wiring only.",
       "gui_triggers": [
         "Projects list/card/menu, Onboarding first project, Settings project route",
-        "Product Onboarding Review commit after draft/preflight; actual Project result feeds paid/free setup and resume"
+        "Product Onboarding Review commit after draft/preflight; actual Project result feeds paid/free setup and resume",
+        "Projects archived row, K3 Project manager, palette/API; retained ui.project.restore_archived entry constructs cmd.project.unarchive before every gate"
       ],
-      "return_route": "Exact Project route and caller focus. Onboarding consumes its persisted/listed Project and required owner results bound to exact draft/hash; acknowledgement is not commit.",
+      "return_route": "Exact Project route and caller focus. Onboarding consumes its persisted/listed Project and required owner results bound to exact draft/hash; acknowledgement is not commit. Unarchive preserves the exact caller route/focus without opening the Project, and exposes success only after owner persistence/readback.",
       "reverse_consumers": [
         "Plans/Planning_Wizard.md",
         "Plans/Settings_System.md",
@@ -2873,7 +2875,8 @@
       ],
       "test_refs": [
         "Plans/project_system_contract_fixtures.json",
-        "tests/test_pm_onboarding_phases.py"
+        "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_project_unarchive.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
@@ -8044,10 +8047,10 @@
     [
       "TOUCH-PJCT-010",
       "TCP-PROJECT",
-      "ui_action",
-      "ui.project.restore_archived",
+      "command",
+      "cmd.project.unarchive",
       "partial",
-      "Typed local action exists but has no centrally normalized command or native handler."
+      "USER-PROJECT-UNARCHIVE-REGISTRY-20260911: one centrally registered Project-owner registry mutation and typed production-intent route replace the local-only classification. Native permission, persistence/readback, replay/restart and GUI evidence remain absent; no EventRecord is admitted."
     ],
     [
       "TOUCH-NPLAN-001",
@@ -13094,15 +13097,6 @@
         "Plans/Shared_Integration_Runtime.md#SIR-028"
       ],
       "token": "cmd.project.source_location.open_details"
-    },
-    {
-      "classification": "superseded_by_typed_local_ui_action",
-      "reason": "The retained behavior is owned by a typed local UI action and must not become a semantic-domain command, alias, handler, production wiring row, or EventRecord.",
-      "replacement": "ui.project.restore_archived",
-      "source_refs": [
-        "Plans/Project_System.md#PJCT-003"
-      ],
-      "token": "cmd.project.unarchive"
     },
     {
       "classification": "superseded_by_typed_local_ui_action",

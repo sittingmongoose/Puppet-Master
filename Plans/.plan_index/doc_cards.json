@@ -3397,7 +3397,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6299,
+      "line_count": 6300,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 80,
       "plan_unit_ids": [
@@ -3569,7 +3569,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "6e17ce48d8456122190b95a6908b98aac207095e25b1a82c8782ad7be6d6c3da",
+      "sha256": "aaae6093d3552bae526d6b1d8d0b8b8e8ace04ecab7e24a2fdace2aab2ca6cc2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -13437,7 +13437,7 @@
         "False": 1,
         "True": 6
       },
-      "heading_count": 20,
+      "heading_count": 21,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Project_System.md",
@@ -13449,7 +13449,7 @@
         "future Project composition native handlers",
         "future Projects surface"
       ],
-      "line_count": 431,
+      "line_count": 445,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 7,
       "plan_unit_ids": [
@@ -13474,7 +13474,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "42e37191e68e5cc4fec296cf684c8bf9f4e0255297498c55a0fcadc6b36abd7c",
+      "sha256": "fb53b1ce7b6c8e74d53d6a1d4c6f3dfa70a70a72b524307151882fd3d5de6ec3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 7
@@ -13497,7 +13497,9 @@
         "owner-routing negative fixtures",
         "persistence and migration fixtures",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm_project_unarchive_contract.py",
         "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_project_unarchive.py",
         "tests/test_pm_settings_draft_transfer.py"
       ]
     },
@@ -17267,7 +17269,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13059,
+      "line_count": 13060,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 162,
       "plan_unit_ids": [
@@ -17499,7 +17501,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "fb64ddf0ffb7bbeba391657f944bd4864c82fad5a353e44723621a1f4c6d3c8f",
+      "sha256": "eccd9c23d5dc3d7f619e9ba2ac7ecd4940e34d3272b09f3bde46ee7d2b2d72be",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 161,
@@ -17611,7 +17613,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1713,
+      "line_count": 1716,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -17668,7 +17670,7 @@
         "unwired_gui",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "d99b47c5ed93e7148f218743e172c2bce459f1bf91a40b9fe9b4713708c71fee",
+      "sha256": "d37a249e731527c0f5d9fb381b9dc9f27afc1025fd69d2bb53f35456d196e2bb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -18128,7 +18130,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4682,
+      "line_count": 4684,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 56,
       "plan_unit_ids": [
@@ -18220,7 +18222,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "5d52a9929c47e26cc64319b4c05bfc6e587449bdf41ec76aec1ee6921d84e2c7",
+      "sha256": "3de8a251e504b7d7e02ddbbf48f0f27d5c121190bec02aa669675687749c651c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 56
@@ -18546,7 +18548,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:33:12Z",
+  "generated_at_utc": "2026-09-11T17:33:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
