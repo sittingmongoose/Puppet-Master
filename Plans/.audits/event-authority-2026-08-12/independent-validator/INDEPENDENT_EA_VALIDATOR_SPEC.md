@@ -77,6 +77,14 @@ There is no `C:` fallback, working-directory fallback, or candidate-generated re
 
 Exclusion revalidation summary + ledger are also required inputs. Empty ledger fails via row-count mismatch, not as `all_rows_pass`.
 
+## DL-039 holding bucket (receipted, fail closed)
+
+The only authorized validator repair is the DL-039 `quarantined_not_admitted` holding path. Its scope is exactly 26 machine-scan emit candidates plus the 28 non-alias July40 residuals, independently derived and matched to the implementation receipt's exact population. No compaction, August, J248 or alias member may enter through this permission. The owner sheet contains exactly the original eight IDs above; the invented ninth answer is invalid.
+
+`INDIVIDUAL_DISPOSITION_SCHEMA.md` defines the required per-row `holding_authority`, genuine EMIT/J40 answer provenance, `KEEP_QUARANTINED` disposition, and retained evidence-object hash. `reports/event-authority-20260911/step-03-holding-bucket-receipt.json` binds the live DL-039 section, implementation, cohort and machine-scan bytes and identifies the actual author/lander task forbidden to apply the seal. Receipt flags never authorize closure. Existing forged rows fail until explicitly reapplied with genuine row provenance; missing/malformed authority or receipt, unauthorized population, registry/denominator overlap, changed retained evidence or invalid disposition all produce `holding_bucket_invalid`. This and `owner_decision_sheet_exact_eight_required` block denominator, depth and overall pass. Diagnostic receipt input pins include the new change receipt and Decision Log source.
+
+Holding recognizes a non-admitted classification only. It preserves contract evidence gaps and all existing depth, census, freeze and seal checks. The implementation receipt's evidence hashes preserve history, not evidence correctness. This Step 3 repair neither applies rows nor changes frozen hashes, historical validator receipts, registration, readiness or a seal.
+
 ## August checkpoint drafts (fail closed)
 
 `august-checkpoint-drafts/AUGUST_CHECKPOINT_DRAFTS.jsonl` is a required input (`required_paths.august_checkpoint_drafts`). Missing file, empty ledger, or absence of either expected August event (`workspace.layout_changed`, `terminal.workgroup_moved`) is an explicit failure (`august_checkpoint_drafts_missing` / `august_checkpoint_drafts_empty` / `august_checkpoint_events_missing`) **before** veto-status evaluation. `august_checkpoint_decisions_applied` is true only when both expected events are present and none remain `PENDING`. Deleting the artifact must not fail open.

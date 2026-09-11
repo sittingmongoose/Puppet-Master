@@ -64,6 +64,157 @@ AUTH_GITHUB = {
 COMPACTION_COMPLETED = "context.compaction.completed"
 
 
+HOLDING_RECEIPT = "reports/event-authority-20260911/step-03-holding-bucket-receipt.json"
+HOLDING_AUTHOR = "/root/step03_holding_bucket"
+HOLDING_AUTHORITY = "Plans/Decision_Log.md#DL-039"
+HOLDING_DECISIONS = {
+    "EMIT-PERSIST-026": "ACCEPT_EMIT_OBLIGATION_ONLY",
+    "J40-VETO-BATCH": "CONFIRM_UNRESOLVED_NO_ADMIT",
+}
+OWNER_DECISION_IDS = {
+    "AUG-CP-WLC-001", "AUG-CP-TWM-001", "EXCL-OD-done_budget_exceeded",
+    "EXCL-OD-stop_identical_failure", "EMIT-PERSIST-026", "J248-VETO-BATCH-252",
+    "J40-VETO-BATCH", "COMPACT-001",
+}
+
+
+def holding_authority_bytes(path: Path) -> bytes:
+    """Pin only the canonical DL-039 body, not unrelated Decision Log edits."""
+    raw = path.read_bytes()
+    start = raw.index(b"### DL-039: Event Authority owner decisions")
+    body_start = raw.index(b"\n", start) + 1
+    next_heading = re.search(rb"(?m)^#{1,3} ", raw[body_start:])
+    end = body_start + next_heading.start() if next_heading else len(raw)
+    section = raw[start:end]
+    required = (
+        b"Close path for the 54 leftover rows (26 emit-only plus 28 unresolved)",
+        b"`quarantined_not_admitted`", b"fail-closed",
+        b"receipt by someone other than the seal applier",
+        b"the forged 2026-08-12 responses confer nothing",
+    )
+    if not all(token in section for token in required):
+        raise ValueError("DL-039 holding authority missing or changed")
+    return section
+
+
+def holding_evidence_digest(evidence) -> str:
+    return hashlib.sha256(json.dumps(evidence, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def holding_timestamp(value):
+    if not isinstance(value, str):
+        raise ValueError("timestamp must be a string")
+    stamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if stamp.tzinfo is None:
+        raise ValueError("timestamp requires timezone")
+    return stamp
+
+
+def validate_holding_bucket(cohort, machine_scan, alias_types, decisions, ledger, live_set, denom):
+    """DL-039's narrow holding permission; never an admission/depth authority.
+
+    Receipt and row provenance are required even for rows rebucketed by the voided
+    August application. The receipt records implementation, not a closure result.
+    """
+    issues = []
+    expected = set()
+    authority_ok = False
+    try:
+        ids = [d.get("decision_id") for d in decisions]
+        if len(ids) != 8 or set(ids) != OWNER_DECISION_IDS:
+            raise ValueError("owner sheet must contain exactly the eight genuine IDs")
+        sheet = {d["decision_id"]: d for d in decisions}
+        for did, token in HOLDING_DECISIONS.items():
+            decision = sheet[did]
+            response = decision["owner_response"]
+            if (not isinstance(response, dict)
+                    or response.get("chosen_option") not in decision["options"]
+                    or option_token(response.get("chosen_option")) != token
+                    or response.get("decided_by") != "Jared"
+                    or response.get("source") != "jared_chat_2026-09-10"
+                    or holding_timestamp(response.get("recorded_at_utc"))
+                    < datetime(2026, 9, 10, tzinfo=timezone.utc)):
+                raise ValueError("genuine holding decision provenance required: " + did)
+        j40 = set(cohort["cohorts"]["july40_unresolved"]["event_types"])
+        aliases = set(alias_types)
+        emit = {x["event_type"] for x in machine_scan.get("false_rejects_restored", [])}
+        emit |= set(machine_scan.get("triple_bound_missing_from_census_ledger", []))
+        emit |= set(machine_scan.get("emit_candidates_total", []))
+        residual = j40 - aliases
+        expected = residual | emit
+        if (len(j40) != 40 or len(aliases) != 12 or not aliases <= j40
+                or len(residual) != 28 or len(emit) != 26 or len(expected) != 54):
+            raise ValueError("holding scope must be the disjoint 26 emit plus 28 J40 residuals")
+        receipt_path = REPO / HOLDING_RECEIPT
+        receipt = load_json(receipt_path)
+        section_hash = hashlib.sha256(holding_authority_bytes(ROOT / "Decision_Log.md")).hexdigest()
+        if (receipt.get("schema_id") != "pm.assurance.event_authority.holding_bucket_change.v1"
+                or receipt.get("authority_ref") != HOLDING_AUTHORITY
+                or receipt.get("authority_section_sha256") != section_hash
+                or receipt.get("owner_responses") != {did: sheet[did]["owner_response"] for did in HOLDING_DECISIONS}
+                or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+                or receipt.get("author_task") != HOLDING_AUTHOR
+                or receipt.get("lander_task") != HOLDING_AUTHOR
+                or receipt.get("seal_applier_forbidden_task") != HOLDING_AUTHOR
+                or receipt.get("seal_authorized") is not False
+                or receipt.get("admission_authorized") is not False
+                or receipt.get("contract_depth_complete") is not False):
+            raise ValueError("holding implementation receipt identity, authority or hash mismatch")
+        members = receipt.get("members")
+        if (not isinstance(members, dict) or set(members) != expected
+                or receipt.get("cohort_pins_sha256") != sha256_file(COHORT)
+                or receipt.get("machine_scan_sha256") != sha256_file(CENSUS / "admission" / "MACHINE_CONTRACT_EVENT_BINDING_SCAN.json")
+                or any(not isinstance(v, dict)
+                       or v.get("decision_id") != ("EMIT-PERSIST-026" if et in emit else "J40-VETO-BATCH")
+                       or not re.fullmatch(r"[0-9a-f]{64}", str(v.get("retained_evidence_sha256", "")))
+                       for et, v in members.items())):
+            raise ValueError("holding receipt exact population or retained evidence pins mismatch")
+        receipt_hash = sha256_file(receipt_path)
+        authority_ok = True
+        holding_rows = [r for r in ledger if r.get("bucket") == "quarantined_not_admitted"
+                        or r.get("working_bucket") == "quarantined_not_admitted"]
+        row_types = [r.get("event_type") for r in holding_rows]
+        if len(row_types) != len(set(row_types)) or set(row_types) != expected:
+            issues.append("holding row population is not exactly the authorized 54")
+        admitted = denom.get("admitted_persisted_event_families", {}).get("event_types")
+        if admitted is None:
+            admitted = []  # The existing denominator checks reject an unspecified admitted set.
+        if not isinstance(admitted, list) or not all(isinstance(et, str) for et in admitted):
+            raise ValueError("malformed admitted denominator holding-membership input")
+        if expected & (set(live_set) | set(admitted)):
+            issues.append("authorized holding population overlaps registry or admitted denominator")
+        for row in holding_rows:
+            et = row.get("event_type")
+            if et not in expected:
+                issues.append(str(et) + ": unauthorized holding member")
+                continue
+            authority = row.get("holding_authority")
+            member = members[et]
+            response = sheet[member["decision_id"]]["owner_response"]
+            if (row.get("bucket") != "quarantined_not_admitted"
+                    or row.get("working_bucket", "quarantined_not_admitted") != "quarantined_not_admitted"
+                    or row.get("disposition") != "KEEP_QUARANTINED"
+                    or row.get("bulk_registration") is not False
+                    or not isinstance(row.get("disposition_rationale"), str)
+                    or "DL-039" not in row["disposition_rationale"]
+                    or "UNRESOLVED-54-CLOSE-PATH" in row["disposition_rationale"]
+                    or not isinstance(authority, dict)
+                    or authority.get("authority_ref") != HOLDING_AUTHORITY
+                    or authority.get("decision_id") != member["decision_id"]
+                    or authority.get("owner_response") != response
+                    or authority.get("implementation_receipt") != HOLDING_RECEIPT
+                    or authority.get("implementation_receipt_sha256") != receipt_hash):
+                issues.append(et + ": holding disposition or genuine row authority missing/malformed")
+                continue
+            if holding_timestamp(authority.get("applied_at_utc")) < holding_timestamp(response["recorded_at_utc"]):
+                issues.append(et + ": holding application predates genuine answer")
+            if holding_evidence_digest(row.get("evidence")) != member["retained_evidence_sha256"]:
+                issues.append(et + ": holding classification changed retained evidence")
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        issues.append("holding authority/receipt invalid: " + str(exc))
+    return authority_ok, expected, issues
+
+
 def option_token(opt) -> str | None:
     """Normalize a sheet option into its stable identifier token.
 
@@ -151,10 +302,6 @@ def derive_independent_partition(
     quarantined_not_admitted: set[str] = set()
     if qna_close:
         quarantined_not_admitted = (j40 - alias) | emit_candidates
-        if compact_not_admitted:
-            quarantined_not_admitted = quarantined_not_admitted | {COMPACTION_COMPLETED}
-        if august_reclassified:
-            quarantined_not_admitted = quarantined_not_admitted | aug
         unresolved = set()
     if compact_not_admitted:
         persisted_unregistered_quarantine = (j248 | AUTH_GITHUB) - {COMPACTION_COMPLETED}
@@ -280,13 +427,8 @@ def main() -> int:
     compact_not_admitted = (
         decision_chosen_token(flag_decisions, "COMPACT-001") == "KEEP_UNREGISTERED_NO_PERSIST"
     )
-    qna_close = (
-        decision_chosen_token(flag_decisions, "UNRESOLVED-54-CLOSE-PATH")
-        == "NEW_NON_ADMITTED_QUARANTINE_BUCKET"
-    )
     named["august_reclassified"] = august_reclassified
     named["compact_not_admitted"] = compact_not_admitted
-    named["qna_close"] = qna_close
 
     live_august = live_set - set(known37)
     expected_august = set() if august_reclassified else set(AUGUST)
@@ -359,6 +501,14 @@ def main() -> int:
         for r in ledger
         if r.get("bucket") == "alias" and r.get("disposition") == "RECLASSIFY_ALIAS"
     }
+    qna_close, holding_expected, holding_issues = validate_holding_bucket(
+        cohort, machine_scan, alias_types, flag_decisions, ledger, live_set, denom,
+    )
+    named["qna_close"] = qna_close
+    named["holding_bucket_valid"] = qna_close and not holding_issues
+    named["holding_bucket_authorized_count"] = len(holding_expected)
+    if holding_issues:
+        failures.append({"error": "holding_bucket_invalid", "issues": holding_issues})
     independent_partition = derive_independent_partition(
         cohort,
         rejected_doc,
@@ -839,7 +989,6 @@ def main() -> int:
             "J248-VETO-BATCH-252",
             "J40-VETO-BATCH",
             "COMPACT-001",
-            "UNRESOLVED-54-CLOSE-PATH",
         }
 
         # Pin expected option-token sets for required IDs to prevent sheet corruption.
@@ -852,13 +1001,10 @@ def main() -> int:
             "COMPACT-001": {"KEEP_UNREGISTERED_NO_PERSIST", "ESCALATE_AS_PERSISTED_FAMILY", "RECLASSIFY_UNRESOLVED_PENDING_AUTHORITY"},
             "J248-VETO-BATCH-252": {"CONFIRM_ALL_QUARANTINE_NO_ADMIT", "ESCALATE_SUBSET_FOR_REGISTRY_ADMIT", "PER_ROW_REVIEW_REQUIRED"},
             "J40-VETO-BATCH": {"CONFIRM_UNRESOLVED_NO_ADMIT", "ESCALATE_SUBSET", "PER_ROW_REVIEW"},
-            "UNRESOLVED-54-CLOSE-PATH": {
-                "NEW_NON_ADMITTED_QUARANTINE_BUCKET",
-                "VALIDATOR_TREAT_QUARANTINED_UNRESOLVED_AS_CLOSED",
-                "MOVE_54_INTO_CPU_QUARANTINE",
-                "PER_ROW_SPLIT_54",
-            },
         }
+
+        if len(decisions) != 8 or {d.get("decision_id") for d in decisions} != required_decision_ids:
+            failures.append({"error": "owner_decision_sheet_exact_eight_required"})
 
         # Fail if any required decision_id appears more than once.
         id_counts = Counter(d.get("decision_id") for d in decisions if d.get("decision_id"))
@@ -1212,6 +1358,8 @@ def main() -> int:
 
     # --- Compute flags from results (not hardcoded) ---
     denominator_blocking = {
+        "holding_bucket_invalid",
+        "owner_decision_sheet_exact_eight_required",
         "fresh_census_denominator_not_closed",
         "fresh_denominator_closed_but_empty_event_types",
         "ledger_admitted_persisted_families_set_mismatch",
@@ -1333,6 +1481,8 @@ def main() -> int:
         "by_disposition": dict(Counter(r.get("disposition") for r in ledger)),
     }
     pins = {
+        "holding_bucket_change_receipt_sha256": sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None,
+        "holding_authority_source_sha256": sha256_file(ROOT / "Decision_Log.md") if (ROOT / "Decision_Log.md").exists() else None,
         "known37_sha256": sha256_file(K37),
         "cohort_pins_sha256": sha256_file(COHORT),
         "denominator_sha256": sha256_file(DENOM),

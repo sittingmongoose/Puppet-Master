@@ -33,7 +33,13 @@ Exactly one `bucket` per row. Valid values:
 | `alias` | `RECLASSIFY_ALIAS` compatibility tokens. **Remains valid.** Not admitted. Not unresolved. |
 | `quarantined_not_admitted` | Owner-closed non-admitted quarantine. **Not admitted.** **Not unresolved.** Not a live-registry admit. Not a denominator admit. |
 
-`quarantined_not_admitted` is authorized by owner decision **`UNRESOLVED-54-CLOSE-PATH`** option `NEW_NON_ADMITTED_QUARANTINE_BUCKET`. Expected disposition is **`KEEP_QUARANTINED`**. It does not reopen `unresolved`, does not fold into `alias`, and does not admit to the registry or the admitted persisted-event-family denominator.
+`quarantined_not_admitted` is authorized only by **`Plans/Decision_Log.md` DL-039**, for the exact 54 leftover rows: 26 emit-only candidates under genuine `EMIT-PERSIST-026 = ACCEPT_EMIT_OBLIGATION_ONLY` and 28 J40 residuals under genuine `J40-VETO-BATCH = CONFIRM_UNRESOLVED_NO_ADMIT`. Expected disposition is **`KEEP_QUARANTINED`**. The invented ninth sheet decision confers no authority; the owner sheet must contain exactly its original eight IDs. Compaction, August registered families, J248 rows and aliases are outside this holding permission. Holding is outside both the live registry and the admitted persisted-event-family denominator.
+
+The independently derived population must equal the 54 members pinned in `reports/event-authority-20260911/step-03-holding-bucket-receipt.json`. That implementation receipt binds the actual DL-039 section bytes, validator bytes, cohort pins and machine scan, and identifies the distinct author/lander task barred from applying the seal. Missing, malformed or mismatched authority/receipt, population drift, registry/denominator overlap, invalid disposition or forged/missing row provenance fails closed for denominator, depth and overall validation.
+
+Each holding row requires a `holding_authority` object with `authority_ref: "Plans/Decision_Log.md#DL-039"`, its genuine `decision_id`, an exact copy of that decision's `owner_response` pinned in the change receipt (chosen option, Jared attribution, genuine recorded timestamp and source), `implementation_receipt: "reports/event-authority-20260911/step-03-holding-bucket-receipt.json"`, the receipt's SHA-256 in `implementation_receipt_sha256`, and a timezone-qualified `applied_at_utc` no earlier than the genuine answer. `bucket` and any `working_bucket` must agree; `bulk_registration` remains false. The later explicit application step supplies this metadata and replaces forged rationale with a DL-039 citation and no invented ninth-decision token; the global DL-039 permission never validates historical forged row provenance automatically.
+
+The row's retained `evidence` object must match its receipt member's `retained_evidence_sha256`, computed from UTF-8 JSON with sorted keys and compact separators. This preserves existing gaps and history; it does not endorse the evidence's correctness or confer contract depth. Holding does not relax existing evidence checks, declare persistence proof, authorize a seal, or grant PNC-019 closure.
 
 This schema addition does **not** claim contract-depth complete, seal, validator `pass`, or PNC-019.
 
@@ -104,4 +110,4 @@ Row completeness here is per-row evidence completeness. It is **not** contract-d
 
 `testing.capability_policy.updated` and `testing.visibility_policy.updated` enter IndividualDisposition as `bucket: unresolved` emit candidates after false lexical reject correction. Persistence still requires adjudication; no ADMIT.
 
-Owner decision **`UNRESOLVED-54-CLOSE-PATH`** (`NEW_NON_ADMITTED_QUARANTINE_BUCKET`) authorizes moving closed emit/J40 residuals from `unresolved` to `quarantined_not_admitted` with `KEEP_QUARANTINED`. That move is **not** admission and **not** an unresolved residual. `alias` is unchanged.
+DL-039 authorizes the receipted, explicitly applied move of the exact 54 emit/J40 residuals to `quarantined_not_admitted` with `KEEP_QUARANTINED` under the authority and provenance checks above. That holding classification is not admission or persistence proof; retained evidence gaps remain visible. `alias` is unchanged.
