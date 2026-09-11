@@ -329,6 +329,14 @@ def extract_cases(group: dict[str, Any], corpus: SliceCorpus) -> list[dict[str, 
 
 def classify_case(group_id: str, case: dict[str, Any], spec: dict[str, Any]) -> str:
     identifier = case["source_identifier"]
+    # Exact source-backed adaptations outrank broad retirement keywords. A mixed
+    # selected-surface obligation is not retired just because it names the old
+    # competition; the source/spec hashes still require a new review freeze.
+    if identifier in spec.get("adapted_selected_implementation_cases", {}).get(group_id, []):
+        if any(identifier in spec.get(key, {}).get(group_id, [])
+               for key in ("retired_bakeoff_cases", "superseded_cases")):
+            raise AuditError(f"conflicting applicability declarations: {group_id}/{identifier}")
+        return "adapted_selected_implementation"
     if identifier in spec.get("retired_bakeoff_cases", {}).get(group_id, []):
         return "retired_bakeoff_process_only"
     if identifier in spec.get("superseded_cases", {}).get(group_id, []):

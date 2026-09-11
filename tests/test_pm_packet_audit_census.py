@@ -240,6 +240,119 @@ class CensusTests(unittest.TestCase):
                     WORK.merge(directory)
 
 
+class MixedSettingsApplicabilityTests(unittest.TestCase):
+    """Real classification policy with synthetic cases, not corpus/runtime proof."""
+
+    GROUPS = ("settings_base_audit", "settings_cumulative_audit")
+    DESCRIPTIONS = {
+        "line:19": "Run ConceptHub validation and deterministic automated probes for the selected implementation.",
+        "line:25": "Record per-concept blocker/major/minor findings for the selected implementation.",
+    }
+
+    def setUp(self):
+        self.spec = AUDIT.load_json(AUDIT.SPEC_PATH)
+
+    def case(self, identifier, description=None):
+        return {
+            "case_id": identifier, "source_identifier": identifier,
+            "source_ref": "synthetic://settings#" + identifier,
+            "source_line": int(identifier.split(":")[1]),
+            "description": description if description is not None else self.DESCRIPTIONS[identifier],
+            "metadata": {},
+        }
+
+    def manifest(self):
+        manifest = synthetic_manifest()
+        groups = []
+        for group_id in self.GROUPS:
+            group = {"group_id": group_id, "suite": "settings", "extractor": "synthetic",
+                     "source": {"source_sha256": "a" * 64}, "cases": []}
+            for identifier in self.DESCRIPTIONS:
+                case = self.case(identifier)
+                case["applicability"] = AUDIT.classify_case(group_id, case, self.spec)
+                group["cases"].append(case)
+            groups.append(group)
+        manifest["groups"] = groups + [manifest["groups"][-1]]
+        repin(manifest)
+        manifest["applicability_counts"] = {"adapted_selected_implementation": 4, "retained": 4}
+        return manifest
+
+    def test_real_spec_pins_only_two_mixed_lines_in_both_independent_groups(self):
+        self.assertEqual(self.spec["adapted_selected_implementation_cases"],
+                         {group_id: ["line:19", "line:25"] for group_id in self.GROUPS})
+
+    def test_exact_mixed_cases_override_retired_keyword_fallback(self):
+        for group_id in self.GROUPS:
+            for identifier in self.DESCRIPTIONS:
+                with self.subTest(group=group_id, identifier=identifier):
+                    case = self.case(identifier)
+                    self.assertEqual(AUDIT.classify_case(group_id, case, self.spec),
+                                     "adapted_selected_implementation")
+                    without_overrides = copy.deepcopy(self.spec)
+                    without_overrides.pop("adapted_selected_implementation_cases", None)
+                    self.assertEqual(AUDIT.classify_case(group_id, case, without_overrides),
+                                     "retired_bakeoff_process_only")
+
+    def test_override_does_not_spill_to_other_groups_or_lines(self):
+        for identifier in self.DESCRIPTIONS:
+            self.assertEqual(AUDIT.classify_case("settings_seven_designs_audit", self.case(identifier), self.spec),
+                             "retired_bakeoff_process_only")
+        for group_id in self.GROUPS:
+            self.assertEqual(AUDIT.classify_case(group_id, self.case("line:18", "Check concept differentiation."), self.spec),
+                             "retired_bakeoff_process_only")
+            self.assertEqual(AUDIT.classify_case(group_id, self.case("line:20", self.DESCRIPTIONS["line:19"]), self.spec),
+                             "retired_bakeoff_process_only")
+
+    def test_explicit_adaptation_conflicts_fail_closed(self):
+        for group_id in self.GROUPS:
+            for identifier in self.DESCRIPTIONS:
+                for competing_key in ("retired_bakeoff_cases", "superseded_cases"):
+                    with self.subTest(group=group_id, identifier=identifier, competing=competing_key):
+                        conflict = copy.deepcopy(self.spec)
+                        conflict.setdefault(competing_key, {}).setdefault(group_id, []).append(identifier)
+                        with self.assertRaisesRegex(AUDIT.AuditError, "conflicting applicability declarations"):
+                            AUDIT.classify_case(group_id, self.case(identifier), conflict)
+
+    def test_selected_concept_integration_readiness_remains_applicable(self):
+        for group_id in self.GROUPS:
+            case = self.case("line:34", "Verify selected-concept integration-readiness retains validation, deterministic automated probes and actionable findings.")
+            self.assertEqual(AUDIT.classify_case(group_id, case, self.spec), "adapted_selected_implementation")
+
+    def test_fresh_template_keeps_four_mixed_cases_not_run_without_evidence(self):
+        manifest = self.manifest()
+        self.assertEqual(validate_manifest_census(manifest), [])
+        template = AUDIT.build_report_template(manifest)
+        mixed = [case for case in template["case_results"] if case["applicability"] == "adapted_selected_implementation"]
+        self.assertEqual({case["case_ref"] for case in mixed},
+                         {group_id + "/" + identifier for group_id in self.GROUPS for identifier in self.DESCRIPTIONS})
+        self.assertEqual(len(mixed), 4)
+        for case in mixed:
+            self.assertEqual(case["status"], "not_run")
+            self.assertEqual(case["evidence_refs"], [])
+            self.assertEqual(case["findings"], [])
+            self.assertEqual(case["reviewer"], "")
+            self.assertEqual(case["checked_at"], "")
+        self.assertEqual(template["aggregate_verdict"], "not_run")
+        self.assertEqual(template["report_kind"], "template")
+
+    def test_stale_applicability_cannot_be_self_repinned_against_current_source(self):
+        current = self.manifest()
+        for group_id in self.GROUPS:
+            with self.subTest(group=group_id):
+                stale = copy.deepcopy(current)
+                group = next(group for group in stale["groups"] if group["group_id"] == group_id)
+                for case in group["cases"]:
+                    case["applicability"] = "retired_bakeoff_process_only"
+                repin(stale)
+                stale["applicability_counts"] = {
+                    "retired_bakeoff_process_only": 2, "adapted_selected_implementation": 2, "retained": 4,
+                }
+                self.assertEqual(stale["spec_sha256"], current["spec_sha256"])
+                self.assertEqual(validate_manifest_census(stale), [])
+                self.assertIn(group_id + ": case_content_sha256 drift from current source freeze",
+                              validate_source_freeze(stale, current))
+
+
 class MultiCustodyTests(unittest.TestCase):
     """Synthetic custody fixtures, never packet review judgments."""
 

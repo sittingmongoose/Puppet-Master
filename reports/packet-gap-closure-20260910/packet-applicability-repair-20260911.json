@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.packet_applicability_repair.v1",
+  "report_id": "PACKET-APPLICABILITY-REPAIR-20260911",
+  "status": "bounded_tooling_repair_verified_not_packet_completion",
+  "source_base_commit": "f359b6aed30dc38433dec1e3929c09288f8155ca",
+  "cause": "The broad ConceptHub and per-concept blocker keyword retirement rules dropped the retained portions of two mixed obligations in each of two source cohorts. Each source's line 34 explicitly applies the audit to the selected concept.",
+  "source_adjudication": [
+    {
+      "groups": [
+        "settings_base_audit",
+        "settings_cumulative_audit"
+      ],
+      "source_identifier": "line:19",
+      "source_text": "ConceptHub validation and deterministic automated probes.",
+      "disposition": "adapted_selected_implementation",
+      "reason": "Retire only the old competition hub. Deterministic probes for the selected implementation remain required; no probe execution is proved."
+    },
+    {
+      "groups": [
+        "settings_base_audit",
+        "settings_cumulative_audit"
+      ],
+      "source_identifier": "line:25",
+      "source_text": "per-concept blocker/major/minor findings;",
+      "disposition": "adapted_selected_implementation",
+      "reason": "Retire rival comparison, not selected-surface severity reporting under source line 34. No current severity report or reproduced bug is manufactured."
+    }
+  ],
+  "canonical_support": [
+    "Plans/Settings_System.md#SSYS-001",
+    "Plans/Settings_System.md#SSYS-017",
+    "Plans/Automated_Testing_System.md#ATS-045",
+    "Plans/FinalGUISpec.md:35690"
+  ],
+  "repair": "Extraction spec v2.1.0 declares only these exact group/identifier pairs as selected-implementation adaptations. The classifier applies those declarations before broad keyword fallback and rejects conflicts with explicit retired or superseded declarations. No raw packet or canonical product prose changes.",
+  "preservation": {
+    "case_count": 13416,
+    "group_count": 70,
+    "case_identity_sha256": "2dab297c37d850feddd67cb91fd5b0359d4d248b3eba6f01deb8245f6a00086d",
+    "case_identity_unchanged": true,
+    "other_cases": 13412,
+    "other_cases_sha256": "c03e6dc34e8a1e7aa31adda707867d9d7f4b85ee80cc7d4888770e5403dea53a",
+    "other_cases_unchanged": true,
+    "group_sources_sha256": "00318927b3c79b6a21677c406732050ef45afbcb431daaf94a8608878094193b",
+    "group_sources_unchanged": true,
+    "prior_applicability_counts": {
+      "retained": 13320,
+      "retired_bakeoff_process_only": 11,
+      "adapted_selected_implementation": 82,
+      "superseded": 3
+    },
+    "current_applicability_counts": {
+      "retained": 13320,
+      "retired_bakeoff_process_only": 7,
+      "adapted_selected_implementation": 86,
+      "superseded": 3
+    },
+    "old_workbooks_or_judgments_changed": false
+  },
+  "fresh_workbook_boundary": "The four adapted cases now start not_run with empty evidence and reviewer fields. They cannot pass as not_applicable. Existing workbooks remain immutable and stale-source checks remain enforced; a new R5 freeze is required before any explicit result incorporation. The unrelated retirement/adaptation decisions are unchanged, not newly reviewed by this patch.",
+  "verification": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests python3 -B -m unittest test_pm_packet_audit_census test_pm_packet_audit_verdicts -v",
+    "tests_run": 45,
+    "passed": 45,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 0.14,
+    "new_tests": 7,
+    "real_census_valid": true,
+    "shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2208
+    },
+    "full_suite_rerun": false,
+    "standard_governance_rerun": false,
+    "claim_boundary": "Focused synthetic audit-tool tests plus live custody/census preservation, not implementation, native, visual, performance, full-suite, full-governance or completed-review proof."
+  },
+  "source_pins": [
+    {
+      "path": "scripts/pm-integration-packet-audit.py",
+      "sha256": "ccc70f4080b97427ee336cb1b4c7f2383cf9900239b9430437724dbf5b2ff59a"
+    },
+    {
+      "path": "scripts/pm-integration-packet-audit.spec.json",
+      "sha256": "3df34c7498550612c8a4ea79729481e71e3e1078da50fd069970b0f700c52f41"
+    },
+    {
+      "path": "tests/test_pm_packet_audit_census.py",
+      "sha256": "a8e4816b3350747094146e2596139f926321cfdc4f23973d388524e17c0ce286"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "sha256": "e74d9bb2c6e1a7cf73345af91db4dee07b0ac271a3768ebc3921154b97fb53bc"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f"
+    }
+  ],
+  "external_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-applicability-repair-20260911-fx0hZ5/census-comparison.json",
+      "sha256": "5e14b2ee30efb73358238d997a87761f6ac4342fad1ed0c2560640702cfc82dc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-applicability-repair-20260911-fx0hZ5/focused-tests.log",
+      "sha256": "845eb491033032c2ef44482b1acd17cd212a2440fdd2f324c6c9a5b278d8c675"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-applicability-repair-20260911-fx0hZ5/shard-check.json",
+      "sha256": "018171cdedfd597b2e7ad1bac2d97e541f59c20455ef0d492d1612140fec7475"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/slices/PKT-01-pm-settings-seven-new-concepts-bakeoff-2026-08-18/DOC-0015/L000001-L000034.txt",
+      "sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/slices/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/DOC-0084/L000001-L000034.txt",
+      "sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd"
+    }
+  ],
+  "remaining_work": [
+    "New R5 source/workbook freeze",
+    "Explicit current-source revalidation and incorporation of provisional reviews",
+    "All remaining packet/Touch case reviews",
+    "Both independent correction-reference reviews and source-bound suite/aggregate verdicts"
+  ],
+  "formal_packet_audit_complete": false,
+  "native_proven": false,
+  "governance_sealed": false
+}

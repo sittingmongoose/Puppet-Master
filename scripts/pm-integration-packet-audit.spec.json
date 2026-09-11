@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.integration_packet_audit_spec.v2",
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "default_custody_id": "legacy",
   "custody_roots": {
     "legacy": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody",
@@ -474,6 +474,10 @@
       "extractor": "nonempty_prose", "minimum_count": 20, "case_metadata": {"area": "shared"}
     }
   ],
+  "adapted_selected_implementation_cases": {
+    "settings_base_audit": ["line:19", "line:25"],
+    "settings_cumulative_audit": ["line:19", "line:25"]
+  },
   "retired_bakeoff_cases": {
     "onboarding_doctor_requirements": ["SH-001", "SH-002", "SH-003", "TST-001"]
   },
