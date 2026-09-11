@@ -18,7 +18,7 @@ This owner defines shared state machines, identities, fencing, leases, receipts,
 
 | Domain | Canonical owner retained | Shared Integration Runtime role |
 |---|---|---|
-| Project content, Vault content, sync, move, and source-control semantics | `Plans/Project_Sync_and_Backbone.md` and `Plans/WorktreeGitImprovement.md` | Bind execution to canonical topology identities; never become a second content, sync, move, or Git authority. |
+| Project content, Vault content, sync, move, and source-control semantics | `Plans/Project_Sync_and_Backbone.md`, `Plans/Source_Control_System.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/Jujutsu_Integration.md` | Bind execution to canonical topology identities; common source-control semantics remain Source Control, Git/worktree semantics remain WorktreeGitImprovement, and JJ-native semantics remain Jujutsu Integration; never become a second content, sync, move, Git, or Jujutsu authority. The separately owned internal Jujutsu adapter service retains JJI-009 semantics and SCS-018 admission gates while shared lifecycle and ObservableWork remain here. |
 | Provider/model/account/auth policy | `Plans/Models_System.md`, `Plans/Multi-Account.md`, provider-specific plans | Execute approved installation, connection, and admission lifecycles; never select an account or weaken provider policy. |
 | Provider CLI acquisition policy | `Plans/CLI_Bridged_Providers.md`, `Plans/Release_Supply_Chain.md` | Enforce explicit consent and exact-target proofs; never silently acquire a provider CLI. |
 | Prompt construction and compaction policy | `Plans/Prompt_Pipeline.md` | Supply fenced operation, permit, artifact, and conditional-rule mechanics. |

@@ -505,3 +505,814 @@ negative_constraints:
   - Do not add a JJ-private Backup command, handler, event family, manifest, restore coordinator, or automation binding.
   - Do not claim runtime, native, clean-host, security, visual, or readiness evidence from static contracts.
 ```
+
+## DL-043 Accepted Jujutsu Planning Addendum - 2026-09-11
+
+This addendum compiles the specified DL-043 answers as accepted planning requirements. It does not change current command/provider enums, admit typed schema variants, register handlers/events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. Declined dispositions receive no PlanUnits. Cross-owner command, GUI, wiring, Contracts, Permissions/FileSafe and Backup amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/FinalGUISpec.md
+
+### JJI-009 - Private PM Owned Adapter Service
+
+```yaml
+plan_unit_id: JJI-009
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Own a separate internal service. The Jujutsu adapter runs behind a separately owned Puppet Master
+  internal service boundary and the existing Source Control owner routes. Puppet Master owns its engine and diff
+  implementation; neither an embedded third-party source-control library nor a third-party diff library enters this
+  adapter. Included qualified tooling remains subject to existing installation and exact-version certification rather
+  than proving a capability by its presence.
+gui_related: false
+gui_classification_reason: The unit defines owner service, identity, authorization, or native effect semantics.
+depends_on:
+- JJI-001
+- JJI-003
+- JJI-004
+- JJI-007
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- The service accepts only authenticated internal owner requests with the SCS-018 envelope and returns typed results
+  and receipts; consumers do not launch jj themselves. Shared Integration Runtime owns lifecycle/ObservableWork,
+  Source Control owns context and leases, and Permissions/FileSafe retain independent decisions.
+- 'Design default grounded in JJI-001/JJI-007 and SCS-016: scope each service session to one authorized repository
+  and Source Location execution environment, with request correlation and protocol/adapter generation. Process reuse
+  is not a public multi-repository service or new deployment authority.'
+- Service restart, cancellation or lost connection revokes stale session/generation use, preserves admitted command
+  identity and durable attempt evidence, and reconciles any possible effect before retry. Reconnection cannot reacquire
+  mutation authority from a cached request.
+- Protocol qualification covers native semantic parity, bounded requests/results and cancellation, hostile repository
+  configuration, secret redaction and supported tool/profile combinations. Existing central routes stay sole future
+  handlers; service transport is internal implementation planning, not new command/event admission.
+- No external IDE client, public shared source-control service, MCP source-control surface, custom publishing hook
+  runner, alternate agent route, private third-party engine fork, or new runtime implementation is authorized here.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future internal session/auth, crash-after-effect, generation mismatch, tool-version and no-consumer-subprocess
+  fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: private_pm_owned_adapter_service
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d022
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Own a separate internal service
+```
+
+### JJI-010 - Read Only And Earlier State Browsing
+
+```yaml
+plan_unit_id: JJI-010
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: 'Add a supported read-only browsing mode and a clearly labeled earlier-state browsing mode. These
+  are distinct contexts: a physically read-only repository is browsed only through a qualified no-source-write path,
+  while an earlier-state context pins coordinated graph, tree, content and bookmark reads to one exact historical
+  operation/view without restoring it or changing the active workspace.'
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- JJI-006
+- JJI-008
+- SCS-018
+- SCS-017
+unblocks: []
+acceptance_criteria:
+- Read qualification proves no hidden snapshot, operation-head update, migration, reconciliation, index write or
+  Git import/export against the original. If native reading needs writes, use an explicitly owned disposable local
+  scratch index/copy only when its closure and read isolation are proven; otherwise report the exact read limitation.
+- Historical queries bind the selected operation, its repository view, immutable objects, workspace context, capability
+  and projection generation. Historical visibility, bookmarks and graph traversal use that view rather than present-day
+  reachability; missing/pruned objects are unavailable or partial, never silently replaced by current objects.
+- Active workspace state and historical viewed state remain separately identified. Enter, navigate and exit do not
+  restore, undo, change @, materialize old files into the workspace, fetch, or create a checkpoint. Exit returns
+  to a newly validated current view.
+- Mutation actions from historical/read-only context remain disabled unless the user enters a separately authorized
+  current-state workflow with exact targets and fresh preview. Scratch cleanup is tracked and cannot remove source
+  storage; cancellation/GC races retain explicit missing-data or cleanup state.
+- 'Design default grounded in JJI-008: reuse the proven ignore-working-copy/no-hidden-snapshot isolation discipline,
+  not Backup restore or its activation path, for historical reads. Disposable artifacts are not history authority
+  or backup alignment.'
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future locked-mount/no-write, old-view visibility, missing-object, migration-required, scratch-cleanup and historical/current
+  navigation fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: read_only_and_earlier_state_browsing
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d001
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d044
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add a supported read-only browsing mode
+- Add a clearly labeled earlier-state browsing mode
+```
+
+### JJI-011 - Named Checkpoints And Receipt Based History Metadata
+
+```yaml
+plan_unit_id: JJI-011
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add named markers on existing checkpoints, simple action and time filters, and structured descriptions
+  from existing receipts. Markers and descriptions are PM metadata keyed to exact native identities; operation filtering
+  is an Operation Log projection, independent of SourceGraph and Backup history.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- JJI-003
+- SCS-008
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- A marker references the existing Source Control checkpoint identity/generation and exact repository/operation.
+  Label create/rename/remove changes metadata only, never fabricates a native no-op, bookmark, checkpoint or operation.
+  Missing target remains a visible missing-target marker and cannot resolve by name or newest operation.
+- 'Design default grounded in SCS-008: duplicate display names are allowed because stable marker identity, checkpoint
+  identity and generation disambiguate them. Labels are bounded sanitized text; they confer no retention or recovery
+  guarantee and any maintenance impact must disclose affected markers.'
+- Action filters classify structured receipt command/action facts and explicitly retain unknown/external operations
+  as such. Time filters identify their time basis and bounds; an unknown timestamp is not silently assigned now.
+  Active filters, omitted/partial records, stable pagination and clear-filter state remain visible.
+- Descriptions are derived from already authorized secret-free receipt data and exact command/operation correlation.
+  External/unmatched operations retain native descriptions with an unknown correlation indicator; display text cannot
+  become idempotency, authorization or operation identity.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future duplicate-name, missing checkpoint, metadata-race, external operation, unknown-time and filtered-pagination
+  fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: named_checkpoints_and_receipt_based_history_metadata
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d002
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d005
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d006
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add named markers on existing checkpoints
+- Add simple action and time filters
+- Add structured descriptions from existing receipts
+```
+
+### JJI-012 - Verified Group Undo Redo And Selected Operation Reversal
+
+```yaml
+plan_unit_id: JJI-012
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Group display and provide verified group undo; add recent actions and supported redo; add a separately
+  labeled reverse-selected-operation action. Group undo, sequential undo/redo, reversing one selected operation,
+  restoring an old operation view, and backing out a source change remain different semantics and cannot share an
+  ambiguous recovery label.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-005
+- JJI-003
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- A group records an ordered exact set of native operations and their receipts under the originating ObservableWork,
+  including failure/partial completion and before/after boundaries. Group display never promises native atomicity.
+  External/interleaved operations, missing ancestry or incomplete effects prevent group undo until a qualified exact
+  recoverability preview proves what is reversed and what later work remains.
+- Group undo stops after a failed or unknown subeffect, preserves every completed reversal receipt and remaining
+  operation, and requires reconciliation/new preview rather than replaying the whole group. A disconnected or mixed-operation
+  group is not collapsed into restore-to-first-operation.
+- Recent actions use bounded operation/receipt navigation. Redo requires exact supported native state and a qualified
+  inverse/reapplication relationship, rejects divergent intervening work or changed operation head, and remains
+  unavailable when lineage is missing or native semantics are unsupported.
+- Reverse-selected-operation previews the exact selected operation against the current head, affected changes/bookmarks/workspaces
+  and possible conflicts while preserving later work according to the qualified native semantics. Unsupported root/merge
+  targets are rejected explicitly; selecting a root or multi-parent operation never guesses an inverse parent.
+- All recovery applies recheck JJI-005/SCS-018 authorization, FileSafe external effects, confirmation, writer lease
+  and expected operation; receipts prove actual before/after state and remaining conflicts, not merely process exit.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future group interleave, partial undo, branching redo invalidation, root/merge selected target, overlapping later
+  edit, cancellation and restart fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: verified_group_undo_redo_and_selected_operation_reversal
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d003
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d004
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d042
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Group display and provide verified group undo
+- Add recent actions and supported redo
+- Add a separately labeled reverse-selected-operation action
+```
+
+### JJI-013 - Explicit History Storage Maintenance
+
+```yaml
+plan_unit_id: JJI-013
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Diagnose growth and offer explicit maintenance. Size, operation counts, known retained closure and
+  scan completeness are diagnostic facts; they do not authorize an automatic retention policy, prune, snapshot suppression
+  or shrinking history before backup.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-008
+- JJI-005
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- Diagnostics bind repository/layout, observed operation heads, measurement time and completeness; unknown/unreadable
+  stores are unknown rather than zero bytes. Scans have cancellation and resource bounds.
+- Before any maintenance write, show exact supported operation, targeted stores/operations, reachable and retained
+  recovery scope, affected named markers, backup/capture barriers, expected reclaim estimate and its uncertainty.
+  Missing proof of retained object/operation closure blocks maintenance.
+- Acquire the existing JJ writer and JJI-008 GC/prune/rewrite fence coordinated with Backup. Active capture/restore
+  verification or changed head/retention state invalidates the preview; never prune to make a backup fit or declare
+  a remote clone adequate recovery.
+- Apply requires separately explicit authorization, destructive target confirmation and FileSafe scope. Cancellation,
+  partial cleanup and unknown effect retain receipts and remeasurement/reconciliation before further maintenance.
+  No scheduled or implicit maintenance is introduced.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future scan truncation, marker-target retention, shared-store GC race, backup barrier, cancellation and reclaim-estimate
+  fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: explicit_history_storage_maintenance
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d007
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Diagnose growth and offer explicit maintenance
+```
+
+### JJI-014 - Explicit Workspace Adoption Repair And Visibility
+
+```yaml
+plan_unit_id: JJI-014
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add an explicit adoption and repair flow and hide/unhide for inactive workspaces. Adoption verifies
+  existing native workspace/repository identities before registration or repair; hiding changes only PM visibility
+  and never deletes, abandons, unregisters or releases an active workspace.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- JJI-004
+- JJI-006
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- Discovery records native workspace ID, backing repository/store mapping, Source Location/Host/Environment and
+  topology. Existing foreign paths, missing paths, aliases, moved workspaces, duplicate native IDs, colocation and
+  stale snapshot state are explicit findings; a path alone cannot prove adoption.
+- Adoption preview separates PM registration from each native repair, before/after mapping and any file/config effects.
+  A qualified version-specific repair consumes exact leases, Permissions/FileSafe, expected operations and confirmation;
+  identity collision or unsafe configuration blocks rather than renaming, synchronizing or importing automatically.
+- After apply, prove native identity, mapping, snapshot, operation and single mutation authority. Partial registration/repair
+  is receipted as partial/recovery_required and cannot silently become ready. Open/create/switch/remove are not
+  aliases for unadmitted adoption.
+- 'Design default grounded in SCS-002 and JJI-002: visibility metadata keys repository plus stable workspace identity
+  in the existing PM workspace projection. Hide/unhide is idempotent metadata state, requires owner authorization,
+  and remains separate from native repository mutation.'
+- Inactive means no active selection or admitted work/lease relying on it; active/busy hide requests explain the
+  blocker. Hidden workspaces stay discoverable through an explicit hidden-items view, survive refresh without path-based
+  conflation and unhide only the same identity; a missing/deleted workspace remains missing.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future moved path, duplicate ID, unsafe config, partial adoption, colocation race, hide-active and refresh/unhide
+  fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: explicit_workspace_adoption_repair_and_visibility
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d008
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d009
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add an explicit adoption and repair flow
+- Add hide and unhide
+```
+
+### JJI-015 - Managed Rewrite Preview And Apply Lifecycle
+
+```yaml
+plan_unit_id: JJI-015
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add an explicitly managed rewrite preview and apply workflow. A native unpublished rewrite can write
+  objects and is not a read-only dry run. Preview creation, inspection, application and disposal form a fenced owner
+  lifecycle separate from ordinary UI effect previews and from Backup alignment or restore.
+gui_related: false
+gui_classification_reason: The unit defines owner service, identity, authorization, or native effect semantics.
+depends_on:
+- JJI-002
+- JJI-003
+- JJI-004
+- JJI-005
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- Preview creation captures the exact source operation/view, immutable input revisions, workspace snapshot, topology,
+  adapter/profile/configuration and intended semantic rewrite in a durable proposal record before effects. Acquire
+  scoped writer/Permissions/FileSafe authority for storage writes; no admitted read command can launch it.
+- Isolation proves the active operation heads and working copy remain unchanged, prevents unapproved network, hooks,
+  credential helpers or other external effects, and identifies owned temporary objects/artifacts and GC lifetime.
+  If a native feature cannot prove this qualified isolation, capability stays unavailable.
+- Inspection returns bounded typed graph/content/conflict differences referencing the proposal and source fence.
+  Preview receipts distinguish created objects from published repository view changes and show incomplete/unknown
+  state; preview success is not application success.
+- Apply is a separate confirmed admitted mutation using the same proposal and revalidated current input/head/workspace/capability/configuration.
+  Any mismatch invalidates apply and requires recomputation; do not promote a stale preview by merging/rebasing
+  implicitly.
+- Dispose/cancel/restart use recorded proposal custody and effect reconciliation; retain cleanup_required or effect_unknown
+  when deletion/publication cannot be proven. Cleanup cannot delete source-retained objects, cross a capture/GC
+  fence, or undo applied work. No auto-apply after restart or user navigation.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future preview-write authorization, isolation/external-effect negatives, concurrent-head change, GC race, crash
+  before/after publish and cleanup-custody fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: managed_rewrite_preview_and_apply_lifecycle
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d043
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add an explicitly managed rewrite preview and apply workflow
+```
+
+### JJI-016 - Qualified Native Change Editing Semantics
+
+```yaml
+plan_unit_id: JJI-016
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add guided convergence when supported, a duplicate action, a merge action, absorption with preview
+  and a back-out action. Each action needs its own explicit admitted semantic meaning and exact native qualification;
+  existing change.new, squash, rebase or restore requests do not automatically admit the extra behavior.
+gui_related: false
+gui_classification_reason: The unit defines owner service, identity, authorization, or native effect semantics.
+depends_on:
+- JJI-002
+- JJI-003
+- JJI-005
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- Convergence selects exact divergent immutable commits of one stable change ID and shows every selected version,
+  ancestry, resulting identity and conflicts. Ambiguous heuristic choices require explicit selection; unsupported
+  semantics are unavailable and no arbitrary version wins.
+- Duplicate binds exact source immutable commit and destination parents, previews descendant behavior and conflicts,
+  and proves a new independent change ID in its result; no retained shared identity or silent descendant rewrite
+  is allowed.
+- Merge binds the exact ordered selected parent set and previews the resulting multi-parent change, parent/ancestor
+  redundancy and conflicts. Duplicate, missing or invalid parents and forbidden cycles are rejected under qualified
+  native rules; no Git merge alias is introduced.
+- Absorption captures the exact dirty snapshot and candidate earlier immutable changes, previews every hunk-to-destination
+  assignment and rewritten descendant set, and leaves ambiguous/unassigned edits explicit and unabsorbed unless
+  separately resolved. Apply cannot recompute a different allocation after approval.
+- Back-out creates a new change reversing the selected source patch at explicit destination parent(s), retaining
+  intervening history. Its preview names the source commit, patch parent/baseline and conflict consequences; unsupported
+  merge-source ambiguity is rejected rather than guessing a parent. It is not operation undo, selected-operation
+  reversal or old-view restore.
+- All actions preview affected changes, bookmarks, descendants and working-copy effects; recheck exact operation/snapshot,
+  writer, capability, Permissions/FileSafe and idempotency; preserve conflict deltas, partial effects and before/after
+  identities in receipts. Published/protected histories remain subject to existing policy.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future divergence, independent duplicate identity, redundant/merge parents, ambiguous absorption, changed dirty
+  snapshot, back-out overlap and protected rewrite fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: qualified_native_change_editing_semantics
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d010
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d011
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d012
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d013
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d014
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add guided convergence when supported
+- Add a duplicate action
+- Add a merge action
+- Add absorption with preview
+- Add a back-out action
+```
+
+### JJI-017 - Version Comparison And Focused Change Evolution
+
+```yaml
+plan_unit_id: JJI-017
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add a version-to-version comparison and a focused evolution view. Version comparison identifies
+  both immutable versions of the selected stable change and their parent-normalization basis; evolution follows
+  bounded native predecessor relationships while keeping source history distinct from operation history and Backup
+  history.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- SCS-017
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- The comparison result binds repository, stable change ID, exact old/new immutable commits, operation visibility,
+  each parent/base and the qualified normalization algorithm/profile. A normalized patch comparison is labeled separately
+  from ordinary tree-to-tree diff and exposes unsupported merge/missing-parent cases instead of fabricating a baseline.
+- Evolution pages bind exact selected version and projection generation, preserve divergence/abandonment and predecessor
+  provenance, and disclose missing or pruned ancestors, truncation and stale observations. Traversal never substitutes
+  current change resolution for an explicitly selected historical commit.
+- Comparison and evolution are read projections with bounded pagination/cancellation and no hidden snapshot or rewrite.
+  Selecting an old version does not restore/edit it. Native rewrite lineage is evidence of relation, not evidence
+  that review approval remains valid.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future rebased-parent normalization, multi-parent ambiguity, divergent versions, missing predecessor and stale-page
+  fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: version_comparison_and_focused_change_evolution
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d015
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d016
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add a version-to-version comparison
+- Add a focused evolution view
+```
+
+### JJI-018 - Exact Hunk Selection And Graph Rewrite Intent
+
+```yaml
+plan_unit_id: JJI-018
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Add a structured hunk selection interface and previewed drag actions with keyboard equivalents.
+  GUI gestures and internal agent requests resolve to the same exact admitted native editing semantics and server-side
+  policy, with no new external scripting service or content-hash authority.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- JJI-003
+- SCS-018
+- SCS-017
+unblocks: []
+acceptance_criteria:
+- Listing hunks binds repository/workspace, operation, immutable source/destination commits, dirty snapshot, exact
+  file identity/path, file mode/type, byte spans and disambiguating occurrence context to an immutable selection
+  result. Content hashes are integrity checks only; duplicate identical hunks never select each other.
+- Partial/truncated listing cannot imply all hunks were inspected or authorize undisclosed hunks. Binary/symlink/mode-only/rename
+  and malformed or unsupported text cases expose explicit per-type capability; unsupported selection is rejected
+  rather than converted to whole-file mutation.
+- Apply names exact listed selection IDs and intended existing split/squash/edit semantics, destination and expected
+  revisions; changed bytes, generation, operation, duplicates, out-of-range selections or lost file identity invalidate
+  it. Receipts list selected and actually affected identities and unchanged remainder.
+- Drag and keyboard both resolve exact selected changes and target into a reviewable rebase/reorder intent with
+  explicit move-versus-insert semantics, selected descendants, resulting parent graph and conflicts. Mixed or non-contiguous
+  selection is admitted only when the exact native interpretation is qualified; cycles and ambiguous drop targets
+  are rejected.
+- Graph autoscroll/pagination/focus changes do not retarget frozen selections. Effect preview and apply use SCS-018
+  fences and existing owner actions; if semantic payload requires a typed extension, the gesture remains unavailable
+  until admitted. No direct subprocess, fake staging area or hidden Git operation is introduced.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future duplicate hunk, truncated list, invalid byte span, binary/mode/rename selection, multi-select insert-rebase,
+  descendant/cycle and drag-keyboard parity fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: exact_hunk_selection_and_graph_rewrite_intent
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d019
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d031
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add a structured hunk selection interface
+- Add previewed drag actions and keyboard equivalents
+```
+
+### JJI-019 - Conditional Conflict Publication And Bookmark Resolution
+
+```yaml
+plan_unit_id: JJI-019
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: Block by default; add an advanced path only for qualified compatible targets. Add a guided picker
+  only if it clarifies rather than hides the target states. These exact DL-043 conditions govern unresolved-conflict
+  publication and conflicted-bookmark target selection respectively; neither conditional acceptance is a blanket
+  force-push or conflict-clearing capability.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-002
+- JJI-004
+- JJI-005
+- SCS-015
+- SCS-016
+- SCS-018
+- FGI-003
+unblocks: []
+acceptance_criteria:
+- Conflict publication is blocked by default. The advanced path requires exact native adapter/version qualification
+  and separately qualified target/transport/provider consumer compatibility for the actual conflicted representation,
+  fresh capability and permission evidence, explicit target-bound advanced confirmation and normal protected-ref/remote
+  expected-head checks.
+- Preview names every target, immutable conflicted revision, conflict identity/type and downstream limitation. An
+  unsupported or unknown consumer/target, changed conflict state, stale remote binding or head, or missing compatible-target
+  proof blocks dispatch. Per-target fan-out is explicit and receipted; authorization for one target never widens
+  another.
+- Publishing success does not resolve local conflicts, certify Git-only readability or create a review. Unknown
+  remote effects follow SCS-016 reconciliation with no blind retry; no import/export bypass, ordinary Git fallback
+  or custom hook is admitted.
+- The bookmark picker displays all competing added/removed/local/remote targets with full immutable revision references,
+  remote/tracking identity and observed currentness, including unknown or deleted targets. It previews the exact
+  existing admitted bookmark action and before/after target set; a single friendly label cannot conceal competing
+  states.
+- No remote fetch/push, tracking change or deletion is implicit in choosing a local target. If current admitted
+  move/track semantics cannot represent the needed resolution, the picker blocks pending a typed extension. Changed
+  target sets or observation generation invalidate selection and demand a fresh preview.
+- Acceptance validation must demonstrate that the picker clarifies all target states; otherwise it remains unavailable
+  and existing truthful details/actions remain the route.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future default-block, incompatible/unknown consumer, fan-out partial effect, stale remote head, add/remove bookmark
+  conflict and local-versus-remote picker fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: conditional_conflict_publication_and_bookmark_resolution
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d027
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d028
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Block by default; add an advanced path only for qualified compatible targets.
+- Add a guided picker only if it clarifies rather than hides the target states.
+```
+
+### JJI-020 - History Annotation And Recovery Retention Boundary
+
+```yaml
+plan_unit_id: JJI-020
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: D5 history conveniences consume retained native operation/object truth. Named markers, recent actions,
+  group metadata and historical browsing references do not pin native objects implicitly, promise permanent recoverability
+  or replace Backup closure. Every recovery offer proves that its exact target and required object lineage are still
+  available.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- JJI-008
+- JJI-011
+- JJI-012
+- JJI-013
+- JJI-010
+- SCS-008
+unblocks: []
+acceptance_criteria:
+- An absent/pruned target, lost group member, incomplete historical view or changed retention envelope is an explicit
+  unavailable/partial/stale result and preserves the original reference for diagnosis; no target is rebound by display
+  name, path or nearest/newest operation.
+- Explicit maintenance preview discloses which marker, group, redo or historical-browse references would lose recovery
+  coverage and respects JJI-008 capture and GC fencing. No D5 annotation introduces automatic retention, pruning
+  or extra backup content policy.
+- 'Historical reading and recovery remain separate: a visible label or browsable subset is not proof that undo,
+  restore, group reversal or redo can succeed. Native recovery qualification and current SCS-018 authorization are
+  required independently.'
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future retained-label/missing-object, partial group closure and maintenance-versus-browse fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: history_annotation_and_recovery_retention_boundary
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d002
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d003
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d004
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d007
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d042
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d044
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add named markers on existing checkpoints
+- Group display and provide verified group undo
+- Add recent actions and supported redo
+- Diagnose growth and offer explicit maintenance
+- Add a separately labeled reverse-selected-operation action
+- Add a clearly labeled earlier-state browsing mode
+```

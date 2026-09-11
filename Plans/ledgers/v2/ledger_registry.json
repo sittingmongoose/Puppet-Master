@@ -22,18 +22,6 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
-    },
-    {
-      "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-      "title": "Jujutsu DL-043 decisions",
-      "status": "active",
-      "phase": "ready_for_owner_compile",
-      "created_at_utc": "2026-09-11T17:28:15.827337+00:00",
-      "last_updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
-      "last_event_id": "evt-001",
-      "canonical_plan_targets": [],
-      "resume_file": "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/handoff.json",
-      "notes": "All44 DL-043 answers captured;36 require owner planning and8 remain declined/deferred. D5 compilation and independent review active; no seal or runtime implementation."
     }
   ],
   "compiled_ledgers": [
@@ -144,6 +132,45 @@
       "notes": "F001 compiled with independent review. Static contracts/index/configured shards pass; ledger validation fails pre-existing governance coverage. Await packet answers once origin/main ancestry and external landing receipt are verified. No packet disposition or seal.",
       "compiled_owner_docs": [
         "Plans/Jujutsu_Integration.md"
+      ]
+    },
+    {
+      "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+      "title": "Jujutsu DL-043 decisions",
+      "status": "compiled",
+      "phase": "compiled_jujutsu_d5_owner_requirements",
+      "created_at_utc": "2026-09-11T17:28:15.827337+00:00",
+      "last_updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
+      "last_event_id": "evt-003",
+      "canonical_plan_targets": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Permissions_System.md",
+        "Plans/Source_Control_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/storage-plan.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/handoff.json",
+      "notes": "All 44 DL-043 answers preserved; 42 independently reviewed PlanUnits under 12 owners and one SIR route correction. Configured shards/index checked; governance coverage failures remain deferred. No seal or runtime implementation.",
+      "compiled_owner_docs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Permissions_System.md",
+        "Plans/Source_Control_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/storage-plan.md"
       ]
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "status": "D5 answers recorded; owner compilation pending",
+  "status": "compiled_owner_requirements_independently_reviewed",
   "decisions": [
     {
       "decision_id": "D001",
@@ -22,8 +22,64 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d001",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-010",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-010"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-557",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-557"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D002",
@@ -46,8 +102,64 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d002",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-011",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-011"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-552",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-552"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D003",
@@ -71,8 +183,74 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d003",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-012",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-012"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-552",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-552"
+        },
+        {
+          "plan_unit_id": "F3-553",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-553"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D004",
@@ -96,8 +274,74 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d004",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-012",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-012"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-552",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-552"
+        },
+        {
+          "plan_unit_id": "F3-553",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-553"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D005",
@@ -121,8 +365,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d005",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-011",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-011"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-552",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-552"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D006",
@@ -145,8 +430,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d006",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-011",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-011"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-552",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-552"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D007",
@@ -170,8 +501,69 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d007",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-013",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-013"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-559",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-559"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D008",
@@ -194,8 +586,64 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d008",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-014",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-014"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-557",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-557"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D009",
@@ -218,8 +666,64 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d009",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-014",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-014"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-557",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-557"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D010",
@@ -242,8 +746,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d010",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-016",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-016"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D011",
@@ -266,8 +816,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d011",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-016",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-016"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D012",
@@ -290,8 +886,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d012",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-016",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-016"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D013",
@@ -314,8 +956,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d013",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-016",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-016"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D014",
@@ -338,8 +1026,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d014",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-016",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-016"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D015",
@@ -362,8 +1096,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d015",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-017",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-017"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D016",
@@ -386,8 +1161,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d016",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-017",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-017"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D017",
@@ -410,8 +1226,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d017",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-020",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-020"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D018",
@@ -434,8 +1291,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d018",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-020",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-020"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D019",
@@ -458,8 +1356,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d019",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-018",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-018"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D020",
@@ -483,8 +1427,19 @@
       "decision_class": "policy",
       "canonical_class_text": "policy set",
       "source_atom_id": "atom-jj-d5-d020",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "F3-560",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-560"
+        },
+        {
+          "plan_unit_id": "F-082",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-082"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D021",
@@ -532,8 +1487,34 @@
       "decision_class": "architecture",
       "canonical_class_text": "architecture choice",
       "source_atom_id": "atom-jj-d5-d022",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-009",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-009"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D023",
@@ -652,8 +1633,54 @@
       "decision_class": "conditional",
       "canonical_class_text": "accepted with the stated condition",
       "source_atom_id": "atom-jj-d5-d027",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-019",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-019"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-558",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-558"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-143",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-143"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D028",
@@ -676,8 +1703,54 @@
       "decision_class": "conditional",
       "canonical_class_text": "accepted with the stated condition",
       "source_atom_id": "atom-jj-d5-d028",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-019",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-019"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-558",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-558"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-143",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-143"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D029",
@@ -700,8 +1773,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d029",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-019",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-019"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D030",
@@ -724,8 +1838,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d030",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-019",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-019"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D031",
@@ -748,8 +1903,54 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d031",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-018",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-018"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-555",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-555"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D032",
@@ -772,8 +1973,49 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d032",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-019",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-019"
+        },
+        {
+          "plan_unit_id": "F3-556",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-556"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D033",
@@ -820,8 +2062,34 @@
       "decision_class": "policy",
       "canonical_class_text": "policy set",
       "source_atom_id": "atom-jj-d5-d034",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "F3-560",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-560"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "BRS-021",
+          "owner_doc": "Plans/Backup_Restore_System.md",
+          "canonical_ref": "Plans/Backup_Restore_System.md#BRS-021"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-261",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-261"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D035",
@@ -844,8 +2112,59 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d035",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "F3-560",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-560"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "BRS-022",
+          "owner_doc": "Plans/Backup_Restore_System.md",
+          "canonical_ref": "Plans/Backup_Restore_System.md#BRS-022"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-261",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-261"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D036",
@@ -892,8 +2211,64 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d037",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-021",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-021"
+        },
+        {
+          "plan_unit_id": "F3-559",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-559"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D038",
@@ -916,8 +2291,59 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d038",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "SCS-021",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-021"
+        },
+        {
+          "plan_unit_id": "F3-559",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-559"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F2-212",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-212"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D039",
@@ -940,8 +2366,54 @@
       "decision_class": "conditional",
       "canonical_class_text": "accepted with the stated condition",
       "source_atom_id": "atom-jj-d5-d039",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "FGI-016",
+          "owner_doc": "Plans/Forge_Integrations.md",
+          "canonical_ref": "Plans/Forge_Integrations.md#FGI-016"
+        },
+        {
+          "plan_unit_id": "F3-558",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-558"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-143",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-143"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D040",
@@ -964,8 +2436,54 @@
       "decision_class": "conditional",
       "canonical_class_text": "accepted with the stated condition",
       "source_atom_id": "atom-jj-d5-d040",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "FGI-017",
+          "owner_doc": "Plans/Forge_Integrations.md",
+          "canonical_ref": "Plans/Forge_Integrations.md#FGI-017"
+        },
+        {
+          "plan_unit_id": "F3-558",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-558"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-143",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-143"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D041",
@@ -1012,8 +2530,69 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d042",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-012",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-012"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-553",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-553"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D043",
@@ -1036,8 +2615,69 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d043",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-015",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-015"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-554",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-554"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "CV-331",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-331"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     },
     {
       "decision_id": "D044",
@@ -1060,8 +2700,69 @@
       "decision_class": "accepted_for_planning",
       "canonical_class_text": "accepted for planning",
       "source_atom_id": "atom-jj-d5-d044",
-      "plan_units": [],
-      "planning_status": "pending_owner_compile"
+      "plan_units": [
+        {
+          "plan_unit_id": "JJI-010",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-010"
+        },
+        {
+          "plan_unit_id": "JJI-020",
+          "owner_doc": "Plans/Jujutsu_Integration.md",
+          "canonical_ref": "Plans/Jujutsu_Integration.md#JJI-020"
+        },
+        {
+          "plan_unit_id": "SCS-018",
+          "owner_doc": "Plans/Source_Control_System.md",
+          "canonical_ref": "Plans/Source_Control_System.md#SCS-018"
+        },
+        {
+          "plan_unit_id": "F3-554",
+          "owner_doc": "Plans/FinalGUISpec.md",
+          "canonical_ref": "Plans/FinalGUISpec.md#F3-554"
+        },
+        {
+          "plan_unit_id": "UCC-162",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-162"
+        },
+        {
+          "plan_unit_id": "UCC-163",
+          "owner_doc": "Plans/UI_Command_Catalog.md",
+          "canonical_ref": "Plans/UI_Command_Catalog.md#UCC-163"
+        },
+        {
+          "plan_unit_id": "WM-054",
+          "owner_doc": "Plans/Wiring_Matrix.md",
+          "canonical_ref": "Plans/Wiring_Matrix.md#WM-054"
+        },
+        {
+          "plan_unit_id": "CV-330",
+          "owner_doc": "Plans/Contracts_V0.md",
+          "canonical_ref": "Plans/Contracts_V0.md#CV-330"
+        },
+        {
+          "plan_unit_id": "PS-142",
+          "owner_doc": "Plans/Permissions_System.md",
+          "canonical_ref": "Plans/Permissions_System.md#PS-142"
+        },
+        {
+          "plan_unit_id": "F-083",
+          "owner_doc": "Plans/FileManager.md",
+          "canonical_ref": "Plans/FileManager.md#F-083"
+        },
+        {
+          "plan_unit_id": "F2-211",
+          "owner_doc": "Plans/FileSafe.md",
+          "canonical_ref": "Plans/FileSafe.md#F2-211"
+        },
+        {
+          "plan_unit_id": "SP-260",
+          "owner_doc": "Plans/storage-plan.md",
+          "canonical_ref": "Plans/storage-plan.md#SP-260"
+        }
+      ],
+      "planning_status": "compiled_owner_requirements"
     }
   ],
   "finding_owner_map": {
@@ -1795,5 +3496,19 @@
     "architecture": 1,
     "declined_or_deferred": 8
   },
-  "ledger_id": "pldg-20260911-002-jujutsu-decisions"
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "plan_unit_count": 42,
+  "owner_doc_count": 12,
+  "updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
+  "canonical_docs_changed": 13,
+  "reference_amendments": [
+    {
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "decision_ids": [
+        "D022"
+      ],
+      "finding_id": "RBS-001",
+      "new_planunits": 0
+    }
+  ]
 }

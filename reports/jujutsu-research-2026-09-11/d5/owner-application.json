@@ -1,0 +1,70 @@
+{
+  "status": "applied_byte_exact_reviewed_variants",
+  "at": "2026-09-11T17:43:35.686027+00:00",
+  "manifest_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/manifest.json",
+  "manifest_sha256": "a1851e2837bac657a8062998cb0e80dd976b665463ca432b0cf8609a0e8e7f6f",
+  "review_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/variant-findings.json",
+  "review_sha256": "6676784cdd43cb163480a7f0486326b37292f645cfa242a5efd6583063909cc6",
+  "files": [
+    {
+      "path": "Plans/Jujutsu_Integration.md",
+      "before_sha256": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+      "after_sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a"
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "before_sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "after_sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3"
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "before_sha256": "fb5f9889bb6a3b702304cf026f75bf1865c65e98c64773a17aaa3c068e243d87",
+      "after_sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "before_sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5",
+      "after_sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "before_sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+      "after_sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "before_sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e",
+      "after_sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "before_sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+      "after_sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "before_sha256": "65f8cfc8efb2bacf69961629152d9bdba0f2c626c8121147d3ec11b2985f1c53",
+      "after_sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582"
+    },
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "before_sha256": "7638c06e29a7bffa0cd6cce46f88902e000a56f7e3edf6c7c27cdcd7d6ccb089",
+      "after_sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167"
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "before_sha256": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+      "after_sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc"
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "before_sha256": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+      "after_sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "before_sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+      "after_sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1"
+    }
+  ]
+}

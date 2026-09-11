@@ -1,0 +1,1150 @@
+{
+  "review_kind": "independent_final_applied_semantic_review",
+  "reviewer": "jj_d5_semantic_review",
+  "created_at": "2026-09-11T17:49:57.040367+00:00",
+  "status": "pass",
+  "scope": "Final applied semantic fidelity of 42 new PlanUnits under 12 owners, the separately reviewed Shared Integration Runtime owner-route row, and all 44 compiled ledger/answered-companion dispositions.",
+  "counts": {
+    "decisions": 44,
+    "accepted_for_planning": 29,
+    "conditional": 4,
+    "policies": 2,
+    "architecture": 1,
+    "declined_or_deferred": 8,
+    "positive_dispositions": 36,
+    "new_plan_units": 42,
+    "planunit_owners": 12,
+    "touched_canonical_documents": 13
+  },
+  "open_findings": [],
+  "resolved_findings": [
+    {
+      "id": "SEM-001",
+      "affected_units": [
+        "SCS-018"
+      ],
+      "status": "fixed_and_verified_in_actual_owner",
+      "repair": "Reconcile before retry; reuse applied result, retry only proven unapplied effects with fresh fences, keep unresolved effects blocked."
+    },
+    {
+      "id": "RBS-001",
+      "status": "exact_backlink_repair_verified_in_actual_owner",
+      "owner": "Plans/Shared_Integration_Runtime.md",
+      "repair": "Retained common/Git/Jujutsu semantic owners explicitly named; shared lifecycle and ObservableWork remain SIR-owned."
+    }
+  ],
+  "non_actionable_observations": [
+    {
+      "id": "OBS-001",
+      "status": "clarity_improvement_applied",
+      "units": [
+        "F3-556",
+        "SCS-020"
+      ]
+    },
+    {
+      "id": "OBS-002",
+      "status": "clarity_improvement_applied",
+      "units": [
+        "BRS-021",
+        "SP-261",
+        "JJI-009"
+      ]
+    },
+    {
+      "id": "OBS-003",
+      "status": "no_product_redecision_required",
+      "units": [
+        "F-082"
+      ],
+      "text": "Nearest-existing newline policy remains mandatory. Deterministic equidistant/no-boundary implementation handling stays within owner qualification and does not permit whole-file normalization."
+    }
+  ],
+  "decision_verdicts": [
+    {
+      "card_id": "J01",
+      "decision_id": "D002",
+      "name": "Named history markers",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add named markers on existing checkpoints",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-552",
+        "JJI-011",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Names annotate existing checkpoint/operation identities; duplicate labels and missing targets cannot retarget recovery.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J02",
+      "decision_id": "D003",
+      "name": "Grouped history actions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Group display and provide verified group undo",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-552",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Ordered applied members and partial outcomes support separately verified group undo without an atomic-batch claim.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J03",
+      "decision_id": "D004",
+      "name": "Recent actions and redo",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add recent actions and supported redo",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-552",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Recent navigation is bounded; redo requires an exact qualified relation and rejects changed or divergent native state.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J04",
+      "decision_id": "D005",
+      "name": "Filter operation history",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add simple action and time filters",
+      "plan_units": [
+        "CV-330",
+        "F3-552",
+        "JJI-011",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Simple action/time filtering preserves unknown/external operations, time basis, omissions and pagination; no operation query language added.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J05",
+      "decision_id": "D006",
+      "name": "Readable operation descriptions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add structured descriptions from existing receipts",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-552",
+        "JJI-011",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Descriptions derive from existing sanitized receipts and never create operations or become identity/idempotency.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J06",
+      "decision_id": "D007",
+      "name": "History storage maintenance",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Diagnose growth and offer explicit maintenance",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F2-211",
+        "F3-559",
+        "JJI-013",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Diagnostics and explicit authorized maintenance preserve retained closure and capture/GC fences; automatic pruning is excluded.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J07",
+      "decision_id": "D042",
+      "name": "Reverse one selected operation",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a separately labeled reverse-selected-operation action",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Reverse-selected-operation binds one exact historic operation against current state, rejects unsupported root/merge targets and remains distinct from sequential undo.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J08",
+      "decision_id": "D043",
+      "name": "Preview a rewrite before applying it",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an explicitly managed rewrite preview and apply workflow",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F-083",
+        "F2-211",
+        "F3-554",
+        "JJI-015",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Rewrite preview is an effectful managed lifecycle with isolation, custody, cleanup and separately revalidated application; it is neither read-only dry run nor backup alignment.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J09",
+      "decision_id": "D044",
+      "name": "Browse an earlier repository state",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a clearly labeled earlier-state browsing mode",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-554",
+        "JJI-010",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Earlier-state browsing coordinates graph/tree/content/bookmarks at one historical operation and cannot restore or substitute current objects.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J10",
+      "decision_id": "D037",
+      "name": "Export operation diagnostics",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add explicit sanitized export",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F2-212",
+        "F3-559",
+        "PS-142",
+        "SCS-018",
+        "SCS-021",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Explicit sanitized export creates an authorized artifact with bounded reviewed scope, destination and receipt; it does not upload or execute.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J11",
+      "decision_id": "D038",
+      "name": "View source-control commands",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an optional technical log view",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-559",
+        "PS-142",
+        "SCS-018",
+        "SCS-021",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Optional bounded command log consumes redacted exact receipts; stdout and exit status never become authority.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J12",
+      "decision_id": "D010",
+      "name": "Combine divergent versions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add guided convergence when supported",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Guided convergence binds exact divergent commits of one change and makes heuristic ambiguity and conflicts explicit.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J13",
+      "decision_id": "D011",
+      "name": "Duplicate a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a duplicate action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Duplication creates independent change identity from exact source and destination parents, with descendant effects qualified.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J14",
+      "decision_id": "D012",
+      "name": "Create a merge change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a merge action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Merge creation preserves selected parent identities, ordering and conflict consequences without a hidden Git alias.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J15",
+      "decision_id": "D013",
+      "name": "Absorb edits into earlier changes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add absorption with preview",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Absorption fixes dirty snapshot, per-hunk allocations and affected descendants before approval; ambiguous remainder stays visible.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J16",
+      "decision_id": "D014",
+      "name": "Back out a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a back-out action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Back-out creates a compensating source change preserving intervening history; it is distinct from operation recovery.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J17",
+      "decision_id": "D015",
+      "name": "Compare versions of a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a version-to-version comparison",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "JJI-017",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Version comparison binds immutable endpoints and parent normalization, with explicit unsupported or missing baselines.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J18",
+      "decision_id": "D016",
+      "name": "Change evolution",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a focused evolution view",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "JJI-017",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Focused evolution follows bounded predecessor lineage and preserves divergence, abandonment and retention gaps.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J19",
+      "decision_id": "D031",
+      "name": "Edit history by dragging",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add previewed drag actions and keyboard equivalents",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-018",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Drag and keyboard produce the same exact previewed native intent, preserving multiselection, insert/move and descendant semantics.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J20",
+      "decision_id": "D019",
+      "name": "Scriptable partial changes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a structured hunk selection interface",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-018",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Structured hunk input shares native routes, exact snapshots and occurrence identities; duplicate text, truncation and unsupported file types cannot widen selection.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J21",
+      "decision_id": "D001",
+      "name": "Read-only repositories",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a supported read-only browsing mode",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-010",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Qualified physically read-only browsing prohibits original-store mutation and discloses unsupported or incomplete paths.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J22",
+      "decision_id": "D008",
+      "name": "Adopt existing workspaces",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an explicit adoption and repair flow",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-014",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Explicit adoption/repair preserves native identity, previews mapping and individual effects, and exposes partial or quarantined state.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J23",
+      "decision_id": "D009",
+      "name": "Hide inactive workspaces",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add hide and unhide",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-014",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Hide/unhide is idempotent presentation metadata on stable workspace identity; it does not remove data or release authority.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J24",
+      "decision_id": "D036",
+      "name": "Very large repository backends",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Defer specialized storage",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Deferred specialized storage has no PlanUnit or new backend/library.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J25",
+      "decision_id": "D029",
+      "name": "Prioritize graph lanes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add explicit lane priorities",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Native lane priorities intersect visible bounded graph identity and preserve stable layout/currentness.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J26",
+      "decision_id": "D030",
+      "name": "Help with history queries",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add native query assistance",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Version-qualified native query help remains bounded and distinct from query execution and operation-query language.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J27",
+      "decision_id": "D032",
+      "name": "Keep comparison context visible",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add pinned comparison and selected-change details",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Pins bind immutable comparison endpoints and selected details; refresh cannot silently retarget or invent staging.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J28",
+      "decision_id": "D017",
+      "name": "Line attribution and file history",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add bounded attribution and file history",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-020",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Bounded attribution and file history carry exact revision/path/range provenance and disclose rename and performance limitations.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J29",
+      "decision_id": "D018",
+      "name": "Review marks that survive edits",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add conservative matching with stale markers",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-020",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Conservative matching preserves original immutable review evidence, adds derived unambiguous correspondence, and exposes stale/orphaned marks without moving hosted approval.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J30",
+      "decision_id": "D033",
+      "name": "Review a workspace with AI",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Use existing chat review workflows",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined specialized AI workspace-review workflow has no PlanUnit; existing chat review remains.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J31",
+      "decision_id": "D020",
+      "name": "New line endings in mixed-ending text",
+      "decision_class": "policy set",
+      "verbatim_answer": "Use the nearest existing line ending; preserve existing endings on ordinary Save.",
+      "plan_units": [
+        "F-082",
+        "F3-560"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Nearest-existing behavior is a required new-boundary policy; ordinary Save preserves surviving CRLF/LF/CR and optional paste normalization remains scoped.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J32",
+      "decision_id": "D021",
+      "name": "Use an external diff or merge editor",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep resolution inside Puppet Master",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external diff/merge editor has no PlanUnit; in-PM resolution remains unchanged.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J33",
+      "decision_id": "D027",
+      "name": "Publish unresolved conflicts",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Block by default; add an advanced path only for qualified compatible targets.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "JJI-019",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Default blocking and exact qualified-compatible-target condition are explicit acceptance criteria, with separate local conflict and publication truth.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J34",
+      "decision_id": "D028",
+      "name": "Resolve a conflicted bookmark",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add a guided picker only if it clarifies rather than hides the target states.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "JJI-019",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Picker must display all target alternatives and prove clarity; it uses admitted actions only and blocks stale or unrepresentable selections.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J35",
+      "decision_id": "D039",
+      "name": "Publish a stack of reviews",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add one explicitly supported forge workflow at a time.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "FGI-016",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "One supported forge workflow at a time is an admission condition; stack identities, partial publication/review outcomes and per-phase idempotency are preserved.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J36",
+      "decision_id": "D040",
+      "name": "Additional review services",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add only for a concrete user workflow and keep local history independent.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "FGI-017",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Additional service admission requires a concrete workflow with exact provider semantics and preserves independent local history; no provider is silently selected.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J37",
+      "decision_id": "D041",
+      "name": "Custom actions around publishing",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep publication within existing adapter behavior",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined custom publication actions have no PlanUnit or hook runner.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J38",
+      "decision_id": "D022",
+      "name": "How the adapter runs",
+      "decision_class": "architecture choice",
+      "verbatim_answer": "Own a separate internal service",
+      "plan_units": [
+        "CV-330",
+        "JJI-009",
+        "PS-142",
+        "SCS-018",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "PM owns a separate authenticated internal adapter service and engine/diff implementation; existing leases and routes remain authoritative.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J39",
+      "decision_id": "D023",
+      "name": "Reuse a diff library",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep an independently owned diff implementation",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined library reuse has no PlanUnit; the architecture unit retains the independently owned implementation constraint.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J40",
+      "decision_id": "D024",
+      "name": "Connect external IDEs",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep source-control interaction in Puppet Master",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external IDE connectivity has no PlanUnit or new endpoint.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J41",
+      "decision_id": "D025",
+      "name": "Shared source-control service",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Use existing owner services only",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined shared source-control service has no PlanUnit; existing internal owner-service routing remains.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J42",
+      "decision_id": "D026",
+      "name": "Connect other agent tools",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep existing internal agent routes",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external-agent/MCP interface has no PlanUnit or alternate runtime route.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J43",
+      "decision_id": "D034",
+      "name": "Store or rebuild history indexes",
+      "decision_class": "policy set",
+      "verbatim_answer": "Prefer rebuilding correctness-critical indexes in the isolated drill; keep captured indexes only as an optional speed aid.",
+      "plan_units": [
+        "BRS-021",
+        "CV-331",
+        "F2-212",
+        "F3-560",
+        "SP-261"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Isolated drill must rebuild correctness-critical indexes and prove native closure without captured caches; optional speed-aid capture is narrow and scope-authorized.",
+      "applied_state_verdict": "pass"
+    },
+    {
+      "card_id": "J44",
+      "decision_id": "D035",
+      "name": "Complete missing repository data",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a separately authorized completion workflow",
+      "plan_units": [
+        "BRS-022",
+        "CV-330",
+        "CV-331",
+        "F2-212",
+        "F3-560",
+        "PS-142",
+        "SP-261",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Missing-data completion is separately authorized transport, preserves exact scope and credentials, recaptures and verifies closure, and cannot activate restore or relabel old snapshots.",
+      "applied_state_verdict": "pass"
+    }
+  ],
+  "verified_actual_owner_files": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Jujutsu_Integration.md",
+      "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Source_Control_System.md",
+      "sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Forge_Integrations.md",
+      "sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FinalGUISpec.md",
+      "sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/UI_Command_Catalog.md",
+      "sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Wiring_Matrix.md",
+      "sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Contracts_V0.md",
+      "sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Permissions_System.md",
+      "sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Backup_Restore_System.md",
+      "sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileManager.md",
+      "sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileSafe.md",
+      "sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/storage-plan.md",
+      "sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+      "sha256": "735620bdc43ffebecb0afd8ad46d5ebe9cb88590ef32fab7d86ceb3f425593df"
+    }
+  ],
+  "reviewed_sources": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Jujutsu_Integration.md",
+      "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Source_Control_System.md",
+      "sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Forge_Integrations.md",
+      "sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FinalGUISpec.md",
+      "sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/UI_Command_Catalog.md",
+      "sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Wiring_Matrix.md",
+      "sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Contracts_V0.md",
+      "sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Permissions_System.md",
+      "sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Backup_Restore_System.md",
+      "sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileManager.md",
+      "sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileSafe.md",
+      "sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/storage-plan.md",
+      "sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+      "sha256": "735620bdc43ffebecb0afd8ad46d5ebe9cb88590ef32fab7d86ceb3f425593df"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/reports/jujutsu-research-2026-09-11/d5/answered-companion.json",
+      "sha256": "c1dc2d8b50a2266639862b9cbfc9b6da6112958dd071c38e4b598ca2b444837e"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/records/design_atoms.jsonl",
+      "sha256": "113e6468bd7402925a6f663c74539452953186bea1a64a10468005484e212df2"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/records/decisions.jsonl",
+      "sha256": "bb69bb56903326cef5deb002b46ee9a1601f7e18f1f8efcdb368c0f33f4054fa"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/indexes/decision_map.json",
+      "sha256": "be264bc17e6250e04b3f48cb65fdcef2c03c3fe768e45d8e198a8ef5520481e9"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/compile_queue.json",
+      "sha256": "800a3933066fd096502e47f65624f7963303887ed73c61e2632b84be839c6c78"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/validation/ledger_health.json",
+      "sha256": "5291b706b102f80ddfedc869bf67c90cb682bc57d12b573078ae20d1803418aa"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/handoff.json",
+      "sha256": "a7511534251478db3e51a25445faff62018603f035b486814c45a7d208bb698a"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/current.json",
+      "sha256": "30ae444bc53b101a5b9afc346bcd61d7961a40ae6b275d44dcc1542920cf2a74"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/open_items.json",
+      "sha256": "fa243085e1c787e2eaeb9cd3eaa89c959fd08ef142dc3f95ee4d59239fddd4c6"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/operating_capsule.json",
+      "sha256": "0d6b4436d589fa488b54ac81a9cc3f9aa379ea432c20ce58f1d340f2d098daec"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/reports/jujutsu-research-2026-09-11/d3/technical-companion.json",
+      "sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/manifest.json",
+      "sha256": "a1851e2837bac657a8062998cb0e80dd976b665463ca432b0cf8609a0e8e7f6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/owner-application.json",
+      "sha256": "34e4261c5be336a49a2f85e776b50f658080f3b388868bdb8b57a1036e38278b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/proposal-findings.json",
+      "sha256": "ea03697d74e124b595112462638f0de40c69ba71bb79040ce0ce986b6ca5b3ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/variant-findings.json",
+      "sha256": "6676784cdd43cb163480a7f0486326b37292f645cfa242a5efd6583063909cc6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/backlink-and-application-review.json",
+      "sha256": "bd2b297825c41b3ca366d95eb0b9660159159638a7e33d73b7f2a51342f654cf"
+    }
+  ],
+  "observed_gate_state": {
+    "ledger_health_status": "fail_deferred_governance_coverage",
+    "validator_status": "fail",
+    "errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
+    ],
+    "interpretation": "These explicitly recorded governance-coverage omissions are outside this semantic certification. Parent owns final gate-state reporting; this review does not turn them into PASS or authorize a seal."
+  },
+  "certification_boundary": "PASS certifies the exact source bytes and semantic/mapping fidelity recorded here. It does not certify native implementation, runtime/provider behavior, current schema admission, readiness, governance seal, derived-file regeneration, commit, push, or landing. Later canonical text or mapping changes require a bounded new check.",
+  "full_review_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/final-findings.json",
+    "sha256": "231fb46e5768d689ad3f0a26142a4381e298dfd5eaf226f6bdf84a09036a81a3"
+  },
+  "check_count": 382
+}

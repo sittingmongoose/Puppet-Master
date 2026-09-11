@@ -1,0 +1,29 @@
+{
+  "status": "reviewer_recommended_narrow_clarity_amendments_parent_accepted",
+  "amendments": [
+    {
+      "id": "OBS-001-clarity",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/FinalGUISpec.append.md",
+      "unit": "F3-556",
+      "before": "Review marks move only when conservative native rewrite correspondence establishes the exact match; ambiguous, stale and orphaned marks remain visibly unresolved and never silently mark rewritten content reviewed.",
+      "after": "Review marks retain their original immutable reviewed-version evidence and display derived correspondence only when the Source Control owner proves an exact unambiguous match under SCS-020; ambiguous, stale and orphaned marks remain visibly unresolved. Local correspondence never transfers hosted approval or marks changed content reviewed.",
+      "source_sha256": "5690f383e4275f25587e7531fa89e924edb28a371a0a776ed087bfbe5ee86244"
+    },
+    {
+      "id": "OBS-002-backup-clarity",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/Backup_Restore_System.addendum.md",
+      "unit": "BRS-021",
+      "before": "while storage owns physical rebuild mechanics.",
+      "after": "while Storage owns disposable material custody and native index rebuild execution remains with the Jujutsu owner through the PM-owned internal adapter service.",
+      "source_sha256": "cc7cc68f405fae1d4a6b368f8e0e9e22a12a25898627f7f2acca839040eeb9b2"
+    },
+    {
+      "id": "OBS-002-storage-clarity",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/storage-plan.addendum.md",
+      "unit": "SP-261",
+      "before": "Storage supplies isolated history-index rebuild mechanics and durable non-secret progress/receipt\n  references to BRS-021/BRS-022 while Backup retains verification and missing-data-completion orchestration.",
+      "after": "Storage supplies disposable rebuild-material custody and durable non-secret progress/receipt\n  references to BRS-021/BRS-022 while Backup retains verification and missing-data-completion orchestration. Native history-index rebuild execution remains with the Jujutsu owner through the PM-owned internal adapter service.",
+      "source_sha256": "ed7bdbe4f49f57c123f1de6f18e3c7fcb59226d466baae99a9b83db4d69c9701"
+    }
+  ]
+}

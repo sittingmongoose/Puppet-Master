@@ -1,0 +1,20 @@
+{
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
+  ],
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+  "status": "fail",
+  "summary": {
+    "atoms": 44,
+    "compile_queue_items": 12,
+    "corrections": 0,
+    "decisions": 44,
+    "events": 3,
+    "plan_units_checked": 1924,
+    "questions": 0
+  },
+  "warnings": []
+}

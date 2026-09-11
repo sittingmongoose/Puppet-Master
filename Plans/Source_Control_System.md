@@ -994,3 +994,352 @@ negative_constraints:
   - Do not eagerly hydrate an unbounded history, lose selection identity between pages, or paint stale/partial data as current.
   - Do not add a SourceGraph command, handler, state owner, EventRecord family, persistence authority, or runtime/native proof from this static closure.
 ```
+
+## DL-043 Accepted Jujutsu Planning Addendum - 2026-09-11
+
+This addendum compiles the specified DL-043 answers as accepted planning requirements. It does not change current command/provider enums, admit typed schema variants, register handlers/events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. Declined dispositions receive no PlanUnits. Cross-owner command, GUI, wiring, Contracts, Permissions/FileSafe and Backup amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/FinalGUISpec.md
+
+### SCS-018 - D5 Planning Admission And Exact Effect Envelope
+
+```yaml
+plan_unit_id: SCS-018
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: DL-043 accepts the specified D5 behavior for planning. The existing Jujutsu request enum remains
+  exactly 31 commands. A new action or request meaning remains unavailable for dispatch until its owner supplies
+  a closed typed extension, positive and rejected fixtures, central catalog and sole-handler wiring, explicit event
+  or no-persist disposition, Permissions/FileSafe closure, current exact-environment qualification and runtime validation.
+  Existing commands may be reused only where their admitted request meaning already matches the action; a convenience
+  surface cannot smuggle an extra effect through a read or loosely interpreted command.
+gui_related: false
+gui_classification_reason: The unit defines owner service, identity, authorization, or native effect semantics.
+depends_on:
+- SCS-002
+- SCS-003
+- SCS-015
+- SCS-016
+- JJI-003
+- JJI-007
+unblocks: []
+acceptance_criteria:
+- Future projections and requests retain RepositoryContext, Project, Home Server, Execution Host, Environment, Source
+  Location, topology generation, repo_id, scm_backend=jujutsu, workspace_id, change_id where applicable, immutable
+  commit_id, operation_id and exact selected target identities. A display path, label, abbreviated ID, content hash,
+  current focus, or newest object cannot replace that identity.
+- Every native write, including managed preview object writes and repair, compares exact expected operation/revision
+  and topology, current capability revision, writer lease generation/epoch/expiry, Permissions and FileSafe decisions
+  and idempotent command instance at dispatch. Destructive or recovery effects also require exact target-bound confirmation.
+  No additional writer is created for a separate service.
+- Validated reads use read authorization and no writer, credential, FileSafe or confirmation authority; a read that
+  would migrate, snapshot, reconcile, fetch or rebuild in the source store must reject or use a separately admitted
+  effect path. PM metadata writes, disposable storage writes and export writes require their own scoped owner authorization/FileSafe
+  decision rather than pretending to be source reads.
+- Asynchronous accepted work references ObservableWork. Every established terminal attempt keeps JJI-003 receipt
+  rules, including blocked, failed, cancelled, recovery_required and effect_unknown, without inventing an operation
+  for a no-effect attempt. Interruption persists known phase effects. An effect_unknown result requires reconciliation before any retry; a confirmed applied effect returns its original result without re-execution, a proven unapplied effect may be retried only under fresh currentness/authorization fences, and an unresolved effect remains blocked.
+- Preview/application bind one immutable proposal identity, exact inputs, target and expected native state. Selection,
+  source content, configuration/capability, workspace, topology or operation change invalidates application; recomputation
+  and new confirmation replace stale intent. Accepted work never retargets when focus changes.
+- Support, implementation, freshness and availability remain distinct under SCS-015. Unknown/stale cannot become
+  unsupported or ready; absent native qualification is an explicit blocker, not permission to use an upstream version
+  guess, direct Git fallback, raw subprocess or external client.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- Plans/jujutsu_integration_contracts.schema.json
+- Plans/source_control_contracts.schema.json
+- future all-terminal, stale selection, duplicate, lease-loss, interruption and unknown-effect fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: d5_planning_admission_and_exact_effect_envelope
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d001
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d002
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d003
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d004
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d005
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d006
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d007
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d008
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d009
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d010
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d011
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d012
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d013
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d014
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d015
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d016
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d017
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d018
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d019
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d022
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d027
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d028
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d029
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d030
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d031
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d032
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d037
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d038
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d039
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d040
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d042
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d043
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d044
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Source_Control_System.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add a supported read-only browsing mode
+- Add named markers on existing checkpoints
+- Group display and provide verified group undo
+- Add recent actions and supported redo
+- Add simple action and time filters
+- Add structured descriptions from existing receipts
+- Diagnose growth and offer explicit maintenance
+- Add an explicit adoption and repair flow
+- Add hide and unhide
+- Add guided convergence when supported
+- Add a duplicate action
+- Add a merge action
+- Add absorption with preview
+- Add a back-out action
+- Add a version-to-version comparison
+- Add a focused evolution view
+- Add bounded attribution and file history
+- Add conservative matching with stale markers
+- Add a structured hunk selection interface
+- Own a separate internal service
+- Block by default; add an advanced path only for qualified compatible targets.
+- Add a guided picker only if it clarifies rather than hides the target states.
+- Add explicit lane priorities
+- Add native query assistance
+- Add previewed drag actions and keyboard equivalents
+- Add pinned comparison and selected-change details
+- Add explicit sanitized export
+- Add an optional technical log view
+- Add one explicitly supported forge workflow at a time.
+- Add only for a concrete user workflow and keep local history independent.
+- Add a separately labeled reverse-selected-operation action
+- Add an explicitly managed rewrite preview and apply workflow
+- Add a clearly labeled earlier-state browsing mode
+```
+
+### SCS-019 - Bounded Graph Priorities Queries And Pinned Comparison
+
+```yaml
+plan_unit_id: SCS-019
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: Add explicit lane priorities, native query assistance, and pinned comparison and selected-change
+  details through the existing bounded SourceGraph and comparison projections. Preference and selection state never
+  becomes revision or mutation authority.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- SCS-017
+- SCS-018
+- JJI-017
+unblocks: []
+acceptance_criteria:
+- Lane priority resolves exact revision references or qualified native priority expressions at a captured graph
+  generation, intersects the result with currently visible nodes and preserves stable fallback ordering across refreshes.
+  Hidden/missing/pruned references cannot force hydration or fabricate nodes.
+- Native query assistance identifies the qualified backend/version grammar, supplies bounded completions and syntax
+  diagnostics, and separates validation from execution. Queries have page/node, work/time and cancellation limits;
+  unsupported syntax, expensive/truncated results, filters and elisions remain explicit. No advanced operation-query
+  language is added by source revset help.
+- Keep SCS-017 200-node page cap and bounded hydration, stable anchors and currentness. An old completion or pagination
+  result cannot overwrite a changed query/repository generation.
+- Pinned comparison stores exact repository/workspace and immutable compared commits with operation/snapshot context,
+  comparison kind and base. Refresh never moves pins to newest versions silently; missing/stale targets remain labeled.
+  Selected-change details keep explicit bookmark/tracking/conflict identities and physical untracked-file state
+  without inventing a Git stage area.
+- 'Design default grounded in SCS-017: lane priorities affect layout only and pins affect selection only; native
+  graph membership and source identity remain unchanged. All mutation from a selection uses a new current exact
+  owner preview.'
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future hidden-priority intersection, bounded invalid revset, stale completion, pin-on-rewrite, missing pin and
+  untracked-file projection fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: bounded_graph_priorities_queries_and_pinned_comparison
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d029
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d030
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d032
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Source_Control_System.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add explicit lane priorities
+- Add native query assistance
+- Add pinned comparison and selected-change details
+```
+
+### SCS-020 - Bounded Attribution File History And Conservative Review Matching
+
+```yaml
+plan_unit_id: SCS-020
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: Add bounded attribution and file history, and conservative matching with stale markers. File history
+  and attribution retain native repository/version/path provenance; review marks retain their originally reviewed
+  immutable version and may record only proven correspondence to another version.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- SCS-017
+- SCS-018
+- JJI-017
+- FGI-004
+unblocks: []
+acceptance_criteria:
+- Attribution/file-history requests bind exact repository, operation visibility, immutable commit, file identity/path/range,
+  backend/profile and projection generation. Paginate and bound work with cancellation, explicit incomplete/missing/unsupported
+  rename history, binary or unsupported file types and no assertion of measured performance from research.
+- A review mark/annotation records original immutable revision, path/range, reviewed content context, author and
+  existing review scope. Candidate matching to a rewritten version requires exact repository and native lineage
+  plus unambiguous qualified content/range correspondence; content hash or stable change ID alone cannot authorize
+  transfer.
+- 'Design default grounded in FGI-004: preserve the original mark and add a derived correspondence record, never
+  overwrite its evidence identity. Only exact unambiguous unchanged correspondence can appear matched; ambiguous,
+  altered or missing regions are stale or orphaned with the original available for inspection and explicit user
+  re-review.'
+- Local correspondence never moves hosted approvals, test/capture/audit evidence, thread resolution or Ready status
+  to a new ForgeReviewRevision. A forge provider continues to own its exact-version review effects and policy; read-side
+  matching grants no remote mutation authority.
+- Missing predecessor/rename proof, duplicate text, normalization ambiguity, partial results or stale projection
+  never produces a current reviewed claim. Matching remains bounded and can fail conservatively without losing original
+  notes.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future duplicate-text, rename/merge ambiguity, changed range, orphan mark, unsupported attribution, cancellation
+  and no-approval-transfer fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: bounded_attribution_file_history_and_conservative_review_matching
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d017
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d018
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Source_Control_System.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add bounded attribution and file history
+- Add conservative matching with stale markers
+```
+
+### SCS-021 - Sanitized Diagnostic Export And Optional Technical Log
+
+```yaml
+plan_unit_id: SCS-021
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: Add explicit sanitized export and an optional technical log view over existing source-control receipts.
+  Neither surface parses terminal output into authoritative state or creates native operations merely to add descriptions.
+  Export is an explicit owner-authorized file/artifact effect; viewing remains a read of already authorized redacted
+  data.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- SCS-003
+- SCS-016
+- SCS-018
+- JJI-003
+unblocks: []
+acceptance_criteria:
+- Capture export scope by exact repository, selected operation/receipt IDs, time bounds and completeness. Preview
+  included categories and destination before writing, require scoped export authorization and FileSafe destination
+  handling, and produce an artifact identity/digest plus sanitization and omitted-field summary in the receipt.
+- 'Design default grounded in existing non-secret receipt boundaries: export an allowlisted structured diagnostic
+  subset; omit credentials, tokens, secret-bearing URLs/environment/argv, private absolute paths and source content
+  by default. Sanitize native descriptions and errors as untrusted text; unsafe fields are omitted rather than assuming
+  generic token masking is enough.'
+- Technical log exposes bounded authorized secret-free argv identity, command/attempt, timestamps, before/after
+  operation refs, terminal outcome and receipt links. It labels unmatched native actions or unavailable diagnostics
+  and preserves effect_unknown without inferring success from exit code or prose.
+- Export is local artifact creation/sharing preparation, not permission to send/upload to a service or alter retention.
+  Destination collisions, denied writes, cancellation, partial files and restart have explicit cleanup/receipt behavior;
+  repeat command identity does not duplicate an export blindly.
+- Repository/account switches invalidate unscoped cached views; filtering and pagination cannot leak another authorized
+  context. Private path/content handling and redaction negatives are required before availability.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future credential-in-argv/URL/error/name, private path/content, bounded-log, cross-repository cache, denied destination
+  and partial export fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: sanitized_diagnostic_export_and_optional_technical_log
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d037
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d038
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Source_Control_System.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add explicit sanitized export
+- Add an optional technical log view
+```

@@ -1,13 +1,600 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_plan_outputs": [],
-  "compiled_owner_docs": [],
+  "updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Backup_Restore_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Permissions_System.md",
+    "Plans/Source_Control_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Backup_Restore_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Permissions_System.md",
+    "Plans/Shared_Integration_Runtime.md",
+    "Plans/Source_Control_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Backup_Restore_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Permissions_System.md",
+    "Plans/Source_Control_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/storage-plan.md"
+  ],
   "governance_status": "not_requested",
-  "status": "ready_for_owner_compile",
-  "items": [],
-  "notes": "Owner compilation is not yet applied; proposed unit mappings will be recorded at application."
+  "status": "compiled_jujutsu_d5_owner_requirements",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "target_doc": "Plans/Backup_Restore_System.md",
+      "target_docs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d034",
+        "atom-jj-d5-d035"
+      ],
+      "target_plan_unit_ids": [
+        "BRS-021",
+        "BRS-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "BRS-021",
+        "BRS-022"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d022",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d034",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "CV-330",
+        "CV-331"
+      ],
+      "compiled_plan_unit_ids": [
+        "CV-330",
+        "CV-331"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "target_doc": "Plans/FileManager.md",
+      "target_docs": [
+        "Plans/FileManager.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d020",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "F-082",
+        "F-083"
+      ],
+      "compiled_plan_unit_ids": [
+        "F-082",
+        "F-083"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "target_doc": "Plans/FileSafe.md",
+      "target_docs": [
+        "Plans/FileSafe.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d034",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "F2-211",
+        "F2-212"
+      ],
+      "compiled_plan_unit_ids": [
+        "F2-211",
+        "F2-212"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-005",
+      "status": "compiled",
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d020",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d034",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "F3-552",
+        "F3-553",
+        "F3-554",
+        "F3-555",
+        "F3-556",
+        "F3-557",
+        "F3-558",
+        "F3-559",
+        "F3-560"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-552",
+        "F3-553",
+        "F3-554",
+        "F3-555",
+        "F3-556",
+        "F3-557",
+        "F3-558",
+        "F3-559",
+        "F3-560"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-006",
+      "status": "compiled",
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-016",
+        "FGI-017"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-016",
+        "FGI-017"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "target_doc": "Plans/Jujutsu_Integration.md",
+      "target_docs": [
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d022",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "JJI-009",
+        "JJI-010",
+        "JJI-011",
+        "JJI-012",
+        "JJI-013",
+        "JJI-014",
+        "JJI-015",
+        "JJI-016",
+        "JJI-017",
+        "JJI-018",
+        "JJI-019",
+        "JJI-020"
+      ],
+      "compiled_plan_unit_ids": [
+        "JJI-009",
+        "JJI-010",
+        "JJI-011",
+        "JJI-012",
+        "JJI-013",
+        "JJI-014",
+        "JJI-015",
+        "JJI-016",
+        "JJI-017",
+        "JJI-018",
+        "JJI-019",
+        "JJI-020"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "target_doc": "Plans/Permissions_System.md",
+      "target_docs": [
+        "Plans/Permissions_System.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d022",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "PS-142",
+        "PS-143"
+      ],
+      "compiled_plan_unit_ids": [
+        "PS-142",
+        "PS-143"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "target_doc": "Plans/Source_Control_System.md",
+      "target_docs": [
+        "Plans/Source_Control_System.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d022",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "SCS-018",
+        "SCS-019",
+        "SCS-020",
+        "SCS-021"
+      ],
+      "compiled_plan_unit_ids": [
+        "SCS-018",
+        "SCS-019",
+        "SCS-020",
+        "SCS-021"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-162",
+        "UCC-163"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-162",
+        "UCC-163"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d010",
+        "atom-jj-d5-d011",
+        "atom-jj-d5-d012",
+        "atom-jj-d5-d013",
+        "atom-jj-d5-d014",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d019",
+        "atom-jj-d5-d022",
+        "atom-jj-d5-d027",
+        "atom-jj-d5-d028",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d031",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d039",
+        "atom-jj-d5-d040",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "WM-054"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-054"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "target_doc": "Plans/storage-plan.md",
+      "target_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "source_atom_ids": [
+        "atom-jj-d5-d001",
+        "atom-jj-d5-d002",
+        "atom-jj-d5-d003",
+        "atom-jj-d5-d004",
+        "atom-jj-d5-d005",
+        "atom-jj-d5-d006",
+        "atom-jj-d5-d007",
+        "atom-jj-d5-d008",
+        "atom-jj-d5-d009",
+        "atom-jj-d5-d015",
+        "atom-jj-d5-d016",
+        "atom-jj-d5-d017",
+        "atom-jj-d5-d018",
+        "atom-jj-d5-d029",
+        "atom-jj-d5-d030",
+        "atom-jj-d5-d032",
+        "atom-jj-d5-d034",
+        "atom-jj-d5-d035",
+        "atom-jj-d5-d037",
+        "atom-jj-d5-d038",
+        "atom-jj-d5-d042",
+        "atom-jj-d5-d043",
+        "atom-jj-d5-d044"
+      ],
+      "target_plan_unit_ids": [
+        "SP-260",
+        "SP-261"
+      ],
+      "compiled_plan_unit_ids": [
+        "SP-260",
+        "SP-261"
+      ],
+      "compile_event_id": "evt-002"
+    }
+  ],
+  "notes": "Authoring compile mapping only, not an executable queue.42reviewed PlanUnits applied; no runtime or governance certification.",
+  "terminal_ledger_event_id": "evt-003",
+  "compiled_reference_docs": [
+    "Plans/Shared_Integration_Runtime.md"
+  ],
+  "reference_backlink_scan_ref": "reports/jujutsu-research-2026-09-11/d5/reference-backlink-scan.json"
 }

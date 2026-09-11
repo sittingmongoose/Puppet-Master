@@ -1,0 +1,23 @@
+{
+  "phase": "d5",
+  "status": "reviewed_authoring_batch_ready_for_rebase_and_landing",
+  "dispositions": 44,
+  "classes": {
+    "accepted_for_planning": 29,
+    "conditional": 4,
+    "policy": 2,
+    "architecture": 1,
+    "declined_or_deferred": 8
+  },
+  "positive_dispositions": 36,
+  "new_plan_units": 42,
+  "planunit_owners": 12,
+  "canonical_documents": 13,
+  "independent_review_checks": 382,
+  "findings_fixed": [
+    "SEM-001: reconcile effect-unknown before retry; applied effects return original result, proven unapplied effects need fresh fences, unresolved effects remain blocked.",
+    "RBS-001: shared integration owner-route table explicitly retains common Source Control, Git and Jujutsu semantic owners."
+  ],
+  "governance_status": "failures_recorded_no_reseal",
+  "campaign_work": "Original frozen results untouched; protocol repair and continuation are subsequent separately reported phases."
+}
