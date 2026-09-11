@@ -1,0 +1,195 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5b-egolite-181-20260911",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "6e0a38084ed86b4326be9ddbbfde2d3f8e2ae2c1",
+  "landing_base_commit": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+  "scope_and_authority": [
+    "Read-only requirement-by-requirement audit of the 181 Egolite requirements in DOC-0116 under the unchanged R5 freeze.",
+    "This landing changes this compact report only. Raw source, probes, detailed judgments and results remain in PuppetMaster-Evidence.",
+    "No canonical product edits, native implementation, deferred visual design, Spec Lock, generated governance reseal or other agents' edits are included.",
+    "Historical frozen outcomes are not restamped as tests of later main; all 79 selected owner passages remain byte-identical through the landing base."
+  ],
+  "new_batch": {
+    "cases": 181,
+    "chunks": [
+      "chunk-00026",
+      "chunk-00027"
+    ],
+    "status_counts": {
+      "partial": 179,
+      "fail": 2
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 437,
+    "not_reviewed_cases": 12979,
+    "expected_chunks": 151,
+    "valid_result_files": 9,
+    "missing_result_files": 142,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {
+      "partial": 232,
+      "not_applicable": 3,
+      "blocked": 39,
+      "pass": 160,
+      "fail": 3
+    },
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/egolite-181-root-review.json",
+      "sha256": "7ff821eecb873e6d1051362bd6f7a8e31e69e4740d071e5815e440e07fff9710"
+    },
+    "chunk_results": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00026.result.json",
+        "sha256": "d9e5cd28462d356cdf94ba012e44be83c4e5f97c2c18035b124a5b7cd33d7e16",
+        "case_count": 130
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00027.result.json",
+        "sha256": "ca224633c808059509ed9876ed5a6fc2b084c819f207170c54b311f8f02066a3",
+        "case_count": 51
+      }
+    ],
+    "integrity": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/review-closure-integrity.json",
+      "sha256": "d1d0414250e1e16aff1ddf5bea026fd4f7dde3e5a7dd8db0465937e8dec47d1c"
+    },
+    "source_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/egolite-181-custody-37-to-6e-jJy2Cd/manifest.json",
+      "sha256": "de096487917a1c1258551b0a00324288f8e18be542fbb363bdcff8d79b0eabef"
+    },
+    "reviewed_input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/reviewed-input-custody.generated.json",
+      "sha256": "2be1a0d43f78c27240f0f7a1419f0426682a4cecae729461b6c6aa32b618ffa4"
+    },
+    "reviewed_owner_passages": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/reviewed-owner-passages.generated.json",
+      "sha256": "a5b54295c98f118703c7ba16ef028d2369f66d42fd24ba18d252e5f6e90fa545"
+    },
+    "scm_origin_static_map": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/scm-origin-static-map-37-to-6e-osMHct/receipt.json",
+      "sha256": "5b8ec09a64b7c0e3295f1f50a53d40e5f7822e7fbe3bfcdb30dff4cc2281efa2"
+    },
+    "compact_result_probe": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/probe-contract-boundaries.result.json",
+      "sha256": "1ce85f09859aec8603cd85abaa5b6bb5650a48ea2b755a61fe8a00883d850257",
+      "claim_boundary": "Static result schema plus helper only; no native prompt leak demonstrated."
+    },
+    "landing_currentness": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-egolite-root-review-20260911-o1eLLh9M/landing-currentness-808bd8d9.json",
+      "sha256": "b4ec6188244187cd744700de3b287003f5529fdcee4bc4ce745dcf6be2941931"
+    }
+  },
+  "verification": {
+    "integrity": {
+      "verified_external_file_pins": 56,
+      "reviewed_repository_inputs": 44,
+      "unchanged_selected_owner_passages": 79,
+      "frozen_static_methods_with_exact_ok": 25,
+      "method_hash_convention": "SHA-256 of Python ast.get_source_segment; declared line range is inclusive but hash excludes leading indentation on the first line and final newline",
+      "case_identity_and_root_judgment_match": true,
+      "distinct_chunk_scoped_receipts": true
+    },
+    "historical_frozen_full_suite": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-unittest-20260911-Zrc5oHfC/execution-summary.json",
+      "sha256": "e0489e5c3cfa49c37bbdbf04f197497da55fb7c5ddafbd68d9994822d9212bbb",
+      "tests": 561,
+      "passed": 548,
+      "failures": 4,
+      "errors": 9,
+      "scope": "Historical frozen full suite; selected static methods do not prove whole requirements."
+    },
+    "historical_frozen_governance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/run-gates.json",
+      "sha256": "7c5071a7ab3e338b5fd7fb3f6832fc4c989b6ad0ea2646c12b270cb1663aebf5",
+      "passed": 25,
+      "total": 36,
+      "scope": "Historical governance outcome; not rerun or resealed."
+    },
+    "landing_currentness": {
+      "base": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+      "changed_whole_reviewed_files_since_initial_comparison": [
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "adjudication": "The added Home outcome-custody SIR-046 passage was read; no selected Egolite passage changed. Existing frozen results retain their original time and source scope."
+    },
+    "own_worktree_shard_check": {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "head": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+      "status": "pass",
+      "docs_checked": 98,
+      "shards_checked": 2302,
+      "failures": [],
+      "claim_boundary": "Read-only shard consistency at landing base, not a governance reseal or native result."
+    }
+  },
+  "named_findings": [
+    {
+      "id": "R5B-COMPACT-RESULT-BUDGET",
+      "requirements": [
+        "HBU-021",
+        "HBU-023",
+        "GOV-008"
+      ],
+      "status": "verified_static_gap",
+      "detail": "compact_result admits 131072-byte, 1-MiB and 8-MiB single inline strings through schema and semantic helper. A property-count limit is not a byte/token result-budget join.",
+      "boundary": "No native prompt leak or executable Browser handler is demonstrated.",
+      "next": "Adjudicate the existing owner budget/representation contract and repair its static budget join with exact boundary and over-budget tests; do not invent a new parallel result family."
+    },
+    {
+      "id": "R5B-PROVIDER-FIXTURE-ENROLLMENT",
+      "requirements": [
+        "SCM-013",
+        "SCM-014",
+        "SCM-015",
+        "ORI-001",
+        "ORI-011",
+        "ORI-012"
+      ],
+      "status": "verified_static_coverage_limit",
+      "detail": "The standalone Origin, GitLab, Azure DevOps and Bitbucket fixture packs are absent from the shared validator CONTRACT_PAIRS manifest. Shared records/matrices and individual static tests do not imply those packs ran.",
+      "next": "Review each existing pack and its owner before adding or correcting validator enrollment; preserve required negatives and separate native/provider evidence."
+    },
+    {
+      "id": "R5B-BROWSER-CONTROL-FLOW",
+      "requirements": [
+        "BRW-003"
+      ],
+      "status": "unresolved_representation_question",
+      "detail": "The source requires typed bounded control flow while the current closed AST exposes actions, local_operators and checkpoint refs; a compiler lowering/representation contract is not established by those fields.",
+      "boundary": "No claim that source control flow is categorically unsupported; lowering may be intended but remains unproved."
+    },
+    {
+      "id": "R5B-NATIVE-AND-SECURITY-PROOF",
+      "status": "open",
+      "detail": "Owner/schema/fixture evidence does not prove compiler execution, browser/controller behavior, capture/media fidelity, broker isolation, source-control or forge effects, plugin activation, platform durability, benchmarks or native GUI acceptance."
+    },
+    {
+      "id": "R5B-GOVERNANCE",
+      "requirements": [
+        "GOV-005"
+      ],
+      "status": "fail_at_frozen_revision",
+      "detail": "Frozen governance remains 25/36 passing. This report neither reseals it nor attributes historical failures to the present landing."
+    }
+  ],
+  "remaining_work": [
+    "12,979 R5 rows remain unreviewed; no aggregate completed audit is emitted.",
+    "Implement and verify the identified in-scope static gaps after owner adjudication; native/security/provider obligations remain explicit.",
+    "The prior Browser event checkpoint admitted two of 53 static families; 51 remain outside this batch. Static admission is not native runtime proof.",
+    "Deferred visual design and designated-owner governance sealing remain untouched."
+  ],
+  "prior_checkpoint": "reports/packet-gap-closure-20260910/r5-audit-checkpoint-20260911.json"
+}
