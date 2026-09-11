@@ -1,0 +1,25 @@
+{
+  "status": "PASS_PROPOSED_CONTROL_STOP_ADJUDICATION",
+  "at": 1789159047.3270166,
+  "source_budget": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/arm-budgets/premium.json",
+    "sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639"
+  },
+  "authorization": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/authorization.json",
+    "sha256": "79691055c7c07124a63661af1bb5f0a8a5683cc063f4c88a8221df4ddf935fb2"
+  },
+  "observed_prior_stop": {
+    "reason": "Stop: global_allowance_launch_allowed",
+    "kind": "limit_or_gate"
+  },
+  "decision": "A fresh input copy may resolve exactly the obsolete prior global allowance gate stop, because the new explicit80phase/revisedgate authorization supersedes that control condition. This is not waiver of an arm cap,timeout,retrylimit or admissionlimit.",
+  "required_copy_invariants": [
+    "Retain exact original budget bytes and SHA256 as immutable evidence.",
+    "Set only copied stop_reason and stop_kind to null; append durable control_stop_adjudications metadata identifying original values,authorization andreason.",
+    "All existing other original fields compare deeply equal, including16attempts,receipts/history,bound,4historical admissions,restartcounts and1789152688.500512start.",
+    "Use unchanged monetary source; existing resume_grant applies only previously authorized unused12 to cap28,retaininglogicalretrylimits.",
+    "Keep current v4 offline proof/freeze unchanged; actual fresh continuation3global80allowance/manualgate andarmcap,time,retry checks still required atlaunch."
+  ],
+  "not_claimed": "No actual normalized copy or migration output inspected; this approval concerns the narrowly specified operational adjudication. No production source or original budget was edited."
+}

@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "at": 1789157348.744304,
+  "scope": "Pure function only; source extractor and registration completeness owned by root.",
+  "source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/refresh_continuation3_allowance.py",
+  "sha256": "6b1705b55eb351af72950618a900a24579609b49fd20133ce5cd9a8c758ec444",
+  "cases": [
+    {
+      "case": "valid",
+      "pass": true
+    },
+    {
+      "case": "manual_closed",
+      "pass": true
+    },
+    {
+      "case": "manual_missing",
+      "pass": true
+    },
+    {
+      "case": "exact_boundary",
+      "pass": true
+    },
+    {
+      "case": "above_boundary",
+      "pass": true
+    },
+    {
+      "case": "below_boundary",
+      "pass": true
+    },
+    {
+      "case": "counter_gap",
+      "pass": true
+    },
+    {
+      "case": "arm_reporting_failure_ignored",
+      "pass": true
+    },
+    {
+      "case": "wrong_config_phase",
+      "pass": true
+    },
+    {
+      "case": "wrong_usage_phase",
+      "pass": true
+    },
+    {
+      "case": "wrong_cap",
+      "pass": true
+    },
+    {
+      "case": "wrong_aggregate",
+      "pass": true
+    },
+    {
+      "case": "nonzero_opening",
+      "pass": true
+    },
+    {
+      "case": "captured_nan",
+      "pass": true
+    },
+    {
+      "case": "captured_bool",
+      "pass": true
+    },
+    {
+      "case": "negative_margin",
+      "pass": true
+    },
+    {
+      "case": "invalid_time",
+      "pass": true
+    }
+  ],
+  "paid_requests": 0
+}

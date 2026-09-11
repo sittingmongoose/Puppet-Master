@@ -1,0 +1,54 @@
+{
+  "arms": [
+    {
+      "arm": "premium",
+      "run": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911",
+      "run_sha256": "7d91d2830476589d645703b62b65f5d15543ec778ea9d878f9829a265807607e",
+      "history_manifest": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/history-artifacts.json",
+        "sha256": "d326c3a1d118d4290d3b6635853ca7fdf71e059ba0e1544661d01b834a388367"
+      },
+      "artifacts_verified": 2875,
+      "case_input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a",
+      "inputs": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cases/jujutsu-frozen-20260911",
+      "fresh_code_hashes_verified": true
+    },
+    {
+      "arm": "hybrid",
+      "run": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911",
+      "run_sha256": "03c1fa17dcd25239e0a80f51a63040c9646bf2f34067f31c42cf38a3b753ae40",
+      "history_manifest": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/history-artifacts.json",
+        "sha256": "863b82260fb9bbdd4451eb60640339c2510eb8b3ba6cb70f0acffd12e5f85aae"
+      },
+      "artifacts_verified": 2381,
+      "case_input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a",
+      "inputs": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cases/jujutsu-frozen-20260911",
+      "fresh_code_hashes_verified": true
+    }
+  ],
+  "premium_existing_attempts_preserved": 16,
+  "premium_admission_cap": 28,
+  "premium_start_preserved": 1789152688.500512,
+  "premium_restarts_preserved": 0,
+  "premium_verified_human_waits": [
+    {
+      "start": 1789154117.097736,
+      "end": 1789154140.353642,
+      "verified": true,
+      "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/approval-wait-evidence.json",
+      "evidence_sha256": "cd24beb26f9ddb2c292419407ac4786bc66ecbcd888aa97026590f6982f59d6a"
+    },
+    {
+      "start": 1789156004.896084,
+      "end": 1789157021.4942,
+      "verified": true,
+      "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/human-wait-evidence.json",
+      "evidence_sha256": "a3976caacd1ff8b18a56d1697362bc1a5c6b46cd887208867e3b92f04fa3f968"
+    }
+  ],
+  "hybrid_original_attempts": 12,
+  "hybrid_future_admission_cap": 24,
+  "hybrid_not_activated": true,
+  "newer_canon_in_inputs": false
+}

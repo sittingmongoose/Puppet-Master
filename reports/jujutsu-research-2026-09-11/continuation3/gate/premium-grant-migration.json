@@ -1,0 +1,54 @@
+{
+  "grant_id": "premium-continuation3-existing-second-grant",
+  "additional_admissions": 12,
+  "authorized_at_recorded": 1789159069.9430685,
+  "authorization_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/authorization.json",
+  "authorization_sha256": "79691055c7c07124a63661af1bb5f0a8a5683cc063f4c88a8221df4ddf935fb2",
+  "prior_attempt_count": 16,
+  "source_budget_sha256": "24e82bf11dd2f17b0edad8714bd5b3fd20f2fcbdf1c5b40f5e96b6dfd8f3ee4f",
+  "source_usage_sha256": "f253974892ba9fc58105a3013138d4c9ed24e2ace5179a17030d3ded66f69908",
+  "baseline_unresolved": {
+    "J0002-implementation": [
+      "legacy:J0002-implementation"
+    ],
+    "J0003-history": [
+      "legacy:J0003-history"
+    ],
+    "J0004-implementation": [
+      "legacy:J0004-implementation"
+    ],
+    "J0010-reconcile": [
+      "cb4361ba0610d547ccf6c7b1ae4e7defbeddbb8b2c3655ddcfd7e4127338ad7d"
+    ],
+    "J0011-reconcile": [
+      "d818c1a6e35cde63cef49d4ec6eec761aa5f1debddeaffe1d7f857a4d566d5f4"
+    ],
+    "J0013-reconcile": [
+      "32080e93bb490073261fa291791b99737e1dde578f4f6e24f4d957f126e394ed"
+    ],
+    "J0015-reconcile": [
+      "d338068e52e4bcaab1fb9ea26af83654137121f2c46896f28c2b941cc3d7678f"
+    ],
+    "J0016-reconcile": [
+      "bf637e0d3e49c08a0fae8ba9291299f7bab27a074db0494093686070e3db7776"
+    ]
+  },
+  "baseline_terminal_jobs": [
+    "J0001-discovery",
+    "J0002-implementation",
+    "J0003-history",
+    "J0004-implementation",
+    "J0005-reconcile",
+    "J0006-reconcile",
+    "J0007-reconcile",
+    "J0008-reconcile",
+    "J0009-reconcile",
+    "J0010-reconcile",
+    "J0011-reconcile",
+    "J0012-reconcile",
+    "J0013-reconcile",
+    "J0014-reconcile",
+    "J0015-reconcile",
+    "J0016-reconcile"
+  ]
+}

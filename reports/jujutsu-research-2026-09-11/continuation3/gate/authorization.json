@@ -1,0 +1,45 @@
+{
+  "authorization": "User explicitly authorized NEXT_GOAL_2_CONTINUATION3_20260911.md and additional80 non-arm",
+  "user_authorization_at": "2026-09-11T20:03:41.494200+00:00",
+  "nonarm_phase_cap_usd": 80,
+  "workflow_attempt": 1,
+  "max_workflow_attempts": 1,
+  "max_workflow_seconds": 1200,
+  "workflow_started_at": "2026-09-11T20:03:41.494200+00:00",
+  "workflow_deadline_at": "2026-09-11T20:23:41.494200+00:00",
+  "live_qualification_max_requests": 3,
+  "live_receipt_qualification_is_non_blocking": true,
+  "additional_premium_admissions": 12,
+  "premium_grant_already_authorized_at": "2026-09-11T19:15:40.353642+00:00",
+  "additional_hybrid_admissions": 12,
+  "renew_time_or_admission_grants": false,
+  "premium_original_continuation_started_at": 1789152688.500512,
+  "lifetime_caps_usd": {
+    "premium": 250,
+    "hybrid": 100
+  },
+  "source_brief": {
+    "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/NEXT_GOAL_2_CONTINUATION3_20260911.md",
+    "sha256": "83d2545f2a23b70769898cdade7dd7696417abb82e0ab926e750eb4f8be6a2dc"
+  },
+  "source_protocol_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/protocol/freeze.json",
+    "sha256": "df5e8ace4832d511862a9c5b85bc96589a37beaa023fef598bf4c37d49d72a87"
+  },
+  "arithmetic_correction": "12 times12=144 exceeds hybrid100; enforce captured plus allowances admission against each unchanged lifetime cap, not full-grant preapproval.",
+  "verified_human_waits": [
+    {
+      "start": 1789154117.097736,
+      "end": 1789154140.353642,
+      "verified": true,
+      "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/approval-wait-evidence.json"
+    },
+    {
+      "start": 1789156004.896084,
+      "end": 1789157021.4942,
+      "verified": true,
+      "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/human-wait-evidence.json",
+      "evidence_sha256": "a3976caacd1ff8b18a56d1697362bc1a5c6b46cd887208867e3b92f04fa3f968"
+    }
+  ]
+}

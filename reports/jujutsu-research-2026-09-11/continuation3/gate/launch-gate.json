@@ -1,0 +1,59 @@
+{
+  "preflight_passed": true,
+  "d1_committed_pushed_reported": true,
+  "d1_report_sha256": "fd4cadc918b73075a2d11c5d8a2170f6b8fec1c2c3ea5795fbef576d3f198114",
+  "freeze_sha256": "e775933dc7bf35a13835d403a43962f6af33c4715128fb4b7c4b0f40cad7d3ed",
+  "cost_control": {
+    "mode": "monitored_priced_usage",
+    "deepseek_metadata": {
+      "context_window": 1000000,
+      "max_output_tokens": 384000,
+      "selector": "opencode-go/deepseek-v4-flash",
+      "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/deepseek-models.json",
+      "source_sha256": "43897d8cc810ef5d1738511c5bab5bec2b0ae38ba03acc365faab286b2036bdb"
+    },
+    "pricing_basis": "preserved_2026-09-08",
+    "astra_service_tier": "default",
+    "deepseek_valuation": "peak_tariff_upper_bound_includes_auxiliary_receipts_conservatively",
+    "semantics": "Admission and every native request check captured usage plus live stage allowances plus terminal unresolved charges against the unchanged arm cap. Stage average after two terminal same-arm stage jobs with reconciled native usage, otherwise12. Live usage is reporting only. Job-end native records determine captured valuation; an unreconciled terminal job retains12 separately as unresolved liability. Estimates are not billed cash or a mathematical spend bound.",
+    "version": 4,
+    "meter": "captured_plus_live_plus_terminal_unresolved_job_end_v4",
+    "lifetime_captured_caps_usd": {
+      "premium": 250,
+      "hybrid": 100
+    },
+    "cold_stage_allowance_usd": 12,
+    "minimum_fully_reconciled_jobs_for_average": 2,
+    "allowance_scope": "same_arm_and_same_stage_per_job_average",
+    "max_model_requests_per_job": 40,
+    "max_seconds_per_job": 2400,
+    "cancellation_boundary": "before_every_native_model_request",
+    "truncated_runtime_status": "budget_truncated",
+    "historical_state": "immutable_import_preserving_captured_totals_and_all_original_jobs_receipts_reservations_admissions_retries_results",
+    "unresolved_usage": "Every new v4 terminal job without complete native accounting retains12 USD unresolved charge, separate from captured usage; counts against cap indefinitely. Prior baseline unknowns remain visible with unchanged historical valuation.",
+    "legacy_response_reservations": {
+      "astra_usd": 35.85,
+      "deepseek_usd": 0.94688,
+      "status": "historical_read_only_not_used_for_v2_admission"
+    }
+  },
+  "native_boundary_verified": true,
+  "native_boundary_proofs": {
+    "codex": {
+      "adapter_sha256": "49d972926b972df178b23303dc17ce26049625b989021448b1eeb0e6f80372fa",
+      "proxy_sha256": "b8e4b2844aa864bf87d1fb3c9d4cd0f0580e991cc2e3f709f88efd557412c31e",
+      "receipt_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/protocol/native-boundary-proof.json",
+      "receipt_sha256": "0d127f525fb97d30095518c7f02748fc2915e95f34e23cd81aa63ee2982138f5"
+    }
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/review/final-review.json",
+    "sha256": "1e8d45ab3119e5c63a8de5ba6a2dc0b2a5d4760f6c0a7568a4f17ea930c48c53"
+  },
+  "continuation3_authorization": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/authorization.json",
+    "sha256": "79691055c7c07124a63661af1bb5f0a8a5683cc063f4c88a8221df4ddf935fb2"
+  },
+  "live_receipts_required": false,
+  "usage_reconciliation": "job_end_native_records"
+}

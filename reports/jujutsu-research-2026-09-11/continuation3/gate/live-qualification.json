@@ -1,0 +1,139 @@
+{
+  "status": "qualified_job_end_receipts",
+  "max_requests": 3,
+  "wall_limit_seconds": 60,
+  "runtime_sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "script_sha256": "49e9b3e18e44ef43cffaebeefc8270474eb3130215685b9268d1c7d2d8438694",
+  "capture_raw": false,
+  "ephemeral": false,
+  "source_hashes": {
+    "adapters/codex_native.py": "49d972926b972df178b23303dc17ce26049625b989021448b1eeb0e6f80372fa",
+    "adapters/transport_gate.py": "b8e4b2844aa864bf87d1fb3c9d4cd0f0580e991cc2e3f709f88efd557412c31e",
+    "native_receipts.py": "b596c176d00272d9febf2b7b687db022070f45b9b5061a94bcbb4d9cf1f47564",
+    "cost_watch.py": "e5e2c8243a97b83343df2185cd5e52e6938b2e44a3ceb5d376e8514a3665a9df"
+  },
+  "thread_id": "01a09230-32d8-7563-9436-a1d37cdfc769",
+  "rollout_source_path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T20-37-07-01a09230-32d8-7563-9436-a1d37cdfc769.jsonl",
+  "model": "gpt-6-astra",
+  "effort": "xhigh",
+  "service_tier": "default",
+  "native_goal_activated": true,
+  "native_token_usage": {
+    "total": {
+      "totalTokens": 24670,
+      "inputTokens": 24583,
+      "cachedInputTokens": 20736,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 87,
+      "reasoningOutputTokens": 51
+    },
+    "last": {
+      "totalTokens": 12431,
+      "inputTokens": 12426,
+      "cachedInputTokens": 12032,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 5,
+      "reasoningOutputTokens": 0
+    },
+    "modelContextWindow": 258400
+  },
+  "gate": {
+    "forward_admitted": 2,
+    "denied_before_dispatch": 0,
+    "max_requests": 3,
+    "usage_receipts": 2,
+    "stop_reason": "qualification_finished",
+    "live_usage_reporting_only": true,
+    "reporting_failures": 0,
+    "stopped": true,
+    "upstream_origin": "https://chatgpt.com",
+    "upstream_prefix": "/backend-api/codex"
+  },
+  "retention": {
+    "status": "retained",
+    "thread_id": "01a09230-32d8-7563-9436-a1d37cdfc769",
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/native-qualification/native/native-usage.records.jsonl",
+    "sha256": "4b60c754d780ef3c0aea73826926e87533f2ec797965e89d05ea5450454ffac5",
+    "source": {
+      "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T20-37-07-01a09230-32d8-7563-9436-a1d37cdfc769.jsonl",
+      "sha256": "dbfa2c805abbef6c290db2675782314cc2a3131d75ca64124ec5e1dfd9492159"
+    },
+    "gaps": [],
+    "records": 2
+  },
+  "collection": {
+    "receipts": [
+      {
+        "route": "codex",
+        "payload": {
+          "usage_epoch": "native-response:01a09230-32d8-7563-9436-a1d37cdfc769:resp_02eee92909a4b5c6016aa466751acc87d2b6327c8f87b11052",
+          "epoch_start": true,
+          "total": {
+            "inputTokens": 12157,
+            "cachedInputTokens": 8704,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 82
+          },
+          "last": {
+            "inputTokens": 12157,
+            "cachedInputTokens": 8704,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 82
+          }
+        },
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/native-qualification/native/native-usage.records.jsonl",
+          "line": 1
+        }
+      },
+      {
+        "route": "codex",
+        "payload": {
+          "usage_epoch": "native-response:01a09230-32d8-7563-9436-a1d37cdfc769:resp_02eee92909a4b5c6016aa4667a735887d2931efdffdcd34c4a",
+          "epoch_start": true,
+          "total": {
+            "inputTokens": 12426,
+            "cachedInputTokens": 12032,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 5
+          },
+          "last": {
+            "inputTokens": 12426,
+            "cachedInputTokens": 12032,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 5
+          }
+        },
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/native-qualification/native/native-usage.records.jsonl",
+          "line": 2
+        }
+      }
+    ],
+    "complete": true,
+    "gaps": [],
+    "sources": [
+      {
+        "kind": "physical_http_attempts",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/native-qualification/native/transport-boundary.jsonl",
+        "sha256": "ed5528bc104276e33b069c1a8b28d9c43bfe71f84af194cd81f9fee6b0006e64"
+      },
+      {
+        "kind": "original_native_rollout",
+        "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T20-37-07-01a09230-32d8-7563-9436-a1d37cdfc769.jsonl",
+        "sha256": "dbfa2c805abbef6c290db2675782314cc2a3131d75ca64124ec5e1dfd9492159"
+      },
+      {
+        "kind": "retained_native",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/native-qualification/native/native-usage.records.jsonl",
+        "sha256": "4b60c754d780ef3c0aea73826926e87533f2ec797965e89d05ea5450454ffac5"
+      }
+    ],
+    "request_count": 2,
+    "receipt_count": 2
+  },
+  "captured_upper_usd": 0.063556,
+  "unresolved_charge_usd": 0.0,
+  "request_count": 2,
+  "elapsed_seconds": 10.798
+}

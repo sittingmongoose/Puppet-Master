@@ -1,0 +1,31 @@
+{
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/arm-budgets/premium.json",
+    "sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639"
+  },
+  "original_snapshot": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/migration-input/premium-original.json",
+    "sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639"
+  },
+  "normalized_input": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/migration-input/premium-stop-adjudicated.json",
+    "sha256": "24e82bf11dd2f17b0edad8714bd5b3fd20f2fcbdf1c5b40f5e96b6dfd8f3ee4f"
+  },
+  "authorization": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/authorization.json",
+    "sha256": "79691055c7c07124a63661af1bb5f0a8a5683cc063f4c88a8221df4ddf935fb2"
+  },
+  "old_control": {
+    "stop_reason": "Stop: global_allowance_launch_allowed",
+    "stop_kind": "limit_or_gate"
+  },
+  "new_control": {
+    "stop_reason": null,
+    "stop_kind": null
+  },
+  "reason": "Prior global launch closure belongs to the failed live-receipt-required gate and old phase. Explicit continuation3 authorization replaces that gate with independently reviewed v4 job-end accounting and new80phase; current launch gate still required.",
+  "all_other_keys_equal": true,
+  "original_attempts_preserved": 16,
+  "original_restarts_preserved": 0,
+  "original_start_preserved": 1789152688.500512
+}

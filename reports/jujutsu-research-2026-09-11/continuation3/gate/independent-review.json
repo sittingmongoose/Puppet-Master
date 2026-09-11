@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "review_at": 1789158970.0713184,
+  "scope": "Continuation3 independent offline enforcement, job-end native accounting, migration and non-arm allowance review. Live per-request capture and optional qualification are not launch predicates under the new authorization.",
+  "freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/protocol/freeze.json",
+    "sha256": "e775933dc7bf35a13835d403a43962f6af33c4715128fb4b7c4b0f40cad7d3ed"
+  },
+  "source_sha256": {
+    "adapters/codex_native.py": "49d972926b972df178b23303dc17ce26049625b989021448b1eeb0e6f80372fa",
+    "adapters/omp_native.py": "94eec40faa223be0989157e04ac19f8562bef19c0bbf2147bf070b181fb16806",
+    "adapters/transport_gate.py": "b8e4b2844aa864bf87d1fb3c9d4cd0f0580e991cc2e3f709f88efd557412c31e",
+    "bounded_campaign.py": "0897ae446213293c68b36436b8a47707750c0f7081806a796f23c3266b704a8a",
+    "child_transport.py": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597",
+    "cost_watch.py": "e5e2c8243a97b83343df2185cd5e52e6938b2e44a3ceb5d376e8514a3665a9df",
+    "discovery_to_plan.py": "891d8e57f0b76c0bdc45a09692819b3c38735f2fddc65ba4ec930a6de59316fe",
+    "freeze_protocol.py": "d13aa63aeac01a234516b63ee292b70bbd86f97b193fe3c354ed891d72bd7d22",
+    "native_receipts.py": "b596c176d00272d9febf2b7b687db022070f45b9b5061a94bcbb4d9cf1f47564",
+    "prepare_case.py": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302",
+    "prepare_continuation.py": "da277df0b59ce32d5eda2c12b0483d19d09b2324d87c7547563f0b1b875e6cef",
+    "protocol/research_base.py": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a",
+    "research.py": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+    "research_shared_v3.py": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+    "test_bounded_campaign.py": "8f767e19b62dd19372c420d3f2954c300cfa2f27954f0c59491a57c333924482",
+    "test_bounded_campaign_v2.py": "ee841a12e10d84b957ed0f7ec95ac7ebce2ee010eca48b5fc76ce74ca006339a",
+    "test_cost_watch.py": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37",
+    "test_cost_watch_v2.py": "f823e6dac3c8b1b5ca1809232172233f9a47941733f2a34d85a63e920defa368",
+    "test_job_end_v4.py": "741f6aa762007d7d16e179c0d6136406350fb9f0d7bd9215b7f7b607d0364964",
+    "test_native_boundaries_v2.py": "a217a0036c0e27d9c19f084ffe97e358f9c7d5966ffae2a01cc099e67c9268ac",
+    "test_native_boundaries_v3.py": "4ff04fd73a745a60d6311d3c846d5f2351ad0d76517ced1729757de90fb4199d",
+    "test_native_continuation3.py": "a4e94e5eb2da8e4b33e111c8b7a2de11986a854cf8a63f16908a85d30168b1de",
+    "test_resume_grant_v3.py": "cfeb763b7b12b3a89f5c74708fbe1b79521c1de5f4478a95485839030088b69d",
+    "valuation.py": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930",
+    "PRICING_BASIS.md": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d",
+    "cost_policy.json": "d096dac1ddd552aa1cfa026981151b2162c73070307ec4083beb90812edf1247"
+  },
+  "runtime": {
+    "path": "/home/sittingmongoose/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+    "sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da"
+  },
+  "tests": [
+    {
+      "command": "python3 -B -m unittest test_job_end_v4 test_bounded_campaign_v2 test_native_continuation3 -q",
+      "passed": 40,
+      "seconds": 6.424,
+      "paid_calls": 0
+    },
+    {
+      "command": "python3 -B -m unittest test_independent_meter_v4 test_independent_collector_v4 -q",
+      "passed": 17,
+      "seconds": 0.078,
+      "paid_calls": 0,
+      "files": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/review/test_independent_collector_v4.py",
+          "sha256": "818d9f86fb3bf160355fb6d782b5ea4baa926569998d84a1b6ce5aaeb2349cdb"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/review/test_independent_meter_v4.py",
+          "sha256": "30f00bc91bbf50a44ea0dd86cd4877fd462ed5c02238ef251583e18d481d4e66"
+        }
+      ]
+    },
+    {
+      "kind": "independent allowance pure cases",
+      "passed": 17,
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/review/allowance-review.json",
+        "sha256": "58896d4ece8528e987ec91c0d8be66ff9c8f4871e60174bb4bf1158cde059aa6"
+      }
+    }
+  ],
+  "material_findings": [],
+  "resolved_findings": [
+    "Known valid receipt siblings are captured even when another receipt is malformed; unresolved12 retained.",
+    "Stage averages use two terminal same-arm/stage jobs with complete usage regardless of research outcome.",
+    "Durable Meter request count must equal native unique response count and transport count; matching log/native omissions cannot clear unresolved12.",
+    "Hybrid cannot use premium extra-grant migration; original12 plus unused12 cap24, premium16 plus unused12 cap28 without clock/retry reset.",
+    "Forward-only pricing subtracts both inclusive cached-read and cache-write categories from uncached input; impossible category sums rejected, historical valuations untouched."
+  ],
+  "verified_properties": [
+    "Every physical POST enters durable40request/2400seconds/cap boundary, including retries and compact route.",
+    "Missing live usage,HTTP500 and reporting parser/callback failures do not stop forwarding; native bytes preserved.",
+    "Native thread/response identities deduplicate projections; cumulative reset/conflict/partial records remain gaps; known receipts price once.",
+    "Unreconciled terminal jobs retain fixed12 separatefromcaptured andlive allowances, including across restart; all count againstactualarmcaps.",
+    "Original history,capturedcost,receiptidentities,attempts,retries,startclock preserved by migration fixture and source review; existing completion recovery does not replaywork.",
+    "CommonrouteAstraxhigh,3workers,10000chars,max3leads,reconcile/compareonly preserved; root must validate original frozen case and own-arm inputs when staging.",
+    "Separate nonarm80phase allowance enforcesmanualgate,knowncountergaps,finitevalues andfreshness; no arm live receipt predicate."
+  ],
+  "arithmetic_correction": "12*12=144 exceeds hybrid100; admission estimates are not mathematical cost guarantees. Actual100hybrid/250premium caps govern, not incorrect brief arithmetic.",
+  "qualification": "Optional max3request qualification outcome is reporting only, and is neither required nor certified by this review.",
+  "limits": [
+    "Inherited native provider-route evidence is lineage for unchanged fixed provider wiring; updated offline tests certify modified request/time/cap and reporting behavior.",
+    "No campaign run or raw historical repricing performed by reviewer. Root owns actual state staging, input-manifest verification, watcher lifecycle and publication.",
+    "Legacyv2/v3 tests include superseded live-receipt semantics and are not represented as passing v4suite."
+  ]
+}
