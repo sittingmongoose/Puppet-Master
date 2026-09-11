@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19768-L19957
+Source lines: L19774-L20428
 
-Source SHA256: `7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739`
+Source SHA256: `d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec`
 
 ---
 
@@ -198,3 +198,468 @@ The physical row must be materialized with normal coordinator/version admission 
 **Retained original evidence closure.** The same row also retains the exact authenticated `original_normalized_request` identity projection used by CV-333 (request ref, command/instance/operation, original full owner identity, payload digest, idempotency key, target generation and dispatch frame), plus the original successful synced `AppendReceipt` object. These are closed content-free evidence, not a new UICommand envelope or recaptured domain arguments. The canonical domain request digest remains the companion's separate exact recipe. First capture must authenticate the actual original request; a fixture-shaped identity cannot establish it. Successful terminal publication proves the receipt's event/frame/durable watermark through barrier2 and requires its canonical digest to equal the typed result's append_receipt_sha256. Thereafter lawful point/event retirement need not preserve the old segment: the original receipt is historical committed command evidence, never a live locator or authority to read purged bytes. Pending and no-effect refused/failed rows have null original_append_receipt. Native retained outcome/request/response resolution is delegated through the one canonical row; original refs remain exact, with no replacement identities. The complete command-result row is preserved atomically in mandatory backup, separately from expiring point/companion custody.
 
 **Closed semantic publication guards.** Pending custody requires both frozen append-input and producer semantic digests, each equal to the same admitted creation companion. A terminal created result requires those same non-null original digests, actual successful outcome, accepted/succeeded response with no error, the exact point/ref/hash/event identity, and the original synced receipt with `durable_end_offset > byte_offset`. A terminal refused result requires the actual rejected outcome, rejected response with its original error and null result status, no event refs, no append receipt and no frozen append-input or producer digests. A terminal failed no-effect result requires the actual failed outcome, accepted/failed response with its original error, and the same absence of created-event/append/digest claims. All result/receipt/outcome references resolve through this one committed value's exact typed members; the canonical schema pointer is `Plans/restore_point_create_result.schema.json#/$defs/RestorePointCreateCommandResult`. Request and outcome identity joins remain mandatory in every state. The terminal time cannot precede admission; an admitted terminal value is immutable. Shape validation alone cannot establish these relational guards or native provenance.
+
+### SP-271 - Historical child-status exact source reader
+
+```yaml
+plan_unit_id: SP-271
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage defines an exact read-only historical goal.child_status_changed adapter over the
+  existing current EventRecord index and verified retained source. It owns no projection, durable state,
+  checkpoint, append or recovery write. The generic index checkpoint and source publication proof remain
+  independently required; unresolved shared custody makes interpretation unavailable.
+gui_related: false
+gui_classification_reason: This exact-row contract defines historical validation and read-only storage
+  interpretation without a new GUI or active child projection.
+split_recommended: false
+depends_on:
+- GRS-052
+- CV-334
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The sole adapter storage.goal_child_status_history_read.v1@1.0.0 accepts exact authorized project/event/original-sequence
+  identity and validates key, partition, index, source frame and payload joins.
+- A consistent CURRENT-selected index generation, its actual admitted generic checkpoint, complete declared
+  coverage, source watermark and committed translation authority are verified before releasing the ephemeral
+  result; stale generations discard it.
+- Family checkpoint disposition is none_required because there is no family-owned durable effect, projection,
+  acknowledgement, idempotency ledger or progress cursor; another family checkpoint is never borrowed.
+- Current producer rejection precedes dedupe/CAS/outbox/append. Passive historical lookup cannot rebuild
+  child topology, run a prior transition, schedule work, approve, charge, notify, append, write quarantine
+  or alter canonical state.
+- Exact original v2 schema and supported registered v1 normalization preserve historical source identity
+  and genuine custody; missing evidence or unsupported routes never produce synthetic history.
+- Existing source/index retention, backup, holds, tombstones, authorization and secret-handling rules
+  remain intact; the adapter owns no new retention clock or material.
+validation_surfaces:
+- Plans/goal_child_status_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+risk_class: retired_goal_child_writer_reintroduction
+reasoning_tier: high
+context_scope: goal_child_status_historical_event
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: goal_child_status_history_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+preserved_exact_tokens:
+- goal.child_status_changed
+- pm.goal_runtime_event.goal_child_status_changed.schema.v2
+- RP-AUTHORITY-INDEFINITE
+- none_required
+- projector_replay_only
+negative_constraints:
+- No event/schema/registry/physical/policy mutation, sibling disposition, new child topology, To-Do translation,
+  runtime proof, WorkNode/readiness admission or governance seal.
+- No current append success from historical dedupe, guessed source custody, unresolved generic checkpoint,
+  read-triggered write or fabricated historical default.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+```
+
+**Authority and producer.** This exact row stays registered with its current v2 payload root, project-only scope and `RP-AUTHORITY-INDEFINITE@1.0.0`. GRS-060/CV-334 forbid every current producer append before dedupe/CAS. There is no new publication/outbox, payload, canonical receipt, physical family, launch-critical dependency, retention policy, projector or checkpoint writer. The earlier sole-new-writers clause carries the exact CV-334 historical-only exception. SP-214's `goal_child_index.v1` and child-state reconstruction do not apply to this row in the current runtime; preserving old bytes does not authorize rebuilding retired child topology.
+
+**Named consumer binding.** Define NEW read-adapter binding `storage.goal_child_status_history_read.v1`, version `1.0.0`, over the existing Storage EventRecord direct inspection and Runtime Artifacts Panel/Goal history validated read paths. This is a technical name for the existing bounded lookup behavior, not an assertion that a previously named adapter was found. Consumers use it only for read-only historical diagnostic inspection. Request exactly project ID, event ID and original sequence ID under normal project read authorization. No current selected-project fallback, name-prefix scan, history pagination, notification, scheduling, approval, accounting or file mutation is owned by this adapter.
+
+**Key, value, cursor and shared proof.** Resolve `event_record_index` by family ID, using existing key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` and value `pm.storage_value.event_record_index.v2@2.0.0`. Partition is `project~{base64url_no_pad(UTF8(project_id))}`; sequence uses exact nonnegative integer arithmetic and 20-digit zero padding within the EventRecord owner's admitted domain. Validate the existing closed value schema. Index key/value/project/event/sequence/type must match the request, exact family name and source EventRecord. The physical cursor is the value's full `(segment_generation, segment_name, byte_offset, sequence_id)`, never an offset alone.
+
+The generic index projector remains independently owned. Read a consistent CURRENT-selected committed generation and require publication_locator's manifest_generation, recovery_epoch and survivor_prefix_sha256 to match that authority. Resolve its checkpoint_ref to the independently published generic index checkpoint and prove the requested sequence belongs to its complete validated coverage and surviving source set, with the index and checkpoint published together under the existing generic contract. A nonempty ref alone proves nothing. Do not substitute application dedupe, `run.started`'s filtered checkpoint or another family checkpoint. If generic checkpoint proof cannot be resolved, this read is unavailable; this contract does not invent its shape or infer proof from max sequence. Validate any compaction translation through the committed translation manifest and exact source identity. Read and validate the complete source frame within the durable watermark; verify payload hash and producer digest by the existing Contracts formulas and immutable frame identity. Index metadata is never payload authority. Revalidate the selected publication before releasing the in-memory answer; a changed/recovered generation discards the answer and requires a fresh bounded read. No cross-generation patched offset is permitted.
+
+**Checkpoint and owned effect.** Family checkpoint disposition is explicitly `none_required`: there is no family projection, durable progress, acknowledge token, replay position, idempotency ledger or owned write. Repeated lookups recompute an ephemeral answer; interruption leaves no family state. The requested exact event tuple is a lookup selector, not a durable cursor. The source index's independently owned checkpoint proof above remains required. Zero durable owned effect means no atomic family write transaction and no checkpoint advance; returning the complete validated answer is the only success boundary. A missing index does not trigger a rebuild or write in this adapter; the existing independent generic recovery owner may rebuild it through its own contract.
+
+**History and replay.** Historical eligibility means source bytes already in verified retained seglog or their byte/identity-preserving restoration from an authenticated existing backup generation with the existing recovery receipt and source manifest. Timestamp, payload schema promotion date, imported JSON, synthetic migration marker and current dedupe records cannot establish historical custody. Existing invalid material is preserved for diagnostics and cannot be interpreted as authority. V2 validates against the unchanged schema and historical D-R03 predicates, without running them. Exact v1 normalization is transient and allowed only through the pre-existing registered event-specific legacy route, source header/cursor and identity candidates; unsupported/absent route refuses interpretation and leaves bytes intact. No default-filled rewritten payload or new idempotency identity is persisted. Neither v1 nor v2 inspection creates parent/child projections or dispatches any original side effect.
+
+**Failure, retention and recovery.** Same exact source/identity/digest is the same historical observation, not current append success. Conflicting bytes, ambiguous identity, missing original proof, unsupported future schema, wrong scope, stale publication or unresolved source return unavailable/invalid diagnostic disposition without successful interpretation. Current writer rejection is unconditional even if historical bytes with the same idempotency key exist. Canonical seglog and any referenced historical canonical receipts remain subject to their existing backup/custody rules; loss is not repaired from an index or guessed child state. `RP-AUTHORITY-INDEFINITE@1.0.0` keeps source authority; `RP-EVENT-INDEX-SOURCE@1.0.0` couples the existing lookup row to that source. Adapter holds no independent retained material and owns no new clock. Existing project deletion, legal holds, retained-source access and tombstone rules still govern access. Exact committed deleted/expired translations return unavailable, never fabricated history. Raw secrets are not exposed: use existing reject-unhandled-secrets with no new redaction transform. Reader failure is read-only refusal, not an instruction to write quarantine from this adapter.
+
+**Withdrawal.** Unsupported adapter/payload/envelope version disables the family read, preserves original bytes and indexes under their owners, and grants no fallthrough writer, parent projection or alias. Removing reader availability does not change registry membership or retention. Contract/schema/oracle materialization is not native proof, checker success, registry admission, WorkNode/readiness admission or a governance seal.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-060, ContractName:Plans/Contracts_V0.md#CV-334, ContractName:Plans/Runtime_Artifacts_Panel.md, SchemaID:pm.storage_value.event_record_index.v2
+
+### SP-277 - Historical Goal degradation direct source reader
+
+```yaml
+unit_type: storage_contract
+status: accepted
+gui_related: false
+gui_classification_reason: Defines exact event admission, historical interpretation and storage read authority
+  without adding a GUI.
+split_recommended: false
+unblocks: []
+reasoning_tier: high
+context_scope: goal_degraded_exact_family_historical_contract
+validation_surfaces:
+- Plans/goal_degraded_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_degraded.schema.json
+- Plans/goal_runtime_events.schema.json
+- Plans/storage_value_registry.json
+- python3 scripts/pm-plan-index.py validate
+- Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.
+node_compile_hint:
+  mode: goal_degraded_historical_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-049
+- Plans/Goal_Runtime_System.md#GRS-014
+- EA-UND-0006-GOAL:D-R06
+- Plans/Decision_Log.md#DL-045
+source_atom_ids: []
+negative_constraints:
+- No blanket21 retirement, registry/schema/retention mutation, alias, new current producer, active Goal
+  state, role/tier, phase/tranche/child/budget, To-Do or GoalRun translation.
+- No native/runtime/readiness/gate/seal proof, canonical receipt reconstruction, automatic recovery/continuation,
+  notification, Usage, approval or hold effect.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+plan_unit_id: SP-277
+owner_doc: Plans/storage-plan.md
+depends_on:
+- GRS-061
+- CV-335
+- SP-235
+- SP-236
+- SP-237
+- SP-241
+risk_class: historical_goal_event_source_and_checkpoint_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+canonical_text: 'Define NEW read-adapter binding `storage.goal_degraded_history_read.v1`, version `1.0.0`,
+  for the existing Storage/Goal/Runtime Artifacts validated EventRecord inspection path. The ID is a new
+  explicit technical definition, not a claim of a previously registered adapter. It serves exactly the
+  already registered `event-family-goal-degraded@2.0.0` under GRS-061/CV-335''s historical-only disposition.
+  There is no current producer, family projector, new physical value, critical/MVP dependency, new policy
+  or active lifecycle effect. The existing v2 payload and immutable legacy aggregate are unchanged. This
+  binding does not reuse the child-status adapter as authority; both consume the independently owned generic
+  index through their own exact-family constraints.
+
+
+  The bounded lookup selector contains exactly project_id, goal_id, event_id and sequence_id. Normal authenticated
+  project/historical-read access applies; a live Goal object need not be fabricated for a retained historical
+  event. Resolve the existing `event_record_index` family by ID, schema `pm.storage_value.event_record_index.v2@2.0.0`,
+  using key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. Project partition is
+  exactly `project~{base64url_no_pad(UTF8(project_id))}` and sequence formatting follows the existing
+  exact EventRecord integer domain and twenty-digit unsigned decimal padding. Do not round through floating
+  point, substitute selected project, infer the event from its name or omit event ID. Validate the closed
+  current index schema and exact key/value/project/sequence/event/family joins, then validate source payload
+  goal_id against the selector.
+
+
+  Read a consistent CURRENT-selected committed index/source publication. Resolve the index publication_locator''s
+  manifest_generation, recovery_epoch, survivor_prefix_sha256 and checkpoint_ref to the independently
+  owned generic index publication and actual checkpoint. Prove complete generic index coverage includes
+  the exact requested sequence in the surviving source set; a nonempty reference, maximum sequence, family-filtered
+  checkpoint, application dedupe checkpoint or another event''s cursor is not coverage proof. If the actual
+  generic checkpoint cannot be resolved, return unavailable instead of inventing a checkpoint contract.
+  This family owns no full-range scan or catch-up. It relies on verified generic full-range publication
+  and validates this exact complete source frame.
+
+
+  The source cursor is the full tuple segment_generation, segment_name, byte_offset and sequence_id from
+  the validated row. Check current generation, complete frame bounds/CRC, durable watermark, original
+  event identity, payload hash and existing producer-semantic digest with their actual owner algorithms.
+  The index contains lookup metadata, not event or receipt authority. Compaction translations must resolve
+  an actual committed translation manifest and preserve exact source identity; a guessed retired offset
+  is forbidden. Revalidate CURRENT/publication selection before releasing the complete in-memory answer.
+  If recovery/generation changed, discard the answer and perform a fresh bounded read. A missing index
+  does not cause this adapter to write/rebuild; only the independent generic recovery owner may do so
+  under its contract.
+
+
+  Family checkpoint disposition is explicitly `none_required`. The adapter owns zero durable state: no
+  projection row, progress/cursor value, acknowledgement, family idempotency record, receipt, checkpoint,
+  cache materialization, hold or index write. Repeated/interrupted lookups leave no owned effect. The
+  exact selector is a lookup request, not a resumable cursor. The sole success boundary is release of
+  one fully validated in-memory historical answer; there is no atomic family write transaction or checkpoint
+  advance. The independently required generic checkpoint proof is not waived by none_required. No child-status/run.started/Goal-state
+  checkpoint is borrowed.
+
+
+  Genuine historical eligibility is established by actual retained immutable seglog source or its authenticated
+  byte/identity-preserving restoration from an existing verified backup generation with the original source/restore
+  custody. A timestamp, schema promotion date, imported caller JSON, migration marker or absent current
+  writer does not prove history. A record must validate under its actual supported original schema and
+  source provenance. Legacy aggregate `pm.goal_runtime_events.schema.v1` shape remains read/import evidence
+  only; an exact established generic legacy normalization route may supply its own transient envelope/identity
+  view when all registered original candidates/header/cursor proofs exist. No new event-specific v1-to-v2
+  payload converter is defined; unsupported original semantics stay explicitly unresolved instead of default-filled
+  or rewritten as v2. Source bytes are never changed on read. D-R06 predicates remain historical diagnostic
+  checks; their actions, role/tier requirements and state transitions are not executed.
+
+
+  Same exact source identity/digest yields the same historical observation. Conflicting source bytes,
+  goal/project joins or digest evidence fail interpretation without selecting a winner. Every attempted
+  current append is independently rejected before dedupe or CAS. Unknown schema, malformed frame, absent
+  canonical source, unsupported reader, stale publication or unresolved receipt/predecessor facts return
+  invalid/unavailable or explicitly unresolved historical validation; they grant no current lifecycle
+  truth. Read refusal does not instruct the adapter to write quarantine records. Existing Storage recovery
+  owns any separate integrity handling.
+
+
+  Historical source keeps `RP-AUTHORITY-INDEFINITE@1.0.0`, with its original backup/hold/canonical authority.
+  Existing lookup rows keep `RP-EVENT-INDEX-SOURCE@1.0.0`; no family-local timer is introduced. The adapter
+  retains nothing independently. Canonical goal receipts remain mandatory-backup/non-rebuildable and cannot
+  be regenerated from this event or index. Unavailable required evidence remains unavailable; original
+  historical meaning is not converted to a current block on a retired verifier. Existing actual recovery/continuation
+  owners still fence mutation and false completion when canonical authority is unknown. Survivor-projection
+  degraded quality/provenance remains valid under GRS-042, without emitting this event or writing a fifth
+  Goal state.
+
+
+  Existing deletion/tombstone/access and hold rules apply to source and original refs. Indefinite audit
+  custody does not unhide deleted Goal/thread content or grant dereference permission. A committed unavailable/deleted
+  source translation returns truthful unavailable; no missing record is reconstructed. Reject unhandled
+  secrets under the existing family rule and use no new redaction transform; do not expose secret-bearing
+  original bytes as a successful view. Unsupported adapter/envelope/payload/index schema or explicit withdrawal
+  stops this exact family interpretation, preserves original custody under its owners and admits no fallback
+  current producer, projection, alias or event. These definitions provide contract depth, not native reader,
+  storage, recovery, permission, lifecycle or governance proof.
+
+
+  Historical eligibility additionally requires actual retained source-generation/compatibility custody
+  establishing the original applicable contract; an invalid current append does not become lawful history
+  merely by already being in seglog. No claim is made that a historical v2 instance exists. Timestamps
+  or the current schema promotion cannot supply the missing original admission proof.
+
+
+  At this source snapshot, no concrete generic EventRecord-index checkpoint family/schema is materialized:
+  checkpoint_ref is only a reference. The positive lookup path therefore remains blocked on the separately
+  owned shared checkpoint/publication prerequisite. Fail-closed text is not an operating positive path
+  or completed reader-depth evidence. This unit does not define that missing shared checkpoint; root must
+  integrate the independently reviewed exact shared authority before admitting the reader.'
+acceptance_criteria:
+- Exact four-field project/goal/event/sequence lookup validates existing generic index key/value and complete
+  canonical source frame, payload/hash and goal joins.
+- Actual generic checkpoint/coverage, CURRENT, generation/recovery/survivor and committed translation
+  proof are required; no sibling or nonempty-reference substitute is accepted.
+- Changed publication before response invalidates the answer; index/source missing does not trigger adapter
+  writes or guessed offsets.
+- Family checkpoint is none_required because no durable family effect exists; repeated/interrupted reads
+  leave all Goal/projection/receipt/index/checkpoint state unchanged.
+- Genuine original source/backup custody establishes history; timestamps, source absence, imported JSON
+  and default-filled migration data do not.
+- Unchanged v2 schema and supported original v1 route are reader-only; no new v1-to-v2 payload upgrader
+  or active D-R06 transition exists.
+- Historical source and canonical receipt custody/holds retain existing policies; lookup rows are source-coupled
+  and no new family/timer/launch tier is created.
+- Projection degraded quality and recovery fences remain with existing owners; reading historical data
+  cannot create a fifth Goal state, recover a receipt or certify success.
+- Deletion/permission/secret/unsupported-version/withdrawal cases preserve original bytes and return truthful
+  unavailable without action, hold, notification or writer effects.
+- Positive reader admission remains blocked until the actual generic EventRecord-index checkpoint/publication
+  contract is separately materialized and bound; a required reference alone is not operating-path proof.
+preserved_exact_tokens:
+- storage.goal_degraded_history_read.v1
+- none_required
+- event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}
+- pm.storage_value.event_record_index.v2
+- RP-EVENT-INDEX-SOURCE
+- RP-AUTHORITY-INDEFINITE
+- projector_replay_only
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
+
+### SP-280 - Exact historical Goal scheduling contract
+
+```yaml
+unit_type: requirement
+status: accepted
+gui_related: false
+gui_classification_reason: Defines exact event admission and historical source interpretation without
+  adding a GUI or changing current Scheduling controls.
+split_recommended: false
+unblocks: []
+reasoning_tier: high
+context_scope: goal_scheduled_exact_family_historical_contract
+validation_surfaces:
+- Plans/goal_scheduled_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
+- Plans/goal_runtime_events.schema.json
+- Plans/storage_value_registry.json
+- python3 scripts/pm-plan-index.py validate
+- Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.
+node_compile_hint:
+  mode: goal_scheduled_historical_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-050
+- Plans/Goal_Runtime_System.md#GRS-051
+- Plans/Scheduling_and_Quota_Resume.md
+- EA-UND-0011-GOAL:D-R11
+source_atom_ids: []
+negative_constraints:
+- No sibling disposition, registry/schema/retention mutation, alias, current producer, scheduled Goal
+  state, Goal budget, child/phase/role, or GoalRun/To-Do/Plan conversion.
+- No native/readiness/seal proof, canonical receipt reconstruction, timer/queue/dispatch/Usage/approval/hold/epoch
+  effect, or shared-checkpoint waiver.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+plan_unit_id: SP-280
+owner_doc: Plans/storage-plan.md
+depends_on:
+- GRS-062
+- CV-336
+- SP-235
+- SP-236
+- SP-237
+- SP-241
+risk_class: historical_scheduling_source_and_checkpoint_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+canonical_text: 'Define NEW read-adapter binding `storage.goal_scheduled_history_read.v1`, version `1.0.0`,
+  for the existing Storage/Goal/Runtime Artifacts validated EventRecord inspection path. The ID is a new
+  explicit technical definition, not a claim of a previously registered adapter. It serves exactly the
+  already registered `event-family-goal-scheduled@2.0.0` under GRS-062/CV-336''s historical-only disposition.
+  There is no current producer, family projector, new physical value, critical/MVP dependency, new policy
+  or active lifecycle effect. The existing v2 payload and immutable legacy aggregate are unchanged. The
+  child-status and degraded adapters do not supply authority for this row. Each exact-family binding consumes
+  the independently owned generic index on its own constraints.
+
+
+  The bounded lookup selector contains exactly project_id, goal_id, event_id and sequence_id. Normal authenticated
+  project/historical-read access applies; a live Goal object need not be fabricated for a retained historical
+  event. Resolve the existing `event_record_index` family by ID, schema `pm.storage_value.event_record_index.v2@2.0.0`,
+  using key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. Project partition is
+  exactly `project~{base64url_no_pad(UTF8(project_id))}` and sequence formatting follows the existing
+  exact EventRecord integer domain and twenty-digit unsigned decimal padding. Do not round through floating
+  point, substitute selected project, infer the event from its name or omit event ID. Validate the closed
+  current index schema and exact key/value/project/sequence/event/family joins, then validate source payload
+  goal_id against the selector.
+
+
+  Read a consistent CURRENT-selected committed index/source publication. Resolve the index publication_locator''s
+  manifest_generation, recovery_epoch, survivor_prefix_sha256 and checkpoint_ref to the independently
+  owned generic index publication and actual checkpoint. Prove complete generic index coverage includes
+  the exact requested sequence in the surviving source set; a nonempty reference, maximum sequence, family-filtered
+  checkpoint, application dedupe checkpoint or another event''s cursor is not coverage proof. If the actual
+  generic checkpoint cannot be resolved, return unavailable instead of inventing a checkpoint contract.
+  This family owns no full-range scan or catch-up. It relies on verified generic full-range publication
+  and validates this exact complete source frame.
+
+
+  The source cursor is the full tuple segment_generation, segment_name, byte_offset and sequence_id from
+  the validated row. Check current generation, complete frame bounds/CRC, durable watermark, original
+  event identity, payload hash and existing producer-semantic digest with their actual owner algorithms.
+  The index contains lookup metadata, not event or receipt authority. Compaction translations must resolve
+  an actual committed translation manifest and preserve exact source identity; a guessed retired offset
+  is forbidden. Revalidate CURRENT/publication selection before releasing the complete in-memory answer.
+  If recovery/generation changed, discard the answer and perform a fresh bounded read. A missing index
+  does not cause this adapter to write/rebuild; only the independent generic recovery owner may do so
+  under its contract.
+
+
+  Family checkpoint disposition is explicitly `none_required`. The adapter owns zero durable state: no
+  projection row, progress/cursor value, acknowledgement, family idempotency record, receipt, checkpoint,
+  cache materialization, hold or index write. Repeated/interrupted lookups leave no owned effect. The
+  exact selector is a lookup request, not a resumable cursor. The sole success boundary is release of
+  one fully validated in-memory historical answer; there is no atomic family write transaction or checkpoint
+  advance. The independently required generic checkpoint proof is not waived by none_required. No child-status/run.started/Goal-state
+  checkpoint is borrowed.
+
+
+  Genuine historical eligibility is established by actual retained immutable seglog source or its authenticated
+  byte/identity-preserving restoration from an existing verified backup generation with the original source/restore
+  custody. A timestamp, schema promotion date, imported caller JSON, migration marker or absent current
+  writer does not prove history. A record must validate under its actual supported original schema and
+  source provenance. Legacy aggregate `pm.goal_runtime_events.schema.v1` shape remains read/import evidence
+  only; an exact established generic legacy normalization route may supply its own transient envelope/identity
+  view when all registered original candidates/header/cursor proofs exist. No new event-specific v1-to-v2
+  payload converter is defined; unsupported original semantics stay explicitly unresolved instead of default-filled
+  or rewritten as v2. Source bytes are never changed on read. D-R11 predicates remain historical diagnostic
+  checks; its next_action, queue/budget eligibility and scheduled-state transition are not executed.
+
+
+  Same exact source identity/digest yields the same historical observation. Conflicting source bytes,
+  goal/project joins or digest evidence fail interpretation without selecting a winner. Every attempted
+  current append is independently rejected before dedupe or CAS. Unknown schema, malformed frame, absent
+  canonical source, unsupported reader, stale publication or unresolved receipt/predecessor facts return
+  invalid/unavailable or explicitly unresolved historical validation; they grant no current lifecycle
+  truth. Read refusal does not instruct the adapter to write quarantine records. Existing Storage recovery
+  owns any separate integrity handling.
+
+
+  Historical source keeps `RP-AUTHORITY-INDEFINITE@1.0.0`, with its original backup/hold/canonical authority.
+  Existing lookup rows keep `RP-EVENT-INDEX-SOURCE@1.0.0`; no family-local timer is introduced. The adapter
+  retains nothing independently. Canonical goal receipts remain mandatory-backup/non-rebuildable and cannot
+  be regenerated from this event or index. Unavailable required evidence remains unavailable; original
+  historical meaning is not converted to a new Goal budget requirement or permission to resume manually
+  stopped work. Existing actual recovery/continuation owners still fence mutation and false completion
+  when canonical authority is unknown. Survivor-projection degraded quality/provenance remains valid under
+  GRS-042 and its exact-event qualifications, without writing a fifth Goal state. Reading this event cannot
+  bypass Scheduling user_stop_epoch, consent, eligibility or dispatch-time revalidation.
+
+
+  Existing deletion/tombstone/access and hold rules apply to source and original refs. Indefinite audit
+  custody does not unhide deleted Goal/thread content or grant dereference permission. A committed unavailable/deleted
+  source translation returns truthful unavailable; no missing record is reconstructed. Reject unhandled
+  secrets under the existing family rule and use no new redaction transform; do not expose secret-bearing
+  original bytes as a successful view. Unsupported adapter/envelope/payload/index schema or explicit withdrawal
+  stops this exact family interpretation, preserves original custody under its owners and admits no fallback
+  current producer, projection, alias or event. These definitions provide contract depth, not native reader,
+  storage, recovery, permission, lifecycle or governance proof.
+
+
+  Historical eligibility additionally requires actual retained source-generation/compatibility custody
+  establishing the original applicable contract; an invalid current append does not become lawful history
+  merely by already being in seglog. No claim is made that a historical v2 instance exists. Timestamps
+  or the current schema promotion cannot supply the missing original admission proof.
+
+
+  The positive lookup path remains blocked on the independently owned generic EventRecord-index checkpoint/publication
+  contract and its concrete schema, key, complete source coverage and currentness joins. A nonempty checkpoint_ref
+  or refusal path does not establish an operating reader. Until that shared authority and this exact family
+  adoption are materialized and reviewed, consumer/checkpoint/replay depth remains partial and historical
+  read success is unavailable. This unit defines no substitute shared checkpoint. Historical dispatch/await
+  values remain data only: the adapter owns no timer, queue enqueue, provider/tool call, quota charge,
+  stop-epoch clearing, schedule or Goal mutation.'
+acceptance_criteria:
+- Four-field project/goal/event/sequence selector joins actual generic index key/value, canonical source
+  frame and payload identity.
+- Actual generic checkpoint/coverage and CURRENT/survivor/manifest/translation joins are required; unresolved
+  SP278 leaves operating path blocked.
+- Family none_required checkpoint follows zero durable effects, not waiver of shared proof; stale publication
+  discards complete answer before release.
+- Original supported source/backup custody establishes history; timestamp/schema-valid JSON and fabricated
+  import cannot establish original semantics.
+- Read never schedules, dispatches, charges, approves, clears stop epoch, writes receipt or creates a
+  Goal projection.
+- Unchanged authority/index retention and canonical receipt backup rules, deletion/permission/secret/version/withdrawal
+  refusal preserve source without current lifecycle effects.
+preserved_exact_tokens:
+- goal.scheduled
+- pm.goal_runtime_event.goal_scheduled.schema.v2
+- D-R11
+- active|paused|blocked|completed
+- user_stop_epoch
+- RP-AUTHORITY-INDEFINITE
+- RP-EVENT-INDEX-SOURCE
+- none_required
+- storage.goal_scheduled_history_read.v1
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045

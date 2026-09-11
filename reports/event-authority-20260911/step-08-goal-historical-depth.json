@@ -1,0 +1,158 @@
+{
+  "assessment_id": "EA-STEP08-GOAL-HISTORICAL-EXACT-THREE",
+  "assessed_at_utc": "2026-09-11T20:45:47.437148+00:00",
+  "base_commit": "4d9d21297d2134148828b91fdcba6527fc99126c",
+  "rows": [
+    {
+      "event_type": "goal.child_status_changed",
+      "family_id": "event-family-goal-child-status-changed",
+      "status": "PARTIAL",
+      "normative_contract_complete": false,
+      "owner_disposition": "historical_only_no_current_writer",
+      "exact_owner_reason": "GRS-052 explicitly retires child Goals and child topology; exact D-R03 requires that retired structure.",
+      "new_planunits": [
+        "SP-271",
+        "CV-334",
+        "GRS-060"
+      ],
+      "defined_facets": [
+        "exact producer refusal before dedupe/CAS/outbox",
+        "unchanged authoritative schema and EventRecord joins",
+        "original identity and idempotency custody",
+        "existing source/index retention",
+        "explicit passive exact-family adapter with zero durable effects",
+        "none_required family-owned checkpoint with mandatory independent generic proof",
+        "historical compatibility and withdrawal",
+        "deletion/redaction and canonical-recovery safeguards"
+      ],
+      "partial_facets": [
+        "operating consumer",
+        "actual generic checkpoint/publication adoption",
+        "current complete source and original admission custody"
+      ],
+      "no_current_emission_does_not_prove_historical_admission": true,
+      "native_execution": "NOT_RUN",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "plan_unit_id": "SP-271",
+          "sha256": "d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "plan_unit_id": "CV-334",
+          "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7"
+        },
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "plan_unit_id": "GRS-060",
+          "sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf"
+        }
+      ]
+    },
+    {
+      "event_type": "goal.degraded",
+      "family_id": "event-family-goal-degraded",
+      "status": "PARTIAL",
+      "normative_contract_complete": false,
+      "owner_disposition": "historical_only_no_current_writer",
+      "exact_owner_reason": "GRS-048 exclusive four-state lifecycle conflicts with the exact D-R06 degraded destination; GRS-049 retires the old tier/role semantics.",
+      "new_planunits": [
+        "SP-277",
+        "CV-335",
+        "GRS-061"
+      ],
+      "defined_facets": [
+        "exact producer refusal before dedupe/CAS/outbox",
+        "unchanged authoritative schema and EventRecord joins",
+        "original identity and idempotency custody",
+        "existing source/index retention",
+        "explicit passive exact-family adapter with zero durable effects",
+        "none_required family-owned checkpoint with mandatory independent generic proof",
+        "historical compatibility and withdrawal",
+        "deletion/redaction and canonical-recovery safeguards"
+      ],
+      "partial_facets": [
+        "operating consumer",
+        "actual generic checkpoint/publication adoption",
+        "current complete source and original admission custody"
+      ],
+      "no_current_emission_does_not_prove_historical_admission": true,
+      "native_execution": "NOT_RUN",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "plan_unit_id": "SP-277",
+          "sha256": "d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "plan_unit_id": "CV-335",
+          "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7"
+        },
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "plan_unit_id": "GRS-061",
+          "sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf"
+        }
+      ]
+    },
+    {
+      "event_type": "goal.scheduled",
+      "family_id": "event-family-goal-scheduled",
+      "status": "PARTIAL",
+      "normative_contract_complete": false,
+      "owner_disposition": "historical_only_no_current_writer",
+      "exact_owner_reason": "GRS-048 exclusive four-state lifecycle conflicts with D-R11 scheduled destination. Actual Scheduling/run owners still schedule active Goal work.",
+      "new_planunits": [
+        "SP-280",
+        "CV-336",
+        "GRS-062"
+      ],
+      "defined_facets": [
+        "exact producer refusal before dedupe/CAS/outbox",
+        "unchanged authoritative schema and EventRecord joins",
+        "original identity and idempotency custody",
+        "existing source/index retention",
+        "explicit passive exact-family adapter with zero durable effects",
+        "none_required family-owned checkpoint with mandatory independent generic proof",
+        "historical compatibility and withdrawal",
+        "deletion/redaction and canonical-recovery safeguards"
+      ],
+      "partial_facets": [
+        "operating consumer",
+        "actual generic checkpoint/publication adoption",
+        "current complete source and original admission custody"
+      ],
+      "no_current_emission_does_not_prove_historical_admission": true,
+      "native_execution": "NOT_RUN",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "plan_unit_id": "SP-280",
+          "sha256": "d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "plan_unit_id": "CV-336",
+          "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7"
+        },
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "plan_unit_id": "GRS-062",
+          "sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf"
+        }
+      ]
+    }
+  ],
+  "newly_completed_registered_families": 0,
+  "registered_families_added": 0,
+  "storage_families_added": 0,
+  "retention_policies_added": 0,
+  "unchanged_event_family_count": 41,
+  "original_39_row_depth_denominator_unchanged": true,
+  "step9_dispositions_unchanged": true,
+  "independent_validator_clearance": false,
+  "readiness_or_governance_seal": false,
+  "next_required": "Materialize and independently review the shared EventRecord-index checkpoint contract, then adopt it separately for each exact historical reader with concrete lawful original-source positives and schema-valid join negatives."
+}

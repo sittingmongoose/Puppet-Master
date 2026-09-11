@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5168-L5314
+Source lines: L5174-L5313
 
-Source SHA256: `b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa`
+Source SHA256: `311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf`
 
 ---
 
@@ -20,7 +20,7 @@ Goal Runtime therefore distinguishes these aftermaths without inventing success:
 
 - a validated receipt and continuous canonical event lineage may resume or display its exact recorded lifecycle after normal currentness and authority checks;
 - while receipt/canonical-event recovery is in progress or its truth is not yet established, completion and resumability are unknown, no new mutation-capable scheduling begins, and no projection is promoted to receipt authority;
-- a projection rebuilt to the current survivor set remains `goal.degraded` when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk;
+- a projection rebuilt to the current survivor set remains degraded in its completeness/health when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk. This is derived-view quality, not a fifth GoalRecordV2 state or authority to emit `goal.degraded`; GRS-061 preserves the exact event for historical interpretation only;
 - missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion/certification and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
 - canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and certification rather than using a degraded receipt as a success substitute.
 
@@ -55,22 +55,19 @@ plan_unit_id: GRS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  goal_receipt is canonical non-rebuildable redb authority recovered from mandatory
-  verified backup, while goal-state and goal-run projections remain disposable.
-  Missing, corrupt, quarantined, continuity-uncertain, or unrecoverable receipt/event
-  authority cannot be reconstructed into success: recovery-in-progress is unknown,
-  survivor projections remain degraded with provenance, and completion or
-  mutation-authorizing uncertainty remains blocked until verified recovery.
+canonical_text: |-
+  goal_receipt is canonical non-rebuildable redb authority recovered from mandatory verified backup, while goal-state and goal-run projections remain disposable. Missing, corrupt, quarantined, continuity-uncertain, or unrecoverable receipt/event authority cannot be reconstructed into success: recovery-in-progress is unknown, survivor projections remain degraded with provenance, and completion or mutation-authorizing uncertainty remains blocked until verified recovery.
+
+  Degraded survivor projection means derived-view quality/provenance, not GoalRecordV2.state or an active goal.degraded producer; GRS-061 governs the exact historical event. Existing canonical-loss mutation/completion fences remain unchanged.
 gui_related: true
-gui_classification_reason: Unknown, degraded, blocked, recovery provenance, and safe-next-action goal states are user-visible Goal Runtime truth.
+gui_classification_reason: Recovery availability, derived-view quality, provenance and safe-next-action disclosure are user-visible; degraded is not a fifth GoalRecordV2 state.
 depends_on: [GRS-005, GRS-012, GRS-019, SP-235, SP-236, SP-237]
 unblocks: []
 acceptance_criteria:
   - Per-family corruption/deletion fixtures never reconstruct a GoalCompletionReceipt from events, worker claims, artifacts, or projections.
   - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, evidence, and certification checks.
   - Unknown receipt/event truth schedules no mutation and certifies no completion.
-  - A current survivor projection with a canonical gap remains degraded or blocked with integrity and recovery provenance.
+  - A current survivor projection with a canonical gap retains degraded projection quality or owner-blocked recovery, with integrity/recovery provenance; this does not add a GoalRecordV2 state or emit goal.degraded.
   - Unavailable mandatory backup leaves completion blocked and names the exact affected family, recovery state, boundary, and next safe action.
   - Goal/receipt/recovery/evidence/certification anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
 validation_surfaces:
@@ -106,14 +103,10 @@ plan_unit_id: GRS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events,
-  preserves global event identity and scoped lifetime idempotency, fails closed on
-  dedupe_unavailable, and limits replay-only compatibility input to disposable
-  projection effects. Scheduler admission additionally requires storage writer and
-  continuity truth, resolved exact-restore or recovery-hold state, and current
-  permission evidence; viewer, root, integrity, restore-recovery, and permission
-  blockers cannot become failure or completion.
+canonical_text: |-
+  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events, preserves global event identity and scoped lifetime idempotency, fails closed on dedupe_unavailable, and limits replay-only compatibility input to disposable projection effects. Scheduler admission additionally requires storage writer and continuity truth, resolved exact-restore or recovery-hold state, and current permission evidence; viewer, root, integrity, restore-recovery, and permission blockers cannot become failure or completion.
+
+  The admission and recovery safeguards do not authorize goal.scheduled: GRS-062/CV-336 make that exact row historical-only. Current run scheduling still applies every actual storage/permission/recovery/stop-epoch gate, while SP-280 reads cannot dispatch or mutate.
 gui_related: true
 gui_classification_reason: Goal blocked, historical viewer, recovery, permission, and resume states are visible control-plane behavior.
 depends_on: [GRS-006, GRS-019, GRS-020, CV-317, CV-318, CV-320, SP-239, SP-240, SP-241, SP-242]

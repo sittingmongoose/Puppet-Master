@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14935,
+    "depends_on_edge_count": 14967,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17584,
-    "node_count": 6527,
+    "edge_count": 17616,
+    "node_count": 6536,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T20:00:13Z",
+  "generated_at_utc": "2026-09-11T20:43:35Z",
   "gui_related_units": {
-    "count": 3153,
+    "count": 3156,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -7590,8 +7590,8 @@
         "source_location": {
           "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
           "heading_level": 3,
-          "heading_line": 18171,
-          "line": 18173,
+          "heading_line": 18177,
+          "line": 18179,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7601,8 +7601,8 @@
         "source_location": {
           "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
           "heading_level": 3,
-          "heading_line": 19715,
-          "line": 19717,
+          "heading_line": 19721,
+          "line": 19723,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7612,8 +7612,8 @@
         "source_location": {
           "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
           "heading_level": 3,
-          "heading_line": 19790,
-          "line": 19792,
+          "heading_line": 19796,
+          "line": 19798,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7623,8 +7623,8 @@
         "source_location": {
           "heading": "CV-308 - prompt_admission_execution",
           "heading_level": 3,
-          "heading_line": 19860,
-          "line": 19862,
+          "heading_line": 19866,
+          "line": 19868,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7634,8 +7634,8 @@
         "source_location": {
           "heading": "CV-314 - FABLE Residual Contracts Feature Boundary",
           "heading_level": 3,
-          "heading_line": 20291,
-          "line": 20293,
+          "heading_line": 20297,
+          "line": 20299,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7645,8 +7645,8 @@
         "source_location": {
           "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
           "heading_level": 3,
-          "heading_line": 20513,
-          "line": 20515,
+          "heading_line": 20519,
+          "line": 20521,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7656,8 +7656,8 @@
         "source_location": {
           "heading": "CV-320 - Case L Restore Outcomes And Restore-Point Events",
           "heading_level": 3,
-          "heading_line": 20826,
-          "line": 20828,
+          "heading_line": 20832,
+          "line": 20834,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7667,8 +7667,8 @@
         "source_location": {
           "heading": "CV-321 - Case L Storage Compatibility And Migration Status Envelope",
           "heading_level": 3,
-          "heading_line": 20878,
-          "line": 20880,
+          "heading_line": 20884,
+          "line": 20886,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7678,8 +7678,8 @@
         "source_location": {
           "heading": "CV-322 - Case L Fallback Divergence Command Envelopes",
           "heading_level": 3,
-          "heading_line": 20935,
-          "line": 20937,
+          "heading_line": 20941,
+          "line": 20943,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7700,8 +7700,8 @@
         "source_location": {
           "heading": "CV-326 - Touch Closure Registry And Static Production-Intent Boundary",
           "heading_level": 3,
-          "heading_line": 21118,
-          "line": 21120,
+          "heading_line": 21124,
+          "line": 21126,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7711,8 +7711,8 @@
         "source_location": {
           "heading": "CV-327 - Cross-Owner Route Scope, Immutable Selection, And Provenance Binding",
           "heading_level": 3,
-          "heading_line": 21178,
-          "line": 21180,
+          "heading_line": 21184,
+          "line": 21186,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -17754,8 +17754,8 @@
         "source_location": {
           "heading": "GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation",
           "heading_level": 3,
-          "heading_line": 4250,
-          "line": 4252,
+          "heading_line": 4256,
+          "line": 4258,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17765,8 +17765,8 @@
         "source_location": {
           "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
           "heading_level": 3,
-          "heading_line": 4391,
-          "line": 4393,
+          "heading_line": 4397,
+          "line": 4399,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17776,8 +17776,8 @@
         "source_location": {
           "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 4469,
-          "line": 4471,
+          "heading_line": 4475,
+          "line": 4477,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17787,8 +17787,8 @@
         "source_location": {
           "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
           "heading_level": 3,
-          "heading_line": 4548,
-          "line": 4550,
+          "heading_line": 4554,
+          "line": 4556,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17798,8 +17798,8 @@
         "source_location": {
           "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
           "heading_level": 3,
-          "heading_line": 4645,
-          "line": 4647,
+          "heading_line": 4651,
+          "line": 4653,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17809,8 +17809,8 @@
         "source_location": {
           "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
           "heading_level": 3,
-          "heading_line": 4735,
-          "line": 4737,
+          "heading_line": 4741,
+          "line": 4743,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17820,8 +17820,8 @@
         "source_location": {
           "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
           "heading_level": 3,
-          "heading_line": 4827,
-          "line": 4829,
+          "heading_line": 4833,
+          "line": 4835,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17831,8 +17831,8 @@
         "source_location": {
           "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
           "heading_level": 3,
-          "heading_line": 4902,
-          "line": 4904,
+          "heading_line": 4908,
+          "line": 4910,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17842,8 +17842,8 @@
         "source_location": {
           "heading": "GRS-042 - Case L Canonical Goal Receipt Recovery Truth",
           "heading_level": 3,
-          "heading_line": 5208,
-          "line": 5210,
+          "heading_line": 5214,
+          "line": 5216,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17853,8 +17853,8 @@
         "source_location": {
           "heading": "GRS-043 - Case L Goal Event And Recovery Admission",
           "heading_level": 3,
-          "heading_line": 5259,
-          "line": 5261,
+          "heading_line": 5262,
+          "line": 5264,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17941,8 +17941,41 @@
         "source_location": {
           "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
           "heading_level": 3,
-          "heading_line": 5455,
-          "line": 5473,
+          "heading_line": 5454,
+          "line": 5472,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-060",
+        "source_location": {
+          "heading": "GRS-060 - Historical child-status event disposition",
+          "heading_level": 3,
+          "heading_line": 5517,
+          "line": 5519,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-061",
+        "source_location": {
+          "heading": "GRS-061 - Historical Goal degradation and current projection quality",
+          "heading_level": 3,
+          "heading_line": 5593,
+          "line": 5595,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-062",
+        "source_location": {
+          "heading": "GRS-062 - Exact historical Goal scheduling contract",
+          "heading_level": 3,
+          "heading_line": 5712,
+          "line": 5714,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -29249,8 +29282,8 @@
         "source_location": {
           "heading": "SP-217 - Discovery Index Persistence, Cache Identity, And History Boundaries",
           "heading_level": 3,
-          "heading_line": 15366,
-          "line": 15368,
+          "heading_line": 15372,
+          "line": 15374,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29260,8 +29293,8 @@
         "source_location": {
           "heading": "SP-227 - P0-HISTORY-STORAGE-CAPS",
           "heading_level": 3,
-          "heading_line": 16208,
-          "line": 16210,
+          "heading_line": 16214,
+          "line": 16216,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29271,8 +29304,8 @@
         "source_location": {
           "heading": "SP-228 - P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
           "heading_level": 3,
-          "heading_line": 16288,
-          "line": 16290,
+          "heading_line": 16294,
+          "line": 16296,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29282,8 +29315,8 @@
         "source_location": {
           "heading": "SP-229 - P0-SYSTEM-RESOURCE-GOVERNOR",
           "heading_level": 3,
-          "heading_line": 16369,
-          "line": 16371,
+          "heading_line": 16375,
+          "line": 16377,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29293,8 +29326,8 @@
         "source_location": {
           "heading": "SP-235 - Case L Migration Backup And Canonical Redb Recovery",
           "heading_level": 3,
-          "heading_line": 17405,
-          "line": 17407,
+          "heading_line": 17411,
+          "line": 17413,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29304,8 +29337,8 @@
         "source_location": {
           "heading": "SP-236 - Case L SeglogFrameV2 Durability And Recovery",
           "heading_level": 3,
-          "heading_line": 17446,
-          "line": 17448,
+          "heading_line": 17452,
+          "line": 17454,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29315,8 +29348,8 @@
         "source_location": {
           "heading": "SP-237 - Case L Retention Compaction Deletion And Quarantine",
           "heading_level": 3,
-          "heading_line": 17485,
-          "line": 17487,
+          "heading_line": 17491,
+          "line": 17493,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29326,8 +29359,8 @@
         "source_location": {
           "heading": "SP-238 - Case L Storage IO Admission And Recovery",
           "heading_level": 3,
-          "heading_line": 17525,
-          "line": 17527,
+          "heading_line": 17531,
+          "line": 17533,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29337,8 +29370,8 @@
         "source_location": {
           "heading": "SP-239 - Case L Aggregate Lock And Viewer Envelope",
           "heading_level": 3,
-          "heading_line": 17561,
-          "line": 17563,
+          "heading_line": 17567,
+          "line": 17569,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29348,8 +29381,8 @@
         "source_location": {
           "heading": "SP-240 - Case L Root Continuity Relocation And Fallback Branch",
           "heading_level": 3,
-          "heading_line": 17597,
-          "line": 17599,
+          "heading_line": 17603,
+          "line": 17605,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29359,8 +29392,8 @@
         "source_location": {
           "heading": "SP-242 - Case L Safe Point Restore Transaction And Restore Point Storage",
           "heading_level": 3,
-          "heading_line": 17676,
-          "line": 17678,
+          "heading_line": 17682,
+          "line": 17684,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29370,8 +29403,8 @@
         "source_location": {
           "heading": "SP-244 - Debug Workspace Persistence Keys",
           "heading_level": 3,
-          "heading_line": 17932,
-          "line": 17934,
+          "heading_line": 17938,
+          "line": 17940,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29381,8 +29414,8 @@
         "source_location": {
           "heading": "SP-245 - Home Workspace Layout Transaction And Recovery",
           "heading_level": 3,
-          "heading_line": 17884,
-          "line": 17886,
+          "heading_line": 17890,
+          "line": 17892,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29392,8 +29425,8 @@
         "source_location": {
           "heading": "SP-248 - Usage View-State Persistence Surface",
           "heading_level": 3,
-          "heading_line": 18175,
-          "line": 18177,
+          "heading_line": 18181,
+          "line": 18183,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29403,8 +29436,8 @@
         "source_location": {
           "heading": "SP-249 - Settled Widget Layout Versioning Migration And Write Boundary",
           "heading_level": 3,
-          "heading_line": 18271,
-          "line": 18273,
+          "heading_line": 18277,
+          "line": 18279,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29414,8 +29447,8 @@
         "source_location": {
           "heading": "SP-250 - Home Workspace Cross-Axis And Semantic Preset Persistence",
           "heading_level": 3,
-          "heading_line": 18341,
-          "line": 18343,
+          "heading_line": 18347,
+          "line": 18349,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29425,8 +29458,8 @@
         "source_location": {
           "heading": "SP-252 - Product Onboarding Draft-First Storage Migration",
           "heading_level": 3,
-          "heading_line": 18488,
-          "line": 18490,
+          "heading_line": 18494,
+          "line": 18496,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -34707,10 +34740,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6527,
+  "plan_unit_count": 6536,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1983,
+      "high": 1992,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36220,10 +36253,14 @@
       "hidden_mutation_channel": 1,
       "hidden_peer_channel_drift": 1,
       "hidden_runtime_fallback": 1,
+      "historical_goal_event_source_and_checkpoint_authority": 1,
       "historical_handoff_drift": 1,
       "historical_projection_and_ghost_evidence": 1,
       "historical_run_focus": 1,
       "historical_run_mode_ambiguity": 1,
+      "historical_scheduling_schema_misread_as_writer_admission": 1,
+      "historical_scheduling_source_and_checkpoint_authority": 1,
+      "historical_schema_misread_as_writer_admission": 1,
       "history_action_authority_drift": 1,
       "history_annotation_and_recovery_retention_boundary": 1,
       "history_artifact_link_loss": 1,
@@ -37430,9 +37467,12 @@
       "retired_gemini_cli_token_flow_resurrection": 1,
       "retired_gemini_cli_usage_resurrection": 1,
       "retired_git_alias_and_stale_canon_risk": 1,
+      "retired_goal_child_writer_reintroduction": 3,
+      "retired_goal_degradation_reintroduced": 1,
       "retired_goal_projection_in_transcript": 1,
       "retired_goal_structure_reintroduced": 1,
       "retired_provider_first_choreography_reactivated": 1,
+      "retired_scheduled_goal_state_reintroduced": 1,
       "retrieval": 2,
       "retrieval_budget": 1,
       "retrieval_scope": 1,
@@ -38461,7 +38501,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6336,
+      "accepted": 6345,
       "retired": 182,
       "superseded": 9
     },
@@ -38487,7 +38527,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 611,
+      "constraint": 613,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -38528,7 +38568,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5184,
+      "requirement": 5190,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38545,7 +38585,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 9,
+      "storage_contract": 10,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -38634,7 +38674,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa",
+        "expected": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38684,7 +38724,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-restore-created-depth-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-goal-child-history-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {

@@ -2616,7 +2616,7 @@ owner_hints:
 Goal Runtime requires these data-shape families:
 
 - Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `acceptance_criteria`, `non_goals`, `allowed_scope`, constraints, budget, `work_queue`, task list, `model_policy`, attachment manifest, child goals, `evidence_index`, evidence references, completion receipt, `goal_revision`, and recovery state.
-- Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`.
+- Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Historical records preserve original custody and cannot rebuild retired current Goal states or child topology.
 - Goal update event fields: `goal_revision`, `previous_revision`, `objective_update`, `constraint_added`, `active_subgoals_notified`, and stale child goals.
 - Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
 - Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
@@ -3614,6 +3614,8 @@ Notation: `R{}` fields are required, `O{}` are optional-but-non-null, `F{}` are 
 
 ##### `EA-UND-0003-GOAL` — `goal.child_status_changed` (`D-R03`)
 
+Historical interpretation only under GRS-060: the following original fields and transitions preserve source semantics without admitting a current child Goal writer, topology or state transition. DL-039 schema authority is unchanged.
+
 - Fields: `R{child_goal_id:ref, previous_status:GoalStatus, next_status:GoalStatus}`; `O{child_agent_lease_id:ref,result_ref:ref,receipt_ref:ref,parent_action_required:boolean}`.
 - Branches: `previous_status != next_status`; `next_status=completed` requires `receipt_ref`; `next_status=failed|blocked|degraded` requires `result_ref` or `receipt_ref`; `parent_action_required` defaults by absence to false. The child cannot set the parent complete.
 - Transition: parent state is preserved (`S -> S`) for any nonterminal parent state. A separate parent `goal.replanned`, `goal.blocked`, `goal.verification_decided`, or `goal.completed` event is required for parent-state change. A child transition must itself be legal under the Goal state table.
@@ -3634,6 +3636,8 @@ Notation: `R{}` fields are required, `O{}` are optional-but-non-null, `F{}` are 
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-001..005`, `GRS-035`), `D-CAS-01`, `D-R05`.
 
 ##### `EA-UND-0006-GOAL` — `goal.degraded` (`D-R06`)
+
+Historical interpretation only under GRS-061: the following exact fields, branches and state edges preserve original semantics but admit no current Goal writer or transition. DL-039 schema authority is unchanged.
 
 - Fields: `R{degraded_reason:verifier_unavailable|optional_check_unavailable|evidence_incomplete|canonical_gap|recovery_provenance|provider_fallback|partial_scope, affected_scope:Scope, residual_risk_refs:ref[], allowed_actions:ActionId[]}`; `O{exception_refs:ref[],approval_refs:ref[]}`.
 - Branches: `residual_risk_refs` and `allowed_actions` are non-empty. Strong certification cannot degrade for unavailable verifier or a required check and must use `goal.blocked`. Standard may degrade only when no mutation or required check is affected. Any exception requires non-empty `exception_refs`; risk acceptance requires non-empty payload `approval_refs`, which must be a subset of common `approval_refs`.
@@ -3669,6 +3673,8 @@ Notation: `R{}` fields are required, `O{}` are optional-but-non-null, `F{}` are 
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-007`, `GRS-016`, `GRS-026`), `D-R10`.
 
 ##### `EA-UND-0011-GOAL` — `goal.scheduled` (`D-R11`)
+
+Historical interpretation only under GRS-062: the exact following fields, branches and transition preserve original semantics without current writer, dispatch or scheduled Goal-state admission. Current run scheduling remains with its actual owners. DL-039 schema authority is unchanged.
 
 - Fields: `R{scheduler_reason:SchedulerReason,eligible_at_utc:date-time,priority:Priority,budget_snapshot_ref:ref,next_action:NextAction}`; `O{queue_id:ref}`.
 - Branches: allowed `next_action` is `dispatch|await_dependency|await_approval`; `dispatch` requires `eligible_at_utc<=append observed_at_utc`, `queue_id`, writer-capable storage, current permission evidence, resolved recovery truth, and remaining budget. Waiting actions may omit `queue_id` and do not dispatch.
@@ -5177,7 +5183,7 @@ Goal Runtime therefore distinguishes these aftermaths without inventing success:
 
 - a validated receipt and continuous canonical event lineage may resume or display its exact recorded lifecycle after normal currentness and authority checks;
 - while receipt/canonical-event recovery is in progress or its truth is not yet established, completion and resumability are unknown, no new mutation-capable scheduling begins, and no projection is promoted to receipt authority;
-- a projection rebuilt to the current survivor set remains `goal.degraded` when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk;
+- a projection rebuilt to the current survivor set remains degraded in its completeness/health when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk. This is derived-view quality, not a fifth GoalRecordV2 state or authority to emit `goal.degraded`; GRS-061 preserves the exact event for historical interpretation only;
 - missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion/certification and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
 - canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and certification rather than using a degraded receipt as a success substitute.
 
@@ -5212,22 +5218,19 @@ plan_unit_id: GRS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  goal_receipt is canonical non-rebuildable redb authority recovered from mandatory
-  verified backup, while goal-state and goal-run projections remain disposable.
-  Missing, corrupt, quarantined, continuity-uncertain, or unrecoverable receipt/event
-  authority cannot be reconstructed into success: recovery-in-progress is unknown,
-  survivor projections remain degraded with provenance, and completion or
-  mutation-authorizing uncertainty remains blocked until verified recovery.
+canonical_text: |-
+  goal_receipt is canonical non-rebuildable redb authority recovered from mandatory verified backup, while goal-state and goal-run projections remain disposable. Missing, corrupt, quarantined, continuity-uncertain, or unrecoverable receipt/event authority cannot be reconstructed into success: recovery-in-progress is unknown, survivor projections remain degraded with provenance, and completion or mutation-authorizing uncertainty remains blocked until verified recovery.
+
+  Degraded survivor projection means derived-view quality/provenance, not GoalRecordV2.state or an active goal.degraded producer; GRS-061 governs the exact historical event. Existing canonical-loss mutation/completion fences remain unchanged.
 gui_related: true
-gui_classification_reason: Unknown, degraded, blocked, recovery provenance, and safe-next-action goal states are user-visible Goal Runtime truth.
+gui_classification_reason: Recovery availability, derived-view quality, provenance and safe-next-action disclosure are user-visible; degraded is not a fifth GoalRecordV2 state.
 depends_on: [GRS-005, GRS-012, GRS-019, SP-235, SP-236, SP-237]
 unblocks: []
 acceptance_criteria:
   - Per-family corruption/deletion fixtures never reconstruct a GoalCompletionReceipt from events, worker claims, artifacts, or projections.
   - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, evidence, and certification checks.
   - Unknown receipt/event truth schedules no mutation and certifies no completion.
-  - A current survivor projection with a canonical gap remains degraded or blocked with integrity and recovery provenance.
+  - A current survivor projection with a canonical gap retains degraded projection quality or owner-blocked recovery, with integrity/recovery provenance; this does not add a GoalRecordV2 state or emit goal.degraded.
   - Unavailable mandatory backup leaves completion blocked and names the exact affected family, recovery state, boundary, and next safe action.
   - Goal/receipt/recovery/evidence/certification anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
 validation_surfaces:
@@ -5263,14 +5266,10 @@ plan_unit_id: GRS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events,
-  preserves global event identity and scoped lifetime idempotency, fails closed on
-  dedupe_unavailable, and limits replay-only compatibility input to disposable
-  projection effects. Scheduler admission additionally requires storage writer and
-  continuity truth, resolved exact-restore or recovery-hold state, and current
-  permission evidence; viewer, root, integrity, restore-recovery, and permission
-  blockers cannot become failure or completion.
+canonical_text: |-
+  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events, preserves global event identity and scoped lifetime idempotency, fails closed on dedupe_unavailable, and limits replay-only compatibility input to disposable projection effects. Scheduler admission additionally requires storage writer and continuity truth, resolved exact-restore or recovery-hold state, and current permission evidence; viewer, root, integrity, restore-recovery, and permission blockers cannot become failure or completion.
+
+  The admission and recovery safeguards do not authorize goal.scheduled: GRS-062/CV-336 make that exact row historical-only. Current run scheduling still applies every actual storage/permission/recovery/stop-epoch gate, while SP-280 reads cannot dispatch or mutate.
 gui_related: true
 gui_classification_reason: Goal blocked, historical viewer, recovery, permission, and resume states are visible control-plane behavior.
 depends_on: [GRS-006, GRS-019, GRS-020, CV-317, CV-318, CV-320, SP-239, SP-240, SP-241, SP-242]
@@ -5515,3 +5514,324 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Assistant_Plan_Runtime.md
 
+### GRS-060 - Historical child-status event disposition
+
+```yaml
+plan_unit_id: GRS-060
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Current Goal Runtime admits no goal.child_status_changed producer because child Goals
+  and child topology are retired. Existing authoritative schema and D-R03 rules validate genuine historical
+  observations only; the exact Storage adapter cannot supply current GoalRecordV2 state, parent completion,
+  child projection, continuation or work allocation.
+gui_related: true
+gui_classification_reason: 'Historical data and active Goal presentation must remain distinct: these rules
+  constrain visible lifecycle states, child topology, recovery quality and actionable controls.'
+split_recommended: false
+depends_on:
+- GRS-052
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- No command, host continuation, subagent callback, retry, migration upgrader or parent transition may
+  append goal.child_status_changed, and no To-Do, workflow participant or separate Goal is translated
+  into it.
+- D-R03 historical original identities, legal transitions, evidence refs and absence-means-false parent_action_required
+  semantics are preserved without modifying bytes or executing the old state machine.
+- Only the exact read-only Storage adapter exposes one historical record and validity disposition; it
+  creates no child tree/card/GUI and active Goal views cannot ingest it as lifecycle or completion authority.
+- Reader withdrawal disables interpretation while preserving original registered source and retention;
+  it admits no replacement writer and decides no sibling event disposition.
+validation_surfaces:
+- Plans/goal_child_status_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+risk_class: retired_goal_child_writer_reintroduction
+reasoning_tier: high
+context_scope: goal_child_status_historical_event
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: goal_child_status_history_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+preserved_exact_tokens:
+- goal.child_status_changed
+- pm.goal_runtime_event.goal_child_status_changed.schema.v2
+- RP-AUTHORITY-INDEFINITE
+- none_required
+- projector_replay_only
+negative_constraints:
+- No event/schema/registry/physical/policy mutation, sibling disposition, new child topology, To-Do translation,
+  runtime proof, WorkNode/readiness admission or governance seal.
+- No current append success from historical dedupe, guessed source custody, unresolved generic checkpoint,
+  read-triggered write or fabricated historical default.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+```
+
+For exactly `goal.child_status_changed`, current Goal scope and the retirement of child Goals control emission. There is no active producer, command, host continuation, subagent callback, retry, migration upgrader or parent transition authorized to append this event. Registration and DL-039's authoritative v2 schema preserve validation and custody of genuine historical records; they do not restore child topology. No To-Do, Collaborative Workflow participant or separate Goal is translated into this event. The existing family membership, version, schema bytes and retention assignment remain unchanged.
+
+D-R03 is historical interpretation only for this row. Preserve its original child identity, previous/next historical statuses, optional lease/result/receipt refs and the absence-means-false `parent_action_required` interpretation. Do not insert that optional default into stored bytes. Completed requires the original receipt ref; failed/blocked/degraded requires result or receipt ref. A child cannot complete its parent; historical parent state was preserved, and legal historical child transition/revision/reference predicates remain diagnostic validity requirements. Missing historical predecessor/receipt evidence is unresolved validation, never proof of current completion. These historical predicates neither instantiate a GoalRecordV2 nor execute an old state machine.
+
+The sole family-specific consumer binding is the new Storage-owned read adapter `storage.goal_child_status_history_read.v1@1.0.0` in SP-271, used by the existing read-only EventRecord inspection path. It exposes one exact historical source record and validation disposition per lookup, without a tree, actionable child card or new GUI. Active Goal views never ingest the record as lifecycle state, completion, budget, work allocation or continuation evidence.
+
+This exact-row qualification applies to the older event-log list, D-R03, v2 matrix and schema-authority prose wherever they could be read as current writer/projection admission. Other rows retain their own unresolved/adjudicated owner disposition. Withdrawal of this adapter disables interpretation only; it does not delete historical source or admit a replacement writer.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#0-scope, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/storage-plan.md#SP-271, ContractName:Plans/Contracts_V0.md#CV-334
+
+### GRS-061 - Historical Goal degradation and current projection quality
+
+```yaml
+unit_type: requirement
+status: accepted
+gui_related: true
+gui_classification_reason: 'Historical data and active Goal presentation must remain distinct: these rules
+  constrain visible lifecycle states, child topology, recovery quality and actionable controls.'
+split_recommended: false
+unblocks: []
+reasoning_tier: high
+context_scope: goal_degraded_exact_family_historical_contract
+validation_surfaces:
+- Plans/goal_degraded_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_degraded.schema.json
+- Plans/goal_runtime_events.schema.json
+- Plans/storage_value_registry.json
+- python3 scripts/pm-plan-index.py validate
+- Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.
+node_compile_hint:
+  mode: goal_degraded_historical_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-049
+- Plans/Goal_Runtime_System.md#GRS-014
+- EA-UND-0006-GOAL:D-R06
+- Plans/Decision_Log.md#DL-045
+source_atom_ids: []
+negative_constraints:
+- No blanket21 retirement, registry/schema/retention mutation, alias, new current producer, active Goal
+  state, role/tier, phase/tranche/child/budget, To-Do or GoalRun translation.
+- No native/runtime/readiness/gate/seal proof, canonical receipt reconstruction, automatic recovery/continuation,
+  notification, Usage, approval or hold effect.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+plan_unit_id: GRS-061
+owner_doc: Plans/Goal_Runtime_System.md
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-050
+- GRS-042
+risk_class: retired_goal_degradation_reintroduced
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+canonical_text: 'The exact registered family `goal.degraded` is historical-only. This disposition follows
+  GRS-048''s exclusive four-state GoalRecordV2 contract, D-R06''s explicit transition into the incompatible
+  `degraded` Goal state, GRS-049''s retirement of Goal-owned certification tiers/role casts, and GRS-014''s
+  explicit superseded status. It does not follow merely from absence in the eight-name Goal V2 list. DL-039
+  preserves the existing authoritative `pm.goal_runtime_event.goal_degraded.schema.v2` validation root;
+  schema promotion does not restore a retired lifecycle transition. The event stays registered with unchanged
+  schema bytes, family revision, scope and retention. This ruling applies only to this exact event; it
+  does not retire the other twenty roots.
+
+
+  There is no current producer, Goal host callback, verifier callback, provider-fallback callback, storage-recovery
+  callback, command, retry or upgrader authorized to append `goal.degraded`. No current Goal transitions
+  into `degraded`, and no current record acquires a certification tier, structured scope, role cast, phase,
+  tranche, child or budget to make this payload fit. Do not translate the event into a To-Do, Collaborative
+  Workflow participant, GoalRun transition or substitute event. Current Goal state and continuation remain
+  with GRS-048/050 and existing actual owner conditions.
+
+
+  Historical D-R06 semantics remain intact for interpretation of genuine original bytes. Preserve exactly
+  the seven degradation reasons, original affected_scope, residual_risk_refs, allowed_actions, exception
+  refs, approval refs, revisions, actor and provider/model/account identities. Risks/actions were nonempty;
+  exceptions and risk acceptance required their original evidence and approval-subset joins. The original
+  state edge was created|scheduled|running|paused|verifying|repairing to degraded, with degraded-to-degraded
+  requiring changed risk/currentness evidence; blocked/stopped/limit/terminal states could not silently
+  degrade. The original strong/standard tier predicates remain historical diagnostics under their original
+  contract, not requirements for a current Goal. A missing historical predecessor, tier, exception or
+  approval proof is unresolved historical semantic validation, never a new Goal block on a missing verifier
+  or an inferred completed receipt. Schema-valid historical bytes alone do not prove those referenced
+  facts.
+
+
+  Current GRS-042 recovery safeguards remain: canonical receipts are non-rebuildable, possible canonical
+  gaps retain explicit provenance, and unresolved mutation/completion authority remains fenced until existing
+  owner recovery. The word degraded in a survivor view describes the quality/completeness of that derived
+  view, not a fifth GoalRecordV2 state and not authority to emit `goal.degraded`. Receipt/evidence views
+  may retain their existing recovery provenance without running D-R06. Unknown authority cannot be laundered
+  into completion. This qualification does not invent a new health field, enum, physical family or notification,
+  and does not remove current integrity disclosure.
+
+
+  The sole new family-specific read binding is `storage.goal_degraded_history_read.v1@1.0.0` in SP-277,
+  over the existing read-only validated EventRecord inspection path. It returns one exact historical record
+  with its validation/provenance disposition. Historical allowed_actions are displayed as original data
+  only and never wired as live controls. The lookup cannot mutate GoalRecordV2, receipt, evidence/goal-state
+  projection, continuation, approval, budget or recovery state. Withdrawal disables interpretation while
+  preserving original source/receipt custody; it admits no replacement writer.'
+acceptance_criteria:
+- Exact GRS048 plus D-R06 transition and explicit GRS014/049 retirement establish this one historical-only
+  event; omission from the eight-name list is not the proof.
+- No current Goal producer/command/callback can emit goal.degraded or add degraded as a fifth state, while
+  the authoritative schema and family membership remain unchanged.
+- Historical reasons, scope, risks, actions, exception/approval evidence and state/revision predicates
+  remain interpretable as original data; unresolved history cannot impose retired current verifier/tier
+  policy.
+- GRS042 projection quality/provenance and canonical-loss mutation/completion fences remain intact without
+  active event/state admission.
+- Original allowed_actions never dispatch; no Goal/To-Do/GoalRun transformation or sibling retirement
+  is inferred.
+preserved_exact_tokens:
+- goal.degraded
+- pm.goal_runtime_event.goal_degraded.schema.v2
+- active|paused|blocked|completed
+- D-R06
+- GRS-042
+- RP-AUTHORITY-INDEFINITE
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
+
+### GRS-062 - Exact historical Goal scheduling contract
+
+```yaml
+unit_type: requirement
+status: accepted
+gui_related: true
+gui_classification_reason: 'Historical data and active Goal presentation must remain distinct: these rules
+  constrain visible lifecycle states, child topology, recovery quality and actionable controls.'
+split_recommended: false
+unblocks: []
+reasoning_tier: high
+context_scope: goal_scheduled_exact_family_historical_contract
+validation_surfaces:
+- Plans/goal_scheduled_history_contract_fixtures.json
+- Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
+- Plans/goal_runtime_events.schema.json
+- Plans/storage_value_registry.json
+- python3 scripts/pm-plan-index.py validate
+- Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.
+node_compile_hint:
+  mode: goal_scheduled_historical_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-050
+- Plans/Goal_Runtime_System.md#GRS-051
+- Plans/Scheduling_and_Quota_Resume.md
+- EA-UND-0011-GOAL:D-R11
+source_atom_ids: []
+negative_constraints:
+- No sibling disposition, registry/schema/retention mutation, alias, current producer, scheduled Goal
+  state, Goal budget, child/phase/role, or GoalRun/To-Do/Plan conversion.
+- No native/readiness/seal proof, canonical receipt reconstruction, timer/queue/dispatch/Usage/approval/hold/epoch
+  effect, or shared-checkpoint waiver.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+plan_unit_id: GRS-062
+owner_doc: Plans/Goal_Runtime_System.md
+depends_on:
+- GRS-048
+- GRS-050
+- GRS-051
+- GRS-042
+- GRS-043
+risk_class: retired_scheduled_goal_state_reintroduced
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+canonical_text: 'The exact existing `goal.scheduled` EventRecord has historical-only disposition and zero
+  current writers. This follows the positive semantic conflict between D-R11''s required transition `created|paused|blocked|stopped
+  -> scheduled` and GRS-048''s exclusive active GoalRecordV2 writer with exactly `active|paused|blocked|completed`.
+  The destination scheduled is not an active Goal state. The row''s mandatory historical budget_snapshot_ref
+  cannot authorize restoration of Goal-owned budgets. GRS-048/050/051 and Scheduling_and_Quota_Resume
+  instead place eligibility, quota waiting, execution windows and resume with the actual run and Scheduling
+  owner. Omission from the eight-name current event list is not sufficient evidence and is not the basis
+  for this ruling. DL-039''s authoritative promotion of all twenty-one payload schemas remains intact;
+  this exact registered row, version, original schema bytes and historical minima remain unchanged. No
+  other event''s disposition is inferred.
+
+
+  Current Goal hosts may still schedule eligible turns and consume the existing Scheduling service. That
+  ordinary use of the word schedule does not mean entering the historical scheduled Goal state or appending
+  goal.scheduled. An active Goal with its run waiting for quota remains active. A quota reset, window
+  opening, dependency clearance, approval arrival or provider retry cannot override a manual Stop/Pause/Cancel;
+  the existing user_stop_epoch and dispatch-time revalidation remain mandatory. GRS-050 evidence-gated
+  continuation/completion and actual permission/recovery/owner blocks remain unchanged. This unit grants
+  no admission to Scheduling''s separately named events or commands and invents no alias or translation
+  to a scheduled message, ExecutionSchedule, GoalRun, To-Do, Plan or Collaborative Workflow object.
+
+
+  No current producer, host callback, timer, recovery callback, command, retry or upgrader may append
+  this exact event, even when its unchanged v2 schema validates, an old idempotency key matches, a run
+  is eligible, or original next_action is dispatch. It cannot add scheduled, queue structure, Goal budget,
+  phase, child or role fields to the active Goal. Current scheduling remains under its real owner conditions,
+  not a backward conversion into the retired transition.
+
+
+  Historical interpretation preserves all six scheduler_reason values (created, resumed, replanned, repair_cycle,
+  dependency_cleared, capacity_available), four priority values (low, normal, high, critical), original
+  eligible_at_utc, budget_snapshot_ref, optional queue_id and next_action. D-R11 allowed dispatch, await_dependency
+  and await_approval only. Original dispatch required queue_id, eligibility at or before the original
+  append observation, writer-capable storage, permission evidence, resolved recovery truth and remaining
+  budget. Waiting did not dispatch and could omit queue_id. Historical blocked/stopped sources required
+  explicit owner-admitted recovery/revalidation evidence; limit and terminal sources were illegal. Revision/CAS,
+  actor/account/envelope and original idempotency identity joins remain historical diagnostics. Missing
+  original prerequisite evidence is explicitly unresolved historical validation, not guessed validity,
+  a newly issued schedule, or a requirement to manufacture a current Goal budget.
+
+
+  Historical next_action and scheduler_reason are original data only. Inspecting dispatch cannot enqueue,
+  create a timer, dispatch a turn, consume budget/quota, approve, resume, mutate an epoch, write a receipt,
+  or change a Goal/GoalRun/To-Do state. The sole new exact-family read adapter is storage.goal_scheduled_history_read.v1@1.0.0
+  under SP-280. It returns one provenance-validated original record, without projection or durable effect.
+  Current canonical receipt non-rebuildability, degraded survivor-view quality/provenance and recovery/false-completion
+  fences under GRS-042/043 remain in force; this disposition does not undo the separate child-status or
+  degraded qualifications. Missing canonical authority stays fenced under the real owner. Withdrawal disables
+  interpretation, preserves original custody, and grants no replacement producer.'
+acceptance_criteria:
+- Exact D-R11 destination conflicts with exclusive GRS048 current lifecycle; no omission or sibling inference
+  establishes disposition.
+- All21 authoritative schema roots and this existing registered family remain unchanged with zero current
+  goal.scheduled writes.
+- Current run scheduling, quota/window eligibility and stop-epoch precedence remain with their actual
+  owners.
+- Original six reasons, four priorities, three actions, eligibility/queue/budget/recovery/CAS predicates
+  remain historical data and diagnostics, with unresolved original proof disclosed.
+- Historical dispatch has no timer/queue/turn/approval/Usage/epoch/state effect and does not recreate
+  Goal budget or remove recovery provenance.
+preserved_exact_tokens:
+- goal.scheduled
+- pm.goal_runtime_event.goal_scheduled.schema.v2
+- D-R11
+- active|paused|blocked|completed
+- user_stop_epoch
+- RP-AUTHORITY-INDEFINITE
+- RP-EVENT-INDEX-SOURCE
+- none_required
+- storage.goal_scheduled_history_read.v1
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045

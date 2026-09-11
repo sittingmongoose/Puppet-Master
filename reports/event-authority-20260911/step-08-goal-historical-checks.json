@@ -1,0 +1,218 @@
+{
+  "synthetic_validation": [
+    {
+      "event_type": "goal.child_status_changed",
+      "shape_cases": 6,
+      "semantic_cases": 0,
+      "native_pairs": 18,
+      "native_status": "NOT_RUN",
+      "fixture": {
+        "path": "Plans/goal_child_status_history_contract_fixtures.json",
+        "sha256": "48cb5fb2e470c58519a633ddc11ee6135a7b496de0024383d75cb307fcf06362"
+      }
+    },
+    {
+      "event_type": "goal.degraded",
+      "shape_cases": 15,
+      "semantic_cases": 0,
+      "native_pairs": 20,
+      "native_status": "NOT_RUN",
+      "fixture": {
+        "path": "Plans/goal_degraded_history_contract_fixtures.json",
+        "sha256": "3d190655d03ee8f539931cfa18998fba0497dbc431585c3ac24bbf8b874a24f1"
+      }
+    },
+    {
+      "event_type": "goal.scheduled",
+      "shape_cases": 33,
+      "semantic_cases": 19,
+      "native_pairs": 22,
+      "native_status": "NOT_RUN",
+      "fixture": {
+        "path": "Plans/goal_scheduled_history_contract_fixtures.json",
+        "sha256": "3eda34c2ad1ec7057d5e969f99cc5f02ae8441b6333195037228f4a6f9cd8ce4"
+      }
+    }
+  ],
+  "unchanged_contract_files": [
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee"
+    },
+    {
+      "path": "Plans/goal_runtime_events.schema.json",
+      "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+      "sha256": "0844947203e067de9a1b23090c5e50fab16327fa1531a39a9ed6ecef5b2b4eca"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "95529410a80758f6d5d30fd5ef4b49a7d7528ff92cb7383acb81f6b65d748daf"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+      "sha256": "2d3de6a93a05bdaf025b084a5f5dd6536132d405a4f89d341d863d252033582b"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+      "sha256": "4f6df24761ac3103ddf04497b37370092a1ed310945e647214ed50a1dc46d592"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "sha256": "80ed49a733fde275617523cf9825e85d8e4625b49c3f9d5c4890eaad5a573e92"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+      "sha256": "5049d1e292c8055f0420cd0af55a4ad0ca81bf808735a618f3a28206492b19b8"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+      "sha256": "67ee3b52ffd526f0cd4a2893b15d17f324100377614a457c917252e05ff0a55c"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+      "sha256": "435354e28885d40b4ca7157980ce718672bbc287bbde3714af2ebbb99cd35b6b"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+      "sha256": "d7b499cc4e3a5ed2e4950ee068a1ace5ea2ceac2be20aae407d8776c3257da9d"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+      "sha256": "d41a2b05350ef9021b8124eb9d4fd8f8b6542c0e43d81ce4955bddb7df2d5d13"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+      "sha256": "66400648120d8b6c60c7a47962433bd192ef942fb9b9bbced9d76e07b2790500"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+      "sha256": "6a2dd3337dcdb9dfca37003b29dfc71be227b225db9368034da74aaca6ee5d63"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "sha256": "a4144dd0476b9a1dfdbc23b406a243cf3d4381a778902457d60b82b34592c38f"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+      "sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+      "sha256": "eb8ca819fa91924a304a70a9ec3e15e7990501eb4538f41e317574c13ca1a4f4"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+      "sha256": "043212b8d2cdc1f65ffcac057f38f7b24ce82e7d46dc193f9975ba45ba545297"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+      "sha256": "c18207e899571aebc03df5a369101dc7a360cc82957fc0ac4d3f16cfd62b5bd5"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+      "sha256": "26812b949780cf89e58b0bb1670d15b71f86b0cf4e8886394f298b6b7ccffd92"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+      "sha256": "c35a0427e68a4880a72b41b0c6a4ac30a7ef59a592d41a2911bfe995189f7eff"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "sha256": "a7de56604057213ddf7bf50c1b7803c59fa362c893e0621f9b105cf48db9836b"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+      "sha256": "8b21a1a0ef9b999d1b0853b53aa8b1a2f449dd67264ceb87b332316d8ec71ca6"
+    }
+  ],
+  "index_scope": {
+    "plan_units.jsonl": {
+      "before": 6527,
+      "after": 6536,
+      "added": 9,
+      "existing_semantic_changes": [
+        "CV-287",
+        "GRS-042",
+        "GRS-043",
+        "SP-214"
+      ],
+      "all_other_semantics_preserved": true
+    },
+    "acceptance_units.jsonl": {
+      "before": 25048,
+      "after": 25095,
+      "added": 47,
+      "existing_semantic_changes": [
+        "GRS-042-A004"
+      ],
+      "all_other_semantics_preserved": true
+    }
+  },
+  "generated_shard_groups": {
+    "Plans/_shards/contracts_v0": 54,
+    "Plans/_shards/goal_runtime_system": 33,
+    "Plans/_shards/storage-plan": 58
+  },
+  "base_commit": "4d9d21297d2134148828b91fdcba6527fc99126c",
+  "new_units": [
+    "CV-334",
+    "CV-335",
+    "CV-336",
+    "GRS-060",
+    "GRS-061",
+    "GRS-062",
+    "SP-271",
+    "SP-277",
+    "SP-280"
+  ],
+  "status": "PASS_STATIC_ONLY",
+  "original_admission_and_operating_reader": "UNPROVEN; shared checkpoint and each exact family positive custody adoption remain required.",
+  "native_execution": "NOT_RUN",
+  "newly_completed_registered_families": 0,
+  "source_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/source-review.json",
+    "sha256": "6c5e5bec68e2ace75384ca2f9bc867bd39164eca14e1049e41adfb9517df7a7d"
+  },
+  "integration_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/integration-checks.json",
+    "sha256": "163cee7ff7b86973ed75d3ce331cbadbce44f2abd66906b8d68e969b82ce819d"
+  },
+  "validation_helper": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/verify.py",
+    "sha256": "4220581a1d3e7fb6dbbb997172ff76be0673542c12a67925102577182b46d504"
+  },
+  "shards": {
+    "status": "PASS",
+    "documents": 98,
+    "shards": 2236
+  },
+  "goal_runtime_lineage_self_test": {
+    "status": "PASS",
+    "cases": 6
+  },
+  "standard_governance": "Prior dated full-check result remains failing; not rerun or overridden by this focused change.",
+  "existing_new_contracts_static_gate": {
+    "status": "PASS",
+    "contract_pairs": 26,
+    "positive_cases_valid": 1016,
+    "negative_cases_rejected": 3314,
+    "internal_self_tests_passed": 12,
+    "claim": "Existing gate excludes the three new historical fixture packs; those are tested separately by the pinned root verifier."
+  },
+  "index_validation": {
+    "status": "PASS",
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/index-validation.json",
+    "sha256": "58adf81b00f75a8d0b658156f1599901c0997a78e01318baaa61998705f88c3a"
+  }
+}

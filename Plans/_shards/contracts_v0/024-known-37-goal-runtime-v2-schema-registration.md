@@ -4,13 +4,13 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3563-L17487
 
-Source SHA256: `a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3`
+Source SHA256: `a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7`
 
 ---
 
 ## Known-37 Goal Runtime v2 schema registration
 
-The following 21 project-scoped payload roots are the only current Goal/GoalRun writers. Each family revision is `2.0.0`, the registry selects root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
+The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Each family revision is `2.0.0`, the registry selects root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
 
 | Event type | Current root | Exact schema ID |
 |---|---|---|

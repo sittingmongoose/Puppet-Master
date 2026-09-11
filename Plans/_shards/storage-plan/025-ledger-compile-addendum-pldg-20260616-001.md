@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15068-L15143
+Source lines: L15068-L15149
 
-Source SHA256: `7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739`
+Source SHA256: `d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec`
 
 ---
 
@@ -17,8 +17,14 @@ plan_unit_id: SP-214
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
+canonical_text: |-
   storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
+
+  For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection or checkpoint write. Existing other-row qualifications remain unchanged.
+
+  For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications: SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status, degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
+
+  For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:

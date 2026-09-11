@@ -1,0 +1,320 @@
+{
+  "schema_version": "1.0.0",
+  "event_type": "goal.child_status_changed",
+  "claim": "Static synthetic schema and supplied historical facts only. No original admission/custody, operating reader, native durability or runtime effect is proven.",
+  "shared_checkpoint_adoption": "UNRESOLVED",
+  "operating_positive_read_path": false,
+  "payload_schema": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+  "schema_cases": [
+    {
+      "id": "valid_historical_shape",
+      "valid": true,
+      "value": {
+        "event_name": "goal.child_status_changed",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "paused"
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "unknown_field",
+      "valid": false,
+      "value": {
+        "event_name": "goal.child_status_changed",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "paused"
+        },
+        "expected_goal_revision": 1,
+        "unrecognized": true
+      }
+    },
+    {
+      "id": "same_status",
+      "valid": false,
+      "value": {
+        "event_name": "goal.child_status_changed",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "running"
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "completed_no_receipt",
+      "valid": false,
+      "value": {
+        "event_name": "goal.child_status_changed",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "completed"
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "failed_no_result",
+      "valid": false,
+      "value": {
+        "event_name": "goal.child_status_changed",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "failed"
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "wrong_event",
+      "valid": false,
+      "value": {
+        "event_name": "goal.child_other",
+        "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "child_goal_id": "child-original",
+          "previous_status": "running",
+          "next_status": "paused"
+        },
+        "expected_goal_revision": 1
+      }
+    }
+  ],
+  "native_oracles": {
+    "status": "NORMATIVE_NATIVE_NOT_RUN",
+    "pairs": [
+      {
+        "id": "GCH-01",
+        "positive": "Verified original v2 source yields read-only diagnostic",
+        "negative": "Schema-valid current append rejected before dedupe",
+        "facet_case": "historical_v2",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-02",
+        "positive": "Repeated historical lookup same source observation",
+        "negative": "Current identical-idempotency retry not successful admission",
+        "facet_case": "retry",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-03",
+        "positive": "Original authenticated backup bytes restored with provenance readable",
+        "negative": "New JSON with old timestamp not historical proof",
+        "facet_case": "custody",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-04",
+        "positive": "All project joins agree",
+        "negative": "Selected project fallback rejected",
+        "facet_case": "scope",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-05",
+        "positive": "Complete durable original source frame verified",
+        "negative": "Index without source unavailable",
+        "facet_case": "source",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-06",
+        "positive": "Resolved generic checkpoint complete coverage includes event",
+        "negative": "Nonempty checkpoint_ref or run.started checkpoint insufficient",
+        "facet_case": "checkpoint",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-07",
+        "positive": "Consistent CURRENT/index/checkpoint/source generation",
+        "negative": "CURRENT changes before return discards answer",
+        "facet_case": "generation",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-08",
+        "positive": "Committed exact survivor mapping source readable",
+        "negative": "Guessed old byte offset rejected",
+        "facet_case": "translation",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-09",
+        "positive": "Unchanged v2 payload validates",
+        "negative": "Future schema no best-effort interpretation",
+        "facet_case": "schema",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-10",
+        "positive": "Exact existing admitted v1 route transient only",
+        "negative": "Unregistered v1 shape no inferred upgrader",
+        "facet_case": "legacy",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-11",
+        "positive": "Historical inspection writes zero durable records",
+        "negative": "Child index/receipt/outbox/notification write forbidden",
+        "facet_case": "no_effect",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-12",
+        "positive": "Historical child cannot complete parent",
+        "negative": "Historical status applied to GoalRecordV2 forbidden",
+        "facet_case": "lifecycle",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-13",
+        "positive": "Historical completed ref resolved before diagnostic-valid claim",
+        "negative": "Missing receipt unresolved not current completion",
+        "facet_case": "refs",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-14",
+        "positive": "Held readable source and source-coupled index preserved",
+        "negative": "Deleted mapping never reconstructed",
+        "facet_case": "retention",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-15",
+        "positive": "Existing secret-safe source inspected",
+        "negative": "Unhandled secret refused without redaction rewrite",
+        "facet_case": "secret",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-16",
+        "positive": "Unsupported binding preserves original custody",
+        "negative": "Fallback active writer or topology forbidden",
+        "facet_case": "withdrawal",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-17",
+        "positive": "Exact source event and digest stable",
+        "negative": "Conflicting identity/digest cannot choose winner",
+        "facet_case": "identity",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GCH-18",
+        "positive": "Interrupted read leaves no owned state",
+        "negative": "Synthetic read cursor checkpoint forbidden",
+        "facet_case": "interruption",
+        "native_status": "NOT_RUN"
+      }
+    ]
+  },
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-child-status-20260911/package-manifest.json",
+    "sha256": "98ae1780c5ffae8478827f5bcf3564628900829f88c204d081e879521cb0a112"
+  }
+}

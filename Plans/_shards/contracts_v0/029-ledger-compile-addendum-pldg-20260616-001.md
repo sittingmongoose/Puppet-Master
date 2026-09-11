@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L17828-L17957
+Source lines: L17828-L17963
 
-Source SHA256: `a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3`
+Source SHA256: `a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7`
 
 ---
 
@@ -92,8 +92,14 @@ plan_unit_id: CV-287
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
+canonical_text: |-
   Contracts_V0 registers concrete persisted Goal Runtime event names and cross-contract payload minima. Canonical goal events are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, and goal.cancelled. Canonical Orchestrator GoalRun events are goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Existing transactional-outbox tokens GoalRunStarted and BuildStarted remain aliases for producer/outbox integration and must normalize into the canonical persisted event family before projection. Goal Runtime owns behavior and event semantics; storage-plan owns persistence, replay, projection keys, retention, and concrete stored payload schemas; Executor remains the producer/consumer boundary for scheduler, safe-point, WorkNode, and remediation events and is not re-owned by this goal event family. Every goal event payload carries event_name, schema_version, occurred_at_utc, project_id, optional thread_id, goal_id, optional parent_goal_id, goal_revision, optional expected_goal_revision, actor_ref, execution_role, requested and effective provider/model/account refs, correlation_id, optional causation_event_ref, optional idempotency_key, evidence_refs, artifact_refs, approval refs, and block refs. goal.created additionally carries objective, acceptance criteria, scope, constraints, budget, attachment refs, and model policy. goal.updated carries previous revision and objective/scope/constraint deltas. goal.replanned carries interruption class, impact, affected child goals or WorkNodes, stale/re-steer/cancel decisions, remaining evidence, new revision, and next action. goal.blocked carries blocker class, cause, affected scope, last attempted recovery, why autonomous recovery stopped, next safe action, and allowed_action_ids. Receipt events carry receipt kind, certification tier, validator outputs, child/worknode receipt refs, unresolved risks, and final certifier decision.
+
+  For exactly goal.degraded, the registered payload is authoritative historical validation only under GRS-061/CV-335; this registration does not admit its retired current lifecycle transition. Existing other-row qualifications remain unchanged.
+
+  For exactly goal.scheduled, schema registration preserves authoritative historical validation under GRS-062/CV-336 and admits no current scheduled-state transition. Existing other-row qualifications remain unchanged.
+
+  For exactly goal.child_status_changed, the registered schema preserves authoritative historical validation under GRS-060/CV-334 and admits no current child-state transition or new writer.
 gui_related: false
 gui_classification_reason: Event schema registration and owner boundaries are contract/governance behavior, not visual presentation.
 depends_on:

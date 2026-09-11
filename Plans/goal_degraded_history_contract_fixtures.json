@@ -1,0 +1,770 @@
+{
+  "schema_version": "1.0.0",
+  "event_type": "goal.degraded",
+  "claim": "Static synthetic schema and supplied historical facts only. No original admission/custody, operating reader, native durability or runtime effect is proven.",
+  "shared_checkpoint_adoption": "UNRESOLVED",
+  "operating_positive_read_path": false,
+  "payload_schema": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+  "schema_cases": [
+    {
+      "id": "historical_shape_verifier_unavailable",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "verifier_unavailable",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_optional_check_unavailable",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "optional_check_unavailable",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_evidence_incomplete",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "evidence_incomplete",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_canonical_gap",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_recovery_provenance",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "recovery_provenance",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_provider_fallback",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "provider_fallback",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "historical_shape_partial_scope",
+      "valid": true,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "partial_scope",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "unknown_reason",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "new_reason",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "empty_risks",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "empty_actions",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": []
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "unknown_action",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "auto_resume"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "wrong_event",
+      "valid": false,
+      "value": {
+        "event_name": "goal.blocked",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "unknown_field",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1,
+        "current_state": "degraded"
+      }
+    },
+    {
+      "id": "read_only_scope_write",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "external_read_only",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": true
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        },
+        "expected_goal_revision": 1
+      }
+    },
+    {
+      "id": "missing_expected_revision",
+      "valid": false,
+      "value": {
+        "event_name": "goal.degraded",
+        "schema_version": "pm.goal_runtime_event.goal_degraded.schema.v2",
+        "occurred_at_utc": "2020-01-01T00:00:00Z",
+        "project_id": "fixture:project_id",
+        "goal_id": "fixture:goal_id",
+        "goal_revision": 2,
+        "actor_ref": "fixture:actor_ref",
+        "execution_role": "worker",
+        "requested_provider_ref": "fixture:requested_provider_ref",
+        "effective_provider_ref": "fixture:effective_provider_ref",
+        "requested_model_ref": "fixture:requested_model_ref",
+        "effective_model_ref": "fixture:effective_model_ref",
+        "requested_account_ref": "fixture:requested_account_ref",
+        "effective_account_ref": "fixture:effective_account_ref",
+        "correlation_id": "fixture:correlation_id",
+        "evidence_refs": [],
+        "artifact_refs": [],
+        "payload": {
+          "degraded_reason": "canonical_gap",
+          "affected_scope": {
+            "scope_kind": "project",
+            "include_refs": [
+              "scope:original"
+            ],
+            "exclude_refs": [],
+            "write_allowed": false
+          },
+          "residual_risk_refs": [
+            "risk:original"
+          ],
+          "allowed_actions": [
+            "retry_storage"
+          ]
+        }
+      }
+    }
+  ],
+  "native_oracles": {
+    "status": "NOT_RUN",
+    "pairs": [
+      {
+        "id": "GD-01",
+        "name": "owner_disposition",
+        "positive": "Four-state exclusive owner plus exact D-R06 transition gives historical-only row",
+        "negative": "Absence from8-name list alone cannot establish retirement",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-02",
+        "name": "projection_health",
+        "positive": "Existing degraded survivor quality/provenance and false-success fences remain",
+        "negative": "Quality state cannot append goal.degraded or add fifth Goal state",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-03",
+        "name": "active_gate",
+        "positive": "Current exact-name rejection before dedupe/CAS/outbox",
+        "negative": "Same historical idempotency key must not return current append success",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-04",
+        "name": "original_v2",
+        "positive": "Genuine original source validates unchanged v2 schema",
+        "negative": "Schema-valid imported JSON is not historical custody",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-05",
+        "name": "source_custody",
+        "positive": "Original authenticated backup restores same event bytes/identity",
+        "negative": "Timestamp or synthetic migration marker cannot backdate new event",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-06",
+        "name": "scope",
+        "positive": "Project/goal/event/sequence and envelope joins match",
+        "negative": "Selected project or wrong goal payload fails",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-07",
+        "name": "index",
+        "positive": "Exact closed index row resolves complete durable source frame",
+        "negative": "Index without canonical frame is unavailable",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-08",
+        "name": "checkpoint",
+        "positive": "Resolved independently owned generic full-range checkpoint covers source",
+        "negative": "Sibling checkpoint or nonempty checkpoint_ref cannot prove coverage",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-09",
+        "name": "generation",
+        "positive": "Current publication revalidated before in-memory answer",
+        "negative": "Generation/recovery change discards answer without owned writes",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-10",
+        "name": "translation",
+        "positive": "Actual committed survivor translation preserves identity",
+        "negative": "Guessed retired offset rejected",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-11",
+        "name": "no_owned_effect",
+        "positive": "Repeated/interrupted bounded lookup has zero owned effects",
+        "negative": "Goal/projection/checkpoint/index/receipt write forbidden",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-12",
+        "name": "legacy",
+        "positive": "Supported original legacy route retains original schema/bytes",
+        "negative": "Invented event-specific v1-to-v2 payload upgrader forbidden",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-13",
+        "name": "historical_predicates",
+        "positive": "Actual original risk/exception/approval/predecessor evidence permits valid diagnostic",
+        "negative": "Missing original evidence remains unresolved not new verifier policy",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-14",
+        "name": "historical_actions",
+        "positive": "allowed_actions retained as original data only",
+        "negative": "Historical stop/replan/approval list must not dispatch",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-15",
+        "name": "state",
+        "positive": "Current four-state lifecycle/host evidence remains unchanged",
+        "negative": "Historical degraded state cannot drive current continuation or certification",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-16",
+        "name": "tiers",
+        "positive": "Original tier predicates interpreted only historically",
+        "negative": "Current Goal cannot acquire certification tier/rolecast to fit event",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-17",
+        "name": "retention",
+        "positive": "Indefinite audit source/source-coupled index and holds preserved",
+        "negative": "Reader cannot add TTL, remove hold or rebuild lost receipt",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-18",
+        "name": "secret_access",
+        "positive": "Current authorized secret-safe original source inspected",
+        "negative": "Secret/permission/tombstone conflict cannot expose successful view",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-19",
+        "name": "withdrawal",
+        "positive": "Unsupported reader preserves custody and fails read",
+        "negative": "Fallback producer/schema rewrite/action dispatch forbidden",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "GD-20",
+        "name": "no_conflation",
+        "positive": "Exact row remains in21 while no current emission",
+        "negative": "No other20 retirement, To-Do/Crew/GoalRun conversion or alias",
+        "native_status": "NOT_RUN"
+      }
+    ]
+  },
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-degraded-20260911/package-manifest.json",
+    "sha256": "a7bd7b060a00e0253a9bdc13da6224a44446a11982db8cac85dc8800de491b25"
+  }
+}

@@ -3963,10 +3963,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 260,
+        "False": 263,
         "True": 73
       },
-      "heading_count": 507,
+      "heading_count": 510,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4056,9 +4056,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 21801,
+      "line_count": 22075,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 333,
+      "plan_unit_count": 336,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4392,7 +4392,10 @@
         "CV-332",
         "CV-333",
         "CV-330",
-        "CV-331"
+        "CV-331",
+        "CV-334",
+        "CV-335",
+        "CV-336"
       ],
       "reasoning_tiers": [
         "high",
@@ -4531,6 +4534,8 @@
         "gui_action_projection_stale",
         "handoff_identity_underkeying",
         "hidden_peer_channel_drift",
+        "historical_scheduling_schema_misread_as_writer_admission",
+        "historical_schema_misread_as_writer_admission",
         "history_contract_identity_drift",
         "hitl_blocked_episode_identity_loss",
         "hitl_request_id_identity_revival",
@@ -4629,6 +4634,7 @@
         "restore_outcome_enum_drift",
         "resume_url_shadow_route",
         "retired_gemini_cli_auth_pool_resurrection",
+        "retired_goal_child_writer_reintroduction",
         "retry_scheduled_payload_loss",
         "route_activation_shell_state_boundary_drift",
         "route_extra_args_validation_bypass",
@@ -4731,19 +4737,19 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3",
+      "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 333
+        "accepted": 336
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 32,
-        "constraint": 53,
+        "constraint": 54,
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 3,
-        "requirement": 222,
+        "requirement": 224,
         "schema_contract": 20,
         "source_lineage_residual_disposition": 1
       },
@@ -4756,14 +4762,25 @@
         "Free Models unsafe material rejection fixtures",
         "Future DL-036 positive, negative, replay and resume acceptance; no runtime result implied",
         "Future owner-qualified request/result, stale identity, denied, cancellation, partial and unknown-effect fixtures",
+        "Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.",
+        "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Contracts_V0.md#73-route_target",
         "Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context",
         "Plans/browser_event_admission_fixtures.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/event_family_registry.json",
+        "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "Plans/goal_child_status_history_contract_fixtures.json",
+        "Plans/goal_degraded_history_contract_fixtures.json",
+        "Plans/goal_runtime_events.schema.json",
+        "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
         "Plans/shared_integration_runtime_expansion_fixtures.json",
+        "Plans/storage_value_registry.json",
         "Plans/ui_command_response_fixtures.json",
         "Remote/tunnel WS requires configured auth",
         "Restarted workspace probes every configured surface before run",
@@ -7997,9 +8014,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 23
+        "True": 26
       },
-      "heading_count": 141,
+      "heading_count": 144,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8055,9 +8072,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 5517,
+      "line_count": 5837,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 58,
+      "plan_unit_count": 61,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8116,7 +8133,10 @@
         "GRS-042",
         "GRS-043",
         "GRS-057",
-        "GRS-058"
+        "GRS-058",
+        "GRS-060",
+        "GRS-061",
+        "GRS-062"
       ],
       "reasoning_tiers": [
         "high",
@@ -8164,8 +8184,11 @@
         "planning_wizard_runtime_drift",
         "premature_runtime_launch",
         "product_scope_drift",
+        "retired_goal_child_writer_reintroduction",
+        "retired_goal_degradation_reintroduced",
         "retired_goal_projection_in_transcript",
         "retired_goal_structure_reintroduced",
+        "retired_scheduled_goal_state_reintroduced",
         "runtime_split_brain",
         "scheduler_drift",
         "silent_goal_data_loss_on_migration",
@@ -8177,17 +8200,17 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa",
+      "sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 49,
+        "accepted": 52,
         "superseded": 9
       },
       "title": "Goal Runtime System",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "constraint": 8,
-        "requirement": 44,
+        "constraint": 9,
+        "requirement": 46,
         "risk": 1,
         "schema_contract": 1,
         "validation_criterion": 2
@@ -8209,12 +8232,23 @@
         "Goal route-freeze and rebind fixtures",
         "Imported external-agent session has source tool/version, authority surface, context lineage, credential handling, cwd/worktree, terminal/session transcript, and continuation mode.",
         "Long-running shell command exposes next-check countdown and manual snapshot trigger.",
+        "Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.",
+        "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
         "Orphan helpers/processes are reaped on session close/crash/restart.",
         "Parent cannot certify complete until all required child results are settled or explicitly waived.",
         "Parent sees child terminal errors as typed failed outcomes, never empty successful completion.",
         "Plans/.plan_index/node_readiness_report.json",
+        "Plans/event_family_registry.json",
+        "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "Plans/goal_child_status_history_contract_fixtures.json",
+        "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_handoff_contract_fixtures.json",
         "Plans/goal_handoff_contracts.schema.json",
+        "Plans/goal_runtime_events.schema.json",
+        "Plans/goal_scheduled_history_contract_fixtures.json",
+        "Plans/storage_value_registry.json",
         "Spend/quota caps terminate even when model output appears syntactically successful.",
         "Stop active MCP call leaves partial/cancelled result",
         "Stop provider stream does not replay unfinished assistant/tool turn",
@@ -16403,10 +16437,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 167,
+        "False": 170,
         "True": 100
       },
-      "heading_count": 492,
+      "heading_count": 495,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16465,9 +16499,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19957,
+      "line_count": 20428,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 267,
+      "plan_unit_count": 270,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16735,7 +16769,10 @@
         "SP-266",
         "SP-281",
         "SP-269",
-        "SP-274"
+        "SP-274",
+        "SP-271",
+        "SP-277",
+        "SP-280"
       ],
       "reasoning_tiers": [
         "high",
@@ -16757,6 +16794,8 @@
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
+        "historical_goal_event_source_and_checkpoint_authority",
+        "historical_scheduling_source_and_checkpoint_authority",
         "history_projection_drift",
         "home_cross_axis_or_semantic_preset_schema_drift",
         "home_layout_persistence_drift",
@@ -16775,6 +16814,7 @@
         "restore_point_original_result_authority",
         "restore_point_terminal_retention_authority",
         "retention_compaction_recovery_loss",
+        "retired_goal_child_writer_reintroduction",
         "rollback_diagnostics_storage_drift",
         "safe_point_restore_storage_drift",
         "second_source_of_truth",
@@ -16798,20 +16838,20 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+      "sha256": "d2846e68c4f583d8a801ed7b7253fb332619178eb9174b2b6a784e747ae8cdec",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 264,
+        "accepted": 267,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 243,
+        "requirement": 245,
         "schema_contract": 8,
         "security_contract": 1,
-        "storage_contract": 9,
+        "storage_contract": 10,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -16839,6 +16879,8 @@
         "Large tool results remain retrievable from artifacts with hashes.",
         "Low-memory mode disables optional previews/agents before core runtime fails.",
         "Memory store and chat/session files have size/compaction policies.",
+        "Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.",
+        "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
@@ -16846,6 +16888,14 @@
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/event_family_registry.json",
+        "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+        "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "Plans/goal_child_status_history_contract_fixtures.json",
+        "Plans/goal_degraded_history_contract_fixtures.json",
+        "Plans/goal_runtime_events.schema.json",
+        "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/restore_point_create_result.schema.json",
         "Plans/restore_point_create_result_fixtures.json",
         "Plans/restore_point_create_result_join_fixtures.json",
@@ -18782,7 +18832,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T20:00:13Z",
+  "generated_at_utc": "2026-09-11T20:43:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18790,13 +18840,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3374,
-      "True": 3153
+      "False": 3380,
+      "True": 3156
     },
-    "plan_unit_count": 6527,
+    "plan_unit_count": 6536,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6336,
+      "accepted": 6345,
       "retired": 182,
       "superseded": 9
     },
@@ -18822,7 +18872,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 611,
+      "constraint": 613,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -18863,7 +18913,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5184,
+      "requirement": 5190,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -18880,7 +18930,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 9,
+      "storage_contract": 10,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
