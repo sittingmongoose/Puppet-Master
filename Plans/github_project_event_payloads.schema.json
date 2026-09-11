@@ -40,7 +40,7 @@
           "const": "cmd.project.new_github_repo"
         },
         "operation_id": {
-          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"
         },
         "request_sha256": {
           "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
@@ -102,7 +102,7 @@
           "const": "cmd.project.new_github_repo"
         },
         "operation_id": {
-          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"
         },
         "request_sha256": {
           "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
@@ -123,7 +123,7 @@
           "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
         },
         "project_id": {
-          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/non_empty_string"
         },
         "registration_receipt_ref": {
           "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
