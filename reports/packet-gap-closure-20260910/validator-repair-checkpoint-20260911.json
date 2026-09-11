@@ -1,0 +1,278 @@
+{
+  "schema_id": "pm.packet_audit_validator_repair_checkpoint.v1",
+  "recorded_at_utc": "2026-09-11T21:18:00Z",
+  "status": "bounded_repairs_verified_global_checks_not_passed",
+  "source_base_commit": "76553452c8a41769c1a197f0871e38ade4117229",
+  "scope": "Three authored Python files only, plus this compact report. Static contract checking and negative-control fidelity; no product/runtime/security certification.",
+  "fixes": [
+    {
+      "id": "protected_auth_named_fixture_selection",
+      "owner": "Plans/Shared_Integration_Runtime.md#SIR-031",
+      "rationale": "The standalone checker validated named local request/result fixtures against the root session union. Six valid local actions failed there; negative root rejection could conceal an accepted invalid local action.",
+      "change": "Select each declared $defs entry for both positive and negative fixtures, retaining root validation only when definition is absent. Resolve the existing shared-integration expansion schema from its exact local $id through an offline registry. Malformed/unknown definitions and unresolved references are checker failures, never negative-payload passes.",
+      "verification": "Eight focused methods pass, covering 19 valid and 27 invalid fixtures, all six local-action positive controls moved to the negative set, malformed selectors in both groups, unresolved external references without network access, three ordinary cross-schema positive controls, and independent security-discriminator ablations."
+    },
+    {
+      "id": "holding_bucket_negative_control_fidelity",
+      "owner": "Plans/Decision_Log.md#DL-039",
+      "rationale": "The test assumed the live historical ledger still held the voided application. Step 5 had legitimately repaired its provenance, so that input was no longer a negative control.",
+      "change": "Construct missing-provenance, forged ninth-decision and forged August-stamp mutations across the 54 authorized members; require each to fail while the genuine control passes. The independent holding validator, ledger, authority decision and historical receipt are unchanged.",
+      "verification": "All 13 focused holding-bucket methods pass."
+    }
+  ],
+  "focused_results": {
+    "protected_auth_tests": 8,
+    "holding_bucket_tests": 13,
+    "total": 21,
+    "passed": 21
+  },
+  "captures": [
+    {
+      "label": "auth-before",
+      "exit_code": 1,
+      "input_count": 7010,
+      "input_drift_count": 0,
+      "started_at": "2026-09-11T21:03:03.188690+00:00",
+      "finished_at": "2026-09-11T21:03:12.868536+00:00",
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-before/summary.json",
+          "sha256": "cd0df1b743ad686074a3031aa25cda6fa110c29356e895f71a7442b33675a7d7"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-before/stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-before/stderr.log",
+          "sha256": "269cdcbfa85109a6ab465b0a4bad4b268fe64ad7e1365a4803bfb7de1a5761e4"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-before/input-hashes-before.json",
+          "sha256": "28ff5242f1b4bc44828ec1e4302f0d960617c84d283e24c7c6d1e11007630ebe"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-before/input-hashes-after.json",
+          "sha256": "28ff5242f1b4bc44828ec1e4302f0d960617c84d283e24c7c6d1e11007630ebe"
+        }
+      ]
+    },
+    {
+      "label": "auth-final",
+      "exit_code": 0,
+      "input_count": 7010,
+      "input_drift_count": 0,
+      "started_at": "2026-09-11T21:06:28.168162+00:00",
+      "finished_at": "2026-09-11T21:06:52.513852+00:00",
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-final/summary.json",
+          "sha256": "731b68c2c859a31cc5afa36d6b2c27ac9a900b87ebe7065c2dd8138482eadcf0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-final/stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-final/stderr.log",
+          "sha256": "252d233c81390876daf09855357bdbe815d1e0c3df5519d05c26f183ba0c8283"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-final/input-hashes-before.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/auth-final/input-hashes-after.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        }
+      ]
+    },
+    {
+      "label": "holding-final",
+      "exit_code": 0,
+      "input_count": 7010,
+      "input_drift_count": 0,
+      "started_at": "2026-09-11T21:06:29.717221+00:00",
+      "finished_at": "2026-09-11T21:06:32.402316+00:00",
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/holding-final/summary.json",
+          "sha256": "945c4b65ccf395b378b6ef81236537d2e92f49d1f9cee5a1aa32209e8b70f16d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/holding-final/stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/holding-final/stderr.log",
+          "sha256": "37517311c37cb87e5195d52d5653a264ed5fc9918c52d9891485b7df7067276b"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/holding-final/input-hashes-before.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/holding-final/input-hashes-after.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        }
+      ]
+    },
+    {
+      "label": "full-suite",
+      "exit_code": 1,
+      "input_count": 7010,
+      "input_drift_count": 0,
+      "started_at": "2026-09-11T21:06:57.681632+00:00",
+      "finished_at": "2026-09-11T21:12:06.823900+00:00",
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/full-suite/summary.json",
+          "sha256": "b435db3628563e8af96b9fdde7ea931fb0c90db57307850c518ca8e787bd88d4"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/full-suite/stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/full-suite/stderr.log",
+          "sha256": "f7f81b9c8e7a8cd65420aba9cdd6862a20a4383ac0e974914c73ee68834500fb"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/full-suite/input-hashes-before.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/full-suite/input-hashes-after.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        }
+      ]
+    },
+    {
+      "label": "run-gates",
+      "exit_code": 1,
+      "input_count": 7010,
+      "input_drift_count": 0,
+      "started_at": "2026-09-11T21:06:59.109579+00:00",
+      "finished_at": "2026-09-11T21:11:35.415756+00:00",
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/run-gates/summary.json",
+          "sha256": "814f8ed7fc1752e080b03d27a451bfebdbb9769d7dcfd493d056f1d5a947dd69"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/run-gates/stdout.log",
+          "sha256": "f8ad4df5dc4ffa2ce1d542ad3a3e20b69cf510018312e4c0ef2d9189aeaa09f0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/run-gates/stderr.log",
+          "sha256": "8e004013591043f475bad549c9c8848aa85af6db1fb37c6cfdf81cf4f5010e4f"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/run-gates/input-hashes-before.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/run-gates/input-hashes-after.json",
+          "sha256": "decc90995a47b1855fc23c8a975353d797b220a06d264c0ae9d9f6b01d0121a0"
+        }
+      ]
+    }
+  ],
+  "capture_script": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/capture.py",
+    "sha256": "9797c29760b204c14976edbdc777ff7c384e4d85a4011121fc0c126b4ece7f60"
+  },
+  "implementation_files": [
+    {
+      "path": "scripts/pm-protected-auth-browser-contracts.py",
+      "sha256": "cca8e0b15f0c597f010339c2aa3cf9f646b37b753522af75cb19a5fd2428e9d9"
+    },
+    {
+      "path": "tests/test_event_authority_holding_bucket.py",
+      "sha256": "a0e50e1cd010e162b50b91780ca3a428786c215ae6793dd54fdb4b19ec69a78f"
+    },
+    {
+      "path": "tests/test_protected_auth_browser_contracts.py",
+      "sha256": "030250fda2bd2e68f854a34d7972a685cf923969d046fccd08beda4d05e38f93"
+    }
+  ],
+  "full_suite": {
+    "total": 566,
+    "pass": 554,
+    "fail": 3,
+    "error": 9,
+    "failures": [
+      "test_existing_family_and_retention_census_is_unchanged (test_pm_onboarding_phases.OnboardingStorageTests.test_existing_family_and_retention_census_is_unchanged)",
+      "test_bounded_validator_passes (test_runtime_integration_disposition.RuntimeIntegrationDispositionTest.test_bounded_validator_passes)",
+      "test_registry_has_exact_family_and_status_counts (test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_has_exact_family_and_status_counts)"
+    ],
+    "errors": [
+      "test_all_current_hashes_still_fail_closed_on_denominator_and_depth (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_all_current_hashes_still_fail_closed_on_denominator_and_depth)",
+      "test_current_event_authority_audit_rehashes_cleanly_and_remains_open (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_audit_rehashes_cleanly_and_remains_open)",
+      "test_current_event_authority_group_artifact_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_group_artifact_drift_fails)",
+      "test_current_event_authority_live_source_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_live_source_drift_fails)",
+      "test_currentness_helper_mutation_invalidates_its_own_binding (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_currentness_helper_mutation_invalidates_its_own_binding)",
+      "test_event_authority_clearance_requires_both_conditions (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_clearance_requires_both_conditions)",
+      "test_event_authority_inventory_excludes_derived_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_inventory_excludes_derived_consumers)",
+      "test_prior_five_path_gap_is_enforced_by_both_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_prior_five_path_gap_is_enforced_by_both_consumers)",
+      "test_receipt_writer_and_both_consumers_share_one_bound_contract (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_receipt_writer_and_both_consumers_share_one_bound_contract)"
+    ],
+    "stale_owner_hash_rows": 156
+  },
+  "gates": {
+    "total": 36,
+    "pass": 25,
+    "failed_checks": [
+      "json_syntax",
+      "verify_spec_lock",
+      "validate_plan_graph",
+      "validate_evidence",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_implementation_readiness",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_audit_closure",
+      "validate_audit_status_index"
+    ],
+    "full_failure_totals_available": false
+  },
+  "residual_findings": [
+    {
+      "id": "storage_family_count_guards",
+      "status": "open_unchanged",
+      "evidence": "At the frozen base the registry has 94 families: 72 materialized, 21 deferred, one alias. The shared-runtime test expects 84; the Onboarding test expects 90. The four Restore families landed after the R5 freeze account for the new Onboarding count failure.",
+      "disposition": "Do not override counts or edit the readiness validator to claim success. SP-281 explicitly preserves the implementation-readiness count failure; this patch also leaves both failing storage-count tests unchanged.",
+      "owner": "Plans/storage-plan.md#SP-281"
+    },
+    {
+      "id": "runtime_disposition_currentness",
+      "status": "open_unchanged",
+      "evidence": "The bounded runtime-disposition test reports 156 owner-file-hash-stale rows at this base.",
+      "disposition": "No automatic rehash, historical-evidence rewrite or inference of current semantic closure. Requires separate owner-by-owner currentness adjudication.",
+      "owner": "Plans/runtime_integration_disposition.json"
+    },
+    {
+      "id": "pnc019_missing_historical_receipt",
+      "status": "blocked_evidence_missing",
+      "evidence": "Nine Pnc019CurrentnessTests fail in setUp because the required historical VALIDATOR_RECEIPT.json is absent.",
+      "disposition": "No fabricated receipt, skipped tests, relaxed guard or governance reseal."
+    },
+    {
+      "id": "packet_audit_remaining",
+      "status": "open",
+      "evidence": "The separate frozen R5 checkpoint retains 256 reviewed cases and 13,160 not reviewed out of 13,416. These validator tests do not add formal case verdicts or close the blocked Settings/Onboarding reference passes.",
+      "checkpoint": "reports/packet-gap-closure-20260910/r5-audit-checkpoint-20260911.json"
+    }
+  ],
+  "boundaries": {
+    "canonical_plans_changed": false,
+    "concepts_changed": false,
+    "governance_resealed": false,
+    "generated_artifacts_regenerated": false,
+    "runtime_execution_proven": false,
+    "event_admission_changed": false,
+    "global_packet_audit_complete": false
+  },
+  "custody_note": "Raw output and all tracked Plans/scripts/tests input hashes remain outside the repository. Each run's before/after maps match; all four final-run maps also match the authored patch state when this report was assembled. The failing auth-before run is retained as pre-fix evidence, not compared to post-fix bytes. Full gate failure totals are not inferred from the CLI's capped failure samples."
+}
