@@ -1,0 +1,240 @@
+{
+  "schema": "jujutsu.d2.partial_campaigns.v1",
+  "recorded_at": "2026-09-11T13:47:49.301295+00:00",
+  "snapshot_sha": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "same_frozen_inputs_and_protocol": true,
+  "protocol_file_hashes_verified": 16,
+  "arm_order": [
+    "premium",
+    "hybrid"
+  ],
+  "workers": 3,
+  "batch_characters": 10000,
+  "batch_max_leads": 3,
+  "adjudication_started": false,
+  "pricing_basis": "Preserved September 8 standard tier; user confirmed no Fast sessions. Captured API-equivalent valuation and retained liability are separate; cash bill unknown.",
+  "arms": {
+    "premium": {
+      "terminal": {
+        "at": "2026-09-11T04:40:31.431996+00:00",
+        "stop_reason": "Stop: missing_or_interrupted_usage",
+        "partial": true,
+        "pending_intake_preserved": true
+      },
+      "timing": {
+        "at": "2026-09-11T04:40:31.431283+00:00",
+        "stages": {
+          "discovery": {
+            "wall_seconds": 2307.179612159729,
+            "summed_job_seconds": 2306.921,
+            "average_concurrency": 0.9998879098279275
+          },
+          "implementation": {
+            "wall_seconds": 516.1961925029755,
+            "summed_job_seconds": 1031.5388105793,
+            "average_concurrency": 1.9983464147177992
+          },
+          "history": {
+            "wall_seconds": 516.1230847835541,
+            "summed_job_seconds": 516.0137667655945,
+            "average_concurrency": 0.9997881938995125
+          },
+          "reconcile": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          }
+        },
+        "arm_cumulative_wall_seconds": 2823.4991071224213,
+        "summed_terminal_job_seconds": 3854.4735773448942,
+        "average_concurrency": 1.3651407105537192,
+        "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+        "reserved_upper_usd": 107.55000000000001,
+        "actual_usage_usd": null,
+        "captured_usage_upper_usd": 39.71806599999998,
+        "money_stop_reason": "missing_or_interrupted_usage",
+        "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+      },
+      "admitted_attempts": 4,
+      "restarts": 0,
+      "attempt_status_counts": {
+        "discovery:complete": 1,
+        "implementation:cost_stopped": 1,
+        "history:cost_stopped": 1,
+        "implementation:partial": 1
+      },
+      "captured_api_equivalent_upper_usd": 39.71806599999998,
+      "outstanding_liability_usd": 107.55000000000001,
+      "actual_cash_usd": null,
+      "coverage": {
+        "leads": 88,
+        "counts": {
+          "discovered": 88,
+          "studied": 0,
+          "reconciled": 0,
+          "comparison_delivered": 0
+        },
+        "pending_deep_leads": 84,
+        "pending_reconcile_leads": 88,
+        "pending_compare_leads": 88,
+        "pending_report_intake": 0,
+        "coverage_claim": "Bounded workflow; unfinished deep investigations are retained even for compared leads. Delivery is not semantic validation."
+      },
+      "frozen_files": {
+        "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/frozen/premium/manifest.json",
+        "sha256": "4ebda0a8186e66778ed90ee351575ca1fd4b6280188d98512d60bf74bebcf101",
+        "all_file_count": 24589,
+        "copied_report_lead_handoff_count": 196
+      }
+    },
+    "hybrid": {
+      "terminal": {
+        "at": "2026-09-11T13:45:26.995520+00:00",
+        "stop_reason": "interrupted_execution_process_absence_detected",
+        "partial": true,
+        "pending_intake_preserved": true,
+        "interruption_time_known": false,
+        "last_observed_timing_at": "2026-09-11T05:35:50.847190+00:00",
+        "wall_elapsed_at_detection_seconds": 31577.21066427231,
+        "cumulative_budget_elapsed_seconds_at_detection": 31577.21066427231,
+        "six_hour_elapsed_cap_exceeded": true,
+        "no_restart_authorized": true,
+        "independent_detection_receipt": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/interruption-observation.json",
+        "new_jobs": 0,
+        "new_restarts": 0,
+        "preimage_manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/recovery/preimage-20260911T134526995520Z/manifest.json"
+      },
+      "timing": {
+        "at": "2026-09-11T13:45:26.995520+00:00",
+        "stages": {
+          "discovery": {
+            "wall_seconds": 452.38707637786865,
+            "summed_job_seconds": 452.165,
+            "average_concurrency": 0.9995091009680322
+          },
+          "implementation": {
+            "wall_seconds": 1487.5854902267456,
+            "summed_job_seconds": 2216.825,
+            "average_concurrency": 1.4902168746362938
+          },
+          "history": {
+            "wall_seconds": 1642.1095123291016,
+            "summed_job_seconds": 2381.148,
+            "average_concurrency": 1.4500543247098523
+          },
+          "reconcile": {
+            "wall_seconds": null,
+            "summed_job_seconds": null,
+            "average_concurrency": null,
+            "last_observed_snapshot": {
+              "wall_seconds": 106.24113273620605,
+              "summed_job_seconds": 106.24113345146179,
+              "average_concurrency": 1.0000000067323807
+            },
+            "reason": "Execution ended at an unknown time before process-absence detection"
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          }
+        },
+        "arm_cumulative_wall_seconds": null,
+        "summed_terminal_job_seconds": 5050.138,
+        "average_concurrency": null,
+        "timing_scope": "Known completed-job times remain measured; interrupted job elapsed and final running time/concurrency are unknown. Detection wall elapsed includes an unobserved interval and is not active runtime.",
+        "reserved_upper_usd": 35.85,
+        "actual_usage_usd": null,
+        "captured_usage_upper_usd": 3.596462368000001,
+        "money_stop_reason": "missing_or_interrupted_usage",
+        "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed.",
+        "summed_job_seconds": null,
+        "unknown_elapsed_jobs": [
+          "J0012-reconcile"
+        ],
+        "last_observed_scheduler_timing": {
+          "at": "2026-09-11T05:35:50.847190+00:00",
+          "stages": {
+            "discovery": {
+              "wall_seconds": 452.38707637786865,
+              "summed_job_seconds": 452.165,
+              "average_concurrency": 0.9995091009680322
+            },
+            "implementation": {
+              "wall_seconds": 1487.5854902267456,
+              "summed_job_seconds": 2216.825,
+              "average_concurrency": 1.4902168746362938
+            },
+            "history": {
+              "wall_seconds": 1642.1095123291016,
+              "summed_job_seconds": 2381.148,
+              "average_concurrency": 1.4500543247098523
+            },
+            "reconcile": {
+              "wall_seconds": 106.24113273620605,
+              "summed_job_seconds": 106.24113345146179,
+              "average_concurrency": 1.0000000067323807
+            },
+            "compare": {
+              "wall_seconds": 0,
+              "summed_job_seconds": 0,
+              "average_concurrency": null
+            }
+          },
+          "arm_cumulative_wall_seconds": 2201.013027906418,
+          "summed_terminal_job_seconds": 5050.138,
+          "average_concurrency": 2.2944607487415203,
+          "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+          "reserved_upper_usd": 35.85,
+          "actual_usage_usd": null,
+          "captured_usage_upper_usd": 3.596462368000001,
+          "money_stop_reason": null,
+          "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+        },
+        "wall_elapsed_first_admission_to_detection_seconds": 31577.21066427231,
+        "unobserved_detection_interval_seconds": 29376.14833021164,
+        "cumulative_budget_elapsed_seconds_at_detection": 31577.21066427231,
+        "budget_elapsed_scope": "Frozen policy counts all wall time since first admission, including idle/unobserved interval; six-hour cap is exceeded and cannot restart.",
+        "arm_wall_horizon_exceeded_by_detection": true
+      },
+      "admitted_attempts": 12,
+      "restarts": 0,
+      "attempt_status_counts": {
+        "discovery:completed": 1,
+        "implementation:completed": 5,
+        "history:completed": 5,
+        "reconcile:interrupted_unknown": 1
+      },
+      "captured_api_equivalent_upper_usd": 3.596462368000001,
+      "outstanding_liability_usd": 35.85,
+      "actual_cash_usd": null,
+      "coverage": {
+        "leads": 91,
+        "counts": {
+          "discovered": 86,
+          "studied": 5,
+          "reconciled": 0,
+          "comparison_delivered": 0
+        },
+        "pending_deep_leads": 75,
+        "pending_reconcile_leads": 91,
+        "pending_compare_leads": 91,
+        "pending_report_intake": 0,
+        "coverage_claim": "Bounded workflow; unfinished deep investigations are retained even for compared leads. Delivery is not semantic validation.",
+        "recovery_status": "interrupted_unknown",
+        "process_absence_detected_at": "2026-09-11T13:45:26.995520+00:00"
+      },
+      "frozen_files": {
+        "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/frozen/hybrid/manifest.json",
+        "sha256": "c82706748195f8a34a36f1ead0a40abb042c33f8758b1d6ed7335f9ff7222d2a",
+        "all_file_count": 22312,
+        "copied_report_lead_handoff_count": 242
+      }
+    }
+  }
+}
