@@ -1,0 +1,204 @@
+{
+  "schema_id": "pm.packet_gap_closure.r5_audit_checkpoint.v1",
+  "date": "2026-09-11",
+  "status": "incomplete_with_findings",
+  "implementation_snapshot": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "implementation_tree": "96f8fe942c13e4d7ac14f69523e1fb43ec51ab08",
+  "claim_boundary": "Historical R5 source/implementation freeze, not current-main acceptance. This report preserves direct judgments and their evidence custody; it is not a completed workbook, aggregate or suite pass, runtime/native/visual proof, Event Authority closure, readiness admission or governance seal. Later main changes require separate currentness review.",
+  "formal_review": {
+    "audit_dir": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook",
+    "manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+    "expected_cases": 13416,
+    "expected_chunks": 151,
+    "reviewed_cases": 256,
+    "reviewed_chunks": [
+      "chunk-00001",
+      "chunk-00002",
+      "chunk-00003",
+      "chunk-00008",
+      "chunk-00009",
+      "chunk-00011",
+      "chunk-00014"
+    ],
+    "unreviewed_cases": 13160,
+    "missing_result_files": 144,
+    "duplicate_case_count": 0,
+    "validation_failure_count": 0,
+    "complete": false,
+    "implementation_verdict": "not_inferred",
+    "status_counts": {
+      "pass": 160,
+      "partial": 53,
+      "blocked": 39,
+      "not_applicable": 3,
+      "fail": 1
+    },
+    "method": "Root authored case-specific judgments after literal source and current owner review. Mechanical checks join exact identities, source hashes, frozen owner hashes, literal findings and residuals; they do not choose or carry verdicts from prior proposals.",
+    "cohorts": [
+      {
+        "cases": 34,
+        "subject": "Settings base and cumulative audit",
+        "counts": {
+          "partial": 30,
+          "not_applicable": 2,
+          "blocked": 2
+        }
+      },
+      {
+        "cases": 160,
+        "subject": "Two distinct Settings command-candidate identities",
+        "counts": {
+          "pass": 158,
+          "blocked": 2
+        },
+        "boundary": "PASS means static exact candidate disposition, not native dispatch or runtime implementation. Artifact-manager command remains unregistered."
+      },
+      {
+        "cases": 43,
+        "subject": "Seven-concept audit and selected-surface validation matrix",
+        "counts": {
+          "pass": 2,
+          "partial": 23,
+          "blocked": 17,
+          "not_applicable": 1
+        },
+        "boundary": "Only explicit competition/bakeoff-process retirement is not applicable. Selected-concept visual, theme/width and interaction requirements remain retained."
+      },
+      {
+        "cases": 19,
+        "subject": "Full Thread performance scenarios",
+        "counts": {
+          "blocked": 18,
+          "fail": 1
+        },
+        "boundary": "Native timing/platform/storage evidence is absent; whole plan governance fails."
+      }
+    ]
+  },
+  "reference_review": {
+    "status": "blocked",
+    "settings": {
+      "required": 4,
+      "opened": 4,
+      "status": "blocked"
+    },
+    "onboarding_doctor": {
+      "required": 4,
+      "opened": 4,
+      "status": "blocked"
+    },
+    "same_bytes_not_same_identity": true,
+    "boundary": "Both correction passes were read and reviewed. Current owners represent policy but absent affected-surface execution and incomplete case coverage prevent a no-material-effect finding."
+  },
+  "census_qualification": "SSYS-026's current census note explicitly distinguishes historical 828, ordinary registry 887 and concept 892. Earlier 34-case prose saying unresolved prose/registry discrepancy must be read with this qualification: these totals are not unexplained; historical acceptance/checklist wording still needs consistent interpretation. No inventory shrink, new design choice or blanket conflict closure is claimed.",
+  "verification": {
+    "receipt_integrity": {
+      "passed": true,
+      "assertions": 6582,
+      "file_pin_checks": 1025,
+      "boundary": "Mechanical fidelity only. The initial checker incorrectly expected identical command residuals despite their explicit static-scope prefix and did not allow the third not-applicable rationale or a script evidence path. Its failed output is retained; final checker checks those exact known representations. No case status or receipt was changed to make the checker pass."
+    },
+    "unittest": {
+      "pattern": "test_*.py",
+      "previous_pattern": "test_pm*.py",
+      "discovered": 561,
+      "run": 561,
+      "passed": 548,
+      "failures": 4,
+      "errors": 9,
+      "skipped": 0,
+      "loader_errors": 0,
+      "exit_code": 1,
+      "input_hashes_before_after_unchanged": true,
+      "scope_note": "This intentionally broader discovery exposes four previously excluded failures; it is not a regression comparison against the narrower historical run."
+    },
+    "newly_exposed_failures": [
+      {
+        "test": "test_event_authority_holding_bucket.HoldingBucketTests.test_existing_forged_application_is_rejected",
+        "issue": "Negative test uses a live ledger that now has genuine provenance; explicit forged fixtures must replace this stale historical assumption. Validator/ledger unchanged by this report."
+      },
+      {
+        "test": "test_protected_auth_browser_contracts.ProtectedAuthBrowserContractsTest.test_positive_negative_and_cross_schema_matrix",
+        "issue": "Standalone checker applies root schema to six positive local-action fixtures declaring a named definition; dedicated fixture routing and stale exact-count assertions need repair."
+      },
+      {
+        "test": "test_runtime_integration_disposition.RuntimeIntegrationDispositionTest.test_bounded_validator_passes",
+        "issue": "Currentness validator reports stale owner-file hash bindings. No blanket rehash or governance reseal performed."
+      },
+      {
+        "test": "test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_has_exact_family_and_status_counts",
+        "issue": "Test expects 84 total / 66 materialized / 17 deferred / 1 alias; frozen registry is 90 / 68 / 21 / 1. Exact admission lineage must be checked before updating assertions."
+      }
+    ],
+    "setup_errors": "Nine PNC019CurrentnessTests require missing historical Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json. No receipt fabricated.",
+    "new_contracts": {
+      "status": "pass",
+      "contract_pairs": 26,
+      "positive": 1016,
+      "negative": 3314,
+      "internal_self_tests": 12
+    },
+    "run_gates": {
+      "status": "fail",
+      "passed": 25,
+      "total": 36,
+      "failing_checks": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1448,
+        "validate_implementation_readiness": 38,
+        "validate_plan_graph": 1448,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "verify_spec_lock": 26
+      },
+      "note": "json_syntax failure is an absent tracked-snapshot raw-capture schema, not a sparse-checkout omission. Counts are snapshot findings, not waived."
+    },
+    "shards": {
+      "status": "pass",
+      "documents": 98,
+      "shards": 2208
+    }
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/implementation-freeze.json",
+      "sha256": "edd844986b19196956e4a3b0919736baf619734769c47e0864d813993e48d75c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/checkpoint-integrity-final.json",
+      "sha256": "c853cd0583a9545c380dea5829890d8b750439b75109c4b527ae9afbb7d7450c",
+      "contains": "All four case-review receipts, correction review and seven chunk-result hashes."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/check-checkpoint.py",
+      "sha256": "13ceec11f6717e0d635e7ae346345f6ca187639b28bbdc9d877f08bd74015a82"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/reference-review-report.json",
+      "sha256": "c0447a403194e11f37cc6a4f9b6a06b65172b46bbcd48d0535909e681ea6e3c6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-unittest-20260911-Zrc5oHfC/execution-summary.json",
+      "sha256": "e0489e5c3cfa49c37bbdbf04f197497da55fb7c5ddafbd68d9994822d9212bbb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/run-gates.json",
+      "sha256": "7c5071a7ab3e338b5fd7fb3f6832fc4c989b6ad0ea2646c12b270cb1663aebf5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/validate-new-contracts.json",
+      "sha256": "e2fcac38770698235576eb3875374ac0101f50f8a52c0f481755fcabfb758176"
+    }
+  ],
+  "remaining_work": [
+    "Finish all 13160 unreviewed exact identities and then author separately scoped suite/aggregate verdicts; do not import historical result counts as current passes.",
+    "Continue approved Browser event sibling work with individually bound authority; workspace-created admission does not admit the other 52.",
+    "Repair bounded non-design validation defects after owner/lineage inspection on current main; keep unapproved governance work and other agents' changes untouched.",
+    "Revalidate affected judgments after canonical changes; retain historical freezes instead of overwriting evidence.",
+    "Deferred visual/native/performance obligations remain unverified and must not be claimed complete by this audit."
+  ]
+}
