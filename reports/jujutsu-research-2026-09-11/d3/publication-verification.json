@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-11T15:00:57.985615+00:00",
+  "status": "PASS",
+  "scope": "Exact reviewed artifact hashes and lossless identity/count projection; semantic review is independently bound above.",
+  "findings": 105,
+  "union_counts_match": true,
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "91a789a6e211641459c7bea1e371a3885ca13d751e119fb40bfc1e03478f77c4",
+      "bytes": 4054
+    },
+    {
+      "file": "adjudicated-findings.json",
+      "sha256": "a67d67b6cfd0559264b8fcc0a149a3995ffb9054093b2595e96fcd0e9e309863",
+      "bytes": 333298
+    },
+    {
+      "file": "comparison.json",
+      "sha256": "62fa9fa7855faa7164b59f4270cb5840e8d1528c4d7d5408c8d5255438b00690",
+      "bytes": 66265
+    },
+    {
+      "file": "corrections.md",
+      "sha256": "200bfe08dbf82ef00cd7984670401ae3d40555f7ce41026c87330dc17444eaf6",
+      "bytes": 2759
+    },
+    {
+      "file": "decision-packet.md",
+      "sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767",
+      "bytes": 26606
+    },
+    {
+      "file": "evidence-receipts.json",
+      "sha256": "18a8f12bb8e5accb0bd9bbf99e8882aeb0662fd784546604b6125a5ac7b22de7",
+      "bytes": 6247
+    },
+    {
+      "file": "independent-review.json",
+      "sha256": "f3b933e4b7258b02d47fc36a199b6dc2cb1b52ec34c56f5f9c1c0c2b3cf72c99",
+      "bytes": 6402
+    },
+    {
+      "file": "proposal-dispositions.json",
+      "sha256": "a4d47c258590f70086b0a93aeab8a99de3858d02e10458af1b148071cd53f1a5",
+      "bytes": 156155
+    },
+    {
+      "file": "technical-companion.json",
+      "sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702",
+      "bytes": 66869
+    }
+  ]
+}
