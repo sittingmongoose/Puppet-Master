@@ -1,0 +1,40 @@
+{
+  "premium": {
+    "original_case": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cases/jujutsu-frozen-20260911",
+    "input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a",
+    "brief_sha256": "d94193bb97a1465b00cdfd7352e11422bb217f673bb7d00790884289e1203de1",
+    "navigation_sha256": "0eb77a4d431853fca5057fd00ed79827cca224b1bb2cce684a4ab170d8c2e195",
+    "frozen_plan_files_verified": 199,
+    "historical_artifacts_verified": 2683,
+    "historical_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/history-artifacts.json",
+      "sha256": "881ee3c2366a423085a2322607d371625643e8244cf1ae5a0cf34dd856c731c5"
+    },
+    "protocol_files_identical": true,
+    "original_config_preserved": true,
+    "original_config_source": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-premium-20260911/run.json",
+      "sha256": "72231c563e6a71e11b6766d9b08ec5ee093bde34995de1fd7ff8ead39340ea56"
+    },
+    "newer_canon_in_worker_inputs": false
+  },
+  "hybrid": {
+    "original_case": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cases/jujutsu-frozen-20260911",
+    "input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a",
+    "brief_sha256": "d94193bb97a1465b00cdfd7352e11422bb217f673bb7d00790884289e1203de1",
+    "navigation_sha256": "0eb77a4d431853fca5057fd00ed79827cca224b1bb2cce684a4ab170d8c2e195",
+    "frozen_plan_files_verified": 199,
+    "historical_artifacts_verified": 2381,
+    "historical_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-hybrid-continuation-20260911/history-artifacts.json",
+      "sha256": "863b82260fb9bbdd4451eb60640339c2510eb8b3ba6cb70f0acffd12e5f85aae"
+    },
+    "protocol_files_identical": true,
+    "original_config_preserved": true,
+    "original_config_source": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-hybrid-20260911/run.json",
+      "sha256": "b29a3a3d2cbab412c23c5e90ab029a6c6a1e62c229c0ea1a95bb56f11ad48ff2"
+    },
+    "newer_canon_in_worker_inputs": false
+  }
+}

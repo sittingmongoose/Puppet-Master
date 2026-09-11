@@ -1,0 +1,28 @@
+{
+  "schema": "jujutsu.continuation.partial.v1",
+  "status": "blocked_shared_live_accounting_failure",
+  "protocol_version": "jujutsu-continuation-v2-20260911",
+  "freeze_sha256": "8126b2b12abada3ea68c830ce7abb18f47ec99bb9893b82324c69813d6fb6965",
+  "repair_offline_tests_passed": true,
+  "live_readiness": false,
+  "hybrid_launch_permitted": false,
+  "limitations": [
+    "The frozen gate passed offline dispatch tests but failed to reconcile real provider streams.",
+    "The exact provider encoding, framing or usage-shape mismatch is not proved because raw provider bodies and diagnostic metadata were not retained.",
+    "The scheduler continued admitting replacement jobs after terminal unresolved jobs, using all twelve premium continuation admissions before manual global closure. No counters were reset.",
+    "Seven native receipts were independently recovered once; five new jobs remain unpriced. No zero-cost claim for those requests.",
+    "Repair captured usage exceeded its $40 allowance; that phase is closed. No further protocol engineering was charged to continuation.",
+    "Future live work requires a separately authorized repair and new qualification; premium additionally has no continuation admissions left. Hybrid grants remain unopened."
+  ],
+  "original_results_preserved": true,
+  "new_research_notes": 0,
+  "operational_gate": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/launch-gate-suspended.json",
+    "sha256": "18d7cdaa7843f75ecc12f437ad557e619f9431865a6f95b07ec8828d201274b3"
+  },
+  "source_snapshot": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/freeze.json",
+    "sha256": "8126b2b12abada3ea68c830ce7abb18f47ec99bb9893b82324c69813d6fb6965"
+  },
+  "phase_cost_correction": "repair-phase-close-addendum.json"
+}

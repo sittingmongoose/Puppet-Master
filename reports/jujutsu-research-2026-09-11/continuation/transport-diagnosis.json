@@ -1,0 +1,1071 @@
+{
+  "scope": "Read-only recovery; no journal mutation; duplicate native representations must be counted once. Fresh native thread plus one physical request per job supports validated epoch start.",
+  "original_meter_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/priced-usage-final.json",
+    "sha256": "479e27cb7d4975fba62bd69b762afb3393fe4649c2c5dd82fbe19d3254ed66fc"
+  },
+  "original_meter_captured_usd": 39.71806599999998,
+  "jobs": [
+    {
+      "job": "J0005-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-8740c3c7463941198517adca37e19f3e"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0005-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "ee9876578523ab7fefab0ffa256d92fc87e583aa3648623cf46597c326cac099"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0005-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "ae29a79abb18a6b51bccfef27b5eaa09bcb97e0601e5816b1ab74d454fe03c35"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091cf-bd9c-7160-b523-c828949a552d",
+            "usage_epoch": "01a091cf-bd9c-7160-b523-c828949a552d",
+            "epoch_start": true,
+            "request_identity": "http-8740c3c7463941198517adca37e19f3e",
+            "total": {
+              "totalTokens": 12845,
+              "inputTokens": 12729,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 116,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12845,
+              "inputTokens": 12729,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 116,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0005-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "ae29a79abb18a6b51bccfef27b5eaa09bcb97e0601e5816b1ab74d454fe03c35",
+            "line": 61
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12845,
+            "inputTokens": 12729,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 116,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0005-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "ae29a79abb18a6b51bccfef27b5eaa09bcb97e0601e5816b1ab74d454fe03c35",
+            "line": 59
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12729,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 116,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12845
+            },
+            "last_token_usage": {
+              "input_tokens": 12729,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 116,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12845
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-51-45-01a091cf-bd9c-7160-b523-c828949a552d.jsonl",
+            "sha256": "cec79331da3cf96504ffed3e09afbb12c6e094b27b20959ae8901305aae69a4d",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.13309,
+        "codex_credit_estimate": 3.32725,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0006-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-f8a501d348df47f1917c2ca228403d83"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0006-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "f2d34b7af591a4006e9fe7c85fd72e47d841bc1e2e27c7dbb2133653a458b3f3"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0006-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "f89f8275c81bcef4d17b57616321b476c657e82b32e37864f89f2201a7896db3"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091cf-bdb6-7ee1-a947-9bff6453637d",
+            "usage_epoch": "01a091cf-bdb6-7ee1-a947-9bff6453637d",
+            "epoch_start": true,
+            "request_identity": "http-f8a501d348df47f1917c2ca228403d83",
+            "total": {
+              "totalTokens": 12877,
+              "inputTokens": 12735,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 142,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12877,
+              "inputTokens": 12735,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 142,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0006-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "f89f8275c81bcef4d17b57616321b476c657e82b32e37864f89f2201a7896db3",
+            "line": 60
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12877,
+            "inputTokens": 12735,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 142,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0006-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "f89f8275c81bcef4d17b57616321b476c657e82b32e37864f89f2201a7896db3",
+            "line": 58
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12735,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 142,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12877
+            },
+            "last_token_usage": {
+              "input_tokens": 12735,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 142,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12877
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-51-45-01a091cf-bdb6-7ee1-a947-9bff6453637d.jsonl",
+            "sha256": "59ae0ad32952f24cc37c8e32075d890726c044e6c2d4e2dd0bf2a2c54b62ed1f",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.13445,
+        "codex_credit_estimate": 3.36125,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0007-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-de5d680c715f4ad7909e99d9fe9a90e0"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0007-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "fcbc84aa7a32225b84af835f0d309e6419af8751235dd9e81fa3763b3fe06811"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0007-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "84705024ff68c6cd8fd748b370e52696c5e6fa01fec70eada1e497c961683f1f"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091cf-bdba-7c73-aee8-77c699ecd3e4",
+            "usage_epoch": "01a091cf-bdba-7c73-aee8-77c699ecd3e4",
+            "epoch_start": true,
+            "request_identity": "http-de5d680c715f4ad7909e99d9fe9a90e0",
+            "total": {
+              "totalTokens": 12920,
+              "inputTokens": 12779,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 141,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12920,
+              "inputTokens": 12779,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 141,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0007-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "84705024ff68c6cd8fd748b370e52696c5e6fa01fec70eada1e497c961683f1f",
+            "line": 60
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12920,
+            "inputTokens": 12779,
+            "cachedInputTokens": 8704,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 141,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0007-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "84705024ff68c6cd8fd748b370e52696c5e6fa01fec70eada1e497c961683f1f",
+            "line": 58
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12779,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 141,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12920
+            },
+            "last_token_usage": {
+              "input_tokens": 12779,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 141,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12920
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-51-45-01a091cf-bdba-7c73-aee8-77c699ecd3e4.jsonl",
+            "sha256": "91d806b0718dd633f262d5a86b63f71ea0a4833c726e142d5e5df520633b201c",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.056504,
+        "codex_credit_estimate": 1.4126,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0008-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-a171f1a76b0640b782b8c64068050e75"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0008-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "8f4a14fc423f220a9096cfacff6709c61ce2e0073dc454dd76826cce53986c31"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0008-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "dae0291dcae8f9621c8837643b752d8a4f4ec19ade52b865ccc4443352c7d11f"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091cf-f100-7d62-8a88-e8592edfb949",
+            "usage_epoch": "01a091cf-f100-7d62-8a88-e8592edfb949",
+            "epoch_start": true,
+            "request_identity": "http-a171f1a76b0640b782b8c64068050e75",
+            "total": {
+              "totalTokens": 12930,
+              "inputTokens": 12779,
+              "cachedInputTokens": 4608,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 151,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12930,
+              "inputTokens": 12779,
+              "cachedInputTokens": 4608,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 151,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0008-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "dae0291dcae8f9621c8837643b752d8a4f4ec19ade52b865ccc4443352c7d11f",
+            "line": 66
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12930,
+            "inputTokens": 12779,
+            "cachedInputTokens": 4608,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 151,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0008-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "dae0291dcae8f9621c8837643b752d8a4f4ec19ade52b865ccc4443352c7d11f",
+            "line": 64
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12779,
+              "cached_input_tokens": 4608,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 151,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12930
+            },
+            "last_token_usage": {
+              "input_tokens": 12779,
+              "cached_input_tokens": 4608,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 151,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12930
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-51-59-01a091cf-f100-7d62-8a88-e8592edfb949.jsonl",
+            "sha256": "ada0af79f11869dc07548c90dbaa986808ebc54afb7aa13e33ebd12f40f82c1a",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.093868,
+        "codex_credit_estimate": 2.3467,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0009-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-0de094e344824371a06b4d395c0ef267"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0009-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "40831538004feb02e88005d519c1e545cf69d073be1d44b82d14f3c0ebeeffed"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0009-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "87ee881601ac1db15af9114e3aa03759cef32f5e048464e0c42f5f28d82e070b"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091cf-f241-7ae0-979d-94a4162c5c53",
+            "usage_epoch": "01a091cf-f241-7ae0-979d-94a4162c5c53",
+            "epoch_start": true,
+            "request_identity": "http-0de094e344824371a06b4d395c0ef267",
+            "total": {
+              "totalTokens": 12869,
+              "inputTokens": 12735,
+              "cachedInputTokens": 4608,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 134,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12869,
+              "inputTokens": 12735,
+              "cachedInputTokens": 4608,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 134,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0009-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "87ee881601ac1db15af9114e3aa03759cef32f5e048464e0c42f5f28d82e070b",
+            "line": 61
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12869,
+            "inputTokens": 12735,
+            "cachedInputTokens": 4608,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 134,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0009-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "87ee881601ac1db15af9114e3aa03759cef32f5e048464e0c42f5f28d82e070b",
+            "line": 59
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12735,
+              "cached_input_tokens": 4608,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 134,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12869
+            },
+            "last_token_usage": {
+              "input_tokens": 12735,
+              "cached_input_tokens": 4608,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 134,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12869
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-51-59-01a091cf-f241-7ae0-979d-94a4162c5c53.jsonl",
+            "sha256": "36887744465ab6e7b99324f4748ab2b94590aa9b30128ae49f6340bb931baec3",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.092578,
+        "codex_credit_estimate": 2.31445,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0010-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-fc781fdd88e1436f9c13e93d9ecad246"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0010-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "949485a463e0ff209fd12d77e7e3175c207ffa999ba544112dcdf772e59a0f6c"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0010-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "5540612f0b547f446f1081b50670c67b0db08be34b9856c975471c503e9e920c"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [],
+      "raw_response_receipts": [],
+      "rollout_token_count_receipts": [
+        {
+          "info": null,
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-00-01a091cf-f644-73b1-b253-745cfa76fec0.jsonl",
+            "sha256": "61af2f312cc80a90e261119ea4e3adea8058707c089a04823ac32837ad29c683",
+            "line": 19
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": null,
+        "codex_credit_estimate": null,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0011-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-5fd3227c1e184e239bf00467a35a4011"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0011-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "60d83d4c646e80d63ff8253c3e002e794d2bbea027325d74efe968836846dbd7"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0011-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "01d3d4927af627607ebda9f00c73a1fb49fad88115316d69ebdca1e05216c1d7"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [],
+      "raw_response_receipts": [],
+      "rollout_token_count_receipts": [
+        {
+          "info": null,
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-11-01a091d0-209a-7692-ad50-9e0b92632778.jsonl",
+            "sha256": "31d116bcb70559c2f7a121107c9a6f416cf5d122528a1830019e56aea78c6779",
+            "line": 19
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": null,
+        "codex_credit_estimate": null,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0012-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-a521d3ec38b44e48a71919198529127b"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0012-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "7f82a9ff08e8d0e6d02238a4b0dd4860d2decb0b3a0daea727a64ae5ac110807"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0012-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "af39a3054c3dbf3b2be551656b6b42797d2abc37f7d58992ae3af2a844d9441b"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091d0-2549-7781-bfe7-ab713cf8071b",
+            "usage_epoch": "01a091d0-2549-7781-bfe7-ab713cf8071b",
+            "epoch_start": true,
+            "request_identity": "http-a521d3ec38b44e48a71919198529127b",
+            "total": {
+              "totalTokens": 12877,
+              "inputTokens": 12755,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 122,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12877,
+              "inputTokens": 12755,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 122,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0012-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "af39a3054c3dbf3b2be551656b6b42797d2abc37f7d58992ae3af2a844d9441b",
+            "line": 62
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12877,
+            "inputTokens": 12755,
+            "cachedInputTokens": 8704,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 122,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0012-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "af39a3054c3dbf3b2be551656b6b42797d2abc37f7d58992ae3af2a844d9441b",
+            "line": 60
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12755,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 122,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12877
+            },
+            "last_token_usage": {
+              "input_tokens": 12755,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 122,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12877
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-12-01a091d0-2549-7781-bfe7-ab713cf8071b.jsonl",
+            "sha256": "b0072b0730f477dd87937d4937f37a3630e320aa6110a60f1491cd1bc8404ebb",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.055314,
+        "codex_credit_estimate": 1.38285,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0013-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-318ad6663eb94eea89ecff70dcabe7fa"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0013-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "df35b068eb02839e6b98362c841ff45aaacf79ed3b4a1cde5bc383aca68e4daa"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0013-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "4149a00524dc55a8fb82eccc40ac19b9724dcb99afaa5538c89ff870134c2e4c"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [],
+      "raw_response_receipts": [],
+      "rollout_token_count_receipts": [
+        {
+          "info": null,
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-13-01a091d0-27e3-73d2-9ade-2e3769ac937c.jsonl",
+            "sha256": "feb37741a13469c47559fa97f7f4a2e7e08894a8ce6aaf98f7c644f8b46ddcec",
+            "line": 19
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": null,
+        "codex_credit_estimate": null,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0014-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-5d5156836ffb4dfb8f0111ee3463ca74"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0014-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "d2cb96909278021f3f01c3011d9e6cd2390d354757619ab05cf92f8ba5fbe425"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0014-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "71698f169d09c35713560f322ff21207e7089f56e785dff235541bdf4f07c3b7"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [
+        {
+          "route": "codex",
+          "payload": {
+            "thread_id": "01a091d0-4f8a-7503-854e-1acf9b1e4f2f",
+            "usage_epoch": "01a091d0-4f8a-7503-854e-1acf9b1e4f2f",
+            "epoch_start": true,
+            "request_identity": "http-5d5156836ffb4dfb8f0111ee3463ca74",
+            "total": {
+              "totalTokens": 12895,
+              "inputTokens": 12753,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 142,
+              "reasoningOutputTokens": 0
+            },
+            "last": {
+              "totalTokens": 12895,
+              "inputTokens": 12753,
+              "cachedInputTokens": 8704,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 142,
+              "reasoningOutputTokens": 0
+            }
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0014-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "71698f169d09c35713560f322ff21207e7089f56e785dff235541bdf4f07c3b7",
+            "line": 69
+          }
+        }
+      ],
+      "raw_response_receipts": [
+        {
+          "type": "rawResponse/completed",
+          "usage": {
+            "totalTokens": 12895,
+            "inputTokens": 12753,
+            "cachedInputTokens": 8704,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 142,
+            "reasoningOutputTokens": 0
+          },
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0014-reconcile/raw-codex/server.stdout.raw.jsonl",
+            "sha256": "71698f169d09c35713560f322ff21207e7089f56e785dff235541bdf4f07c3b7",
+            "line": 67
+          }
+        }
+      ],
+      "rollout_token_count_receipts": [
+        {
+          "info": {
+            "total_token_usage": {
+              "input_tokens": 12753,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 142,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12895
+            },
+            "last_token_usage": {
+              "input_tokens": 12753,
+              "cached_input_tokens": 8704,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 142,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 12895
+            },
+            "model_context_window": 258400
+          },
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-23-01a091d0-4f8a-7503-854e-1acf9b1e4f2f.jsonl",
+            "sha256": "4f520b69e6d21c721ac5cf323f8ee32409a6516f6f7260d868c0423071c616a8",
+            "line": 20
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": 0.056294,
+        "codex_credit_estimate": 1.40735,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0015-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-fb77e46fa43f4f8d9ae210a5e09f4cf6"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0015-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "3ec6e6653834152f0d474db37dfc631240f9232d702801f9b56d46371e5aabe8"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0015-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "cc88aecf0d81be817e307542e280035dfdd1967970ee0e8054f719434a047b92"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        },
+        {
+          "event": "upstream_finished",
+          "http_status": 200,
+          "reconciled": false
+        },
+        {
+          "event": "gate_stopped",
+          "reason": "unresolved_usage"
+        }
+      ],
+      "recovery_receipts": [],
+      "raw_response_receipts": [],
+      "rollout_token_count_receipts": [
+        {
+          "info": null,
+          "evidence": {
+            "path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T18-52-27-01a091d0-5e88-7561-82ab-4373058e474b.jsonl",
+            "sha256": "8c707e9e6d0d1faaf2150fae236d9c7f587dd58b9c44e68be4d2412198a897f5",
+            "line": 19
+          }
+        }
+      ],
+      "valuation": {
+        "api_equivalent_usd": null,
+        "codex_credit_estimate": null,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    },
+    {
+      "job": "J0016-reconcile",
+      "admitted_request_count": 1,
+      "request_identities": [
+        "http-7f6391546c1f4622871a11e3737d6a56"
+      ],
+      "transport_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0016-reconcile/raw-codex/transport-boundary.jsonl",
+        "sha256": "4bd820f2d2b813dc79f9aaa1637f730ba96d1b0b4403d227912bff1bbef49a36"
+      },
+      "stdout_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0016-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "4e60a0e4fe635a4a02710306326d41fc4fb5ced0c2e297afe22f4626ce910af0"
+      },
+      "transport_events": [
+        {
+          "event": "forward_admitted"
+        }
+      ],
+      "recovery_receipts": [],
+      "raw_response_receipts": [],
+      "rollout_token_count_receipts": [],
+      "valuation": {
+        "api_equivalent_usd": null,
+        "codex_credit_estimate": null,
+        "configured_model": "gpt-6-astra",
+        "configured_service_tier": "default",
+        "unpriced_reasons": null
+      }
+    }
+  ],
+  "recovered_partial_api_equivalent_usd": 0.622098,
+  "recovered_partial_codex_credits": 15.55245,
+  "unpriced_new_jobs": [
+    "J0010-reconcile",
+    "J0011-reconcile",
+    "J0013-reconcile",
+    "J0015-reconcile",
+    "J0016-reconcile"
+  ],
+  "code_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/adapters/transport_gate.py",
+      "sha256": "b79b6c69590136df91a1c441bfdc5062f2edd73c94e5242e5ff7390f464f6b9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/adapters/codex_native.py",
+      "sha256": "b95349cef7c37f40cd04f2e52ffdecda897797f0e811aea0fa0865eb0d5ab2e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_watch.py",
+      "sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/valuation.py",
+      "sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+    }
+  ],
+  "diagnosis": {
+    "proved": [
+      "Eleven completed HTTP200 transport requests have reconciled:false; J0016 only has admission.",
+      "Seven jobs retain matching thread/tokenUsage and rawResponse/completed usage; local rollout token_count corroborates.",
+      "J0010,J0011,J0013,J0015 rollout token_count has null info; J0016 no token_count.",
+      "Gate recognizes response.completed with response.usage snake_case input_tokens_details.cached_tokens; it does not decode compressed response bodies and does not parse an unterminated trailing SSE event.",
+      "Native adapter intentionally stores tokenUsage without forwarding to meter."
+    ],
+    "not_proved": [
+      "Which of encoding, SSE framing/event type, provider usage shape, or another parse mismatch caused failure: provider response headers/body/event-type diagnostics were not retained.",
+      "App-server camelCase usage does not prove provider wire usage was camelCase."
+    ],
+    "disposition": "Do not launch hybrid using same frozen variant. Preserve original counters; record partial recovery separately and retain five newly admitted requests as unresolved. No paid probes or protocol repair recommended within exhausted repair budget."
+  }
+}

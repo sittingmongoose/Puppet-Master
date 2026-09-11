@@ -1,0 +1,355 @@
+{
+  "premium": {
+    "status": "terminal_partial_admission_limit_and_live_accounting_failure",
+    "continuation_started_at": "2026-09-11T18:51:28.500512+00:00",
+    "historical_admissions": 4,
+    "new_admissions": 12,
+    "lifetime_admissions": 16,
+    "new_admissions_remaining": 0,
+    "historical_restarts": 0,
+    "continuation_restarts": 0,
+    "runtime_status_counts": {
+      "budget_truncated": 11,
+      "interrupted": 1
+    },
+    "assigned_distinct_leads": 13,
+    "new_notes": 0,
+    "new_reconciled_leads": 0,
+    "new_compared_leads": 0,
+    "attempts": [
+      {
+        "job": "J0005-reconcile",
+        "logical_key": "3c55b150c1cf7955b475d56e77f1f6373fbf5d93759ab031398a41718860304c",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-80244e477912"
+        ],
+        "admitted_at": 1789152699.7028487,
+        "attempt_number": 1,
+        "terminal_at": 1789152716.2483957,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 16.046
+      },
+      {
+        "job": "J0006-reconcile",
+        "logical_key": "af669670dc484cfcd260ad32ff9095006bd4115177e373282cfb4effb47137ad",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-7dc9a6726cf9"
+        ],
+        "admitted_at": 1789152700.0148058,
+        "attempt_number": 1,
+        "terminal_at": 1789152715.2921488,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 14.249
+      },
+      {
+        "job": "J0007-reconcile",
+        "logical_key": "1d3e3c8fe482e62773e1e3a54a52355f2484ead919375720911dac677863e8fa",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-4f94a6cc2232",
+          "L-c89be7ac8a66",
+          "L-39a5001283f3"
+        ],
+        "admitted_at": 1789152700.5256224,
+        "attempt_number": 1,
+        "terminal_at": 1789152714.6910748,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 13.621
+      },
+      {
+        "job": "J0008-reconcile",
+        "logical_key": "1d3e3c8fe482e62773e1e3a54a52355f2484ead919375720911dac677863e8fa",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-4f94a6cc2232",
+          "L-c89be7ac8a66",
+          "L-39a5001283f3"
+        ],
+        "admitted_at": 1789152715.0443704,
+        "attempt_number": 2,
+        "terminal_at": 1789152727.7270088,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 11.749
+      },
+      {
+        "job": "J0009-reconcile",
+        "logical_key": "af669670dc484cfcd260ad32ff9095006bd4115177e373282cfb4effb47137ad",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-7dc9a6726cf9"
+        ],
+        "admitted_at": 1789152715.479108,
+        "attempt_number": 2,
+        "terminal_at": 1789152726.8790853,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 10.718
+      },
+      {
+        "job": "J0010-reconcile",
+        "logical_key": "3c55b150c1cf7955b475d56e77f1f6373fbf5d93759ab031398a41718860304c",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-80244e477912"
+        ],
+        "admitted_at": 1789152716.519143,
+        "attempt_number": 2,
+        "terminal_at": 1789152727.7696688,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 10.639
+      },
+      {
+        "job": "J0011-reconcile",
+        "logical_key": "d8b885508d63f2bb2ac3b70350b6208fdb25d6b0f32607d06478727b5cd1b3f2",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-c0c7178a160f",
+          "L-444f31e68545",
+          "L-0793ad1e2a78"
+        ],
+        "admitted_at": 1789152727.4105163,
+        "attempt_number": 1,
+        "terminal_at": 1789152738.739425,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 10.451
+      },
+      {
+        "job": "J0012-reconcile",
+        "logical_key": "f836aee71cbf34bbdec29c40c140575c8f8b90f846b7c3bec5fd87706a8efa88",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-ad68a4ac94ad",
+          "L-2e0dc4dec29d"
+        ],
+        "admitted_at": 1789152728.2338796,
+        "attempt_number": 1,
+        "terminal_at": 1789152742.6142905,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 13.452
+      },
+      {
+        "job": "J0013-reconcile",
+        "logical_key": "4bf9d239bedf67986421b5e1047a3e2ff3c75c8d30c0aeae8dd5d5b1b5c40738",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-289201b4f4ec",
+          "L-732df4469871",
+          "L-3c0712b66649"
+        ],
+        "admitted_at": 1789152728.763562,
+        "attempt_number": 1,
+        "terminal_at": 1789152745.9232154,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 16.659
+      },
+      {
+        "job": "J0014-reconcile",
+        "logical_key": "5974fbde0f77d23c0a2354c7cff02c1133eb5a7060131b9938541d1f08e9a08a",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-c0c7178a160f",
+          "L-444f31e68545"
+        ],
+        "admitted_at": 1789152739.2191632,
+        "attempt_number": 1,
+        "terminal_at": 1789152751.491261,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 11.281
+      },
+      {
+        "job": "J0015-reconcile",
+        "logical_key": "fe264cb3325fd12392ad1e00f5612c3889577bbf4bb398acd391a55d2f7390b9",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-0793ad1e2a78",
+          "L-ad68a4ac94ad"
+        ],
+        "admitted_at": 1789152743.2382402,
+        "attempt_number": 1,
+        "terminal_at": 1789152754.762046,
+        "runtime_status": "budget_truncated",
+        "continuation": true,
+        "elapsed_seconds": 10.578
+      },
+      {
+        "job": "J0016-reconcile",
+        "logical_key": "e8af2f4207c5edf8758e96bcf4d624128461a4f107abb175d0a2a66abacde59f",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-2e0dc4dec29d",
+          "L-289201b4f4ec"
+        ],
+        "admitted_at": 1789152746.7712607,
+        "attempt_number": 1,
+        "terminal_at": 1789152757.565259,
+        "runtime_status": "interrupted",
+        "continuation": true,
+        "elapsed_seconds": 10.430164575576782
+      }
+    ],
+    "timing": {
+      "at": "2026-09-11T18:52:37.720213+00:00",
+      "stages": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null
+        },
+        "reconcile": {
+          "wall_seconds": 57.86241030693054,
+          "summed_job_seconds": 149.8731645755768,
+          "average_concurrency": 2.590164560732541
+        },
+        "compare": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null
+        }
+      },
+      "arm_cumulative_wall_seconds": 69.19525575637817,
+      "continuation_processing_seconds": 69.2197265625,
+      "summed_terminal_job_seconds": 149.8731645755768,
+      "average_concurrency": 2.165945669790548,
+      "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+      "reserved_upper_usd": 0,
+      "actual_usage_usd": null,
+      "captured_usage_upper_usd": 39.71806599999998,
+      "money_stop_reason": null,
+      "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+    },
+    "lifetime_captured_usd": 40.34016399999999,
+    "original_captured_usd": 39.71806599999998,
+    "new_captured_usd": 0.622098,
+    "new_unpriced_jobs": [
+      "J0010-reconcile",
+      "J0011-reconcile",
+      "J0013-reconcile",
+      "J0015-reconcile",
+      "J0016-reconcile"
+    ],
+    "captured_total_is_partial": true,
+    "lifetime_cap_usd": 250,
+    "historical_unresolved_retained": true,
+    "budget_truncated_leads": [
+      "L-0793ad1e2a78",
+      "L-289201b4f4ec",
+      "L-2e0dc4dec29d",
+      "L-39a5001283f3",
+      "L-3c0712b66649",
+      "L-444f31e68545",
+      "L-4f94a6cc2232",
+      "L-732df4469871",
+      "L-7dc9a6726cf9",
+      "L-80244e477912",
+      "L-ad68a4ac94ad",
+      "L-c0c7178a160f",
+      "L-c89be7ac8a66"
+    ],
+    "timing_note": "Terminal timing is frozen at campaign stop. Later accounting recovery does not change runtime or its at-stop cost field.",
+    "sources": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/arm-budgets/premium.json",
+        "sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/campaign-terminal.json",
+        "sha256": "f53f58bb736d49e56ac67a9af617e80b8ee3aea8d1272230f4adee3a4f693a05"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/timing.json",
+        "sha256": "ade947859ddd9749ca2a02c296cc8370fee9b0ddfce10ba73e9de91770146447"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/premium-priced-usage-post-reconciliation.json",
+        "sha256": "f253974892ba9fc58105a3013138d4c9ed24e2ace5179a17030d3ded66f69908"
+      }
+    ]
+  },
+  "hybrid": {
+    "status": "not_started_shared_live_accounting_gate_failure",
+    "continuation_started_at": null,
+    "historical_admissions": 12,
+    "new_admissions": 0,
+    "lifetime_admissions": 12,
+    "new_admissions_remaining": 12,
+    "new_processing_grant_started": false,
+    "new_processing_grant_seconds": 14400,
+    "historical_restarts": 0,
+    "continuation_restarts": 0,
+    "runtime_status_counts": {},
+    "assigned_distinct_leads": 0,
+    "new_notes": 0,
+    "new_reconciled_leads": 0,
+    "new_compared_leads": 0,
+    "lifetime_captured_usd": 3.596462368000001,
+    "new_captured_usd": 0,
+    "historical_unresolved_retained": true,
+    "lifetime_cap_usd": 100,
+    "new_unpriced_jobs": [],
+    "timing": {
+      "stages": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started"
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started"
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started"
+        },
+        "reconcile": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started"
+        },
+        "compare": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started"
+        }
+      }
+    },
+    "sources": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid.json",
+        "sha256": "1d4e24b83788dd945c88f12928e4672e3a3da79893e5df8c9e62cba195693843"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid-priced-usage.json",
+        "sha256": "870694784daec81c42ed9185693cf03386f901bc33ebafe4e552f9de0a814b72"
+      }
+    ]
+  }
+}

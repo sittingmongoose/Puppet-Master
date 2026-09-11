@@ -1,0 +1,19 @@
+{
+  "phase": "repair",
+  "status": "reviewed_version_published",
+  "main_commit": "8d4b5c2d31c11c008fb3656e30fc34e96e6dee15",
+  "both_remotes_pushed": true,
+  "worktree_removed": true,
+  "cost_capture_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/cost-phase-close.json",
+  "cost_capture_sha256": "c182b3f30facb99f2a7be44ff98979413ba0409790ff9181681bdbbc15663b46",
+  "captured_usd": 41.644954,
+  "cap_usd": 40,
+  "overrun_usd": 1.6449539999999985,
+  "cap_compliance": "exceeded; engineering stopped on $39.713260 snapshot, later pending review and closure receipts increased captured usage; no reset or deduction",
+  "all_gaps": 0,
+  "closed_at": "2026-09-11T18:50:07.070552+00:00",
+  "continuation_arm_admissions": 0,
+  "continuation_timers_started": false,
+  "gate": "PASS reviewed fixed Codex variant",
+  "verification": "49 final supplied tests plus independent tests passed; own and shared shard checks passed; no governance reseal"
+}

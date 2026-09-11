@@ -1,0 +1,19 @@
+{
+  "status": "corrected_by_additive_boundary_audit",
+  "phase": "repair",
+  "preserved_phase_close": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/phase-close.json",
+    "sha256": "61df5d4808b5576543fa9705e02815449e14231ba41b0e3151cbcc79eed43dc5"
+  },
+  "preserved_captured_usd": 41.644954,
+  "late_receipt_addition_usd": 0.115596,
+  "corrected_captured_usd": 41.76055,
+  "cap_usd": 40,
+  "overrun_usd": 1.76055,
+  "audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/boundary-audit/phase-boundary-audit.json",
+    "sha256": "ac6dd6680688cf54402cdb42984a0ac960f43bfea879608512dbbb6de287c5c2"
+  },
+  "original_receipts_unchanged": true,
+  "no_transfer_to_continuation": true
+}

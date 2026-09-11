@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "reviewer": "jj_cont_final_review",
+  "reviewed_files": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/README.md",
+      "sha256": "dc1860482909d6ddd91362b67e620338c460b7650e684b07ab2311f97f96c911"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/arm-results.json",
+      "sha256": "13462949b4d336eb6e5bedb39cbb7220de2e2eb4845474d019599d79bbe638bf"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/comparison.json",
+      "sha256": "58f1c8a9cef7531f73a04afae1baadc52721ffe387758ceb0243e89651f38874"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/currentness.json",
+      "sha256": "6080eecf05a674b946e5e45228c3dc2bf7fcddbab75fca249de51842a2f1e118"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/d5-phase-close.json",
+      "sha256": "ec9fb2b02c2c22a4aadb3b286fffc1350c2045760e265dc8a65658fe909c85f3"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/hybrid-pending.json",
+      "sha256": "1aeb0e5a3d7284fd3720eae19cb9dae5db7c61fea0f3ffe61a94bb6e6a6cb02c"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/input-preservation.json",
+      "sha256": "b8adbd01f09bc9e5f5b885e5427316db5c5cb0f0fc33ab31bb6e15ac9de58af6"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/launch-gate-suspended.json",
+      "sha256": "18d7cdaa7843f75ecc12f437ad557e619f9431865a6f95b07ec8828d201274b3"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/nonarm-cost-checkpoint.json",
+      "sha256": "bf41a53c51883e9d8d1cb06751ba06417f037ced774d0c1d52072faf0eeeecb6"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/phase-boundary-audit.json",
+      "sha256": "fa8837edd85c8b3c415907c8ad92be4d961bda6116854ee3568ab2533492786c"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/premium-pending.json",
+      "sha256": "a30bfaa1da8b36674833b9b9657f65b0239fe7f584c0f1194c25ba6c1cceb14a"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/repair-phase-close-addendum.json",
+      "sha256": "089c39fc908e8099901b45ddd704993fc8939a9b8e43119e7feab8f9f865c6e0"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/repair-phase-close.json",
+      "sha256": "61df5d4808b5576543fa9705e02815449e14231ba41b0e3151cbcc79eed43dc5"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/result.json",
+      "sha256": "2ebe9c325e4e7ac5f24fa8f8a0b9768af4fed9d9f3202703365ef7994be73a30"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/transport-diagnosis.json",
+      "sha256": "87eb164648a109c517183e0bacfd0a98675d9304255fd26aca6b52d9e4e8f32d"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/continuation/usage-reconciliation.json",
+      "sha256": "96c8a6b7e10b4edf69881aed47dec5c349b9ac164fc6e15b5e114651fa7831e4"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation-20260911/reports/jujutsu-research-2026-09-11/repair/README.md",
+      "sha256": "76cbe8da9d318e4d92935be73a5de470e1cabe7ed24ad1a2847e57a6ffefa4d3"
+    }
+  ],
+  "checks": [
+    "Seven recovered receipts validated against retained native/rawResponse/rollout evidence, unique request and fresh thread epoch, total equals last; frozen tariff arithmetic $0.622098.",
+    "Immutable pre/post meter verified: seven single receipts added, $40.340164 captured lifetime; historical jobs unchanged, five newly admitted jobs remain unknown.",
+    "All 21 frozen protocol hashes, 199 frozen Plan files, original configs, 2683 premium and 2381 hybrid historical artifacts match source hashes.",
+    "Pending lists equal retained progress projections; no delivered new notes; 12 admissions, 11 budget_truncated and one interrupted, 13 distinct leads.",
+    "Original adjudicated recall/shared/unique counts unchanged; new zero contributions are explicitly not measured recall.",
+    "Hybrid budget absent; report correctly blocks live launch and distinguishes offline qualification.",
+    "Every absolute path plus SHA reference in report JSONs verified.",
+    "Boundary audit hash and source session prefix hashes checked; closed phase event sums $49.905084 D5/$41.760550 repair; missing root line41883 independently verified continuous counters, timestamp after old snapshot and before repair cutoff, frozen tariff $0.115596, preserved old receipt and additive overrun $1.760550.",
+    "Pre-publication nonarm checkpoint immutable SHA verified and three agent costs sum to $9.124314; README and checkpoint explicitly nonfinal and their current hashes included."
+  ],
+  "qualification": "Approval covers the reviewed partial-result report and closed repair/D5 captured API-equivalent totals. Continuation remains open; its $7.498246 prefix snapshot is not a final total. Actual cash and unreported usage remain unknown.",
+  "defects": []
+}

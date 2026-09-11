@@ -1,0 +1,160 @@
+{
+  "metric": "recall against the previously adjudicated union; original results unchanged",
+  "original_comparison": {
+    "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/d3/comparison.json",
+    "sha256": "62fa9fa7855faa7164b59f4270cb5840e8d1528c4d7d5408c8d5255438b00690"
+  },
+  "adjudicated_union": "23850729559d9d80d2f8d6cd45725116837436a883eae5ca78e4c3f6f9e64756",
+  "union_class_counts": {
+    "correction": 1,
+    "unsupported_or_rejected": 63,
+    "optional_capability": 35,
+    "product_choice": 6
+  },
+  "shared_class_counts": {
+    "unsupported_or_rejected": 39,
+    "optional_capability": 14,
+    "product_choice": 2
+  },
+  "reference_limit": "The union is the best available reference, not ground truth; common misses are unknown. Neither arm defines its denominator.",
+  "arms": {
+    "premium": {
+      "original_recall_by_class": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 19,
+          "union": 35,
+          "recall": 0.5428571428571428
+        },
+        "product_choice": {
+          "found": 3,
+          "union": 6,
+          "recall": 0.5
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "original_shared_count": 55,
+      "original_unique_count": 18,
+      "original_unsupported_or_rejected_count": 51,
+      "continuation_observed_new_shared": 0,
+      "continuation_observed_new_unique": 0,
+      "continuation_observed_new_unsupported": 0,
+      "continuation_new_contributions_by_class": {
+        "correction": 0,
+        "unsupported_or_rejected": 0,
+        "optional_capability": 0,
+        "product_choice": 0
+      },
+      "continuation_recall_measurable": false,
+      "reason": "No delivered research notes; premium stopped at the resource guard, hybrid was not launched.",
+      "cumulative_recall_by_class_unchanged": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 19,
+          "union": 35,
+          "recall": 0.5428571428571428
+        },
+        "product_choice": {
+          "found": 3,
+          "union": 6,
+          "recall": 0.5
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "resource_truncated_job_count": 11,
+      "resource_truncated_leads": [
+        "L-0793ad1e2a78",
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-39a5001283f3",
+        "L-3c0712b66649",
+        "L-444f31e68545",
+        "L-4f94a6cc2232",
+        "L-732df4469871",
+        "L-7dc9a6726cf9",
+        "L-80244e477912",
+        "L-ad68a4ac94ad",
+        "L-c0c7178a160f",
+        "L-c89be7ac8a66"
+      ]
+    },
+    "hybrid": {
+      "original_recall_by_class": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 30,
+          "union": 35,
+          "recall": 0.8571428571428571
+        },
+        "product_choice": {
+          "found": 5,
+          "union": 6,
+          "recall": 0.8333333333333334
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "original_shared_count": 55,
+      "original_unique_count": 31,
+      "original_unsupported_or_rejected_count": 51,
+      "continuation_observed_new_shared": 0,
+      "continuation_observed_new_unique": 0,
+      "continuation_observed_new_unsupported": 0,
+      "continuation_new_contributions_by_class": {
+        "correction": 0,
+        "unsupported_or_rejected": 0,
+        "optional_capability": 0,
+        "product_choice": 0
+      },
+      "continuation_recall_measurable": false,
+      "reason": "No delivered research notes; premium stopped at the resource guard, hybrid was not launched.",
+      "cumulative_recall_by_class_unchanged": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 30,
+          "union": 35,
+          "recall": 0.8571428571428571
+        },
+        "product_choice": {
+          "found": 5,
+          "union": 6,
+          "recall": 0.8333333333333334
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "resource_truncated_job_count": 0,
+      "resource_truncated_leads": []
+    }
+  }
+}

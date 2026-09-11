@@ -1,0 +1,26 @@
+{
+  "phase": "d5",
+  "status": "completed_landed_pushed_and_cleaned",
+  "closed_at": "2026-09-11T18:11:45.382113+00:00",
+  "landed_head": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+  "captured_usd": 49.905084,
+  "phase_cap_usd": 120,
+  "basis": "Preserved standard Astra API-equivalent; not cash billing",
+  "cost_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/cost-phase-close.json",
+    "sha256": "80f43986d118523da5668254b92ba8dff0d98bcc9aeddb822ad8d002cd73ea64"
+  },
+  "open_counter_gaps": 0,
+  "limitations": [
+    "The request completing after the phase transition is assigned to the next phase; no cumulative usage resets.",
+    "Unreported or interrupted-request cash liability remains unknown."
+  ],
+  "findings": {
+    "positive_dispositions": 36,
+    "declined": 8,
+    "plan_units": 42,
+    "owners": 12,
+    "canonical_docs": 13
+  },
+  "gates": "configured shards and index pass; full governance11fail and ledger3coverageerrors remain recorded"
+}

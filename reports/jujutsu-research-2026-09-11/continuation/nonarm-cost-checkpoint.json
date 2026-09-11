@@ -1,0 +1,29 @@
+{
+  "phase": "continuation",
+  "status": "before_publication_checkpoint_not_final_bill",
+  "captured_at": "2026-09-11T19:08:32.333429+00:00",
+  "captured_usd": 9.124314,
+  "cap_usd": 60,
+  "basis": "Preserved2026-09-08; inclusive input subtracts cache categories; output includes reasoning once",
+  "actual_cash_usd": null,
+  "snapshot_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/nonarm-cost-before-publication.json",
+  "snapshot_sha256": "3ef813e6924e4a2c224ae7bee0849661e25cb9772bc8b0c00a70d4f914f5b740",
+  "agents": [
+    {
+      "agent": "root",
+      "captured_usd": 5.63621,
+      "counter_gaps": 0
+    },
+    {
+      "agent": "continuation_transport_diagnosis",
+      "captured_usd": 1.7457719999999999,
+      "counter_gaps": 0
+    },
+    {
+      "agent": "continuation_final_review",
+      "captured_usd": 1.742332,
+      "counter_gaps": 0
+    }
+  ],
+  "later_usage": "Final external phase-close receipt follows publication; no cutoff gap will be discarded."
+}

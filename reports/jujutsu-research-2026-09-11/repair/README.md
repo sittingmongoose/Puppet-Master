@@ -8,6 +8,10 @@ Compaction dispatch and accounting were observed; synthetic compaction completio
 
 See `protocol-version.json`, `independent-final-review.json`, `native-boundary.json`, and `preservation-check.json`. Raw evidence and exact versioned source remain outside the product repository at the paths and SHA-256 references in these files. Earlier meter/scheduler receipts describe their checkpoint times; the final review and sealed version supersede their pending native status.
 
-Cost at engineering stop: $39.713260 captured of the $40 phase allowance, preserved standard API-equivalent basis, with closing request usage still pending. The immutable phase-close receipt records the final captured value; no cash billing claim. No arm allowance, timer or admission was consumed.
+Final repair cost: $41.760550 captured against $40, an overrun of $1.760550 on the preserved standard API-equivalent basis. Engineering stopped on a $39.713260 snapshot; pending review and publication receipts increased the captured total. The overrun remains recorded without reset or deduction. No arm grant was consumed during repair. See `../continuation/repair-phase-close-addendum.json`.
 
-Plan governance: reports only; shard verification passed (98 sources, 2,175 shards). The D5-reported governance failures remain outside this repair. No governance reseal.
+Plan governance: reports only; landing shard verification passed (98 sources, 2,181 shards). The D5-reported governance failures remain outside this repair. No governance reseal.
+
+Live validation update: the continuation exposed unreconciled real provider streams. The operational launch gate is now suspended; the historical offline certificate does not authorize further launches. See [continuation report](../continuation/README.md).
+
+The phase-boundary audit preserved the earlier repair snapshot and added one late $0.115596 receipt. The corrected repair total is $41.760550. D5 remains $49.905084. See `../continuation/phase-boundary-audit.json`.

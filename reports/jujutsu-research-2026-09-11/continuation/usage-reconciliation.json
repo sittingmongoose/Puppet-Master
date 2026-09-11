@@ -1,0 +1,97 @@
+{
+  "at": "2026-09-11T18:58:44.761416+00:00",
+  "status": "seven_verified_receipts_reconciled_five_jobs_unpriced",
+  "proposal_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation/transport-diagnosis/recovery-and-diagnosis.json",
+  "proposal_sha256": "87eb164648a109c517183e0bacfd0a98675d9304255fd26aca6b52d9e4e8f32d",
+  "pre_journal_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/premium-priced-usage-pre-reconciliation.json",
+  "pre_journal_sha256": "bc04b217bef09d644a8182e66d8b43d6fa0225b5abe4b8250d98e676b2676cd7",
+  "post_journal_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/premium-priced-usage-post-reconciliation.json",
+  "post_journal_sha256": "f253974892ba9fc58105a3013138d4c9ed24e2ace5179a17030d3ded66f69908",
+  "before_captured_usd": 39.71806599999998,
+  "additive_captured_usd": 0.622098,
+  "after_captured_usd": 40.34016399999999,
+  "applied": [
+    {
+      "job": "J0005-reconcile",
+      "request_identity": "http-8740c3c7463941198517adca37e19f3e",
+      "usage_epoch": "01a091cf-bd9c-7160-b523-c828949a552d",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0005-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "ae29a79abb18a6b51bccfef27b5eaa09bcb97e0601e5816b1ab74d454fe03c35",
+        "line": 61
+      }
+    },
+    {
+      "job": "J0006-reconcile",
+      "request_identity": "http-f8a501d348df47f1917c2ca228403d83",
+      "usage_epoch": "01a091cf-bdb6-7ee1-a947-9bff6453637d",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0006-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "f89f8275c81bcef4d17b57616321b476c657e82b32e37864f89f2201a7896db3",
+        "line": 60
+      }
+    },
+    {
+      "job": "J0007-reconcile",
+      "request_identity": "http-de5d680c715f4ad7909e99d9fe9a90e0",
+      "usage_epoch": "01a091cf-bdba-7c73-aee8-77c699ecd3e4",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0007-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "84705024ff68c6cd8fd748b370e52696c5e6fa01fec70eada1e497c961683f1f",
+        "line": 60
+      }
+    },
+    {
+      "job": "J0008-reconcile",
+      "request_identity": "http-a171f1a76b0640b782b8c64068050e75",
+      "usage_epoch": "01a091cf-f100-7d62-8a88-e8592edfb949",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0008-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "dae0291dcae8f9621c8837643b752d8a4f4ec19ade52b865ccc4443352c7d11f",
+        "line": 66
+      }
+    },
+    {
+      "job": "J0009-reconcile",
+      "request_identity": "http-0de094e344824371a06b4d395c0ef267",
+      "usage_epoch": "01a091cf-f241-7ae0-979d-94a4162c5c53",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0009-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "87ee881601ac1db15af9114e3aa03759cef32f5e048464e0c42f5f28d82e070b",
+        "line": 61
+      }
+    },
+    {
+      "job": "J0012-reconcile",
+      "request_identity": "http-a521d3ec38b44e48a71919198529127b",
+      "usage_epoch": "01a091d0-2549-7781-bfe7-ab713cf8071b",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0012-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "af39a3054c3dbf3b2be551656b6b42797d2abc37f7d58992ae3af2a844d9441b",
+        "line": 62
+      }
+    },
+    {
+      "job": "J0014-reconcile",
+      "request_identity": "http-5d5156836ffb4dfb8f0111ee3463ca74",
+      "usage_epoch": "01a091d0-4f8a-7503-854e-1acf9b1e4f2f",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/jobs/J0014-reconcile/raw-codex/server.stdout.raw.jsonl",
+        "sha256": "71698f169d09c35713560f322ff21207e7089f56e785dff235541bdf4f07c3b7",
+        "line": 69
+      }
+    }
+  ],
+  "unpriced_new_jobs": [
+    "J0010-reconcile",
+    "J0011-reconcile",
+    "J0013-reconcile",
+    "J0015-reconcile",
+    "J0016-reconcile"
+  ],
+  "budget_before_after_sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639",
+  "runtime_outcomes_unchanged": true,
+  "historical_baseline_unchanged": true,
+  "partial_only": true,
+  "actual_cash_usd": null
+}

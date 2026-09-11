@@ -1,0 +1,145 @@
+{
+  "schema": "jj.followup.nonarm.boundary_audit.v1",
+  "captured_at": "2026-09-11T19:04:41.913591+00:00",
+  "basis": "Preserved 2026-09-08 standard API-equivalent; not billing. Exact timezone-normalized half-open event timestamp intervals. All unique sessions registered across the three configs are scanned in each interval; phase membership follows receipt timestamp.",
+  "baseline_reasoning": "For each session and interval, the last native cumulative token receipt strictly before start establishes baseline; zero if none. Retained classify_counter_transition validates every distinct receipt; repeats excluded; known epoch reset permits total==last after rollback. A request begun earlier is charged to the interval in which its token receipt timestamp falls. Null info has no price; gaps remain excluded. As the preserved extractor does, unchanged cumulative counters are skipped before transition validation; malformed last counters on those repeats are recorded separately as anomalies, not newly missing receipts or monetary gaps.",
+  "limitations": [
+    "Continuation is a captured-prefix snapshot, not a closed phase.",
+    "Native service tier remains unverified; standard valuation is not cash billing.",
+    "In-flight/unreported usage is unknown.",
+    "No historical pricing, arm journals, extractor, configs or closed receipts changed."
+  ],
+  "full_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/boundary-audit/phase-boundary-audit.json",
+    "sha256": "ac6dd6680688cf54402cdb42984a0ac960f43bfea879608512dbbb6de287c5c2"
+  },
+  "closed_phases": [
+    {
+      "phase": "d5",
+      "interval_start_inclusive": "2026-09-11T17:18:13.025531+00:00",
+      "interval_end_exclusive": "2026-09-11T18:11:45.382113+00:00",
+      "closed": true,
+      "preserved_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/d5-usage.json",
+        "sha256": "80f43986d118523da5668254b92ba8dff0d98bcc9aeddb822ad8d002cd73ea64",
+        "captured_prefix_bytes": 194277
+      },
+      "preserved_captured_at": "2026-09-11T18:11:45.352358+00:00",
+      "preserved_standard_usd": 49.905084,
+      "audited_standard_usd": 49.905084,
+      "corrective_delta_usd": 0.0,
+      "missing_distinct_receipt_count": 0,
+      "missing_receipts": [],
+      "old_events_outside_interval": [],
+      "counter_gap_count": 0,
+      "unchanged_cumulative_counter_anomalies": [
+        {
+          "agent": "root",
+          "source_path": "/home/sittingmongoose/.codex/sessions/2026/09/07/rollout-2026-09-07T04-18-18-01a07a16-9f4b-7500-900a-efb4c0aa337a.jsonl",
+          "line": 40552,
+          "timestamp": "2026-09-11T17:53:18.561Z",
+          "reason": "unchanged cumulative counters with malformed last counters; extractor skips as repeat before validation; not a distinct chargeable receipt",
+          "previous": {
+            "input_tokens": 46501853,
+            "cached_input_tokens": 45431168,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 221139,
+            "reasoning_output_tokens": 93937,
+            "total_tokens": 46722992
+          },
+          "total": {
+            "input_tokens": 46501853,
+            "cached_input_tokens": 45431168,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 221139,
+            "reasoning_output_tokens": 93937,
+            "total_tokens": 46722992
+          },
+          "last": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 15056
+          }
+        }
+      ]
+    },
+    {
+      "phase": "repair",
+      "interval_start_inclusive": "2026-09-11T18:11:45.382113+00:00",
+      "interval_end_exclusive": "2026-09-11T18:50:07.070552+00:00",
+      "closed": true,
+      "preserved_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/repair-usage.json",
+        "sha256": "c182b3f30facb99f2a7be44ff98979413ba0409790ff9181681bdbbc15663b46",
+        "captured_prefix_bytes": 179702
+      },
+      "preserved_captured_at": "2026-09-11T18:49:38.661476+00:00",
+      "preserved_standard_usd": 41.644954,
+      "audited_standard_usd": 41.76055,
+      "corrective_delta_usd": 0.115596,
+      "missing_distinct_receipt_count": 1,
+      "missing_receipts": [
+        {
+          "agent": "root",
+          "source_path": "/home/sittingmongoose/.codex/sessions/2026/09/07/rollout-2026-09-07T04-18-18-01a07a16-9f4b-7500-900a-efb4c0aa337a.jsonl",
+          "line": 41883,
+          "timestamp": "2026-09-11T18:49:39.253Z",
+          "last_token_usage": {
+            "input_tokens": 93720,
+            "cached_input_tokens": 93056,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 318,
+            "reasoning_output_tokens": 55,
+            "total_tokens": 94038
+          },
+          "counter_transition": "continuous",
+          "standard_api_equivalent_usd": 0.115596
+        }
+      ],
+      "old_events_outside_interval": [],
+      "counter_gap_count": 0,
+      "unchanged_cumulative_counter_anomalies": [
+        {
+          "agent": "root",
+          "source_path": "/home/sittingmongoose/.codex/sessions/2026/09/07/rollout-2026-09-07T04-18-18-01a07a16-9f4b-7500-900a-efb4c0aa337a.jsonl",
+          "line": 41514,
+          "timestamp": "2026-09-11T18:37:35.175Z",
+          "reason": "unchanged cumulative counters with malformed last counters; extractor skips as repeat before validation; not a distinct chargeable receipt",
+          "previous": {
+            "input_tokens": 60533452,
+            "cached_input_tokens": 59198720,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 271984,
+            "reasoning_output_tokens": 110728,
+            "total_tokens": 60805436
+          },
+          "total": {
+            "input_tokens": 60533452,
+            "cached_input_tokens": 59198720,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 271984,
+            "reasoning_output_tokens": 110728,
+            "total_tokens": 60805436
+          },
+          "last": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 15059
+          }
+        }
+      ]
+    }
+  ],
+  "continuation_prefix_snapshot": {
+    "captured_usd": 7.498246,
+    "captured_at": "2026-09-11T19:04:41.913591+00:00",
+    "closed": false,
+    "note": "This later active-phase snapshot is not a correction to a closed phase."
+  }
+}
