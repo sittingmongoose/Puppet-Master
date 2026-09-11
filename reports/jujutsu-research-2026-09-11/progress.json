@@ -1,18 +1,19 @@
 {
-  "at": "2026-09-11T13:57:22.220604+00:00",
-  "status": "d3_blind_adjudication_running",
+  "at": "2026-09-11T14:40:05.638512+00:00",
+  "status": "d3_independent_semantic_review_and_attribution_repairs",
   "checkpoint_reached": false,
-  "non_arm_observed_api_equivalent_usd": 59.065252,
+  "non_arm_observed_api_equivalent_usd": 115.24201,
   "non_arm_cap_usd": 180,
-  "operational_reserve_usd": 2.0,
+  "operational_reserve_usd": 5,
   "reserve_is_not_spend": true,
   "allowance_stop_reason": null,
   "actual_cash_usd": null,
   "named_xhigh_disputes": 0,
   "d1": "complete_pushed",
   "d2": "complete_partial_campaigns_frozen_pushed",
-  "d3": "blind_medium_adjudication_running",
+  "d3": "full_blind_union_drafted_independent_source_attribution_review_in_progress",
   "d4": "pending_no_corrections_landed_no_decision_packet",
   "d5": "pending_answers_after_d4",
-  "budget_extension": "d3-prepared/allowance-extension.json"
+  "budget_extension": "d3-prepared/allowance-extension.json",
+  "accounting_snapshot_captured_at": "2026-09-11T14:39:39.548051+00:00"
 }
