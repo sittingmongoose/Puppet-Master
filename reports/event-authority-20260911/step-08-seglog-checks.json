@@ -40,5 +40,37 @@
     "status": "pass",
     "plan_units": 6538,
     "acceptance_units": 25115
+  },
+  "standard_governance": {
+    "status": "FAIL_UNSEALED_GOVERNANCE_AND_PREEXISTING_MISSING_REFERENCES",
+    "complete_run": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-root-20260911/full-gates.json",
+      "sha256": "75f1972814bc1179568d57671f94e3382db85646ab4148cc0d699130fcf517be",
+      "checks": 36,
+      "failed": 18
+    },
+    "targeted_rechecks_after_materializing_tests_and_Concepts": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-root-20260911/restored-sparse-gates.json",
+      "sha256": "e375b932543b79f203d7c81bf4c087cb1cf2b6ae24fdc747a95f222030ca1853",
+      "checks": 11
+    },
+    "combined_latest_subcheck_count": 36,
+    "remaining_failed_subchecks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_evidence",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "verify_spec_lock"
+    ],
+    "not_a_second_aggregate_run": true,
+    "new_contracts_gate": "PASS",
+    "new_planunit_path_or_contractref_failure": false,
+    "governance_mutations": false
   }
 }
