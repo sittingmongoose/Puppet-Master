@@ -4559,7 +4559,7 @@ depends_on: [CV-331, UIW-023]
 unblocks: []
 acceptance_criteria:
   - "Require response_contract_ref to equal Plans/ui_command_response.schema.json in the production response gate; retain historical matrix examples without treating them as production proof."
-  - "The current 1154 production-intent rows inherit the declared envelope; 387 have explicit typed result schema refs and 767 do not. These counts are a scoped September 10 inventory, not adapter certification."
+  - "At the response-bridge snapshot, 1154 production-intent rows inherited the declared envelope; 387 had explicit typed result schema refs and 767 did not. WM-056 records subsequent peer-row exclusions; derive the current counts from the actual matrix. Neither snapshot is adapter certification."
   - "All twenty-six shared-runtime commands have exact typed result refs inheriting the required command outcome binding."
   - "No row, handler, availability, event effect, candidate exclusion or command identity is added or lifted merely by adding the root reference."
   - "Native admission still requires actual typed-result resolution, authenticated owner verification, effect receipts and end-to-end interaction proof."
@@ -4576,3 +4576,107 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### WM-056 - Bounded Gap-Repair Touch Inventory And Whole-Command Accounting
+
+The table below is the exact additional Touch Closure inventory for the September 10 gap repair:
+nine existing BSD commands, seven existing Context Lens commands, and twenty-two existing
+commands affected by the owner-reference/sole-handler repair. The fifteen scoped Browser
+program commands and `cmd.bsd.set` already have rows and are not duplicated. This is an explicit
+bounded extension, not permission to turn every catalog mention, alias, source candidate or
+unrelated production command into a new packet denominator.
+
+<!-- gap-repair-touch-inventory-20260910:start -->
+| Canonical command | Touch profile | Canonical owner PlanUnit |
+|---|---|---|
+| `cmd.bsd.configure` | `TCP-GAP-001` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.workflow.configure` | `TCP-GAP-002` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.assignment.pause` | `TCP-GAP-003` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.assignment.resume` | `TCP-GAP-004` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.assignment.retry` | `TCP-GAP-005` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.assignment.stop` | `TCP-GAP-006` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.finding.open` | `TCP-GAP-007` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.open_usage` | `TCP-GAP-008` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.bsd.open_transcript` | `TCP-GAP-009` | `Plans/Back_Seat_Driver.md#BSD-020` |
+| `cmd.chat.context_lens.toggle` | `TCP-GAP-010` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.set_mode` | `TCP-GAP-011` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.turn_off` | `TCP-GAP-012` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.toggle_message_selection` | `TCP-GAP-013` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.clear_selection` | `TCP-GAP-014` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.apply_subcompact` | `TCP-GAP-015` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.context_lens.revert_subcompact` | `TCP-GAP-016` | `Plans/assistant-chat-design.md#ACD-460` |
+| `cmd.chat.attachment.add` | `TCP-GAP-017` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.remove` | `TCP-GAP-018` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.retry` | `TCP-GAP-019` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.open` | `TCP-GAP-020` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.download` | `TCP-GAP-021` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.details` | `TCP-GAP-022` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.freeze_reference` | `TCP-GAP-023` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.attachment.save_to_project` | `TCP-GAP-024` | `Plans/FileManager.md#F-082` |
+| `cmd.chat.composer.destination.set` | `TCP-GAP-025` | `Plans/assistant-chat-design.md#ACD-462` |
+| `cmd.chat.thread.regenerate_title` | `TCP-GAP-026` | `Plans/assistant-chat-design.md#ACD-462` |
+| `cmd.chat.goal.propose_update` | `TCP-GAP-027` | `Plans/Goal_Runtime_System.md#GRS-054` |
+| `cmd.chat.plan.build` | `TCP-GAP-028` | `Plans/Assistant_Plan_Runtime.md#APR-007` |
+| `cmd.chat.plan.build_with_crew` | `TCP-GAP-029` | `Plans/Assistant_Plan_Runtime.md#APR-011` |
+| `cmd.chat.plan.export` | `TCP-GAP-030` | `Plans/Assistant_Plan_Runtime.md#APR-003` |
+| `cmd.chat.crew_auto.set` | `TCP-GAP-031` | `Plans/Collaborative_Workflows.md#CWR-004` |
+| `cmd.collaboration.start` | `TCP-GAP-032` | `Plans/Collaborative_Workflows.md#CWR-001` |
+| `cmd.brainstorm.synthesize_plan` | `TCP-GAP-033` | `Plans/Collaborative_Workflows.md#CWR-007` |
+| `cmd.browser.capture.full_to_chat` | `TCP-GAP-034` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089` |
+| `cmd.browser.capture.region_to_chat` | `TCP-GAP-035` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089` |
+| `cmd.browser.component.send_now` | `TCP-GAP-036` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090` |
+| `cmd.browser.component.add_to_composer` | `TCP-GAP-037` | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090` |
+| `cmd.chat.revert` | `TCP-GAP-038` | `Plans/assistant-chat-design.md#ACD-217` |
+<!-- gap-repair-touch-inventory-20260910:end -->
+
+Every entry remains partial. A Markdown payload/result/error reference identifies the current
+owner declaration and its gap; it is not a materialized JSON schema. None of these rows proves
+native dispatch, authenticated owner-result resolution, durable effects, event producers,
+reverse-surface interaction, accessibility, visual or motion acceptance. Required unadmitted
+event families block their effects: a receipt or an empty expected-event list is no substitute.
+Existing historical audit identities and alias/source cases remain retained even when an
+illegal peer production row is removed.
+
+Whole-command accounting separately enumerates every actual production row and unique command,
+including commands outside the packet Touch inventory, without silently treating them as reviewed
+or implemented. It validates actual references, exact exclusions and one handler identity per
+canonical command. Missing machine request/result bindings remain visible in that accounting.
+The single shared exclusion predicate is consumed by both the standard wiring gate and the
+read-only inspector; it must not fork into conflicting alias rules.
+
+```yaml
+plan_unit_id: WM-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  The bounded gap-repair table adds exactly thirty-eight existing commands to partial Touch Closure.
+  Whole-production command accounting is separate from the packet denominator and cannot promote
+  structural coverage to semantic review or native proof. Excluded aliases and retired commands
+  have no peer production row, and each canonical command has one sole handler identity across surfaces.
+gui_related: true
+gui_classification_reason: Visible command controls retain exact owner, disabled, trigger and return coverage.
+depends_on: [WM-046, DR-040, DR-041, BSD-020, ACD-460, ACD-462, F-082]
+unblocks: []
+acceptance_criteria:
+  - The exact thirty-eight listed commands each have one partial Touch Closure row and the listed owner/profile; unrelated catalog or source tokens cannot expand that set.
+  - This repair moves the retained Touch inventory from 606 rows/93 profiles to 644 rows/131 profiles, preserves its 58 exclusions and 64 alias bindings, and removes eleven forbidden peer production rows from the 1154-row predecessor. These scoped counts are not native or semantic-review verdicts.
+  - The eleven excluded production spellings are cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings, retired cmd.chat.delete_message, and file-only cmd.chat.add_file_reference. The last retains its catalog signature and normalizes to cmd.chat.attachment.add before every gate; preserve its source identity and reject folder input without a peer handler.
+  - Existing Browser and BSD mode rows remain single; BSD mode request/result/error refs resolve to the existing shared-runtime schemas without a parallel contract family.
+  - Each new profile names its actual sole future handler and actual production placements plus intended family consumers; no native wiring status is inferred.
+  - Markdown declarations remain explicitly unmaterialized machine-contract gaps and cannot establish complete payload, result or error coverage.
+  - Every production row and unique command is separately accounted, including out-of-packet commands and missing machine bindings.
+  - Exact excluded tokens cannot reappear as peer production rows, and differing handler identities for one canonical command fail the standard gate.
+  - Historical source cases, superseded spellings and missing runtime findings remain retained; removal of a peer row cannot erase them from the audit.
+  - No native implementation, event family, storage family, WorkNode, NodeSeed, readiness unlock or governance seal is admitted by this repair.
+validation_surfaces: [scripts/pm-touch-closure-verify.py, scripts/pm-assistant-contract-check.py, scripts/pm_wiring_inventory.py, tests/test_pm_touch_closure_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+risk_class: omitted_touch_or_false_whole_command_closure
+reasoning_tier: high
+context_scope: bounded_packet_gap_accounting
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json]
+node_compile_hint: {mode: static_inventory_and_contract_references_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-156, Plans/UI_Command_Catalog.md#UCC-158, Plans/Back_Seat_Driver.md, Plans/assistant-chat-design.md]
+negative_constraints: [No ambient-token denominator expansion., No fabricated machine schema or native evidence., No duplicate owner handler or alias production row., No audit-case deletion or false aggregate pass.]
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-040, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/touch_closure.json

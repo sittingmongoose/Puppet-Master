@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14667,
+    "depends_on_edge_count": 14683,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17315,
-    "node_count": 6460,
+    "edge_count": 17331,
+    "node_count": 6463,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T17:00:12Z",
+  "generated_at_utc": "2026-09-11T17:02:19Z",
   "gui_related_units": {
-    "count": 3117,
+    "count": 3120,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3471,6 +3471,17 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-462",
+        "source_location": {
+          "heading": "ACD-462 - Composer Destination And Title Command Owner References",
+          "heading_level": 3,
+          "heading_line": 25349,
+          "line": 25351,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Azure_DevOps_Integration.md",
         "plan_unit_id": "ADO-001",
         "source_location": {
@@ -5016,8 +5027,8 @@
         "source_location": {
           "heading": "BSD-021 - Reuse And Alias Reconciliation For cmd.bsd.set",
           "heading_level": 3,
-          "heading_line": 1449,
-          "line": 1451,
+          "heading_line": 1451,
+          "line": 1453,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5027,8 +5038,8 @@
         "source_location": {
           "heading": "BSD-022 - Requested Versus Effective Advisor Identity Disclosure",
           "heading_level": 3,
-          "heading_line": 1505,
-          "line": 1507,
+          "heading_line": 1507,
+          "line": 1509,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5038,8 +5049,8 @@
         "source_location": {
           "heading": "BSD-023 - Project Watch Guidance Scope And Inertness",
           "heading_level": 3,
-          "heading_line": 1556,
-          "line": 1558,
+          "heading_line": 1558,
+          "line": 1560,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5049,8 +5060,8 @@
         "source_location": {
           "heading": "25. Concise Context More Details Projection (APR-061)",
           "heading_level": 3,
-          "heading_line": 1762,
-          "line": 1774,
+          "heading_line": 1764,
+          "line": 1776,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5060,8 +5071,8 @@
         "source_location": {
           "heading": "25. Concise Context More Details Projection (APR-061)",
           "heading_level": 3,
-          "heading_line": 1762,
-          "line": 1822,
+          "heading_line": 1764,
+          "line": 1824,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5071,8 +5082,8 @@
         "source_location": {
           "heading": "26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)",
           "heading_level": 3,
-          "heading_line": 1868,
-          "line": 1872,
+          "heading_line": 1870,
+          "line": 1874,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -5082,8 +5093,8 @@
         "source_location": {
           "heading": "Registration, implementation, and demonstrations remain distinct",
           "heading_level": 3,
-          "heading_line": 2006,
-          "line": 2024,
+          "heading_line": 2008,
+          "line": 2026,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -10276,6 +10287,17 @@
           "heading_level": 3,
           "heading_line": 4976,
           "line": 4978,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-082",
+        "source_location": {
+          "heading": "F-082 - Attachment Command Owner And Unmaterialized Contract Boundary",
+          "heading_level": 3,
+          "heading_line": 5076,
+          "line": 5078,
           "path": "Plans/FileManager.md"
         }
       },
@@ -34095,6 +34117,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-056",
+        "source_location": {
+          "heading": "WM-056 - Bounded Gap-Repair Touch Inventory And Whole-Command Accounting",
+          "heading_level": 3,
+          "heading_line": 4580,
+          "line": 4647,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Working_Notebook.md",
         "plan_unit_id": "WN-019",
         "source_location": {
@@ -34311,10 +34344,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6460,
+  "plan_unit_count": 6463,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1916,
+      "high": 1919,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -34490,6 +34523,7 @@
       "assistant_worktree_record_owner_duplication": 1,
       "assistant_worktree_surface_drift": 1,
       "atomic_edit_drift": 1,
+      "attachment_owner_split_or_false_contract_closure": 1,
       "attempt_completed_payload_loss": 1,
       "attempt_journal_contract": 1,
       "attempt_snapshot_identity_stability_retries": 1,
@@ -36208,6 +36242,7 @@
       "oauth_callback_token_overwrite": 1,
       "oauth_device_code_flow": 1,
       "offline_cached_blocked_identity_drift": 1,
+      "omitted_touch_or_false_whole_command_closure": 1,
       "onboarding_command_lineage_revival": 1,
       "onboarding_fake_command_or_parallel_owner_wiring": 1,
       "onboarding_forge_account_repository_or_provider_requirement_drift": 1,
@@ -38018,6 +38053,7 @@
       "worktree_storage": 3,
       "wrapper_command_navigation_drift": 1,
       "write_atomicity_drift": 1,
+      "wrong_chat_owner_or_unproved_dispatch": 1,
       "wrong_environment_or_stale_version_certification": 1,
       "wrong_plan_version_built_or_duplicate_nightly_build": 1,
       "wrong_pr_target": 1,
@@ -38027,7 +38063,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6269,
+      "accepted": 6272,
       "retired": 182,
       "superseded": 9
     },
@@ -38074,7 +38110,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 42,
+      "integration_contract": 44,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -38094,7 +38130,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5154,
+      "requirement": 5155,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38224,7 +38260,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "94f95368af1be44d59b7df5b3a19409829004b9634f5a3cb9da126fd2bc71a0e",
+        "expected": "82aef9360e06875ef658481e347672379660389f2c32e0ae5fc380b5afa7028a",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

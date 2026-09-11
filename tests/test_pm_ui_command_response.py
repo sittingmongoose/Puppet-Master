@@ -103,9 +103,15 @@ class UICommandResponseTests(unittest.TestCase):
 
     def test_declared_global_contract_does_not_claim_missing_typed_adapters(self):
         report = GATE.validate()
-        self.assertEqual(report["wiring_rows_consuming_response_contract"], 1154)
-        self.assertEqual(report["wiring_rows_with_explicit_typed_result_ref"], 387)
-        self.assertEqual(report["wiring_rows_without_explicit_typed_result_ref"], 767)
+        # The response bridge must cover the actual production matrix, not its
+        # historical admission snapshot. WM-056 owns the reviewed peer removals.
+        entries = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())["entries"]
+        typed = sum(bool(row.get("result_schema_ref")) for row in entries.values())
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["wiring_rows_consuming_response_contract"], len(entries))
+        self.assertEqual(report["wiring_rows_with_explicit_typed_result_ref"], typed)
+        self.assertEqual(report["wiring_rows_without_explicit_typed_result_ref"], len(entries) - typed)
+        self.assertGreater(len(entries) - typed, 0)
         self.assertEqual(report["native_owner_adapters_proven"], 0)
 
     def test_both_standard_aggregate_paths_include_both_new_checks(self):
