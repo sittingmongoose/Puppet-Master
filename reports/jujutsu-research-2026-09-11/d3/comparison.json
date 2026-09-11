@@ -1,0 +1,2649 @@
+{
+  "schema": "jujutsu.union_comparison.v1",
+  "at": "2026-09-11T15:00:44.865329+00:00",
+  "adjudication_seal": {
+    "schema": "jujutsu.adjudication_seal.v1",
+    "at": "2026-09-11T15:00:44.216428+00:00",
+    "independent_review_passed": true,
+    "judgments_frozen_before_reattachment": true,
+    "named_xhigh_dispute_resolutions": 0,
+    "union_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/union.json",
+    "union_sha256": "23850729559d9d80d2f8d6cd45725116837436a883eae5ca78e4c3f6f9e64756",
+    "coverage_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/document-coverage.json",
+    "coverage_sha256": "5e7e41421ea9e4a6ad4e4768b55b89f80e231758504313bdd47afba46aab3988",
+    "review_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/review.json",
+    "review_sha256": "f3b933e4b7258b02d47fc36a199b6dc2cb1b52ec34c56f5f9c1c0c2b3cf72c99",
+    "documents_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/documents.json",
+    "documents_sha256": "c742ef646ceda1ed1ec0416ef19afd67f8942ab87d8d0c006eb5feebf7447e96",
+    "provenance_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-provenance.json",
+    "provenance_sha256": "159680ff04faed7e3382c97c9628c94f9ec73aecaa46b66378125fef9f3485d4",
+    "both_arms_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/frozen/both-arms.json",
+    "both_arms_sha256": "b2078d67d41badb19cf149495a921a4d65fbdea806cd0c457de1e7b2b3648252",
+    "document_roles_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/document-roles.json",
+    "document_roles_sha256": "94597a8f510986b44949bf722eea09159519aa9d999a9cfba0e1be7853fcfbe2",
+    "blind_verification_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-verification.json",
+    "blind_verification_sha256": "d111acf4f0a7c6c92d63f7c846f5d0a70ca374d387ac84582f52660c62dece88",
+    "packet_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/decision-draft.md",
+    "packet_sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767",
+    "companion_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/companion.json",
+    "companion_sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702",
+    "proposal_dispositions_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/proposal-dispositions.json",
+    "proposal_dispositions_sha256": "a4d47c258590f70086b0a93aeab8a99de3858d02e10458af1b148071cd53f1a5",
+    "corrections_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/corrections.md",
+    "corrections_sha256": "200bfe08dbf82ef00cd7984670401ae3d40555f7ce41026c87330dc17444eaf6"
+  },
+  "metric": "recall against the adjudicated union",
+  "reference_limit": "The union is the best available reference, not ground truth; common misses are unknown. Neither arm defines its denominator.",
+  "union_class_counts": {
+    "correction": 1,
+    "unsupported_or_rejected": 63,
+    "optional_capability": 35,
+    "product_choice": 6
+  },
+  "shared_class_counts": {
+    "unsupported_or_rejected": 39,
+    "optional_capability": 14,
+    "product_choice": 2
+  },
+  "arms": {
+    "premium": {
+      "union_relative_recall_by_class": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 19,
+          "union": 35,
+          "recall": 0.5428571428571428
+        },
+        "product_choice": {
+          "found": 3,
+          "union": 6,
+          "recall": 0.5
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "shared_findings": [
+        "F002",
+        "F004",
+        "F006",
+        "F007",
+        "F010",
+        "F011",
+        "F015",
+        "F019",
+        "F020",
+        "F022",
+        "F024",
+        "F025",
+        "F026",
+        "F027",
+        "F028",
+        "F029",
+        "F035",
+        "F037",
+        "F038",
+        "F039",
+        "F043",
+        "F044",
+        "F046",
+        "F047",
+        "F048",
+        "F050",
+        "F051",
+        "F052",
+        "F054",
+        "F056",
+        "F057",
+        "F059",
+        "F061",
+        "F062",
+        "F064",
+        "F066",
+        "F067",
+        "F068",
+        "F069",
+        "F071",
+        "F072",
+        "F074",
+        "F076",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F086",
+        "F087",
+        "F089",
+        "F092",
+        "F094",
+        "F097",
+        "F102",
+        "F103"
+      ],
+      "unique_contributions": [
+        "F005",
+        "F008",
+        "F030",
+        "F031",
+        "F032",
+        "F033",
+        "F034",
+        "F036",
+        "F053",
+        "F065",
+        "F070",
+        "F078",
+        "F084",
+        "F085",
+        "F088",
+        "F090",
+        "F096",
+        "F104"
+      ],
+      "unsupported_or_rejected": [
+        "F002",
+        "F004",
+        "F005",
+        "F006",
+        "F007",
+        "F008",
+        "F010",
+        "F011",
+        "F019",
+        "F029",
+        "F030",
+        "F031",
+        "F033",
+        "F034",
+        "F036",
+        "F037",
+        "F038",
+        "F039",
+        "F043",
+        "F050",
+        "F051",
+        "F052",
+        "F053",
+        "F054",
+        "F056",
+        "F057",
+        "F059",
+        "F061",
+        "F062",
+        "F064",
+        "F068",
+        "F069",
+        "F070",
+        "F071",
+        "F072",
+        "F074",
+        "F076",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F084",
+        "F085",
+        "F086",
+        "F087",
+        "F088",
+        "F089",
+        "F092",
+        "F094",
+        "F097",
+        "F102"
+      ],
+      "stage_presence": {
+        "discovery": {
+          "captured_output_finding_ids": [
+            "F002",
+            "F004",
+            "F005",
+            "F006",
+            "F007",
+            "F010",
+            "F011",
+            "F015",
+            "F019",
+            "F020",
+            "F022",
+            "F024",
+            "F025",
+            "F026",
+            "F027",
+            "F028",
+            "F029",
+            "F030",
+            "F031",
+            "F034",
+            "F035",
+            "F036",
+            "F037",
+            "F038",
+            "F039",
+            "F043",
+            "F044",
+            "F046",
+            "F047",
+            "F048",
+            "F050",
+            "F051",
+            "F052",
+            "F053",
+            "F054",
+            "F056",
+            "F057",
+            "F059",
+            "F061",
+            "F062",
+            "F064",
+            "F065",
+            "F066",
+            "F067",
+            "F068",
+            "F069",
+            "F070",
+            "F071",
+            "F072",
+            "F074",
+            "F076",
+            "F078",
+            "F079",
+            "F080",
+            "F081",
+            "F082",
+            "F084",
+            "F085",
+            "F086",
+            "F087",
+            "F088",
+            "F089",
+            "F090",
+            "F092",
+            "F094",
+            "F096",
+            "F097",
+            "F102",
+            "F103",
+            "F104"
+          ],
+          "completed_job_output_finding_ids": [
+            "F002",
+            "F004",
+            "F005",
+            "F006",
+            "F007",
+            "F010",
+            "F011",
+            "F015",
+            "F019",
+            "F020",
+            "F022",
+            "F024",
+            "F025",
+            "F026",
+            "F027",
+            "F028",
+            "F029",
+            "F030",
+            "F031",
+            "F034",
+            "F035",
+            "F036",
+            "F037",
+            "F038",
+            "F039",
+            "F043",
+            "F044",
+            "F046",
+            "F047",
+            "F048",
+            "F050",
+            "F051",
+            "F052",
+            "F053",
+            "F054",
+            "F056",
+            "F057",
+            "F059",
+            "F061",
+            "F062",
+            "F064",
+            "F065",
+            "F066",
+            "F067",
+            "F068",
+            "F069",
+            "F070",
+            "F071",
+            "F072",
+            "F074",
+            "F076",
+            "F078",
+            "F079",
+            "F080",
+            "F081",
+            "F082",
+            "F084",
+            "F085",
+            "F086",
+            "F087",
+            "F088",
+            "F089",
+            "F090",
+            "F092",
+            "F094",
+            "F096",
+            "F097",
+            "F102",
+            "F103",
+            "F104"
+          ]
+        },
+        "implementation": {
+          "captured_output_finding_ids": [
+            "F004",
+            "F007",
+            "F008",
+            "F029",
+            "F030",
+            "F031",
+            "F032",
+            "F033",
+            "F034",
+            "F035",
+            "F036",
+            "F037",
+            "F043"
+          ],
+          "completed_job_output_finding_ids": []
+        },
+        "history": {
+          "captured_output_finding_ids": [
+            "F029",
+            "F030",
+            "F031",
+            "F032",
+            "F034",
+            "F036",
+            "F037",
+            "F053"
+          ],
+          "completed_job_output_finding_ids": []
+        },
+        "reconcile": {
+          "captured_output_finding_ids": [],
+          "completed_job_output_finding_ids": []
+        },
+        "compare": {
+          "captured_output_finding_ids": [],
+          "completed_job_output_finding_ids": []
+        }
+      },
+      "stage_loss": {
+        "whole_chain_loss_count": null,
+        "status": "not_measurable_from_completed_chain",
+        "reason": "No completed comparison exists. Stage presence is reported; absence in pending or interrupted downstream work is not classified as semantic loss. Captured findings from interrupted jobs remain in the union."
+      },
+      "pending_coverage": {
+        "counts": {
+          "discovered": 88,
+          "studied": 0,
+          "reconciled": 0,
+          "comparison_delivered": 0
+        },
+        "pending_deep_leads": [
+          "L-80244e477912",
+          "L-7dc9a6726cf9",
+          "L-4f94a6cc2232",
+          "L-c89be7ac8a66",
+          "L-39a5001283f3",
+          "L-c0c7178a160f",
+          "L-444f31e68545",
+          "L-0793ad1e2a78",
+          "L-ad68a4ac94ad",
+          "L-2e0dc4dec29d",
+          "L-289201b4f4ec",
+          "L-732df4469871",
+          "L-3c0712b66649",
+          "L-0eb0bdc5ba1a",
+          "L-f27a42fd3b4c",
+          "L-937ac57a9f2b",
+          "L-3e328f150be6",
+          "L-aa8c1461d43a",
+          "L-e9ec230d009b",
+          "L-6028298d8855",
+          "L-6fea72bca3ad",
+          "L-28f7a36f8557",
+          "L-74d9d8b172d3",
+          "L-6ab2467deb87",
+          "L-403e2eb271bc",
+          "L-21de7aceefe8",
+          "L-09a659a5a6f3",
+          "L-4634dafd85af",
+          "L-a2ab9a454e58",
+          "L-aa07eee74517",
+          "L-bcabaae59ce7",
+          "L-c6261d72d4d5",
+          "L-4af7ce1cedec",
+          "L-3016429f1ffd",
+          "L-2ccd857addc8",
+          "L-5ecac36d9640",
+          "L-a35ea8f8a42c",
+          "L-68f1f74918fa",
+          "L-772b9a7a0dbf",
+          "L-62e705862167",
+          "L-f8ff85550285",
+          "L-231d8f561300",
+          "L-a1f6c79b9a08",
+          "L-a87239280738",
+          "L-2af0aefc10d5",
+          "L-55fc3564ea0d",
+          "L-e605258629f1",
+          "L-e456a501a075",
+          "L-edc200a119f5",
+          "L-a479adf5c634",
+          "L-b4d7619f8161",
+          "L-be11c4021bcc",
+          "L-00e1f9ce469f",
+          "L-6dd0efd9acdc",
+          "L-bb26697551cd",
+          "L-7fc4c8de53ef",
+          "L-21a2bb4fec38",
+          "L-34a96f087e91",
+          "L-71b5784eb925",
+          "L-3aa83a161ada",
+          "L-78bd00277eb9",
+          "L-6d1f611b0ff1",
+          "L-922c5e230f5f",
+          "L-c012b99fc03a",
+          "L-88df222adfaf",
+          "L-37f190f6fb37",
+          "L-1a81c025c133",
+          "L-03bddc3281d3",
+          "L-bed440a0194e",
+          "L-800ea3bdca74",
+          "L-91141f16e0c3",
+          "L-3aaef1ce9eb7",
+          "L-be2b2fe15192",
+          "L-bdd85d894bf7",
+          "L-689048221e5c",
+          "L-dc11b69871ee",
+          "L-d13e44f554a5",
+          "L-2ab768f8fe5e",
+          "L-c16f21f72e55",
+          "L-f0795b00764c",
+          "L-201f547c6246",
+          "L-53bb97673a1d",
+          "L-2d95cb1c4cf9",
+          "L-629c38cc9cb3"
+        ],
+        "pending_reconcile_leads": [
+          "L-80244e477912",
+          "L-7dc9a6726cf9",
+          "L-4f94a6cc2232",
+          "L-c89be7ac8a66",
+          "L-39a5001283f3",
+          "L-c0c7178a160f",
+          "L-444f31e68545",
+          "L-0793ad1e2a78",
+          "L-ad68a4ac94ad",
+          "L-2e0dc4dec29d",
+          "L-289201b4f4ec",
+          "L-732df4469871",
+          "L-3c0712b66649",
+          "L-0eb0bdc5ba1a",
+          "L-f27a42fd3b4c",
+          "L-937ac57a9f2b",
+          "L-3e328f150be6",
+          "L-aa8c1461d43a",
+          "L-e9ec230d009b",
+          "L-6028298d8855",
+          "L-6fea72bca3ad",
+          "L-28f7a36f8557",
+          "L-74d9d8b172d3",
+          "L-6ab2467deb87",
+          "L-403e2eb271bc",
+          "L-21de7aceefe8",
+          "L-09a659a5a6f3",
+          "L-4634dafd85af",
+          "L-a2ab9a454e58",
+          "L-aa07eee74517",
+          "L-bcabaae59ce7",
+          "L-c6261d72d4d5",
+          "L-4af7ce1cedec",
+          "L-3016429f1ffd",
+          "L-2ccd857addc8",
+          "L-5ecac36d9640",
+          "L-a35ea8f8a42c",
+          "L-68f1f74918fa",
+          "L-772b9a7a0dbf",
+          "L-62e705862167",
+          "L-f8ff85550285",
+          "L-231d8f561300",
+          "L-a1f6c79b9a08",
+          "L-a87239280738",
+          "L-2af0aefc10d5",
+          "L-55fc3564ea0d",
+          "L-e605258629f1",
+          "L-e456a501a075",
+          "L-edc200a119f5",
+          "L-a479adf5c634",
+          "L-b4d7619f8161",
+          "L-be11c4021bcc",
+          "L-00e1f9ce469f",
+          "L-6dd0efd9acdc",
+          "L-bb26697551cd",
+          "L-7fc4c8de53ef",
+          "L-21a2bb4fec38",
+          "L-34a96f087e91",
+          "L-71b5784eb925",
+          "L-3aa83a161ada",
+          "L-78bd00277eb9",
+          "L-6d1f611b0ff1",
+          "L-922c5e230f5f",
+          "L-c012b99fc03a",
+          "L-88df222adfaf",
+          "L-37f190f6fb37",
+          "L-1a81c025c133",
+          "L-03bddc3281d3",
+          "L-bed440a0194e",
+          "L-800ea3bdca74",
+          "L-91141f16e0c3",
+          "L-3aaef1ce9eb7",
+          "L-be2b2fe15192",
+          "L-bdd85d894bf7",
+          "L-689048221e5c",
+          "L-dc11b69871ee",
+          "L-d13e44f554a5",
+          "L-a888dbe90442",
+          "L-2ab768f8fe5e",
+          "L-c16f21f72e55",
+          "L-f0795b00764c",
+          "L-362bdde3a16e",
+          "L-201f547c6246",
+          "L-53bb97673a1d",
+          "L-8eb461a3b2a0",
+          "L-2d95cb1c4cf9",
+          "L-629c38cc9cb3",
+          "L-e983294c2a02"
+        ],
+        "pending_compare_leads": [
+          "L-80244e477912",
+          "L-7dc9a6726cf9",
+          "L-4f94a6cc2232",
+          "L-c89be7ac8a66",
+          "L-39a5001283f3",
+          "L-c0c7178a160f",
+          "L-444f31e68545",
+          "L-0793ad1e2a78",
+          "L-ad68a4ac94ad",
+          "L-2e0dc4dec29d",
+          "L-289201b4f4ec",
+          "L-732df4469871",
+          "L-3c0712b66649",
+          "L-0eb0bdc5ba1a",
+          "L-f27a42fd3b4c",
+          "L-937ac57a9f2b",
+          "L-3e328f150be6",
+          "L-aa8c1461d43a",
+          "L-e9ec230d009b",
+          "L-6028298d8855",
+          "L-6fea72bca3ad",
+          "L-28f7a36f8557",
+          "L-74d9d8b172d3",
+          "L-6ab2467deb87",
+          "L-403e2eb271bc",
+          "L-21de7aceefe8",
+          "L-09a659a5a6f3",
+          "L-4634dafd85af",
+          "L-a2ab9a454e58",
+          "L-aa07eee74517",
+          "L-bcabaae59ce7",
+          "L-c6261d72d4d5",
+          "L-4af7ce1cedec",
+          "L-3016429f1ffd",
+          "L-2ccd857addc8",
+          "L-5ecac36d9640",
+          "L-a35ea8f8a42c",
+          "L-68f1f74918fa",
+          "L-772b9a7a0dbf",
+          "L-62e705862167",
+          "L-f8ff85550285",
+          "L-231d8f561300",
+          "L-a1f6c79b9a08",
+          "L-a87239280738",
+          "L-2af0aefc10d5",
+          "L-55fc3564ea0d",
+          "L-e605258629f1",
+          "L-e456a501a075",
+          "L-edc200a119f5",
+          "L-a479adf5c634",
+          "L-b4d7619f8161",
+          "L-be11c4021bcc",
+          "L-00e1f9ce469f",
+          "L-6dd0efd9acdc",
+          "L-bb26697551cd",
+          "L-7fc4c8de53ef",
+          "L-21a2bb4fec38",
+          "L-34a96f087e91",
+          "L-71b5784eb925",
+          "L-3aa83a161ada",
+          "L-78bd00277eb9",
+          "L-6d1f611b0ff1",
+          "L-922c5e230f5f",
+          "L-c012b99fc03a",
+          "L-88df222adfaf",
+          "L-37f190f6fb37",
+          "L-1a81c025c133",
+          "L-03bddc3281d3",
+          "L-bed440a0194e",
+          "L-800ea3bdca74",
+          "L-91141f16e0c3",
+          "L-3aaef1ce9eb7",
+          "L-be2b2fe15192",
+          "L-bdd85d894bf7",
+          "L-689048221e5c",
+          "L-dc11b69871ee",
+          "L-d13e44f554a5",
+          "L-a888dbe90442",
+          "L-2ab768f8fe5e",
+          "L-c16f21f72e55",
+          "L-f0795b00764c",
+          "L-362bdde3a16e",
+          "L-201f547c6246",
+          "L-53bb97673a1d",
+          "L-8eb461a3b2a0",
+          "L-2d95cb1c4cf9",
+          "L-629c38cc9cb3",
+          "L-e983294c2a02"
+        ],
+        "pending_report_intake": [],
+        "coverage_claim": "Bounded workflow; unfinished deep investigations are retained even for compared leads. Delivery is not semantic validation."
+      },
+      "timing": {
+        "at": "2026-09-11T04:40:31.431283+00:00",
+        "stages": {
+          "discovery": {
+            "wall_seconds": 2307.179612159729,
+            "summed_job_seconds": 2306.921,
+            "average_concurrency": 0.9998879098279275
+          },
+          "implementation": {
+            "wall_seconds": 516.1961925029755,
+            "summed_job_seconds": 1031.5388105793,
+            "average_concurrency": 1.9983464147177992
+          },
+          "history": {
+            "wall_seconds": 516.1230847835541,
+            "summed_job_seconds": 516.0137667655945,
+            "average_concurrency": 0.9997881938995125
+          },
+          "reconcile": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          }
+        },
+        "arm_cumulative_wall_seconds": 2823.4991071224213,
+        "summed_terminal_job_seconds": 3854.4735773448942,
+        "average_concurrency": 1.3651407105537192,
+        "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+        "reserved_upper_usd": 107.55000000000001,
+        "actual_usage_usd": null,
+        "captured_usage_upper_usd": 39.71806599999998,
+        "money_stop_reason": "missing_or_interrupted_usage",
+        "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+      },
+      "terminal": {
+        "at": "2026-09-11T04:40:31.431996+00:00",
+        "stop_reason": "Stop: missing_or_interrupted_usage",
+        "partial": true,
+        "pending_intake_preserved": true
+      },
+      "cost": {
+        "captured_priced_upper_usd": 39.71806599999998,
+        "unresolved_reserved_liability_usd": 107.55000000000001,
+        "actual_cash_usd": null,
+        "basis": "Preserved September 8 basis: Astra standard API-equivalent; Hybrid combines it with DeepSeek Go allowance valuation. Reserved liability is separate from captured valuation."
+      }
+    },
+    "hybrid": {
+      "union_relative_recall_by_class": {
+        "correction": {
+          "found": 0,
+          "union": 1,
+          "recall": 0.0
+        },
+        "optional_capability": {
+          "found": 30,
+          "union": 35,
+          "recall": 0.8571428571428571
+        },
+        "product_choice": {
+          "found": 5,
+          "union": 6,
+          "recall": 0.8333333333333334
+        },
+        "unsupported_or_rejected": {
+          "found": 51,
+          "union": 63,
+          "recall": 0.8095238095238095
+        }
+      },
+      "shared_findings": [
+        "F002",
+        "F004",
+        "F006",
+        "F007",
+        "F010",
+        "F011",
+        "F015",
+        "F019",
+        "F020",
+        "F022",
+        "F024",
+        "F025",
+        "F026",
+        "F027",
+        "F028",
+        "F029",
+        "F035",
+        "F037",
+        "F038",
+        "F039",
+        "F043",
+        "F044",
+        "F046",
+        "F047",
+        "F048",
+        "F050",
+        "F051",
+        "F052",
+        "F054",
+        "F056",
+        "F057",
+        "F059",
+        "F061",
+        "F062",
+        "F064",
+        "F066",
+        "F067",
+        "F068",
+        "F069",
+        "F071",
+        "F072",
+        "F074",
+        "F076",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F086",
+        "F087",
+        "F089",
+        "F092",
+        "F094",
+        "F097",
+        "F102",
+        "F103"
+      ],
+      "unique_contributions": [
+        "F003",
+        "F009",
+        "F012",
+        "F013",
+        "F014",
+        "F016",
+        "F017",
+        "F018",
+        "F021",
+        "F023",
+        "F040",
+        "F041",
+        "F042",
+        "F045",
+        "F049",
+        "F055",
+        "F058",
+        "F060",
+        "F063",
+        "F073",
+        "F075",
+        "F077",
+        "F083",
+        "F091",
+        "F093",
+        "F095",
+        "F098",
+        "F099",
+        "F100",
+        "F101",
+        "F105"
+      ],
+      "unsupported_or_rejected": [
+        "F002",
+        "F004",
+        "F006",
+        "F007",
+        "F009",
+        "F010",
+        "F011",
+        "F012",
+        "F019",
+        "F029",
+        "F037",
+        "F038",
+        "F039",
+        "F040",
+        "F041",
+        "F042",
+        "F043",
+        "F045",
+        "F050",
+        "F051",
+        "F052",
+        "F054",
+        "F055",
+        "F056",
+        "F057",
+        "F059",
+        "F061",
+        "F062",
+        "F064",
+        "F068",
+        "F069",
+        "F071",
+        "F072",
+        "F073",
+        "F074",
+        "F075",
+        "F076",
+        "F077",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F086",
+        "F087",
+        "F089",
+        "F092",
+        "F093",
+        "F094",
+        "F097",
+        "F098",
+        "F102"
+      ],
+      "stage_presence": {
+        "discovery": {
+          "captured_output_finding_ids": [
+            "F003",
+            "F004",
+            "F006",
+            "F007",
+            "F011",
+            "F013",
+            "F014",
+            "F015",
+            "F016",
+            "F017",
+            "F018",
+            "F019",
+            "F022",
+            "F025",
+            "F026",
+            "F028",
+            "F038",
+            "F044",
+            "F045",
+            "F047",
+            "F050",
+            "F051",
+            "F052",
+            "F054",
+            "F056",
+            "F057",
+            "F058",
+            "F059",
+            "F061",
+            "F064",
+            "F066",
+            "F071",
+            "F074",
+            "F077",
+            "F079",
+            "F080",
+            "F082",
+            "F089",
+            "F091",
+            "F092",
+            "F095",
+            "F097",
+            "F099",
+            "F100",
+            "F102",
+            "F103"
+          ],
+          "completed_job_output_finding_ids": [
+            "F003",
+            "F004",
+            "F006",
+            "F007",
+            "F011",
+            "F013",
+            "F014",
+            "F015",
+            "F016",
+            "F017",
+            "F018",
+            "F019",
+            "F022",
+            "F025",
+            "F026",
+            "F028",
+            "F038",
+            "F044",
+            "F045",
+            "F047",
+            "F050",
+            "F051",
+            "F052",
+            "F054",
+            "F056",
+            "F057",
+            "F058",
+            "F059",
+            "F061",
+            "F064",
+            "F066",
+            "F071",
+            "F074",
+            "F077",
+            "F079",
+            "F080",
+            "F082",
+            "F089",
+            "F091",
+            "F092",
+            "F095",
+            "F097",
+            "F099",
+            "F100",
+            "F102",
+            "F103"
+          ]
+        },
+        "implementation": {
+          "captured_output_finding_ids": [
+            "F002",
+            "F004",
+            "F006",
+            "F009",
+            "F010",
+            "F011",
+            "F014",
+            "F015",
+            "F017",
+            "F018",
+            "F020",
+            "F021",
+            "F023",
+            "F024",
+            "F025",
+            "F026",
+            "F027",
+            "F029",
+            "F035",
+            "F037",
+            "F038",
+            "F039",
+            "F040",
+            "F041",
+            "F043",
+            "F044",
+            "F045",
+            "F046",
+            "F047",
+            "F048",
+            "F049",
+            "F050",
+            "F054",
+            "F059",
+            "F060",
+            "F061",
+            "F062",
+            "F063",
+            "F066",
+            "F067",
+            "F069",
+            "F071",
+            "F072",
+            "F073",
+            "F076",
+            "F077",
+            "F079",
+            "F081",
+            "F082",
+            "F083",
+            "F087",
+            "F089",
+            "F092",
+            "F093",
+            "F094",
+            "F097",
+            "F098",
+            "F099",
+            "F102",
+            "F105"
+          ],
+          "completed_job_output_finding_ids": [
+            "F002",
+            "F004",
+            "F006",
+            "F009",
+            "F010",
+            "F011",
+            "F014",
+            "F015",
+            "F017",
+            "F018",
+            "F020",
+            "F021",
+            "F023",
+            "F024",
+            "F025",
+            "F026",
+            "F027",
+            "F029",
+            "F035",
+            "F037",
+            "F038",
+            "F039",
+            "F040",
+            "F041",
+            "F043",
+            "F044",
+            "F045",
+            "F046",
+            "F047",
+            "F048",
+            "F049",
+            "F050",
+            "F054",
+            "F059",
+            "F060",
+            "F061",
+            "F062",
+            "F063",
+            "F066",
+            "F067",
+            "F069",
+            "F071",
+            "F072",
+            "F073",
+            "F076",
+            "F077",
+            "F079",
+            "F081",
+            "F082",
+            "F083",
+            "F087",
+            "F089",
+            "F092",
+            "F093",
+            "F094",
+            "F097",
+            "F098",
+            "F099",
+            "F102",
+            "F105"
+          ]
+        },
+        "history": {
+          "captured_output_finding_ids": [
+            "F002",
+            "F003",
+            "F004",
+            "F006",
+            "F007",
+            "F009",
+            "F010",
+            "F011",
+            "F012",
+            "F013",
+            "F014",
+            "F015",
+            "F016",
+            "F017",
+            "F019",
+            "F021",
+            "F024",
+            "F026",
+            "F027",
+            "F038",
+            "F039",
+            "F040",
+            "F041",
+            "F042",
+            "F043",
+            "F044",
+            "F045",
+            "F046",
+            "F047",
+            "F048",
+            "F050",
+            "F052",
+            "F054",
+            "F055",
+            "F056",
+            "F059",
+            "F061",
+            "F062",
+            "F066",
+            "F067",
+            "F068",
+            "F071",
+            "F073",
+            "F074",
+            "F075",
+            "F076",
+            "F077",
+            "F079",
+            "F081",
+            "F082",
+            "F083",
+            "F086",
+            "F089",
+            "F095",
+            "F097",
+            "F099",
+            "F101",
+            "F102",
+            "F105"
+          ],
+          "completed_job_output_finding_ids": [
+            "F002",
+            "F003",
+            "F004",
+            "F006",
+            "F007",
+            "F009",
+            "F010",
+            "F011",
+            "F012",
+            "F013",
+            "F014",
+            "F015",
+            "F016",
+            "F017",
+            "F019",
+            "F021",
+            "F024",
+            "F026",
+            "F027",
+            "F038",
+            "F039",
+            "F040",
+            "F041",
+            "F042",
+            "F043",
+            "F044",
+            "F045",
+            "F046",
+            "F047",
+            "F048",
+            "F050",
+            "F052",
+            "F054",
+            "F055",
+            "F056",
+            "F059",
+            "F061",
+            "F062",
+            "F066",
+            "F067",
+            "F068",
+            "F071",
+            "F073",
+            "F074",
+            "F075",
+            "F076",
+            "F077",
+            "F079",
+            "F081",
+            "F082",
+            "F083",
+            "F086",
+            "F089",
+            "F095",
+            "F097",
+            "F099",
+            "F101",
+            "F102",
+            "F105"
+          ]
+        },
+        "reconcile": {
+          "captured_output_finding_ids": [],
+          "completed_job_output_finding_ids": []
+        },
+        "compare": {
+          "captured_output_finding_ids": [],
+          "completed_job_output_finding_ids": []
+        }
+      },
+      "stage_loss": {
+        "whole_chain_loss_count": null,
+        "status": "not_measurable_from_completed_chain",
+        "reason": "No completed comparison exists. Stage presence is reported; absence in pending or interrupted downstream work is not classified as semantic loss. Captured findings from interrupted jobs remain in the union."
+      },
+      "pending_coverage": {
+        "counts": {
+          "discovered": 86,
+          "studied": 5,
+          "reconciled": 0,
+          "comparison_delivered": 0
+        },
+        "pending_deep_leads": [
+          "L-c40a480e8584",
+          "L-44263d5ddaac",
+          "L-5a81ba234b68",
+          "L-573005872bcd",
+          "L-b7a3245a887a",
+          "L-2baf42803812",
+          "L-faa66ae3e6d5",
+          "L-b012f1897324",
+          "L-3afa0b99ec83",
+          "L-edcb77283c3f",
+          "L-6bca1edf3124",
+          "L-55733ae9742e",
+          "L-85ab39d7ce52",
+          "L-3512249ed15c",
+          "L-1a687fbfe4fd",
+          "L-0698eeef89f3",
+          "L-04108b8516ee",
+          "L-469588177389",
+          "L-0b2edf97ce76",
+          "L-95e5af9e0c18",
+          "L-4e64b2083623",
+          "L-2e0f14b85096",
+          "L-7dae776224e8",
+          "L-fd4fcde17324",
+          "L-8d922e695b42",
+          "L-00eb2e1c446a",
+          "L-3a8cdeda8c54",
+          "L-7095b3a312ac",
+          "L-5037fb264585",
+          "L-a2402e0d3e27",
+          "L-081e8dfd155a",
+          "L-4b03367619db",
+          "L-fc717266bd9b",
+          "L-2a089e970ccc",
+          "L-65772deaf9a7",
+          "L-a9b5e06c5720",
+          "L-d29d4ef6d7da",
+          "L-722c6aada278",
+          "L-66ce329790b8",
+          "L-3ade6542ba78",
+          "L-807edc8d87aa",
+          "L-297a548ad1bf",
+          "L-21592551ae1a",
+          "L-1f4633d49613",
+          "L-e97b320c2b31",
+          "L-564c7b34484f",
+          "L-44ee920d40b8",
+          "L-83132d35ac61",
+          "L-107fb6c29da2",
+          "L-5cfa1cf57028",
+          "L-f32213a1ca37",
+          "L-44de2f574c82",
+          "L-103bc065ea55",
+          "L-b23510c9746c",
+          "L-0f46dd9d4d23",
+          "L-ba0c5d6a24a0",
+          "L-aa267d31188a",
+          "L-d99808380a59",
+          "L-d9d75d61d1aa",
+          "L-8e6a90da40c0",
+          "L-c773c280cebc",
+          "L-170a886c9d40",
+          "L-4817fe60ece8",
+          "L-1caba9c9afcc",
+          "L-0a8b7936dda0",
+          "L-077064a72e3c",
+          "L-8a184b4ac11a",
+          "L-a73ca403b0bf",
+          "L-00ad41366b7c",
+          "L-a31d3437715e",
+          "L-54af9a8b0ce0",
+          "L-79eed57e3e2b",
+          "L-e0009138a510",
+          "L-729ba6605145",
+          "L-495cc1f3fffa"
+        ],
+        "pending_reconcile_leads": [
+          "L-57a7dbaf939e",
+          "L-718aab2f5cc8",
+          "L-ed29958e8a22",
+          "L-c6f933c467f3",
+          "L-69e6431790ab",
+          "L-c40a480e8584",
+          "L-44263d5ddaac",
+          "L-5a81ba234b68",
+          "L-573005872bcd",
+          "L-b7a3245a887a",
+          "L-2baf42803812",
+          "L-faa66ae3e6d5",
+          "L-b012f1897324",
+          "L-3afa0b99ec83",
+          "L-29ba0dd33711",
+          "L-edcb77283c3f",
+          "L-6bca1edf3124",
+          "L-55733ae9742e",
+          "L-85ab39d7ce52",
+          "L-3512249ed15c",
+          "L-1685deb00789",
+          "L-1a687fbfe4fd",
+          "L-0698eeef89f3",
+          "L-04108b8516ee",
+          "L-469588177389",
+          "L-0b2edf97ce76",
+          "L-95e5af9e0c18",
+          "L-4e64b2083623",
+          "L-2e0f14b85096",
+          "L-7dae776224e8",
+          "L-2ce3e096d89a",
+          "L-fd4fcde17324",
+          "L-8d922e695b42",
+          "L-00eb2e1c446a",
+          "L-3a8cdeda8c54",
+          "L-7095b3a312ac",
+          "L-5037fb264585",
+          "L-a2402e0d3e27",
+          "L-b4c980902616",
+          "L-081e8dfd155a",
+          "L-4b03367619db",
+          "L-fc717266bd9b",
+          "L-2a089e970ccc",
+          "L-65772deaf9a7",
+          "L-a9b5e06c5720",
+          "L-d9905ad5e17f",
+          "L-d29d4ef6d7da",
+          "L-722c6aada278",
+          "L-66ce329790b8",
+          "L-3ade6542ba78",
+          "L-807edc8d87aa",
+          "L-297a548ad1bf",
+          "L-21592551ae1a",
+          "L-1f4633d49613",
+          "L-e97b320c2b31",
+          "L-ea92b28558fe",
+          "L-564c7b34484f",
+          "L-44ee920d40b8",
+          "L-83132d35ac61",
+          "L-107fb6c29da2",
+          "L-5cfa1cf57028",
+          "L-6a148d17f4d7",
+          "L-f32213a1ca37",
+          "L-44de2f574c82",
+          "L-103bc065ea55",
+          "L-b23510c9746c",
+          "L-0f46dd9d4d23",
+          "L-ba0c5d6a24a0",
+          "L-aa267d31188a",
+          "L-d99808380a59",
+          "L-54517ec9cbdd",
+          "L-d9d75d61d1aa",
+          "L-8e6a90da40c0",
+          "L-c773c280cebc",
+          "L-170a886c9d40",
+          "L-4817fe60ece8",
+          "L-1caba9c9afcc",
+          "L-063d49977f7a",
+          "L-0a8b7936dda0",
+          "L-077064a72e3c",
+          "L-8a184b4ac11a",
+          "L-a73ca403b0bf",
+          "L-00ad41366b7c",
+          "L-a31d3437715e",
+          "L-76f8ba64578e",
+          "L-54af9a8b0ce0",
+          "L-79eed57e3e2b",
+          "L-e0009138a510",
+          "L-729ba6605145",
+          "L-495cc1f3fffa",
+          "L-ae1f1315d276"
+        ],
+        "pending_compare_leads": [
+          "L-57a7dbaf939e",
+          "L-718aab2f5cc8",
+          "L-ed29958e8a22",
+          "L-c6f933c467f3",
+          "L-69e6431790ab",
+          "L-c40a480e8584",
+          "L-44263d5ddaac",
+          "L-5a81ba234b68",
+          "L-573005872bcd",
+          "L-b7a3245a887a",
+          "L-2baf42803812",
+          "L-faa66ae3e6d5",
+          "L-b012f1897324",
+          "L-3afa0b99ec83",
+          "L-29ba0dd33711",
+          "L-edcb77283c3f",
+          "L-6bca1edf3124",
+          "L-55733ae9742e",
+          "L-85ab39d7ce52",
+          "L-3512249ed15c",
+          "L-1685deb00789",
+          "L-1a687fbfe4fd",
+          "L-0698eeef89f3",
+          "L-04108b8516ee",
+          "L-469588177389",
+          "L-0b2edf97ce76",
+          "L-95e5af9e0c18",
+          "L-4e64b2083623",
+          "L-2e0f14b85096",
+          "L-7dae776224e8",
+          "L-2ce3e096d89a",
+          "L-fd4fcde17324",
+          "L-8d922e695b42",
+          "L-00eb2e1c446a",
+          "L-3a8cdeda8c54",
+          "L-7095b3a312ac",
+          "L-5037fb264585",
+          "L-a2402e0d3e27",
+          "L-b4c980902616",
+          "L-081e8dfd155a",
+          "L-4b03367619db",
+          "L-fc717266bd9b",
+          "L-2a089e970ccc",
+          "L-65772deaf9a7",
+          "L-a9b5e06c5720",
+          "L-d9905ad5e17f",
+          "L-d29d4ef6d7da",
+          "L-722c6aada278",
+          "L-66ce329790b8",
+          "L-3ade6542ba78",
+          "L-807edc8d87aa",
+          "L-297a548ad1bf",
+          "L-21592551ae1a",
+          "L-1f4633d49613",
+          "L-e97b320c2b31",
+          "L-ea92b28558fe",
+          "L-564c7b34484f",
+          "L-44ee920d40b8",
+          "L-83132d35ac61",
+          "L-107fb6c29da2",
+          "L-5cfa1cf57028",
+          "L-6a148d17f4d7",
+          "L-f32213a1ca37",
+          "L-44de2f574c82",
+          "L-103bc065ea55",
+          "L-b23510c9746c",
+          "L-0f46dd9d4d23",
+          "L-ba0c5d6a24a0",
+          "L-aa267d31188a",
+          "L-d99808380a59",
+          "L-54517ec9cbdd",
+          "L-d9d75d61d1aa",
+          "L-8e6a90da40c0",
+          "L-c773c280cebc",
+          "L-170a886c9d40",
+          "L-4817fe60ece8",
+          "L-1caba9c9afcc",
+          "L-063d49977f7a",
+          "L-0a8b7936dda0",
+          "L-077064a72e3c",
+          "L-8a184b4ac11a",
+          "L-a73ca403b0bf",
+          "L-00ad41366b7c",
+          "L-a31d3437715e",
+          "L-76f8ba64578e",
+          "L-54af9a8b0ce0",
+          "L-79eed57e3e2b",
+          "L-e0009138a510",
+          "L-729ba6605145",
+          "L-495cc1f3fffa",
+          "L-ae1f1315d276"
+        ],
+        "pending_report_intake": [],
+        "coverage_claim": "Bounded workflow; unfinished deep investigations are retained even for compared leads. Delivery is not semantic validation."
+      },
+      "timing": {
+        "at": "2026-09-11T13:45:26.995520+00:00",
+        "stages": {
+          "discovery": {
+            "wall_seconds": 452.38707637786865,
+            "summed_job_seconds": 452.165,
+            "average_concurrency": 0.9995091009680322
+          },
+          "implementation": {
+            "wall_seconds": 1487.5854902267456,
+            "summed_job_seconds": 2216.825,
+            "average_concurrency": 1.4902168746362938
+          },
+          "history": {
+            "wall_seconds": 1642.1095123291016,
+            "summed_job_seconds": 2381.148,
+            "average_concurrency": 1.4500543247098523
+          },
+          "reconcile": {
+            "wall_seconds": null,
+            "summed_job_seconds": null,
+            "average_concurrency": null,
+            "last_observed_snapshot": {
+              "wall_seconds": 106.24113273620605,
+              "summed_job_seconds": 106.24113345146179,
+              "average_concurrency": 1.0000000067323807
+            },
+            "reason": "Execution ended at an unknown time before process-absence detection"
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          }
+        },
+        "arm_cumulative_wall_seconds": null,
+        "summed_terminal_job_seconds": 5050.138,
+        "average_concurrency": null,
+        "timing_scope": "Known completed-job times remain measured; interrupted job elapsed and final running time/concurrency are unknown. Detection wall elapsed includes an unobserved interval and is not active runtime.",
+        "reserved_upper_usd": 35.85,
+        "actual_usage_usd": null,
+        "captured_usage_upper_usd": 3.596462368000001,
+        "money_stop_reason": "missing_or_interrupted_usage",
+        "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed.",
+        "summed_job_seconds": null,
+        "unknown_elapsed_jobs": [
+          "J0012-reconcile"
+        ],
+        "last_observed_scheduler_timing": {
+          "at": "2026-09-11T05:35:50.847190+00:00",
+          "stages": {
+            "discovery": {
+              "wall_seconds": 452.38707637786865,
+              "summed_job_seconds": 452.165,
+              "average_concurrency": 0.9995091009680322
+            },
+            "implementation": {
+              "wall_seconds": 1487.5854902267456,
+              "summed_job_seconds": 2216.825,
+              "average_concurrency": 1.4902168746362938
+            },
+            "history": {
+              "wall_seconds": 1642.1095123291016,
+              "summed_job_seconds": 2381.148,
+              "average_concurrency": 1.4500543247098523
+            },
+            "reconcile": {
+              "wall_seconds": 106.24113273620605,
+              "summed_job_seconds": 106.24113345146179,
+              "average_concurrency": 1.0000000067323807
+            },
+            "compare": {
+              "wall_seconds": 0,
+              "summed_job_seconds": 0,
+              "average_concurrency": null
+            }
+          },
+          "arm_cumulative_wall_seconds": 2201.013027906418,
+          "summed_terminal_job_seconds": 5050.138,
+          "average_concurrency": 2.2944607487415203,
+          "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+          "reserved_upper_usd": 35.85,
+          "actual_usage_usd": null,
+          "captured_usage_upper_usd": 3.596462368000001,
+          "money_stop_reason": null,
+          "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+        },
+        "wall_elapsed_first_admission_to_detection_seconds": 31577.21066427231,
+        "unobserved_detection_interval_seconds": 29376.14833021164,
+        "cumulative_budget_elapsed_seconds_at_detection": 31577.21066427231,
+        "budget_elapsed_scope": "Frozen policy counts all wall time since first admission, including idle/unobserved interval; six-hour cap is exceeded and cannot restart.",
+        "arm_wall_horizon_exceeded_by_detection": true
+      },
+      "terminal": {
+        "at": "2026-09-11T13:45:26.995520+00:00",
+        "stop_reason": "interrupted_execution_process_absence_detected",
+        "partial": true,
+        "pending_intake_preserved": true,
+        "interruption_time_known": false,
+        "last_observed_timing_at": "2026-09-11T05:35:50.847190+00:00",
+        "wall_elapsed_at_detection_seconds": 31577.21066427231,
+        "cumulative_budget_elapsed_seconds_at_detection": 31577.21066427231,
+        "six_hour_elapsed_cap_exceeded": true,
+        "no_restart_authorized": true,
+        "independent_detection_receipt": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/interruption-observation.json",
+        "new_jobs": 0,
+        "new_restarts": 0,
+        "preimage_manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/recovery/preimage-20260911T134526995520Z/manifest.json"
+      },
+      "cost": {
+        "captured_priced_upper_usd": 3.596462368000001,
+        "unresolved_reserved_liability_usd": 35.85,
+        "actual_cash_usd": null,
+        "basis": "Preserved September 8 basis: Astra standard API-equivalent; Hybrid combines it with DeepSeek Go allowance valuation. Reserved liability is separate from captured valuation."
+      }
+    }
+  },
+  "evaluator_derived_corrections": [
+    "F001"
+  ],
+  "evaluator_derived_credit_policy": "Explicitly independently reviewed evaluator-derived corrections remain in the union denominator and receive zero direct discovery credit for either arm. Supporting research premises are preserved as lineage only.",
+  "full_comparison": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/comparison.json",
+    "sha256": "5adbed81946b9fcbfdc7b08718ccfd024f7ec595598e66b7ffb7313483b73629"
+  },
+  "findings": [
+    {
+      "finding_id": "F001",
+      "classification": "correction",
+      "finding_origin": "evaluator_derived_correction",
+      "arms": [],
+      "shared": false
+    },
+    {
+      "finding_id": "F002",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F003",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F004",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F005",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F006",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F007",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F008",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F009",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F010",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F011",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F012",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F013",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F014",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F015",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F016",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F017",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F018",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F019",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F020",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F021",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F022",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F023",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F024",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F025",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F026",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F027",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F028",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F029",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F030",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F031",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F032",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F033",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F034",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F035",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F036",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F037",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F038",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F039",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F040",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F041",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F042",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F043",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F044",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F045",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F046",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F047",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F048",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F049",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F050",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F051",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F052",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F053",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F054",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F055",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F056",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F057",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F058",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F059",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F060",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F061",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F062",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F063",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F064",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F065",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F066",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F067",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F068",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F069",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F070",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F071",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F072",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F073",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F074",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F075",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F076",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F077",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F078",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F079",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F080",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F081",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F082",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F083",
+      "classification": "product_choice",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F084",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F085",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F086",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F087",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F088",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F089",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F090",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F091",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F092",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F093",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F094",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F095",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F096",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F097",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F098",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F099",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F100",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F101",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F102",
+      "classification": "unsupported_or_rejected",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F103",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "shared": true
+    },
+    {
+      "finding_id": "F104",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "premium"
+      ],
+      "shared": false
+    },
+    {
+      "finding_id": "F105",
+      "classification": "optional_capability",
+      "finding_origin": "research_derived",
+      "arms": [
+        "hybrid"
+      ],
+      "shared": false
+    }
+  ]
+}

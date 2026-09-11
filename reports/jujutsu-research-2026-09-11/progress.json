@@ -1,8 +1,8 @@
 {
-  "at": "2026-09-11T14:40:05.638512+00:00",
-  "status": "d3_independent_semantic_review_and_attribution_repairs",
+  "at": "2026-09-11T15:01:44.783768+00:00",
+  "status": "d3_complete_independently_reviewed_and_published",
   "checkpoint_reached": false,
-  "non_arm_observed_api_equivalent_usd": 115.24201,
+  "non_arm_observed_api_equivalent_usd": 144.541896,
   "non_arm_cap_usd": 180,
   "operational_reserve_usd": 5,
   "reserve_is_not_spend": true,
@@ -11,9 +11,17 @@
   "named_xhigh_disputes": 0,
   "d1": "complete_pushed",
   "d2": "complete_partial_campaigns_frozen_pushed",
-  "d3": "full_blind_union_drafted_independent_source_attribution_review_in_progress",
-  "d4": "pending_no_corrections_landed_no_decision_packet",
+  "d3": "complete_independent_review_passed_comparison_published",
+  "d4": "pending_ledger_compile_and_landing_of_one_evaluator_derived_correction",
   "d5": "pending_answers_after_d4",
   "budget_extension": "d3-prepared/allowance-extension.json",
-  "accounting_snapshot_captured_at": "2026-09-11T14:39:39.548051+00:00"
+  "accounting_snapshot_captured_at": "2026-09-11T15:01:44.466121+00:00",
+  "adjudication": {
+    "documents": 206,
+    "extraction_keys": 404,
+    "findings": 105,
+    "decision_cards": 44,
+    "evaluator_derived_corrections": 1,
+    "direct_arm_credit_for_evaluator_correction": 0
+  }
 }

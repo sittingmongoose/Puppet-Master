@@ -1,0 +1,1522 @@
+{
+  "status": "draft; no user decisions recorded",
+  "decisions": [
+    {
+      "decision_id": "D001",
+      "finding_ids": [
+        "F003"
+      ],
+      "name": "Read-only repositories",
+      "question": "Should Puppet Master support browsing a repository whose native storage cannot be written?",
+      "why_it_came_up": "Frozen canon permits safe degraded reads and blocking unsupported layouts; it does not promise usable browsing from every physically read-only native store. Native migrations/index rebuilds/reconciliation explain why this is additional compatibility work.",
+      "what_you_get": "Inspection inside locked agent sandboxes and archival mounts.",
+      "costs": "Separate compatibility tests and possibly disposable local indexing storage.",
+      "options": [
+        "Add a supported read-only browsing mode",
+        "Keep such repositories visibly unsupported until later"
+      ],
+      "recommendation": "Keep it optional until a safe read path is demonstrated.",
+      "answer": "",
+      "why_it_came_up_plain": "Native browsing can try to update metadata even when the repository is mounted read-only."
+    },
+    {
+      "decision_id": "D002",
+      "finding_ids": [
+        "F013"
+      ],
+      "name": "Named history markers",
+      "question": "Should users be able to label important points in operation history?",
+      "why_it_came_up": "Neutral backend checkpoints already exist; the added proposal is a human-named operation bookmark/annotation workflow rather than basic recovery-point creation. Upstream has discussed but not shipped user waypoints.",
+      "what_you_get": "Recognizable places to return to during experimental history editing.",
+      "costs": "Name storage, retention and missing-target behavior.",
+      "options": [
+        "Add named markers on existing checkpoints",
+        "Use ordinary checkpoint and operation history only"
+      ],
+      "recommendation": "Add lightweight labels only if they reuse existing checkpoint ownership.",
+      "answer": "",
+      "why_it_came_up_plain": "Users of other tools ask for recognizable stopping points before experimental history edits."
+    },
+    {
+      "decision_id": "D003",
+      "finding_ids": [
+        "F014"
+      ],
+      "name": "Grouped history actions",
+      "question": "Should a multi-step history edit appear as one group with a clearly bounded group undo?",
+      "why_it_came_up": "ObservableWork already reports multi-step actions, but native Jujutsu creates separate operations and does not provide an atomic batch-undo promise. A dependent queue stopping on failure is useful prior art; grouped display and grouped recovery need an additional explicit product contract.",
+      "what_you_get": "Less noisy operation history and easier reversal of an intentional sequence.",
+      "costs": "Grouping metadata, partial-failure rules and recovery previews.",
+      "options": [
+        "Group display and provide verified group undo",
+        "Group display only",
+        "Keep each native operation separate"
+      ],
+      "recommendation": "Start with grouped display; add group undo only with exact recoverability proof.",
+      "answer": "",
+      "why_it_came_up_plain": "One intentional workflow can produce many native operations, and a failure can leave only part of the sequence applied."
+    },
+    {
+      "decision_id": "D004",
+      "finding_ids": [
+        "F015"
+      ],
+      "name": "Recent actions and redo",
+      "question": "Should the Operation Log include a recent-actions menu and redo navigation?",
+      "why_it_came_up": "The frozen owner promises a separate Operation Log plus undo/show/restore, but not a recent-operation menu or redo command. Virtualization is an implementation option for this additional navigation rather than a reason to duplicate SourceGraph.",
+      "what_you_get": "Faster movement through recent reversible work.",
+      "costs": "Redo invalidation and branching-history behavior must be clear.",
+      "options": [
+        "Add recent actions and supported redo",
+        "Add a recent-actions menu only",
+        "Keep the current operation list"
+      ],
+      "recommendation": "Add recent navigation first and expose redo only where the native state permits it.",
+      "answer": "",
+      "why_it_came_up_plain": "Other tools expose recent actions and redo, while redo can become unavailable after new work."
+    },
+    {
+      "decision_id": "D005",
+      "finding_ids": [
+        "F016"
+      ],
+      "name": "Filter operation history",
+      "question": "Should users be able to filter operation history to find meaningful actions among automatic snapshots?",
+      "why_it_came_up": "Upstream opset/grouping requests reveal a useful feature but frozen canon only promises operation log/show/undo/restore, not a query language for operations.",
+      "what_you_get": "Faster inspection of long-running repositories.",
+      "costs": "Filter semantics and visible disclosure of omitted history.",
+      "options": [
+        "Add simple action and time filters",
+        "Add an advanced operation query language",
+        "Keep the full list"
+      ],
+      "recommendation": "Prefer simple filters with an obvious clear-filter action.",
+      "answer": "",
+      "why_it_came_up_plain": "Frequent snapshots can bury meaningful actions in a long operation list."
+    },
+    {
+      "decision_id": "D006",
+      "finding_ids": [
+        "F017"
+      ],
+      "name": "Readable operation descriptions",
+      "question": "Should operation history show richer application action descriptions?",
+      "why_it_came_up": "Existing command receipts already supply exact identities; new editable labels or enriched operation descriptions are presentation metadata, not native operation IDs or an idempotency mechanism. Upstream custom-entry requests remain unshipped.",
+      "what_you_get": "History users can understand without decoding command output.",
+      "costs": "Description storage and correlation across external operations.",
+      "options": [
+        "Add structured descriptions from existing receipts",
+        "Keep native descriptions with technical details"
+      ],
+      "recommendation": "Reuse existing receipts and never create no-op history solely to add text.",
+      "answer": "",
+      "why_it_came_up_plain": "Native operation descriptions often describe commands rather than the user’s intent."
+    },
+    {
+      "decision_id": "D007",
+      "finding_ids": [
+        "F018"
+      ],
+      "name": "History storage maintenance",
+      "question": "How should Puppet Master manage a repository whose operation history becomes large?",
+      "why_it_came_up": "The native operation log can grow through frequent snapshots. Frozen backup closure protects retained history and fences GC but does not select an automatic retention policy. Suppressing meaningful native history or shrinking it before backup changes recovery scope.",
+      "what_you_get": "Predictable disk use and clearer maintenance guidance.",
+      "costs": "Pruning reduces recovery history and requires coordination with backups.",
+      "options": [
+        "Diagnose growth and offer explicit maintenance",
+        "Offer a configurable retention policy",
+        "Leave maintenance to external tools"
+      ],
+      "recommendation": "Start with diagnosis and explicit maintenance; do not prune automatically.",
+      "answer": "",
+      "why_it_came_up_plain": "Frequent snapshots and long operation histories can consume storage and slow repository work."
+    },
+    {
+      "decision_id": "D008",
+      "finding_ids": [
+        "F020"
+      ],
+      "name": "Adopt existing workspaces",
+      "question": "Should Puppet Master adopt and repair existing workspaces created by other tools?",
+      "why_it_came_up": "Create/open/switch/remove and explicit backend migration are promised, but adoption/synchronization proposals upstream remain unmerged and are not the same as those existing operations. This is optional scope and must never silently change workspace identities.",
+      "what_you_get": "Less manual setup when bringing an established repository into the workbench.",
+      "costs": "Version-specific mapping, path repair and migration conflict handling.",
+      "options": [
+        "Add an explicit adoption and repair flow",
+        "Support existing workspaces through open only"
+      ],
+      "recommendation": "Keep adoption explicit and defer automatic synchronization.",
+      "answer": "",
+      "why_it_came_up_plain": "Existing workspaces can have paths and registrations that differ between tools."
+    },
+    {
+      "decision_id": "D009",
+      "finding_ids": [
+        "F021"
+      ],
+      "name": "Hide inactive workspaces",
+      "question": "Should users be able to hide inactive workspaces without deleting them?",
+      "why_it_came_up": "The supplied GitButler archive model is an optional visibility behavior. It does not establish PM workspace authority and is not promised by create/open/switch/remove.",
+      "what_you_get": "A calmer workspace list while preserving work.",
+      "costs": "A separate archived state and clear restore-to-list behavior.",
+      "options": [
+        "Add hide and unhide",
+        "Keep all discovered workspaces visible"
+      ],
+      "recommendation": "Add only as a presentation state separate from removal.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients distinguish hiding a workspace from deleting it."
+    },
+    {
+      "decision_id": "D010",
+      "finding_ids": [
+        "F022"
+      ],
+      "name": "Combine divergent versions",
+      "question": "Should users get a guided action to combine divergent versions of the same change?",
+      "why_it_came_up": "Exact commit selection and truthful divergence are already required. A guided native converge action is additional capability outside the frozen 31-command inventory, with version-specific heuristics and possible conflicts.",
+      "what_you_get": "A clearer recovery path after concurrent rewrites.",
+      "costs": "Heuristic choices, preview complexity and conflict handling.",
+      "options": [
+        "Add guided convergence when supported",
+        "Offer exact version selection and existing rebase/abandon only"
+      ],
+      "recommendation": "Keep it explicit and preview every selected version.",
+      "answer": "",
+      "why_it_came_up_plain": "Concurrent rewrites can leave multiple versions of one change that need deliberate reconciliation."
+    },
+    {
+      "decision_id": "D011",
+      "finding_ids": [
+        "F023"
+      ],
+      "name": "Duplicate a change",
+      "question": "Should users be able to duplicate a change into a new independent change?",
+      "why_it_came_up": "These are concrete adjacent-product capabilities; the frozen owner lists new/describe/edit/split/squash/rebase/abandon/restore. Each new action needs its own admitted command and native semantic qualification; availability upstream is not a requirement.",
+      "what_you_get": "Reuse an existing patch without sharing its identity.",
+      "costs": "New identity, destination and descendant behavior must be clear.",
+      "options": [
+        "Add a duplicate action",
+        "Defer duplication"
+      ],
+      "recommendation": "Defer until the core editing actions are proven.",
+      "answer": "",
+      "why_it_came_up_plain": "Other Jujutsu clients expose useful actions beyond the currently planned set."
+    },
+    {
+      "decision_id": "D012",
+      "finding_ids": [
+        "F023"
+      ],
+      "name": "Create a merge change",
+      "question": "Should users be able to create a change with multiple selected parents?",
+      "why_it_came_up": "These are concrete adjacent-product capabilities; the frozen owner lists new/describe/edit/split/squash/rebase/abandon/restore. Each new action needs its own admitted command and native semantic qualification; availability upstream is not a requirement.",
+      "what_you_get": "Join parallel lines of work explicitly.",
+      "costs": "Parent selection and resulting conflicts need a clear preview.",
+      "options": [
+        "Add a merge action",
+        "Defer merge creation"
+      ],
+      "recommendation": "Add after parent selection and conflict previews are reliable.",
+      "answer": "",
+      "why_it_came_up_plain": "Other Jujutsu clients expose useful actions beyond the currently planned set."
+    },
+    {
+      "decision_id": "D013",
+      "finding_ids": [
+        "F023"
+      ],
+      "name": "Absorb edits into earlier changes",
+      "question": "Should users be able to distribute workspace edits automatically into the earlier changes they belong to?",
+      "why_it_came_up": "These are concrete adjacent-product capabilities; the frozen owner lists new/describe/edit/split/squash/rebase/abandon/restore. Each new action needs its own admitted command and native semantic qualification; availability upstream is not a requirement.",
+      "what_you_get": "Reduce manual patch placement across a sequence of changes.",
+      "costs": "Automatic attribution can be ambiguous and requires a reviewable preview.",
+      "options": [
+        "Add absorption with preview",
+        "Defer automatic absorption"
+      ],
+      "recommendation": "Defer until each proposed placement can be reviewed.",
+      "answer": "",
+      "why_it_came_up_plain": "Other Jujutsu clients expose useful actions beyond the currently planned set."
+    },
+    {
+      "decision_id": "D014",
+      "finding_ids": [
+        "F023"
+      ],
+      "name": "Back out a change",
+      "question": "Should users be able to create a new change that reverses a selected change?",
+      "why_it_came_up": "These are concrete adjacent-product capabilities; the frozen owner lists new/describe/edit/split/squash/rebase/abandon/restore. Each new action needs its own admitted command and native semantic qualification; availability upstream is not a requirement.",
+      "what_you_get": "Reverse an earlier patch while retaining the intervening history.",
+      "costs": "Conflicts and scope must be distinguished from operation undo or restoring an old repository view.",
+      "options": [
+        "Add a back-out action",
+        "Defer back-out"
+      ],
+      "recommendation": "Add with exact selected change and a conflict preview.",
+      "answer": "",
+      "why_it_came_up_plain": "Other Jujutsu clients expose useful actions beyond the currently planned set."
+    },
+    {
+      "decision_id": "D015",
+      "finding_ids": [
+        "F024"
+      ],
+      "name": "Compare versions of a change",
+      "question": "Should users be able to compare what changed between two versions of the same change?",
+      "why_it_came_up": "The frozen source graph preserves rewrite identity but does not promise a dedicated interdiff workflow. The supplied tools demonstrate its usefulness and its parent-normalized semantics.",
+      "what_you_get": "Easier review after rebases and amendments.",
+      "costs": "Precise parent normalization and selection rules.",
+      "options": [
+        "Add a version-to-version comparison",
+        "Keep ordinary tree comparisons"
+      ],
+      "recommendation": "Add when review workflows need it, with the compared versions clearly named.",
+      "answer": "",
+      "why_it_came_up_plain": "Ordinary file comparisons do not directly show how one version of a change differs from another."
+    },
+    {
+      "decision_id": "D016",
+      "finding_ids": [
+        "F025"
+      ],
+      "name": "Change evolution",
+      "question": "Should users get a dedicated timeline of earlier versions of one change?",
+      "why_it_came_up": "The source graph must preserve rewrites/abandonment, but a browsable evolution timeline is a distinct optional view; it cannot merge operation history or Backup history into source history.",
+      "what_you_get": "A direct way to understand and inspect how a change evolved.",
+      "costs": "Historical visibility, predecessor loading and comparison semantics.",
+      "options": [
+        "Add a focused evolution view",
+        "Keep rewrites visible in the main history graph"
+      ],
+      "recommendation": "Add a bounded detail view if it reuses existing identities and routes.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients let users follow one change through its earlier versions."
+    },
+    {
+      "decision_id": "D017",
+      "finding_ids": [
+        "F026"
+      ],
+      "name": "Line attribution and file history",
+      "question": "Should Source Control expose native line attribution and file history for Jujutsu?",
+      "why_it_came_up": "Adjacent tools provide annotate/blame/file-history workflows, while the frozen Jujutsu inventory has no dedicated attribution command. Reported annotate cost is unmeasured for PM and does not establish a performance defect.",
+      "what_you_get": "Users can trace where code came from without opening another tool.",
+      "costs": "Potentially expensive queries and rename-history limitations.",
+      "options": [
+        "Add bounded attribution and file history",
+        "Keep ordinary change history only"
+      ],
+      "recommendation": "Make it optional and expose unsupported rename cases honestly.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients provide line attribution and file history, with performance and rename limitations."
+    },
+    {
+      "decision_id": "D018",
+      "finding_ids": [
+        "F027"
+      ],
+      "name": "Review marks that survive edits",
+      "question": "Should reviewed marks and notes follow a change through matching rewrites?",
+      "why_it_came_up": "General review/annotation surfaces exist, but the supplied proposal is automatic native rewrite-aware reconciliation of review state. No frozen promise was found for that correspondence algorithm; it is new review behavior with identity-sensitive failure modes.",
+      "what_you_get": "Less repeated review after small edits and rebases.",
+      "costs": "Matching can be ambiguous, so stale and orphaned marks need visible handling.",
+      "options": [
+        "Add conservative matching with stale markers",
+        "Keep review marks fixed to the exact reviewed version"
+      ],
+      "recommendation": "Prefer exact-version marks until conservative matching is proven.",
+      "answer": "",
+      "why_it_came_up_plain": "Other review tools preserve matching review state through edits, but the correspondence can be ambiguous."
+    },
+    {
+      "decision_id": "D019",
+      "finding_ids": [
+        "F028"
+      ],
+      "name": "Scriptable partial changes",
+      "question": "Should agents and scripts be able to request exact selected hunks through a structured interface?",
+      "why_it_came_up": "GUI hunk actions are already accepted. The extra proposal is an automation format that lists and applies selected hunks with exact native bindings, without installing a second runtime or treating content hashes as authority.",
+      "what_you_get": "More precise automated split and squash workflows.",
+      "costs": "Selection receipts, duplicate matching, truncation and stale-input checks.",
+      "options": [
+        "Add a structured hunk selection interface",
+        "Keep partial selection in the GUI"
+      ],
+      "recommendation": "Add only through the same command and revision checks as user actions.",
+      "answer": "",
+      "why_it_came_up_plain": "Existing tools demonstrate structured hunk selection for agents, while content hashes alone do not bind a native revision."
+    },
+    {
+      "decision_id": "D020",
+      "finding_ids": [
+        "F032"
+      ],
+      "name": "New line endings in mixed-ending text",
+      "question": "Which line ending should the editor use for newly inserted lines in a file that mixes line-ending styles?",
+      "why_it_came_up": "FileManager already requires preserve-on-save and separately permits optional paste normalization. Those are settled. The remaining optional policy concerns newly created newline boundaries in mixed-ending text; it must not normalize surviving existing boundaries or reopen ordinary Save behavior.",
+      "what_you_get": "Predictable newly inserted lines while existing line endings remain preserved.",
+      "costs": "A per-line convention and clear handling of pasted or replaced text.",
+      "options": [
+        "Use the nearest existing line ending for each new line",
+        "Use the dominant line ending for new lines",
+        "Ask the user to choose a convention for new lines"
+      ],
+      "recommendation": "Use the nearest existing line ending; preserve existing endings on ordinary Save.",
+      "answer": "",
+      "why_it_came_up_plain": "Existing line endings are already preserved on Save; mixed-ending text still needs a convention for newly inserted lines."
+    },
+    {
+      "decision_id": "D021",
+      "finding_ids": [
+        "F035"
+      ],
+      "name": "Use an external diff or merge editor",
+      "question": "Should users be able to hand a comparison or conflict to an external editor?",
+      "why_it_came_up": "Frozen Jujutsu promises diff and conflict workflows but does not require launching a third-party diff editor or a remote browser handoff. If adopted, native authority and exact conflict checks remain mandatory; a browser opening or tool exiting is not completed resolution.",
+      "what_you_get": "Access to familiar specialized editing tools, including selected remote setups.",
+      "costs": "Tool packaging, session authentication, temporary files, remote forwarding and cancellation.",
+      "options": [
+        "Support explicitly configured qualified tools",
+        "Keep resolution inside Puppet Master"
+      ],
+      "recommendation": "Keep in-app workflows primary; add qualified external tools only when needed.",
+      "answer": "",
+      "why_it_came_up_plain": "External editors offer familiar workflows but have separate launch, save, exit and cleanup boundaries."
+    },
+    {
+      "decision_id": "D022",
+      "finding_ids": [
+        "F044"
+      ],
+      "name": "How the adapter runs",
+      "question": "Should the Jujutsu adapter drive the included command-line tool or embed native libraries?",
+      "why_it_came_up": "Frozen canon forbids consumer-owned subprocesses but explicitly allows an adapter boundary and includes a managed baseline tool. It does not choose in-process native library versus adapter-owned CLI versus private service. Embedders duplicate CLI semantics; vendor forks own extra protocol and upgrade work; no public upstream RPC is shipped.",
+      "what_you_get": "A clear balance between native behavior, responsiveness and maintenance.",
+      "costs": "Command-line execution needs lifecycle/parsing work; embedding needs version-coupled semantic parity; a private service adds protocol upkeep.",
+      "options": [
+        "Drive the included qualified tool",
+        "Embed qualified native libraries",
+        "Own a separate internal service"
+      ],
+      "recommendation": "Start with the least complex qualified adapter; avoid a private fork unless a measured need justifies it.",
+      "answer": "",
+      "why_it_came_up_plain": "Existing clients use different integration approaches, each with a different maintenance burden."
+    },
+    {
+      "decision_id": "D023",
+      "finding_ids": [
+        "F046"
+      ],
+      "name": "Reuse a diff library",
+      "question": "Should Puppet Master reuse an existing Rust diff library for its comparison engine?",
+      "why_it_came_up": "The supplied JayJay library boundary is credible reuse evidence. Frozen canon fixes Rust/Slint direction but does not require a particular diff implementation; shell licensing differs from reusable crates and source inspection alone does not prove compatibility.",
+      "what_you_get": "Potentially faster delivery of syntax, word and side-by-side diff behavior.",
+      "costs": "Dependency upkeep, license review and byte/type fidelity testing.",
+      "options": [
+        "Evaluate the reusable library behind an adapter",
+        "Keep an independently owned diff implementation"
+      ],
+      "recommendation": "Evaluate the library on exact file-type and performance fixtures before adopting it.",
+      "answer": "",
+      "why_it_came_up_plain": "An existing Rust library provides reusable comparison behavior independently of its application shell."
+    },
+    {
+      "decision_id": "D024",
+      "finding_ids": [
+        "F047"
+      ],
+      "name": "Connect external IDEs",
+      "question": "Should external IDEs be able to use Puppet Master’s source-control adapter?",
+      "why_it_came_up": "The source corpus demonstrates VS Code and JetBrains integration surfaces. Frozen PM consumer routing does not promise an external IDE plugin; adding one introduces a new product surface and version/IPC maintenance.",
+      "what_you_get": "Consistent history actions across the workbench and an existing editor.",
+      "costs": "Plugin maintenance, authenticated sessions and per-IDE behavior testing.",
+      "options": [
+        "Add selected external IDE clients",
+        "Keep source-control interaction in Puppet Master"
+      ],
+      "recommendation": "Defer until the primary workbench adapter is proven.",
+      "answer": "",
+      "why_it_came_up_plain": "External IDE integrations demonstrate demand for the same history workflows outside a dedicated workbench."
+    },
+    {
+      "decision_id": "D025",
+      "finding_ids": [
+        "F048"
+      ],
+      "name": "Shared source-control service",
+      "question": "Should a reusable service support multiple repositories and external clients?",
+      "why_it_came_up": "Sapling local-server reuse and multi-repo daemon proposals are architecture precedents, not frozen PM obligations. Existing multi-Client ownership remains authoritative; this capability would need an explicit deployment and exposure contract.",
+      "what_you_get": "Reusable connections and centralized observation for larger setups.",
+      "costs": "Service lifecycle, resource isolation and authenticated remote access.",
+      "options": [
+        "Add a separately scoped service later",
+        "Use existing owner services only"
+      ],
+      "recommendation": "Use existing owner services first and add a public client surface only with a clear need.",
+      "answer": "",
+      "why_it_came_up_plain": "Other products reuse one service across clients and repositories, adding lifecycle and isolation responsibilities."
+    },
+    {
+      "decision_id": "D026",
+      "finding_ids": [
+        "F049"
+      ],
+      "name": "MCP source-control access",
+      "question": "Should other agent tools be able to invoke the source-control adapter through MCP?",
+      "why_it_came_up": "The supplied vendor fork advertises MCP but its exact semantics are unverified. PM agent consumers already have owner routes; a separate MCP interface is an optional interoperability capability, not evidence of missing authority.",
+      "what_you_get": "Interoperability with agents outside the workbench.",
+      "costs": "A new authenticated surface and schema/version support.",
+      "options": [
+        "Design a narrow MCP client surface",
+        "Keep existing internal agent routes"
+      ],
+      "recommendation": "Defer until the adapter and its permission boundary are complete.",
+      "answer": "",
+      "why_it_came_up_plain": "An adjacent product advertises connections for external agent tools, but its full behavior is not established."
+    },
+    {
+      "decision_id": "D027",
+      "finding_ids": [
+        "F058"
+      ],
+      "name": "Publish unresolved conflicts",
+      "question": "Should users ever be able to publish a change that still contains native conflicts?",
+      "why_it_came_up": "Frozen command authority and remote targeting do not choose this product scope. Current native allow-conflicts support and Git-only consumers create a real interoperability tradeoff; default-safe rejection can coexist with first-class local conflicts.",
+      "what_you_get": "Advanced collaboration on intentionally conflicted work.",
+      "costs": "Git-only tools and forges may display unfamiliar conflict trees.",
+      "options": [
+        "Block publication while conflicts remain",
+        "Allow a separately confirmed advanced capability"
+      ],
+      "recommendation": "Block by default; add an advanced path only for qualified compatible targets.",
+      "answer": "",
+      "why_it_came_up_plain": "Jujutsu can retain conflicts inside local history, while Git-only tools may not understand published conflicted changes."
+    },
+    {
+      "decision_id": "D028",
+      "finding_ids": [
+        "F060"
+      ],
+      "name": "Resolve a conflicted bookmark",
+      "question": "Should conflicted bookmarks have a guided target-selection workflow?",
+      "why_it_came_up": "Truthful bookmark state and move/track actions already exist. The added guided picker is a convenience workflow not specifically required by the frozen command list; it must reuse existing admitted bookmark mutations.",
+      "what_you_get": "An easier way to understand competing bookmark targets and choose one.",
+      "costs": "Additional previews and careful local-versus-remote wording.",
+      "options": [
+        "Add a guided picker using existing actions",
+        "Use existing bookmark details and move actions"
+      ],
+      "recommendation": "Add a guided picker only if it clarifies rather than hides the target states.",
+      "answer": "",
+      "why_it_came_up_plain": "A bookmark can have competing local or remote targets that are difficult to understand from a single label."
+    },
+    {
+      "decision_id": "D029",
+      "finding_ids": [
+        "F063"
+      ],
+      "name": "Prioritize graph lanes",
+      "question": "Should users be able to keep selected branches or stacks near the leading edge of the graph?",
+      "why_it_came_up": "The generic graph has layout controls, but faithfully consuming a native graph-priority expression is a distinct preference. GG ignores the native setting; adding it requires visibility intersection to avoid hidden-node failures and must preserve bounded rendering.",
+      "what_you_get": "More predictable navigation through a wide history.",
+      "costs": "Layout preferences and hidden-revision edge cases.",
+      "options": [
+        "Add explicit lane priorities",
+        "Use the default stable graph layout"
+      ],
+      "recommendation": "Offer a simple preference only if it remains stable across refreshes.",
+      "answer": "",
+      "why_it_came_up_plain": "Wide graphs become easier to navigate when important branches keep a predictable position."
+    },
+    {
+      "decision_id": "D030",
+      "finding_ids": [
+        "F065"
+      ],
+      "name": "Help with history queries",
+      "question": "Should advanced history filters provide autocomplete and inline syntax help?",
+      "why_it_came_up": "The research shows jjui assistance, while frozen SourceGraph filtering does not mandate an advanced revset editor. The feature must retain query bounds and clear filter/elision indicators.",
+      "what_you_get": "Fewer invalid queries and easier use of powerful filters.",
+      "costs": "Version-specific syntax support and bounded-query safeguards.",
+      "options": [
+        "Add native query assistance",
+        "Keep simple built-in filters"
+      ],
+      "recommendation": "Start with simple filters and add assistance for advanced users later.",
+      "answer": "",
+      "why_it_came_up_plain": "Advanced history queries are powerful but easy to mistype and can request expensive work."
+    },
+    {
+      "decision_id": "D031",
+      "finding_ids": [
+        "F066"
+      ],
+      "name": "Edit history by dragging",
+      "question": "Should users be able to reorder or rebase selected changes by dragging them in the graph?",
+      "why_it_came_up": "Existing canonical mutations do not require drag gestures or multi-selection. Adjacent tools show useful direct manipulation and subtle insert-rebase/descendant bugs. If added, gestures must select an existing semantic command and still pass server admission; drag autoscroll is part of that optional interaction.",
+      "what_you_get": "A faster visual workflow for arranging history.",
+      "costs": "Preview complexity, multi-selection rules, accessibility and native rebase parity tests.",
+      "options": [
+        "Add previewed drag actions and keyboard equivalents",
+        "Keep menu and command actions"
+      ],
+      "recommendation": "Add only after precise previews and equivalent keyboard actions exist.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients use direct graph manipulation, with subtle rebase and selection failure cases."
+    },
+    {
+      "decision_id": "D032",
+      "finding_ids": [
+        "F067"
+      ],
+      "name": "Keep comparison context visible",
+      "question": "Should the comparison view offer pinned revisions and richer selected-change details?",
+      "why_it_came_up": "Basic diff/history/bookmark presentation is required; pinned comparisons and richer selected-detail navigation are optional convenience capabilities. An untracked-files section must remain a physical-file projection rather than a fake Git stage area.",
+      "what_you_get": "Less repeated navigation while comparing versions or wide graphs.",
+      "costs": "Additional selection state and clear stale/untracked context.",
+      "options": [
+        "Add pinned comparison and selected-change details",
+        "Keep the basic comparison view"
+      ],
+      "recommendation": "Prioritize pinning and explicit bookmark details without adding a separate panel.",
+      "answer": "",
+      "why_it_came_up_plain": "Users can lose comparison context while moving through a wide or changing history."
+    },
+    {
+      "decision_id": "D033",
+      "finding_ids": [
+        "F078"
+      ],
+      "name": "Review a workspace with AI",
+      "question": "Should Source Control offer a dedicated AI review action for the current workspace?",
+      "why_it_came_up": "The supplied adjacent product advertises this convenience; ordinary PM agent/chat consumers already exist, but the specialized workspace-review entrypoint and workflow are not established by the frozen Jujutsu owner.",
+      "what_you_get": "A direct starting point for reviewing uncommitted work.",
+      "costs": "Review scope, model cost and exact snapshot handoff need clear handling.",
+      "options": [
+        "Add a workspace review entrypoint",
+        "Use existing chat review workflows"
+      ],
+      "recommendation": "Prefer existing review handoffs unless a dedicated action removes substantial friction.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients offer a shortcut to review a single workspace with AI."
+    },
+    {
+      "decision_id": "D034",
+      "finding_ids": [
+        "F083"
+      ],
+      "name": "Store or rebuild history indexes",
+      "question": "Should backups store derived history indexes or rebuild them when verifying a restore?",
+      "why_it_came_up": "The supplied implementation shows indexes can be rebuilt from retained native history, at a cost. Frozen closure requires recoverable native state but does not require every rebuildable cache byte; omission must not hide missing object dependencies or invoke writes on the original.",
+      "what_you_get": "A balance between backup size and restore speed.",
+      "costs": "Rebuilding takes time; storing requires consistent capture and version checks.",
+      "options": [
+        "Rebuild indexes during isolated verification",
+        "Store indexes as a performance aid and still verify native objects"
+      ],
+      "recommendation": "Prefer rebuilding correctness-critical indexes in the isolated drill; keep captured indexes only as an optional speed aid.",
+      "answer": "",
+      "why_it_came_up_plain": "Native history indexes can be rebuilt, creating a tradeoff between stored bytes and verification time."
+    },
+    {
+      "decision_id": "D035",
+      "finding_ids": [
+        "F090"
+      ],
+      "name": "Complete missing repository data",
+      "question": "Should users be able to explicitly fetch missing history or large-file data for a verified backup?",
+      "why_it_came_up": "Basic eligibility can honestly block incomplete stores today. Fetching missing data is new transport work with credentials, remote effects and retention reachability, not an implicit read or a claim that all-ref fetch covers all retained native operations.",
+      "what_you_get": "A path from incomplete repositories to full recoverable backups.",
+      "costs": "Network cost, remote availability, credentials and potentially large downloads.",
+      "options": [
+        "Add a separately authorized completion workflow",
+        "Block incomplete backups with clear missing-data details"
+      ],
+      "recommendation": "Keep blocking truthful; add explicit completion only with full retained-history reachability proof.",
+      "answer": "",
+      "why_it_came_up_plain": "Some repositories contain references to history or large-file data that is not present locally."
+    },
+    {
+      "decision_id": "D036",
+      "finding_ids": [
+        "F091"
+      ],
+      "name": "Very large repository backends",
+      "question": "Should Puppet Master pursue specialized storage for very large repositories?",
+      "why_it_came_up": "These are upstream roadmap capabilities, not frozen PM requirements or measured necessities. They change storage and deployment scope beyond bounded source graph/read performance.",
+      "what_you_get": "Potentially lower checkout and large-file costs.",
+      "costs": "Major backend, filesystem and recovery complexity.",
+      "options": [
+        "Defer specialized storage",
+        "Evaluate one backend for a demonstrated workload"
+      ],
+      "recommendation": "Defer until ordinary qualified repositories show a measured need.",
+      "answer": "",
+      "why_it_came_up_plain": "Upstream roadmaps propose specialized storage for workloads beyond ordinary repositories."
+    },
+    {
+      "decision_id": "D037",
+      "finding_ids": [
+        "F095"
+      ],
+      "name": "Export operation diagnostics",
+      "question": "Should users be able to export a sanitized operation-history report?",
+      "why_it_came_up": "Secret redaction is already mandatory, but a user-facing operation-diff export action is not in the frozen Jujutsu inventory. Upstream redacted-op-log requests establish demand, not a complete safe export implementation.",
+      "what_you_get": "Easier support and review without manually copying terminal output.",
+      "costs": "Sanitization, private path/content handling and export scope.",
+      "options": [
+        "Add explicit sanitized export",
+        "Use existing technical details and artifact sharing"
+      ],
+      "recommendation": "Add only with a reviewed export scope and no credential-bearing diagnostics.",
+      "answer": "",
+      "why_it_came_up_plain": "Users need ways to share operation diagnostics without exposing credentials or private context."
+    },
+    {
+      "decision_id": "D038",
+      "finding_ids": [
+        "F096"
+      ],
+      "name": "View source-control commands",
+      "question": "Should users have a readable log of the source-control commands behind their actions?",
+      "why_it_came_up": "The adapter already records exact secret-free argv identity and terminal receipts. A dedicated user-facing log of executed commands is a convenience surface and must not become the authoritative state parser.",
+      "what_you_get": "Easier troubleshooting and confidence about what ran.",
+      "costs": "Noise and careful secret/path presentation.",
+      "options": [
+        "Add an optional technical log view",
+        "Keep command details inside individual receipts"
+      ],
+      "recommendation": "Prefer an optional view over existing receipts.",
+      "answer": "",
+      "why_it_came_up_plain": "Other interfaces let users inspect the commands behind visible source-control actions."
+    },
+    {
+      "decision_id": "D039",
+      "finding_ids": [
+        "F099"
+      ],
+      "name": "Publish a stack of reviews",
+      "question": "Should users be able to publish related changes as an ordered stack of reviews?",
+      "why_it_came_up": "The frozen Jujutsu owner exposes transport and delegates hosted semantics to forge owners; it does not promise stacked review submission. Sapling, JayJay and VisualJJ demonstrate distinct implementations, while upstream Jujutsu proposals remain open. Publication can succeed before review creation fails and is not atomic.",
+      "what_you_get": "Less manual setup for reviewing dependent changes.",
+      "costs": "Forge-specific base links, partial failures and updates after rewrites.",
+      "options": [
+        "Add stack submission for selected forges",
+        "Keep single-review publication"
+      ],
+      "recommendation": "Add one explicitly supported forge workflow at a time.",
+      "answer": "",
+      "why_it_came_up_plain": "Other products publish dependent changes as linked reviews, while the hosting services have different rules."
+    },
+    {
+      "decision_id": "D040",
+      "finding_ids": [
+        "F100"
+      ],
+      "name": "Additional review services",
+      "question": "Should Puppet Master add review services beyond its current supported providers?",
+      "why_it_came_up": "Jujutsu native Gerrit upload and adjacent-product forge crates are feature evidence. The frozen supported-provider envelope does not name Gerrit; an available native command cannot silently extend PM hosting scope or replace local history.",
+      "what_you_get": "Access to workflows such as Gerrit without leaving the workbench.",
+      "costs": "Provider-specific authentication, identity, submit and recovery support.",
+      "options": [
+        "Design one additional provider explicitly",
+        "Keep the existing provider set"
+      ],
+      "recommendation": "Add only for a concrete user workflow and keep local history independent.",
+      "answer": "",
+      "why_it_came_up_plain": "Native and adjacent tools support review services outside the current provider set."
+    },
+    {
+      "decision_id": "D041",
+      "finding_ids": [
+        "F101"
+      ],
+      "name": "Custom actions around publishing",
+      "question": "Should users be able to configure custom actions around Jujutsu publication?",
+      "why_it_came_up": "The supplied GG hook PR is unmerged and native hook support is not established. Existing ordinary Git hooks are not permission to introduce an unqualified Jujutsu hook runner; this is additional extension capability with independent external effects.",
+      "what_you_get": "Integration with team checks or preparation steps.",
+      "costs": "External process effects, failure ordering and recovery complexity.",
+      "options": [
+        "Add a qualified explicit extension point",
+        "Keep publication within existing adapter behavior"
+      ],
+      "recommendation": "Defer third-party hooks until effect and permission boundaries are designed.",
+      "answer": "",
+      "why_it_came_up_plain": "An adjacent client proposes custom publishing hooks, but their side effects need their own clear contract."
+    },
+    {
+      "decision_id": "D042",
+      "finding_ids": [
+        "F103"
+      ],
+      "name": "Reverse one selected operation",
+      "question": "Should users be able to reverse one selected historical operation while keeping later work?",
+      "why_it_came_up": "D0171 establishes the exact native op-revert behavior and a client choosing it; D0184 distinguishes the sequential undo/redo evolution. The closed frozen command list does not expose this additional action. Exact-version qualification and rejection of unsupported root/merge targets remain mandatory.",
+      "what_you_get": "More precise recovery than stepping backward or restoring an entire old view.",
+      "costs": "Additional previews, root and merge restrictions, and conflicts when later work overlaps.",
+      "options": [
+        "Add a separately labeled reverse-selected-operation action",
+        "Keep the existing Undo and Restore actions"
+      ],
+      "recommendation": "Add only if this targeted recovery workflow is needed.",
+      "answer": "",
+      "why_it_came_up_plain": "Native history distinguishes reversing one action from sequential undo and restoring an entire old view."
+    },
+    {
+      "decision_id": "D043",
+      "finding_ids": [
+        "F104"
+      ],
+      "name": "Preview a rewrite before applying it",
+      "question": "Should users be able to inspect a complex rewrite in a separate native preview before choosing to apply it?",
+      "why_it_came_up": "D0076 explicitly proposes this workflow. The native flag still writes objects and may permit external effects, so this is not a read-only dry run or a backup alignment mechanism. Existing command previews do not establish this durable native preview-and-promotion lifecycle.",
+      "what_you_get": "A reviewable result before changing the active repository view.",
+      "costs": "Preview storage, cleanup, currentness checks and separately admitted application.",
+      "options": [
+        "Add an explicitly managed rewrite preview and apply workflow",
+        "Keep the existing command previews"
+      ],
+      "recommendation": "Keep it optional until isolation, cleanup and later application are proven.",
+      "answer": "",
+      "why_it_came_up_plain": "Native operations can be prepared without publishing them, suggesting a separate preview-and-apply workflow."
+    },
+    {
+      "decision_id": "D044",
+      "finding_ids": [
+        "F105"
+      ],
+      "name": "Browse an earlier repository state",
+      "question": "Should users be able to browse the repository as it looked at a selected earlier operation?",
+      "why_it_came_up": "The research names viewing the repository at past operations as a distinct UI capability. Frozen operation show/log and exact recovery do not clearly promise a graph-and-content browsing mode pinned to that old view. Such browsing must preserve historical visibility and never imply restoration. Existing exact operation inspection and isolated restore are already explicit; the optional addition is a coordinated full historical graph/tree/bookmark browsing context, not another operation-show action.",
+      "what_you_get": "Inspection of historical graph and content without restoring it.",
+      "costs": "Historical query isolation, retention gaps and clear indication of the viewed state.",
+      "options": [
+        "Add a clearly labeled earlier-state browsing mode",
+        "Keep the existing operation details and recovery controls"
+      ],
+      "recommendation": "Add only if operation details do not provide enough context.",
+      "answer": "",
+      "why_it_came_up_plain": "Other clients identify browsing an earlier repository view as a distinct history feature."
+    }
+  ],
+  "finding_owner_map": {
+    "F001": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "correction",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F002": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F003": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D001",
+      "decision_groups": [
+        "D001"
+      ]
+    },
+    "F004": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F005": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F006": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F007": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F008": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F009": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F010": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F011": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F012": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F013": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D002",
+      "decision_groups": [
+        "D002"
+      ]
+    },
+    "F014": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D003",
+      "decision_groups": [
+        "D003"
+      ]
+    },
+    "F015": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D004",
+      "decision_groups": [
+        "D004"
+      ]
+    },
+    "F016": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D005",
+      "decision_groups": [
+        "D005"
+      ]
+    },
+    "F017": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D006",
+      "decision_groups": [
+        "D006"
+      ]
+    },
+    "F018": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D007",
+      "decision_groups": [
+        "D007"
+      ]
+    },
+    "F019": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F020": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D008",
+      "decision_groups": [
+        "D008"
+      ]
+    },
+    "F021": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D009",
+      "decision_groups": [
+        "D009"
+      ]
+    },
+    "F022": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D010",
+      "decision_groups": [
+        "D010"
+      ]
+    },
+    "F023": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D011",
+      "decision_groups": [
+        "D011",
+        "D012",
+        "D013",
+        "D014"
+      ]
+    },
+    "F024": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D015",
+      "decision_groups": [
+        "D015"
+      ]
+    },
+    "F025": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D016",
+      "decision_groups": [
+        "D016"
+      ]
+    },
+    "F026": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D017",
+      "decision_groups": [
+        "D017"
+      ]
+    },
+    "F027": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D018",
+      "decision_groups": [
+        "D018"
+      ]
+    },
+    "F028": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D019",
+      "decision_groups": [
+        "D019"
+      ]
+    },
+    "F029": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F030": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F031": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F032": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D020",
+      "decision_groups": [
+        "D020"
+      ]
+    },
+    "F033": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F034": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F035": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D021",
+      "decision_groups": [
+        "D021"
+      ]
+    },
+    "F036": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F037": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F038": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F039": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F040": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F041": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F042": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F043": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F044": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D022",
+      "decision_groups": [
+        "D022"
+      ]
+    },
+    "F045": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F046": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D023",
+      "decision_groups": [
+        "D023"
+      ]
+    },
+    "F047": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D024",
+      "decision_groups": [
+        "D024"
+      ]
+    },
+    "F048": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "optional_capability",
+      "decision_group": "D025",
+      "decision_groups": [
+        "D025"
+      ]
+    },
+    "F049": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D026",
+      "decision_groups": [
+        "D026"
+      ]
+    },
+    "F050": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F051": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F052": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F053": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F054": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F055": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F056": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F057": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F058": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D027",
+      "decision_groups": [
+        "D027"
+      ]
+    },
+    "F059": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F060": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D028",
+      "decision_groups": [
+        "D028"
+      ]
+    },
+    "F061": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F062": {
+      "owner": "Plans/FinalGUISpec.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F063": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D029",
+      "decision_groups": [
+        "D029"
+      ]
+    },
+    "F064": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F065": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D030",
+      "decision_groups": [
+        "D030"
+      ]
+    },
+    "F066": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D031",
+      "decision_groups": [
+        "D031"
+      ]
+    },
+    "F067": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D032",
+      "decision_groups": [
+        "D032"
+      ]
+    },
+    "F068": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F069": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F070": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F071": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F072": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F073": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F074": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F075": {
+      "owner": "Plans/Decision_Log.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F076": {
+      "owner": "Plans/FinalGUISpec.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F077": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F078": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D033",
+      "decision_groups": [
+        "D033"
+      ]
+    },
+    "F079": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F080": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F081": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F082": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F083": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "product_choice",
+      "decision_group": "D034",
+      "decision_groups": [
+        "D034"
+      ]
+    },
+    "F084": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F085": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F086": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F087": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F088": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F089": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F090": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D035",
+      "decision_groups": [
+        "D035"
+      ]
+    },
+    "F091": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D036",
+      "decision_groups": [
+        "D036"
+      ]
+    },
+    "F092": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F093": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F094": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F095": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D037",
+      "decision_groups": [
+        "D037"
+      ]
+    },
+    "F096": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D038",
+      "decision_groups": [
+        "D038"
+      ]
+    },
+    "F097": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F098": {
+      "owner": "Plans/Source_Control_System.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F099": {
+      "owner": "Plans/Forge_Integrations.md",
+      "classification": "optional_capability",
+      "decision_group": "D039",
+      "decision_groups": [
+        "D039"
+      ]
+    },
+    "F100": {
+      "owner": "Plans/Forge_Integrations.md",
+      "classification": "optional_capability",
+      "decision_group": "D040",
+      "decision_groups": [
+        "D040"
+      ]
+    },
+    "F101": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D041",
+      "decision_groups": [
+        "D041"
+      ]
+    },
+    "F102": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "unsupported_or_rejected",
+      "decision_group": null,
+      "decision_groups": []
+    },
+    "F103": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D042",
+      "decision_groups": [
+        "D042"
+      ]
+    },
+    "F104": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D043",
+      "decision_groups": [
+        "D043"
+      ]
+    },
+    "F105": {
+      "owner": "Plans/Jujutsu_Integration.md",
+      "classification": "optional_capability",
+      "decision_group": "D044",
+      "decision_groups": [
+        "D044"
+      ]
+    }
+  },
+  "frozen_root": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/cases/jujutsu-frozen-20260911/plans/Plans",
+  "blind_document_roles_sha256": "94597a8f510986b44949bf722eea09159519aa9d999a9cfba0e1be7853fcfbe2"
+}

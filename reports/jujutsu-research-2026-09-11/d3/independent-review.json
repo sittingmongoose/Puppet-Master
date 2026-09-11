@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "verdict": "PASS",
+  "status": "pass",
+  "reviewer": "independent_blind_review",
+  "completed_at": "2026-09-11T14:59:50.483254+00:00",
+  "subjects": {
+    "union_sha256": "23850729559d9d80d2f8d6cd45725116837436a883eae5ca78e4c3f6f9e64756",
+    "coverage_sha256": "5e7e41421ea9e4a6ad4e4768b55b89f80e231758504313bdd47afba46aab3988",
+    "documents_sha256": "c742ef646ceda1ed1ec0416ef19afd67f8942ab87d8d0c006eb5feebf7447e96",
+    "document_roles_sha256": "94597a8f510986b44949bf722eea09159519aa9d999a9cfba0e1be7853fcfbe2",
+    "decision_packet_sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767",
+    "companion_sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702",
+    "proposal_dispositions_sha256": "a4d47c258590f70086b0a93aeab8a99de3858d02e10458af1b148071cd53f1a5",
+    "corrections_sha256": "200bfe08dbf82ef00cd7984670401ae3d40555f7ce41026c87330dc17444eaf6"
+  },
+  "artifact_manifest_sha256": "725c39a37879351c75f162a2d9701c7d9b04b06396e7817710bb33d38b87f712",
+  "blocking_findings": [],
+  "unresolved_issues": [],
+  "evaluator_derived_findings": [
+    "F001"
+  ],
+  "scope": {
+    "findings_reviewed": 105,
+    "proposal_dispositions_reviewed": 404,
+    "documents_reviewed": 206,
+    "decision_cards_reviewed": 44,
+    "document_finding_edges_reviewed": 925,
+    "asserting_edges_reviewed": 753,
+    "supporting_edges_reviewed": 172,
+    "all_claims_and_classifications": true,
+    "all_optional_cards_and_declines": true,
+    "exact_frozen_references_checked": true,
+    "all_substantive_source_edges_reviewed": true,
+    "method": "Blind claim and classification review, all extraction-key and document dispositions, all decision cards, exact frozen passages, every final asserting passage and exclusion, plus independent terminal-receipt schema counterexample. Initial full-scope review followed by complete 833-edge staged audit and final delta review. Corpus-wide intake completeness is additionally certified separately; this review used targeted proposition-bearing passage reads, not a claimed second full-byte corpus reread.",
+    "limits": "No arm identity, provenance mapping, run results, comparative costs, live Plans, upstream runtime execution or canonical edits used. PASS is frozen-canon adjudication and attribution correctness, not native implementation certification."
+  },
+  "reviewed_files": {
+    "union.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/union.json",
+      "sha256": "23850729559d9d80d2f8d6cd45725116837436a883eae5ca78e4c3f6f9e64756"
+    },
+    "document-coverage.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/document-coverage.json",
+      "sha256": "5e7e41421ea9e4a6ad4e4768b55b89f80e231758504313bdd47afba46aab3988"
+    },
+    "proposal-dispositions.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/proposal-dispositions.json",
+      "sha256": "a4d47c258590f70086b0a93aeab8a99de3858d02e10458af1b148071cd53f1a5"
+    },
+    "companion.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/companion.json",
+      "sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702"
+    },
+    "decision-draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/decision-draft.md",
+      "sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767"
+    },
+    "corrections.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/corrections.md",
+      "sha256": "200bfe08dbf82ef00cd7984670401ae3d40555f7ce41026c87330dc17444eaf6"
+    },
+    "artifact-manifest.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/artifact-manifest.json",
+      "sha256": "725c39a37879351c75f162a2d9701c7d9b04b06396e7817710bb33d38b87f712"
+    }
+  },
+  "per_item_dispositions": {
+    "per-finding-final-review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/per-finding-final-review.json",
+      "sha256": "5bfa803af018e0e15816212eeb19656d0d058c03965acb909ac9f515a6498791"
+    },
+    "per-edge-final-review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/per-edge-final-review.json",
+      "sha256": "083d9b503cb7b28f11fefd30ed34a7e84449621a1047892300c50518983f32ca"
+    },
+    "per-proposal-final-review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/per-proposal-final-review.json",
+      "sha256": "3faa022a65a356836f86de1ec1d243ade42b3c8f2a9d3440a1587ff9cd2a01e8"
+    },
+    "per-document-final-review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/per-document-final-review.json",
+      "sha256": "58d8a4ce7c599f51d357a51dcd8d62e0beae88a7313349a7a6e44cf76e046e48"
+    },
+    "per-decision-final-review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/per-decision-final-review.json",
+      "sha256": "90a9dd41162c632874b422daa2e33d9e48fbe6ffef3fe13c66a1d2079a664aea"
+    }
+  },
+  "mechanical_checks": {
+    "subject_consistency": "pass",
+    "source_quotes_and_coverage_edges": "pass",
+    "final_author_hash_match": true
+  },
+  "resolved_material_issues": [
+    "F001 explicitly evaluator-derived with no direct research credit; independently reproduced null terminal receipt counterexample, established attempts only.",
+    "F012 split from reverse-selected-operation F103.",
+    "F104 isolated rewrite preview and F105 historical browsing preserved separately.",
+    "Historical graph visibility remapped away from evolution; queue safety away from grouped undo; diff file creation away from clone cleanup.",
+    "F032 narrowed to new newline boundaries preserving existing Save and paste rules.",
+    "Four extra history actions have separate user decisions.",
+    "False thematic credit removed for F018/F019/F025/F027/F060/F100/F102 and other staged exclusions.",
+    "Direct adapter/service source credit restored for F044/D0026 and F048/D0178,D0196.",
+    "Missing explicit action and history references restored; all 404 extraction keys have final dispositions."
+  ]
+}
