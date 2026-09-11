@@ -1,0 +1,97 @@
+{
+  "step": 1,
+  "source_revision": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "started_at": "2026-09-11T03:03:43.376975+00:00",
+  "finished_at": "2026-09-11T03:05:34.058874+00:00",
+  "elapsed_seconds": 6.906,
+  "validator_elapsed_seconds": 2.666,
+  "worktree": "/home/sittingmongoose/pm-worktrees/event-authority-20260911",
+  "branch": "plans/event-authority-20260911",
+  "command": "PM_EVIDENCE_MAP=/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/evidence-map.json python3 scripts/pm-event-authority-currentness.py validate",
+  "readability_method": "Recursively enumerate directories with pathlib.Path.iterdir and read each file completely with pathlib.Path.read_bytes; no permission changes.",
+  "directories_readable": 2,
+  "files_readable": 10,
+  "readability_failures": [],
+  "return_code": 1,
+  "structured_validation_result": true,
+  "permission_error_observed": false,
+  "validator_result": {
+    "evidence_valid": false,
+    "event_authority_closed": false,
+    "checks": {
+      "exact_live_source_set": false,
+      "every_direct_plans_markdown_inventoried": true,
+      "all_live_sources_rehashed": false,
+      "source_manifest_digest_matches": true,
+      "occurrence_ledger_hash_matches": true,
+      "live_registry_exactly_matches_status": true,
+      "status_remains_fail_closed": true,
+      "august_pass_marked_stale_void": true,
+      "depth_remains_incomplete": true,
+      "explicit_exclusions_present": true,
+      "quarantined_252_exact_set_and_custody": true,
+      "artifact_hashes_match_receipt": true,
+      "validator_hash_matches_receipt": false,
+      "receipt_is_explicitly_non_closing": true
+    }
+  },
+  "failed_checks": [
+    "exact_live_source_set",
+    "all_live_sources_rehashed",
+    "validator_hash_matches_receipt"
+  ],
+  "raw_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/readability.json",
+      "sha256": "8a947bee6460c3134e9d5ed723223b0d0cf76bef4e77f1d4eac0fa558106dbaf",
+      "bytes": 3409
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/validator.stdout",
+      "sha256": "5e89c6c8f3b09f0458ee26b9dcc0847082b1fa9a24c890a410818d2d7db92e9d",
+      "bytes": 698
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/validator.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/evidence-map.json",
+      "sha256": "6415bb97e118bd0c7d3de38c16f814c9f409345f5d14135045f7e121e0c46b0f",
+      "bytes": 269
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/initial-receipt.json",
+      "sha256": "ae919e742b278634e408f9fb4af6a38c4b69d7507054e53997f5e702db393507",
+      "bytes": 2297
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/initial-readability.json",
+      "sha256": "699373e1e13a46e5ebadd975b55cff584e677978cfc2dcf20344fd4bd45a9391",
+      "bytes": 554
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/initial-validator.stdout",
+      "sha256": "892d8d4fea3ee49967dc1227b04791726d63e13bb83834f0b46b65fe0a1b0178",
+      "bytes": 306
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-01/initial-validator.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "model": "gpt-6-astra",
+  "reasoning_effort": "medium",
+  "dollar_cost": null,
+  "dollar_cost_note": "Unavailable; no cost telemetry provided.",
+  "scope": "Readability and unchanged validator execution only; no adjudication, remediation, seal or certification.",
+  "step_passed": true,
+  "mapped_evidence_root": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness",
+  "mapping_note": "Explicit supported input mapping to retained historical audit files in shared checkout, absent the fresh worktree. Map stays external; mapped inputs were read only.",
+  "initial_unmapped_attempt": {
+    "return_code": 2,
+    "error": "evidence is missing: /home/sittingmongoose/pm-worktrees/event-authority-20260911/Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv; supply an explicit PM_EVIDENCE_MAP for relocated evidence"
+  }
+}
