@@ -2,7 +2,7 @@
   "schema_id": "pm.browser_workspace_reset_root_review.v1",
   "review_id": "BROWSER-WORKSPACE-RESET-ROOT-20260911",
   "reviewer": "root",
-  "status": "static_root_review_accepted_pending_current_main_rebase_and_validation",
+  "status": "static_root_review_accepted",
   "source_base_commit": "2fdd86c1c5efa73ef7ad4bc22de7c64f9953b1e0",
   "authority": "Plans/Decision_Log.md#DL-046",
   "scope": {
@@ -47,228 +47,350 @@
     "Only reset is added in this landing. All existing registry rows and retention policies are unchanged. The other Browser admissions remain individually pending."
   ],
   "verification": {
-    "static_not_native": true,
-    "pre_rebase_base": "2fdd86c1c5efa73ef7ad4bc22de7c64f9953b1e0",
-    "focused_tests": {
-      "total": 131,
-      "passed": 131,
-      "modules": {
-        "test_pm_browser_workspace_reset": 51,
-        "test_pm_event_index_binding": 14,
-        "test_pm_browser_workspace_created": 36,
-        "test_pm_browser_event_admission": 30
+    "claim_boundary": "Static single-family contract verification only. Initial and post-rebase snapshots are distinct and both retained; global failures remain open.",
+    "initial": {
+      "static_not_native": true,
+      "pre_rebase_base": "2fdd86c1c5efa73ef7ad4bc22de7c64f9953b1e0",
+      "focused_tests": {
+        "total": 131,
+        "passed": 131,
+        "modules": {
+          "test_pm_browser_workspace_reset": 51,
+          "test_pm_event_index_binding": 14,
+          "test_pm_browser_workspace_created": 36,
+          "test_pm_browser_event_admission": 30
+        }
+      },
+      "browser_gate": {
+        "status": "pass",
+        "payload_positive_cases": 53,
+        "payload_negative_cases": 576,
+        "command_bindings": 15,
+        "admitted_browser_families": 2,
+        "prepared_browser_families": 51,
+        "global_registry_rows": 42,
+        "all_39_original_rows_preserved": true,
+        "admission_complete": false
+      },
+      "new_contracts": "pass",
+      "shards": {
+        "status": "pass",
+        "documents": 98,
+        "shards": 2247
+      },
+      "plan_index": {
+        "status": "pass",
+        "plan_units": 6539,
+        "only_new_units": [
+          "SMPFS-168",
+          "SP-282"
+        ],
+        "readiness": "blocked_runtime_certification_incomplete"
+      },
+      "full_suite_initial": {
+        "run": 631,
+        "passed": 616,
+        "failures": 3,
+        "errors": 12,
+        "skipped": 0,
+        "pattern": "test_*.py",
+        "failure_tests": [
+          "test_existing_family_and_retention_census_is_unchanged (test_pm_onboarding_phases.OnboardingStorageTests.test_existing_family_and_retention_census_is_unchanged)",
+          "test_bounded_validator_passes (test_runtime_integration_disposition.RuntimeIntegrationDispositionTest.test_bounded_validator_passes)",
+          "test_registry_has_exact_family_and_status_counts (test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_has_exact_family_and_status_counts)"
+        ],
+        "error_tests": [
+          "test_all_current_hashes_still_fail_closed_on_denominator_and_depth (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_all_current_hashes_still_fail_closed_on_denominator_and_depth)",
+          "test_current_event_authority_audit_rehashes_cleanly_and_remains_open (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_audit_rehashes_cleanly_and_remains_open)",
+          "test_current_event_authority_group_artifact_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_group_artifact_drift_fails)",
+          "test_current_event_authority_live_source_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_live_source_drift_fails)",
+          "test_currentness_helper_mutation_invalidates_its_own_binding (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_currentness_helper_mutation_invalidates_its_own_binding)",
+          "test_event_authority_clearance_requires_both_conditions (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_clearance_requires_both_conditions)",
+          "test_event_authority_inventory_excludes_derived_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_inventory_excludes_derived_consumers)",
+          "test_prior_five_path_gap_is_enforced_by_both_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_prior_five_path_gap_is_enforced_by_both_consumers)",
+          "test_receipt_writer_and_both_consumers_share_one_bound_contract (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_receipt_writer_and_both_consumers_share_one_bound_contract)",
+          "test_current_composition_matches_emitted_bands_exactly (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_current_composition_matches_emitted_bands_exactly)",
+          "test_current_tour_inventory_preserves_domain_owners_and_open_status (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_current_tour_inventory_preserves_domain_owners_and_open_status)",
+          "test_missing_reused_domain_catalog_command_fails_closed (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_missing_reused_domain_catalog_command_fails_closed)"
+        ],
+        "qualification": "Initial sparse worktree omitted Concepts, causing three extra Touch Closure source errors. Concepts is now materialized unchanged from Git; full verification must rerun on the rebased branch. Nine existing PNC-019 errors lack the historical validator receipt. The two exact count guards and stale runtime-disposition owner hashes are not overridden."
+      },
+      "gates_initial": {
+        "run": 36,
+        "passed": 24,
+        "failed": 12,
+        "qualification": "One extra Touch Closure failure is caused by omitted Concepts in the initial sparse checkout; broader gate failures remain open. Per-check CLI failure lists may be capped and are not full finding totals. Revalidate after restoring that checkout dependency and rebasing."
+      },
+      "source_isolation": {
+        "status": "pass",
+        "physical_families_before": 95,
+        "physical_families_after": 96,
+        "old_families_unchanged": true,
+        "all_retention_policies_unchanged": true,
+        "only_admission_row_changed": "browser.workspace.reset",
+        "all_7030_plans_scripts_tests_input_pins_stable": true
+      },
+      "authored_source_hashes": {
+        "Plans/Section15_MVP_Promoted_Features_Spec.md": "972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92",
+        "Plans/storage-plan.md": "b43f91f3cdb860d1a3e55335a4003c1d7c62e7e47410b76ff678652290353e72",
+        "Plans/browser_workspace_reset_contracts.schema.json": "fc3b1824c918f17e1b5691462b371997e2b0eabe5a064af6feef7e6c6ad6f02e",
+        "Plans/browser_workspace_reset_contract_fixtures.json": "048ffe1cdae8aaeb331aab13059ada2ad68067c041c97958ea475a122b0605a7",
+        "Plans/browser_event_admission.json": "0179cb7bd5edb35faaea181864951cd777ac220cd1939c1fb5d238a5878bf46a",
+        "Plans/event_family_registry.json": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "Plans/storage_value_registry.json": "5c019ee6b52b9cb553b40cdce3f41f7fd6490d8a5dc31c3aff76d4176c672d82",
+        "scripts/pm_browser_workspace_reset.py": "a04bbcc3ee218439e56876a8749e408b638814cf106cb41c89202b7f2101648d",
+        "scripts/pm_event_index_binding.py": "8e2c243f24e401e125e0af321cbb8dd76e2eca86742db84f2acafd91dc263e2f",
+        "scripts/pm-browser-event-admission.py": "38e515f5d118708e2e3cba132c7f443f6cb7d2f3bdd6b46a41bc197ef092ba15",
+        "tests/test_pm_browser_workspace_reset.py": "0530435e8495685200ad5ec0c743c5dfb21ae9b2c741690bdf82d4f29a37f1ae",
+        "tests/test_pm_event_index_binding.py": "b668e35c00aef00bc92117d6c1d06e1094e8fee318252dae28a318e51fe13bab",
+        "tests/test_pm_browser_event_admission.py": "c021521de83e4ae1c54bb07762142106373a3a0052a3f087924071b01798d9c0"
+      },
+      "captures": {
+        "full-suite": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/summary.json",
+            "sha256": "5ca62f84f4a912e5ba2aa73848ce2d691f79d00167766ecc0364719619d97093"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/stderr.log",
+            "sha256": "c117235b6a65a3df6802312d6b8c8e7eb00c555c7a0988d6eacac1ae56851600"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 1,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        },
+        "run-gates": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/summary.json",
+            "sha256": "3d48eb206c7e1b217c0a38abe70f1cf761eb76a1dfee7bd5fec6709faba81f0a"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/stdout.log",
+            "sha256": "750f6709a3beebc1a05a7f20230c5219b3d2943d527ee296e04e4f1204580afc"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/stderr.log",
+            "sha256": "9d85104ef5ca0c76e0b92668dc3f8108a2888ae13069b67c888175d22602e7a1"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 1,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        },
+        "browser-admission": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/summary.json",
+            "sha256": "94e785935746c4fae2acac835fd1d6b1ee4df8d290ade817974ba1081966ed5b"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/stdout.log",
+            "sha256": "a64700fc63d31775a64cdafd73b2be635a046c3a1690c1727e674d6833f31886"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 0,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        },
+        "new-contracts": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/summary.json",
+            "sha256": "1552c1fad3e6a96adb4fdea45e727845de4de5a03beee23b8079f103c08ef995"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/stdout.log",
+            "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 0,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        },
+        "shards": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/summary.json",
+            "sha256": "3f73bda5b86d07a987782e944957ac7fd0a1ee6e02076d15cfe8c0af59c22d4e"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/stdout.log",
+            "sha256": "337306357c7cff9c62591f49145bdcda1ea2e4c452cc3ff86b8edad7696a7aa1"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 0,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        },
+        "isolation": {
+          "summary": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/summary.json",
+            "sha256": "ec1958b653fe6caadb2780bf7760d87c8bf30efb4f538062eb7557d358e08d92"
+          },
+          "stdout": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/stdout.log",
+            "sha256": "90603abaf05bca854a29a2aeb6dff308365c9d4ee247c735c504d0a244f4f9bb"
+          },
+          "stderr": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "input_hashes": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/input-hashes-after.json",
+            "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
+          },
+          "exit_code": 0,
+          "input_count": 7030,
+          "inputs_unchanged": true
+        }
       }
     },
-    "browser_gate": {
-      "status": "pass",
-      "payload_positive_cases": 53,
-      "payload_negative_cases": 576,
-      "command_bindings": 15,
-      "admitted_browser_families": 2,
-      "prepared_browser_families": 51,
-      "global_registry_rows": 42,
-      "all_39_original_rows_preserved": true,
-      "admission_complete": false
-    },
-    "new_contracts": "pass",
-    "shards": {
-      "status": "pass",
-      "documents": 98,
-      "shards": 2247
-    },
-    "plan_index": {
-      "status": "pass",
-      "plan_units": 6539,
-      "only_new_units": [
-        "SMPFS-168",
-        "SP-282"
-      ],
-      "readiness": "blocked_runtime_certification_incomplete"
-    },
-    "full_suite_initial": {
-      "run": 631,
-      "passed": 616,
-      "failures": 3,
-      "errors": 12,
-      "skipped": 0,
-      "pattern": "test_*.py",
-      "failure_tests": [
-        "test_existing_family_and_retention_census_is_unchanged (test_pm_onboarding_phases.OnboardingStorageTests.test_existing_family_and_retention_census_is_unchanged)",
-        "test_bounded_validator_passes (test_runtime_integration_disposition.RuntimeIntegrationDispositionTest.test_bounded_validator_passes)",
-        "test_registry_has_exact_family_and_status_counts (test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_has_exact_family_and_status_counts)"
-      ],
-      "error_tests": [
-        "test_all_current_hashes_still_fail_closed_on_denominator_and_depth (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_all_current_hashes_still_fail_closed_on_denominator_and_depth)",
-        "test_current_event_authority_audit_rehashes_cleanly_and_remains_open (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_audit_rehashes_cleanly_and_remains_open)",
-        "test_current_event_authority_group_artifact_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_group_artifact_drift_fails)",
-        "test_current_event_authority_live_source_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_live_source_drift_fails)",
-        "test_currentness_helper_mutation_invalidates_its_own_binding (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_currentness_helper_mutation_invalidates_its_own_binding)",
-        "test_event_authority_clearance_requires_both_conditions (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_clearance_requires_both_conditions)",
-        "test_event_authority_inventory_excludes_derived_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_inventory_excludes_derived_consumers)",
-        "test_prior_five_path_gap_is_enforced_by_both_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_prior_five_path_gap_is_enforced_by_both_consumers)",
-        "test_receipt_writer_and_both_consumers_share_one_bound_contract (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_receipt_writer_and_both_consumers_share_one_bound_contract)",
-        "test_current_composition_matches_emitted_bands_exactly (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_current_composition_matches_emitted_bands_exactly)",
-        "test_current_tour_inventory_preserves_domain_owners_and_open_status (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_current_tour_inventory_preserves_domain_owners_and_open_status)",
-        "test_missing_reused_domain_catalog_command_fails_closed (test_pm_touch_closure_source.EffectiveGuidedTourSourceTests.test_missing_reused_domain_catalog_command_fails_closed)"
-      ],
-      "qualification": "Initial sparse worktree omitted Concepts, causing three extra Touch Closure source errors. Concepts is now materialized unchanged from Git; full verification must rerun on the rebased branch. Nine existing PNC-019 errors lack the historical validator receipt. The two exact count guards and stale runtime-disposition owner hashes are not overridden."
-    },
-    "gates_initial": {
-      "run": 36,
-      "passed": 24,
-      "failed": 12,
-      "qualification": "One extra Touch Closure failure is caused by omitted Concepts in the initial sparse checkout; broader gate failures remain open. Per-check CLI failure lists may be capped and are not full finding totals. Revalidate after restoring that checkout dependency and rebasing."
-    },
-    "source_isolation": {
-      "status": "pass",
-      "physical_families_before": 95,
-      "physical_families_after": 96,
-      "old_families_unchanged": true,
-      "all_retention_policies_unchanged": true,
-      "only_admission_row_changed": "browser.workspace.reset",
-      "all_7030_plans_scripts_tests_input_pins_stable": true
-    },
-    "authored_source_hashes": {
-      "Plans/Section15_MVP_Promoted_Features_Spec.md": "972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92",
-      "Plans/storage-plan.md": "b43f91f3cdb860d1a3e55335a4003c1d7c62e7e47410b76ff678652290353e72",
-      "Plans/browser_workspace_reset_contracts.schema.json": "fc3b1824c918f17e1b5691462b371997e2b0eabe5a064af6feef7e6c6ad6f02e",
-      "Plans/browser_workspace_reset_contract_fixtures.json": "048ffe1cdae8aaeb331aab13059ada2ad68067c041c97958ea475a122b0605a7",
-      "Plans/browser_event_admission.json": "0179cb7bd5edb35faaea181864951cd777ac220cd1939c1fb5d238a5878bf46a",
-      "Plans/event_family_registry.json": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
-      "Plans/storage_value_registry.json": "5c019ee6b52b9cb553b40cdce3f41f7fd6490d8a5dc31c3aff76d4176c672d82",
-      "scripts/pm_browser_workspace_reset.py": "a04bbcc3ee218439e56876a8749e408b638814cf106cb41c89202b7f2101648d",
-      "scripts/pm_event_index_binding.py": "8e2c243f24e401e125e0af321cbb8dd76e2eca86742db84f2acafd91dc263e2f",
-      "scripts/pm-browser-event-admission.py": "38e515f5d118708e2e3cba132c7f443f6cb7d2f3bdd6b46a41bc197ef092ba15",
-      "tests/test_pm_browser_workspace_reset.py": "0530435e8495685200ad5ec0c743c5dfb21ae9b2c741690bdf82d4f29a37f1ae",
-      "tests/test_pm_event_index_binding.py": "b668e35c00aef00bc92117d6c1d06e1094e8fee318252dae28a318e51fe13bab",
-      "tests/test_pm_browser_event_admission.py": "c021521de83e4ae1c54bb07762142106373a3a0052a3f087924071b01798d9c0"
-    },
-    "captures": {
-      "full-suite": {
-        "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/summary.json",
-          "sha256": "5ca62f84f4a912e5ba2aa73848ce2d691f79d00167766ecc0364719619d97093"
-        },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/stdout.log",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/stderr.log",
-          "sha256": "c117235b6a65a3df6802312d6b8c8e7eb00c555c7a0988d6eacac1ae56851600"
-        },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/full-suite/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 1,
-        "input_count": 7030,
-        "inputs_unchanged": true
+    "post_rebase": {
+      "verification_commit": "4fe66204bde92ab710a6d1f1cf9f46be75d18458",
+      "base_commit": "641c9802642343a8c5be05612ddc12898fe10b2a",
+      "full_suite": {
+        "error_tests": [
+          "test_all_current_hashes_still_fail_closed_on_denominator_and_depth (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_all_current_hashes_still_fail_closed_on_denominator_and_depth)",
+          "test_current_event_authority_audit_rehashes_cleanly_and_remains_open (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_audit_rehashes_cleanly_and_remains_open)",
+          "test_current_event_authority_group_artifact_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_group_artifact_drift_fails)",
+          "test_current_event_authority_live_source_drift_fails (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_current_event_authority_live_source_drift_fails)",
+          "test_currentness_helper_mutation_invalidates_its_own_binding (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_currentness_helper_mutation_invalidates_its_own_binding)",
+          "test_event_authority_clearance_requires_both_conditions (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_clearance_requires_both_conditions)",
+          "test_event_authority_inventory_excludes_derived_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_event_authority_inventory_excludes_derived_consumers)",
+          "test_prior_five_path_gap_is_enforced_by_both_consumers (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_prior_five_path_gap_is_enforced_by_both_consumers)",
+          "test_receipt_writer_and_both_consumers_share_one_bound_contract (test_pm_pnc019_currentness.Pnc019CurrentnessTests.test_receipt_writer_and_both_consumers_share_one_bound_contract)"
+        ],
+        "errors": 9,
+        "failure_tests": [
+          "test_existing_family_and_retention_census_is_unchanged (test_pm_onboarding_phases.OnboardingStorageTests.test_existing_family_and_retention_census_is_unchanged)",
+          "test_bounded_validator_passes (test_runtime_integration_disposition.RuntimeIntegrationDispositionTest.test_bounded_validator_passes)",
+          "test_registry_has_exact_family_and_status_counts (test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_has_exact_family_and_status_counts)"
+        ],
+        "failures": 3,
+        "passed": 619,
+        "run": 631,
+        "skipped": 0,
+        "test_seconds": 333.953
       },
-      "run-gates": {
-        "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/summary.json",
-          "sha256": "3d48eb206c7e1b217c0a38abe70f1cf761eb76a1dfee7bd5fec6709faba81f0a"
-        },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/stdout.log",
-          "sha256": "750f6709a3beebc1a05a7f20230c5219b3d2943d527ee296e04e4f1204580afc"
-        },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/stderr.log",
-          "sha256": "9d85104ef5ca0c76e0b92668dc3f8108a2888ae13069b67c888175d22602e7a1"
-        },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/run-gates/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 1,
-        "input_count": 7030,
-        "inputs_unchanged": true
+      "focused_pass_counts": {
+        "test_pm_browser_event_admission": 30,
+        "test_pm_browser_workspace_created": 36,
+        "test_pm_browser_workspace_reset": 51,
+        "test_pm_event_index_binding": 14
       },
-      "browser-admission": {
-        "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/summary.json",
-          "sha256": "94e785935746c4fae2acac835fd1d6b1ee4df8d290ade817974ba1081966ed5b"
+      "gates": {
+        "claim_boundary": "Per-check CLI finding arrays may be capped; these are gate counts, not total finding counts.",
+        "failed": 11,
+        "passed": 25,
+        "results": {
+          "check_project_artifact_requirements": "pass",
+          "check_shards": "pass",
+          "json_syntax": "fail",
+          "lint_banned_phrases": "pass",
+          "lint_contractrefs": "fail",
+          "lint_path_refs": "fail",
+          "validate_audit_closure": "fail",
+          "validate_audit_status_index": "fail",
+          "validate_auto_decisions": "pass",
+          "validate_browser_event_admission": "pass",
+          "validate_case_l_non_event_materialization": "pass",
+          "validate_evidence": "fail",
+          "validate_filesafe_security_policy": "pass",
+          "validate_forge_backup_acceptance": "pass",
+          "validate_github_project_integration": "pass",
+          "validate_goal_runtime_event_fixtures": "pass",
+          "validate_gui_asset_policy": "pass",
+          "validate_implementation_readiness": "fail",
+          "validate_new_contracts": "pass",
+          "validate_plan_graph": "fail",
+          "validate_plan_migration": "fail",
+          "validate_plans_to_code_handoff_schema": "pass",
+          "validate_pm7_gui_fixtures": "fail",
+          "validate_prd_planning_runtime_contracts": "pass",
+          "validate_project_output_fixtures": "pass",
+          "validate_runtime_artifact_schemas": "pass",
+          "validate_server_command_gap": "pass",
+          "validate_testing_session_event_admission": "pass",
+          "validate_touch_closure": "pass",
+          "validate_ui_command_response": "pass",
+          "validate_usage_contract_drift": "pass",
+          "validate_usage_gui_fixtures": "pass",
+          "validate_web_capability_contracts": "pass",
+          "validate_wiring_matrix": "pass",
+          "validate_working_notebook_contracts": "pass",
+          "verify_spec_lock": "fail"
         },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/stdout.log",
-          "sha256": "a64700fc63d31775a64cdafd73b2be635a046c3a1690c1727e674d6833f31886"
-        },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/stderr.log",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/browser-admission/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 0,
-        "input_count": 7030,
-        "inputs_unchanged": true
+        "run": 36
       },
-      "new-contracts": {
-        "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/summary.json",
-          "sha256": "1552c1fad3e6a96adb4fdea45e727845de4de5a03beee23b8079f103c08ef995"
-        },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/stdout.log",
-          "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6"
-        },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/stderr.log",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/new-contracts/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 0,
-        "input_count": 7030,
-        "inputs_unchanged": true
+      "source_hashes": {
+        "Plans/Section15_MVP_Promoted_Features_Spec.md": "972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92",
+        "Plans/browser_event_admission.json": "0179cb7bd5edb35faaea181864951cd777ac220cd1939c1fb5d238a5878bf46a",
+        "Plans/browser_workspace_reset_contract_fixtures.json": "048ffe1cdae8aaeb331aab13059ada2ad68067c041c97958ea475a122b0605a7",
+        "Plans/browser_workspace_reset_contracts.schema.json": "fc3b1824c918f17e1b5691462b371997e2b0eabe5a064af6feef7e6c6ad6f02e",
+        "Plans/event_family_registry.json": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "Plans/storage-plan.md": "52ae76de5ed144388f39fe96ec8b82ebc782286cbd0860e1cb0fc6a39c434f38",
+        "Plans/storage_value_registry.json": "e53b8dbe63db6df55b819a958dde581c69d11c25002554f9aad260564850eca3",
+        "scripts/pm-browser-event-admission.py": "38e515f5d118708e2e3cba132c7f443f6cb7d2f3bdd6b46a41bc197ef092ba15",
+        "scripts/pm_browser_workspace_reset.py": "a04bbcc3ee218439e56876a8749e408b638814cf106cb41c89202b7f2101648d",
+        "scripts/pm_event_index_binding.py": "8e2c243f24e401e125e0af321cbb8dd76e2eca86742db84f2acafd91dc263e2f",
+        "tests/test_pm_browser_event_admission.py": "c021521de83e4ae1c54bb07762142106373a3a0052a3f087924071b01798d9c0",
+        "tests/test_pm_browser_workspace_reset.py": "0530435e8495685200ad5ec0c743c5dfb21ae9b2c741690bdf82d4f29a37f1ae",
+        "tests/test_pm_event_index_binding.py": "b668e35c00aef00bc92117d6c1d06e1094e8fee318252dae28a318e51fe13bab"
       },
+      "verified_current_file_pins": 12386,
       "shards": {
-        "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/summary.json",
-          "sha256": "3f73bda5b86d07a987782e944957ac7fd0a1ee6e02076d15cfe8c0af59c22d4e"
-        },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/stdout.log",
-          "sha256": "337306357c7cff9c62591f49145bdcda1ea2e4c452cc3ff86b8edad7696a7aa1"
-        },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/stderr.log",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/shards/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 0,
-        "input_count": 7030,
-        "inputs_unchanged": true
+        "docs_checked": 98,
+        "failures": [],
+        "shards_checked": 2251,
+        "source_count": 98,
+        "status": "pass"
       },
-      "isolation": {
+      "focused_total_passed": 131,
+      "source_isolation": "All 95 current-base storage families and all retention policies unchanged; only reset family added. Current Storage document retained verbatim before reset appendix. Regenerated conflicts only; no manual shard/index merge.",
+      "qualification": "The restored Concepts checkout resolves the three initial source errors and extra Touch Closure gate failure. Three full-suite failures remain: unchanged 96-vs-90 and 96-vs-84 count guards and stale runtime-disposition owner hashes. Nine PNC-019 tests lack the historical validator receipt. No count override, hash-only re-adjudication substitute or governance reseal was performed.",
+      "integrity_receipt": {
         "summary": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/summary.json",
-          "sha256": "ec1958b653fe6caadb2780bf7760d87c8bf30efb4f538062eb7557d358e08d92"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/final-integrity/summary.json",
+          "sha256": "c8d712b64853597a7bd7e1429888116fd8dac4a4dd0b7a2d01ce8e4f3f14fe2b"
         },
-        "stdout": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/stdout.log",
-          "sha256": "90603abaf05bca854a29a2aeb6dff308365c9d4ee247c735c504d0a244f4f9bb"
+        "report": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/final-integrity/stdout.log",
+          "sha256": "24917e15c63f4ed8e644cd359c8dada771352b3c74d9669edaa3a7dd2b1e58cc"
         },
-        "stderr": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/stderr.log",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "verifier": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/collect-verification.py",
+          "sha256": "cfa9db4ba82d13fbb82df64b3150049f89001390662f2af290d9ca92361c7ce8"
         },
-        "input_hashes": {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-verification-20260911-Incrn857/isolation/input-hashes-after.json",
-          "sha256": "db4447594e31087174d0afe5da080bac3bcd89641f3708a743e747d050194834"
-        },
-        "exit_code": 0,
-        "input_count": 7030,
-        "inputs_unchanged": true
+        "scope": "Rehashed every capture summary/output, before/after input map and all 12,386 current Plans/scripts/tests/Concepts files. Underlying exact capture paths and hashes are in the retained report."
       }
     }
   },
@@ -301,6 +423,27 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-existing-first-050f2204-0DOpU7B3/delta.json",
       "sha256": "1090a529702032dc461cdba27b4a1afd46defa55e81102c4333e3266bd3564e3"
     },
-    "finding": "All seven query outputs unchanged apart from commit prefixes and line shifts. Read changed SP-265/SP-281 and appended sibling-adoption prose: no reset-specific binding or SP-278 semantic change. Rebase itself is pending."
+    "finding": "Intermediate target reviewed before the final 641c9802 reconciliation; all seven query outputs unchanged apart from commit prefixes and line shifts. SP-265/SP-281 sibling-adoption changes introduce no reset binding or SP-278 semantic change.",
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-existing-first-050f2204-0DOpU7B3/root-review.md",
+      "sha256": "d12b800d271782e01c6add32c4e48a56cfebaf12e60b294b16205e94d8888b2d"
+    }
+  },
+  "final_rebase_source_review": {
+    "target": "641c9802642343a8c5be05612ddc12898fe10b2a",
+    "searched_current_nonpipeline_files": 381,
+    "manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-existing-first-641c9802-J3ufMwHk/manifest.json",
+      "sha256": "9f3ee49c442ec23eaf823ecaabb258e792f525a209a886e93ea5b3a9c2263413"
+    },
+    "delta": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-existing-first-641c9802-J3ufMwHk/delta.json",
+      "sha256": "9fd8a22c823cfc323404c2e86e650e26a336e41fcdc71e2ff4dbaf8d2a8d6b10"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-reset-existing-first-641c9802-J3ufMwHk/root-review.md",
+      "sha256": "621aad4d865b21d91d56c3f11624eb570790e5471375e93b04efcac02bb24f09"
+    },
+    "finding": "No search population change; all seven outputs unchanged after only commit/line normalization. Read the entire new SP-269/summary-reader registry delta and preserved it. It adds no reset binding, source EventRecord, checkpoint family, policy or SP-278 change."
   }
 }
