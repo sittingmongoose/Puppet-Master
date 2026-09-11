@@ -159,6 +159,9 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
                 failures.extend(server_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") in {"TestingSessionCommandResult", "ArtifactRecordingCommandResult"}:
                 failures.extend(evidence_owner_failures(response, outcome, owner_result, bundle.get("owner_request")))
+            elif response["command_id"] == "cmd.project.new_github_repo":
+                from pm_project_forge_contract import response_failures as forge_response_failures
+                failures.extend(forge_response_failures(response, outcome, owner_result, bundle.get("owner_request"), bundle.get("owner_snapshot")))
             for field in ("command_id", "command_instance_id", "operation_id"):
                 if field in owner_result and owner_result[field] != response[field]:
                     failures.append("typed_owner_" + field + "_mismatch")
