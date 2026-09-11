@@ -1,0 +1,63 @@
+{
+  "status": "PASS_OPERATIONAL_MONITORED_COST_CONTROLS",
+  "checked_at": "2026-09-11T03:48:16.079998+00:00",
+  "scope": "Narrow successor review per root adjudication: cumulative observed-cost monitoring and cancellation under original brief, no formal provider-side billing certification. Prior certification-only launch objection is superseded.",
+  "checks": [
+    "Atomic flock-protected monetary journal preserves cumulative observed charges and each outstanding job reservation.",
+    "Astra callback validates cumulative category continuity; cache reads and long-context rates accounted, writes conservatively overcounted.",
+    "DeepSeek assistant and auxiliary callbacks priced conservatively at preserved peak tariff; unknown model/category/cache-write stops.",
+    "Validated completed jobs release outstanding reservation; timeout/interrupted/missing usage retains liability and stops.",
+    "Live callback kills owning worker tree at observed-plus-outstanding threshold; scheduler also polls journal and cancels other active workers.",
+    "Astra default tier verified by adapter; DeepSeek1M context/384K output metadata hash checked and$0.94688 peak-response reservation arithmetic verified.",
+    "Seven focused monetary tests independently passed in0.143s, including actual callback SIGKILL and no following summary marker.",
+    "Root/support standard tier recorded from Jared exact statement; script-only allowance refresh preserves$60 cumulative cap,65s human wait and unknown unreported/cash fields."
+  ],
+  "limitations": [
+    "Operational cancellation may race native requests, internal retries or unreported usage; observed cost plus reserves is not absolute billing proof.",
+    "Final cost reporting must reconcile native receipts and retain unknown liabilities.",
+    "Common freeze/run descriptors and campaign outputs require root launch/final verification; this receipt does not launch campaigns."
+  ],
+  "findings": [],
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cost_watch.py",
+      "sha256": "866f1f9bc3f6333d37e61347f5ffe525cf26cdf403ea4cee1703b55cb1febe34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/test_cost_watch.py",
+      "sha256": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cost_policy.json",
+      "sha256": "c77700eb32b4af384b22e07e68d333cbe5c697a26ed6be4ac87867bb12ed12a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/bounded_campaign.py",
+      "sha256": "f24162ca2e3f566abe6f524d3b78b34e2ccd673de3ae5460c406a56c4e7e2a2e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/codex_native.py",
+      "sha256": "4c95ccf06d33b929fd55bac9bcece51642faad65e7321e15e970b676c35c52cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/omp_native.py",
+      "sha256": "233ba6b5f5d7e4a28fc0826d679e11399b69656e285f4eeef6782af090a12c40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze.json",
+      "sha256": "84c1cb7b2472878ff25a555f855774549aed99d8ed9b89da31163a7fbdd6cf2c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/session_tier_evidence.json",
+      "sha256": "4b79569d13299e429baad2b7da563c22ecc7488852900f4e7248207d3529e91b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/refresh_allowance.py",
+      "sha256": "a19cd6511c0bd356d69b7e6e05da5ab6210cff2dde76dfabbdf975c2c14b8199"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/watch_allowance.py",
+      "sha256": "b4c93206eb0ed480b114850a3d8a99efb6f478d2b7672df54d347a9f51e9e629"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "preflight_passed": true,
+  "d1_committed_pushed_reported": true,
+  "freeze_sha256": "84c1cb7b2472878ff25a555f855774549aed99d8ed9b89da31163a7fbdd6cf2c",
+  "cost_control": {
+    "mode": "monitored_priced_usage",
+    "astra_response_reservation_usd": 35.85,
+    "deepseek_response_reservation_usd": 0.94688,
+    "deepseek_metadata": {
+      "context_window": 1000000,
+      "max_output_tokens": 384000,
+      "selector": "opencode-go/deepseek-v4-flash",
+      "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/deepseek-models.json",
+      "source_sha256": "43897d8cc810ef5d1738511c5bab5bec2b0ae38ba03acc365faab286b2036bdb"
+    },
+    "pricing_basis": "preserved_2026-09-08",
+    "astra_service_tier": "default",
+    "deepseek_valuation": "peak_tariff_upper_bound_includes_auxiliary_receipts_conservatively",
+    "semantics": "Observed priced categories plus outstanding response reservations; cancel at threshold; retain unknown/interrupted liability; in-flight uncertainty disclosed; no native Goal tokenBudget monetary mapping."
+  },
+  "note": "Root sets preflight_passed true only after targeted independent review and publication. No monetary certification assertion.",
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/audit/monitored_cost_review.json",
+    "sha256": "b534338be2e41787eacfabffc013c899cf8a8f33cfc20b8882457fb65723ebf1"
+  },
+  "root_verified_at": "2026-09-11T03:51:04.775891+00:00"
+}

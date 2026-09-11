@@ -1,0 +1,16 @@
+{
+  "mode": "monitored_priced_usage",
+  "astra_response_reservation_usd": 35.85,
+  "deepseek_response_reservation_usd": 0.94688,
+  "deepseek_metadata": {
+    "context_window": 1000000,
+    "max_output_tokens": 384000,
+    "selector": "opencode-go/deepseek-v4-flash",
+    "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/deepseek-models.json",
+    "source_sha256": "43897d8cc810ef5d1738511c5bab5bec2b0ae38ba03acc365faab286b2036bdb"
+  },
+  "pricing_basis": "preserved_2026-09-08",
+  "astra_service_tier": "default",
+  "deepseek_valuation": "peak_tariff_upper_bound_includes_auxiliary_receipts_conservatively",
+  "semantics": "Observed priced categories plus outstanding response reservations; cancel at threshold; retain unknown/interrupted liability; in-flight uncertainty disclosed; no native Goal tokenBudget monetary mapping."
+}

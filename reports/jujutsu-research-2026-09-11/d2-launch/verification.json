@@ -1,0 +1,24 @@
+{
+  "schema": "jujutsu.launch_verification.v1",
+  "verified_at": "2026-09-11T03:51:04.775891+00:00",
+  "d1_commit": "179c7a0ee673d66a984037b68dc974ee15228bdd",
+  "freeze_sha256": "84c1cb7b2472878ff25a555f855774549aed99d8ed9b89da31163a7fbdd6cf2c",
+  "all_reviewed_source_hashes_match": true,
+  "same_case_brief_navigation_protocol": true,
+  "case_path_resolves_to_original_d1_case": true,
+  "run_paths": {
+    "premium": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-premium-20260911",
+    "hybrid": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-hybrid-20260911"
+  },
+  "run_descriptor_hashes": {
+    "premium": "b1cfc4a067fa7d1ed28630dde782392b844825cfa7e790248a2220850d3b9d39",
+    "hybrid": "e07d5b327325855608a0f960ef0f9535c613d3fe3c219f792c105a7bb1afdecd"
+  },
+  "non_arm_observed_standard_usd": 39.715357999999995,
+  "operational_non_arm_reserve_usd": 2,
+  "cash_usd": null,
+  "unreported_usage_usd": null,
+  "campaigns_launched_at_receipt": 0,
+  "human_waiting_seconds": 65,
+  "native_goal_status_note": "The native Goal remained blocked after user clarification because the exposed tools have no resume status. Authorized work continues manually toward the unchanged D1-D4 completion point; external cumulative processing time and usage remain authoritative for caps."
+}

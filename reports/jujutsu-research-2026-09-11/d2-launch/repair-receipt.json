@@ -1,0 +1,60 @@
+{
+  "status": "PASS_OPERATIONAL_MONITORED_COST_READY_FOR_ROOT_LAUNCH",
+  "implementation_started_at": "2026-09-11T03:32:13.330491+00:00",
+  "implementation_closed_at": "2026-09-11T03:49:42.581294+00:00",
+  "wall_elapsed_seconds": 1049.250803,
+  "recorded_human_wait_seconds": 65,
+  "processing_elapsed_seconds": 984.2508029999999,
+  "deadline": "2026-09-11T03:52:13.330491+00:00",
+  "within_original_deadline": true,
+  "tests_passed": 19,
+  "independent_focused_tests_passed": 7,
+  "paid_calls_in_repair": 0,
+  "campaigns_launched": 0,
+  "owned_processes_running": 0,
+  "final_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze.json",
+    "sha256": "84c1cb7b2472878ff25a555f855774549aed99d8ed9b89da31163a7fbdd6cf2c"
+  },
+  "cost_policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/cost_policy.json",
+    "sha256": "c77700eb32b4af384b22e07e68d333cbe5c697a26ed6be4ac87867bb12ed12a8"
+  },
+  "test_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/test-results-final.txt",
+    "sha256": "fe37fd806c4d601e011f4b0931d6e0a323240c63c409cb75be39a0c3b4335436"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/audit/monitored_cost_review.json",
+    "sha256": "b534338be2e41787eacfabffc013c899cf8a8f33cfc20b8882457fb65723ebf1"
+  },
+  "launch_instructions": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/LAUNCH.md",
+    "sha256": "4a0cba80a7525981ece525852aaec41afece9a53c0c994ed54d79ed06c501a19"
+  },
+  "run_descriptors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-premium-20260911/run.json",
+      "sha256": "b1cfc4a067fa7d1ed28630dde782392b844825cfa7e790248a2220850d3b9d39"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-hybrid-20260911/run.json",
+      "sha256": "e07d5b327325855608a0f960ef0f9535c613d3fe3c219f792c105a7bb1afdecd"
+    }
+  ],
+  "historical_preflight_archive": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/pre-change-protocol/freeze.json",
+    "sha256": "570abec19007627eb77b548bebf0122316a495f7cf09ded22f1bb23f368dae9c"
+  },
+  "historical_publication": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/publication/bundle_manifest.json",
+    "sha256": "ecd64eb4f9ffc34f828f3298507913ba698a08750238d733e7500fea1da64de9"
+  },
+  "semantics": "External priced-usage watchdog under original cumulative monetary caps. Native Goal tokenBudget is not a dollar meter. Retained in-flight uncertainty is disclosed; provider-proof certification gate removed as an added requirement.",
+  "root_handoff": [
+    "Accept review and publish successor",
+    "Flip launch-gate and refresh audited standard-tier non-arm allowance",
+    "Start allowance daemon and launch premium then hybrid sequentially",
+    "Preserve cumulative journals and partial leads on every stop"
+  ]
+}
