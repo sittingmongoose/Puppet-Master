@@ -265,6 +265,109 @@
       "checkpoint": "reports/packet-gap-closure-20260910/r5-audit-checkpoint-20260911.json"
     }
   ],
+  "post_rebase_verification": {
+    "commit": "aed58f4fceaa4f88fd1d9f4cf3cd7de8d1b3bbac",
+    "onto_commit": "c1108a4f1a478e17addb5c5291493c1b0fed2239",
+    "focused_tests": {
+      "passed": 21,
+      "total": 21
+    },
+    "shards": "pass",
+    "captures": [
+      {
+        "label": "rebase-auth",
+        "exit_code": 0,
+        "input_count": 7018,
+        "input_drift_count": 0,
+        "started_at": "2026-09-11T21:18:59.659019+00:00",
+        "finished_at": "2026-09-11T21:19:24.544062+00:00",
+        "files": [
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-auth/summary.json",
+            "sha256": "c809eb796a9465b024c86c93fb579a354402cc7ab7de5289e4eac55c1ad3a14f"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-auth/stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-auth/stderr.log",
+            "sha256": "9e9acef7a87846355b066d31592ebf0410292f9c09f08266e3144e1cdfff378a"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-auth/input-hashes-before.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-auth/input-hashes-after.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          }
+        ]
+      },
+      {
+        "label": "rebase-holding",
+        "exit_code": 0,
+        "input_count": 7018,
+        "input_drift_count": 0,
+        "started_at": "2026-09-11T21:19:00.979229+00:00",
+        "finished_at": "2026-09-11T21:19:03.465215+00:00",
+        "files": [
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-holding/summary.json",
+            "sha256": "a527d74610c54d20203d7d4ffa76c527e432b9266aed6128eba889ca03d2c43c"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-holding/stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-holding/stderr.log",
+            "sha256": "3b53a855c12293d0ce01667219f9e36f7994bbc05376ad7856514fa77f151e6c"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-holding/input-hashes-before.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-holding/input-hashes-after.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          }
+        ]
+      },
+      {
+        "label": "rebase-shards",
+        "exit_code": 0,
+        "input_count": 7018,
+        "input_drift_count": 0,
+        "started_at": "2026-09-11T21:19:02.367767+00:00",
+        "finished_at": "2026-09-11T21:19:11.046529+00:00",
+        "files": [
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-shards/summary.json",
+            "sha256": "93c62d1d03b6ed59e5da2df917d53487ae7683b50075ea10dd84152872540434"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-shards/stdout.log",
+            "sha256": "ade9b7ec57bd6b371388f3ce4a002b3f338e79d4c64a10ecdfdc5fab7f95fd97"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-shards/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-shards/input-hashes-before.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          },
+          {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/validator-repair-20260911-55vQ142f/rebase-shards/input-hashes-after.json",
+            "sha256": "efebb99f29914b22846b7948e15be0a5c6adf1113435956ce0beae3ca1d26d33"
+          }
+        ]
+      }
+    ],
+    "full_suite_and_run_gates_rerun": false,
+    "qualification": "The 566-test and 36-gate results above remain frozen to 76553452 plus the three implementation files. Current main added generic EventRecord checkpoint and peer concept work. The auth/holding implementation, tested contract/fixture inputs and DL-039/SIR-031 owner passages were unchanged across the rebase. No global result is restamped."
+  },
   "boundaries": {
     "canonical_plans_changed": false,
     "concepts_changed": false,
