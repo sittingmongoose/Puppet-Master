@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.assurance.event_authority.append_receipt_custody_gap.v1",
+  "status": "NORMATIVE_RECOVERY_PREREQUISITE_REOPENED",
+  "source_head": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+  "root_review_head": "36a5568ee239eac7c21d034f2034c0fa0e206a39",
+  "source_currentness": "Cited canonical owner and registry bytes remain exact at root_review_head. Subsequent commits touch unrelated reports, .gitignore and the Forge provider fixture gate.",
+  "finding": "Exact first eleven-field AppendReceipt custody is not specified across durable append followed by crash before domain terminal capture; derived four-field dedupe results cannot reconstruct original acknowledgment time/group/manifest.",
+  "scope": "Receipt-dependent recovery obligations; no blanket claim that every family facet failed. Previously reported normative completeness for restore_point.created and workspace.layout_changed is qualified by this newly identified shared prerequisite.",
+  "sources": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 20585,
+      "line_end": 20590,
+      "file_sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+      "span_sha256": "c5cfaf0743e7011c6163c9a901bbda03575bc37db7cf349a9c8ea18bd986ea19"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "line_start": 17043,
+      "line_end": 17065,
+      "file_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+      "span_sha256": "9df266dc34fa25bc9e78b7cf6150023113ed8f702403e9baedd6e0ff61d38b96"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "line_start": 20701,
+      "line_end": 20707,
+      "file_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+      "span_sha256": "59f16a1973b02e000761eaa736860971863c85f5e94a51645e93855da79b333f"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21269,
+      "line_end": 21277,
+      "file_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+      "span_sha256": "da489cc68006ebcc7fb5011007226fe6ba9036e65561ab7056e9d9b4fd2feb9f"
+    }
+  ],
+  "independent_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-custody-owner-audit-20260911/report.json",
+    "sha256": "558c998f3d69e2d9d2cfb77217b51745f158b58f9ce5065ced5bdd755c33e18f",
+    "manifest_sha256": "348a15f5786f78e01dc052147e85524c741485892b82e94cd201e47a4f93ed53"
+  },
+  "root_review_current_source": "Root re-read the cited owner passages and both closed derived dedupe family definitions. Their authority and recovery classes cannot silently retain a nonrebuildable first acknowledgment.",
+  "proposed_resolution": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-custody-proposal-v2-20260911/proposal.md",
+    "sha256": "e806424dbfa8a055361c1fe13c3682a4ed7d7c7c38d224abea00e910c4558299",
+    "manifest_sha256": "0caec80df8e45f530ab1d38f4fe438485a9240d9c18d38734003785a73f1b64d",
+    "root_adjudication": "Narrow CURRENT durable-group terms plus one canonical issued-receipt family may close the already specified recovery duty under DL-045. Reuse RP-EVENT-IDENTITY-APPROOT only with its unchanged existing semantic-identity lifetime. Concrete schemas, ordering, activation and per-family adoption remain unlanded.",
+    "canonical": false,
+    "new_product_or_retention_policy": false
+  },
+  "distinct_read_phase_gap": "Already authenticated immutable domain terminal custody may support later reads after old transient transaction controls retire. Initial admission must still check those actual controls. Restore-created reader phase qualification and the staged expiry/delete pair are under correction.",
+  "unproven": [
+    "concrete normative receipt closure",
+    "native fsync/source/redb/authentication/crash behavior",
+    "frozen-validator DEPTH_PASS",
+    "overall Step 8 or Step 9 completion"
+  ],
+  "canonical_contracts_changed": false,
+  "event_registry_changed": false,
+  "validator_changed": false,
+  "governance_sealed": false
+}

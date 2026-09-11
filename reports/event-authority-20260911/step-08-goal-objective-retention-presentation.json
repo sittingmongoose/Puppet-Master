@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.assurance.event_authority.goal_objective_retention_presentation.v1",
+  "decision_id": "EA-S08-GOAL-OBJECTIVE-RETENTION",
+  "status": "PRESENTED_UNANSWERED",
+  "presented_at_utc": "2026-09-11T23:03:19.781918Z",
+  "source_head": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+  "owners": [
+    "Plans/Goal_Runtime_System.md",
+    "Plans/storage-plan.md"
+  ],
+  "card": "reports/event-authority-20260911/step-08-goal-objective-retention-card.md",
+  "frozen_pre_presentation_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-objective-retention-card-20260911/goal-objective-retention-card.md",
+    "sha256": "d3ac058594a52ea5231ebb1653d85b38ae3bf7898f5c90a3ba8a461208d35c67"
+  },
+  "frozen_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-objective-retention-card-20260911/manifest.json",
+    "sha256": "030203e96e955bb9dd482664970d5fce8140b734dbbf49debdbde3a10b1df8ce"
+  },
+  "response": null,
+  "response_id": null,
+  "responded_at_utc": null,
+  "dependent_work": "GoalRecordV2 current objective and accepted revision body custody remains held for the selected retention/deletion policy. Independent technical contracts may continue.",
+  "not_inferred": [
+    "prior bounded technical approval",
+    "continue or keep-going instructions",
+    "lack of a reply",
+    "an unanswered source draft"
+  ],
+  "policy_changed": false,
+  "event_admitted": false,
+  "governance_sealed": false
+}
