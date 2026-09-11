@@ -3736,10 +3736,10 @@ BROWSER_COMMAND_EXPECTED_EVENTS = {
     "cmd.browser.detach_browser_tab": ["browser.session.state_changed"],
     "cmd.browser.pick_element_for_chat": ["browser.context_captured"],
     "cmd.browser.add_selection_to_chat": ["browser.context_captured"],
-    "cmd.browser.add_selection_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
-    "cmd.browser.add_selection_full_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
-    "cmd.browser.add_screenshot_to_chat": ["runtime_artifact.created"],
-    "cmd.browser.add_full_screenshot_to_chat": ["runtime_artifact.created"],
+    "cmd.browser.add_selection_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.screenshot"],
+    "cmd.browser.add_selection_full_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.screenshot"],
+    "cmd.browser.add_screenshot_to_chat": ["runtime_artifact.screenshot"],
+    "cmd.browser.add_full_screenshot_to_chat": ["runtime_artifact.screenshot"],
     "cmd.browser.share_with_agent": ["browser.context_shared"],
     "cmd.browser.revoke_share_with_agent": ["browser.context_share_revoked"],
     "cmd.browser.take_over": ["browser.session.takeover_state_changed"],
@@ -6495,7 +6495,7 @@ def cmd_validate_browser_event_admission(args: argparse.Namespace) -> dict[str, 
 
 
 def cmd_validate_testing_session_event_admission(args: argparse.Namespace) -> dict[str, Any]:
-    """Check four existing session events without promoting native/global closure."""
+    """Check four candidate contracts and DL-039 non-admission, not native proof."""
     validator = ROOT / "scripts" / "pm-testing-session-event-admission.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
     proc, timeout_report = run_validator_subprocess(
@@ -6511,7 +6511,7 @@ def cmd_validate_testing_session_event_admission(args: argparse.Namespace) -> di
 
 
 def cmd_validate_github_project_integration(args: argparse.Namespace) -> dict[str, Any]:
-    """Check the existing GitHub/Project handoff without granting native proof."""
+    """Check GitHub/Project joins and emit-only non-admission, not native proof."""
     validator = ROOT / "scripts" / "pm-github-project-integration.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
     proc, timeout_report = run_validator_subprocess(
@@ -7010,6 +7010,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         server_command_gap=compact_gate_report(check_map["server_command_gap"]),
         forge_backup_acceptance=compact_gate_report(check_map["forge_backup_acceptance"]),
         browser_event_admission=compact_gate_report(check_map["browser_event_admission"]),
+        testing_session_event_admission=compact_gate_report(check_map["testing_session_event_admission"]),
+        github_project_integration=compact_gate_report(check_map["github_project_integration"]),
         ui_command_response=compact_gate_report(check_map["ui_command_response"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),

@@ -474,14 +474,17 @@ be substituted. The central response joins the actual request digest, instance,
 operation/Server, idempotency key, result digest and registration receipt.
 
 The Full Thread creation operation remains application-scoped with null Project
-identity even after its result returns a Project. `project.github_repo_bound` is
-a Project-scoped child projection of that same operation, not an identity rewrite.
-`ProjectRegistry.forge_registration` emits it once after committed registration
-and verified readback. Its closed payload contains identity/fence/digest/receipt
+identity even after its result returns a Project. The candidate `project.github_repo_bound`
+payload describes a Project-scoped child fact of that same operation, not an identity
+rewrite. `ProjectRegistry.forge_registration` owns its send-only obligation after
+committed registration and verified readback. Its closed payload contains identity/fence/digest/receipt
 metadata only; the envelope Project ID equals the actual result. It joins GI-042
-intake by operation ID, original request digest and admission receipt. Payload,
-retention and replay consume row 1 of `Plans/github_project_event_admission.json`
-and the existing Case L EventRecord store. No second ProjectRecord/store is created.
+intake by operation ID, original request digest and command-intake admission receipt.
+Row 1 of `Plans/github_project_event_admission.json` records the DL-039 emit-only,
+`quarantined_not_admitted` disposition. It grants no EventRecord registration,
+append, retention assignment, replay/projection or checkpoint authority. Even valid
+candidate deliveries leave identity/checkpoint state unchanged. Project commit and
+its owner receipts remain governed separately; no second ProjectRecord/store is created.
 
 Rejected/cancelled registration publishes no half-listed Project and proves the
 registry unchanged by this operation. A stale request may return the actual
@@ -503,7 +506,7 @@ plan_unit_id: PJCT-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_System.md
-canonical_text: The existing new-GitHub-Project command joins GI-042 intake to the existing Project action family, an application-scoped creation operation, verified owner receipts and atomic listed Project readback; only that committed result emits the Project-bound event.
+canonical_text: The existing new-GitHub-Project command joins GI-042 intake to the existing Project action family, an application-scoped creation operation, verified owner receipts and atomic listed Project readback; the Project-bound candidate payload follows that committed result but remains an emit-only, unadmitted obligation under DL-039.
 gui_related: false
 gui_classification_reason: Owner request/result, identity, receipt and event integration without presentation changes.
 depends_on: [PJCT-001, PJCT-002, PJCT-007, GI-042]
@@ -511,7 +514,8 @@ unblocks: []
 acceptance_criteria:
 - No provisional Project ID, acknowledgement-as-success, foreign readback, changed return context, missing receipt or unresolved remote effect is accepted as completion.
 - Existing command, sole planned handler, typed family and placement remain; exact retries preserve original identity and execute no effects.
-- The Project-bound event joins the original application-scoped operation without changing that operation's identity.
+- The Project-bound candidate joins the original application-scoped operation without changing that operation's identity or granting persisted-event admission.
+- EventRecord append/replay remains denied under DL-039 without identity consumption or checkpoint/projection changes, independently of candidate validity and command-result retry.
 - Static validation grants no native availability, runtime proof, readiness, WorkNodes or governance certification.
 validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/github_project_event_payloads.schema.json, Plans/github_project_event_fixtures.json, scripts/pm-github-project-integration.py, tests/test_pm_github_project_integration.py]
 risk_class: premature_project_publication_or_duplicate_remote_effect
@@ -519,7 +523,7 @@ reasoning_tier: high
 context_scope: existing_github_project_creation_handoff
 implementation_surfaces: [Plans/Project_System.md, Plans/GitHub_Integration.md, Plans/Wiring_Matrix.production.json, scripts/pm_project_forge_contract.py, scripts/pm_ui_command_response.py]
 node_compile_hint: {mode: static_owner_integration_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Project_System.md#3-actions-commands-and-results, Plans/GitHub_Integration.md#GI-032, Plans/Wiring_Matrix.production.json#/entries/catalog.project_new_github_repo]
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Project_System.md#3-actions-commands-and-results, Plans/GitHub_Integration.md#GI-032, Plans/Wiring_Matrix.production.json#/entries/catalog.project_new_github_repo]
 negative_constraints: [No fake Project identity., No consumer-owned Project writer., No automatic repository deletion or duplicate create., No Onboarding or Settings design change., No native or global audit closure claim.]
 ```
 

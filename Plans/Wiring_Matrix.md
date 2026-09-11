@@ -4700,10 +4700,13 @@ rows remain `partial`. This correction is not native handler, runtime, visual,
 security, whole-packet audit completion, WorkNode, readiness or governance proof.
 Event obligations remain separate: a typed command binding cannot admit an event.
 The eight session placements additionally consume ATS-049 through their exact
-`Plans/testing_session_event_admission.json` row. Only the committed owner transition
-emits its registered event; pending, no-op, refused/failed/cancelled, unknown-effect
+`Plans/testing_session_event_admission.json` row. Its closed candidate payload
+describes only the committed owner transition; pending, no-op, refused/failed/cancelled, unknown-effect
 and command replay results emit none. Other Testing/recording event dispositions
-are unchanged, and static event admission does not supply a native producer.
+are unchanged. DL-039 keeps these four send-only obligations `quarantined_not_admitted`:
+there is no registered-event append, replay/projection, identity consumption or
+checkpoint advance, even for valid candidates. Static contracts do not supply a
+native producer or change the fixed54 holding receipt.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-004, ContractName:Plans/Commands_System.md
 
@@ -4712,9 +4715,12 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractNam
 `catalog.project_new_github_repo` retains `cmd.project.new_github_repo`, its sole
 planned `handlers::github::project_new_repo`, existing selector/disabled projection
 and one placement. Request/result refs now resolve the existing Project action
-family, consuming GI-042 / PJCT-008. Its event effect binds exact rows 0/1 in
+family, consuming GI-042 / PJCT-008. Its send-only event obligations bind exact rows 0/1 in
 `Plans/github_project_event_admission.json`: application-scoped approved intake
 first, actual Project-scoped committed/readback binding only after owner success.
+Both remain `quarantined_not_admitted` under DL-039; candidate validity does not
+authorize EventRecord append, admitted-event replay, dedupe identity consumption,
+projection or checkpoint advance. Retention/storage metadata remains proposed only.
 Generic click-emits-both assertions are superseded; pending, rejection, cancellation,
 unknown effects and replay cannot fabricate Project completion. The central
 response joins the existing application-scoped operation to its owner result,
@@ -4726,4 +4732,4 @@ This is one repaired consumer, not a new command or row. The inventory remains
 native owner dispatch, authenticated receipt resolution and runtime evidence are
 absent; none of these counts establishes whole-inventory integration closure.
 
-ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Commands_System.md
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Commands_System.md
