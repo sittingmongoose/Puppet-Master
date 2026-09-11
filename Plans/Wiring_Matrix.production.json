@@ -3174,6 +3174,8 @@
         "Negative path is enforced: no local upload engine.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (FOLDER-001, FOLDER-004): semantic_kind file|folder is part of the typed request, and picker, drag-and-drop and File Manager reference paths converge on this one command. A folder carries a bounded manifest -- exact root identity, entries/hash policy, exclusions, permissions, materialization status -- and is never recursively dumped into a prompt.",
+        "File Manager Add to Assistant Chat consumes this same primary row. Preserve the exact cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? } catalog signature as a file-only compatibility input; normalize to cmd.chat.attachment.add before permission, availability and dispatch, reject folder input, and preserve the invoked alias only as source identity. No peer production row, handler, schema, availability selector or receipt authority exists for the alias.",
+        "Prove both direct attachment.add and legacy file-reference entry points reach the same handlers::chat_attachments::attachment_add, exact result contract, target availability/disabled projection and reverse focus. Normalization creates no effect, folder input through the file-only alias fails before dispatch, and a required unadmitted effect event refuses mutation.",
         "Correction v4 (FOLDER-008): the folder manifest and any extracted content keep separate identities, so context selection never mutates the attachment, and a materialization receipt records what was included and omitted."
       ],
       "evidence_required": "Future production evidence for cmd.chat.attachment.add: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/FileManager.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-002. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-033) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
@@ -13785,67 +13787,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.catalog.update_item records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.chat_add_file_reference": {
-      "ui_element_id": "catalog.chat_add_file_reference",
-      "ui_location": "Assistant Chat surface",
-      "ui_command_id": "cmd.chat.add_file_reference",
-      "handler_location": "handlers::chat::add_file_reference",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.chat.add_file_reference must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.chat.add_file_reference must expose projected state selector and disabled reason before dispatch",
-        "cmd.chat.add_file_reference dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.chat.add_file_reference must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.add_file_reference must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Correction v4 (FOLDER-002..003): this row is a file-only compatibility alias that normalises to cmd.chat.attachment.add. It rejects semantic_kind folder, and no second handler, event or storage family exists for folders. Its former global statement that folder references are out of scope is retired."
-      ],
-      "evidence_required": "Production wiring contract for cmd.chat.add_file_reference; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Additive Correction v4 (CW-034) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
-      "state_selector": "state.commands.chat_add_file_reference.availability",
-      "disabled_reason_projection": "state.commands.chat_add_file_reference.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.add_file_reference has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.chat.add_file_reference.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_add_file_reference exposes a stable role/name/description matching cmd.chat.add_file_reference.",
-        "keyboard_access": "catalog.chat_add_file_reference is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_add_file_reference preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_add_file_reference surfaces state.commands.chat_add_file_reference.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.chat_add_file_reference.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.chat.add_file_reference reaches handlers::chat::add_file_reference with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.chat_add_file_reference.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.chat_add_file_reference.availability and disabled copy reads state.commands.chat_add_file_reference.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.chat_add_file_reference.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.add_file_reference has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.chat_add_file_reference.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.correction_v4.chat_add_file_reference.file_alias_rejects_folder",
-          "evidence_kind": "state_projection",
-          "requirement": "Negative path. Prove the alias refuses a folder with a typed error and that a folder added through the shared command produces the same single attachment effect."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.chat.add_file_reference records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.chat_apply_code_block": {
