@@ -1,18 +1,18 @@
 # Shard Index: Plans/Decision_Log.md
 
-Generated: 2026-09-11T16:33:23Z
+Generated: 2026-09-11T17:00:06Z
 
-Source SHA256: `dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734`
+Source SHA256: `815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `7e72a2eeaa1f11590a18aad4cf13b1b919922edb1ff97e6f6b72c5e8304966af`
-- [002 - Purpose](002-purpose.md) L6-L11 `dee03a8bef0403e35c783ac94b20fd266aa56763b00287dc574b225dd3c41eb6`
-- [003 - Entries](003-entries.md) L13-L455 `096b3a7ab277aaa6a2840d4325ef6ee5cafcf5cf94c82c49b911bf385e60aafa`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L457-L461 `4ad43e21eacc247629a10cca4d69c0fd823159c5189621da2760005e9233b1dc`
-- [005 - PlanUnits](005-planunits.md) L463-L2747 `1c8d9a9c5ccb6d714c281362b1197c7aaeaf3d5591915482ae0707338565d7a8`
-- [006 - Migration Coverage](006-migration-coverage.md) L2749-L2759 `e822404dbfe40fc80b3d20b75891a03637e37eb0c29007f23b6de06341028023`
-- [007 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2761-L2768 `ed21ad843c79ed5f60ee2a3972698a0a65807267bf4fc8e1d9aa722c0062462b`
-- [008 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2769-L2775 `7597526e073bb1fe59d2d8d01e3366374c208934da01fd2c5fbd04b890afd8fd`
+- [001 - Preamble](001-preamble.md) L1-L4 `b60bfb742bf4f2be0439b5877013c6413e43b772cf761ec4a03321ff4e0b8b2f`
+- [002 - Purpose](002-purpose.md) L6-L11 `301af179518258fef01cb8d1ad73e64891286f80023a203e6ff429189787c455`
+- [003 - Entries](003-entries.md) L13-L538 `f7fca01ff4e7cef114e9af6ea1ded14feb42980e287d8fcc73d9a2df319e4991`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L540-L544 `0efd7b0921a639af66eded202792ec9810d20370f9c62dd1182f73583a8b052c`
+- [005 - PlanUnits](005-planunits.md) L546-L2900 `8b3e7721088630e44d2f2fa6b1d9d9ed57e9cf306f34fbb3a99efdbc5aecab4b`
+- [006 - Migration Coverage](006-migration-coverage.md) L2902-L2912 `cbf4566fca2d0b46e65be8691dc1c51ad8e09bcc7da97eb92e543cc33294fb34`
+- [007 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2914-L2921 `8fb43c70a250b27aec5ec0c7ab7b19110e8658009c852ae271900cd9888acd70`
+- [008 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2922-L2928 `3ab26f338ad84aead201cddda119a0884753e33edc07b7d23bb3510461be24bd`

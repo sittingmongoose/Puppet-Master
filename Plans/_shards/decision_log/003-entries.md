@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L455
+Source lines: L13-L538
 
-Source SHA256: `dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734`
+Source SHA256: `815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f`
 
 ---
 
@@ -451,3 +451,86 @@ Preserve existing `chat.plan_todo_updated` records as readable history under the
 This approves the migration direction and owner reconciliation. It does not admit any event, supply missing binding identifiers, guarantee historical payload conformance, settle a new retention policy, or prove native execution. Atomic visibility, payload schemas, replay and identity bindings remain required before the corresponding future events can emit. Existing unregistered historical spellings cannot serve as a fallback writer.
 
 ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### DL-043: Jujutsu research decisions — 44 answers to the 11 September packet
+
+Approved on 2026-09-11 by Jared in conversation, answering the plain-language decision packet published by the Jujutsu research goal (`reports/jujutsu-research-2026-09-11/d3/decision-packet.md`, SHA-256 `66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767`; technical companion SHA-256 `616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702`). The source records the calendar date but not an exact UTC instant; this entry does not invent one. Card numbers J01–J44 follow the reviewer's grouped sheet; D-identifiers are the companion's decision ids. Every answer is quoted verbatim from the option or recommendation Jared chose. This grouped entry records exactly forty-four dispositions:
+
+**Operation history and recovery.**
+
+- `J01` / `D002` Named history markers — Add named markers on existing checkpoints (accepted for planning)
+- `J02` / `D003` Grouped history actions — Group display and provide verified group undo (accepted for planning)
+- `J03` / `D004` Recent actions and redo — Add recent actions and supported redo (accepted for planning)
+- `J04` / `D005` Filter operation history — Add simple action and time filters (accepted for planning)
+- `J05` / `D006` Readable operation descriptions — Add structured descriptions from existing receipts (accepted for planning)
+- `J06` / `D007` History storage maintenance — Diagnose growth and offer explicit maintenance (accepted for planning)
+- `J07` / `D042` Reverse one selected operation — Add a separately labeled reverse-selected-operation action (accepted for planning)
+- `J08` / `D043` Preview a rewrite before applying it — Add an explicitly managed rewrite preview and apply workflow (accepted for planning)
+- `J09` / `D044` Browse an earlier repository state — Add a clearly labeled earlier-state browsing mode (accepted for planning)
+- `J10` / `D037` Export operation diagnostics — Add explicit sanitized export (accepted for planning)
+- `J11` / `D038` View source-control commands — Add an optional technical log view (accepted for planning)
+
+**Editing changes.**
+
+- `J12` / `D010` Combine divergent versions — Add guided convergence when supported (accepted for planning)
+- `J13` / `D011` Duplicate a change — Add a duplicate action (accepted for planning)
+- `J14` / `D012` Create a merge change — Add a merge action (accepted for planning)
+- `J15` / `D013` Absorb edits into earlier changes — Add absorption with preview (accepted for planning)
+- `J16` / `D014` Back out a change — Add a back-out action (accepted for planning)
+- `J17` / `D015` Compare versions of a change — Add a version-to-version comparison (accepted for planning)
+- `J18` / `D016` Change evolution — Add a focused evolution view (accepted for planning)
+- `J19` / `D031` Edit history by dragging — Add previewed drag actions and keyboard equivalents (accepted for planning)
+- `J20` / `D019` Scriptable partial changes — Add a structured hunk selection interface (accepted for planning)
+
+**Workspaces and repositories.**
+
+- `J21` / `D001` Read-only repositories — Add a supported read-only browsing mode (accepted for planning)
+- `J22` / `D008` Adopt existing workspaces — Add an explicit adoption and repair flow (accepted for planning)
+- `J23` / `D009` Hide inactive workspaces — Add hide and unhide (accepted for planning)
+- `J24` / `D036` Very large repository backends — Defer specialized storage (declined or deferred)
+
+**Graph, comparison and review views.**
+
+- `J25` / `D029` Prioritize graph lanes — Add explicit lane priorities (accepted for planning)
+- `J26` / `D030` Help with history queries — Add native query assistance (accepted for planning)
+- `J27` / `D032` Keep comparison context visible — Add pinned comparison and selected-change details (accepted for planning)
+- `J28` / `D017` Line attribution and file history — Add bounded attribution and file history (accepted for planning)
+- `J29` / `D018` Review marks that survive edits — Add conservative matching with stale markers (accepted for planning)
+- `J30` / `D033` Review a workspace with AI — Use existing chat review workflows (declined or deferred)
+- `J31` / `D020` New line endings in mixed-ending text — Use the nearest existing line ending; preserve existing endings on ordinary Save. (policy set)
+- `J32` / `D021` Use an external diff or merge editor — Keep resolution inside Puppet Master (declined or deferred)
+
+**Publishing, forges and conflicts.**
+
+- `J33` / `D027` Publish unresolved conflicts — Block by default; add an advanced path only for qualified compatible targets. (accepted with the stated condition)
+- `J34` / `D028` Resolve a conflicted bookmark — Add a guided picker only if it clarifies rather than hides the target states. (accepted with the stated condition)
+- `J35` / `D039` Publish a stack of reviews — Add one explicitly supported forge workflow at a time. (accepted with the stated condition)
+- `J36` / `D040` Additional review services — Add only for a concrete user workflow and keep local history independent. (accepted with the stated condition)
+- `J37` / `D041` Custom actions around publishing — Keep publication within existing adapter behavior (declined or deferred)
+
+**Architecture and integrations.**
+
+- `J38` / `D022` How the adapter runs — Own a separate internal service (architecture choice)
+- `J39` / `D023` Reuse a diff library — Keep an independently owned diff implementation (declined or deferred)
+- `J40` / `D024` Connect external IDEs — Keep source-control interaction in Puppet Master (declined or deferred)
+- `J41` / `D025` Shared source-control service — Use existing owner services only (declined or deferred)
+- `J42` / `D026` Connect other agent tools — Keep existing internal agent routes (declined or deferred)
+
+**Backups.**
+
+- `J43` / `D034` Store or rebuild history indexes — Prefer rebuilding correctness-critical indexes in the isolated drill; keep captured indexes only as an optional speed aid. (policy set)
+- `J44` / `D035` Complete missing repository data — Add a separately authorized completion workflow (accepted for planning)
+
+Summary: 29 accepted for planning, 4 accepted with a stated condition, 2 policies set, 1 architecture choice, 8 declined or deferred.
+
+Jujutsu Integration owns adapter, history, workspace and change-editing behavior; Source Control owns the shared receipt and command contracts; FinalGUI owns visible history, graph and comparison surfaces; UI Command Catalog and Wiring own new actions; Backup and Restore owns index and completion policy; Contracts owns typed envelopes; Permissions and FileSafe own authorization and file safety where the accepted items touch them. Acceptance authorizes planning those items as PlanUnits under their owners; implementation follows the existing Approve And Build path. `J38` (own a separate internal service) and `J39` (independently owned diff implementation) follow the DL-035 direction that Puppet Master owns its own engine code; `J41` and `J42` mean no shared public service and no external agent surface are planned now.
+
+The one correction the same research produced, requiring a typed receipt on every terminal Jujutsu attempt (JJI-003), was landed separately under the existing repair authorization and is not a decision here.
+
+Negative constraints: no implementation, WorkNodes, or NodeSeeds from this record; no third-party diff library or embedded third-party source-control library in the adapter; no external IDE client, shared multi-repository service, or MCP source-control surface is planned; declined and deferred items stay recorded and are never re-asked; nothing under `reports/` is canon.
+
+These dispositions authorize planning only. They do not land any owner amendment, prove runtime behavior, or seal governance.
+
+SourceRef: `reports/jujutsu-research-2026-09-11/d3/decision-packet.md`; `reports/jujutsu-research-2026-09-11/d3/technical-companion.json`; Jared, conversation of 2026-09-11.
+
+ContractRef: ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md

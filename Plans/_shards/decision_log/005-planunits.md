@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L463-L2747
+Source lines: L546-L2900
 
-Source SHA256: `dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734`
+Source SHA256: `815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f`
 
 ---
 
@@ -2169,6 +2169,76 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
+```
+
+### DL-043 - Jujutsu Research Decisions Forty Four Answers
+
+```yaml
+plan_unit_id: DL-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jujutsu research decision record of 2026-09-11 answering the 44-card packet:
+  29 optional capabilities accepted for planning, four accepted with a stated
+  condition, two policies set (nearest existing line ending for new lines;
+  rebuild correctness-critical history indexes in the isolated restore drill),
+  one architecture choice (the Jujutsu adapter is a separately owned internal
+  service), and eight declined or deferred (specialized storage, a dedicated AI
+  workspace review, external diff or merge editors, custom publishing hooks, a
+  reusable diff library, external IDE clients, a shared multi-repository service,
+  and an external agent-tool surface).
+gui_related: true
+gui_classification_reason: Most accepted items are visible history, graph, comparison and workspace surfaces; the adapter and diff choices are non-GUI.
+split_recommended: false
+depends_on: [DL-035]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry records exactly forty-four dispositions J01 through J44 with the companion decision ids D001 through D044 and the verbatim chosen option, and no additional decision.
+  - Each accepted or conditionally accepted item is planned as a PlanUnit under its owner before any implementation, and execution follows the existing Approve And Build path.
+  - The research agent fills the answer field of every decision in the technical companion from this record in deliverable 5.
+  - Declined and deferred items stay recorded and are not re-asked.
+validation_surfaces:
+  - PlanUnit YAML parse and identifier-uniqueness check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: jujutsu_research_decision_drift
+reasoning_tier: high
+context_scope: jujutsu_research_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Backup_Restore_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: jujutsu_research_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/jujutsu-research-2026-09-11/d3/decision-packet.md:66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767
+  - reports/jujutsu-research-2026-09-11/d3/technical-companion.json:616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702
+  - Plans/Decision_Log.md:DL-043-approval-2026-09-11
+preserved_exact_tokens:
+  - Own a separate internal service
+  - Keep an independently owned diff implementation
+  - Use existing owner services only
+  - Keep existing internal agent routes
+  - Block by default
+  - nearest existing line ending
+  - Approve And Build
+negative_constraints:
+  - No implementation, WorkNodes, or NodeSeeds are created by this record.
+  - No third-party diff library and no embedded third-party source-control library are adopted into the adapter.
+  - No external IDE client, shared multi-repository service, or external agent-tool surface is planned by this record.
+  - Declined and deferred items are never re-asked.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
+  - Plans/FinalGUISpec.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

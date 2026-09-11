@@ -5064,12 +5064,13 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 19,
-        "True": 20
+        "True": 21
       },
-      "heading_count": 82,
+      "heading_count": 84,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
+        "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
@@ -5083,6 +5084,7 @@
         "Plans/GitHub_Integration.md",
         "Plans/Glossary.md",
         "Plans/Goal_Runtime_System.md",
+        "Plans/Jujutsu_Integration.md",
         "Plans/Models_System.md",
         "Plans/Multi-Account.md",
         "Plans/OpenCode_Deep_Extraction.md",
@@ -5099,6 +5101,7 @@
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "Plans/Server_System.md",
         "Plans/Settings_System.md",
+        "Plans/Source_Control_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/UI_Wiring_Rules.md",
         "Plans/Wiring_Matrix.md",
@@ -5116,9 +5119,9 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json"
       ],
-      "line_count": 2775,
+      "line_count": 2928,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 39,
+      "plan_unit_count": 40,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5158,6 +5161,7 @@
         "DL-037",
         "DL-038",
         "DL-039",
+        "DL-043",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5189,6 +5193,7 @@
         "graph_governance_semantics_drift",
         "graph_patch_lineage_loss",
         "help_cluster_alias_drift",
+        "jujutsu_research_decision_drift",
         "lane_cleanup_retention_loss",
         "migration_lineage",
         "navigation_primitive_boundary_drift",
@@ -5205,16 +5210,16 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734",
+      "sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 39
+        "accepted": 40
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 36
+        "requirement": 37
       },
       "validation_surfaces": [
         "Owner/consumer source-to-decision review",
@@ -18384,7 +18389,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T16:35:09Z",
+  "generated_at_utc": "2026-09-11T17:00:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18393,12 +18398,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3334,
-      "True": 3106
+      "True": 3107
     },
-    "plan_unit_count": 6440,
+    "plan_unit_count": 6441,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6249,
+      "accepted": 6250,
       "retired": 182,
       "superseded": 9
     },
@@ -18465,7 +18470,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5142,
+      "requirement": 5143,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
