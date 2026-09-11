@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19626-L19772
+Source lines: L19644-L19808
 
-Source SHA256: `c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c`
+Source SHA256: `bd792465f98c1df89daa7d452458b2c9ae38de7c42f225886d3bc21ee32a17d6`
 
 ---
 
@@ -87,16 +87,23 @@ Only `reader.chat.restore_point_history` and `reader.runtime_artifacts.restore_p
 
 ### SP-281 — Restore-point created custody and checkpoint
 
+**Versioned successor qualification.** The surrounding predecessor v1 consumer/projector/checkpoint definition and original stored digest meanings remain compatibility-only. Current v2 uses `pm.storage_value.restore_point_created_checkpoint.v2@2.0.0`, the existing consumer/projector IDs at2.0.0 and cursor projector_schema_version2.0.0 under the explicit SP-265/SP-281 successor contract. All named dependent reader successors are at2.0.0. Its actual supported successor transition archives exact old cores under the existing three-generation/hold rules, after complete source-range/currentness handoff; no version-string substitution upgrades an old value. Original native append evidence is separately typed/authenticated and may predate the current generic index anchor. See `Plans/event_index_consumer_adoption.schema.json#/$defs/restore_created_checkpoint_v2`.
+
 ```yaml
 plan_unit_id: SP-281
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage defines the restore-created projector and complete physical checkpoint and canonical
-  creation-companion families under DL-045. The logical read view reuses the verified existing EventRecord
-  index and rp values, with atomic current-generation checkpoint publication and separate native/historical
-  completion predicates. The disposable checkpoint follows RP-PROJECTION-3GEN exactly; canonical per-point
-  creation custody follows the existing restore-point release/hold/cap policy and mandatory-backup recovery.
+canonical_text: Storage selects pm.storage_value.restore_point_created_checkpoint.v2@2.0.0 at the existing
+  projector.checkpoint.restore_point_created.v1:{scope_partition} key. The same consumer/projector IDs
+  at 2.0.0 and explicitly adopted history, branch-preflight and Runtime Artifacts reader successors consume
+  the complete SP-278 source/index token after actual owner-admitted full rebuild. Original v1 values
+  and digest meanings remain compatibility-only, with exact nonrecursive v1/v2 retired cores under the
+  unchanged RP-PROJECTION-3GEN policy. Current native completion separately authenticates the original
+  creation publication/receipt and canonical record/companion transaction, which may predate the current
+  generic index generation. A matching current index anchor cannot replace original custody. Existing
+  native, supported historical and terminal-summary predicates, original capture/command hash recipes,
+  source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain unchanged.
   No sibling checkpoint or deferred family is borrowed.
 gui_related: false
 gui_classification_reason: This unit defines canonical custody, storage schemas and checkpoint mechanics.
@@ -106,11 +113,15 @@ depends_on:
 - SP-242
 - CV-320
 - DL-045
+- SP-278
 unblocks: []
 acceptance_criteria:
-- Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication identity; stale history never certifies currentness.
-- Typed terminal-summary traversal resolves the physical SP-269 value and its exact retired native custody set without requiring removed rp/companion bytes.
-- A complete lawful terminal-retention disposition independently permits passive traversal after covered point and companion removal; unexplained loss never selects this branch.
+- Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication
+  identity; stale history never certifies currentness.
+- Typed terminal-summary traversal resolves the physical SP-269 value and its exact retired native custody
+  set without requiring removed rp/companion bytes.
+- A complete lawful terminal-retention disposition independently permits passive traversal after covered
+  point and companion removal; unexplained loss never selects this branch.
 - Both physical rows include exact closed schemas, key/value joins, migration/recovery/retention metadata
   before use.
 - Checkpoint currentness proves full-index selection, source durability, contiguous source coverage and
@@ -121,11 +132,17 @@ acceptance_criteria:
   not require a fabricated companion.
 - The unchanged implementation-readiness physical-family count check may remain failing; no validator
   edit or count override is permitted.
+- Current v2 selection binds complete SP-278 anchor/frontier/source evidence; ordinary append changes
+  the current token while preserving old index-row birth anchors and filtered generation history.
+- Actual original native creation publication and canonical companion transaction bind the original receipt
+  independently of a later generic rebuild; self-consistent caller evidence cannot supply original authority.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
 - python3 scripts/pm-plans-verify.py run-gates
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -138,6 +155,7 @@ node_compile_hint:
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created

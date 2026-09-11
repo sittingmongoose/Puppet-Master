@@ -1,0 +1,694 @@
+{
+  "assessment_id": "EA-STEP08-RUN-CREATED-VERSIONED-INDEX-ADOPTION",
+  "assessed_at_utc": "2026-09-11T21:32:05.223169+00:00",
+  "base_commit": "b1c489e123cd8a775a5bcb8ca1d9b525b392e38e",
+  "status_meaning": "PASS means the individual normative owner contract explicitly supplies this facet. It is not native execution, frozen-validator depth clearance, readiness or governance certification.",
+  "families": [
+    {
+      "event_type": "run.started",
+      "family_id": "event-family-run-started",
+      "normative_contract_complete": true,
+      "open_generic_checkpoint_or_versioned_adoption_gap": false,
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "assessment": "Existing family and payload revision are explicit and unchanged.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "assessment": "Executor retains semantic admission; Storage owns the index/checkpoint; four read consumers have exact owners.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "producer": {
+          "status": "PASS",
+          "assessment": "Existing immutable runtime/start barrier plus new explicit mechanical identity and original-result reuse.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "assessment": "Current closed envelope and v2 payload reused without widening; snapshot must satisfy exact schema and joins.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "assessment": "Project partition, payload run/thread, storage instance and immutable runtime identity are cross-validated.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "assessment": "Retries preserve original durable identity; inclusive cursor resume and rebuild cannot repeat dispatch or accounting.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "retention": {
+          "status": "PASS",
+          "assessment": "Existing source and index policies are unchanged. Run checkpoint history is concrete at its same checkpoints-table key: current plus at most two finalized withdrawn predecessor cores, first-withdrawal retirement time, hold/ref-aware inclusive seven-day cleanup, and atomic slot reservation. V1 custody-bound identity makes no historical-birth claim.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "assessment": "Permission/tombstone checks, non-capability refs, quarantine and mandatory canonical-backup recovery prevent content or authority reconstruction.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "transitions": {
+          "status": "PASS",
+          "assessment": "Two ordered index/filter barriers; checkpoints cannot become lifecycle or execution authority.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "assessment": "Four explicitly adopted v2 readers share the current same-key v2 checkpoint after complete SP-278 source/index and immutable runtime-snapshot joins. The full current frontier token differs from old row birth provenance; no reader gains durable or execution effects.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "assessment": "Original v1 schemas and stored digest meanings remain exact compatibility-only inputs. Current v2 routing requires owner-admitted complete rebuild and atomic predecessor handoff; version substitution never upgrades old data. Current/withdrawn status, same-generation refresh, retained history and current-source authority remain separate.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "assessment": "The integrated successor passes six complete joined positives, forty schema-valid relational negatives, six typed retention cases, four slot/cleanup checks and two explicit compatibility-route pairs. The independent review separately passes 66 bounded checks. Previously authored native owner obligations remain NOT_RUN; static fixture witnesses are not runtime authority.",
+          "current_owner_units": [
+            "SP-265",
+            "EP-116",
+            "RGV-019",
+            "OP-036",
+            "UF-102",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-run-started-depth.json",
+            "sha256": "24455d21403847a310dd6557d887d8043dbe62fe0e5a184b2504a71663261a8c"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        }
+      },
+      "runtime_execution": "NOT_RUN",
+      "independent_validator_pass": false,
+      "seal_prerequisites_met": false
+    },
+    {
+      "event_type": "restore_point.created",
+      "family_id": "event-family-restore-point-created",
+      "normative_contract_complete": true,
+      "open_generic_checkpoint_or_versioned_adoption_gap": false,
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "assessment": "Existing event/family/payload/envelope versions remain exact and unchanged.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "assessment": "Chat retains creation semantics; Storage owns durable custody/currentness; explicit passive readers and delegated SIR outcome custody are bounded.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "producer": {
+          "status": "PASS",
+          "assessment": "Exact immutable capture and original input with point/intent/result pending commit, real synced append, and atomic terminal commit before success.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "assessment": "Existing closed EventRecord/payload preserved; all new non-event physical/result values have real closed schemas.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "assessment": "Project, reversible partition, point/ref, storage instance, original command identity and actual shared topology/outcome joins are explicit.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "assessment": "Native retry preserves the same original request/result; original command evidence survives lawful point retirement and passive replay has no owner effects.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "retention": {
+          "status": "PASS",
+          "assessment": "Existing RP90 point/custody, content-free original-result lifetime and RP3GEN checkpoint policy are unchanged. Exact v1/v2 retired cores preserve first retirement and immediate successor identity; current refresh does not reset history. SP-269 remains the separate canonical final residue.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "assessment": "Content-free residue and result evidence, mandatory backup, owner authentication, access checks and affected-record fences prevent source/authority reconstruction.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "transitions": {
+          "status": "PASS",
+          "assessment": "Explicit durability barriers, pending/terminal outcomes, atomic generation transitions and summary/removal commit; lifecycle and source visibility remain separately owned.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "assessment": "The exact current v2 family/reader routes explicitly adopt SP-278 generation, immutable birth anchor, mutable frontier, source selection and same-redb snapshot. Full domain/source joins precede filtered progress; source rows preserve birth anchors on append. Native creation separately requires authentic original publication and companion transaction, which may predate generic rebuild.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "assessment": "Original v1 schemas and stored digest meanings remain exact compatibility-only inputs. Current v2 routing requires owner-admitted complete rebuild and atomic predecessor handoff; version substitution never upgrades old data. Current/withdrawn status, same-generation refresh, retained history and current-source authority remain separate.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "assessment": "The integrated successor passes six complete joined positives, forty schema-valid relational negatives, six typed retention cases, four slot/cleanup checks and two explicit compatibility-route pairs. The independent review separately passes 66 bounded checks. Previously authored native owner obligations remain NOT_RUN; static fixture witnesses are not runtime authority.",
+          "current_owner_units": [
+            "SP-281",
+            "ACD-465",
+            "RAP-059",
+            "SP-269",
+            "SP-274",
+            "SIR-044",
+            "SP-278"
+          ],
+          "prior_contract_evidence": {
+            "path": "reports/event-authority-20260911/step-08-restore-created-depth.json",
+            "sha256": "1fdc27babbf1744313d58cc7a01ace7a94651e4c4334e2bd11f24a5d25c6847f"
+          },
+          "adoption_owner_anchor": "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+        }
+      },
+      "runtime_execution": "NOT_RUN",
+      "independent_validator_pass": false,
+      "seal_prerequisites_met": false
+    }
+  ],
+  "depth_wave_size": 39,
+  "depth_wave_normative_completed_families_after_this_supplement": [
+    "run.started",
+    "restore_point.created"
+  ],
+  "supersession": "This closes the shared prerequisite that reopened the earlier run-start assessment and held restore-created partial. It supersedes those particular open-prerequisite statements in dated supplements; it does not rewrite their evidence or frozen accounting.",
+  "step8_complete": false,
+  "step9_unchanged": true,
+  "new_event_admissions": 0,
+  "physical_family_count": 95,
+  "retention_policy_count": 24,
+  "validation": {
+    "base_commit": "b1c489e123cd8a775a5bcb8ca1d9b525b392e38e",
+    "status": "PASS_STATIC_NORMATIVE_ADOPTION",
+    "joined_positive": 6,
+    "schema_valid_joined_negative": 40,
+    "typed_retention_cases": 6,
+    "slot_and_cleanup_checks": 4,
+    "compatibility": [
+      {
+        "family": "run",
+        "old_v1_reader_accepts": true,
+        "current_v2_route_rejects_v1": true
+      },
+      {
+        "family": "created",
+        "old_v1_reader_accepts": true,
+        "current_v2_route_rejects_v1": true
+      }
+    ],
+    "physical_families_before": 95,
+    "physical_families_after": 95,
+    "changed_family_ids": [
+      "restore_point_created_checkpoint",
+      "run_started_index_checkpoint"
+    ],
+    "other_93_rows_unchanged": true,
+    "all_policy_objects_and_other_registry_metadata_unchanged": true,
+    "all_41_events_and_existing_source_schemas_unchanged": true,
+    "new_plan_units": 0,
+    "changed_owner_units": [
+      "ACD-465",
+      "EP-116",
+      "OP-036",
+      "RAP-059",
+      "RGV-019",
+      "SP-265",
+      "SP-281",
+      "UF-102"
+    ],
+    "index_checks": {
+      "plan_units.jsonl": {
+        "before": 6537,
+        "after": 6537,
+        "changed_ids": [
+          "ACD-465",
+          "EP-116",
+          "OP-036",
+          "RAP-059",
+          "RGV-019",
+          "SP-265",
+          "SP-281",
+          "UF-102"
+        ],
+        "added": [],
+        "other_semantics_preserved": true
+      },
+      "acceptance_units.jsonl": {
+        "before": 25102,
+        "after": 25106,
+        "changed_ids": [
+          "ACD-465-A001",
+          "ACD-465-A002",
+          "ACD-465-A003",
+          "ACD-465-A004",
+          "ACD-465-A005",
+          "ACD-465-A006",
+          "ACD-465-A007",
+          "EP-116-A001",
+          "EP-116-A002",
+          "EP-116-A003",
+          "EP-116-A004",
+          "OP-036-A001",
+          "OP-036-A002",
+          "OP-036-A003",
+          "RAP-059-A001",
+          "RAP-059-A002",
+          "RAP-059-A003",
+          "RAP-059-A004",
+          "RGV-019-A001",
+          "RGV-019-A002",
+          "RGV-019-A003",
+          "SP-265-A001",
+          "SP-265-A002",
+          "SP-265-A003",
+          "SP-265-A004",
+          "SP-265-A005",
+          "SP-281-A001",
+          "SP-281-A002",
+          "SP-281-A003",
+          "SP-281-A004",
+          "SP-281-A005",
+          "SP-281-A006",
+          "SP-281-A007",
+          "SP-281-A008",
+          "UF-102-A001",
+          "UF-102-A002",
+          "UF-102-A003"
+        ],
+        "added": [
+          "SP-265-A006",
+          "SP-265-A007",
+          "SP-281-A009",
+          "SP-281-A010"
+        ],
+        "other_semantics_preserved": true
+      }
+    },
+    "shard_groups": {
+      "runtime_artifacts_panel": 41,
+      "assistant-chat-design": 73,
+      "storage-plan": 59,
+      "executor_protocol": 32,
+      "storage_value_registry": 165,
+      "usage-feature": 40,
+      "orchestrator_page": 23,
+      "run_graph_view": 22
+    },
+    "native_execution": "NOT_RUN",
+    "no_validator_or_governance_artifact_changes": true
+  },
+  "required_checks": {
+    "shards": {
+      "status": "PASS",
+      "docs": 98,
+      "shards": 2245
+    },
+    "plan_index": {
+      "status": "PASS",
+      "plan_units": 6537,
+      "acceptance_units": 25106
+    },
+    "validate_new_contracts": "PASS",
+    "diff_check": "PASS"
+  },
+  "native_limits": [
+    "Actual source decoding/CRC and frame/watermark/directory durability",
+    "Original creation publication and companion transaction authentication",
+    "Run-runtime owner references, permissions, complete hold/ref enumeration and coherent backup",
+    "Coordinator execution, same-redb snapshots/CAS, crash recovery and cleanup races"
+  ],
+  "current_canonical_evidence": [
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "sha256": "ac2b4e5b3e867049a18e838c874eb45aa731cbfa5ae40f8bc38746c5f6f25f8f"
+    },
+    {
+      "path": "Plans/Run_Graph_View.md",
+      "sha256": "15a71b95a9383d4bea46ba17a8024ecc8f6829f5a2bb9f857a87c3fdb7e592c5"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "sha256": "b7823792fdb50aeb61be0c5d1c74324a1fbf12e20f7a967572999929730b57b4"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623"
+    },
+    {
+      "path": "Plans/event_index_consumer_adoption.schema.json",
+      "sha256": "a0dc69878aa78674eb122726815b129f05bf8ad5cd45c8689a3b5119155f8912"
+    },
+    {
+      "path": "Plans/event_index_consumer_adoption_fixtures.json",
+      "sha256": "ec23a212f39756e6a1d221d1368d1d4681b909cc1bf21317fca7292c8df41439"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
+    },
+    {
+      "path": "Plans/restore_point_created_contracts.schema.json",
+      "sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821"
+    },
+    {
+      "path": "Plans/run_started_checkpoint_retention_fixtures.json",
+      "sha256": "4e4e63df8c380f1600f7758617387451126215b97fec4a8e93e20ee252b5c7b8"
+    },
+    {
+      "path": "Plans/run_started_consumer_contracts.schema.json",
+      "sha256": "d20605a23d53b73fb98dc51cc52eaa6b3219122b787a8d259d9d238609915b52"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "bd792465f98c1df89daa7d452458b2c9ae38de7c42f225886d3bc21ee32a17d6"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "ea9ab8612ef1948675896d716a69e3f8a4529278a323ddf653e939509eebdffc"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "sha256": "3f0a8dcc889ec2cd2f2a0df746594ff699966d6850c730b316a7ab5bd4926c6d"
+    }
+  ],
+  "external_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-adoption-20260911/v4/manifest.json",
+      "sha256": "7ee1b1d18ce0479af7e2cf26d88e3b03b193c73de772b2e07d710615cf02308d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-adoption-20260911/v4/binding-successor-contract.md",
+      "sha256": "a73086a6bf057b953472bb6cc0b1db12c2bb55f8b50fe4321270a3c5a4ae60cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-independent-review-20260911/adoption-v4-review/report.json",
+      "sha256": "5e1c72b37582cb7a7a80590d5c3efa45806f59b0474a5a10c775fdc68b246492"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-independent-review-20260911/adoption-v4-review/manifest.json",
+      "sha256": "79e28bc273da50b47ad195ccb6e3eb1f117bad02c5cc2ffd94a18eea2fb24450"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-index-adoption-root-20260911/integration-record.json",
+      "sha256": "f716b316693b9485ef6150d54770c0d5db68b4ea81e447aa3cfb8397c9dff5ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-index-adoption-root-20260911/verify.py",
+      "sha256": "33cc0e25474aa25f6bef4cf3c266236a6b249d156794e9732005139679d7ee73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-index-adoption-root-20260911/checks.json",
+      "sha256": "c612fe0c8197c90dfa90788b6f79efbafaf0b7bb8c9cd727df7e7e26c26df4e5"
+    }
+  ],
+  "cost": "Root integration and source adjudication plus Astra-medium author/independent review. Exact billed cost is not exposed; no native runs."
+}

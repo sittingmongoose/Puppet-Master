@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14972,
+    "depends_on_edge_count": 14980,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17623,
+    "edge_count": 17631,
     "node_count": 6537,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T20:58:22Z",
+  "generated_at_utc": "2026-09-11T21:26:32Z",
   "gui_related_units": {
     "count": 3156,
     "units": [
@@ -3487,8 +3487,8 @@
         "source_location": {
           "heading": "ACD-465 — Restore-point created consumers",
           "heading_level": 3,
-          "heading_line": 25460,
-          "line": 25462,
+          "heading_line": 25462,
+          "line": 25464,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -22484,8 +22484,8 @@
         "source_location": {
           "heading": "OP-036 - Run-start History and Ledger reader",
           "heading_level": 3,
-          "heading_line": 2732,
-          "line": 2734,
+          "heading_line": 2734,
+          "line": 2736,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -26026,8 +26026,8 @@
         "source_location": {
           "heading": "RAP-059 — Restore-point created consumers",
           "heading_level": 3,
-          "heading_line": 2876,
-          "line": 2878,
+          "heading_line": 2878,
+          "line": 2880,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -26356,8 +26356,8 @@
         "source_location": {
           "heading": "RGV-019 - Run-start graph context reader",
           "heading_level": 3,
-          "heading_line": 1285,
-          "line": 1287,
+          "heading_line": 1287,
+          "line": 1289,
           "path": "Plans/Run_Graph_View.md"
         }
       },
@@ -33385,8 +33385,8 @@
         "source_location": {
           "heading": "UF-102 - Run-start attribution context reader",
           "heading_level": 3,
-          "heading_line": 7053,
-          "line": 7055,
+          "heading_line": 7055,
+          "line": 7057,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -38657,7 +38657,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "f4eaac74fb682666154e763e3ded43b452e72407e8de50901ad880eacf7198da",
+        "expected": "ea9ab8612ef1948675896d716a69e3f8a4529278a323ddf653e939509eebdffc",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38669,7 +38669,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+        "expected": "32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
@@ -38681,7 +38681,7 @@
       {
         "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
         "error": "pnc019_source_hash_stale",
-        "expected": "82e027030cbd6e5e717856ab3d1103a38f9f3566d31b849c57eefbd9106340a7",
+        "expected": "ac2b4e5b3e867049a18e838c874eb45aa731cbfa5ae40f8bc38746c5f6f25f8f",
         "source_path": "Plans/Orchestrator_Page.md"
       },
       {
@@ -38725,7 +38725,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-generic-index-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-index-adoption-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19316-L19442
+Source lines: L19316-L19460
 
-Source SHA256: `c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c`
+Source SHA256: `bd792465f98c1df89daa7d452458b2c9ae38de7c42f225886d3bc21ee32a17d6`
 
 ---
 
@@ -81,57 +81,75 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Contr
 
 ### SP-265 - Run-start filtered index checkpoint and four-reader boundary
 
+**Versioned successor qualification.** The surrounding predecessor v1 binding, four v1 reader IDs and v1 stored digest meanings are preserved compatibility-only. Current v2 use requires the explicit SP-265/SP-281 successor contract, `pm.storage_value.run_started_index_checkpoint.v2@2.0.0`, `storage.run_started_index.v2@2.0.0` and the four named .v2 reader successors at2.0.0, with verified full rebuild, existing withdrawal/history and exact SP-278 frontier selection. Original v1 values never self-upgrade. See `Plans/event_index_consumer_adoption.schema.json#/$defs/run_started_checkpoint_v2`.
+
 ```yaml
 plan_unit_id: SP-265
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage newly defines storage.run_started_index.v1@1.0.0 as a read binding over the independently
-  published complete EventRecord index. It verifies the original generation-qualified source frame, current
-  run.started payload, actual payload.run_id and immutable requested_effective_runtime snapshot before
-  committing only run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}, closed value
-  pm.storage_value.run_started_index_checkpoint.v1@1.0.0. Complete retained-range coverage, CURRENT and
-  survivor evidence, shared snapshot publication, same-identity conflict handling, tombstones, custody,
-  supported legacy normalization and owner-governed withdrawal are mandatory. The four versioned consumers
-  are run_graph.run_start_context.v1, orchestrator.history_run_start.v1, usage.run_start_attribution.v1 and
-  executor.run_start_recovery_evidence.v1, each at 1.0.0, with no independent durable effects. The new
-  checkpoint uses RP-PROJECTION-3GEN@1.0.0; existing event and index retention remain unchanged. Missing or
-  unsupported evidence fences the filtered view and rebuilds only derived checkpoint state.
+canonical_text: Storage selects storage.run_started_index.v2@2.0.0 over the independently published complete
+  SP-278 EventRecord index. The unchanged run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}
+  key now stores pm.storage_value.run_started_index_checkpoint.v2@2.0.0 in the actual redb checkpoints
+  table. Current v2 requires owner-admitted complete rebuild, exact current source/index frontier token,
+  immutable runtime-snapshot and scope joins, and the four explicitly adopted v2@2.0.0 readers run_graph.run_start_context.v2,
+  orchestrator.history_run_start.v2, usage.run_start_attribution.v2 and executor.run_start_recovery_evidence.v2.
+  Original v1 schemas, stored digest meanings and reader bindings remain compatibility-only. A stable
+  current publication and at most two complete retired cores implement the unchanged RP-PROJECTION-3GEN
+  policy at the same logical key; first withdrawal supplies the retirement anchor and ordinary traversal
+  preserves generation birth/history. Newly bound v1 custody identity is explicitly not historical birth.
+  Full read fences, current holds, lawful cleanup/slot reservation and exact predecessor CAS are required.
+  This filtered writer owns no generic index, canonical source, execution, focus or accounting effect.
+  Missing or unsupported evidence fences affected currentness and rebuilds only derived state.
 gui_related: false
-gui_classification_reason: "Defines storage or execution contracts, not a new visual surface."
-depends_on: [DL-045]
+gui_classification_reason: Defines storage or execution contracts, not a new visual surface.
+depends_on:
+- DL-045
+- SP-278
 unblocks: []
 acceptance_criteria:
-  - "The independent generic index writer publishes complete CURRENT/index coverage before the filtered reader can become current; this binding writes no index row or global checkpoint."
-  - "Actual source frame, payload.run_id, immutable snapshot, identity hashes, scope and full retained-range coverage are verified before filtered checkpoint commit and read publication."
-  - "Closed checkpoint validates exact IDs/versions, scope, survivor cursor and currentness predicates; a missing or incompatible checkpoint rebuilds without canonical reconstruction."
-  - "Existing event/index policies remain unchanged and the new checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 including rebuild_projection overflow and rebuild expiry."
-  - "Native crash, replay, custody, deletion, compatibility and withdrawal pairs remain separate execution obligations; no runtime/depth/readiness pass is inferred."
+- The independent generic index writer publishes complete CURRENT/index coverage before the filtered reader
+  can become current; this binding writes no index row or global checkpoint.
+- Actual source frame, payload.run_id, immutable snapshot, identity hashes, scope and full retained-range
+  coverage are verified before filtered checkpoint commit and read publication.
+- Closed checkpoint validates exact IDs/versions, scope, survivor cursor and currentness predicates; a
+  missing or incompatible checkpoint rebuilds without canonical reconstruction.
+- Existing event/index policies remain unchanged and the new checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0
+  including rebuild_projection overflow and rebuild expiry.
+- Native crash, replay, custody, deletion, compatibility and withdrawal pairs remain separate execution
+  obligations; no runtime/depth/readiness pass is inferred.
+- Current v2 admission binds the actual SP-278 generation, immutable anchor and mutable frontier; a birth
+  locator or v1 version-string substitution cannot certify currentness.
+- One same-key transaction finalizes first withdrawal and publishes exact predecessor custody plus a fully
+  rebuilt successor; repeated withdrawal, refresh, hold races and cleanup preserve all original anchors
+  and unaffected cores.
 validation_surfaces:
-  - Plans/run_started_consumer_contracts.schema.json
-  - Plans/run_started_consumer_contract_fixtures.json
-  - Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/run_started_consumer_contracts.schema.json
+- Plans/run_started_consumer_contract_fixtures.json
+- Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: event_source_and_checkpoint_authority_drift
 reasoning_tier: high
 context_scope: run_started_single_family_depth
 implementation_surfaces:
-  - Plans/storage-plan.md
-  - Plans/storage_value_registry.json
-  - Plans/run_started_consumer_contracts.schema.json
-  - Plans/run_started_consumer_contract_fixtures.json
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/run_started_consumer_contracts.schema.json
+- Plans/run_started_consumer_contract_fixtures.json
 node_compile_hint:
   mode: run_started_owner_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-045
-  - reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 source_atom_ids: []
 negative_constraints:
-  - No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
-  - No canonical source reconstruction from a checkpoint or UI projection.
+- No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
+- No canonical source reconstruction from a checkpoint or UI projection.
 owner_hints:
-  - Plans/storage-plan.md
-  - Plans/Executor_Protocol.md
+- Plans/storage-plan.md
+- Plans/Executor_Protocol.md
 ```

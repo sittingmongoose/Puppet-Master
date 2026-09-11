@@ -2980,7 +2980,6 @@
     "DL-012",
     "CV-334",
     "GRS-060",
-    "SP-265",
     "DP-006",
     "DP-025",
     "F3-446",
@@ -3173,10 +3172,6 @@
     "DL-013",
     "DL-016",
     "SP-271",
-    "EP-116",
-    "OP-036",
-    "RGV-019",
-    "UF-102",
     "DP-007",
     "DP-008",
     "DP-026",
@@ -5876,6 +5871,7 @@
     "CRAU-080",
     "GRS-061",
     "F3-457",
+    "SP-265",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -5900,6 +5896,10 @@
     "OSI-419",
     "CRAU-083",
     "CV-335",
+    "EP-116",
+    "OP-036",
+    "RGV-019",
+    "UF-102",
     "ACD-087",
     "CV-336",
     "PS-134",
@@ -10232,6 +10232,11 @@
       "edge_type": "depends_on",
       "from": "ACD-465",
       "to": "SP-269"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "SP-278"
     },
     {
       "edge_type": "depends_on",
@@ -23625,6 +23630,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-116",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -34387,6 +34397,11 @@
       "edge_type": "depends_on",
       "from": "OP-036",
       "to": "SP-265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-036",
+      "to": "SP-278"
     },
     {
       "edge_type": "depends_on",
@@ -49411,6 +49426,11 @@
     {
       "edge_type": "depends_on",
       "from": "RAP-059",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-059",
       "to": "SP-281"
     },
     {
@@ -49972,6 +49992,11 @@
       "edge_type": "depends_on",
       "from": "RGV-019",
       "to": "SP-265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-019",
+      "to": "SP-278"
     },
     {
       "edge_type": "depends_on",
@@ -65715,6 +65740,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-265",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-266",
       "to": "CV-332"
     },
@@ -65882,6 +65912,11 @@
       "edge_type": "depends_on",
       "from": "SP-281",
       "to": "SP-269"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-281",
+      "to": "SP-278"
     },
     {
       "edge_type": "depends_on",
@@ -75857,6 +75892,11 @@
       "edge_type": "depends_on",
       "from": "UF-102",
       "to": "SP-265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-102",
+      "to": "SP-278"
     },
     {
       "edge_type": "depends_on",
@@ -94659,7 +94699,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T20:58:22Z",
+  "generated_at_utc": "2026-09-11T21:26:32Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -103681,8 +103721,8 @@
       "source_location": {
         "heading": "ACD-465 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 25460,
-        "line": 25462,
+        "heading_line": 25462,
+        "line": 25464,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127226,8 +127266,8 @@
       "source_location": {
         "heading": "EP-116 - Run-start identity and recovery consumer",
         "heading_level": 3,
-        "heading_line": 7281,
-        "line": 7283,
+        "heading_line": 7283,
+        "line": 7285,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -161838,8 +161878,8 @@
       "source_location": {
         "heading": "OP-036 - Run-start History and Ledger reader",
         "heading_level": 3,
-        "heading_line": 2732,
-        "line": 2734,
+        "heading_line": 2734,
+        "line": 2736,
         "path": "Plans/Orchestrator_Page.md"
       },
       "status": "accepted",
@@ -181728,8 +181768,8 @@
       "source_location": {
         "heading": "RAP-059 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 2876,
-        "line": 2878,
+        "heading_line": 2878,
+        "line": 2880,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182306,8 +182346,8 @@
       "source_location": {
         "heading": "RGV-019 - Run-start graph context reader",
         "heading_level": 3,
-        "heading_line": 1285,
-        "line": 1287,
+        "heading_line": 1287,
+        "line": 1289,
         "path": "Plans/Run_Graph_View.md"
       },
       "status": "accepted",
@@ -192524,7 +192564,7 @@
         "heading": "SP-265 - Run-start filtered index checkpoint and four-reader boundary",
         "heading_level": 3,
         "heading_line": 19387,
-        "line": 19389,
+        "line": 19391,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192540,8 +192580,8 @@
       "source_location": {
         "heading": "SP-266 - Browser workspace-created single-family persistence binding",
         "heading_level": 3,
-        "heading_line": 19585,
-        "line": 19587,
+        "heading_line": 19603,
+        "line": 19605,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192557,8 +192597,8 @@
       "source_location": {
         "heading": "SP-269 — Restore-point final retention summary custody",
         "heading_level": 3,
-        "heading_line": 19807,
-        "line": 19809,
+        "heading_line": 19843,
+        "line": 19845,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192574,8 +192614,8 @@
       "source_location": {
         "heading": "SP-271 - Historical child-status exact source reader",
         "heading_level": 3,
-        "heading_line": 19965,
-        "line": 19967,
+        "heading_line": 20001,
+        "line": 20003,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192591,8 +192631,8 @@
       "source_location": {
         "heading": "SP-274 - Create restore-point original result custody",
         "heading_level": 3,
-        "heading_line": 19862,
-        "line": 19864,
+        "heading_line": 19898,
+        "line": 19900,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192608,8 +192648,8 @@
       "source_location": {
         "heading": "SP-277 - Historical Goal degradation direct source reader",
         "heading_level": 3,
-        "heading_line": 20054,
-        "line": 20056,
+        "heading_line": 20090,
+        "line": 20092,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192625,8 +192665,8 @@
       "source_location": {
         "heading": "Generic EventRecord index checkpoint and publication",
         "heading_level": 3,
-        "heading_line": 20431,
-        "line": 20477,
+        "heading_line": 20467,
+        "line": 20513,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192642,8 +192682,8 @@
       "source_location": {
         "heading": "SP-280 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 20243,
-        "line": 20245,
+        "heading_line": 20279,
+        "line": 20281,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -192659,8 +192699,8 @@
       "source_location": {
         "heading": "SP-281 — Restore-point created custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 19703,
-        "line": 19705,
+        "heading_line": 19721,
+        "line": 19725,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -202298,8 +202338,8 @@
       "source_location": {
         "heading": "UF-102 - Run-start attribution context reader",
         "heading_level": 3,
-        "heading_line": 7053,
-        "line": 7055,
+        "heading_line": 7055,
+        "line": 7057,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -205797,9 +205837,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14972,
+    "depends_on_edge_count": 14980,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17623,
+    "edge_count": 17631,
     "node_count": 6537,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,

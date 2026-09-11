@@ -2863,6 +2863,8 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractNam
 
 ## Restore-point created passive record reader
 
+**Versioned restore-created reader adoption.** For `restore_point.created` only, current publication uses `reader.runtime_artifacts.restore_point_record@2.0.0` with the actual SP-281/SP-278 v2 successor and complete current source/index token. V1 bindings in the following predecessor text remain compatibility-only for this family; all existing native, supported historical and terminal-summary predicates and owner behavior remain unchanged. Original creation publication/receipt authority is independently verified and may predate the current generic generation. Other event families require their own explicit adoption. No event replay gains action authority.
+
 This addendum defines the previously missing restore-created bindings under `DL-045` for already specified behavior. These are new owner definitions, not claims that the identifiers pre-existed. The existing `event-family-restore-point-created@2.0.0`, `restore_point.created`, project-only scope, EventRecord `pm.event.v0@2.0.0`, inline payload `https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0` and source policy `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` remain unchanged. This is a static contract; native runtime, crash, GUI and durable-storage behavior remain unproven. No sibling event is admitted.
 
 Runtime Artifacts newly owns `reader.runtime_artifacts.restore_point_record@1.0.0`. It passively consumes the verified logical record/source-event view owned by Storage SP-281 and Chat ACD-465's two present-point completion predicates plus Storage SP-269's distinct typed terminal-summary result. For new native writes, require the committed matching creation companion and genuine synced created event; `rp.status=available` or a marker alone is insufficient. For supported previously completed restore points, the explicit Chat historical validating reader preserves existing history and branch preflight without fabricating a companion or today's original command fields. Missing completion/custody proof is unavailable; a native missing/pending companion cannot opt into historical mode through absence, ID spelling or timestamp.
@@ -2881,9 +2883,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: Runtime Artifacts defines one passive restore-point record reader using Chat native or
-  supported historical completion proof, or the separate typed terminal-retention-summary result, and Storage current snapshot authority. It preserves existing
-  status/permission/hold/source visibility and branch preflight, emits no runtime_artifact.restore_point
-  event, and never treats a projection as canonical point or custody authority.
+  supported historical completion proof, or the separate typed terminal-retention-summary result, and
+  Storage current snapshot authority. It preserves existing status/permission/hold/source visibility and
+  branch preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
+  point or custody authority. For restore_point.created only, current read publication explicitly adopts
+  the named 2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and actual
+  original creation custody remains independently required.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -2892,9 +2897,11 @@ depends_on:
 - RAP-046
 - ACD-465
 - SP-281
+- SP-278
 unblocks: []
 acceptance_criteria:
-- Lawfully retired points may display their verified SP-269 terminal/hash-summary result without present rp/companion bytes and with no action authority.
+- Lawfully retired points may display their verified SP-269 terminal/hash-summary result without present
+  rp/companion bytes and with no action authority.
 - Native completion requires companion plus genuine source proof; supported legacy completion remains
   readable without guessed original fields.
 - Creation replay never revives terminal/deleted state or dispatches branch/filesystem/artifact effects.
@@ -2904,6 +2911,8 @@ validation_surfaces:
 - Plans/storage_value_registry.json
 - python3 scripts/pm-plans-verify.py run-gates
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -2916,6 +2925,7 @@ node_compile_hint:
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created

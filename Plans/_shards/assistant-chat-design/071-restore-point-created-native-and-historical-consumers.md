@@ -2,13 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25387-L25534
+Source lines: L25387-L25546
 
-Source SHA256: `89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd`
+Source SHA256: `b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871`
 
 ---
 
 ## Restore-point created native and historical consumers
+
+**Versioned restore-created reader adoption.** For `restore_point.created` only, current publication uses `consumer.chat.restore_point_created@2.0.0`, `reader.chat.restore_point_history@2.0.0` and `reader.chat.branch_from_restore@2.0.0` with the actual SP-281/SP-278 v2 successor and complete current source/index token. V1 bindings in the following predecessor text remain compatibility-only for this family; all existing native, supported historical and terminal-summary predicates and owner behavior remain unchanged. Original creation publication/receipt authority is independently verified and may predate the current generic generation. Other event families require their own explicit adoption. No event replay gains action authority.
 
 This addendum defines the previously missing restore-created bindings under `DL-045` for already specified behavior. These are new owner definitions, not claims that the identifiers pre-existed. The existing `event-family-restore-point-created@2.0.0`, `restore_point.created`, project-only scope, EventRecord `pm.event.v0@2.0.0`, inline payload `https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0` and source policy `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` remain unchanged. This is a static contract; native runtime, crash, GUI and durable-storage behavior remain unproven. No sibling event is admitted.
 
@@ -94,7 +96,10 @@ canonical_text: Assistant Chat defines restore-created passive consumers and nat
   require verified current completion. Supported previously completed points retain a separate genuine-event/custody
   validating reader without fabricated companion or command fields. Missing required native custody fences
   only the affected restore-point operations; old completion validity and companion backfill are distinct.
-  Passive history additionally accepts a separately verified terminal-retention-summary result, with no action authority.
+  Passive history additionally accepts a separately verified terminal-retention-summary result, with no
+  action authority. For restore_point.created only, current read publication explicitly adopts the named
+  2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and actual original
+  creation custody remains independently required.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -104,11 +109,15 @@ depends_on:
 - ACD-087
 - SP-281
 - CV-320
+- SP-278
 unblocks: []
 acceptance_criteria:
-- History accepts the independently typed SP-269 terminal-summary result without a present point/companion; branch reader never accepts that result.
-- Native immutable capture SHA-256 uses the exact thirteen-field preimage, RFC 8785 UTF-8 bytes and required new-recipe companion discriminator; lifecycle and hold changes do not change that digest.
-- Historical hash adoption never overwrites genuine stored hashes or adds a new-recipe marker without equal recomputation and complete genuine custody.
+- History accepts the independently typed SP-269 terminal-summary result without a present point/companion;
+  branch reader never accepts that result.
+- Native immutable capture SHA-256 uses the exact thirteen-field preimage, RFC 8785 UTF-8 bytes and required
+  new-recipe companion discriminator; lifecycle and hold changes do not change that digest.
+- Historical hash adoption never overwrites genuine stored hashes or adds a new-recipe marker without
+  equal recomputation and complete genuine custody.
 - Native ordinary crash after either persistence barrier recovers the exact frozen payload once without
   live recapture or duplicate append.
 - Native rp.available without committed matching source proof cannot enable branch or artifact completion.
@@ -120,6 +129,8 @@ validation_surfaces:
 - Plans/storage_value_registry.json
 - python3 scripts/pm-plans-verify.py run-gates
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -132,6 +143,7 @@ node_compile_hint:
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created

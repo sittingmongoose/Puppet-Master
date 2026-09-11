@@ -19386,59 +19386,77 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Contr
 
 ### SP-265 - Run-start filtered index checkpoint and four-reader boundary
 
+**Versioned successor qualification.** The surrounding predecessor v1 binding, four v1 reader IDs and v1 stored digest meanings are preserved compatibility-only. Current v2 use requires the explicit SP-265/SP-281 successor contract, `pm.storage_value.run_started_index_checkpoint.v2@2.0.0`, `storage.run_started_index.v2@2.0.0` and the four named .v2 reader successors at2.0.0, with verified full rebuild, existing withdrawal/history and exact SP-278 frontier selection. Original v1 values never self-upgrade. See `Plans/event_index_consumer_adoption.schema.json#/$defs/run_started_checkpoint_v2`.
+
 ```yaml
 plan_unit_id: SP-265
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage newly defines storage.run_started_index.v1@1.0.0 as a read binding over the independently
-  published complete EventRecord index. It verifies the original generation-qualified source frame, current
-  run.started payload, actual payload.run_id and immutable requested_effective_runtime snapshot before
-  committing only run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}, closed value
-  pm.storage_value.run_started_index_checkpoint.v1@1.0.0. Complete retained-range coverage, CURRENT and
-  survivor evidence, shared snapshot publication, same-identity conflict handling, tombstones, custody,
-  supported legacy normalization and owner-governed withdrawal are mandatory. The four versioned consumers
-  are run_graph.run_start_context.v1, orchestrator.history_run_start.v1, usage.run_start_attribution.v1 and
-  executor.run_start_recovery_evidence.v1, each at 1.0.0, with no independent durable effects. The new
-  checkpoint uses RP-PROJECTION-3GEN@1.0.0; existing event and index retention remain unchanged. Missing or
-  unsupported evidence fences the filtered view and rebuilds only derived checkpoint state.
+canonical_text: Storage selects storage.run_started_index.v2@2.0.0 over the independently published complete
+  SP-278 EventRecord index. The unchanged run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}
+  key now stores pm.storage_value.run_started_index_checkpoint.v2@2.0.0 in the actual redb checkpoints
+  table. Current v2 requires owner-admitted complete rebuild, exact current source/index frontier token,
+  immutable runtime-snapshot and scope joins, and the four explicitly adopted v2@2.0.0 readers run_graph.run_start_context.v2,
+  orchestrator.history_run_start.v2, usage.run_start_attribution.v2 and executor.run_start_recovery_evidence.v2.
+  Original v1 schemas, stored digest meanings and reader bindings remain compatibility-only. A stable
+  current publication and at most two complete retired cores implement the unchanged RP-PROJECTION-3GEN
+  policy at the same logical key; first withdrawal supplies the retirement anchor and ordinary traversal
+  preserves generation birth/history. Newly bound v1 custody identity is explicitly not historical birth.
+  Full read fences, current holds, lawful cleanup/slot reservation and exact predecessor CAS are required.
+  This filtered writer owns no generic index, canonical source, execution, focus or accounting effect.
+  Missing or unsupported evidence fences affected currentness and rebuilds only derived state.
 gui_related: false
-gui_classification_reason: "Defines storage or execution contracts, not a new visual surface."
-depends_on: [DL-045]
+gui_classification_reason: Defines storage or execution contracts, not a new visual surface.
+depends_on:
+- DL-045
+- SP-278
 unblocks: []
 acceptance_criteria:
-  - "The independent generic index writer publishes complete CURRENT/index coverage before the filtered reader can become current; this binding writes no index row or global checkpoint."
-  - "Actual source frame, payload.run_id, immutable snapshot, identity hashes, scope and full retained-range coverage are verified before filtered checkpoint commit and read publication."
-  - "Closed checkpoint validates exact IDs/versions, scope, survivor cursor and currentness predicates; a missing or incompatible checkpoint rebuilds without canonical reconstruction."
-  - "Existing event/index policies remain unchanged and the new checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 including rebuild_projection overflow and rebuild expiry."
-  - "Native crash, replay, custody, deletion, compatibility and withdrawal pairs remain separate execution obligations; no runtime/depth/readiness pass is inferred."
+- The independent generic index writer publishes complete CURRENT/index coverage before the filtered reader
+  can become current; this binding writes no index row or global checkpoint.
+- Actual source frame, payload.run_id, immutable snapshot, identity hashes, scope and full retained-range
+  coverage are verified before filtered checkpoint commit and read publication.
+- Closed checkpoint validates exact IDs/versions, scope, survivor cursor and currentness predicates; a
+  missing or incompatible checkpoint rebuilds without canonical reconstruction.
+- Existing event/index policies remain unchanged and the new checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0
+  including rebuild_projection overflow and rebuild expiry.
+- Native crash, replay, custody, deletion, compatibility and withdrawal pairs remain separate execution
+  obligations; no runtime/depth/readiness pass is inferred.
+- Current v2 admission binds the actual SP-278 generation, immutable anchor and mutable frontier; a birth
+  locator or v1 version-string substitution cannot certify currentness.
+- One same-key transaction finalizes first withdrawal and publishes exact predecessor custody plus a fully
+  rebuilt successor; repeated withdrawal, refresh, hold races and cleanup preserve all original anchors
+  and unaffected cores.
 validation_surfaces:
-  - Plans/run_started_consumer_contracts.schema.json
-  - Plans/run_started_consumer_contract_fixtures.json
-  - Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/run_started_consumer_contracts.schema.json
+- Plans/run_started_consumer_contract_fixtures.json
+- Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: event_source_and_checkpoint_authority_drift
 reasoning_tier: high
 context_scope: run_started_single_family_depth
 implementation_surfaces:
-  - Plans/storage-plan.md
-  - Plans/storage_value_registry.json
-  - Plans/run_started_consumer_contracts.schema.json
-  - Plans/run_started_consumer_contract_fixtures.json
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/run_started_consumer_contracts.schema.json
+- Plans/run_started_consumer_contract_fixtures.json
 node_compile_hint:
   mode: run_started_owner_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-045
-  - reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 source_atom_ids: []
 negative_constraints:
-  - No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
-  - No canonical source reconstruction from a checkpoint or UI projection.
+- No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
+- No canonical source reconstruction from a checkpoint or UI projection.
 owner_hints:
-  - Plans/storage-plan.md
-  - Plans/Executor_Protocol.md
+- Plans/storage-plan.md
+- Plans/Executor_Protocol.md
 ```
 
 ## Browser workspace-created index and checkpoint — 2026-09-11
@@ -19702,16 +19720,23 @@ Only `reader.chat.restore_point_history` and `reader.runtime_artifacts.restore_p
 
 ### SP-281 — Restore-point created custody and checkpoint
 
+**Versioned successor qualification.** The surrounding predecessor v1 consumer/projector/checkpoint definition and original stored digest meanings remain compatibility-only. Current v2 uses `pm.storage_value.restore_point_created_checkpoint.v2@2.0.0`, the existing consumer/projector IDs at2.0.0 and cursor projector_schema_version2.0.0 under the explicit SP-265/SP-281 successor contract. All named dependent reader successors are at2.0.0. Its actual supported successor transition archives exact old cores under the existing three-generation/hold rules, after complete source-range/currentness handoff; no version-string substitution upgrades an old value. Original native append evidence is separately typed/authenticated and may predate the current generic index anchor. See `Plans/event_index_consumer_adoption.schema.json#/$defs/restore_created_checkpoint_v2`.
+
 ```yaml
 plan_unit_id: SP-281
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage defines the restore-created projector and complete physical checkpoint and canonical
-  creation-companion families under DL-045. The logical read view reuses the verified existing EventRecord
-  index and rp values, with atomic current-generation checkpoint publication and separate native/historical
-  completion predicates. The disposable checkpoint follows RP-PROJECTION-3GEN exactly; canonical per-point
-  creation custody follows the existing restore-point release/hold/cap policy and mandatory-backup recovery.
+canonical_text: Storage selects pm.storage_value.restore_point_created_checkpoint.v2@2.0.0 at the existing
+  projector.checkpoint.restore_point_created.v1:{scope_partition} key. The same consumer/projector IDs
+  at 2.0.0 and explicitly adopted history, branch-preflight and Runtime Artifacts reader successors consume
+  the complete SP-278 source/index token after actual owner-admitted full rebuild. Original v1 values
+  and digest meanings remain compatibility-only, with exact nonrecursive v1/v2 retired cores under the
+  unchanged RP-PROJECTION-3GEN policy. Current native completion separately authenticates the original
+  creation publication/receipt and canonical record/companion transaction, which may predate the current
+  generic index generation. A matching current index anchor cannot replace original custody. Existing
+  native, supported historical and terminal-summary predicates, original capture/command hash recipes,
+  source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain unchanged.
   No sibling checkpoint or deferred family is borrowed.
 gui_related: false
 gui_classification_reason: This unit defines canonical custody, storage schemas and checkpoint mechanics.
@@ -19721,11 +19746,15 @@ depends_on:
 - SP-242
 - CV-320
 - DL-045
+- SP-278
 unblocks: []
 acceptance_criteria:
-- Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication identity; stale history never certifies currentness.
-- Typed terminal-summary traversal resolves the physical SP-269 value and its exact retired native custody set without requiring removed rp/companion bytes.
-- A complete lawful terminal-retention disposition independently permits passive traversal after covered point and companion removal; unexplained loss never selects this branch.
+- Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication
+  identity; stale history never certifies currentness.
+- Typed terminal-summary traversal resolves the physical SP-269 value and its exact retired native custody
+  set without requiring removed rp/companion bytes.
+- A complete lawful terminal-retention disposition independently permits passive traversal after covered
+  point and companion removal; unexplained loss never selects this branch.
 - Both physical rows include exact closed schemas, key/value joins, migration/recovery/retention metadata
   before use.
 - Checkpoint currentness proves full-index selection, source durability, contiguous source coverage and
@@ -19736,11 +19765,17 @@ acceptance_criteria:
   not require a fabricated companion.
 - The unchanged implementation-readiness physical-family count check may remain failing; no validator
   edit or count override is permitted.
+- Current v2 selection binds complete SP-278 anchor/frontier/source evidence; ordinary append changes
+  the current token while preserving old index-row birth anchors and filtered generation history.
+- Actual original native creation publication and canonical companion transaction bind the original receipt
+  independently of a later generic rebuild; self-consistent caller evidence cannot supply original authority.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
 - python3 scripts/pm-plans-verify.py run-gates
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -19753,6 +19788,7 @@ node_compile_hint:
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created
@@ -20548,3 +20584,65 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Log.md#DL-045, SchemaID:pm.storage_value.event_record_index_checkpoint.v1
+
+## Run-start and restore-created versioned index adoption
+
+This is the explicit owner-reviewed successor contract under SP-265 and SP-281, authorized as a new technical binding by DL-045. It supersedes current use of the prior consumer/checkpoint bindings; their original v1 schemas and digest meanings remain immutable compatibility-only history. A v1 value is never current under a successor, even if its digest coincidentally matches or someone substitutes a version string. No existing source EventRecord, payload, runtime snapshot, canonical capture, original command/frozen input, legacy-normalization or producer identity/digest recipe changes.
+
+### Exact successor registration and routing
+
+The existing family `run_started_index_checkpoint` keeps key `run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}`. Its current value is newly versioned `pm.storage_value.run_started_index_checkpoint.v2@2.0.0`, with projector `storage.run_started_index.v2@2.0.0` and `source_cursor.projector_schema_version=2.0.0`. Its four current reader successors are `run_graph.run_start_context.v2@2.0.0`, `orchestrator.history_run_start.v2@2.0.0`, `usage.run_start_attribution.v2@2.0.0`, and `executor.run_start_recovery_evidence.v2@2.0.0`; their existing read-only behaviors remain unchanged. All previous .v1 bindings are compatibility-only, not alternate current readers.
+
+The existing family `restore_point_created_checkpoint` keeps key `projector.checkpoint.restore_point_created.v1:{scope_partition}`. Its current value is newly versioned `pm.storage_value.restore_point_created_checkpoint.v2@2.0.0`, with the existing stable IDs `consumer.chat.restore_point_created` and `projector.chat.restore_point_created` each at version2.0.0, and `cursor.projector_schema_version=2.0.0`. The dependent read bindings `reader.chat.restore_point_history`, `reader.chat.branch_from_restore`, and `reader.runtime_artifacts.restore_point_record` each have an explicit version2.0.0 successor with the same existing read/preflight responsibilities. No reader gains action authority. Its exact generation discriminator remains the existing `(storage_instance_id, scope_partition, consumer_id, consumer_version, projector_id, projector_version, cursor.projector_schema_version, publication_id)`; current version components must all match the successor route.
+
+`Plans/event_index_consumer_adoption.schema.json` supplies closed current v2 schemas, byte-preserved v1 compatibility schemas and explicit disjoint reader branches. Registry current metadata and inline schemas select v2, never the broad compatibility union. The created current v2 `retired_generations` admits exact closed v1 or v2 predecessor cores without recursive history; each predecessor preserves its original discriminators, cursor, stored hash meaning and bytes. A current v2 value cannot be relabeled v1 history to circumvent holds. Keyshape, family identity and field names remain stable; value-schema IDs and actual binding versions distinguish changed stored semantics.
+
+### Verified handoff and unchanged retention
+
+The actual StorageMigrationCoordinator must admit the reader/writer successor against the existing store graph and version ceilings. This contract allocates no store-version integer. Before publishing any current v2 value, perform a complete governed rebuild from the independently verified SP-278 CURRENT-selected source/index range and all required domain authorities, under actual maintenance/access/hold/read fences and predecessor CAS. Do not convert an old digest, copy an old cursor, or modify a version string as a substitute. A schema-valid old record supplies only old-version compatibility data. Unsupported or unprovable old source remains unavailable; independent Storage recovery/quarantine owns its handling.
+
+Run now has concrete same-family custody in the actual redb table `checkpoints`, at the unchanged logical key `run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}`. Its v2 current value adds publication_id, published_at_utc, hold_refs and retired_generations. There is no separate history key, unspecified redb-generation slot or backup surrogate. The current row plus at most two complete retired entries is the whole logical generation set. An entry is resolved within that actual row by unique publication_id under the same redb snapshot; array position is not a durable identity. The exact current discriminator is `(storage_instance_id, scope_partition, projector_id, projector_version, source_cursor.projector_schema_version, publication_id)`. A same-generation refresh preserves its ID, first published_at_utc and complete history; only its verified traversal/selection fields and observation updated_at_utc may advance.
+
+Each closed retired entry carries publication_id, identity_origin, custody_bound_at_utc, the exact finalized withdrawn predecessor checkpoint core without recursive history, retired_at_utc, successor_publication_id and hold_refs. A v2 predecessor preserves its original publication_id and original birth in that core. A v1 predecessor has no defined original generation ID/birth field: its wrapper identity is newly allocated once as `v1_custody_bound_at_handoff`, and custody_bound_at_utc is the actual handoff time, explicitly not a claim about historical birth. Original v1 fields/digest meaning remain unchanged. Retries reuse the selected custody identity; no timestamp or cursor derives it.
+
+Run's terminal transition remains exactly `current|degraded -> withdrawn`. In an initial replacement, one actual redb transaction performs the first withdrawal and successor-root/history publication: it preserves every predecessor field except state and updated_at_utc, fixes updated_at_utc to the actual withdrawal commit time, archives that exact finalized core and publishes the fully rebuilt successor. If already withdrawn, the entire prior value and first updated_at_utc remain byte-identical. The archived retired_at_utc always equals that first withdrawn core updated_at_utc, even when it predates the later successor's birth; custody-bound time and retirement time are distinct. The wrapper successor ID equals the actual selected successor. Prior sibling history remains unchanged. An old v1 value is never relabeled v2 or treated as a historical birth receipt. Current/degraded states do not start a terminal TTL and withdrawn state cannot publish a healthy current read.
+
+The typed `run_started_generation_admission` input resolves the actual before/withdrawn/after transaction, selected IDs/time, logical root and complete source rebuild token. The exact before-to-withdrawn delta and full after history are joined. Authentication remains native, but the physical value/key and retained contents are explicitly defined. Run no longer delegates this family retention to unspecified migration backups. All actual coordinator, schema, source and version-ceiling admission requirements remain.
+
+Cleanup selects one exact retired publication_id in this row and verifies the root preimage under the actual same-redb maintenance/hold/read fence. Eligibility is inclusive at first withdrawal +604800seconds, never birth/refresh/successor time, and requires all applicable current holds and live/backup/rollback/recovery/maintenance references to be clear. Existing `retention_hold_record` rows keep their original keys, schema and scope vocabulary; stored hold refs must resolve, and actual application/project plus relevant run/thread/event/source-reference holds must be enumerated under their existing owners. Missing resolution blocks cleanup. No checkpoint-specific hold scope or policy is added. The static fixtures exercise actual typed application/project hold records and live-ref inputs; full authoritative enumeration/native snapshot authentication remains NOT_RUN.
+
+Eligible cleanup removes only the selected retired entry in one compare-and-swap transaction, preserving current core and every sibling byte. Cleanup and successor-slot reservation serialize with hold admission. One current plus two protected retired generations cannot reserve a fourth; it must wait for eligible cleanup and then rebuild, with no early held/history eviction. Newly staged family values are not stored in a secret fourth key. An actual admitted candidate reserves capacity before preparation and publishes only through the complete atomic root transition. Existing RP-PROJECTION-3GEN and expiry/rebuild/overflow behavior remain unchanged. Standalone withdrawal without an immediate successor keeps the withdrawn root under the same original anchor and disables current reads.
+
+Created's successor is a real new projection generation, not ordinary traversal. Select its publication_id once; retries reuse it. In the existing one-redb transition, publish the fully rebuilt v2 current core, archive the exact final v1 core, and bind its first retired_at_utc and successor_publication_id to the new generation's first published_at_utc/ID. Preserve older cores and hold refs. One current plus at most two old cores remains the existing cap; a held/protected predecessor is never evicted early to make room. If no lawful slot exists, preserve the prior stored state and leave successor currentness unavailable. Ordinary append/source traversal after this handoff preserves the successor publication_id, published_at_utc and all retired facts. Generic source rebuild does not by itself allocate another filtered generation when the existing complete source-range proof still permits continuation.
+
+### Concrete successor admission and stable refresh
+
+The typed `restore_created_generation_admission` adapter input resolves the actual committed successor transaction: Storage/logical key, transaction ID/state/commit time, independently selected successor publication ID and first publication time, complete immutable predecessor checkpoint, exact committed successor checkpoint and the actual verified rebuild read token. This is evidence from the existing owner transition, not a new persisted family, receipt or selector. Authentication of the supplied transaction remains a native prerequisite; self-consistent fixture dictionaries are not durable admission.
+
+The selected ID equals the committed successor publication_id; selected first publication time equals both transaction commit time and successor published_at_utc. Predecessor and successor Storage/project/scope must agree; IDs differ and successor birth cannot predate predecessor birth. The exact admitted new history is the complete prior history, unchanged and in the same order, followed by the exact final predecessor core without recursive history. That one newly retired wrapper has retired_at_utc exactly equal to this successor's first published_at_utc and successor_publication_id exactly equal to its selected publication_id. Older sibling wrappers retain their own earlier successor IDs/times; they are not retargeted to the latest generation. Closed v1 and v2 core branches preserve their original discriminator/digest meanings. No fourth generation or early eviction is admitted.
+
+An ordinary cursor/frontier refresh compares current schema/binding discriminator, selected publication_id, first published_at_utc and the complete retained history with that committed admission state. It changes only its verified traversal/current-source fields and preserves all older core bytes and retirement wrappers. A different current publication ID, slid first-publication time, altered predecessor wrapper or changed older sibling cannot masquerade as refresh. A separately admitted full rebuild produces a new generation-admission transaction and exact handoff; the positive second-generation fixture retains old v1 plus newly retired v2 history. Actual owner-approved hold/ref changes and eligible history cleanup remain governed by existing owner rules and are not newly implemented by this ordinary-refresh fixture predicate.
+
+### Exact current selection and cursor joins
+
+For v2 only, run `current_selection_sha256` and created `index_selection_sha256` hash the exact object `{storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection}` with SP-278's new canonical MessagePack binding-digest wrapper. No optional fields exist. `checkpoint_key` is the actual generic root key, checkpoint_ref appends its exact generation JSON Pointer, anchor hash binds the immutable birth anchor, and frontier hash binds the whole current frontier/source selection. The redb read-snapshot ID is separately pinned and revalidated before commit/disclosure; it is not persisted in this digest. Generic same-redb tables and CURRENT authority remain exactly SP-278, with no flat fallback.
+
+Each index row joins its immutable generic birth anchor and exact current source frame. Each filtered cursor joins the final examined frame at complete current coverage, including valid nonmatching events. These are separate joins: an old row's birth manifest/survivor triple is not rewritten on append, and a matching run/created event need not be the last traversal record. A same-generation generic append changes the current frontier/token and invalidates old filtered selection digests. The filtered writer still writes only its existing checkpoint after its complete domain join. It cannot write generic rows/root, choose CURRENT, or substitute generic metadata for original canonical authority.
+
+### Original native creation publication evidence
+
+Current generic generation birth may occur long after original restore-point creation. The original native receipt therefore joins independently authenticated original append/publication evidence, never blindly the latest frontier or current generic anchor. The closed `original_creation_publication` adapter input identifies Storage instance, original decoded source selection, exact original project/event/sequence/schema, full source locator and durable end, original EventRecord value/payload/producer digests, original append-receipt binding, and actual admitted committed canonical record/companion transaction reference and values. The original source selection uses SP-278's typed owner-decoded binding only; this creates no new CURRENT/manifest format, durable receipt family, history store or retention clock.
+
+Resolve original owner controls/frames or an already authenticated existing owner custody route, verify bounds/CRC/source schema and exact bytes, and resolve the actual committed creation companion transaction under existing three-barrier creation authority. The binding's Storage identity, recovery epoch, original manifest generation and survivor digest must match that original source evidence. Original receipt manifest/event/sequence/full locator/durable end must match the same original publication. Its actual transaction must be committed for the same Storage, exact companion/record keys and unchanged canonical values. The current native point/companion still must pass every original completion predicate, immutable capture/frozen input/receipt relation and current domain permission rule.
+
+The original event's immutable identity/scope/schema/value/payload/producer facts must equal the surviving current source event joined by SP-278. Current physical offsets/generation may differ after governed rebuild or compaction; those current locators are separately verified by generic authority and never copied into the original receipt. Original evidence may predate the current generic anchor, as an explicit positive fixture demonstrates. Current source presence, self-consistent hashes or a caller-supplied transaction record cannot authenticate missing original publication. Missing authentic original evidence blocks native-completion release and never becomes guessed birth provenance or new canonical custody.
+
+The new adapter-only original-append-receipt binding uses SP-278's canonical MessagePack binding wrapper. Exact source-value and persisted canonical record/companion byte hashes use their existing actual MessagePack bytes; the fixture encodes those values to model them. Canonical capture/command/frozen-input/producer/legacy/snapshot algorithms remain unchanged. Synthetic EventRecord-value extents are not native SeglogFrameV2 or CRC evidence.
+
+### Scope and proof limits
+
+Six typed joined positives cover complete native run-start/restore-created joins, append with preserved old rows/frontier advancement, original creation publication predating current generic rebuild/recovery, a second verified created v2 generation retaining v1 and v2 cores, concrete run v2 withdrawal/history, and preservation of an already-withdrawn v1 anchor. Forty production-value-schema-valid negatives include the independent review's original Storage/manifest/recovery/survivor counterexamples, repaired paired receipt+transaction mismatch, and repaired frozen-input semantic mismatch. The exact selected successor identity/first-publication transaction, newly archived retirement wrapper, full older sibling history and ordinary-refresh generation stability are joined explicitly, including repaired paired-wrapper negatives. V1 compatibility shapes pass their reader branch and reject current v2 routing. The original v1 adoption packet and its adverse review remain frozen.
+
+Native source decoding/CRC, sync, redb commits/read snapshots, original transaction/publication authentication, coordinator execution and actual retention/hold/access/CAS and the six run-runtime owner-reference resolutions remain NOT_RUN. Historical/terminal restore-created branches and run compatibility normalization retain their complete existing owner requirements and are not newly exercised by these native-completion fixtures. No currentness/readiness/DEPTH_PASS or live producer success is established by static joins; all native and family-specific authority prerequisites remain required after this normative successor adoption.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-265, ContractName:Plans/storage-plan.md#SP-281, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-045, SchemaID:pm.storage_value.run_started_index_checkpoint.v2, SchemaID:pm.storage_value.restore_point_created_checkpoint.v2

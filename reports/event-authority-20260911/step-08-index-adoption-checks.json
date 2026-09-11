@@ -1,0 +1,422 @@
+{
+  "base_commit": "b1c489e123cd8a775a5bcb8ca1d9b525b392e38e",
+  "status": "PASS_STATIC_NORMATIVE_ADOPTION",
+  "cases": [
+    {
+      "case": "both_full_owner_joins",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "append_old_rows_stable_new_filtered_frontier",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "original_creation_precedes_current_generic_rebuild",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "verified_v2_rebuild_preserves_v1_and_v2_history",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "run_atomic_withdrawal_and_v2_successor_history",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "run_already_withdrawn_preserves_first_retirement",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "same-generation-stale-full-token",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "exact current generation/anchor/frontier/source/redb snapshot token"
+    },
+    {
+      "case": "foreign-full-root-ref",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "exact current generation/anchor/frontier/source/redb snapshot token"
+    },
+    {
+      "case": "wrong-redb-read-snapshot",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "exact current generation/anchor/frontier/source/redb snapshot token"
+    },
+    {
+      "case": "run-filtered-stale-frontier",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "filtered exact frontier selection run_started"
+    },
+    {
+      "case": "created-filtered-stale-frontier",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "filtered exact frontier selection restore_created"
+    },
+    {
+      "case": "run-birth-triple-as-current-cursor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "complete source traversal frontier run_started"
+    },
+    {
+      "case": "created-matching-event-as-complete-cursor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "complete source traversal frontier restore_created"
+    },
+    {
+      "case": "run-wrong-requested-run",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "run immutable snapshot/domain join: run_lookup_join"
+    },
+    {
+      "case": "run-snapshot-unjoined-effective-model",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "run immutable snapshot/domain join: immutable_snapshot_hash,snapshot_join_effective_model"
+    },
+    {
+      "case": "created-record-boundary-unjoined",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source boundary"
+    },
+    {
+      "case": "created-companion-frozen-input-unjoined",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "frozen digests"
+    },
+    {
+      "case": "created-receipt-source-offset-unjoined",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "receipt location"
+    },
+    {
+      "case": "review-birth-storage_instance_id",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source witness original Storage identity"
+    },
+    {
+      "case": "review-birth-manifest_generation",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "actual original committed canonical record/companion transaction"
+    },
+    {
+      "case": "review-birth-recovery_epoch",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source witness original recovery_epoch"
+    },
+    {
+      "case": "review-birth-survivor_prefix_sha256",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source witness original survivor prefix"
+    },
+    {
+      "case": "review-paired-receipt-manifest-repaired-transaction",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source witness original manifest_generation"
+    },
+    {
+      "case": "created-frozen-input-digests-repaired",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "frozen append equality"
+    },
+    {
+      "case": "original-transaction-foreign-storage",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "original publication actual Storage identity"
+    },
+    {
+      "case": "original-birth-evidence-current-rebuild-manifest",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "typed original publication complete binding"
+    },
+    {
+      "case": "unverified-successor-version-substitution",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "verified successor source-range/currentness handoff"
+    },
+    {
+      "case": "mutated-retired-v1-core",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "review-retired-time-before-selected-successor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "review-fabricated-successor-publication-id",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "review-append-mutated-current-publication-id",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "refresh-mutated-current-first-publication",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "paired-current-admission-wrong-retirement-wrapper",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "exact admitted retirement wrapper and preserved sibling history"
+    },
+    {
+      "case": "paired-current-admission-mutated-older-v1-sibling",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "exact admitted retirement wrapper and preserved sibling history"
+    },
+    {
+      "case": "v2-predecessor-core-mutated",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "ordinary refresh preserves selected generation discriminator birth and complete history"
+    },
+    {
+      "case": "admitted-selected-successor-id-unjoined",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "selected successor identity and first publication transaction"
+    },
+    {
+      "case": "admitted-selected-first-publication-unjoined",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "selected successor identity and first publication transaction"
+    },
+    {
+      "case": "run-refresh-publication-id-changed",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same-generation run refresh preserves identity birth and complete history"
+    },
+    {
+      "case": "run-refresh-first-publication-slid",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same-generation run refresh preserves identity birth and complete history"
+    },
+    {
+      "case": "run-archived-first-withdrawal-slid",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same-generation run refresh preserves identity birth and complete history"
+    },
+    {
+      "case": "run-current-state-withdrawn-no-read",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "run current publication eligibility"
+    },
+    {
+      "case": "run-current-state-degraded-no-healthy-read",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "run current publication eligibility"
+    },
+    {
+      "case": "run-withdrawal-mutates-final-cursor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "atomic exact first withdrawal preserves prior core and repeat time"
+    },
+    {
+      "case": "run-repeat-withdrawal-resets-first-time",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "atomic exact first withdrawal preserves prior core and repeat time"
+    },
+    {
+      "case": "run-paired-admission-current-older-sibling-mutated",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same-row run exact prior history plus withdrawn core"
+    },
+    {
+      "case": "run-v1-custody-identity-mislabelled-as-old-birth",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same-generation run refresh preserves identity birth and complete history"
+    },
+    {
+      "case": "seven-days-inclusive",
+      "expected_eligible": true,
+      "result": "PASS"
+    },
+    {
+      "case": "one-second-before-seven-days",
+      "expected_eligible": false,
+      "result": "PASS"
+    },
+    {
+      "case": "actual-existing-project-hold-blocks",
+      "expected_eligible": false,
+      "result": "PASS"
+    },
+    {
+      "case": "actual-cleared-project-hold",
+      "expected_eligible": true,
+      "result": "PASS"
+    },
+    {
+      "case": "live-backup-reference-blocks",
+      "expected_eligible": false,
+      "result": "PASS"
+    },
+    {
+      "case": "unresolved-stored-hold-reference-blocks",
+      "expected_eligible": false,
+      "result": "PASS"
+    }
+  ],
+  "joined_positive": 6,
+  "schema_valid_joined_negative": 40,
+  "typed_retention_cases": 6,
+  "slot_and_cleanup_checks": 4,
+  "compatibility": [
+    {
+      "family": "run",
+      "old_v1_reader_accepts": true,
+      "current_v2_route_rejects_v1": true
+    },
+    {
+      "family": "created",
+      "old_v1_reader_accepts": true,
+      "current_v2_route_rejects_v1": true
+    }
+  ],
+  "physical_families_before": 95,
+  "physical_families_after": 95,
+  "changed_family_ids": [
+    "restore_point_created_checkpoint",
+    "run_started_index_checkpoint"
+  ],
+  "other_93_rows_unchanged": true,
+  "all_policy_objects_and_other_registry_metadata_unchanged": true,
+  "all_41_events_and_existing_source_schemas_unchanged": true,
+  "new_plan_units": 0,
+  "changed_owner_units": [
+    "ACD-465",
+    "EP-116",
+    "OP-036",
+    "RAP-059",
+    "RGV-019",
+    "SP-265",
+    "SP-281",
+    "UF-102"
+  ],
+  "index_checks": {
+    "plan_units.jsonl": {
+      "before": 6537,
+      "after": 6537,
+      "changed_ids": [
+        "ACD-465",
+        "EP-116",
+        "OP-036",
+        "RAP-059",
+        "RGV-019",
+        "SP-265",
+        "SP-281",
+        "UF-102"
+      ],
+      "added": [],
+      "other_semantics_preserved": true
+    },
+    "acceptance_units.jsonl": {
+      "before": 25102,
+      "after": 25106,
+      "changed_ids": [
+        "ACD-465-A001",
+        "ACD-465-A002",
+        "ACD-465-A003",
+        "ACD-465-A004",
+        "ACD-465-A005",
+        "ACD-465-A006",
+        "ACD-465-A007",
+        "EP-116-A001",
+        "EP-116-A002",
+        "EP-116-A003",
+        "EP-116-A004",
+        "OP-036-A001",
+        "OP-036-A002",
+        "OP-036-A003",
+        "RAP-059-A001",
+        "RAP-059-A002",
+        "RAP-059-A003",
+        "RAP-059-A004",
+        "RGV-019-A001",
+        "RGV-019-A002",
+        "RGV-019-A003",
+        "SP-265-A001",
+        "SP-265-A002",
+        "SP-265-A003",
+        "SP-265-A004",
+        "SP-265-A005",
+        "SP-281-A001",
+        "SP-281-A002",
+        "SP-281-A003",
+        "SP-281-A004",
+        "SP-281-A005",
+        "SP-281-A006",
+        "SP-281-A007",
+        "SP-281-A008",
+        "UF-102-A001",
+        "UF-102-A002",
+        "UF-102-A003"
+      ],
+      "added": [
+        "SP-265-A006",
+        "SP-265-A007",
+        "SP-281-A009",
+        "SP-281-A010"
+      ],
+      "other_semantics_preserved": true
+    }
+  },
+  "shard_groups": {
+    "runtime_artifacts_panel": 41,
+    "assistant-chat-design": 73,
+    "storage-plan": 59,
+    "executor_protocol": 32,
+    "storage_value_registry": 165,
+    "usage-feature": 40,
+    "orchestrator_page": 23,
+    "run_graph_view": 22
+  },
+  "native_execution": "NOT_RUN",
+  "no_validator_or_governance_artifact_changes": true
+}

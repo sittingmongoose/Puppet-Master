@@ -7264,6 +7264,8 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Shared_
 
 ## Run-start consumer binding and recovery read boundary - 2026-09-11
 
+**Versioned run-start reader adoption.** For `run.started`, the current reader is `executor.run_start_recovery_evidence.v2@2.0.0` through `storage.run_started_index.v2@2.0.0` and the SP-265/SP-278 successor contract. The v1 identifiers in the following predecessor text are compatibility-only; its owner behavior and restrictions apply unchanged to v2. Current publication requires the actual admitted full rebuild and complete current index/source token. Substituting version strings or accepting an old stored digest does not upgrade a v1 reader.
+
 Under DL-045 this addendum newly defines `executor.run_start_recovery_evidence.v1@1.0.0`, a read-consumer binding through SP-265's `storage.run_started_index.v1@1.0.0` reducer and `run_started_index_checkpoint.v1:{storage_instance_id}:{scope_partition}`. It names the existing Executor restart/admission read path, not a new recovery service or handler. Its source is the CURRENT-selected EventRecord index **plus the verified source frame and immutable runtime snapshot**, not index-only run state. The consumer validates the requested run against `payload.run_id`, preserves envelope/project/thread joins, and reports the source event identity and snapshot ref. It cannot materialize missing intake, attempt, safe-point, permission or dispatch authority.
 
 The producer remains Executor's existing immutable start barrier. It still persists and verifies the complete `pm.requested_effective_runtime@1.0.0` snapshot and six owner joins before activation, follows `candidate -> admission_validated -> runtime_identity_resolved -> activated -> start_recorded`, and obtains the synced barrier AppendReceipt before attributable provider/tool work. No GUI/index refresh timing replaces that receipt or becomes an extra provider-start condition. The EventRecord envelope remains `2.0.0`, payload remains the current closed run-start v2 root, and source retention remains `RP-RUNTIME-365D@1.0.0`.
@@ -7285,47 +7287,56 @@ plan_unit_id: EP-116
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  Executor newly defines executor.run_start_recovery_evidence.v1@1.0.0 through SP-265 and keeps its
-  existing complete immutable runtime-snapshot barrier before attributable execution. A genuinely new
-  logical start uses idempotency_key run-start: plus lowercase SHA-256 of RFC8785([project_id,run_id]) and
-  event_id evt_run_start_ plus lowercase SHA-256 of RFC8785([storage_instance_id,project_id,run_id]).
+canonical_text: 'Executor newly defines executor.run_start_recovery_evidence.v2@2.0.0 through SP-265 and
+  keeps its existing complete immutable runtime-snapshot barrier before attributable execution. A genuinely
+  new logical start uses idempotency_key run-start: plus lowercase SHA-256 of RFC8785([project_id,run_id])
+  and event_id evt_run_start_ plus lowercase SHA-256 of RFC8785([storage_instance_id,project_id,run_id]).
   Historical committed identities take precedence; retained-tail absence after lawful removal never proves
   a new run. Equal semantic retries return original durable results and preserve authored bytes, while
   conflicting or uncertain identity fails idempotency_conflict or dedupe_unavailable. The recovery reader
-  supplies verified historical start evidence only; canonical intake, attempt, permissions, safe-point and
-  currentness authority remain independently required, with no replay dispatch, resume, canonical
-  reconstruction or Usage charge.
+  supplies verified historical start evidence only; canonical intake, attempt, permissions, safe-point
+  and currentness authority remain independently required, with no replay dispatch, resume, canonical
+  reconstruction or Usage charge. The v1 reader is compatibility-only for this family; current v2 publication
+  requires the explicitly admitted SP-265/SP-278 successor and complete current source/index token, with
+  unchanged owner behavior.'
 gui_related: false
-gui_classification_reason: "Defines storage or execution contracts, not a new visual surface."
-depends_on: [SP-265]
+gui_classification_reason: Defines storage or execution contracts, not a new visual surface.
+depends_on:
+- SP-265
+- SP-278
 unblocks: []
 acceptance_criteria:
-  - "Immutable snapshot and six owner joins precede the existing durable start barrier and attributable execution."
-  - "New mechanical identity formulas preserve existing historical event IDs/keys; retained-tail absence cannot prove a new logical run, and unknown durable identity is dedupe_unavailable."
-  - "Same semantic start returns the original durable result; conflicting snapshot/intent and uncertain append truth produce no second event or dispatch."
-  - "The recovery consumer never reconstructs canonical intake/attempt authority, changes terminal state, auto-resumes work or charges Usage."
+- Immutable snapshot and six owner joins precede the existing durable start barrier and attributable execution.
+- New mechanical identity formulas preserve existing historical event IDs/keys; retained-tail absence
+  cannot prove a new logical run, and unknown durable identity is dedupe_unavailable.
+- Same semantic start returns the original durable result; conflicting snapshot/intent and uncertain append
+  truth produce no second event or dispatch.
+- The recovery consumer never reconstructs canonical intake/attempt authority, changes terminal state,
+  auto-resumes work or charges Usage.
 validation_surfaces:
-  - Plans/run_started_consumer_contracts.schema.json
-  - Plans/run_started_consumer_contract_fixtures.json
-  - Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/run_started_consumer_contracts.schema.json
+- Plans/run_started_consumer_contract_fixtures.json
+- Native execution of the named replay, crash, source-lookup and custody pairs remains required.
+- Plans/event_index_consumer_adoption.schema.json
+- Plans/event_index_consumer_adoption_fixtures.json
 risk_class: event_source_and_checkpoint_authority_drift
 reasoning_tier: high
 context_scope: run_started_single_family_depth
 implementation_surfaces:
-  - Plans/Executor_Protocol.md
+- Plans/Executor_Protocol.md
 node_compile_hint:
   mode: run_started_owner_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-045
-  - reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20260911/step-08-run-started-depth.json
+- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
 source_atom_ids: []
 negative_constraints:
-  - No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
-  - No canonical source reconstruction from a checkpoint or UI projection.
+- No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.
+- No canonical source reconstruction from a checkpoint or UI projection.
 owner_hints:
-  - Plans/storage-plan.md
-  - Plans/Executor_Protocol.md
+- Plans/storage-plan.md
+- Plans/Executor_Protocol.md
 ```

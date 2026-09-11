@@ -618,7 +618,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25534,
+      "line_count": 25546,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 463,
       "plan_unit_ids": [
@@ -1418,7 +1418,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+      "sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 463
@@ -1447,6 +1447,8 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/restore_point_created_contract_fixtures.json",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
@@ -5738,7 +5740,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 7331,
+      "line_count": 7342,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 116,
       "plan_unit_ids": [
@@ -5885,7 +5887,7 @@
         "unsafe_runtime_activation",
         "unverified_execution_completion"
       ],
-      "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+      "sha256": "32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 116
@@ -5909,6 +5911,8 @@
         "No partial stream fragment is replayed as a full assistant turn.",
         "OpenCode remains HTTP/SSE unless upstream contract changes.",
         "Partial-stream failure routing fixtures",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Provider native item IDs are kept only where allowed by replay policy.",
@@ -11816,7 +11820,7 @@
         "future Orchestrator History tab",
         "future Orchestrator run details and routes"
       ],
-      "line_count": 2777,
+      "line_count": 2785,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -11899,7 +11903,7 @@
         "source_control_boundary_drift",
         "untruthful_projection"
       ],
-      "sha256": "82e027030cbd6e5e717856ab3d1103a38f9f3566d31b849c57eefbd9106340a7",
+      "sha256": "ac2b4e5b3e867049a18e838c874eb45aa731cbfa5ae40f8bc38746c5f6f25f8f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 35,
@@ -11914,6 +11918,8 @@
       },
       "validation_surfaces": [
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "future Orchestrator Ledger export fixture suite",
@@ -14517,7 +14523,7 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 1330,
+      "line_count": 1340,
       "path": "Plans/Run_Graph_View.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -14566,7 +14572,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "284d95201916a33d121ad4339283ac20bb295d51e5b98889beab81d6fddfbe7e",
+      "sha256": "15a71b95a9383d4bea46ba17a8024ecc8f6829f5a2bb9f857a87c3fdb7e592c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -14592,6 +14598,8 @@
         "Manual stale tier/HITL cleanup review.",
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Owner adjudication review.",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Projection trust/manual action-gating review.",
@@ -14820,7 +14828,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 2935,
+      "line_count": 2945,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 56,
       "plan_unit_ids": [
@@ -14943,7 +14951,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "41ba1415a3dc399589d19cdf7fd511d3e5a00afce1b54e903b71c5634db31013",
+      "sha256": "b7823792fdb50aeb61be0c5d1c74324a1fbf12e20f7a967572999929730b57b4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 55,
@@ -14963,6 +14971,8 @@
         "Future Runtime Artifacts receipt browsing tests.",
         "Inline visualizer artifact projection fixtures",
         "Notification delivery receipt Runtime Artifacts projection fixtures",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/restore_point_created_contract_fixtures.json",
         "Plans/storage_value_registry.json",
         "Redacted copy/export fixtures",
@@ -16440,7 +16450,7 @@
         "False": 171,
         "True": 100
       },
-      "heading_count": 496,
+      "heading_count": 503,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16499,7 +16509,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 20550,
+      "line_count": 20648,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 271,
       "plan_unit_ids": [
@@ -16840,7 +16850,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c",
+      "sha256": "bd792465f98c1df89daa7d452458b2c9ae38de7c42f225886d3bc21ee32a17d6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 268,
@@ -16891,6 +16901,8 @@
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/event_family_registry.json",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
@@ -18054,7 +18066,7 @@
         "Plans/usage-feature.md",
         "future usage events"
       ],
-      "line_count": 7099,
+      "line_count": 7109,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 103,
       "plan_unit_ids": [
@@ -18199,7 +18211,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "7ceb20e33f7d4c893a4f99f501dcad5a1c3ce0f09f9d93cc71dcf45225afad08",
+      "sha256": "3f0a8dcc889ec2cd2f2a0df746594ff699966d6850c730b316a7ab5bd4926c6d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 103
@@ -18229,6 +18241,8 @@
         "Paid fallback budget gate fixtures",
         "Per-provider/model/account cache hit/miss/cost savings views expose measured vs estimated vs unsupported states.",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/event_index_consumer_adoption.schema.json",
+        "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/full_thread_runtime_contract_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
@@ -18837,7 +18851,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T20:58:22Z",
+  "generated_at_utc": "2026-09-11T21:26:32Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
