@@ -1,0 +1,47 @@
+{
+  "card_id": "EA-S8-SAFEPOINT-SUMMARY-CLOCK-001",
+  "status": "QUEUED_UNANSWERED",
+  "presented": false,
+  "answer": null,
+  "base_commit": "c1108a4f1a478e17addb5c5291493c1b0fed2239",
+  "owner": "Plans/storage-plan.md",
+  "adjacent_owner": "Plans/FileSafe.md",
+  "registered_family": "safe_point.recovery_unavailable",
+  "step9_rows_reclassified": 0,
+  "source_evidence": [
+    {
+      "canonical_path": "Plans/storage-plan.md",
+      "file_sha256": "c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c",
+      "line_start": 17088,
+      "line_end": 17107,
+      "span_sha256": "a416b8493e6d4f85b97f671419aaf8bd07a893237a44688f6536b3764327f36d",
+      "external_capture": "/home/sittingmongoose/PM-Experiments/event-authority-step08-safe-point-clock-root-20260911/storage-plan-clock-source.txt"
+    },
+    {
+      "canonical_path": "Plans/Decision_Log.md",
+      "file_sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f",
+      "line_start": 558,
+      "line_end": 566,
+      "span_sha256": "2fa69265f894a132f25e98780cf698e2178f0d53f845597a0a5c0dbd4d23d2b0",
+      "external_capture": "/home/sittingmongoose/PM-Experiments/event-authority-step08-safe-point-clock-root-20260911/Decision_Log-clock-source.txt"
+    }
+  ],
+  "frozen_external_proposal": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-safe-point-unavailable-20260911/v4/package-manifest.json",
+      "sha256": "3f2780259c2c71b2f25cb387f75c289717f5358f1914de293e8c76a5f98de9c1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-safe-point-unavailable-20260911/v4/owner-clock-question.json",
+      "sha256": "c61904fba2c251c1c56dcd2aefeeb51cd08a595dc8ec5091244ea21c26649117"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-safe-point-unavailable-20260911/v4/clock-owner-search.json",
+      "sha256": "dca27390debf12f638d2527cd55221707c54c7a26adb1b293b94f6d1471d455a"
+    }
+  ],
+  "root_adjudication": "The duration is explicit; the summary anchor is not. Delayed compaction makes the proposed anchors yield different disposal dates. Choosing an anchor changes retention/deletion behavior reserved to Jared by DL-045. First durable publication is a recommendation only. Existing pending card remains first under DL-036.",
+  "native_status": "NOT_RUN",
+  "policy_or_registry_changes": false,
+  "permitted_pending_behavior": "No native summary expiry/purge admission from the unresolved proposal; required source evidence remains protected when summary publication is unresolved."
+}
