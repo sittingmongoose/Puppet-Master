@@ -1802,7 +1802,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4473,
+      "line_count": 4486,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 49,
       "plan_unit_ids": [
@@ -1907,7 +1907,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "d0315a8fa74dc85add77991a73679eddd763692afb2e552b75fc073418f24acb",
+      "sha256": "10b0afdf4d693bd04d82cc3c832144021eaeb1366e51b00a27a694fef9d54a14",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -7679,7 +7679,7 @@
         "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2604,
+      "line_count": 2618,
       "path": "Plans/GitHub_Integration.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -7739,7 +7739,7 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "a8d9c1a920d9cc7c09bed2758a8ee8f04033f1d5e5ef34362b0e9dfe25bcb5ca",
+      "sha256": "a128627d85b0eb7cafb591dd7f33e769fcad42a272294631f99c93f272a50e4c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -13452,7 +13452,7 @@
         "scripts/pm_project_forge_contract.py",
         "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 526,
+      "line_count": 530,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -13479,7 +13479,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "dd952dcc2c5166307b8ea6cc434760efd8c757f7fcadaea2131634a3ad35f1d8",
+      "sha256": "df863f9f529da70b8c06cff18f7917ca9f9ea8f3d01220762022f29c5d5019b4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -16110,7 +16110,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1070,
+      "line_count": 1083,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -16154,7 +16154,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "2f95ddcb144b335f9c0f3711eff82ed0d1d50116aee02c52c72b3a2f649d685e",
+      "sha256": "b2ea19865b93c2030935b29f11040d26ad920d61ee8abd968cce66576b4f6a60",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 17
@@ -17273,7 +17273,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13087,
+      "line_count": 13092,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 162,
       "plan_unit_ids": [
@@ -17505,7 +17505,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "9b2478d627663bbbd012a2b304b36559aea02cc7545c2f4e157853be0b6d4e03",
+      "sha256": "7008e0dde6ca8cce7eb1e7cb515e2581df5ebaf5f4defd92b5d148fb8c193ac5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 161,
@@ -18133,7 +18133,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4717,
+      "line_count": 4723,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 56,
       "plan_unit_ids": [
@@ -18225,7 +18225,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "cc2aa46c181b697877fb478ca6013b48bf6e2a03e467013b004f55b42116d462",
+      "sha256": "723beb16e784bc6c6b24a01d60ea27a6dbdcd1f96d851ed8a76b35f21f6e16f4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 56
@@ -18551,7 +18551,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T15:29:01Z",
+  "generated_at_utc": "2026-09-11T16:02:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

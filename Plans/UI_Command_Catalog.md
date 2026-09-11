@@ -331,7 +331,7 @@ These IDs are required by `Plans/GitHub_Integration.md` section D and the legacy
 |---|---|---|---|
 | `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |
 | `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |
-| `cmd.project.new_github_repo` | Project-owned `project_action_request` (`Plans/project_system_contracts.schema.json`); approved forge intent under GI-042 / PJCT-008 | `project_action_result`; separately admitted `github.repo.create_requested` intake and `project.github_repo_bound` committed transition | File menu, Dashboard, New GitHub Repo flow; existing consumers unchanged |
+| `cmd.project.new_github_repo` | Project-owned `project_action_request` (`Plans/project_system_contracts.schema.json`); approved forge intent under GI-042 / PJCT-008 | `project_action_result`; send-only `github.repo.create_requested` intake and `project.github_repo_bound` committed-transition obligations, both `quarantined_not_admitted` under DL-039 | File menu, Dashboard, New GitHub Repo flow; existing consumers unchanged |
 | `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |
 | `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Planning Wizard deferred intake (legacy command alias) |
 
@@ -813,10 +813,10 @@ Rules:
 | `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
 | `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
 | `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
-| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.screenshot` | browser chrome, assistant chat |
 | `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
 | `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
 | `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
@@ -829,6 +829,7 @@ Rules:
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
 Capture event rules:
+- The four screenshot-to-chat rows declare `runtime_artifact.screenshot` consumer intent using `pm.runtime_artifact.screenshot.schema.v1` (`Plans/runtime_artifact_screenshot.schema.json`), owned by `Plans/Runtime_Artifacts_Panel.md#RAP-054`. RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded. Schema shape is not proof of real IDs, native capture, or retention execution.
 - `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
 - `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command.
 
@@ -4775,7 +4776,7 @@ plan_unit_id: UCC-064
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime artifact creation, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
+canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime_artifact.screenshot consumer intent subject to RAP-054 / Event Authority admission, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4823,7 +4824,8 @@ preserved_exact_tokens:
 negative_constraints:
 - share_with_agent and revoke_share_with_agent do not create browser.context_captured events and do not serialize page, selection, or element context without a separate explicit capture command.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- runtime_artifact.created is preserved only as forbidden compatibility/source lineage; RAP-054 excludes it from active screenshot event expectations.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md
@@ -13068,8 +13070,9 @@ Typed requests and results are mandatory at these placements; the former generic
 "typed contract or route/open disposition" fallback does not apply. Existing
 selectors project the typed owner availability/error, including `handler_unavailable`.
 Recording row scope remains record-only versus live-subject. Existing session event
-obligations consume the separate ATS-049 admission in
-`Plans/testing_session_event_admission.json`; export
+obligations consume the ATS-049 / DL-039 emit-only, `quarantined_not_admitted`
+disposition in `Plans/testing_session_event_admission.json`; payload validity does
+not authorize EventRecord append, replay, identity consumption or checkpoint advance. Export
 and recording controls retain receipt-only domain-event dispositions. No new native
 handler, visual design, command, storage family, runtime proof or readiness is claimed.
 
@@ -13078,10 +13081,12 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractNam
 The existing `cmd.project.new_github_repo` and its sole planned
 `handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
 Project action request/result family. No second field-list DTO, generic create
-command or Project Composition command is introduced. The two registered events
-are separate owner transitions, not unconditional dispatch success. The central
+command or Project Composition command is introduced. The two send-only obligations
+are separate owner transitions, not unconditional dispatch success; both remain
+`quarantined_not_admitted` under DL-039, without EventRecord append/replay authority.
+The central
 response preserves the application-scoped creation operation while its typed
 terminal result identifies the actual committed Project. Native availability
 remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
 
-ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007
