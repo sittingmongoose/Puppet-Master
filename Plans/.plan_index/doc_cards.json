@@ -16452,10 +16452,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 172,
+        "False": 173,
         "True": 100
       },
-      "heading_count": 509,
+      "heading_count": 518,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16514,9 +16514,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 20896,
+      "line_count": 21091,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 272,
+      "plan_unit_count": 273,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16789,7 +16789,8 @@
         "SP-277",
         "SP-280",
         "SP-278",
-        "SP-282"
+        "SP-282",
+        "SP-270"
       ],
       "reasoning_tiers": [
         "high",
@@ -16809,6 +16810,7 @@
         "execution_boundary",
         "false_durability",
         "false_generic_event_index_publication_or_source_coverage",
+        "false_native_append_settlement_or_source_retirement",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
@@ -16857,17 +16859,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "52ae76de5ed144388f39fe96ec8b82ebc782286cbd0860e1cb0fc6a39c434f38",
+      "sha256": "809b4dbabe4adc927a029ef7b9c76e80cf359dd6036bfaf968e413eefd1a4808",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 269,
+        "accepted": 270,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 247,
+        "requirement": 248,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 10,
@@ -16930,6 +16932,8 @@
         "Plans/restore_point_retention_summary_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
+        "Plans/seglog_append_observability_contract_fixtures.json",
+        "Plans/seglog_append_observability_contracts.schema.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
         "Plans/storage_value_registry.json",
         "Plans/working_notebook_contract_fixtures.json",
@@ -16986,6 +16990,7 @@
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "reports/event-authority-20260911/step-06-contract-validation.md",
+        "reports/event-authority-20260911/step-08-seglog-validation.md",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -18861,7 +18866,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T22:15:28Z",
+  "generated_at_utc": "2026-09-11T22:34:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18869,13 +18874,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3383,
+      "False": 3384,
       "True": 3156
     },
-    "plan_unit_count": 6539,
+    "plan_unit_count": 6540,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6348,
+      "accepted": 6349,
       "retired": 182,
       "superseded": 9
     },
@@ -18942,7 +18947,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5192,
+      "requirement": 5193,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

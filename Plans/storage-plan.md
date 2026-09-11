@@ -20894,3 +20894,198 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.storage_value.browser_workspace_reset_index_checkpoint.v1
+
+<a id="seglog-append-observability-producer-and-read-contract"></a>
+### Seglog append observability producer and read contract
+
+This NEW technical definition under DL-045 preserves event-family-seglog-event-appended@2.0.0, its inline payload schema https://puppetmaster.local/schemas/event_payloads/seglog_event_appended/1.0.0, inherits_referenced_event scope and RP-SEGLOG-7D@1.0.0. The closed payload has seq,type,event_ref,segment_ref,ts and optional writer_id; it does not acquire schema_version or any other field. Contracts_V0 names the Storage append writer and projectors/analytics/replay, and ATS SEA-P01 requires the referenced frame and watermark synchronized before observability. Generation-1 wire-format retirement in Storage §2.2.2 does not retire this event. No runtime, readiness or depth pass follows from this contract.
+
+### Producer authority, introduction boundary and no recursion
+
+Define storage.seglog_append_observability_writer.v1@1.0.0 as an active Storage append-writer continuation. It is not a replay projector. For each newly committed native logical EventRecord after its adopted boundary, the validated original frame itself establishes the durable obligation to produce exactly one append-observability fact, except when the original event_type is seglog.event_appended. The metadata append never invokes this producer on itself. Ordinary original appends, metadata appends, physical compaction copies and compatibility reads remain distinct operations.
+
+A NEW canonical adoption record with an immutable adoption floor and a separately mutable compact settlement prefix, seglog_observability_adoption.v1:{storage_instance_id}:{producer_version}, pins the actual instance, writer/version, exclusive committed-tail boundary, manifest ref/hash and source cursor, adoption ID and sole migration receipt. Its source_after_sequence_id/event_id/cursor are all null only for a coordinator-verified empty source boundary. A nonempty boundary requires exact equality to the cursor's last sequence/event and actual synchronized source manifest. Numeric gaps are not source events. A floor is not inferred from mtime, first retained row, maximum visible sequence or missing metadata.
+
+StorageMigrationCoordinator creates this floor once under its existing exclusive lock, backup, pre-stamp verification, stamp-last, reopen and terminal migration-receipt round-trip contract before enabling the writer. The actual supported store graph must install the named family/version; an absent graph edge or receipt is no activation proof. Restore captures floor, source and source identity authority in the same existing canonical boundary. A missing/corrupt canonical floor restores from mandatory backup or fences this writer; it is never rebuilt from a retained tail. A successor has an explicitly adopted floor and semantics, preserves old identities and settles/preserves predecessor obligations before it can treat new sources as its own. It never retroactively claims pre-floor native records.
+
+Only new native source appends under the installed writer are obligations. Pre-floor records, frozen v1/envelope compatibility views, projector_replay_only processing, JSONL, import inspection and physical survivor relocation never create one. Recovery may continue a proved post-floor native obligation from its preserved original source and actual recovery durability evidence; missing observability alone cannot prove that obligation. Unknown introduction, source provenance or historical settlement is unavailable, not permission to backfill.
+
+### Strict source-first append and immutable producer bytes
+
+The source append is the existing canonical append and returns its own original result. Before admitting any observability append, prove the original decoded EventRecord and registered payload; actual frame identity/CRC/bounds; and the committed original frame/watermark durability boundary under Storage's source/manifest authority. A four-field dedupe original_append_result is only an identity/location join. It is not the eleven-field synced AppendReceipt and cannot supply missing frame/watermark proof. persisted_at_utc alone is never durability proof. An atomic group that writes the metadata before the original proof is established does not satisfy this contract.
+
+The original source remains authoritative whether observability subsequently succeeds, fails or is temporarily unavailable. Failure cannot uncommit/rewrite the original, replace its receipt with a metadata receipt, or rerun its owning action. Pending observability remains an explicit Storage producer obligation until reconciled. There is no best-effort disappearance or in-memory-only acknowledgement of that obligation.
+
+For new v1 producer writes, derive identity_digest = SHA256(RFC8785([storage_instance_id, original.event_id])). event_id is evt_seglog_appended_ plus that digest; idempotency_key is seglog.event_appended: plus it. Writer/binding version, time, current segment, retries and process identity are excluded from this semantic identity. Preserve every already committed metadata identity/result during compatibility or successor adoption; a new spelling cannot rewrite it.
+
+The new deterministic semantic mapping is:
+
+- payload.seq = original.sequence_id; payload.type = original.event_type; payload.event_ref = original.event_id exactly, not a URL, encoded locator or dereferenced payload.
+- payload.segment_ref is the original append result's Storage-owned segment reference, resolved and cross-checked against the actual original append/segment authority. Rotation/compaction does not replace it with today's locator. Unresolvable original segment identity is unavailable.
+- payload.ts and outer occurred_at_utc equal original.persisted_at_utc. That stable commit-group time is descriptive and becomes admissible here only after the separate original durability proof. It is not replay order or the metadata TTL anchor. This binding omits optional payload.writer_id rather than inventing a historical process identity.
+- Scope and envelope project_id exactly inherit the referenced original. The other domain joins are null; the original remains the source of thread/run/node/attempt attribution. The new actor_ref is the non-capability Storage service identity storage.append_observer:{storage_instance_id}:v1. It grants no user/service permission. Requested/effective account refs are null. correlation_id copies the original; causation_event_id and parent_event_id equal original.event_id. producer_sequence_id equals original.sequence_id. payload_ref is null; redaction_profile=no_secrets; migration fields are null; replay_policy=dedupe_by_idempotency_key.
+
+These are producer bindings to the existing Contracts semantic projection, not an alternate EventRecord envelope. Storage assigns the metadata's own sequence_id, observed_at_utc and persisted_at_utc through normal append; its sequence must be strictly greater than the original. Apply registered schema, no-secret, scope, dedupe and writer-admission checks again to the metadata. Ordinary metadata uses the existing ordinary durability class; an original barrier stays a barrier and is not weakened. Metadata success requires its own frame and watermark barriers and matching synced receipt. Same identity/digest returns the original result; conflicting digest is idempotency_conflict; unavailable authority is dedupe_unavailable. No acknowledgement is fabricated from an index row.
+
+The semantic bytes are reproducible from immutable original source, original append identity and the pinned adopted mapping; they do not require a second payload-copy outbox. Once metadata exists, its original semantic bytes/identity take precedence on retry. If the original inputs needed for an unfulfilled obligation are unavailable, do not invent replacement values. Preparation may occur earlier, but it is not an admitted/emitted payload or success before the original proof.
+
+### Producer reconciliation, source preservation and exact settlement
+
+Define the NEW progress binding storage.seglog_append_observability_producer.v1@1.0.0 and its disposable seglog_observability_producer_checkpoint.v1:{storage_instance_id}:{producer_version}. The canonical floor, authenticated contiguous settlement prefix and source authority are stronger than this checkpoint. It reads original seglog authority directly; it cannot manufacture authority from generic-index progress.
+
+Under the existing append-writer lock and maintenance fence, validate floor, dedupe currentness and a frozen verified source range. Enumerate it in source sequence order, checking each complete frame and registered identity before classification. Pre-floor/compatibility/non-native frames and metadata frames are non-emitting skips only after that provenance is verified. Each eligible native source is pending until actual matching metadata settlement is proved. Call the normal admitted metadata append under the already-held writer context without reacquiring the same lock or bypassing validation. Newly appended metadata frames are examined as non-emitting records; a bounded reconciliation pass stops at a completely verified boundary, not at an unbounded moving native workload.
+
+For each pending original, order the effects: prove original frame/watermark; admit and durably append/reconcile metadata; then advance the canonical settlement prefix for a complete eligible range in the adoption value under its own prior-value CAS; only afterward commit disposable producer checkpoint progress in redb. The checkpoint never advances ahead of that metadata durability result. No cross-store atomic transaction is claimed. Crash after metadata durability but before canonical-prefix commit preserves original/meta evidence and reexamines it through permanent event/scoped identity plus actual source durability, then commits the prefix once. Crash after prefix commit but before disposable checkpoint commit rebuilds progress from that canonical prefix and current verified tail, without reemitting metadata. Crash before metadata durability leaves the obligation pending. This is an owner producer continuation; a projector_replay_only invocation cannot execute it or append anything.
+
+The producer checkpoint includes exact adoption ref/hash, source boundary ref, CURRENT digest, processed-through sequence, and the nine-field survivor cursor: manifest_generation,recovery_epoch,segment_generation,segment_name,byte_offset,last_sequence_id,last_event_id,survivor_prefix_sha256,projector_schema_version. The through sequence equals the cursor sequence. Resolve every ref to actual selected Storage evidence; timestamp is observation only. Resume rereads the last frame inclusively and validates its identity. Commit progress only against the actual post-append selected source generation and unchanged prior-checkpoint CAS; a changed fence aborts progress. current requires healthy, complete coverage of the declared boundary and actual matching manifest/survivor evidence. It does not claim that no later source append exists. Unknown ranges or source/settlement proof cannot be skipped.
+
+An original obligation and its needed original/meta first-append evidence remain pending for preservation until the canonical prefix covers it; actual metadata settlement or a disposable checkpoint alone cannot release this dependency. Pending originals use the existing Storage-owned live-ref/maintenance-ref eligibility override in Case L-3; old source deletion already waits for cleared refs. Define storage.seglog_observability_pending_source_ref.v1 as the new resolver for that existing class: under the maintenance fence, floor plus actual source and metadata settlement evidence determine whether the source's bytes/identity are still needed by this producer. Unknown status is ineligible for destructive removal. This is not a new retention_hold_record.hold_kind, legal hold, manual_keep or safe-point recovery anchor. It retains no source beyond the pending dependency's authenticated canonical-prefix commit and does not retain source content for diagnostics afterward. Before compaction or deletion removes/relocates a pending original or metadata's necessary first-append evidence, reconcile and canonically certify the obligation or preserve that evidence through the existing verified source/translation mechanism. If neither is possible, maintenance remains blocked with evidence intact; do not silently create a permanent hold or waive the dependency.
+
+Retained settlement validates actual original and metadata frames, exact adopted mapping, both frame/watermark barriers and matching permanent event/scoped identity values. A metadata four-field dedupe result alone never establishes this admission. The old proposal's guessed expired removal-lineage dictionary remains disallowed; current owners provide no permanent per-event removal receipt that can supply it. Instead the following NEW narrow canonical prefix closes prior-settlement custody without another family or retention policy.
+
+The same seglog_observability_adoption value contains settlement_prefix, initially null. Its immutable floor fields remain exact. A prefix contains revision, through_sequence_id, through_event_id, the exact nine-field source_cursor, the captured source_selection, cumulative settled_native_original_count, committed_at_utc, commit_transaction_id and predecessor_prefix_sha256. Revision begins at one and increases by exactly one; the previous prefix hash is SHA-256 of its exact canonical MessagePack value bytes, null only for the first prefix. That new custody digest changes no existing producer, EventRecord, payload, control or legacy hash. The root is still one bounded canonical value per Storage instance and producer version. It stores neither per-event entries nor payload copies, and no checkpoint-style history array. The adopted mapping version remains pinned by the immutable floor.
+
+Under the actual writer lock, maintenance fence and canonical prior-value CAS, freeze and verify the entire logical source interval after the previous prefix (or original exclusive floor) through the proposed boundary. Every eligible native original in that interval must have actual exact metadata settlement proved before this commit; enumerate every source position and settle each original exactly once. Metadata source records are verified non-emitting skips. Only actual proven abandoned allocator ranges can explain a missing numeric position in the newly certified interval; an unknown, retention-removal or corruption-loss hole cannot advance this prefix. For an originally empty store, null floor remains null and the verified interval starts with the actual first allocated source boundary; all earlier numeric leases, if any, require existing allocator evidence. Compatibility reads, import inspection and physical survivor relocation never become eligible native originals. Existing writer/source authority must authenticate the post-adoption native interval; a caller-provided boolean or source timestamp cannot do so.
+
+Commit the complete new same-family canonical value only after those original/meta durability barriers. Preserve all needed source evidence until that commit is proven durable. The prefix's through cursor/event/source selection must equal the actual verified interval end; its cumulative count adds exactly the newly settled native originals, and the prior prefix and immutable floor must match the actual stored preimage. The commit transaction ID/time are the actual first canonical commit, not a disposable observation. No derived checkpoint can advance beyond this prefix. A retry reads the committed value and reuses the proved prefix; it neither invents another metadata event nor silently recertifies missing source. A later prefix overwrites this bounded certificate only after validating the entire next interval and its predecessor CAS.
+
+After metadata expiry, read the actual authenticated canonical adoption/prefix and permanent original and metadata event/scoped identity records in the same admitted store snapshot. Resolve their exact existing dedupe keys and actual values; original global/scoped records must agree in identity, digest, original append result and locator. The original sequence must lie strictly after the immutable adoption floor and at or below the committed prefix; it must be an original event under the pinned native writer contract, not metadata-about-metadata or a pre-floor/compatibility source. The preserved metadata identity must equal SHA256(RFC8785([storage_instance_id, original.event_id])) under the already adopted spelling, have the original scope, and have a sequence strictly after the original. The authenticated certificate asserts that every eligible original in its interval was durably settled; it does not need to retain old frames or fabricate a removed-source receipt. Return already_settled_prefix_certified with the preserved identity and no new AppendReceipt, append, payload reconstruction, current source-presence claim or original-action replay. Original source may also be gone, provided actual permanent identity and canonical prefix custody remain authentic. Independently apply current inspection/access/deletion rules; this content-free settlement check grants no content access.
+
+An original above the prefix still requires retained actual original/meta source and watermark proof before prefix advance. Missing/corrupt canonical prefix or floor requires their mandatory coherent backup under the original instance/writer boundary, otherwise fence reconciliation and dependent maintenance. Never reconstruct either canonical field from a disposable checkpoint, retained-tail maximum, absent metadata, timestamp, guessed removal manifest or unrelated backup. Restore preserves the immutable floor and latest authenticated prefix coherently with the canonical identity/source authority; a mismatched or older prefix cannot silently release evidence or regenerate expired metadata. The record remains non-rebuildable source/receipt lineage under existing RP-AUTHORITY-INDEFINITE. The new prefix is not a second canonical event source and has no per-event perpetual catalog or new retention timer.
+
+A lost/corrupt producer checkpoint rebuilds from the actual immutable adoption floor and authenticated canonical settlement prefix, plus verified current source and permanent identity evidence for the remaining tail. Prefix-covered originals use the certified prior-settlement route; above-prefix originals require actual retained metadata settlement and a new canonical commit. If a preexisting hole cannot prove eligible skip or prior settlement, do not move the floor to the first retained row and do not reemit historical metadata. Preserve uncertainty and fence this producer's advancement. Generic original-event index/read access remains governed independently. This contract does not promise successful recovery when required canonical evidence has been lost.
+
+### Concrete read consumers and publication
+
+Define storage.seglog_append_observability_reader.v1@1.0.0 over the existing event_record_index.v2 output, with NEW seglog_observability_reader_checkpoint.v1:{storage_instance_id}:{scope_partition}. The exact partition is app for application scope or project~base64url_no_pad(UTF8(project_id)) for project scope. Three NEW read bindings use the same verified join and checkpoint token: storage.seglog_append_observability_projectors.v1, storage.seglog_append_observability_analytics.v1 and storage.seglog_append_observability_replay.v1, all at 1.0.0. They provide append observability to the already named consumers, with no new GUI, billable usage, durable analytics row or owner state transition.
+
+Generic EventRecord index publication occurs first and independently. The filtered reader enumerates the complete declared partition range through an actual published full-index checkpoint, resolving each candidate metadata frame and exact payload. Then resolve payload.event_ref to the original registered source and verify original type/sequence/segment identity, inherited scope and actual committed source authority. Outer event_type remains seglog.event_appended while payload.type names the original; payload.seq is not the outer sequence. The metadata's sequence is later than the original. The index has no authority to replace either source frame.
+
+Do not recursively follow metadata-about-metadata chains. New producer emission excludes them. A schema-valid historical record that references an earlier metadata record may be inspected one hop under its original contract, without scheduling anything; a self-reference, cycle or nonpreceding source cannot pass the sequence/source join. No new payload exclusion is added to the frozen registry schema merely to implement the current producer's no-recursion rule.
+
+A complete checkpoint requires the full retained range, verified gaps/removals, CURRENT generation and source joins. An unreadable potentially relevant original is not a filter skip. Proven source removal is reported honestly as source_removed; unexplained absence is source_unavailable. The reader may expose already verified partial diagnostics, but cannot claim complete healthy coverage across an unresolved join. Metadata expiry does not imply original-event loss, and metadata presence does not authorize replaying its original action.
+
+The reader adopts SP-278 reader.storage.event_record_index@1.0.0 and stores the exact closed read_token as index_read_token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. The ref resolves the actual checkpoints root and its generation JSON Pointer in the same redb database as the selected generation dataset; no flat-table or foreign-database fallback is allowed. Row publication locators bind the immutable birth anchor; currentness separately binds the advancing frontier. An ordinary append changes the token even when generation and older rows remain fixed. Resolve actual selected source frames and both original and metadata EventRecord envelopes; recompute existing payload and producer-semantic digests without changing their codecs. The typed joins in the frozen joined-evidence schema pinned by reports/event-authority-20260911/step-08-seglog-validation.md are decoded adapter inputs, not replacements for native owner controls or receipts. The reader writes only its filtered checkpoint in one redb transaction under unchanged full generic token, CURRENT, source/survivor, access/deletion and prior-cursor fences. Read-only joins publish after commit under that exact snapshot token and are revalidated before disclosure. They have no separate durable effect. Crash before commit leaves prior progress; after commit recomputes the same join. These three consumers cannot advance a business projector, global index checkpoint, UsageRecord, canonical state or dispatch on the basis of this metadata. The original event's owner reducer still processes its original source exactly once under its own checkpoint.
+
+Compaction may translate producer/reader cursors only by preserved semantic identity and verified survivor evidence, otherwise rebuild as defined. Target shadows publish only after the existing synchronized CURRENT selection. No retired locator survives and no timestamp steers selection. The original first-append segment reference is historical provenance, not permission to open a retired physical file.
+
+### Exact policy and custody bindings
+
+The metadata event remains RP-SEGLOG-7D@1.0.0: creation anchor, 604800 seconds, 500000 per actual Storage instance across application and project partitions, oldest-eligible overflow, hold eligibility and compact expiry. Its creation anchor is its own canonical persisted_at_utc after actual durable commit, not payload.ts, original creation, mtime or checkpoint refresh. Inclusive expiry and all stronger existing protections remain. Do not regenerate an expired metadata record and reset its seven-day window. Index rows for metadata use RP-EVENT-INDEX-SOURCE with THIS metadata event as their source; the original event and its separate index keep their own exact registered policies.
+
+The new canonical adoption floor and compact mutable settlement prefix map to existing RP-AUTHORITY-INDEFINITE as migration/source-lineage authority. This is an explicit NEW technical class assignment under DL-045, justified by Case L-1 migration receipt/backup obligations and Case L-3's indefinite receipt/audit/source-lineage class. It is one introduction boundary per producer version and contains no per-event payload/history catalog. No policy value changes. Do not describe the assignment as an existing row or infer permanence from the word identity alone.
+
+Both new disposable checkpoints use RP-PROJECTION-3GEN@1.0.0: current_plus_history, 604800 seconds, at most three per logical key, hold eligible, overflow rebuild_projection and expiry rebuild. Their precise terminal edge is current|degraded -> withdrawn; updated_at_utc freezes at first withdrawal and is the terminal anchor. Normal cursor refresh, source append, source completion and repeated withdrawal do not reset/start that TTL. A withdrawn record cannot refresh itself into current; an explicitly adopted successor/rebuild owns its new generation. Checkpoint expiry never expires a source or authorizes a new metadata emission.
+
+The two actual redb checkpoint values live in the same database table named checkpoints, at their already proposed logical producer/reader keys. Each root contains one publication core and retired_generations with at most two closed, nonrecursive entries. A core now includes publication_id, published_at_utc and hold_refs. A retired entry contains checkpoint (the exact withdrawn core), retired_at_utc equal to that core's frozen updated_at_utc, and successor_publication_id. It does not embed an entire root or recursively nest history. Current, degraded and withdrawn root cores plus retired entries all count toward the three-generation ceiling; no fourth staged generation is persisted under another spelling or hidden side table.
+
+Allocate a fresh non-capability publication_id exactly once for each deliberately rebuilt/new publication and durably reuse it across retry; published_at_utc is that publication's first committed selection. A same-generation refresh preserves both birth fields, all retired cores and hold_refs exactly while advancing only its admissible cursor/token/progress and observation fields under prior-value CAS. Withdrawal changes only state and updated_at_utc on the first current/degraded-to-withdrawn edge. An already withdrawn core is preserved byte-for-byte on a later successor handoff; repeated withdrawal never resets the anchor. The original root's complete existing retired array is carried unchanged, followed by the exact newly withdrawn core. The new current root, old withdrawal, carried history, selected identity and full source token commit in one redb transaction in the same store under the actual prior-value CAS. Initial admission and subsequent refresh/generation admission are separately verified; a self-consistent fabricated birth hash is not admission proof.
+
+Cleanup targets one actual nonselected retired publication ID. It requires inclusive age >= first retirement + 604800 seconds, actual applicable existing retention_hold_record values and live/maintenance/backup refs, and an unchanged current owner hold/ref fence. An unresolved referenced hold blocks cleanup. Existing dynamically applicable holds protect it even when they were set after retirement and therefore are absent from the frozen core. The current root, never-withdrawn state and protected siblings cannot be removed. Serialize eligible cleanup and slot reservation with hold/ref admission and publication; preserve sibling bytes, then reserve the released slot. If no eligible slot exists, stop the new derived publication and disclose governed rebuild unavailability without eviction or a fourth generation. These records create no new hold kind or source-retention clock.
+
+The three physical families and their v1 bindings are first-native registrations in this contract. No previously admitted historical value is reinterpreted. The frozen predecessor proposals remain source-lineage only. The sole StorageMigrationCoordinator still installs the actual supported graph before any production persistence; this packet allocates no store-version integer.
+
+
+Adoption, checkpoints and diagnostics contain IDs, hashes, bounded cursors and non-capability refs, never source payload copies, credentials, account material or local absolute paths. Source and metadata permissions, deletion tombstones and quarantine custody apply independently before join/publication and after restore. Removing a project from a UI registry is not physical purge; explicit scoped data deletion follows existing Storage intents and eligibility. No application-wide deletion permission is created by inherited app scope. A preserved metadata/audit reference does not restore content or navigation that current deletion policy removed.
+
+### Compatibility and withdrawal
+
+The event payload stays its exact registered inline 1.0.0 shape under current EventRecord 2.0.0. Frozen EventRecord 1.0.0 and EventEnvelopeV1 use only existing registered normalization and unique referenced-event scope evidence. Preserve original source hashes and transient-upgrader provenance. A projector_replay_only view affects only allowed disposable read state; it never starts the producer, creates adoption, appends metadata or dispatches the original action. Missing/ambiguous scope or refs quarantine/refuse without reader advancement. No alias, new payload field or membership change is added.
+
+Read-only consumer withdrawal fences only its own filtered publication. Producer withdrawal stops admitting new observability obligations at an explicit owner-controlled native append boundary; original appends that require the withdrawn contract cannot silently continue as if observability were active. Preserve and reconcile already admitted obligations or keep them fenced with their source refs. The adopted floor and permanent original/meta identity evidence remain under their existing lineage policies. An explicit successor migration defines its own floor and compatible semantic mapping and verifies pending settlement, source cardinality/joins and checkpoints before activation. Withdrawal never deletes the floor to pretend the producer was absent, rewrites historical identities, clears unresolved pending refs or reconstructs source actions from metadata.
+
+All listed transitions, static fixtures and native obligations are contract evidence only. Actual source sync, expiry settlement, migration, maintenance races, checkpoint loss, permissions, deletion and recovery must be tested natively before any runtime acceptance claim.
+
+### Static fixture and remaining contract boundary
+
+The retained-source examples bind actual registered EventRecord and payload shapes to a complete SP-278 synthetic source/checkpoint/dataset and typed original/meta source evidence, both permanent dedupe value shapes, the canonical adoption value, actual checkpoint table/key/value bindings and full publication tokens. Producer progress examines the metadata tail as a non-emitting record after source-first settlement. Two positive retained joins and the individually named relational negatives do not authenticate installed migration floors, original native provenance, frame CRC, real receipt/manifest codecs, disk sync, redb or inventory completeness. The adoption floor and prefix read authenticity are assumed supplied by actual installed owner custody in these synthetic examples; native migration/adoption proof remains NOT_RUN. Transaction JSON hashes in retention fixtures are test-only checks, not new canonical producer or control hash recipes. The NEW same-value prefix remedy has typed initial, incremental and empty-floor canonical-commit fixtures, plus expired prior-settlement reuse with missing disposable progress and no source-presence claim. The old removal-lineage route has zero positive fixtures. No DEPTH_PASS is claimed.
+
+### Exact producer projection, native bookkeeping and history joins
+
+The immutable metadata producer projection binds occurred_at_utc to the original persisted_at_utc, exactly like payload.ts, even when the original occurred_at_utc is earlier. Validate all existing producer-semantic fields, schema and deterministic event identity against that projection. Do not compare the whole envelope to an example factory. Metadata sequence_id, observed_at_utc and persisted_at_utc are normal independently assigned Storage fields and join the actual metadata frame/watermark. Metadata sequence must be strictly greater than the original, not necessarily adjacent; complete coverage must explain any allocator gap through the actual owner evidence. Metadata's own persisted time remains its registered TTL anchor. These rules apply both to retained reads and canonical settlement-prefix admission. No existing producer hash or timestamp meaning changes.
+
+Every producer/reader checkpoint generation has birth <= current observation. Retired cores keep first withdrawal as their exact update/retirement anchor. Every link has retired-core birth <= first retirement <= actual immediate successor birth, and all IDs form one unique ordered acyclic chain ending at the selected root. Resolve every actual successor in the bounded value; timestamps alone cannot infer links. A replacement cannot withdraw before birth or retire after its already selected successor. Refresh and replacement preserve the full logical owner identity, including schema/version, Storage instance and binding/version, and for readers scope_kind, project_id and exact encoded scope_partition. A matching partition string alone cannot admit a foreign project.
+
+The permanent event/scoped identity pair must additionally join original_append_result.byte_offset to source_locator.byte_offset and original_append_result.segment_ref to source_locator.segment_name, alongside exact sequence/event/digest and actual store values. Repaired hashes or agreement between two identically forged index entries do not waive this cross-field source identity join. This historical check does not grant permission to open a retired segment or claim current source presence. Unsupported custody remains unavailable under its actual owner.
+
+All nine root v2 findings are covered by schema-valid v3 regressions. Additional positive fixtures exercise Storage-assigned later times and nonadjacent legal sequence allocation through both retained and canonical-prefix paths. Native source/identity/commit authenticity remains NOT_RUN separately from these static predicate checks.
+
+Validate replay_policy independently of the producer-semantic digest: a native metadata record requires dedupe_by_idempotency_key, and a projector_replay_only original cannot establish a native producer or settlement-prefix obligation. This adds no field to the existing semantic hash preimage.
+
+```yaml
+plan_unit_id: SP-270
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage defines source-first native append observability with an immutable introduction
+  floor, bounded canonical settlement prefix, exact metadata identity, and independently verified producer
+  and reader checkpoint generations.
+gui_related: false
+gui_classification_reason: Backend append custody, source preservation, filtered read publication and
+  retention.
+depends_on:
+- SP-235
+- SP-236
+- SP-237
+- SP-241
+- SP-278
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only a proved native post-adoption original creates one nonrecursive source-first metadata obligation.
+- Exact deterministic metadata mapping preserves existing source, payload and producer digest recipes
+  and separately enforces native replay admission.
+- Actual source and metadata durability precede canonical contiguous-prefix commit, which precedes disposable
+  progress.
+- Authenticated canonical prefix and permanent identity permit prior-settlement reuse after expiry without
+  reappend or a source-presence claim.
+- Pending evidence remains protected by the existing live-ref and maintenance class until canonical settlement
+  certification.
+- All three read consumers join actual source frames and the complete SP-278 snapshot token before checkpoint
+  commit and disclosure.
+- Two physical checkpoint roots carry at most three lawful generations with stable birth, exact first
+  withdrawal, holds and serialized eligible cleanup.
+- The new canonical floor and bounded prefix use existing indefinite migration and source-lineage authority
+  with coherent backup.
+- Unsupported migration, native provenance or missing canonical custody fences affected work; static fixtures
+  confer no native or DEPTH_PASS acceptance.
+validation_surfaces:
+- Plans/seglog_append_observability_contracts.schema.json
+- Plans/seglog_append_observability_contract_fixtures.json
+- reports/event-authority-20260911/step-08-seglog-validation.md
+risk_class: false_native_append_settlement_or_source_retirement
+reasoning_tier: high
+context_scope: event_authority_step08_seglog_append_observability
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md
+- Plans/Automated_Testing_System.md#SEA-P01
+- Plans/storage-plan.md#SP-278
+split_recommended: false
+source_atom_ids: []
+preserved_exact_tokens:
+- seglog.event_appended
+- seglog_observability_adoption
+- seglog_observability_producer_checkpoint
+- seglog_observability_reader_checkpoint
+- RP-SEGLOG-7D
+- RP-PROJECTION-3GEN
+- RP-AUTHORITY-INDEFINITE
+- already_settled_prefix_certified
+negative_constraints:
+- No new event membership, payload field, retention policy, per-event perpetual catalog, global semantic
+  hash preimage, launch-array entry, WorkNode or governance seal.
+- No migration activation, source authenticity, native sync or runtime acceptance inferred from synthetic
+  fixture values.
+owner_hints:
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-270, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Log.md#DL-045, SchemaID:pm.storage_value.seglog_observability_adoption.v1

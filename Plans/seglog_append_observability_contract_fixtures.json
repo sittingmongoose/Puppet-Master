@@ -1,0 +1,872 @@
+{
+  "schema_id": "pm.seglog_append_observability.contract_fixtures.v1",
+  "status": "STATIC_SHAPE_AND_SPECIFICATION_ONLY",
+  "native_execution": "NOT_RUN",
+  "external_joined_subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-appended-20260911/v4-root/manifest.json",
+    "sha256": "1dbd8542840086c1741d55cc2ada0edbc4b3c02affa552c60d4f13321251a171"
+  },
+  "value_shape_cases": [
+    {
+      "id": "app_retained_adoption",
+      "definition": "adoption",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_adoption.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "producer_id": "storage.seglog_append_observability_writer.v1",
+        "producer_version": "1.0.0",
+        "adoption_id": "adoption:fixture:empty-source",
+        "migration_receipt_ref": "migration_receipt:fixture",
+        "floor_kind": "exclusive_after_committed_tail",
+        "source_after_sequence_id": 9,
+        "source_after_event_id": "event:adoption-floor-9",
+        "boundary_source_cursor": {
+          "manifest_generation": 9,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000009.active",
+          "byte_offset": 0,
+          "last_sequence_id": 9,
+          "last_event_id": "event:adoption-floor-9",
+          "survivor_prefix_sha256": "48a4612a1574fe1a5df24d9d8f9a757503d6070a3e4b10e7c1d7f6f72b30e53d",
+          "projector_schema_version": "1.0.0"
+        },
+        "boundary_manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "boundary_manifest_sha256": "549ff269093f701da977272ff7775a47ffb4eb40af8c9c630caf4cf3b007e7b3",
+        "adopted_at_utc": "2026-09-11T01:00:00Z",
+        "redaction_profile": "no_secrets",
+        "settlement_prefix": {
+          "revision": 1,
+          "through_sequence_id": 11,
+          "through_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "source_cursor": {
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000010.active",
+            "byte_offset": 1017,
+            "last_sequence_id": 11,
+            "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+            "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "projector_schema_version": "1.0.0"
+          },
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "settled_native_original_count": 1,
+          "committed_at_utc": "2026-09-11T01:00:02Z",
+          "commit_transaction_id": "synthetic:canonical:prefix:1",
+          "predecessor_prefix_sha256": null
+        }
+      }
+    },
+    {
+      "id": "app_retained_producer_checkpoint",
+      "definition": "producer_checkpoint",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_producer_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_producer.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1017,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:producer:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "adoption_ref": "seglog_observability_adoption.v1:11111111-1111-4111-8111-111111111111:1.0.0",
+        "adoption_sha256": "c249d77ac6b16619a0d64cee4f3fd1782388f59295b42cffa61d1da8fef01734",
+        "source_boundary_ref": "storage/seglog/manifest.v1.msgpack",
+        "processed_through_sequence_id": 11
+      }
+    },
+    {
+      "id": "app_retained_reader_checkpoint",
+      "definition": "reader_checkpoint",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_reader_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_reader.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1017,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:reader:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "scope_kind": "application",
+        "project_id": null,
+        "scope_partition": "app",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "synthetic-same-redb-snapshot:txn:initial-A"
+        },
+        "first_retained_sequence_id": 10,
+        "index_through_sequence_id": 11
+      }
+    },
+    {
+      "id": "project_retained_adoption",
+      "definition": "adoption",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_adoption.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "producer_id": "storage.seglog_append_observability_writer.v1",
+        "producer_version": "1.0.0",
+        "adoption_id": "adoption:fixture:empty-source",
+        "migration_receipt_ref": "migration_receipt:fixture",
+        "floor_kind": "exclusive_after_committed_tail",
+        "source_after_sequence_id": 9,
+        "source_after_event_id": "event:adoption-floor-9",
+        "boundary_source_cursor": {
+          "manifest_generation": 9,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000009.active",
+          "byte_offset": 0,
+          "last_sequence_id": 9,
+          "last_event_id": "event:adoption-floor-9",
+          "survivor_prefix_sha256": "f9b3d324ec792612edb50c2a42246d493cbc52c8ff7693bdc7a530dd50aff560",
+          "projector_schema_version": "1.0.0"
+        },
+        "boundary_manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "boundary_manifest_sha256": "c72b9dace3cc8a8989528fe6e21e0867f9c55645115bcf65347c5d5268408eee",
+        "adopted_at_utc": "2026-09-11T01:00:00Z",
+        "redaction_profile": "no_secrets",
+        "settlement_prefix": {
+          "revision": 1,
+          "through_sequence_id": 11,
+          "through_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "source_cursor": {
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000010.active",
+            "byte_offset": 1029,
+            "last_sequence_id": 11,
+            "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+            "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "projector_schema_version": "1.0.0"
+          },
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "d865e2b88d257b42081f67d94449c9da72abd4ae4126807f7459c9df3008817d",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "retained_inventory_sha256": "9c39b52edd91cdd8d80fccc954e470905a148fde6c81d146b602c314de5f0ebd",
+            "durable_watermarks_sha256": "b8fa051f9358080b7830c701225aaf345864e14c30d2ee9d87c0b335b4579feb",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "settled_native_original_count": 1,
+          "committed_at_utc": "2026-09-11T01:00:02Z",
+          "commit_transaction_id": "synthetic:canonical:prefix:1",
+          "predecessor_prefix_sha256": null
+        }
+      }
+    },
+    {
+      "id": "project_retained_producer_checkpoint",
+      "definition": "producer_checkpoint",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_producer_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_producer.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1029,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:producer:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "adoption_ref": "seglog_observability_adoption.v1:11111111-1111-4111-8111-111111111111:1.0.0",
+        "adoption_sha256": "108a6d4f2b8219e656eeaffee2111b5f3acd60da165081e07269647e14d8e3b0",
+        "source_boundary_ref": "storage/seglog/manifest.v1.msgpack",
+        "processed_through_sequence_id": 11
+      }
+    },
+    {
+      "id": "project_retained_reader_checkpoint",
+      "definition": "reader_checkpoint",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_reader_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_reader.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1029,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:reader:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "scope_kind": "project",
+        "project_id": "project/a",
+        "scope_partition": "project~cHJvamVjdC9h",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "generation_id": "eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "generation_anchor_sha256": "1f455be72f5c87f21197eb872bbc92f3596a2e74f293b8748015c4b51720f13c",
+          "frontier_revision": 0,
+          "frontier_sha256": "e3bda93eadef6433b1384a87768d76430417cc7e2e3e003989612e5ef7c67999",
+          "index_dataset_name": "event_record_index.v2@eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "d865e2b88d257b42081f67d94449c9da72abd4ae4126807f7459c9df3008817d",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "retained_inventory_sha256": "9c39b52edd91cdd8d80fccc954e470905a148fde6c81d146b602c314de5f0ebd",
+            "durable_watermarks_sha256": "b8fa051f9358080b7830c701225aaf345864e14c30d2ee9d87c0b335b4579feb",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "synthetic-same-redb-snapshot:txn:initial-A"
+        },
+        "first_retained_sequence_id": 10,
+        "index_through_sequence_id": 11
+      }
+    },
+    {
+      "id": "app_retained_adoption__unknown_field",
+      "definition": "adoption",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_adoption.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "producer_id": "storage.seglog_append_observability_writer.v1",
+        "producer_version": "1.0.0",
+        "adoption_id": "adoption:fixture:empty-source",
+        "migration_receipt_ref": "migration_receipt:fixture",
+        "floor_kind": "exclusive_after_committed_tail",
+        "source_after_sequence_id": 9,
+        "source_after_event_id": "event:adoption-floor-9",
+        "boundary_source_cursor": {
+          "manifest_generation": 9,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000009.active",
+          "byte_offset": 0,
+          "last_sequence_id": 9,
+          "last_event_id": "event:adoption-floor-9",
+          "survivor_prefix_sha256": "48a4612a1574fe1a5df24d9d8f9a757503d6070a3e4b10e7c1d7f6f72b30e53d",
+          "projector_schema_version": "1.0.0"
+        },
+        "boundary_manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "boundary_manifest_sha256": "549ff269093f701da977272ff7775a47ffb4eb40af8c9c630caf4cf3b007e7b3",
+        "adopted_at_utc": "2026-09-11T01:00:00Z",
+        "redaction_profile": "no_secrets",
+        "settlement_prefix": {
+          "revision": 1,
+          "through_sequence_id": 11,
+          "through_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "source_cursor": {
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000010.active",
+            "byte_offset": 1017,
+            "last_sequence_id": 11,
+            "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+            "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "projector_schema_version": "1.0.0"
+          },
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "settled_native_original_count": 1,
+          "committed_at_utc": "2026-09-11T01:00:02Z",
+          "commit_transaction_id": "synthetic:canonical:prefix:1",
+          "predecessor_prefix_sha256": null
+        },
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "app_retained_producer_checkpoint__unknown_field",
+      "definition": "producer_checkpoint",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_producer_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_producer.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1017,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:producer:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "adoption_ref": "seglog_observability_adoption.v1:11111111-1111-4111-8111-111111111111:1.0.0",
+        "adoption_sha256": "c249d77ac6b16619a0d64cee4f3fd1782388f59295b42cffa61d1da8fef01734",
+        "source_boundary_ref": "storage/seglog/manifest.v1.msgpack",
+        "processed_through_sequence_id": 11,
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "app_retained_reader_checkpoint__unknown_field",
+      "definition": "reader_checkpoint",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_reader_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_reader.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1017,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:reader:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "scope_kind": "application",
+        "project_id": null,
+        "scope_partition": "app",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "synthetic-same-redb-snapshot:txn:initial-A"
+        },
+        "first_retained_sequence_id": 10,
+        "index_through_sequence_id": 11,
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "project_retained_adoption__unknown_field",
+      "definition": "adoption",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_adoption.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "producer_id": "storage.seglog_append_observability_writer.v1",
+        "producer_version": "1.0.0",
+        "adoption_id": "adoption:fixture:empty-source",
+        "migration_receipt_ref": "migration_receipt:fixture",
+        "floor_kind": "exclusive_after_committed_tail",
+        "source_after_sequence_id": 9,
+        "source_after_event_id": "event:adoption-floor-9",
+        "boundary_source_cursor": {
+          "manifest_generation": 9,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000009.active",
+          "byte_offset": 0,
+          "last_sequence_id": 9,
+          "last_event_id": "event:adoption-floor-9",
+          "survivor_prefix_sha256": "f9b3d324ec792612edb50c2a42246d493cbc52c8ff7693bdc7a530dd50aff560",
+          "projector_schema_version": "1.0.0"
+        },
+        "boundary_manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "boundary_manifest_sha256": "c72b9dace3cc8a8989528fe6e21e0867f9c55645115bcf65347c5d5268408eee",
+        "adopted_at_utc": "2026-09-11T01:00:00Z",
+        "redaction_profile": "no_secrets",
+        "settlement_prefix": {
+          "revision": 1,
+          "through_sequence_id": 11,
+          "through_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "source_cursor": {
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000010.active",
+            "byte_offset": 1029,
+            "last_sequence_id": 11,
+            "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+            "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "projector_schema_version": "1.0.0"
+          },
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "d865e2b88d257b42081f67d94449c9da72abd4ae4126807f7459c9df3008817d",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "retained_inventory_sha256": "9c39b52edd91cdd8d80fccc954e470905a148fde6c81d146b602c314de5f0ebd",
+            "durable_watermarks_sha256": "b8fa051f9358080b7830c701225aaf345864e14c30d2ee9d87c0b335b4579feb",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "settled_native_original_count": 1,
+          "committed_at_utc": "2026-09-11T01:00:02Z",
+          "commit_transaction_id": "synthetic:canonical:prefix:1",
+          "predecessor_prefix_sha256": null
+        },
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "project_retained_producer_checkpoint__unknown_field",
+      "definition": "producer_checkpoint",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_producer_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_producer.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1029,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:producer:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "adoption_ref": "seglog_observability_adoption.v1:11111111-1111-4111-8111-111111111111:1.0.0",
+        "adoption_sha256": "108a6d4f2b8219e656eeaffee2111b5f3acd60da165081e07269647e14d8e3b0",
+        "source_boundary_ref": "storage/seglog/manifest.v1.msgpack",
+        "processed_through_sequence_id": 11,
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "project_retained_reader_checkpoint__unknown_field",
+      "definition": "reader_checkpoint",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.seglog_observability_reader_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "binding_id": "storage.seglog_append_observability_reader.v1",
+        "binding_version": "1.0.0",
+        "state": "current",
+        "health": "healthy",
+        "coverage_complete": true,
+        "current_selection_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+        "source_cursor": {
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000010.active",
+          "byte_offset": 1029,
+          "last_sequence_id": 11,
+          "last_event_id": "evt_seglog_appended_a1f4a9642825cac9921893d741687e763e7b7da961a14c9a4a778c9cc469b136",
+          "survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+          "projector_schema_version": "1.0.0"
+        },
+        "updated_at_utc": "2026-09-11T01:00:02Z",
+        "publication_id": "publication:reader:fixture-new-1",
+        "published_at_utc": "2026-09-11T01:00:02Z",
+        "hold_refs": [],
+        "retired_generations": [],
+        "scope_kind": "project",
+        "project_id": "project/a",
+        "scope_partition": "project~cHJvamVjdC9h",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "generation_id": "eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "generation_anchor_sha256": "1f455be72f5c87f21197eb872bbc92f3596a2e74f293b8748015c4b51720f13c",
+          "frontier_revision": 0,
+          "frontier_sha256": "e3bda93eadef6433b1384a87768d76430417cc7e2e3e003989612e5ef7c67999",
+          "index_dataset_name": "event_record_index.v2@eig_195f0ce8ed70d89314cab87afb2554e7aee32c9eb6126fcba941511fd27ca649",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "d865e2b88d257b42081f67d94449c9da72abd4ae4126807f7459c9df3008817d",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "2b6ef8ccc40268b7a23b800caa2bb20790e6eebfac7d96003354f01d84116373",
+            "retained_inventory_sha256": "9c39b52edd91cdd8d80fccc954e470905a148fde6c81d146b602c314de5f0ebd",
+            "durable_watermarks_sha256": "b8fa051f9358080b7830c701225aaf345864e14c30d2ee9d87c0b335b4579feb",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "synthetic-same-redb-snapshot:txn:initial-A"
+        },
+        "first_retained_sequence_id": 10,
+        "index_through_sequence_id": 11,
+        "unregistered_field": true
+      }
+    }
+  ],
+  "native_oracles": {
+    "native_execution": "NOT_RUN",
+    "oracles": [
+      {
+        "id": "SEA-NATIVE-01",
+        "positive": "Coordinator installs exact immutable floor with source/manifest boundary and terminal receipt before writer activation.",
+        "negative": "Missing floor, graph edge, receipt or mismatched instance prevents activation.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-02",
+        "positive": "Verified empty source allows all-null boundary tuple.",
+        "negative": "Partially null or guessed retained-tail boundary is refused.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-03",
+        "positive": "Actual original frame CRC and synchronized frame/watermark precede metadata admission.",
+        "negative": "A four-field dedupe row, persisted timestamp or early watermark cannot authorize metadata.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-04",
+        "positive": "Same source and instance produce same exact semantic bytes and metadata identities across retry.",
+        "negative": "Different bytes under either identity return idempotency_conflict without append.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-05",
+        "positive": "Original caller keeps original result when metadata fails.",
+        "negative": "Metadata failure cannot rewrite original receipt or rerun original action.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-06",
+        "positive": "Metadata gets own sequence and successful synced frame/watermark receipt.",
+        "negative": "Original receipt alone cannot acknowledge metadata or advance producer cursor.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-07",
+        "positive": "Crash before metadata commit preserves pending original dependency for retry.",
+        "negative": "Recovery cannot skip unproved pending source.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-08",
+        "positive": "Crash after metadata sync before canonical prefix commit preserves original/meta evidence and reuses settlement once; after prefix commit a lost derived checkpoint rebuilds without reemit.",
+        "negative": "Checkpoint or metadata durability alone cannot release pending evidence or impersonate canonical prefix custody.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-09",
+        "positive": "New producer skips actual metadata frames without emitting; reader permits valid historical one-hop join.",
+        "negative": "Producer metadata-about-metadata emission and reader cycles/self/nonpreceding refs fail.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-10",
+        "positive": "Lost derived progress rebuilds from actual immutable floor, authenticated compact prefix and verified current tail.",
+        "negative": "Lost canonical prefix requires coherent mandatory backup or fence; no inferred prefix from absence/timestamp/disposable cursor.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-11",
+        "positive": "Actual authenticated same-family prefix plus preserved original and metadata event/scoped identities proves prior settlement after expiry without source-presence or receipt claim.",
+        "negative": "Original above prefix, wrong identity/scope, missing canonical bytes or forged CAS/read authority yields unavailable and zero reemit.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-12",
+        "positive": "Existing live-ref/maintenance dependency preserves original/meta evidence until canonical prefix commit; afterward only that dependency may clear.",
+        "negative": "Ordinary TTL/count pressure or derived checkpoint cannot release evidence before canonical commit; all other hold/ref predicates continue.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-13",
+        "positive": "Actual survivor translation preserves identity and first-append provenance under target CURRENT.",
+        "negative": "Unselected target or retired source path cannot satisfy publication/currentness.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-14",
+        "positive": "RP-SEGLOG-7D uses own persisted creation, 604800 seconds and instance-wide 500000 limit.",
+        "negative": "Payload/original time, per-project cardinality, replay or checkpoint refresh cannot reset policy.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-15",
+        "positive": "Application and encoded project partitions inherit exact referenced source scope.",
+        "negative": "Ambiguous/mismatched cross-project join refuses healthy publication.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-16",
+        "positive": "Generic index publishes independently before filtered complete-range checkpoint.",
+        "negative": "Metadata consumer cannot stall/rewrite global checkpoint or pretend partial range is complete.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-17",
+        "positive": "Proven removal yields honest source_removed diagnostic with suitable coverage state.",
+        "negative": "Unexplained absence is source_unavailable and cannot become a healthy complete join.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-18",
+        "positive": "Single redb checkpoint and exact unchanged source/index/access token precede read publication.",
+        "negative": "Race changing CURRENT, access, deletion or prior cursor aborts publication.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-19",
+        "positive": "Crash before checkpoint leaves prior coverage; after commit recomputes same read join.",
+        "negative": "No separate durable analytics, billing or owner mutation is duplicated.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-20",
+        "positive": "Original owner processes original source under its own reducer checkpoint.",
+        "negative": "Metadata cannot dispatch original action, create UsageRecord or advance business reducer.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-21",
+        "positive": "First current/degraded to withdrawn freezes terminal updated_at anchor with three generations.",
+        "negative": "Ordinary refresh, repeated withdrawal or source completion cannot restart terminal TTL.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-22",
+        "positive": "Canonical floor/source/identity boundary round-trips mandatory backup before producer resumes.",
+        "negative": "Missing/corrupt floor fences producer instead of rebuilding from retained-tail absence.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-23",
+        "positive": "Frozen views retain source hashes and unique referenced scope; read-only projection permitted.",
+        "negative": "Compatibility/JSONL/import/physical copy cannot start producer or create adoption.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-24",
+        "positive": "Current deletion/tombstone and source/metadata permission checks apply before disclosure and restore.",
+        "negative": "Kept metadata reference cannot restore deleted content/navigation or grant app-wide purge.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-25",
+        "positive": "Explicit append-admission boundary stops new obligations and preserves pending refs for successor.",
+        "negative": "Withdrawal cannot clear unresolved refs, erase adoption or quietly admit obligated native sources.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-26",
+        "positive": "Sole coordinator verifies actual installed family/version, preserved identities and predecessor obligations.",
+        "negative": "A new producer version cannot rewrite old semantic identities or backfill pre-floor events.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-27",
+        "positive": "Verified sequence lease gaps are skipped with source evidence.",
+        "negative": "Numeric gaps alone cannot prove source removal or observability settlement.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-28",
+        "positive": "Writer continuation uses held writer context and maintenance fences without recursive locking.",
+        "negative": "Concurrent appends/maintenance/CAS changes cannot deadlock or publish stale progress.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-29",
+        "positive": "Same canonical value CAS preserves immutable floor and advances exact authenticated full native settlement range with monotonic compact prefix.",
+        "negative": "Missing eligible original, unexplained gap, wrong writer/fence, stale CAS, count or predecessor rejects and retains source evidence.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-30",
+        "positive": "Coherent mandatory backup restores floor/prefix with matching source and lifetime identity authority under the same instance/writer.",
+        "negative": "Missing or mixed-backup canonical prefix fences producer and dependent maintenance; it cannot be rebuilt from disposable state.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "SEA-NATIVE-31",
+        "positive": "Actual checkpoint first withdrawal and bounded same-key history commit atomically; eligible cleanup preserves siblings and reserves one of three slots.",
+        "negative": "Reset birth/retirement, fourth generation, unknown hold/ref or fence race blocks publication/cleanup.",
+        "status": "NOT_RUN"
+      }
+    ]
+  }
+}

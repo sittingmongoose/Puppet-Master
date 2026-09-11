@@ -1,0 +1,131 @@
+{
+  "status": "NORMATIVE_CONTRACT_COMPLETE_NATIVE_UNPROVEN",
+  "baseline_head": "641c9802642343a8c5be05612ddc12898fe10b2a",
+  "event_type": "seglog.event_appended",
+  "new_plan_units": [
+    "SP-270"
+  ],
+  "new_storage_families": [
+    "seglog_observability_adoption",
+    "seglog_observability_producer_checkpoint",
+    "seglog_observability_reader_checkpoint"
+  ],
+  "storage_family_counts": {
+    "before": 95,
+    "after": 98
+  },
+  "old_rows_and_policy_values_preserved": true,
+  "event_registry_unchanged": true,
+  "new_retention_policies": 0,
+  "native_execution": "NOT_RUN",
+  "closed_rows": 0,
+  "original_registered_event_denominator": 39,
+  "step09_quarantined_events": 252,
+  "subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-appended-20260911/v4-root/manifest.json",
+    "sha256": "1dbd8542840086c1741d55cc2ada0edbc4b3c02affa552c60d4f13321251a171"
+  },
+  "depth_criteria": [
+    {
+      "criterion": "membership_version",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Existing event-family-seglog-event-appended@2.0.0 and inline payload 1.0.0 unchanged."
+    },
+    {
+      "criterion": "owner_doc",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Storage owns original append, new active writer continuation, floor, pending ref resolver and reader."
+    },
+    {
+      "criterion": "producer",
+      "status": "PASS",
+      "external_proposal_status": "NEW_CANONICAL_PREFIX_CONTRACT_STATIC_ONLY_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Explicit migration-installed introduction floor; exact source-first durable obligation, nonrecursive emit and sufficient settlement evidence. Same canonical adoption value now has bounded authenticated contiguous settlement prefix; no per-event permanent catalog."
+    },
+    {
+      "criterion": "closed_payload_schema",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Existing closed five-required/one-optional-field payload unchanged; three new closed sidecar definitions validate."
+    },
+    {
+      "criterion": "scope_identity",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Inherited application/project source scope; deterministic instance/original-event identity; encoded project partition."
+    },
+    {
+      "criterion": "replay_idempotency",
+      "status": "PASS",
+      "external_proposal_status": "NEW_CANONICAL_PREFIX_CONTRACT_STATIC_ONLY_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Permanent event/scoped identity plus real frame/watermark or sufficient actual removal lineage; unknown historical settlement unavailable, never historical reemit. Same canonical adoption value now has bounded authenticated contiguous settlement prefix; no per-event permanent catalog."
+    },
+    {
+      "criterion": "retention",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Unchanged metadata/source/index/checkpoint policy values. NEW adoption class mapping to indefinite migration/source lineage explicitly requires root review; pending source uses existing live-ref/maintenance class. Actual same-key <=3 generation layouts, first-withdrawal anchors, stable birth, typed hold checks and serialized slot cleanup now materialized."
+    },
+    {
+      "criterion": "redaction_custody",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "IDs/hashes/bounded cursors only; mandatory canonical adoption backup, current deletion/access fences and no content restoration from refs."
+    },
+    {
+      "criterion": "transitions",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Source proof -> metadata durability -> producer redb checkpoint; generic index -> filtered redb checkpoint -> token-bound read publication."
+    },
+    {
+      "criterion": "consumers_checkpoints",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Actual SP278 full token, complete generic source/dataset and typed original/meta envelope joins; exact checkpoints table/key/CAS with bounded history."
+    },
+    {
+      "criterion": "compatibility_withdrawal",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "Existing frozen normalization paths read-only; exact store graph adoption and withdrawal boundary preserve pending obligations/identities."
+    },
+    {
+      "criterion": "positive_negative_oracles",
+      "status": "PASS",
+      "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_plan_unit": "SP-270",
+      "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
+      "assessment": "2 retained full generic joins and 23 negatives; 3 canonical prefix commits and 1 expired reuse positive, 13 commit and 9 read negatives; 16 history/refresh and 7 retention predicates plus slot/sibling cleanup. Native oracles NOT_RUN."
+    }
+  ],
+  "original_removal_lineage_positive_count": 0,
+  "canonical_prefix_is_new_authority": true,
+  "governance_seal": false,
+  "normative_contract_complete": true,
+  "status_meaning": "PASS means this facet is explicitly supplied by the individual normative contract. It is not native execution, frozen-validator DEPTH_PASS, runtime acceptance, readiness or governance certification."
+}
