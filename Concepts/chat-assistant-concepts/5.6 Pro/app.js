@@ -262,7 +262,7 @@
       /* mutators -- each triggers the render the change actually needs */
       renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
-      openDialog, closeDialog, copyText, savePrefs, extRender
+      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation
     }, extra);
   }
   function extEach(name, extra, each){
@@ -879,13 +879,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
     return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
-  function renderWorkingAnimation(m){
-    const rec=workRecFor(m)||state.work;
+  function renderWorkingAnimation(m,ownedProjection){
+    const rec=ownedProjection||workRecFor(m)||state.work;
     const v=state.variants[2];
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.completed?'Completed':'Working'}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):`${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button>`}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Everything a working-animation take needs, so takes can live outside
@@ -930,6 +930,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   const RUN_CACHE={};
   function rowsFromPhase(s){ return (D.phaseRows[s.kind]&&D.phaseRows[s.kind][s.id])||(s.evidence||[]).slice(0,3).map(t=>({text:t})); }
   function workInstancesFor(rec){
+    if(rec?.ownerProjection&&rec.steps)return rec.steps;
     const runId=rec&&rec.runId, key=runId||'__legacy';
     if(RUN_CACHE[key]) return RUN_CACHE[key];
     let list;
@@ -1309,7 +1310,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      a Goal has no numerator. Legacy phase fields are read only to migrate an
      older fixture's text, never to render structure. */
   function goalSummary(){
-    const g=D.goal;
+    const g=window.PM56_GOAL?.get?.()||null;
     if(!g) return {...GOAL_FALLBACK, derived:false};
     return {
       title:g.objective||g.title||GOAL_FALLBACK.title,
@@ -1350,13 +1351,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     tid=tid||state.selectedThread;
     const thread=threadById(tid);
     const msgs=(thread&&thread.messages)||[];
-    const g=D.goal;
-    const hasAttachedGoal=!!(g&&g.status!=='cleared'&&(g.thread===tid||(thread&&thread.goalId&&g.id&&thread.goalId===g.id)));
-    const hasGoalReceipt=msgs.some(m=>m.type==='goal-receipt');
-    const hasGoalArtifact=(D.artifacts||[]).some(a=>a.threadId===tid&&(a.id==='goal-artifact'||a.kind==='goal'||a.type==='goal'));
-    const hasGoalHistory=hasAttachedGoal||hasGoalReceipt||hasGoalArtifact;
-    const capGoal=!!(state.activityCaps&&state.activityCaps.goal&&state.activityCaps.goal[tid]);
-    const hasGoal=hasGoalHistory||(!!state.capabilities.goal&&capGoal);
+    const g=window.PM56_GOAL?.get?.(tid)||null;
+    const hasAttachedGoal=!!g;
+    const hasGoalHistory=hasAttachedGoal;
+    const hasGoal=hasAttachedGoal;
     /* Assistant-redesign wave: To-Dos have ONE owner, todos.js (ToDo_Runtime.md).
        The legacy flat `D.todos` fixture is thread-scoped only for `query`, so
        reading it here hid the chip on every other thread that genuinely has a
@@ -1385,7 +1383,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const runs=collabRuns(tid);
     const collab={brainstorm:runs.filter(r=>r.kind==='brainstorm'),review:runs.filter(r=>r.kind==='review'),chat_room:runs.filter(r=>r.kind==='chat_room'),crew:runs.filter(r=>r.kind==='crew')};
     return {
-      tid, hasAttachedGoal, hasGoalReceipt, hasGoalHistory, capGoal, hasGoal,
+      tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
       collab,
       live:{
@@ -1698,7 +1696,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="send-queue" data-k="send-queue">${q.map(e=>`<div class="send-queue-row" data-k="q:${esc(e.id)}"><span class="send-queue-text"${hoverAttrs('q-text-'+e.id,e.text)}>${esc(e.text)}</span><button class="icon-button" data-action="queue-edit" data-id="${esc(e.id)}"${hoverAttrs('q-edit-'+e.id,'Edit')}>${icon('edit',13)}</button><button class="icon-button" data-action="queue-send-now" data-id="${esc(e.id)}"${hoverAttrs('q-send-'+e.id,'Send now')}>${icon('send',13)}</button></div>`).join('')}</div>`;
   }
   function sendButtonHtml(){
-    const busy=runningRecs().length>0;
+    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=runningRecs().length>0||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){

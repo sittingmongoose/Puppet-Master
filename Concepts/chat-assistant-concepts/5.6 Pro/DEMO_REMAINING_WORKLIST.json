@@ -177,7 +177,13 @@
         "v4:PGOAL-015",
         "v3:APR-059"
       ],
-      "status": "PLANNED_NOT_EXECUTED"
+      "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+      "checkpoint": "BATCH_15_CHECKPOINT.json",
+      "coverage_delta": "BATCH_15_COVERAGE_DELTA.json",
+      "full_feature_acceptance": false,
+      "native_proof": false,
+      "user_acceptance": "PENDING_USER_INSTALLATION_AND_ACCEPTANCE",
+      "mapping_note": "43 exact source identities accounted for; current-owner bounded behavior, not all original clauses/native/global motion. Five unique ordinary scenarios; size-specific repetitions counted separately."
     },
     {
       "number": 16,
@@ -724,7 +730,8 @@
     "Settings changes require current dedicated source/build lanes, never direct generated-page editing.",
     "Some source rows require native/runtime or governance evidence, not HTML demos. Keep those separate and open.",
     "Final motion acceptance must be bound to final bytes; earlier batch clips do not certify later builds.",
-    "Batch 12 adds two complete local BSD workflows; individual native, cross-workflow and motion clauses remain open in its coverage delta. Original after-B11 estimate remains historical."
+    "Batch 12 adds two complete local BSD workflows; individual native, cross-workflow and motion clauses remain open in its coverage delta. Original after-B11 estimate remains historical.",
+    "Batch 15 adds computed Simple Goal and explicit Plan execution through shared owners. Batches 16\u201329 remain an estimate, not a runtime queue; Batch 16 has not started. User installation and acceptance remain pending."
   ],
   "census": {
     "source_feature_groups": 67,
@@ -745,8 +752,9 @@
     "unmapped_groups": [],
     "boundary": "Previous primary checkpoints are not blanket closure of all group clauses."
   },
-  "updated_in_batch": 14,
+  "updated_in_batch": 15,
   "remaining_batch_estimate_after_batch12": 17,
   "remaining_batch_estimate_after_batch13": 16,
-  "remaining_batch_estimate_after_batch14": 15
+  "remaining_batch_estimate_after_batch14": 15,
+  "remaining_batch_estimate_after_batch15": 14
 }

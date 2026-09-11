@@ -1,56 +1,30 @@
-/* goals.js — feature module.  OWNER: Assistant redesign wave (2026-09-03), Goal V2.
- *
- * WHAT CHANGED AND WHY
- * --------------------
- * This file used to model a goal as a PHASE MACHINE: a phase list with exit
- * criteria and evidence, a currentPhaseId that could move backwards, a subgoal
- * (child goal) roster, a token budget, and a replan log.  The approved redesign
- * retires every one of those.  A Goal is now exactly:
- *
- *     one concise text objective  +  a four-value lifecycle  +  durable
- *     host continuation that keeps working until the objective is complete,
- *     paused, blocked or cancelled.
- *
- * The phase model was not a port and was never canon — the previous header in
- * this file said so itself ("Phases are OUR ADDITION, not a port").  It is gone
- * rather than hidden, because a phase was a second, weaker copy of a stage the
- * owning workflow already tracked, and the two drifted.  Progress is visible
- * through To-Dos (todos.js) and the ordinary transcript, not through a
- * Goal-owned tracker.  See Plans/Goal_Runtime_System.md (GRS-048..GRS-056) and
- * Plans/FinalGUISpec.md §7 of the 2026-09-03 redesign section.
- *
- * WHAT THIS FILE IS HONEST ABOUT
- * ------------------------------
- * Continuation is host-owned in the product.  A concept page has no host, so
- * the "continuation" here is a visible demo counter with a real stop epoch:
- * pressing Pause or Cancel latches `stopEpoch`, and every simulated
- * continuation compares the epoch it was decided against before it may land.
- * That is the one invariant worth demonstrating, and it is demonstrated for
- * real rather than described in copy.
- *
- * GOAL IS NOT A MODE.  Nothing here reads state.mode.
- * GOAL IS NOT A TRANSCRIPT CARD.  It renders in Activity only.
- * GOAL DOES NOT OWN TO-DOS.  This module never reads D.todos.
+/* Goal Runtime concept owner, Batch 15.
+ * One text objective, four lifecycle states, explicit authority and epoch-fenced
+ * continuation. Records are session-memory projections, not native durability.
+ * Plan/To-Do/work/evidence/scheduling ownership remains with the shared owners.
  */
 (function(){
-  'use strict';
-  var D = window.PM56_DATA;
-  if(!D) return;
-  var EXT = window.PM56_EXT;
-  if(!EXT || !EXT.slot) return;
-
-  /* =====================================================================
-     1. THE FIXTURE — GoalRecordV2 shape (pm.goal.record.v2)
-     ---------------------------------------------------------------------
-     Field-for-field the record in Plans/Goal_Runtime_System.md, minus the
-     storage-only columns.  The negative fields are listed in a comment rather
-     than as keys, because a key set to null is still a field a renderer can
-     find and start showing.
-       NEGATIVE FIELDS (must never appear): title, phase, tranche,
-       child_goal_ids, goal_budget, planner_role, verifier_role,
-       adjudicator_role, separate_done_when, separate_scope,
-       separate_constraints, attachment_manifest.
-     ===================================================================== */
+ 'use strict';
+ const D=window.PM56_DATA, E=window.PM56_EXT, TX=window.PM56_TX;
+ const RT=window.PM56_RUNTIME=window.PM56_RUNTIME||{};
+ const clone=x=>x==null?x:JSON.parse(JSON.stringify(x)), now=()=>new Date().toISOString();
+ const store=RT.goals={byId:{},currentByThread:{},cancellations:{},proposals:{},tickets:{},receipts:{},seq:0,generation:1};
+ RT.boundGoals={byPlan:{},seq:0};
+ const owners=new Map(),timers=new Map();
+ const ui={editing:null,draft:null,history:false,continuations:false,proposal:null};
+ const labels={active:'Running',paused:'Paused',blocked:'Blocked',completed:'Completed'};
+ const tones={active:'working',paused:'idle',blocked:'blocked',completed:'done'};
+ const origins=['user_request','agent_requested_by_user','plan_build','internal_workflow'];
+ const originLabels={user_request:'the user asked for it directly',agent_requested_by_user:'an agent created it because the user asked the agent to',plan_build:'an approved Plan was built as a Goal',internal_workflow:'a workflow uses it internally'};
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const context=()=>E.ctx?.();
+ const thread=tid=>context()?.state.threads.find(t=>t.id===tid);
+ function scope(tid){const t=thread(tid);if(!t)return null;return {projectId:t.projectId||'pm',threadId:t.id,worktreeId:t.worktreeId||t.worktree?.id||context().state.worktree||'concept:default'};}
+ const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+ const cancelled=g=>!!(g&&store.cancellations[g.id]);
+ function get(tid){tid=tid||context()?.thread.id||'query';const g=store.byId[store.currentByThread[tid]];if(g?.demo&&!g.scopeInitialized&&context()){g.scope=scope(tid);g.projectId=g.scope.projectId;g.scopeInitialized=true;}return g&&!cancelled(g)?g:null;}
+ const byId=id=>store.byId[id]||null;
+ function lineageFor(id,revision,kind,o={}){if(!origins.includes(kind))throw new Error('invalid_origin_kind');return {schema:'pm.goal.origin_lineage.v1',goal_id:id,goal_revision:revision,origin_kind:kind,origin_label:originLabels[kind],source_message_refs:o.source_message_refs||[],source_context_manifest_ref:o.source_context_manifest_ref||null,bound_plan_ref:o.bound_plan_ref||null,owning_workflow_ref:o.owning_workflow_ref||null};}
   var GOAL_FIXTURE = {
     demo:true,
     id:'goal-query-perf',
@@ -86,552 +60,208 @@
       { id:'cont-3', at:'2026-08-27T12:11:00Z', result:'continue', stopEpochAt:0, note:'Third host-admitted turn. One model response was never completion.' }
     ]
   };
-  var GOAL0 = JSON.stringify(GOAL_FIXTURE);
-  if(!D.goal || D.goal.id === GOAL_FIXTURE.id) D.goal = JSON.parse(GOAL0);
 
-  /* Local view state only. Nothing here is domain truth. */
-  var ui = { editing:false, draft:null, showHistory:false, showContinuations:false, confirmCancel:false, proposal:null };
-
-  function restoreFixture(){
-    D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false;
-    ui.confirmCancel=false; ui.proposal=null;
-    /* Plan-bound Goals live in the shared runtime, not in D.goal, so restoring
-       only the fixture left every Goal a previous Build as Goal had created
-       still bound -- the next admission then failed `active_run_exists` against
-       a Goal the caller had just asked to be rid of. A restore that leaves
-       durable records behind is a restore that lies. */
-    if(RT_G.boundGoals){ RT_G.boundGoals.byPlan={}; RT_G.boundGoals.seq=0; }
+ function change(g,values){for(const [k,v] of Object.entries(values))TX.set(g,k,v);}
+ function stamp(g){TX.set(g,'updatedAt',now());TX.set(g,'currentnessHash',g.id+':r'+g.revision+':e'+g.stopEpoch+':'+(++store.seq));}
+ function capture(g){return g?{goalId:g.id,revision:g.revision,hash:g.currentnessHash,epoch:g.stopEpoch,run:g.activeRunRef||null,scope:clone(g.scope),binding:clone(g.binding||null),generation:store.generation}:null;}
+ function current(token){const g=byId(token?.goalId);if(!g||cancelled(g))return 'goal_unavailable';if(token.generation!==store.generation)return 'restored_generation';if(token.revision!==g.revision||token.hash!==g.currentnessHash)return 'stale_objective_revision';if(token.epoch!==g.stopEpoch)return 'stale_stop_epoch';if(token.run!==(g.activeRunRef||null))return 'run_replaced';if(!equal(token.scope,g.scope)||!equal(g.scope,scope(g.thread)))return 'scope_changed';if(!equal(token.binding,g.binding||null))return 'binding_changed';return null;}
+ function allowedMutation(token){const error=current(token);if(error)return {ok:false,error};const g=byId(token.goalId);if(context()?.thread.id!==g.thread)return {ok:false,error:'wrong_thread'};if(!['active','paused','blocked'].includes(g.status))return {ok:false,error:'goal_not_mutable'};return {ok:true,goal:g};}
+ function textError(text){return typeof text!=='string'||!text.trim()?'objective_required':text.length>4000?'objective_too_long':null;}
+ function create(o){
+  const error=textError(o.objective);if(error)return {ok:false,error};
+  if(o.explicitRequest!==true)return {ok:false,error:'explicit_request_required'};
+  const sc=scope(o.threadId);if(!sc||o.projectId&&o.projectId!==sc.projectId)return {ok:false,error:'scope_changed'};
+  if(o.scope&&!equal(o.scope,sc))return {ok:false,error:'scope_changed'};
+  const prior=get(o.threadId);if(prior&&prior.status!=='completed')return {ok:false,error:'active_goal_exists'};
+  const kind=o.origin||'user_request';if(!origins.includes(kind))return {ok:false,error:'invalid_origin_kind'};
+  const seq=store.seq+1;TX.set(store,'seq',seq);const id='goal-'+seq+'-'+o.threadId;
+  const g={id,projectId:sc.projectId,thread:o.threadId,scope:clone(sc),objective:o.objective,revision:1,status:'active',blockedReason:null,activeRunRef:o.runId||null,createdAt:now(),updatedAt:now(),currentnessHash:id+':r1:e0',stopEpoch:0,
+   revisions:[{revision:1,at:now(),source:'user_direct',objective:o.objective,sourceMessageId:o.sourceMessageId||null}],continuations:[],history:[],
+   lineage:lineageFor(id,1,kind,{source_message_refs:o.sourceMessageId?[o.sourceMessageId]:[],owning_workflow_ref:o.workRef?.ref||null}),workRef:o.workRef?clone(o.workRef):null};
+  TX.set(store.byId,id,g);TX.set(store.currentByThread,o.threadId,id);return {ok:true,goal:g};
+ }
+ function fence(g,reason){clearTimeout(timers.get(g.id));timers.delete(g.id);TX.set(g,'stopEpoch',g.stopEpoch+1);TX.set(g,'history',(g.history||[]).concat({at:now(),what:'fenced',note:reason}));stamp(g);}
+ function edit(token,text,source='user_direct',approvalId=null){
+  const a=allowedMutation(token);if(!a.ok)return a;const g=a.goal,error=textError(text);if(error)return {ok:false,error};
+  if(!['user_direct','agent_proposed_user_approved'].includes(source))return {ok:false,error:'silent_rewrite_forbidden'};
+  if(source==='agent_proposed_user_approved'){
+   const p=store.proposals[approvalId];if(!p||p.state!=='approving'||p.objective!==text||!equal(p.token,token))return {ok:false,error:'approval_required'};
   }
-
-  var STATUS_LABEL = { active:'Running', paused:'Paused', blocked:'Blocked', completed:'Completed' };
-  var STATUS_TONE  = { active:'working', paused:'idle',   blocked:'blocked', completed:'done' };
-
-  function goal(){ var g=D.goal; return (g && g.status!=='cleared') ? g : null; }
-  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-  function clockOf(iso){
-    if(!iso) return '';
-    var d=new Date(iso); if(isNaN(d)) return '';
-    return d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  if(g.objective===text)return {ok:true,unchanged:true,goal:g};
+  fence(g,'Objective revision changed; earlier callbacks are invalid.');
+  change(g,{objective:text,revision:g.revision+1,revisions:g.revisions.concat({revision:g.revision+1,at:now(),source,approvalId,objective:text}),lineage:{...g.lineage,goal_revision:g.revision+1}});stamp(g);
+  if(g.binding){window.PM56_PLANS?.goalConflict?.(g.binding.assistant_plan_id);change(g,{status:'blocked',blockedReason:'The objective changed. Review the exact bound Plan through Revise before admitting more mutation.'});}
+  else if(g.status==='active')TX.defer(()=>kick(g.id));
+  return {ok:true,goal:g};
+ }
+ function propose(token,text,request){
+  const a=allowedMutation(token);if(!a.ok)return a;
+  const error=textError(text);if(error)return {ok:false,error};
+  if(!request?.explicit||typeof request.text!=='string'||!request.text.trim())return {ok:false,error:'explicit_change_request_required'};
+  const id='goal-approval-'+(++store.seq),p={id,token:clone(token),current:a.goal.objective,objective:text,request:request.text,state:'pending',createdAt:now(),expiresAt:Date.now()+300000};
+  store.proposals[id]=p;ui.proposal=id;return {ok:true,approval:clone(p)};
+ }
+ function approve(id){const p=store.proposals[id];if(!p||p.state!=='pending')return {ok:false,error:'approval_not_pending'};
+  if(Date.now()>p.expiresAt){p.state='expired';return {ok:false,error:'approval_expired'};}
+  const error=current(p.token);if(error){p.state='stale';return {ok:false,error};}
+  p.state='approving';const out=edit(p.token,p.objective,'agent_proposed_user_approved',id);p.state=out.ok?'approved':'stale';if(ui.proposal===id)ui.proposal=null;return out;
+ }
+ function deny(id){const p=store.proposals[id];if(!p||p.state!=='pending')return {ok:false,error:'approval_not_pending'};p.state='denied';if(ui.proposal===id)ui.proposal=null;return {ok:true};}
+ function lifecycle(token,to){
+  const a=allowedMutation(token);if(!a.ok)return a;const g=a.goal,P=window.PM56_PLANS;
+  if(to==='active'){
+   if(!['paused','blocked'].includes(g.status))return {ok:false,error:'not_resumable'};
+   const eligible=resumeEligibility(g);if(!eligible.ok)return eligible;
+   if(g.binding){const check=P?.canResumeGoal?.(g.binding);if(check&&!check.ok)return check;}
+  }else if(!['paused','cancel'].includes(to))return {ok:false,error:'invalid_transition'};
+  fence(g,'Explicit user '+to+'.');
+  if(to==='cancel'){
+   const receipt={goal_id:g.id,revision:g.revision,user_stop_epoch:g.stopEpoch,at:now(),event:'goal.cancelled'};
+   TX.set(store.cancellations,g.id,receipt);if(store.currentByThread[g.thread]===g.id)TX.remove(store.currentByThread,g.thread);
+   if(g.binding)P?.boundCancel(g.binding.assistant_plan_id,g.stopEpoch);
+   return {ok:true,receipt};
   }
-  function dayOf(iso){
-    if(!iso) return '';
-    var d=new Date(iso); if(isNaN(d)) return '';
-    return d.toLocaleDateString([], {month:'short', day:'numeric'});
-  }
-
-  /* Two-line preview for the Activity bar. Deliberately a character budget
-     rather than a word count, so a long single word cannot blow the card. */
-  function preview(text, max){
-    text=String(text||'');
-    if(text.length<=max) return text;
-    return text.slice(0, max-1).replace(/\s+\S*$/,'') + '…';
-  }
-
-  function summary(){
-    var g=goal();
-    if(!g) return { tone:'idle', status:'none', statusLine:'No goal', objective:'' };
-    return {
-      tone: g.blockedReason ? 'blocked' : (STATUS_TONE[g.status]||'idle'),
-      status: g.status,
-      statusLine: STATUS_LABEL[g.status]||g.status,
-      objective: g.objective,
-      revision: g.revision,
-      blocker: g.blockedReason
-    };
-  }
-
-  /* =====================================================================
-     2. AUTHORITY — exactly two paths write objective text
-     ---------------------------------------------------------------------
-     user_direct                    : the user edits and presses Save.
-     agent_proposed_user_approved   : the agent proposes, the user approves.
-     There is no third path. Nothing else in this file writes `objective`.
-     ===================================================================== */
-  function writeRevision(objective, source, approvalId){
-    var g=goal(); if(!g) return false;
-    objective=String(objective||'').trim();
-    if(!objective) return false;
-    if(objective.length>4000) return false;            /* rejected, not truncated */
-    if(objective===g.objective) return false;
-    g.revision += 1;
-    g.objective = objective;
-    g.updatedAt = new Date().toISOString();
-    g.currentnessHash = (Math.random().toString(16).slice(2,10));
-    var rec = { revision:g.revision, at:g.updatedAt, source:source, objective:objective };
-    if(approvalId) rec.approvalId = approvalId;
-    g.revisions.push(rec);
-    return true;
-  }
-
-  /* Pause / Cancel latch the stop epoch. A continuation decided before the
-     latch and delivered after it is discarded — that comparison is the whole
-     point of the field, so it is exercised rather than described. */
-  function latchStop(g){ g.stopEpoch = (g.stopEpoch||0) + 1; }
-
-  function admitContinuation(g, note){
-    var decidedAt = g.stopEpoch;
-    if(g.status!=='active') {
-      g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-        result: g.status==='paused' ? 'pause' : g.status==='blocked' ? 'blocked' : 'complete',
-        stopEpochAt:decidedAt, note:'Refused at dispatch: '+(STATUS_LABEL[g.status]||g.status).toLowerCase()+'.' });
-      return false;
-    }
-    if(decidedAt !== g.stopEpoch){
-      g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-        result:'pause', stopEpochAt:decidedAt, note:'Discarded: decided before a manual stop, delivered after it.' });
-      return false;
-    }
-    g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-      result:'continue', stopEpochAt:decidedAt, note: note || 'Objective unfinished; host admitted another ordinary agent turn.' });
-    return true;
-  }
-
-  /* =====================================================================
-     3. RENDERERS
-     ===================================================================== */
-  function statusChip(g){
-    return '<span class="goal-chip goal-chip-'+esc(g.status)+'" data-k="goal-chip">'+
-      '<i class="goal-dot goal-dot-'+esc(g.status)+'"></i>'+esc(STATUS_LABEL[g.status]||g.status)+
-      '</span>';
-  }
-
-  /* Activity-bar hover preview: status, a two-line objective, and ACTIONABLE
-     controls. The edit icon opens Activity Detail in edit mode; the packet is
-     explicit that it is an icon and that it lands in edit mode, not view mode. */
-  function renderCompact(ctx){
-    var g=goal(); if(!g) return '';
-    /* The pencil's own tooltip promises "Edit objective in Activity Detail",
-       and goal-open-editor sets ui.editing. But the DEFAULT Activity Detail
-       concept (#2 Status Board) draws the COMPACT goal, which has no editor --
-       so the pencil opened the panel and then showed no way to edit, on the
-       one layout that ships selected. While an edit is in progress the compact
-       projection yields to the full section, which owns the textarea, Save and
-       Cancel. One editor, one owner, reachable from every concept. */
-    if(ui.editing) return renderSection(ctx);
-    var resumeable = g.status==='paused' || (g.status==='blocked' && !g.blockedReason);
-    var actions =
-      (g.status==='active'
-        ? '<button class="soft-button" data-action="goal-pause" data-k="goal-a-pause">'+ctx.icon('pause',12)+' Pause</button>'
-        : resumeable
-          ? '<button class="soft-button" data-action="goal-resume" data-k="goal-a-resume">'+ctx.icon('play',12)+' Resume</button>'
-          : '<button class="soft-button" data-action="goal-resume" data-k="goal-a-resume" disabled title="'+esc(g.blockedReason||'Not resumable')+'">'+ctx.icon('play',12)+' Resume</button>') +
-      '<button class="soft-button" data-action="goal-cancel" data-k="goal-a-cancel">'+ctx.icon('close',12)+' Cancel</button>'+
-      '<button class="icon-button" data-action="goal-open-editor" data-k="goal-a-edit" title="Edit objective in Activity Detail">'+ctx.icon('edit',12)+'</button>';
-    return '<div class="goal-compact" data-k="goal-compact">'+
-        '<div class="goal-compact-head" data-k="goal-compact-head">'+statusChip(g)+
-          '<span class="goal-rev" data-k="goal-rev">Revision '+g.revision+'</span></div>'+
-        '<p class="ab-objective goal-objective-2" data-k="ab-obj">'+esc(preview(g.objective, 150))+'</p>'+
-        (g.blockedReason?'<p class="goal-blocker-line" data-k="goal-blocked">'+esc(g.blockedReason)+'</p>':'')+
-        '<div class="goal-compact-actions" data-k="goal-compact-actions">'+actions+'</div>'+
-      '</div>';
-  }
-
-  /* Activity Detail. Objective area, Save / Cancel edit, lifecycle controls,
-     History. NO title field, NO phases, NO child goals, NO budget, NO current
-     action, NO next action, NO invented percentage. */
-
-  /* =====================================================================
-     BOUND GOALS — Additive Correction v4 (PGOAL-003..014, GREPLAY-001..011)
-     ---------------------------------------------------------------------
-     `Build as Goal` creates ONE simple Goal, ONE PlanRun and ONE
-     GoalPlanBinding, atomically. The Goal it creates is an ordinary simple
-     Goal: text only, no title, no phases, no child Goals, no budgets. What is
-     new is the hidden lineage beside it (origin, source refs, admitted context
-     manifest, bound Plan) and the binding record, neither of which is a
-     visible Goal field.
-
-     A bound Goal lives in Activity, exactly like the thread Goal. It never
-     becomes a thread card.
-     ===================================================================== */
-  var RT_G = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
-  RT_G.boundGoals = RT_G.boundGoals || { byPlan:{}, seq:0 };
-
-  /* GREPLAY-002. The FOUR origin kinds, as a closed vocabulary the owner
-     publishes rather than a string one code path happens to write. Only
-     `plan_build` was ever produced here, so nothing could tell whether the
-     other three existed as a contract or had simply been forgotten; and
-     because a Goal has no title, origin can never be inferred from one.
-     `originOf()` is the single reader, so a future writer that invents a
-     fifth kind fails closed instead of leaking an unknown value into replay. */
-  var ORIGIN_KINDS = ['user_request','agent_requested_by_user','plan_build','internal_workflow'];
-  var ORIGIN_LABEL = {
-    user_request:'the user asked for it directly',
-    agent_requested_by_user:'an agent created it because the user asked the agent to',
-    plan_build:'an approved Plan was built as a Goal',
-    internal_workflow:'a workflow uses it internally'
-  };
-  function originOf(kind){
-    return ORIGIN_KINDS.indexOf(kind)>=0 ? kind : 'user_request';
-  }
-  /* The plain thread Goal has an origin too; it is simply not `plan_build`. */
-  function lineageFor(goalId, revision, kind, o){
-    o=o||{};
-    return { schema:'pm.goal.origin_lineage.v1', goal_id:goalId, goal_revision:revision||1,
-             origin_kind:originOf(kind), origin_label:ORIGIN_LABEL[originOf(kind)],
-             source_message_refs:o.source_message_refs||[],
-             source_context_manifest_ref:o.source_context_manifest_ref||null,
-             bound_plan_ref:o.bound_plan_ref||null,
-             owning_workflow_ref:o.owning_workflow_ref||null };
-  }
-
-  function boundFor(planId){ return RT_G.boundGoals.byPlan[planId] || null; }
-  function boundList(threadId){
-    var out=[], k, m=RT_G.boundGoals.byPlan;
-    for(k in m){ if(!threadId || m[k].thread===threadId) out.push(m[k]); }
-    return out;
-  }
-
-  /* PGOAL-003/011/012. Fails CLOSED on a stale hash, on an existing active run,
-     and returns the ORIGINAL result for a repeated idempotency key. */
-  function createBound(o){
-    var prior=boundFor(o.plan_id);
-    if(prior && prior.idempotency_key===o.idempotency_key) return { ok:true, goal:prior, replayed:true };
-    if(prior && prior.status!=='canceled' && prior.status!=='completed')
-      return { ok:false, error:'active_run_exists', goal:prior };
-    if(o.expected_hash && o.plan_hash && o.expected_hash!==o.plan_hash)
-      return { ok:false, error:'stale_plan_version' };
-    RT_G.boundGoals.seq++;
-    var id='goal-plan-'+o.plan_id+'-'+RT_G.boundGoals.seq;
-    var g={
-      id:id, projectId:'pm', thread:o.thread, bound:true,
-      objective:'Complete the approved Plan “'+o.title+'” at version V'+o.version+' exactly as written.',
-      revision:1, status:'active', blockedReason:null,
-      createdAt:new Date().toISOString(), updatedAt:new Date().toISOString(),
-      currentnessHash:o.plan_hash, stopEpoch:0, mode:null,
-      idempotency_key:o.idempotency_key,
-      /* GREPLAY-001..002: hidden lineage. Not rendered as Goal content. */
-      lineage:lineageFor(id, 1, o.origin_kind||'plan_build', {
-                source_message_refs:o.source_refs||[],
-                source_context_manifest_ref:'ctx-manifest:'+o.plan_id+'@V'+o.version,
-                bound_plan_ref:o.plan_id+'@V'+o.version,
-                owning_workflow_ref:o.owning_workflow_ref||null }),
-      /* PGOAL-003/004: the binding. todo_list_ref and planunit_bundle_ref are
-         REFERENCES to what already exists -- identity equality is the proof
-         that nothing was duplicated. */
-      binding:{ schema:'pm.goal.plan_binding.v1', goal_id:id,
-                assistant_plan_id:o.plan_id, plan_version:o.version, plan_hash:o.plan_hash,
-                plan_run_id:o.plan_run_id,
-                todo_list_ref:'todos:'+o.thread, planunit_bundle_ref:o.planunit_bundle_ref||null },
-      history:[{ at:new Date().toISOString(), what:'created', note:'Build as Goal admitted; Goal, PlanRun and binding committed together.' }],
-      continuations:[], revisions:[{ revision:1, at:new Date().toISOString(), source:'plan_build', objective:null }]
-    };
-    g.revisions[0].objective=g.objective;
-    RT_G.boundGoals.byPlan[o.plan_id]=g;
-    return { ok:true, goal:g };
-  }
-
-  function boundTransition(planId, to, note){
-    var g=boundFor(planId); if(!g) return null;
-    /* GREPLAY-009/010: pause, cancel and revision each fence the epoch, and a
-       manual stop is authoritative -- resume after cancel is refused. */
-    if(to==='active' && g.status==='canceled') return { ok:false, error:'canceled_is_terminal' };
-    if(to==='paused' || to==='canceled') g.stopEpoch++;
-    g.status=to; g.updatedAt=new Date().toISOString();
-    g.history.push({ at:g.updatedAt, what:to, note:note||'' });
-    return { ok:true, goal:g };
-  }
-
-  function renderBound(ctx, g){
-    var b=g.binding;
-    return '<div class="goal-bound goal-bound-'+esc(g.status)+'" data-k="goal-bound-'+esc(g.id)+'" data-goal-id="'+esc(g.id)+'" data-bound-plan="'+esc(b.assistant_plan_id)+'">'+
-      '<div class="goal-bound-head">'+
-        '<span class="goal-bound-chip">'+esc(g.status)+'</span>'+
-        '<span class="goal-bound-link">bound to '+esc(b.assistant_plan_id)+' · V'+b.plan_version+'</span>'+
-        '<span class="spacer"></span>'+
-        '<span class="goal-hash">'+esc(b.plan_hash)+'</span>'+
-      '</div>'+
-      '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
-      '<div class="goal-lifecycle">'+
-        (g.status==='active'
-          ? '<button class="soft-button" data-action="goal-bound-pause" data-id="'+esc(b.assistant_plan_id)+'">'+ctx.icon('pause',12)+' Pause</button>'
-          : '<button class="soft-button" data-action="goal-bound-resume" data-id="'+esc(b.assistant_plan_id)+'"'+(g.status==='paused'?'':' disabled')+'>'+ctx.icon('play',12)+' Resume</button>')+
-        '<button class="soft-button danger" data-action="goal-bound-cancel" data-id="'+esc(b.assistant_plan_id)+'"'+(g.status==='canceled'||g.status==='completed'?' disabled':'')+'>'+ctx.icon('close',12)+' Cancel Goal</button>'+
-        '<span class="spacer"></span>'+
-        '<button class="text-button" data-action="goal-bound-open-plan" data-id="'+esc(b.assistant_plan_id)+'">Open Plan</button>'+
-      '</div>'+
-      '<p class="goal-note">Reuses the thread To-Do list (<code>'+esc(b.todo_list_ref)+'</code>)'+
-        (b.planunit_bundle_ref?' and the scoped PlanUnit bundle (<code>'+esc(b.planunit_bundle_ref)+'</code>)':'')+
-        '. No phases, no child Goals, no Orchestrator. Editing this Goal never edits the approved Plan.</p>'+
-    '</div>';
-  }
-
-  function renderBoundAll(ctx){
-    var t=ctx && ctx.state && ctx.state.selectedThread;
-    var gs=boundList(t);
-    if(!gs.length) return '';
-    return '<div class="goal-bound-wrap" data-k="goal-bound-wrap">'+
-      '<h4 class="goal-bound-h">Plan-bound Goals</h4>'+
-      gs.map(function(g){ return renderBound(ctx,g); }).join('')+'</div>';
-  }
-
-  function renderSection(ctx){
-    var g=goal();
-    if(!g) return '<div class="goal-section-v2" data-k="goal-section-v2">'+renderBoundAll(ctx)+
-      '<div class="goal-empty" data-k="goal-empty"><p>No goal on this thread. Start one with <code>/goal</code>, the Goal control, or by asking for one directly.</p></div></div>';
-
-    var editing = ui.editing;
-    var draft = ui.draft==null ? g.objective : ui.draft;
-    var over = draft.length>4000;
-
-    var body = editing
-      ? '<div class="goal-edit" data-k="goal-edit">'+
-          '<textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="6" '+
-            'placeholder="One concise objective. The outcome, the finish condition and the constraints all live here.">'+esc(draft)+'</textarea>'+
-          '<div class="goal-edit-foot">'+
-            '<span class="goal-count'+(over?' over':'')+'">'+draft.length+' / 4000</span>'+
-            '<span class="spacer"></span>'+
-            '<button class="text-button" data-action="goal-cancel-edit">Cancel edit</button>'+
-            '<button class="primary-button" data-action="goal-save"'+(over?' disabled':'')+'>Save</button>'+
-          '</div>'+
-
-        '</div>'
-      : '<div class="goal-view" data-k="goal-view">'+
-          '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
-          '<button class="soft-button" data-action="goal-edit">'+ctx.icon('edit',12)+' Edit objective</button>'+
-        '</div>';
-
-    var resumeable = g.status==='paused';
-    var lifecycle = '<div class="goal-lifecycle" data-k="goal-lifecycle">'+
-      (g.status==='active'
-        ? '<button class="soft-button" data-action="goal-pause">'+ctx.icon('pause',12)+' Pause</button>'
-        : '<button class="soft-button" data-action="goal-resume"'+(resumeable?'':' disabled title="'+esc(g.blockedReason||'Not resumable')+'"')+'>'+ctx.icon('play',12)+' Resume</button>')+
-      '<button class="soft-button danger" data-action="goal-cancel">'+ctx.icon('close',12)+' Cancel Goal</button>'+
-      '<span class="spacer"></span>'+
-      '<button class="soft-button" data-action="goal-continue" data-k="goal-continue"'+(g.status==='active'?'':' disabled')+'>'+ctx.icon('play',12)+' Admit next turn</button>'+
-      '</div>';
-
-    var hist = ui.showHistory
-      ? '<div class="goal-history" data-k="goal-history">'+
-          g.revisions.slice().reverse().map(function(r){
-            return '<div class="goal-history-row" data-k="goal-hr-'+r.revision+'">'+
-              '<span class="goal-history-rev">V'+r.revision+'</span>'+
-              '<span class="goal-history-when">'+esc(dayOf(r.at)+' '+clockOf(r.at))+'</span>'+
-              '<span class="goal-history-src goal-src-'+esc(r.source)+'">'+esc(r.source==='user_direct'?'You edited it':'You approved an agent proposal')+'</span>'+
-              '<p class="goal-history-text">'+esc(r.objective)+'</p>'+
-            '</div>';
-          }).join('')+
-        '</div>' : '';
-
-    var conts = ui.showContinuations
-      ? '<div class="goal-conts" data-k="goal-conts">'+
-          g.continuations.slice().reverse().map(function(c){
-            return '<div class="goal-cont-row goal-cont-'+esc(c.result)+'" data-k="goal-cr-'+esc(c.id)+'">'+
-              '<span class="goal-cont-result">'+esc(c.result)+'</span>'+
-              '<span class="goal-cont-when">'+esc(clockOf(c.at))+'</span>'+
-              '<span class="goal-cont-epoch">stop epoch '+c.stopEpochAt+'</span>'+
-              '<p class="goal-cont-note">'+esc(c.note)+'</p>'+
-            '</div>';
-          }).join('')+
-          '<p class="goal-note">The host decides continuation and records the decision. One model response ending is never completion.</p>'+
-        '</div>' : '';
-
-    /* The approval host renders HERE as well as in the goal-artifact editor
-       pane. The control that raises an agent proposal lives in this section,
-       but renderEditor was only reachable through the `goalEditor` slot -- so a
-       proposal raised from Activity Detail was invisible until the user
-       happened to open a different pane, and "agent-proposed Goal changes
-       require the existing approval dialog" was not satisfied on the very
-       surface that raised it. */
-    return '<div class="goal-section-v2" data-k="goal-section-v2">'+
-      renderEditor(ctx)+
-      renderBoundAll(ctx)+
-      '<div class="goal-head" data-k="goal-head">'+statusChip(g)+
-        '<span class="goal-rev">Revision '+g.revision+'</span>'+
-        '<span class="spacer"></span>'+
-
-      '</div>'+
-      (g.blockedReason?'<div class="goal-blocked-card" data-k="goal-blocked-card">'+ctx.icon('lock',13)+'<div><strong>Blocked</strong><p>'+esc(g.blockedReason)+'</p></div></div>':'')+
-      body + lifecycle +
-      '<div class="goal-disclosures" data-k="goal-disclosures">'+
-        '<button class="text-button" data-action="goal-toggle-history">'+(ui.showHistory?'Hide':'Show')+' History ('+g.revisions.length+')</button>'+
-        '<button class="text-button" data-action="goal-toggle-conts">'+(ui.showContinuations?'Hide':'Show')+' continuation log ('+g.continuations.length+')</button>'+
-
-      '</div>'+ hist + conts + '<details class="goal-technical"><summary>Technical details</summary><dl><dt>Currentness</dt><dd>'+esc(g.currentnessHash)+'</dd></dl></details>' +
-    '</div>';
-  }
-
-  /* The approval host for an agent-proposed replacement. Shows exactly the
-     current objective, the proposed complete replacement, Approve Change and
-     Cancel — and writes nothing until Approve. */
-  function renderEditor(ctx){
-    if(!ui.proposal) return '';
-    var g=goal(); if(!g) return '';
-    return '<div class="goal-approval" data-k="goal-approval">'+
-      '<div class="goal-approval-head">'+ctx.icon('warning',13)+'<strong>The agent proposes a new objective</strong></div>'+
-      '<div class="goal-approval-pair">'+
-        '<div><label>Current</label><p>'+esc(g.objective)+'</p></div>'+
-        '<div><label>Proposed</label><p>'+esc(ui.proposal.objective)+'</p></div>'+
-      '</div>'+
-      '<p class="goal-note">Nothing changes until you approve. A denied or expired proposal leaves the revision and currentness hash untouched.</p>'+
-      '<div class="plan-actions">'+
-        '<button class="soft-button" data-action="goal-deny-proposal">Cancel</button>'+
-        '<button class="primary-button" data-action="goal-approve-proposal">Approve Change</button>'+
-      '</div>'+
-    '</div>';
-  }
-
-  function headerChip(){ return ''; }        /* no Goal chip in the header — packet §1 */
-  function sidebarSummary(){ var s=summary(); return s.statusLine; }
-
-  /* =====================================================================
-     4. ACTIONS
-     ===================================================================== */
-  var ACTIONS = {
-    'goal-edit': function(ctx){ var g=goal(); if(!g) return; ui.editing=true; ui.draft=g.objective; ctx.renderApp(); },
-    'goal-cancel-edit': function(ctx){ ui.editing=false; ui.draft=null; ctx.renderApp(); },
-    'goal-save': function(ctx){
-      var g=goal(); if(!g) return;
-      var next = ui.draft==null ? g.objective : ui.draft;
-      var ok = writeRevision(next, 'user_direct', null);
-      ui.editing=false; ui.draft=null;
-      ctx.renderApp();
-      if(ok) ctx.toast('Objective saved', 'Revision '+g.revision+' recorded as your own change. No approval was needed.');
-      else ctx.toast('No change recorded', 'The objective was unchanged, empty, or over the 4,000-character limit.');
-    },
-    'goal-open-editor': function(ctx){
-      var g=goal(); if(!g) return;
-      ui.editing=true; ui.draft=g.objective;
-      ctx.state.activity.open=true; ctx.state.activity.domain='goal'; ctx.state.activity.scope='focus';
-      if(ctx.state.activity.expanded && ctx.state.activity.expanded.indexOf('goal')<0) ctx.state.activity.expanded.push('goal');
-      ctx.closeMenu && ctx.closeMenu();
-      ctx.renderApp();
-    },
-    'goal-pause': function(ctx){
-      var g=goal(); if(!g||g.status!=='active') return;
-      g.status='paused'; latchStop(g); g.updatedAt=new Date().toISOString();
-      ctx.renderApp();
-      ctx.toast('Goal paused', 'Stop epoch '+g.stopEpoch+' is latched. Nothing auto-resumes it — not a quota reset, not a window opening.');
-    },
-    'goal-resume': function(ctx){
-      var g=goal(); if(!g) return;
-      if(g.status==='blocked' && g.blockedReason){ ctx.toast('Cannot resume', g.blockedReason); return; }
-      if(g.status!=='paused' && g.status!=='blocked') return;
-      g.status='active'; g.updatedAt=new Date().toISOString();
-      ctx.renderApp();
-      ctx.toast('Goal resumed', 'You resumed it explicitly. That is the only thing that clears a latched stop.');
-    },
-    'goal-cancel': function(ctx){
-      var g=goal(); if(!g) return;
-      latchStop(g);
-      ctx.addReceipt('goal-receipt','Goal cancelled','Objective ended at revision '+g.revision+'. Workflow-owned records remain under their own owners.');
-      D.goal = Object.assign({}, g, { status:'cleared' });
-      ui.editing=false; ui.draft=null;
-      ctx.renderApp();
-    },
-    'goal-continue': function(ctx){
-      var g=goal(); if(!g) return;
-      var admitted = admitContinuation(g);
-      ui.showContinuations = true;
-      ctx.renderApp();
-      ctx.toast(admitted?'Next turn admitted':'Continuation refused',
-        admitted ? 'The host reloaded canonical Goal state, compared the stop epoch, and admitted one ordinary agent turn.'
-                 : 'The stop epoch moved or the Goal is not active, so the decision was discarded rather than dispatched.');
-    },
-    'goal-toggle-history': function(ctx){ ui.showHistory=!ui.showHistory; ctx.renderApp(); },
-    'goal-toggle-conts': function(ctx){ ui.showContinuations=!ui.showContinuations; ctx.renderApp(); },
-    'goal-demo-proposal': function(ctx){
-      ui.proposal = { objective:'Reduce the tenant-scoped analytics query p95 below 80 ms, accept up to 12% write amplification, and drop the rehearsed rollback requirement.', at:new Date().toISOString() };
-      ctx.renderApp();
-      ctx.toast('Proposal raised', 'The agent wrote nothing. The approval host is showing the current and proposed objectives.');
-    },
-    'goal-approve-proposal': function(ctx){
-      var p=ui.proposal; if(!p) return;
-      var g=goal(); if(!g) return;
-      var ok = writeRevision(p.objective, 'agent_proposed_user_approved', 'apr-'+Math.floor(Math.random()*9000+1000));
-      ui.proposal=null;
-      ctx.renderApp();
-      ctx.toast(ok?'Change approved':'Nothing written', ok?('Revision '+g.revision+' recorded with its originating approval id.'):'The proposal did not change the objective.');
-    },
-    'goal-deny-proposal': function(ctx){
-      var g=goal(); var before = g?g.revision:0;
-      ui.proposal=null; ctx.renderApp();
-      ctx.toast('Proposal denied', 'Revision stayed at '+before+' and the currentness hash is untouched.');
-    },
-
-    /* --- Additive Correction v4: bound Goal lifecycle -------------------
-       PGOAL-007/008. These control the BOUND PlanRun. The Plan's Build
-       control stays Building… through pause; only cancel makes it Canceled,
-       and cancel fences that execution's schedules and quota consent while
-       leaving unrelated scheduled messages alone. */
-    'goal-bound-pause': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'paused','Paused by the user; the bound PlanRun stopped at a safe boundary.');
-      if(!res) return;
-      if(P && P.boundPause) P.boundPause(id, res.goal.stopEpoch);
-      ctx.renderApp();
-      ctx.toast('Goal paused','The Plan stays Building… with “Paused” as its secondary reason. Continuation epoch is now '+res.goal.stopEpoch+'.');
-    },
-    'goal-bound-resume': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'active','Resumed under the current epoch.');
-      if(!res) return;
-      if(res.ok===false){ ctx.toast('Refused', 'A cancelled Goal is terminal; resume is not available.'); return; }
-      if(P && P.boundResume) P.boundResume(id, res.goal.stopEpoch);
-      ctx.renderApp();
-      ctx.toast('Goal resumed','Revalidated against the current epoch before the bound run continued.');
-    },
-    'goal-bound-cancel': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'canceled','Cancelled by the user; the bound PlanRun and its schedules are fenced.');
-      if(!res) return;
-      var fenced = (P && P.boundCancel) ? P.boundCancel(id, res.goal.stopEpoch) : null;
-      ctx.renderApp();
-      ctx.toast('Goal cancelled', fenced
-        ? ('Plan is Canceled. Invalidated '+fenced.schedules+' schedule(s) for this execution; '+fenced.untouched+' unrelated scheduled message(s) untouched.')
-        : 'Plan is Canceled.');
-    },
-    'goal-bound-open-plan': function(ctx,btn){
-      var P=window.PM56_PLANS;
-      if(P && P.openDetails) P.openDetails(ctx, btn.dataset.id);
-    }
-  };
-  Object.keys(ACTIONS).forEach(function(name){
-    EXT.action(name, function(ctx,btn,ev){ ACTIONS[name](ctx,btn,ev); return true; });
-  });
-
-  EXT.slot('goalSection', renderSection);
-  EXT.slot('goalEditor',  renderEditor);
-
-  /* Reset must really reset. Chain rather than clobber, so whichever module
-     loads last does not silently drop the others. */
-  var prevReset = EXT._actions && EXT._actions['reset-all'];
-  EXT.chainAction('reset-all', function(ctx,btn,ev){
-    restoreFixture();
-    return false;
-  });
-
-  /* Own delegated input listener. Deliberately does NOT re-render: the
-     objective is a textarea and a re-render mid-keystroke would fight the
-     caret. The textarea carries data-pm-keep so pmPatch leaves it alone. */
-  document.addEventListener('input', function(e){
-    var t=e.target;
-    if(!t || !t.getAttribute) return;
-    if(t.getAttribute('data-goal-input')!=='objective') return;
-    ui.draft = t.value;
-    var foot = t.parentNode && t.parentNode.querySelector('.goal-count');
-    if(foot){ foot.textContent = ui.draft.length + ' / 4000'; foot.classList.toggle('over', ui.draft.length>4000); }
-  });
-
-  window.PM56_GOAL = {
-    get:goal, summary:summary,
-    /* phaseNumber/progress are retained as retired-shape stubs so any older
-       harness that still calls them gets a truthful empty answer instead of a
-       TypeError. Nothing in the redesign calls either. */
-    progress:function(){ return { completed:0, total:0, open:0, retired:true }; },
-    phaseNumber:function(){ return 0; },
-    restore:restoreFixture,
-    fixture:function(){ return JSON.parse(GOAL0); },
-    render:{ section:renderSection, compact:renderCompact, editor:renderEditor },
-    /* Additive Correction v4 (PGOAL/GREPLAY). Plan-bound simple Goals. */
-    bound:boundFor,
-    boundList:boundList,
-    createBound:createBound,
-    boundTransition:boundTransition,
-    chip:headerChip,
-    sidebar:sidebarSummary,
-    /* GREPLAY-002: the closed origin vocabulary, published by its owner. */
-    originKinds:function(){ return ORIGIN_KINDS.slice(); },
-    originLabel:function(k){ return ORIGIN_LABEL[originOf(k)]; },
-    lineageFor:lineageFor
-  };
+  TX.set(g,'status',to);if(to==='active')TX.set(g,'blockedReason',null);stamp(g);
+  if(g.binding){if(to==='paused')P?.boundPause(g.binding.assistant_plan_id,g.stopEpoch);else P?.boundResume(g.binding.assistant_plan_id,g.stopEpoch);}
+  else if(to==='active')kick(g.id);
+  return {ok:true,goal:g};
+ }
+ function inspector(g){const owner=g.workRef&&owners.get(g.workRef.kind);if(!owner)return {eligible:false,complete:false,reason:'No work/evidence evaluator is attached in this local concept.',fingerprint:'unbound'};
+  try{return owner.inspect(g.workRef.ref,g);}catch(e){return {eligible:false,complete:false,reason:'Owner inspection failed: '+e.message,fingerprint:'failed'};}
+ }
+ // A blocked owner must report its condition cleared; an explicit user Resume
+ // never means a provider reset or a stale callback may resume by itself.
+ function resumeEligibility(g){
+  if(!g||g.status==='completed'||cancelled(g))return {ok:false,error:'not_resumable'};
+  if(g.binding&&g.blockedReason)return {ok:false,error:'owner_block_not_cleared'};
+  if(g.status==='blocked'&&!g.demo){const x=inspector(g);if(!x.eligible&&!decisionComplete(x))return {ok:false,error:x.reason||'owner_block_not_cleared'};}
+  return {ok:true};
+ }
+ function block(g,reason,waitKind){if(waitKind==='quota')return;if(g.status==='active'){TX.set(g,'status','blocked');TX.set(g,'blockedReason',reason||'The work owner has no eligible attempt.');stamp(g);}}
+ function decisionComplete(x){return x?.complete===true&&x.requiredResolved===true&&x.verified===true&&Array.isArray(x.evidenceRefs)&&x.evidenceRefs.length>0;}
+ function evaluate(id){const g=byId(id);if(!g||cancelled(g))return {ok:false,error:'goal_unavailable'};
+  const error=current(capture(g));if(error)return {ok:false,error};
+  const x=inspector(g),key=[g.id,g.revision,g.activeRunRef,g.stopEpoch,x.nextAttemptRef||x.fingerprint].join('|');
+  const prior=Object.values(store.tickets).find(t=>t.key===key&&t.state==='pending');if(prior)return {ok:true,ticket:clone(prior),replayed:true};
+  const result=g.status==='paused'?'pause':g.status==='blocked'?'blocked':g.status==='completed'?'complete':decisionComplete(x)?'complete':x.eligible?'continue':'blocked';
+  const t={id:'continuation-'+(++store.seq),key,token:capture(g),fingerprint:x.fingerprint,result,state:'pending',evidenceRefs:clone(x.evidenceRefs||[]),reason:x.reason||null,waitKind:x.waitKind||null,at:now()};
+  store.tickets[t.id]=t;return {ok:true,ticket:clone(t)};
+ }
+ function recordDecision(g,t,result,note){g.continuations.push({id:t.id,at:now(),result,stopEpochAt:t.token.epoch,goalRevision:t.token.revision,runRef:t.token.run,note:note||'',completion_evidence_refs:clone(t.evidenceRefs)});}
+ function dispatch(ticketId){const t=store.tickets[ticketId];if(!t)return {ok:false,error:'unknown_continuation'};
+  if(t.state==='settled')return {ok:true,replayed:true,receipt:clone(t.receipt)};
+  if(t.state!=='pending')return {ok:false,error:'continuation_discarded'};
+  const g=byId(t.token.goalId),error=current(t.token);if(error){t.state='discarded';t.reason=error;if(g)recordDecision(g,t,'pause',error);return {ok:false,error};}
+  if(g.status!=='active'){t.state='discarded';recordDecision(g,t,g.status==='paused'?'pause':'blocked','Goal is not active.');return {ok:false,error:'goal_not_active'};}
+  const x=inspector(g);if(x.fingerprint!==t.fingerprint){t.state='discarded';recordDecision(g,t,'blocked','Work or evidence changed after evaluation.');return {ok:false,error:'work_currentness_changed',reason:x.reason,waitKind:x.waitKind||null};}
+  if(t.result==='complete'){
+   if(!decisionComplete(x)){t.state='discarded';return {ok:false,error:'completion_not_verified'};}
+   const owner=owners.get(g.workRef?.kind),settled=owner?.complete?.(g.workRef.ref,g,x)||{ok:true};
+   if(!settled.ok){t.state='discarded';return settled;}
+   change(g,{status:'completed',blockedReason:null,completion:{at:now(),revision:g.revision,runRef:g.activeRunRef,evidenceRefs:clone(x.evidenceRefs),binding:clone(g.binding||null)}});stamp(g);
+   recordDecision(g,t,'complete','The owning workflow verified all required outcomes and supplied current evidence.');
+  }else if(t.result==='continue'&&x.eligible){
+   const out=owners.get(g.workRef.kind)?.advance?.(g.workRef.ref,g,t);
+   if(!out?.ok){t.state='discarded';block(g,out?.error||'Work admission refused.');recordDecision(g,t,'blocked',out?.error||'Work admission refused.');return out||{ok:false,error:'work_admission_refused'};}
+   recordDecision(g,t,'continue','One ordinary local work attempt was admitted against the captured objective, scope and stop epoch.');
+  }else{t.state='discarded';block(g,x.reason||'No runnable work.',x.waitKind);recordDecision(g,t,'blocked',x.reason||'No runnable work.');return {ok:false,error:'work_not_eligible',reason:x.reason,waitKind:x.waitKind||null};}
+  t.state='settled';t.receipt={continuation_id:t.id,goal_id:g.id,result:t.result,revision:t.token.revision,run_ref:t.token.run};store.receipts[t.id]=clone(t.receipt);
+  return {ok:true,receipt:clone(t.receipt)};
+ }
+ function kick(id){const g=byId(id);if(!g||g.binding||cancelled(g)||g.status!=='active'||timers.has(id))return;
+  const e=evaluate(id);if(!e.ok)return;if(e.ticket.result==='blocked'){block(g,e.ticket.reason,e.ticket.waitKind);return;}if(!['continue','complete'].includes(e.ticket.result))return;
+  const timer=setTimeout(()=>{timers.delete(id);const out=dispatch(e.ticket.id);context()?.renderApp();if(out.ok&&g.status==='active')kick(id);},1000);timers.set(id,timer);
+ }
+ // Called only by an admitted shared quota consent. It never clears a manual
+ // stop or changes Goal lifecycle. The captured revision/run/epoch must match.
+ function resumeFromQuota(token){
+  const error=current(token),g=byId(token?.goalId);if(error)return {ok:false,error};
+  if(g.status!=='active')return {ok:false,error:'goal_not_active'};
+  if(g.binding){const out=window.PM56_PLANS.resumeFromQuota(g.binding);return out;}
+  const x=inspector(g);if(!x.eligible&&!decisionComplete(x))return {ok:false,error:x.reason||'work_not_eligible'};
+  kick(g.id);return {ok:true,goal_id:g.id,run_id:g.activeRunRef};
+ }
+ function bound(planId){return RT.boundGoals.byPlan[planId]||null;}
+ function boundList(tid){return Object.values(RT.boundGoals.byPlan).filter(g=>!cancelled(g)&&(!tid||g.thread===tid));}
+ function createBound(o){
+  const prior=bound(o.plan_id);if(prior?.idempotency_key===o.idempotency_key&&!cancelled(prior))return {ok:true,goal:prior,replayed:true};
+  if(prior&&!cancelled(prior)&&prior.status!=='completed')return {ok:false,error:'active_run_exists'};
+  if(o.expected_hash!==o.plan_hash)return {ok:false,error:'stale_plan_version'};
+  const out=create({threadId:o.thread,projectId:o.project_id,scope:o.scope,objective:'Complete the approved Plan “'+o.title+'” at version V'+o.version+' exactly as written.',explicitRequest:true,origin:'plan_build',runId:o.plan_run_id,workRef:{kind:'assistant_plan',ref:o.plan_id}});
+  if(!out.ok)return out;const g=out.goal;
+  change(g,{bound:true,idempotency_key:o.idempotency_key,binding:{schema:'pm.goal.plan_binding.v1',goal_id:g.id,assistant_plan_id:o.plan_id,plan_version:o.version,plan_hash:o.plan_hash,plan_run_id:o.plan_run_id,todo_list_ref:'todos:'+o.thread,planunit_bundle_ref:o.planunit_bundle_ref||null},lineage:lineageFor(g.id,1,'plan_build',{source_message_refs:o.source_refs||[],bound_plan_ref:o.plan_id+'@V'+o.version,owning_workflow_ref:o.plan_run_id})});
+  TX.set(RT.boundGoals.byPlan,o.plan_id,g);return {ok:true,goal:g};
+ }
+ function boundTransition(planId,to,note){const g=bound(planId);if(!g)return null;
+  if(to==='completed'){const e=evaluate(g.id);return e.ok?dispatch(e.ticket.id):e;}
+  return lifecycle(capture(g),to==='canceled'||to==='cancelled'?'cancel':to);
+ }
+ function checkpoint(tid){const g=get(tid);return {schema:'pm.concept.goal_checkpoint.v1',durability:'session_memory_only',goal:g?clone(g):null,scope:scope(tid),capturedAt:now()};}
+ function rebind(snapshot,targetId,kind){
+  if(!snapshot?.goal)return {ok:true,empty:true};if(!['branch','restore','rewind'].includes(kind))return {ok:false,error:'invalid_rebind_kind'};
+  const sc=scope(targetId);if(!sc||sc.projectId!==snapshot.scope?.projectId)return {ok:false,error:'project_mismatch'};
+  const old=get(targetId);if(old&&old.status!=='completed'){fence(old,'Explicit '+kind+' safe boundary.');if(old.binding)window.PM56_PLANS?.boundPause(old.binding.assistant_plan_id);}
+  const g=clone(snapshot.goal),id=kind==='branch'?'goal-branch-'+(++store.seq)+'-'+targetId:g.id;
+  g.id=id;g.thread=targetId;g.scope=clone(sc);g.projectId=sc.projectId;g.stopEpoch=Math.max(g.stopEpoch,old?.stopEpoch||0)+1;g.currentnessHash=id+':rebind:'+g.stopEpoch+':'+(++store.seq);g.status='paused';g.blockedReason=null;g.activeRunRef=null;g.binding=null;g.bound=false;g.workRef=null;
+  g.lineage={...g.lineage,goal_id:id,rebound_from:snapshot.goal.id,rebind_kind:kind,live_controller_reused:false};
+  store.byId[id]=g;store.currentByThread[targetId]=id;delete store.cancellations[id];return {ok:true,goal:g,requiresExplicitWorkRebind:true};
+ }
+ function restore(){for(const t of timers.values())clearTimeout(t);timers.clear();store.generation++;for(const k of ['byId','currentByThread','cancellations','proposals','tickets','receipts'])store[k]={};RT.boundGoals.byPlan={};RT.boundGoals.seq=0;Object.assign(ui,{editing:null,draft:null,proposal:null,history:false,continuations:false});const g=clone(GOAL_FIXTURE);g.scope=scope('query')||{projectId:g.projectId,threadId:'query',worktreeId:'concept:default'};g.projectId=g.scope.projectId;g.workRef=null;g.lineage=lineageFor(g.id,g.revision,'user_request');store.byId[g.id]=g;store.currentByThread.query=g.id;D.goal=g;}
+ function summary(tid){const g=get(tid);return g?{tone:tones[g.status],status:g.status,statusLine:labels[g.status],objective:g.objective,revision:g.revision,blocker:g.blockedReason}:{tone:'idle',status:'none',statusLine:'No goal',objective:''};}
+ const button=(action,label,extra='')=>'<button class="soft-button" data-action="'+action+'" '+extra+'>'+esc(label)+'</button>';
+ function renderEditor(c){const p=store.proposals[ui.proposal];if(!p||p.state!=='pending'||p.token.goalId!==get()?.id)return '';
+  return '<section class="goal-approval" data-k="goal-approval:'+p.id+'"><strong>Review objective change</strong><div class="goal-approval-pair"><div><label>Current</label><p>'+esc(p.current)+'</p></div><div><label>Proposed</label><p>'+esc(p.objective)+'</p></div></div><p class="goal-note">Nothing changes until you approve.</p><div class="plan-actions">'+button('goal-deny-proposal','Cancel')+button('goal-approve-proposal','Approve Change')+'</div></section>';
+ }
+ function renderSection(c){const g=get(c.thread.id);if(!g)return '<section class="goal-section-v2"><p>No Goal on this thread.</p>'+button('goal-new','Create Goal')+'</section>';
+  const editing=ui.editing?.goalId===g.id,wait=g.status==='active'?inspector(g):null;
+  return '<section class="goal-section-v2" data-goal-id="'+esc(g.id)+'" data-k="goal:'+esc(g.id)+'">'+renderEditor(c)+
+   '<div class="goal-head"><span class="goal-chip goal-chip-'+g.status+'"><i class="goal-dot goal-dot-'+g.status+'"></i>'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div>'+
+   (wait?.waitKind==='quota'?'<p class="goal-note">Waiting for provider Usage. The Goal stays running; continuation requires the shared quota owner.</p>':'')+
+   (g.blockedReason?'<p class="goal-blocker-line">'+esc(g.blockedReason)+'</p>':'')+
+   (editing?'<div class="goal-edit"><textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="5">'+esc(ui.draft)+'</textarea><div class="goal-edit-foot"><span class="goal-count">'+ui.draft.length+' / 4000</span><span class="spacer"></span>'+button('goal-cancel-edit','Cancel edit')+button('goal-save','Save')+'</div></div>':'<p class="goal-objective-full">'+esc(g.objective)+'</p>')+
+   '<div class="goal-lifecycle">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-cancel','Cancel Goal',g.status==='completed'?'disabled':'')+(!editing?button('goal-edit','Edit objective',g.status==='completed'?'disabled':''):'')+'</div>'+
+   (g.binding?'<div class="goal-lifecycle">'+button('goal-bound-open-plan','Open exact Plan · V'+g.binding.plan_version,'data-id="'+esc(g.binding.assistant_plan_id)+'"')+(g.blockedReason?button('goal-revise-plan','Revise Plan','data-id="'+esc(g.binding.assistant_plan_id)+'"'):'')+'</div>':'')+
+   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-toggle-conts','Continuation decisions')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
+   (ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'')+
+   (ui.continuations?'<div class="goal-conts">'+g.continuations.slice().reverse().map(t=>'<div class="goal-cont-row"><strong>'+esc(t.result)+'</strong><small>Stop epoch '+t.stopEpochAt+'</small><p>'+esc(t.note)+'</p></div>').join('')+(g.continuations.length?'':'<p>No continuation decision yet.</p>')+'</div>':'')+
+   '<details class="goal-technical"><summary>Details</summary><p>Session-memory concept. No native host persistence or provider execution.</p><pre>'+esc(JSON.stringify({goal_id:g.id,origin:g.lineage,scope:g.scope,binding:g.binding||null,active_run_ref:g.activeRunRef,currentness_hash:g.currentnessHash,user_stop_epoch:g.stopEpoch},null,2))+'</pre>'+(!g.binding?button('goal-continue','Evaluate next turn',g.status==='active'?'':'disabled'):'')+'</details></section>';
+ }
+ function renderCompact(c){const g=get(c.thread.id);if(!g)return '';if(ui.editing||ui.proposal||ui.history||ui.continuations)return renderSection(c);
+  return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p><div class="goal-compact-actions">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-open-editor','Edit objective',g.status==='completed'?'disabled':'')+button('goal-cancel','Cancel',g.status==='completed'?'disabled':'')+button('goal-details','Details')+'</div></section>';
+ }
+ function refresh(c,out){c.renderApp();c.renderOverlays?.();if(out?.ok===false)c.toast('No change made',out.error?.replaceAll('_',' ')||'The owner refused this action.');}
+ function openGoal(c){c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
+ const actions={
+  'goal-new':c=>{c.state.composer='/goal '+c.state.composer.replace(/^\/goal\s*/,'');c.state.menu=null;refresh(c);setTimeout(()=>document.querySelector('textarea.composer-input,textarea[data-composer]')?.focus(),0);},
+  'goal-details':c=>{ui.history=true;openGoal(c);refresh(c);},
+  'goal-edit':c=>{const g=get();if(!g||g.status==='completed')return;ui.editing=capture(g);ui.draft=g.objective;refresh(c);},
+  'goal-open-editor':c=>{actions['goal-edit'](c);openGoal(c);refresh(c);},
+  'goal-cancel-edit':c=>{ui.editing=null;ui.draft=null;refresh(c);},
+  'goal-save':c=>{const out=edit(ui.editing,ui.draft);if(out.ok){ui.editing=null;ui.draft=null;}refresh(c,out);},
+  'goal-pause':c=>refresh(c,lifecycle(capture(get()),'paused')),
+  'goal-resume':c=>refresh(c,lifecycle(capture(get()),'active')),
+  'goal-cancel':c=>{const out=lifecycle(capture(get()),'cancel');if(out.ok){ui.editing=null;ui.proposal=null;}refresh(c,out);},
+  'goal-toggle-history':c=>{ui.history=!ui.history;refresh(c);},
+  'goal-toggle-conts':c=>{ui.continuations=!ui.continuations;refresh(c);},
+  'goal-request-change':c=>{const g=get();if(!g)return;RT.composer.destination={kind:'goal-objective-proposal',refId:g.id,label:'Request objective change',goalToken:capture(g)};c.toast('Composer targeted at the objective','Send the complete replacement you explicitly want proposed. Approval is still required.');refresh(c);},
+  'goal-approve-proposal':c=>refresh(c,approve(ui.proposal)),
+  'goal-deny-proposal':c=>refresh(c,deny(ui.proposal)),
+  'goal-continue':c=>{const g=get();if(!g)return;const out=evaluate(g.id);if(out.ok){setTimeout(()=>refresh(context(),dispatch(out.ticket.id)),450);}ui.continuations=true;refresh(c,out);},
+  'goal-bound-open-plan':(c,b)=>window.PM56_PLANS?.openDetails(c,b.dataset.id),
+  'goal-revise-plan':(c,b)=>E._actions[window.PM56_PLANS?.get(b.dataset.id)?.status==='building'?'pd-stop-revise':'pd-revise']?.(c,{dataset:{id:b.dataset.id}})
+ };
+ for(const [name,fn] of Object.entries(actions))E.action(name,(c,b)=>{fn(c,b);return true;});
+ for(const [name,to] of [['goal-bound-pause','paused'],['goal-bound-resume','active'],['goal-bound-cancel','cancel']])E.action(name,(c,b)=>{refresh(c,lifecycle(capture(bound(b.dataset.id)),to));return true;});
+ E.chainAction('stop-run',c=>{const g=get(c.thread.id);if(g?.status==='active')lifecycle(capture(g),'paused');else{const r=window.PM56_PLANS?.current(c.thread.id);if(r?.workRef&&r.status==='building')window.PM56_PLANS.boundPause(r.plan_id);}window.PM56_SCHED?.latchStop('Explicit Stop from the composer.');return false;});
+ E.slot('goalSection',renderSection);E.slot('goalEditor',renderEditor);E.chainAction('reset-all',()=>{restore();return false;});
+ document.addEventListener('input',e=>{if(e.target.getAttribute?.('data-goal-input')==='objective'){ui.draft=e.target.value;const count=e.target.parentNode.querySelector('.goal-count');if(count)count.textContent=ui.draft.length+' / 4000';}});
+ window.PM56_GOAL={get,byId,summary,create,capture,current,resumeEligibility,resumeFromQuota,edit,propose,approve,deny,lifecycle,evaluate,dispatch,kick,scope,checkpoint,rebind,
+  cancelled,proposal:id=>clone(store.proposals[id]||null),tickets:()=>clone(store.tickets),cancellation:id=>clone(store.cancellations[id]||null),
+  registerOwner:(kind,api)=>{if(owners.has(kind))throw new Error('duplicate_goal_work_owner');owners.set(kind,api);},
+  fenceThread:tid=>{const g=get(tid);if(g){fence(g,'Thread lineage changed.');g.status='paused';if(g.binding)window.PM56_PLANS?.boundPause(g.binding.assistant_plan_id);}return g;},
+  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
+  originKinds:()=>origins.slice(),originLabel:k=>originLabels[k]||null,lineageFor,progress:()=>({completed:0,total:0,open:0,retired:true}),phaseNumber:()=>0,
+  exportRecord:id=>{const g=byId(id);return g?{schema_id:'pm.goal.record.v2',goal_id:g.id,project_id:g.projectId,thread_id:g.thread,objective_text:g.objective,revision:g.revision,state:g.status,blocked_reason_ref:g.blockedReason,active_run_ref:g.activeRunRef,created_at:g.createdAt,updated_at:g.updatedAt,currentness_hash:g.currentnessHash}:null;}
+ };
+ restore();
 })();

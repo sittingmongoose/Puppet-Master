@@ -1,0 +1,185 @@
+{
+  "batch_id": "assistant-demo-b15-simple-goal-explicit-plan-execution",
+  "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+  "user_acceptance": "PENDING_USER_INSTALLATION_AND_ACCEPTANCE",
+  "basis": "Verified cumulative B14 plus affected-source comparison at pinned main; no source recovered from the interrupted B15 attempt.",
+  "baseline_archive_sha256": "cc3831bb63e90220ed7997f6bed1097a1aa75794ad32b9be433a8e7bed6f11bf",
+  "implementation_pin": "79464dc0311b6e99dcef2e659d6c226a6f02348b",
+  "integration_recheck_head": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+  "html": {
+    "bytes": 3319597,
+    "sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c",
+    "git_blob": "71d456f3b60baad66154c0ba5f33a76f88394fd6"
+  },
+  "scenario_ids": [
+    "B15-SIMPLE",
+    "B15-OBJECTIVE-AUTHORITY",
+    "B15-PLAN-AS-GOAL",
+    "B15-SCHEDULED-GOAL",
+    "B15-PRIMARY-NORMAL-BUILD"
+  ],
+  "source_rows_accounted": 43,
+  "all_source_clauses_closed": false,
+  "coverage_delta": "BATCH_15_COVERAGE_DELTA.json",
+  "wiring": "BATCH_15_WIRING.json",
+  "source_review": "BATCH_15_SOURCE_REVIEW.json",
+  "tests": {
+    "actual_handler_cases": 34,
+    "actual_handler_assertions": 134,
+    "surface_cases": 2,
+    "surface_assertions": 21,
+    "unique_ordinary_scenarios": 5,
+    "size_specific_journeys": 7,
+    "ordinary_checks": 133,
+    "journeys": [
+      {
+        "scenario": "authority",
+        "width": 700,
+        "height": 1000,
+        "checks": 20,
+        "status": "pass",
+        "report": "final-b15/authority-700/RESULT.json"
+      },
+      {
+        "scenario": "authority",
+        "width": 900,
+        "height": 1000,
+        "checks": 20,
+        "status": "pass",
+        "report": "final-b15/authority-900/RESULT.json"
+      },
+      {
+        "scenario": "normal",
+        "width": 1440,
+        "height": 1000,
+        "checks": 17,
+        "status": "pass",
+        "report": "final-b15/normal-1440/RESULT.json"
+      },
+      {
+        "scenario": "plan",
+        "width": 1440,
+        "height": 1000,
+        "checks": 19,
+        "status": "pass",
+        "report": "final-b15/plan-1440/RESULT.json"
+      },
+      {
+        "scenario": "plan",
+        "width": 700,
+        "height": 1000,
+        "checks": 19,
+        "status": "pass",
+        "report": "final-b15/plan-700/RESULT.json"
+      },
+      {
+        "scenario": "scheduled",
+        "width": 900,
+        "height": 1000,
+        "checks": 22,
+        "status": "pass",
+        "report": "final-b15/scheduled-900/RESULT.json"
+      },
+      {
+        "scenario": "simple",
+        "width": 1440,
+        "height": 1000,
+        "checks": 16,
+        "status": "pass",
+        "report": "final-b15/simple-1440/RESULT.json"
+      }
+    ],
+    "cumulative_b01_b14": "PASS_ON_FINAL_HTML",
+    "cumulative_post_b11_repair": "PASS_ON_FINAL_HTML",
+    "recordings": 4,
+    "syntax_modules": 62,
+    "extracted_installer_rehearsal_assertions": 35,
+    "final_exact_zip_installer_receipt": "Separate evidence final-installer/RESULT.json binds the delivered ZIP hash. Rehearsal alone is not final ZIP proof.",
+    "actual_cumulative_zip_extraction_receipt": "Separate evidence final-package/RESULT.json binds cumulative ZIP and clean rebuilt HTML."
+  },
+  "protected_files": [
+    {
+      "file": "motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "file": "motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "source_freeze_repair": "Native-resolution review of the prior 05f0359 build found clipped narrow-column work-card controls. Final fbc28efc build wraps the header by actual available space. New ordinary-handler geometry check verifies all shortcut buttons fit. All functional/cumulative/recording gates rerun for final bytes.",
+  "proof_status": "LOCAL_HTML_CONCEPT_ONLY",
+  "full_feature_acceptance": false,
+  "native_proof": false,
+  "canonical_plans_modified": false,
+  "settings_and_onboarding_modified": false,
+  "governance_modified": false,
+  "global_event_authority_completion": false,
+  "formal_audit_completion": false,
+  "repository_publication": "LOCAL_DELIVERY_NOT_PUSHED",
+  "batch16_started": false,
+  "motion": {
+    "uniform_smooth_60fps_accepted": false,
+    "actual_paint_instrumented": false,
+    "protected_files_unchanged": true,
+    "review_ref": "Separate evidence final-recordings/VISUAL_REVIEW.json",
+    "measurement_ref": "Separate evidence final-recordings/MOTION_OBSERVATIONS.json",
+    "scope": "Original capture timestamps, decoded frame hashes, browser callbacks, overview/consecutive contact sheets and selected native frames are separate evidence. No interpolation, CFR padding, global animation acceptance or every-frame native inspection claimed."
+  },
+  "remaining_limits": [
+    "Visual review is bounded to the listed samples and native frames, not every frame, every theme or every possible layout.",
+    "Original recordings retain Chromium fullscreen/download hints and a pale transient overlay near startup; they were not edited away. Informational toasts also briefly cover parts of the upper transcript during rapid actions.",
+    "Encoded timestamps, identical-frame hashes and browser callbacks are not actual-paint instrumentation. Static repeated frames are not by themselves evidence of dropped animation.",
+    "Ordinary file and loopback HTTP navigation was blocked before application load by this environment; unrestricted-browser navigation remains unproved.",
+    "Installer execution was tested on Linux. Native Windows/macOS installation and cross-host/restart durability remain unproved.",
+    "The order-export adapter recognizes a bounded task grammar; unrelated objectives save but block old work rather than pretending general model execution.",
+    "Deep Plan admission/binding reuses existing bundle and To-Do list; execution without an adapter blocks instead of producing fake completion.",
+    "Branch/restore evidence is in-memory identity and continuation safety, not native crash recovery, cross-host durability or V1 migration.",
+    "A material bound-objective conflict exposes Revise and stops mutation; automatic revised-Plan/Goal reconciliation is not claimed.",
+    "Some original GREPLAY/PGOAL/APR packet wording remains unavailable; current-owner behavior and source-ID inventory are not exhaustive original-clause acceptance."
+  ],
+  "evidence_location": "pm-b15-evidence.zip; final-* paths refer to this final HTML, historical/ is explicitly non-final. Exact delivered artifact identities are bound in its final-package/RELEASE_RECEIPT.json and external pm-b15-delivery.json.",
+  "created_utc": "2026-09-11T18:54:44.168915+00:00"
+}

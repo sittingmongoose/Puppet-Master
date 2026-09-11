@@ -22,7 +22,7 @@ shell=(root/'shell.html').read_text(encoding=ENC)
 #        -> a module's window.PM56_EXT registrations exist before the app boots,
 #           so they are live on the very first render.
 # Adding a module here is the only build.py edit a feature wave should ever need.
-MODULES=['activity-panel','activity-bar','goals','context','history','menus',
+MODULES=['command-transaction','activity-panel','activity-bar','goals','context','history','menus',
          'transcript','lens-protocol','lens','orbit','threadops','questions',
          # Assistant-redesign wave (2026-09-03). One owner per file; each registers
          # through window.PM56_EXT and owns a bounded feature family, so app.js does
@@ -30,7 +30,7 @@ MODULES=['activity-panel','activity-bar','goals','context','history','menus',
          # because attachments, plans, collaboration and browser-capture all read and
          # write the composer destination it owns.
          'composer-state','attachments','question-budget-protocol','plans','todos','collaboration','bsd-protocol','bsd',
-         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos','narrow-review','plan-demo-batch1','plan-demo-batch2','review-protocol','review-demo-batch3','brainstorm-protocol','brainstorm-demo-batch4','crew-protocol','crew-demo-batch5','room-protocol','room-demo-batch6','teach-protocol','teach-demo-batch7','memory-protocol','memory-demo-batch8','batch8-polish','debug-protocol','debug-demo-batch9','revert-protocol','revert-demo-batch10','eli5-preferences','eli5-demo-batch11','bsd-demo-batch12','wonderer-protocol','lens-wonderer-batch13','deep-plan-protocol','deep-plan-batch14']
+         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos','narrow-review','plan-demo-batch1','plan-demo-batch2','review-protocol','review-demo-batch3','brainstorm-protocol','brainstorm-demo-batch4','crew-protocol','crew-demo-batch5','room-protocol','room-demo-batch6','teach-protocol','teach-demo-batch7','memory-protocol','memory-demo-batch8','batch8-polish','debug-protocol','debug-demo-batch9','revert-protocol','revert-demo-batch10','eli5-preferences','eli5-demo-batch11','bsd-demo-batch12','wonderer-protocol','lens-wonderer-batch13','deep-plan-protocol','deep-plan-batch14','goal-work-batch15']
 
 def read(name):
     f=root/name
