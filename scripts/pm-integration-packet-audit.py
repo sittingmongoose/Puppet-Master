@@ -14,7 +14,7 @@ import hashlib
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Iterator
 
 # Also support the existing importlib-based harness entry point.
@@ -28,7 +28,6 @@ from pm_packet_audit_census import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "scripts" / "pm-integration-packet-audit.spec.json"
-DEFAULT_OUT = ROOT / "scratchpad" / "approval-gated-packet-audit-20260831-001"
 TOUCH_PATH = ROOT / "Plans" / "touch_closure.json"
 COMPLETED_REPORT_NAME = "audit_report.completed.json"
 EXPECTED_CASE_COUNT = LEGACY_CASE_COUNT  # Compatibility name for historical V1 harnesses only.
@@ -415,22 +414,73 @@ def touch_cases(spec: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, An
     }, cases)
 
 
+def load_corpora(spec: dict[str, Any]) -> tuple[dict[str, SliceCorpus], str]:
+    """Keep DOC IDs local to each custody; source groups remain globally unique."""
+    roots = spec.get("custody_roots")
+    if roots is None:
+        roots = {"legacy": spec.get("custody_root")}
+    if (not isinstance(roots, dict) or not roots
+            or any(not is_nonempty_string(key) or not is_nonempty_string(value)
+                   for key, value in roots.items())):
+        raise AuditError("custody_roots must map nonempty unique IDs to source directories")
+    default = spec.get("default_custody_id", "legacy")
+    if default not in roots:
+        raise AuditError("default_custody_id is not in custody_roots")
+    corpora = {}
+    for key, value in roots.items():
+        try:
+            path = Path(value)
+            # Explicit absolute custody inputs are retained as supplied. Legacy
+            # repository-relative locations must use the shared explicit mapper.
+            root = path if path.is_absolute() else resolve_evidence_input(ROOT, value)
+            corpora[key] = SliceCorpus(root)
+        except (EvidencePathError, OSError) as exc:
+            raise AuditError(f"{key}: {exc}") from exc
+    return corpora, default
+
+
+def apply_case_metadata(group: dict[str, Any], case: dict[str, Any]) -> None:
+    """Bind explicit shared scopes, with unambiguous source-ID area refinements."""
+    for key, value in group.get("case_metadata", {}).items():
+        if key in case["metadata"] and case["metadata"][key] != value:
+            raise AuditError(f"{group['group_id']}: fixed metadata contradicts source")
+        case["metadata"][key] = value
+    areas = {area for prefix, area in group.get("area_by_id_prefix", {}).items()
+             if case["case_id"].startswith(prefix)}
+    if len(areas) > 1:
+        raise AuditError(f"{group['group_id']}: ambiguous source area prefixes")
+    if areas:
+        area = next(iter(areas))
+        if case["metadata"].get("area") not in (None, "shared", area):
+            raise AuditError(f"{group['group_id']}: source area contradicts ID prefix")
+        case["metadata"]["area"] = area
+
+
 def build_manifest() -> dict[str, Any]:
     spec = load_json(SPEC_PATH)
-    try:
-        custody_root = resolve_evidence_input(ROOT, spec["custody_root"])
-    except EvidencePathError as exc:
-        raise AuditError(str(exc)) from exc
-    corpus = SliceCorpus(custody_root)
-    coverage = corpus.verify_all()
-    failures = list(coverage["failures"])
+    corpora, default_custody_id = load_corpora(spec)
+    corpus_coverage = {key: corpus.verify_all() for key, corpus in corpora.items()}
+    failures = [f"{key}: {failure}" for key, item in corpus_coverage.items() for failure in item["failures"]]
+    coverage = {
+        "document_count": sum(item["document_count"] for item in corpus_coverage.values()),
+        "slice_count": sum(item["slice_count"] for item in corpus_coverage.values()),
+        "unique_source_line_count": sum(item["unique_source_line_count"] for item in corpus_coverage.values()),
+        "corpora": corpus_coverage, "valid": not failures, "failures": list(failures),
+    }
     if failures:
         raise AuditError("packet custody is invalid: " + "; ".join(failures))
     groups = []
     all_refs: set[str] = set()
     for source_group in spec["source_groups"]:
+        custody_id = source_group.get("custody_id", default_custody_id)
+        if custody_id not in corpora:
+            raise AuditError(f"{source_group['group_id']}: unknown custody_id {custody_id!r}")
+        corpus = corpora[custody_id]
+        if source_group.get("document_id") not in corpus.documents:
+            raise AuditError(f"{source_group['group_id']}: unknown document in custody {custody_id}")
         cases = extract_cases(source_group, corpus)
         for case in cases:
+            apply_case_metadata(source_group, case)
             case["applicability"] = classify_case(source_group["group_id"], case, spec)
         identifiers = [case["source_identifier"] for case in cases]
         if len(identifiers) != len(set(identifiers)):
@@ -461,7 +511,11 @@ def build_manifest() -> dict[str, Any]:
             "case_content_sha256": sha256_values(
                 json.dumps(case, sort_keys=True, separators=(",", ":")) for case in cases
             ),
-            "source": corpus.document_summary(source_group["document_id"]),
+            "source": {
+                **corpus.document_summary(source_group["document_id"]),
+                "custody_id": custody_id, "custody_root": str(corpus.root),
+                "coverage_sha256": corpus.coverage_sha256,
+            },
             "cases": cases,
         })
     touch_summary, touches = touch_cases(spec)
@@ -493,7 +547,7 @@ def build_manifest() -> dict[str, Any]:
         "created_at": utc_now(),
         "spec_path": "scripts/pm-integration-packet-audit.spec.json",
         "spec_sha256": sha256_file(SPEC_PATH),
-        "custody_root": spec["custody_root"],
+        "custody_roots": {key: str(corpus.root) for key, corpus in corpora.items()},
         "source_coverage": coverage,
         "source_census_valid": not failures,
         "source_census_failures": failures,
@@ -631,6 +685,8 @@ def build_reference_review(manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def prepare(outdir: Path) -> dict[str, Any]:
+    if outdir.resolve().is_relative_to(ROOT.resolve()):
+        raise AuditError("raw packet workbooks require an explicit external output directory")
     if outdir.exists():
         raise AuditError(f"refusing to overwrite retained evidence directory: {outdir}")
     manifest = build_manifest()
@@ -646,7 +702,7 @@ def prepare(outdir: Path) -> dict[str, Any]:
         "created_at": utc_now(),
         "source_census_valid": manifest["source_census_valid"],
         "implementation_verdict": "not_run",
-        "manifest": manifest_path.relative_to(ROOT).as_posix(),
+        "manifest": str(manifest_path),
         "manifest_sha256": sha256_file(manifest_path),
         "case_count": manifest["case_count"],
         "group_count": manifest["group_count"],
@@ -663,7 +719,7 @@ def prepare(outdir: Path) -> dict[str, Any]:
         "prepare review chunks, collect case-by-case results, and merge them to "
         "`audit_report.completed.json`. Complete `reference-review-report.json`, then run:\n\n"
         "```sh\n"
-        f"python3 scripts/pm-integration-packet-audit.py validate --dir {outdir.relative_to(ROOT)}\n"
+        f"python3 scripts/pm-integration-packet-audit.py validate --dir {outdir}\n"
         "```\n\n"
         "Never overwrite or delete this directory before explicit owner approval. Create a new "
         "timestamped output directory when the source or Touch Closure freeze changes.\n",

@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 277
+        "True": 278
       },
-      "heading_count": 662,
+      "heading_count": 663,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -605,6 +605,7 @@
         "Plans/newtools.md",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md",
+        "Plans/touch_closure.json",
         "Plans/usage-feature.md",
         "future Assistant Chat @file autocomplete",
         "future Assistant Chat Teacher handoff affordance",
@@ -617,9 +618,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25284,
+      "line_count": 25321,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 460,
+      "plan_unit_count": 461,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1080,7 +1081,8 @@
         "ACD-457",
         "ACD-458",
         "ACD-459",
-        "ACD-460"
+        "ACD-460",
+        "ACD-461"
       ],
       "reasoning_tiers": [
         "high",
@@ -1409,12 +1411,13 @@
         "worktree_errors",
         "worktree_header_ui",
         "worktree_identity",
-        "worktree_storage"
+        "worktree_storage",
+        "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "f5513c64efa1971abdfd94949abf1543ec7ee54808f480ed00c2a67da3fa1796",
+      "sha256": "6bf649c57bc055f62507d520d529fd20c1e44c0f06e314fb8380880ca167f593",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 460
+        "accepted": 461
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1422,6 +1425,7 @@
         "constraint": 137,
         "decision": 6,
         "gui_requirement": 5,
+        "integration_contract": 1,
         "requirement": 303,
         "validation_rule": 2
       },
@@ -1436,6 +1440,9 @@
         "Future hidden-by-policy mention autocomplete no-leak test.",
         "Future permission prompt not suppressed by chat visibility setting test.",
         "PlanUnit YAML parse and identifier uniqueness",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/touch_closure.json",
         "RSP-ATOMIC-001",
         "RSP-ATOMIC-002",
         "RSP-ATOMIC-003",
@@ -1455,6 +1462,7 @@
         "future Chat shell-detail and reconnect fixtures",
         "future Chat work/advisory/disabled-control fixtures",
         "future GUI usage projection fixture suite",
+        "future native destination and title currentness tests",
         "future onboarding Teacher handoff copy fixture",
         "future registered Lens dispatch and stale-preview fixtures",
         "future skipped-provider Teacher degraded-state fixture",
@@ -2099,7 +2107,7 @@
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2058,
+      "line_count": 2060,
       "path": "Plans/Back_Seat_Driver.md",
       "plan_unit_count": 29,
       "plan_unit_ids": [
@@ -2168,7 +2176,7 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "6b0232d02c4b84adac08e08179fe41526399602f7756ca595d7ed9a4d413c823",
+      "sha256": "96b290f57baabfd348c1cbe407e98b0ea98f4696b2d60c6c10122c0617f83538",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29
@@ -5910,9 +5918,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 11,
-        "True": 70
+        "True": 71
       },
-      "heading_count": 163,
+      "heading_count": 164,
       "implementation_surfaces": [
         "Concepts/pm6-build/parts/12-html-side-panels.part.html",
         "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
@@ -5923,6 +5931,8 @@
         "Plans/LSPSupport.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/touch_closure.json",
         "future Backup Restore native owner",
         "future File Manager panel",
         "future File Manager snapshot browser and compare surfaces",
@@ -5930,9 +5940,9 @@
         "future editor viewer renderer",
         "future file tree renderer"
       ],
-      "line_count": 5074,
+      "line_count": 5113,
       "path": "Plans/FileManager.md",
-      "plan_unit_count": 81,
+      "plan_unit_count": 82,
       "plan_unit_ids": [
         "F-002",
         "F-003",
@@ -6014,13 +6024,15 @@
         "F-078",
         "F-079",
         "F-080",
-        "F-081"
+        "F-081",
+        "F-082"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "attachment_owner_split_or_false_contract_closure",
         "backup_snapshot_wrong_target_or_files_owner_leak",
         "file_manager_drift",
         "file_operation_conflict_drift",
@@ -6034,15 +6046,15 @@
         "filemanager_viewer_renderer_drift",
         "migration_lineage"
       ],
-      "sha256": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+      "sha256": "475b7caf333953b55140093950edc73b8eae379e5cbcb912d0c515565216b9a4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 81
+        "accepted": 82
       },
       "title": "File Manager & IDE-style Editor -- Plan",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "integration_contract": 1,
+        "integration_contract": 2,
         "requirement": 78
       },
       "validation_surfaces": [
@@ -6055,13 +6067,18 @@
         "Future keyboard-only tree navigation and accessibility exposure tests.",
         "Future remote/SSH file navigation no-leak tests.",
         "Plans/Backup_Restore_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json",
         "Plans/backup_restore_system_contracts.schema.json",
+        "Plans/touch_closure.json",
         "future Files snapshot topology FileSafe currentness reverse-route archive-consent and event-silence tests",
+        "future native attachment identity permission folder FileSafe and reverse-route fixtures",
         "manual FileManager cross-reference review",
         "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "scripts/pm-assistant-contract-check.py"
       ]
     },
     {
@@ -18044,9 +18061,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 13,
-        "True": 42
+        "True": 43
       },
-      "heading_count": 124,
+      "heading_count": 125,
       "implementation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Concepts/pm7-tools/systems_integration_source.py",
@@ -18077,9 +18094,9 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4566,
+      "line_count": 4670,
       "path": "Plans/Wiring_Matrix.md",
-      "plan_unit_count": 55,
+      "plan_unit_count": 56,
       "plan_unit_ids": [
         "WM-002",
         "WM-003",
@@ -18135,7 +18152,8 @@
         "WM-052",
         "WM-053",
         "WM-054",
-        "WM-055"
+        "WM-055",
+        "WM-056"
       ],
       "reasoning_tiers": [
         "high",
@@ -18152,6 +18170,7 @@
         "goal_command_wiring_gap",
         "missing_reverse_wiring_or_false_production_claim",
         "notification_wiring_gap",
+        "omitted_touch_or_false_whole_command_closure",
         "onboarding_fake_command_or_parallel_owner_wiring",
         "one_way_or_false_production_wiring",
         "owner_demotion_drift",
@@ -18167,10 +18186,10 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "5a1c5450b287216918fb3f3c9c123c326aedfef3e8949cf087e790060efd268f",
+      "sha256": "6ca27a8b1ded4d2afabba5699b417e0d2b7ecd4dae598f2d73cb0f0fef6fe313",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 55
+        "accepted": 56
       },
       "title": "Wiring Matrix (Canonical)",
       "unit_type_counts": {
@@ -18178,7 +18197,7 @@
         "constraint": 11,
         "generated_artifact_residual": 1,
         "production_wiring": 1,
-        "requirement": 33,
+        "requirement": 34,
         "validation_rule": 1,
         "wiring_contract": 6,
         "wiring_disposition": 1
@@ -18217,8 +18236,11 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm-assistant-contract-check.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py",
+        "scripts/pm_wiring_inventory.py",
+        "tests/test_pm_touch_closure_source.py",
         "tests/test_pm_ui_command_response.py"
       ]
     },
@@ -18490,7 +18512,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-10T23:51:56Z",
+  "generated_at_utc": "2026-09-11T00:08:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18499,12 +18521,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3339,
-      "True": 3116
+      "True": 3119
     },
-    "plan_unit_count": 6455,
+    "plan_unit_count": 6458,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6264,
+      "accepted": 6267,
       "retired": 182,
       "superseded": 9
     },
@@ -18551,7 +18573,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 42,
+      "integration_contract": 44,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -18571,7 +18593,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5149,
+      "requirement": 5150,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
