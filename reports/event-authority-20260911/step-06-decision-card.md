@@ -1,6 +1,6 @@
 # Decision EA-S6-001 — Compaction completion history and retention
 
-Status: awaiting Jared’s answer. Owners: Assistant Chat and Storage, with Shared Integration Runtime for replay. This is a proposal, not an applied decision.
+Status: approved by Jared on 2026-09-11 at 15:26:49.325818 UTC; owner contract application remains outstanding. Owners: Assistant Chat and Storage, with Shared Integration Runtime for replay.
 
 **Question:** Should the owners connect saved compaction completions to the existing focused-thread detail and replay path, and keep content-free completion receipts as permanent audit records?
 
@@ -19,9 +19,9 @@ Status: awaiting Jared’s answer. Owners: Assistant Chat and Storage, with Shar
 
 **Response choices:** Approve; Deny; Deny with changes; Ask a question.
 
-**Answer:** ____________________
+**Answer:** Approve.
 
-**Changes or question, if any:** ____________________
+**Clarification before approval:** Jared asked, “Does that have an impact on the assistant chat being able to search through thread history?” The answer preserved the existing requirements: retained history remains searchable by agents after compaction, compaction does not rewrite the canonical transcript, and permanent completion metadata does not retain or reconstruct deleted conversation content. The same proposal was re-presented and approved. Exact response chronology is recorded in [decision responses](decision-responses.jsonl).
 
 Approval authorizes owner planning and contract work only. It grants no runtime, WorkNodes, validator modification, or governance seal.
 
