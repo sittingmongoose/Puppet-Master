@@ -1,0 +1,364 @@
+{
+  "schema_id": "pm.packet_prepared_verification.v1",
+  "report_id": "PACKET-PREPARED-VERIFICATION-20260911",
+  "status": "integration_verified_with_explicit_open_baseline_and_admission_gates",
+  "tested_source_commit": "ab42e735d32c3e459feda0b797292f47070ae8ac",
+  "integrated_source_commit": "b09294e44b3e977d884a520d38f91da94dff3043",
+  "integrated_main": "8d4b5c2d31c11c008fb3656e30fc34e96e6dee15",
+  "scope": "Non-design packet/owner contract integration, prepared Browser payload contracts and conditional admission boundary; no native or visual implementation, no Browser event admission, no final packet-audit or governance closure.",
+  "preservation": {
+    "prepared_lineage_commit": "7db6a87c60",
+    "original_published_source_commit": "73f15d4269c18fc84b936108fb2b44f2ef433ce9",
+    "upstream_new_planunits_preserved_exactly": 47,
+    "prepared_new_planunits_preserved": 29,
+    "identifier_mapping_ref": "reports/packet-gap-closure-20260910/prepared-integration-20260911.json#/planunit_reference_remap",
+    "independent_review": "Read-only 7db + cc6..af6856d delta comparison to ab42 found zero parity failures. All upstream insertions/replacements and47 unit bodies are byte-preserved; all29 prepared unit bodies are preserved modulo Browser UF-102->UF-103.",
+    "last_rebase": "ab42 -> b092 adds only the exact11 upstream reports/jujutsu-research-2026-09-11/repair files. Every canonical, executable, schema, fixture, test and generated-index byte is unchanged; test evidence remains tied to ab42.",
+    "storage": "Exact prepared88 rows plus the exact upstream run_started_index_checkpoint row. The new family is upstream work, not Browser admission. Retention catalog24 unchanged.",
+    "governance": "No Concepts, Spec_Lock, auto_decisions, frozen governance evidence or readiness artifact delta is included."
+  },
+  "browser": {
+    "prepared": 53,
+    "admitted": 0,
+    "admission_complete": false,
+    "central_event_families": 40,
+    "central_registry_sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+    "positive_payload_cases": 53,
+    "negative_payload_cases": 576,
+    "conditional_command_bindings": 15,
+    "authority": "DL-046 applies both exact user answers to the frozen53-name scope. DL-045 membership is unchanged and disjoint. Per-family search, scoped absence, complete owner contracts, product gates, semantic checks, root review and individual Storage landings remain mandatory.",
+    "not_claimed": [
+      "Concrete missing binding definitions",
+      "Contract-depth completion",
+      "Native producer/replay safety",
+      "New retention/deletion choices",
+      "Runtime enablement",
+      "Global Event Authority clearance"
+    ]
+  },
+  "unit_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tests -p test_pm*.py -v",
+    "discovered": 455,
+    "run": 455,
+    "passed": 446,
+    "failures": 0,
+    "errors": 9,
+    "skipped": 0,
+    "exit_code": 1,
+    "unittest_seconds": 240.696,
+    "wall_seconds": 241.786,
+    "error_cause": "All9 errors occur in test_pm_pnc019_currentness.Pnc019CurrentnessTests.setUp because the unchanged historical Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json is absent. No assertion failure, fabricated receipt, test skip or currentness bypass.",
+    "source_stability": {
+      "head_unchanged": true,
+      "tracked_python_entries": 298,
+      "present_python": 287,
+      "absent_python": 11,
+      "tracked_json_entries": 4354,
+      "present_json": 4332,
+      "absent_json": 22,
+      "before_after_hash_inventories_identical": true
+    },
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/execution-summary.json",
+        "sha256": "131d1ffffe6da61014bef66ccb73debf884fed7dbd4e46e5de48e451397c0f87"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/stderr.log",
+        "sha256": "7da2dc0ed65990fa456c209dc7ff948f4cd550bd4be6e8e60a77efce27a4b294"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/discovery-inventory.json",
+        "sha256": "02efab374a9b01d549f93332869d5258d8d50176bba544ad7217972f3424d8b9"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/python-hashes-before.json",
+        "sha256": "c8202fa0ea6a2341abcd65b5968adcf2a4ced865bad4dadcbce567d5dcb986e4"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/python-hashes-after.json",
+        "sha256": "c8202fa0ea6a2341abcd65b5968adcf2a4ced865bad4dadcbce567d5dcb986e4"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/json-hashes-before.json",
+        "sha256": "0075c6d75cfad87769c271ac64d18049a446b94b26a7d581ed89ff6d1f1da973"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-unittest-20260911-smhDN5dy/json-hashes-after.json",
+        "sha256": "0075c6d75cfad87769c271ac64d18049a446b94b26a7d581ed89ff6d1f1da973"
+      }
+    ]
+  },
+  "standard_gates": {
+    "passed": 25,
+    "total": 36,
+    "status": "fail",
+    "generated_at_utc": "2026-09-11T18:55:00Z",
+    "failing_groups": [
+      {
+        "check": "json_syntax",
+        "failures": 1
+      },
+      {
+        "check": "lint_contractrefs",
+        "failures": 1
+      },
+      {
+        "check": "lint_path_refs",
+        "failures": 15
+      },
+      {
+        "check": "validate_audit_closure",
+        "failures": 201
+      },
+      {
+        "check": "validate_audit_status_index",
+        "failures": 1
+      },
+      {
+        "check": "validate_evidence",
+        "failures": 1448
+      },
+      {
+        "check": "validate_implementation_readiness",
+        "failures": 35
+      },
+      {
+        "check": "validate_plan_graph",
+        "failures": 1449
+      },
+      {
+        "check": "validate_plan_migration",
+        "failures": 180
+      },
+      {
+        "check": "validate_pm7_gui_fixtures",
+        "failures": 1
+      },
+      {
+        "check": "verify_spec_lock",
+        "failures": 26
+      }
+    ],
+    "interpretation": "Same11 broad open baseline groups, not an all-green governance claim. Counts reflect current sources, not old report restamps. Missing raw-capture/PM7 fixtures and historical paths, stale Spec Lock/graph/evidence/closure/migration/index/currentness state remain.",
+    "storage_baseline": "Upstream's new checkpoint makes89 families/67 materialized while the existing readiness validator still expects88/66. Actual tier counts are16 launch,70 later-GUI,3 migration versus existing16/71/1 expectations; runtime_resource_admission and observable_work_projection remain migration_only. These existing/new upstream discrepancies are reported, not repaired by changing readiness constants.",
+    "all_in_scope_checks_passed": [
+      "validate_new_contracts",
+      "validate_browser_event_admission",
+      "validate_testing_session_event_admission",
+      "validate_github_project_integration",
+      "validate_ui_command_response",
+      "validate_server_command_gap",
+      "validate_wiring_matrix",
+      "validate_touch_closure",
+      "check_shards"
+    ]
+  },
+  "derived_validation": {
+    "shards": {
+      "status": "pass",
+      "documents": 98,
+      "shards": 2204
+    },
+    "plan_index": {
+      "status": "pass",
+      "planunits": 6519,
+      "acceptance_units": 25002,
+      "node_readiness": "blocked_runtime_certification_incomplete",
+      "worknodes_created": false,
+      "nodeseeds_created": false
+    }
+  },
+  "wiring_accounting": {
+    "placements": 1142,
+    "unique_commands": 1078,
+    "touch_primary_in_wiring": 465,
+    "production_commands_outside_touch": 613,
+    "rows_with_request_and_result": 400,
+    "rows_missing_request_or_result": 742,
+    "scope": "Whole production-intent inventory; structural accounting, not semantic/native completion.400 pointer-bearing placements still require actual request/result/effect execution evidence;742 missing a request or result pointer remain explicit.",
+    "touch": {
+      "rows": 643,
+      "profiles": 133,
+      "action_kinds": {
+        "command": 466,
+        "command_alias": 65,
+        "presentation": 7,
+        "ui_action": 105
+      },
+      "dispositions": {
+        "blocked": 1,
+        "partial": 642
+      },
+      "open_residuals": 643,
+      "actionable_primary_commands": 465,
+      "with_production_wiring": 465,
+      "with_one_handler_identity": 465,
+      "blocked_primary_commands": 1,
+      "aliases": 65,
+      "alias_targets": 32,
+      "alias_peer_production_rows": 0,
+      "handler_statuses": {
+        "absent": 2,
+        "specified": 641
+      },
+      "wiring_statuses": {
+        "absent": 2,
+        "concept_simulated": 97,
+        "specified": 544
+      },
+      "exclusions": 58
+    },
+    "external_settings_dispositions": {
+      "canonical_target_count": 30,
+      "disposition_counts": {
+        "rejected_with_reason": 31,
+        "retired_bakeoff_only": 1,
+        "reuse_canonical_command": 41,
+        "superseded_by_typed_local_ui_action": 7
+      },
+      "manager_owner_action_count": 37,
+      "manager_registry_count": 38,
+      "named_projection_count": 3,
+      "non_actionable_source_count": 72,
+      "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
+      "required_touch_action_count": 69,
+      "source_sha256": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632",
+      "token_count": 80,
+      "typed_local_ui_action_count": 7
+    }
+  },
+  "formal_packet_audit": {
+    "status": "OPEN",
+    "census_valid": true,
+    "packet_cases": 5057,
+    "touch_cases": 8359,
+    "total_cases": 13416,
+    "touch_rows": 643,
+    "dimensions": 13,
+    "packet_groups": 69,
+    "total_groups_including_touch": 70,
+    "spec_sha256": "ba3d6e4e8f57c50c1d6ac04d76d1b771fdfa5e35fbbbac3899e2327349064cc5",
+    "touch_sha256": "61304e205b57641b05a359ff1bfb3795bb113c3e8d353441dcf01506a31be05b",
+    "completed_fresh_review": false,
+    "limits": "Census is not case-by-case review. Historical R4 is source-stale; provisional reviews are not automatically admitted or restamped. Settings/Onboarding/Tour visual work, native evidence and independent final acceptance remain open."
+  },
+  "verification_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-20260911-azL5T5/run-gates.json",
+      "sha256": "c4c9950601d9e2b56863cfa94239dd47e3f89ee3997ff8ab1b64dee4f70bd8c3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-20260911-azL5T5/touch-closure.json",
+      "sha256": "c91cd75443178055216fe3ec686dad632719e094b17420017df7930a1ddf4567"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-final-20260911-azL5T5/census.json",
+      "sha256": "3643a795ca3fbedf911b117dac93981b0c0f4d24425c865653da228e0867463d"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a"
+    },
+    {
+      "path": "Plans/browser_event_admission.json",
+      "sha256": "9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534"
+    },
+    {
+      "path": "Plans/browser_event_admission.schema.json",
+      "sha256": "7d40f58b94788bb7e90503d197ed93f0c287729acb1113140a5f29c71e0513b5"
+    },
+    {
+      "path": "Plans/browser_event_payloads.schema.json",
+      "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+    },
+    {
+      "path": "Plans/browser_event_admission_fixtures.json",
+      "sha256": "9a4052eac69b1e544c9c14d610b83025169e53ed0302f535d0505cf234cce032"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3"
+    },
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "3b42ad563a048eb635cc57e735186666c4cf91e59da9c2208cfd6504231a2a86"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "96d1c05d4fb0cf0e198f11b53a2a75c30b85f20bd894d585bd8074b4eab5b79f"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "65afb2c8432181f47b675f3f781eaa9676f9a8effa9ec434201288d37e021963"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "sha256": "7ceb20e33f7d4c893a4f99f501dcad5a1c3ce0f09f9d93cc71dcf45225afad08"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "036a874a84fad89827cc3f5851ddd994c67c5f534f69e0d75dcb46be2dbd7f70"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "1d238590ecc596cd5edf04ab25a9a5f4baa31845bcc888ff5fb7c93f707f7f67"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "sha256": "3c26eb6851a6e3085cffaf161b65199fc4d6132115a93d27fd6304066fe2965b"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "sha256": "ced41d91296811960e611ca01e3d58a9fb74f285f1dbefd7eebdf5c4caf8e21e"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "61304e205b57641b05a359ff1bfb3795bb113c3e8d353441dcf01506a31be05b"
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a"
+    },
+    {
+      "path": "Plans/source_control_contract_fixtures.json",
+      "sha256": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642"
+    },
+    {
+      "path": "scripts/pm-browser-event-admission.py",
+      "sha256": "3d1eb59125a70ddf3d38ef3414cfd19c26fc02b59cec695c82321f578ac3dc8c"
+    },
+    {
+      "path": "scripts/pm-touch-closure-verify.py",
+      "sha256": "7340f67677e4f8de3286a3d9552bfb78b473200153b479e32d5f2ba7c1b02a83"
+    },
+    {
+      "path": "scripts/pm-implementation-readiness.py",
+      "sha256": "7101cbd81f9c8670c20c2824f77db1708001ad36213a77d3f383aa5e42c4579f"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "fc6a67bc5f7e17f615f67369cfb80c538ce45b89b9be0bf9bb245d7473e9db2e"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "sha256": "02a143d036282a195e5b3f8338f7036e6118f9368421a507bfa65d973fce1d6d"
+    }
+  ],
+  "next_work": [
+    "Land this preparation independently of event admissions",
+    "Define/review/admit each Browser family separately under DL-046 only after its complete gates",
+    "Complete fresh evidence-backed formal case review and separate suite/aggregate verdicts",
+    "Keep independent visual, native-runtime and governance clearance explicit"
+  ]
+}
