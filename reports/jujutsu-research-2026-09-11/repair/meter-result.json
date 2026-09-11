@@ -1,0 +1,143 @@
+{
+  "status": "implemented_and_unit_tested_native_integration_not_proven",
+  "finished_at": "2026-09-11T18:28:20.342344+00:00",
+  "owned_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_watch.py",
+      "sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_policy.json",
+      "sha256": "75cf4023bf04940b8310c51ac0dcc16023eab38e9e6a50117740074da186cbf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/test_cost_watch_v2.py",
+      "sha256": "85c402a3567ccd8390b1ad5d23a028caea549966016c7edb330f60e1203a1250"
+    }
+  ],
+  "tests": {
+    "command": "python3 -m unittest -v test_cost_watch_v2.py",
+    "cwd": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol",
+    "passed": 20,
+    "failed": 0,
+    "coverage": [
+      "cold12until2fullyreconciledsamearmandstage",
+      "no_cross_arm_or_stage_pooling",
+      "captured_plus_live_admission_and_boundary_truncation",
+      "terminal_unresolved_not_live_or_charged",
+      "request40_and_seconds2400_durable_limits",
+      "repeated_totals_and_validated_new_usage_epochs",
+      "conflicting_receipt_identity_no_doublecount",
+      "late_exact_request_reconciliation",
+      "legacy_pricing_cache_and_auxiliary_categories",
+      "thread_and_process_locking",
+      "restart_persistence_and_failed_transaction_atomicity",
+      "historical_snapshot_totals_receipts_admissions_retries_reservations_unchanged",
+      "nonfinite_receipt_retained_unresolved",
+      "cross_job_native_epoch_replay_dedup_and_continuity",
+      "independent_epoch_and_legacy_job_identical_totals_still_charge",
+      "replayed_boundary_checks_current_time_and_cap"
+    ]
+  },
+  "historical_import_test": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/historical-meter-import-test.json",
+    "sha256": "425160d0c2f41f4bd88e272be34ed8fc017b59c6ac97008fef8a4621f475d90c",
+    "results": {
+      "premium": {
+        "captured_unchanged_usd": 39.71806599999998,
+        "historical_admissions": 4,
+        "original_hashes_unchanged": {
+          "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium-priced-usage.json": "0aa73715fd27c44519976fe8f090e2da9525a010ccadffce96ce037d1291b9fc",
+          "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium.json": "8288564634a14f14f0ff80585320009d0999f079eb792351483016c8235b5ad1"
+        },
+        "live_allowance_usd": 0,
+        "historical_reserved_usd": 107.55000000000001,
+        "unresolved_jobs": [
+          "J0002-implementation",
+          "J0003-history",
+          "J0004-implementation"
+        ],
+        "stage_allowance_and_fully_reconciled_samples": {
+          "compare": [
+            12.0,
+            0
+          ],
+          "discovery": [
+            12.0,
+            1
+          ],
+          "history": [
+            12.0,
+            0
+          ],
+          "implementation": [
+            12.0,
+            0
+          ],
+          "reconcile": [
+            12.0,
+            0
+          ]
+        }
+      },
+      "hybrid": {
+        "captured_unchanged_usd": 3.596462368000001,
+        "historical_admissions": 12,
+        "original_hashes_unchanged": {
+          "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid-priced-usage.json": "870694784daec81c42ed9185693cf03386f901bc33ebafe4e552f9de0a814b72",
+          "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid.json": "1d4e24b83788dd945c88f12928e4672e3a3da79893e5df8c9e62cba195693843"
+        },
+        "live_allowance_usd": 0,
+        "historical_reserved_usd": 35.85,
+        "unresolved_jobs": [
+          "J0012-reconcile"
+        ],
+        "stage_allowance_and_fully_reconciled_samples": {
+          "compare": [
+            12.0,
+            0
+          ],
+          "discovery": [
+            12.0,
+            1
+          ],
+          "history": [
+            0.21480552160000005,
+            5
+          ],
+          "implementation": [
+            0.21087530719999997,
+            5
+          ],
+          "reconcile": [
+            12.0,
+            0
+          ]
+        }
+      }
+    }
+  },
+  "api": {
+    "constructor": "Meter(path, cap=None, cheap_headroom=None, *, arm=None, clock=None)",
+    "reserve": "reserve(jid,adapter,phase=\"unknown\") -> bool",
+    "before": "request_boundary(jid,request_identity=None) -> bool; before_request alias",
+    "after": "after_request(jid,request_identity=None,*,reconciled=None) -> bool",
+    "observe": "observe(jid,route,payload) -> bool; exact payload request_identity recommended",
+    "terminal": "terminal(jid,outcome); retains prior budget_truncated status",
+    "history": "import_history(source_path,*,arm=None,stage_by_job=None,budget_path=None); import_baseline alias",
+    "global": "before_request(request_identity), after_request(request_identity,*,reconciled=None), callback(route,payload) from PM_COST_JOURNAL and PM_COST_JOB"
+  },
+  "limitations": [
+    "Native adapters must prove enforceable before-every-model-request boundaries; this meter alone does not prove those boundaries. No live campaign was run.",
+    "Captured upper-basis priced usage is not billed cash; in-flight allowances are estimates, not mathematical guarantees against overshoot.",
+    "The user-prescribed $12 cold allowance is retained although one historical premium discovery job cost $25.42344; that stage has only one eligible job and cannot use an average yet.",
+    "Every retry needs a new job/request identity. Repeated boundary identity is idempotent only while that request is pending and is not authorization to issue a duplicate model request.",
+    "Existing test_cost_watch.py remains unchanged v1 lineage and asserts superseded behavior; only explicit v2 test invocation is current.",
+    "No retrospective repricing or rescoring occurred. Original source/budget/result files were read only."
+  ],
+  "review_repairs": [
+    "Explicit native epoch receipt identity no longer includes local job ID; global cumulative epoch continuity survives a new local retry job.",
+    "Every repeated boundary identity rechecks current elapsed time, captured+live cap and unresolved usage before idempotent success.",
+    "Conflicting Codex duplicate-total last categories produce a durable unresolved gap."
+  ]
+}

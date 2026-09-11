@@ -1,0 +1,93 @@
+{
+  "original_protocol_files": [
+    {
+      "path": "adapters/codex_native.py",
+      "source_sha256": "4c95ccf06d33b929fd55bac9bcece51642faad65e7321e15e970b676c35c52cc"
+    },
+    {
+      "path": "adapters/omp_native.py",
+      "source_sha256": "233ba6b5f5d7e4a28fc0826d679e11399b69656e285f4eeef6782af090a12c40"
+    },
+    {
+      "path": "bounded_campaign.py",
+      "source_sha256": "f24162ca2e3f566abe6f524d3b78b34e2ccd673de3ae5460c406a56c4e7e2a2e"
+    },
+    {
+      "path": "child_transport.py",
+      "source_sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597"
+    },
+    {
+      "path": "cost_watch.py",
+      "source_sha256": "866f1f9bc3f6333d37e61347f5ffe525cf26cdf403ea4cee1703b55cb1febe34"
+    },
+    {
+      "path": "discovery_to_plan.py",
+      "source_sha256": "0009845be6b30791f495d930be0826bd0bafc2bb94029e88b21607c709df7e91"
+    },
+    {
+      "path": "freeze_protocol.py",
+      "source_sha256": "d13aa63aeac01a234516b63ee292b70bbd86f97b193fe3c354ed891d72bd7d22"
+    },
+    {
+      "path": "prepare_case.py",
+      "source_sha256": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302"
+    },
+    {
+      "path": "protocol/research_base.py",
+      "source_sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a"
+    },
+    {
+      "path": "research.py",
+      "source_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "research_shared_v3.py",
+      "source_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "test_bounded_campaign.py",
+      "source_sha256": "8f767e19b62dd19372c420d3f2954c300cfa2f27954f0c59491a57c333924482"
+    },
+    {
+      "path": "test_cost_watch.py",
+      "source_sha256": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37"
+    },
+    {
+      "path": "valuation.py",
+      "source_sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+    },
+    {
+      "path": "PRICING_BASIS.md",
+      "source_sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+    },
+    {
+      "path": "cost_policy.json",
+      "source_sha256": "c77700eb32b4af384b22e07e68d333cbe5c697a26ed6be4ac87867bb12ed12a8"
+    }
+  ],
+  "arms": {
+    "premium": {
+      "budget_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium.json",
+      "budget_sha256": "8288564634a14f14f0ff80585320009d0999f079eb792351483016c8235b5ad1",
+      "usage_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium-priced-usage.json",
+      "usage_sha256": "0aa73715fd27c44519976fe8f090e2da9525a010ccadffce96ce037d1291b9fc",
+      "historical_admissions": 4,
+      "historical_restarts": 0,
+      "captured_usage_usd": 39.71806599999998,
+      "legacy_unresolved_reservation_usd": 107.55000000000001,
+      "historical_runtime_timing_unchanged": true
+    },
+    "hybrid": {
+      "budget_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid.json",
+      "budget_sha256": "1d4e24b83788dd945c88f12928e4672e3a3da79893e5df8c9e62cba195693843",
+      "usage_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid-priced-usage.json",
+      "usage_sha256": "870694784daec81c42ed9185693cf03386f901bc33ebafe4e552f9de0a814b72",
+      "historical_admissions": 12,
+      "historical_restarts": 0,
+      "captured_usage_usd": 3.596462368000001,
+      "legacy_unresolved_reservation_usd": 35.85,
+      "historical_runtime_timing_unchanged": true
+    }
+  },
+  "status": "pass"
+}

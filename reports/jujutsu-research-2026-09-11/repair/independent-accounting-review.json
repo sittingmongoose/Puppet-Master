@@ -1,0 +1,190 @@
+{
+  "status": "pass_bounded_offline_accounting_recovery_review",
+  "generated_at": "2026-09-11T18:31:44.568428+00:00",
+  "scope": "Independent offline accounting/recovery review; no paid models, no native launch, no implementation files changed by reviewer.",
+  "native_boundary_status": "Not reviewed in this assignment; deliberate fail-closed lack of native capability is not a regression and this report does not certify live readiness.",
+  "files_checked": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_watch.py",
+      "sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_policy.json",
+      "sha256": "75cf4023bf04940b8310c51ac0dcc16023eab38e9e6a50117740074da186cbf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/bounded_campaign.py",
+      "sha256": "b6451e0c1fc73a22f89776e931c080597253fd9e969a2ed573600e65107d49e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/discovery_to_plan.py",
+      "sha256": "891d8e57f0b76c0bdc45a09692819b3c38735f2fddc65ba4ec930a6de59316fe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/test_cost_watch_v2.py",
+      "sha256": "85c402a3567ccd8390b1ad5d23a028caea549966016c7edb330f60e1203a1250"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/test_bounded_campaign_v2.py",
+      "sha256": "61c05dd3477b947644e0c0716ef9a0bc31a41724bc4cecbda2cb2c32e5b57d96"
+    }
+  ],
+  "tests": {
+    "supplied_initial": {
+      "command": "python3 -m unittest -v test_cost_watch_v2.py test_bounded_campaign_v2.py",
+      "passed": 25,
+      "failed": 0
+    },
+    "independent_initial": {
+      "count": 6,
+      "passed": 2,
+      "failed": 4,
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/independent-test-results.txt",
+        "sha256": "fab24f3088584c956fc5f85ecd50650ab38a3ac7bca6eb2facbe6899852569c9"
+      }
+    },
+    "independent_after_meter_fixes_expanded": {
+      "count": 7,
+      "passed": 5,
+      "failed": 2,
+      "script": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/test_accounting_recovery_independent.py",
+        "sha256": "3ea8344fe67fb39085d4cc7ffa53559315f57889a0e2f682a9a5e322059f432a"
+      },
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/independent-test-results-expanded.txt",
+        "sha256": "be0443db06cd4f08e89d7fa8d6010a97c02e53ecd3263860079cbf0a857fdafc"
+      }
+    },
+    "independent_final_attempt1": {
+      "count": 8,
+      "passed": 8,
+      "failed": 0,
+      "script": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/test_accounting_recovery_independent.py",
+        "sha256": "adb0e29bf1c57a67bb591ef1a0fa3b374175a0a4a3270e0a36cc378f7578df5b"
+      },
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/independent-test-results-final-attempt1.txt",
+        "sha256": "8e976812181e3093bf933280d98bc9e5a22c18d35da174db5f86ee2e1a6cd277"
+      },
+      "reservation_crash_test_adaptation": "Original counterexample preserved in initial log/probe. Updated SIGKILL stub uses new required durable admission_intent before Meter.reserve, matching repaired launch order."
+    },
+    "supplied_final_attempt1": {
+      "count": 30,
+      "passed": 30,
+      "failed": 0,
+      "command": "python3 -m unittest -v test_cost_watch_v2.py test_bounded_campaign_v2.py",
+      "cwd": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol",
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/supplied-test-results-final-attempt1.txt",
+        "sha256": "114a1587324c380bcd910abcc7b98e9e36d1dce5f1dc2dcd0ed71f40adf38a30"
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "AR-01",
+      "severity": "P1",
+      "status": "fixed_independently_verified",
+      "title": "Reservation-only crash prevents recovery",
+      "files": [
+        "bounded_campaign.py:158",
+        "bounded_campaign.py:291",
+        "bounded_campaign.py:80"
+      ],
+      "why": "Meter.reserve is persisted before Budget.admit. SIGKILL in that interval leaves no budget row. Recovery never visits the meter-only job; its $12 remains falsely live, and next_job_id reuses the occupied ID so the next reservation raises duplicate monetary admission.",
+      "repro": "test_sigkill_after_meter_reserve_before_budget_admit_is_recoverable; actual subprocess SIGKILL after durable reserve and before budget admit",
+      "expected": "Reconcile both journals, terminalize or explicitly cancel orphan admissions, retain counters according to their actual dispatch/admission state, and never reuse a monetary identity.",
+      "resolution": "Scheduler now durably records admission intent before monetary reserve. Actual SIGKILL at intent+reserve but before Budget.admit recovers one interrupted admission and frees allowance; next ID is fresh. Unexplained meter entries without intent fail closed."
+    },
+    {
+      "id": "AR-02",
+      "severity": "P1",
+      "status": "fixed_independently_verified",
+      "title": "Codex native receipt was charged again under retry job identity",
+      "files": [
+        "cost_watch.py:_receipt"
+      ],
+      "why": "Original candidate keyed Codex receipt identity by job ID as well as epoch and total. Same native epoch/request/total replayed under retry job captured $0.02 for one $0.01 native receipt.",
+      "repro": "test_exact_codex_receipt_replayed_on_retry_not_charged_twice",
+      "resolution": "Explicit native epoch identity now global; own counterexample passes."
+    },
+    {
+      "id": "AR-03",
+      "severity": "P2",
+      "status": "fixed_independently_verified",
+      "title": "Repeated pending boundary bypassed elapsed and cap checks",
+      "files": [
+        "cost_watch.py:request_boundary"
+      ],
+      "why": "Original pending-ID branch returned True before current time, unresolved and cap checks; same pending ID at elapsed 2400 seconds was still authorized.",
+      "repro": "test_pending_boundary_replay_rechecks_elapsed_limit",
+      "resolution": "Checks now precede replay success; own counterexample passes."
+    },
+    {
+      "id": "AR-04",
+      "severity": "P2",
+      "status": "fixed_independently_verified",
+      "title": "Conflicting Codex duplicate usage silently validated",
+      "files": [
+        "cost_watch.py:_receipt"
+      ],
+      "why": "Original dedup early return accepted same epoch/total with contradictory last categories and left no unresolved record.",
+      "repro": "test_codex_conflicting_duplicate_total_stays_unresolved uses total.inputTokens=1000 and replay last.inputTokens=2000",
+      "resolution": "Duplicate categories validation now rejects and retains unresolved; own counterexample passes."
+    },
+    {
+      "id": "AR-05",
+      "severity": "P1",
+      "status": "fixed_independently_verified",
+      "title": "Campaign silently creates zero-captured meter despite historical budget",
+      "files": [
+        "bounded_campaign.py:campaign"
+      ],
+      "why": "A valid continuation Budget imported from original premium history does not require its monetary baseline. Missing priced journal auto-creates captured=0/history=None and admits J0005 despite original captured $39.718066, allowing lifetime cap to reset if initialization is incomplete.",
+      "repro": "test_campaign_rejects_missing_lifetime_meter_import_before_admission; uses real historical Budget and real campaign with dispatch replaced by a raising local stub",
+      "expected": "Before any new admission require matching, hash-bound imported monetary history for the budget arm; reject absent or mismatched baseline.",
+      "resolution": "campaign now rejects missing monetary journal/history before admission and validates history identity. Own missing-baseline campaign counterexample passes."
+    },
+    {
+      "id": "AR-06",
+      "severity": "P2",
+      "status": "fixed_independently_verified_for_verified_waits",
+      "title": "Wall clock consumes human waiting as processing time",
+      "files": [
+        "bounded_campaign.py:Budget.check",
+        "bounded_campaign.py:interrupted_outcome",
+        "bounded_campaign.py:timing"
+      ],
+      "why": "Budget.check computes time.time minus continuation_started_at; interrupted outcome uses recovery time minus admission. Scheduler-down/human waiting consumes four-hour allowance and is represented as job elapsed, although the brief says processing time excludes human waiting.",
+      "repro": "Static code evidence; continuation start + four hours denies even when most of interval was human waiting. Existing scheduler tests explicitly assert this wall-clock behavior.",
+      "expected": "Durably track authorized processing elapsed without resetting it, retain down/unknown intervals separately and do not fabricate execution time for downtime.",
+      "resolution": "Durable verified_human_waits intervals are validated, unioned and excluded. Independent restart test preserves original start and computes 14000 processing seconds from 15000 elapsed minus 1000 documented wait. Unknown downtime remains conservatively charged; parent explicitly required no invented human-wait exclusions."
+    }
+  ],
+  "verified": [
+    "Same-arm/stage cold allowance $12 until two fully reconciled samples; no cross-arm pooling (supplied tests independently run).",
+    "Lifetime cap identity $250 premium/$100 hybrid and 12 additional admissions/14400-second start retention (supplied tests independently run).",
+    "Normal actual SIGKILL with real Meter, Budget and flow.finish retains .03 captured then fresh retry reaches .035; completed receipt bytes unchanged and no duplicate receipt entries.",
+    "Unknown interrupted request remains unresolved and uncharged; no live allowance remains for terminal interrupted job.",
+    "Repeated recovery does not duplicate terminal receipt or finish effects.",
+    "Original premium and hybrid raw histories unchanged after import/recovery, original counters preserved, hybrid J0012 elapsed remains null."
+  ],
+  "limitations": [
+    "Offline stubs do not establish provider request-boundary enforcement or live transport cancellation.",
+    "Independent test covers actual SIGKILL with real Meter/Budget/finish; worker and transport are stubs.",
+    "Pass is restricted to listed files/hashes and reviewed counterexamples. Native adapter work is concurrent and outside this pass."
+  ],
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/probe.py",
+      "sha256": "42687abf77fd7202596b58523a360838565320d8644958da2a38546fa89b927d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/missing-history-guard-repro.json",
+      "sha256": "0f03b420c38b9176c275f1ece704d0298ff7cae835954cf1fe80c96fb1c29853"
+    }
+  ]
+}

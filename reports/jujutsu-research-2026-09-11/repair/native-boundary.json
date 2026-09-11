@@ -1,0 +1,252 @@
+{
+  "adapter": "codex",
+  "protocol_version": 2,
+  "status": "independently_reviewed_transport_boundary",
+  "runtime_version": "0.153.4",
+  "runtime_sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "adapter_sha256": "b95349cef7c37f40cd04f2e52ffdecda897797f0e811aea0fa0865eb0d5ab2e7",
+  "proxy_sha256": "b79b6c69590136df91a1c441bfdc5062f2edd73c94e5242e5ff7390f464f6b9f",
+  "meter_sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9",
+  "test_sha256": "3502a92dd895620d5db085f1f2e912ac719104ec53cc587719ca275003ecdb76",
+  "max_model_requests": 40,
+  "max_job_seconds": 2400,
+  "admitted_phases": [
+    "reconcile",
+    "compare"
+  ],
+  "denied_before_dispatch": true,
+  "all_dispatch_routes_verified": true,
+  "independently_reviewed": true,
+  "live_campaign_allowed": true,
+  "route_scope": "Only the configured Codex native OpenAI provider in the fixed reconcile/compare stages. Main sampling, native Goal continuations, HTTP retries, stream retries and native remote compaction v2 all reach the loopback gate. Unknown POST paths/models and WebSockets are rejected without forwarding. Apps, plugins, hooks, multi-agent and web search are disabled.",
+  "upstream_origin": "https://chatgpt.com",
+  "upstream_prefix": "/backend-api/codex",
+  "transport_overrides": [
+    "private custom provider ID with native provider name OpenAI",
+    "requires_openai_auth=true",
+    "supports_websockets=false",
+    "enable_request_compression=false"
+  ],
+  "tests": {
+    "passed": 15,
+    "command": "python3 -m unittest test_native_boundaries_v2 -q",
+    "paid_calls": 0
+  },
+  "limitations": [
+    "Native remote compaction dispatch and usage reconciliation were observed, but the synthetic response lacked the encrypted compaction output item; native compaction completion was therefore not certified by that fixture. The proxy forwards real provider response bytes unchanged.",
+    "HTTP failures without usage stop further forwarding with unresolved usage; their retries are denied rather than assigned zero usage.",
+    "Same preserved pricing basis; usage-derived allowances are operational bounds, not guarantees against the cost of an already admitted request.",
+    "OMP remains unavailable and is excluded by the immutable review-stage allowlist."
+  ],
+  "evidence": [
+    {
+      "probe": "final-forty-001",
+      "network_isolation": "bwrap --unshare-net",
+      "status": "offline_probe_finished",
+      "gate": {
+        "forward_admitted": 40,
+        "denied_before_dispatch": 1,
+        "usage_receipts": 40,
+        "stop_reason": "model_request_limit",
+        "stopped": true,
+        "upstream_origin": "http://127.0.0.1:37297",
+        "upstream_prefix": "/v1"
+      },
+      "native_compaction_starts": 0,
+      "native_compaction_fixture_errors": [],
+      "paths": {
+        "/v1/responses": 40
+      },
+      "references": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-forty-001/summary.json",
+          "sha256": "f2d1880b146e367497f18c0b08f0f0db24b94a808308138c17e9d85133789c2e"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-forty-001/native.events.json",
+          "sha256": "69fc796ec2fe314bc9dc0d90a29fcdc10eb139ab1d5ff9703a6e5b7dc1cdafe0"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-forty-001/stderr.txt",
+          "sha256": "dbff313e9ff0edd3dc63c4f6a5f3773e008b137aa3e133e6dc3d81fd4f56546d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-forty-001/probe.script.py",
+          "sha256": "2be74122b27861f6a650848e231e56eecfb8e3e011d7d6ce16a0a4422885fc47"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-forty-001/transport-boundary.jsonl",
+          "sha256": "52f2c63f471405ddcfda19603893e4bd01c5e74f3ce35f631dee58df48c1f2d5"
+        }
+      ]
+    },
+    {
+      "probe": "final-compact-001",
+      "network_isolation": "bwrap --unshare-net",
+      "status": "offline_probe_finished",
+      "gate": {
+        "forward_admitted": 3,
+        "denied_before_dispatch": 0,
+        "usage_receipts": 3,
+        "stop_reason": null,
+        "stopped": false,
+        "upstream_origin": "http://127.0.0.1:35619",
+        "upstream_prefix": "/v1"
+      },
+      "native_compaction_starts": 2,
+      "native_compaction_fixture_errors": [
+        "Error running remote compact task: Fatal error: remote compaction v2 expected exactly one compaction output item, got 0 from 1 output items",
+        "Error running remote compact task: Fatal error: remote compaction v2 expected exactly one compaction output item, got 0 from 1 output items"
+      ],
+      "paths": {
+        "/v1/responses": 3
+      },
+      "references": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-compact-001/summary.json",
+          "sha256": "2a60202eeea59793a2655d1424fe212fc9a0b83516dea3f20c27e459f4966a2b"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-compact-001/native.events.json",
+          "sha256": "553b62e937054e95c095accf119a8a94ba3b4a20ebdf8c1abaebe3e50e1b99ae"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-compact-001/stderr.txt",
+          "sha256": "0c5cc37f8a6dabeece4ba78a91695e95a1f0635a3b3ec3503a06c793357ccbd2"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-compact-001/probe.script.py",
+          "sha256": "2be74122b27861f6a650848e231e56eecfb8e3e011d7d6ce16a0a4422885fc47"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-compact-001/transport-boundary.jsonl",
+          "sha256": "f8b43d2ada3dc66722de4aeb856a9d5a42b18bf2478861065d83edc58d8b1a03"
+        }
+      ]
+    },
+    {
+      "probe": "final-http_retry-001",
+      "network_isolation": "bwrap --unshare-net",
+      "status": "offline_probe_finished",
+      "gate": {
+        "forward_admitted": 1,
+        "denied_before_dispatch": 1,
+        "usage_receipts": 0,
+        "stop_reason": "unresolved_usage",
+        "stopped": true,
+        "upstream_origin": "http://127.0.0.1:45741",
+        "upstream_prefix": "/v1"
+      },
+      "native_compaction_starts": 0,
+      "native_compaction_fixture_errors": [],
+      "paths": {
+        "/v1/responses": 1
+      },
+      "references": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-http_retry-001/summary.json",
+          "sha256": "e7e7ced5741e6c481167f02d375ba08ebdf9867a1e4eaa668ae0635d31d2c528"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-http_retry-001/native.events.json",
+          "sha256": "2aeea91d09b165f750699347d6ef79c04729dfb9b320f25b05e89c7fa50701c5"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-http_retry-001/stderr.txt",
+          "sha256": "effe431f53821f41eb1b36fd55a35464a07cf55b56a3b67db8fe1f8488c83c95"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-http_retry-001/probe.script.py",
+          "sha256": "2be74122b27861f6a650848e231e56eecfb8e3e011d7d6ce16a0a4422885fc47"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-http_retry-001/transport-boundary.jsonl",
+          "sha256": "acd19b2b5061d7e53d106ed296c41f7e0cac1fae9d96488f3a2cc1325db8bf50"
+        }
+      ]
+    },
+    {
+      "probe": "final-stream_retry-001",
+      "network_isolation": "bwrap --unshare-net",
+      "status": "offline_probe_finished",
+      "gate": {
+        "forward_admitted": 40,
+        "denied_before_dispatch": 1,
+        "usage_receipts": 40,
+        "stop_reason": "model_request_limit",
+        "stopped": true,
+        "upstream_origin": "http://127.0.0.1:46187",
+        "upstream_prefix": "/v1"
+      },
+      "native_compaction_starts": 0,
+      "native_compaction_fixture_errors": [],
+      "paths": {
+        "/v1/responses": 40
+      },
+      "references": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-stream_retry-001/summary.json",
+          "sha256": "e535f9c69274d4fd31a75a68d8a0cecee4c71ad5fa4dd09351c2ad8acc25044d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-stream_retry-001/native.events.json",
+          "sha256": "72c9cc6abdc9853d5130b376ad2f5b1e24b2ee108f3b24cbac8551f4a08d15eb"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-stream_retry-001/stderr.txt",
+          "sha256": "87c25bd9316c317729d681312280bca001788f029c6c9b5b54037abcf8c01381"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-stream_retry-001/probe.script.py",
+          "sha256": "2be74122b27861f6a650848e231e56eecfb8e3e011d7d6ce16a0a4422885fc47"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-stream_retry-001/transport-boundary.jsonl",
+          "sha256": "a7edf713e92bc402bfe9291894259d4c8d8910b0b6719df9d84cb3385e6429a2"
+        }
+      ]
+    },
+    {
+      "probe": "final-adapter-001",
+      "network_isolation": "bwrap --unshare-net",
+      "status": "budget_truncated",
+      "gate": {
+        "forward_admitted": 40,
+        "denied_before_dispatch": 1,
+        "usage_receipts": 40,
+        "stop_reason": "model_request_limit",
+        "stopped": true,
+        "upstream_origin": "http://127.0.0.1:38013",
+        "upstream_prefix": "/v1"
+      },
+      "native_compaction_starts": 0,
+      "native_compaction_fixture_errors": [],
+      "paths": {
+        "/v1/responses": 40
+      },
+      "references": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-adapter-001/summary.json",
+          "sha256": "0f798e2a63a135d5a1a3d4e58973f839fd4a4aa80febb834a57a291b29f4182b"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-adapter-001/probe.script.py",
+          "sha256": "477d8e81ecf1e0fdd3ddd940146565ee16a3836a59a8930434b291021c6b1a34"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/final-adapter-001/transport-boundary.jsonl",
+          "sha256": "8aaa698ba6256bf9c92c262e229fb4a4cb8329a476e435e09d17369422bf6ef3"
+        }
+      ]
+    }
+  ],
+  "created_at_utc": "2026-09-11T18:45:59Z",
+  "installed_route_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/native-boundary-evidence/attempt-2/installed-runtime-targets.json",
+    "sha256": "be0d3fa4aeda568f886b1d0dd733fe15b9692ca6e8823bef2e61838cf28401ed"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/final-delta-review.json",
+    "sha256": "9457f6cb858578b090506b87a1c841c23bfb63e452d5e5d3adf2955dcebd4703"
+  }
+}

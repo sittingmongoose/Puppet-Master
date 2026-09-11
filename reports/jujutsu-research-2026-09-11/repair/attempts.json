@@ -1,0 +1,180 @@
+{
+  "attempts": [
+    {
+      "phase": "repair",
+      "attempt": 1,
+      "attempt_start": "2026-09-11T18:11:45.382113+00:00",
+      "max_attempt_seconds": 1200,
+      "max_restarts": 2,
+      "restart_count": 0,
+      "status": "checkpoint_native_transport_remaining",
+      "source_protocol": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol",
+      "source_files": [
+        {
+          "path": "adapters/codex_native.py",
+          "source_sha256": "4c95ccf06d33b929fd55bac9bcece51642faad65e7321e15e970b676c35c52cc"
+        },
+        {
+          "path": "adapters/omp_native.py",
+          "source_sha256": "233ba6b5f5d7e4a28fc0826d679e11399b69656e285f4eeef6782af090a12c40"
+        },
+        {
+          "path": "bounded_campaign.py",
+          "source_sha256": "f24162ca2e3f566abe6f524d3b78b34e2ccd673de3ae5460c406a56c4e7e2a2e"
+        },
+        {
+          "path": "child_transport.py",
+          "source_sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597"
+        },
+        {
+          "path": "cost_watch.py",
+          "source_sha256": "866f1f9bc3f6333d37e61347f5ffe525cf26cdf403ea4cee1703b55cb1febe34"
+        },
+        {
+          "path": "discovery_to_plan.py",
+          "source_sha256": "0009845be6b30791f495d930be0826bd0bafc2bb94029e88b21607c709df7e91"
+        },
+        {
+          "path": "freeze_protocol.py",
+          "source_sha256": "d13aa63aeac01a234516b63ee292b70bbd86f97b193fe3c354ed891d72bd7d22"
+        },
+        {
+          "path": "prepare_case.py",
+          "source_sha256": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302"
+        },
+        {
+          "path": "protocol/research_base.py",
+          "source_sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a"
+        },
+        {
+          "path": "research.py",
+          "source_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+        },
+        {
+          "path": "research_shared_v3.py",
+          "source_sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+        },
+        {
+          "path": "test_bounded_campaign.py",
+          "source_sha256": "8f767e19b62dd19372c420d3f2954c300cfa2f27954f0c59491a57c333924482"
+        },
+        {
+          "path": "test_cost_watch.py",
+          "source_sha256": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37"
+        },
+        {
+          "path": "valuation.py",
+          "source_sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+        },
+        {
+          "path": "PRICING_BASIS.md",
+          "source_sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+        },
+        {
+          "path": "cost_policy.json",
+          "source_sha256": "c77700eb32b4af384b22e07e68d333cbe5c697a26ed6be4ac87867bb12ed12a8"
+        }
+      ],
+      "cap_usd": 40,
+      "instructions": "No live campaign before independent repaired-protocol testing and versioning.",
+      "source_copy_completed_at": "2026-09-11T18:14:04.296797+00:00",
+      "deadline_at": "2026-09-11T18:31:45.382113+00:00",
+      "last_code_change_at": "2026-09-11T18:30:46Z",
+      "checkpoint_at": "2026-09-11T18:32:05.485844+00:00",
+      "checkpoint_files": [
+        {
+          "path": "PRICING_BASIS.md",
+          "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+        },
+        {
+          "path": "adapters/codex_native.py",
+          "sha256": "caab44a989f8f12c225e2c852ed27ca4e3a6836f6cf3e94b961309eae207e911"
+        },
+        {
+          "path": "adapters/omp_native.py",
+          "sha256": "94eec40faa223be0989157e04ac19f8562bef19c0bbf2147bf070b181fb16806"
+        },
+        {
+          "path": "bounded_campaign.py",
+          "sha256": "b6451e0c1fc73a22f89776e931c080597253fd9e969a2ed573600e65107d49e8"
+        },
+        {
+          "path": "child_transport.py",
+          "sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597"
+        },
+        {
+          "path": "cost_policy.json",
+          "sha256": "75cf4023bf04940b8310c51ac0dcc16023eab38e9e6a50117740074da186cbf1"
+        },
+        {
+          "path": "cost_watch.py",
+          "sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9"
+        },
+        {
+          "path": "discovery_to_plan.py",
+          "sha256": "891d8e57f0b76c0bdc45a09692819b3c38735f2fddc65ba4ec930a6de59316fe"
+        },
+        {
+          "path": "freeze_protocol.py",
+          "sha256": "d13aa63aeac01a234516b63ee292b70bbd86f97b193fe3c354ed891d72bd7d22"
+        },
+        {
+          "path": "prepare_case.py",
+          "sha256": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302"
+        },
+        {
+          "path": "protocol/research_base.py",
+          "sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a"
+        },
+        {
+          "path": "research.py",
+          "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+        },
+        {
+          "path": "research_shared_v3.py",
+          "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+        },
+        {
+          "path": "test_bounded_campaign.py",
+          "sha256": "8f767e19b62dd19372c420d3f2954c300cfa2f27954f0c59491a57c333924482"
+        },
+        {
+          "path": "test_bounded_campaign_v2.py",
+          "sha256": "61c05dd3477b947644e0c0716ef9a0bc31a41724bc4cecbda2cb2c32e5b57d96"
+        },
+        {
+          "path": "test_cost_watch.py",
+          "sha256": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37"
+        },
+        {
+          "path": "test_cost_watch_v2.py",
+          "sha256": "85c402a3567ccd8390b1ad5d23a028caea549966016c7edb330f60e1203a1250"
+        },
+        {
+          "path": "test_native_boundaries_v2.py",
+          "sha256": "db93ec129c43f9ae79ba2dd8470b4fe418c2243d3cd4d976997268cbc0816cc1"
+        },
+        {
+          "path": "valuation.py",
+          "sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+        }
+      ],
+      "checkpoint_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair/attempt-001",
+      "findings": "Meter/recovery fixes tested; independent retest pending; native transport prototype route proved but production gate remains unverified."
+    },
+    {
+      "phase": "repair",
+      "attempt": 2,
+      "attempt_start": "2026-09-11T18:32:05.485844+00:00",
+      "deadline_at": "2026-09-11T18:52:05.485844+00:00",
+      "max_attempt_seconds": 1200,
+      "max_restarts": 2,
+      "restart_count": 1,
+      "status": "completed_reviewed_and_sealed",
+      "cap_usd": 40,
+      "phase_usage_resets": false,
+      "scope": "Complete production Codex request gate and independently validate repairs. Continuation stage allowlist reconciliation/comparison under review; no livecampaign.",
+      "completed_at": "2026-09-11T18:48:32.791111+00:00"
+    }
+  ]
+}

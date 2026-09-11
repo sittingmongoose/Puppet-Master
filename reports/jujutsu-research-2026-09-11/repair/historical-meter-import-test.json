@@ -1,0 +1,74 @@
+{
+  "premium": {
+    "captured_unchanged_usd": 39.71806599999998,
+    "historical_admissions": 4,
+    "original_hashes_unchanged": {
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium-priced-usage.json": "0aa73715fd27c44519976fe8f090e2da9525a010ccadffce96ce037d1291b9fc",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/premium.json": "8288564634a14f14f0ff80585320009d0999f079eb792351483016c8235b5ad1"
+    },
+    "live_allowance_usd": 0,
+    "historical_reserved_usd": 107.55000000000001,
+    "unresolved_jobs": [
+      "J0002-implementation",
+      "J0003-history",
+      "J0004-implementation"
+    ],
+    "stage_allowance_and_fully_reconciled_samples": {
+      "compare": [
+        12.0,
+        0
+      ],
+      "discovery": [
+        12.0,
+        1
+      ],
+      "history": [
+        12.0,
+        0
+      ],
+      "implementation": [
+        12.0,
+        0
+      ],
+      "reconcile": [
+        12.0,
+        0
+      ]
+    }
+  },
+  "hybrid": {
+    "captured_unchanged_usd": 3.596462368000001,
+    "historical_admissions": 12,
+    "original_hashes_unchanged": {
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid-priced-usage.json": "870694784daec81c42ed9185693cf03386f901bc33ebafe4e552f9de0a814b72",
+      "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid.json": "1d4e24b83788dd945c88f12928e4672e3a3da79893e5df8c9e62cba195693843"
+    },
+    "live_allowance_usd": 0,
+    "historical_reserved_usd": 35.85,
+    "unresolved_jobs": [
+      "J0012-reconcile"
+    ],
+    "stage_allowance_and_fully_reconciled_samples": {
+      "compare": [
+        12.0,
+        0
+      ],
+      "discovery": [
+        12.0,
+        1
+      ],
+      "history": [
+        0.21480552160000005,
+        5
+      ],
+      "implementation": [
+        0.21087530719999997,
+        5
+      ],
+      "reconcile": [
+        12.0,
+        0
+      ]
+    }
+  }
+}

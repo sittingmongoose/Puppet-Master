@@ -1,0 +1,115 @@
+{
+  "status": "PASS_REVIEWED_FIXED_CODEX_TRANSPORT_VARIANT",
+  "at": "2026-09-11T18:47:27.235883+00:00",
+  "scope": "Prior independent accounting/recovery plus continuation preparer, review-only phases and allowance watcher delta. Native approval pending final frozen candidate.",
+  "prior_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/accounting-recovery-findings.json",
+    "sha256": "8f07eeabd45f3d3e1f2d2af3e59e950453018f627e01e8c1cc427b9c9317ae3e"
+  },
+  "files_checked": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/prepare_continuation.py",
+      "sha256": "5f932bd93f1a220d691ecc84549289814313e52983e328eb7fbdedb024185fdf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/bounded_campaign.py",
+      "sha256": "18427f38096c9dc5220f4f9ac6c827bb6e8c9840316e9046fe791f562e1bee2c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_watch.py",
+      "sha256": "f0f43a3c4e6dc7d028991e9184077f83f3e6c01948ad5e6b93bbc80fe4f6cbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/cost_policy.json",
+      "sha256": "75cf4023bf04940b8310c51ac0dcc16023eab38e9e6a50117740074da186cbf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/discovery_to_plan.py",
+      "sha256": "891d8e57f0b76c0bdc45a09692819b3c38735f2fddc65ba4ec930a6de59316fe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/refresh_allowance.py",
+      "sha256": "2a07941fa5726456c66d2bf374c0c78abc1ed5e7ab5228733587609dd6a0a994"
+    }
+  ],
+  "tests": {
+    "preparer": {
+      "pass": 3,
+      "fail": 0,
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/test_preparer_independent.py",
+        "sha256": "92bfaad44679f8426156fa5c14f727c13092044a45202fc9cd0a2fd1db8ee7de"
+      },
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/preparer-test-results.txt",
+        "sha256": "ff5ee69cecea60a4db3a1e379c4de14c65095e58f13fcbf3e8dec2284289497c"
+      }
+    },
+    "watcher": {
+      "pass": 2,
+      "fail": 0,
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/allowance-watcher-stub-results.json",
+        "sha256": "6d1b58e191ef6c101ffe47a2f3afa0ef84de88b750ada90266318084067490c0"
+      }
+    }
+  },
+  "verified": [
+    "Both arms preserve copied artifact bytes, original config, historical counters and null elapsed.",
+    "Stage does not activate grants; activation imports monetary baseline; existing-start rejection preserves start/counters.",
+    "Mutated historical copy blocks activation.",
+    "Only reconciliation/comparison admitted, both Astra xhigh; OMP and wrong effort rejected.",
+    "Watcher copies extractor summary with 90-second freshness; repair phase forbids launch."
+  ],
+  "native_boundary": "Independent narrow review passes for exact reachable Codex variant only; no OMP route admitted. Operational gate remains closed until parent seals matching reviewed proof and continuation allowance.",
+  "actual_arm_activations": 0,
+  "limitations": [
+    "Preparer gate calls were stubbed; this verifies preservation/start semantics, not native gate readiness.",
+    "Watcher tested against temporary extractor stubs, not rerun against actual accounting files."
+  ],
+  "native_review": {
+    "proof": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/native-boundary-proof.json",
+      "sha256": "ff2ab9be15ab32284835dedbc449ba6c41f9059a365a1764621794fc2353db22"
+    },
+    "source_hashes": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/adapters/codex_native.py",
+        "sha256": "b95349cef7c37f40cd04f2e52ffdecda897797f0e811aea0fa0865eb0d5ab2e7"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/adapters/transport_gate.py",
+        "sha256": "b79b6c69590136df91a1c441bfdc5062f2edd73c94e5242e5ff7390f464f6b9f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/test_native_boundaries_v2.py",
+        "sha256": "3502a92dd895620d5db085f1f2e912ac719104ec53cc587719ca275003ecdb76"
+      }
+    ],
+    "unit_tests": {
+      "passed": 15,
+      "failed": 0,
+      "output": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/review/native-final-test-results.txt",
+        "sha256": "42698eac657b1d1bfb3773b7c65805bbcf1cabb791d0031787afc228ed42aa7a"
+      }
+    },
+    "evidence_hashes_checked": 23,
+    "evidence_hash_failures": 0,
+    "reviewed_behavior": [
+      "Every physical model POST durably admitted before upstream connection; serial dispatch; 40 accepted, request41 denied.",
+      "Native Goal continuation and production adapter integration demonstrated 40 durable usage receipts and budget_truncated.",
+      "HTTP retry after missing usage denied unresolved; stream retry passes through request count.",
+      "Native remote compaction v2 dispatch crossed same gate and reconciled usage.",
+      "WebSockets and request compression disabled; apps/plugins/hooks/multi-agent/web search disabled; unknown model/path rejected."
+    ],
+    "scope": "Pinned runtime0.153.4 hash56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da; Astra xhigh; reconciliation/comparison only.",
+    "limitations": [
+      "Synthetic native compaction completion FAILED because encrypted output item was absent. Review accepts transport admission/usage evidence only and does not certify successful compaction.",
+      "No live provider invocation or actual arm activation occurred in review.",
+      "Final receipt retained independently_reviewed=false during review; parent may seal exact reviewed hashes.",
+      "Already admitted in-flight request cost can exceed estimated allowance; no mathematical spend guarantee claimed."
+    ]
+  },
+  "stop": "Review ended immediately on parent-reported repair expenditure39.713/40; no further tests or engineering authorized."
+}

@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-11T18:34:50.515911+00:00",
+  "status": "offline_scheduler_tests_passed_native_launch_blocked",
+  "test_command": "python3 protocol/test_bounded_campaign_v2.py",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.498s\n\nOK\n",
+  "test_count": 11,
+  "sha256": {
+    "bounded_campaign.py": "18427f38096c9dc5220f4f9ac6c827bb6e8c9840316e9046fe791f562e1bee2c",
+    "test_bounded_campaign_v2.py": "0a83b5f6b62f7a524f217486abcef090fd523b01a5d54428a88f7112a8e57570"
+  },
+  "limits": {
+    "new_admissions_per_arm": 12,
+    "new_seconds_per_arm": 14400,
+    "job_seconds": 2400,
+    "max_attempts_per_logical_and_lead_stage_including_history": 2,
+    "additional_restarts": 2,
+    "workers": 3,
+    "batch_chars": 10000,
+    "batch_max_leads": 3,
+    "premium_lifetime_cap_usd": 250,
+    "hybrid_lifetime_cap_usd": 100,
+    "continuation_non_arm_cap_usd": 60,
+    "admitted_phases": [
+      "reconcile",
+      "compare"
+    ],
+    "review_route": {
+      "adapter": "codex",
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    }
+  },
+  "verified": [
+    "explicit history baseline retains original raw counters and policy",
+    "hard SIGKILL followed by interrupted receipt, retained notes/captured usage, pending retry under same counters",
+    "completed receipt bytes and completion count unchanged after restart",
+    "PID reuse guard and owned orphan cleanup",
+    "admission-before-workspace interruption receipt without invalid job directory",
+    "reviews before extra studies",
+    "12-admission cap drains accepted jobs and preserves pending comparisons",
+    "unavailable native capability cannot be bypassed with gate boolean",
+    "new continuation allowance does not inherit old 24h deadline",
+    "durable reserved admission intent rolls forward exactly once after scheduler loss",
+    "missing monetary baseline rejected before admission and imported snapshot/budget binding enforced",
+    "closed verified human wait intervals are unioned and excluded from processing time",
+    "identical review-only immutable phase whitelist for both arms; researcher roles preserved, studies remain pending",
+    "exact original Astra xhigh codex review route rejects adapter/model/effort substitutions",
+    "native proof requires current codex adapter, transport proxy and runtime hashes; OMP not admitted"
+  ],
+  "limitations": [
+    "No live campaign launched. Native synchronous request boundary unproven and gate fails closed.",
+    "Full campaign tests use offline fake dependency renderer/meter/worker; SIGKILL test uses actual subprocesses with stub work.",
+    "Unverified downtime remains charged; only explicit closed verified human-wait records exclude processing time.",
+    "True SIGKILL at reservation-to-budget gap is under independent review; local test verifies durable roll-forward state and existing real SIGKILL test remains passing."
+  ]
+}
