@@ -12,7 +12,7 @@
   "batch_characters": 10000,
   "batch_max_leads": 3,
   "adjudication_started": false,
-  "pricing_basis": "Preserved September 8 standard tier; user confirmed no Fast sessions. Captured API-equivalent valuation and retained liability are separate; cash bill unknown.",
+  "pricing_basis": "Preserved September 8 basis: Astra standard API-equivalent, combined with DeepSeek Go allowance valuation for Hybrid. User confirmed no Fast sessions. Captured valuation, retained liability and unknown cash billing remain separate.",
   "arms": {
     "premium": {
       "terminal": {
@@ -68,7 +68,6 @@
         "history:cost_stopped": 1,
         "implementation:partial": 1
       },
-      "captured_api_equivalent_upper_usd": 39.71806599999998,
       "outstanding_liability_usd": 107.55000000000001,
       "actual_cash_usd": null,
       "coverage": {
@@ -90,7 +89,8 @@
         "sha256": "4ebda0a8186e66778ed90ee351575ca1fd4b6280188d98512d60bf74bebcf101",
         "all_file_count": 24589,
         "copied_report_lead_handoff_count": 196
-      }
+      },
+      "captured_priced_upper_usd": 39.71806599999998
     },
     "hybrid": {
       "terminal": {
@@ -210,7 +210,6 @@
         "history:completed": 5,
         "reconcile:interrupted_unknown": 1
       },
-      "captured_api_equivalent_upper_usd": 3.596462368000001,
       "outstanding_liability_usd": 35.85,
       "actual_cash_usd": null,
       "coverage": {
@@ -234,7 +233,8 @@
         "sha256": "c82706748195f8a34a36f1ead0a40abb042c33f8758b1d6ed7335f9ff7222d2a",
         "all_file_count": 22312,
         "copied_report_lead_handoff_count": 242
-      }
+      },
+      "captured_priced_upper_usd": 3.596462368000001
     }
   }
 }

@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "at": "2026-09-11T14:12:21.304296+00:00",
+  "script": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/build_comparison.py",
+    "sha256": "46bf9f769c6e21ab401f517f959f179dd7ab2b4fdc5eab47ec25c47958477c9d"
+  },
+  "synthetic_cases": 9,
+  "passed": 9,
+  "failed": 0,
+  "evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/script-review/synthetic-results-v3.json",
+    "sha256": "1b0e0b2bbf9dfde8600307cedf0f61ef091ca064439eb2b73857b357bd581870"
+  },
+  "reproducer": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/script-review/reproduce_v3.py",
+    "sha256": "de3cee2fd31ada7436bf87359eb3d5918daf7f5be4a3badf3a2d09272e9f2b21"
+  },
+  "resolved_findings": [
+    "C01",
+    "C02",
+    "C03",
+    "C03B",
+    "C04",
+    "C05"
+  ],
+  "remaining_findings": [],
+  "scope": "Existing nine synthetic sealed fixtures only; no new exploration, no real finding documents read, no real comparison execution. Confirms positive attribution and rejection gates including current source byte tampering."
+}
