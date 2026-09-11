@@ -1,7 +1,12 @@
 {
-  "schema_id": "pm.integration_packet_audit_spec.v1",
-  "schema_version": "1.0.0",
-  "custody_root": "scratchpad/approval-gated-touch-closure-packet-custody-20260831-001",
+  "schema_id": "pm.integration_packet_audit_spec.v2",
+  "schema_version": "2.0.0",
+  "default_custody_id": "legacy",
+  "custody_roots": {
+    "legacy": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody",
+    "forge_backup_tsnet_20260901": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/forge-backup-tsnet-custody-20260901",
+    "onboarding_tour_20260903": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/onboarding-tour-20260903/custody"
+  },
   "source_groups": [
     {
       "group_id": "settings_base_audit",
@@ -293,6 +298,180 @@
       "document_id": "DOC-0228",
       "extractor": "nonempty_prose",
       "expected_count": 2
+    },
+    {
+      "group_id": "sep01_forge_backup_requirements", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0040",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 132,
+      "description_fields": ["title", "domain", "owner_role", "contract_path", "requirement", "acceptance"]
+    },
+    {
+      "group_id": "sep01_forge_backup_acceptance", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0027",
+      "extractor": "json_objects", "identifier_field": "scenario_id", "expected_count": 67,
+      "description_fields": ["title", "kind", "setup", "expected", "execution_status"]
+    },
+    {
+      "group_id": "sep01_forge_backup_actions", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0031",
+      "extractor": "json_objects", "identifier_field": "action_id", "expected_count": 168,
+      "description_fields": ["candidate_command_id", "label", "owner_role", "mode", "result_contract", "error_contract", "event_or_receipt", "availability_owner", "progress_owner", "idempotency_recovery", "detail"]
+    },
+    {
+      "group_id": "sep01_baseline_preservation", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0030",
+      "extractor": "json_objects", "identifier_field": "source_requirement_id", "expected_count": 243,
+      "description_fields": ["source_domain", "source_requirement_sha256", "disposition"]
+    },
+    {
+      "group_id": "sep01_forge_provider_profiles", "suite": "egolite_browser_scm_origin",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0038",
+      "extractor": "json_objects", "identifier_field": "profile_id", "expected_count": 13,
+      "description_fields": ["label", "local_vcs", "git_transport_target", "review_vocabulary", "automation_service", "hosting_integration", "authentication", "notes", "test_status"]
+    },
+    {
+      "group_id": "sep01_backup_destinations", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0029",
+      "extractor": "json_objects", "identifier_field": "destination_kind", "expected_count": 11,
+      "description_fields": ["label", "engine_transport_reference", "test_canary_policy", "runtime_test_status"]
+    },
+    {
+      "group_id": "sep01_auth_profiles", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0028",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 10,
+      "description_fields": ["service", "flow", "owner_location", "critical_boundary", "requirement_ref"]
+    },
+    {
+      "group_id": "sep01_dry_components", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0033",
+      "extractor": "json_objects", "identifier_field": "family", "expected_count": 5,
+      "description_fields": ["owner"]
+    },
+    {
+      "group_id": "sep01_gui_state_fixtures", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0034",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 12,
+      "description_fields": ["title", "route", "state"]
+    },
+    {
+      "group_id": "sep01_migrations", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0035",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 14,
+      "description_fields": ["old", "new", "scope", "safety", "requirement_ref"]
+    },
+    {
+      "group_id": "sep01_panel_sections", "suite": "egolite_browser_scm_origin",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0036",
+      "extractor": "json_objects", "identifier_field": "section_id", "expected_count": 28,
+      "description_fields": ["panel", "label", "condition", "behavior", "requirement_ref", "primary_candidate_command"]
+    },
+    {
+      "group_id": "sep01_owner_consumer_matrix", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0037",
+      "extractor": "json_objects", "identifier_field": "owner_role", "expected_count": 20,
+      "description_fields": ["owner_candidate", "change_scope"]
+    },
+    {
+      "group_id": "sep01_requirement_test_mapping", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0039",
+      "extractor": "json_objects", "identifier_field": "requirement_id", "expected_count": 132,
+      "description_fields": ["specification_acceptance", "additional_test_owner_requirement", "runtime_status"]
+    },
+    {
+      "group_id": "sep01_tsnet_requirements", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0064",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 20,
+      "description_fields": ["domain", "requirement", "replaces"]
+    },
+    {
+      "group_id": "sep01_tsnet_command_tokens", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0062",
+      "extractor": "command_token_set", "minimum_count": 17
+    },
+    {
+      "group_id": "sep01_tsnet_owner_deltas", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0063",
+      "extractor": "json_objects", "identifier_field": "owner", "expected_count": 15,
+      "description_fields": ["delta"]
+    },
+    {
+      "group_id": "sep01_tsnet_failures_and_performance", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0059",
+      "extractor": "markdown_obligation", "minimum_count": 15
+    },
+    {
+      "group_id": "sep01_tsnet_negative_requirements", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0060",
+      "extractor": "nonempty_prose", "minimum_count": 10
+    },
+    {
+      "group_id": "sep01_security_performance_failures", "suite": "server_wan_backup",
+      "custody_id": "forge_backup_tsnet_20260901", "document_id": "DOC-0017",
+      "extractor": "nonempty_prose", "expected_count": 11
+    },
+    {
+      "group_id": "sep03_newbie_first_requirements", "suite": "onboarding_doctor",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0037",
+      "extractor": "json_objects", "identifier_field": "id", "expected_count": 49,
+      "description_fields": ["text"], "case_metadata": {"area": "shared"},
+      "area_by_id_prefix": {
+        "FLOW-": "onboarding", "COPY-": "onboarding", "COMMIT-": "onboarding",
+        "PROV-": "onboarding", "FREE-": "onboarding", "TOUR-": "tour", "DOC-": "doctor"
+      }
+    },
+    {
+      "group_id": "sep03_onboarding_doctor_acceptance", "suite": "onboarding_doctor",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0027",
+      "extractor": "json_objects", "identifier_field": "scenario_id", "expected_count": 36,
+      "description_fields": ["title", "status"], "case_metadata": {"area": "shared"}
+    },
+    {
+      "group_id": "sep03_onboarding_doctor_actions", "suite": "onboarding_doctor",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0028",
+      "extractor": "json_objects", "identifier_field": "candidate_command_id", "expected_count": 34,
+      "description_fields": ["label", "owner", "onboarding_when", "side_effect_class"],
+      "case_metadata": {"area": "shared"}
+    },
+    {
+      "group_id": "sep03_doctor_check_fields", "suite": "doctor",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0029",
+      "extractor": "json_leaf_lines", "minimum_count": 30
+    },
+    {
+      "group_id": "sep03_provider_onboarding_profiles", "suite": "onboarding",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0031",
+      "extractor": "json_objects", "identifier_field": "id", "minimum_count": 8,
+      "description_fields": ["label", "adapter", "normal_login", "login", "primary_action"]
+    },
+    {
+      "group_id": "sep03_newbie_flow_detail", "suite": "onboarding",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0002",
+      "extractor": "nonempty_prose", "minimum_count": 30
+    },
+    {
+      "group_id": "sep03_draft_copy_commit_detail", "suite": "onboarding",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0003",
+      "extractor": "nonempty_prose", "minimum_count": 20
+    },
+    {
+      "group_id": "sep03_postproject_provider_detail", "suite": "onboarding",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0004",
+      "extractor": "nonempty_prose", "minimum_count": 30
+    },
+    {
+      "group_id": "sep03_guided_tour_rebuild_detail", "suite": "guided_tour",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0005",
+      "extractor": "nonempty_prose", "minimum_count": 20
+    },
+    {
+      "group_id": "sep03_demo_copy_detail", "suite": "guided_tour",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0006",
+      "extractor": "nonempty_prose", "minimum_count": 40
+    },
+    {
+      "group_id": "sep03_acceptance_impacts_detail", "suite": "onboarding_doctor",
+      "custody_id": "onboarding_tour_20260903", "document_id": "DOC-0007",
+      "extractor": "nonempty_prose", "minimum_count": 20, "case_metadata": {"area": "shared"}
     }
   ],
   "retired_bakeoff_cases": {

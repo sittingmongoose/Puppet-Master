@@ -203,6 +203,7 @@ class WholeCommandAccountingTests(unittest.TestCase):
         original_load = gate.load_json
         baseline = original_load(matrix_path)
         mutations = [("cmd.actions.pin", "excluded_command_has_peer_production_wiring"),
+                     ("cmd.chat.add_file_reference", "excluded_command_has_peer_production_wiring"),
                      ("cmd.chat.revert", "command_has_no_sole_handler_identity")]
         for cid, expected_error in mutations:
             altered = copy.deepcopy(baseline)
@@ -225,6 +226,72 @@ class WholeCommandAccountingTests(unittest.TestCase):
         revert = next(c for c in report["commands"] if c["command_id"] == "cmd.chat.revert")
         self.assertEqual(revert["sole_declared_handlers"], ["handlers::chat::revert"])
         self.assertEqual(report["wiring_row_count"], sum(len(c["wiring_rows"]) for c in report["commands"]))
+
+
+class BoundedGapRepairInventoryTests(unittest.TestCase):
+    def test_exact_owner_table_adds_only_38_partial_commands(self):
+        admitted = validator.gap_repair_inventory()
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        profiles = {p["profile_id"]: p for p in registry["profiles"]}
+        rows = {r[3]: r for r in registry["rows"]}
+        self.assertEqual(len(admitted), 38)
+        self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
+        self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
+        self.assertNotIn("cmd.bsd.set", admitted)
+        self.assertEqual(len(rows), 644)
+        self.assertEqual(len(profiles), 131)
+        for command, (profile_id, owner, unit) in admitted.items():
+            with self.subTest(command=command):
+                self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
+                profile = profiles[profile_id]
+                self.assertEqual((profile["owner_plan"], profile["plan_unit"]), (owner, unit))
+                self.assertEqual(profile["handler_status"], "specified")
+                self.assertEqual(profile["wiring_status"], "specified")
+                self.assertIn("Machine request/result/error schema materialization", profile["production_or_simulation"])
+                self.assertTrue(all(profile[field].endswith("#" + unit)
+                                    for field in ("dry_contract_ref", "payload_schema_ref", "result_schema_ref", "error_schema_ref")))
+
+    def test_unrelated_catalog_or_prose_cannot_expand_the_gap_roster(self):
+        expected = validator.gap_repair_inventory()
+        original = validator.read
+        def changed(path):
+            value = original(path)
+            return value + "\n| `cmd.unrelated.synthetic` | unrelated |\n" if path in {
+                "Plans/Wiring_Matrix.md", "Plans/UI_Command_Catalog.md"} else value
+        with mock.patch.object(validator, "read", side_effect=changed):
+            self.assertEqual(validator.gap_repair_inventory(), expected)
+
+    def test_duplicate_or_omitted_inventory_rows_fail_closed(self):
+        original = validator.read
+        text = original("Plans/Wiring_Matrix.md")
+        row = next(line for line in text.splitlines() if line.startswith("| `cmd.bsd.configure` | `TCP-GAP-"))
+        for replacement in ("", row + "\n" + row, row.replace("TCP-GAP-001", "invalid-profile")):
+            changed = text.replace(row, replacement)
+            with self.subTest(replacement=replacement), mock.patch.object(
+                    validator, "read", side_effect=lambda path: changed if path == "Plans/Wiring_Matrix.md" else original(path)):
+                with self.assertRaises(ValueError):
+                    validator.gap_repair_inventory()
+
+    def test_missing_primary_command_cannot_be_replaced_by_prose(self):
+        original = validator.read
+        def changed(path):
+            value = original(path)
+            if path == "Plans/UI_Command_Catalog.md":
+                value = "\n".join(line for line in value.splitlines()
+                                  if not line.startswith("| `cmd.bsd.configure` |"))
+            return value
+        with mock.patch.object(validator, "read", side_effect=changed), self.assertRaisesRegex(ValueError, "primary catalog"):
+            validator.gap_repair_inventory()
+
+    def test_bsd_mode_reuses_existing_machine_contract_refs(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        profile = next(p for p in registry["profiles"] if p["profile_id"] == "TCP-BSD")
+        self.assertEqual(sum(r[3] == "cmd.bsd.set" for r in registry["rows"]), 1)
+        for field, name in (("payload_schema_ref", "back_seat_driver_mode_set_request"),
+                            ("result_schema_ref", "back_seat_driver_mode_set_result"),
+                            ("error_schema_ref", "command_error")):
+            self.assertEqual(profile[field], "Plans/shared_runtime_command_contracts.schema.json#/$defs/" + name)
+            self.assertIsNone(validator.validate_repository_ref(profile[field]))
 
 
 if __name__ == "__main__":
