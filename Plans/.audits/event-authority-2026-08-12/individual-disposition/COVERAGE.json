@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.individual_disposition_coverage.v1",
-  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
+  "generated_at_utc": "2026-09-11T15:12:51.572607+00:00",
   "ledger_rows": 321,
   "unique_event_types": 321,
   "provisional_count": 2,
@@ -27,7 +27,7 @@
   "keep_registered_count": 2,
   "alias_bucket_count": 12,
   "unresolved_bucket_count": 0,
-  "note": "Plans/Decision_Log.md#DL-039 Step 5: 54 receipt-bound holding rows, 2 registered/provisional August rows, and 1 blocked compaction escalation restored. Remaining 252 CPU and 12 alias lines unchanged. Depth remains open.",
+  "note": "Plans/Decision_Log.md#DL-039 Step 9 interim: genuine A8 application provenance replaces forged claims on exactly 252 CPU rows; existing KEEP_QUARANTINED classifications/counts and all other rows remain unchanged. The 252 remain counted, not registered, and await individual owner-batched final outcomes. Depth and seal remain incomplete.",
   "keep_quarantined_count": 306,
   "quarantined_not_admitted_bucket_count": 54
 }

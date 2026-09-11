@@ -7,7 +7,7 @@
   ],
   "working_bucket": "confirmed_persisted_unregistered",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_crashed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -131,5 +131,21 @@
   "provisional": false,
   "quality_notes": [
     "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
-  ]
+  ],
+  "applied_at_utc": "2026-09-11T15:12:51.572607+00:00",
+  "phase1_application": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "J248-VETO-BATCH-252",
+    "owner_response": {
+      "chosen_option": "CONFIRM_ALL_QUARANTINE_NO_ADMIT",
+      "decided_by": "Jared",
+      "recorded_at_utc": "2026-09-11T00:49:25.665050+00:00",
+      "source": "jared_chat_2026-09-10"
+    },
+    "step": 9,
+    "phase": "interim_stance_application",
+    "outcome": "KEEP_QUARANTINED_COUNTED_NOT_REGISTERED",
+    "author_task": "/root/step03_holding_bucket",
+    "report": "reports/event-authority-20260911/step-09-interim-application.json"
+  }
 }

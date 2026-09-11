@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.census_adjudication_coverage.v1",
-  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
+  "generated_at_utc": "2026-09-11T15:12:51.572607+00:00",
   "ledger": "census-adjudication/LEDGER.jsonl",
   "total_rows": 528,
   "category_counts": {
@@ -29,5 +29,5 @@
       "closed-world-census/rejected-lexical/FALSE_LEXICAL_RESTORE.json"
     ]
   },
-  "note": "Plans/Decision_Log.md#DL-039 Step 5: registered_keep=39, persisted_unregistered_quarantine=253, quarantined_not_admitted=54; provisional August2 and blocked compaction retain depth gaps. Denominator is open."
+  "note": "Plans/Decision_Log.md#DL-039 Step 9 interim: application provenance refreshed for exactly 252 persisted_unregistered_quarantine rows under genuine A8. All category counts and other 276 rows are unchanged. Counted is not registered; no final campaign outcomes or depth/denominator closure are claimed."
 }
