@@ -1,0 +1,60 @@
+{
+  "status": "failed_live_qualification_campaign_disabled",
+  "version": "jujutsu-continuation-v3-20260911",
+  "freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/protocol/freeze.json",
+    "sha256": "df5e8ace4832d511862a9c5b85bc96589a37beaa023fef598bf4c37d49d72a87"
+  },
+  "immutable_source_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/version-003",
+  "files": {
+    "adapters/codex_native.py": "807d21b80bf7565eae84dd27e0c23be8d842ffa0b0ff750bec8db5d811d25ce6",
+    "adapters/omp_native.py": "94eec40faa223be0989157e04ac19f8562bef19c0bbf2147bf070b181fb16806",
+    "adapters/transport_gate.py": "f288a956868a81a4d25af68dfb7554102107a1fbce774b7768f6da457f3cc11a",
+    "bounded_campaign.py": "6298805404b76716f116a7e4178b775f30bf718d19394ee86f95a5dd140bc6ca",
+    "child_transport.py": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597",
+    "cost_watch.py": "590be9fa40fa0b8efcaf5b0692437ac8fc721be87c8120caca1ad96faa4e90f7",
+    "discovery_to_plan.py": "891d8e57f0b76c0bdc45a09692819b3c38735f2fddc65ba4ec930a6de59316fe",
+    "freeze_protocol.py": "d13aa63aeac01a234516b63ee292b70bbd86f97b193fe3c354ed891d72bd7d22",
+    "prepare_case.py": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302",
+    "prepare_continuation.py": "ffd18fdb648b5824eb8d577dc23d837011de4bc88987baa45583963b1aa2a488",
+    "protocol/research_base.py": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a",
+    "research.py": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+    "research_shared_v3.py": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2",
+    "test_bounded_campaign.py": "8f767e19b62dd19372c420d3f2954c300cfa2f27954f0c59491a57c333924482",
+    "test_bounded_campaign_v2.py": "0a83b5f6b62f7a524f217486abcef090fd523b01a5d54428a88f7112a8e57570",
+    "test_cost_watch.py": "5b2c2466ba6a63339179a41cdac4275080e8dce1a13f05f4cdf0fb38d639ee37",
+    "test_cost_watch_v2.py": "f823e6dac3c8b1b5ca1809232172233f9a47941733f2a34d85a63e920defa368",
+    "test_native_boundaries_v2.py": "a217a0036c0e27d9c19f084ffe97e358f9c7d5966ffae2a01cc099e67c9268ac",
+    "test_native_boundaries_v3.py": "4ff04fd73a745a60d6311d3c846d5f2351ad0d76517ced1729757de90fb4199d",
+    "test_resume_grant_v3.py": "cfeb763b7b12b3a89f5c74708fbe1b79521c1de5f4478a95485839030088b69d",
+    "valuation.py": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930",
+    "PRICING_BASIS.md": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d",
+    "cost_policy.json": "75cf4023bf04940b8310c51ac0dcc16023eab38e9e6a50117740074da186cbf1"
+  },
+  "authorization": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/authorization-and-attempt.json",
+    "sha256": "a2040e4682892ea0fae1c1f2dcb013b12dd493b440be3dd27d371b9733e2e767"
+  },
+  "qualification": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/native-qualification/qualification.json",
+    "sha256": "2656181362c681a50887a5f34ee34e426cdad79ba05043f98be03087cbf43198"
+  },
+  "offline_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/review/offline-final-review.json",
+    "sha256": "5ff56dee1866a0833537527b30788fd8841ba93046b151f8911e8d72c8723528"
+  },
+  "attempt_number": 3,
+  "restart_count": 2,
+  "attempt_start": "2026-09-11T19:17:20.042537+00:00",
+  "deadline": "2026-09-11T19:37:20.042537+00:00",
+  "engineering_closed": true,
+  "campaign_launch_allowed": false,
+  "new_arm_admissions": 0,
+  "additional_premium_grant_applied": false,
+  "authorized_additional_premium_admissions_unused": 12,
+  "hybrid_additional_admissions_unused": 12,
+  "historical_budget_files_mutated": false,
+  "preserved_original_premium_continuation_start": 1789152688.500512,
+  "historical_unknown_usage_preserved": true,
+  "limitation": "Offline tests pass; real response usage is not reconciled by transport. No passing native proof. No campaign retry or input migration occurred."
+}

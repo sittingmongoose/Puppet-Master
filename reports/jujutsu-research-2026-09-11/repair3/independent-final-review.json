@@ -1,0 +1,65 @@
+{
+  "status": "FAIL_LIVE_LAUNCH",
+  "review_at": 1789155104.6915183,
+  "live_launch_approved": false,
+  "qualification": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/native-qualification/qualification.json",
+    "sha256": "2656181362c681a50887a5f34ee34e426cdad79ba05043f98be03087cbf43198"
+  },
+  "freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/protocol/freeze.json",
+    "sha256": "df5e8ace4832d511862a9c5b85bc96589a37beaa023fef598bf4c37d49d72a87"
+  },
+  "native_boundary_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/protocol/native-boundary-proof.json",
+    "sha256": "c46b20b55f7eea98240fe3952abee52706bb55c3359de09d20cb154d84118061"
+  },
+  "transport_metadata": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/native-qualification/native/transport-boundary.jsonl",
+    "sha256": "23690c50c297cd9445779c975351c572dda66046cee3b24fd7c936041513b3c4"
+  },
+  "offline_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/review/offline-final-review.json",
+    "sha256": "5ff56dee1866a0833537527b30788fd8841ba93046b151f8911e8d72c8723528"
+  },
+  "offline_native_proof": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/native-offline-proof.json",
+    "sha256": "026b1631f1ab7546f6e6988f2302fde7ae7475af9a13e76ca31d6f5b522ac87f"
+  },
+  "source_sha256": {
+    "bounded_campaign.py": "6298805404b76716f116a7e4178b775f30bf718d19394ee86f95a5dd140bc6ca",
+    "cost_watch.py": "590be9fa40fa0b8efcaf5b0692437ac8fc721be87c8120caca1ad96faa4e90f7",
+    "prepare_continuation.py": "ffd18fdb648b5824eb8d577dc23d837011de4bc88987baa45583963b1aa2a488",
+    "adapters/codex_native.py": "807d21b80bf7565eae84dd27e0c23be8d842ffa0b0ff750bec8db5d811d25ce6",
+    "adapters/transport_gate.py": "f288a956868a81a4d25af68dfb7554102107a1fbce774b7768f6da457f3cc11a",
+    "test_bounded_campaign_v2.py": "0a83b5f6b62f7a524f217486abcef090fd523b01a5d54428a88f7112a8e57570",
+    "test_cost_watch_v2.py": "f823e6dac3c8b1b5ca1809232172233f9a47941733f2a34d85a63e920defa368",
+    "test_resume_grant_v3.py": "cfeb763b7b12b3a89f5c74708fbe1b79521c1de5f4478a95485839030088b69d",
+    "test_native_boundaries_v2.py": "a217a0036c0e27d9c19f084ffe97e358f9c7d5966ffae2a01cc099e67c9268ac",
+    "test_native_boundaries_v3.py": "4ff04fd73a745a60d6311d3c846d5f2351ad0d76517ced1729757de90fb4199d"
+  },
+  "accounting_sha256": "03b1351f930fefe77408f2e24bef7baaea8cc0b1b8d1d8206a0d130f5499d504",
+  "runtime_sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "finding": {
+    "severity": "blocking",
+    "observed": "Exactly one HTTP200 request forwarded; next request denied; zero transport usage receipts; one unresolved request_receipt_gap. Parser classified response as non-SSE identity body, decoded78166 bytes, and raised JSONDecodeError. No normalized usage produced.",
+    "implication": "Live format remains unsupported/unqualified; a priced transport receipt was not durably captured, so no native proof or campaign launch is approved. Offline fixture success is insufficient.",
+    "recovered_native_categories": {
+      "totalTokens": 12146,
+      "inputTokens": 12141,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 5,
+      "reasoningOutputTokens": 0
+    },
+    "recovered_preserved_basis_usd": 0.043324,
+    "recovered_cost_scope": "Known native usage can be included in controller accounting; it does not repair the missing transport-boundary receipt or qualify the gate. Zero captured_upper_usd in qualification is not zero usage/spend."
+  },
+  "verified_offline": {
+    "protocol_tests_passed": 58,
+    "seconds": 12.16,
+    "accounting_cases_passed": 8,
+    "normalization_finding": "Mixed alias and bool cache-write defects fixed and verified before freeze."
+  },
+  "disposition": "Engineering closed. No retry, code edit, additional test or paid probe. Keep live gate false; root handles final report and unused grant."
+}

@@ -1,0 +1,61 @@
+{
+  "status": "unqualified",
+  "max_forwarded_requests": 1,
+  "wall_limit_seconds": 30,
+  "adapter_sha256": "807d21b80bf7565eae84dd27e0c23be8d842ffa0b0ff750bec8db5d811d25ce6",
+  "proxy_sha256": "f288a956868a81a4d25af68dfb7554102107a1fbce774b7768f6da457f3cc11a",
+  "meter_sha256": "590be9fa40fa0b8efcaf5b0692437ac8fc721be87c8120caca1ad96faa4e90f7",
+  "runtime_sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "script_sha256": "84bd9fda8b8edf1510f6a5eda276b34ab0a246a34e85b229d5025f9ec99b4d0d",
+  "ephemeral": false,
+  "capture_raw": false,
+  "native_usage_matches_transport": false,
+  "thread_id": "01a091f2-9025-7d13-a2ff-e1c8641fc100",
+  "rollout_source_path": "/home/sittingmongoose/.codex/sessions/2026/09/11/rollout-2026-09-11T19-29-48-01a091f2-9025-7d13-a2ff-e1c8641fc100.jsonl",
+  "model": "gpt-6-astra",
+  "reasoning_effort": "xhigh",
+  "service_tier": "default",
+  "native_goal_activated": true,
+  "native_token_usage": {
+    "total": {
+      "totalTokens": 12146,
+      "inputTokens": 12141,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 5,
+      "reasoningOutputTokens": 0
+    },
+    "last": {
+      "totalTokens": 12146,
+      "inputTokens": 12141,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 5,
+      "reasoningOutputTokens": 0
+    },
+    "modelContextWindow": 258400
+  },
+  "gate": {
+    "forward_admitted": 1,
+    "denied_before_dispatch": 1,
+    "max_requests": 1,
+    "usage_receipts": 0,
+    "stop_reason": "transport_or_receipt_interrupted",
+    "stopped": true,
+    "upstream_origin": "https://chatgpt.com",
+    "upstream_prefix": "/backend-api/codex"
+  },
+  "forwarded_requests": 1,
+  "captured_upper_usd": 0.0,
+  "unresolved": [
+    {
+      "identity": "c8840aacc6addcd1b133f029d782876014371f0bb93465ef3d66d93e409241e2",
+      "reason": "request_receipt_gap",
+      "request_identity": "http-40fde3968fd14f8d85a18d66d00f6a0d",
+      "payload": null,
+      "at": 1789154992.6946464,
+      "resolved": false
+    }
+  ],
+  "elapsed_seconds": 30.719
+}

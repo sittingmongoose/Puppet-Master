@@ -1,0 +1,91 @@
+{
+  "status": "PASS_OFFLINE_SOURCE_AND_ACCOUNTING__LIVE_LAUNCH_NOT_APPROVED",
+  "review_at": 1789154960.7423518,
+  "scope": "Independent v3 candidate protocol and segment allowance review; no paid requests; no implementation edits.",
+  "tests": {
+    "command": "python3 -B -m unittest test_bounded_campaign_v2 test_cost_watch_v2 test_resume_grant_v3 test_native_boundaries_v2 test_native_boundaries_v3 -q",
+    "passed": 58,
+    "seconds": 12.16,
+    "note": "Independent final rerun after both mixed-alias fixes and qualification meter-binding fix."
+  },
+  "accounting_cases": [
+    {
+      "case": "valid",
+      "pass": true
+    },
+    {
+      "case": "manual_closed",
+      "pass": true
+    },
+    {
+      "case": "unknown",
+      "pass": true
+    },
+    {
+      "case": "at_cap",
+      "pass": true
+    },
+    {
+      "case": "inconsistent_cap",
+      "pass": true
+    },
+    {
+      "case": "nan",
+      "pass": true
+    },
+    {
+      "case": "negative",
+      "pass": true
+    },
+    {
+      "case": "boolean",
+      "pass": true
+    }
+  ],
+  "accounting_sha256": "03b1351f930fefe77408f2e24bef7baaea8cc0b1b8d1d8206a0d130f5499d504",
+  "source_sha256": {
+    "bounded_campaign.py": "6298805404b76716f116a7e4178b775f30bf718d19394ee86f95a5dd140bc6ca",
+    "cost_watch.py": "590be9fa40fa0b8efcaf5b0692437ac8fc721be87c8120caca1ad96faa4e90f7",
+    "prepare_continuation.py": "ffd18fdb648b5824eb8d577dc23d837011de4bc88987baa45583963b1aa2a488",
+    "adapters/codex_native.py": "807d21b80bf7565eae84dd27e0c23be8d842ffa0b0ff750bec8db5d811d25ce6",
+    "adapters/transport_gate.py": "f288a956868a81a4d25af68dfb7554102107a1fbce774b7768f6da457f3cc11a",
+    "test_bounded_campaign_v2.py": "0a83b5f6b62f7a524f217486abcef090fd523b01a5d54428a88f7112a8e57570",
+    "test_cost_watch_v2.py": "f823e6dac3c8b1b5ca1809232172233f9a47941733f2a34d85a63e920defa368",
+    "test_resume_grant_v3.py": "cfeb763b7b12b3a89f5c74708fbe1b79521c1de5f4478a95485839030088b69d",
+    "test_native_boundaries_v2.py": "a217a0036c0e27d9c19f084ffe97e358f9c7d5966ffae2a01cc099e67c9268ac",
+    "test_native_boundaries_v3.py": "4ff04fd73a745a60d6311d3c846d5f2351ad0d76517ced1729757de90fb4199d"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "launch_blocker",
+      "status": "pending",
+      "detail": "Existing native-boundary-proof remains v2 new_attempt_unqualified, live_campaign_allowed false; real one-request v3 qualification and current exact proof must be reviewed before launch."
+    },
+    {
+      "id": "F2",
+      "severity": "normalization_defect",
+      "status": "fixed_and_verified",
+      "detail": "Any mixed camelCase/snake_case category shapes reject in both directions; duplicate cache-write aliases require nonnegative actual integers, rejecting booleans. Final independent58 tests pass."
+    }
+  ],
+  "source_review_passes": [
+    "prospective unknown gaps block replacement admission and next requests across same-arm jobs",
+    "historical baseline unknown usage remains visible and uncharged",
+    "Migration fixture preserves16 existing attempt rows and raises admission cap to28 using explicit additional12 authorization; source immutability and repeated-grant rejection checked.",
+    "migration preserves original continuation clock and existing retry/restart counters",
+    "SIGKILL recovery test preserves completed bytes, interrupted notes, captured costs and pending work",
+    "native max40 requests/2400seconds and cap checks precede each HTTP POST",
+    "common reconcile/compare route enforces Astra xhigh both arms,workers3,10000chars,max3leads",
+    "captured-plus-live allowance uses same arm/stage average only after2 fully reconciled jobs",
+    "compressed parser preserves original wire bytes and rejects missing usage without zero fallback",
+    "segment allowance sums sealed opening and current capture, checks cap consistency, honors manual gate"
+  ],
+  "approval": "Offline/source review only. Do not turn on live_campaign_allowed from this artifact. Review the real one-request qualification and final v3 proof separately.",
+  "limits": [
+    "Does not certify actual migrated campaign state files; migration preservation is source-reviewed and fixture-tested.",
+    "No paid request made by this reviewer.",
+    "No historical v2 raw native evidence re-read; current offline production transport tests exercise40 admitted requests and deny41, timeout,cap,compaction and retries.",
+    "Accounting review covers make_allowance only; extraction completeness and exact sealed opening figure are controller responsibilities."
+  ]
+}
